@@ -22,6 +22,9 @@
 	
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
 	GLuint defaultFramebuffer, colorRenderbuffer;
+	
+	GLuint    vertexBuffer;
+	GLuint    indexBuffer;	
 }
 
 - (void) render;

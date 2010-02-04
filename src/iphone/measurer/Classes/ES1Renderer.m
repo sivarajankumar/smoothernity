@@ -8,11 +8,31 @@
 
 #import "ES1Renderer.h"
 
+typedef struct _vertexStruct
+{
+	GLfloat position[2];
+	GLubyte color[4];
+} vertexStruct;
+
+static const vertexStruct vertices[] = {
+	-0.5f,  -0.33f, 255, 255,   0, 255,
+	 0.5f,  -0.33f, 0,   255, 255, 255,
+	-0.5f,   0.33f, 0,     0,   0,   0,
+	 0.5f,   0.33f, 255,   0, 255, 255,
+};
+
+static const GLubyte indices[] = {
+	0, 1, 2, 3
+};
+
 @implementation ES1Renderer
 
 // Create an ES 1.1 context
 - (id) init
 {
+	vertexBuffer = 0;
+	indexBuffer = 0;
+	
 	if (self = [super init])
 	{
 		context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
@@ -29,6 +49,15 @@
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
+		
+		glGenBuffers(1, &vertexBuffer);
+		glGenBuffers(1, &indexBuffer);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	}
 	
 	return self;
@@ -36,22 +65,6 @@
 
 - (void) render
 {
-    // Replace the implementation of this method to do your own custom drawing
-    
-    static const GLfloat squareVertices[] = {
-        -0.5f,  -0.33f,
-         0.5f,  -0.33f,
-        -0.5f,   0.33f,
-         0.5f,   0.33f,
-    };
-	
-    static const GLubyte squareColors[] = {
-        255, 255,   0, 255,
-        0,   255, 255, 255,
-        0,     0,   0,   0,
-        255,   0, 255, 255,
-    };
-    
 	static float transY = 0.0f;
 	
 	// This application only creates a single context which is already set current at this point.
@@ -73,12 +86,14 @@
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
-    glVertexPointer(2, GL_FLOAT, 0, squareVertices);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
+    glVertexPointer(2, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
     glEnableClientState(GL_COLOR_ARRAY);
-    
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertexStruct), (void*)offsetof(vertexStruct,color));
+    glDrawElements(GL_TRIANGLE_STRIP, sizeof(indices)/sizeof(GLubyte), GL_UNSIGNED_BYTE, (void*)0);
+	
 	// This application only creates a single color renderbuffer which is already bound at this point.
 	// This call is redundant, but needed if dealing with multiple renderbuffers.
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);

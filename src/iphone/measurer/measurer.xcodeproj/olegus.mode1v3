@@ -326,7 +326,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1957170D111B8753007DE9C6</string>
+										<string>19E4619D111B892D00885B27</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -340,7 +340,7 @@
 											<string>19320A6E111AE667009BF036</string>
 											<string>19320A6F111AE667009BF036</string>
 											<string>19320A70111AE667009BF036</string>
-											<string>19320A72111AE667009BF036</string>
+											<string>1957170D111B8753007DE9C6</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -398,9 +398,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1957170A111B8741007DE9C6</string>
+				<string>19E4619E111B892D00885B27</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1957170B111B8741007DE9C6</string>
+				<string>19E4619F111B892D00885B27</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -538,8 +538,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>19E461A8111B892D00885B27</string>
+		<string>19E461A9111B892D00885B27</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19E3FF3F10E29715006628E8</string>
-		<string>/Volumes/Documents/Documents/code/measurer/measurer.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 55 1224 723 0 0 1280 778 </string>
@@ -619,7 +623,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>19E3FF3F10E29715006628E8</string>
-				<string>1957170C111B8741007DE9C6</string>
+				<string>19E461A0111B892D00885B27</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -741,13 +745,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>19320A47111ACC23009BF036</string>
+				<string>19E461A1111B892D00885B27</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>19320A48111ACC23009BF036</string>
-				<string>19320A49111ACC23009BF036</string>
-				<string>19320A4A111ACC23009BF036</string>
-				<string>19320A4B111ACC23009BF036</string>
-				<string>19320A4C111ACC23009BF036</string>
+				<string>19E461A2111B892D00885B27</string>
+				<string>19E461A3111B892D00885B27</string>
+				<string>19E461A4111B892D00885B27</string>
+				<string>19E461A5111B892D00885B27</string>
+				<string>19E461A6111B892D00885B27</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -903,7 +907,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>19320A4D111ACC23009BF036</string>
+				<string>19E461A7111B892D00885B27</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
