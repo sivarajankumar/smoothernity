@@ -35,6 +35,7 @@
 	int frames;
 	int framesMissed;
 	int lastMissedFrame;
+	bool frameMissed;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;

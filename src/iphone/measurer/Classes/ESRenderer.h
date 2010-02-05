@@ -13,7 +13,7 @@
 
 @protocol ESRenderer <NSObject>
 
-- (void) render;
+- (void) render:(bool) frameMissed;
 - (BOOL) resizeFromLayer:(CAEAGLLayer *)layer;
 
 @end

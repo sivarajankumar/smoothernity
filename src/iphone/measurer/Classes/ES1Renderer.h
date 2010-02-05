@@ -31,15 +31,21 @@ typedef struct _vertexStruct
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
 	GLuint defaultFramebuffer, colorRenderbuffer;
 	
-	GLuint    vertexBuffer;
-	GLuint    indexBuffer;	
+	GLuint    meshVertexBuffer;
+	GLuint    meshIndexBuffer;	
 
+	GLuint    topVertexBuffer;
+	GLuint    topIndexBuffer;
+	
+	GLuint    currentVertexBuffer;
+	GLuint    currentIndexBuffer;
+	
 	int indicesCount;
 	vertexStruct vertices[VERTEX_BUFFER_MAX_SIZE];
 	GLushort indices[VERTEX_BUFFER_MAX_SIZE];	
 }
 
-- (void) render;
+- (void) render: (bool) frameMissed;
 - (BOOL) resizeFromLayer:(CAEAGLLayer *)layer;
 
 @end

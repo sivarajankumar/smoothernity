@@ -8,20 +8,26 @@
 
 #import "ES1Renderer.h"
 
-static const int MESH_SPANS = 5000;
+static const int MESH_SPANS = 50;
+static const double COMPUTATION_DELAY = 0.0;
 static const float PI = 3.141592f;
 static const GLubyte colorsR[] = { 255, 255, 255,   0,   0,   0, 255 };
 static const GLubyte colorsG[] = {   0, 128, 255, 255, 255,   0,   0 };
 static const GLubyte colorsB[] = {   0,   0,   0,   0, 255, 255, 255 };
 static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
+static const int MAX_FRAMES_WITHOUT_LOSSES = 60 * 20;
 
 @implementation ES1Renderer
 
 // Create an ES 1.1 context
 - (id) init
 {
-	vertexBuffer = 0;
-	indexBuffer = 0;
+	meshVertexBuffer = 0;
+	meshIndexBuffer = 0;
+	topVertexBuffer = 0;
+	topIndexBuffer = 0;
+	currentVertexBuffer = 0;
+	currentIndexBuffer = 0;
 	indicesCount = 0;
 	
 	if (self = [super init])
@@ -79,22 +85,74 @@ static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
 		}
 		NSLog(@"faces in mesh: %i", indicesCount-2);
 		
-		glGenBuffers(1, &vertexBuffer);
-		glGenBuffers(1, &indexBuffer);
+		static const vertexStruct topVertices[] = {
+		    -1.0f, -1.0f, 0.0f, 192, 255, 192, 255,
+			 1.0f, -1.0f, 0.0f, 192, 255, 192, 255,
+			-1.0f,  1.0f, 0.0f, 192, 255, 192, 255,
+		     1.0f,  1.0f, 0.0f, 192, 255, 192, 255,
+		};
+		static const GLushort topIndices[] = { 0, 1, 2, 3 };
 		
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		static const vertexStruct currentVertices[] = {
+		    -1.0f, -1.0f, 0.0f, 64, 255, 64, 255,
+			 1.0f, -1.0f, 0.0f, 64, 255, 64, 255,
+			-1.0f,  1.0f, 0.0f, 64, 255, 64, 255,
+			 1.0f,  1.0f, 0.0f, 64, 255, 64, 255,
+		};
+		static const GLushort currentIndices[] = { 0, 1, 2, 3 };
+		
+		glGenBuffers(1, &meshVertexBuffer);
+		glGenBuffers(1, &meshIndexBuffer);		
+		glBindBuffer(GL_ARRAY_BUFFER, meshVertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		glGenBuffers(1, &topVertexBuffer);
+		glGenBuffers(1, &topIndexBuffer);		
+		glBindBuffer(GL_ARRAY_BUFFER, topVertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(topVertices), topVertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, topIndexBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(topIndices), topIndices, GL_STATIC_DRAW);
+
+		glGenBuffers(1, &currentVertexBuffer);
+		glGenBuffers(1, &currentIndexBuffer);		
+		glBindBuffer(GL_ARRAY_BUFFER, currentVertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(currentVertices), currentVertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currentIndexBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(currentIndices), currentIndices, GL_STATIC_DRAW);
 	}
 	
 	return self;
 }
 
-- (void) render
+- (void) render :(bool) frameMissed
 {
 	static float transY = 0.0f;
+	static int maxFramesWithoutLosses = 0;
+	static int framesWithoutLosses = 0;
+	static int bestResultExpirationFrames = 0;
+	
+	if ( frameMissed )
+		framesWithoutLosses = 0;
+	else
+		framesWithoutLosses++;
+	if ( framesWithoutLosses > maxFramesWithoutLosses )
+	{
+		maxFramesWithoutLosses = framesWithoutLosses;
+		bestResultExpirationFrames = 0;
+	}
+	else
+		bestResultExpirationFrames++;
+	if ( bestResultExpirationFrames > MAX_FRAMES_WITHOUT_LOSSES )
+		maxFramesWithoutLosses = 0;
+	
+	float curPos = ((float)framesWithoutLosses) / (float)MAX_FRAMES_WITHOUT_LOSSES;
+	float topPos = ((float)maxFramesWithoutLosses) / (float)MAX_FRAMES_WITHOUT_LOSSES;
+	if ( curPos > 1.0f )
+		curPos = 1.0f;
+	if ( topPos > 1.0f )
+		topPos = 1.0f;
 	
 	// This application only creates a single context which is already set current at this point.
 	// This call is redundant, but needed if dealing with multiple contexts.
@@ -110,16 +168,38 @@ static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
     glLoadIdentity();
 	glFrustumf(-1.0f,1.0f,-1.515f,1.515f,1.0f,10.0f);
     glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(0.0f, 0.0f, -2.0f);
-    glRotatef(transY, 0.0f, 1.0f, 0.0f);
-	transY += 2.0f;
 	
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glLoadIdentity();
+	glTranslatef(0.0f, -7.0f + ( 6.0f * topPos ), -2.0f);
+	glScalef(4.0f, 4.0f, 4.0f);
+    glBindBuffer(GL_ARRAY_BUFFER, topVertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, topIndexBuffer);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertexStruct), (void*)offsetof(vertexStruct,color));
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, (void*)0);
+	
+	glLoadIdentity();
+	glTranslatef(0.0f, -7.0f + ( 6.0f * curPos ), -2.0f);
+	glScalef(4.0f, 4.0f, 4.0f);
+    glBindBuffer(GL_ARRAY_BUFFER, currentVertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currentIndexBuffer);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertexStruct), (void*)offsetof(vertexStruct,color));
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, (void*)0);
+	
+	glLoadIdentity();
+	glTranslatef(0.0f, 0.0f, -2.0f);
+    glRotatef(transY, 0.0f, 1.0f, 0.0f);
+	transY += 2.0f;
+    glBindBuffer(GL_ARRAY_BUFFER, meshVertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexBuffer);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
     glEnableClientState(GL_COLOR_ARRAY);
@@ -127,7 +207,7 @@ static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
     glDrawElements(GL_TRIANGLE_STRIP, indicesCount, GL_UNSIGNED_SHORT, (void*)0);
 	
 	CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
-	const double desiredDelay = 0.008;
+	const double desiredDelay = COMPUTATION_DELAY;
 	while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) desiredDelay )
 	{
 	}
