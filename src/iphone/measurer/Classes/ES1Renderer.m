@@ -8,22 +8,12 @@
 
 #import "ES1Renderer.h"
 
-typedef struct _vertexStruct
-{
-	GLfloat position[3];
-	GLubyte color[4];
-} vertexStruct;
-
-static const vertexStruct vertices[] = {
-	-1.0f,  -1.0f, 0.0f, 255, 255,   0, 255,
-	 1.0f,  -1.0f, 0.0f, 0,   255, 255, 255,
-	-1.0f,   1.0f, 0.0f, 0,     0,   0,   0,
-	 1.0f,   1.0f, 0.0f, 255,   0, 255, 255,
-};
-
-static const GLubyte indices[] = {
-	0, 1, 2, 3
-};
+static const int MESH_SPANS = 3;
+static const float PI = 3.141592f;
+static const GLubyte colorsR[] = { 255,   0, 0, 255 };
+static const GLubyte colorsG[] = { 255, 255, 0,   0 };
+static const GLubyte colorsB[] = {   0, 255, 0, 255 };
+static const GLubyte colorsA[] = { 255, 255, 0, 255 };
 
 @implementation ES1Renderer
 
@@ -32,6 +22,7 @@ static const GLubyte indices[] = {
 {
 	vertexBuffer = 0;
 	indexBuffer = 0;
+	indicesCount = 0;
 	
 	if (self = [super init])
 	{
@@ -42,13 +33,48 @@ static const GLubyte indices[] = {
             [self release];
             return nil;
         }
-		
 		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
 		glGenFramebuffersOES(1, &defaultFramebuffer);
 		glGenRenderbuffersOES(1, &colorRenderbuffer);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
+		
+		for ( int i = 0; i < MESH_SPANS + 1; i++ )
+		{
+			float angle = ((float)i) * PI * 2.0f / (float)MESH_SPANS;
+			float x = sinf ( angle );
+			float z = cosf ( angle );
+			vertices [ indicesCount ] . position [ 0 ] =     x;
+			vertices [ indicesCount ] . position [ 1 ] =  1.0f;
+			vertices [ indicesCount ] . position [ 2 ] =     z;
+			vertices [ indicesCount ] . color [ 0 ] = colorsR [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 1 ] = colorsG [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 2 ] = colorsB [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 3 ] = colorsA [ indicesCount % 4 ];
+			indices [ indicesCount ] = indicesCount;
+			indicesCount++;
+			if (indicesCount >= VERTEX_BUFFER_MAX_SIZE)
+			{
+				NSLog(@"vertex buffer too small");
+				break;
+			}
+			vertices [ indicesCount ] . position [ 0 ] =     x;
+			vertices [ indicesCount ] . position [ 1 ] = -1.0f;
+			vertices [ indicesCount ] . position [ 2 ] =     z;
+			vertices [ indicesCount ] . color [ 0 ] = colorsR [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 1 ] = colorsG [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 2 ] = colorsB [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 3 ] = colorsA [ indicesCount % 4 ];
+			indices [ indicesCount ] = indicesCount;
+			indicesCount++;
+			if (indicesCount >= VERTEX_BUFFER_MAX_SIZE)
+			{
+				NSLog(@"vertex buffer too small");
+				break;
+			}
+		}
+		NSLog(@"faces in mesh: %i", indicesCount-2);
 		
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &indexBuffer);
@@ -75,6 +101,7 @@ static const GLubyte indices[] = {
 	// This call is redundant, but needed if dealing with multiple framebuffers.
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
     glViewport(0, 0, backingWidth, backingHeight);
+	glEnable(GL_CULL_FACE);
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -94,7 +121,7 @@ static const GLubyte indices[] = {
     glVertexPointer(3, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertexStruct), (void*)offsetof(vertexStruct,color));
-    glDrawElements(GL_TRIANGLE_STRIP, sizeof(indices)/sizeof(GLubyte), GL_UNSIGNED_BYTE, (void*)0);
+    glDrawElements(GL_TRIANGLE_STRIP, indicesCount, GL_UNSIGNED_BYTE, (void*)0);
 	
 	// This application only creates a single color renderbuffer which is already bound at this point.
 	// This call is redundant, but needed if dealing with multiple renderbuffers.

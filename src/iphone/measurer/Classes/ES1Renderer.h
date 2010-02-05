@@ -11,6 +11,14 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+#define VERTEX_BUFFER_MAX_SIZE 1000
+
+typedef struct _vertexStruct
+{
+	GLfloat position[3];
+	GLubyte color[4];
+} vertexStruct;
+
 @interface ES1Renderer : NSObject <ESRenderer>
 {
 @private
@@ -25,6 +33,10 @@
 	
 	GLuint    vertexBuffer;
 	GLuint    indexBuffer;	
+
+	int indicesCount;
+	vertexStruct vertices[VERTEX_BUFFER_MAX_SIZE];
+	GLubyte indices[VERTEX_BUFFER_MAX_SIZE];	
 }
 
 - (void) render;

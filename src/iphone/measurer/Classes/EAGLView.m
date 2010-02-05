@@ -61,7 +61,7 @@
 {
 	CFAbsoluteTime frameTime = CFAbsoluteTimeGetCurrent ();
 	CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
-	const double desiredDelay = 0.010;
+	const double desiredDelay = 0.0;
 	while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) desiredDelay )
 	{
 	}
