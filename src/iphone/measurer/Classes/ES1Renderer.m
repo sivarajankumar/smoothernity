@@ -10,15 +10,15 @@
 
 typedef struct _vertexStruct
 {
-	GLfloat position[2];
+	GLfloat position[3];
 	GLubyte color[4];
 } vertexStruct;
 
 static const vertexStruct vertices[] = {
-	-0.5f,  -0.33f, 255, 255,   0, 255,
-	 0.5f,  -0.33f, 0,   255, 255, 255,
-	-0.5f,   0.33f, 0,     0,   0,   0,
-	 0.5f,   0.33f, 255,   0, 255, 255,
+	-1.0f,  -1.0f, 0.0f, 255, 255,   0, 255,
+	 1.0f,  -1.0f, 0.0f, 0,   255, 255, 255,
+	-1.0f,   1.0f, 0.0f, 0,     0,   0,   0,
+	 1.0f,   1.0f, 0.0f, 255,   0, 255, 255,
 };
 
 static const GLubyte indices[] = {
@@ -78,10 +78,12 @@ static const GLubyte indices[] = {
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+	glFrustumf(-1.0f,1.0f,-1.515f,1.515f,1.0f,10.0f);
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-    glTranslatef(0.0f, (GLfloat)(sinf(transY)/2.0f), 0.0f);
-	transY += 0.075f;
+	glTranslatef(0.0f, 0.0f, -2.0f);
+    glRotatef(transY, 0.0f, 1.0f, 0.0f);
+	transY += 2.0f;
 	
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -89,7 +91,7 @@ static const GLubyte indices[] = {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(2, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
+    glVertexPointer(3, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertexStruct), (void*)offsetof(vertexStruct,color));
     glDrawElements(GL_TRIANGLE_STRIP, sizeof(indices)/sizeof(GLubyte), GL_UNSIGNED_BYTE, (void*)0);
