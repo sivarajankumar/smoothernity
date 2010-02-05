@@ -10,10 +10,10 @@
 
 static const int MESH_SPANS = 5000;
 static const float PI = 3.141592f;
-static const GLubyte colorsR[] = { 255,   0, 0, 255 };
-static const GLubyte colorsG[] = { 255, 255, 0,   0 };
-static const GLubyte colorsB[] = {   0, 255, 0, 255 };
-static const GLubyte colorsA[] = { 255, 255, 0, 255 };
+static const GLubyte colorsR[] = { 255, 255, 255,   0,   0,   0, 255 };
+static const GLubyte colorsG[] = {   0, 128, 255, 255, 255,   0,   0 };
+static const GLubyte colorsB[] = {   0,   0,   0,   0, 255, 255, 255 };
+static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
 
 @implementation ES1Renderer
 
@@ -45,13 +45,16 @@ static const GLubyte colorsA[] = { 255, 255, 0, 255 };
 			float angle = ((float)i) * PI * 2.0f / (float)MESH_SPANS;
 			float x = sinf ( angle );
 			float z = cosf ( angle );
+			int color = ( i * 21 / ( MESH_SPANS + 1 ) ) % 7;
+			int color1 = color;
+			int color2 = ( color + 1 ) % 7;
 			vertices [ indicesCount ] . position [ 0 ] =     x;
 			vertices [ indicesCount ] . position [ 1 ] =  1.0f;
 			vertices [ indicesCount ] . position [ 2 ] =     z;
-			vertices [ indicesCount ] . color [ 0 ] = colorsR [ indicesCount % 4 ];
-			vertices [ indicesCount ] . color [ 1 ] = colorsG [ indicesCount % 4 ];
-			vertices [ indicesCount ] . color [ 2 ] = colorsB [ indicesCount % 4 ];
-			vertices [ indicesCount ] . color [ 3 ] = colorsA [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 0 ] = colorsR [ color1 ];
+			vertices [ indicesCount ] . color [ 1 ] = colorsG [ color1 ];
+			vertices [ indicesCount ] . color [ 2 ] = colorsB [ color1 ];
+			vertices [ indicesCount ] . color [ 3 ] = colorsA [ color1 ];
 			indices [ indicesCount ] = indicesCount;
 			indicesCount++;
 			if (indicesCount >= VERTEX_BUFFER_MAX_SIZE)
@@ -62,10 +65,10 @@ static const GLubyte colorsA[] = { 255, 255, 0, 255 };
 			vertices [ indicesCount ] . position [ 0 ] =     x;
 			vertices [ indicesCount ] . position [ 1 ] = -1.0f;
 			vertices [ indicesCount ] . position [ 2 ] =     z;
-			vertices [ indicesCount ] . color [ 0 ] = colorsR [ indicesCount % 4 ];
-			vertices [ indicesCount ] . color [ 1 ] = colorsG [ indicesCount % 4 ];
-			vertices [ indicesCount ] . color [ 2 ] = colorsB [ indicesCount % 4 ];
-			vertices [ indicesCount ] . color [ 3 ] = colorsA [ indicesCount % 4 ];
+			vertices [ indicesCount ] . color [ 0 ] = colorsR [ color2 ];
+			vertices [ indicesCount ] . color [ 1 ] = colorsG [ color2 ];
+			vertices [ indicesCount ] . color [ 2 ] = colorsB [ color2 ];
+			vertices [ indicesCount ] . color [ 3 ] = colorsA [ color2 ];
 			indices [ indicesCount ] = indicesCount;
 			indicesCount++;
 			if (indicesCount >= VERTEX_BUFFER_MAX_SIZE)
@@ -110,7 +113,7 @@ static const GLubyte colorsA[] = { 255, 255, 0, 255 };
 	glLoadIdentity();
 	glTranslatef(0.0f, 0.0f, -2.0f);
     glRotatef(transY, 0.0f, 1.0f, 0.0f);
-	transY += 0.1f;
+	transY += 2.0f;
 	
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
