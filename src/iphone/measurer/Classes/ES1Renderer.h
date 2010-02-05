@@ -11,7 +11,7 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-#define VERTEX_BUFFER_MAX_SIZE 1000
+#define VERTEX_BUFFER_MAX_SIZE 100000
 
 typedef struct _vertexStruct
 {
@@ -36,7 +36,7 @@ typedef struct _vertexStruct
 
 	int indicesCount;
 	vertexStruct vertices[VERTEX_BUFFER_MAX_SIZE];
-	GLubyte indices[VERTEX_BUFFER_MAX_SIZE];	
+	GLushort indices[VERTEX_BUFFER_MAX_SIZE];	
 }
 
 - (void) render;

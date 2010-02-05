@@ -8,7 +8,7 @@
 
 #import "ES1Renderer.h"
 
-static const int MESH_SPANS = 3;
+static const int MESH_SPANS = 5000;
 static const float PI = 3.141592f;
 static const GLubyte colorsR[] = { 255,   0, 0, 255 };
 static const GLubyte colorsG[] = { 255, 255, 0,   0 };
@@ -110,7 +110,7 @@ static const GLubyte colorsA[] = { 255, 255, 0, 255 };
 	glLoadIdentity();
 	glTranslatef(0.0f, 0.0f, -2.0f);
     glRotatef(transY, 0.0f, 1.0f, 0.0f);
-	transY += 2.0f;
+	transY += 0.1f;
 	
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -121,7 +121,13 @@ static const GLubyte colorsA[] = { 255, 255, 0, 255 };
     glVertexPointer(3, GL_FLOAT, sizeof(vertexStruct), (void*)offsetof(vertexStruct,position));
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertexStruct), (void*)offsetof(vertexStruct,color));
-    glDrawElements(GL_TRIANGLE_STRIP, indicesCount, GL_UNSIGNED_BYTE, (void*)0);
+    glDrawElements(GL_TRIANGLE_STRIP, indicesCount, GL_UNSIGNED_SHORT, (void*)0);
+	
+	CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
+	const double desiredDelay = 0.008;
+	while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) desiredDelay )
+	{
+	}
 	
 	// This application only creates a single color renderbuffer which is already bound at this point.
 	// This call is redundant, but needed if dealing with multiple renderbuffers.

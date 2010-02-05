@@ -60,11 +60,6 @@
 - (void) drawView:(id)sender
 {
 	CFAbsoluteTime frameTime = CFAbsoluteTimeGetCurrent ();
-	CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
-	const double desiredDelay = 0.0;
-	while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) desiredDelay )
-	{
-	}
     [renderer render];
 	frameTime = CFAbsoluteTimeGetCurrent () - frameTime;
 	
