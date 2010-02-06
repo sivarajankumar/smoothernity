@@ -8,14 +8,14 @@
 
 #import "ES1Renderer.h"
 
-static const int MESH_SPANS = 50;
-static const double COMPUTATION_DELAY = 0.0;
+static const int MESH_SPANS = 5000;
+static const double COMPUTATION_DELAY = 0.006;
 static const float PI = 3.141592f;
 static const GLubyte colorsR[] = { 255, 255, 255,   0,   0,   0, 255 };
 static const GLubyte colorsG[] = {   0, 128, 255, 255, 255,   0,   0 };
 static const GLubyte colorsB[] = {   0,   0,   0,   0, 255, 255, 255 };
 static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
-static const int MAX_FRAMES_WITHOUT_LOSSES = 60 * 20;
+static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 
 @implementation ES1Renderer
 
