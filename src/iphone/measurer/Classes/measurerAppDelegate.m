@@ -34,6 +34,11 @@
 	[glView stopAnimation];
 }
 
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	NSLog(@"memory warning!");
+}
+
 - (void) dealloc
 {
 	[window release];

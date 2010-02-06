@@ -8,6 +8,7 @@
 
 #import "ES1Renderer.h"
 
+static const int BUFFERS_COUNT = 1;
 static const int MESH_SPANS = 5000;
 static const int COMPUTATION_STEPS = 3;
 static const double COMPUTATION_STEP_DELAY = 0.002;
@@ -21,7 +22,7 @@ static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
 static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 
 #define PROFILE_FRAME_LOSSES 1
-#define PROFILE_COMPUTATION_DELAY 1
+#define PROFILE_COMPUTATION_DELAY 0
 
 #if ( PROFILE_FRAME_LOSSES && ! PROFILE_COMPUTATION_DELAY )
 	#define topR 192
@@ -134,12 +135,15 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 		};
 		static const GLushort currentIndices[] = { 0, 1, 2, 3 };
 		
-		glGenBuffers(1, &meshVertexBuffer);
-		glGenBuffers(1, &meshIndexBuffer);		
-		glBindBuffer(GL_ARRAY_BUFFER, meshVertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		for ( int i = 0; i < BUFFERS_COUNT; i++ )
+		{
+			glGenBuffers(1, &meshVertexBuffer);
+			glGenBuffers(1, &meshIndexBuffer);		
+			glBindBuffer(GL_ARRAY_BUFFER, meshVertexBuffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexBuffer);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		}
 
 		glGenBuffers(1, &topVertexBuffer);
 		glGenBuffers(1, &topIndexBuffer);		
