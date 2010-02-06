@@ -30,6 +30,9 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	currentIndexBuffer = 0;
 	indicesCount = 0;
 	
+	for ( int i = 0; i < ( MEMORY_POOL_SIZE ) / sizeof(int); i++ )
+		fakeMemoryPool [ i ] = i;
+	
 	if (self = [super init])
 	{
 		context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];

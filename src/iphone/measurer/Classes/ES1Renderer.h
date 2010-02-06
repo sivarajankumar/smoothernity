@@ -11,7 +11,8 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-#define VERTEX_BUFFER_MAX_SIZE 100000
+#define VERTEX_BUFFER_MAX_SIZE 20000
+#define MEMORY_POOL_SIZE 48*1024*1024
 
 typedef struct _vertexStruct
 {
@@ -43,6 +44,8 @@ typedef struct _vertexStruct
 	int indicesCount;
 	vertexStruct vertices[VERTEX_BUFFER_MAX_SIZE];
 	GLushort indices[VERTEX_BUFFER_MAX_SIZE];	
+	
+	int fakeMemoryPool [ MEMORY_POOL_SIZE / 4 ];
 }
 
 - (void) render: (bool) frameMissed;
