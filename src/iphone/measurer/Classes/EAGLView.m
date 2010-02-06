@@ -85,7 +85,13 @@
 		timeTotal += frameTime;
 		++frames;
 	}
-	[NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:@selector(drawView:) userInfo:nil repeats:NO];
+	[ NSTimer 
+	    scheduledTimerWithTimeInterval : 0.0
+		target : self
+	    selector : @ selector ( drawView : )
+	    userInfo : nil
+	    repeats : NO
+	 ] ;
 }
 
 - (void) layoutSubviews
@@ -99,7 +105,7 @@
 	NSLog(@"start animation");
 	if (!animating)
 	{
-		[NSTimer scheduledTimerWithTimeInterval:0.016 target:self selector:@selector(drawView:) userInfo:nil repeats:NO];
+		[NSTimer scheduledTimerWithTimeInterval:0.0 target:self selector:@selector(drawView:) userInfo:nil repeats:NO];
 		NSLog(@"timer");
 		animating = TRUE;
 	}

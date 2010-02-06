@@ -9,13 +9,43 @@
 #import "ES1Renderer.h"
 
 static const int MESH_SPANS = 5000;
-static const double COMPUTATION_DELAY = 0.006;
+static const int COMPUTATION_STEPS = 3;
+static const double COMPUTATION_STEP_DELAY = 0.002;
+static const double SLEEP_BETWEEN_STEPS = 0.0001;
+static const double COMPUTATION_STEP_DELAY_CHECK_ACCURACY = 0.01;
 static const float PI = 3.141592f;
 static const GLubyte colorsR[] = { 255, 255, 255,   0,   0,   0, 255 };
 static const GLubyte colorsG[] = {   0, 128, 255, 255, 255,   0,   0 };
 static const GLubyte colorsB[] = {   0,   0,   0,   0, 255, 255, 255 };
 static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
 static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
+
+#define PROFILE_FRAME_LOSSES 1
+#define PROFILE_COMPUTATION_DELAY 1
+
+#if ( PROFILE_FRAME_LOSSES && ! PROFILE_COMPUTATION_DELAY )
+	#define topR 192
+	#define topG 255
+	#define topB 192
+	#define currentR 64
+	#define currentG 255
+	#define currentB 64
+#elif ( PROFILE_COMPUTATION_DELAY && ! PROFILE_FRAME_LOSSES )
+	#define topR 192
+	#define topG 192
+	#define topB 255
+	#define currentR 64
+	#define currentG 64
+	#define currentB 255
+#else
+	#define topR 32
+	#define topG 192
+	#define topB 192
+	#define currentR 64
+	#define currentG 255
+	#define currentB 255
+#endif
+
 
 @implementation ES1Renderer
 
@@ -87,20 +117,20 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 			}
 		}
 		NSLog(@"faces in mesh: %i", indicesCount-2);
-		
+
 		static const vertexStruct topVertices[] = {
-		    -1.0f, -1.0f, 0.0f, 192, 255, 192, 255,
-			 1.0f, -1.0f, 0.0f, 192, 255, 192, 255,
-			-1.0f,  1.0f, 0.0f, 192, 255, 192, 255,
-		     1.0f,  1.0f, 0.0f, 192, 255, 192, 255,
+		    -1.0f, -1.0f, 0.0f, topR, topG, topB, 255,
+			 1.0f, -1.0f, 0.0f, topR, topG, topB, 255,
+			-1.0f,  1.0f, 0.0f, topR, topG, topB, 255,
+		     1.0f,  1.0f, 0.0f, topR, topG, topB, 255,
 		};
 		static const GLushort topIndices[] = { 0, 1, 2, 3 };
 		
 		static const vertexStruct currentVertices[] = {
-		    -1.0f, -1.0f, 0.0f, 64, 255, 64, 255,
-			 1.0f, -1.0f, 0.0f, 64, 255, 64, 255,
-			-1.0f,  1.0f, 0.0f, 64, 255, 64, 255,
-			 1.0f,  1.0f, 0.0f, 64, 255, 64, 255,
+		    -1.0f, -1.0f, 0.0f, currentR, currentG, currentB, 255,
+			 1.0f, -1.0f, 0.0f, currentR, currentG, currentB, 255,
+			-1.0f,  1.0f, 0.0f, currentR, currentG, currentB, 255,
+			 1.0f,  1.0f, 0.0f, currentR, currentG, currentB, 255,
 		};
 		static const GLushort currentIndices[] = { 0, 1, 2, 3 };
 		
@@ -136,10 +166,11 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	static int framesWithoutLosses = 0;
 	static int bestResultExpirationFrames = 0;
 	
+	framesWithoutLosses++;
+#if PROFILE_FRAME_LOSSES
 	if ( frameMissed )
 		framesWithoutLosses = 0;
-	else
-		framesWithoutLosses++;
+#endif
 	if ( framesWithoutLosses > maxFramesWithoutLosses )
 	{
 		maxFramesWithoutLosses = framesWithoutLosses;
@@ -157,13 +188,6 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	if ( topPos > 1.0f )
 		topPos = 1.0f;
 	
-	// This application only creates a single context which is already set current at this point.
-	// This call is redundant, but needed if dealing with multiple contexts.
-    [EAGLContext setCurrentContext:context];
-    
-	// This application only creates a single default framebuffer which is already bound at this point.
-	// This call is redundant, but needed if dealing with multiple framebuffers.
-    glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
     glViewport(0, 0, backingWidth, backingHeight);
 	glEnable(GL_CULL_FACE);
     
@@ -172,7 +196,7 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	glFrustumf(-1.0f,1.0f,-1.515f,1.515f,1.0f,10.0f);
     glMatrixMode(GL_MODELVIEW);
 	
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
 	glLoadIdentity();
@@ -208,16 +232,25 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(vertexStruct), (void*)offsetof(vertexStruct,color));
     glDrawElements(GL_TRIANGLE_STRIP, indicesCount, GL_UNSIGNED_SHORT, (void*)0);
-	
-	CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
-	const double desiredDelay = COMPUTATION_DELAY;
-	while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) desiredDelay )
+
+	CFAbsoluteTime timeConsumed;
+	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
+		CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
+		while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) COMPUTATION_STEP_DELAY )
+		{
+		}
+		timeConsumed += CFAbsoluteTimeGetCurrent() - timeBegin;
+		
+		if ( SLEEP_BETWEEN_STEPS > 0.0 )
+			[ NSThread sleepForTimeInterval : ( NSTimeInterval ) SLEEP_BETWEEN_STEPS ];
 	}
 	
-	// This application only creates a single color renderbuffer which is already bound at this point.
-	// This call is redundant, but needed if dealing with multiple renderbuffers.
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+#if PROFILE_COMPUTATION_DELAY
+	if ( timeConsumed > ( 1.0 + COMPUTATION_STEP_DELAY_CHECK_ACCURACY ) * COMPUTATION_STEP_DELAY * ( double ) COMPUTATION_STEPS )
+		framesWithoutLosses = 0;
+#endif
+	
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];	
 }
 

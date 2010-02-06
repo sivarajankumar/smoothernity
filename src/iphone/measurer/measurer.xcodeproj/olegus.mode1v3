@@ -272,7 +272,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>6</integer>
+									<integer>3</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -315,7 +315,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>EAGLView.m</string>
+								<string>ES1Renderer.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -323,23 +323,23 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>EAGLView.m</string>
+										<string>ES1Renderer.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>194231AF111D6C4700570D2B</string>
+										<string>1942324D111D8EF300570D2B</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
-											<string>19E463A8111C2EA600885B27</string>
-											<string>19E4645D111C3E3700885B27</string>
-											<string>19E4645E111C3E3700885B27</string>
 											<string>19E4645F111C3E3700885B27</string>
-											<string>19E464A2111CD29A00885B27</string>
-											<string>19E464A3111CD29A00885B27</string>
-											<string>19E464A8111CD52A00885B27</string>
-											<string>19E4656B111D01BC00885B27</string>
-											<string>19E4656D111D01BC00885B27</string>
+											<string>194231E0111D799900570D2B</string>
+											<string>19423233111D8A3700570D2B</string>
+											<string>1942323A111D8C4B00570D2B</string>
+											<string>1942323B111D8C4B00570D2B</string>
+											<string>1942323C111D8C4B00570D2B</string>
+											<string>1942323D111D8C4B00570D2B</string>
+											<string>1942323E111D8C4B00570D2B</string>
+											<string>1942324C111D8EF300570D2B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -537,6 +537,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>194231EC111D799900570D2B</string>
+		<string>194231ED111D799900570D2B</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>19E3FF3F10E29715006628E8</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
@@ -562,7 +566,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>ES1Renderer.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -579,6 +583,8 @@
 							<string>218pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -631,7 +637,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -740,13 +746,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>19E461A1111B892D00885B27</string>
+				<string>194231E5111D799900570D2B</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>19E461A2111B892D00885B27</string>
-				<string>19E461A3111B892D00885B27</string>
-				<string>19E461A4111B892D00885B27</string>
-				<string>19E461A5111B892D00885B27</string>
-				<string>19E461A6111B892D00885B27</string>
+				<string>194231E6111D799900570D2B</string>
+				<string>194231E7111D799900570D2B</string>
+				<string>194231E8111D799900570D2B</string>
+				<string>194231E9111D799900570D2B</string>
+				<string>194231EA111D799900570D2B</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -902,7 +908,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>19E461A7111B892D00885B27</string>
+				<string>194231EB111D799900570D2B</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
