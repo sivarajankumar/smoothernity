@@ -19,7 +19,11 @@
 class shy_iphone_platform
 {
 public :
-	typedef int int_32 ;
+    typedef int int_32 ;
+    static void render_enable_face_culling ( )
+    {
+        glEnable ( GL_CULL_FACE ) ;
+    }
 } ;
 
 typedef struct _vertexStruct

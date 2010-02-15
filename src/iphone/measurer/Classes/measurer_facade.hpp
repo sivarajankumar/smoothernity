@@ -1,6 +1,7 @@
 #pragma once
 
 #include "measurer_mediator.hpp"
+#include "measurer_logic.hpp"
 
 template < typename platform >
 class shy_measurer_facade
@@ -26,5 +27,5 @@ public :
         _mediator . update ( current_step , max_steps ) ;
     }
 private :
-    shy_measurer_mediator < platform > _mediator ;
+    shy_measurer_mediator < platform , shy_measurer_logic < platform > > _mediator ;
 } ;

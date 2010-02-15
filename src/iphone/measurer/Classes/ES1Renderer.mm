@@ -166,6 +166,7 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 
 - (void) render :(bool) frameMissed
 {
+    glViewport(0, 0, backingWidth, backingHeight);
 	shyMeasurer . render ( ) ;
 	
 	static float transY = 0.0f;
@@ -195,9 +196,6 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	if ( topPos > 1.0f )
 		topPos = 1.0f;
 	
-    glViewport(0, 0, backingWidth, backingHeight);
-	glEnable(GL_CULL_FACE);
-    
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 	glFrustumf(-1.0f,1.0f,-1.515f,1.515f,1.0f,10.0f);
