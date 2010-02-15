@@ -30,6 +30,12 @@ public :
         glClearColor ( ( GLfloat ) r , ( GLfloat ) g , ( GLfloat ) b , ( GLfloat ) 1 ) ;
         glClear ( GL_COLOR_BUFFER_BIT ) ;
     }
+    static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far )
+    {
+        glMatrixMode ( GL_PROJECTION ) ;
+        glLoadIdentity ( ) ;
+        glFrustumf ( left , right , bottom , top , near , far ) ;
+    }
 } ;
 
 typedef struct _vertexStruct

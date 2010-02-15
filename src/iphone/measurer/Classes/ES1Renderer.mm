@@ -196,9 +196,6 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	if ( topPos > 1.0f )
 		topPos = 1.0f;
 	
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-	glFrustumf(-1.0f,1.0f,-1.515f,1.515f,1.0f,10.0f);
     glMatrixMode(GL_MODELVIEW);
 	
 	glLoadIdentity();

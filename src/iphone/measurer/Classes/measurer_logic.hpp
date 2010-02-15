@@ -7,6 +7,7 @@ public :
     void init ( )
     {
         platform :: render_enable_face_culling ( ) ;
+        platform :: render_projection_frustum ( -1.0f , 1.0f , -1.515f , 1.515f , 1.0f , 10.0f ) ;
     }
     void done ( )
     {
