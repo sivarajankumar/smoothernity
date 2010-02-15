@@ -11,8 +11,16 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+#import "measurer_facade.hpp"
+
 #define VERTEX_BUFFER_MAX_SIZE 20000
 #define MEMORY_POOL_SIZE 48*1024*1024
+
+class shy_iphone_platform
+{
+public :
+	typedef int int_32 ;
+} ;
 
 typedef struct _vertexStruct
 {
@@ -23,6 +31,8 @@ typedef struct _vertexStruct
 @interface ES1Renderer : NSObject <ESRenderer>
 {
 @private
+	shy_measurer_facade < shy_iphone_platform > shyMeasurer ;
+	
 	EAGLContext *context;
 	
 	// The pixel dimensions of the CAEAGLLayer

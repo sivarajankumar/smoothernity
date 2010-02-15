@@ -47,7 +47,6 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	#define currentB 255
 #endif
 
-
 @implementation ES1Renderer
 
 // Create an ES 1.1 context
@@ -79,6 +78,8 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
+		
+		shyMeasurer . init ( ) ;
 		
 		for ( int i = 0; i < MESH_SPANS + 1; i++ )
 		{
@@ -165,6 +166,8 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 
 - (void) render :(bool) frameMissed
 {
+	shyMeasurer . render ( ) ;
+	
 	static float transY = 0.0f;
 	static int maxFramesWithoutLosses = 0;
 	static int framesWithoutLosses = 0;
@@ -240,6 +243,7 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	CFAbsoluteTime timeConsumed;
 	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
+		shyMeasurer . update ( i , COMPUTATION_STEPS ) ;
 		CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
 		while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) COMPUTATION_STEP_DELAY )
 		{
@@ -277,6 +281,8 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 
 - (void) dealloc
 {
+	shyMeasurer . done ( ) ;
+	
 	// Tear down GL
 	if (defaultFramebuffer)
 	{
