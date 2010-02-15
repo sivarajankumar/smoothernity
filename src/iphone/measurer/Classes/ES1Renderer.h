@@ -20,9 +20,15 @@ class shy_iphone_platform
 {
 public :
     typedef int int_32 ;
+    typedef float float_32 ;
     static void render_enable_face_culling ( )
     {
         glEnable ( GL_CULL_FACE ) ;
+    }
+    static void render_clear_screen ( float_32 r , float_32 g , float_32 b )
+    {
+        glClearColor ( ( GLfloat ) r , ( GLfloat ) g , ( GLfloat ) b , ( GLfloat ) 1 ) ;
+        glClear ( GL_COLOR_BUFFER_BIT ) ;
     }
 } ;
 

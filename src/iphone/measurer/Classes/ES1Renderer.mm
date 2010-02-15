@@ -201,9 +201,6 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	glFrustumf(-1.0f,1.0f,-1.515f,1.515f,1.0f,10.0f);
     glMatrixMode(GL_MODELVIEW);
 	
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
 	glLoadIdentity();
 	glTranslatef(0.0f, -7.0f + ( 6.0f * topPos ), -2.0f);
 	glScalef(4.0f, 4.0f, 4.0f);
