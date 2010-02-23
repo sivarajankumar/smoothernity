@@ -147,7 +147,7 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 		}
 
 		glGenBuffers(1, &topVertexBuffer);
-		glGenBuffers(1, &topIndexBuffer);		
+		glGenBuffers(1, &topIndexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, topVertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(topVertices), topVertices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, topIndexBuffer);
@@ -197,7 +197,7 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 		topPos = 1.0f;
 	
     glMatrixMode(GL_MODELVIEW);
-	
+    
 	glLoadIdentity();
 	glTranslatef(0.0f, -7.0f + ( 6.0f * topPos ), -2.0f);
 	glScalef(4.0f, 4.0f, 4.0f);

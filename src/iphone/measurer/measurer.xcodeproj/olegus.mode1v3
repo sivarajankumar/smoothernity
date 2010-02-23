@@ -204,7 +204,7 @@
 				<key>PBXProjectModuleGUID</key>
 				<string>19423304111DA8FF00570D2B</string>
 				<key>PBXProjectModuleLabel</key>
-				<string>ES1Renderer.m</string>
+				<string>ES1Renderer.mm</string>
 				<key>PBXSplitModuleInNavigatorKey</key>
 				<dict>
 					<key>Split0</key>
@@ -212,14 +212,14 @@
 						<key>PBXProjectModuleGUID</key>
 						<string>19423305111DA8FF00570D2B</string>
 						<key>PBXProjectModuleLabel</key>
-						<string>ES1Renderer.m</string>
+						<string>ES1Renderer.mm</string>
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>19BFEEBD111DD19F00424782</string>
+						<string>19E68772113467140018222D</string>
 						<key>history</key>
 						<array>
-							<string>19423371111DC3D300570D2B</string>
+							<string>19AE69BB1129EA2900742128</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -308,14 +308,16 @@
 								<string>080E96DDFE201D6D7F000001</string>
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
+								<string>29B97323FDCFA39411CA2CEA</string>
+								<string>19C28FACFE9D520D11CA2CBB</string>
 								<string>1C37FAAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>16</integer>
-									<integer>13</integer>
+									<integer>11</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -350,12 +352,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer-Info.plist</string>
+								<string>measurer_logic.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -363,23 +367,26 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer-Info.plist</string>
+										<string>measurer_logic.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19BFEEBC111DD19F00424782</string>
+										<string>19E6876F113467140018222D</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
-											<string>194231E0111D799900570D2B</string>
-											<string>1942323C111D8C4B00570D2B</string>
-											<string>19423363111DBE9300570D2B</string>
-											<string>19423364111DBE9300570D2B</string>
-											<string>19423365111DBE9300570D2B</string>
-											<string>1942336D111DC3D300570D2B</string>
-											<string>19BFEEB9111DD19F00424782</string>
-											<string>19BFEEBA111DD19F00424782</string>
-											<string>19BFEEBB111DD19F00424782</string>
+											<string>19AE69501129CD1000742128</string>
+											<string>19AE69531129CD1000742128</string>
+											<string>19AE69541129CD1000742128</string>
+											<string>19AE69551129CD1000742128</string>
+											<string>19AE699E1129E12700742128</string>
+											<string>19AE699F1129E12700742128</string>
+											<string>19AE69A91129E44300742128</string>
+											<string>19AE69AA1129E44300742128</string>
+											<string>19AE69B61129EA2900742128</string>
+											<string>19AE69B71129EA2900742128</string>
+											<string>19AE69B81129EA2900742128</string>
+											<string>19AE69BA1129EA2900742128</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -437,9 +444,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>19BFEEAF111DC84A00424782</string>
+				<string>19E68770113467140018222D</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>19BFEEB0111DC84A00424782</string>
+				<string>19E68771113467140018222D</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -577,10 +584,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>19BFEEC5111DD19F00424782</string>
-		<string>19BFEEC6111DD19F00424782</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19E3FF3F10E29715006628E8</string>
 		<string>19423304111DA8FF00570D2B</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
@@ -663,7 +666,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>19E3FF3F10E29715006628E8</string>
-				<string>19BFEEB2111DC84A00424782</string>
+				<string>19E68773113467140018222D</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -785,13 +788,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>19BFEEBE111DD19F00424782</string>
+				<string>19AE69421129C8D000742128</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>19BFEEBF111DD19F00424782</string>
-				<string>19BFEEC0111DD19F00424782</string>
-				<string>19BFEEC1111DD19F00424782</string>
-				<string>19BFEEC2111DD19F00424782</string>
-				<string>19BFEEC3111DD19F00424782</string>
+				<string>19AE69431129C8D000742128</string>
+				<string>19AE69441129C8D000742128</string>
+				<string>19AE69451129C8D000742128</string>
+				<string>19AE69461129C8D000742128</string>
+				<string>19AE69471129C8D000742128</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -945,7 +948,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>19BFEEC4111DD19F00424782</string>
+				<string>19AE695A1129CD1000742128</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

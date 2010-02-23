@@ -21,6 +21,29 @@ class shy_iphone_platform
 public :
     typedef int int_32 ;
     typedef float float_32 ;
+    
+    class buffer_id
+    {
+        friend class shy_iphone_platform ;
+    private :
+        GLuint _buffer_id ;
+    } ;
+    
+    class vertex_data
+    {
+        friend class shy_iphone_platform ;
+    private :
+        GLfloat _position [ 3 ] ;
+        GLubyte _color [ 4 ] ;
+    } ;
+    
+    class index_data
+    {
+        friend class shy_iphone_platform ;
+    private :
+        GLushort _index ;
+    } ;
+    
     static void render_enable_face_culling ( )
     {
         glEnable ( GL_CULL_FACE ) ;
@@ -35,6 +58,47 @@ public :
         glMatrixMode ( GL_PROJECTION ) ;
         glLoadIdentity ( ) ;
         glFrustumf ( left , right , bottom , top , near , far ) ;
+    }
+    static void render_create_buffer_id ( buffer_id & arg_buffer_id )
+    {
+        glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
+    }
+    static void render_bind_vertex_buffer ( const buffer_id & arg_buffer_id , int_32 elements , vertex_data * data )
+    {
+		glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+		glBufferData
+            ( GL_ARRAY_BUFFER 
+            , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) elements ) 
+            , data
+            , GL_STATIC_DRAW 
+            ) ;
+    }
+    static void render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z )
+    {
+        vertex . _position [ 0 ] = ( GLfloat ) x ;
+        vertex . _position [ 1 ] = ( GLfloat ) y ;
+        vertex . _position [ 2 ] = ( GLfloat ) z ;
+    }
+    static void render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a )
+    {
+        vertex . _color [ 0 ] = ( GLubyte ) r ;
+        vertex . _color [ 1 ] = ( GLubyte ) g ;
+        vertex . _color [ 2 ] = ( GLubyte ) b ;
+        vertex . _color [ 3 ] = ( GLubyte ) a ;
+    }
+    static void render_bind_index_buffer ( const buffer_id & arg_buffer_id , int_32 elements , index_data * data )
+    {
+		glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+		glBufferData
+            ( GL_ELEMENT_ARRAY_BUFFER
+            , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) elements )
+            , data
+            , GL_STATIC_DRAW
+            ) ;
+    }
+    static void render_set_index_value ( index_data & data , int_32 index )
+    {
+        data . _index = ( GLushort ) index ;
     }
 } ;
 
