@@ -75,8 +75,8 @@ private :
         
         platform :: render_create_buffer_id ( _top_vertex_buffer_id ) ;
         platform :: render_create_buffer_id ( _top_index_buffer_id ) ;
-        platform :: render_bind_vertex_buffer ( _top_vertex_buffer_id , 4 , top_vertices ) ;
-        platform :: render_bind_index_buffer ( _top_index_buffer_id , 4 , top_indices ) ;
+        platform :: render_load_vertex_buffer ( _top_vertex_buffer_id , 4 , top_vertices ) ;
+        platform :: render_load_index_buffer ( _top_index_buffer_id , 4 , top_indices ) ;
     }
     void _render_top_mesh ( )
     {

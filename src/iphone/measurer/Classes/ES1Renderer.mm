@@ -8,6 +8,16 @@
 
 #import "ES1Renderer.h"
 
+shy_iphone_platform :: vertex_data shy_iphone_platform :: _reference_vertex ;
+void * shy_iphone_platform :: _vertex_position_offset = reinterpret_cast < void * >
+    ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _position ) 
+    - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
+    ) ;
+void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
+    ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _color ) 
+    - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
+    ) ;
+        
 static const int BUFFERS_COUNT = 1;
 static const int MESH_SPANS = 5000;
 static const int COMPUTATION_STEPS = 3;

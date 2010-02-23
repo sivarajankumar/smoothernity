@@ -63,7 +63,7 @@ public :
     {
         glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     }
-    static void render_bind_vertex_buffer ( const buffer_id & arg_buffer_id , int_32 elements , vertex_data * data )
+    static void render_load_vertex_buffer ( const buffer_id & arg_buffer_id , int_32 elements , vertex_data * data )
     {
 		glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
 		glBufferData
@@ -86,7 +86,7 @@ public :
         vertex . _color [ 2 ] = ( GLubyte ) b ;
         vertex . _color [ 3 ] = ( GLubyte ) a ;
     }
-    static void render_bind_index_buffer ( const buffer_id & arg_buffer_id , int_32 elements , index_data * data )
+    static void render_load_index_buffer ( const buffer_id & arg_buffer_id , int_32 elements , index_data * data )
     {
 		glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
 		glBufferData
@@ -125,11 +125,15 @@ public :
         glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
         glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
         glEnableClientState ( GL_VERTEX_ARRAY ) ;
-        glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , ( void * ) offsetof ( vertex_data , _position ) ) ;
+        glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_position_offset ) ;
         glEnableClientState ( GL_COLOR_ARRAY ) ;
-        glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , ( void * ) offsetof ( vertex_data , _color ) ) ;
+        glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
         glDrawElements ( GL_TRIANGLE_STRIP , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
     }
+private :
+    static vertex_data _reference_vertex ;
+    static void * _vertex_position_offset ;
+    static void * _vertex_color_offset ;
 } ;
 
 typedef struct _vertexStruct
