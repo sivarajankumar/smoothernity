@@ -18,7 +18,6 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
     - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
     ) ;
         
-static const int COMPUTATION_STEPS = 3;
 static const double COMPUTATION_STEP_DELAY = 0.002;
 static const double SLEEP_BETWEEN_STEPS = 0.0001;
 static const double COMPUTATION_STEP_DELAY_CHECK_ACCURACY = 0.01;
@@ -89,7 +88,7 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
 		CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
-		shyMeasurer . update ( i , COMPUTATION_STEPS ) ;
+		shyMeasurer . update ( i ) ;
 		timeConsumed += CFAbsoluteTimeGetCurrent() - timeBegin;
 		
 		if ( SLEEP_BETWEEN_STEPS > 0.0 )

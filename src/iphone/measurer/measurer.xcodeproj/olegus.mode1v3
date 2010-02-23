@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>19E687F61134915D0018222D</string>
+						<string>19E68805113492F20018222D</string>
 						<key>history</key>
 						<array>
 							<string>19AE69BB1129EA2900742128</string>
@@ -316,7 +316,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
+									<integer>11</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -359,7 +359,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>ES1Renderer.mm</string>
+								<string>measurer_logic.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -367,11 +367,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>ES1Renderer.mm</string>
+										<string>measurer_logic.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19E687F51134915D0018222D</string>
+										<string>19E68804113492F20018222D</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -381,12 +381,12 @@
 											<string>19AE69551129CD1000742128</string>
 											<string>19AE699E1129E12700742128</string>
 											<string>19AE699F1129E12700742128</string>
-											<string>19E6877A113477410018222D</string>
-											<string>19E6879411347C170018222D</string>
 											<string>19E687F11134915D0018222D</string>
-											<string>19E687F21134915D0018222D</string>
-											<string>19E687F31134915D0018222D</string>
-											<string>19E687F41134915D0018222D</string>
+											<string>19E687FF113492F20018222D</string>
+											<string>19E68800113492F20018222D</string>
+											<string>19E68801113492F20018222D</string>
+											<string>19E68802113492F20018222D</string>
+											<string>19E68803113492F20018222D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -586,8 +586,8 @@
 	<array>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>19423304111DA8FF00570D2B</string>
 		<string>19E3FF3F10E29715006628E8</string>
+		<string>19423304111DA8FF00570D2B</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -612,7 +612,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic.hpp</string>
+								<string>ES1Renderer.mm</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -683,7 +683,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

@@ -63,7 +63,7 @@ public :
         _render_current_mesh ( ) ;
         _render_benchmark_mesh ( ) ;
     }
-    void update ( typename platform :: int_32 current_step , typename platform :: int_32 max_steps )
+    void update ( typename platform :: int_32 step )
     {
         typename platform :: time_data time_begin ;
         platform :: time_get_current ( time_begin ) ;

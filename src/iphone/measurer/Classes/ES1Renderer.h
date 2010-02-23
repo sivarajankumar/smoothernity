@@ -13,8 +13,8 @@
 
 #import "measurer_facade.hpp"
 
-#define VERTEX_BUFFER_MAX_SIZE 20000
 #define MEMORY_POOL_SIZE 48*1024*1024
+#define COMPUTATION_STEPS 3
 
 class shy_iphone_platform
 {
@@ -162,17 +162,15 @@ public :
             diff = time2 . _time - time1 . _time ;
         return ( int_32 ) ( diff * ( CFAbsoluteTime ) 1000000 ) ;
     }
+    static int_32 max_update_steps ( )
+    {
+        return COMPUTATION_STEPS ;
+    }
 private :
     static vertex_data _reference_vertex ;
     static void * _vertex_position_offset ;
     static void * _vertex_color_offset ;
 } ;
-
-typedef struct _vertexStruct
-{
-	GLfloat position[3];
-	GLubyte color[4];
-} vertexStruct;
 
 @interface ES1Renderer : NSObject <ESRenderer>
 {
@@ -187,19 +185,6 @@ typedef struct _vertexStruct
 	
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
 	GLuint defaultFramebuffer, colorRenderbuffer;
-	
-	GLuint    meshVertexBuffer;
-	GLuint    meshIndexBuffer;	
-
-	GLuint    topVertexBuffer;
-	GLuint    topIndexBuffer;
-	
-	GLuint    currentVertexBuffer;
-	GLuint    currentIndexBuffer;
-	
-	int indicesCount;
-	vertexStruct vertices[VERTEX_BUFFER_MAX_SIZE];
-	GLushort indices[VERTEX_BUFFER_MAX_SIZE];	
 	
 	int fakeMemoryPool [ MEMORY_POOL_SIZE / 4 ];
 }

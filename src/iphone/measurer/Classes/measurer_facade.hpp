@@ -22,9 +22,9 @@ public :
     {
         _mediator . render ( ) ;
     }
-    void update ( typename platform :: int_32 current_step , typename platform :: int_32 max_steps )
+    void update ( typename platform :: int_32 step )
     {
-        _mediator . update ( current_step , max_steps ) ;
+        _mediator . update ( step ) ;
     }
 private :
     shy_measurer_mediator < platform , shy_measurer_logic < platform > > _mediator ;

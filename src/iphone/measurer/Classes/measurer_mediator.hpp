@@ -19,9 +19,9 @@ public :
     {
         _logic . render ( ) ;
     }
-    void update ( typename platform :: int_32 current_step , typename platform :: int_32 max_steps )
+    void update ( typename platform :: int_32 step )
     {
-        _logic . update ( current_step , max_steps ) ;
+        _logic . update ( step ) ;
     }
 private :
     measurer_logic _logic ;
