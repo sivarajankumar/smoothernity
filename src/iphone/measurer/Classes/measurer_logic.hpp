@@ -9,6 +9,7 @@ static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
 #define PROFILE_FRAME_LOSSES 1
 #define PROFILE_COMPUTATION_DELAY 0
 #define PI 3.141592f
+#define COMPUTATION_STEP_DELAY_IN_MICROSECONDS 2000
 
 #if ( PROFILE_FRAME_LOSSES && ! PROFILE_COMPUTATION_DELAY )
 	#define topR 192
@@ -64,6 +65,15 @@ public :
     }
     void update ( typename platform :: int_32 current_step , typename platform :: int_32 max_steps )
     {
+        typename platform :: time_data time_begin ;
+        platform :: time_get_current ( time_begin ) ;
+		while ( true )
+		{
+            typename platform :: time_data time_current ;
+            platform :: time_get_current ( time_current ) ;
+            if ( platform :: time_diff_in_microseconds ( time_begin , time_current ) >= COMPUTATION_STEP_DELAY_IN_MICROSECONDS )
+                break ;
+		}
     }
 private :
     void _create_top_mesh ( )

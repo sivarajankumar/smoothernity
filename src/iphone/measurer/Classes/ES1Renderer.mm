@@ -88,11 +88,8 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 	CFAbsoluteTime timeConsumed;
 	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
-		shyMeasurer . update ( i , COMPUTATION_STEPS ) ;
 		CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
-		while ( CFAbsoluteTimeGetCurrent() - timeBegin < ( CFAbsoluteTime ) COMPUTATION_STEP_DELAY )
-		{
-		}
+		shyMeasurer . update ( i , COMPUTATION_STEPS ) ;
 		timeConsumed += CFAbsoluteTimeGetCurrent() - timeBegin;
 		
 		if ( SLEEP_BETWEEN_STEPS > 0.0 )

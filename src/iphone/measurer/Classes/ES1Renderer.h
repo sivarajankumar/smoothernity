@@ -43,6 +43,13 @@ public :
     private :
         GLushort _index ;
     } ;
+
+    class time_data
+    {
+        friend class shy_iphone_platform ;
+    private :
+        CFAbsoluteTime _time ;
+    } ;
     
     static void render_enable_face_culling ( )
     {
@@ -141,6 +148,19 @@ public :
     static float_32 math_cos ( float_32 a )
     {
         return cosf ( a ) ;
+    }
+    static void time_get_current ( time_data & time )
+    {
+        time . _time = CFAbsoluteTimeGetCurrent ( ) ;
+    }
+    static int_32 time_diff_in_microseconds ( const time_data & time1 , const time_data & time2 )
+    {
+        CFAbsoluteTime diff = 0 ;
+        if ( time1 . _time > time2 . _time )
+            diff = time1 . _time - time2 . _time ;
+        else
+            diff = time2 . _time - time1 . _time ;
+        return ( int_32 ) ( diff * ( CFAbsoluteTime ) 1000000 ) ;
     }
 private :
     static vertex_data _reference_vertex ;
