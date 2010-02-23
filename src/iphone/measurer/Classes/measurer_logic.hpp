@@ -38,20 +38,19 @@
 	#define CURRENT_B 255
 #endif
 
-static const GLubyte COLORS_R [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ;
-static const GLubyte COLORS_G [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ;
-static const GLubyte COLORS_B [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ;
-static const GLubyte COLORS_A [ ] = { 255 , 255 , 255 , 255 , 255 , 255 , 255 } ;
-
 template < typename platform >
 class shy_measurer_logic
 {
 public :
     shy_measurer_logic ( )
-    : _top_pos ( 0.5f )
-    , _current_pos ( 0.25f )
+    : _top_pos ( 0 )
+    , _current_pos ( 0 )
     , _benchmark_indices_count ( 0 )
     , _time_consumed_for_updates ( 0 )
+    , _max_frames_without_losses ( 0 )
+    , _frames_without_losses ( 0 )
+    , _best_result_expiration_frames ( 0 )
+    , _benchmark_mesh_rotation_angle ( 0 )
     {
     }
     void init ( )
@@ -67,32 +66,58 @@ public :
     }
     void render ( )
     {
-        platform :: render_clear_screen ( 0 , 0 , 0 ) ;
-        platform :: render_select_modelview_matrix ( ) ;
+        _update_measures ( ) ;
+        _clear_screen ( ) ;
         _render_top_mesh ( ) ;
         _render_current_mesh ( ) ;
         _render_benchmark_mesh ( ) ;
-        _update_measures ( ) ;
+        _rotate_benchmark_mesh ( ) ;
     }
     void update ( typename platform :: int_32 step )
     {
         typename platform :: time_data time_begin ;
-        typename platform :: time_data time_current ;
         platform :: time_get_current ( time_begin ) ;
-		while ( true )
-		{
-            platform :: time_get_current ( time_current ) ;
-            if ( platform :: time_diff_in_microseconds ( time_begin , time_current ) >= COMPUTATION_STEP_DELAY_IN_MICROSECONDS )
-                break ;
-		}
-        platform :: time_get_current ( time_current ) ;
-        _time_consumed_for_updates += platform :: time_diff_in_microseconds ( time_begin , time_current ) ;
+        _wait_for_time ( COMPUTATION_STEP_DELAY_IN_MICROSECONDS ) ;
+        typename platform :: time_data time_end ;
+        platform :: time_get_current ( time_end ) ;
+        _time_consumed_for_updates += platform :: time_diff_in_microseconds ( time_begin , time_end ) ;
     }
 private :
+    void _update_measures ( )
+    {
+        _advance_frame_counter ( ) ;
+        _advance_max_frames_counter ( ) ;
+        _crop_max_frames_counter ( ) ;
+        _calc_current_pos ( ) ;
+        _calc_top_pos ( ) ;
+        _profile_computation_delay ( ) ;
+        _profile_frame_losses ( ) ;
+    }
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
         platform :: render_projection_frustum ( -1.0f , 1.0f , -1.515f , 1.515f , 1.0f , 10.0f ) ;
+        platform :: render_select_modelview_matrix ( ) ;
+    }
+    void _clear_screen ( )
+    {
+        platform :: render_clear_screen ( 0 , 0 , 0 ) ;
+    }
+    void _wait_for_time ( typename platform :: int_32 delay )
+    {
+        typename platform :: time_data time_begin ;
+        platform :: time_get_current ( time_begin ) ;
+		while ( true )
+		{
+            typename platform :: time_data time_current ;
+            platform :: time_get_current ( time_current ) ;
+            if ( platform :: time_diff_in_microseconds ( time_begin , time_current ) >= delay )
+                break ;
+		}
+    }
+    void _rotate_benchmark_mesh ( )
+    {
+        _benchmark_mesh_rotation_angle += 2.0f ;
     }
     void _save_frame_time ( )
     {
@@ -102,13 +127,8 @@ private :
     {
         _fake_memory_pool [ 0 ] = MEMORY_POOL_SIZE ;
     }
-    void _update_measures ( )
+    void _profile_frame_losses ( )
     {
-        static typename platform :: int_32 max_frames_without_losses = 0 ;
-        static typename platform :: int_32 frames_without_losses = 0 ;
-        static typename platform :: int_32 best_result_expiration_frames = 0 ;
-        
-        frames_without_losses ++ ;
 #if PROFILE_FRAME_LOSSES
         typename platform :: time_data prev_time = _frame_time_begin ;
         _save_frame_time ( ) ;
@@ -116,33 +136,50 @@ private :
            > 1000000 / platform :: frames_per_second ( )
            )
         {
-            frames_without_losses = 0 ;
+            _frames_without_losses = 0 ;
         }
 #endif
-        if ( frames_without_losses > max_frames_without_losses )
-        {
-            max_frames_without_losses = frames_without_losses ;
-            best_result_expiration_frames = 0 ;
-        }
-        else
-            best_result_expiration_frames ++ ;
-        if ( best_result_expiration_frames > MAX_FRAMES_WITHOUT_LOSSES )
-            max_frames_without_losses = 0 ;
-        
-        _current_pos = ( ( typename platform :: float_32 ) frames_without_losses )
-                       / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
-        _top_pos = ( ( typename platform :: float_32 ) max_frames_without_losses ) 
-                   / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
-        if ( _current_pos > 1.0f )
-            _current_pos = 1.0f ;
-        if ( _top_pos > 1.0f )
-            _top_pos = 1.0f ;
-            
+    }
+    void _profile_computation_delay ( )
+    {
 #if PROFILE_COMPUTATION_DELAY
         if ( _time_consumed_for_updates > MAX_TIME_FOR_UPDATES_IN_MICROSECONDS )
-            frames_without_losses = 0 ;
-#endif
+            _frames_without_losses = 0 ;
         _time_consumed_for_updates = 0 ;
+#endif
+    }
+    void _calc_current_pos ( )
+    {
+        _current_pos = ( ( typename platform :: float_32 ) _frames_without_losses )
+                       / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        if ( _current_pos > 1.0f )
+            _current_pos = 1.0f ;
+    }
+    void _calc_top_pos ( )
+    {
+        _top_pos = ( ( typename platform :: float_32 ) _max_frames_without_losses ) 
+                   / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        if ( _top_pos > 1.0f )
+            _top_pos = 1.0f ;
+    }
+    void _advance_frame_counter ( )
+    {
+        _frames_without_losses ++ ;
+    }
+    void _advance_max_frames_counter ( )
+    {
+        if ( _frames_without_losses > _max_frames_without_losses )
+        {
+            _max_frames_without_losses = _frames_without_losses ;
+            _best_result_expiration_frames = 0 ;
+        }
+        else
+            _best_result_expiration_frames ++ ;
+    }
+    void _crop_max_frames_counter ( )
+    {
+        if ( _best_result_expiration_frames > MAX_FRAMES_WITHOUT_LOSSES )
+            _max_frames_without_losses = 0 ;
     }
     void _create_top_mesh ( )
     {
@@ -196,6 +233,11 @@ private :
     }
     void _create_benchmark_mesh ( )
     {
+        static const typename platform :: int_32 COLORS_R [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ;
+        static const typename platform :: int_32 COLORS_G [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ;
+        static const typename platform :: int_32 COLORS_B [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ;
+        static const typename platform :: int_32 COLORS_A [ ] = { 255 , 255 , 255 , 255 , 255 , 255 , 255 } ;
+
         typename platform :: vertex_data vertices [ ( MESH_SPANS + 1 ) * 2 ] ;
         typename platform :: index_data indices [ ( MESH_SPANS + 1 ) * 2 ] ;
         typename platform :: int_32 indices_count = 0 ;
@@ -274,11 +316,9 @@ private :
     }
     void _render_benchmark_mesh ( )
     {
-        static typename platform :: float_32 angle = 0.0f ;
-        angle += 2.0f ;
         platform :: render_matrix_identity ( ) ;
         platform :: render_matrix_translate ( 0.0f , 0.0f , -2.0f ) ;
-        platform :: render_matrix_rotate ( angle , 0.0f , 1.0f , 0.0f ) ;
+        platform :: render_matrix_rotate ( _benchmark_mesh_rotation_angle , 0.0f , 1.0f , 0.0f ) ;
         platform :: render_draw_triangle_strip 
             ( _benchmark_vertex_buffer_id 
             , _benchmark_index_buffer_id 
@@ -297,9 +337,13 @@ private :
     typename platform :: buffer_id _benchmark_vertex_buffer_id ;
     typename platform :: buffer_id _benchmark_index_buffer_id ;
     typename platform :: int_32 _benchmark_indices_count ;
+    typename platform :: float_32 _benchmark_mesh_rotation_angle ;
     
     typename platform :: int_32 _time_consumed_for_updates ;
     typename platform :: time_data _frame_time_begin ;
+    typename platform :: int_32 _max_frames_without_losses ;
+    typename platform :: int_32 _frames_without_losses ;
+    typename platform :: int_32 _best_result_expiration_frames ;
     
 	typename platform :: int_32 _fake_memory_pool [ MEMORY_POOL_SIZE / sizeof ( typename platform :: int_32 ) ] ;
 } ;
