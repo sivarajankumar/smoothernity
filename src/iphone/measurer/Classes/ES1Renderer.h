@@ -116,6 +116,10 @@ public :
     {
         glScalef ( ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
     }
+    static void render_matrix_rotate ( float_32 angle , float_32 x , float_32 y , float_32 z )
+    {
+        glRotatef ( ( GLfloat ) angle , ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
+    }
     static void render_draw_triangle_strip 
         ( const buffer_id & vertices_buffer 
         , const buffer_id & indices_buffer
@@ -129,6 +133,14 @@ public :
         glEnableClientState ( GL_COLOR_ARRAY ) ;
         glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
         glDrawElements ( GL_TRIANGLE_STRIP , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
+    }
+    static float_32 math_sin ( float_32 a )
+    {
+        return sinf ( a ) ;
+    }
+    static float_32 math_cos ( float_32 a )
+    {
+        return cosf ( a ) ;
     }
 private :
     static vertex_data _reference_vertex ;
