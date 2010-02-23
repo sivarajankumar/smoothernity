@@ -76,9 +76,9 @@
 	};
 	19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 3783}}";
-			sepNavSelRange = "{4184, 0}";
-			sepNavVisRange = "{10492, 1978}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 3705}}";
+			sepNavSelRange = "{12539, 0}";
+			sepNavVisRange = "{10672, 1952}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -87,7 +87,7 @@
 		fRef = 28FD14FC0DC6FC130079059D /* EAGLView.h */;
 		name = "EAGLView.h: 21";
 		rLen = 0;
-		rLoc = 566;
+		rLoc = 540;
 		rType = 0;
 		vrLen = 1316;
 		vrLoc = 0;
@@ -97,7 +97,7 @@
 		fRef = 2514C27110084DB100A42282 /* ESRenderer.h */;
 		name = "ESRenderer.h: 16";
 		rLen = 0;
-		rLoc = 295;
+		rLoc = 288;
 		rType = 0;
 		vrLen = 362;
 		vrLoc = 0;
@@ -127,7 +127,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 40";
 		rLen = 0;
-		rLoc = 5663;
+		rLoc = 5671;
 		rType = 0;
 		vrLen = 1321;
 		vrLoc = 259;
@@ -137,7 +137,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 149";
 		rLen = 0;
-		rLoc = 1733;
+		rLoc = 1581;
 		rType = 0;
 		vrLen = 1984;
 		vrLoc = 3911;
@@ -157,7 +157,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 22";
 		rLen = 0;
-		rLoc = 12470;
+		rLoc = 12785;
 		rType = 0;
 		vrLen = 497;
 		vrLoc = 0;
@@ -167,7 +167,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 15";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 497;
 		vrLoc = 0;
@@ -177,7 +177,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 250";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1499;
 		vrLoc = 8114;
@@ -187,7 +187,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.m: 254";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1331;
 		vrLoc = 7930;
@@ -243,7 +243,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 23";
 		rLen = 0;
-		rLoc = 12470;
+		rLoc = 12785;
 		rType = 0;
 		vrLen = 498;
 		vrLoc = 0;
@@ -253,7 +253,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 250";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1499;
 		vrLoc = 8114;
@@ -273,7 +273,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 24";
 		rLen = 0;
-		rLoc = 836;
+		rLoc = 777;
 		rType = 0;
 		vrLen = 1116;
 		vrLoc = 773;
@@ -293,7 +293,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 32";
 		rLen = 11;
-		rLoc = 586;
+		rLoc = 594;
 		rType = 0;
 		vrLen = 1850;
 		vrLoc = 714;
@@ -303,7 +303,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 70";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2303;
 		vrLoc = 603;
@@ -313,7 +313,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 37";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2229;
 		vrLoc = 572;
@@ -323,7 +323,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 250";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1397;
 		vrLoc = 8112;
@@ -333,7 +333,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 52";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2229;
 		vrLoc = 572;
@@ -343,7 +343,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 250";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1397;
 		vrLoc = 8112;
@@ -353,7 +353,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 78";
 		rLen = 0;
-		rLoc = 12466;
+		rLoc = 12781;
 		rType = 0;
 		vrLen = 2207;
 		vrLoc = 603;
@@ -363,7 +363,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 250";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1397;
 		vrLoc = 8112;
@@ -373,7 +373,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 199";
 		rLen = 0;
-		rLoc = 1874;
+		rLoc = 1700;
 		rType = 0;
 		vrLen = 1828;
 		vrLoc = 5812;
@@ -403,7 +403,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 87";
 		rLen = 0;
-		rLoc = 10853;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 2669;
 		vrLoc = 1081;
@@ -413,7 +413,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 115";
 		rLen = 19;
-		rLoc = 3610;
+		rLoc = 3618;
 		rType = 0;
 		vrLen = 1355;
 		vrLoc = 2774;
@@ -423,7 +423,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 132";
 		rLen = 14;
-		rLoc = 4582;
+		rLoc = 4590;
 		rType = 0;
 		vrLen = 1641;
 		vrLoc = 3041;
@@ -433,7 +433,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1452;
 		vrLoc = 8216;
@@ -443,7 +443,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 131";
 		rLen = 26;
-		rLoc = 4619;
+		rLoc = 4627;
 		rType = 0;
 		vrLen = 1628;
 		vrLoc = 3041;
@@ -453,7 +453,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1452;
 		vrLoc = 8216;
@@ -463,7 +463,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 119";
 		rLen = 26;
-		rLoc = 3965;
+		rLoc = 3973;
 		rType = 0;
 		vrLen = 1660;
 		vrLoc = 3041;
@@ -473,7 +473,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 199";
 		rLen = 0;
-		rLoc = 1874;
+		rLoc = 1700;
 		rType = 0;
 		vrLen = 1828;
 		vrLoc = 5812;
@@ -483,7 +483,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 85";
 		rLen = 0;
-		rLoc = 10698;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 2424;
 		vrLoc = 933;
@@ -493,7 +493,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 84";
 		rLen = 0;
-		rLoc = 10601;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 2438;
 		vrLoc = 915;
@@ -503,7 +503,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1364;
 		vrLoc = 8216;
@@ -522,7 +522,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 128";
 		rLen = 0;
-		rLoc = 4333;
+		rLoc = 4341;
 		rType = 0;
 		vrLen = 704;
 		vrLoc = 3698;
@@ -532,7 +532,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 79";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2424;
 		vrLoc = 933;
@@ -551,7 +551,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 126";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4136;
 		rType = 0;
 		vrLen = 1663;
 		vrLoc = 2943;
@@ -561,7 +561,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1452;
 		vrLoc = 8216;
@@ -571,7 +571,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 133";
 		rLen = 0;
-		rLoc = 4422;
+		rLoc = 4430;
 		rType = 0;
 		vrLen = 1769;
 		vrLoc = 2943;
@@ -581,7 +581,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1364;
 		vrLoc = 8216;
@@ -591,7 +591,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 131";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4136;
 		rType = 0;
 		vrLen = 1862;
 		vrLoc = 3041;
@@ -601,7 +601,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1364;
 		vrLoc = 8216;
@@ -611,7 +611,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 130";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4136;
 		rType = 0;
 		vrLen = 1859;
 		vrLoc = 3041;
@@ -621,7 +621,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1364;
 		vrLoc = 8216;
@@ -631,7 +631,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 132";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4136;
 		rType = 0;
 		vrLen = 1883;
 		vrLoc = 3041;
@@ -641,7 +641,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1364;
 		vrLoc = 8216;
@@ -651,7 +651,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 140";
 		rLen = 0;
-		rLoc = 4569;
+		rLoc = 4577;
 		rType = 0;
 		vrLen = 1901;
 		vrLoc = 3041;
@@ -661,7 +661,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 248";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1364;
 		vrLoc = 8216;
@@ -671,7 +671,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 139";
 		rLen = 0;
-		rLoc = 5664;
+		rLoc = 5672;
 		rType = 0;
 		vrLen = 1665;
 		vrLoc = 3372;
@@ -681,7 +681,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 199";
 		rLen = 0;
-		rLoc = 1874;
+		rLoc = 1700;
 		rType = 0;
 		vrLen = 1828;
 		vrLoc = 5812;
@@ -701,7 +701,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 258";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1553;
 		vrLoc = 7928;
@@ -711,7 +711,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 139";
 		rLen = 0;
-		rLoc = 5664;
+		rLoc = 5672;
 		rType = 0;
 		vrLen = 1935;
 		vrLoc = 2558;
@@ -721,7 +721,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 130";
 		rLen = 0;
-		rLoc = 1733;
+		rLoc = 1581;
 		rType = 0;
 		vrLen = 2325;
 		vrLoc = 7039;
@@ -731,7 +731,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 116";
 		rLen = 0;
-		rLoc = 11795;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 2896;
 		vrLoc = 2376;
@@ -741,7 +741,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 132";
 		rLen = 0;
-		rLoc = 12470;
+		rLoc = 12785;
 		rType = 0;
 		vrLen = 1181;
 		vrLoc = 260;
@@ -751,7 +751,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 258";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 1553;
 		vrLoc = 7928;
@@ -762,7 +762,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 264;
+		rLoc = 276;
 		rType = 1;
 	};
 	19E687DD11348CB50018222D /* PBXTextBookmark */ = {
@@ -770,7 +770,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 122";
 		rLen = 0;
-		rLoc = 3948;
+		rLoc = 3956;
 		rType = 0;
 		vrLen = 1813;
 		vrLoc = 3098;
@@ -780,7 +780,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 25";
 		rLen = 0;
-		rLoc = 835;
+		rLoc = 776;
 		rType = 0;
 		vrLen = 1594;
 		vrLoc = 0;
@@ -790,7 +790,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 140";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2486;
 		vrLoc = 3899;
@@ -800,7 +800,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 7";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 1179;
 		vrLoc = 0;
@@ -810,7 +810,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 199";
 		rLen = 0;
-		rLoc = 11344;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 7814;
@@ -820,7 +820,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 129";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 490;
 		vrLoc = 4791;
@@ -830,7 +830,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 7";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2154;
 		vrLoc = 6649;
@@ -840,7 +840,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 25";
 		rLen = 0;
-		rLoc = 835;
+		rLoc = 776;
 		rType = 0;
 		vrLen = 1594;
 		vrLoc = 0;
@@ -850,7 +850,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 29";
 		rLen = 0;
-		rLoc = 836;
+		rLoc = 777;
 		rType = 0;
 		vrLen = 1861;
 		vrLoc = 169;
@@ -860,7 +860,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 106";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 490;
 		vrLoc = 4301;
@@ -870,7 +870,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 27";
 		rLen = 0;
-		rLoc = 836;
+		rLoc = 777;
 		rType = 0;
 		vrLen = 1832;
 		vrLoc = 169;
@@ -880,7 +880,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 103";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 490;
 		vrLoc = 4233;
@@ -900,7 +900,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 74";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2333;
 		vrLoc = 1154;
@@ -910,7 +910,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 163";
 		rLen = 0;
-		rLoc = 5284;
+		rLoc = 5292;
 		rType = 0;
 		vrLen = 1612;
 		vrLoc = 4092;
@@ -920,7 +920,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 92";
 		rLen = 30;
-		rLoc = 1924;
+		rLoc = 1750;
 		rType = 0;
 		vrLen = 1605;
 		vrLoc = 2747;
@@ -930,7 +930,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 94";
 		rLen = 0;
-		rLoc = 1954;
+		rLoc = 1780;
 		rType = 0;
 		vrLen = 1505;
 		vrLoc = 2747;
@@ -940,7 +940,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 100";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 490;
 		vrLoc = 4130;
@@ -950,7 +950,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 129";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4136;
 		rType = 0;
 		vrLen = 724;
 		vrLoc = 3609;
@@ -960,7 +960,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 209";
 		rLen = 0;
-		rLoc = 11320;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 527;
 		vrLoc = 8374;
@@ -971,7 +971,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 59;
+		rLoc = 53;
 		rType = 1;
 	};
 	19E687FC113492BB0018222D /* PBXTextBookmark */ = {
@@ -979,7 +979,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 91";
 		rLen = 0;
-		rLoc = 1924;
+		rLoc = 1750;
 		rType = 0;
 		vrLen = 436;
 		vrLoc = 2623;
@@ -989,7 +989,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 179";
 		rLen = 0;
-		rLoc = 5782;
+		rLoc = 5790;
 		rType = 0;
 		vrLen = 1517;
 		vrLoc = 4447;
@@ -999,7 +999,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 90";
 		rLen = 0;
-		rLoc = 1924;
+		rLoc = 1750;
 		rType = 0;
 		vrLen = 1836;
 		vrLoc = 2234;
@@ -1029,7 +1029,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 67";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2267;
 		vrLoc = 1172;
@@ -1039,7 +1039,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 75";
 		rLen = 0;
-		rLoc = 14;
+		rLoc = 52;
 		rType = 0;
 		vrLen = 2125;
 		vrLoc = 1172;
@@ -1049,7 +1049,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 99";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 963;
 		vrLoc = 3334;
@@ -1059,7 +1059,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 60";
 		rLen = 0;
-		rLoc = 1924;
+		rLoc = 1750;
 		rType = 0;
 		vrLen = 494;
 		vrLoc = 2391;
@@ -1070,7 +1070,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 119;
+		rLoc = 131;
 		rType = 1;
 	};
 	19E6880B11349AC70018222D /* PBXTextBookmark */ = {
@@ -1078,7 +1078,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 120";
 		rLen = 0;
-		rLoc = 3955;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 645;
 		vrLoc = 3711;
@@ -1088,7 +1088,7 @@
 		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
 		name = "EAGLView.mm: 66";
 		rLen = 0;
-		rLoc = 1513;
+		rLoc = 1113;
 		rType = 0;
 		vrLen = 1002;
 		vrLoc = 1131;
@@ -1098,7 +1098,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 22";
 		rLen = 0;
-		rLoc = 835;
+		rLoc = 776;
 		rType = 0;
 		vrLen = 1788;
 		vrLoc = 169;
@@ -1108,7 +1108,7 @@
 		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
 		name = "ES1Renderer.h: 19";
 		rLen = 0;
-		rLoc = 355;
+		rLoc = 363;
 		rType = 0;
 		vrLen = 1516;
 		vrLoc = 535;
@@ -1119,7 +1119,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 119;
+		rLoc = 131;
 		rType = 1;
 	};
 	19E6881211349AE70018222D /* PBXTextBookmark */ = {
@@ -1127,7 +1127,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 122";
 		rLen = 0;
-		rLoc = 4184;
+		rLoc = 2994;
 		rType = 0;
 		vrLen = 1978;
 		vrLoc = 10492;
@@ -1137,10 +1137,90 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 64";
 		rLen = 0;
-		rLoc = 2074;
+		rLoc = 1880;
 		rType = 0;
 		vrLen = 490;
 		vrLoc = 2810;
+	};
+	19E6881611349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
+		name = "measurer_logic.hpp: 262";
+		rLen = 0;
+		rLoc = 2994;
+		rType = 0;
+		vrLen = 1978;
+		vrLoc = 10492;
+	};
+	19E6881711349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28FD14FD0DC6FC130079059D /* EAGLView.mm */;
+		name = "EAGLView.mm: 70";
+		rLen = 0;
+		rLoc = 1423;
+		rType = 0;
+		vrLen = 1087;
+		vrLoc = 0;
+	};
+	19E6881811349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28FD14FC0DC6FC130079059D /* EAGLView.h */;
+		name = "EAGLView.h: 22";
+		rLen = 0;
+		rLoc = 570;
+		rType = 0;
+		vrLen = 744;
+		vrLoc = 0;
+	};
+	19E6881911349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2514C27110084DB100A42282 /* ESRenderer.h */;
+		name = "ESRenderer.h: 16";
+		rLen = 0;
+		rLoc = 288;
+		rType = 0;
+		vrLen = 343;
+		vrLoc = 0;
+	};
+	19E6881A11349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
+		name = "ES1Renderer.h: 19";
+		rLen = 30;
+		rLoc = 325;
+		rType = 0;
+		vrLen = 930;
+		vrLoc = 0;
+	};
+	19E6881B11349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
+		name = "ES1Renderer.mm: 20";
+		rLen = 0;
+		rLoc = 776;
+		rType = 0;
+		vrLen = 1696;
+		vrLoc = 0;
+	};
+	19E6881C11349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
+		name = "ES1Renderer.mm: 101";
+		rLen = 0;
+		rLoc = 3060;
+		rType = 0;
+		vrLen = 1422;
+		vrLoc = 1712;
+	};
+	19E6881D11349C130018222D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
+		name = "ES1Renderer.mm: 59";
+		rLen = 0;
+		rLoc = 1880;
+		rType = 0;
+		vrLen = 682;
+		vrLoc = 2488;
 	};
 	1D3623240D0F684500981E51 /* measurerAppDelegate.h */ = {
 		uiCtxt = {
@@ -1164,40 +1244,40 @@
 	};
 	2514C26D10084DB100A42282 /* ES1Renderer.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {992, 2613}}";
-			sepNavSelRange = "{355, 0}";
-			sepNavVisRange = "{535, 1516}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 2379}}";
+			sepNavSelRange = "{6037, 0}";
+			sepNavVisRange = "{4826, 1286}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
 	2514C26E10084DB100A42282 /* ES1Renderer.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {873, 1482}}";
-			sepNavSelRange = "{2074, 0}";
-			sepNavVisRange = "{2810, 490}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 1287}}";
+			sepNavSelRange = "{848, 0}";
+			sepNavVisRange = "{144, 1793}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
 	2514C27110084DB100A42282 /* ESRenderer.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {949, 645}}";
-			sepNavSelRange = "{295, 0}";
-			sepNavVisRange = "{0, 362}";
+			sepNavSelRange = "{288, 0}";
+			sepNavVisRange = "{0, 343}";
 		};
 	};
 	28FD14FC0DC6FC130079059D /* EAGLView.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {949, 645}}";
-			sepNavSelRange = "{566, 0}";
-			sepNavVisRange = "{0, 1316}";
+			sepNavSelRange = "{570, 0}";
+			sepNavVisRange = "{0, 744}";
 			sepNavWindowFrame = "{{38, 194}, {750, 558}}";
 		};
 	};
 	28FD14FD0DC6FC130079059D /* EAGLView.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1223, 1950}}";
-			sepNavSelRange = "{1513, 0}";
-			sepNavVisRange = "{1131, 1002}";
+			sepNavIntBoundsRect = "{{0, 0}, {1223, 1183}}";
+			sepNavSelRange = "{1423, 0}";
+			sepNavVisRange = "{0, 1087}";
 		};
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
@@ -1397,6 +1477,14 @@
 			19E6881111349AE70018222D /* XCBuildMessageTextBookmark */ = 19E6881111349AE70018222D /* XCBuildMessageTextBookmark */;
 			19E6881211349AE70018222D /* PBXTextBookmark */ = 19E6881211349AE70018222D /* PBXTextBookmark */;
 			19E6881311349AE70018222D /* PBXTextBookmark */ = 19E6881311349AE70018222D /* PBXTextBookmark */;
+			19E6881611349C130018222D /* PBXTextBookmark */ = 19E6881611349C130018222D /* PBXTextBookmark */;
+			19E6881711349C130018222D /* PBXTextBookmark */ = 19E6881711349C130018222D /* PBXTextBookmark */;
+			19E6881811349C130018222D /* PBXTextBookmark */ = 19E6881811349C130018222D /* PBXTextBookmark */;
+			19E6881911349C130018222D /* PBXTextBookmark */ = 19E6881911349C130018222D /* PBXTextBookmark */;
+			19E6881A11349C130018222D /* PBXTextBookmark */ = 19E6881A11349C130018222D /* PBXTextBookmark */;
+			19E6881B11349C130018222D /* PBXTextBookmark */ = 19E6881B11349C130018222D /* PBXTextBookmark */;
+			19E6881C11349C130018222D /* PBXTextBookmark */ = 19E6881C11349C130018222D /* PBXTextBookmark */;
+			19E6881D11349C130018222D /* PBXTextBookmark */ = 19E6881D11349C130018222D /* PBXTextBookmark */;
 		};
 		sourceControlManager = 19E3FF4810E29715006628E8 /* Source Control */;
 		userBuildSettings = {

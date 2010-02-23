@@ -13,9 +13,9 @@
 
 #import "measurer_facade.hpp"
 
-#define MEMORY_POOL_SIZE 48*1024*1024
 #define COMPUTATION_STEPS 3
 #define FRAMES_PER_SECOND 60
+#define SLEEP_BETWEEN_STEPS_IN_SECONDS 0.0001
 
 class shy_iphone_platform
 {
@@ -189,12 +189,10 @@ private :
 	GLint backingHeight;
 	
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
-	GLuint defaultFramebuffer, colorRenderbuffer;
-	
-	int fakeMemoryPool [ MEMORY_POOL_SIZE / 4 ];
+	GLuint defaultFramebuffer, colorRenderbuffer;	
 }
 
-- (void) render: (bool) frameMissed;
+- (void) render;
 - (BOOL) resizeFromLayer:(CAEAGLLayer *)layer;
 
 @end

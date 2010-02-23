@@ -1,5 +1,6 @@
 #pragma once
 
+#define MEMORY_POOL_SIZE 48*1024*1024
 #define MESH_SPANS 5000
 #define COMPUTATION_STEP_DELAY_IN_MICROSECONDS 2000
 #define COMPUTATION_STEP_DELAY_CHECK_ACCURACY_PERCENTS 1
@@ -55,12 +56,11 @@ public :
     }
     void init ( )
     {
-        platform :: render_enable_face_culling ( ) ;
-        platform :: render_projection_frustum ( -1.0f , 1.0f , -1.515f , 1.515f , 1.0f , 10.0f ) ;
+        _init_render ( ) ;
         _create_top_mesh ( ) ;
         _create_current_mesh ( ) ;
         _create_benchmark_mesh ( ) ;
-        platform :: time_get_current ( _previous_frame_time_begin ) ;
+        _make_fake_memory_useable ( ) ;
     }
     void done ( )
     {
@@ -89,6 +89,19 @@ public :
         _time_consumed_for_updates += platform :: time_diff_in_microseconds ( time_begin , time_current ) ;
     }
 private :
+    void _init_render ( )
+    {
+        platform :: render_enable_face_culling ( ) ;
+        platform :: render_projection_frustum ( -1.0f , 1.0f , -1.515f , 1.515f , 1.0f , 10.0f ) ;
+    }
+    void _save_frame_time ( )
+    {
+        platform :: time_get_current ( _frame_time_begin ) ;
+    }
+    void _make_fake_memory_useable ( )
+    {
+        _fake_memory_pool [ 0 ] = MEMORY_POOL_SIZE ;
+    }
     void _update_measures ( )
     {
         static typename platform :: int_32 max_frames_without_losses = 0 ;
@@ -97,15 +110,14 @@ private :
         
         frames_without_losses ++ ;
 #if PROFILE_FRAME_LOSSES
-        typename platform :: time_data current_time ;
-        platform :: time_get_current ( current_time ) ;
-        if ( platform :: time_diff_in_microseconds ( _previous_frame_time_begin , current_time ) 
+        typename platform :: time_data prev_time = _frame_time_begin ;
+        _save_frame_time ( ) ;
+        if ( platform :: time_diff_in_microseconds ( _frame_time_begin , prev_time ) 
            > 1000000 / platform :: frames_per_second ( )
            )
         {
             frames_without_losses = 0 ;
         }
-        _previous_frame_time_begin = current_time ;
 #endif
         if ( frames_without_losses > max_frames_without_losses )
         {
@@ -287,5 +299,7 @@ private :
     typename platform :: int_32 _benchmark_indices_count ;
     
     typename platform :: int_32 _time_consumed_for_updates ;
-    typename platform :: time_data _previous_frame_time_begin ;
+    typename platform :: time_data _frame_time_begin ;
+    
+	typename platform :: int_32 _fake_memory_pool [ MEMORY_POOL_SIZE / sizeof ( typename platform :: int_32 ) ] ;
 } ;

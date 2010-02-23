@@ -17,17 +17,12 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
     ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _color ) 
     - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
     ) ;
-        
-static const double SLEEP_BETWEEN_STEPS = 0.0001;
 
 @implementation ES1Renderer
 
 // Create an ES 1.1 context
 - (id) init
-{	
-	for ( int i = 0; i < ( MEMORY_POOL_SIZE ) / sizeof(int); i++ )
-		fakeMemoryPool [ i ] = i;
-	
+{		
 	if (self = [super init])
 	{
 		context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
@@ -50,18 +45,15 @@ static const double SLEEP_BETWEEN_STEPS = 0.0001;
 	return self;
 }
 
-- (void) render :(bool) frameMissed
+- (void) render
 {
     glViewport(0, 0, backingWidth, backingHeight);
 	shyMeasurer . render ( ) ;
-	
 	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
 		shyMeasurer . update ( i ) ;		
-		if ( SLEEP_BETWEEN_STEPS > 0.0 )
-			[ NSThread sleepForTimeInterval : ( NSTimeInterval ) SLEEP_BETWEEN_STEPS ];
+        [ NSThread sleepForTimeInterval : ( NSTimeInterval ) SLEEP_BETWEEN_STEPS_IN_SECONDS ];
 	}
-	
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];	
 }
 
