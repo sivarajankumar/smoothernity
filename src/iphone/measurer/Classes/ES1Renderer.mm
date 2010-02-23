@@ -195,9 +195,7 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 		curPos = 1.0f;
 	if ( topPos > 1.0f )
 		topPos = 1.0f;
-	
-    glMatrixMode(GL_MODELVIEW);
-    
+	    
 	glLoadIdentity();
 	glTranslatef(0.0f, -7.0f + ( 6.0f * topPos ), -2.0f);
 	glScalef(4.0f, 4.0f, 4.0f);

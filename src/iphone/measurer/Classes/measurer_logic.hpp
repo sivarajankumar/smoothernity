@@ -30,6 +30,10 @@ template < typename platform >
 class shy_measurer_logic
 {
 public :
+    shy_measurer_logic ( )
+    : _top_pos ( 0.5f )
+    {
+    }
     void init ( )
     {
         platform :: render_enable_face_culling ( ) ;
@@ -42,6 +46,8 @@ public :
     void render ( )
     {
         platform :: render_clear_screen ( 0 , 0 , 0 ) ;
+        platform :: render_select_modelview_matrix ( ) ;
+        _render_top_mesh ( ) ;
     }
     void update ( typename platform :: int_32 current_step , typename platform :: int_32 max_steps )
     {
@@ -72,7 +78,15 @@ private :
         platform :: render_bind_vertex_buffer ( _top_vertex_buffer_id , 4 , top_vertices ) ;
         platform :: render_bind_index_buffer ( _top_index_buffer_id , 4 , top_indices ) ;
     }
+    void _render_top_mesh ( )
+    {
+        platform :: render_matrix_identity ( ) ;
+        platform :: render_matrix_translate ( 0.0f , -7.0f + ( 6.0f * _top_pos ) , -2.0f ) ;
+        platform :: render_matrix_scale ( 4.0f , 4.0f , 4.0f ) ;
+        platform :: render_draw_triangle_strip ( _top_vertex_buffer_id , _top_index_buffer_id , 4 ) ;
+    }
 private :
     typename platform :: buffer_id _top_vertex_buffer_id ;
     typename platform :: buffer_id _top_index_buffer_id ;
+    typename platform :: float_32 _top_pos ;
 } ;

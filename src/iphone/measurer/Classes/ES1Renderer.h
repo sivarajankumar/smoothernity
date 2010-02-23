@@ -100,6 +100,36 @@ public :
     {
         data . _index = ( GLushort ) index ;
     }
+    static void render_select_modelview_matrix ( )
+    {
+        glMatrixMode ( GL_MODELVIEW ) ;
+    }
+    static void render_matrix_identity ( )
+    {
+        glLoadIdentity ( ) ;
+    }
+    static void render_matrix_translate ( float_32 x , float_32 y , float_32 z )
+    {
+        glTranslatef ( ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
+    }
+    static void render_matrix_scale ( float_32 x , float_32 y , float_32 z )
+    {
+        glScalef ( ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
+    }
+    static void render_draw_triangle_strip 
+        ( const buffer_id & vertices_buffer 
+        , const buffer_id & indices_buffer
+        , int_32 indices_count
+        )
+    {
+        glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
+        glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
+        glEnableClientState ( GL_VERTEX_ARRAY ) ;
+        glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , ( void * ) offsetof ( vertex_data , _position ) ) ;
+        glEnableClientState ( GL_COLOR_ARRAY ) ;
+        glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , ( void * ) offsetof ( vertex_data , _color ) ) ;
+        glDrawElements ( GL_TRIANGLE_STRIP , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
+    }
 } ;
 
 typedef struct _vertexStruct
