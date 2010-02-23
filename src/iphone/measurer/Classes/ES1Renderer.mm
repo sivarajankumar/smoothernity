@@ -18,10 +18,7 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
     - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
     ) ;
         
-static const double COMPUTATION_STEP_DELAY = 0.002;
 static const double SLEEP_BETWEEN_STEPS = 0.0001;
-static const double COMPUTATION_STEP_DELAY_CHECK_ACCURACY = 0.01;
-static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
 
 @implementation ES1Renderer
 
@@ -58,47 +55,12 @@ static const int MAX_FRAMES_WITHOUT_LOSSES = 200;
     glViewport(0, 0, backingWidth, backingHeight);
 	shyMeasurer . render ( ) ;
 	
-	static int maxFramesWithoutLosses = 0;
-	static int framesWithoutLosses = 0;
-	static int bestResultExpirationFrames = 0;
-	
-	framesWithoutLosses++;
-#if PROFILE_FRAME_LOSSES
-	if ( frameMissed )
-		framesWithoutLosses = 0;
-#endif
-	if ( framesWithoutLosses > maxFramesWithoutLosses )
-	{
-		maxFramesWithoutLosses = framesWithoutLosses;
-		bestResultExpirationFrames = 0;
-	}
-	else
-		bestResultExpirationFrames++;
-	if ( bestResultExpirationFrames > MAX_FRAMES_WITHOUT_LOSSES )
-		maxFramesWithoutLosses = 0;
-	
-	float curPos = ((float)framesWithoutLosses) / (float)MAX_FRAMES_WITHOUT_LOSSES;
-	float topPos = ((float)maxFramesWithoutLosses) / (float)MAX_FRAMES_WITHOUT_LOSSES;
-	if ( curPos > 1.0f )
-		curPos = 1.0f;
-	if ( topPos > 1.0f )
-		topPos = 1.0f;
-        
-	CFAbsoluteTime timeConsumed;
 	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
-		CFAbsoluteTime timeBegin = CFAbsoluteTimeGetCurrent ();
-		shyMeasurer . update ( i ) ;
-		timeConsumed += CFAbsoluteTimeGetCurrent() - timeBegin;
-		
+		shyMeasurer . update ( i ) ;		
 		if ( SLEEP_BETWEEN_STEPS > 0.0 )
 			[ NSThread sleepForTimeInterval : ( NSTimeInterval ) SLEEP_BETWEEN_STEPS ];
 	}
-	
-#if PROFILE_COMPUTATION_DELAY
-	if ( timeConsumed > ( 1.0 + COMPUTATION_STEP_DELAY_CHECK_ACCURACY ) * COMPUTATION_STEP_DELAY * ( double ) COMPUTATION_STEPS )
-		framesWithoutLosses = 0;
-#endif
 	
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];	
 }

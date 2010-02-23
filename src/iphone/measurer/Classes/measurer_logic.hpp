@@ -1,38 +1,46 @@
 #pragma once
 
-static const GLubyte colorsR[] = { 255, 255, 255,   0,   0,   0, 255 };
-static const GLubyte colorsG[] = {   0, 128, 255, 255, 255,   0,   0 };
-static const GLubyte colorsB[] = {   0,   0,   0,   0, 255, 255, 255 };
-static const GLubyte colorsA[] = { 255, 255, 255, 255, 255, 255, 255 };
-
 #define MESH_SPANS 5000
+#define COMPUTATION_STEP_DELAY_IN_MICROSECONDS 2000
+#define COMPUTATION_STEP_DELAY_CHECK_ACCURACY_PERCENTS 1
+#define MAX_FRAMES_WITHOUT_LOSSES 200
 #define PROFILE_FRAME_LOSSES 1
 #define PROFILE_COMPUTATION_DELAY 0
+
 #define PI 3.141592f
-#define COMPUTATION_STEP_DELAY_IN_MICROSECONDS 2000
+#define MAX_TIME_FOR_UPDATES_IN_MICROSECONDS \
+    ( ( 100 + COMPUTATION_STEP_DELAY_CHECK_ACCURACY_PERCENTS ) \
+    * COMPUTATION_STEP_DELAY_IN_MICROSECONDS * COMPUTATION_STEPS \
+    / 100 \
+    )
 
 #if ( PROFILE_FRAME_LOSSES && ! PROFILE_COMPUTATION_DELAY )
-	#define topR 192
-	#define topG 255
-	#define topB 192
-	#define currentR 64
-	#define currentG 255
-	#define currentB 64
+	#define TOP_R 192
+	#define TOP_G 255
+	#define TOP_B 192
+	#define CURRENT_R 64
+	#define CURRENT_G 255
+	#define CURRENT_B 64
 #elif ( PROFILE_COMPUTATION_DELAY && ! PROFILE_FRAME_LOSSES )
-	#define topR 192
-	#define topG 192
-	#define topB 255
-	#define currentR 64
-	#define currentG 64
-	#define currentB 255
+	#define TOP_R 192
+	#define TOP_G 192
+	#define TOP_B 255
+	#define CURRENT_R 64
+	#define CURRENT_G 64
+	#define CURRENT_B 255
 #else
-	#define topR 32
-	#define topG 192
-	#define topB 192
-	#define currentR 64
-	#define currentG 255
-	#define currentB 255
+	#define TOP_R 32
+	#define TOP_G 192
+	#define TOP_B 192
+	#define CURRENT_R 64
+	#define CURRENT_G 255
+	#define CURRENT_B 255
 #endif
+
+static const GLubyte COLORS_R [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ;
+static const GLubyte COLORS_G [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ;
+static const GLubyte COLORS_B [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ;
+static const GLubyte COLORS_A [ ] = { 255 , 255 , 255 , 255 , 255 , 255 , 255 } ;
 
 template < typename platform >
 class shy_measurer_logic
@@ -42,6 +50,7 @@ public :
     : _top_pos ( 0.5f )
     , _current_pos ( 0.25f )
     , _benchmark_indices_count ( 0 )
+    , _time_consumed_for_updates ( 0 )
     {
     }
     void init ( )
@@ -51,6 +60,7 @@ public :
         _create_top_mesh ( ) ;
         _create_current_mesh ( ) ;
         _create_benchmark_mesh ( ) ;
+        platform :: time_get_current ( _previous_frame_time_begin ) ;
     }
     void done ( )
     {
@@ -62,20 +72,66 @@ public :
         _render_top_mesh ( ) ;
         _render_current_mesh ( ) ;
         _render_benchmark_mesh ( ) ;
+        _update_measures ( ) ;
     }
     void update ( typename platform :: int_32 step )
     {
         typename platform :: time_data time_begin ;
+        typename platform :: time_data time_current ;
         platform :: time_get_current ( time_begin ) ;
 		while ( true )
 		{
-            typename platform :: time_data time_current ;
             platform :: time_get_current ( time_current ) ;
             if ( platform :: time_diff_in_microseconds ( time_begin , time_current ) >= COMPUTATION_STEP_DELAY_IN_MICROSECONDS )
                 break ;
 		}
+        platform :: time_get_current ( time_current ) ;
+        _time_consumed_for_updates += platform :: time_diff_in_microseconds ( time_begin , time_current ) ;
     }
 private :
+    void _update_measures ( )
+    {
+        static typename platform :: int_32 max_frames_without_losses = 0 ;
+        static typename platform :: int_32 frames_without_losses = 0 ;
+        static typename platform :: int_32 best_result_expiration_frames = 0 ;
+        
+        frames_without_losses ++ ;
+#if PROFILE_FRAME_LOSSES
+        typename platform :: time_data current_time ;
+        platform :: time_get_current ( current_time ) ;
+        if ( platform :: time_diff_in_microseconds ( _previous_frame_time_begin , current_time ) 
+           > 1000000 / platform :: frames_per_second ( )
+           )
+        {
+            frames_without_losses = 0 ;
+        }
+        _previous_frame_time_begin = current_time ;
+#endif
+        if ( frames_without_losses > max_frames_without_losses )
+        {
+            max_frames_without_losses = frames_without_losses ;
+            best_result_expiration_frames = 0 ;
+        }
+        else
+            best_result_expiration_frames ++ ;
+        if ( best_result_expiration_frames > MAX_FRAMES_WITHOUT_LOSSES )
+            max_frames_without_losses = 0 ;
+        
+        _current_pos = ( ( typename platform :: float_32 ) frames_without_losses )
+                       / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        _top_pos = ( ( typename platform :: float_32 ) max_frames_without_losses ) 
+                   / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        if ( _current_pos > 1.0f )
+            _current_pos = 1.0f ;
+        if ( _top_pos > 1.0f )
+            _top_pos = 1.0f ;
+            
+#if PROFILE_COMPUTATION_DELAY
+        if ( _time_consumed_for_updates > MAX_TIME_FOR_UPDATES_IN_MICROSECONDS )
+            frames_without_losses = 0 ;
+#endif
+        _time_consumed_for_updates = 0 ;
+    }
     void _create_top_mesh ( )
     {
         typename platform :: vertex_data top_vertices [ 4 ] ;
@@ -86,10 +142,10 @@ private :
         platform :: render_set_vertex_position ( top_vertices [ 2 ] , -1.0f ,  1.0f , 0.0f ) ;
         platform :: render_set_vertex_position ( top_vertices [ 3 ] ,  1.0f ,  1.0f , 0.0f ) ;
         
-        platform :: render_set_vertex_color    ( top_vertices [ 0 ] , topR , topG , topB , 255 ) ;
-        platform :: render_set_vertex_color    ( top_vertices [ 1 ] , topR , topG , topB , 255 ) ;
-        platform :: render_set_vertex_color    ( top_vertices [ 2 ] , topR , topG , topB , 255 ) ;
-        platform :: render_set_vertex_color    ( top_vertices [ 3 ] , topR , topG , topB , 255 ) ;
+        platform :: render_set_vertex_color    ( top_vertices [ 0 ] , TOP_R , TOP_G , TOP_B , 255 ) ;
+        platform :: render_set_vertex_color    ( top_vertices [ 1 ] , TOP_R , TOP_G , TOP_B , 255 ) ;
+        platform :: render_set_vertex_color    ( top_vertices [ 2 ] , TOP_R , TOP_G , TOP_B , 255 ) ;
+        platform :: render_set_vertex_color    ( top_vertices [ 3 ] , TOP_R , TOP_G , TOP_B , 255 ) ;
         
         platform :: render_set_index_value ( top_indices [ 0 ] , 0 ) ;
         platform :: render_set_index_value ( top_indices [ 1 ] , 1 ) ;
@@ -111,10 +167,10 @@ private :
         platform :: render_set_vertex_position ( current_vertices [ 2 ] , -1.0f ,  1.0f , 0.0f ) ;
         platform :: render_set_vertex_position ( current_vertices [ 3 ] ,  1.0f ,  1.0f , 0.0f ) ;
         
-        platform :: render_set_vertex_color    ( current_vertices [ 0 ] , currentR , currentG , currentB , 255 ) ;
-        platform :: render_set_vertex_color    ( current_vertices [ 1 ] , currentR , currentG , currentB , 255 ) ;
-        platform :: render_set_vertex_color    ( current_vertices [ 2 ] , currentR , currentG , currentB , 255 ) ;
-        platform :: render_set_vertex_color    ( current_vertices [ 3 ] , currentR , currentG , currentB , 255 ) ;
+        platform :: render_set_vertex_color    ( current_vertices [ 0 ] , CURRENT_R , CURRENT_G , CURRENT_B , 255 ) ;
+        platform :: render_set_vertex_color    ( current_vertices [ 1 ] , CURRENT_R , CURRENT_G , CURRENT_B , 255 ) ;
+        platform :: render_set_vertex_color    ( current_vertices [ 2 ] , CURRENT_R , CURRENT_G , CURRENT_B , 255 ) ;
+        platform :: render_set_vertex_color    ( current_vertices [ 3 ] , CURRENT_R , CURRENT_G , CURRENT_B , 255 ) ;
         
         platform :: render_set_index_value ( current_indices [ 0 ] , 0 ) ;
         platform :: render_set_index_value ( current_indices [ 1 ] , 1 ) ;
@@ -131,7 +187,7 @@ private :
         typename platform :: vertex_data vertices [ ( MESH_SPANS + 1 ) * 2 ] ;
         typename platform :: index_data indices [ ( MESH_SPANS + 1 ) * 2 ] ;
         typename platform :: int_32 indices_count = 0 ;
-		for ( typename platform :: int_32 i = 0; i < MESH_SPANS + 1 ; i++ )
+		for ( typename platform :: int_32 i = 0; i < MESH_SPANS + 1 ; i ++ )
 		{
 			typename platform :: float_32 angle 
                 = ( ( typename platform :: float_32 ) i ) 
@@ -152,10 +208,10 @@ private :
                 ) ;
             platform :: render_set_vertex_color 
                 ( vertices [ indices_count ] 
-                , colorsR [ color1 ]
-                , colorsG [ color1 ]
-                , colorsB [ color1 ]
-                , colorsA [ color1 ]
+                , COLORS_R [ color1 ]
+                , COLORS_G [ color1 ]
+                , COLORS_B [ color1 ]
+                , COLORS_A [ color1 ]
                 ) ;
             platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
 			indices_count++;
@@ -167,10 +223,10 @@ private :
                 ) ;
             platform :: render_set_vertex_color 
                 ( vertices [ indices_count ] 
-                , colorsR [ color2 ]
-                , colorsG [ color2 ]
-                , colorsB [ color2 ]
-                , colorsA [ color2 ]
+                , COLORS_R [ color2 ]
+                , COLORS_G [ color2 ]
+                , COLORS_B [ color2 ]
+                , COLORS_A [ color2 ]
                 ) ;
             platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
 			indices_count++;
@@ -229,4 +285,7 @@ private :
     typename platform :: buffer_id _benchmark_vertex_buffer_id ;
     typename platform :: buffer_id _benchmark_index_buffer_id ;
     typename platform :: int_32 _benchmark_indices_count ;
+    
+    typename platform :: int_32 _time_consumed_for_updates ;
+    typename platform :: time_data _previous_frame_time_begin ;
 } ;

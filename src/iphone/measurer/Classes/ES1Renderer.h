@@ -15,6 +15,7 @@
 
 #define MEMORY_POOL_SIZE 48*1024*1024
 #define COMPUTATION_STEPS 3
+#define FRAMES_PER_SECOND 60
 
 class shy_iphone_platform
 {
@@ -165,6 +166,10 @@ public :
     static int_32 max_update_steps ( )
     {
         return COMPUTATION_STEPS ;
+    }
+    static int_32 frames_per_second ( )
+    {
+        return FRAMES_PER_SECOND ;
     }
 private :
     static vertex_data _reference_vertex ;
