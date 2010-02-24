@@ -47,7 +47,6 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
 
 - (void) render
 {
-    glViewport(0, 0, backingWidth, backingHeight);
 	shyMeasurer . render ( ) ;
 	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
@@ -71,6 +70,7 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
         return NO;
     }
     
+    glViewport(0, 0, backingWidth, backingHeight);
     return YES;
 }
 
