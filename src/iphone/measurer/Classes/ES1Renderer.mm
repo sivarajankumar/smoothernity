@@ -53,7 +53,8 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
 		shyMeasurer . update ( i ) ;		
         [ NSThread sleepForTimeInterval : ( NSTimeInterval ) SLEEP_BETWEEN_STEPS_IN_SECONDS ];
 	}
-    [context presentRenderbuffer:GL_RENDERBUFFER_OES];	
+    [context presentRenderbuffer:GL_RENDERBUFFER_OES];
+    shyMeasurer . render_finished ( ) ;
 }
 
 - (BOOL) resizeFromLayer:(CAEAGLLayer *)layer

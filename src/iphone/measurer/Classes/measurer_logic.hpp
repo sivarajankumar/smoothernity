@@ -3,16 +3,15 @@
 #define MEMORY_POOL_SIZE 48*1024*1024
 #define MESH_SPANS 5000
 #define COMPUTATION_STEP_DELAY_IN_MICROSECONDS 2000
-#define COMPUTATION_STEP_DELAY_CHECK_ACCURACY_PERCENTS 1
+#define COMPUTATION_STEP_DELAY_CHECK_ACCURACY_PERCENTS 20
 #define MAX_FRAMES_WITHOUT_LOSSES 200
-#define PROFILE_FRAME_LOSSES 1
-#define PROFILE_COMPUTATION_DELAY 0
+#define PROFILE_FRAME_LOSSES 0
+#define PROFILE_COMPUTATION_DELAY 1
 
 #define PI 3.141592f
 #define MAX_TIME_FOR_UPDATES_IN_MICROSECONDS \
     ( ( 100 + COMPUTATION_STEP_DELAY_CHECK_ACCURACY_PERCENTS ) \
-    * COMPUTATION_STEP_DELAY_IN_MICROSECONDS * COMPUTATION_STEPS \
-    / 100 \
+    * COMPUTATION_STEP_DELAY_IN_MICROSECONDS * platform :: max_update_steps ( ) \
     )
 
 #if ( PROFILE_FRAME_LOSSES && ! PROFILE_COMPUTATION_DELAY )
@@ -60,6 +59,7 @@ public :
         _create_current_mesh ( ) ;
         _create_benchmark_mesh ( ) ;
         _make_fake_memory_useable ( ) ;
+        _save_frame_time ( ) ;
     }
     void done ( )
     {
@@ -72,6 +72,11 @@ public :
         _render_current_mesh ( ) ;
         _render_benchmark_mesh ( ) ;
         _rotate_benchmark_mesh ( ) ;
+    }
+    void render_finished ( )
+    {
+        _profile_computation_delay ( ) ;
+        _profile_frame_losses ( ) ;
     }
     void update ( typename platform :: int_32 step )
     {
@@ -90,8 +95,6 @@ private :
         _crop_max_frames_counter ( ) ;
         _calc_current_pos ( ) ;
         _calc_top_pos ( ) ;
-        _profile_computation_delay ( ) ;
-        _profile_frame_losses ( ) ;
     }
     void _init_render ( )
     {
@@ -130,20 +133,23 @@ private :
     void _profile_frame_losses ( )
     {
 #if PROFILE_FRAME_LOSSES
-        typename platform :: time_data prev_time = _frame_time_begin ;
+        typename platform :: time_data time_prev = _frame_time_begin ;
         _save_frame_time ( ) ;
-        if ( platform :: time_diff_in_microseconds ( _frame_time_begin , prev_time ) 
-           > 1000000 / platform :: frames_per_second ( )
-           )
+        typename platform :: int_32 whole_frame_time 
+            = platform :: time_diff_in_microseconds ( _frame_time_begin , time_prev )
+            * platform :: frames_per_second ( ) ;
+        if ( whole_frame_time > 1500000 )
         {
             _frames_without_losses = 0 ;
+            if ( whole_frame_time > 3000000 )
+                _max_frames_without_losses = 0 ;
         }
 #endif
     }
     void _profile_computation_delay ( )
     {
 #if PROFILE_COMPUTATION_DELAY
-        if ( _time_consumed_for_updates > MAX_TIME_FOR_UPDATES_IN_MICROSECONDS )
+        if ( _time_consumed_for_updates * 100 > MAX_TIME_FOR_UPDATES_IN_MICROSECONDS )
             _frames_without_losses = 0 ;
         _time_consumed_for_updates = 0 ;
 #endif

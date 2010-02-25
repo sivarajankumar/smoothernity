@@ -13,9 +13,9 @@
 
 #import "measurer_facade.hpp"
 
-#define COMPUTATION_STEPS 3
+#define COMPUTATION_STEPS 1
 #define FRAMES_PER_SECOND 60
-#define SLEEP_BETWEEN_STEPS_IN_SECONDS 0.0001
+#define SLEEP_BETWEEN_STEPS_IN_SECONDS 0.004
 
 class shy_iphone_platform
 {
@@ -162,6 +162,13 @@ public :
         else
             diff = time2 . _time - time1 . _time ;
         return ( int_32 ) ( diff * ( CFAbsoluteTime ) 1000000 ) ;
+    }
+    static double debug_time_diff_in_seconds ( const time_data & time1 , const time_data & time2 )
+    {
+        if ( time1 . _time > time2 . _time )
+            return time1 . _time - time2 . _time ;
+        else
+            return time2 . _time - time1 . _time ;
     }
     static int_32 max_update_steps ( )
     {

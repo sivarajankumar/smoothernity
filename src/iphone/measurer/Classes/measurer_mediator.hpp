@@ -19,6 +19,10 @@ public :
     {
         _logic . render ( ) ;
     }
+    void render_finished ( )
+    {
+        _logic . render_finished ( ) ;
+    }
     void update ( typename platform :: int_32 step )
     {
         _logic . update ( step ) ;

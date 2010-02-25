@@ -22,6 +22,10 @@ public :
     {
         _mediator . render ( ) ;
     }
+    void render_finished ( )
+    {
+        _mediator . render_finished ( ) ;
+    }
     void update ( typename platform :: int_32 step )
     {
         _mediator . update ( step ) ;
