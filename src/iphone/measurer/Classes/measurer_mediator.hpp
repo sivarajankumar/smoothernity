@@ -34,9 +34,23 @@ public :
     {
         _logic . init ( ) ;
     }
-    mesh_id mesh_create ( vertex_data * vertices , index_data * indices , int_32 vertices_count , int_32 indices_count )
+    mesh_id mesh_create 
+        ( vertex_data * vertices 
+        , index_data * triangle_strip_indices 
+        , index_data * triangle_fan_indices
+        , int_32 vertices_count
+        , int_32 triangle_strip_indices_count 
+        , int_32 triangle_fan_indices_count
+        )
     {
-        return _mesh . mesh_create ( vertices , indices , vertices_count , indices_count ) ;
+        return _mesh . mesh_create 
+            ( vertices
+            , triangle_strip_indices
+            , triangle_fan_indices
+            , vertices_count
+            , triangle_strip_indices_count
+            , triangle_fan_indices_count
+            ) ;
     }
     void mesh_render ( mesh_id arg_mesh_id )
     {

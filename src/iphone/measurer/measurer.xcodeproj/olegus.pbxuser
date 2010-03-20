@@ -59,17 +59,17 @@
 	};
 	19AE697C1129D72700742128 /* measurer_mediator.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 884}}";
-			sepNavSelRange = "{1282, 0}";
-			sepNavVisRange = "{230, 1541}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 1001}}";
+			sepNavSelRange = "{1614, 0}";
+			sepNavVisRange = "{258, 1550}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
 	19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 3042}}";
-			sepNavSelRange = "{1019, 0}";
-			sepNavVisRange = "{148, 1497}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 2782}}";
+			sepNavSelRange = "{4145, 0}";
+			sepNavVisRange = "{2736, 2597}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -78,7 +78,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 24";
 		rLen = 0;
-		rLoc = 1691;
+		rLoc = 2020;
 		rType = 0;
 		vrLen = 552;
 		vrLoc = 0;
@@ -168,7 +168,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 356";
 		rLen = 0;
-		rLoc = 8237;
+		rLoc = 8253;
 		rType = 0;
 		vrLen = 2155;
 		vrLoc = 11108;
@@ -215,9 +215,9 @@
 	};
 	19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 897}}";
-			sepNavSelRange = "{1102, 0}";
-			sepNavVisRange = "{601, 1757}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 1404}}";
+			sepNavSelRange = "{823, 0}";
+			sepNavVisRange = "{13, 1619}";
 		};
 	};
 	19D4B1BF1154BADF00DEA992 /* PBXTextBookmark */ = {
@@ -225,7 +225,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 3";
 		rLen = 0;
-		rLoc = 2358;
+		rLoc = 3736;
 		rType = 0;
 		vrLen = 14;
 		vrLoc = 0;
@@ -235,7 +235,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 24";
 		rLen = 0;
-		rLoc = 1691;
+		rLoc = 2020;
 		rType = 0;
 		vrLen = 552;
 		vrLoc = 0;
@@ -336,7 +336,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 63;
+		rLoc = 77;
 		rType = 1;
 	};
 	19D4B1D11154BB9500DEA992 /* PBXTextBookmark */ = {
@@ -344,7 +344,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 31";
 		rLen = 0;
-		rLoc = 1843;
+		rLoc = 2172;
 		rType = 0;
 		vrLen = 301;
 		vrLoc = 349;
@@ -403,7 +403,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 368";
 		rLen = 0;
-		rLoc = 8222;
+		rLoc = 8238;
 		rType = 0;
 		vrLen = 1880;
 		vrLoc = 13524;
@@ -442,7 +442,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 5";
 		rLen = 0;
-		rLoc = 876;
+		rLoc = 999;
 		rType = 0;
 		vrLen = 100;
 		vrLoc = 0;
@@ -501,7 +501,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 37";
 		rLen = 0;
-		rLoc = 1843;
+		rLoc = 2172;
 		rType = 0;
 		vrLen = 279;
 		vrLoc = 54;
@@ -586,7 +586,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 40";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 2106;
 		rType = 0;
 		vrLen = 1184;
 		vrLoc = 0;
@@ -596,7 +596,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 15";
 		rLen = 0;
-		rLoc = 876;
+		rLoc = 999;
 		rType = 0;
 		vrLen = 542;
 		vrLoc = 0;
@@ -606,7 +606,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 17";
 		rLen = 0;
-		rLoc = 939;
+		rLoc = 1181;
 		rType = 0;
 		vrLen = 530;
 		vrLoc = 0;
@@ -676,7 +676,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 40";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 2106;
 		rType = 0;
 		vrLen = 1184;
 		vrLoc = 0;
@@ -736,7 +736,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 373";
 		rLen = 0;
-		rLoc = 8218;
+		rLoc = 8234;
 		rType = 0;
 		vrLen = 1865;
 		vrLoc = 13734;
@@ -786,7 +786,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 46";
 		rLen = 45;
-		rLoc = 1647;
+		rLoc = 2606;
 		rType = 0;
 		vrLen = 1645;
 		vrLoc = 209;
@@ -806,7 +806,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 44";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 2106;
 		rType = 0;
 		vrLen = 1190;
 		vrLoc = 0;
@@ -836,7 +836,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 44";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 2106;
 		rType = 0;
 		vrLen = 1254;
 		vrLoc = 0;
@@ -956,7 +956,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 59";
 		rLen = 84;
-		rLoc = 2102;
+		rLoc = 3480;
 		rType = 0;
 		vrLen = 1687;
 		vrLoc = 561;
@@ -966,7 +966,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 44";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 2106;
 		rType = 0;
 		vrLen = 1254;
 		vrLoc = 0;
@@ -1016,7 +1016,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 67";
 		rLen = 0;
-		rLoc = 2358;
+		rLoc = 3736;
 		rType = 0;
 		vrLen = 1677;
 		vrLoc = 0;
@@ -1173,7 +1173,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 66";
 		rLen = 0;
-		rLoc = 1953;
+		rLoc = 2282;
 		rType = 0;
 		vrLen = 1365;
 		vrLoc = 549;
@@ -1243,7 +1243,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 42";
 		rLen = 0;
-		rLoc = 1777;
+		rLoc = 2106;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 731;
@@ -1491,7 +1491,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 59";
 		rLen = 0;
-		rLoc = 2089;
+		rLoc = 3467;
 		rType = 0;
 		vrLen = 1731;
 		vrLoc = 520;
@@ -1511,7 +1511,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 59";
 		rLen = 0;
-		rLoc = 2089;
+		rLoc = 3467;
 		rType = 0;
 		vrLen = 1768;
 		vrLoc = 520;
@@ -2471,7 +2471,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 187";
 		rLen = 0;
-		rLoc = 7977;
+		rLoc = 7993;
 		rType = 0;
 		vrLen = 1894;
 		vrLoc = 5654;
@@ -2491,7 +2491,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 187";
 		rLen = 0;
-		rLoc = 7976;
+		rLoc = 7992;
 		rType = 0;
 		vrLen = 1848;
 		vrLoc = 5654;
@@ -2571,7 +2571,7 @@
 		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
 		name = "measurer_mesh.hpp: 38";
 		rLen = 0;
-		rLoc = 1102;
+		rLoc = 1417;
 		rType = 0;
 		vrLen = 1757;
 		vrLoc = 601;
@@ -2581,7 +2581,7 @@
 		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
 		name = "measurer_mediator.hpp: 39";
 		rLen = 0;
-		rLoc = 1282;
+		rLoc = 1598;
 		rType = 0;
 		vrLen = 1541;
 		vrLoc = 230;
@@ -2591,7 +2591,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 126";
 		rLen = 0;
-		rLoc = 5013;
+		rLoc = 5021;
 		rType = 0;
 		vrLen = 2231;
 		vrLoc = 3807;
@@ -2601,7 +2601,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 114";
 		rLen = 0;
-		rLoc = 4252;
+		rLoc = 4260;
 		rType = 0;
 		vrLen = 2081;
 		vrLoc = 4110;
@@ -2701,7 +2701,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 192";
 		rLen = 0;
-		rLoc = 7226;
+		rLoc = 7234;
 		rType = 0;
 		vrLen = 1704;
 		vrLoc = 5755;
@@ -2727,6 +2727,104 @@
 		vrLoc = 148;
 	};
 	19D4B37B1154F64000DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
+		name = "ES1Renderer.mm: 55";
+		rLen = 0;
+		rLoc = 1829;
+		rType = 0;
+		vrLen = 643;
+		vrLoc = 2473;
+	};
+	19D4B382115502E900DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
+		name = "measurer_logic.hpp: 217";
+		rLen = 0;
+		rLoc = 8222;
+		rType = 0;
+		vrLen = 544;
+		vrLoc = 6430;
+	};
+	19D4B383115502E900DEA992 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'class shy_measurer_mesh<shy_measurer_mediator<shy_iphone_platform, shy_measurer_camera, shy_measurer_logic, shy_measurer_mesh> >::_mesh_data' has no member named 'triangle_strip_indices_count'";
+		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 46;
+		rType = 1;
+	};
+	19D4B384115502E900DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
+		name = "measurer_mesh.hpp: 47";
+		rLen = 0;
+		rLoc = 1349;
+		rType = 0;
+		vrLen = 689;
+		vrLoc = 1104;
+	};
+	19D4B3871155031B00DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE69731129D66A00742128 /* measurer_facade.hpp */;
+		name = "measurer_facade.hpp: 44";
+		rLen = 0;
+		rLoc = 800;
+		rType = 0;
+		vrLen = 800;
+		vrLoc = 0;
+	};
+	19D4B3881155031B00DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2514C26D10084DB100A42282 /* ES1Renderer.h */;
+		name = "ES1Renderer.h: 290";
+		rLen = 0;
+		rLoc = 9154;
+		rType = 0;
+		vrLen = 2023;
+		vrLoc = 8863;
+	};
+	19D4B3891155031B00DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
+		name = "measurer_mediator.hpp: 53";
+		rLen = 0;
+		rLoc = 1614;
+		rType = 0;
+		vrLen = 1550;
+		vrLoc = 258;
+	};
+	19D4B38A1155031B00DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
+		name = "measurer_logic.hpp: 112";
+		rLen = 0;
+		rLoc = 4145;
+		rType = 0;
+		vrLen = 2597;
+		vrLoc = 2736;
+	};
+	19D4B38B1155031B00DEA992 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'class shy_measurer_mesh<shy_measurer_mediator<shy_iphone_platform, shy_measurer_camera, shy_measurer_logic, shy_measurer_mesh> >::_mesh_data' has no member named 'triangle_strip_indices_count'";
+		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 46;
+		rType = 1;
+	};
+	19D4B38C1155031B00DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */;
+		name = "measurer_mesh.hpp: 28";
+		rLen = 0;
+		rLoc = 823;
+		rType = 0;
+		vrLen = 1619;
+		vrLoc = 13;
+	};
+	19D4B38D1155031B00DEA992 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 55";
@@ -2804,9 +2902,9 @@
 	};
 	2514C26D10084DB100A42282 /* ES1Renderer.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {992, 4277}}";
-			sepNavSelRange = "{8830, 0}";
-			sepNavVisRange = "{7625, 1571}";
+			sepNavIntBoundsRect = "{{0, 0}, {992, 5044}}";
+			sepNavSelRange = "{9154, 0}";
+			sepNavVisRange = "{8863, 2023}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -3201,6 +3299,16 @@
 			19D4B3771154F62C00DEA992 /* PBXTextBookmark */ = 19D4B3771154F62C00DEA992 /* PBXTextBookmark */;
 			19D4B37A1154F64000DEA992 /* PBXTextBookmark */ = 19D4B37A1154F64000DEA992 /* PBXTextBookmark */;
 			19D4B37B1154F64000DEA992 /* PBXTextBookmark */ = 19D4B37B1154F64000DEA992 /* PBXTextBookmark */;
+			19D4B382115502E900DEA992 /* PBXTextBookmark */ = 19D4B382115502E900DEA992 /* PBXTextBookmark */;
+			19D4B383115502E900DEA992 /* XCBuildMessageTextBookmark */ = 19D4B383115502E900DEA992 /* XCBuildMessageTextBookmark */;
+			19D4B384115502E900DEA992 /* PBXTextBookmark */ = 19D4B384115502E900DEA992 /* PBXTextBookmark */;
+			19D4B3871155031B00DEA992 /* PBXTextBookmark */ = 19D4B3871155031B00DEA992 /* PBXTextBookmark */;
+			19D4B3881155031B00DEA992 /* PBXTextBookmark */ = 19D4B3881155031B00DEA992 /* PBXTextBookmark */;
+			19D4B3891155031B00DEA992 /* PBXTextBookmark */ = 19D4B3891155031B00DEA992 /* PBXTextBookmark */;
+			19D4B38A1155031B00DEA992 /* PBXTextBookmark */ = 19D4B38A1155031B00DEA992 /* PBXTextBookmark */;
+			19D4B38B1155031B00DEA992 /* XCBuildMessageTextBookmark */ = 19D4B38B1155031B00DEA992 /* XCBuildMessageTextBookmark */;
+			19D4B38C1155031B00DEA992 /* PBXTextBookmark */ = 19D4B38C1155031B00DEA992 /* PBXTextBookmark */;
+			19D4B38D1155031B00DEA992 /* PBXTextBookmark */ = 19D4B38D1155031B00DEA992 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 19E3FF4810E29715006628E8 /* Source Control */;
 		userBuildSettings = {

@@ -23,8 +23,10 @@ private :
     {
     public :
         buffer_id vertex_buffer_id ;
-        buffer_id index_buffer_id ;
-        int_32 indices_count ;
+        buffer_id triangle_strip_index_buffer_id ;
+        buffer_id triangle_fan_index_buffer_id ;
+        int_32 triangle_strip_indices_count ;
+        int_32 triangle_fan_indices_count ;
         matrix_data transform ;
     } ;
 public :
@@ -32,15 +34,39 @@ public :
     : _next_mesh_id ( 0 )
     {
     }
-    mesh_id mesh_create ( vertex_data * vertices , index_data * indices , int_32 vertices_count , int_32 indices_count )
+    mesh_id mesh_create 
+        ( vertex_data * vertices 
+        , index_data * triangle_strip_indices 
+        , index_data * triangle_fan_indices
+        , int_32 vertices_count
+        , int_32 triangle_strip_indices_count 
+        , int_32 triangle_fan_indices_count
+        )
     {
         _mesh_data & mesh = _meshes_data [ _next_mesh_id ] ;
-        mesh . indices_count = indices_count ;
+        mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
+        mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
         platform :: matrix_identity ( mesh . transform ) ;
         platform :: render_create_buffer_id ( mesh . vertex_buffer_id ) ;
-        platform :: render_create_buffer_id ( mesh . index_buffer_id ) ;
         platform :: render_load_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
-        platform :: render_load_index_buffer ( mesh . index_buffer_id , indices_count , indices ) ;
+        if ( triangle_strip_indices_count > 0 )
+        {
+            platform :: render_create_buffer_id ( mesh . triangle_strip_index_buffer_id ) ;
+            platform :: render_load_index_buffer 
+                ( mesh . triangle_strip_index_buffer_id 
+                , triangle_strip_indices_count 
+                , triangle_strip_indices 
+                ) ;
+        }
+        if ( triangle_fan_indices_count > 0 )
+        {
+            platform :: render_create_buffer_id ( mesh . triangle_fan_index_buffer_id ) ;
+            platform :: render_load_index_buffer 
+                ( mesh . triangle_fan_index_buffer_id 
+                , triangle_fan_indices_count 
+                , triangle_fan_indices 
+                ) ;
+        }
         mesh_id new_id ;
         new_id . _mesh_id = _next_mesh_id ;
         ++ _next_mesh_id ;
@@ -51,11 +77,22 @@ public :
         _mesh_data & mesh = _meshes_data [ arg_mesh_id . _mesh_id ] ;
         platform :: render_matrix_push ( ) ;
         platform :: render_matrix_mult ( mesh . transform ) ;
-        platform :: render_draw_triangle_strip 
-            ( mesh . vertex_buffer_id 
-            , mesh . index_buffer_id 
-            , mesh . indices_count 
-            ) ;
+        if ( mesh . triangle_strip_indices_count > 0 )
+        {
+            platform :: render_draw_triangle_strip 
+                ( mesh . vertex_buffer_id 
+                , mesh . triangle_strip_index_buffer_id 
+                , mesh . triangle_strip_indices_count 
+                ) ;
+        }
+        if ( mesh . triangle_fan_indices_count > 0 )
+        {
+            platform :: render_draw_triangle_fan 
+                ( mesh . vertex_buffer_id 
+                , mesh . triangle_fan_index_buffer_id 
+                , mesh . triangle_fan_indices_count 
+                ) ;
+        }
         platform :: render_matrix_pop ( ) ;
     }
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform )

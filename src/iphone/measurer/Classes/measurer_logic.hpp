@@ -109,7 +109,7 @@ private :
         platform :: render_set_index_value ( indices [ 2 ] , 2 ) ;
         platform :: render_set_index_value ( indices [ 3 ] , 3 ) ;
         
-        _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 4 , 4 ) ;
+        _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 4 , 4 , 0 ) ;
         matrix_data matrix ;
         platform :: matrix_identity ( matrix ) ;
         platform :: matrix_set_axis_x ( matrix , 10.0f ,  0.0f ,  0.0f ) ;
@@ -191,7 +191,7 @@ private :
             , 255
             ) ;
         ++ vertices_count ;
-        _entity_mesh_id = _mediator -> mesh_create ( vertices , indices , vertices_count , indices_count ) ;
+        _entity_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
     }
     void _create_entity_grid ( )
     {
