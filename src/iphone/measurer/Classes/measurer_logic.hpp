@@ -42,7 +42,12 @@ class shy_measurer_logic
 {
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: float_32 float_32 ;
+    typedef typename mediator :: platform :: index_data index_data ;
+    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: time_data time_data ;
+    typedef typename mediator :: platform :: vertex_data vertex_data ;
 public :
     shy_measurer_logic ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
@@ -69,6 +74,7 @@ public :
     {
         _update_measures ( ) ;
         _rotate_benchmark_mesh ( ) ;
+        _update_camera ( ) ;
         _clear_screen ( ) ;
         _render_top_mesh ( ) ;
         _render_current_mesh ( ) ;
@@ -79,12 +85,12 @@ public :
         _profile_computation_delay ( ) ;
         _profile_frame_losses ( ) ;
     }
-    void update ( typename platform :: int_32 step )
+    void update ( int_32 step )
     {
-        typename platform :: time_data time_begin ;
+        time_data time_begin ;
         platform :: time_get_current ( time_begin ) ;
         _wait_for_time ( COMPUTATION_STEP_DELAY_IN_MICROSECONDS ) ;
-        typename platform :: time_data time_end ;
+        time_data time_end ;
         platform :: time_get_current ( time_end ) ;
         _time_consumed_for_updates += platform :: time_diff_in_microseconds ( time_begin , time_end ) ;
     }
@@ -97,6 +103,9 @@ private :
         _calc_current_pos ( ) ;
         _calc_top_pos ( ) ;
     }
+    void _update_camera ( )
+    {
+    }
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
@@ -107,13 +116,13 @@ private :
     {
         platform :: render_clear_screen ( 0 , 0 , 0 ) ;
     }
-    void _wait_for_time ( typename platform :: int_32 delay )
+    void _wait_for_time ( int_32 delay )
     {
-        typename platform :: time_data time_begin ;
+        time_data time_begin ;
         platform :: time_get_current ( time_begin ) ;
 		while ( true )
 		{
-            typename platform :: time_data time_current ;
+            time_data time_current ;
             platform :: time_get_current ( time_current ) ;
             if ( platform :: time_diff_in_microseconds ( time_begin , time_current ) >= delay )
                 break ;
@@ -122,9 +131,9 @@ private :
     void _rotate_benchmark_mesh ( )
     {
         _benchmark_mesh_rotation_angle += 2.0f * PI / 360.0f ;
-        typename platform :: float_32 cos_a = platform :: math_cos ( _benchmark_mesh_rotation_angle ) ;
-        typename platform :: float_32 sin_a = platform :: math_sin ( _benchmark_mesh_rotation_angle ) ;
-        typename platform :: matrix_data matrix ;
+        float_32 cos_a = platform :: math_cos ( _benchmark_mesh_rotation_angle ) ;
+        float_32 sin_a = platform :: math_sin ( _benchmark_mesh_rotation_angle ) ;
+        matrix_data matrix ;
         platform :: matrix_set_axis_x ( matrix , cos_a , 0.0f , - sin_a ) ;
         platform :: matrix_set_axis_y ( matrix ,  0.0f , 1.0f ,    0.0f ) ;
         platform :: matrix_set_axis_z ( matrix , sin_a , 0.0f ,   cos_a ) ;
@@ -142,9 +151,9 @@ private :
     void _profile_frame_losses ( )
     {
 #if PROFILE_FRAME_LOSSES
-        typename platform :: time_data time_prev = _frame_time_begin ;
+        time_data time_prev = _frame_time_begin ;
         _save_frame_time ( ) ;
-        typename platform :: int_32 whole_frame_time 
+        int_32 whole_frame_time 
             = platform :: time_diff_in_microseconds ( _frame_time_begin , time_prev )
             * platform :: frames_per_second ( ) ;
         if ( whole_frame_time > 1500000 )
@@ -165,10 +174,10 @@ private :
     }
     void _calc_current_pos ( )
     {
-        typename platform :: float_32 current_pos = 0 ;
-        typename platform :: matrix_data matrix ;
-        current_pos = ( ( typename platform :: float_32 ) _frames_without_losses )
-                      / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        float_32 current_pos = 0 ;
+        matrix_data matrix ;
+        current_pos = ( ( float_32 ) _frames_without_losses )
+                      / ( float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
         if ( current_pos > 1.0f )
             current_pos = 1.0f ;
         platform :: matrix_set_axis_x ( matrix , 4.0f , 0.0f , 0.0f ) ;
@@ -179,10 +188,10 @@ private :
     }
     void _calc_top_pos ( )
     {
-        typename platform :: float_32 top_pos = 0 ;
-        typename platform :: matrix_data matrix ;
-        top_pos = ( ( typename platform :: float_32 ) _max_frames_without_losses ) 
-                  / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        float_32 top_pos = 0 ;
+        matrix_data matrix ;
+        top_pos = ( ( float_32 ) _max_frames_without_losses ) 
+                  / ( float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
         if ( top_pos > 1.0f )
             top_pos = 1.0f ;
         platform :: matrix_set_axis_x ( matrix , 4.0f , 0.0f , 0.0f ) ;
@@ -212,8 +221,8 @@ private :
     }
     void _create_top_mesh ( )
     {
-        typename platform :: vertex_data top_vertices [ 4 ] ;
-        typename platform :: index_data top_indices [ 4 ] ;
+        vertex_data top_vertices [ 4 ] ;
+        index_data top_indices [ 4 ] ;
         
         platform :: render_set_vertex_position ( top_vertices [ 0 ] , - 1.0f , - 1.0f , 0.0f ) ;
         platform :: render_set_vertex_position ( top_vertices [ 1 ] ,   1.0f , - 1.0f , 0.0f ) ;
@@ -234,8 +243,8 @@ private :
     }
     void _create_current_mesh ( )
     {
-        typename platform :: vertex_data current_vertices [ 4 ] ;
-        typename platform :: index_data current_indices [ 4 ] ;
+        vertex_data current_vertices [ 4 ] ;
+        index_data current_indices [ 4 ] ;
         
         platform :: render_set_vertex_position ( current_vertices [ 0 ] , - 1.0f , - 1.0f , 0.0f ) ;
         platform :: render_set_vertex_position ( current_vertices [ 1 ] ,   1.0f , - 1.0f , 0.0f ) ;
@@ -256,27 +265,27 @@ private :
     }
     void _create_benchmark_mesh ( )
     {
-        static const typename platform :: int_32 COLORS_R [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ;
-        static const typename platform :: int_32 COLORS_G [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ;
-        static const typename platform :: int_32 COLORS_B [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ;
-        static const typename platform :: int_32 COLORS_A [ ] = { 255 , 255 , 255 , 255 , 255 , 255 , 255 } ;
+        static const int_32 COLORS_R [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ;
+        static const int_32 COLORS_G [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ;
+        static const int_32 COLORS_B [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ;
+        static const int_32 COLORS_A [ ] = { 255 , 255 , 255 , 255 , 255 , 255 , 255 } ;
 
-        typename platform :: vertex_data vertices [ ( MESH_SPANS + 1 ) * 2 ] ;
-        typename platform :: index_data indices [ ( MESH_SPANS + 1 ) * 2 ] ;
-        typename platform :: int_32 indices_count = 0 ;
-		for ( typename platform :: int_32 i = 0; i < MESH_SPANS + 1 ; i ++ )
+        vertex_data vertices [ ( MESH_SPANS + 1 ) * 2 ] ;
+        index_data indices [ ( MESH_SPANS + 1 ) * 2 ] ;
+        int_32 indices_count = 0 ;
+		for ( int_32 i = 0; i < MESH_SPANS + 1 ; i ++ )
 		{
-			typename platform :: float_32 angle 
-                = ( ( typename platform :: float_32 ) i ) 
+			float_32 angle 
+                = ( ( float_32 ) i ) 
                 * PI 
                 * 2.0f 
-                / ( typename platform :: float_32 ) MESH_SPANS
+                / ( float_32 ) MESH_SPANS
                 ;
-			typename platform :: float_32 x = platform :: math_sin ( angle ) ;
-			typename platform :: float_32 z = platform :: math_cos ( angle ) ;
-			typename platform :: int_32 color = ( i * 21 / ( MESH_SPANS + 1 ) ) % 7;
-			typename platform :: int_32 color1 = color;
-			typename platform :: int_32 color2 = ( color + 1 ) % 7;
+			float_32 x = platform :: math_sin ( angle ) ;
+			float_32 z = platform :: math_cos ( angle ) ;
+			int_32 color = ( i * 21 / ( MESH_SPANS + 1 ) ) % 7;
+			int_32 color1 = color;
+			int_32 color2 = ( color + 1 ) % 7;
             platform :: render_set_vertex_position 
                 ( vertices [ indices_count ] 
                 , x 
@@ -330,15 +339,15 @@ private :
     
     matrix_data _camera_matrix ;
     
-    typename platform :: float_32 _benchmark_mesh_rotation_angle ;    
+    float_32 _benchmark_mesh_rotation_angle ;    
     
-    typename platform :: int_32 _time_consumed_for_updates ;
-    typename platform :: time_data _frame_time_begin ;
-    typename platform :: int_32 _max_frames_without_losses ;
-    typename platform :: int_32 _frames_without_losses ;
-    typename platform :: int_32 _best_result_expiration_frames ;
+    int_32 _time_consumed_for_updates ;
+    time_data _frame_time_begin ;
+    int_32 _max_frames_without_losses ;
+    int_32 _frames_without_losses ;
+    int_32 _best_result_expiration_frames ;
     
-	typename platform :: int_32 _fake_memory_pool [ MEMORY_POOL_SIZE / sizeof ( typename platform :: int_32 ) ] ;
+	int_32 _fake_memory_pool [ MEMORY_POOL_SIZE / sizeof ( int_32 ) ] ;
     
     mediator * _mediator ;
 } ;
