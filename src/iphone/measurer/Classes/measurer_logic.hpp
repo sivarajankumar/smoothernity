@@ -4,10 +4,6 @@
 #define ENTITY_MESH_GRID 5
 #define PI 3.141592f
 
-#define LAND_R 0
-#define LAND_G 255
-#define LAND_B 0
-
 template < typename mediator >
 class shy_measurer_logic
 {
@@ -32,6 +28,7 @@ public :
         _create_entity_mesh ( ) ;
         _create_entity_grid ( ) ;
         _create_land_mesh ( ) ;
+        _update_camera ( ) ;
     }
     void done ( )
     {
@@ -90,6 +87,10 @@ private :
     }
     void _create_land_mesh ( )
     {
+        static const int_32 LAND_R = 0 ;
+        static const int_32 LAND_G = 255 ;
+        static const int_32 LAND_B = 0 ;
+        
         vertex_data vertices [ 4 ] ;
         index_data indices [ 4 ] ;
         
@@ -121,9 +122,12 @@ private :
         static const int_32 COLORS_R [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ;
         static const int_32 COLORS_G [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ;
         static const int_32 COLORS_B [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ;
-        static const int_32 COLORS_A [ ] = { 255 , 255 , 255 , 255 , 255 , 255 , 255 } ;
+        
+        static const int_32 COLOR_ROOF_R = 255 ;
+        static const int_32 COLOR_ROOF_G = 255 ;
+        static const int_32 COLOR_ROOF_B = 255 ;
 
-        vertex_data vertices [ ( ENTITY_MESH_SPANS + 1 ) * 2 ] ;
+        vertex_data vertices [ ( ENTITY_MESH_SPANS + 1 ) * 2 + 1 ] ;
         index_data indices [ ( ENTITY_MESH_SPANS + 1 ) * 2 ] ;
         int_32 indices_count = 0 ;
         int_32 vertices_count = 0 ;
@@ -151,7 +155,7 @@ private :
                 , COLORS_R [ color1 ]
                 , COLORS_G [ color1 ]
                 , COLORS_B [ color1 ]
-                , COLORS_A [ color1 ]
+                , 255
                 ) ;
             platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
             ++ indices_count ;
@@ -167,12 +171,26 @@ private :
                 , COLORS_R [ color2 ]
                 , COLORS_G [ color2 ]
                 , COLORS_B [ color2 ]
-                , COLORS_A [ color2 ]
+                , 255
                 ) ;
             platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
             ++ indices_count ;
             ++ vertices_count ;
 		}
+        platform :: render_set_vertex_position 
+            ( vertices [ vertices_count ] 
+            , 0.0f
+            , 1.0f 
+            , 0.0f 
+            ) ;
+        platform :: render_set_vertex_color 
+            ( vertices [ vertices_count ] 
+            , COLOR_ROOF_R
+            , COLOR_ROOF_G
+            , COLOR_ROOF_B
+            , 255
+            ) ;
+        ++ vertices_count ;
         _entity_mesh_id = _mediator -> mesh_create ( vertices , indices , vertices_count , indices_count ) ;
     }
     void _create_entity_grid ( )
