@@ -37,14 +37,14 @@
 	#define CURRENT_B 255
 #endif
 
-template < typename platform >
+template < typename mediator >
 class shy_measurer_logic
 {
+    typedef typename mediator :: platform platform ;
+    typedef typename mediator :: mesh_id mesh_id ;
 public :
-    shy_measurer_logic ( )
-    : _top_pos ( 0 )
-    , _current_pos ( 0 )
-    , _benchmark_indices_count ( 0 )
+    shy_measurer_logic ( mediator * arg_mediator )
+    : _mediator ( arg_mediator )
     , _time_consumed_for_updates ( 0 )
     , _max_frames_without_losses ( 0 )
     , _frames_without_losses ( 0 )
@@ -123,10 +123,12 @@ private :
         _benchmark_mesh_rotation_angle += 2.0f * PI / 360.0f ;
         typename platform :: float_32 cos_a = platform :: math_cos ( _benchmark_mesh_rotation_angle ) ;
         typename platform :: float_32 sin_a = platform :: math_sin ( _benchmark_mesh_rotation_angle ) ;
-        platform :: matrix_set_axis_x ( _benchmark_matrix , cos_a , 0.0f , - sin_a ) ;
-        platform :: matrix_set_axis_y ( _benchmark_matrix ,  0.0f , 1.0f ,    0.0f ) ;
-        platform :: matrix_set_axis_z ( _benchmark_matrix , sin_a , 0.0f ,   cos_a ) ;
-        platform :: matrix_set_origin ( _benchmark_matrix ,  0.0f , 0.0f ,  - 2.0f ) ;
+        typename platform :: matrix_data matrix ;
+        platform :: matrix_set_axis_x ( matrix , cos_a , 0.0f , - sin_a ) ;
+        platform :: matrix_set_axis_y ( matrix ,  0.0f , 1.0f ,    0.0f ) ;
+        platform :: matrix_set_axis_z ( matrix , sin_a , 0.0f ,   cos_a ) ;
+        platform :: matrix_set_origin ( matrix ,  0.0f , 0.0f ,  - 2.0f ) ;
+        _mediator -> mesh_set_transform ( _benchmark_mesh_id , matrix ) ;
     }
     void _save_frame_time ( )
     {
@@ -162,25 +164,31 @@ private :
     }
     void _calc_current_pos ( )
     {
-        _current_pos = ( ( typename platform :: float_32 ) _frames_without_losses )
-                       / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
-        if ( _current_pos > 1.0f )
-            _current_pos = 1.0f ;
-        platform :: matrix_set_axis_x ( _current_matrix , 4.0f , 0.0f , 0.0f ) ;
-        platform :: matrix_set_axis_y ( _current_matrix , 0.0f , 4.0f , 0.0f ) ;
-        platform :: matrix_set_axis_z ( _current_matrix , 0.0f , 0.0f , 4.0f ) ;
-        platform :: matrix_set_origin ( _current_matrix , 0.0f , - 7.0f + ( 6.0f * _current_pos ) , - 2.0f ) ;
+        typename platform :: float_32 current_pos = 0 ;
+        typename platform :: matrix_data matrix ;
+        current_pos = ( ( typename platform :: float_32 ) _frames_without_losses )
+                      / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        if ( current_pos > 1.0f )
+            current_pos = 1.0f ;
+        platform :: matrix_set_axis_x ( matrix , 4.0f , 0.0f , 0.0f ) ;
+        platform :: matrix_set_axis_y ( matrix , 0.0f , 4.0f , 0.0f ) ;
+        platform :: matrix_set_axis_z ( matrix , 0.0f , 0.0f , 4.0f ) ;
+        platform :: matrix_set_origin ( matrix , 0.0f , - 7.0f + ( 6.0f * current_pos ) , - 2.0f ) ;
+        _mediator -> mesh_set_transform ( _current_mesh_id , matrix ) ;
     }
     void _calc_top_pos ( )
     {
-        _top_pos = ( ( typename platform :: float_32 ) _max_frames_without_losses ) 
-                   / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
-        if ( _top_pos > 1.0f )
-            _top_pos = 1.0f ;
-        platform :: matrix_set_axis_x ( _top_matrix , 4.0f , 0.0f , 0.0f ) ;
-        platform :: matrix_set_axis_y ( _top_matrix , 0.0f , 4.0f , 0.0f ) ;
-        platform :: matrix_set_axis_z ( _top_matrix , 0.0f , 0.0f , 4.0f ) ;
-        platform :: matrix_set_origin ( _top_matrix , 0.0f , - 7.0f + ( 6.0f * _top_pos ) , - 2.0f ) ;
+        typename platform :: float_32 top_pos = 0 ;
+        typename platform :: matrix_data matrix ;
+        top_pos = ( ( typename platform :: float_32 ) _max_frames_without_losses ) 
+                  / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
+        if ( top_pos > 1.0f )
+            top_pos = 1.0f ;
+        platform :: matrix_set_axis_x ( matrix , 4.0f , 0.0f , 0.0f ) ;
+        platform :: matrix_set_axis_y ( matrix , 0.0f , 4.0f , 0.0f ) ;
+        platform :: matrix_set_axis_z ( matrix , 0.0f , 0.0f , 4.0f ) ;
+        platform :: matrix_set_origin ( matrix , 0.0f , - 7.0f + ( 6.0f * top_pos ) , - 2.0f ) ;
+        _mediator -> mesh_set_transform ( _top_mesh_id , matrix ) ;
     }
     void _advance_frame_counter ( )
     {
@@ -221,10 +229,7 @@ private :
         platform :: render_set_index_value ( top_indices [ 2 ] , 2 ) ;
         platform :: render_set_index_value ( top_indices [ 3 ] , 3 ) ;
         
-        platform :: render_create_buffer_id ( _top_vertex_buffer_id ) ;
-        platform :: render_create_buffer_id ( _top_index_buffer_id ) ;
-        platform :: render_load_vertex_buffer ( _top_vertex_buffer_id , 4 , top_vertices ) ;
-        platform :: render_load_index_buffer ( _top_index_buffer_id , 4 , top_indices ) ;
+        _top_mesh_id = _mediator -> mesh_create ( top_vertices , top_indices , 4 ) ;
     }
     void _create_current_mesh ( )
     {
@@ -246,10 +251,7 @@ private :
         platform :: render_set_index_value ( current_indices [ 2 ] , 2 ) ;
         platform :: render_set_index_value ( current_indices [ 3 ] , 3 ) ;
         
-        platform :: render_create_buffer_id ( _current_vertex_buffer_id ) ;
-        platform :: render_create_buffer_id ( _current_index_buffer_id ) ;
-        platform :: render_load_vertex_buffer ( _current_vertex_buffer_id , 4 , current_vertices ) ;
-        platform :: render_load_index_buffer ( _current_index_buffer_id , 4 , current_indices ) ;
+        _current_mesh_id = _mediator -> mesh_create ( current_vertices , current_indices , 4 ) ;
     }
     void _create_benchmark_mesh ( )
     {
@@ -306,55 +308,26 @@ private :
 			indices_count++;
 		}
 		// NSLog(@"faces in mesh: %i", indices_count-2);
-        platform :: render_create_buffer_id ( _benchmark_vertex_buffer_id ) ;
-        platform :: render_create_buffer_id ( _benchmark_index_buffer_id ) ;
-        platform :: render_load_vertex_buffer ( _benchmark_vertex_buffer_id , indices_count , vertices ) ;
-        platform :: render_load_index_buffer ( _benchmark_index_buffer_id , indices_count , indices ) ;
-        _benchmark_indices_count = indices_count ;
+        _benchmark_mesh_id = _mediator -> mesh_create ( vertices , indices , indices_count ) ;
     }
     void _render_top_mesh ( )
     {
-        platform :: render_matrix_load ( _top_matrix ) ;
-        platform :: render_draw_triangle_strip 
-            ( _top_vertex_buffer_id 
-            , _top_index_buffer_id 
-            , 4 
-            ) ;
+        _mediator -> mesh_render ( _top_mesh_id ) ;
     }
     void _render_current_mesh ( )
     {
-        platform :: render_matrix_load ( _current_matrix ) ;
-        platform :: render_draw_triangle_strip 
-            ( _current_vertex_buffer_id 
-            , _current_index_buffer_id 
-            , 4 
-            ) ;
+        _mediator -> mesh_render ( _current_mesh_id ) ;
     }
     void _render_benchmark_mesh ( )
     {
-        platform :: render_matrix_load ( _benchmark_matrix ) ;
-        platform :: render_draw_triangle_strip 
-            ( _benchmark_vertex_buffer_id 
-            , _benchmark_index_buffer_id 
-            , _benchmark_indices_count 
-            ) ;    
+        _mediator -> mesh_render ( _benchmark_mesh_id ) ;
     }
 private :
-    typename platform :: buffer_id _top_vertex_buffer_id ;
-    typename platform :: buffer_id _top_index_buffer_id ;
-    typename platform :: float_32 _top_pos ;
-    typename platform :: matrix_data _top_matrix ;
-
-    typename platform :: buffer_id _current_vertex_buffer_id ;
-    typename platform :: buffer_id _current_index_buffer_id ;
-    typename platform :: float_32 _current_pos ;
-    typename platform :: matrix_data _current_matrix ;
+    mesh_id _top_mesh_id ;
+    mesh_id _current_mesh_id ;
+    mesh_id _benchmark_mesh_id ;
     
-    typename platform :: buffer_id _benchmark_vertex_buffer_id ;
-    typename platform :: buffer_id _benchmark_index_buffer_id ;
-    typename platform :: int_32 _benchmark_indices_count ;
-    typename platform :: float_32 _benchmark_mesh_rotation_angle ;
-    typename platform :: matrix_data _benchmark_matrix ;
+    typename platform :: float_32 _benchmark_mesh_rotation_angle ;    
     
     typename platform :: int_32 _time_consumed_for_updates ;
     typename platform :: time_data _frame_time_begin ;
@@ -363,4 +336,6 @@ private :
     typename platform :: int_32 _best_result_expiration_frames ;
     
 	typename platform :: int_32 _fake_memory_pool [ MEMORY_POOL_SIZE / sizeof ( typename platform :: int_32 ) ] ;
+    
+    mediator * _mediator ;
 } ;
