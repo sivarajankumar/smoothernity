@@ -2,6 +2,7 @@
 
 template 
     < typename _platform
+    , template < typename mediator > class measurer_camera
     , template < typename mediator > class measurer_logic 
     , template < typename mediator > class measurer_mesh
     >
@@ -13,31 +14,25 @@ public :
     typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
+    typedef typename platform :: vector_data vector_data ;
     typedef typename platform :: vertex_data vertex_data ;
 public :
     shy_measurer_mediator ( )
     : _logic ( this )
     {
     }
-    void init ( )
+public :
+    void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up )
     {
-        _logic . init ( ) ;
+        _camera . camera_matrix_look_at ( matrix , from , to , norm_up ) ;
     }
     void done ( )
     {
         _logic . done ( ) ;
     }
-    void render ( )
+    void init ( )
     {
-        _logic . render ( ) ;
-    }
-    void render_finished ( )
-    {
-        _logic . render_finished ( ) ;
-    }
-    void update ( int_32 step )
-    {
-        _logic . update ( step ) ;
+        _logic . init ( ) ;
     }
     mesh_id mesh_create ( vertex_data * vertices , index_data * indices , int_32 vertices_count )
     {
@@ -51,7 +46,20 @@ public :
     {
         _mesh . mesh_set_transform ( arg_mesh_id , transform ) ;
     }
+    void render ( )
+    {
+        _logic . render ( ) ;
+    }
+    void render_finished ( )
+    {
+        _logic . render_finished ( ) ;
+    }
+    void update ( int_32 step )
+    {
+        _logic . update ( step ) ;
+    }
 private :
+    measurer_camera < shy_measurer_mediator > _camera ;
     measurer_logic < shy_measurer_mediator > _logic ;
     measurer_mesh < shy_measurer_mediator > _mesh ;
 } ;

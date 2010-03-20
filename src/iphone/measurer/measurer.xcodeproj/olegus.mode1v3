@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>19D4B2551154D4FA00DEA992</string>
+						<string>19D4B2621154DCF600DEA992</string>
 						<key>history</key>
 						<array>
 							<string>19D4B2021154C1A700DEA992</string>
@@ -256,7 +256,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>19D4B2561154D4FA00DEA992</string>
+						<string>19D4B2631154DCF600DEA992</string>
 						<key>history</key>
 						<array>
 							<string>19D3772B1154B24000F453A7</string>
@@ -310,6 +310,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -356,7 +358,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>2</integer>
+									<integer>13</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -392,14 +394,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>ES1Renderer.h</string>
+								<string>measurer_camera.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -407,11 +407,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>ES1Renderer.h</string>
+										<string>measurer_camera.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19D4B2541154D4FA00DEA992</string>
+										<string>19D4B2611154DCF600DEA992</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -423,12 +423,13 @@
 											<string>19D3770F1154AE2100F453A7</string>
 											<string>19D377101154AE2100F453A7</string>
 											<string>19D377111154AE2100F453A7</string>
-											<string>19D4B2061154C20900DEA992</string>
 											<string>19D4B2261154C79F00DEA992</string>
-											<string>19D4B2481154D38700DEA992</string>
-											<string>19D4B2491154D38700DEA992</string>
 											<string>19D4B24A1154D38700DEA992</string>
-											<string>19D4B2051154C20900DEA992</string>
+											<string>19D4B25C1154DCF600DEA992</string>
+											<string>19D4B25D1154DCF600DEA992</string>
+											<string>19D4B25E1154DCF600DEA992</string>
+											<string>19D4B25F1154DCF600DEA992</string>
+											<string>19D4B2601154DCF600DEA992</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

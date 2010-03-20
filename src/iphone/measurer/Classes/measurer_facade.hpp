@@ -1,5 +1,6 @@
 #pragma once
 
+#include "measurer_camera.hpp"
 #include "measurer_logic.hpp"
 #include "measurer_mediator.hpp"
 #include "measurer_mesh.hpp"
@@ -34,6 +35,7 @@ public :
 private :
     shy_measurer_mediator 
         < platform 
+        , shy_measurer_camera
         , shy_measurer_logic 
         , shy_measurer_mesh 
         > 
