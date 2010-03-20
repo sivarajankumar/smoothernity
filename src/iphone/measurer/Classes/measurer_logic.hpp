@@ -128,8 +128,10 @@ private :
         static const int_32 COLOR_ROOF_B = 255 ;
 
         vertex_data vertices [ ( ENTITY_MESH_SPANS + 1 ) * 2 + 1 ] ;
-        index_data indices [ ( ENTITY_MESH_SPANS + 1 ) * 2 ] ;
-        int_32 indices_count = 0 ;
+        index_data strip_indices [ ( ENTITY_MESH_SPANS + 1 ) * 2 ] ;
+        index_data fan_indices [ ENTITY_MESH_SPANS + 2 ] ;
+        int_32 strip_indices_count = 0 ;
+        int_32 fan_indices_count = 0 ;
         int_32 vertices_count = 0 ;
 		for ( int_32 i = 0; i < ENTITY_MESH_SPANS + 1 ; i ++ )
 		{
@@ -157,8 +159,8 @@ private :
                 , COLORS_B [ color1 ]
                 , 255
                 ) ;
-            platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
-            ++ indices_count ;
+            platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , strip_indices_count ) ;
+            ++ strip_indices_count ;
             ++ vertices_count ;
             platform :: render_set_vertex_position 
                 ( vertices [ vertices_count ] 
@@ -173,8 +175,8 @@ private :
                 , COLORS_B [ color2 ]
                 , 255
                 ) ;
-            platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
-            ++ indices_count ;
+            platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , strip_indices_count ) ;
+            ++ strip_indices_count ;
             ++ vertices_count ;
 		}
         platform :: render_set_vertex_position 
@@ -191,7 +193,14 @@ private :
             , 255
             ) ;
         ++ vertices_count ;
-        _entity_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
+        _entity_mesh_id = _mediator -> mesh_create 
+            ( vertices 
+            , strip_indices 
+            , fan_indices 
+            , vertices_count 
+            , strip_indices_count 
+            , fan_indices_count
+            ) ;
     }
     void _create_entity_grid ( )
     {

@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>19D4B38D1155031B00DEA992</string>
+						<string>19D4B39A115506A800DEA992</string>
 						<key>history</key>
 						<array>
 							<string>19D3772B1154B24000F453A7</string>
@@ -359,7 +359,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_mesh.hpp</string>
+								<string>measurer_logic.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -367,11 +367,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_mesh.hpp</string>
+										<string>measurer_logic.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19D4B38C1155031B00DEA992</string>
+										<string>19D4B399115506A800DEA992</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -388,8 +388,8 @@
 											<string>19D4B3871155031B00DEA992</string>
 											<string>19D4B3881155031B00DEA992</string>
 											<string>19D4B3891155031B00DEA992</string>
+											<string>19D4B394115505D900DEA992</string>
 											<string>19D4B38A1155031B00DEA992</string>
-											<string>19D4B38B1155031B00DEA992</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
