@@ -17,6 +17,14 @@
 #define FRAMES_PER_SECOND 60
 #define SLEEP_BETWEEN_STEPS_IN_SECONDS 0.004
 
+template < typename T >
+void swap_values ( T & a , T & b )
+{
+    T c = b ;
+    b = a ;
+    a = c ;
+}
+
 class shy_iphone_platform
 {
 public :
@@ -52,6 +60,60 @@ public :
         CFAbsoluteTime _time ;
     } ;
     
+    class matrix_data
+    {
+        friend class shy_iphone_platform ;
+    private :
+        GLfloat _elements [ 16 ] ;
+    } ;
+    
+    static void matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+    {
+        matrix . _elements [ 0 ] = x ;
+        matrix . _elements [ 1 ] = y ;
+        matrix . _elements [ 2 ] = z ;
+        matrix . _elements [ 3 ] = 0 ;
+    }
+    static void matrix_set_axis_y ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+    {
+        matrix . _elements [ 4 ] = x ;
+        matrix . _elements [ 5 ] = y ;
+        matrix . _elements [ 6 ] = z ;
+        matrix . _elements [ 7 ] = 0 ;
+    }
+    static void matrix_set_axis_z ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+    {
+        matrix . _elements [  8 ] = x ;
+        matrix . _elements [  9 ] = y ;
+        matrix . _elements [ 10 ] = z ;
+        matrix . _elements [ 11 ] = 0 ;
+    }
+    static void matrix_set_origin ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+    {
+        matrix . _elements [ 12 ] = x ;
+        matrix . _elements [ 13 ] = y ;
+        matrix . _elements [ 14 ] = z ;
+        matrix . _elements [ 15 ] = 1 ;
+    }
+    static void matrix_identity ( matrix_data & matrix )
+    {
+        for ( int i = 0 ; i < 16 ; i ++ )
+        {
+            if ( i == 0 || i == 5 || i == 10 || i == 15 )
+                matrix . _elements [ i ] = 1 ;
+            else
+                matrix . _elements [ i ] = 0 ;
+        }
+    }
+    static void matrix_inverse_rotation_translation ( matrix_data & matrix )
+    {
+        swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
+        swap_values ( matrix . _elements [ 2 ] , matrix . _elements [ 8 ] ) ;
+        swap_values ( matrix . _elements [ 6 ] , matrix . _elements [ 9 ] ) ;
+        matrix . _elements [ 12 ] = - matrix . _elements [ 12 ] ;
+        matrix . _elements [ 13 ] = - matrix . _elements [ 13 ] ;
+        matrix . _elements [ 14 ] = - matrix . _elements [ 14 ] ;
+    }
     static void render_enable_face_culling ( )
     {
         glEnable ( GL_CULL_FACE ) ;
@@ -127,6 +189,10 @@ public :
     static void render_matrix_rotate ( float_32 angle , float_32 x , float_32 y , float_32 z )
     {
         glRotatef ( ( GLfloat ) angle , ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
+    }
+    static void render_matrix_load ( const matrix_data & matrix )
+    {
+        glLoadMatrixf ( matrix . _elements ) ;
     }
     static void render_draw_triangle_strip 
         ( const buffer_id & vertices_buffer 

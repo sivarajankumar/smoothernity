@@ -67,11 +67,11 @@ public :
     void render ( )
     {
         _update_measures ( ) ;
+        _rotate_benchmark_mesh ( ) ;
         _clear_screen ( ) ;
         _render_top_mesh ( ) ;
         _render_current_mesh ( ) ;
         _render_benchmark_mesh ( ) ;
-        _rotate_benchmark_mesh ( ) ;
     }
     void render_finished ( )
     {
@@ -99,7 +99,7 @@ private :
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
-        platform :: render_projection_frustum ( -1.0f , 1.0f , -1.515f , 1.515f , 1.0f , 10.0f ) ;
+        platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 10.0f ) ;
         platform :: render_select_modelview_matrix ( ) ;
     }
     void _clear_screen ( )
@@ -120,7 +120,13 @@ private :
     }
     void _rotate_benchmark_mesh ( )
     {
-        _benchmark_mesh_rotation_angle += 2.0f ;
+        _benchmark_mesh_rotation_angle += 2.0f * PI / 360.0f ;
+        typename platform :: float_32 cos_a = platform :: math_cos ( _benchmark_mesh_rotation_angle ) ;
+        typename platform :: float_32 sin_a = platform :: math_sin ( _benchmark_mesh_rotation_angle ) ;
+        platform :: matrix_set_axis_x ( _benchmark_matrix , cos_a , 0.0f , - sin_a ) ;
+        platform :: matrix_set_axis_y ( _benchmark_matrix ,  0.0f , 1.0f ,    0.0f ) ;
+        platform :: matrix_set_axis_z ( _benchmark_matrix , sin_a , 0.0f ,   cos_a ) ;
+        platform :: matrix_set_origin ( _benchmark_matrix ,  0.0f , 0.0f ,  - 2.0f ) ;
     }
     void _save_frame_time ( )
     {
@@ -160,6 +166,10 @@ private :
                        / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
         if ( _current_pos > 1.0f )
             _current_pos = 1.0f ;
+        platform :: matrix_set_axis_x ( _current_matrix , 4.0f , 0.0f , 0.0f ) ;
+        platform :: matrix_set_axis_y ( _current_matrix , 0.0f , 4.0f , 0.0f ) ;
+        platform :: matrix_set_axis_z ( _current_matrix , 0.0f , 0.0f , 4.0f ) ;
+        platform :: matrix_set_origin ( _current_matrix , 0.0f , - 7.0f + ( 6.0f * _current_pos ) , - 2.0f ) ;
     }
     void _calc_top_pos ( )
     {
@@ -167,6 +177,10 @@ private :
                    / ( typename platform :: float_32 ) MAX_FRAMES_WITHOUT_LOSSES ;
         if ( _top_pos > 1.0f )
             _top_pos = 1.0f ;
+        platform :: matrix_set_axis_x ( _top_matrix , 4.0f , 0.0f , 0.0f ) ;
+        platform :: matrix_set_axis_y ( _top_matrix , 0.0f , 4.0f , 0.0f ) ;
+        platform :: matrix_set_axis_z ( _top_matrix , 0.0f , 0.0f , 4.0f ) ;
+        platform :: matrix_set_origin ( _top_matrix , 0.0f , - 7.0f + ( 6.0f * _top_pos ) , - 2.0f ) ;
     }
     void _advance_frame_counter ( )
     {
@@ -192,10 +206,10 @@ private :
         typename platform :: vertex_data top_vertices [ 4 ] ;
         typename platform :: index_data top_indices [ 4 ] ;
         
-        platform :: render_set_vertex_position ( top_vertices [ 0 ] , -1.0f , -1.0f , 0.0f ) ;
-        platform :: render_set_vertex_position ( top_vertices [ 1 ] ,  1.0f , -1.0f , 0.0f ) ;
-        platform :: render_set_vertex_position ( top_vertices [ 2 ] , -1.0f ,  1.0f , 0.0f ) ;
-        platform :: render_set_vertex_position ( top_vertices [ 3 ] ,  1.0f ,  1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( top_vertices [ 0 ] , - 1.0f , - 1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( top_vertices [ 1 ] ,   1.0f , - 1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( top_vertices [ 2 ] , - 1.0f ,   1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( top_vertices [ 3 ] ,   1.0f ,   1.0f , 0.0f ) ;
         
         platform :: render_set_vertex_color    ( top_vertices [ 0 ] , TOP_R , TOP_G , TOP_B , 255 ) ;
         platform :: render_set_vertex_color    ( top_vertices [ 1 ] , TOP_R , TOP_G , TOP_B , 255 ) ;
@@ -217,10 +231,10 @@ private :
         typename platform :: vertex_data current_vertices [ 4 ] ;
         typename platform :: index_data current_indices [ 4 ] ;
         
-        platform :: render_set_vertex_position ( current_vertices [ 0 ] , -1.0f , -1.0f , 0.0f ) ;
-        platform :: render_set_vertex_position ( current_vertices [ 1 ] ,  1.0f , -1.0f , 0.0f ) ;
-        platform :: render_set_vertex_position ( current_vertices [ 2 ] , -1.0f ,  1.0f , 0.0f ) ;
-        platform :: render_set_vertex_position ( current_vertices [ 3 ] ,  1.0f ,  1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( current_vertices [ 0 ] , - 1.0f , - 1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( current_vertices [ 1 ] ,   1.0f , - 1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( current_vertices [ 2 ] , - 1.0f ,   1.0f , 0.0f ) ;
+        platform :: render_set_vertex_position ( current_vertices [ 3 ] ,   1.0f ,   1.0f , 0.0f ) ;
         
         platform :: render_set_vertex_color    ( current_vertices [ 0 ] , CURRENT_R , CURRENT_G , CURRENT_B , 255 ) ;
         platform :: render_set_vertex_color    ( current_vertices [ 1 ] , CURRENT_R , CURRENT_G , CURRENT_B , 255 ) ;
@@ -278,7 +292,7 @@ private :
             platform :: render_set_vertex_position 
                 ( vertices [ indices_count ] 
                 , x 
-                , -1.0f 
+                , - 1.0f 
                 , z 
                 ) ;
             platform :: render_set_vertex_color 
@@ -300,9 +314,7 @@ private :
     }
     void _render_top_mesh ( )
     {
-        platform :: render_matrix_identity ( ) ;
-        platform :: render_matrix_translate ( 0.0f , -7.0f + ( 6.0f * _top_pos ) , -2.0f ) ;
-        platform :: render_matrix_scale ( 4.0f , 4.0f , 4.0f ) ;
+        platform :: render_matrix_load ( _top_matrix ) ;
         platform :: render_draw_triangle_strip 
             ( _top_vertex_buffer_id 
             , _top_index_buffer_id 
@@ -311,9 +323,7 @@ private :
     }
     void _render_current_mesh ( )
     {
-        platform :: render_matrix_identity ( ) ;
-        platform :: render_matrix_translate ( 0.0f , -7.0f + ( 6.0f * _current_pos ) , -2.0f ) ;
-        platform :: render_matrix_scale ( 4.0f , 4.0f , 4.0f ) ;
+        platform :: render_matrix_load ( _current_matrix ) ;
         platform :: render_draw_triangle_strip 
             ( _current_vertex_buffer_id 
             , _current_index_buffer_id 
@@ -322,9 +332,7 @@ private :
     }
     void _render_benchmark_mesh ( )
     {
-        platform :: render_matrix_identity ( ) ;
-        platform :: render_matrix_translate ( 0.0f , 0.0f , -2.0f ) ;
-        platform :: render_matrix_rotate ( _benchmark_mesh_rotation_angle , 0.0f , 1.0f , 0.0f ) ;
+        platform :: render_matrix_load ( _benchmark_matrix ) ;
         platform :: render_draw_triangle_strip 
             ( _benchmark_vertex_buffer_id 
             , _benchmark_index_buffer_id 
@@ -335,15 +343,18 @@ private :
     typename platform :: buffer_id _top_vertex_buffer_id ;
     typename platform :: buffer_id _top_index_buffer_id ;
     typename platform :: float_32 _top_pos ;
+    typename platform :: matrix_data _top_matrix ;
 
     typename platform :: buffer_id _current_vertex_buffer_id ;
     typename platform :: buffer_id _current_index_buffer_id ;
     typename platform :: float_32 _current_pos ;
+    typename platform :: matrix_data _current_matrix ;
     
     typename platform :: buffer_id _benchmark_vertex_buffer_id ;
     typename platform :: buffer_id _benchmark_index_buffer_id ;
     typename platform :: int_32 _benchmark_indices_count ;
     typename platform :: float_32 _benchmark_mesh_rotation_angle ;
+    typename platform :: matrix_data _benchmark_matrix ;
     
     typename platform :: int_32 _time_consumed_for_updates ;
     typename platform :: time_data _frame_time_begin ;

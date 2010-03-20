@@ -216,10 +216,10 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>1946E860113602EF0007B497</string>
+						<string>19D377291154B1D900F453A7</string>
 						<key>history</key>
 						<array>
-							<string>19429E801135534C0014D389</string>
+							<string>1946E860113602EF0007B497</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -371,22 +371,22 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1946E85D113602EF0007B497</string>
+										<string>19D377281154B1D900F453A7</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
 											<string>19AE69501129CD1000742128</string>
 											<string>19AE69531129CD1000742128</string>
-											<string>19AE69541129CD1000742128</string>
-											<string>19AE69551129CD1000742128</string>
-											<string>19E6881811349C130018222D</string>
-											<string>19E6881911349C130018222D</string>
-											<string>1946E857113602EF0007B497</string>
-											<string>1946E858113602EF0007B497</string>
-											<string>1946E859113602EF0007B497</string>
-											<string>1946E85A113602EF0007B497</string>
-											<string>1946E85B113602EF0007B497</string>
-											<string>1946E85C113602EF0007B497</string>
+											<string>19D3770A1154AE2100F453A7</string>
+											<string>19D3770B1154AE2100F453A7</string>
+											<string>19D3770C1154AE2100F453A7</string>
+											<string>19D3770D1154AE2100F453A7</string>
+											<string>19D3770E1154AE2100F453A7</string>
+											<string>19D3770F1154AE2100F453A7</string>
+											<string>19D377101154AE2100F453A7</string>
+											<string>19D377111154AE2100F453A7</string>
+											<string>19D377121154AE2100F453A7</string>
+											<string>19D377131154AE2100F453A7</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -444,9 +444,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1946E85E113602EF0007B497</string>
+				<string>19D376F411549F0100F453A7</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1946E85F113602EF0007B497</string>
+				<string>19D376F511549F0100F453A7</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -584,12 +584,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1946E869113602EF0007B497</string>
-		<string>1946E86A113602EF0007B497</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19423304111DA8FF00570D2B</string>
 		<string>19E3FF3F10E29715006628E8</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -614,7 +612,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic.hpp</string>
+								<string>ES1Renderer.h</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -672,7 +670,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>19E3FF3F10E29715006628E8</string>
-				<string>1946E861113602EF0007B497</string>
+				<string>19D376F711549F0100F453A7</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -794,13 +792,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>1946E862113602EF0007B497</string>
+				<string>19D376FC1154A66800F453A7</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>1946E863113602EF0007B497</string>
-				<string>1946E864113602EF0007B497</string>
-				<string>1946E865113602EF0007B497</string>
-				<string>1946E866113602EF0007B497</string>
-				<string>1946E867113602EF0007B497</string>
+				<string>19D376FD1154A66800F453A7</string>
+				<string>19D376FE1154A66800F453A7</string>
+				<string>19D376FF1154A66800F453A7</string>
+				<string>19D377001154A66800F453A7</string>
+				<string>19D377011154A66800F453A7</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -919,8 +917,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -956,7 +952,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>1946E868113602EF0007B497</string>
+				<string>19D377021154A66800F453A7</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -966,7 +962,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
