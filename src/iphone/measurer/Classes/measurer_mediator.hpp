@@ -34,9 +34,9 @@ public :
     {
         _logic . init ( ) ;
     }
-    mesh_id mesh_create ( vertex_data * vertices , index_data * indices , int_32 vertices_count )
+    mesh_id mesh_create ( vertex_data * vertices , index_data * indices , int_32 vertices_count , int_32 indices_count )
     {
-        return _mesh . mesh_create ( vertices , indices , vertices_count ) ;
+        return _mesh . mesh_create ( vertices , indices , vertices_count , indices_count ) ;
     }
     void mesh_render ( mesh_id arg_mesh_id )
     {

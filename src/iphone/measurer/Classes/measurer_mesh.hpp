@@ -32,15 +32,15 @@ public :
     : _next_mesh_id ( 0 )
     {
     }
-    mesh_id mesh_create ( vertex_data * vertices , index_data * indices , int_32 vertices_count )
+    mesh_id mesh_create ( vertex_data * vertices , index_data * indices , int_32 vertices_count , int_32 indices_count )
     {
         _mesh_data & mesh = _meshes_data [ _next_mesh_id ] ;
-        mesh . indices_count = vertices_count ;
+        mesh . indices_count = indices_count ;
         platform :: matrix_identity ( mesh . transform ) ;
         platform :: render_create_buffer_id ( mesh . vertex_buffer_id ) ;
         platform :: render_create_buffer_id ( mesh . index_buffer_id ) ;
         platform :: render_load_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
-        platform :: render_load_index_buffer ( mesh . index_buffer_id , vertices_count , indices ) ;
+        platform :: render_load_index_buffer ( mesh . index_buffer_id , indices_count , indices ) ;
         mesh_id new_id ;
         new_id . _mesh_id = _next_mesh_id ;
         ++ _next_mesh_id ;

@@ -79,8 +79,8 @@ private :
         matrix_data matrix ;
         vector_data from = platform :: vector_xyz 
             ( 0.0f 
-            , 1.5f + 0.3f * platform :: math_sin ( _camera_angle ) 
-            , 17.0f + platform :: math_sin ( _camera_angle * 0.3f )
+            , 2.5f + 0.3f * platform :: math_sin ( _camera_angle ) 
+            , 15.0f + platform :: math_sin ( _camera_angle * 0.3f )
             ) ;
         vector_data to   = platform :: vector_xyz ( 0.0 , 0.0f , -2.0f ) ;
         vector_data norm_up = platform :: vector_xyz ( 0.0f , 1.0f , 0.0f ) ;
@@ -108,7 +108,7 @@ private :
         platform :: render_set_index_value ( indices [ 2 ] , 2 ) ;
         platform :: render_set_index_value ( indices [ 3 ] , 3 ) ;
         
-        _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 4 ) ;
+        _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 4 , 4 ) ;
         matrix_data matrix ;
         platform :: matrix_identity ( matrix ) ;
         platform :: matrix_set_axis_x ( matrix , 10.0f ,  0.0f ,  0.0f ) ;
@@ -126,6 +126,7 @@ private :
         vertex_data vertices [ ( ENTITY_MESH_SPANS + 1 ) * 2 ] ;
         index_data indices [ ( ENTITY_MESH_SPANS + 1 ) * 2 ] ;
         int_32 indices_count = 0 ;
+        int_32 vertices_count = 0 ;
 		for ( int_32 i = 0; i < ENTITY_MESH_SPANS + 1 ; i ++ )
 		{
 			float_32 angle 
@@ -140,37 +141,39 @@ private :
 			int_32 color1 = color;
 			int_32 color2 = ( color + 1 ) % 7;
             platform :: render_set_vertex_position 
-                ( vertices [ indices_count ] 
+                ( vertices [ vertices_count ] 
                 , x 
                 , 1.0f 
                 , z 
                 ) ;
             platform :: render_set_vertex_color 
-                ( vertices [ indices_count ] 
+                ( vertices [ vertices_count ] 
                 , COLORS_R [ color1 ]
                 , COLORS_G [ color1 ]
                 , COLORS_B [ color1 ]
                 , COLORS_A [ color1 ]
                 ) ;
             platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
-			indices_count++;
+            ++ indices_count ;
+            ++ vertices_count ;
             platform :: render_set_vertex_position 
-                ( vertices [ indices_count ] 
+                ( vertices [ vertices_count ] 
                 , x 
                 , - 1.0f 
                 , z 
                 ) ;
             platform :: render_set_vertex_color 
-                ( vertices [ indices_count ] 
+                ( vertices [ vertices_count ] 
                 , COLORS_R [ color2 ]
                 , COLORS_G [ color2 ]
                 , COLORS_B [ color2 ]
                 , COLORS_A [ color2 ]
                 ) ;
             platform :: render_set_index_value ( indices [ indices_count ] , indices_count ) ;
-			++ indices_count ;
+            ++ indices_count ;
+            ++ vertices_count ;
 		}
-        _entity_mesh_id = _mediator -> mesh_create ( vertices , indices , indices_count ) ;
+        _entity_mesh_id = _mediator -> mesh_create ( vertices , indices , vertices_count , indices_count ) ;
     }
     void _create_entity_grid ( )
     {
