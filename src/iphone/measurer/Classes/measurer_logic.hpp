@@ -40,8 +40,9 @@
 template < typename mediator >
 class shy_measurer_logic
 {
-    typedef typename mediator :: platform platform ;
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: matrix_data matrix_data ;
 public :
     shy_measurer_logic ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
@@ -326,6 +327,8 @@ private :
     mesh_id _top_mesh_id ;
     mesh_id _current_mesh_id ;
     mesh_id _benchmark_mesh_id ;
+    
+    matrix_data _camera_matrix ;
     
     typename platform :: float_32 _benchmark_mesh_rotation_angle ;    
     

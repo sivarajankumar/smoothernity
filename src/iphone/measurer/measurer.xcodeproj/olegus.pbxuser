@@ -61,15 +61,15 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {949, 858}}";
 			sepNavSelRange = "{1914, 0}";
-			sepNavVisRange = "{549, 1365}";
+			sepNavVisRange = "{490, 1424}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
 	19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {733, 4264}}";
-			sepNavSelRange = "{8705, 0}";
-			sepNavVisRange = "{5246, 1616}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 4901}}";
+			sepNavSelRange = "{1131, 0}";
+			sepNavVisRange = "{839, 1247}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -168,7 +168,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 356";
 		rLen = 0;
-		rLoc = 13824;
+		rLoc = 13933;
 		rType = 0;
 		vrLen = 2155;
 		vrLoc = 11108;
@@ -178,7 +178,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 91";
 		rLen = 0;
-		rLoc = 2553;
+		rLoc = 2624;
 		rType = 0;
 		vrLen = 1982;
 		vrLoc = 2511;
@@ -198,7 +198,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 91";
 		rLen = 0;
-		rLoc = 2553;
+		rLoc = 2624;
 		rType = 0;
 		vrLen = 1982;
 		vrLoc = 2511;
@@ -215,9 +215,9 @@
 	};
 	19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 871}}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 858}}";
 			sepNavSelRange = "{416, 0}";
-			sepNavVisRange = "{561, 1687}";
+			sepNavVisRange = "{0, 1677}";
 		};
 	};
 	19D4B1BF1154BADF00DEA992 /* PBXTextBookmark */ = {
@@ -255,7 +255,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 223";
 		rLen = 0;
-		rLoc = 8790;
+		rLoc = 8861;
 		rType = 0;
 		vrLen = 1183;
 		vrLoc = 890;
@@ -403,7 +403,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 368";
 		rLen = 0;
-		rLoc = 13809;
+		rLoc = 13918;
 		rType = 0;
 		vrLen = 1880;
 		vrLoc = 13524;
@@ -424,7 +424,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 231;
+		rLoc = 232;
 		rType = 1;
 	};
 	19D4B1ED1154BEA700DEA992 /* PBXTextBookmark */ = {
@@ -463,7 +463,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 231;
+		rLoc = 232;
 		rType = 1;
 	};
 	19D4B1F11154BEA700DEA992 /* PBXTextBookmark */ = {
@@ -471,7 +471,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 226";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 3328;
 		vrLoc = 7375;
@@ -481,7 +481,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 226";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 2211;
 		vrLoc = 7666;
@@ -512,7 +512,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 231;
+		rLoc = 232;
 		rType = 1;
 	};
 	19D4B1F81154BEAE00DEA992 /* PBXTextBookmark */ = {
@@ -520,7 +520,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 226";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 827;
 		vrLoc = 8092;
@@ -548,7 +548,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 231;
+		rLoc = 232;
 		rType = 1;
 	};
 	19D4B2051154C20900DEA992 /* PBXTextBookmark */ = {
@@ -576,7 +576,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 44";
 		rLen = 0;
-		rLoc = 1183;
+		rLoc = 1255;
 		rType = 0;
 		vrLen = 1376;
 		vrLoc = 0;
@@ -616,7 +616,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 227";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1865;
 		vrLoc = 7043;
@@ -646,7 +646,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 227";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1865;
 		vrLoc = 7043;
@@ -696,7 +696,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 227";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1865;
 		vrLoc = 7043;
@@ -726,7 +726,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 44";
 		rLen = 0;
-		rLoc = 1183;
+		rLoc = 1255;
 		rType = 0;
 		vrLen = 1376;
 		vrLoc = 0;
@@ -736,7 +736,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 373";
 		rLen = 0;
-		rLoc = 13805;
+		rLoc = 13914;
 		rType = 0;
 		vrLen = 1865;
 		vrLoc = 13734;
@@ -746,7 +746,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 227";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1857;
 		vrLoc = 7101;
@@ -776,7 +776,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 319";
 		rLen = 0;
-		rLoc = 12977;
+		rLoc = 13048;
 		rType = 0;
 		vrLen = 1941;
 		vrLoc = 12191;
@@ -816,7 +816,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 227";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1898;
 		vrLoc = 7101;
@@ -846,7 +846,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 319";
 		rLen = 0;
-		rLoc = 12977;
+		rLoc = 13048;
 		rType = 0;
 		vrLen = 1941;
 		vrLoc = 12191;
@@ -856,7 +856,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 339";
 		rLen = 0;
-		rLoc = 13201;
+		rLoc = 13272;
 		rType = 0;
 		vrLen = 1860;
 		vrLoc = 13185;
@@ -866,7 +866,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 227";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1898;
 		vrLoc = 7101;
@@ -886,7 +886,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 321";
 		rLen = 0;
-		rLoc = 13084;
+		rLoc = 13155;
 		rType = 0;
 		vrLen = 1974;
 		vrLoc = 12167;
@@ -896,7 +896,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 227";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1898;
 		vrLoc = 7101;
@@ -916,7 +916,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 320";
 		rLen = 0;
-		rLoc = 13172;
+		rLoc = 13243;
 		rType = 0;
 		vrLen = 1778;
 		vrLoc = 11516;
@@ -926,7 +926,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 226";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1954;
 		vrLoc = 7109;
@@ -946,7 +946,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 131";
 		rLen = 0;
-		rLoc = 4266;
+		rLoc = 4337;
 		rType = 0;
 		vrLen = 2091;
 		vrLoc = 3596;
@@ -986,7 +986,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 232";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1616;
 		vrLoc = 5246;
@@ -1026,7 +1026,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 143";
 		rLen = 0;
-		rLoc = 4579;
+		rLoc = 4650;
 		rType = 0;
 		vrLen = 2375;
 		vrLoc = 6037;
@@ -1046,7 +1046,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 232";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1658;
 		vrLoc = 5246;
@@ -1076,7 +1076,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 232";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1658;
 		vrLoc = 5246;
@@ -1106,7 +1106,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 232";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1658;
 		vrLoc = 5246;
@@ -1136,7 +1136,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 232";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1658;
 		vrLoc = 5246;
@@ -1153,9 +1153,9 @@
 	};
 	19D4B2591154D78300DEA992 /* measurer_camera.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 622}}";
-			sepNavSelRange = "{342, 114}";
-			sepNavVisRange = "{0, 980}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 645}}";
+			sepNavSelRange = "{1049, 0}";
+			sepNavVisRange = "{0, 1049}";
 		};
 	};
 	19D4B25C1154DCF600DEA992 /* PBXTextBookmark */ = {
@@ -1223,7 +1223,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 232";
 		rLen = 0;
-		rLoc = 8705;
+		rLoc = 8776;
 		rType = 0;
 		vrLen = 1616;
 		vrLoc = 5246;
@@ -1237,6 +1237,54 @@
 		rType = 0;
 		vrLen = 643;
 		vrLoc = 2473;
+	};
+	19D4B2681154DD3300DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
+		name = "measurer_mediator.hpp: 42";
+		rLen = 0;
+		rLoc = 1738;
+		rType = 0;
+		vrLen = 465;
+		vrLoc = 731;
+	};
+	19D4B2691154DD3300DEA992 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "No matching function for call to 'shy_measurer_mediator<shy_iphone_platform, shy_measurer_logic, shy_measurer_mesh>::mesh_create(shy_iphone_platform::vertex_data [4], shy_iphone_platform::index_data [4], int)'";
+		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 232;
+		rType = 1;
+	};
+	19D4B26A1154DD3300DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
+		name = "measurer_logic.hpp: 232";
+		rLen = 0;
+		rLoc = 8776;
+		rType = 0;
+		vrLen = 776;
+		vrLoc = 8199;
+	};
+	19D4B26D1154DDAB00DEA992 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'matrix_data' does not name a type";
+		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 330;
+		rType = 1;
+	};
+	19D4B26E1154DDAB00DEA992 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
+		name = "measurer_logic.hpp: 330";
+		rLen = 0;
+		rLoc = 13368;
+		rType = 0;
+		vrLen = 388;
+		vrLoc = 13023;
 	};
 	19E3FF2E10E296FD006628E8 /* measurer */ = {
 		isa = PBXExecutable;
@@ -1306,9 +1354,9 @@
 	};
 	2514C26D10084DB100A42282 /* ES1Renderer.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {992, 4563}}";
-			sepNavSelRange = "{144, 0}";
-			sepNavVisRange = "{0, 875}";
+			sepNavIntBoundsRect = "{{0, 0}, {992, 4745}}";
+			sepNavSelRange = "{5150, 35}";
+			sepNavVisRange = "{3952, 2012}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -1553,6 +1601,11 @@
 			19D4B2611154DCF600DEA992 /* PBXTextBookmark */ = 19D4B2611154DCF600DEA992 /* PBXTextBookmark */;
 			19D4B2621154DCF600DEA992 /* PBXTextBookmark */ = 19D4B2621154DCF600DEA992 /* PBXTextBookmark */;
 			19D4B2631154DCF600DEA992 /* PBXTextBookmark */ = 19D4B2631154DCF600DEA992 /* PBXTextBookmark */;
+			19D4B2681154DD3300DEA992 /* PBXTextBookmark */ = 19D4B2681154DD3300DEA992 /* PBXTextBookmark */;
+			19D4B2691154DD3300DEA992 /* XCBuildMessageTextBookmark */ = 19D4B2691154DD3300DEA992 /* XCBuildMessageTextBookmark */;
+			19D4B26A1154DD3300DEA992 /* PBXTextBookmark */ = 19D4B26A1154DD3300DEA992 /* PBXTextBookmark */;
+			19D4B26D1154DDAB00DEA992 /* XCBuildMessageTextBookmark */ = 19D4B26D1154DDAB00DEA992 /* XCBuildMessageTextBookmark */;
+			19D4B26E1154DDAB00DEA992 /* PBXTextBookmark */ = 19D4B26E1154DDAB00DEA992 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 19E3FF4810E29715006628E8 /* Source Control */;
 		userBuildSettings = {

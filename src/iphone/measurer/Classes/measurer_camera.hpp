@@ -17,5 +17,6 @@ public :
         platform :: matrix_set_axis_y ( matrix , axis_y ) ;
         platform :: matrix_set_axis_z ( matrix , axis_z ) ;
         platform :: matrix_set_origin ( matrix , from ) ;
+        platform :: matrix_inverse_rotation_translation ( matrix ) ;
     }
 } ;
