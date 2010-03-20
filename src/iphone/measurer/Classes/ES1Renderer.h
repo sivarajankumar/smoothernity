@@ -67,6 +67,69 @@ public :
         GLfloat _elements [ 16 ] ;
     } ;
     
+    class vector_data
+    {
+        friend class shy_iphone_platform ;
+    private :
+        float_32 _x ;
+        float_32 _y ;
+        float_32 _z ;
+    } ;
+    
+    static vector_data vector_xyz ( float_32 x , float_32 y , float_32 z )
+    {
+        vector_data vector ;
+        vector . _x = x ;
+        vector . _y = y ;
+        vector . _z = z ;
+        return vector ;
+    }
+    static float_32 vector_dot_product ( vector_data v1 , vector_data v2 )
+    {
+        return v1 . _x * v2 . _x
+             + v1 . _y * v2 . _y
+             + v1 . _z * v2 . _z ;
+    }
+    static vector_data vector_cross_product ( vector_data v1 , vector_data v2 )
+    {
+        vector_data result ;
+        result . _x = v1 . _y * v2 . _z - v2 . _y * v1 . _z ;
+        result . _y = v1 . _z * v2 . _x - v2 . _z * v1 . _x ;
+        result . _z = v1 . _x * v2 . _y - v2 . _x * v1 . _y ;
+        return result ;
+    }
+    static vector_data vector_add ( vector_data v1 , vector_data v2 )
+    {
+        vector_data result ;
+        result . _x = v1 . _x + v2 . _x ;
+        result . _y = v1 . _y + v2 . _y ;
+        result . _z = v1 . _z + v2 . _z ;
+        return result ;
+    }
+    static vector_data vector_sub ( vector_data v1 , vector_data v2 )
+    {
+        vector_data result ;
+        result . _x = v1 . _x - v2 . _x ;
+        result . _y = v1 . _y - v2 . _y ;
+        result . _z = v1 . _z - v2 . _z ;
+        return result ;
+    }
+    static vector_data vector_mul ( vector_data v , float_32 f )
+    {
+        vector_data result ;
+        result . _x = f * v . _x ;
+        result . _y = f * v . _y ;
+        result . _z = f * v . _z ;
+        return result ;
+    }
+    static float_32 vector_length ( vector_data v )
+    {
+        return ( float_32 ) sqrt ( vector_dot_product ( v , v ) ) ;
+    }
+    static vector_data vector_normalize ( vector_data v )
+    {
+        return vector_mul ( v , 1.0f / vector_length ( v ) ) ;
+    }
     static void matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
     {
         matrix . _elements [ 0 ] = x ;
@@ -94,6 +157,22 @@ public :
         matrix . _elements [ 13 ] = y ;
         matrix . _elements [ 14 ] = z ;
         matrix . _elements [ 15 ] = 1 ;
+    }
+    static void matrix_set_axis_x ( matrix_data & matrix , vector_data v )
+    {
+        matrix_set_axis_x ( matrix , v . _x , v . _y , v . _z ) ;
+    }
+    static void matrix_set_axis_y ( matrix_data & matrix , vector_data v )
+    {
+        matrix_set_axis_y ( matrix , v . _x , v . _y , v . _z ) ;
+    }
+    static void matrix_set_axis_z ( matrix_data & matrix , vector_data v )
+    {
+        matrix_set_axis_z ( matrix , v . _x , v . _y , v . _z ) ;
+    }
+    static void matrix_set_origin ( matrix_data & matrix , vector_data v )
+    {
+        matrix_set_origin ( matrix , v . _x , v . _y , v . _z ) ;
     }
     static void matrix_identity ( matrix_data & matrix )
     {
