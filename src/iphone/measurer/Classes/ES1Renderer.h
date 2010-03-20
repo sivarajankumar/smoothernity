@@ -273,6 +273,18 @@ public :
     {
         glLoadMatrixf ( matrix . _elements ) ;
     }
+    static void render_matrix_mult ( const matrix_data & matrix )
+    {
+        glMultMatrixf ( matrix . _elements ) ;
+    }
+    static void render_matrix_push ( )
+    {
+        glPushMatrix ( ) ;
+    }
+    static void render_matrix_pop ( )
+    {
+        glPopMatrix ( ) ;
+    }
     static void render_draw_triangle_strip 
         ( const buffer_id & vertices_buffer 
         , const buffer_id & indices_buffer

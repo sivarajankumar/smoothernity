@@ -49,12 +49,14 @@ public :
     void mesh_render ( mesh_id arg_mesh_id )
     {
         _mesh_data & mesh = _meshes_data [ arg_mesh_id . _mesh_id ] ;
-        platform :: render_matrix_load ( mesh . transform ) ;
+        platform :: render_matrix_push ( ) ;
+        platform :: render_matrix_mult ( mesh . transform ) ;
         platform :: render_draw_triangle_strip 
             ( mesh . vertex_buffer_id 
             , mesh . index_buffer_id 
             , mesh . indices_count 
             ) ;
+        platform :: render_matrix_pop ( ) ;
     }
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform )
     {

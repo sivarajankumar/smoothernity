@@ -47,10 +47,12 @@ class shy_measurer_logic
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: time_data time_data ;
+    typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 public :
     shy_measurer_logic ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
+    , _camera_angle ( 0 )
     , _time_consumed_for_updates ( 0 )
     , _max_frames_without_losses ( 0 )
     , _frames_without_losses ( 0 )
@@ -105,12 +107,24 @@ private :
     }
     void _update_camera ( )
     {
+        matrix_data matrix ;
+        vector_data from = platform :: vector_xyz 
+            ( 0.0f 
+            , platform :: math_sin ( _camera_angle ) 
+            , 1.5f + platform :: math_sin ( _camera_angle * 0.3f )
+            ) ;
+        vector_data to   = platform :: vector_xyz ( 0.0 , 0.0f , -2.0f ) ;
+        vector_data norm_up = platform :: vector_xyz ( 0.0f , 1.0f , 0.0f ) ;
+        _mediator -> camera_matrix_look_at ( matrix , from , to , norm_up ) ;
+        _camera_angle += 0.05f ;
+        platform :: render_matrix_load ( matrix ) ;
     }
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
         platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 10.0f ) ;
         platform :: render_select_modelview_matrix ( ) ;
+        platform :: render_matrix_identity ( ) ;
     }
     void _clear_screen ( )
     {
@@ -337,8 +351,7 @@ private :
     mesh_id _current_mesh_id ;
     mesh_id _benchmark_mesh_id ;
     
-    matrix_data _camera_matrix ;
-    
+    float_32 _camera_angle ;    
     float_32 _benchmark_mesh_rotation_angle ;    
     
     int_32 _time_consumed_for_updates ;
