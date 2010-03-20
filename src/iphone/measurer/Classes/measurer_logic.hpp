@@ -159,7 +159,7 @@ private :
                 , COLORS_B [ color1 ]
                 , 255
                 ) ;
-            platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , strip_indices_count ) ;
+            platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , vertices_count ) ;
             ++ strip_indices_count ;
             ++ vertices_count ;
             platform :: render_set_vertex_position 
@@ -175,7 +175,7 @@ private :
                 , COLORS_B [ color2 ]
                 , 255
                 ) ;
-            platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , strip_indices_count ) ;
+            platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , vertices_count ) ;
             ++ strip_indices_count ;
             ++ vertices_count ;
 		}
@@ -192,7 +192,14 @@ private :
             , COLOR_ROOF_B
             , 255
             ) ;
+        platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , vertices_count ) ;
+        ++ fan_indices_count ;
         ++ vertices_count ;
+        for ( int_32 i = 0 ; i < ENTITY_MESH_SPANS + 1 ; ++ i )
+        {
+            platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , i * 2 ) ;
+            ++ fan_indices_count ;
+        }
         _entity_mesh_id = _mediator -> mesh_create 
             ( vertices 
             , strip_indices 
