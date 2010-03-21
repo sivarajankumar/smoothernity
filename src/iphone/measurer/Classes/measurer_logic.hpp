@@ -132,7 +132,7 @@ private :
     vector_data _random_camera_target ( )
     {
         return _random_entity_origin 
-            ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID - ENTITY_MESH_GRID / 2 )
+            ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 )
             , ENTITY_MESH_GRID * ENTITY_MESH_GRID
             ) ;
     }
