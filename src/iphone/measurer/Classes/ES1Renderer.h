@@ -219,6 +219,15 @@ public :
     {
         glEnable ( GL_DEPTH_TEST ) ;
     }
+    static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a )
+    {
+        GLfloat color [ ] = { r , g , b , a } ;
+        glEnable ( GL_FOG ) ;
+        glFogf ( GL_FOG_MODE , GL_LINEAR ) ;
+        glFogf ( GL_FOG_START , ( GLfloat ) near ) ;
+        glFogf ( GL_FOG_END , ( GLfloat ) far ) ;
+        glFogfv ( GL_FOG_COLOR , color ) ;
+    }
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b )
     {
         glClearColor ( ( GLfloat ) r , ( GLfloat ) g , ( GLfloat ) b , ( GLfloat ) 0 ) ;
