@@ -64,7 +64,7 @@ private :
     void _reset_camera_rubber ( )
     {
         _current_camera_origin = _random_camera_origin ( ) ;
-        _current_camera_target = _random_entity_origin ( ) ;
+        _current_camera_target = _random_camera_target ( ) ;
     }
     void _clear_screen ( )
     {
@@ -98,7 +98,7 @@ private :
         if ( -- _frames_to_change_camera_target < 0 )
         {
             _frames_to_change_camera_target = 181 ;
-            _desired_camera_target = _random_entity_origin ( ) ;
+            _desired_camera_target = _random_camera_target ( ) ;
         }
         _current_camera_origin = platform :: vector_add
             ( platform :: vector_mul ( _current_camera_origin , origin_rubber )
@@ -115,18 +115,25 @@ private :
             , platform :: vector_xyz ( 0.0f , 1.0f , 0.0f )
             ) ;
     }
-    vector_data _random_entity_origin ( )
+    vector_data _random_entity_origin ( int_32 index_min , int_32 index_max )
     {
         _random_seed = ( _random_seed + 181 ) % 139 ;
         return platform :: matrix_get_origin 
-            ( _entities_grid_matrices [ _random_seed % ( ENTITY_MESH_GRID * ENTITY_MESH_GRID ) ]
+            ( _entities_grid_matrices [ index_min + ( _random_seed % ( index_max - index_min ) ) ]
             ) ;
     }
     vector_data _random_camera_origin ( )
     {
         return platform :: vector_add 
-            ( _random_entity_origin ( ) 
+            ( _random_entity_origin ( 0 , ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 ) )
             , platform :: vector_xyz ( 0.0f , 3.0f , 0.0f )
+            ) ;
+    }
+    vector_data _random_camera_target ( )
+    {
+        return _random_entity_origin 
+            ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID - ENTITY_MESH_GRID / 2 )
+            , ENTITY_MESH_GRID * ENTITY_MESH_GRID
             ) ;
     }
     void _create_land_mesh ( )
