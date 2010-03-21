@@ -134,11 +134,11 @@ private :
         static const int_32 LAND_R = 0 ;
         static const int_32 LAND_G = 255 ;
         static const int_32 LAND_B = 0 ;
-        static const int_32 LAND_GRID = 1 ;
+        static const int_32 LAND_GRID = 10 ;
         static const float_32 LAND_RADIUS = 10 ;
         
         vertex_data vertices [ ( LAND_GRID + 1 ) * ( LAND_GRID + 1 ) ] ;
-        index_data indices [ ( ( LAND_GRID + 1 ) * 2 + 1 ) * LAND_GRID - 1 ] ;
+        index_data indices [ ( LAND_GRID + 1 ) * 2 * LAND_GRID ] ;
         int_32 vertices_count = 0 ;
         int_32 indices_count = 0 ;
         
@@ -146,42 +146,50 @@ private :
         const float_32 grid_origin_x = - LAND_RADIUS ;
         const float_32 grid_origin_z = - LAND_RADIUS ;
         
+        for ( int_32 iz = 0 ; iz < LAND_GRID + 1 ; iz ++ )
+        {
+            for ( int_32 ix = 0 ; ix < LAND_GRID + 1 ; ix ++ )
+            {
+                float_32 x = grid_origin_x + grid_step * ( float_32 ) ix ;
+                float_32 z = grid_origin_z + grid_step * ( float_32 ) iz ;
+                platform :: render_set_vertex_position 
+                    ( vertices [ vertices_count ]
+                    , x
+                    , 0.0f
+                    , z
+                    ) ;
+                platform :: render_set_vertex_color
+                    ( vertices [ vertices_count ]
+                    , LAND_R
+                    , LAND_G
+                    , LAND_B
+                    , 255
+                    ) ;
+                ++ vertices_count ;
+            }
+        }
+        
         for ( int_32 iz = 0 ; iz < LAND_GRID ; iz ++ )
         {
             for ( int_32 ix = 0 ; ix < LAND_GRID + 1 ; ix ++ )
             {
-                platform :: render_set_vertex_position 
-                    ( vertices [ vertices_count ]
-                    , grid_origin_x + grid_step * ( float_32 ) ix
-                    , 0.0f
-                    , grid_origin_z + grid_step * ( float_32 ) iz
-                    ) ;
-                platform :: render_set_vertex_color
-                    ( vertices [ vertices_count ]
-                    , LAND_R
-                    , LAND_G
-                    , LAND_B
-                    , 255
-                    ) ;
-                platform :: render_set_index_value ( indices [ indices_count ] , vertices_count ) ;
-                ++ indices_count ;
-                ++ vertices_count ;
-                platform :: render_set_vertex_position 
-                    ( vertices [ vertices_count ]
-                    , grid_origin_x + grid_step * ( float_32 ) ix
-                    , 0.0f
-                    , grid_origin_z + grid_step * ( float_32 ) ( iz + 1 )
-                    ) ;
-                platform :: render_set_vertex_color
-                    ( vertices [ vertices_count ]
-                    , LAND_R
-                    , LAND_G
-                    , LAND_B
-                    , 255
-                    ) ;
-                platform :: render_set_index_value ( indices [ indices_count ] , vertices_count ) ;
-                ++ indices_count ;
-                ++ vertices_count ;
+                int_32 index = 0 ;
+                if ( iz % 2 == 0 )
+                {
+                    index = ix + ( LAND_GRID + 1 ) * iz ;
+                    platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
+                    ++ indices_count ;
+                    platform :: render_set_index_value ( indices [ indices_count ] , index + LAND_GRID + 1 ) ;
+                    ++ indices_count ;
+                }
+                else
+                {
+                    index = LAND_GRID - ix + ( LAND_GRID + 1 ) * iz ;
+                    platform :: render_set_index_value ( indices [ indices_count ] , index + LAND_GRID + 1 ) ;
+                    ++ indices_count ;
+                    platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
+                    ++ indices_count ;
+                }
             }
         }
         _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
