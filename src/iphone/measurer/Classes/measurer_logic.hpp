@@ -19,7 +19,9 @@ class shy_measurer_logic
 public :
     shy_measurer_logic ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
-    , _camera_angle ( 0 )
+    , _frames_to_change_camera_target ( 0 )
+    , _frames_to_change_camera_origin ( 0 )
+    , _random_seed ( 0 )
     {
     }
     void init ( )
@@ -28,6 +30,7 @@ public :
         _create_entity_mesh ( ) ;
         _create_entity_grid ( ) ;
         _create_land_mesh ( ) ;
+        _reset_camera_rubber ( ) ;
         _update_camera ( ) ;
     }
     void done ( )
@@ -36,6 +39,7 @@ public :
     void render ( )
     {
         _clear_screen ( ) ;
+        _use_camera_matrix ( ) ;
         _render_land ( ) ;
         _render_entities ( ) ;
     }
@@ -51,13 +55,23 @@ private :
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
+        platform :: render_enable_depth_test ( ) ;
         platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
         platform :: render_select_modelview_matrix ( ) ;
         platform :: render_matrix_identity ( ) ;
     }
+    void _reset_camera_rubber ( )
+    {
+        _current_camera_origin = _random_camera_origin ( ) ;
+        _current_camera_target = _random_entity_origin ( ) ;
+    }
     void _clear_screen ( )
     {
         platform :: render_clear_screen ( 0 , 0 , 0 ) ;
+    }
+    void _use_camera_matrix ( )
+    {
+        platform :: render_matrix_load ( _camera_matrix ) ;
     }
     void _render_land ( )
     {
@@ -73,17 +87,46 @@ private :
     }
     void _update_camera ( )
     {
-        matrix_data matrix ;
-        vector_data from = platform :: vector_xyz 
-            ( 0.0f 
-            , 2.5f + 0.3f * platform :: math_sin ( _camera_angle ) 
-            , 15.0f + platform :: math_sin ( _camera_angle * 0.3f )
+        const float_32 origin_rubber = 0.99f ;
+        const float_32 target_rubber = 0.9f ;
+        if ( -- _frames_to_change_camera_origin < 0 )
+        {
+            _frames_to_change_camera_origin = 139 ;
+            _desired_camera_origin = _random_camera_origin ( ) ;
+        }
+        if ( -- _frames_to_change_camera_target < 0 )
+        {
+            _frames_to_change_camera_target = 181 ;
+            _desired_camera_target = _random_entity_origin ( ) ;
+        }
+        _current_camera_origin = platform :: vector_add
+            ( platform :: vector_mul ( _current_camera_origin , origin_rubber )
+            , platform :: vector_mul ( _desired_camera_origin , 1.0f - origin_rubber )
             ) ;
-        vector_data to   = platform :: vector_xyz ( 0.0 , 0.0f , -2.0f ) ;
-        vector_data norm_up = platform :: vector_xyz ( 0.0f , 1.0f , 0.0f ) ;
-        _mediator -> camera_matrix_look_at ( matrix , from , to , norm_up ) ;
-        _camera_angle += 0.05f ;
-        platform :: render_matrix_load ( matrix ) ;
+        _current_camera_target = platform :: vector_add
+            ( platform :: vector_mul ( _current_camera_target , target_rubber )
+            , platform :: vector_mul ( _desired_camera_target , 1.0f - target_rubber )
+            ) ;
+        _mediator -> camera_matrix_look_at 
+            ( _camera_matrix 
+            , _current_camera_origin
+            , _current_camera_target
+            , platform :: vector_xyz ( 0.0f , 1.0f , 0.0f )
+            ) ;
+    }
+    vector_data _random_entity_origin ( )
+    {
+        _random_seed = ( _random_seed + 181 ) % 139 ;
+        return platform :: matrix_get_origin 
+            ( _entities_grid_matrices [ _random_seed % ( ENTITY_MESH_GRID * ENTITY_MESH_GRID ) ]
+            ) ;
+    }
+    vector_data _random_camera_origin ( )
+    {
+        return platform :: vector_add 
+            ( _random_entity_origin ( ) 
+            , platform :: vector_xyz ( 0.0f , 3.0f , 0.0f )
+            ) ;
     }
     void _create_land_mesh ( )
     {
@@ -228,7 +271,14 @@ private :
 private :
     mesh_id _entity_mesh_id ;
     mesh_id _land_mesh_id ;
+    matrix_data _camera_matrix ;
     matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
-    float_32 _camera_angle ;    
+    int_32 _frames_to_change_camera_target ;
+    int_32 _frames_to_change_camera_origin ;
+    int_32 _random_seed ;
+    vector_data _desired_camera_origin ;
+    vector_data _desired_camera_target ;
+    vector_data _current_camera_origin ;
+    vector_data _current_camera_target ;
     mediator * _mediator ;
 } ;

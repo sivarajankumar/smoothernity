@@ -174,6 +174,22 @@ public :
     {
         matrix_set_origin ( matrix , v . _x , v . _y , v . _z ) ;
     }
+    static vector_data matrix_get_axis_x ( const matrix_data & matrix )
+    {
+        return vector_xyz ( matrix . _elements [ 0 ] , matrix . _elements [ 1 ] , matrix . _elements [ 2 ] ) ;
+    }
+    static vector_data matrix_get_axis_y ( const matrix_data & matrix )
+    {
+        return vector_xyz ( matrix . _elements [ 4 ] , matrix . _elements [ 5 ] , matrix . _elements [ 6 ] ) ;
+    }
+    static vector_data matrix_get_axis_z ( const matrix_data & matrix )
+    {
+        return vector_xyz ( matrix . _elements [ 8 ] , matrix . _elements [ 9 ] , matrix . _elements [ 10 ] ) ;
+    }
+    static vector_data matrix_get_origin ( const matrix_data & matrix )
+    {
+        return vector_xyz ( matrix . _elements [ 12 ] , matrix . _elements [ 13 ] , matrix . _elements [ 14 ] ) ;
+    }
     static void matrix_identity ( matrix_data & matrix )
     {
         for ( int i = 0 ; i < 16 ; i ++ )
@@ -186,21 +202,28 @@ public :
     }
     static void matrix_inverse_rotation_translation ( matrix_data & matrix )
     {
+        matrix_set_origin ( matrix , vector_xyz
+            ( - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_x ( matrix ) )
+            , - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_y ( matrix ) )
+            , - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_z ( matrix ) )
+            ) ) ;
         swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
         swap_values ( matrix . _elements [ 2 ] , matrix . _elements [ 8 ] ) ;
         swap_values ( matrix . _elements [ 6 ] , matrix . _elements [ 9 ] ) ;
-        matrix . _elements [ 12 ] = - matrix . _elements [ 12 ] ;
-        matrix . _elements [ 13 ] = - matrix . _elements [ 13 ] ;
-        matrix . _elements [ 14 ] = - matrix . _elements [ 14 ] ;
     }
     static void render_enable_face_culling ( )
     {
         glEnable ( GL_CULL_FACE ) ;
     }
+    static void render_enable_depth_test ( )
+    {
+        glEnable ( GL_DEPTH_TEST ) ;
+    }
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b )
     {
-        glClearColor ( ( GLfloat ) r , ( GLfloat ) g , ( GLfloat ) b , ( GLfloat ) 1 ) ;
-        glClear ( GL_COLOR_BUFFER_BIT ) ;
+        glClearColor ( ( GLfloat ) r , ( GLfloat ) g , ( GLfloat ) b , ( GLfloat ) 0 ) ;
+        glClearDepthf ( 1 ) ;
+        glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) ;
     }
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far )
     {
@@ -367,7 +390,7 @@ private :
 	GLint backingHeight;
 	
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
-	GLuint defaultFramebuffer, colorRenderbuffer;	
+	GLuint defaultFramebuffer, colorRenderbuffer, depthRenderbuffer;
 }
 
 - (void) render;

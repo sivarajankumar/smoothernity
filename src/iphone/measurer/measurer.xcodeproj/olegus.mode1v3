@@ -216,10 +216,10 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>19D4B39C115506C800DEA992</string>
+						<string>193157831156303A000F3B7C</string>
 						<key>history</key>
 						<array>
-							<string>19D3772B1154B24000F453A7</string>
+							<string>1984AE7611556CC200CC9BEA</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -316,7 +316,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>11</integer>
+									<integer>2</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -359,7 +359,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic.hpp</string>
+								<string>ES1Renderer.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -367,29 +367,29 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_logic.hpp</string>
+										<string>ES1Renderer.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19D4B39B115506C800DEA992</string>
+										<string>193157821156303A000F3B7C</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
 											<string>19AE69501129CD1000742128</string>
 											<string>19AE69531129CD1000742128</string>
-											<string>19D3770C1154AE2100F453A7</string>
-											<string>19D3770D1154AE2100F453A7</string>
-											<string>19D3770E1154AE2100F453A7</string>
-											<string>19D3770F1154AE2100F453A7</string>
 											<string>19D377101154AE2100F453A7</string>
-											<string>19D377111154AE2100F453A7</string>
 											<string>19D4B2261154C79F00DEA992</string>
-											<string>19D4B2D31154E47800DEA992</string>
-											<string>19D4B3871155031B00DEA992</string>
-											<string>19D4B3881155031B00DEA992</string>
-											<string>19D4B3891155031B00DEA992</string>
-											<string>19D4B394115505D900DEA992</string>
-											<string>19D4B38A1155031B00DEA992</string>
+											<string>1984AE6C11556CC200CC9BEA</string>
+											<string>1984AE7011556CC200CC9BEA</string>
+											<string>1984AE7111556CC200CC9BEA</string>
+											<string>193156C211562782000F3B7C</string>
+											<string>193156E711562908000F3B7C</string>
+											<string>1931576F11562FD8000F3B7C</string>
+											<string>1931577011562FD8000F3B7C</string>
+											<string>1931577111562FD8000F3B7C</string>
+											<string>1931577211562FD8000F3B7C</string>
+											<string>193157801156303A000F3B7C</string>
+											<string>193157811156303A000F3B7C</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -447,9 +447,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>19D4B1B91154B89700DEA992</string>
+				<string>193156A71156250E000F3B7C</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>19D4B1BA1154B89700DEA992</string>
+				<string>193156A81156250E000F3B7C</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -587,10 +587,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C78EAAD065D492600B07095</string>
+		<string>193156EB11562908000F3B7C</string>
+		<string>193156E6115628E5000F3B7C</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>19E3FF3F10E29715006628E8</string>
 		<string>19423304111DA8FF00570D2B</string>
+		<string>19E3FF3F10E29715006628E8</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -615,7 +617,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_mesh.hpp</string>
+								<string>ES1Renderer.h</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -673,7 +675,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>19E3FF3F10E29715006628E8</string>
-				<string>19D4B1BC1154B89700DEA992</string>
+				<string>193156AA1156250E000F3B7C</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -686,7 +688,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -795,13 +797,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>19D4B1D81154BB9800DEA992</string>
+				<string>193156AB1156250E000F3B7C</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>19D4B1D91154BB9800DEA992</string>
-				<string>19D4B1DA1154BB9800DEA992</string>
-				<string>19D4B1DB1154BB9800DEA992</string>
-				<string>19D4B1DC1154BB9800DEA992</string>
-				<string>19D4B1DD1154BB9800DEA992</string>
+				<string>193156AC1156250E000F3B7C</string>
+				<string>193156AD1156250E000F3B7C</string>
+				<string>193156AE1156250E000F3B7C</string>
+				<string>193156AF1156250E000F3B7C</string>
+				<string>193156B01156250E000F3B7C</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -920,6 +922,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -955,7 +959,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>19D4B1DE1154BB9800DEA992</string>
+				<string>193156B11156250E000F3B7C</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -965,7 +969,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

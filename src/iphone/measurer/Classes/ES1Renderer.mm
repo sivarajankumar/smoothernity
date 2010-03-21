@@ -34,11 +34,8 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
         }
 		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
 		glGenFramebuffersOES(1, &defaultFramebuffer);
-		glGenRenderbuffersOES(1, &colorRenderbuffer);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
-		
+
 		shyMeasurer . init ( ) ;		
 	}
 	
@@ -47,12 +44,15 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
 
 - (void) render
 {
+    [EAGLContext setCurrentContext:context];
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
 	shyMeasurer . render ( ) ;
 	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
 	{
 		shyMeasurer . update ( i ) ;		
         [ NSThread sleepForTimeInterval : ( NSTimeInterval ) SLEEP_BETWEEN_STEPS_IN_SECONDS ];
 	}
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
     shyMeasurer . render_finished ( ) ;
 }
@@ -60,11 +60,20 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
 - (BOOL) resizeFromLayer:(CAEAGLLayer *)layer
 {	
 	// Allocate color buffer backing based on the current layer size
+    glGenRenderbuffersOES(1, &colorRenderbuffer);
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
     [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
+	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
+    
 	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
 	
+    // Allocate and attach the depth buffer
+    glGenRenderbuffersOES(1, &depthRenderbuffer);
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
+    glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, backingWidth, backingHeight);
+    glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
+    
     if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 	{
 		NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
