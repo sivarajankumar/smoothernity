@@ -25,6 +25,7 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
 {		
 	if (self = [super init])
 	{
+        [UIApplication sharedApplication].idleTimerDisabled = YES;
 		context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
         
         if (!context || ![EAGLContext setCurrentContext:context])
