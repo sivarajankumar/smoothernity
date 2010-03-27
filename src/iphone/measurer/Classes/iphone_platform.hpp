@@ -7,6 +7,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define FRAMES_PER_SECOND 60
+#define SOUND_FREQUENCY 44100
 
 class shy_iphone_platform
 {
@@ -57,6 +58,27 @@ public :
         float_32 _x ;
         float_32 _y ;
         float_32 _z ;
+    } ;
+    
+    class sound_sample
+    {
+        friend class shy_iphone_platform ;
+    private :
+        ALubyte _value ;
+    } ;
+    
+    class sound_buffer_id
+    {
+        friend class shy_iphone_platform ;
+    private :
+        ALuint _buffer_id ;
+    } ;
+    
+    class sound_source_id
+    {
+        friend class shy_iphone_platform ;
+    private :
+        ALuint _source_id ;
     } ;
     
     static int_32 frames_per_second ( )
@@ -138,7 +160,20 @@ public :
     static void sound_set_listener_position ( vector_data position ) ;
     static void sound_set_listener_velocity ( vector_data velocity ) ;
     static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
-    
+    static int_32 sound_samples_per_second ( ) ;
+    static void sound_set_sample_value ( sound_sample & sample , float_32 value ) ;
+    static sound_buffer_id sound_create_buffer ( sound_sample * samples , int_32 samples_count ) ;
+    static sound_source_id sound_create_source ( ) ;
+    static void sound_set_source_pitch ( const sound_source_id & source_id , float_32 pitch ) ;
+    static void sound_set_source_gain ( const sound_source_id & source_id , float_32 gain ) ;
+    static void sound_set_source_position ( const sound_source_id & source_id , vector_data position ) ;
+    static void sound_set_source_velocity ( const sound_source_id & source_id , vector_data velocity ) ;
+    static void sound_set_source_buffer ( const sound_source_id & source_id , sound_buffer_id & buffer_id ) ;
+    static void sound_set_source_playback_looping ( const sound_source_id & source_id ) ;
+    static void sound_set_source_playback_once ( const sound_source_id & source_id ) ;
+    static void sound_source_play ( const sound_source_id & source_id ) ;
+    static void sound_source_stop ( const sound_source_id & source_id ) ;
+
     //
     // math
     //
