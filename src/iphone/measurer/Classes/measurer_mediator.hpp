@@ -68,9 +68,9 @@ public :
     {
         _logic . render_finished ( ) ;
     }
-    void update ( int_32 step )
+    void update ( )
     {
-        _logic . update ( step ) ;
+        _logic . update ( ) ;
     }
 private :
     measurer_camera < shy_measurer_mediator > _camera ;

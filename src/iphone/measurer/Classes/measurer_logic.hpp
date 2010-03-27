@@ -46,10 +46,9 @@ public :
     void render_finished ( )
     {
     }
-    void update ( int_32 step )
+    void update ( )
     {
-        if ( step == 0 )
-            _update_camera ( ) ;
+        _update_camera ( ) ;
     }
 private :
     void _init_render ( )

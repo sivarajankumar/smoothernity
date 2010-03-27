@@ -8,16 +8,6 @@
 
 #import "ES1Renderer.h"
 
-shy_iphone_platform :: vertex_data shy_iphone_platform :: _reference_vertex ;
-void * shy_iphone_platform :: _vertex_position_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _position ) 
-    - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
-    ) ;
-void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _color ) 
-    - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
-    ) ;
-
 @implementation ES1Renderer
 
 // Create an ES 1.1 context
@@ -33,6 +23,18 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
             [self release];
             return nil;
         }
+        
+        mDevice = alcOpenDevice ( NULL ) ;
+        if ( ! mDevice )
+        {
+            NSLog ( @"Failed to open OpenAl device" ) ;
+            [ self release ] ;
+            return nil ;
+        }
+        
+        mContext = alcCreateContext ( mDevice , NULL ) ;
+        alcMakeContextCurrent ( mContext ) ;
+                
 		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
 		glGenFramebuffersOES(1, &defaultFramebuffer);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
@@ -42,7 +44,6 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
         ////////////////////////////////////////////
         // Sound experiment begin
         
-        mDevice = alcOpenDevice ( NULL ) ;
         if ( mDevice )
         {
             ALfloat listenerPos [ ] = { 0.0 , 0.0 , 4.0 } ;
@@ -62,8 +63,6 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
                 data [ i ] = ( unsigned char ) ( level * 127.0f + 128.0f ) ;
             }
             
-            mContext = alcCreateContext ( mDevice , NULL ) ;
-            alcMakeContextCurrent ( mContext ) ;
             alListenerfv ( AL_POSITION , listenerPos ) ;
             alListenerfv ( AL_VELOCITY , listenerVel ) ;
             alListenerfv ( AL_ORIENTATION , listenerOri ) ;            
@@ -104,10 +103,6 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
                 NSLog ( @"Failed creating OpenAl buffers" ) ;
             }
         }
-        else
-        {
-            NSLog ( @"Failed to open OpenAl device" ) ;
-        }
         
         // Sound experiment end
         ////////////////////////////////////////////
@@ -121,11 +116,7 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
     [EAGLContext setCurrentContext:context];
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
 	shyMeasurer . render ( ) ;
-	for ( int i = 0; i < COMPUTATION_STEPS; i++ )
-	{
-		shyMeasurer . update ( i ) ;		
-        [ NSThread sleepForTimeInterval : ( NSTimeInterval ) SLEEP_BETWEEN_STEPS_IN_SECONDS ];
-	}
+	shyMeasurer . update ( ) ;
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
     shyMeasurer . render_finished ( ) ;
@@ -179,9 +170,15 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
 	if ([EAGLContext currentContext] == context)
         [EAGLContext setCurrentContext:nil];
 	
-	[context release];
+ 	[context release];
 	context = nil;
-	
+
+    // Turn off Open AL
+	alcDestroyContext ( mContext ) ;
+	alcCloseDevice ( mDevice ) ;
+    mContext = nil ;
+    mDevice = nil ;
+    
 	[super dealloc];
 }
 

@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -276,7 +278,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
+									<integer>13</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -312,14 +314,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>ES1Renderer.mm</string>
+								<string>measurer_camera.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,26 +327,33 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>ES1Renderer.mm</string>
+										<string>measurer_camera.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19A8DE04115E1AF60062EAB6</string>
+										<string>19A8DE4D115E299C0062EAB6</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
 											<string>19AE69501129CD1000742128</string>
-											<string>19F3D76511574F600006D4E0</string>
-											<string>19F3D76611574F600006D4E0</string>
 											<string>19F3D76711574F600006D4E0</string>
 											<string>19F3D76811574F600006D4E0</string>
 											<string>19F3D76911574F600006D4E0</string>
-											<string>19F3D76A11574F600006D4E0</string>
 											<string>19A8DDB5115E11250062EAB6</string>
 											<string>19A8DDB6115E11250062EAB6</string>
 											<string>19A8DDB7115E11250062EAB6</string>
-											<string>19A8DDF5115E191F0062EAB6</string>
-											<string>19A8DDF6115E191F0062EAB6</string>
+											<string>19A8DE31115E281C0062EAB6</string>
+											<string>19A8DE3B115E290C0062EAB6</string>
+											<string>19A8DE3D115E290C0062EAB6</string>
+											<string>19A8DE44115E299C0062EAB6</string>
+											<string>19A8DE45115E299C0062EAB6</string>
+											<string>19A8DE46115E299C0062EAB6</string>
+											<string>19A8DE47115E299C0062EAB6</string>
+											<string>19A8DE48115E299C0062EAB6</string>
+											<string>19A8DE49115E299C0062EAB6</string>
+											<string>19A8DE4A115E299C0062EAB6</string>
+											<string>19A8DE4B115E299C0062EAB6</string>
+											<string>19A8DE4C115E299C0062EAB6</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -573,7 +580,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>iphone_platform.hpp</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
