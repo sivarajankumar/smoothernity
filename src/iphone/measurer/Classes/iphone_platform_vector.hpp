@@ -60,7 +60,7 @@ shy_iphone_platform :: vector_sub
     , shy_iphone_platform :: vector_data v2 
     )
 {
-    shy_iphone_platform :: vector_data result ;
+    vector_data result ;
     result . _x = v1 . _x - v2 . _x ;
     result . _y = v1 . _y - v2 . _y ;
     result . _z = v1 . _z - v2 . _z ;
@@ -74,7 +74,7 @@ shy_iphone_platform :: vector_mul
     , shy_iphone_platform :: float_32 f 
     )
 {
-    shy_iphone_platform :: vector_data result ;
+    vector_data result ;
     result . _x = f * v . _x ;
     result . _y = f * v . _y ;
     result . _z = f * v . _z ;
@@ -87,7 +87,7 @@ shy_iphone_platform :: vector_length
     ( shy_iphone_platform :: vector_data v 
     )
 {
-    return ( shy_iphone_platform :: float_32 ) sqrt ( vector_dot_product ( v , v ) ) ;
+    return ( float_32 ) sqrt ( vector_dot_product ( v , v ) ) ;
 }
 
 inline
