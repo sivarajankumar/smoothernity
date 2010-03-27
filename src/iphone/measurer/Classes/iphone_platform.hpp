@@ -8,14 +8,6 @@
 
 #define FRAMES_PER_SECOND 60
 
-template < typename T >
-void swap_values ( T & a , T & b )
-{
-    T c = b ;
-    b = a ;
-    a = c ;
-}
-
 class shy_iphone_platform
 {
 public :
@@ -84,87 +76,25 @@ public :
     // matrix
     //
     
-    static void matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
-    {
-        matrix . _elements [ 0 ] = x ;
-        matrix . _elements [ 1 ] = y ;
-        matrix . _elements [ 2 ] = z ;
-        matrix . _elements [ 3 ] = 0 ;
-    }
-    static void matrix_set_axis_y ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
-    {
-        matrix . _elements [ 4 ] = x ;
-        matrix . _elements [ 5 ] = y ;
-        matrix . _elements [ 6 ] = z ;
-        matrix . _elements [ 7 ] = 0 ;
-    }
-    static void matrix_set_axis_z ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
-    {
-        matrix . _elements [  8 ] = x ;
-        matrix . _elements [  9 ] = y ;
-        matrix . _elements [ 10 ] = z ;
-        matrix . _elements [ 11 ] = 0 ;
-    }
-    static void matrix_set_origin ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
-    {
-        matrix . _elements [ 12 ] = x ;
-        matrix . _elements [ 13 ] = y ;
-        matrix . _elements [ 14 ] = z ;
-        matrix . _elements [ 15 ] = 1 ;
-    }
-    static void matrix_set_axis_x ( matrix_data & matrix , vector_data v )
-    {
-        matrix_set_axis_x ( matrix , v . _x , v . _y , v . _z ) ;
-    }
-    static void matrix_set_axis_y ( matrix_data & matrix , vector_data v )
-    {
-        matrix_set_axis_y ( matrix , v . _x , v . _y , v . _z ) ;
-    }
-    static void matrix_set_axis_z ( matrix_data & matrix , vector_data v )
-    {
-        matrix_set_axis_z ( matrix , v . _x , v . _y , v . _z ) ;
-    }
-    static void matrix_set_origin ( matrix_data & matrix , vector_data v )
-    {
-        matrix_set_origin ( matrix , v . _x , v . _y , v . _z ) ;
-    }
-    static vector_data matrix_get_axis_x ( const matrix_data & matrix )
-    {
-        return vector_xyz ( matrix . _elements [ 0 ] , matrix . _elements [ 1 ] , matrix . _elements [ 2 ] ) ;
-    }
-    static vector_data matrix_get_axis_y ( const matrix_data & matrix )
-    {
-        return vector_xyz ( matrix . _elements [ 4 ] , matrix . _elements [ 5 ] , matrix . _elements [ 6 ] ) ;
-    }
-    static vector_data matrix_get_axis_z ( const matrix_data & matrix )
-    {
-        return vector_xyz ( matrix . _elements [ 8 ] , matrix . _elements [ 9 ] , matrix . _elements [ 10 ] ) ;
-    }
-    static vector_data matrix_get_origin ( const matrix_data & matrix )
-    {
-        return vector_xyz ( matrix . _elements [ 12 ] , matrix . _elements [ 13 ] , matrix . _elements [ 14 ] ) ;
-    }
-    static void matrix_identity ( matrix_data & matrix )
-    {
-        for ( int i = 0 ; i < 16 ; i ++ )
-        {
-            if ( i == 0 || i == 5 || i == 10 || i == 15 )
-                matrix . _elements [ i ] = 1 ;
-            else
-                matrix . _elements [ i ] = 0 ;
-        }
-    }
-    static void matrix_inverse_rotation_translation ( matrix_data & matrix )
-    {
-        matrix_set_origin ( matrix , vector_xyz
-            ( - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_x ( matrix ) )
-            , - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_y ( matrix ) )
-            , - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_z ( matrix ) )
-            ) ) ;
-        swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
-        swap_values ( matrix . _elements [ 2 ] , matrix . _elements [ 8 ] ) ;
-        swap_values ( matrix . _elements [ 6 ] , matrix . _elements [ 9 ] ) ;
-    }
+    static void matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
+    static void matrix_set_axis_y ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
+    static void matrix_set_axis_z ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
+    static void matrix_set_origin ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
+    static void matrix_set_axis_x ( matrix_data & matrix , vector_data v ) ;
+    static void matrix_set_axis_y ( matrix_data & matrix , vector_data v ) ;
+    static void matrix_set_axis_z ( matrix_data & matrix , vector_data v ) ;
+    static void matrix_set_origin ( matrix_data & matrix , vector_data v ) ;
+    static vector_data matrix_get_axis_x ( const matrix_data & matrix ) ;
+    static vector_data matrix_get_axis_y ( const matrix_data & matrix ) ;
+    static vector_data matrix_get_axis_z ( const matrix_data & matrix ) ;
+    static vector_data matrix_get_origin ( const matrix_data & matrix ) ;
+    static void matrix_identity ( matrix_data & matrix ) ;
+    static void matrix_inverse_rotation_translation ( matrix_data & matrix ) ;
+    
+    //
+    // render
+    //
+    
     static void render_enable_face_culling ( )
     {
         glEnable ( GL_CULL_FACE ) ;
@@ -337,5 +267,14 @@ private :
     static void * _vertex_color_offset ;
 } ;
 
+template < typename T >
+void swap_values ( T & a , T & b )
+{
+    T c = b ;
+    b = a ;
+    a = c ;
+}
+
+#include "iphone_platform_matrix.hpp"
 #include "iphone_platform_render.hpp"
 #include "iphone_platform_vector.hpp"
