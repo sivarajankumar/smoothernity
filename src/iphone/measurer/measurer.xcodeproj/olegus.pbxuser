@@ -457,9 +457,9 @@
 	};
 	19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 5252}}";
-			sepNavSelRange = "{1295, 0}";
-			sepNavVisRange = "{921, 1480}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 4836}}";
+			sepNavSelRange = "{2889, 0}";
+			sepNavVisRange = "{1125, 1791}";
 		};
 	};
 	19A8DE19115E259E0062EAB6 /* XCBuildMessageTextBookmark */ = {
@@ -468,7 +468,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 0;
-		rLoc = 69;
+		rLoc = 73;
 		rType = 1;
 	};
 	19A8DE1A115E259E0062EAB6 /* PBXTextBookmark */ = {
@@ -476,7 +476,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 52";
 		rLen = 0;
-		rLoc = 1218;
+		rLoc = 1251;
 		rType = 0;
 		vrLen = 282;
 		vrLoc = 791;
@@ -586,7 +586,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 376";
 		rLen = 0;
-		rLoc = 12965;
+		rLoc = 11979;
 		rType = 0;
 		vrLen = 1804;
 		vrLoc = 11185;
@@ -1071,7 +1071,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 24";
 		rLen = 0;
-		rLoc = 1218;
+		rLoc = 1251;
 		rType = 0;
 		vrLen = 1441;
 		vrLoc = 0;
@@ -1130,7 +1130,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 376";
 		rLen = 0;
-		rLoc = 12965;
+		rLoc = 11979;
 		rType = 0;
 		vrLen = 1815;
 		vrLoc = 11214;
@@ -1157,7 +1157,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 378";
 		rLen = 0;
-		rLoc = 12965;
+		rLoc = 11979;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 11295;
@@ -1184,9 +1184,9 @@
 	};
 	19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 622}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 884}}";
+			sepNavSelRange = "{1968, 0}";
+			sepNavVisRange = "{426, 1542}";
 		};
 	};
 	19AE69501129CD1000742128 /* PlistBookmark */ = {

@@ -67,53 +67,23 @@ public :
         float_32 _z ;
     } ;
     
+    //
+    // vector
+    //
+    
     static vector_data vector_xyz ( float_32 x , float_32 y , float_32 z ) ;
-    static float_32 vector_dot_product ( vector_data v1 , vector_data v2 )
-    {
-        return v1 . _x * v2 . _x
-             + v1 . _y * v2 . _y
-             + v1 . _z * v2 . _z ;
-    }
-    static vector_data vector_cross_product ( vector_data v1 , vector_data v2 )
-    {
-        vector_data result ;
-        result . _x = v1 . _y * v2 . _z - v2 . _y * v1 . _z ;
-        result . _y = v1 . _z * v2 . _x - v2 . _z * v1 . _x ;
-        result . _z = v1 . _x * v2 . _y - v2 . _x * v1 . _y ;
-        return result ;
-    }
-    static vector_data vector_add ( vector_data v1 , vector_data v2 )
-    {
-        vector_data result ;
-        result . _x = v1 . _x + v2 . _x ;
-        result . _y = v1 . _y + v2 . _y ;
-        result . _z = v1 . _z + v2 . _z ;
-        return result ;
-    }
-    static vector_data vector_sub ( vector_data v1 , vector_data v2 )
-    {
-        vector_data result ;
-        result . _x = v1 . _x - v2 . _x ;
-        result . _y = v1 . _y - v2 . _y ;
-        result . _z = v1 . _z - v2 . _z ;
-        return result ;
-    }
-    static vector_data vector_mul ( vector_data v , float_32 f )
-    {
-        vector_data result ;
-        result . _x = f * v . _x ;
-        result . _y = f * v . _y ;
-        result . _z = f * v . _z ;
-        return result ;
-    }
-    static float_32 vector_length ( vector_data v )
-    {
-        return ( float_32 ) sqrt ( vector_dot_product ( v , v ) ) ;
-    }
-    static vector_data vector_normalize ( vector_data v )
-    {
-        return vector_mul ( v , 1.0f / vector_length ( v ) ) ;
-    }
+    static float_32 vector_dot_product ( vector_data v1 , vector_data v2 ) ;
+    static vector_data vector_cross_product ( vector_data v1 , vector_data v2 ) ;
+    static vector_data vector_add ( vector_data v1 , vector_data v2 ) ;
+    static vector_data vector_sub ( vector_data v1 , vector_data v2 ) ;
+    static vector_data vector_mul ( vector_data v , float_32 f ) ;
+    static float_32 vector_length ( vector_data v ) ;
+    static vector_data vector_normalize ( vector_data v ) ;
+    
+    //
+    // matrix
+    //
+    
     static void matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
     {
         matrix . _elements [ 0 ] = x ;
