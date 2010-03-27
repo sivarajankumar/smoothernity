@@ -10,6 +10,8 @@
 
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+#import <OpenAL/al.h>
+#import <OpenAL/alc.h>
 
 #import "measurer_facade.hpp"
 
@@ -400,6 +402,10 @@ private :
 	
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
 	GLuint defaultFramebuffer, colorRenderbuffer, depthRenderbuffer;
+    
+    // OpenAL 
+	ALCcontext * mContext;
+	ALCdevice * mDevice;
 }
 
 - (void) render;
