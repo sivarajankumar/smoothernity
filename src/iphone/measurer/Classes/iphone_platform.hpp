@@ -132,6 +132,12 @@ public :
         ) ;
     
     //
+    // sound
+    //
+    
+    static void sound_set_listener_position ( vector_data position ) ;
+    
+    //
     // math
     //
     
@@ -162,5 +168,6 @@ void swap_values ( T & a , T & b )
 #include "iphone_platform_math.hpp"
 #include "iphone_platform_matrix.hpp"
 #include "iphone_platform_render.hpp"
+#include "iphone_platform_sound.hpp"
 #include "iphone_platform_time.hpp"
 #include "iphone_platform_vector.hpp"

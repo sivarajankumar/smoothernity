@@ -27,6 +27,7 @@ public :
     void init ( )
     {
         _init_render ( ) ;
+        _init_sound ( ) ;
         _create_entity_mesh ( ) ;
         _create_entity_grid ( ) ;
         _create_land_mesh ( ) ;
@@ -59,6 +60,10 @@ private :
         platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
         platform :: render_select_modelview_matrix ( ) ;
         platform :: render_matrix_identity ( ) ;
+    }
+    void _init_sound ( )
+    {
+        platform :: sound_set_listener_position ( platform :: vector_xyz ( 0.0 , 0.0 , 4.0 ) ) ;
     }
     void _reset_camera_rubber ( )
     {
