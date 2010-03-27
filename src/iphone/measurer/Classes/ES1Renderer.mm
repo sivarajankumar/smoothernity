@@ -40,67 +40,7 @@
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
 
 		shyMeasurer . init ( ) ;
-        
-        ////////////////////////////////////////////
-        // Sound experiment begin
-        
-        if ( mDevice )
-        {
-            ALfloat source0Pos [ ] = { - 2.0 , 0.0 , 0.0 } ;
-            ALfloat source0Vel [ ] = { 0.0 , 0.0 , 0.0 } ;
-            
-            ALuint  buffer = 0 ;
-            ALuint  source = 0 ;
-
-            ALubyte data [ 44100 ] ;
-            for ( int i = 0 ; i < 44100 ; ++ i )
-            {
-                float pos = ( ( float ) i ) * 3.14159 / 44100.0f ;
-                float level = sinf ( pos * 10000.0f ) ;
-                data [ i ] = ( unsigned char ) ( level * 127.0f + 128.0f ) ;
-            }
-            
-            alGetError ( ) ;
-            alGenBuffers ( 1 , & buffer ) ;
-            if ( alGetError ( ) == AL_NO_ERROR )
-            {
-                alGetError ( ) ;
-                alBufferData ( buffer , AL_FORMAT_MONO8 , ( ALvoid * ) data , 44100 , 44100 ) ;
-                if ( alGetError ( ) == AL_NO_ERROR )
-                {
-                    alGetError ( ) ;
-                    alGenSources( 1 , & source ) ;
-                    if ( alGetError ( ) == AL_NO_ERROR ) 
-                    {
-                        alSourcef ( source , AL_PITCH , 1.0f ) ;
-                        alSourcef ( source , AL_GAIN , 1.0f ) ;
-                        alSourcefv ( source , AL_POSITION , source0Pos ) ;
-                        alSourcefv ( source , AL_VELOCITY , source0Vel ) ;
-                        alSourcei ( source , AL_BUFFER , buffer ) ;
-                        alSourcei ( source , AL_LOOPING , AL_TRUE ) ;
-                        alSourcePlay ( source ) ;
-                        NSLog ( @"Successfully created OpenAl sources" ) ;
-                    }
-                    else
-                    {
-                        NSLog ( @"Failed creating OpenAl sources" ) ;
-                    }
-                }
-                else
-                {
-                    NSLog ( @"Failed loading OpenAl buffer data" ) ;
-                }
-
-            }
-            else
-            {
-                NSLog ( @"Failed creating OpenAl buffers" ) ;
-            }
-        }
-        
-        // Sound experiment end
-        ////////////////////////////////////////////
-	}
+    }
 	
 	return self;
 }

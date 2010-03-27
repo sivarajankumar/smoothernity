@@ -37,15 +37,6 @@ shy_iphone_platform :: sound_set_listener_orientation
 }
 
 inline
-shy_iphone_platform :: int_32 
-shy_iphone_platform :: sound_samples_per_second 
-    ( 
-    )
-{
-    return SOUND_FREQUENCY ;
-}
-
-inline
 void 
 shy_iphone_platform :: sound_set_sample_value 
     ( shy_iphone_platform :: sound_sample & sample 
@@ -69,7 +60,7 @@ shy_iphone_platform :: sound_create_buffer
         , AL_FORMAT_MONO8 
         , ( ALvoid * ) samples 
         , samples_count
-        , SOUND_FREQUENCY
+        , sound_samples_per_second
         ) ;
     return buffer_id ;
 }

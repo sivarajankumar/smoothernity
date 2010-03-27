@@ -13,6 +13,9 @@ class shy_measurer_logic
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: sound_buffer_id sound_buffer_id ;
+    typedef typename mediator :: platform :: sound_sample sound_sample ;
+    typedef typename mediator :: platform :: sound_source_id sound_source_id ;
     typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -36,6 +39,7 @@ public :
     }
     void done ( )
     {
+        _done_sound ( ) ;
     }
     void render ( )
     {
@@ -69,6 +73,28 @@ private :
             ( platform :: vector_xyz ( 0 , 0 , 1 )
             , platform :: vector_xyz ( 0 , 1 , 0 )
             ) ;
+            
+        sound_sample sound_data [ platform :: sound_samples_per_second ] ;
+        for ( int_32 i = 0 ; i < platform :: sound_samples_per_second ; ++ i )
+        {
+            float_32 pos = float_32 ( i ) * PI / float_32 ( platform :: sound_samples_per_second ) ;
+            float_32 level = platform :: math_sin ( pos * 10000.0f ) ;
+            platform :: sound_set_sample_value ( sound_data [ i ] , level ) ;
+        }
+        
+        sound_buffer_id sound_buffer = platform :: sound_create_buffer ( sound_data , platform :: sound_samples_per_second ) ;
+        _sound_source = platform :: sound_create_source ( ) ;
+        platform :: sound_set_source_pitch ( _sound_source , 1 ) ;
+        platform :: sound_set_source_gain ( _sound_source , 1 ) ;
+        platform :: sound_set_source_position ( _sound_source , platform :: vector_xyz ( - 2 , 0 , 0 ) ) ;
+        platform :: sound_set_source_velocity ( _sound_source , platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
+        platform :: sound_set_source_buffer ( _sound_source , sound_buffer ) ;
+        platform :: sound_set_source_playback_looping ( _sound_source ) ;
+        platform :: sound_source_play ( _sound_source ) ;
+    }
+    void _done_sound ( )
+    {
+        platform :: sound_source_stop ( _sound_source ) ;
     }
     void _reset_camera_rubber ( )
     {
@@ -330,5 +356,6 @@ private :
     vector_data _desired_camera_target ;
     vector_data _current_camera_origin ;
     vector_data _current_camera_target ;
+    sound_source_id _sound_source ;
     mediator * _mediator ;
 } ;

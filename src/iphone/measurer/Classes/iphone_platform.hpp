@@ -6,9 +6,6 @@
 #import <OpenAL/alc.h>
 #import <QuartzCore/QuartzCore.h>
 
-#define FRAMES_PER_SECOND 60
-#define SOUND_FREQUENCY 44100
-
 class shy_iphone_platform
 {
 public :
@@ -81,10 +78,12 @@ public :
         ALuint _source_id ;
     } ;
     
-    static int_32 frames_per_second ( )
-    {
-        return FRAMES_PER_SECOND ;
-    }
+    //
+    // constants
+    //
+    
+    static const int_32 frames_per_second = 60 ;
+    static const int_32 sound_samples_per_second = 44100 ;
     
     //
     // vector
@@ -160,7 +159,6 @@ public :
     static void sound_set_listener_position ( vector_data position ) ;
     static void sound_set_listener_velocity ( vector_data velocity ) ;
     static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
-    static int_32 sound_samples_per_second ( ) ;
     static void sound_set_sample_value ( sound_sample & sample , float_32 value ) ;
     static sound_buffer_id sound_create_buffer ( sound_sample * samples , int_32 samples_count ) ;
     static sound_source_id sound_create_source ( ) ;
