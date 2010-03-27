@@ -65,6 +65,10 @@ private :
     {
         platform :: sound_set_listener_position ( platform :: vector_xyz ( 0 , 0 , 4 ) ) ;
         platform :: sound_set_listener_velocity ( platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
+        platform :: sound_set_listener_orientation
+            ( platform :: vector_xyz ( 0 , 0 , 1 )
+            , platform :: vector_xyz ( 0 , 1 , 0 )
+            ) ;
     }
     void _reset_camera_rubber ( )
     {

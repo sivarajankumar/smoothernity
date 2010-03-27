@@ -276,7 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
+									<integer>21</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>ES1Renderer.mm</string>
+								<string>iphone_platform_sound.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>ES1Renderer.mm</string>
+										<string>iphone_platform_sound.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19A8DEC2115E45FF0062EAB6</string>
+										<string>19A8DEC9115E47950062EAB6</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -356,10 +356,10 @@
 											<string>19A8DEBB115E45FF0062EAB6</string>
 											<string>19A8DEBC115E45FF0062EAB6</string>
 											<string>19A8DEBD115E45FF0062EAB6</string>
-											<string>19A8DEBE115E45FF0062EAB6</string>
-											<string>19A8DEBF115E45FF0062EAB6</string>
-											<string>19A8DEC0115E45FF0062EAB6</string>
-											<string>19A8DEC1115E45FF0062EAB6</string>
+											<string>19A8DEC5115E47950062EAB6</string>
+											<string>19A8DEC6115E47950062EAB6</string>
+											<string>19A8DEC7115E47950062EAB6</string>
+											<string>19A8DEC8115E47950062EAB6</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

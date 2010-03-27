@@ -137,6 +137,7 @@ public :
     
     static void sound_set_listener_position ( vector_data position ) ;
     static void sound_set_listener_velocity ( vector_data velocity ) ;
+    static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
     
     //
     // math
