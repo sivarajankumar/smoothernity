@@ -22,7 +22,7 @@ public :
     typedef int int_32 ;
     typedef float float_32 ;
     
-    class buffer_id
+    class render_buffer_id
     {
         friend class shy_iphone_platform ;
     private :
@@ -231,11 +231,11 @@ public :
         glLoadIdentity ( ) ;
         glFrustumf ( left , right , bottom , top , near , far ) ;
     }
-    static void render_create_buffer_id ( buffer_id & arg_buffer_id )
+    static void render_create_buffer_id ( render_buffer_id & arg_buffer_id )
     {
         glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     }
-    static void render_load_vertex_buffer ( const buffer_id & arg_buffer_id , int_32 elements , vertex_data * data )
+    static void render_load_vertex_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data )
     {
 		glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
 		glBufferData
@@ -258,7 +258,7 @@ public :
         vertex . _color [ 2 ] = ( GLubyte ) b ;
         vertex . _color [ 3 ] = ( GLubyte ) a ;
     }
-    static void render_load_index_buffer ( const buffer_id & arg_buffer_id , int_32 elements , index_data * data )
+    static void render_load_index_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , index_data * data )
     {
 		glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
 		glBufferData
@@ -309,8 +309,8 @@ public :
         glPopMatrix ( ) ;
     }
     static void render_draw_triangle_strip 
-        ( const buffer_id & vertices_buffer 
-        , const buffer_id & indices_buffer
+        ( const render_buffer_id & vertices_buffer 
+        , const render_buffer_id & indices_buffer
         , int_32 indices_count
         )
     {
@@ -323,8 +323,8 @@ public :
         glDrawElements ( GL_TRIANGLE_STRIP , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
     }
     static void render_draw_triangle_fan
-        ( const buffer_id & vertices_buffer 
-        , const buffer_id & indices_buffer
+        ( const render_buffer_id & vertices_buffer 
+        , const render_buffer_id & indices_buffer
         , int_32 indices_count
         )
     {

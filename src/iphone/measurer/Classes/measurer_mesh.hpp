@@ -6,7 +6,7 @@ template < typename mediator >
 class shy_measurer_mesh
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: buffer_id buffer_id ;
+    typedef typename mediator :: platform :: render_buffer_id render_buffer_id ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
@@ -22,9 +22,9 @@ private :
     class _mesh_data
     {
     public :
-        buffer_id vertex_buffer_id ;
-        buffer_id triangle_strip_index_buffer_id ;
-        buffer_id triangle_fan_index_buffer_id ;
+        render_buffer_id vertex_buffer_id ;
+        render_buffer_id triangle_strip_index_buffer_id ;
+        render_buffer_id triangle_fan_index_buffer_id ;
         int_32 triangle_strip_indices_count ;
         int_32 triangle_fan_indices_count ;
         matrix_data transform ;
