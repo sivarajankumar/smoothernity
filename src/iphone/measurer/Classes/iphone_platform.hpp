@@ -67,14 +67,7 @@ public :
         float_32 _z ;
     } ;
     
-    static vector_data vector_xyz ( float_32 x , float_32 y , float_32 z )
-    {
-        vector_data vector ;
-        vector . _x = x ;
-        vector . _y = y ;
-        vector . _z = z ;
-        return vector ;
-    }
+    static vector_data vector_xyz ( float_32 x , float_32 y , float_32 z ) ;
     static float_32 vector_dot_product ( vector_data v1 , vector_data v2 )
     {
         return v1 . _x * v2 . _x
@@ -373,3 +366,6 @@ private :
     static void * _vertex_position_offset ;
     static void * _vertex_color_offset ;
 } ;
+
+#include "iphone_platform_render.hpp"
+#include "iphone_platform_vector.hpp"
