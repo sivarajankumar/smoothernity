@@ -59,9 +59,10 @@ public :
         float_32 _z ;
     } ;
     
-    //
-    // vector
-    //
+    static int_32 frames_per_second ( )
+    {
+        return FRAMES_PER_SECOND ;
+    }
     
     static vector_data vector_xyz ( float_32 x , float_32 y , float_32 z ) ;
     static float_32 vector_dot_product ( vector_data v1 , vector_data v2 ) ;
@@ -71,10 +72,6 @@ public :
     static vector_data vector_mul ( vector_data v , float_32 f ) ;
     static float_32 vector_length ( vector_data v ) ;
     static vector_data vector_normalize ( vector_data v ) ;
-    
-    //
-    // matrix
-    //
     
     static void matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
     static void matrix_set_axis_y ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
@@ -90,10 +87,6 @@ public :
     static vector_data matrix_get_origin ( const matrix_data & matrix ) ;
     static void matrix_identity ( matrix_data & matrix ) ;
     static void matrix_inverse_rotation_translation ( matrix_data & matrix ) ;
-    
-    //
-    // render
-    //
     
     static void render_enable_face_culling ( ) ;
     static void render_enable_depth_test ( ) ;
@@ -126,18 +119,9 @@ public :
         , int_32 indices_count
         ) ;
     
-    //
-    // math
-    //
+    static float_32 math_sin ( float_32 a ) ;
+    static float_32 math_cos ( float_32 a ) ;
     
-    static float_32 math_sin ( float_32 a )
-    {
-        return sinf ( a ) ;
-    }
-    static float_32 math_cos ( float_32 a )
-    {
-        return cosf ( a ) ;
-    }
     static void time_get_current ( time_data & time )
     {
         time . _time = CFAbsoluteTimeGetCurrent ( ) ;
@@ -150,10 +134,6 @@ public :
         else
             diff = time2 . _time - time1 . _time ;
         return ( int_32 ) ( diff * ( CFAbsoluteTime ) 1000000 ) ;
-    }
-    static int_32 frames_per_second ( )
-    {
-        return FRAMES_PER_SECOND ;
     }
 private :
     static vertex_data _reference_vertex ;
@@ -169,6 +149,7 @@ void swap_values ( T & a , T & b )
     a = c ;
 }
 
+#include "iphone_platform_math.hpp"
 #include "iphone_platform_matrix.hpp"
 #include "iphone_platform_render.hpp"
 #include "iphone_platform_vector.hpp"

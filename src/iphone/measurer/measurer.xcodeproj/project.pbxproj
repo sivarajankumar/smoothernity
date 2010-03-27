@@ -30,6 +30,7 @@
 		19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_render.hpp; sourceTree = "<group>"; };
 		19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_vector.hpp; sourceTree = "<group>"; };
 		19A8DE99115E350A0062EAB6 /* iphone_platform_matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_matrix.hpp; sourceTree = "<group>"; };
+		19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_math.hpp; sourceTree = "<group>"; };
 		19AE69731129D66A00742128 /* measurer_facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_facade.hpp; sourceTree = "<group>"; };
 		19AE697C1129D72700742128 /* measurer_mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_mediator.hpp; sourceTree = "<group>"; };
 		19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic.hpp; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 				19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */,
 				19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */,
 				19A8DE99115E350A0062EAB6 /* iphone_platform_matrix.hpp */,
+				19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
