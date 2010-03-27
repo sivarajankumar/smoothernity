@@ -1,6 +1,6 @@
 // !$*UTF8*$!
 {
-	19044C93115669F500C648FF /* measurer_logic.hpp:183 */ = {
+	19044C93115669F500C648FF /* measurer_logic.hpp:184 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -12,7 +12,7 @@
 		functionName = "_create_land_mesh ( )";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 183;
+		lineNumber = 184;
 		location = measurer;
 		modificationTime = 290875893.166006;
 		originalNumberOfMultipleMatches = 1;
@@ -110,7 +110,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 45";
 		rLen = 0;
-		rLoc = 3558;
+		rLoc = 3441;
 		rType = 0;
 		vrLen = 1588;
 		vrLoc = 515;
@@ -160,7 +160,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 53";
 		rLen = 0;
-		rLoc = 1355;
+		rLoc = 1295;
 		rType = 0;
 		vrLen = 1561;
 		vrLoc = 1020;
@@ -170,7 +170,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 57";
 		rLen = 0;
-		rLoc = 3558;
+		rLoc = 3441;
 		rType = 0;
 		vrLen = 1526;
 		vrLoc = 1020;
@@ -180,7 +180,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 63";
 		rLen = 0;
-		rLoc = 1619;
+		rLoc = 1559;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 1020;
@@ -200,7 +200,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 65";
 		rLen = 0;
-		rLoc = 1946;
+		rLoc = 1886;
 		rType = 0;
 		vrLen = 1584;
 		vrLoc = 1020;
@@ -210,7 +210,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 54";
 		rLen = 0;
-		rLoc = 1584;
+		rLoc = 1524;
 		rType = 0;
 		vrLen = 1526;
 		vrLoc = 1321;
@@ -220,7 +220,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 75";
 		rLen = 0;
-		rLoc = 2244;
+		rLoc = 2127;
 		rType = 0;
 		vrLen = 1516;
 		vrLoc = 1584;
@@ -230,7 +230,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 73";
 		rLen = 0;
-		rLoc = 2244;
+		rLoc = 2127;
 		rType = 0;
 		vrLen = 1454;
 		vrLoc = 1509;
@@ -240,7 +240,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 75";
 		rLen = 0;
-		rLoc = 2411;
+		rLoc = 2294;
 		rType = 0;
 		vrLen = 1604;
 		vrLoc = 1509;
@@ -250,7 +250,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 75";
 		rLen = 0;
-		rLoc = 2411;
+		rLoc = 2294;
 		rType = 0;
 		vrLen = 1655;
 		vrLoc = 1509;
@@ -260,7 +260,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 78";
 		rLen = 0;
-		rLoc = 2578;
+		rLoc = 2461;
 		rType = 0;
 		vrLen = 1659;
 		vrLoc = 1792;
@@ -270,7 +270,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 82";
 		rLen = 0;
-		rLoc = 2845;
+		rLoc = 2728;
 		rType = 0;
 		vrLen = 1913;
 		vrLoc = 1792;
@@ -280,7 +280,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 78";
 		rLen = 0;
-		rLoc = 2578;
+		rLoc = 2461;
 		rType = 0;
 		vrLen = 1946;
 		vrLoc = 1792;
@@ -290,7 +290,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 78";
 		rLen = 0;
-		rLoc = 2578;
+		rLoc = 2461;
 		rType = 0;
 		vrLen = 1946;
 		vrLoc = 1792;
@@ -330,7 +330,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 78";
 		rLen = 0;
-		rLoc = 2578;
+		rLoc = 2461;
 		rType = 0;
 		vrLen = 1946;
 		vrLoc = 1792;
@@ -340,7 +340,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 71";
 		rLen = 0;
-		rLoc = 2244;
+		rLoc = 2127;
 		rType = 0;
 		vrLen = 1940;
 		vrLoc = 1792;
@@ -350,7 +350,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 71";
 		rLen = 0;
-		rLoc = 2244;
+		rLoc = 2127;
 		rType = 0;
 		vrLen = 1832;
 		vrLoc = 1792;
@@ -360,7 +360,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 71";
 		rLen = 0;
-		rLoc = 2299;
+		rLoc = 2182;
 		rType = 0;
 		vrLen = 1841;
 		vrLoc = 1792;
@@ -370,7 +370,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 71";
 		rLen = 0;
-		rLoc = 2339;
+		rLoc = 2222;
 		rType = 0;
 		vrLen = 2010;
 		vrLoc = 1321;
@@ -380,7 +380,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 60";
 		rLen = 0;
-		rLoc = 1637;
+		rLoc = 1577;
 		rType = 0;
 		vrLen = 2025;
 		vrLoc = 1321;
@@ -410,7 +410,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 62";
 		rLen = 0;
-		rLoc = 1918;
+		rLoc = 1858;
 		rType = 0;
 		vrLen = 2059;
 		vrLoc = 1654;
@@ -420,7 +420,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 62";
 		rLen = 0;
-		rLoc = 1902;
+		rLoc = 1842;
 		rType = 0;
 		vrLen = 2070;
 		vrLoc = 1654;
@@ -430,7 +430,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 64";
 		rLen = 0;
-		rLoc = 1945;
+		rLoc = 1885;
 		rType = 0;
 		vrLen = 2024;
 		vrLoc = 1654;
@@ -440,7 +440,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 74";
 		rLen = 0;
-		rLoc = 2299;
+		rLoc = 2182;
 		rType = 0;
 		vrLen = 2023;
 		vrLoc = 1654;
@@ -450,16 +450,16 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 74";
 		rLen = 0;
-		rLoc = 2244;
+		rLoc = 2127;
 		rType = 0;
 		vrLen = 2169;
 		vrLoc = 1561;
 	};
 	19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1006, 2041}}";
-			sepNavSelRange = "{5072, 71}";
-			sepNavVisRange = "{3116, 2362}";
+			sepNavIntBoundsRect = "{{0, 0}, {1006, 2015}}";
+			sepNavSelRange = "{5209, 0}";
+			sepNavVisRange = "{3316, 2223}";
 		};
 	};
 	19A8DE19115E259E0062EAB6 /* XCBuildMessageTextBookmark */ = {
@@ -586,7 +586,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 376";
 		rLen = 0;
-		rLoc = 5936;
+		rLoc = 6007;
 		rType = 0;
 		vrLen = 1804;
 		vrLoc = 11185;
@@ -728,7 +728,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 119";
 		rLen = 0;
-		rLoc = 3855;
+		rLoc = 3738;
 		rType = 0;
 		vrLen = 1832;
 		vrLoc = 3675;
@@ -872,7 +872,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 66";
 		rLen = 0;
-		rLoc = 1946;
+		rLoc = 1886;
 		rType = 0;
 		vrLen = 2284;
 		vrLoc = 829;
@@ -1051,7 +1051,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 66";
 		rLen = 0;
-		rLoc = 1946;
+		rLoc = 1886;
 		rType = 0;
 		vrLen = 2239;
 		vrLoc = 874;
@@ -1130,7 +1130,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 376";
 		rLen = 0;
-		rLoc = 5936;
+		rLoc = 6007;
 		rType = 0;
 		vrLen = 1815;
 		vrLoc = 11214;
@@ -1157,7 +1157,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 378";
 		rLen = 0;
-		rLoc = 5936;
+		rLoc = 6007;
 		rType = 0;
 		vrLen = 1773;
 		vrLoc = 11295;
@@ -1241,7 +1241,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 277";
 		rLen = 0;
-		rLoc = 5748;
+		rLoc = 5819;
 		rType = 0;
 		vrLen = 1375;
 		vrLoc = 8368;
@@ -1271,7 +1271,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 164";
 		rLen = 0;
-		rLoc = 5634;
+		rLoc = 5705;
 		rType = 0;
 		vrLen = 1363;
 		vrLoc = 4528;
@@ -1348,7 +1348,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 143";
 		rLen = 0;
-		rLoc = 5307;
+		rLoc = 5378;
 		rType = 0;
 		vrLen = 1071;
 		vrLoc = 4931;
@@ -1358,7 +1358,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 152";
 		rLen = 0;
-		rLoc = 5748;
+		rLoc = 5819;
 		rType = 0;
 		vrLen = 1511;
 		vrLoc = 4412;
@@ -1372,9 +1372,9 @@
 	};
 	19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 645}}";
-			sepNavSelRange = "{257, 0}";
-			sepNavVisRange = "{0, 257}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 622}}";
+			sepNavSelRange = "{506, 0}";
+			sepNavVisRange = "{0, 513}";
 		};
 	};
 	19A8DEB9115E45FF0062EAB6 /* PBXTextBookmark */ = {
@@ -1442,7 +1442,7 @@
 		fRef = 19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */;
 		name = "iphone_platform_sound.hpp: 10";
 		rLen = 0;
-		rLoc = 257;
+		rLoc = 513;
 		rType = 0;
 		vrLen = 257;
 		vrLoc = 0;
@@ -1452,7 +1452,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 67";
 		rLen = 0;
-		rLoc = 2041;
+		rLoc = 2126;
 		rType = 0;
 		vrLen = 1381;
 		vrLoc = 1124;
@@ -1462,7 +1462,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 65";
 		rLen = 0;
-		rLoc = 1946;
+		rLoc = 1886;
 		rType = 0;
 		vrLen = 2247;
 		vrLoc = 874;
@@ -1472,7 +1472,7 @@
 		fRef = 2514C26E10084DB100A42282 /* ES1Renderer.mm */;
 		name = "ES1Renderer.mm: 64";
 		rLen = 0;
-		rLoc = 1945;
+		rLoc = 1885;
 		rType = 0;
 		vrLen = 2172;
 		vrLoc = 874;
@@ -1597,7 +1597,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 135";
 		rLen = 0;
-		rLoc = 4708;
+		rLoc = 4793;
 		rType = 0;
 		vrLen = 1942;
 		vrLoc = 3573;
@@ -1696,9 +1696,9 @@
 	};
 	2514C26E10084DB100A42282 /* ES1Renderer.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 2288}}";
-			sepNavSelRange = "{1945, 0}";
-			sepNavVisRange = "{874, 2172}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 2249}}";
+			sepNavSelRange = "{1886, 0}";
+			sepNavVisRange = "{891, 2135}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -1747,7 +1747,7 @@
 		);
 		breakpoints = (
 			19D4B1FD1154C13700DEA992 /* measurer_facade.hpp:17 */,
-			19044C93115669F500C648FF /* measurer_logic.hpp:183 */,
+			19044C93115669F500C648FF /* measurer_logic.hpp:184 */,
 		);
 		codeSenseManager = 19E3FF4910E29715006628E8 /* Code sense */;
 		executables = (

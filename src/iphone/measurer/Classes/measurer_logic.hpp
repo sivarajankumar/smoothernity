@@ -63,7 +63,8 @@ private :
     }
     void _init_sound ( )
     {
-        platform :: sound_set_listener_position ( platform :: vector_xyz ( 0.0 , 0.0 , 4.0 ) ) ;
+        platform :: sound_set_listener_position ( platform :: vector_xyz ( 0 , 0 , 4 ) ) ;
+        platform :: sound_set_listener_velocity ( platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
     }
     void _reset_camera_rubber ( )
     {

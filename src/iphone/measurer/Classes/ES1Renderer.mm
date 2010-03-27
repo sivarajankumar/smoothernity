@@ -46,7 +46,6 @@
         
         if ( mDevice )
         {
-            ALfloat listenerVel [ ] = { 0.0 , 0.0 , 0.0 } ;
             ALfloat listenerOri [ ] = { 0.0 , 0.0 , 1.0 , 0.0 , 1.0 , 0.0 } ;
             ALfloat source0Pos [ ] = { - 2.0 , 0.0 , 0.0 } ;
             ALfloat source0Vel [ ] = { 0.0 , 0.0 , 0.0 } ;
@@ -62,7 +61,6 @@
                 data [ i ] = ( unsigned char ) ( level * 127.0f + 128.0f ) ;
             }
             
-            alListenerfv ( AL_VELOCITY , listenerVel ) ;
             alListenerfv ( AL_ORIENTATION , listenerOri ) ;            
             alGetError ( ) ;
             alGenBuffers ( 1 , & buffer ) ;
