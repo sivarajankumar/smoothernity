@@ -1,5 +1,6 @@
 #include "measurer_camera.hpp"
 #include "measurer_logic.hpp"
+#include "measurer_logic_entities.hpp"
 #include "measurer_logic_fidget.hpp"
 #include "measurer_mediator.hpp"
 #include "measurer_mesh.hpp"
@@ -36,6 +37,7 @@ private :
         < platform 
         , shy_measurer_camera
         , shy_measurer_logic
+        , shy_measurer_logic_entities
         , shy_measurer_logic_fidget
         , shy_measurer_mesh 
         > 
