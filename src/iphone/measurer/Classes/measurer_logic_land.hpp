@@ -12,6 +12,7 @@ public :
     shy_measurer_logic_land ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _land_created ( false )
+    , _frames_left_to_create ( 20 )
     {
     }
     void render_land ( )
@@ -21,10 +22,15 @@ public :
     }
     void update ( )
     {
-        if ( ! _land_created )
+        if ( _frames_left_to_create > 0 )
+            _frames_left_to_create -- ;
+        else
         {
-            _create_land_mesh ( ) ;
-            _land_created = true ;
+            if ( ! _land_created )
+            {
+                _create_land_mesh ( ) ;
+                _land_created = true ;
+            }
         }
     }
 private :
@@ -100,5 +106,6 @@ private :
 private :
     mesh_id _land_mesh_id ;
     int_32 _land_created ;
+    int_32 _frames_left_to_create ;
     mediator * _mediator ;
 } ;

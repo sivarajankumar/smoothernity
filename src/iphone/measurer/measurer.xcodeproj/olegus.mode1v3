@@ -276,7 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>12</integer>
+									<integer>16</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic_camera.hpp</string>
+								<string>measurer_logic_sound.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_logic_camera.hpp</string>
+										<string>measurer_logic_sound.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19FCF6011167EAF200A0159E</string>
+										<string>19FCF6091167ECAB00A0159E</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -357,15 +357,15 @@
 											<string>193A64AE1167D098003779CF</string>
 											<string>19FCF5B51167E16500A0159E</string>
 											<string>19FCF5CF1167E47B00A0159E</string>
-											<string>19FCF5D01167E47B00A0159E</string>
-											<string>19FCF5DA1167E61300A0159E</string>
 											<string>19FCF5EC1167E87E00A0159E</string>
 											<string>19FCF5ED1167E87E00A0159E</string>
 											<string>19FCF5EE1167E87E00A0159E</string>
-											<string>19FCF5F31167E92C00A0159E</string>
 											<string>19FCF5F51167E92C00A0159E</string>
-											<string>19FCF5FC1167EAD400A0159E</string>
-											<string>19FCF5FD1167EAD400A0159E</string>
+											<string>19FCF6041167ECAB00A0159E</string>
+											<string>19FCF6051167ECAB00A0159E</string>
+											<string>19FCF6061167ECAB00A0159E</string>
+											<string>19FCF6071167ECAB00A0159E</string>
+											<string>19FCF6081167ECAB00A0159E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

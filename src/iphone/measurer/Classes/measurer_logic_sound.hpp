@@ -17,14 +17,20 @@ public :
     shy_measurer_logic_sound ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _sound_created ( false )
+    , _frames_left_to_create ( 30 )
     {
     }
     void update ( )
     {
-        if ( ! _sound_created )
+        if ( _frames_left_to_create > 0 )
+            _frames_left_to_create -- ;
+        else
         {
-            _create_sound ( ) ;
-            _sound_created = true ;
+            if ( ! _sound_created )
+            {
+                _create_sound ( ) ;
+                _sound_created = true ;
+            }
         }
     }
 private :
@@ -82,5 +88,6 @@ private :
 private :
     sound_source_id _sound_source ;
     int_32 _sound_created ;
+    int_32 _frames_left_to_create ;
     mediator * _mediator ;
 } ;

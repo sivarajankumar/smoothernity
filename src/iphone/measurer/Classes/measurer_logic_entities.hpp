@@ -18,6 +18,7 @@ public :
     shy_measurer_logic_entities ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _entity_created ( false )
+    , _frames_left_to_create ( 10 )
     {
     }
     void render_entities ( )
@@ -31,11 +32,16 @@ public :
     }
     void update ( )
     {
-        if ( ! _entity_created )
+        if ( _frames_left_to_create > 0 )
+            _frames_left_to_create -- ;
+        else
         {
-            _create_entity_mesh ( ) ;
-            _create_entity_grid ( ) ;
-            _entity_created = true ;
+            if ( ! _entity_created )
+            {
+                _create_entity_mesh ( ) ;
+                _create_entity_grid ( ) ;
+                _entity_created = true ;
+            }
         }
     }
     vector_data get_entity_origin ( int_32 index )
@@ -166,5 +172,6 @@ private :
     mesh_id _entity_mesh_id ;
     matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
     int_32 _entity_created ;
+    int_32 _frames_left_to_create ;
     mediator * _mediator ;
 } ;
