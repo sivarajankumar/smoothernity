@@ -47,6 +47,7 @@
 		19FCF5B31167DE8A00A0159E /* measurer_logic_entities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_entities.hpp; sourceTree = "<group>"; };
 		19FCF5C71167E2DF00A0159E /* measurer_logic_land.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_land.hpp; sourceTree = "<group>"; };
 		19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_sound.hpp; sourceTree = "<group>"; };
+		19FCF5E81167E6E300A0159E /* measurer_logic_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_camera.hpp; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* measurerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = measurerAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* measurerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = measurerAppDelegate.m; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 				19D4B2591154D78300DEA992 /* measurer_camera.hpp */,
 				19AE69731129D66A00742128 /* measurer_facade.hpp */,
 				19AE699B1129DEF400742128 /* measurer_logic.hpp */,
+				19FCF5E81167E6E300A0159E /* measurer_logic_camera.hpp */,
 				19FCF5B31167DE8A00A0159E /* measurer_logic_entities.hpp */,
 				19FCF5991167DA7200A0159E /* measurer_logic_fidget.hpp */,
 				19FCF5C71167E2DF00A0159E /* measurer_logic_land.hpp */,
