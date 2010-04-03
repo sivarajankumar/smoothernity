@@ -28,7 +28,6 @@ public :
     , _frames_to_change_camera_target ( 0 )
     , _frames_to_change_camera_origin ( 0 )
     , _random_seed ( 0 )
-    , _fidget_angle ( 0 )
     {
     }
     void init ( )
@@ -38,7 +37,6 @@ public :
         _create_entity_mesh ( ) ;
         _create_entity_grid ( ) ;
         _create_land_mesh ( ) ;
-        _create_fidget_mesh ( ) ;
         _reset_camera_rubber ( ) ;
         _update_camera ( ) ;
     }
@@ -52,7 +50,7 @@ public :
         _use_camera_matrix ( ) ;
         _render_land ( ) ;
         _render_entities ( ) ;
-        _render_fidget ( ) ;
+        _mediator -> render_fidget ( ) ;
     }
     void render_finished ( )
     {
@@ -60,7 +58,6 @@ public :
     void update ( )
     {
         _update_camera ( ) ;
-        _update_fidget ( ) ;
     }
 private :
     void _init_render ( )
@@ -152,43 +149,6 @@ private :
             _mediator -> mesh_render ( _entity_mesh_id ) ;
         }
     }
-    void _render_fidget ( )
-    {
-        platform :: render_disable_depth_test ( ) ;
-        platform :: render_matrix_identity ( ) ;
-        matrix_data matrix ;
-        platform :: matrix_set_axis_x
-            ( matrix
-            , platform :: math_cos ( _fidget_angle )
-            , platform :: math_sin ( _fidget_angle )
-            , 0.0f
-            ) ;
-        platform :: matrix_set_axis_y
-            ( matrix
-            , - platform :: math_sin ( _fidget_angle )
-            , platform :: math_cos ( _fidget_angle )
-            , 0.0f
-            ) ;
-        platform :: matrix_set_axis_z
-            ( matrix
-            , 0.0f
-            , 0.0f
-            , 1.0f
-            ) ;
-        platform :: matrix_set_origin
-            ( matrix
-            , 0.0f
-            , 3.0f
-            , - 3.0f
-            ) ;
-        _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
-        _mediator -> mesh_render ( _fidget_mesh_id ) ;
-        platform :: render_enable_depth_test ( ) ;
-    }
-    void _update_fidget ( )
-    {
-        _fidget_angle += 2.0f * PI / 50.0f ;
-    }
     void _update_camera ( )
     {
         const float_32 origin_rubber = 0.99f ;
@@ -238,38 +198,6 @@ private :
             ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 )
             , ENTITY_MESH_GRID * ENTITY_MESH_GRID
             ) ;
-    }
-    void _create_fidget_mesh ( )
-    {
-        static const int_32 FIDGET_R = 255 ;
-        static const int_32 FIDGET_G = 128 ;
-        static const int_32 FIDGET_B = 0 ;
-        
-        vertex_data vertices [ 3 ] ;
-        index_data indices [ 3 ] ;
-        
-        for ( int_32 i = 0 ; i < 3 ; i ++ )
-        {
-            float_32 angle = PI * 2.0f * float_32 ( i ) / 3.0f ;
-            platform :: render_set_vertex_position
-                ( vertices [ i ]
-                , platform :: math_cos ( angle )
-                , platform :: math_sin ( angle )
-                , 0.0f
-                ) ;
-            platform :: render_set_vertex_color
-                ( vertices [ i ]
-                , FIDGET_R
-                , FIDGET_G
-                , FIDGET_B
-                , 255
-                ) ;
-            platform :: render_set_index_value
-                ( indices [ i ]
-                , i
-                ) ;
-        }
-        _fidget_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 3 , 3 , 0 ) ;
     }
     void _create_land_mesh ( )
     {
@@ -447,13 +375,11 @@ private :
 private :
     mesh_id _entity_mesh_id ;
     mesh_id _land_mesh_id ;
-    mesh_id _fidget_mesh_id ;
     matrix_data _camera_matrix ;
     matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
     int_32 _frames_to_change_camera_target ;
     int_32 _frames_to_change_camera_origin ;
     int_32 _random_seed ;
-    float_32 _fidget_angle ;
     vector_data _desired_camera_origin ;
     vector_data _desired_camera_target ;
     vector_data _current_camera_origin ;

@@ -43,6 +43,7 @@
 		19BFEEB4111DD0FA00424782 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_mesh.hpp; sourceTree = "<group>"; };
 		19D4B2591154D78300DEA992 /* measurer_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_camera.hpp; sourceTree = "<group>"; };
+		19FCF5991167DA7200A0159E /* measurer_logic_fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_fidget.hpp; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* measurerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = measurerAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* measurerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = measurerAppDelegate.m; sourceTree = "<group>"; };
@@ -90,19 +91,20 @@
 				28FD14FD0DC6FC130079059D /* EAGLView.mm */,
 				1D3623240D0F684500981E51 /* measurerAppDelegate.h */,
 				1D3623250D0F684500981E51 /* measurerAppDelegate.m */,
-				19AE69731129D66A00742128 /* measurer_facade.hpp */,
-				19AE697C1129D72700742128 /* measurer_mediator.hpp */,
-				19AE699B1129DEF400742128 /* measurer_logic.hpp */,
-				19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */,
 				19D4B2591154D78300DEA992 /* measurer_camera.hpp */,
+				19AE69731129D66A00742128 /* measurer_facade.hpp */,
+				19AE699B1129DEF400742128 /* measurer_logic.hpp */,
+				19FCF5991167DA7200A0159E /* measurer_logic_fidget.hpp */,
+				19AE697C1129D72700742128 /* measurer_mediator.hpp */,
+				19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */,
 				19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */,
 				19A8DE64115E2B230062EAB6 /* iphone_platform.mm */,
-				19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */,
-				19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */,
-				19A8DE99115E350A0062EAB6 /* iphone_platform_matrix.hpp */,
 				19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */,
-				19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */,
+				19A8DE99115E350A0062EAB6 /* iphone_platform_matrix.hpp */,
+				19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */,
 				19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */,
+				19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */,
+				19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
