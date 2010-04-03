@@ -78,11 +78,11 @@ private :
             , platform :: vector_xyz ( 0 , 1 , 0 )
             ) ;
             
-        mono_sound_sample sound_data [ platform :: sound_samples_per_second ] ;
+        mono_sound_sample sound_data [ platform :: mono_sound_samples_per_second ] ;
         int_32 next_sample = 0 ;
-        for ( int_32 i = 0 ; i < platform :: sound_samples_per_second ; ++ i )
+        for ( int_32 i = 0 ; i < platform :: mono_sound_samples_per_second ; ++ i )
         {
-            next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * PI / float_32 ( platform :: sound_samples_per_second ) ) ) ) ;
+            next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * PI / float_32 ( platform :: mono_sound_samples_per_second ) ) ) ) ;
             platform :: sound_set_sample_value ( sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
         }
         

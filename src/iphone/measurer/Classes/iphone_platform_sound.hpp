@@ -60,7 +60,7 @@ shy_iphone_platform :: sound_create_buffer
         , AL_FORMAT_MONO8 
         , ( ALvoid * ) samples 
         , samples_count
-        , sound_samples_per_second
+        , mono_sound_samples_per_second
         ) ;
     return buffer_id ;
 }

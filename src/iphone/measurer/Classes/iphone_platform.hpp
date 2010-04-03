@@ -64,6 +64,14 @@ public :
         ALubyte _value ;
     } ;
     
+    class stereo_sound_sample
+    {
+        friend class shy_iphone_platform ;
+    private :
+        ALushort _left_channel_value ;
+        ALushort _right_channel_value ; 
+    } ;
+    
     class sound_buffer_id
     {
         friend class shy_iphone_platform ;
@@ -83,7 +91,8 @@ public :
     //
     
     static const int_32 frames_per_second = 60 ;
-    static const int_32 sound_samples_per_second = 44100 ;
+    static const int_32 mono_sound_samples_per_second = 44100 ;
+    static const int_32 stereo_sound_samples_per_second = 44100 ;
     
     //
     // vector
