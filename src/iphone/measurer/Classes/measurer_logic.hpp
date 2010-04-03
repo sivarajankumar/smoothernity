@@ -28,6 +28,7 @@ public :
     , _frames_to_change_camera_target ( 0 )
     , _frames_to_change_camera_origin ( 0 )
     , _random_seed ( 0 )
+    , _fidget_angle ( 0 )
     {
     }
     void init ( )
@@ -37,6 +38,7 @@ public :
         _create_entity_mesh ( ) ;
         _create_entity_grid ( ) ;
         _create_land_mesh ( ) ;
+        _create_fidget_mesh ( ) ;
         _reset_camera_rubber ( ) ;
         _update_camera ( ) ;
     }
@@ -197,6 +199,38 @@ private :
             ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 )
             , ENTITY_MESH_GRID * ENTITY_MESH_GRID
             ) ;
+    }
+    void _create_fidget_mesh ( )
+    {
+        static const int_32 FIDGET_R = 255 ;
+        static const int_32 FIDGET_G = 128 ;
+        static const int_32 FIDGET_B = 0 ;
+        
+        vertex_data vertices [ 3 ] ;
+        index_data indices [ 3 ] ;
+        
+        for ( int_32 i = 0 ; i < 3 ; i ++ )
+        {
+            float_32 angle = PI * 2.0f * float_32 ( i ) / 3.0f ;
+            platform :: render_set_vertex_position
+                ( vertices [ i ]
+                , platform :: math_cos ( angle )
+                , platform :: math_sin ( angle )
+                , 0.0f
+                ) ;
+            platform :: render_set_vertex_color
+                ( vertices [ i ]
+                , FIDGET_R
+                , FIDGET_G
+                , FIDGET_B
+                , 255
+                ) ;
+            platform :: render_set_index_value
+                ( indices [ i ]
+                , i
+                ) ;
+        }
+        _fidget_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 3 , 3 , 0 ) ;
     }
     void _create_land_mesh ( )
     {
@@ -374,11 +408,13 @@ private :
 private :
     mesh_id _entity_mesh_id ;
     mesh_id _land_mesh_id ;
+    mesh_id _fidget_mesh_id ;
     matrix_data _camera_matrix ;
     matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
     int_32 _frames_to_change_camera_target ;
     int_32 _frames_to_change_camera_origin ;
     int_32 _random_seed ;
+    float_32 _fidget_angle ;
     vector_data _desired_camera_origin ;
     vector_data _desired_camera_target ;
     vector_data _current_camera_origin ;
