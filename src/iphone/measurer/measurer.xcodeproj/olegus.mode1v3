@@ -276,7 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>11</integer>
+									<integer>21</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic.hpp</string>
+								<string>iphone_platform_sound.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,16 +327,15 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_logic.hpp</string>
+										<string>iphone_platform_sound.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>193A647B1167C34E003779CF</string>
+										<string>193A649F1167C4BF003779CF</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
 											<string>19AE69501129CD1000742128</string>
-											<string>19F3D76711574F600006D4E0</string>
 											<string>19A8DDB5115E11250062EAB6</string>
 											<string>19A8DDB6115E11250062EAB6</string>
 											<string>19A8DDB7115E11250062EAB6</string>
@@ -353,13 +352,15 @@
 											<string>19B4F6FA1167AE6600C77292</string>
 											<string>19B4F6FB1167AE6600C77292</string>
 											<string>19B4F6FD1167AE6600C77292</string>
-											<string>19B4F7021167AF7700C77292</string>
-											<string>19B4F7131167AFE900C77292</string>
 											<string>19B4F7151167AFE900C77292</string>
 											<string>19B4F7211167B04600C77292</string>
-											<string>19B4F72B1167B2BC00C77292</string>
 											<string>193A64791167C34E003779CF</string>
-											<string>193A647A1167C34E003779CF</string>
+											<string>193A64971167C47A003779CF</string>
+											<string>193A64981167C47A003779CF</string>
+											<string>193A64991167C47A003779CF</string>
+											<string>193A649A1167C47A003779CF</string>
+											<string>193A649D1167C4BF003779CF</string>
+											<string>193A649E1167C4BF003779CF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		19A8DDC8115E122F0062EAB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A8DDC7115E122F0062EAB6 /* OpenAL.framework */; };
 		19A8DE65115E2B230062EAB6 /* iphone_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19A8DE64115E2B230062EAB6 /* iphone_platform.mm */; };
-		19BA210A1167657D007398AF /* rough_n_heavy_v37.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 19BA21091167657D007398AF /* rough_n_heavy_v37.mp3 */; };
+		19BA210A1167657D007398AF /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 19BA21091167657D007398AF /* stereo_sound_resource_1.mp3 */; };
 		19BA211B11676CA4007398AF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BA211A11676CA4007398AF /* AudioToolbox.framework */; };
 		19BFEEB5111DD0FA00424782 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 19BFEEB4111DD0FA00424782 /* Icon.png */; };
 		1D3623260D0F684500981E51 /* measurerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* measurerAppDelegate.m */; };
@@ -38,7 +38,7 @@
 		19AE69731129D66A00742128 /* measurer_facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_facade.hpp; sourceTree = "<group>"; };
 		19AE697C1129D72700742128 /* measurer_mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_mediator.hpp; sourceTree = "<group>"; };
 		19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic.hpp; sourceTree = "<group>"; };
-		19BA21091167657D007398AF /* rough_n_heavy_v37.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rough_n_heavy_v37.mp3; sourceTree = "<group>"; };
+		19BA21091167657D007398AF /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = stereo_sound_resource_1.mp3; sourceTree = "<group>"; };
 		19BA211A11676CA4007398AF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		19BFEEB4111DD0FA00424782 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_mesh.hpp; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				19BA21091167657D007398AF /* rough_n_heavy_v37.mp3 */,
+				19BA21091167657D007398AF /* stereo_sound_resource_1.mp3 */,
 				19BFEEB4111DD0FA00424782 /* Icon.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* measurer-Info.plist */,
@@ -216,7 +216,7 @@
 				2514C27C10084DCA00A42282 /* Shader.vsh in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				19BFEEB5111DD0FA00424782 /* Icon.png in Resources */,
-				19BA210A1167657D007398AF /* rough_n_heavy_v37.mp3 in Resources */,
+				19BA210A1167657D007398AF /* stereo_sound_resource_1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

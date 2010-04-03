@@ -19,6 +19,9 @@ class shy_measurer_logic
     typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
+    
+    static const int_32 music_rough_and_heavy_resource_index = 1 ;
+    
 public :
     shy_measurer_logic ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
@@ -89,7 +92,9 @@ private :
         const int_32 max_stereo_sound_samples = platform :: stereo_sound_samples_per_second * 60 ;
         static stereo_sound_sample stereo_sound_data [ max_stereo_sound_samples ] ;
         int_32 loaded_stereo_sound_samples = 0 ;
-        stereo_sound_resource_id music_resource_id = platform :: sound_create_stereo_resource_id ( 0 ) ;
+        stereo_sound_resource_id music_resource_id = platform :: sound_create_stereo_resource_id 
+            ( music_rough_and_heavy_resource_index 
+            ) ;
         platform :: sound_load_stereo_sample_data
             ( stereo_sound_data
             , max_stereo_sound_samples

@@ -68,7 +68,7 @@ shy_iphone_platform :: sound_load_stereo_sample_data
 {
     NSBundle * bundle = [ NSBundle mainBundle ] ;
     CFURLRef file_url = ( CFURLRef ) [ [ NSURL fileURLWithPath : [ bundle 
-        pathForResource : @"rough_n_heavy_v37" 
+        pathForResource : [ NSString stringWithFormat : @"stereo_sound_resource_%i" , resource_id . _resource_id ] 
         ofType : @"mp3" 
         ] ] retain ] ;
         
