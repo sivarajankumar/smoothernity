@@ -276,7 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>11</integer>
+									<integer>3</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic.hpp</string>
+								<string>ES1Renderer.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_logic.hpp</string>
+										<string>ES1Renderer.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19A8DEFE115E5A350062EAB6</string>
+										<string>19BA213111676E5E007398AF</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -340,7 +340,6 @@
 											<string>19A8DDB5115E11250062EAB6</string>
 											<string>19A8DDB6115E11250062EAB6</string>
 											<string>19A8DDB7115E11250062EAB6</string>
-											<string>19A8DE31115E281C0062EAB6</string>
 											<string>19A8DE3B115E290C0062EAB6</string>
 											<string>19A8DE46115E299C0062EAB6</string>
 											<string>19A8DE56115E2A9D0062EAB6</string>
@@ -355,11 +354,12 @@
 											<string>19A8DECE115E4DE20062EAB6</string>
 											<string>19A8DECF115E4DE20062EAB6</string>
 											<string>19A8DED0115E4DE20062EAB6</string>
-											<string>19A8DEF0115E585C0062EAB6</string>
-											<string>19A8DEF1115E585C0062EAB6</string>
-											<string>19A8DEF2115E585C0062EAB6</string>
-											<string>19A8DEFC115E5A350062EAB6</string>
-											<string>19A8DEFD115E5A350062EAB6</string>
+											<string>19BA212211676D96007398AF</string>
+											<string>19BA212311676D96007398AF</string>
+											<string>19BA212511676D96007398AF</string>
+											<string>19BA212611676D96007398AF</string>
+											<string>19BA212B11676DCA007398AF</string>
+											<string>19BA212C11676DCA007398AF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -417,9 +417,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>19A8DDA5115DFCDA0062EAB6</string>
+				<string>19BA20F21167612D007398AF</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>19A8DDA6115DFCDA0062EAB6</string>
+				<string>19BA20F31167612D007398AF</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -557,11 +557,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>19A8DE05115E1AF60062EAB6</string>
-		<string>19A8DE06115E1AF60062EAB6</string>
+		<string>19BA213211676E5E007398AF</string>
+		<string>19BA213311676E5E007398AF</string>
+		<string>19BA213411676E5E007398AF</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19E3FF3F10E29715006628E8</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -586,7 +587,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>iphone_platform_sound.hpp</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -603,8 +604,6 @@
 							<string>218pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -644,7 +643,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>19E3FF3F10E29715006628E8</string>
-				<string>19A8DDA7115DFCDA0062EAB6</string>
+				<string>19BA20F41167612D007398AF</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -766,13 +765,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>19A8DDAB115DFD330062EAB6</string>
+				<string>19BA20FB1167623F007398AF</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>19A8DDAC115DFD330062EAB6</string>
-				<string>19A8DDAD115DFD330062EAB6</string>
-				<string>19A8DDAE115DFD330062EAB6</string>
-				<string>19A8DDAF115DFD330062EAB6</string>
-				<string>19A8DDB0115DFD330062EAB6</string>
+				<string>19BA20FC1167623F007398AF</string>
+				<string>19BA20FD1167623F007398AF</string>
+				<string>19BA20FE1167623F007398AF</string>
+				<string>19BA20FF1167623F007398AF</string>
+				<string>19BA21001167623F007398AF</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -928,7 +927,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>19A8DDB1115DFD330062EAB6</string>
+				<string>19BA21011167623F007398AF</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -938,7 +937,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

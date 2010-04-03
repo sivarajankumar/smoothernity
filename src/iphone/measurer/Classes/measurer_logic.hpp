@@ -14,7 +14,7 @@ class shy_measurer_logic
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: sound_buffer_id sound_buffer_id ;
-    typedef typename mediator :: platform :: sound_sample sound_sample ;
+    typedef typename mediator :: platform :: mono_sound_sample mono_sound_sample ;
     typedef typename mediator :: platform :: sound_source_id sound_source_id ;
     typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
@@ -65,6 +65,10 @@ private :
         platform :: render_select_modelview_matrix ( ) ;
         platform :: render_matrix_identity ( ) ;
     }
+    float_32 _int_to_sample ( int_32 i )
+    {
+        return float_32 ( ( i % 256 ) - 128 ) / 128.0f ;
+    }
     void _init_sound ( )
     {
         platform :: sound_set_listener_position ( platform :: vector_xyz ( 0 , 0 , 4 ) ) ;
@@ -74,19 +78,20 @@ private :
             , platform :: vector_xyz ( 0 , 1 , 0 )
             ) ;
             
-        sound_sample sound_data [ platform :: sound_samples_per_second ] ;
+        mono_sound_sample sound_data [ platform :: sound_samples_per_second ] ;
+        int_32 next_sample = 0 ;
         for ( int_32 i = 0 ; i < platform :: sound_samples_per_second ; ++ i )
         {
-            float_32 pos = float_32 ( i ) * PI / float_32 ( platform :: sound_samples_per_second ) ;
-            float_32 level = platform :: math_sin ( pos * 10000.0f ) ;
-            platform :: sound_set_sample_value ( sound_data [ i ] , level ) ;
+            next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * PI / float_32 ( platform :: sound_samples_per_second ) ) ) ) ;
+            platform :: sound_set_sample_value ( sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
         }
         
-        sound_buffer_id sound_buffer = platform :: sound_create_buffer ( sound_data , platform :: sound_samples_per_second ) ;
+        sound_buffer_id sound_buffer = platform :: sound_get_buffer_from_music_EXPERIMENTAL ( ) ;
+        //platform :: sound_create_buffer ( sound_data , platform :: sound_samples_per_second ) ;
         _sound_source = platform :: sound_create_source ( ) ;
         platform :: sound_set_source_pitch ( _sound_source , 1 ) ;
         platform :: sound_set_source_gain ( _sound_source , 1 ) ;
-        platform :: sound_set_source_position ( _sound_source , platform :: vector_xyz ( - 2 , 0 , 0 ) ) ;
+        platform :: sound_set_source_position ( _sound_source , platform :: vector_xyz ( 0 , 0 , - 2 ) ) ;
         platform :: sound_set_source_velocity ( _sound_source , platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
         platform :: sound_set_source_buffer ( _sound_source , sound_buffer ) ;
         platform :: sound_set_source_playback_looping ( _sound_source ) ;
