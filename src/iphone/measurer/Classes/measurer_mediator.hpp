@@ -5,6 +5,7 @@ template
     , template < typename mediator > class measurer_logic_entities
     , template < typename mediator > class measurer_logic_fidget
     , template < typename mediator > class measurer_logic_land
+    , template < typename mediator > class measurer_logic_sound
     , template < typename mediator > class measurer_mesh
     >
 class shy_measurer_mediator
@@ -23,6 +24,7 @@ public :
     , _logic_entities ( this )
     , _logic_fidget ( this )
     , _logic_land ( this )
+    , _logic_sound ( this )
     {
     }
 public :
@@ -94,6 +96,7 @@ public :
         _logic_fidget . update ( ) ;
         _logic_entities . update ( ) ;
         _logic_land . update ( ) ;
+        _logic_sound . update ( ) ;
     }
 private :
     measurer_camera < shy_measurer_mediator > _camera ;
@@ -101,5 +104,6 @@ private :
     measurer_logic_entities < shy_measurer_mediator > _logic_entities ;
     measurer_logic_fidget < shy_measurer_mediator > _logic_fidget ;
     measurer_logic_land < shy_measurer_mediator > _logic_land ;
+    measurer_logic_sound < shy_measurer_mediator > _logic_sound ;
     measurer_mesh < shy_measurer_mediator > _mesh ;
 } ;

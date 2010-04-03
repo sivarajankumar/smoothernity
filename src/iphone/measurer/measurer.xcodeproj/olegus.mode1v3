@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic_land.hpp</string>
+								<string>measurer_logic.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_logic_land.hpp</string>
+										<string>measurer_logic.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19FCF5D61167E47B00A0159E</string>
+										<string>19FCF5E41167E68600A0159E</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -360,10 +360,11 @@
 											<string>19FCF5CF1167E47B00A0159E</string>
 											<string>19FCF5D01167E47B00A0159E</string>
 											<string>19FCF5D11167E47B00A0159E</string>
-											<string>19FCF5D21167E47B00A0159E</string>
-											<string>19FCF5D31167E47B00A0159E</string>
-											<string>19FCF5D41167E47B00A0159E</string>
-											<string>19FCF5D51167E47B00A0159E</string>
+											<string>19FCF5D81167E61300A0159E</string>
+											<string>19FCF5DA1167E61300A0159E</string>
+											<string>19FCF5E11167E68600A0159E</string>
+											<string>19FCF5E21167E68600A0159E</string>
+											<string>19FCF5E31167E68600A0159E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -563,8 +564,8 @@
 	<array>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>19E3FF3F10E29715006628E8</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
+		<string>19E3FF3F10E29715006628E8</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 55 1224 723 0 0 1280 778 </string>
@@ -590,7 +591,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic_land.hpp</string>
+								<string>measurer_logic_sound.hpp</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -659,7 +660,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
