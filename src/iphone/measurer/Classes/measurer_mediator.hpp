@@ -1,5 +1,3 @@
-#pragma once
-
 template 
     < typename _platform
     , template < typename mediator > class measurer_camera

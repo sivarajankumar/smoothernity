@@ -1,5 +1,3 @@
-#pragma once
-
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
 #import <Foundation/NSBundle.h>

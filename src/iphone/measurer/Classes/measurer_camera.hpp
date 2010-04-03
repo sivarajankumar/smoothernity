@@ -1,5 +1,3 @@
-#pragma once
-
 template < typename mediator >
 class shy_measurer_camera
 {

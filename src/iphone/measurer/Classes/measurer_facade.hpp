@@ -1,5 +1,3 @@
-#pragma once
-
 #include "measurer_camera.hpp"
 #include "measurer_logic.hpp"
 #include "measurer_mediator.hpp"

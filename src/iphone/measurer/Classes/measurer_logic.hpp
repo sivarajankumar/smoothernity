@@ -1,5 +1,3 @@
-#pragma once
-
 #define ENTITY_MESH_SPANS 50
 #define ENTITY_MESH_GRID 5
 #define PI 3.141592f

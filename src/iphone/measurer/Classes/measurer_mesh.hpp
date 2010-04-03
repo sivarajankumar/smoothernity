@@ -1,5 +1,3 @@
-#pragma once
-
 #define MAX_MESHES 100
 
 template < typename mediator >
