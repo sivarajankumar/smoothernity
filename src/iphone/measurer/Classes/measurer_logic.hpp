@@ -97,14 +97,20 @@ private :
             , music_resource_id
             ) ;
         
-        sound_buffer_id sound_buffer = platform :: sound_create_stereo_buffer ( stereo_sound_data , loaded_stereo_sound_samples ) ;
-        //platform :: sound_create_mono_buffer ( mono_sound_data , platform :: sound_samples_per_second ) ;
+        sound_buffer_id stereo_sound_buffer = platform :: sound_create_stereo_buffer 
+            ( stereo_sound_data 
+            , loaded_stereo_sound_samples - 2293 
+            ) ;
+        sound_buffer_id mono_sound_buffer = platform :: sound_create_mono_buffer 
+            ( mono_sound_data 
+            , platform :: mono_sound_samples_per_second 
+            ) ;
         _sound_source = platform :: sound_create_source ( ) ;
         platform :: sound_set_source_pitch ( _sound_source , 1 ) ;
         platform :: sound_set_source_gain ( _sound_source , 1 ) ;
         platform :: sound_set_source_position ( _sound_source , platform :: vector_xyz ( 0 , 0 , - 2 ) ) ;
         platform :: sound_set_source_velocity ( _sound_source , platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
-        platform :: sound_set_source_buffer ( _sound_source , sound_buffer ) ;
+        platform :: sound_set_source_buffer ( _sound_source , stereo_sound_buffer ) ;
         platform :: sound_set_source_playback_looping ( _sound_source ) ;
         platform :: sound_source_play ( _sound_source ) ;
     }
