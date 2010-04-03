@@ -34,7 +34,6 @@ public :
     {
         _init_render ( ) ;
         _init_sound ( ) ;
-        _create_land_mesh ( ) ;
         _reset_camera_rubber ( ) ;
         _update_camera ( ) ;
     }
@@ -46,7 +45,7 @@ public :
     {
         _clear_screen ( ) ;
         _use_camera_matrix ( ) ;
-        _render_land ( ) ;
+        _mediator -> render_land ( ) ;
         _mediator -> render_entities ( ) ;
         _mediator -> render_fidget ( ) ;
     }
@@ -135,10 +134,6 @@ private :
     {
         platform :: render_matrix_load ( _camera_matrix ) ;
     }
-    void _render_land ( )
-    {
-        _mediator -> mesh_render ( _land_mesh_id ) ;
-    }
     void _update_camera ( )
     {
         const float_32 origin_rubber = 0.99f ;
@@ -187,73 +182,7 @@ private :
             , ENTITY_MESH_GRID * ENTITY_MESH_GRID
             ) ;
     }
-    void _create_land_mesh ( )
-    {
-        static const int_32 LAND_R = 0 ;
-        static const int_32 LAND_G = 255 ;
-        static const int_32 LAND_B = 0 ;
-        static const int_32 LAND_GRID = 10 ;
-        static const float_32 LAND_RADIUS = 10 ;
-        
-        vertex_data vertices [ ( LAND_GRID + 1 ) * ( LAND_GRID + 1 ) ] ;
-        index_data indices [ ( LAND_GRID + 1 ) * 2 * LAND_GRID ] ;
-        int_32 vertices_count = 0 ;
-        int_32 indices_count = 0 ;
-        
-        const float_32 grid_step = LAND_RADIUS * 2.0f / ( float_32 ) LAND_GRID ;
-        const float_32 grid_origin_x = - LAND_RADIUS ;
-        const float_32 grid_origin_z = - LAND_RADIUS ;
-        
-        for ( int_32 iz = 0 ; iz < LAND_GRID + 1 ; iz ++ )
-        {
-            for ( int_32 ix = 0 ; ix < LAND_GRID + 1 ; ix ++ )
-            {
-                float_32 x = grid_origin_x + grid_step * ( float_32 ) ix ;
-                float_32 z = grid_origin_z + grid_step * ( float_32 ) iz ;
-                platform :: render_set_vertex_position 
-                    ( vertices [ vertices_count ]
-                    , x
-                    , 0.0f
-                    , z
-                    ) ;
-                platform :: render_set_vertex_color
-                    ( vertices [ vertices_count ]
-                    , LAND_R
-                    , LAND_G
-                    , LAND_B
-                    , 255
-                    ) ;
-                ++ vertices_count ;
-            }
-        }
-        
-        for ( int_32 iz = 0 ; iz < LAND_GRID ; iz ++ )
-        {
-            for ( int_32 ix = 0 ; ix < LAND_GRID + 1 ; ix ++ )
-            {
-                int_32 index = 0 ;
-                if ( iz % 2 == 0 )
-                {
-                    index = ix + ( LAND_GRID + 1 ) * iz ;
-                    platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
-                    ++ indices_count ;
-                    platform :: render_set_index_value ( indices [ indices_count ] , index + LAND_GRID + 1 ) ;
-                    ++ indices_count ;
-                }
-                else
-                {
-                    index = LAND_GRID - ix + ( LAND_GRID + 1 ) * iz ;
-                    platform :: render_set_index_value ( indices [ indices_count ] , index + LAND_GRID + 1 ) ;
-                    ++ indices_count ;
-                    platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
-                    ++ indices_count ;
-                }
-            }
-        }
-        _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
-    }
 private :
-    mesh_id _land_mesh_id ;
     matrix_data _camera_matrix ;
     int_32 _frames_to_change_camera_target ;
     int_32 _frames_to_change_camera_origin ;

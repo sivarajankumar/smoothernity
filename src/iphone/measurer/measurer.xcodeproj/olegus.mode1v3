@@ -276,7 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>12</integer>
+									<integer>11</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic_entities.hpp</string>
+								<string>measurer_logic_land.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_logic_entities.hpp</string>
+										<string>measurer_logic_land.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19FCF5C61167E23900A0159E</string>
+										<string>19FCF5D61167E47B00A0159E</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -356,13 +356,14 @@
 											<string>193A64AD1167D098003779CF</string>
 											<string>193A64AE1167D098003779CF</string>
 											<string>19FCF59E1167DD0C00A0159E</string>
-											<string>19FCF5B41167E16500A0159E</string>
 											<string>19FCF5B51167E16500A0159E</string>
-											<string>19FCF5B61167E16500A0159E</string>
-											<string>19FCF5B71167E16500A0159E</string>
-											<string>19FCF5C41167E23900A0159E</string>
-											<string>19FCF5C51167E23900A0159E</string>
-											<string>19FCF5B81167E16500A0159E</string>
+											<string>19FCF5CF1167E47B00A0159E</string>
+											<string>19FCF5D01167E47B00A0159E</string>
+											<string>19FCF5D11167E47B00A0159E</string>
+											<string>19FCF5D21167E47B00A0159E</string>
+											<string>19FCF5D31167E47B00A0159E</string>
+											<string>19FCF5D41167E47B00A0159E</string>
+											<string>19FCF5D51167E47B00A0159E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -582,12 +583,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>measurer_logic_land.hpp</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
