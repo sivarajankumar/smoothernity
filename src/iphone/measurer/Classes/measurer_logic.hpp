@@ -87,7 +87,7 @@ private :
         }
         
         sound_buffer_id sound_buffer = platform :: sound_get_buffer_from_music_EXPERIMENTAL ( ) ;
-        //platform :: sound_create_buffer ( sound_data , platform :: sound_samples_per_second ) ;
+        //platform :: sound_create_mono_buffer ( sound_data , platform :: sound_samples_per_second ) ;
         _sound_source = platform :: sound_create_source ( ) ;
         platform :: sound_set_source_pitch ( _sound_source , 1 ) ;
         platform :: sound_set_source_gain ( _sound_source , 1 ) ;

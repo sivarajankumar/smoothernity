@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>iphone_platform_sound.hpp</string>
+								<string>measurer_logic.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>iphone_platform_sound.hpp</string>
+										<string>measurer_logic.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19B4F6A81167A37700C77292</string>
+										<string>19B4F6BA1167A5A100C77292</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -357,9 +357,9 @@
 											<string>19BA212211676D96007398AF</string>
 											<string>19BA212311676D96007398AF</string>
 											<string>19B4F6A41167A37700C77292</string>
-											<string>19B4F6A51167A37700C77292</string>
-											<string>19B4F6A61167A37700C77292</string>
-											<string>19B4F6A71167A37700C77292</string>
+											<string>19B4F6AB1167A3BE00C77292</string>
+											<string>19B4F6B41167A59500C77292</string>
+											<string>19B4F6B51167A59500C77292</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -579,6 +579,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -601,8 +603,6 @@
 							<string>218pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -655,7 +655,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

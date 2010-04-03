@@ -48,7 +48,7 @@ shy_iphone_platform :: sound_set_sample_value
 
 inline
 shy_iphone_platform :: sound_buffer_id 
-shy_iphone_platform :: sound_create_buffer 
+shy_iphone_platform :: sound_create_mono_buffer 
     ( shy_iphone_platform :: mono_sound_sample * samples 
     , shy_iphone_platform :: int_32 samples_count 
     )

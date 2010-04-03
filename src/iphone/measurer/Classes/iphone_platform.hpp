@@ -86,12 +86,19 @@ public :
         ALuint _source_id ;
     } ;
     
+    class stereo_sound_resource_id
+    {
+        friend class shy_iphone_platform ;
+    private :
+        int _resource_id ;
+    } ;
+    
     //
     // constants
     //
     
     static const int_32 frames_per_second = 60 ;
-    static const int_32 mono_sound_samples_per_second = 44100 ;
+    static const int_32 mono_sound_samples_per_second = 22050 ;
     static const int_32 stereo_sound_samples_per_second = 44100 ;
     
     //
@@ -169,7 +176,15 @@ public :
     static void sound_set_listener_velocity ( vector_data velocity ) ;
     static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
     static void sound_set_sample_value ( mono_sound_sample & sample , float_32 value ) ;
-    static sound_buffer_id sound_create_buffer ( mono_sound_sample * samples , int_32 samples_count ) ;
+    static stereo_sound_resource_id sound_create_stereo_resource_id ( int_32 resource_index ) ;
+    static void sound_load_stereo_sample_data
+        ( stereo_sound_sample * samples 
+        , int_32 max_samples_count
+        , int_32 & loaded_samples_count
+        , const stereo_sound_resource_id & resource_id 
+        ) ;
+    static sound_buffer_id sound_create_mono_buffer ( mono_sound_sample * samples , int_32 samples_count ) ;
+    static sound_buffer_id sound_create_stereo_buffer ( stereo_sound_sample * samples , int_32 samples_count ) ;
     static sound_buffer_id sound_get_buffer_from_music_EXPERIMENTAL ( ) ;
     static sound_source_id sound_create_source ( ) ;
     static void sound_set_source_pitch ( const sound_source_id & source_id , float_32 pitch ) ;
