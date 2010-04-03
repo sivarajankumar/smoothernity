@@ -1,9 +1,12 @@
 #pragma once
 
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AudioToolbox/ExtendedAudioFile.h>
+#import <Foundation/NSBundle.h>
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 #import <QuartzCore/QuartzCore.h>
 
 class shy_iphone_platform
