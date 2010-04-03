@@ -184,7 +184,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 377";
 		rLen = 0;
-		rLoc = 17050;
+		rLoc = 17049;
 		rType = 0;
 		vrLen = 1888;
 		vrLoc = 13381;
@@ -194,7 +194,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 210";
 		rLen = 0;
-		rLoc = 10080;
+		rLoc = 10079;
 		rType = 0;
 		vrLen = 1880;
 		vrLoc = 7343;
@@ -435,9 +435,9 @@
 	};
 	19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1188, 5928}}";
-			sepNavSelRange = "{6837, 0}";
-			sepNavVisRange = "{6046, 1610}";
+			sepNavIntBoundsRect = "{{0, 0}, {691, 6110}}";
+			sepNavSelRange = "{6210, 0}";
+			sepNavVisRange = "{6074, 450}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -765,7 +765,7 @@
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 19E3FF2E10E296FD006628E8 /* measurer */;
-		activeSDKPreference = iphonesimulator3.1.3;
+		activeSDKPreference = iphoneos3.1.3;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* measurer */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* measurer */,

@@ -187,7 +187,7 @@ private :
     }
     void _update_fidget ( )
     {
-        _fidget_angle += 2.0f * PI / 100.0f ;
+        _fidget_angle += 2.0f * PI / 50.0f ;
     }
     void _update_camera ( )
     {
