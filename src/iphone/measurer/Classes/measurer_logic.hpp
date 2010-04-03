@@ -52,6 +52,7 @@ public :
         _use_camera_matrix ( ) ;
         _render_land ( ) ;
         _render_entities ( ) ;
+        _render_fidget ( ) ;
     }
     void render_finished ( )
     {
@@ -59,6 +60,7 @@ public :
     void update ( )
     {
         _update_camera ( ) ;
+        _update_fidget ( ) ;
     }
 private :
     void _init_render ( )
@@ -149,6 +151,43 @@ private :
             _mediator -> mesh_set_transform ( _entity_mesh_id , _entities_grid_matrices [ i ] ) ;
             _mediator -> mesh_render ( _entity_mesh_id ) ;
         }
+    }
+    void _render_fidget ( )
+    {
+        platform :: render_disable_depth_test ( ) ;
+        platform :: render_matrix_identity ( ) ;
+        matrix_data matrix ;
+        platform :: matrix_set_axis_x
+            ( matrix
+            , platform :: math_cos ( _fidget_angle )
+            , platform :: math_sin ( _fidget_angle )
+            , 0.0f
+            ) ;
+        platform :: matrix_set_axis_y
+            ( matrix
+            , - platform :: math_sin ( _fidget_angle )
+            , platform :: math_cos ( _fidget_angle )
+            , 0.0f
+            ) ;
+        platform :: matrix_set_axis_z
+            ( matrix
+            , 0.0f
+            , 0.0f
+            , 1.0f
+            ) ;
+        platform :: matrix_set_origin
+            ( matrix
+            , 0.0f
+            , 3.0f
+            , - 3.0f
+            ) ;
+        _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
+        _mediator -> mesh_render ( _fidget_mesh_id ) ;
+        platform :: render_enable_depth_test ( ) ;
+    }
+    void _update_fidget ( )
+    {
+        _fidget_angle += 2.0f * PI / 100.0f ;
     }
     void _update_camera ( )
     {
