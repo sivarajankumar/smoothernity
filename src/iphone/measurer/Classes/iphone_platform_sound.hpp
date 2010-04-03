@@ -242,14 +242,3 @@ shy_iphone_platform :: sound_source_stop
 {
     alSourceStop ( source_id . _source_id ) ;
 }
-
-inline
-shy_iphone_platform :: sound_buffer_id
-shy_iphone_platform :: sound_get_buffer_from_music_EXPERIMENTAL
-    (
-    )
-{
-    sound_buffer_id buffer_id ;
-    buffer_id . _buffer_id = _experimental_buffer_id ;
-    return buffer_id ;
-}

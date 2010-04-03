@@ -186,7 +186,6 @@ public :
         ) ;
     static sound_buffer_id sound_create_mono_buffer ( mono_sound_sample * samples , int_32 samples_count ) ;
     static sound_buffer_id sound_create_stereo_buffer ( stereo_sound_sample * samples , int_32 samples_count ) ;
-    static sound_buffer_id sound_get_buffer_from_music_EXPERIMENTAL ( ) ;
     static sound_source_id sound_create_source ( ) ;
     static void sound_set_source_pitch ( const sound_source_id & source_id , float_32 pitch ) ;
     static void sound_set_source_gain ( const sound_source_id & source_id , float_32 gain ) ;
@@ -211,9 +210,6 @@ public :
     
     static void time_get_current ( time_data & time ) ;
     static int_32 time_diff_in_microseconds ( const time_data & time1 , const time_data & time2 ) ;
-    
-public :
-    static ALuint _experimental_buffer_id ;
     
 private :
     static vertex_data _reference_vertex ;

@@ -331,7 +331,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19B4F6F81167AD2B00C77292</string>
+										<string>19B4F72A1167B07400C77292</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -340,26 +340,26 @@
 											<string>19A8DDB5115E11250062EAB6</string>
 											<string>19A8DDB6115E11250062EAB6</string>
 											<string>19A8DDB7115E11250062EAB6</string>
-											<string>19A8DE58115E2A9D0062EAB6</string>
 											<string>19A8DE59115E2A9D0062EAB6</string>
 											<string>19A8DEAE115E3C7C0062EAB6</string>
 											<string>19A8DECE115E4DE20062EAB6</string>
 											<string>19A8DECF115E4DE20062EAB6</string>
 											<string>19A8DED0115E4DE20062EAB6</string>
-											<string>19B4F6CE1167AAFE00C77292</string>
 											<string>19B4F6D01167AAFE00C77292</string>
 											<string>19B4F6D11167AAFE00C77292</string>
 											<string>19B4F6D21167AAFE00C77292</string>
-											<string>19B4F6DF1167AC1100C77292</string>
-											<string>19B4F6E51167AC3900C77292</string>
 											<string>19B4F6E61167AC3900C77292</string>
-											<string>19B4F6E71167AC3900C77292</string>
-											<string>19B4F6E81167AC3900C77292</string>
-											<string>19B4F6E91167AC3900C77292</string>
-											<string>19B4F6EA1167AC3900C77292</string>
 											<string>19B4F6ED1167AC8700C77292</string>
-											<string>19B4F6EE1167AC8700C77292</string>
-											<string>19B4F6EF1167AC8700C77292</string>
+											<string>19B4F6FA1167AE6600C77292</string>
+											<string>19B4F6FB1167AE6600C77292</string>
+											<string>19B4F6FD1167AE6600C77292</string>
+											<string>19B4F7021167AF7700C77292</string>
+											<string>19B4F7131167AFE900C77292</string>
+											<string>19B4F7141167AFE900C77292</string>
+											<string>19B4F7151167AFE900C77292</string>
+											<string>19B4F7201167B04600C77292</string>
+											<string>19B4F7211167B04600C77292</string>
+											<string>19B4F7221167B04600C77292</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -557,6 +557,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>19B4F7191167AFE900C77292</string>
+		<string>19B4F70F1167AFA300C77292</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19E3FF3F10E29715006628E8</string>
@@ -889,6 +891,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

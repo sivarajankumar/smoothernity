@@ -7,8 +7,6 @@
 //
 
 #import "ES1Renderer.h"
-#import <AudioToolbox/AudioToolbox.h>
-#import <AudioToolbox/ExtendedAudioFile.h>
 
 @implementation ES1Renderer
 
@@ -40,86 +38,6 @@
 		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
 		glGenFramebuffersOES(1, &defaultFramebuffer);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
-
-        /////////////////////////////////////
-        // EXPERIMENTAL CODE
-        {
-            ALvoid * outData = 0 ;
-            ALenum  error = AL_NO_ERROR ;
-            ALenum  format ;
-            ALsizei size ;
-            ALsizei freq ;
-         
-            NSBundle * bundle = [ NSBundle mainBundle ] ;
-         
-            CFURLRef fileURL = ( CFURLRef ) [ [ NSURL fileURLWithPath : [ bundle pathForResource : @"rough_n_heavy_v37" ofType : @"mp3" ] ] retain ] ;
-         
-            if ( fileURL )
-            {
-                {
-                    CFURLRef inFileURL = fileURL ;
-                    ALsizei * outDataSize = & size ;
-                    ALenum * outDataFormat = & format ;
-                    ALsizei * outSampleRate = & freq ;
-                    SInt64 theFileLengthInFrames = 0 ;
-                    AudioStreamBasicDescription theFileFormat ;
-                    UInt32 thePropertySize = sizeof ( theFileFormat ) ;
-                    ExtAudioFileRef extRef = NULL ;
-                    void * theData = NULL ;
-                    AudioStreamBasicDescription theOutputFormat ;
-                 
-                    ExtAudioFileOpenURL ( inFileURL , & extRef ) ;
-                    ExtAudioFileGetProperty ( extRef , kExtAudioFileProperty_FileDataFormat , & thePropertySize , & theFileFormat ) ;
-                    
-                    theOutputFormat . mSampleRate = theFileFormat . mSampleRate ;
-                    theOutputFormat . mChannelsPerFrame = theFileFormat . mChannelsPerFrame;
-                    theOutputFormat . mFormatID = kAudioFormatLinearPCM ;
-                    theOutputFormat . mBytesPerPacket = 2 * theOutputFormat . mChannelsPerFrame ;
-                    theOutputFormat . mFramesPerPacket = 1 ;
-                    theOutputFormat . mBytesPerFrame = 2 * theOutputFormat . mChannelsPerFrame ;
-                    theOutputFormat . mBitsPerChannel = 16;
-                    theOutputFormat . mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger ;
-                    
-                    ExtAudioFileSetProperty ( extRef , kExtAudioFileProperty_ClientDataFormat , sizeof ( theOutputFormat ) , & theOutputFormat ) ;
-                    thePropertySize = sizeof ( theFileLengthInFrames ) ;
-                    ExtAudioFileGetProperty ( extRef , kExtAudioFileProperty_FileLengthFrames , & thePropertySize , & theFileLengthInFrames ) ;
-                    UInt32 dataSize = theFileLengthInFrames * theOutputFormat . mBytesPerFrame ;
-                    theData = malloc ( dataSize ) ;
-                    AudioBufferList theDataBuffer;
-                    theDataBuffer . mNumberBuffers = 1;
-                    theDataBuffer . mBuffers [ 0 ] . mDataByteSize = dataSize;
-                    theDataBuffer . mBuffers [ 0 ] . mNumberChannels = theOutputFormat . mChannelsPerFrame;
-                    theDataBuffer . mBuffers [ 0 ] . mData = theData ;
-             
-                    ExtAudioFileRead ( extRef , ( UInt32 * ) & theFileLengthInFrames , & theDataBuffer ) ;
-                    * outDataSize = ( ALsizei ) dataSize;
-                    * outDataFormat = ( theOutputFormat . mChannelsPerFrame > 1 ) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16 ;
-                    * outSampleRate = ( ALsizei ) theOutputFormat . mSampleRate ;
-                    outData = theData ;
-                    if ( extRef )
-                        ExtAudioFileDispose ( extRef ) ;
-                }
-                CFRelease ( fileURL ) ;
-                if ( ( error = alGetError ( ) ) == AL_NO_ERROR )
-                {
-                    NSUInteger bufferID ;
-                    alGenBuffers ( 1 , & bufferID ) ;
-                    alBufferData ( bufferID , format , outData , size - 2 * 2 * 2293 , freq ) ; 
-                    free ( outData ) ;
-                    shy_iphone_platform :: _experimental_buffer_id = bufferID ;
-                }
-                else
-                {
-                    NSLog ( @"error loading sound" ) ;
-                }
-            }
-            else
-            {
-                NSLog ( @"file not found." ) ;
-            }
-        }
-        // EXPERIMENTAL CODE
-        /////////////////////////////////////
         
    		shyMeasurer . init ( ) ;
     }
