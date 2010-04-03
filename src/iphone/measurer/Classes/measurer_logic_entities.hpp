@@ -25,6 +25,10 @@ public :
         if ( _entity_created )
             _render_entities ( ) ;
     }
+    int_32 are_entities_created ( )
+    {
+        return _entity_created ;
+    }
     void update ( )
     {
         if ( ! _entity_created )

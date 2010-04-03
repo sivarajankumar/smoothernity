@@ -33,14 +33,17 @@ public :
     }
     void update ( )
     {
-        if ( ! _camera_created )
+        if ( _mediator -> are_entities_created ( ) )
         {
-            _reset_camera_rubber ( ) ;
-            _update_camera ( ) ;
-            _camera_created = true ;
+            if ( ! _camera_created )
+            {
+                _reset_camera_rubber ( ) ;
+                _update_camera ( ) ;
+                _camera_created = true ;
+            }
+            else
+                _update_camera ( ) ;
         }
-        else
-            _update_camera ( ) ;
     }
 private :
     void _reset_camera_rubber ( )
