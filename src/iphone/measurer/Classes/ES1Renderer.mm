@@ -177,7 +177,7 @@ ALvoid alBufferDataStaticProc ( const ALint bid, ALenum format, ALvoid * data , 
                 {
                     NSUInteger bufferID ;
                     alGenBuffers ( 1 , & bufferID ) ;
-                    alBufferData ( bufferID , format , outData , size , freq ) ; 
+                    alBufferData ( bufferID , format , outData , size - 2 * 2 * 2293 , freq ) ; 
                     shy_iphone_platform :: _experimental_buffer_id = bufferID ;
                 }
                 else
