@@ -7,6 +7,7 @@ template
     , template < typename mediator > class measurer_logic_fidget
     , template < typename mediator > class measurer_logic_land
     , template < typename mediator > class measurer_logic_sound
+    , template < typename mediator > class measurer_logic_touch
     , template < typename mediator > class measurer_mesh
     >
 class shy_measurer_mediator
@@ -27,6 +28,7 @@ public :
     , _logic_fidget ( this )
     , _logic_land ( this )
     , _logic_sound ( this )
+    , _logic_touch ( this )
     {
     }
 public :
@@ -93,6 +95,10 @@ public :
     {
         _logic_land . render_land ( ) ;
     }
+    void render_touch ( )
+    {
+        _logic_touch . render_touch ( ) ;
+    }
     void update ( )
     {
         _logic . update ( ) ;
@@ -101,6 +107,7 @@ public :
         _logic_fidget . update ( ) ;
         _logic_land . update ( ) ;
         _logic_sound . update ( ) ;
+        _logic_touch . update ( ) ;
     }
     void use_camera_matrix ( )
     {
@@ -114,5 +121,6 @@ private :
     measurer_logic_fidget < shy_measurer_mediator > _logic_fidget ;
     measurer_logic_land < shy_measurer_mediator > _logic_land ;
     measurer_logic_sound < shy_measurer_mediator > _logic_sound ;
+    measurer_logic_touch < shy_measurer_mediator > _logic_touch ;
     measurer_mesh < shy_measurer_mediator > _mesh ;
 } ;

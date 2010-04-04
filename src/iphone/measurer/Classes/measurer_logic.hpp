@@ -48,6 +48,7 @@ private :
     {
         platform :: render_disable_depth_test ( ) ;
         _use_ortho_projection ( ) ;
+        _mediator -> render_touch ( ) ;
         _mediator -> render_fidget ( ) ;
     }
     void _use_perspective_projection ( )

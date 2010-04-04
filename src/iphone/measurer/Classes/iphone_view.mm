@@ -100,8 +100,8 @@
     UITouch * touch = [ touches anyObject ] ;
     CGPoint point = [ touch locationInView : [ touch view ] ] ;
     shy_iphone_platform :: _touch_occured = true ;
-    shy_iphone_platform :: _touch_x = ( float ) point . x / ( float ) _gl_backing_width ;
-    shy_iphone_platform :: _touch_y = ( float ) point . y / ( float ) _gl_backing_height ;
+    shy_iphone_platform :: _touch_x =   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ;
+    shy_iphone_platform :: _touch_y = - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ;
 }
 
 - ( void ) draw_view : ( id ) sender

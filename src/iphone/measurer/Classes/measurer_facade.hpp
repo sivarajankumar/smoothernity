@@ -5,6 +5,7 @@
 #include "measurer_logic_fidget.hpp"
 #include "measurer_logic_land.hpp"
 #include "measurer_logic_sound.hpp"
+#include "measurer_logic_touch.hpp"
 #include "measurer_mediator.hpp"
 #include "measurer_mesh.hpp"
 
@@ -45,6 +46,7 @@ private :
         , shy_measurer_logic_fidget
         , shy_measurer_logic_land
         , shy_measurer_logic_sound
+        , shy_measurer_logic_touch
         , shy_measurer_mesh 
         > 
         _mediator ;

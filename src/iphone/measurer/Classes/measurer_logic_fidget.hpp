@@ -65,7 +65,6 @@ private :
             ) ;
         _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
         _mediator -> mesh_render ( _fidget_mesh_id ) ;
-        platform :: render_enable_depth_test ( ) ;
     }
     void _create_fidget_mesh ( )
     {
@@ -74,13 +73,14 @@ private :
         static const int_32 FIDGET_B = 0 ;
         
         static const float_32 fidget_size = 0.3f ;
+        static const int_32 fidget_edges = 3 ;
         
-        vertex_data vertices [ 3 ] ;
-        index_data indices [ 3 ] ;
+        vertex_data vertices [ fidget_edges ] ;
+        index_data indices [ fidget_edges ] ;
         
-        for ( int_32 i = 0 ; i < 3 ; i ++ )
+        for ( int_32 i = 0 ; i < fidget_edges ; i ++ )
         {
-            float_32 angle = PI * 2.0f * float_32 ( i ) / 3.0f ;
+            float_32 angle = PI * 2.0f * float_32 ( i ) / float_32 ( fidget_edges ) ;
             platform :: render_set_vertex_position
                 ( vertices [ i ]
                 , fidget_size * platform :: math_cos ( angle )
@@ -99,7 +99,7 @@ private :
                 , i
                 ) ;
         }
-        _fidget_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 3 , 3 , 0 ) ;
+        _fidget_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , fidget_edges , 0 , fidget_edges ) ;
     }
 private :
     int_32 _fidget_mesh_created ;

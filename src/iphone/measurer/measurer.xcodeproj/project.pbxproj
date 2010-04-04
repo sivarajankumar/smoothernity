@@ -25,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		190FDE781168FC030053FE8F /* iphone_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_touch.hpp; sourceTree = "<group>"; };
+		190FDEE011690E1C0053FE8F /* measurer_logic_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_touch.hpp; sourceTree = "<group>"; };
 		19111313116897E900F5E355 /* iphone_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_sound_loader.h; sourceTree = "<group>"; };
 		1911131411689BDB00F5E355 /* iphone_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_sound_loader.m; sourceTree = "<group>"; };
 		19A8DDC7115E122F0062EAB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -92,6 +93,7 @@
 				19FCF5991167DA7200A0159E /* measurer_logic_fidget.hpp */,
 				19FCF5C71167E2DF00A0159E /* measurer_logic_land.hpp */,
 				19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */,
+				190FDEE011690E1C0053FE8F /* measurer_logic_touch.hpp */,
 				19AE697C1129D72700742128 /* measurer_mediator.hpp */,
 				19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */,
 				1D3623240D0F684500981E51 /* iphone_app_delegate.h */,
