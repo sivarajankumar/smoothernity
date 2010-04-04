@@ -3,6 +3,7 @@
 #import <Foundation/NSBundle.h>
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
+#import <OpenAL/oalStaticBufferExtension.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 #import <QuartzCore/QuartzCore.h>

@@ -88,9 +88,11 @@ shy_iphone_platform :: sound_create_mono_buffer
     , shy_iphone_platform :: int_32 samples_count 
     )
 {
+    alBufferDataStaticProcPtr al_buffer_data_static_proc = 
+        ( alBufferDataStaticProcPtr ) alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
     sound_buffer_id buffer_id ;
     alGenBuffers ( 1 , & buffer_id . _buffer_id ) ;
-    alBufferData 
+	al_buffer_data_static_proc
         ( buffer_id . _buffer_id 
         , AL_FORMAT_MONO8 
         , ( ALvoid * ) samples
@@ -107,9 +109,11 @@ shy_iphone_platform :: sound_create_stereo_buffer
     , int_32 samples_count 
     )
 {
+    alBufferDataStaticProcPtr al_buffer_data_static_proc = 
+        ( alBufferDataStaticProcPtr ) alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
     sound_buffer_id buffer_id ;
     alGenBuffers ( 1 , & buffer_id . _buffer_id ) ;
-    alBufferData 
+	al_buffer_data_static_proc
         ( buffer_id . _buffer_id 
         , AL_FORMAT_STEREO16 
         , ( ALvoid * ) samples 

@@ -27,9 +27,9 @@
 	};
 	1911131411689BDB00F5E355 /* iphone_sound_loader.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 1157}}";
-			sepNavSelRange = "{3193, 0}";
-			sepNavVisRange = "{0, 1547}";
+			sepNavIntBoundsRect = "{{0, 0}, {810, 1326}}";
+			sepNavSelRange = "{3188, 0}";
+			sepNavVisRange = "{503, 661}";
 		};
 	};
 	1911131811689DB600F5E355 /* PBXTextBookmark */ = {
@@ -127,7 +127,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 217";
 		rLen = 0;
-		rLoc = 8221;
+		rLoc = 8265;
 		rType = 0;
 		vrLen = 1968;
 		vrLoc = 6642;
@@ -376,7 +376,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 217";
 		rLen = 0;
-		rLoc = 8221;
+		rLoc = 8265;
 		rType = 0;
 		vrLen = 1968;
 		vrLoc = 6642;
@@ -546,7 +546,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 190";
 		rLen = 43;
-		rLoc = 6710;
+		rLoc = 6754;
 		rType = 0;
 		vrLen = 2382;
 		vrLoc = 5797;
@@ -1021,6 +1021,136 @@
 		vrLen = 1485;
 		vrLoc = 694;
 	};
+	191113CA1168B3DB00F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19AE697C1129D72700742128 /* measurer_mediator.hpp */;
+		name = "measurer_mediator.hpp: 81";
+		rLen = 0;
+		rLoc = 2562;
+		rType = 0;
+		vrLen = 1416;
+		vrLoc = 1194;
+	};
+	191113CB1168B3DB00F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */;
+		name = "measurer_logic_sound.hpp: 93";
+		rLen = 0;
+		rLoc = 3617;
+		rType = 0;
+		vrLen = 2411;
+		vrLoc = 1912;
+	};
+	191113CC1168B3DB00F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19111313116897E900F5E355 /* iphone_sound_loader.h */;
+		name = "iphone_sound_loader.h: 17";
+		rLen = 0;
+		rLoc = 407;
+		rType = 0;
+		vrLen = 609;
+		vrLoc = 0;
+	};
+	191113CD1168B3DB00F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1911131411689BDB00F5E355 /* iphone_sound_loader.m */;
+		name = "iphone_sound_loader.m: 26";
+		rLen = 0;
+		rLoc = 372;
+		rType = 0;
+		vrLen = 2408;
+		vrLoc = 779;
+	};
+	191113CE1168B3DB00F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */;
+		name = "iphone_platform_sound.hpp: 81";
+		rLen = 0;
+		rLoc = 2062;
+		rType = 0;
+		vrLen = 1214;
+		vrLoc = 0;
+	};
+	191113CF1168B3DB00F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */;
+		name = "iphone_platform_sound.hpp: 111";
+		rLen = 0;
+		rLoc = 3157;
+		rType = 0;
+		vrLen = 1501;
+		vrLoc = 2220;
+	};
+	191113D01168B40800F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
+		name = "iphone_platform.hpp: 7";
+		rLen = 0;
+		rLoc = 229;
+		rType = 0;
+		vrLen = 1036;
+		vrLoc = 0;
+	};
+	191113D11168B40800F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1911131411689BDB00F5E355 /* iphone_sound_loader.m */;
+		name = "iphone_sound_loader.m: 26";
+		rLen = 0;
+		rLoc = 372;
+		rType = 0;
+		vrLen = 2406;
+		vrLoc = 779;
+	};
+	191113D21168B40800F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */;
+		name = "measurer_logic_sound.hpp: 93";
+		rLen = 0;
+		rLoc = 3617;
+		rType = 0;
+		vrLen = 2411;
+		vrLoc = 1912;
+	};
+	191113D31168B40800F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */;
+		name = "iphone_platform_sound.hpp: 111";
+		rLen = 0;
+		rLoc = 3157;
+		rType = 0;
+		vrLen = 1501;
+		vrLoc = 2220;
+	};
+	191113D41168B40800F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */;
+		name = "iphone_platform_sound.hpp: 111";
+		rLen = 0;
+		rLoc = 3157;
+		rType = 0;
+		vrLen = 1456;
+		vrLoc = 2220;
+	};
+	191113D91168B49F00F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */;
+		name = "iphone_platform_sound.hpp: 112";
+		rLen = 0;
+		rLoc = 3156;
+		rType = 0;
+		vrLen = 1293;
+		vrLoc = 2220;
+	};
+	191113DF1168B55200F5E355 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */;
+		name = "iphone_platform_sound.hpp: 93";
+		rLen = 0;
+		rLoc = 2448;
+		rType = 0;
+		vrLen = 1464;
+		vrLoc = 2220;
+	};
 	1928A9C5110CBED600735B08 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 1928A9C6110CBED600735B08 /* UILabel.h */;
@@ -1077,7 +1207,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 143";
 		rLen = 0;
-		rLoc = 4089;
+		rLoc = 4133;
 		rType = 0;
 		vrLen = 2797;
 		vrLoc = 3304;
@@ -1124,9 +1254,9 @@
 	};
 	19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1006, 2626}}";
-			sepNavSelRange = "{6710, 43}";
-			sepNavVisRange = "{5797, 2382}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 3679}}";
+			sepNavSelRange = "{229, 0}";
+			sepNavVisRange = "{0, 1036}";
 		};
 	};
 	19A8DE59115E2A9D0062EAB6 /* PBXTextBookmark */ = {
@@ -1194,9 +1324,9 @@
 	};
 	19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 2860}}";
-			sepNavSelRange = "{2062, 0}";
-			sepNavVisRange = "{0, 1214}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 2899}}";
+			sepNavSelRange = "{2448, 0}";
+			sepNavVisRange = "{2220, 1464}";
 		};
 	};
 	19A8DECE115E4DE20062EAB6 /* PBXTextBookmark */ = {
@@ -1241,9 +1371,9 @@
 	};
 	19AE697C1129D72700742128 /* measurer_mediator.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 1508}}";
-			sepNavSelRange = "{1203, 0}";
-			sepNavVisRange = "{694, 1485}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 1560}}";
+			sepNavSelRange = "{2562, 0}";
+			sepNavVisRange = "{1194, 1416}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -1420,8 +1550,8 @@
 	19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1188, 1469}}";
-			sepNavSelRange = "{1521, 0}";
-			sepNavVisRange = "{0, 1855}";
+			sepNavSelRange = "{3617, 0}";
+			sepNavVisRange = "{1912, 2411}";
 		};
 	};
 	19FCF5E81167E6E300A0159E /* measurer_logic_camera.hpp */ = {
@@ -1606,7 +1736,7 @@
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 19E3FF2E10E296FD006628E8 /* measurer */;
-		activeSDKPreference = iphoneos3.1.3;
+		activeSDKPreference = iphonesimulator3.1.3;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* measurer */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* measurer */,
@@ -1820,6 +1950,19 @@
 			191113BD1168B04300F5E355 /* PBXTextBookmark */ = 191113BD1168B04300F5E355 /* PBXTextBookmark */;
 			191113BE1168B04300F5E355 /* PBXTextBookmark */ = 191113BE1168B04300F5E355 /* PBXTextBookmark */;
 			191113BF1168B04300F5E355 /* PBXTextBookmark */ = 191113BF1168B04300F5E355 /* PBXTextBookmark */;
+			191113CA1168B3DB00F5E355 /* PBXTextBookmark */ = 191113CA1168B3DB00F5E355 /* PBXTextBookmark */;
+			191113CB1168B3DB00F5E355 /* PBXTextBookmark */ = 191113CB1168B3DB00F5E355 /* PBXTextBookmark */;
+			191113CC1168B3DB00F5E355 /* PBXTextBookmark */ = 191113CC1168B3DB00F5E355 /* PBXTextBookmark */;
+			191113CD1168B3DB00F5E355 /* PBXTextBookmark */ = 191113CD1168B3DB00F5E355 /* PBXTextBookmark */;
+			191113CE1168B3DB00F5E355 /* PBXTextBookmark */ = 191113CE1168B3DB00F5E355 /* PBXTextBookmark */;
+			191113CF1168B3DB00F5E355 /* PBXTextBookmark */ = 191113CF1168B3DB00F5E355 /* PBXTextBookmark */;
+			191113D01168B40800F5E355 /* PBXTextBookmark */ = 191113D01168B40800F5E355 /* PBXTextBookmark */;
+			191113D11168B40800F5E355 /* PBXTextBookmark */ = 191113D11168B40800F5E355 /* PBXTextBookmark */;
+			191113D21168B40800F5E355 /* PBXTextBookmark */ = 191113D21168B40800F5E355 /* PBXTextBookmark */;
+			191113D31168B40800F5E355 /* PBXTextBookmark */ = 191113D31168B40800F5E355 /* PBXTextBookmark */;
+			191113D41168B40800F5E355 /* PBXTextBookmark */ = 191113D41168B40800F5E355 /* PBXTextBookmark */;
+			191113D91168B49F00F5E355 /* PBXTextBookmark */ = 191113D91168B49F00F5E355 /* PBXTextBookmark */;
+			191113DF1168B55200F5E355 /* PBXTextBookmark */ = 191113DF1168B55200F5E355 /* PBXTextBookmark */;
 			1928A9C5110CBED600735B08 = 1928A9C5110CBED600735B08 /* PBXTextBookmark */;
 			193A64971167C47A003779CF = 193A64971167C47A003779CF /* PBXBookmark */;
 			193A64981167C47A003779CF = 193A64981167C47A003779CF /* PBXTextBookmark */;

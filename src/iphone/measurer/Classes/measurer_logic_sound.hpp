@@ -76,21 +76,21 @@ private :
             , platform :: vector_xyz ( 0 , 1 , 0 )
             ) ;
             
-        int_32 next_sample = 0 ;
+/*        int_32 next_sample = 0 ;
         for ( int_32 i = 0 ; i < platform :: mono_sound_samples_per_second ; ++ i )
         {
             next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * PI / float_32 ( platform :: mono_sound_samples_per_second ) ) ) ) ;
             platform :: sound_set_sample_value ( _mono_sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
         }
-                
+  */              
         sound_buffer_id stereo_sound_buffer = platform :: sound_create_stereo_buffer 
             ( _stereo_sound_data 
             , _loaded_stereo_sound_samples - 2293 
             ) ;
-        sound_buffer_id mono_sound_buffer = platform :: sound_create_mono_buffer 
+/*        sound_buffer_id mono_sound_buffer = platform :: sound_create_mono_buffer 
             ( _mono_sound_data 
             , platform :: mono_sound_samples_per_second 
-            ) ;
+            ) ;*/
         _sound_source = platform :: sound_create_source ( ) ;
         platform :: sound_set_source_pitch ( _sound_source , 1 ) ;
         platform :: sound_set_source_gain ( _sound_source , 1 ) ;
