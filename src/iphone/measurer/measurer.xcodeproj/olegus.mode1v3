@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -277,7 +275,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
+									<integer>13</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -313,12 +311,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>EAGLView.mm</string>
+								<string>iphone_app_delegate.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,7 +326,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>EAGLView.mm</string>
+										<string>iphone_app_delegate.mm</string>
+										<key>_historyCapacity</key>
+										<integer>0</integer>
+										<key>bookmark</key>
+										<string>197AE4D81168F29100C01469</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -342,20 +346,22 @@
 											<string>1911131D11689DB600F5E355</string>
 											<string>191113B01168AFCE00F5E355</string>
 											<string>191113BC1168B04300F5E355</string>
-											<string>191113BD1168B04300F5E355</string>
 											<string>191113CA1168B3DB00F5E355</string>
 											<string>191113D21168B40800F5E355</string>
 											<string>19B921F41168D53A00B79C60</string>
 											<string>19B9225F1168E43C00B79C60</string>
 											<string>19B922601168E43C00B79C60</string>
 											<string>19B922741168E4CF00B79C60</string>
-											<string>19B922751168E4CF00B79C60</string>
 											<string>19B922771168E4CF00B79C60</string>
-											<string>19B9228E1168E76700B79C60</string>
-											<string>19B922901168E76700B79C60</string>
-											<string>19B922911168E76700B79C60</string>
-											<string>19B922921168E76700B79C60</string>
 											<string>19B922931168E76700B79C60</string>
+											<string>197AE4D01168F29100C01469</string>
+											<string>197AE4D11168F29100C01469</string>
+											<string>197AE4D21168F29100C01469</string>
+											<string>197AE4D31168F29100C01469</string>
+											<string>197AE4D41168F29100C01469</string>
+											<string>197AE4D51168F29100C01469</string>
+											<string>197AE4D61168F29100C01469</string>
+											<string>197AE4D71168F29100C01469</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -553,6 +559,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19E3FF3F10E29715006628E8</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
@@ -756,13 +764,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>19B921FD1168D74200B79C60</string>
+				<string>197AE4D91168F29100C01469</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>19B921FE1168D74200B79C60</string>
-				<string>19B921FF1168D74200B79C60</string>
-				<string>19B922001168D74200B79C60</string>
-				<string>19B922011168D74200B79C60</string>
-				<string>19B922021168D74200B79C60</string>
+				<string>197AE4DA1168F29100C01469</string>
+				<string>197AE4DB1168F29100C01469</string>
+				<string>197AE4DC1168F29100C01469</string>
+				<string>197AE4DD1168F29100C01469</string>
+				<string>197AE4DE1168F29100C01469</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -881,8 +889,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -918,7 +924,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>19B922031168D74200B79C60</string>
+				<string>197AE4DF1168F29100C01469</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

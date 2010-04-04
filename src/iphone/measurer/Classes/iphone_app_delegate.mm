@@ -1,4 +1,4 @@
-#import "measurerAppDelegate.h"
+#import "iphone_app_delegate.h"
 #import "iphone_view.h"
 
 @implementation measurerAppDelegate
