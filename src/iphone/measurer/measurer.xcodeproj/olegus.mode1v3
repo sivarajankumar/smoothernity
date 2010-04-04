@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -311,8 +313,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -327,16 +327,10 @@
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
 										<string>EAGLView.mm</string>
-										<key>_historyCapacity</key>
-										<integer>0</integer>
-										<key>bookmark</key>
-										<string>19B922961168E78400B79C60</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
 											<string>19AE69501129CD1000742128</string>
-											<string>19A8DDB5115E11250062EAB6</string>
-											<string>19A8DDB6115E11250062EAB6</string>
 											<string>19A8DEAE115E3C7C0062EAB6</string>
 											<string>19A8DECE115E4DE20062EAB6</string>
 											<string>193A64971167C47A003779CF</string>
@@ -358,12 +352,10 @@
 											<string>19B922751168E4CF00B79C60</string>
 											<string>19B922771168E4CF00B79C60</string>
 											<string>19B9228E1168E76700B79C60</string>
-											<string>19B9228F1168E76700B79C60</string>
 											<string>19B922901168E76700B79C60</string>
 											<string>19B922911168E76700B79C60</string>
 											<string>19B922921168E76700B79C60</string>
 											<string>19B922931168E76700B79C60</string>
-											<string>19B922941168E76700B79C60</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -421,9 +413,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>19B921F71168D53A00B79C60</string>
+				<string>197AE4B01168EBDD00C01469</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>19B921F81168D53A00B79C60</string>
+				<string>197AE4B11168EBDD00C01469</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -561,10 +553,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>19B9222B1168DED500B79C60</string>
-		<string>19B9222C1168DED500B79C60</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19E3FF3F10E29715006628E8</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
 	</array>
@@ -590,7 +578,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>iphone_sound_loader.m</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -607,8 +595,6 @@
 							<string>218pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -648,7 +634,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>19E3FF3F10E29715006628E8</string>
-				<string>19B921F91168D53A00B79C60</string>
+				<string>197AE4B21168EBDD00C01469</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -661,7 +647,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
