@@ -17,8 +17,9 @@ class shy_measurer_logic_sound
 public :
     shy_measurer_logic_sound ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
-    , _sound_created ( false )
-    , _sound_loaded ( false )
+    , _mono_sound_created ( false )
+    , _stereo_sound_created ( false )
+    , _stereo_sound_loaded ( false )
     , _frames_left_to_create ( 30 )
     , _loaded_stereo_sound_samples ( 0 )
     {
@@ -38,28 +39,32 @@ public :
             _frames_left_to_create -- ;
         else
         {
-            if ( ! _sound_loaded )
+            if ( ! _stereo_sound_loaded )
             {
                 if ( platform :: sound_loader_ready ( ) )
                 {
                     _load_sound ( ) ;
-                    _sound_loaded = true ;
+                    _stereo_sound_loaded = true ;
                 }
             }
             else
             {
                 if ( platform :: sound_loader_ready ( ) )
                 {
-                    if ( ! _sound_created )
+                    if ( ! _stereo_sound_created )
                     {
-                        _create_mono_sound ( ) ;
                         _create_stereo_sound ( ) ;
-                        _sound_created = true ;
+                        _stereo_sound_created = true ;
                     }
                 }
             }
+            if ( ! _mono_sound_created )
+            {
+                _create_mono_sound ( ) ;
+                _mono_sound_created = true ;
+            }
         }
-        if ( _sound_created )
+        if ( _mono_sound_created )
         {
             if ( platform :: touch_occured ( ) )
             {
@@ -123,8 +128,9 @@ private :
 private :
     sound_source_id _stereo_sound_source ;
     sound_source_id _mono_sound_source ;
-    int_32 _sound_created ;
-    int_32 _sound_loaded ;
+    int_32 _mono_sound_created ;
+    int_32 _stereo_sound_created ;
+    int_32 _stereo_sound_loaded ;
     int_32 _frames_left_to_create ;
     int_32 _loaded_stereo_sound_samples ;
     stereo_sound_sample _stereo_sound_data [ max_stereo_sound_samples ] ;
