@@ -67,7 +67,7 @@ private :
         static const int_32 SPOT_B = 255 ;
         
         static const float_32 spot_size = 0.3f ;
-        static const int_32 spot_edges = 6 ;
+        static const int_32 spot_edges = 32 ;
         
         vertex_data vertices [ spot_edges ] ;
         index_data indices [ spot_edges ] ;

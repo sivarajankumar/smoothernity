@@ -1,6 +1,6 @@
 // !$*UTF8*$!
 {
-	19044C93115669F500C648FF /* measurer_logic.hpp:73 */ = {
+	19044C93115669F500C648FF /* measurer_logic.hpp:74 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -12,7 +12,7 @@
 		functionName = "_create_land_mesh ( )";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 73;
+		lineNumber = 74;
 		location = measurer;
 		modificationTime = 292007915.533403;
 		originalNumberOfMultipleMatches = 1;
@@ -60,7 +60,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 228";
 		rLen = 0;
-		rLoc = 8256;
+		rLoc = 8297;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 7759;
@@ -70,7 +70,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 225";
 		rLen = 0;
-		rLoc = 8190;
+		rLoc = 8231;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 7759;
@@ -100,7 +100,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 223";
 		rLen = 106;
-		rLoc = 8085;
+		rLoc = 8126;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 7759;
@@ -110,7 +110,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 223";
 		rLen = 106;
-		rLoc = 8085;
+		rLoc = 8126;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 7759;
@@ -120,7 +120,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 251";
 		rLen = 0;
-		rLoc = 8808;
+		rLoc = 8849;
 		rType = 0;
 		vrLen = 1170;
 		vrLoc = 7833;
@@ -200,7 +200,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 57";
 		rLen = 0;
-		rLoc = 2204;
+		rLoc = 2249;
 		rType = 0;
 		vrLen = 1486;
 		vrLoc = 227;
@@ -220,7 +220,7 @@
 		fRef = 19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */;
 		name = "measurer_logic_sound.hpp: 95";
 		rLen = 0;
-		rLoc = 3684;
+		rLoc = 3755;
 		rType = 0;
 		vrLen = 2550;
 		vrLoc = 2910;
@@ -230,7 +230,7 @@
 		fRef = 19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */;
 		name = "measurer_logic_sound.hpp: 76";
 		rLen = 0;
-		rLoc = 2724;
+		rLoc = 2795;
 		rType = 0;
 		vrLen = 2762;
 		vrLoc = 3168;
@@ -277,7 +277,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 159";
 		rLen = 0;
-		rLoc = 5375;
+		rLoc = 5416;
 		rType = 0;
 		vrLen = 2693;
 		vrLoc = 3890;
@@ -287,7 +287,7 @@
 		fRef = 19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */;
 		name = "iphone_platform_render.hpp: 59";
 		rLen = 0;
-		rLoc = 2223;
+		rLoc = 2313;
 		rType = 0;
 		vrLen = 1551;
 		vrLoc = 1515;
@@ -307,7 +307,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 45";
 		rLen = 0;
-		rLoc = 2055;
+		rLoc = 2101;
 		rType = 0;
 		vrLen = 1429;
 		vrLoc = 227;
@@ -317,7 +317,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 46";
 		rLen = 0;
-		rLoc = 2056;
+		rLoc = 2101;
 		rType = 0;
 		vrLen = 1429;
 		vrLoc = 227;
@@ -327,7 +327,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 150";
 		rLen = 0;
-		rLoc = 4494;
+		rLoc = 4535;
 		rType = 0;
 		vrLen = 2693;
 		vrLoc = 3890;
@@ -337,7 +337,7 @@
 		fRef = 19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */;
 		name = "iphone_platform_render.hpp: 59";
 		rLen = 0;
-		rLoc = 2223;
+		rLoc = 2313;
 		rType = 0;
 		vrLen = 1549;
 		vrLoc = 1515;
@@ -347,7 +347,7 @@
 		fRef = 19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */;
 		name = "iphone_platform_render.hpp: 70";
 		rLen = 0;
-		rLoc = 2135;
+		rLoc = 2225;
 		rType = 0;
 		vrLen = 1543;
 		vrLoc = 870;
@@ -357,7 +357,7 @@
 		fRef = 19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */;
 		name = "iphone_platform_render.hpp: 58";
 		rLen = 0;
-		rLoc = 1728;
+		rLoc = 1818;
 		rType = 0;
 		vrLen = 1674;
 		vrLoc = 450;
@@ -377,7 +377,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 222";
 		rLen = 0;
-		rLoc = 8173;
+		rLoc = 8214;
 		rType = 0;
 		vrLen = 1112;
 		vrLoc = 7736;
@@ -427,7 +427,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 75";
 		rLen = 0;
-		rLoc = 2204;
+		rLoc = 2249;
 		rType = 0;
 		vrLen = 1283;
 		vrLoc = 741;
@@ -437,7 +437,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 60";
 		rLen = 0;
-		rLoc = 1786;
+		rLoc = 1908;
 		rType = 0;
 		vrLen = 1281;
 		vrLoc = 741;
@@ -457,7 +457,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 60";
 		rLen = 0;
-		rLoc = 1836;
+		rLoc = 1958;
 		rType = 0;
 		vrLen = 1336;
 		vrLoc = 828;
@@ -522,9 +522,9 @@
 	};
 	190FDEE011690E1C0053FE8F /* measurer_logic_touch.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {691, 1248}}";
-			sepNavSelRange = "{2753, 0}";
-			sepNavVisRange = "{2522, 578}";
+			sepNavIntBoundsRect = "{{0, 0}, {691, 1313}}";
+			sepNavSelRange = "{2837, 0}";
+			sepNavVisRange = "{2424, 543}";
 		};
 	};
 	190FDEE111690E390053FE8F /* PBXTextBookmark */ = {
@@ -562,7 +562,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 222";
 		rLen = 0;
-		rLoc = 8173;
+		rLoc = 8214;
 		rType = 0;
 		vrLen = 1186;
 		vrLoc = 7662;
@@ -632,7 +632,7 @@
 		fRef = 190FDEE011690E1C0053FE8F /* measurer_logic_touch.hpp */;
 		name = "measurer_logic_touch.hpp: 102";
 		rLen = 0;
-		rLoc = 3524;
+		rLoc = 3525;
 		rType = 0;
 		vrLen = 1780;
 		vrLoc = 1604;
@@ -732,7 +732,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 60";
 		rLen = 0;
-		rLoc = 1836;
+		rLoc = 1958;
 		rType = 0;
 		vrLen = 1336;
 		vrLoc = 828;
@@ -742,7 +742,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 51";
 		rLen = 0;
-		rLoc = 1442;
+		rLoc = 1564;
 		rType = 0;
 		vrLen = 1345;
 		vrLoc = 828;
@@ -806,7 +806,7 @@
 		fRef = 19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */;
 		name = "measurer_logic_sound.hpp: 93";
 		rLen = 0;
-		rLoc = 4860;
+		rLoc = 4931;
 		rType = 0;
 		vrLen = 2411;
 		vrLoc = 1912;
@@ -887,7 +887,7 @@
 		fRef = 19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */;
 		name = "iphone_platform.hpp: 219";
 		rLen = 0;
-		rLoc = 8207;
+		rLoc = 8248;
 		rType = 0;
 		vrLen = 1992;
 		vrLoc = 6754;
@@ -934,9 +934,9 @@
 	};
 	19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1006, 3224}}";
-			sepNavSelRange = "{8173, 0}";
-			sepNavVisRange = "{7662, 1186}";
+			sepNavIntBoundsRect = "{{0, 0}, {1006, 3211}}";
+			sepNavSelRange = "{4191, 0}";
+			sepNavVisRange = "{3757, 2759}";
 		};
 	};
 	19A8DE64115E2B230062EAB6 /* iphone_platform.mm */ = {
@@ -949,9 +949,9 @@
 	};
 	19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 2678}}";
-			sepNavSelRange = "{1728, 0}";
-			sepNavVisRange = "{450, 1674}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 2730}}";
+			sepNavSelRange = "{395, 0}";
+			sepNavVisRange = "{0, 1427}";
 		};
 	};
 	19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */ = {
@@ -1025,7 +1025,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {949, 702}}";
 			sepNavSelRange = "{1116, 0}";
-			sepNavVisRange = "{137, 1044}";
+			sepNavVisRange = "{98, 1083}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -1039,9 +1039,9 @@
 	};
 	19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 988}}";
-			sepNavSelRange = "{1442, 0}";
-			sepNavVisRange = "{828, 1345}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 1001}}";
+			sepNavSelRange = "{2249, 0}";
+			sepNavVisRange = "{860, 1389}";
 			sepNavWindowFrame = "{{15, 215}, {750, 558}}";
 		};
 	};
@@ -1200,8 +1200,8 @@
 	19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1188, 1820}}";
-			sepNavSelRange = "{2724, 0}";
-			sepNavVisRange = "{3168, 2762}";
+			sepNavSelRange = "{2638, 0}";
+			sepNavVisRange = "{2012, 1601}";
 		};
 	};
 	19FCF5E81167E6E300A0159E /* measurer_logic_camera.hpp */ = {
@@ -1216,7 +1216,7 @@
 		fRef = 19AE699B1129DEF400742128 /* measurer_logic.hpp */;
 		name = "measurer_logic.hpp: 57";
 		rLen = 0;
-		rLoc = 2204;
+		rLoc = 2249;
 		rType = 0;
 		vrLen = 1417;
 		vrLoc = 296;
@@ -1280,12 +1280,12 @@
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 19E3FF2E10E296FD006628E8 /* measurer */;
-		activeSDKPreference = iphonesimulator3.1.3;
+		activeSDKPreference = iphoneos3.1.3;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* measurer */;
 		addToTargets = (
 		);
 		breakpoints = (
-			19044C93115669F500C648FF /* measurer_logic.hpp:73 */,
+			19044C93115669F500C648FF /* measurer_logic.hpp:74 */,
 		);
 		codeSenseManager = 19E3FF4910E29715006628E8 /* Code sense */;
 		executables = (

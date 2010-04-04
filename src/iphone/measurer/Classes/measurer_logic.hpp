@@ -39,6 +39,7 @@ private :
     void _render_scene ( )
     {
         platform :: render_enable_depth_test ( ) ;
+        platform :: render_fog_linear ( 10 , 20 , 0.0f , 0.1f , 0.4f , 0 ) ;
         _use_perspective_projection ( ) ;
         _mediator -> use_camera_matrix ( ) ;
         _mediator -> render_land ( ) ;
@@ -47,6 +48,7 @@ private :
     void _render_hud ( )
     {
         platform :: render_disable_depth_test ( ) ;
+        platform :: render_fog_disable ( ) ;
         _use_ortho_projection ( ) ;
         _mediator -> render_touch ( ) ;
         _mediator -> render_fidget ( ) ;
@@ -64,7 +66,6 @@ private :
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
-        platform :: render_fog_linear ( 10 , 20 , 0.0f , 0.1f , 0.4f , 0 ) ;
     }
     void _clear_screen ( )
     {

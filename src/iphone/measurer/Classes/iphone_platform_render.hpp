@@ -13,6 +13,11 @@ inline void shy_iphone_platform :: render_disable_depth_test ( )
     glDisable ( GL_DEPTH_TEST ) ;
 }
 
+inline void shy_iphone_platform :: render_fog_disable ( )
+{
+    glDisable ( GL_FOG ) ;
+}
+
 inline void shy_iphone_platform :: render_fog_linear 
     ( shy_iphone_platform :: float_32 near 
     , shy_iphone_platform :: float_32 far 

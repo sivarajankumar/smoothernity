@@ -68,6 +68,7 @@ public :
         {
             if ( platform :: touch_occured ( ) )
             {
+                platform :: sound_source_stop ( _mono_sound_source ) ;
                 platform :: sound_source_play ( _mono_sound_source ) ;
             }
         }
