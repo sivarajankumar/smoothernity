@@ -30,8 +30,9 @@
 - ( void ) stop_animation ;
 - ( void ) draw_view : ( id ) sender ;
 - ( void ) _init_platform ;
-- ( void ) _init_game ;
 - ( void ) _done_platform ;
+- ( void ) _init_game ;
 - ( void ) _done_game ;
+- ( void ) _schedule_draw ;
 
 @end

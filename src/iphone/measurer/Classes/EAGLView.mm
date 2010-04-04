@@ -111,13 +111,18 @@
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
     _shy_measurer . render_finished ( ) ;
+    [ self _schedule_draw ] ;
+}
+
+- ( void ) _schedule_draw
+{
 	[ NSTimer 
 	    scheduledTimerWithTimeInterval : 0.0
 		target : self
 	    selector : @ selector ( draw_view : )
 	    userInfo : nil
 	    repeats : NO
-	 ] ;
+    ] ;
 }
 
 - ( void ) layoutSubviews
@@ -148,7 +153,7 @@
 {
 	if ( ! _animating )
 	{
-		[ NSTimer scheduledTimerWithTimeInterval : 0.0 target : self selector : @selector ( draw_view : ) userInfo : nil repeats : NO ] ;
+        [ self _schedule_draw ] ;
 		_animating = TRUE ;
 	}
 }
