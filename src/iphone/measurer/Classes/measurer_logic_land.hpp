@@ -12,7 +12,7 @@ public :
     shy_measurer_logic_land ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _land_created ( false )
-    , _frames_left_to_create ( 20 )
+    , _frames_left_to_create ( 0 )
     {
     }
     void render_land ( )

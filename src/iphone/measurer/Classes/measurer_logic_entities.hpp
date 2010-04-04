@@ -18,17 +18,13 @@ public :
     shy_measurer_logic_entities ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _entity_created ( false )
-    , _frames_left_to_create ( 10 )
+    , _frames_left_to_create ( 0 )
     {
     }
     void render_entities ( )
     {
         if ( _entity_created )
             _render_entities ( ) ;
-    }
-    int_32 are_entities_created ( )
-    {
-        return _entity_created ;
     }
     void update ( )
     {
@@ -46,10 +42,7 @@ public :
     }
     vector_data get_entity_origin ( int_32 index )
     {
-        if ( _entity_created )
-            return platform :: matrix_get_origin ( _entities_grid_matrices [ index ] ) ;
-        else
-            return platform :: vector_xyz ( 0.0f , 0.0f , 0.0f ) ;
+        return _get_entity_origin ( index ) ;
     }
 private :
     void _render_entities ( )
@@ -152,21 +145,25 @@ private :
             , fan_indices_count
             ) ;
     }
-    void _create_entity_grid ( )
+    vector_data _get_entity_origin ( int_32 index )
     {
         const float_32 grid_step = 5.0f ;
-        for ( int_32 x = 0 ; x < ENTITY_MESH_GRID ; x ++ )
-            for ( int_32 z = 0 ; z < ENTITY_MESH_GRID ; z ++ )
-            {
-                matrix_data & matrix = _entities_grid_matrices [ x + ENTITY_MESH_GRID * z ] ;
-                platform :: matrix_identity ( matrix ) ;
-                platform :: matrix_set_origin 
-                    ( matrix
-                    , grid_step * ( float_32 ) ( x - ( ENTITY_MESH_GRID / 2 ) )
-                    , 1.0f
-                    , grid_step * ( float_32 ) ( z - ( ENTITY_MESH_GRID / 2 ) )
-                    ) ;
-            }
+        int_32 x = index % ENTITY_MESH_GRID ;
+        int_32 z = index / ENTITY_MESH_GRID ;
+        return platform :: vector_xyz
+            ( grid_step * ( float_32 ) ( x - ( ENTITY_MESH_GRID / 2 ) )
+            , 1.0f
+            , grid_step * ( float_32 ) ( z - ( ENTITY_MESH_GRID / 2 ) )
+            ) ;
+    }
+    void _create_entity_grid ( )
+    {
+        for ( int_32 i = 0 ; i < ENTITY_MESH_GRID * ENTITY_MESH_GRID ; i ++ )
+        {
+            matrix_data & matrix = _entities_grid_matrices [ i ] ;
+            platform :: matrix_identity ( matrix ) ;
+            platform :: matrix_set_origin ( matrix , _get_entity_origin ( i ) ) ;
+        }
     }
 private :
     mesh_id _entity_mesh_id ;

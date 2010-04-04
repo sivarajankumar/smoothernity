@@ -84,23 +84,17 @@ private :
     }
     vector_data _random_camera_origin ( )
     {
-        if ( _mediator -> are_entities_created ( ) )
-            return platform :: vector_add 
-                ( _random_entity_origin ( 0 , ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 ) )
-                , platform :: vector_xyz ( 0.0f , 3.0f , 0.0f )
-                ) ;
-        else
-            return platform :: vector_xyz ( 0.0f , 4.0f , 0.0f ) ;
+        return platform :: vector_add 
+            ( _random_entity_origin ( 0 , ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 ) )
+            , platform :: vector_xyz ( 0.0f , 3.0f , 0.0f )
+            ) ;
     }
     vector_data _random_camera_target ( )
     {
-        if ( _mediator -> are_entities_created ( ) )
-            return _random_entity_origin 
-                ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 )
-                , ENTITY_MESH_GRID * ENTITY_MESH_GRID
-                ) ;
-        else
-            return platform :: vector_xyz ( 0.0f , 1.0f , - 10.0f ) ;
+        return _random_entity_origin 
+            ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 )
+            , ENTITY_MESH_GRID * ENTITY_MESH_GRID
+            ) ;
     }
 private :
     matrix_data _camera_matrix ;

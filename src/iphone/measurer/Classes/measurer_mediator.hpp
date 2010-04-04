@@ -30,10 +30,6 @@ public :
     {
     }
 public :
-    int_32 are_entities_created ( )
-    {
-        return _logic_entities . are_entities_created ( ) ;
-    }
     void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up )
     {
         _camera . camera_matrix_look_at ( matrix , from , to , norm_up ) ;
