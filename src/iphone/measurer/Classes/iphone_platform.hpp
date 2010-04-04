@@ -216,7 +216,7 @@ public :
     static void time_get_current ( time_data & time ) ;
     static int_32 time_diff_in_microseconds ( const time_data & time1 , const time_data & time2 ) ;
 
-    static sound_loader * _sound_loader ;
+    static shy_iphone_sound_loader * _sound_loader ;
 
 private :
     static vertex_data _reference_vertex ;

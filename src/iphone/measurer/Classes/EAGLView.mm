@@ -50,8 +50,8 @@
         _al_context = alcCreateContext ( _al_device , NULL ) ;
         alcMakeContextCurrent ( _al_context ) ;
         
-        shy_iphone_platform :: _sound_loader = [ [ sound_loader alloc ] init ] ;
-   		_shy_measurer . init ( ) ;        
+        shy_iphone_platform :: _sound_loader = [ [ shy_iphone_sound_loader alloc ] init ] ;
+   		_shy_measurer . init ( ) ;
 	}
 	
     return self ;

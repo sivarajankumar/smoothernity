@@ -2,7 +2,7 @@
 #import <AudioToolbox/ExtendedAudioFile.h>
 #import <Foundation/NSBundle.h>
 
-@interface sound_loader : NSObject
+@interface shy_iphone_sound_loader : NSObject
 {
 @private
     bool _is_ready ;

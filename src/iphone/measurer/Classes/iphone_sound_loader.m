@@ -1,6 +1,6 @@
 #import "iphone_sound_loader.h"
 
-@implementation sound_loader
+@implementation shy_iphone_sound_loader
 
 - ( id ) init
 {

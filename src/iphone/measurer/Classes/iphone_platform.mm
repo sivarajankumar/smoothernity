@@ -10,4 +10,4 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
     - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
     ) ;
     
-sound_loader * shy_iphone_platform :: _sound_loader = 0 ;
+shy_iphone_sound_loader * shy_iphone_platform :: _sound_loader = 0 ;
