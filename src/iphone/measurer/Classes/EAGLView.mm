@@ -1,19 +1,10 @@
-//
-//  EAGLView.m
-//  measurer
-//
-//  Created by Oleg Plakhotnyuk on 23.12.09.
-//  Copyright __MyCompanyName__ 2009. All rights reserved.
-//
-
 #import "EAGLView.h"
 
 @implementation EAGLView
 
-// You must implement this method
-+ (Class) layerClass
++ ( Class ) layerClass
 {
-    return [CAEAGLLayer class];
+    return [ CAEAGLLayer class ] ;
 }
 
 - ( void ) touchesBegan : ( NSSet * ) touches withEvent : ( UIEvent * ) event
@@ -23,26 +14,31 @@
     NSLog ( @"touch began x=%f, y=%f" , point . x , point . y ) ;
 }
 
-//The GL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
-- (id) initWithCoder:(NSCoder*)coder
+- ( id ) initWithCoder : ( NSCoder * ) coder
 {    
-    if ((self = [super initWithCoder:coder]))
+    if ( ( self = [ super initWithCoder : coder ] ) )
 	{
-        // Get the layer
-        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+   		_animating = FALSE ;
         
-        eaglLayer.opaque = TRUE;
-        eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
-		
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
-		_gl_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+        CAEAGLLayer * eagl_layer = ( CAEAGLLayer * ) self . layer ;
+        eagl_layer . opaque = TRUE ;
+        eagl_layer . drawableProperties = [ NSDictionary dictionaryWithObjectsAndKeys 
+            : [ NSNumber numberWithBool : FALSE ]
+            , kEAGLDrawablePropertyRetainedBacking
+            , kEAGLColorFormatRGBA8
+            , kEAGLDrawablePropertyColorFormat
+            , nil
+            ] ;		
+        [ UIApplication sharedApplication ] . idleTimerDisabled = YES ;
         
-        if (!_gl_context || ![EAGLContext setCurrentContext:_gl_context])
+		_gl_context = [ [ EAGLContext alloc ] initWithAPI : kEAGLRenderingAPIOpenGLES1 ] ;
+        if ( ! _gl_context || ! [ EAGLContext setCurrentContext : _gl_context ] )
 		{
-            [self release];
-            return nil;
+            [ self release ] ;
+            return nil ;
         }
+		glGenFramebuffersOES ( 1 , & _gl_default_framebuffer ) ;
+		glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
         
         _al_device = alcOpenDevice ( NULL ) ;
         if ( ! _al_device )
@@ -51,31 +47,24 @@
             [ self release ] ;
             return nil ;
         }
-        
         _al_context = alcCreateContext ( _al_device , NULL ) ;
         alcMakeContextCurrent ( _al_context ) ;
-                
-		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
-		glGenFramebuffersOES(1, &_gl_default_framebuffer);
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, _gl_default_framebuffer);
         
         shy_iphone_platform :: _sound_loader = [ [ sound_loader alloc ] init ] ;
-   		_shy_measurer . init ( ) ;
-        
-		_animating = FALSE;
+   		_shy_measurer . init ( ) ;        
 	}
 	
-    return self;
+    return self ;
 }
 
-- (void) drawView:(id)sender
+- ( void ) drawView : ( id ) sender
 {
-    [EAGLContext setCurrentContext:_gl_context];
-    glBindFramebufferOES(GL_FRAMEBUFFER_OES, _gl_default_framebuffer);
+    [ EAGLContext setCurrentContext : _gl_context ] ;
+    glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
 	_shy_measurer . render ( ) ;
 	_shy_measurer . update ( ) ;
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, _gl_color_renderbuffer);
-    [_gl_context presentRenderbuffer:GL_RENDERBUFFER_OES];
+    glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
+    [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
     _shy_measurer . render_finished ( ) ;
 	[ NSTimer 
 	    scheduledTimerWithTimeInterval : 0.0
@@ -86,44 +75,42 @@
 	 ] ;
 }
 
-- (void) layoutSubviews
+- ( void ) layoutSubviews
 {
-	// Allocate color buffer backing based on the current layer size
-    glGenRenderbuffersOES(1, &_gl_color_renderbuffer);
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, _gl_color_renderbuffer);
-    [_gl_context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(CAEAGLLayer*)self.layer];
-	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, _gl_color_renderbuffer);
+    glGenRenderbuffersOES ( 1 , & _gl_color_renderbuffer ) ;
+    glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
+    [ _gl_context renderbufferStorage : GL_RENDERBUFFER_OES fromDrawable : ( CAEAGLLayer * ) self . layer ] ;
+	glFramebufferRenderbufferOES ( GL_FRAMEBUFFER_OES , GL_COLOR_ATTACHMENT0_OES , GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     
-	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &_gl_backing_width);
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &_gl_backing_height);
+	glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES , GL_RENDERBUFFER_WIDTH_OES , & _gl_backing_width ) ;
+    glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES , GL_RENDERBUFFER_HEIGHT_OES , & _gl_backing_height ) ;
 	
-    // Allocate and attach the depth buffer
-    glGenRenderbuffersOES(1, &_gl_depth_renderbuffer);
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, _gl_depth_renderbuffer);
-    glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, _gl_backing_width, _gl_backing_height);
-    glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, _gl_depth_renderbuffer);
+    glGenRenderbuffersOES ( 1 , & _gl_depth_renderbuffer ) ;
+    glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_depth_renderbuffer ) ;
+    glRenderbufferStorageOES ( GL_RENDERBUFFER_OES , GL_DEPTH_COMPONENT16_OES , _gl_backing_width , _gl_backing_height ) ;
+    glFramebufferRenderbufferOES ( GL_FRAMEBUFFER_OES , GL_DEPTH_ATTACHMENT_OES , GL_RENDERBUFFER_OES , _gl_depth_renderbuffer ) ;
     
-    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
+    if ( glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ) != GL_FRAMEBUFFER_COMPLETE_OES )
 	{
-		NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+		NSLog ( @"Failed to make complete framebuffer object %x" , glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ) ) ;
     }
     
-    glViewport(0, 0, _gl_backing_width, _gl_backing_height);
-    [self drawView:nil];
+    glViewport ( 0 , 0 , _gl_backing_width , _gl_backing_height ) ;
+    [ self drawView : nil ] ;
 }
 
-- (void) startAnimation
+- ( void ) startAnimation
 {
-	if (!_animating)
+	if ( ! _animating )
 	{
-		[NSTimer scheduledTimerWithTimeInterval:0.0 target:self selector:@selector(drawView:) userInfo:nil repeats:NO];
-		_animating = TRUE;
+		[ NSTimer scheduledTimerWithTimeInterval : 0.0 target : self selector : @selector ( drawView : ) userInfo : nil repeats : NO ] ;
+		_animating = TRUE ;
 	}
 }
 
-- (void)stopAnimation
+- ( void ) stopAnimation
 {
-	if (_animating)
+	if ( _animating )
 		_animating = FALSE;
 }
 

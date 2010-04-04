@@ -26,8 +26,8 @@
 	BOOL _animating;
 }
 
-- (void) startAnimation;
-- (void) stopAnimation;
-- (void) drawView:(id)sender;
+- ( void ) startAnimation ;
+- ( void ) stopAnimation ;
+- ( void ) drawView : ( id ) sender ;
 
 @end
