@@ -45,6 +45,7 @@ public :
     void init ( )
     {
         _logic . init ( ) ;
+        _logic_sound . init ( ) ;
     }
     mesh_id mesh_create 
         ( vertex_data * vertices 

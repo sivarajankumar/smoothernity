@@ -21,8 +21,8 @@
 	190FDE781168FC030053FE8F /* iphone_platform_touch.hpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {949, 645}}";
-			sepNavSelRange = "{112, 0}";
-			sepNavVisRange = "{0, 316}";
+			sepNavSelRange = "{114, 0}";
+			sepNavVisRange = "{0, 319}";
 		};
 	};
 	190FDE791168FC110053FE8F /* PBXTextBookmark */ = {
@@ -90,7 +90,7 @@
 		fRef = 190FDE781168FC030053FE8F /* iphone_platform_touch.hpp */;
 		name = "iphone_platform_touch.h: 5";
 		rLen = 0;
-		rLoc = 112;
+		rLoc = 115;
 		rType = 0;
 		vrLen = 316;
 		vrLoc = 0;
@@ -640,9 +640,9 @@
 	};
 	28FD14FD0DC6FC130079059D /* iphone_view.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {949, 2184}}";
-			sepNavSelRange = "{22, 0}";
-			sepNavVisRange = "{0, 1469}";
+			sepNavIntBoundsRect = "{{0, 0}, {949, 2028}}";
+			sepNavSelRange = "{3104, 0}";
+			sepNavVisRange = "{2344, 2018}";
 		};
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {

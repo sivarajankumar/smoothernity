@@ -99,7 +99,9 @@
 {
     UITouch * touch = [ touches anyObject ] ;
     CGPoint point = [ touch locationInView : [ touch view ] ] ;
-    NSLog ( @"touch began x=%f, y=%f" , point . x , point . y ) ;
+    shy_iphone_platform :: _touch_occured = true ;
+    shy_iphone_platform :: _touch_x = ( int ) point . x ;
+    shy_iphone_platform :: _touch_y = ( int ) point . y ;
 }
 
 - ( void ) draw_view : ( id ) sender
@@ -111,6 +113,7 @@
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
     _shy_measurer . render_finished ( ) ;
+    shy_iphone_platform :: _touch_occured = false ;
     [ self _schedule_draw ] ;
 }
 

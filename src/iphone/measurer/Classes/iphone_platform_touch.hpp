@@ -2,7 +2,7 @@ inline
 shy_iphone_platform :: int_32 
 shy_iphone_platform :: touch_occured ( )
 {
-    return _touch_occured != 0 ;
+    return _touch_occured == true ;
 }
 
 inline
