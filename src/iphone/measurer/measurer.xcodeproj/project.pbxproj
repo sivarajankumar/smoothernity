@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1911131511689BDB00F5E355 /* iphone_sound_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1911131411689BDB00F5E355 /* iphone_sound_loader.m */; };
 		19A8DDC8115E122F0062EAB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A8DDC7115E122F0062EAB6 /* OpenAL.framework */; };
 		19A8DE65115E2B230062EAB6 /* iphone_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19A8DE64115E2B230062EAB6 /* iphone_platform.mm */; };
 		19BA210A1167657D007398AF /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 19BA21091167657D007398AF /* stereo_sound_resource_1.mp3 */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		19111313116897E900F5E355 /* iphone_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_sound_loader.h; sourceTree = "<group>"; };
+		1911131411689BDB00F5E355 /* iphone_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_sound_loader.m; sourceTree = "<group>"; };
 		19A8DDC7115E122F0062EAB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform.hpp; sourceTree = "<group>"; };
 		19A8DE64115E2B230062EAB6 /* iphone_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iphone_platform.mm; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */,
 				19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */,
 				19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */,
+				19111313116897E900F5E355 /* iphone_sound_loader.h */,
+				1911131411689BDB00F5E355 /* iphone_sound_loader.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 				28FD14FE0DC6FC130079059D /* EAGLView.mm in Sources */,
 				2514C27210084DB100A42282 /* ES1Renderer.mm in Sources */,
 				19A8DE65115E2B230062EAB6 /* iphone_platform.mm in Sources */,
+				1911131511689BDB00F5E355 /* iphone_sound_loader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

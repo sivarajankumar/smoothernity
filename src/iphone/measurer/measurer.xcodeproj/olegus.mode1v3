@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -276,7 +278,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>13</integer>
+									<integer>24</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -312,14 +314,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic_entities.hpp</string>
+								<string>iphone_platform_sound.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>measurer_logic_entities.hpp</string>
+										<string>iphone_platform_sound.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>19FCF6141167F70D00A0159E</string>
+										<string>191113561168A15700F5E355</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -343,21 +343,11 @@
 											<string>19A8DEAE115E3C7C0062EAB6</string>
 											<string>19A8DECE115E4DE20062EAB6</string>
 											<string>19A8DECF115E4DE20062EAB6</string>
-											<string>19B4F6D01167AAFE00C77292</string>
 											<string>19B4F6D11167AAFE00C77292</string>
-											<string>19B4F6D21167AAFE00C77292</string>
-											<string>19B4F6FA1167AE6600C77292</string>
-											<string>19B4F7151167AFE900C77292</string>
-											<string>19B4F7211167B04600C77292</string>
 											<string>193A64971167C47A003779CF</string>
-											<string>193A64981167C47A003779CF</string>
-											<string>193A64A21167CAD7003779CF</string>
 											<string>193A64AC1167D098003779CF</string>
-											<string>193A64AD1167D098003779CF</string>
 											<string>193A64AE1167D098003779CF</string>
-											<string>19FCF5B51167E16500A0159E</string>
 											<string>19FCF5CF1167E47B00A0159E</string>
-											<string>19FCF5EC1167E87E00A0159E</string>
 											<string>19FCF5ED1167E87E00A0159E</string>
 											<string>19FCF5EE1167E87E00A0159E</string>
 											<string>19FCF5F51167E92C00A0159E</string>
@@ -365,7 +355,19 @@
 											<string>19FCF6111167F70D00A0159E</string>
 											<string>19FCF6121167F70D00A0159E</string>
 											<string>19FCF6131167F70D00A0159E</string>
-											<string>19FCF6061167ECAB00A0159E</string>
+											<string>1911131811689DB600F5E355</string>
+											<string>1911131911689DB600F5E355</string>
+											<string>1911131A11689DB600F5E355</string>
+											<string>1911131B11689DB600F5E355</string>
+											<string>1911131C11689DB600F5E355</string>
+											<string>1911131D11689DB600F5E355</string>
+											<string>1911132211689DB600F5E355</string>
+											<string>191113481168A09000F5E355</string>
+											<string>1911134D1168A10000F5E355</string>
+											<string>191113521168A15700F5E355</string>
+											<string>191113531168A15700F5E355</string>
+											<string>191113541168A15700F5E355</string>
+											<string>191113551168A15700F5E355</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -423,9 +425,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>19FCF5A41167DD0C00A0159E</string>
+				<string>1911132611689DB600F5E355</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>19FCF5A51167DD0C00A0159E</string>
+				<string>1911132711689DB600F5E355</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -563,8 +565,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>19FCF6151167F70D00A0159E</string>
-		<string>19FCF6161167F70D00A0159E</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>19E3FF3F10E29715006628E8</string>
@@ -587,14 +587,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>measurer_logic_sound.hpp</string>
+								<string>iphone_sound_loader.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -611,6 +609,8 @@
 							<string>218pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -650,7 +650,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>19E3FF3F10E29715006628E8</string>
-				<string>19FCF5A61167DD0C00A0159E</string>
+				<string>1911132811689DB600F5E355</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -663,7 +663,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -772,13 +772,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>19FCF5A71167DD0C00A0159E</string>
+				<string>1911133311689E5B00F5E355</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>19FCF5A81167DD0C00A0159E</string>
-				<string>19FCF5A91167DD0C00A0159E</string>
-				<string>19FCF5AA1167DD0C00A0159E</string>
-				<string>19FCF5AB1167DD0C00A0159E</string>
-				<string>19FCF5AC1167DD0C00A0159E</string>
+				<string>1911133411689E5B00F5E355</string>
+				<string>1911133511689E5B00F5E355</string>
+				<string>1911133611689E5B00F5E355</string>
+				<string>1911133711689E5B00F5E355</string>
+				<string>1911133811689E5B00F5E355</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -932,7 +932,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>19FCF5AD1167DD0C00A0159E</string>
+				<string>1911133911689E5B00F5E355</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

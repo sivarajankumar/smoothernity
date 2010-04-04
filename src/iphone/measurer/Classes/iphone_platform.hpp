@@ -7,6 +7,8 @@
 #import <OpenGLES/ES1/glext.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "iphone_sound_loader.h"
+
 class shy_iphone_platform
 {
 public :
@@ -211,7 +213,9 @@ public :
     
     static void time_get_current ( time_data & time ) ;
     static int_32 time_diff_in_microseconds ( const time_data & time1 , const time_data & time2 ) ;
-    
+
+    static sound_loader * _sound_loader ;
+
 private :
     static vertex_data _reference_vertex ;
     static void * _vertex_position_offset ;

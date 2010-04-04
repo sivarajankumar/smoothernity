@@ -13,8 +13,9 @@
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 
-#include "measurer_facade.hpp"
 #include "iphone_platform.hpp"
+#include "iphone_sound_loader.h"
+#include "measurer_facade.hpp"
 
 @interface ES1Renderer : NSObject <ESRenderer>
 {
@@ -33,6 +34,8 @@
     // OpenAL 
 	ALCcontext * mContext;
 	ALCdevice * mDevice;
+    
+    sound_loader * _m_sound_loader ;
 }
 
 - (void) render;

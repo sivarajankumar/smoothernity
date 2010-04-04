@@ -39,6 +39,9 @@
 		glGenFramebuffersOES(1, &defaultFramebuffer);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
         
+        _m_sound_loader = [ [ sound_loader alloc ] init ] ;
+        shy_iphone_platform :: _sound_loader = _m_sound_loader ;
+        
    		shyMeasurer . init ( ) ;
     }
 	
@@ -86,6 +89,9 @@
 - (void) dealloc
 {
 	shyMeasurer . done ( ) ;
+    [ _m_sound_loader release ] ;
+    _m_sound_loader = nil ;
+    shy_iphone_platform :: _sound_loader = nil ;
 	
 	// Tear down GL
 	if (defaultFramebuffer)
