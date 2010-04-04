@@ -57,7 +57,7 @@
     return self ;
 }
 
-- ( void ) drawView : ( id ) sender
+- ( void ) draw_view : ( id ) sender
 {
     [ EAGLContext setCurrentContext : _gl_context ] ;
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
@@ -69,7 +69,7 @@
 	[ NSTimer 
 	    scheduledTimerWithTimeInterval : 0.0
 		target : self
-	    selector : @ selector ( drawView : )
+	    selector : @ selector ( draw_view : )
 	    userInfo : nil
 	    repeats : NO
 	 ] ;
@@ -96,63 +96,60 @@
     }
     
     glViewport ( 0 , 0 , _gl_backing_width , _gl_backing_height ) ;
-    [ self drawView : nil ] ;
+    [ self draw_view : nil ] ;
 }
 
-- ( void ) startAnimation
+- ( void ) start_animation
 {
 	if ( ! _animating )
 	{
-		[ NSTimer scheduledTimerWithTimeInterval : 0.0 target : self selector : @selector ( drawView : ) userInfo : nil repeats : NO ] ;
+		[ NSTimer scheduledTimerWithTimeInterval : 0.0 target : self selector : @selector ( draw_view : ) userInfo : nil repeats : NO ] ;
 		_animating = TRUE ;
 	}
 }
 
-- ( void ) stopAnimation
+- ( void ) stop_animation
 {
 	if ( _animating )
-		_animating = FALSE;
+		_animating = FALSE ;
 }
 
-- (void) dealloc
+- ( void ) dealloc
 {
 	_shy_measurer . done ( ) ;
     [ shy_iphone_platform :: _sound_loader release ] ;
     shy_iphone_platform :: _sound_loader = nil ;
 	
-	// Tear down GL
-	if (_gl_default_framebuffer)
+	if ( _gl_default_framebuffer )
 	{
-		glDeleteFramebuffersOES(1, &_gl_default_framebuffer);
-		_gl_default_framebuffer = 0;
+		glDeleteFramebuffersOES ( 1 , & _gl_default_framebuffer ) ;
+		_gl_default_framebuffer = 0 ;
 	}
 
-	if (_gl_color_renderbuffer)
+	if ( _gl_color_renderbuffer )
 	{
-		glDeleteRenderbuffersOES(1, &_gl_color_renderbuffer);
-		_gl_color_renderbuffer = 0;
+		glDeleteRenderbuffersOES ( 1 , & _gl_color_renderbuffer ) ;
+		_gl_color_renderbuffer = 0 ;
 	}
     
-    if (_gl_depth_renderbuffer)
+    if ( _gl_depth_renderbuffer )
     {
-		glDeleteRenderbuffersOES(1, &_gl_depth_renderbuffer);
-        _gl_depth_renderbuffer = 0;
+		glDeleteRenderbuffersOES ( 1 , & _gl_depth_renderbuffer ) ;
+        _gl_depth_renderbuffer = 0 ;
     }
 	
-	// Tear down context
-	if ([EAGLContext currentContext] == _gl_context)
-        [EAGLContext setCurrentContext:nil];
+	if ( [ EAGLContext currentContext ] == _gl_context )
+        [ EAGLContext setCurrentContext : nil ] ;
 	
- 	[_gl_context release];
-	_gl_context = nil;
+ 	[ _gl_context release ] ;
+	_gl_context = nil ;
 
-    // Turn off Open AL
 	alcDestroyContext ( _al_context ) ;
 	alcCloseDevice ( _al_device ) ;
     _al_context = nil ;
     _al_device = nil ;
 
-    [super dealloc];
+    [ super dealloc ] ;
 }
 
 @end
