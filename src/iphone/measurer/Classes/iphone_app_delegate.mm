@@ -1,7 +1,7 @@
 #import "iphone_app_delegate.h"
 #import "iphone_view.h"
 
-@implementation measurerAppDelegate
+@implementation shy_iphone_app_delegate
 
 @synthesize window ;
 @synthesize glView ;

@@ -2,7 +2,7 @@
 
 @class EAGLView ;
 
-@interface measurerAppDelegate : NSObject < UIApplicationDelegate > 
+@interface shy_iphone_app_delegate : NSObject < UIApplicationDelegate > 
 {
     UIWindow * window ;
     EAGLView * glView ;
