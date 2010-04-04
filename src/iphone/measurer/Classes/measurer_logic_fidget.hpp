@@ -38,8 +38,6 @@ private :
     }
     void _render_fidget_mesh ( )
     {
-        platform :: render_disable_depth_test ( ) ;
-        platform :: render_matrix_identity ( ) ;
         matrix_data matrix ;
         platform :: matrix_set_axis_x
             ( matrix
@@ -62,7 +60,7 @@ private :
         platform :: matrix_set_origin
             ( matrix
             , 0.0f
-            , 3.0f
+            , 1.0f
             , - 3.0f
             ) ;
         _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
@@ -75,6 +73,8 @@ private :
         static const int_32 FIDGET_G = 128 ;
         static const int_32 FIDGET_B = 0 ;
         
+        static const float_32 fidget_size = 0.3f ;
+        
         vertex_data vertices [ 3 ] ;
         index_data indices [ 3 ] ;
         
@@ -83,8 +83,8 @@ private :
             float_32 angle = PI * 2.0f * float_32 ( i ) / 3.0f ;
             platform :: render_set_vertex_position
                 ( vertices [ i ]
-                , platform :: math_cos ( angle )
-                , platform :: math_sin ( angle )
+                , fidget_size * platform :: math_cos ( angle )
+                , fidget_size * platform :: math_sin ( angle )
                 , 0.0f
                 ) ;
             platform :: render_set_vertex_color

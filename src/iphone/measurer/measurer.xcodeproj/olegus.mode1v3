@@ -275,7 +275,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>18</integer>
+									<integer>7</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -318,7 +318,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>iphone_platform_render.hpp</string>
+								<string>iphone_platform_touch.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,11 +326,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>iphone_platform_render.hpp</string>
+										<string>iphone_platform_touch.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>190FDEC511690A070053FE8F</string>
+										<string>190FDEDB11690D280053FE8F</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -346,24 +346,24 @@
 											<string>19B922601168E43C00B79C60</string>
 											<string>19B922741168E4CF00B79C60</string>
 											<string>19B922771168E4CF00B79C60</string>
-											<string>197AE4D21168F29100C01469</string>
 											<string>197AE4E61168F34900C01469</string>
-											<string>190FDE7A1168FC110053FE8F</string>
 											<string>190FDE9D116903790053FE8F</string>
 											<string>190FDE9E116903790053FE8F</string>
-											<string>190FDE9F116903790053FE8F</string>
 											<string>190FDEA0116903790053FE8F</string>
-											<string>190FDEA1116903790053FE8F</string>
 											<string>190FDEA2116903790053FE8F</string>
 											<string>190FDEA3116903790053FE8F</string>
 											<string>190FDEB6116908BD0053FE8F</string>
-											<string>190FDEB7116908BD0053FE8F</string>
 											<string>190FDEB8116908BD0053FE8F</string>
-											<string>190FDEBA116908BD0053FE8F</string>
 											<string>190FDEBD116908BD0053FE8F</string>
-											<string>190FDEC211690A070053FE8F</string>
-											<string>190FDEC311690A070053FE8F</string>
-											<string>190FDEC411690A070053FE8F</string>
+											<string>190FDEC611690BBB0053FE8F</string>
+											<string>190FDEC711690BBB0053FE8F</string>
+											<string>190FDEC811690BBB0053FE8F</string>
+											<string>190FDECA11690BBB0053FE8F</string>
+											<string>190FDECC11690BBB0053FE8F</string>
+											<string>190FDED711690D280053FE8F</string>
+											<string>190FDED811690D280053FE8F</string>
+											<string>190FDED911690D280053FE8F</string>
+											<string>190FDEDA11690D280053FE8F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -565,8 +565,8 @@
 		<string>190FDEAF116903790053FE8F</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>19E3FF3F10E29715006628E8</string>
 		<string>/Volumes/Documents/Documents/code/smoothernity/trunk/src/iphone/measurer/measurer.xcodeproj</string>
+		<string>19E3FF3F10E29715006628E8</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 55 1224 723 0 0 1280 778 </string>
@@ -585,12 +585,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>iphone_view.mm</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -659,7 +661,7 @@
 			<key>WindowToolGUID</key>
 			<string>19E3FF3F10E29715006628E8</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

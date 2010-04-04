@@ -26,10 +26,8 @@ public :
     void render ( )
     {
         _clear_screen ( ) ;
-        _mediator -> use_camera_matrix ( ) ;
-        _mediator -> render_land ( ) ;
-        _mediator -> render_entities ( ) ;
-        _mediator -> render_fidget ( ) ;
+        _render_scene ( ) ;
+        _render_hud ( ) ;
     }
     void render_finished ( )
     {
@@ -38,13 +36,34 @@ public :
     {
     }
 private :
+    void _render_scene ( )
+    {
+        platform :: render_enable_depth_test ( ) ;
+        _use_perspective_projection ( ) ;
+        _mediator -> use_camera_matrix ( ) ;
+        _mediator -> render_land ( ) ;
+        _mediator -> render_entities ( ) ;
+    }
+    void _render_hud ( )
+    {
+        platform :: render_disable_depth_test ( ) ;
+        _use_ortho_projection ( ) ;
+        _mediator -> render_fidget ( ) ;
+    }
+    void _use_perspective_projection ( )
+    {
+        platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
+        platform :: render_matrix_identity ( ) ;
+    }
+    void _use_ortho_projection ( )
+    {
+        platform :: render_projection_ortho ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
+        platform :: render_matrix_identity ( ) ;
+    }
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
-        platform :: render_enable_depth_test ( ) ;
         platform :: render_fog_linear ( 10 , 20 , 0.0f , 0.1f , 0.4f , 0 ) ;
-        platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
-        platform :: render_matrix_identity ( ) ;
     }
     void _clear_screen ( )
     {

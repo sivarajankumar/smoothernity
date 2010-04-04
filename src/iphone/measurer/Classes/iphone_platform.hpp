@@ -218,13 +218,13 @@ public :
     //
     
     static int_32 touch_occured ( ) ;
-    static int_32 touch_x ( ) ;
-    static int_32 touch_y ( ) ;
+    static float_32 touch_x ( ) ;
+    static float_32 touch_y ( ) ;
 
     static shy_iphone_sound_loader * _sound_loader ;
-    static bool _touch_occured ;
-    static int _touch_x ;
-    static int _touch_y ;
+    static int_32 _touch_occured ;
+    static float_32 _touch_x ;
+    static float_32 _touch_y ;
 
 private :
     static vertex_data _reference_vertex ;
