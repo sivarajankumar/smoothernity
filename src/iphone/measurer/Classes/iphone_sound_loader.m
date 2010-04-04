@@ -6,6 +6,10 @@
 {
    	self = [ super init ] ;
     _is_ready = true ;
+    _resource_index = 0 ;
+    _buffer = 0 ;
+    _max_samples_count = 0 ;
+    _loaded_samples_count = 0 ;
 	return self ;
 }
 
@@ -19,14 +23,12 @@
     return _is_ready ;
 }
 
-- ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( int ) resource_index
-    to_buffer : ( void * ) buffer
-    with_max_samples_count_of : ( int ) max_samples_count
-    put_loaded_samples_count_to : ( int * ) loaded_samples_count
+- ( void ) _thread_main_method
 {
+    NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
     NSBundle * bundle = [ NSBundle mainBundle ] ;
     CFURLRef file_url = ( CFURLRef ) [ [ NSURL fileURLWithPath : [ bundle 
-        pathForResource : [ NSString stringWithFormat : @"stereo_sound_resource_%i" , resource_index ] 
+        pathForResource : [ NSString stringWithFormat : @"stereo_sound_resource_%i" , _resource_index ] 
         ofType : @"mp3" 
         ] ] retain ] ;
         
@@ -56,12 +58,31 @@
     data_buffer . mNumberBuffers = 1 ;
     data_buffer . mBuffers [ 0 ] . mDataByteSize = file_length_in_frames * output_format . mBytesPerFrame ;
     data_buffer . mBuffers [ 0 ] . mNumberChannels = output_format . mChannelsPerFrame ;
-    data_buffer . mBuffers [ 0 ] . mData = buffer ;
+    data_buffer . mBuffers [ 0 ] . mData = _buffer ;
     
     ExtAudioFileRead ( ext_ref , ( UInt32 * ) & file_length_in_frames , & data_buffer ) ;
-    * loaded_samples_count = file_length_in_frames ;
+    * _loaded_samples_count = file_length_in_frames ;
     ExtAudioFileDispose ( ext_ref ) ;
     CFRelease ( file_url ) ;
+    [ pool release ] ;
+    
+    _is_ready = true ;
+}
+
+- ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( int ) resource_index
+    to_buffer : ( void * ) buffer
+    with_max_samples_count_of : ( int ) max_samples_count
+    put_loaded_samples_count_to : ( int * ) loaded_samples_count
+{
+    if ( _is_ready )
+    {
+        _is_ready = false ;
+        _resource_index = resource_index ;
+        _buffer = buffer ;
+        _max_samples_count = max_samples_count ;
+        _loaded_samples_count = loaded_samples_count ;
+        [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
+    }
 }
 
 @end

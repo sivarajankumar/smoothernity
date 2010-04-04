@@ -40,7 +40,6 @@
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
         
         shy_iphone_platform :: _sound_loader = [ [ sound_loader alloc ] init ] ;
-        
    		shyMeasurer . init ( ) ;
     }
 	
