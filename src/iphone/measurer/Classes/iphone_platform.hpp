@@ -216,7 +216,18 @@ public :
     static void time_get_current ( time_data & time ) ;
     static int_32 time_diff_in_microseconds ( const time_data & time1 , const time_data & time2 ) ;
 
+    //
+    // touch
+    //
+    
+    static int_32 touch_occured ( ) ;
+    static int_32 touch_x ( ) ;
+    static int_32 touch_y ( ) ;
+
     static shy_iphone_sound_loader * _sound_loader ;
+    static bool _touch_occured ;
+    static int _touch_x ;
+    static int _touch_y ;
 
 private :
     static vertex_data _reference_vertex ;
@@ -237,4 +248,5 @@ void swap_values ( T & a , T & b )
 #include "iphone_platform_render.hpp"
 #include "iphone_platform_sound.hpp"
 #include "iphone_platform_time.hpp"
+#include "iphone_platform_touch.hpp"
 #include "iphone_platform_vector.hpp"

@@ -11,3 +11,7 @@ void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
     ) ;
     
 shy_iphone_sound_loader * shy_iphone_platform :: _sound_loader = 0 ;
+
+bool shy_iphone_platform :: _touch_occured = false ;
+int shy_iphone_platform :: _touch_x = 0 ;
+int shy_iphone_platform :: _touch_y = 0 ;

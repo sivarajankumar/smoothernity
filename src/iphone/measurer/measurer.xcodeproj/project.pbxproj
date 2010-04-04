@@ -24,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		190FDE781168FC030053FE8F /* iphone_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_touch.hpp; sourceTree = "<group>"; };
 		19111313116897E900F5E355 /* iphone_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_sound_loader.h; sourceTree = "<group>"; };
 		1911131411689BDB00F5E355 /* iphone_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_sound_loader.m; sourceTree = "<group>"; };
 		19A8DDC7115E122F0062EAB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -102,6 +103,7 @@
 				19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */,
 				19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */,
 				19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */,
+				190FDE781168FC030053FE8F /* iphone_platform_touch.hpp */,
 				19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */,
 				19111313116897E900F5E355 /* iphone_sound_loader.h */,
 				1911131411689BDB00F5E355 /* iphone_sound_loader.m */,
