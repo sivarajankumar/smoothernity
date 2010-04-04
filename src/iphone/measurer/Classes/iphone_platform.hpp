@@ -147,17 +147,14 @@ public :
     static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a ) ;
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
+    static void render_projection_ortho ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     static void render_create_buffer_id ( render_buffer_id & arg_buffer_id ) ;
     static void render_load_vertex_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;
     static void render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z ) ;
     static void render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     static void render_load_index_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
     static void render_set_index_value ( index_data & data , int_32 index ) ;
-    static void render_select_modelview_matrix ( ) ;
     static void render_matrix_identity ( ) ;
-    static void render_matrix_translate ( float_32 x , float_32 y , float_32 z ) ;
-    static void render_matrix_scale ( float_32 x , float_32 y , float_32 z ) ;
-    static void render_matrix_rotate ( float_32 angle , float_32 x , float_32 y , float_32 z ) ;
     static void render_matrix_load ( const matrix_data & matrix ) ;
     static void render_matrix_mult ( const matrix_data & matrix ) ;
     static void render_matrix_push ( ) ;

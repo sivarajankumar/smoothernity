@@ -1,33 +1,19 @@
-inline
-void 
-shy_iphone_platform :: render_enable_face_culling 
-    ( 
-    )
+inline void shy_iphone_platform :: render_enable_face_culling ( )
 {
     glEnable ( GL_CULL_FACE ) ;
 }
 
-inline
-void
-shy_iphone_platform :: render_enable_depth_test 
-    ( 
-    )
+inline void shy_iphone_platform :: render_enable_depth_test ( )
 {
     glEnable ( GL_DEPTH_TEST ) ;
 }
 
-inline
-void
-shy_iphone_platform :: render_disable_depth_test 
-    ( 
-    )
+inline void shy_iphone_platform :: render_disable_depth_test ( )
 {
     glDisable ( GL_DEPTH_TEST ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_fog_linear 
+inline void shy_iphone_platform :: render_fog_linear 
     ( shy_iphone_platform :: float_32 near 
     , shy_iphone_platform :: float_32 far 
     , shy_iphone_platform :: float_32 r 
@@ -44,9 +30,7 @@ shy_iphone_platform :: render_fog_linear
     glFogfv ( GL_FOG_COLOR , color ) ;
 }
 
-inline
-void
-shy_iphone_platform :: render_clear_screen 
+inline void shy_iphone_platform :: render_clear_screen 
     ( shy_iphone_platform :: float_32 r 
     , shy_iphone_platform :: float_32 g 
     , shy_iphone_platform :: float_32 b 
@@ -57,9 +41,7 @@ shy_iphone_platform :: render_clear_screen
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_projection_frustum 
+inline void shy_iphone_platform :: render_projection_frustum 
     ( shy_iphone_platform :: float_32 left 
     , shy_iphone_platform :: float_32 right 
     , shy_iphone_platform :: float_32 bottom 
@@ -71,20 +53,32 @@ shy_iphone_platform :: render_projection_frustum
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
     glFrustumf ( left , right , bottom , top , near , far ) ;
+    glMatrixMode ( GL_MODELVIEW ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_create_buffer_id 
+inline void shy_iphone_platform :: render_projection_ortho 
+    ( shy_iphone_platform :: float_32 left 
+    , shy_iphone_platform :: float_32 right 
+    , shy_iphone_platform :: float_32 bottom 
+    , shy_iphone_platform :: float_32 top 
+    , shy_iphone_platform :: float_32 near 
+    , shy_iphone_platform :: float_32 far 
+    )
+{
+    glMatrixMode ( GL_PROJECTION ) ;
+    glLoadIdentity ( ) ;
+    glOrthof ( left , right , bottom , top , near , far ) ;
+    glMatrixMode ( GL_MODELVIEW ) ;
+}
+
+inline void shy_iphone_platform :: render_create_buffer_id 
     ( shy_iphone_platform :: render_buffer_id & arg_buffer_id 
     )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_load_vertex_buffer 
+inline void shy_iphone_platform :: render_load_vertex_buffer 
     ( const shy_iphone_platform :: render_buffer_id & arg_buffer_id 
     , shy_iphone_platform :: int_32 elements 
     , shy_iphone_platform :: vertex_data * data 
@@ -99,9 +93,7 @@ shy_iphone_platform :: render_load_vertex_buffer
         ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_set_vertex_position 
+inline void shy_iphone_platform :: render_set_vertex_position 
     ( shy_iphone_platform :: vertex_data & vertex 
     , shy_iphone_platform :: float_32 x 
     , shy_iphone_platform :: float_32 y 
@@ -113,9 +105,7 @@ shy_iphone_platform :: render_set_vertex_position
     vertex . _position [ 2 ] = ( GLfloat ) z ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_set_vertex_color 
+inline void shy_iphone_platform :: render_set_vertex_color 
     ( shy_iphone_platform :: vertex_data & vertex 
     , shy_iphone_platform :: int_32 r 
     , shy_iphone_platform :: int_32 g 
@@ -129,9 +119,7 @@ shy_iphone_platform :: render_set_vertex_color
     vertex . _color [ 3 ] = ( GLubyte ) a ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_load_index_buffer 
+inline void shy_iphone_platform :: render_load_index_buffer 
     ( const shy_iphone_platform :: render_buffer_id & arg_buffer_id 
     , shy_iphone_platform :: int_32 elements 
     , shy_iphone_platform :: index_data * data 
@@ -146,9 +134,7 @@ shy_iphone_platform :: render_load_index_buffer
         ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_set_index_value 
+inline void shy_iphone_platform :: render_set_index_value 
     ( shy_iphone_platform :: index_data & data 
     , shy_iphone_platform :: int_32 index 
     )
@@ -156,97 +142,36 @@ shy_iphone_platform :: render_set_index_value
     data . _index = ( GLushort ) index ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_select_modelview_matrix 
-    ( 
-    )
-{
-    glMatrixMode ( GL_MODELVIEW ) ;
-}
-
-inline
-void 
-shy_iphone_platform :: render_matrix_identity 
-    ( 
-    )
+inline void shy_iphone_platform :: render_matrix_identity ( )
 {
     glLoadIdentity ( ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_matrix_translate 
-    ( shy_iphone_platform :: float_32 x 
-    , shy_iphone_platform :: float_32 y 
-    , shy_iphone_platform :: float_32 z 
-    )
-{
-    glTranslatef ( ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
-}
-
-inline
-void
-shy_iphone_platform :: render_matrix_scale 
-    ( shy_iphone_platform :: float_32 x 
-    , shy_iphone_platform :: float_32 y 
-    , shy_iphone_platform :: float_32 z 
-    )
-{
-    glScalef ( ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
-}
-
-inline
-void 
-shy_iphone_platform :: render_matrix_rotate 
-    ( shy_iphone_platform :: float_32 angle 
-    , shy_iphone_platform :: float_32 x 
-    , shy_iphone_platform :: float_32 y 
-    , shy_iphone_platform :: float_32 z 
-    )
-{
-    glRotatef ( ( GLfloat ) angle , ( GLfloat ) x , ( GLfloat ) y , ( GLfloat ) z ) ;
-}
-
-inline
-void 
-shy_iphone_platform :: render_matrix_load 
+inline void shy_iphone_platform :: render_matrix_load 
     ( const shy_iphone_platform :: matrix_data & matrix 
     )
 {
     glLoadMatrixf ( matrix . _elements ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_matrix_mult 
+inline void shy_iphone_platform :: render_matrix_mult 
     ( const shy_iphone_platform :: matrix_data & matrix 
     )
 {
     glMultMatrixf ( matrix . _elements ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_matrix_push 
-    ( 
-    )
+inline void shy_iphone_platform :: render_matrix_push ( )
 {
     glPushMatrix ( ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_matrix_pop 
-    ( 
-    )
+inline void shy_iphone_platform :: render_matrix_pop ( )
 {
     glPopMatrix ( ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_draw_triangle_strip 
+inline void shy_iphone_platform :: render_draw_triangle_strip 
     ( const shy_iphone_platform :: render_buffer_id & vertices_buffer 
     , const shy_iphone_platform :: render_buffer_id & indices_buffer
     , shy_iphone_platform :: int_32 indices_count
@@ -261,9 +186,7 @@ shy_iphone_platform :: render_draw_triangle_strip
     glDrawElements ( GL_TRIANGLE_STRIP , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
 }
 
-inline
-void 
-shy_iphone_platform :: render_draw_triangle_fan
+inline void shy_iphone_platform :: render_draw_triangle_fan
     ( const shy_iphone_platform :: render_buffer_id & vertices_buffer 
     , const shy_iphone_platform :: render_buffer_id & indices_buffer
     , shy_iphone_platform :: int_32 indices_count

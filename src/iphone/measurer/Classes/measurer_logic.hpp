@@ -44,7 +44,6 @@ private :
         platform :: render_enable_depth_test ( ) ;
         platform :: render_fog_linear ( 10 , 20 , 0.0f , 0.1f , 0.4f , 0 ) ;
         platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
-        platform :: render_select_modelview_matrix ( ) ;
         platform :: render_matrix_identity ( ) ;
     }
     void _clear_screen ( )
