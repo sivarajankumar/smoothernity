@@ -75,6 +75,13 @@ shy_iphone_platform :: sound_load_stereo_sample_data
 }
 
 inline
+shy_iphone_platform :: int_32 
+shy_iphone_platform :: sound_loader_ready ( )
+{
+    return [ _sound_loader loader_ready ] ;
+}
+
+inline
 shy_iphone_platform :: sound_buffer_id 
 shy_iphone_platform :: sound_create_mono_buffer 
     ( shy_iphone_platform :: mono_sound_sample * samples 

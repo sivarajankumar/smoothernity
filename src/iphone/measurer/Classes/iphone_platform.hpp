@@ -187,6 +187,7 @@ public :
         , int_32 & loaded_samples_count
         , const stereo_sound_resource_id & resource_id 
         ) ;
+    static int_32 sound_loader_ready ( ) ;
     static sound_buffer_id sound_create_mono_buffer ( mono_sound_sample * samples , int_32 samples_count ) ;
     static sound_buffer_id sound_create_stereo_buffer ( stereo_sound_sample * samples , int_32 samples_count ) ;
     static sound_source_id sound_create_source ( ) ;

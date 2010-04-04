@@ -34,8 +34,6 @@
     // OpenAL 
 	ALCcontext * mContext;
 	ALCdevice * mDevice;
-    
-    sound_loader * _m_sound_loader ;
 }
 
 - (void) render;

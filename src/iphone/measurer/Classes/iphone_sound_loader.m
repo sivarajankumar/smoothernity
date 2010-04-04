@@ -5,12 +5,18 @@
 - ( id ) init
 {
    	self = [ super init ] ;
+    _is_ready = true ;
 	return self ;
 }
 
 - ( void ) dealloc
 {
 	[ super dealloc ] ;
+}
+
+- ( bool ) loader_ready
+{
+    return _is_ready ;
 }
 
 - ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( int ) resource_index

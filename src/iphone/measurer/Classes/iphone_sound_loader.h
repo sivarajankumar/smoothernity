@@ -4,6 +4,8 @@
 
 @interface sound_loader : NSObject
 {
+@private
+    bool _is_ready ;
 }
 
 - ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( int ) resource_index
@@ -11,5 +13,7 @@
     with_max_samples_count_of : ( int ) max_samples_count
     put_loaded_samples_count_to : ( int * ) loaded_samples_count
     ;
+    
+- ( bool ) loader_ready ;
 
 @end

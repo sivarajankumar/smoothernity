@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -278,13 +276,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>24</integer>
+									<integer>16</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {192, 664}}</string>
+							<string>{{0, 18}, {192, 664}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -314,12 +312,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>iphone_platform_sound.hpp</string>
+								<string>measurer_logic_sound.hpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>iphone_platform_sound.hpp</string>
+										<string>measurer_logic_sound.hpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>191113561168A15700F5E355</string>
+										<string>191113761168A70C00F5E355</string>
 										<key>history</key>
 										<array>
 											<string>1928A9C5110CBED600735B08</string>
@@ -352,7 +352,6 @@
 											<string>19FCF5EE1167E87E00A0159E</string>
 											<string>19FCF5F51167E92C00A0159E</string>
 											<string>19FCF6041167ECAB00A0159E</string>
-											<string>19FCF6111167F70D00A0159E</string>
 											<string>19FCF6121167F70D00A0159E</string>
 											<string>19FCF6131167F70D00A0159E</string>
 											<string>1911131811689DB600F5E355</string>
@@ -362,12 +361,13 @@
 											<string>1911131C11689DB600F5E355</string>
 											<string>1911131D11689DB600F5E355</string>
 											<string>1911132211689DB600F5E355</string>
-											<string>191113481168A09000F5E355</string>
-											<string>1911134D1168A10000F5E355</string>
-											<string>191113521168A15700F5E355</string>
-											<string>191113531168A15700F5E355</string>
-											<string>191113541168A15700F5E355</string>
-											<string>191113551168A15700F5E355</string>
+											<string>191113631168A50300F5E355</string>
+											<string>191113651168A50300F5E355</string>
+											<string>1911136A1168A57100F5E355</string>
+											<string>1911136B1168A57100F5E355</string>
+											<string>1911136D1168A57100F5E355</string>
+											<string>191113741168A70C00F5E355</string>
+											<string>191113751168A70C00F5E355</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
