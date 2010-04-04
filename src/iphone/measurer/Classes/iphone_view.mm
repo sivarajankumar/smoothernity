@@ -1,4 +1,4 @@
-#import "EAGLView.h"
+#import "iphone_view.h"
 
 @implementation EAGLView
 

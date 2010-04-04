@@ -1,5 +1,5 @@
 #import "measurerAppDelegate.h"
-#import "EAGLView.h"
+#import "iphone_view.h"
 
 @implementation measurerAppDelegate
 
