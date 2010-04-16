@@ -110,6 +110,16 @@ inline void shy_iphone_platform :: render_set_vertex_position
     vertex . _position [ 2 ] = ( GLfloat ) z ;
 }
 
+inline void shy_iphone_platform :: render_set_vertex_tex_coord
+    ( shy_iphone_platform :: vertex_data & vertex 
+    , shy_iphone_platform :: float_32 u
+    , shy_iphone_platform :: float_32 v 
+    )
+{
+    vertex . _tex_coord [ 0 ] = ( GLfloat ) u ;
+    vertex . _tex_coord [ 1 ] = ( GLfloat ) v ;
+}
+
 inline void shy_iphone_platform :: render_set_vertex_color 
     ( shy_iphone_platform :: vertex_data & vertex 
     , shy_iphone_platform :: int_32 r 
@@ -186,6 +196,8 @@ inline void shy_iphone_platform :: render_draw_triangle_strip
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
     glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_position_offset ) ;
+    glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
+    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_tex_coord_offset ) ;
     glEnableClientState ( GL_COLOR_ARRAY ) ;
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements ( GL_TRIANGLE_STRIP , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
@@ -201,6 +213,8 @@ inline void shy_iphone_platform :: render_draw_triangle_fan
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
     glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_position_offset ) ;
+    glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
+    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_tex_coord_offset ) ;
     glEnableClientState ( GL_COLOR_ARRAY ) ;
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements ( GL_TRIANGLE_FAN , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;

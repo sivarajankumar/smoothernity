@@ -5,6 +5,10 @@ void * shy_iphone_platform :: _vertex_position_offset = reinterpret_cast < void 
     ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _position ) 
     - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
     ) ;
+void * shy_iphone_platform :: _vertex_tex_coord_offset = reinterpret_cast < void * >
+    ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _tex_coord ) 
+    - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )
+    ) ;
 void * shy_iphone_platform :: _vertex_color_offset = reinterpret_cast < void * >
     ( reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex . _color ) 
     - reinterpret_cast < char * > ( & shy_iphone_platform :: _reference_vertex )

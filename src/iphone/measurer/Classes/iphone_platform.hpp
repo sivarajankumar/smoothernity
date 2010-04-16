@@ -28,6 +28,7 @@ public :
         friend class shy_iphone_platform ;
     private :
         GLfloat _position [ 3 ] ;
+        GLfloat _tex_coord [ 2 ] ;
         GLubyte _color [ 4 ] ;
     } ;
     
@@ -152,6 +153,7 @@ public :
     static void render_create_buffer_id ( render_buffer_id & arg_buffer_id ) ;
     static void render_load_vertex_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;
     static void render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z ) ;
+    static void render_set_vertex_tex_coord ( vertex_data & vertex , float_32 u , float_32 v ) ;
     static void render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     static void render_load_index_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
     static void render_set_index_value ( index_data & data , int_32 index ) ;
@@ -230,6 +232,7 @@ public :
 private :
     static vertex_data _reference_vertex ;
     static void * _vertex_position_offset ;
+    static void * _vertex_tex_coord_offset ;
     static void * _vertex_color_offset ;
 } ;
 
