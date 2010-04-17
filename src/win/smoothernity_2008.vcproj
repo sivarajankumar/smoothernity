@@ -605,7 +605,51 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="smoothernity.cpp"
+			RelativePath="..\common\measurer_camera.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_facade.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_logic.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_logic_camera.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_logic_entities.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_logic_fidget.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_logic_land.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_logic_sound.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_logic_touch.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_mediator.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\measurer_mesh.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_application.cpp"
 			>
 		</File>
 		<File

@@ -6,7 +6,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 #include "DXUT.h"
+#include "../common/measurer_facade.hpp"
+#include "win_platform.hpp"
 
+static shy_measurer_facade < shy_win_platform > measurer ;
 
 //--------------------------------------------------------------------------------------
 // Extern declarations 
@@ -184,7 +187,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
     // Only require 10-level hardware
     DXUTCreateDevice( D3D_FEATURE_LEVEL_10_0, true, 640, 480 );
-    DXUTMainLoop(); // Enter into the DXUT ren  der loop
+	measurer . init ( ) ;
+    DXUTMainLoop(); // Enter into the DXUT render loop
+	measurer . done ( ) ;
 
     // Perform any application-level cleanup here
 
@@ -240,6 +245,8 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
 
     // Clear the render target and the zbuffer 
     V( pd3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB( 0, 45, 50, 170 ), 1.0f, 0 ) );
+	measurer . render ( ) ;
+	measurer . update ( ) ;
 
     // Render the scene
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
