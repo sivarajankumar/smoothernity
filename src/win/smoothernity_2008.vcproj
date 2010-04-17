@@ -608,6 +608,42 @@
 			RelativePath="smoothernity.cpp"
 			>
 		</File>
+		<File
+			RelativePath=".\win_platform.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_math.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_matrix.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_render.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_sound.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_time.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_touch.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_vector.hpp"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

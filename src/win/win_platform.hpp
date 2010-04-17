@@ -1,16 +1,6 @@
-#import <AudioToolbox/AudioToolbox.h>
-#import <AudioToolbox/ExtendedAudioFile.h>
-#import <Foundation/NSBundle.h>
-#import <OpenAL/al.h>
-#import <OpenAL/alc.h>
-#import <OpenAL/oalStaticBufferExtension.h>
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
-#import <QuartzCore/QuartzCore.h>
+#include <math.h>
 
-#import "iphone_sound_loader.h"
-
-class shy_iphone_platform
+class shy_win_platform
 {
 public :
     typedef int int_32 ;
@@ -18,44 +8,42 @@ public :
     
     class render_buffer_id
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        GLuint _buffer_id ;
+		int _dummy ;
     } ;
     
     class vertex_data
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        GLfloat _position [ 3 ] ;
-        GLfloat _tex_coord [ 2 ] ;
-        GLubyte _color [ 4 ] ;
+		int _dummy ;
     } ;
     
     class index_data
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        GLushort _index ;
+		int _dummy ;
     } ;
 
     class time_data
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        CFAbsoluteTime _time ;
+		int _dummy ;
     } ;
     
     class matrix_data
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        GLfloat _elements [ 16 ] ;
+        float_32 _elements [ 16 ] ;
     } ;
     
     class vector_data
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
         float_32 _x ;
         float_32 _y ;
@@ -64,38 +52,37 @@ public :
     
     class mono_sound_sample
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        ALubyte _value ;
+		int _dummy ;
     } ;
     
     class stereo_sound_sample
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        ALushort _left_channel_value ;
-        ALushort _right_channel_value ; 
+		int _dummy ;
     } ;
     
     class sound_buffer_id
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        ALuint _buffer_id ;
+		int _dummy ;
     } ;
     
     class sound_source_id
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        ALuint _source_id ;
+		int _dummy ;
     } ;
     
     class stereo_sound_resource_id
     {
-        friend class shy_iphone_platform ;
+        friend class shy_win_platform ;
     private :
-        int _resource_id ;
+		int _dummy ;
     } ;
     
     //
@@ -224,11 +211,6 @@ public :
     static float_32 touch_x ( ) ;
     static float_32 touch_y ( ) ;
 
-    static shy_iphone_sound_loader * _sound_loader ;
-    static int_32 _touch_occured ;
-    static float_32 _touch_x ;
-    static float_32 _touch_y ;
-
 private :
     static vertex_data _reference_vertex ;
     static void * _vertex_position_offset ;
@@ -244,10 +226,10 @@ void swap_values ( T & a , T & b )
     a = c ;
 }
 
-#include "iphone_platform_math.hpp"
-#include "iphone_platform_matrix.hpp"
-#include "iphone_platform_render.hpp"
-#include "iphone_platform_sound.hpp"
-#include "iphone_platform_time.hpp"
-#include "iphone_platform_touch.hpp"
-#include "iphone_platform_vector.hpp"
+#include "win_platform_math.hpp"
+#include "win_platform_matrix.hpp"
+#include "win_platform_render.hpp"
+#include "win_platform_sound.hpp"
+#include "win_platform_time.hpp"
+#include "win_platform_touch.hpp"
+#include "win_platform_vector.hpp"
