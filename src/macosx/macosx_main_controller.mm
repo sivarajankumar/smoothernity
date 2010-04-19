@@ -7,12 +7,12 @@
 @interface MainController ( AnimationMethods )
 - ( BOOL ) is_animating ;
 - ( void ) start_animation ;
-- ( void ) stopAnimation ;
-- ( void ) toggleAnimation ;
+- ( void ) stop_animation ;
+- ( void ) toggle_animation ;
 
-- ( void ) startAnimationTimer ;
-- ( void ) stopAnimationTimer ;
-- ( void ) animationTimerFired : ( NSTimer * ) timer ;
+- ( void ) start_animation_timer ;
+- ( void ) stop_animation_timer ;
+- ( void ) animation_timer_fired : ( NSTimer * ) timer ;
 @end
 
 @implementation MainController
@@ -70,7 +70,7 @@
 
     // Pause animation in the OpenGL view.  While we're in full-screen mode, we'll drive the animation actively instead of using a timer callback.
     if ([self is_animating]) {
-        [self stopAnimationTimer];
+        [self stop_animation_timer];
     }
 
     // Take control of the display where we're about to go FullScreen.
@@ -161,7 +161,7 @@
 
     // Resume animation timer firings.
     if ([self is_animating]) {
-        [self startAnimationTimer];
+        [self start_animation_timer];
     }
 }
 
@@ -177,7 +177,7 @@
 
         // [space] toggles rotation of the globe.
         case 32:
-            [self toggleAnimation];
+            [self toggle_animation];
             break;
 
         default:
@@ -196,7 +196,7 @@
     float dx, dy;
 
     if (wasAnimating) {
-        [self stopAnimation];
+        [self stop_animation];
     }
     while (dragging) {
         theEvent = [[openGLView window] nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask];
@@ -249,38 +249,38 @@
     if (!is_animating) {
         is_animating = YES;
         if (![self is_in_full_screen_mode]) {
-            [self startAnimationTimer];
+            [self start_animation_timer];
         }
     }
 }
 
-- (void) stopAnimation
+- (void) stop_animation
 {
     if (is_animating) {
         if (animation_timer != nil) {
-            [self stopAnimationTimer];
+            [self stop_animation_timer];
         }
         is_animating = NO;
     }
 }
 
-- (void) toggleAnimation
+- (void) toggle_animation
 {
     if ([self is_animating]) {
-        [self stopAnimation];
+        [self stop_animation];
     } else {
         [self start_animation];
     }
 }
 
-- (void) startAnimationTimer
+- (void) start_animation_timer
 {
     if (animation_timer == nil) {
-        animation_timer = [[NSTimer scheduledTimerWithTimeInterval:0.017 target:self selector:@selector(animationTimerFired:) userInfo:nil repeats:YES] retain];
+        animation_timer = [[NSTimer scheduledTimerWithTimeInterval:0.017 target:self selector:@selector(animation_timer_fired:) userInfo:nil repeats:YES] retain];
     }
 }
 
-- (void) stopAnimationTimer
+- (void) stop_animation_timer
 {
     if (animation_timer != nil) {
         [animation_timer invalidate];
@@ -289,7 +289,7 @@
     }
 }
 
-- (void) animationTimerFired:(NSTimer *)timer
+- (void) animation_timer_fired:(NSTimer *)timer
 {
     [openGLView setNeedsDisplay:YES];
 }
