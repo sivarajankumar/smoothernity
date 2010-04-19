@@ -9,7 +9,7 @@
     CFAbsoluteTime time_before ;
 
     BOOL stay_in_full_screen_mode ;
-    NSOpenGLContext * fullScreenContext ;
+    NSOpenGLContext * full_screen_context ;
 
     IBOutlet MyOpenGLView * openGLView ;
 }

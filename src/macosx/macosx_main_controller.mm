@@ -59,12 +59,12 @@
     NSLog(@"FullScreen pixelFormat RendererID = %08x", (unsigned)rendererID);
 
     // Create an NSOpenGLContext with the FullScreen pixel format.  By specifying the non-FullScreen context as our "shareContext", we automatically inherit all of the textures, display lists, and other OpenGL objects it has defined.
-    fullScreenContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:[openGLView openGLContext]];
+    full_screen_context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:[openGLView openGLContext]];
     [pixelFormat release];
     pixelFormat = nil;
 
-    if (fullScreenContext == nil) {
-        NSLog(@"Failed to create fullScreenContext");
+    if (full_screen_context == nil) {
+        NSLog(@"Failed to create full_screen_context");
         return;
     }
 
@@ -76,14 +76,14 @@
     // Take control of the display where we're about to go FullScreen.
     err = CGCaptureAllDisplays();
     if (err != CGDisplayNoErr) {
-        [fullScreenContext release];
-        fullScreenContext = nil;
+        [full_screen_context release];
+        full_screen_context = nil;
         return;
     }
 
     // Enter FullScreen mode and make our FullScreen context the active context for OpenGL commands.
-    [fullScreenContext setFullScreen];
-    [fullScreenContext makeCurrentContext];
+    [full_screen_context setFullScreen];
+    [full_screen_context makeCurrentContext];
 
     // Save the current swap interval so we can restore it later, and then set the new swap interval to lock us to the display's refresh rate.
     cglContext = CGLGetCurrentContext();
@@ -131,7 +131,7 @@
 
         // Render a frame, and swap the front and back buffers.
         [scene render];
-        [fullScreenContext flushBuffer];
+        [full_screen_context flushBuffer];
 
         // Clean up any autoreleased objects that were created this time through the loop.
         [pool release];
@@ -140,18 +140,18 @@
     // Clear the front and back framebuffers before switching out of FullScreen mode.  (This is not strictly necessary, but avoids an untidy flash of garbage.)
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
-    [fullScreenContext flushBuffer];
+    [full_screen_context flushBuffer];
     glClear(GL_COLOR_BUFFER_BIT);
-    [fullScreenContext flushBuffer];
+    [full_screen_context flushBuffer];
 
     // Restore the previously set swap interval.
     CGLSetParameter(cglContext, kCGLCPSwapInterval, &oldSwapInterval);
 
     // Exit fullscreen mode and release our FullScreen NSOpenGLContext.
     [NSOpenGLContext clearCurrentContext];
-    [fullScreenContext clearDrawable];
-    [fullScreenContext release];
-    fullScreenContext = nil;
+    [full_screen_context clearDrawable];
+    [full_screen_context release];
+    full_screen_context = nil;
 
     // Release control of the display.
     CGReleaseAllDisplays();
@@ -212,9 +212,9 @@
                 lastWindowPoint = windowPoint;
 
                 // Render a frame.
-                if (fullScreenContext) {
+                if (full_screen_context) {
                     [scene render];
-                    [fullScreenContext flushBuffer];
+                    [full_screen_context flushBuffer];
                 } else {
                     [openGLView display];
                 }
@@ -232,7 +232,7 @@
 
 - (BOOL) isInFullScreenMode
 {
-    return fullScreenContext != nil;
+    return full_screen_context != nil;
 }
 
 @end
