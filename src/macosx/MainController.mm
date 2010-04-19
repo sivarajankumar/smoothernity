@@ -65,7 +65,7 @@
 // Action method wired up to fire when the user clicks the "Go FullScreen" button.  We remain in this method until the user exits FullScreen mode.
 - (IBAction) goFullScreen:(id)sender
 {
-    Scene *scene = [openGLView scene];
+    shy_macosx_scene *scene = [openGLView scene];
     CFAbsoluteTime timeNow;
     CGLContextObj cglContext;
     CGDisplayErr err;
@@ -227,7 +227,7 @@
 // Holding the mouse button and dragging the mouse changes the "roll" angle (y-axis) and the direction from which sunlight is coming (x-axis).
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    Scene *scene = [openGLView scene];
+    shy_macosx_scene *scene = [openGLView scene];
     BOOL wasAnimating = [self isAnimating];
     BOOL dragging = YES;
     NSPoint windowPoint;

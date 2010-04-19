@@ -69,7 +69,7 @@
 
     self = [super initWithFrame:frameRect pixelFormat:pixelFormat];
     if (self) {
-        scene = [[Scene alloc] init];
+        scene = [[shy_macosx_scene alloc] init];
     }
     return self;
 }
@@ -80,7 +80,7 @@
     [super dealloc];
 }
 
-- (Scene *)scene
+- (shy_macosx_scene *)scene
 {
     return scene;
 }

@@ -40,15 +40,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class Scene;
+@class shy_macosx_scene;
 
 @interface MyOpenGLView : NSOpenGLView
 {
     // Model
-    Scene *scene;
+    shy_macosx_scene *scene;
 
     // Controller
     IBOutlet NSResponder *controller;
 }
-- (Scene *)scene;
+- (shy_macosx_scene *)scene;
 @end

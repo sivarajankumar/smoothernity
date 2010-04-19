@@ -1,8 +1,6 @@
 #import "macosx_scene.h"
-#import "Texturing.h"
-#import <OpenGL/glu.h>
 
-@implementation Scene
+@implementation shy_macosx_scene
 
 - init
 {
