@@ -43,12 +43,6 @@
 
 @interface Scene : NSObject
 {
-    NSBitmapImageRep *textureBitmapImageRep;
-    GLuint textureName;
-    float animationPhase;
-    float rollAngle;
-    float sunAngle;
-    BOOL wireframe;
 	shy_measurer_facade < shy_macosx_platform > * measurer;
 }
 - init;
