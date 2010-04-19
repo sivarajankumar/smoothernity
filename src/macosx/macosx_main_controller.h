@@ -5,7 +5,7 @@
 @interface MainController : NSResponder
 {
     BOOL is_animating ;
-    NSTimer * animationTimer ;
+    NSTimer * animation_timer ;
     CFAbsoluteTime timeBefore ;
 
     BOOL stayInFullScreenMode ;

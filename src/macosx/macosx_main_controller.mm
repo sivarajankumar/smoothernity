@@ -257,7 +257,7 @@
 - (void) stopAnimation
 {
     if (is_animating) {
-        if (animationTimer != nil) {
+        if (animation_timer != nil) {
             [self stopAnimationTimer];
         }
         is_animating = NO;
@@ -275,17 +275,17 @@
 
 - (void) startAnimationTimer
 {
-    if (animationTimer == nil) {
-        animationTimer = [[NSTimer scheduledTimerWithTimeInterval:0.017 target:self selector:@selector(animationTimerFired:) userInfo:nil repeats:YES] retain];
+    if (animation_timer == nil) {
+        animation_timer = [[NSTimer scheduledTimerWithTimeInterval:0.017 target:self selector:@selector(animationTimerFired:) userInfo:nil repeats:YES] retain];
     }
 }
 
 - (void) stopAnimationTimer
 {
-    if (animationTimer != nil) {
-        [animationTimer invalidate];
-        [animationTimer release];
-        animationTimer = nil;
+    if (animation_timer != nil) {
+        [animation_timer invalidate];
+        [animation_timer release];
+        animation_timer = nil;
     }
 }
 
