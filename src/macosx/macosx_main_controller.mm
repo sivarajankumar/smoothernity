@@ -230,7 +230,7 @@
     }
 }
 
-- (BOOL) isInFullScreenMode
+- (BOOL) is_in_full_screen_mode
 {
     return full_screen_context != nil;
 }
@@ -248,7 +248,7 @@
 {
     if (!is_animating) {
         is_animating = YES;
-        if (![self isInFullScreenMode]) {
+        if (![self is_in_full_screen_mode]) {
             [self startAnimationTimer];
         }
     }

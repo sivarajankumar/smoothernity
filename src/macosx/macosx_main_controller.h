@@ -14,5 +14,5 @@
     IBOutlet MyOpenGLView * openGLView ;
 }
 - ( IBAction ) goFullScreen : ( id ) sender ;
-- ( BOOL ) isInFullScreenMode ;
+- ( BOOL ) is_in_full_screen_mode ;
 @end
