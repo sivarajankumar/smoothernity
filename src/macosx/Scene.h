@@ -38,6 +38,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <OpenGL/gl.h>
+#import "macosx_platform.hpp"
+#import "../common/measurer_facade.hpp"
 
 @interface Scene : NSObject
 {
@@ -47,6 +49,7 @@
     float rollAngle;
     float sunAngle;
     BOOL wireframe;
+	shy_measurer_facade < shy_macosx_platform > * measurer;
 }
 - init;
 

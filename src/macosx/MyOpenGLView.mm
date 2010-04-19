@@ -58,7 +58,7 @@
         NSOpenGLPFAAccelerated,
         0
     };
-    long rendererID;
+    GLint rendererID;
 
     // Create our non-FullScreen pixel format.
     NSOpenGLPixelFormat* pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];

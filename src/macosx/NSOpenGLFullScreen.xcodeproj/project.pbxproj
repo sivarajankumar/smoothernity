@@ -52,12 +52,12 @@
 
 /* Begin PBXBuildFile section */
 		05689227046B13F600000102 /* MyOpenGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689225046B13F600000102 /* MyOpenGLView.h */; };
-		05689228046B13F600000102 /* MyOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05689226046B13F600000102 /* MyOpenGLView.m */; };
+		05689228046B13F600000102 /* MyOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689226046B13F600000102 /* MyOpenGLView.mm */; };
 		0568922A046B142600000102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05689229046B142600000102 /* OpenGL.framework */; };
 		05689231046B14B900000102 /* MainController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* MainController.h */; };
-		05689232046B14B900000102 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* MainController.m */; };
+		05689232046B14B900000102 /* MainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* MainController.mm */; };
 		05689235046B2C0900000102 /* Scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* Scene.h */; };
-		05689236046B2C0900000102 /* Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* Scene.m */; };
+		05689236046B2C0900000102 /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* Scene.mm */; };
 		080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -67,16 +67,36 @@
 		4CB60DB30471567400090FEF /* Texturing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB60DB20471567400090FEF /* Texturing.m */; };
 		4CB60DB604715A3800090FEF /* Earth.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CB60DB504715A3800090FEF /* Earth.jpg */; };
 		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
+		886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
+		886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886AE9F5117C8B36009CBB6F /* macosx_platform.mm */; };
+		886AE9FF117C8B36009CBB6F /* macosx_platform_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */; };
+		886AEA00117C8B36009CBB6F /* macosx_platform_matrix.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */; };
+		886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
+		886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
+		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
+		886AEA04117C8B36009CBB6F /* macosx_platform_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */; };
+		886AEA05117C8B36009CBB6F /* macosx_platform_vector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */; };
+		886AEA12117C8B50009CBB6F /* measurer_camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA07117C8B50009CBB6F /* measurer_camera.hpp */; };
+		886AEA13117C8B50009CBB6F /* measurer_facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA08117C8B50009CBB6F /* measurer_facade.hpp */; };
+		886AEA14117C8B50009CBB6F /* measurer_logic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA09117C8B50009CBB6F /* measurer_logic.hpp */; };
+		886AEA15117C8B50009CBB6F /* measurer_logic_camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA0A117C8B50009CBB6F /* measurer_logic_camera.hpp */; };
+		886AEA16117C8B50009CBB6F /* measurer_logic_entities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA0B117C8B50009CBB6F /* measurer_logic_entities.hpp */; };
+		886AEA17117C8B50009CBB6F /* measurer_logic_fidget.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA0C117C8B50009CBB6F /* measurer_logic_fidget.hpp */; };
+		886AEA18117C8B50009CBB6F /* measurer_logic_land.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA0D117C8B50009CBB6F /* measurer_logic_land.hpp */; };
+		886AEA19117C8B50009CBB6F /* measurer_logic_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA0E117C8B50009CBB6F /* measurer_logic_sound.hpp */; };
+		886AEA1A117C8B50009CBB6F /* measurer_logic_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA0F117C8B50009CBB6F /* measurer_logic_touch.hpp */; };
+		886AEA1B117C8B50009CBB6F /* measurer_mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA10117C8B50009CBB6F /* measurer_mediator.hpp */; };
+		886AEA1C117C8B50009CBB6F /* measurer_mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AEA11117C8B50009CBB6F /* measurer_mesh.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		05689225046B13F600000102 /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
-		05689226046B13F600000102 /* MyOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MyOpenGLView.m; sourceTree = "<group>"; };
+		05689226046B13F600000102 /* MyOpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = MyOpenGLView.mm; sourceTree = "<group>"; };
 		05689229046B142600000102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		0568922F046B14B900000102 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
-		05689230046B14B900000102 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
+		05689230046B14B900000102 /* MainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainController.mm; sourceTree = "<group>"; };
 		05689233046B2C0900000102 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
-		05689234046B2C0900000102 /* Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scene.m; sourceTree = "<group>"; };
+		05689234046B2C0900000102 /* Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Scene.mm; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		17587328FF379C6511CA2CBB /* NSOpenGLFullScreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = NSOpenGLFullScreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +109,26 @@
 		4CB60DB20471567400090FEF /* Texturing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texturing.m; sourceTree = "<group>"; };
 		4CB60DB504715A3800090FEF /* Earth.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Earth.jpg; sourceTree = "<group>"; };
 		4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform.hpp; sourceTree = "<group>"; };
+		886AE9F5117C8B36009CBB6F /* macosx_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_platform.mm; sourceTree = "<group>"; };
+		886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_math.hpp; sourceTree = "<group>"; };
+		886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_matrix.hpp; sourceTree = "<group>"; };
+		886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render.hpp; sourceTree = "<group>"; };
+		886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound.hpp; sourceTree = "<group>"; };
+		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
+		886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_touch.hpp; sourceTree = "<group>"; };
+		886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_vector.hpp; sourceTree = "<group>"; };
+		886AEA07117C8B50009CBB6F /* measurer_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_camera.hpp; path = ../common/measurer_camera.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA08117C8B50009CBB6F /* measurer_facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_facade.hpp; path = ../common/measurer_facade.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA09117C8B50009CBB6F /* measurer_logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_logic.hpp; path = ../common/measurer_logic.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA0A117C8B50009CBB6F /* measurer_logic_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_logic_camera.hpp; path = ../common/measurer_logic_camera.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA0B117C8B50009CBB6F /* measurer_logic_entities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_logic_entities.hpp; path = ../common/measurer_logic_entities.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA0C117C8B50009CBB6F /* measurer_logic_fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_logic_fidget.hpp; path = ../common/measurer_logic_fidget.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA0D117C8B50009CBB6F /* measurer_logic_land.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_logic_land.hpp; path = ../common/measurer_logic_land.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA0E117C8B50009CBB6F /* measurer_logic_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_logic_sound.hpp; path = ../common/measurer_logic_sound.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA0F117C8B50009CBB6F /* measurer_logic_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_logic_touch.hpp; path = ../common/measurer_logic_touch.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA10117C8B50009CBB6F /* measurer_mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_mediator.hpp; path = ../common/measurer_mediator.hpp; sourceTree = SOURCE_ROOT; };
+		886AEA11117C8B50009CBB6F /* measurer_mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = measurer_mesh.hpp; path = ../common/measurer_mesh.hpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,12 +147,32 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				886AEA07117C8B50009CBB6F /* measurer_camera.hpp */,
+				886AEA08117C8B50009CBB6F /* measurer_facade.hpp */,
+				886AEA09117C8B50009CBB6F /* measurer_logic.hpp */,
+				886AEA0A117C8B50009CBB6F /* measurer_logic_camera.hpp */,
+				886AEA0B117C8B50009CBB6F /* measurer_logic_entities.hpp */,
+				886AEA0C117C8B50009CBB6F /* measurer_logic_fidget.hpp */,
+				886AEA0D117C8B50009CBB6F /* measurer_logic_land.hpp */,
+				886AEA0E117C8B50009CBB6F /* measurer_logic_sound.hpp */,
+				886AEA0F117C8B50009CBB6F /* measurer_logic_touch.hpp */,
+				886AEA10117C8B50009CBB6F /* measurer_mediator.hpp */,
+				886AEA11117C8B50009CBB6F /* measurer_mesh.hpp */,
+				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
+				886AE9F5117C8B36009CBB6F /* macosx_platform.mm */,
+				886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */,
+				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
+				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
+				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
+				886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */,
+				886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */,
+				886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */,
 				0568922F046B14B900000102 /* MainController.h */,
-				05689230046B14B900000102 /* MainController.m */,
+				05689230046B14B900000102 /* MainController.mm */,
 				05689225046B13F600000102 /* MyOpenGLView.h */,
-				05689226046B13F600000102 /* MyOpenGLView.m */,
+				05689226046B13F600000102 /* MyOpenGLView.mm */,
 				05689233046B2C0900000102 /* Scene.h */,
-				05689234046B2C0900000102 /* Scene.m */,
+				05689234046B2C0900000102 /* Scene.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -206,6 +266,25 @@
 				05689231046B14B900000102 /* MainController.h in Headers */,
 				05689235046B2C0900000102 /* Scene.h in Headers */,
 				4CB60DB10471566600090FEF /* Texturing.h in Headers */,
+				886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */,
+				886AE9FF117C8B36009CBB6F /* macosx_platform_math.hpp in Headers */,
+				886AEA00117C8B36009CBB6F /* macosx_platform_matrix.hpp in Headers */,
+				886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */,
+				886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */,
+				886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */,
+				886AEA04117C8B36009CBB6F /* macosx_platform_touch.hpp in Headers */,
+				886AEA05117C8B36009CBB6F /* macosx_platform_vector.hpp in Headers */,
+				886AEA12117C8B50009CBB6F /* measurer_camera.hpp in Headers */,
+				886AEA13117C8B50009CBB6F /* measurer_facade.hpp in Headers */,
+				886AEA14117C8B50009CBB6F /* measurer_logic.hpp in Headers */,
+				886AEA15117C8B50009CBB6F /* measurer_logic_camera.hpp in Headers */,
+				886AEA16117C8B50009CBB6F /* measurer_logic_entities.hpp in Headers */,
+				886AEA17117C8B50009CBB6F /* measurer_logic_fidget.hpp in Headers */,
+				886AEA18117C8B50009CBB6F /* measurer_logic_land.hpp in Headers */,
+				886AEA19117C8B50009CBB6F /* measurer_logic_sound.hpp in Headers */,
+				886AEA1A117C8B50009CBB6F /* measurer_logic_touch.hpp in Headers */,
+				886AEA1B117C8B50009CBB6F /* measurer_mediator.hpp in Headers */,
+				886AEA1C117C8B50009CBB6F /* measurer_mesh.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,10 +325,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B9732CFDCFA39411CA2CEA /* main.m in Sources */,
-				05689228046B13F600000102 /* MyOpenGLView.m in Sources */,
-				05689232046B14B900000102 /* MainController.m in Sources */,
-				05689236046B2C0900000102 /* Scene.m in Sources */,
+				05689228046B13F600000102 /* MyOpenGLView.mm in Sources */,
+				05689232046B14B900000102 /* MainController.mm in Sources */,
+				05689236046B2C0900000102 /* Scene.mm in Sources */,
 				4CB60DB30471567400090FEF /* Texturing.m in Sources */,
+				886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

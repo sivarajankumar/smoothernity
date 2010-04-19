@@ -69,8 +69,8 @@
     CFAbsoluteTime timeNow;
     CGLContextObj cglContext;
     CGDisplayErr err;
-    long oldSwapInterval;
-    long newSwapInterval;
+    GLint oldSwapInterval;
+    GLint newSwapInterval;
 
     // Pixel Format Attributes for the FullScreen NSOpenGLContext
     NSOpenGLPixelFormatAttribute attrs[] = {
@@ -88,7 +88,7 @@
         NSOpenGLPFAAccelerated,
         0
     };
-    long rendererID;
+    GLint rendererID;
 
     // Create the FullScreen NSOpenGLContext with the attributes listed above.
     NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];

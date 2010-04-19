@@ -66,6 +66,7 @@ static double dtor( double degrees )
         rollAngle = 0.0;
         sunAngle = 135.0;
         wireframe = NO;
+		measurer = new shy_measurer_facade < shy_macosx_platform > ( ) ;
     }
     return self;
 }
@@ -73,6 +74,7 @@ static double dtor( double degrees )
 - (void)dealloc
 {
     [textureBitmapImageRep release];
+	delete measurer ;
     [super dealloc];
 }
 
