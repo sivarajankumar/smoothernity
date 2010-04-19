@@ -50,8 +50,6 @@
 - (void)setViewportRect:(NSRect)bounds;
 - (void)render;
 
-- (void)setAnimationPhase:(float)newAnimationPhase;
-
 - (float)rollAngle;
 - (void)setRollAngle:(float)newRollAngle;
 

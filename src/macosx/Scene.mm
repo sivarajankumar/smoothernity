@@ -79,10 +79,6 @@
 {
 }
 
-- (void)setAnimationPhase:(float)newAnimationPhase
-{
-}
-
 - (void)toggleWireframe
 {
 }

@@ -339,7 +339,6 @@
 
 - (void) animationTimerFired:(NSTimer *)timer
 {
-    Scene *scene = [openGLView scene];
     [openGLView setNeedsDisplay:YES];
 }
 
