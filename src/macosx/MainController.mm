@@ -38,7 +38,7 @@
 */
 
 #import "MainController.h"
-#import "MyOpenGLView.h"
+#import "macosx_opengl_view.h"
 #import "macosx_scene.h"
 
 #import <OpenGL/OpenGL.h>

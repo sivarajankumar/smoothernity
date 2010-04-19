@@ -38,7 +38,7 @@
  OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import "MyOpenGLView.h"
+#import "macosx_opengl_view.h"
 #import "macosx_scene.h"
 
 @implementation MyOpenGLView
