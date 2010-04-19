@@ -17,55 +17,46 @@
 
 @implementation MainController
 
-- (void) awakeFromNib
+- ( void ) awakeFromNib
 {
-    is_animating = NO;
-    [self start_animation];
+    is_animating = NO ;
+    [ self start_animation ] ;
 }
 
-// Action method wired up to fire when the user clicks the "Go FullScreen" button.  We remain in this method until the user exits FullScreen mode.
-- (IBAction) goFullScreen:(id)sender
+- ( IBAction ) goFullScreen : ( id ) sender
 {
-    shy_macosx_scene *scene = [openGLView scene];
-    CFAbsoluteTime timeNow;
-    CGLContextObj cglContext;
-    CGDisplayErr err;
-    GLint oldSwapInterval;
-    GLint newSwapInterval;
+    shy_macosx_scene * scene = [ openGLView scene ] ;
+    CFAbsoluteTime time_now ;
+    CGLContextObj cgl_context ;
+    CGDisplayErr err ;
+    GLint old_swap_interval ;
+    GLint new_swap_interval ;
 
-    // Pixel Format Attributes for the FullScreen NSOpenGLContext
-    NSOpenGLPixelFormatAttribute attrs[] = {
-
-        // Specify that we want a full-screen OpenGL context.
-        NSOpenGLPFAFullScreen,
-
-        // We may be on a multi-display system (and each screen may be driven by a different renderer), so we need to specify which screen we want to take over.  For this demo, we'll specify the main screen.
-        NSOpenGLPFAScreenMask, CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay),
-
-        // Attributes Common to FullScreen and non-FullScreen
-        NSOpenGLPFAColorSize, 24,
-        NSOpenGLPFADepthSize, 16,
-        NSOpenGLPFADoubleBuffer,
-        NSOpenGLPFAAccelerated,
+    NSOpenGLPixelFormatAttribute attrs [ ] =
+	{
+        NSOpenGLPFAFullScreen ,
+        NSOpenGLPFAScreenMask , CGDisplayIDToOpenGLDisplayMask ( kCGDirectMainDisplay ) ,
+        NSOpenGLPFAColorSize , 24 ,
+        NSOpenGLPFADepthSize , 16 ,
+        NSOpenGLPFADoubleBuffer ,
+        NSOpenGLPFAAccelerated ,
         0
-    };
-    GLint rendererID;
+    } ;
+    GLint renderer_id ;
+    NSOpenGLPixelFormat * pixel_format = [ [ NSOpenGLPixelFormat alloc ] initWithAttributes : attrs ] ;
+    [ pixel_format getValues : & renderer_id forAttribute : NSOpenGLPFARendererID forVirtualScreen : 0 ] ;
+    NSLog ( @"FullScreen pixel_format renderer_id = %08x" , ( unsigned ) renderer_id ) ;
+    full_screen_context = [ [ NSOpenGLContext alloc ] 
+		initWithFormat : pixel_format 
+		shareContext : [ openGLView openGLContext ]
+		] ;
+    [ pixel_format release ] ;
+    pixel_format = nil ;
 
-    // Create the FullScreen NSOpenGLContext with the attributes listed above.
-    NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];
-    
-    // Just as a diagnostic, report the renderer ID that this pixel format binds to.  CGLRenderers.h contains a list of known renderers and their corresponding RendererID codes.
-    [pixelFormat getValues:&rendererID forAttribute:NSOpenGLPFARendererID forVirtualScreen:0];
-    NSLog(@"FullScreen pixelFormat RendererID = %08x", (unsigned)rendererID);
-
-    // Create an NSOpenGLContext with the FullScreen pixel format.  By specifying the non-FullScreen context as our "shareContext", we automatically inherit all of the textures, display lists, and other OpenGL objects it has defined.
-    full_screen_context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:[openGLView openGLContext]];
-    [pixelFormat release];
-    pixelFormat = nil;
-
-    if (full_screen_context == nil) {
-        NSLog(@"Failed to create full_screen_context");
-        return;
+    if ( full_screen_context == nil )
+	{
+        NSLog ( @"Failed to create full_screen_context" ) ;
+        return ;
     }
 
     // Pause animation in the OpenGL view.  While we're in full-screen mode, we'll drive the animation actively instead of using a timer callback.
@@ -86,10 +77,10 @@
     [full_screen_context makeCurrentContext];
 
     // Save the current swap interval so we can restore it later, and then set the new swap interval to lock us to the display's refresh rate.
-    cglContext = CGLGetCurrentContext();
-    CGLGetParameter(cglContext, kCGLCPSwapInterval, &oldSwapInterval);
-    newSwapInterval = 1;
-    CGLSetParameter(cglContext, kCGLCPSwapInterval, &newSwapInterval);
+    cgl_context = CGLGetCurrentContext();
+    CGLGetParameter(cgl_context, kCGLCPSwapInterval, &old_swap_interval);
+    new_swap_interval = 1;
+    CGLSetParameter(cgl_context, kCGLCPSwapInterval, &new_swap_interval);
 
     // Tell the scene the dimensions of the area it's going to render to, so it can set up an appropriate viewport and viewing transformation.
     [scene set_viewport_rect:NSMakeRect(0, 0, CGDisplayPixelsWide(kCGDirectMainDisplay), CGDisplayPixelsHigh(kCGDirectMainDisplay))];
@@ -126,8 +117,8 @@
         }
 
         // Update our animation.
-        timeNow = CFAbsoluteTimeGetCurrent();
-        time_before = timeNow;
+        time_now = CFAbsoluteTimeGetCurrent();
+        time_before = time_now;
 
         // Render a frame, and swap the front and back buffers.
         [scene render];
@@ -145,7 +136,7 @@
     [full_screen_context flushBuffer];
 
     // Restore the previously set swap interval.
-    CGLSetParameter(cglContext, kCGLCPSwapInterval, &oldSwapInterval);
+    CGLSetParameter(cgl_context, kCGLCPSwapInterval, &old_swap_interval);
 
     // Exit fullscreen mode and release our FullScreen NSOpenGLContext.
     [NSOpenGLContext clearCurrentContext];
