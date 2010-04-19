@@ -8,4 +8,5 @@
     IBOutlet NSResponder * controller ;
 }
 - ( shy_macosx_scene * ) scene ;
+- ( void ) render ;
 @end

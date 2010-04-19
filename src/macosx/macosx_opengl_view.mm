@@ -20,7 +20,11 @@
     NSLog ( @"NSOpenGLView pixelFormat RendererID = %08x" , ( unsigned ) renderer_id ) ;
     self = [ super initWithFrame : frameRect pixelFormat : pixel_format ] ;
     if ( self )
+	{
+		GLint swapInt = 1 ;
+		[ [ self openGLContext ] setValues : & swapInt forParameter : NSOpenGLCPSwapInterval ] ;
         scene = [ [ shy_macosx_scene alloc ] init ] ;
+	}
     return self ;
 }
 
@@ -36,6 +40,11 @@
 }
 
 - ( void ) drawRect : ( NSRect ) aRect
+{
+	[ self render ] ;
+}
+
+- ( void ) render
 {
     [ scene render ] ;
     [ [ self openGLContext ] flushBuffer ] ;

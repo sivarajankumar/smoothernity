@@ -25,7 +25,6 @@
 - ( IBAction ) goFullScreen : ( id ) sender
 {
     shy_macosx_scene * scene = [ openGLView scene ] ;
-    CFAbsoluteTime time_now ;
     CGLContextObj cgl_context ;
     CGDisplayErr err ;
     GLint old_swap_interval ;
@@ -58,6 +57,9 @@
         return ;
     }
 
+    GLint swapInt = 1 ;
+    [ full_screen_context setValues : & swapInt forParameter : NSOpenGLCPSwapInterval ] ;
+	
     if ( [ self is_animating ] )
         [ self stop_animation_timer ] ;
 
@@ -85,7 +87,6 @@
 		) 
 	] ;
 
-    time_before = CFAbsoluteTimeGetCurrent ( ) ;
     stay_in_full_screen_mode = YES ;
     while ( stay_in_full_screen_mode )
 	{
@@ -117,9 +118,6 @@
                     break ;
             }
         }
-
-        time_now = CFAbsoluteTimeGetCurrent ( ) ;
-        time_before = time_now ;
 
         [ scene render ] ;
         [ full_screen_context flushBuffer ] ;
@@ -194,40 +192,37 @@
 - ( void ) stop_animation
 {
     if ( is_animating )
-	{
-        if ( animation_timer != nil )
-            [ self stop_animation_timer ] ;
         is_animating = NO ;
-    }
 }
 
 - ( void ) start_animation_timer
 {
-    if ( animation_timer == nil )
-	{
-        animation_timer = [ [ NSTimer 
-			scheduledTimerWithTimeInterval : 0.017
-			target : self
-			selector : @selector ( animation_timer_fired : )
-			userInfo : nil
-			repeats : YES
-		] retain ] ;
-    }
+    [ NSTimer
+		scheduledTimerWithTimeInterval : 0
+		target : self
+		selector : @selector ( animation_timer_fired : )
+		userInfo : nil
+		repeats : NO
+	] ;
 }
 
 - ( void ) stop_animation_timer
 {
-    if ( animation_timer != nil )
-	{
-        [ animation_timer invalidate ] ;
-        [ animation_timer release ] ;
-        animation_timer = nil ;
-    }
 }
 
 - ( void ) animation_timer_fired : ( NSTimer * ) timer
 {
-    [ openGLView setNeedsDisplay : YES ] ;
+	if ( is_animating )
+	{
+		[ openGLView render ] ;
+		[ NSTimer
+			scheduledTimerWithTimeInterval : 0
+			target : self
+			selector : @selector ( animation_timer_fired : )
+			userInfo : nil
+			repeats : NO
+		] ;
+	}
 }
 
 @end
