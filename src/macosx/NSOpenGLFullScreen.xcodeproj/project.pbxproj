@@ -54,8 +54,8 @@
 		05689227046B13F600000102 /* macosx_opengl_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689225046B13F600000102 /* macosx_opengl_view.h */; };
 		05689228046B13F600000102 /* macosx_opengl_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689226046B13F600000102 /* macosx_opengl_view.mm */; };
 		0568922A046B142600000102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05689229046B142600000102 /* OpenGL.framework */; };
-		05689231046B14B900000102 /* MainController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* MainController.h */; };
-		05689232046B14B900000102 /* MainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* MainController.mm */; };
+		05689231046B14B900000102 /* macosx_main_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* macosx_main_controller.h */; };
+		05689232046B14B900000102 /* macosx_main_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* macosx_main_controller.mm */; };
 		05689235046B2C0900000102 /* macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* macosx_scene.h */; };
 		05689236046B2C0900000102 /* macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* macosx_scene.mm */; };
 		080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
@@ -93,8 +93,8 @@
 		05689225046B13F600000102 /* macosx_opengl_view.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = macosx_opengl_view.h; sourceTree = "<group>"; };
 		05689226046B13F600000102 /* macosx_opengl_view.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_opengl_view.mm; sourceTree = "<group>"; };
 		05689229046B142600000102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		0568922F046B14B900000102 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
-		05689230046B14B900000102 /* MainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainController.mm; sourceTree = "<group>"; };
+		0568922F046B14B900000102 /* macosx_main_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_main_controller.h; sourceTree = "<group>"; };
+		05689230046B14B900000102 /* macosx_main_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_main_controller.mm; sourceTree = "<group>"; };
 		05689233046B2C0900000102 /* macosx_scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_scene.h; sourceTree = "<group>"; };
 		05689234046B2C0900000102 /* macosx_scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_scene.mm; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -147,6 +147,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0568922F046B14B900000102 /* macosx_main_controller.h */,
+				05689230046B14B900000102 /* macosx_main_controller.mm */,
 				05689225046B13F600000102 /* macosx_opengl_view.h */,
 				05689226046B13F600000102 /* macosx_opengl_view.mm */,
 				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
@@ -171,8 +173,6 @@
 				886AEA0F117C8B50009CBB6F /* measurer_logic_touch.hpp */,
 				886AEA10117C8B50009CBB6F /* measurer_mediator.hpp */,
 				886AEA11117C8B50009CBB6F /* measurer_mesh.hpp */,
-				0568922F046B14B900000102 /* MainController.h */,
-				05689230046B14B900000102 /* MainController.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -263,7 +263,7 @@
 			files = (
 				32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */,
 				05689227046B13F600000102 /* macosx_opengl_view.h in Headers */,
-				05689231046B14B900000102 /* MainController.h in Headers */,
+				05689231046B14B900000102 /* macosx_main_controller.h in Headers */,
 				05689235046B2C0900000102 /* macosx_scene.h in Headers */,
 				4CB60DB10471566600090FEF /* Texturing.h in Headers */,
 				886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */,
@@ -326,7 +326,7 @@
 			files = (
 				29B9732CFDCFA39411CA2CEA /* main.m in Sources */,
 				05689228046B13F600000102 /* macosx_opengl_view.mm in Sources */,
-				05689232046B14B900000102 /* MainController.mm in Sources */,
+				05689232046B14B900000102 /* macosx_main_controller.mm in Sources */,
 				05689236046B2C0900000102 /* macosx_scene.mm in Sources */,
 				4CB60DB30471567400090FEF /* Texturing.m in Sources */,
 				886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */,

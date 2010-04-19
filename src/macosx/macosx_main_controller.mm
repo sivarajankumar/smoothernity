@@ -37,7 +37,7 @@
  OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import "MainController.h"
+#import "macosx_main_controller.h"
 #import "macosx_opengl_view.h"
 #import "macosx_scene.h"
 
