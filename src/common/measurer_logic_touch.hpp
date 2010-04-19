@@ -96,9 +96,9 @@ private :
         _spot_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , spot_edges , 0 , spot_edges ) ;
     }
 private :
+    mediator * _mediator ;
+    int_32 _spot_frames_left ;
     int_32 _spot_mesh_created ;
     mesh_id _spot_mesh_id ;
-    int_32 _spot_frames_left ;
     vector_data _spot_position ;
-    mediator * _mediator ;
 } ;

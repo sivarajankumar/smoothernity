@@ -104,8 +104,8 @@ private :
         _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
     }
 private :
-    mesh_id _land_mesh_id ;
+    mediator * _mediator ;
     int_32 _land_created ;
     int_32 _frames_left_to_create ;
-    mediator * _mediator ;
+    mesh_id _land_mesh_id ;
 } ;

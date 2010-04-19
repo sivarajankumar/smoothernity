@@ -166,9 +166,9 @@ private :
         }
     }
 private :
-    mesh_id _entity_mesh_id ;
-    matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
+    mediator * _mediator ;
     int_32 _entity_created ;
     int_32 _frames_left_to_create ;
-    mediator * _mediator ;
+    mesh_id _entity_mesh_id ;
+    matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
 } ;

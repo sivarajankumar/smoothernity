@@ -127,14 +127,14 @@ private :
         platform :: sound_set_source_playback_once ( _mono_sound_source ) ;
     }
 private :
-    sound_source_id _stereo_sound_source ;
-    sound_source_id _mono_sound_source ;
+    mediator * _mediator ;
     int_32 _mono_sound_created ;
     int_32 _stereo_sound_created ;
     int_32 _stereo_sound_loaded ;
     int_32 _frames_left_to_create ;
     int_32 _loaded_stereo_sound_samples ;
+    sound_source_id _stereo_sound_source ;
+    sound_source_id _mono_sound_source ;
     stereo_sound_sample _stereo_sound_data [ max_stereo_sound_samples ] ;
     mono_sound_sample _mono_sound_data [ platform :: mono_sound_samples_per_second ] ;
-    mediator * _mediator ;
 } ;

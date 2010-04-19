@@ -102,8 +102,8 @@ private :
         _fidget_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , fidget_edges , 0 , fidget_edges ) ;
     }
 private :
+    mediator * _mediator ;
+    float_32 _fidget_angle ;
     int_32 _fidget_mesh_created ;
     mesh_id _fidget_mesh_id ;
-    float_32 _fidget_angle ;
-    mediator * _mediator ;
 } ;

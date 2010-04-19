@@ -97,6 +97,7 @@ private :
             ) ;
     }
 private :
+    mediator * _mediator ;
     matrix_data _camera_matrix ;
     int_32 _frames_to_change_camera_target ;
     int_32 _frames_to_change_camera_origin ;
@@ -106,5 +107,4 @@ private :
     vector_data _current_camera_origin ;
     vector_data _current_camera_target ;
     int_32 _camera_created ;
-    mediator * _mediator ;
 } ;
