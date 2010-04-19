@@ -174,53 +174,60 @@
 
 @end
 
-@implementation MainController (AnimationMethods)
+@implementation MainController ( AnimationMethods )
 
-- (BOOL) is_animating
+- ( BOOL ) is_animating
 {
-    return is_animating;
+    return is_animating ;
 }
 
-- (void) start_animation
+- ( void ) start_animation
 {
-    if (!is_animating) {
-        is_animating = YES;
-        if (![self is_in_full_screen_mode]) {
-            [self start_animation_timer];
-        }
+    if ( ! is_animating )
+	{
+        is_animating = YES ;
+        if ( ! [ self is_in_full_screen_mode ] )
+            [ self start_animation_timer ] ;
     }
 }
 
-- (void) stop_animation
+- ( void ) stop_animation
 {
-    if (is_animating) {
-        if (animation_timer != nil) {
-            [self stop_animation_timer];
-        }
-        is_animating = NO;
+    if ( is_animating )
+	{
+        if ( animation_timer != nil )
+            [ self stop_animation_timer ] ;
+        is_animating = NO ;
     }
 }
 
-- (void) start_animation_timer
+- ( void ) start_animation_timer
 {
-    if (animation_timer == nil) {
-        animation_timer = [[NSTimer scheduledTimerWithTimeInterval:0.017 target:self selector:@selector(animation_timer_fired:) userInfo:nil repeats:YES] retain];
+    if ( animation_timer == nil )
+	{
+        animation_timer = [ [ NSTimer 
+			scheduledTimerWithTimeInterval : 0.017
+			target : self
+			selector : @selector ( animation_timer_fired : )
+			userInfo : nil
+			repeats : YES
+		] retain ] ;
     }
 }
 
-- (void) stop_animation_timer
+- ( void ) stop_animation_timer
 {
-    if (animation_timer != nil) {
-        [animation_timer invalidate];
-        [animation_timer release];
-        animation_timer = nil;
+    if ( animation_timer != nil )
+	{
+        [ animation_timer invalidate ] ;
+        [ animation_timer release ] ;
+        animation_timer = nil ;
     }
 }
 
-- (void) animation_timer_fired:(NSTimer *)timer
+- ( void ) animation_timer_fired : ( NSTimer * ) timer
 {
-    [openGLView setNeedsDisplay:YES];
+    [ openGLView setNeedsDisplay : YES ] ;
 }
 
 @end
-
