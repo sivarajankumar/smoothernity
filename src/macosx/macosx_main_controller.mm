@@ -4,15 +4,15 @@
 
 #import <OpenGL/OpenGL.h>
 
-@interface MainController (AnimationMethods)
-- (BOOL) is_animating;
-- (void) startAnimation;
-- (void) stopAnimation;
-- (void) toggleAnimation;
+@interface MainController ( AnimationMethods )
+- ( BOOL ) is_animating ;
+- ( void ) start_animation ;
+- ( void ) stopAnimation ;
+- ( void ) toggleAnimation ;
 
-- (void) startAnimationTimer;
-- (void) stopAnimationTimer;
-- (void) animationTimerFired:(NSTimer *)timer;
+- ( void ) startAnimationTimer ;
+- ( void ) stopAnimationTimer ;
+- ( void ) animationTimerFired : ( NSTimer * ) timer ;
 @end
 
 @implementation MainController
@@ -20,7 +20,7 @@
 - (void) awakeFromNib
 {
     is_animating = NO;
-    [self startAnimation];
+    [self start_animation];
 }
 
 // Action method wired up to fire when the user clicks the "Go FullScreen" button.  We remain in this method until the user exits FullScreen mode.
@@ -225,7 +225,7 @@
         }
     }
     if (wasAnimating) {
-        [self startAnimation];
+        [self start_animation];
         time_before = CFAbsoluteTimeGetCurrent();
     }
 }
@@ -244,7 +244,7 @@
     return is_animating;
 }
 
-- (void) startAnimation
+- (void) start_animation
 {
     if (!is_animating) {
         is_animating = YES;
@@ -269,7 +269,7 @@
     if ([self is_animating]) {
         [self stopAnimation];
     } else {
-        [self startAnimation];
+        [self start_animation];
     }
 }
 
