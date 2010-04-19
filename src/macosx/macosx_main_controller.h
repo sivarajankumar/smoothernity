@@ -8,7 +8,7 @@
     NSTimer * animation_timer ;
     CFAbsoluteTime time_before ;
 
-    BOOL stayInFullScreenMode ;
+    BOOL stay_in_full_screen_mode ;
     NSOpenGLContext * fullScreenContext ;
 
     IBOutlet MyOpenGLView * openGLView ;
