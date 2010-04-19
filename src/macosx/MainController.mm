@@ -39,7 +39,7 @@
 
 #import "MainController.h"
 #import "MyOpenGLView.h"
-#import "Scene.h"
+#import "macosx_scene.h"
 
 #import <OpenGL/OpenGL.h>
 

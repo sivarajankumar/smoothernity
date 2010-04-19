@@ -56,8 +56,8 @@
 		0568922A046B142600000102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05689229046B142600000102 /* OpenGL.framework */; };
 		05689231046B14B900000102 /* MainController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* MainController.h */; };
 		05689232046B14B900000102 /* MainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* MainController.mm */; };
-		05689235046B2C0900000102 /* Scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* Scene.h */; };
-		05689236046B2C0900000102 /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* Scene.mm */; };
+		05689235046B2C0900000102 /* macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* macosx_scene.h */; };
+		05689236046B2C0900000102 /* macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* macosx_scene.mm */; };
 		080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -95,8 +95,8 @@
 		05689229046B142600000102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		0568922F046B14B900000102 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		05689230046B14B900000102 /* MainController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainController.mm; sourceTree = "<group>"; };
-		05689233046B2C0900000102 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
-		05689234046B2C0900000102 /* Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Scene.mm; sourceTree = "<group>"; };
+		05689233046B2C0900000102 /* macosx_scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_scene.h; sourceTree = "<group>"; };
+		05689234046B2C0900000102 /* macosx_scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_scene.mm; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		17587328FF379C6511CA2CBB /* NSOpenGLFullScreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = NSOpenGLFullScreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +147,17 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
+				886AE9F5117C8B36009CBB6F /* macosx_platform.mm */,
+				886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */,
+				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
+				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
+				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
+				886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */,
+				886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */,
+				886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */,
+				05689233046B2C0900000102 /* macosx_scene.h */,
+				05689234046B2C0900000102 /* macosx_scene.mm */,
 				886AEA07117C8B50009CBB6F /* measurer_camera.hpp */,
 				886AEA08117C8B50009CBB6F /* measurer_facade.hpp */,
 				886AEA09117C8B50009CBB6F /* measurer_logic.hpp */,
@@ -158,21 +169,10 @@
 				886AEA0F117C8B50009CBB6F /* measurer_logic_touch.hpp */,
 				886AEA10117C8B50009CBB6F /* measurer_mediator.hpp */,
 				886AEA11117C8B50009CBB6F /* measurer_mesh.hpp */,
-				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
-				886AE9F5117C8B36009CBB6F /* macosx_platform.mm */,
-				886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */,
-				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
-				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
-				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
-				886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */,
-				886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */,
-				886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */,
 				0568922F046B14B900000102 /* MainController.h */,
 				05689230046B14B900000102 /* MainController.mm */,
 				05689225046B13F600000102 /* MyOpenGLView.h */,
 				05689226046B13F600000102 /* MyOpenGLView.mm */,
-				05689233046B2C0900000102 /* Scene.h */,
-				05689234046B2C0900000102 /* Scene.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -264,7 +264,7 @@
 				32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */,
 				05689227046B13F600000102 /* MyOpenGLView.h in Headers */,
 				05689231046B14B900000102 /* MainController.h in Headers */,
-				05689235046B2C0900000102 /* Scene.h in Headers */,
+				05689235046B2C0900000102 /* macosx_scene.h in Headers */,
 				4CB60DB10471566600090FEF /* Texturing.h in Headers */,
 				886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */,
 				886AE9FF117C8B36009CBB6F /* macosx_platform_math.hpp in Headers */,
@@ -327,7 +327,7 @@
 				29B9732CFDCFA39411CA2CEA /* main.m in Sources */,
 				05689228046B13F600000102 /* MyOpenGLView.mm in Sources */,
 				05689232046B14B900000102 /* MainController.mm in Sources */,
-				05689236046B2C0900000102 /* Scene.mm in Sources */,
+				05689236046B2C0900000102 /* macosx_scene.mm in Sources */,
 				4CB60DB30471567400090FEF /* Texturing.m in Sources */,
 				886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */,
 			);
