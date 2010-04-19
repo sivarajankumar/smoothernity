@@ -5,9 +5,9 @@
 {
 	shy_measurer_facade < shy_macosx_platform > * measurer;
 }
-- init;
 
-- (void)setViewportRect:(NSRect)bounds;
-- (void)render;
+- init ;
+- ( void ) set_viewport_rect : ( NSRect ) bounds ;
+- ( void ) render ;
 
 @end

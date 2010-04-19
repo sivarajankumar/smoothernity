@@ -95,7 +95,7 @@
 - (void) reshape
 {
     // Delegate to our scene object to update for a change in the view size.
-    [scene setViewportRect:[self bounds]];
+    [scene set_viewport_rect:[self bounds]];
 }
 
 - (BOOL) acceptsFirstResponder

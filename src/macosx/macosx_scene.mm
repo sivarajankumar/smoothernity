@@ -4,32 +4,30 @@
 
 - init
 {
-    self = [super init];
-    if (self) {
+    self = [ super init ] ;
+    if ( self )
 		measurer = new shy_measurer_facade < shy_macosx_platform > ( ) ;
-    }
-    return self;
+    return self ;
 }
 
-- (void)dealloc
+- ( void ) dealloc
 {
 	measurer -> done ( ) ;
 	delete measurer ;
-    [super dealloc];
+    [ super dealloc ] ;
 }
 
-- (void)setViewportRect:(NSRect)bounds
+- ( void ) set_viewport_rect : ( NSRect ) bounds
 {
-    glViewport( bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+    glViewport ( bounds . origin . x , bounds . origin . y , bounds . size . width , bounds . size . height ) ;
 	measurer -> init ( ) ;
 }
 
-// This method renders our scene.  We could optimize it in any of several ways, including factoring out the repeated OpenGL initialization calls and either hanging onto the GLU quadric object or creating a display list thet draws the Earth, but the details of how it's implemented aren't important here.  The main thing to note is that we've factored our drawing code out of our NSOpenGLView subclass to enable MainController to use it when rendering in FullScreen mode.
-- (void)render
+- ( void ) render
 {
 	measurer -> render ( ) ;
 	measurer -> update ( ) ;
-    glFinish();
+    glFinish ( ) ;
 }
 
 @end

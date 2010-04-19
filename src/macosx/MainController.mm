@@ -131,7 +131,7 @@
     CGLSetParameter(cglContext, kCGLCPSwapInterval, &newSwapInterval);
 
     // Tell the scene the dimensions of the area it's going to render to, so it can set up an appropriate viewport and viewing transformation.
-    [scene setViewportRect:NSMakeRect(0, 0, CGDisplayPixelsWide(kCGDirectMainDisplay), CGDisplayPixelsHigh(kCGDirectMainDisplay))];
+    [scene set_viewport_rect:NSMakeRect(0, 0, CGDisplayPixelsWide(kCGDirectMainDisplay), CGDisplayPixelsHigh(kCGDirectMainDisplay))];
 
     // Now that we've got the screen, we enter a loop in which we alternately process input events and computer and render the next frame of our animation.  The shift here is from a model in which we passively receive events handed to us by the AppKit to one in which we are actively driving event processing.
     timeBefore = CFAbsoluteTimeGetCurrent();
