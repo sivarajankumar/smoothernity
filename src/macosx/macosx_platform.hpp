@@ -4,8 +4,8 @@
 //#import <OpenAL/al.h>
 //#import <OpenAL/alc.h>
 //#import <OpenAL/oalStaticBufferExtension.h>
-//#import <OpenGLES/ES1/gl.h>
-//#import <OpenGLES/ES1/glext.h>
+#import <OpenGL/gl.h>
+#import <OpenGL/glext.h>
 //#import <QuartzCore/QuartzCore.h>
 
 //#import "macosx_sound_loader.h"
@@ -20,26 +20,23 @@ public :
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        GLuint _buffer_id ;
+        GLuint _buffer_id ;
     } ;
     
     class vertex_data
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        GLfloat _position [ 3 ] ;
-//        GLfloat _tex_coord [ 2 ] ;
-//        GLubyte _color [ 4 ] ;
+        GLfloat _position [ 3 ] ;
+        GLfloat _tex_coord [ 2 ] ;
+        GLubyte _color [ 4 ] ;
     } ;
     
     class index_data
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        GLushort _index ;
+        GLushort _index ;
     } ;
 
     class time_data
@@ -54,8 +51,7 @@ public :
     {
         friend class shy_macosx_platform ;
     private :
-        float _elements [ 16 ] ;
-//        GLfloat _elements [ 16 ] ;
+        GLfloat _elements [ 16 ] ;
     } ;
     
     class vector_data
