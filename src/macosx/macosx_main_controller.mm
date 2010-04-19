@@ -57,9 +57,6 @@
         return ;
     }
 
-    GLint swapInt = 1 ;
-    [ full_screen_context setValues : & swapInt forParameter : NSOpenGLCPSwapInterval ] ;
-	
     if ( [ self is_animating ] )
         [ self stop_animation_timer ] ;
 
