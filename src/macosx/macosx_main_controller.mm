@@ -8,7 +8,6 @@
 - ( BOOL ) is_animating ;
 - ( void ) start_animation ;
 - ( void ) stop_animation ;
-- ( void ) toggle_animation ;
 
 - ( void ) start_animation_timer ;
 - ( void ) stop_animation_timer ;
@@ -59,171 +58,118 @@
         return ;
     }
 
-    // Pause animation in the OpenGL view.  While we're in full-screen mode, we'll drive the animation actively instead of using a timer callback.
-    if ([self is_animating]) {
-        [self stop_animation_timer];
+    if ( [ self is_animating ] )
+        [ self stop_animation_timer ] ;
+
+    err = CGCaptureAllDisplays ( ) ;
+    if ( err != CGDisplayNoErr )
+	{
+        [ full_screen_context release ] ;
+        full_screen_context = nil ;
+        return ;
     }
 
-    // Take control of the display where we're about to go FullScreen.
-    err = CGCaptureAllDisplays();
-    if (err != CGDisplayNoErr) {
-        [full_screen_context release];
-        full_screen_context = nil;
-        return;
-    }
+    [ full_screen_context setFullScreen ] ;
+    [ full_screen_context makeCurrentContext ] ;
 
-    // Enter FullScreen mode and make our FullScreen context the active context for OpenGL commands.
-    [full_screen_context setFullScreen];
-    [full_screen_context makeCurrentContext];
+    cgl_context = CGLGetCurrentContext ( ) ;
+    CGLGetParameter ( cgl_context , kCGLCPSwapInterval , & old_swap_interval ) ;
+    new_swap_interval = 1 ;
+    CGLSetParameter ( cgl_context , kCGLCPSwapInterval , & new_swap_interval ) ;
 
-    // Save the current swap interval so we can restore it later, and then set the new swap interval to lock us to the display's refresh rate.
-    cgl_context = CGLGetCurrentContext();
-    CGLGetParameter(cgl_context, kCGLCPSwapInterval, &old_swap_interval);
-    new_swap_interval = 1;
-    CGLSetParameter(cgl_context, kCGLCPSwapInterval, &new_swap_interval);
+    [ scene set_viewport_rect : NSMakeRect 
+		( 0 
+		, 0 
+		, CGDisplayPixelsWide ( kCGDirectMainDisplay ) 
+		, CGDisplayPixelsHigh ( kCGDirectMainDisplay ) 
+		) 
+	] ;
 
-    // Tell the scene the dimensions of the area it's going to render to, so it can set up an appropriate viewport and viewing transformation.
-    [scene set_viewport_rect:NSMakeRect(0, 0, CGDisplayPixelsWide(kCGDirectMainDisplay), CGDisplayPixelsHigh(kCGDirectMainDisplay))];
+    time_before = CFAbsoluteTimeGetCurrent ( ) ;
+    stay_in_full_screen_mode = YES ;
+    while ( stay_in_full_screen_mode )
+	{
+        NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
 
-    // Now that we've got the screen, we enter a loop in which we alternately process input events and computer and render the next frame of our animation.  The shift here is from a model in which we passively receive events handed to us by the AppKit to one in which we are actively driving event processing.
-    time_before = CFAbsoluteTimeGetCurrent();
-    stay_in_full_screen_mode = YES;
-    while (stay_in_full_screen_mode) {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-        // Check for and process input events.
-        NSEvent *event;
-        while (event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES]) {
-            switch ([event type]) {
-                case NSLeftMouseDown:
-                    [self mouseDown:event];
-                    break;
-
-                case NSLeftMouseUp:
-                    [self mouseUp:event];
-                    break;
-
-                case NSLeftMouseDragged:
-                    [self mouseDragged:event];
-                    break;
-
-                case NSKeyDown:
-                    [self keyDown:event];
-                    break;
-
-                default:
-                    break;
+        NSEvent * event ;
+        while ( event = [ NSApp 
+			nextEventMatchingMask : NSAnyEventMask 
+			untilDate : [ NSDate distantPast ] 
+			inMode : NSDefaultRunLoopMode 
+			dequeue : YES
+			] )
+		{
+            switch ( [ event type ] )
+			{
+                case NSLeftMouseDown :
+                    [ self mouseDown : event ] ;
+                    break ;
+                case NSLeftMouseUp :
+                    [ self mouseUp : event ] ;
+                    break ;
+                case NSLeftMouseDragged :
+                    [ self mouseDragged : event ] ;
+                    break ;
+                case NSKeyDown :
+                    [ self keyDown : event ] ;
+                    break ;
+                default :
+                    break ;
             }
         }
 
-        // Update our animation.
-        time_now = CFAbsoluteTimeGetCurrent();
-        time_before = time_now;
+        time_now = CFAbsoluteTimeGetCurrent ( ) ;
+        time_before = time_now ;
 
-        // Render a frame, and swap the front and back buffers.
-        [scene render];
-        [full_screen_context flushBuffer];
+        [ scene render ] ;
+        [ full_screen_context flushBuffer ] ;
 
-        // Clean up any autoreleased objects that were created this time through the loop.
-        [pool release];
+        [ pool release ] ;
     }
     
-    // Clear the front and back framebuffers before switching out of FullScreen mode.  (This is not strictly necessary, but avoids an untidy flash of garbage.)
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    [full_screen_context flushBuffer];
-    glClear(GL_COLOR_BUFFER_BIT);
-    [full_screen_context flushBuffer];
+    glClearColor ( 0.0 , 0.0 , 0.0 , 0.0 ) ;
+    glClear ( GL_COLOR_BUFFER_BIT ) ;
+    [ full_screen_context flushBuffer ] ;
+    glClear ( GL_COLOR_BUFFER_BIT ) ;
+    [ full_screen_context flushBuffer ] ;
 
-    // Restore the previously set swap interval.
-    CGLSetParameter(cgl_context, kCGLCPSwapInterval, &old_swap_interval);
+    CGLSetParameter ( cgl_context , kCGLCPSwapInterval , & old_swap_interval ) ;
 
-    // Exit fullscreen mode and release our FullScreen NSOpenGLContext.
-    [NSOpenGLContext clearCurrentContext];
-    [full_screen_context clearDrawable];
-    [full_screen_context release];
-    full_screen_context = nil;
+    [ NSOpenGLContext clearCurrentContext ] ;
+    [ full_screen_context clearDrawable ] ;
+    [ full_screen_context release ] ;
+    full_screen_context = nil ;
 
-    // Release control of the display.
-    CGReleaseAllDisplays();
+    CGReleaseAllDisplays ( ) ;
 
-    // Mark our view as needing drawing.  (The animation has advanced while we were in FullScreen mode, so its current contents are stale.)
-    [openGLView setNeedsDisplay:YES];
+    [ openGLView setNeedsDisplay : YES ] ;
 
-    // Resume animation timer firings.
-    if ([self is_animating]) {
-        [self start_animation_timer];
+    if ( [ self is_animating ] )
+        [ self start_animation_timer ] ;
+}
+
+- ( void ) keyDown : ( NSEvent * ) event
+{
+    unichar c = [ [ event charactersIgnoringModifiers ] characterAtIndex : 0 ] ;
+    switch ( c )
+	{
+        case 27 :
+            stay_in_full_screen_mode = NO ;
+            break ;
+        default :
+            break ;
     }
 }
 
-- (void) keyDown:(NSEvent *)event
+- ( void ) mouseDown : ( NSEvent * ) the_event
 {
-    unichar c = [[event charactersIgnoringModifiers] characterAtIndex:0];
-    switch (c) {
-
-        // [Esc] exits FullScreen mode.
-        case 27:
-            stay_in_full_screen_mode = NO;
-            break;
-
-        // [space] toggles rotation of the globe.
-        case 32:
-            [self toggle_animation];
-            break;
-
-        default:
-            break;
-    }
-}
-
-// Holding the mouse button and dragging the mouse changes the "roll" angle (y-axis) and the direction from which sunlight is coming (x-axis).
-- (void)mouseDown:(NSEvent *)theEvent
-{
-    shy_macosx_scene *scene = [openGLView scene];
-    BOOL wasAnimating = [self is_animating];
-    BOOL dragging = YES;
-    NSPoint windowPoint;
-    NSPoint lastWindowPoint = [theEvent locationInWindow];
-    float dx, dy;
-
-    if (wasAnimating) {
-        [self stop_animation];
-    }
-    while (dragging) {
-        theEvent = [[openGLView window] nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask];
-        windowPoint = [theEvent locationInWindow];
-        switch ([theEvent type]) {
-            case NSLeftMouseUp:
-                dragging = NO;
-                break;
-
-            case NSLeftMouseDragged:
-                dx = windowPoint.x - lastWindowPoint.x;
-                dy = windowPoint.y - lastWindowPoint.y;
-                lastWindowPoint = windowPoint;
-
-                // Render a frame.
-                if (full_screen_context) {
-                    [scene render];
-                    [full_screen_context flushBuffer];
-                } else {
-                    [openGLView display];
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-    if (wasAnimating) {
-        [self start_animation];
-        time_before = CFAbsoluteTimeGetCurrent();
-    }
+//    shy_macosx_scene * scene = [ openGLView scene ] ;
+//    NSPoint window_point = [ the_event locationInWindow ] ;
 }
 
 - (BOOL) is_in_full_screen_mode
 {
-    return full_screen_context != nil;
+    return full_screen_context != nil ;
 }
 
 @end
@@ -252,15 +198,6 @@
             [self stop_animation_timer];
         }
         is_animating = NO;
-    }
-}
-
-- (void) toggle_animation
-{
-    if ([self is_animating]) {
-        [self stop_animation];
-    } else {
-        [self start_animation];
     }
 }
 
