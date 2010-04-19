@@ -6,7 +6,7 @@
 {
     BOOL is_animating ;
     NSTimer * animation_timer ;
-    CFAbsoluteTime timeBefore ;
+    CFAbsoluteTime time_before ;
 
     BOOL stayInFullScreenMode ;
     NSOpenGLContext * fullScreenContext ;
