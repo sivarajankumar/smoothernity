@@ -28,10 +28,6 @@ public :
     {
         _mediator . render ( ) ;
     }
-    void render_finished ( )
-    {
-        _mediator . render_finished ( ) ;
-    }
     void update ( )
     {
         _mediator . update ( ) ;

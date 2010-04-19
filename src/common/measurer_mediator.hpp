@@ -87,10 +87,6 @@ public :
     {
         _logic_fidget . render_fidget ( ) ;
     }
-    void render_finished ( )
-    {
-        _logic . render_finished ( ) ;
-    }
     void render_land ( )
     {
         _logic_land . render_land ( ) ;

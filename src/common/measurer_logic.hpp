@@ -29,9 +29,6 @@ public :
         _render_scene ( ) ;
         _render_hud ( ) ;
     }
-    void render_finished ( )
-    {
-    }
     void update ( )
     {
     }
