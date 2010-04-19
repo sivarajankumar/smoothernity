@@ -79,10 +79,6 @@
 {
 }
 
-- (void)advanceTimeBy:(float)seconds
-{
-}
-
 - (void)setAnimationPhase:(float)newAnimationPhase
 {
 }

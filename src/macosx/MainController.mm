@@ -166,9 +166,6 @@
 
         // Update our animation.
         timeNow = CFAbsoluteTimeGetCurrent();
-        if ([self isAnimating]) {
-            [scene advanceTimeBy:(timeNow - timeBefore)];
-        }
         timeBefore = timeNow;
 
         // Render a frame, and swap the front and back buffers.
@@ -343,7 +340,6 @@
 - (void) animationTimerFired:(NSTimer *)timer
 {
     Scene *scene = [openGLView scene];
-    [scene advanceTimeBy:0.017];
     [openGLView setNeedsDisplay:YES];
 }
 
