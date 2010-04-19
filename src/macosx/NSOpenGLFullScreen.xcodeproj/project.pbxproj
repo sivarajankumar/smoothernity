@@ -63,8 +63,6 @@
 		1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		29B9732CFDCFA39411CA2CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
-		4CB60DB10471566600090FEF /* Texturing.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB60DB00471566500090FEF /* Texturing.h */; };
-		4CB60DB30471567400090FEF /* Texturing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB60DB20471567400090FEF /* Texturing.m */; };
 		4CB60DB604715A3800090FEF /* Earth.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CB60DB504715A3800090FEF /* Earth.jpg */; };
 		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
 		886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
@@ -105,8 +103,6 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOpenGLFullScreen_Prefix.h; sourceTree = "<group>"; };
-		4CB60DB00471566500090FEF /* Texturing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texturing.h; sourceTree = "<group>"; };
-		4CB60DB20471567400090FEF /* Texturing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texturing.m; sourceTree = "<group>"; };
 		4CB60DB504715A3800090FEF /* Earth.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Earth.jpg; sourceTree = "<group>"; };
 		4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform.hpp; sourceTree = "<group>"; };
@@ -248,8 +244,6 @@
 		4CB60DB40471567900090FEF /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				4CB60DB00471566500090FEF /* Texturing.h */,
-				4CB60DB20471567400090FEF /* Texturing.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -265,7 +259,6 @@
 				05689227046B13F600000102 /* macosx_opengl_view.h in Headers */,
 				05689231046B14B900000102 /* macosx_main_controller.h in Headers */,
 				05689235046B2C0900000102 /* macosx_scene.h in Headers */,
-				4CB60DB10471566600090FEF /* Texturing.h in Headers */,
 				886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */,
 				886AE9FF117C8B36009CBB6F /* macosx_platform_math.hpp in Headers */,
 				886AEA00117C8B36009CBB6F /* macosx_platform_matrix.hpp in Headers */,
@@ -328,7 +321,6 @@
 				05689228046B13F600000102 /* macosx_opengl_view.mm in Sources */,
 				05689232046B14B900000102 /* macosx_main_controller.mm in Sources */,
 				05689236046B2C0900000102 /* macosx_scene.mm in Sources */,
-				4CB60DB30471567400090FEF /* Texturing.m in Sources */,
 				886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
