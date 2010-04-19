@@ -206,7 +206,6 @@
 
 - (void) keyDown:(NSEvent *)event
 {
-    Scene *scene = [openGLView scene];
     unichar c = [[event charactersIgnoringModifiers] characterAtIndex:0];
     switch (c) {
 
@@ -218,12 +217,6 @@
         // [space] toggles rotation of the globe.
         case 32:
             [self toggleAnimation];
-            break;
-
-        // [W] toggles wireframe rendering
-        case 'w':
-        case 'W':
-            [scene toggleWireframe];
             break;
 
         default:
@@ -255,8 +248,6 @@
             case NSLeftMouseDragged:
                 dx = windowPoint.x - lastWindowPoint.x;
                 dy = windowPoint.y - lastWindowPoint.y;
-                [scene setSunAngle:[scene sunAngle] - 1.0 * dx];
-                [scene setRollAngle:[scene rollAngle] - 0.5 * dy];
                 lastWindowPoint = windowPoint;
 
                 // Render a frame.

@@ -50,11 +50,4 @@
 - (void)setViewportRect:(NSRect)bounds;
 - (void)render;
 
-- (float)rollAngle;
-- (void)setRollAngle:(float)newRollAngle;
-
-- (float)sunAngle;
-- (void)setSunAngle:(float)newSunAngle;
-
-- (void)toggleWireframe;
 @end

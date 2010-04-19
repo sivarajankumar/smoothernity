@@ -61,28 +61,6 @@
     [super dealloc];
 }
 
-- (float)rollAngle
-{
-    return 0 ;
-}
-
-- (void)setRollAngle:(float)newRollAngle
-{
-}
-
-- (float)sunAngle
-{
-	return 0 ;
-}
-
-- (void)setSunAngle:(float)newSunAngle
-{
-}
-
-- (void)toggleWireframe
-{
-}
-
 - (void)setViewportRect:(NSRect)bounds
 {
     glViewport( bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
