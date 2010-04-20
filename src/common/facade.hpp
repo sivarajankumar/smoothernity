@@ -1,13 +1,13 @@
-#include "measurer_camera.hpp"
-#include "measurer_logic.hpp"
-#include "measurer_logic_camera.hpp"
-#include "measurer_logic_entities.hpp"
-#include "measurer_logic_fidget.hpp"
-#include "measurer_logic_land.hpp"
-#include "measurer_logic_sound.hpp"
-#include "measurer_logic_touch.hpp"
-#include "measurer_mediator.hpp"
-#include "measurer_mesh.hpp"
+#include "engine_camera.hpp"
+#include "engine_mesh.hpp"
+#include "logic.hpp"
+#include "logic_camera.hpp"
+#include "logic_entities.hpp"
+#include "logic_fidget.hpp"
+#include "logic_land.hpp"
+#include "logic_sound.hpp"
+#include "logic_touch.hpp"
+#include "mediator.hpp"
 
 template < typename platform >
 class shy_measurer_facade
