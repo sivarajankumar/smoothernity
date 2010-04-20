@@ -25,6 +25,7 @@
 
 - ( void ) _thread_main_method
 {
+	[ NSThread sleepForTimeInterval : 0.1 ] ;
     NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
     NSBundle * bundle = [ NSBundle mainBundle ] ;
     CFURLRef file_url = ( CFURLRef ) [ [ NSURL fileURLWithPath : [ bundle 
@@ -40,7 +41,7 @@
                  
     ExtAudioFileOpenURL ( file_url , & ext_ref ) ;
     ExtAudioFileGetProperty ( ext_ref , kExtAudioFileProperty_FileDataFormat , & property_size , & file_format ) ;
-                    
+
     output_format . mSampleRate = 44100 ;
     output_format . mChannelsPerFrame = 2 ;
     output_format . mFormatID = kAudioFormatLinearPCM ;
