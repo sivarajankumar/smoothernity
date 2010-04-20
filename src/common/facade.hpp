@@ -36,6 +36,7 @@ private :
     shy_mediator 
         < platform 
         , shy_engine_camera
+        , shy_engine_mesh 
         , shy_logic
         , shy_logic_camera
         , shy_logic_entities
@@ -43,7 +44,6 @@ private :
         , shy_logic_land
         , shy_logic_sound
         , shy_logic_touch
-        , shy_engine_mesh 
         > 
         _mediator ;
 } ;

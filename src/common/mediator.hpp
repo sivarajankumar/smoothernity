@@ -1,6 +1,7 @@
 template 
     < typename _platform
     , template < typename mediator > class engine_camera
+    , template < typename mediator > class engine_mesh
     , template < typename mediator > class logic 
     , template < typename mediator > class logic_camera
     , template < typename mediator > class logic_entities
@@ -8,7 +9,6 @@ template
     , template < typename mediator > class logic_land
     , template < typename mediator > class logic_sound
     , template < typename mediator > class logic_touch
-    , template < typename mediator > class engine_mesh
     >
 class shy_mediator
 {
@@ -111,6 +111,7 @@ public :
     }
 private :
     engine_camera < shy_mediator > _engine_camera ;
+    engine_mesh < shy_mediator > _engine_mesh ;
     logic < shy_mediator > _logic ;
     logic_camera < shy_mediator > _logic_camera ;
     logic_entities < shy_mediator > _logic_entities ;
@@ -118,5 +119,4 @@ private :
     logic_land < shy_mediator > _logic_land ;
     logic_sound < shy_mediator > _logic_sound ;
     logic_touch < shy_mediator > _logic_touch ;
-    engine_mesh < shy_mediator > _engine_mesh ;
 } ;
