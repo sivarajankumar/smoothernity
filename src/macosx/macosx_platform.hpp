@@ -1,14 +1,14 @@
-//#import <AudioToolbox/AudioToolbox.h>
-//#import <AudioToolbox/ExtendedAudioFile.h>
-//#import <Foundation/NSBundle.h>
-//#import <OpenAL/al.h>
-//#import <OpenAL/alc.h>
-//#import <OpenAL/oalStaticBufferExtension.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AudioToolbox/ExtendedAudioFile.h>
+#import <Foundation/NSBundle.h>
+#import <OpenAL/al.h>
+#import <OpenAL/alc.h>
+#import <OpenAL/MacOSX_OALExtensions.h>
 #import <OpenGL/gl.h>
 #import <OpenGL/glext.h>
-//#import <QuartzCore/QuartzCore.h>
+#import <QuartzCore/QuartzCore.h>
 
-//#import "macosx_sound_loader.h"
+#import "macosx_sound_loader.h"
 
 class shy_macosx_platform
 {

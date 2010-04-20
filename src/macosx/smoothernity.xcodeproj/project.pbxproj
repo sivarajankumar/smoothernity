@@ -75,6 +75,11 @@
 		8812CED7117DE26A008F67D9 /* logic_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECC117DE26A008F67D9 /* logic_sound.hpp */; };
 		8812CED8117DE26A008F67D9 /* logic_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECD117DE26A008F67D9 /* logic_touch.hpp */; };
 		8812CED9117DE26A008F67D9 /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECE117DE26A008F67D9 /* mediator.hpp */; };
+		8812CF37117DE7F9008F67D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
+		8812CF3B117DE80B008F67D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
+		8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
+		8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
+		8812CF45117DE8B4008F67D9 /* macosx_sound_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8812CF43117DE8B4008F67D9 /* macosx_sound_loader.m */; };
 		886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
 		886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886AE9F5117C8B36009CBB6F /* macosx_platform.mm */; };
 		886AE9FF117C8B36009CBB6F /* macosx_platform_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */; };
@@ -114,6 +119,11 @@
 		8812CECC117DE26A008F67D9 /* logic_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_sound.hpp; sourceTree = "<group>"; };
 		8812CECD117DE26A008F67D9 /* logic_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_touch.hpp; sourceTree = "<group>"; };
 		8812CECE117DE26A008F67D9 /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
+		8812CF36117DE7F9008F67D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = /System/Library/Frameworks/OpenAL.framework; sourceTree = "<absolute>"; };
+		8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		8812CF3E117DE82C008F67D9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_sound_loader.h; sourceTree = "<group>"; };
+		8812CF43117DE8B4008F67D9 /* macosx_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = macosx_sound_loader.m; sourceTree = "<group>"; };
 		886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform.hpp; sourceTree = "<group>"; };
 		886AE9F5117C8B36009CBB6F /* macosx_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_platform.mm; sourceTree = "<group>"; };
 		886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_math.hpp; sourceTree = "<group>"; };
@@ -132,6 +142,9 @@
 			files = (
 				1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */,
 				0568922A046B142600000102 /* OpenGL.framework in Frameworks */,
+				8812CF37117DE7F9008F67D9 /* OpenAL.framework in Frameworks */,
+				8812CF3B117DE80B008F67D9 /* AudioToolbox.framework in Frameworks */,
+				8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +170,8 @@
 				886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */,
 				05689233046B2C0900000102 /* macosx_scene.h */,
 				05689234046B2C0900000102 /* macosx_scene.mm */,
+				8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */,
+				8812CF43117DE8B4008F67D9 /* macosx_sound_loader.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -164,6 +179,9 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8812CF3E117DE82C008F67D9 /* QuartzCore.framework */,
+				8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */,
+				8812CF36117DE7F9008F67D9 /* OpenAL.framework */,
 				05689229046B142600000102 /* OpenGL.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -284,6 +302,7 @@
 				8812CED7117DE26A008F67D9 /* logic_sound.hpp in Headers */,
 				8812CED8117DE26A008F67D9 /* logic_touch.hpp in Headers */,
 				8812CED9117DE26A008F67D9 /* mediator.hpp in Headers */,
+				8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +346,7 @@
 				05689232046B14B900000102 /* macosx_main_controller.mm in Sources */,
 				05689236046B2C0900000102 /* macosx_scene.mm in Sources */,
 				886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */,
+				8812CF45117DE8B4008F67D9 /* macosx_sound_loader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
