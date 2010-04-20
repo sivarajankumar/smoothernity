@@ -10,7 +10,6 @@
 - ( void ) stop_animation ;
 
 - ( void ) start_animation_timer ;
-- ( void ) stop_animation_timer ;
 - ( void ) animation_timer_fired : ( NSTimer * ) timer ;
 @end
 
@@ -57,8 +56,7 @@
         return ;
     }
 
-    if ( [ self is_animating ] )
-        [ self stop_animation_timer ] ;
+	[ self stop_animation ] ;
 
     err = CGCaptureAllDisplays ( ) ;
     if ( err != CGDisplayNoErr )
@@ -139,8 +137,7 @@
 
     [ openGLView setNeedsDisplay : YES ] ;
 
-    if ( [ self is_animating ] )
-        [ self start_animation_timer ] ;
+	[ self start_animation ] ;
 }
 
 - ( void ) keyDown : ( NSEvent * ) event
@@ -201,10 +198,6 @@
 		userInfo : nil
 		repeats : NO
 	] ;
-}
-
-- ( void ) stop_animation_timer
-{
 }
 
 - ( void ) animation_timer_fired : ( NSTimer * ) timer
