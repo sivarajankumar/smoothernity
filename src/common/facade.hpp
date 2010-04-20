@@ -37,10 +37,10 @@ private :
         < platform 
         , shy_engine_camera
         , shy_logic
-        , shy_measurer_logic_camera
-        , shy_measurer_logic_entities
-        , shy_measurer_logic_fidget
-        , shy_measurer_logic_land
+        , shy_logic_camera
+        , shy_logic_entities
+        , shy_logic_fidget
+        , shy_logic_land
         , shy_measurer_logic_sound
         , shy_measurer_logic_touch
         , shy_engine_mesh 

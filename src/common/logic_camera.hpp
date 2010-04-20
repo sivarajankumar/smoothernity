@@ -3,7 +3,7 @@
 #define PI 3.141592f
 
 template < typename mediator >
-class shy_measurer_logic_camera
+class shy_logic_camera
 {
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
@@ -16,7 +16,7 @@ class shy_measurer_logic_camera
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
 public :
-    shy_measurer_logic_camera ( mediator * arg_mediator )
+    shy_logic_camera ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _frames_to_change_camera_target ( 0 )
     , _frames_to_change_camera_origin ( 0 )

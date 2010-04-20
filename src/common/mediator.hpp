@@ -2,10 +2,10 @@ template
     < typename _platform
     , template < typename mediator > class engine_camera
     , template < typename mediator > class logic 
-    , template < typename mediator > class measurer_logic_camera
-    , template < typename mediator > class measurer_logic_entities
-    , template < typename mediator > class measurer_logic_fidget
-    , template < typename mediator > class measurer_logic_land
+    , template < typename mediator > class logic_camera
+    , template < typename mediator > class logic_entities
+    , template < typename mediator > class logic_fidget
+    , template < typename mediator > class logic_land
     , template < typename mediator > class measurer_logic_sound
     , template < typename mediator > class measurer_logic_touch
     , template < typename mediator > class engine_mesh
@@ -112,10 +112,10 @@ public :
 private :
     engine_camera < shy_mediator > _engine_camera ;
     logic < shy_mediator > _logic ;
-    measurer_logic_camera < shy_mediator > _logic_camera ;
-    measurer_logic_entities < shy_mediator > _logic_entities ;
-    measurer_logic_fidget < shy_mediator > _logic_fidget ;
-    measurer_logic_land < shy_mediator > _logic_land ;
+    logic_camera < shy_mediator > _logic_camera ;
+    logic_entities < shy_mediator > _logic_entities ;
+    logic_fidget < shy_mediator > _logic_fidget ;
+    logic_land < shy_mediator > _logic_land ;
     measurer_logic_sound < shy_mediator > _logic_sound ;
     measurer_logic_touch < shy_mediator > _logic_touch ;
     engine_mesh < shy_mediator > _engine_mesh ;

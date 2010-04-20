@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_measurer_logic_land
+class shy_logic_land
 {
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
@@ -9,7 +9,7 @@ class shy_measurer_logic_land
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
 public :
-    shy_measurer_logic_land ( mediator * arg_mediator )
+    shy_logic_land ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _land_created ( false )
     , _frames_left_to_create ( 0 )
