@@ -7,8 +7,8 @@
     self = [ super init ] ;
     if ( self )
 	{
-		measurer = new shy_facade < shy_macosx_platform > ( ) ;
 		shy_macosx_platform :: _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
+		measurer = new shy_facade < shy_macosx_platform > ( ) ;
 	}
     return self ;
 }
