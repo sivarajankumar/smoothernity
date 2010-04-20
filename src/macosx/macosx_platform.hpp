@@ -43,8 +43,7 @@ public :
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        CFAbsoluteTime _time ;
+        CFAbsoluteTime _time ;
     } ;
     
     class matrix_data
@@ -67,41 +66,36 @@ public :
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        ALubyte _value ;
+        ALubyte _value ;
     } ;
     
     class stereo_sound_sample
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        ALushort _left_channel_value ;
-//        ALushort _right_channel_value ; 
+        ALushort _left_channel_value ;
+        ALushort _right_channel_value ; 
     } ;
     
     class sound_buffer_id
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        ALuint _buffer_id ;
+        ALuint _buffer_id ;
     } ;
     
     class sound_source_id
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        ALuint _source_id ;
+        ALuint _source_id ;
     } ;
     
     class stereo_sound_resource_id
     {
         friend class shy_macosx_platform ;
     private :
-		int _dummy ;
-//        int _resource_id ;
+        int _resource_id ;
     } ;
     
     //
