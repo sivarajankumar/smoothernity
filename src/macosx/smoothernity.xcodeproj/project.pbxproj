@@ -61,6 +61,45 @@
 		080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		196624D8117E3F2A0077D793 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
+		196624D9117E3F2A0077D793 /* macosx_opengl_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689225046B13F600000102 /* macosx_opengl_view.h */; };
+		196624DA117E3F2A0077D793 /* macosx_main_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* macosx_main_controller.h */; };
+		196624DB117E3F2A0077D793 /* macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* macosx_scene.h */; };
+		196624DC117E3F2A0077D793 /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
+		196624DD117E3F2A0077D793 /* macosx_platform_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */; };
+		196624DE117E3F2A0077D793 /* macosx_platform_matrix.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */; };
+		196624DF117E3F2A0077D793 /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
+		196624E0117E3F2A0077D793 /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
+		196624E1117E3F2A0077D793 /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
+		196624E2117E3F2A0077D793 /* macosx_platform_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */; };
+		196624E3117E3F2A0077D793 /* macosx_platform_vector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */; };
+		196624E4117E3F2A0077D793 /* engine_camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC4117DE26A008F67D9 /* engine_camera.hpp */; };
+		196624E5117E3F2A0077D793 /* engine_mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC5117DE26A008F67D9 /* engine_mesh.hpp */; };
+		196624E6117E3F2A0077D793 /* facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC6117DE26A008F67D9 /* facade.hpp */; };
+		196624E7117E3F2A0077D793 /* logic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC7117DE26A008F67D9 /* logic.hpp */; };
+		196624E8117E3F2A0077D793 /* logic_camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC8117DE26A008F67D9 /* logic_camera.hpp */; };
+		196624E9117E3F2A0077D793 /* logic_entities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC9117DE26A008F67D9 /* logic_entities.hpp */; };
+		196624EA117E3F2A0077D793 /* logic_fidget.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECA117DE26A008F67D9 /* logic_fidget.hpp */; };
+		196624EB117E3F2A0077D793 /* logic_land.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECB117DE26A008F67D9 /* logic_land.hpp */; };
+		196624EC117E3F2A0077D793 /* logic_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECC117DE26A008F67D9 /* logic_sound.hpp */; };
+		196624ED117E3F2A0077D793 /* logic_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECD117DE26A008F67D9 /* logic_touch.hpp */; };
+		196624EE117E3F2A0077D793 /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECE117DE26A008F67D9 /* mediator.hpp */; };
+		196624EF117E3F2A0077D793 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
+		196624F1117E3F2A0077D793 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		196624F2117E3F2A0077D793 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		196624F3117E3F2A0077D793 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
+		196624F4117E3F2A0077D793 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
+		196624F6117E3F2A0077D793 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		196624F7117E3F2A0077D793 /* macosx_opengl_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689226046B13F600000102 /* macosx_opengl_view.mm */; };
+		196624F8117E3F2A0077D793 /* macosx_main_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* macosx_main_controller.mm */; };
+		196624F9117E3F2A0077D793 /* macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* macosx_scene.mm */; };
+		196624FA117E3F2A0077D793 /* macosx_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886AE9F5117C8B36009CBB6F /* macosx_platform.mm */; };
+		196624FB117E3F2A0077D793 /* macosx_sound_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8812CF43117DE8B4008F67D9 /* macosx_sound_loader.m */; };
+		196624FD117E3F2A0077D793 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		196624FE117E3F2A0077D793 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05689229046B142600000102 /* OpenGL.framework */; };
+		196624FF117E3F2A0077D793 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
+		19662500117E3F2A0077D793 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
+		19662501117E3F2A0077D793 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
 		29B9732CFDCFA39411CA2CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
 		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
@@ -103,6 +142,8 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		17587328FF379C6511CA2CBB /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		19662506117E3F2A0077D793 /* Info-smoothernity__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-smoothernity__Upgraded_.plist"; sourceTree = "<group>"; };
+		19662507117E3F2A0077D793 /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -138,6 +179,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		196624FC117E3F2A0077D793 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				196624FD117E3F2A0077D793 /* Cocoa.framework in Frameworks */,
+				196624FE117E3F2A0077D793 /* OpenGL.framework in Frameworks */,
+				196624FF117E3F2A0077D793 /* OpenAL.framework in Frameworks */,
+				19662500117E3F2A0077D793 /* AudioToolbox.framework in Frameworks */,
+				19662501117E3F2A0077D793 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29B9732DFDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -203,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				17587328FF379C6511CA2CBB /* Smoothernity.app */,
+				19662507117E3F2A0077D793 /* Smoothernity.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,6 +270,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				19662506117E3F2A0077D793 /* Info-smoothernity__Upgraded_.plist */,
 			);
 			name = NSOpenGLFullScreen;
 			sourceTree = "<group>";
@@ -278,6 +333,37 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		196624D7117E3F2A0077D793 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				196624D8117E3F2A0077D793 /* NSOpenGLFullScreen_Prefix.h in Headers */,
+				196624D9117E3F2A0077D793 /* macosx_opengl_view.h in Headers */,
+				196624DA117E3F2A0077D793 /* macosx_main_controller.h in Headers */,
+				196624DB117E3F2A0077D793 /* macosx_scene.h in Headers */,
+				196624DC117E3F2A0077D793 /* macosx_platform.hpp in Headers */,
+				196624DD117E3F2A0077D793 /* macosx_platform_math.hpp in Headers */,
+				196624DE117E3F2A0077D793 /* macosx_platform_matrix.hpp in Headers */,
+				196624DF117E3F2A0077D793 /* macosx_platform_render.hpp in Headers */,
+				196624E0117E3F2A0077D793 /* macosx_platform_sound.hpp in Headers */,
+				196624E1117E3F2A0077D793 /* macosx_platform_time.hpp in Headers */,
+				196624E2117E3F2A0077D793 /* macosx_platform_touch.hpp in Headers */,
+				196624E3117E3F2A0077D793 /* macosx_platform_vector.hpp in Headers */,
+				196624E4117E3F2A0077D793 /* engine_camera.hpp in Headers */,
+				196624E5117E3F2A0077D793 /* engine_mesh.hpp in Headers */,
+				196624E6117E3F2A0077D793 /* facade.hpp in Headers */,
+				196624E7117E3F2A0077D793 /* logic.hpp in Headers */,
+				196624E8117E3F2A0077D793 /* logic_camera.hpp in Headers */,
+				196624E9117E3F2A0077D793 /* logic_entities.hpp in Headers */,
+				196624EA117E3F2A0077D793 /* logic_fidget.hpp in Headers */,
+				196624EB117E3F2A0077D793 /* logic_land.hpp in Headers */,
+				196624EC117E3F2A0077D793 /* logic_sound.hpp in Headers */,
+				196624ED117E3F2A0077D793 /* logic_touch.hpp in Headers */,
+				196624EE117E3F2A0077D793 /* mediator.hpp in Headers */,
+				196624EF117E3F2A0077D793 /* macosx_sound_loader.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29B97327FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -311,6 +397,28 @@
 		};
 /* End PBXHeadersBuildPhase section */
 
+/* Begin PBXNativeTarget section */
+		196624D6117E3F2A0077D793 /* smoothernity (Upgraded) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19662502117E3F2A0077D793 /* Build configuration list for PBXNativeTarget "smoothernity (Upgraded)" */;
+			buildPhases = (
+				196624D7117E3F2A0077D793 /* Headers */,
+				196624F0117E3F2A0077D793 /* Resources */,
+				196624F5117E3F2A0077D793 /* Sources */,
+				196624FC117E3F2A0077D793 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "smoothernity (Upgraded)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = NSOpenGLFullScreen;
+			productReference = 19662507117E3F2A0077D793 /* Smoothernity.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
@@ -321,12 +429,24 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				196624D6117E3F2A0077D793 /* smoothernity (Upgraded) */,
 				29B97326FDCFA39411CA2CEA /* smoothernity */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		196624F0117E3F2A0077D793 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				196624F1117E3F2A0077D793 /* MainMenu.nib in Resources */,
+				196624F2117E3F2A0077D793 /* InfoPlist.strings in Resources */,
+				196624F3117E3F2A0077D793 /* AppIcon.icns in Resources */,
+				196624F4117E3F2A0077D793 /* stereo_sound_resource_1.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29B97328FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -341,6 +461,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		196624F5117E3F2A0077D793 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				196624F6117E3F2A0077D793 /* main.m in Sources */,
+				196624F7117E3F2A0077D793 /* macosx_opengl_view.mm in Sources */,
+				196624F8117E3F2A0077D793 /* macosx_main_controller.mm in Sources */,
+				196624F9117E3F2A0077D793 /* macosx_scene.mm in Sources */,
+				196624FA117E3F2A0077D793 /* macosx_platform.mm in Sources */,
+				196624FB117E3F2A0077D793 /* macosx_sound_loader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29B9732BFDCFA39411CA2CEA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -376,6 +509,87 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		19662503117E3F2A0077D793 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "Info-smoothernity__Upgraded_.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = Smoothernity;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		19662504117E3F2A0077D793 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "Info-smoothernity__Upgraded_.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = Smoothernity;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		19662505117E3F2A0077D793 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = "Info-smoothernity__Upgraded_.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = NSOpenGLFullScreen;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
 		88CE0EDF117C860E00A1BF42 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -406,7 +620,6 @@
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRECOMPILE_PREFIX_HEADER = YES;
@@ -473,6 +686,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		19662502117E3F2A0077D793 /* Build configuration list for PBXNativeTarget "smoothernity (Upgraded)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19662503117E3F2A0077D793 /* Development */,
+				19662504117E3F2A0077D793 /* Deployment */,
+				19662505117E3F2A0077D793 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
 		88CE0EE5117C860F00A1BF42 /* Build configuration list for PBXProject "smoothernity" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
