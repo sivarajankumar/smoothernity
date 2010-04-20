@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_measurer_logic_sound
+class shy_logic_sound
 {
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: float_32 float_32 ;
@@ -15,7 +15,7 @@ class shy_measurer_logic_sound
     static const int_32 max_stereo_sound_samples = platform :: stereo_sound_samples_per_second * 60 ;
     
 public :
-    shy_measurer_logic_sound ( mediator * arg_mediator )
+    shy_logic_sound ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _mono_sound_created ( false )
     , _stereo_sound_created ( false )

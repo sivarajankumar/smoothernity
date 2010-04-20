@@ -41,8 +41,8 @@ private :
         , shy_logic_entities
         , shy_logic_fidget
         , shy_logic_land
-        , shy_measurer_logic_sound
-        , shy_measurer_logic_touch
+        , shy_logic_sound
+        , shy_logic_touch
         , shy_engine_mesh 
         > 
         _mediator ;

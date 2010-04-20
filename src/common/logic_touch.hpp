@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_measurer_logic_touch
+class shy_logic_touch
 {
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
@@ -13,7 +13,7 @@ class shy_measurer_logic_touch
     static const int_32 _spot_lifetime_in_frames = 60 ;
     
 public :
-    shy_measurer_logic_touch ( mediator * arg_mediator )
+    shy_logic_touch ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _spot_frames_left ( 0 )
     , _spot_mesh_created ( false )
