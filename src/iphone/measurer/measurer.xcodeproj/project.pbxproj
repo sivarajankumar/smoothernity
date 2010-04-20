@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1911131511689BDB00F5E355 /* iphone_sound_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1911131411689BDB00F5E355 /* iphone_sound_loader.m */; };
+		196D44C8117E36F700B2ED28 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 196D44C7117E36F700B2ED28 /* stereo_sound_resource_1.mp3 */; };
 		19A8DDC8115E122F0062EAB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A8DDC7115E122F0062EAB6 /* OpenAL.framework */; };
 		19A8DE65115E2B230062EAB6 /* iphone_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19A8DE64115E2B230062EAB6 /* iphone_platform.mm */; };
 		19BA211B11676CA4007398AF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BA211A11676CA4007398AF /* AudioToolbox.framework */; };
@@ -37,6 +38,7 @@
 		196D44C0117E364000B2ED28 /* logic_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_sound.hpp; sourceTree = "<group>"; };
 		196D44C1117E364000B2ED28 /* logic_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_touch.hpp; sourceTree = "<group>"; };
 		196D44C2117E364000B2ED28 /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
+		196D44C7117E36F700B2ED28 /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
 		19A8DDC7115E122F0062EAB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform.hpp; sourceTree = "<group>"; };
 		19A8DE64115E2B230062EAB6 /* iphone_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iphone_platform.mm; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				196D44C7117E36F700B2ED28 /* stereo_sound_resource_1.mp3 */,
 				19BFEEB4111DD0FA00424782 /* Icon.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* measurer-Info.plist */,
@@ -218,6 +221,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				19BFEEB5111DD0FA00424782 /* Icon.png in Resources */,
+				196D44C8117E36F700B2ED28 /* stereo_sound_resource_1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
