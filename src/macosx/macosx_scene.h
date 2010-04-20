@@ -3,7 +3,7 @@
 
 @interface shy_macosx_scene : NSObject
 {
-	shy_measurer_facade < shy_macosx_platform > * measurer;
+	shy_facade < shy_macosx_platform > * measurer;
 }
 
 - init ;

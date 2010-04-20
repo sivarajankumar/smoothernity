@@ -10,10 +10,10 @@
 #include "mediator.hpp"
 
 template < typename platform >
-class shy_measurer_facade
+class shy_facade
 {
 public :
-    shy_measurer_facade ( )
+    shy_facade ( )
     {
     }
     void init ( )
@@ -33,7 +33,7 @@ public :
         _mediator . update ( ) ;
     }
 private :
-    shy_measurer_mediator 
+    shy_mediator 
         < platform 
         , shy_measurer_camera
         , shy_measurer_logic

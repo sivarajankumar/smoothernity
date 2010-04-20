@@ -6,7 +6,7 @@
 {
     self = [ super init ] ;
     if ( self )
-		measurer = new shy_measurer_facade < shy_macosx_platform > ( ) ;
+		measurer = new shy_facade < shy_macosx_platform > ( ) ;
     return self ;
 }
 
