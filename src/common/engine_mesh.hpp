@@ -1,7 +1,7 @@
 #define MAX_MESHES 100
 
 template < typename mediator >
-class shy_measurer_mesh
+class shy_engine_mesh
 {
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: render_buffer_id render_buffer_id ;
@@ -12,7 +12,7 @@ class shy_measurer_mesh
 public :
     class mesh_id
     {
-        friend class shy_measurer_mesh ;
+        friend class shy_engine_mesh ;
     private :
         int_32 _mesh_id ;
     } ;
@@ -28,7 +28,7 @@ private :
         matrix_data transform ;
     } ;
 public :
-    shy_measurer_mesh ( )
+    shy_engine_mesh ( )
     : _next_mesh_id ( 0 )
     {
     }
