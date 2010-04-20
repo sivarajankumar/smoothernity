@@ -36,7 +36,7 @@ private :
     shy_mediator 
         < platform 
         , shy_engine_camera
-        , shy_measurer_logic
+        , shy_logic
         , shy_measurer_logic_camera
         , shy_measurer_logic_entities
         , shy_measurer_logic_fidget

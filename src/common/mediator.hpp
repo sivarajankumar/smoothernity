@@ -1,7 +1,7 @@
 template 
     < typename _platform
     , template < typename mediator > class engine_camera
-    , template < typename mediator > class measurer_logic 
+    , template < typename mediator > class logic 
     , template < typename mediator > class measurer_logic_camera
     , template < typename mediator > class measurer_logic_entities
     , template < typename mediator > class measurer_logic_fidget
@@ -111,7 +111,7 @@ public :
     }
 private :
     engine_camera < shy_mediator > _engine_camera ;
-    measurer_logic < shy_mediator > _logic ;
+    logic < shy_mediator > _logic ;
     measurer_logic_camera < shy_mediator > _logic_camera ;
     measurer_logic_entities < shy_mediator > _logic_entities ;
     measurer_logic_fidget < shy_mediator > _logic_fidget ;

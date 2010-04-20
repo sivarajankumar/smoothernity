@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_measurer_logic
+class shy_logic
 {
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
@@ -12,7 +12,7 @@ class shy_measurer_logic
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
 public :
-    shy_measurer_logic ( mediator * arg_mediator )
+    shy_logic ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     {
     }
