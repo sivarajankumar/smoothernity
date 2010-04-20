@@ -82,12 +82,12 @@
 
 - ( void ) _init_game
 {
-	_shy_measurer . init ( ) ;
+	_facade . init ( ) ;
 }
 
 - ( void ) _done_game
 {
-	_shy_measurer . done ( ) ;
+	_facade . done ( ) ;
 }
 
 + ( Class ) layerClass
@@ -108,11 +108,10 @@
 {
     [ EAGLContext setCurrentContext : _gl_context ] ;
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
-	_shy_measurer . render ( ) ;
-	_shy_measurer . update ( ) ;
+	_facade . render ( ) ;
+	_facade . update ( ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
-    _shy_measurer . render_finished ( ) ;
     shy_iphone_platform :: _touch_occured = false ;
     [ self _schedule_draw ] ;
 }

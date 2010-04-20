@@ -10,7 +10,6 @@
 		1911131511689BDB00F5E355 /* iphone_sound_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1911131411689BDB00F5E355 /* iphone_sound_loader.m */; };
 		19A8DDC8115E122F0062EAB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A8DDC7115E122F0062EAB6 /* OpenAL.framework */; };
 		19A8DE65115E2B230062EAB6 /* iphone_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19A8DE64115E2B230062EAB6 /* iphone_platform.mm */; };
-		19BA210A1167657D007398AF /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 19BA21091167657D007398AF /* stereo_sound_resource_1.mp3 */; };
 		19BA211B11676CA4007398AF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BA211A11676CA4007398AF /* AudioToolbox.framework */; };
 		19BFEEB5111DD0FA00424782 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 19BFEEB4111DD0FA00424782 /* Icon.png */; };
 		1D3623260D0F684500981E51 /* iphone_app_delegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iphone_app_delegate.mm */; };
@@ -25,9 +24,19 @@
 
 /* Begin PBXFileReference section */
 		190FDE781168FC030053FE8F /* iphone_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_touch.hpp; sourceTree = "<group>"; };
-		190FDEE011690E1C0053FE8F /* measurer_logic_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_touch.hpp; sourceTree = "<group>"; };
 		19111313116897E900F5E355 /* iphone_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_sound_loader.h; sourceTree = "<group>"; };
 		1911131411689BDB00F5E355 /* iphone_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_sound_loader.m; sourceTree = "<group>"; };
+		196D44B8117E364000B2ED28 /* engine_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_camera.hpp; sourceTree = "<group>"; };
+		196D44B9117E364000B2ED28 /* engine_mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_mesh.hpp; sourceTree = "<group>"; };
+		196D44BA117E364000B2ED28 /* facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = facade.hpp; sourceTree = "<group>"; };
+		196D44BB117E364000B2ED28 /* logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic.hpp; sourceTree = "<group>"; };
+		196D44BC117E364000B2ED28 /* logic_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_camera.hpp; sourceTree = "<group>"; };
+		196D44BD117E364000B2ED28 /* logic_entities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_entities.hpp; sourceTree = "<group>"; };
+		196D44BE117E364000B2ED28 /* logic_fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_fidget.hpp; sourceTree = "<group>"; };
+		196D44BF117E364000B2ED28 /* logic_land.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_land.hpp; sourceTree = "<group>"; };
+		196D44C0117E364000B2ED28 /* logic_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_sound.hpp; sourceTree = "<group>"; };
+		196D44C1117E364000B2ED28 /* logic_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_touch.hpp; sourceTree = "<group>"; };
+		196D44C2117E364000B2ED28 /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		19A8DDC7115E122F0062EAB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform.hpp; sourceTree = "<group>"; };
 		19A8DE64115E2B230062EAB6 /* iphone_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iphone_platform.mm; sourceTree = "<group>"; };
@@ -37,19 +46,8 @@
 		19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_math.hpp; sourceTree = "<group>"; };
 		19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_time.hpp; sourceTree = "<group>"; };
 		19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_sound.hpp; sourceTree = "<group>"; };
-		19AE69731129D66A00742128 /* measurer_facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_facade.hpp; sourceTree = "<group>"; };
-		19AE697C1129D72700742128 /* measurer_mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_mediator.hpp; sourceTree = "<group>"; };
-		19AE699B1129DEF400742128 /* measurer_logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic.hpp; sourceTree = "<group>"; };
-		19BA21091167657D007398AF /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = stereo_sound_resource_1.mp3; sourceTree = "<group>"; };
 		19BA211A11676CA4007398AF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		19BFEEB4111DD0FA00424782 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_mesh.hpp; sourceTree = "<group>"; };
-		19D4B2591154D78300DEA992 /* measurer_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_camera.hpp; sourceTree = "<group>"; };
-		19FCF5991167DA7200A0159E /* measurer_logic_fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_fidget.hpp; sourceTree = "<group>"; };
-		19FCF5B31167DE8A00A0159E /* measurer_logic_entities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_entities.hpp; sourceTree = "<group>"; };
-		19FCF5C71167E2DF00A0159E /* measurer_logic_land.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_land.hpp; sourceTree = "<group>"; };
-		19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_sound.hpp; sourceTree = "<group>"; };
-		19FCF5E81167E6E300A0159E /* measurer_logic_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = measurer_logic_camera.hpp; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* iphone_app_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_app_delegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* iphone_app_delegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iphone_app_delegate.mm; sourceTree = "<group>"; };
@@ -85,17 +83,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				19D4B2591154D78300DEA992 /* measurer_camera.hpp */,
-				19AE69731129D66A00742128 /* measurer_facade.hpp */,
-				19AE699B1129DEF400742128 /* measurer_logic.hpp */,
-				19FCF5E81167E6E300A0159E /* measurer_logic_camera.hpp */,
-				19FCF5B31167DE8A00A0159E /* measurer_logic_entities.hpp */,
-				19FCF5991167DA7200A0159E /* measurer_logic_fidget.hpp */,
-				19FCF5C71167E2DF00A0159E /* measurer_logic_land.hpp */,
-				19FCF5D71167E52000A0159E /* measurer_logic_sound.hpp */,
-				190FDEE011690E1C0053FE8F /* measurer_logic_touch.hpp */,
-				19AE697C1129D72700742128 /* measurer_mediator.hpp */,
-				19D4B1BE1154BA2E00DEA992 /* measurer_mesh.hpp */,
+				196D44B7117E364000B2ED28 /* common */,
 				1D3623240D0F684500981E51 /* iphone_app_delegate.h */,
 				1D3623250D0F684500981E51 /* iphone_app_delegate.mm */,
 				19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */,
@@ -114,6 +102,25 @@
 			);
 			path = Classes;
 			sourceTree = "<group>";
+		};
+		196D44B7117E364000B2ED28 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				196D44B8117E364000B2ED28 /* engine_camera.hpp */,
+				196D44B9117E364000B2ED28 /* engine_mesh.hpp */,
+				196D44BA117E364000B2ED28 /* facade.hpp */,
+				196D44BB117E364000B2ED28 /* logic.hpp */,
+				196D44BC117E364000B2ED28 /* logic_camera.hpp */,
+				196D44BD117E364000B2ED28 /* logic_entities.hpp */,
+				196D44BE117E364000B2ED28 /* logic_fidget.hpp */,
+				196D44BF117E364000B2ED28 /* logic_land.hpp */,
+				196D44C0117E364000B2ED28 /* logic_sound.hpp */,
+				196D44C1117E364000B2ED28 /* logic_touch.hpp */,
+				196D44C2117E364000B2ED28 /* mediator.hpp */,
+			);
+			name = common;
+			path = ../../common;
+			sourceTree = SOURCE_ROOT;
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
@@ -147,7 +154,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				19BA21091167657D007398AF /* stereo_sound_resource_1.mp3 */,
 				19BFEEB4111DD0FA00424782 /* Icon.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* measurer-Info.plist */,
@@ -212,7 +218,6 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				19BFEEB5111DD0FA00424782 /* Icon.png in Resources */,
-				19BA210A1167657D007398AF /* stereo_sound_resource_1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

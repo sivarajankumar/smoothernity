@@ -6,12 +6,12 @@
 #import <UIKit/UIKit.h>
 
 #include "iphone_platform.hpp"
-#include "measurer_facade.hpp"
+#include "../../../common/facade.hpp"
 
 @interface EAGLView : UIView
 {    
 @private	
-	shy_measurer_facade < shy_iphone_platform > _shy_measurer ;
+	shy_facade < shy_iphone_platform > _facade ;
 	
 	EAGLContext * _gl_context ;
 	GLint _gl_backing_width;
