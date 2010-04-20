@@ -23,6 +23,11 @@
 	{
 		GLint swapInt = 1 ;
 		[ [ self openGLContext ] setValues : & swapInt forParameter : NSOpenGLCPSwapInterval ] ;
+		
+		_al_device = alcOpenDevice ( NULL ) ;
+		_al_context = alcCreateContext ( _al_device , NULL ) ;
+		alcMakeContextCurrent ( _al_context ) ;
+		
         scene = [ [ shy_macosx_scene alloc ] init ] ;
 	}
     return self ;
@@ -31,6 +36,10 @@
 - ( void ) dealloc
 {
     [ scene release ] ;
+	alcDestroyContext ( _al_context ) ;
+	alcCloseDevice ( _al_device ) ;
+    _al_context = nil ;
+    _al_device = nil ;
     [ super dealloc ] ;
 }
 
