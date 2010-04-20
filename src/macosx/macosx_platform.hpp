@@ -230,7 +230,7 @@ public :
     static float_32 touch_x ( ) ;
     static float_32 touch_y ( ) ;
 
-//    static shy_macosx_sound_loader * _sound_loader ;
+    static shy_macosx_sound_loader * _sound_loader ;
 //    static int_32 _touch_occured ;
 //    static float_32 _touch_x ;
 //    static float_32 _touch_y ;

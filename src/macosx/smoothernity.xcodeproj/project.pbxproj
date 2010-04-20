@@ -80,6 +80,7 @@
 		8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
 		8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
 		8812CF45117DE8B4008F67D9 /* macosx_sound_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8812CF43117DE8B4008F67D9 /* macosx_sound_loader.m */; };
+		8812CF52117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
 		886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
 		886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886AE9F5117C8B36009CBB6F /* macosx_platform.mm */; };
 		886AE9FF117C8B36009CBB6F /* macosx_platform_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */; };
@@ -124,6 +125,7 @@
 		8812CF3E117DE82C008F67D9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_sound_loader.h; sourceTree = "<group>"; };
 		8812CF43117DE8B4008F67D9 /* macosx_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = macosx_sound_loader.m; sourceTree = "<group>"; };
+		8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
 		886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform.hpp; sourceTree = "<group>"; };
 		886AE9F5117C8B36009CBB6F /* macosx_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_platform.mm; sourceTree = "<group>"; };
 		886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_math.hpp; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */,
 				4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -331,6 +334,7 @@
 				080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */,
 				089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */,
 				4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */,
+				8812CF52117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

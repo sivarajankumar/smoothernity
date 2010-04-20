@@ -6,12 +6,17 @@
 {
     self = [ super init ] ;
     if ( self )
+	{
 		measurer = new shy_facade < shy_macosx_platform > ( ) ;
+		shy_macosx_platform :: _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
+	}
     return self ;
 }
 
 - ( void ) dealloc
 {
+    [ shy_macosx_platform :: _sound_loader release ] ;
+    shy_macosx_platform :: _sound_loader = nil ;
 	measurer -> done ( ) ;
 	delete measurer ;
     [ super dealloc ] ;
