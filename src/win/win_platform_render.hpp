@@ -31,6 +31,9 @@ inline void shy_win_platform :: render_clear_screen
     , shy_win_platform :: float_32 b 
     )
 {
+    HRESULT hr ;
+	D3DCOLOR color = D3DCOLOR_ARGB ( 0 , int ( r * 255.0f ) , int ( g * 255.0f ) , int ( b * 255.0f ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> Clear ( 0 , NULL , D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER , color , 1.0f , 0 ) ) ;
 }
 
 inline void shy_win_platform :: render_projection_frustum 

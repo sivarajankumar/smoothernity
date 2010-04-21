@@ -1,4 +1,5 @@
 #include <math.h>
+#include "DXUT.h"
 
 class shy_win_platform
 {
