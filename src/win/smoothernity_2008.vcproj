@@ -605,47 +605,47 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\common\measurer_camera.hpp"
+			RelativePath="..\common\engine_camera.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_facade.hpp"
+			RelativePath="..\common\engine_mesh.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_logic.hpp"
+			RelativePath="..\common\facade.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_logic_camera.hpp"
+			RelativePath="..\common\logic.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_logic_entities.hpp"
+			RelativePath="..\common\logic_camera.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_logic_fidget.hpp"
+			RelativePath="..\common\logic_entities.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_logic_land.hpp"
+			RelativePath="..\common\logic_fidget.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_logic_sound.hpp"
+			RelativePath="..\common\logic_land.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_logic_touch.hpp"
+			RelativePath="..\common\logic_sound.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_mediator.hpp"
+			RelativePath="..\common\logic_touch.hpp"
 			>
 		</File>
 		<File
-			RelativePath="..\common\measurer_mesh.hpp"
+			RelativePath="..\common\mediator.hpp"
 			>
 		</File>
 		<File

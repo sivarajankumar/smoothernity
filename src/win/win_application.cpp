@@ -6,10 +6,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 #include "DXUT.h"
-#include "../common/measurer_facade.hpp"
+#include "../common/facade.hpp"
 #include "win_platform.hpp"
 
-static shy_measurer_facade < shy_win_platform > measurer ;
+static shy_facade < shy_win_platform > facade ;
 
 //--------------------------------------------------------------------------------------
 // Extern declarations 
@@ -183,13 +183,13 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
     DXUTInit( true, true, NULL ); // Parse the command line, show msgboxes on error, no extra command line params
     DXUTSetCursorSettings( true, true ); // Show the cursor and clip it when in full screen
-    DXUTCreateWindow( L"smoothernity" );
+    DXUTCreateWindow( L"Smoothernity" );
 
     // Only require 10-level hardware
     DXUTCreateDevice( D3D_FEATURE_LEVEL_10_0, true, 640, 480 );
-	measurer . init ( ) ;
+	facade . init ( ) ;
     DXUTMainLoop(); // Enter into the DXUT render loop
-	measurer . done ( ) ;
+	facade . done ( ) ;
 
     // Perform any application-level cleanup here
 
@@ -245,12 +245,11 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
 
     // Clear the render target and the zbuffer 
     V( pd3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB( 0, 45, 50, 170 ), 1.0f, 0 ) );
-	measurer . render ( ) ;
-	measurer . update ( ) ;
-
     // Render the scene
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
     {
+		facade . render ( ) ;
+		facade . update ( ) ;
         V( pd3dDevice->EndScene() );
     }
 }
