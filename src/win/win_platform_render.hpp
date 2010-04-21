@@ -56,10 +56,14 @@ inline void shy_win_platform :: render_projection_ortho
     , shy_win_platform :: float_32 right 
     , shy_win_platform :: float_32 bottom 
     , shy_win_platform :: float_32 top 
-    , shy_win_platform :: float_32 near 
-    , shy_win_platform :: float_32 far 
+    , shy_win_platform :: float_32 znear 
+    , shy_win_platform :: float_32 zfar 
     )
 {
+    HRESULT hr ;
+	D3DXMATRIX matrix ;
+	D3DXMatrixOrthoOffCenterLH ( & matrix , left , right , bottom , top , znear , zfar ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_PROJECTION , & matrix ) ) ;
 }
 
 inline void shy_win_platform :: render_create_buffer_id 
