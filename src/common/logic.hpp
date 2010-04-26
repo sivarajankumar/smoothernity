@@ -14,6 +14,10 @@ class shy_logic
 public :
     shy_logic ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
+    , _color_r ( 0 )
+    , _color_g ( 0 )
+    , _color_b ( 0 )
+    , _color_frames ( 0 )
     {
     }
     void init ( )
@@ -31,12 +35,12 @@ public :
     }
     void update ( )
     {
+        _update_color ( ) ;
     }
 private :
     void _render_scene ( )
     {
         platform :: render_enable_depth_test ( ) ;
-        platform :: render_fog_linear ( 10 , 20 , 0.0f , 0.1f , 0.4f , 0 ) ;
         _use_perspective_projection ( ) ;
         _mediator -> use_camera_matrix ( ) ;
         _mediator -> render_land ( ) ;
@@ -71,8 +75,26 @@ private :
     }
     void _clear_screen ( )
     {
-        platform :: render_clear_screen ( 0 , 0.1f , 0.4f ) ;
+        platform :: render_fog_linear ( 10 , 20 , _color_r , _color_g , _color_b , 0 ) ;
+        platform :: render_clear_screen ( _color_r , _color_g , _color_b ) ;
+    }
+    void _update_color ( )
+    {
+        static const float_32 FINAL_R = 0.0f ;
+        static const float_32 FINAL_G = 0.1f ;
+        static const float_32 FINAL_B = 0.4f ;
+        static const int_32 FADE_IN_FRAMES = 60 ;
+        if ( _color_frames < FADE_IN_FRAMES )
+            _color_frames ++ ;
+        float_32 scale = float_32 ( _color_frames ) / float_32 ( FADE_IN_FRAMES ) ;
+        _color_r = scale * FINAL_R ;
+        _color_g = scale * FINAL_G ;
+        _color_b = scale * FINAL_B ;
     }
 private :
     mediator * _mediator ;
+    float_32 _color_r ;
+    float_32 _color_g ;
+    float_32 _color_b ;
+    int_32 _color_frames ;
 } ;
