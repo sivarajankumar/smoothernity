@@ -17,6 +17,9 @@ public :
     : _mediator ( arg_mediator )
     , _spot_frames_left ( 0 )
     , _spot_mesh_created ( false )
+	, _should_place_new_spot ( false )
+	, _spot_x ( 0 )
+	, _spot_y ( 0 )
     {
     }
     void render_touch ( )
@@ -37,18 +40,43 @@ public :
 private :
     void _update_spot ( )
     {
+		_decrease_spot_lifetime ( ) ;
+		_poll_touchscreen ( ) ;
+		_poll_mouse ( ) ;
+		_place_new_spot ( ) ;
+    }
+	void _decrease_spot_lifetime ( )
+	{
         if ( _spot_frames_left > 0 )
             _spot_frames_left -- ;
+	}
+	void _poll_touchscreen ( )
+	{
         if ( platform :: touch_occured ( ) )
         {
-            _spot_position = platform :: vector_xyz
-                ( platform :: touch_x ( )
-                , platform :: touch_y ( )
-                , - 3.0f
-                ) ;
-            _spot_frames_left = _spot_lifetime_in_frames ;
+			_should_place_new_spot = true ;
+			_spot_x = platform :: touch_x ( ) ;
+			_spot_y = platform :: touch_y ( ) ;
         }
-    }
+	}
+	void _poll_mouse ( )
+	{
+		if ( platform :: mouse_left_button_down ( ) )
+		{
+			_should_place_new_spot = true ;
+			_spot_x = platform :: mouse_x ( ) ;
+			_spot_y = platform :: mouse_y ( ) ;
+		}
+	}
+	void _place_new_spot ( )
+	{
+		if ( _should_place_new_spot )
+		{
+			_should_place_new_spot = false ;
+            _spot_position = platform :: vector_xyz ( _spot_x , _spot_y , - 3.0f ) ;
+            _spot_frames_left = _spot_lifetime_in_frames ;
+		}
+	}
     void _render_spot_mesh ( )
     {
         matrix_data matrix ;
@@ -99,6 +127,9 @@ private :
     mediator * _mediator ;
     int_32 _spot_frames_left ;
     int_32 _spot_mesh_created ;
+	int_32 _should_place_new_spot ;
+	float_32 _spot_x ;
+	float_32 _spot_y ;
     mesh_id _spot_mesh_id ;
     vector_data _spot_position ;
 } ;

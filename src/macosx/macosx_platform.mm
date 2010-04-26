@@ -20,6 +20,6 @@ shy_macosx_sound_loader * shy_macosx_platform :: _sound_loader = 0 ;
 shy_macosx_platform :: float_32 shy_macosx_platform :: _aspect_width = 1.0f ;
 shy_macosx_platform :: float_32 shy_macosx_platform :: _aspect_height = 1.0f ;
 
-//shy_macosx_platform :: int_32 shy_macosx_platform :: _touch_occured = false ;
-//shy_macosx_platform :: float_32 shy_macosx_platform :: _touch_x = 0 ;
-//shy_macosx_platform :: float_32 shy_macosx_platform :: _touch_y = 0 ;
+shy_macosx_platform :: int_32 shy_macosx_platform :: _mouse_left_button_down = false ;
+shy_macosx_platform :: float_32 shy_macosx_platform :: _mouse_x = 0 ;
+shy_macosx_platform :: float_32 shy_macosx_platform :: _mouse_y = 0 ;

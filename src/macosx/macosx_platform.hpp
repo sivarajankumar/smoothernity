@@ -226,12 +226,26 @@ public :
     static float_32 touch_x ( ) ;
     static float_32 touch_y ( ) ;
 
+	//
+	// mouse
+	//
+
+	static int_32 mouse_left_button_down ( ) ;
+	static float_32 mouse_x ( ) ;
+	static float_32 mouse_y ( ) ;
+
+	//
+	// variables
+	//
+
     static shy_macosx_sound_loader * _sound_loader ;
+	
 	static float_32 _aspect_width ;
 	static float_32 _aspect_height ;
-//    static int_32 _touch_occured ;
-//    static float_32 _touch_x ;
-//    static float_32 _touch_y ;
+	
+	static int_32 _mouse_left_button_down ;
+	static float_32 _mouse_x ;
+	static float_32 _mouse_y ;
 
 private :
     static vertex_data _reference_vertex ;
@@ -250,6 +264,7 @@ void swap_values ( T & a , T & b )
 
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
+#include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
 #include "macosx_platform_time.hpp"
