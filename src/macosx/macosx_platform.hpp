@@ -157,6 +157,7 @@ public :
 	static void render_enable_texturing ( ) ;
 	static void render_disable_texturing ( ) ;
 	static void render_set_modulate_texture_mode ( ) ;
+    static void render_use_texture ( const render_texture_id & arg_texture_id ) ;
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;

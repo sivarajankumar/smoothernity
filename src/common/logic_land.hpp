@@ -38,6 +38,7 @@ private :
     void _render_land ( )
     {
         platform :: render_enable_texturing ( ) ;
+        platform :: render_use_texture ( _land_texture_id ) ;
         _mediator -> mesh_render ( _land_mesh_id ) ;
     }
     void _create_land_mesh ( )
