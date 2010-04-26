@@ -170,6 +170,7 @@ public :
     static void render_use_texture ( const render_texture_id & arg_texture_id ) ;
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
     static void render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a ) ;
+    static void render_load_texture_data ( const render_texture_id & arg_texture_id , int_32 size_pow2_base , texel_data * data ) ;
     
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
     

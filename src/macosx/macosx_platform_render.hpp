@@ -68,6 +68,22 @@ inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel ,
     texel . _color [ 3 ] = ( GLubyte ) a ;
 }
 
+inline void shy_macosx_platform :: render_load_texture_data 
+    ( const render_texture_id & arg_texture_id 
+    , int_32 size_pow2_base 
+    , texel_data * data
+    )
+{
+    GLsizei size = 1 << size_pow2_base ;
+    glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
+    glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_NEAREST ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_NEAREST ) ;
+    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_RGBA , GL_UNSIGNED_BYTE , data ) ;
+}
+
 inline void shy_macosx_platform :: render_clear_screen 
     ( shy_macosx_platform :: float_32 r 
     , shy_macosx_platform :: float_32 g 

@@ -1,4 +1,5 @@
-#define LAND_TEXTURE_SIZE 256
+#define LAND_TEXTURE_SIZE_POW2_BASE 8
+#define LAND_TEXTURE_SIZE ( 1 << LAND_TEXTURE_SIZE_POW2_BASE )
 
 template < typename mediator >
 class shy_logic_land
@@ -131,6 +132,7 @@ private :
             }
         }
         platform :: render_create_texture_id ( _land_texture_id ) ;
+        platform :: render_load_texture_data ( _land_texture_id , LAND_TEXTURE_SIZE_POW2_BASE , _land_texture_data ) ;
     }
 private :
     mediator * _mediator ;
