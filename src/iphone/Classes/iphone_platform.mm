@@ -19,3 +19,6 @@ shy_iphone_sound_loader * shy_iphone_platform :: _sound_loader = 0 ;
 shy_iphone_platform :: int_32 shy_iphone_platform :: _touch_occured = false ;
 shy_iphone_platform :: float_32 shy_iphone_platform :: _touch_x = 0 ;
 shy_iphone_platform :: float_32 shy_iphone_platform :: _touch_y = 0 ;
+
+shy_iphone_platform :: float_32 shy_iphone_platform :: _aspect_width = 1 ;
+shy_iphone_platform :: float_32 shy_iphone_platform :: _aspect_height = 1.5f ;

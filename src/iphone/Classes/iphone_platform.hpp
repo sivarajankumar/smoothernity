@@ -23,6 +23,20 @@ public :
         GLuint _buffer_id ;
     } ;
     
+	class render_texture_id
+	{
+		friend class shy_iphone_platform ;
+	private :
+		GLuint _texture_id ;
+	} ;
+	
+    class texel_data
+    {
+        friend class shy_iphone_platform ;
+    private :
+        GLubyte _color [ 4 ] ;
+    } ;
+    
     class vertex_data
     {
         friend class shy_iphone_platform ;
@@ -143,13 +157,26 @@ public :
     //
     
     static void render_enable_face_culling ( ) ;
+    
     static void render_enable_depth_test ( ) ;
     static void render_disable_depth_test ( ) ;
+    
     static void render_fog_disable ( ) ;
     static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a ) ;
+    
+	static void render_enable_texturing ( ) ;
+	static void render_disable_texturing ( ) ;
+	static void render_set_modulate_texture_mode ( ) ;
+    static void render_use_texture ( const render_texture_id & arg_texture_id ) ;
+	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
+    static void render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a ) ;
+    static void render_load_texture_data ( const render_texture_id & arg_texture_id , int_32 size_pow2_base , texel_data * data ) ;
+    
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
+    
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     static void render_projection_ortho ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
+    
     static void render_create_buffer_id ( render_buffer_id & arg_buffer_id ) ;
     static void render_load_vertex_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;
     static void render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z ) ;
@@ -157,11 +184,7 @@ public :
     static void render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     static void render_load_index_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
     static void render_set_index_value ( index_data & data , int_32 index ) ;
-    static void render_matrix_identity ( ) ;
-    static void render_matrix_load ( const matrix_data & matrix ) ;
-    static void render_matrix_mult ( const matrix_data & matrix ) ;
-    static void render_matrix_push ( ) ;
-    static void render_matrix_pop ( ) ;
+    
     static void render_draw_triangle_strip 
         ( const render_buffer_id & vertices_buffer 
         , const render_buffer_id & indices_buffer
@@ -172,6 +195,15 @@ public :
         , const render_buffer_id & indices_buffer
         , int_32 indices_count
         ) ;
+        
+    static void render_matrix_identity ( ) ;
+    static void render_matrix_load ( const matrix_data & matrix ) ;
+    static void render_matrix_mult ( const matrix_data & matrix ) ;
+    static void render_matrix_push ( ) ;
+    static void render_matrix_pop ( ) ;
+    
+	static float_32 render_get_aspect_width ( ) ;
+	static float_32 render_get_aspect_height ( ) ;
     
     //
     // sound
@@ -224,10 +256,24 @@ public :
     static float_32 touch_x ( ) ;
     static float_32 touch_y ( ) ;
 
+	//
+	// mouse
+	//
+
+	static int_32 mouse_left_button_down ( ) ;
+	static float_32 mouse_x ( ) ;
+	static float_32 mouse_y ( ) ;
+
+	//
+	// variables
+	//
+
     static shy_iphone_sound_loader * _sound_loader ;
     static int_32 _touch_occured ;
     static float_32 _touch_x ;
     static float_32 _touch_y ;
+	static float_32 _aspect_width ;
+	static float_32 _aspect_height ;
 
 private :
     static vertex_data _reference_vertex ;
@@ -246,6 +292,7 @@ void swap_values ( T & a , T & b )
 
 #include "iphone_platform_math.hpp"
 #include "iphone_platform_matrix.hpp"
+#include "iphone_platform_mouse.hpp"
 #include "iphone_platform_render.hpp"
 #include "iphone_platform_sound.hpp"
 #include "iphone_platform_time.hpp"

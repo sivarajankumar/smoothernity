@@ -13,6 +13,21 @@ inline void shy_iphone_platform :: render_disable_depth_test ( )
     glDisable ( GL_DEPTH_TEST ) ;
 }
 
+inline void shy_iphone_platform :: render_enable_texturing ( )
+{
+	glEnable ( GL_TEXTURE_2D ) ;
+}
+
+inline void shy_iphone_platform :: render_disable_texturing ( )
+{
+	glDisable ( GL_TEXTURE_2D ) ;
+}
+
+inline void shy_iphone_platform :: render_set_modulate_texture_mode ( )
+{
+    glTexEnvf ( GL_TEXTURE_ENV , GL_TEXTURE_ENV_MODE , GL_MODULATE ) ;
+}
+
 inline void shy_iphone_platform :: render_fog_disable ( )
 {
     glDisable ( GL_FOG ) ;
@@ -33,6 +48,40 @@ inline void shy_iphone_platform :: render_fog_linear
     glFogf ( GL_FOG_START , ( GLfloat ) near ) ;
     glFogf ( GL_FOG_END , ( GLfloat ) far ) ;
     glFogfv ( GL_FOG_COLOR , color ) ;
+}
+
+inline void shy_iphone_platform :: render_create_texture_id ( render_texture_id & arg_texture_id )
+{
+    glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
+}
+
+inline void shy_iphone_platform :: render_use_texture ( const render_texture_id & arg_texture_id )
+{
+    glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
+}
+
+inline void shy_iphone_platform :: render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a )
+{
+    texel . _color [ 0 ] = ( GLubyte ) r ;
+    texel . _color [ 1 ] = ( GLubyte ) g ;
+    texel . _color [ 2 ] = ( GLubyte ) b ;
+    texel . _color [ 3 ] = ( GLubyte ) a ;
+}
+
+inline void shy_iphone_platform :: render_load_texture_data 
+    ( const render_texture_id & arg_texture_id 
+    , int_32 size_pow2_base 
+    , texel_data * data
+    )
+{
+    GLsizei size = 1 << size_pow2_base ;
+    glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
+    glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
+    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_RGBA , GL_UNSIGNED_BYTE , data ) ;
 }
 
 inline void shy_iphone_platform :: render_clear_screen 
@@ -218,4 +267,18 @@ inline void shy_iphone_platform :: render_draw_triangle_fan
     glEnableClientState ( GL_COLOR_ARRAY ) ;
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements ( GL_TRIANGLE_FAN , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
+}
+
+inline
+shy_iphone_platform :: float_32
+shy_iphone_platform :: render_get_aspect_width ( )
+{
+	return _aspect_width ;
+}
+
+inline
+shy_iphone_platform :: float_32
+shy_iphone_platform :: render_get_aspect_height ( )
+{
+	return _aspect_height ;
 }

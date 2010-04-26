@@ -39,6 +39,7 @@
 		194E85BE117E3921000AAADA /* logic_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_touch.hpp; sourceTree = "<group>"; };
 		194E85BF117E3921000AAADA /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		194E85C0117E393D000AAADA /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
+		19850CAB11860F8800378E2E /* iphone_platform_mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_mouse.hpp; sourceTree = "<group>"; };
 		19A8DDC7115E122F0062EAB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform.hpp; sourceTree = "<group>"; };
 		19A8DE64115E2B230062EAB6 /* iphone_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iphone_platform.mm; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 				19A8DE64115E2B230062EAB6 /* iphone_platform.mm */,
 				19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */,
 				19A8DE99115E350A0062EAB6 /* iphone_platform_matrix.hpp */,
+				19850CAB11860F8800378E2E /* iphone_platform_mouse.hpp */,
 				19A8DE87115E32580062EAB6 /* iphone_platform_render.hpp */,
 				19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */,
 				19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */,
