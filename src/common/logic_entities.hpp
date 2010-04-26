@@ -18,7 +18,8 @@ public :
     shy_logic_entities ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _entity_created ( false )
-    , _frames_left_to_create ( 0 )
+    , _frames_left_to_create ( 30 )
+    , _grid_scale ( 0 )
     {
     }
     void render_entities ( )
@@ -35,9 +36,11 @@ public :
             if ( ! _entity_created )
             {
                 _create_entity_mesh ( ) ;
-                _create_entity_grid ( ) ;
+                _update_entity_grid ( ) ;
                 _entity_created = true ;
             }
+            else
+                _update_entity_grid ( ) ;
         }
     }
     vector_data get_entity_origin ( int_32 index )
@@ -148,28 +151,47 @@ private :
     }
     vector_data _get_entity_origin ( int_32 index )
     {
-        const float_32 grid_step = 5.0f ;
+        const float_32 GRID_STEP = 5.0f ;
         int_32 x = index % ENTITY_MESH_GRID ;
         int_32 z = index / ENTITY_MESH_GRID ;
         return platform :: vector_xyz
-            ( grid_step * ( float_32 ) ( x - ( ENTITY_MESH_GRID / 2 ) )
+            ( GRID_STEP * ( float_32 ) ( x - ( ENTITY_MESH_GRID / 2 ) )
             , 1.0f
-            , grid_step * ( float_32 ) ( z - ( ENTITY_MESH_GRID / 2 ) )
+            , GRID_STEP * ( float_32 ) ( z - ( ENTITY_MESH_GRID / 2 ) )
             ) ;
     }
-    void _create_entity_grid ( )
+    void _update_entity_grid ( )
     {
-        for ( int_32 i = 0 ; i < ENTITY_MESH_GRID * ENTITY_MESH_GRID ; i ++ )
+        static const int_32 SCALE_IN_FRAMES = 120 ;
+        static const float_32 SCALE_WAVE = 2 ;
+        if ( _grid_scale <= SCALE_IN_FRAMES )
         {
-            matrix_data & matrix = _entities_grid_matrices [ i ] ;
-            platform :: matrix_identity ( matrix ) ;
-            platform :: matrix_set_origin ( matrix , _get_entity_origin ( i ) ) ;
+            for ( int_32 x = 0 ; x < ENTITY_MESH_GRID ; x ++ )
+            {
+                for ( int_32 z = 0 ; z < ENTITY_MESH_GRID ; z ++ )
+                {
+                    int_32 index = x + ENTITY_MESH_GRID * z ;
+                    matrix_data & matrix = _entities_grid_matrices [ index ] ;
+                    float_32 scale = SCALE_WAVE * float ( x + z ) / float ( ENTITY_MESH_GRID * 2 ) ;
+                    scale = scale - SCALE_WAVE + ( 1.0f + SCALE_WAVE ) * float ( _grid_scale ) / float ( SCALE_IN_FRAMES ) ;
+                    if ( scale < 0.0f )
+                        scale = 0.0f ;
+                    else if ( scale > 1.0f )
+                        scale = 1.0f ;
+                    platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
+                    platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
+                    platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
+                    platform :: matrix_set_origin ( matrix , _get_entity_origin ( index ) ) ;
+                }
+            }
+            _grid_scale ++ ;
         }
     }
 private :
     mediator * _mediator ;
     int_32 _entity_created ;
     int_32 _frames_left_to_create ;
+    int_32 _grid_scale ;
     mesh_id _entity_mesh_id ;
     matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
 } ;
