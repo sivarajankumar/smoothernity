@@ -1,3 +1,5 @@
+#define LAND_TEXTURE_SIZE 256
+
 template < typename mediator >
 class shy_logic_land
 {
@@ -8,6 +10,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
+    typedef typename mediator :: platform :: texel_data texel_data ;
     
 public :
     shy_logic_land ( mediator * arg_mediator )
@@ -30,6 +33,7 @@ public :
             if ( ! _land_created )
             {
                 _create_land_mesh ( ) ;
+                _create_land_texture ( ) ;
                 _land_created = true ;
             }
         }
@@ -105,6 +109,22 @@ private :
             }
         }
         _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
+    }
+    void _create_land_texture ( )
+    {
+        for ( int_32 x = 0 ; x < LAND_TEXTURE_SIZE ; x ++ )
+        {
+            for ( int_32 y = 0 ; y < LAND_TEXTURE_SIZE ; y ++ )
+            {
+                platform :: render_set_texel_color
+                    ( _land_texture_data [ x + LAND_TEXTURE_SIZE * y ]
+                    , ( ( x % 16 ) + ( y % 16 ) ) * 8
+                    , ( ( x % 32 ) + ( y % 32 ) ) * 4
+                    , ( ( x % 64 ) + ( y % 64 ) ) * 2
+                    , 255
+                    ) ;
+            }
+        }
         platform :: render_create_texture_id ( _land_texture_id ) ;
     }
 private :
@@ -113,4 +133,5 @@ private :
     int_32 _frames_left_to_create ;
     mesh_id _land_mesh_id ;
     render_texture_id _land_texture_id ;
+    texel_data _land_texture_data [ LAND_TEXTURE_SIZE * LAND_TEXTURE_SIZE ] ;
 } ;
