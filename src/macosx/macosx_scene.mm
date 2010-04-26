@@ -8,8 +8,8 @@
     if ( self )
 	{
 		shy_macosx_platform :: _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
-		measurer = new shy_facade < shy_macosx_platform > ( ) ;
-		measurer -> init ( ) ;
+		_measurer = new shy_facade < shy_macosx_platform > ( ) ;
+		_measurer -> init ( ) ;
 	}
     return self ;
 }
@@ -18,8 +18,10 @@
 {
     [ shy_macosx_platform :: _sound_loader release ] ;
     shy_macosx_platform :: _sound_loader = nil ;
-	measurer -> done ( ) ;
-	delete measurer ;
+	_measurer -> done ( ) ;
+	delete _measurer ;
+	_measurer = 0 ;
+	
     [ super dealloc ] ;
 }
 
@@ -42,8 +44,8 @@
 
 - ( void ) render
 {
-	measurer -> render ( ) ;
-	measurer -> update ( ) ;
+	_measurer -> render ( ) ;
+	_measurer -> update ( ) ;
     glFinish ( ) ;
 }
 
