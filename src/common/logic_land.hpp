@@ -81,6 +81,11 @@ private :
                     , LAND_B
                     , 255
                     ) ;
+                platform :: render_set_vertex_tex_coord
+                    ( vertices [ vertices_count ]
+                    , float_32 ( iz ) / float_32 ( LAND_GRID )
+                    , float_32 ( ix ) / float_32 ( LAND_GRID )
+                    ) ;
                 ++ vertices_count ;
             }
         }
