@@ -66,7 +66,7 @@ public :
         }
         if ( _mono_sound_created )
         {
-            if ( platform :: touch_occured ( ) )
+            if ( platform :: touch_occured ( ) || platform :: mouse_left_button_down ( ) )
             {
                 platform :: sound_source_stop ( _mono_sound_source ) ;
                 platform :: sound_source_play ( _mono_sound_source ) ;
