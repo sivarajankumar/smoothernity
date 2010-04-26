@@ -45,6 +45,11 @@ inline void shy_macosx_platform :: render_fog_linear
     glFogfv ( GL_FOG_COLOR , color ) ;
 }
 
+inline void shy_macosx_platform :: render_create_texture_id ( render_texture_id & arg_texture_id )
+{
+    glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
+}
+
 inline void shy_macosx_platform :: render_clear_screen 
     ( shy_macosx_platform :: float_32 r 
     , shy_macosx_platform :: float_32 g 

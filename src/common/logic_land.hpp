@@ -7,6 +7,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
+    typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     
 public :
     shy_logic_land ( mediator * arg_mediator )
@@ -102,10 +103,12 @@ private :
             }
         }
         _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
+        platform :: render_create_texture_id ( _land_texture_id ) ;
     }
 private :
     mediator * _mediator ;
     int_32 _land_created ;
     int_32 _frames_left_to_create ;
     mesh_id _land_mesh_id ;
+    render_texture_id _land_texture_id ;
 } ;
