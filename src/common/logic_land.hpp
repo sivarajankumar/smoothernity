@@ -122,11 +122,12 @@ private :
         {
             for ( int_32 y = 0 ; y < LAND_TEXTURE_SIZE ; y ++ )
             {
+                int_32 c = x ^ y ;
                 platform :: render_set_texel_color
                     ( _land_texture_data [ x + LAND_TEXTURE_SIZE * y ]
-                    , ( ( x % 16 ) + ( y % 16 ) ) * 8
-                    , ( ( x % 32 ) + ( y % 32 ) ) * 4
-                    , ( ( x % 64 ) + ( y % 64 ) ) * 2
+                    , ( c % 32 ) * 8
+                    , ( c % 64 ) * 4
+                    , ( c % 128 ) * 2
                     , 255
                     ) ;
             }
