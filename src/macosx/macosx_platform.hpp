@@ -145,9 +145,10 @@ public :
     static void render_enable_face_culling ( ) ;
     static void render_enable_depth_test ( ) ;
     static void render_disable_depth_test ( ) ;
-	static void render_enable_texturing ( ) ;
     static void render_fog_disable ( ) ;
     static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a ) ;
+	static void render_enable_texturing ( ) ;
+	static void render_set_modulate_texture_mode ( ) ;
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     static void render_projection_ortho ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;

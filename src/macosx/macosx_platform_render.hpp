@@ -18,6 +18,11 @@ inline void shy_macosx_platform :: render_enable_texturing ( )
 	glEnable ( GL_TEXTURE_2D ) ;
 }
 
+inline void shy_macosx_platform :: render_set_modulate_texture_mode ( )
+{
+    glTexEnvf ( GL_TEXTURE_ENV , GL_TEXTURE_ENV_MODE , GL_MODULATE ) ;
+}
+
 inline void shy_macosx_platform :: render_fog_disable ( )
 {
     glDisable ( GL_FOG ) ;

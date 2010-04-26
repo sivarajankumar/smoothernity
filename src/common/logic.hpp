@@ -68,6 +68,7 @@ private :
     {
         platform :: render_enable_face_culling ( ) ;
 		platform :: render_enable_texturing ( ) ;
+		platform :: render_set_modulate_texture_mode ( ) ;
     }
     void _clear_screen ( )
     {
