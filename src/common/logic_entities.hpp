@@ -18,7 +18,7 @@ public :
     shy_logic_entities ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
     , _entity_created ( false )
-    , _frames_left_to_create ( 30 )
+    , _frames_left_to_create ( 0 )
     , _grid_scale ( 0 )
     {
     }

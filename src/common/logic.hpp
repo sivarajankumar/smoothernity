@@ -83,7 +83,7 @@ private :
         static const float_32 FINAL_R = 0.0f ;
         static const float_32 FINAL_G = 0.1f ;
         static const float_32 FINAL_B = 0.4f ;
-        static const int_32 FADE_IN_FRAMES = 60 ;
+        static const int_32 FADE_IN_FRAMES = 90 ;
         if ( _color_frames < FADE_IN_FRAMES )
             _color_frames ++ ;
         float_32 scale = float_32 ( _color_frames ) / float_32 ( FADE_IN_FRAMES ) ;
