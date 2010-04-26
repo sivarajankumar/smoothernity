@@ -48,9 +48,9 @@ private :
     }
     void _create_land_mesh ( )
     {
-        static const int_32 LAND_R = 0 ;
+        static const int_32 LAND_R = 255 ;
         static const int_32 LAND_G = 255 ;
-        static const int_32 LAND_B = 0 ;
+        static const int_32 LAND_B = 255 ;
         static const int_32 LAND_GRID = 10 ;
         static const float_32 LAND_RADIUS = 10 ;
         
