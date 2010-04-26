@@ -47,6 +47,7 @@ public :
 private :
     void _render_entities ( )
     {
+        platform :: render_disable_texturing ( ) ;
         for ( int_32 i = 0 ; i < ENTITY_MESH_GRID * ENTITY_MESH_GRID ; i ++ )
         {
             _mediator -> mesh_set_transform ( _entity_mesh_id , _entities_grid_matrices [ i ] ) ;

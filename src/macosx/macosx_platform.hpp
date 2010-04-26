@@ -155,6 +155,7 @@ public :
     static void render_fog_disable ( ) ;
     static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a ) ;
 	static void render_enable_texturing ( ) ;
+	static void render_disable_texturing ( ) ;
 	static void render_set_modulate_texture_mode ( ) ;
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;

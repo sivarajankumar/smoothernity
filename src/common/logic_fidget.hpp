@@ -38,6 +38,7 @@ private :
     }
     void _render_fidget_mesh ( )
     {
+        platform :: render_disable_texturing ( ) ;
         matrix_data matrix ;
         platform :: matrix_set_axis_x
             ( matrix
