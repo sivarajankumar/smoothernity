@@ -14,6 +14,7 @@ public :
     : _mediator ( arg_mediator )
     , _fidget_angle ( 0 )
     , _fidget_mesh_created ( false )
+    , _fidget_scale ( 0 )
     {
     }
     void render_fidget ( )
@@ -38,18 +39,23 @@ private :
     }
     void _render_fidget_mesh ( )
     {
+        static const int_32 SCALE_IN_FRAMES = 60 ;
+        
         platform :: render_disable_texturing ( ) ;
+        float_32 scale = float_32 ( _fidget_scale ) / float_32 ( SCALE_IN_FRAMES ) ;
+        if ( _fidget_scale < SCALE_IN_FRAMES )
+            _fidget_scale ++ ;
         matrix_data matrix ;
         platform :: matrix_set_axis_x
             ( matrix
-            , platform :: math_cos ( _fidget_angle )
-            , platform :: math_sin ( _fidget_angle )
+            , platform :: math_cos ( _fidget_angle ) * scale
+            , platform :: math_sin ( _fidget_angle ) * scale
             , 0.0f
             ) ;
         platform :: matrix_set_axis_y
             ( matrix
-            , - platform :: math_sin ( _fidget_angle )
-            , platform :: math_cos ( _fidget_angle )
+            , - platform :: math_sin ( _fidget_angle ) * scale
+            , platform :: math_cos ( _fidget_angle ) * scale
             , 0.0f
             ) ;
         platform :: matrix_set_axis_z
@@ -106,5 +112,6 @@ private :
     mediator * _mediator ;
     float_32 _fidget_angle ;
     int_32 _fidget_mesh_created ;
+    int_32 _fidget_scale ;
     mesh_id _fidget_mesh_id ;
 } ;

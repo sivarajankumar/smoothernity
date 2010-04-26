@@ -172,8 +172,8 @@ private :
                 {
                     int_32 index = x + ENTITY_MESH_GRID * z ;
                     matrix_data & matrix = _entities_grid_matrices [ index ] ;
-                    float_32 scale = SCALE_WAVE * float ( x + z ) / float ( ENTITY_MESH_GRID * 2 ) ;
-                    scale = scale - SCALE_WAVE + ( 1.0f + SCALE_WAVE ) * float ( _grid_scale ) / float ( SCALE_IN_FRAMES ) ;
+                    float_32 scale = SCALE_WAVE * float_32 ( x + z ) / float_32 ( ENTITY_MESH_GRID * 2 ) ;
+                    scale = scale - SCALE_WAVE + ( 1.0f + SCALE_WAVE ) * float_32 ( _grid_scale ) / float_32 ( SCALE_IN_FRAMES ) ;
                     if ( scale < 0.0f )
                         scale = 0.0f ;
                     else if ( scale > 1.0f )
