@@ -60,7 +60,7 @@ private :
         platform :: matrix_set_origin
             ( matrix
             , 0.0f
-            , 1.0f
+            , platform :: render_get_aspect_height ( ) - 0.5f
             , - 3.0f
             ) ;
         _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
