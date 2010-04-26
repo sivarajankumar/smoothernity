@@ -67,6 +67,7 @@ private :
     void _init_render ( )
     {
         platform :: render_enable_face_culling ( ) ;
+		platform :: render_enable_texturing ( ) ;
     }
     void _clear_screen ( )
     {

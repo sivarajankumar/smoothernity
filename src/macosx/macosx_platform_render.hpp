@@ -13,6 +13,11 @@ inline void shy_macosx_platform :: render_disable_depth_test ( )
     glDisable ( GL_DEPTH_TEST ) ;
 }
 
+inline void shy_macosx_platform :: render_enable_texturing ( )
+{
+	glEnable ( GL_TEXTURE_2D ) ;
+}
+
 inline void shy_macosx_platform :: render_fog_disable ( )
 {
     glDisable ( GL_FOG ) ;
