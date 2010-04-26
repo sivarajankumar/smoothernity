@@ -135,6 +135,7 @@
 
     CGReleaseAllDisplays ( ) ;
 
+    [ scene set_viewport_rect : [ openGLView bounds ] ] ;
     [ openGLView setNeedsDisplay : YES ] ;
 
 	[ self start_animation ] ;
