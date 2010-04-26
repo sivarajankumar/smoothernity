@@ -9,6 +9,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
+    typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
@@ -16,13 +17,16 @@ class shy_logic_land
 public :
     shy_logic_land ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
-    , _land_created ( false )
+    , _land_mesh_created ( false )
+    , _land_texture_created ( false )
     , _frames_left_to_create ( 0 )
+    , _land_texture_creation_row ( 0 )
+    , _land_scale ( 0 )
     {
     }
     void render_land ( )
     {
-        if ( _land_created )
+        if ( _land_mesh_created && _land_texture_created )
             _render_land ( ) ;
     }
     void update ( )
@@ -31,19 +35,29 @@ public :
             _frames_left_to_create -- ;
         else
         {
-            if ( ! _land_created )
-            {
-                _create_land_mesh ( ) ;
+            if ( ! _land_texture_created )
                 _create_land_texture ( ) ;
-                _land_created = true ;
-            }
+            else if ( ! _land_mesh_created )
+                _create_land_mesh ( ) ;
         }
     }
 private :
     void _render_land ( )
     {
+        static const int_32 SCALE_IN_FRAMES = 60 ;
+        static const float_32 SCALE_STEP = 1.0f / float_32 ( SCALE_IN_FRAMES ) ;
         platform :: render_enable_texturing ( ) ;
         platform :: render_use_texture ( _land_texture_id ) ;
+        if ( _land_scale + SCALE_STEP < 1.0f )
+            _land_scale += SCALE_STEP ;
+        else
+            _land_scale = 1 ;
+        matrix_data matrix ;
+        platform :: matrix_set_axis_x ( matrix , _land_scale , 0 , 0 ) ;
+        platform :: matrix_set_axis_y ( matrix , 0 , _land_scale , 0 ) ;
+        platform :: matrix_set_axis_z ( matrix , 0 , 0 , _land_scale ) ;
+        platform :: matrix_set_origin ( matrix , 0 , 0 , 0 ) ;
+        _mediator -> mesh_set_transform ( _land_mesh_id , matrix ) ;
         _mediator -> mesh_render ( _land_mesh_id ) ;
     }
     void _create_land_mesh ( )
@@ -115,12 +129,18 @@ private :
             }
         }
         _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
+        _land_mesh_created = true ;
     }
     void _create_land_texture ( )
     {
-        for ( int_32 x = 0 ; x < LAND_TEXTURE_SIZE ; x ++ )
+        static const int_32 CREATE_ROWS_PER_FRAME = 8 ;
+        int_32 prev_creation_row = _land_texture_creation_row ;
+        while ( _land_texture_creation_row < LAND_TEXTURE_SIZE 
+             && ( _land_texture_creation_row - prev_creation_row ) <= CREATE_ROWS_PER_FRAME
+              )
         {
-            for ( int_32 y = 0 ; y < LAND_TEXTURE_SIZE ; y ++ )
+            int_32 y = _land_texture_creation_row ;
+            for ( int_32 x = 0 ; x < LAND_TEXTURE_SIZE ; x ++ )
             {
                 int_32 c = x ^ y ;
                 platform :: render_set_texel_color
@@ -131,14 +151,22 @@ private :
                     , 255
                     ) ;
             }
+            _land_texture_creation_row ++ ;
         }
-        platform :: render_create_texture_id ( _land_texture_id ) ;
-        platform :: render_load_texture_data ( _land_texture_id , LAND_TEXTURE_SIZE_POW2_BASE , _land_texture_data ) ;
+        if ( _land_texture_creation_row == LAND_TEXTURE_SIZE )
+        {
+            platform :: render_create_texture_id ( _land_texture_id ) ;
+            platform :: render_load_texture_data ( _land_texture_id , LAND_TEXTURE_SIZE_POW2_BASE , _land_texture_data ) ;
+            _land_texture_created = true ;
+        }
     }
 private :
     mediator * _mediator ;
-    int_32 _land_created ;
+    int_32 _land_mesh_created ;
+    int_32 _land_texture_created ;
     int_32 _frames_left_to_create ;
+    int_32 _land_texture_creation_row ;
+    float_32 _land_scale ;
     mesh_id _land_mesh_id ;
     render_texture_id _land_texture_id ;
     texel_data _land_texture_data [ LAND_TEXTURE_SIZE * LAND_TEXTURE_SIZE ] ;

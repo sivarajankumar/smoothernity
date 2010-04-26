@@ -20,7 +20,7 @@ public :
     , _mono_sound_created ( false )
     , _stereo_sound_created ( false )
     , _stereo_sound_loaded ( false )
-    , _frames_left_to_create ( 30 )
+    , _frames_left_to_create ( 60 )
     , _loaded_stereo_sound_samples ( 0 )
     {
     }
