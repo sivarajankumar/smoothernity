@@ -219,3 +219,17 @@ inline void shy_macosx_platform :: render_draw_triangle_fan
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements ( GL_TRIANGLE_FAN , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
 }
+
+inline
+shy_macosx_platform :: float_32
+shy_macosx_platform :: render_get_aspect_width ( )
+{
+	return _aspect_width ;
+}
+
+inline
+shy_macosx_platform :: float_32
+shy_macosx_platform :: render_get_aspect_height ( )
+{
+	return _aspect_height ;
+}

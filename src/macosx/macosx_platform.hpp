@@ -172,6 +172,8 @@ public :
         , const render_buffer_id & indices_buffer
         , int_32 indices_count
         ) ;
+	static float_32 render_get_aspect_width ( ) ;
+	static float_32 render_get_aspect_height ( ) ;
     
     //
     // sound
@@ -225,6 +227,8 @@ public :
     static float_32 touch_y ( ) ;
 
     static shy_macosx_sound_loader * _sound_loader ;
+	static float_32 _aspect_width ;
+	static float_32 _aspect_height ;
 //    static int_32 _touch_occured ;
 //    static float_32 _touch_x ;
 //    static float_32 _touch_y ;

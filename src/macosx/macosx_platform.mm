@@ -17,6 +17,9 @@ void * shy_macosx_platform :: _vertex_color_offset = reinterpret_cast < void * >
     
 shy_macosx_sound_loader * shy_macosx_platform :: _sound_loader = 0 ;
 
+shy_macosx_platform :: float_32 shy_macosx_platform :: _aspect_width = 1.0f ;
+shy_macosx_platform :: float_32 shy_macosx_platform :: _aspect_height = 1.0f ;
+
 //shy_macosx_platform :: int_32 shy_macosx_platform :: _touch_occured = false ;
 //shy_macosx_platform :: float_32 shy_macosx_platform :: _touch_x = 0 ;
 //shy_macosx_platform :: float_32 shy_macosx_platform :: _touch_y = 0 ;

@@ -52,12 +52,16 @@ private :
     }
     void _use_perspective_projection ( )
     {
-        platform :: render_projection_frustum ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
+		float_32 width = platform :: render_get_aspect_width ( ) ;
+		float_32 height = platform :: render_get_aspect_height ( ) ;
+        platform :: render_projection_frustum ( - width , width , - height , height , 1.0f , 50.0f ) ;
         platform :: render_matrix_identity ( ) ;
     }
     void _use_ortho_projection ( )
     {
-        platform :: render_projection_ortho ( - 1.0f , 1.0f , - 1.515f , 1.515f , 1.0f , 50.0f ) ;
+		float_32 width = platform :: render_get_aspect_width ( ) ;
+		float_32 height = platform :: render_get_aspect_height ( ) ;
+        platform :: render_projection_ortho ( - width , width , - height , height , 1.0f , 50.0f ) ;
         platform :: render_matrix_identity ( ) ;
     }
     void _init_render ( )
