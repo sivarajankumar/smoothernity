@@ -27,6 +27,7 @@
 		190FDE781168FC030053FE8F /* iphone_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_touch.hpp; sourceTree = "<group>"; };
 		19111313116897E900F5E355 /* iphone_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_sound_loader.h; sourceTree = "<group>"; };
 		1911131411689BDB00F5E355 /* iphone_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_sound_loader.m; sourceTree = "<group>"; };
+		194C97E31187976E00AA38A1 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 		194E85B5117E3921000AAADA /* engine_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_camera.hpp; sourceTree = "<group>"; };
 		194E85B6117E3921000AAADA /* engine_mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_mesh.hpp; sourceTree = "<group>"; };
 		194E85B7117E3921000AAADA /* facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = facade.hpp; sourceTree = "<group>"; };
@@ -111,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				194E85B5117E3921000AAADA /* engine_camera.hpp */,
+				194C97E31187976E00AA38A1 /* engine_math.hpp */,
 				194E85B6117E3921000AAADA /* engine_mesh.hpp */,
 				194E85B7117E3921000AAADA /* facade.hpp */,
 				194E85B8117E3921000AAADA /* logic.hpp */,
