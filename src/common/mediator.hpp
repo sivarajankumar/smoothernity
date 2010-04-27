@@ -1,6 +1,7 @@
 template 
     < typename _platform
     , template < typename mediator > class engine_camera
+    , template < typename mediator > class engine_math
     , template < typename mediator > class engine_mesh
     , template < typename mediator > class logic 
     , template < typename mediator > class logic_camera
@@ -15,6 +16,7 @@ class shy_mediator
 public :
     typedef _platform platform ;
     typedef typename engine_mesh < shy_mediator > :: mesh_id mesh_id ;
+    typedef typename platform :: float_32 float_32 ;
     typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
@@ -48,6 +50,10 @@ public :
     {
         _logic . init ( ) ;
         _logic_sound . init ( ) ;
+    }
+    vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
+    {
+        return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
     }
     mesh_id mesh_create 
         ( vertex_data * vertices 
@@ -111,6 +117,7 @@ public :
     }
 private :
     engine_camera < shy_mediator > _engine_camera ;
+    engine_math < shy_mediator > _engine_math ;
     engine_mesh < shy_mediator > _engine_mesh ;
     logic < shy_mediator > _logic ;
     logic_camera < shy_mediator > _logic_camera ;

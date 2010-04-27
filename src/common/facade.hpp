@@ -1,4 +1,5 @@
 #include "engine_camera.hpp"
+#include "engine_math.hpp"
 #include "engine_mesh.hpp"
 #include "logic.hpp"
 #include "logic_camera.hpp"
@@ -36,6 +37,7 @@ private :
     shy_mediator 
         < platform 
         , shy_engine_camera
+        , shy_engine_math
         , shy_engine_mesh 
         , shy_logic
         , shy_logic_camera

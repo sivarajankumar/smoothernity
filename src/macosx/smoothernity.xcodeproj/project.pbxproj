@@ -130,6 +130,7 @@
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
 		886AEA04117C8B36009CBB6F /* macosx_platform_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */; };
 		886AEA05117C8B36009CBB6F /* macosx_platform_vector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */; };
+		88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -178,6 +179,7 @@
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
 		886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_touch.hpp; sourceTree = "<group>"; };
 		886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_vector.hpp; sourceTree = "<group>"; };
+		88DBFFB211873D4600584A28 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				8812CEC4117DE26A008F67D9 /* engine_camera.hpp */,
+				88DBFFB211873D4600584A28 /* engine_math.hpp */,
 				8812CEC5117DE26A008F67D9 /* engine_mesh.hpp */,
 				8812CEC6117DE26A008F67D9 /* facade.hpp */,
 				8812CEC7117DE26A008F67D9 /* logic.hpp */,
@@ -396,6 +399,7 @@
 				8812CED9117DE26A008F67D9 /* mediator.hpp in Headers */,
 				8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */,
 				880A037C1185A15C00363D69 /* macosx_platform_mouse.hpp in Headers */,
+				88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
