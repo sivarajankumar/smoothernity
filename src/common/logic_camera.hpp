@@ -149,7 +149,7 @@ private :
             ( _camera_matrix 
             , platform :: vector_add ( _current_camera_origin , platform :: vector_xyz ( 0.0f , height , 0.0f ) )
             , _current_camera_target
-            , platform :: vector_xyz ( 0.0f , 1.0f , 0.0f )
+            , platform :: vector_xyz ( 0 , 1 , 0 )
             ) ;
     }
     int_32 _random_camera_origin_index ( )

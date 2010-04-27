@@ -79,12 +79,19 @@ private :
     }
     void _clear_screen ( )
     {
-        platform :: render_fog_linear ( 10 , 20 , _color_r , _color_g , _color_b , 0 ) ;
+        platform :: render_fog_linear 
+            ( 10 + _get_near_plane_distance ( ) 
+            , 20 + _get_near_plane_distance ( ) 
+            , _color_r 
+            , _color_g 
+            , _color_b 
+            , 0 
+            ) ;
         platform :: render_clear_screen ( _color_r , _color_g , _color_b ) ;
     }
     float_32 _get_near_plane_distance ( )
     {
-        return 0.5f * ( platform :: render_get_aspect_width ( ) + platform :: render_get_aspect_height ( ) ) ;
+        return platform :: render_get_aspect_width ( ) + platform :: render_get_aspect_height ( ) ;
     }
     void _update_color ( )
     {
