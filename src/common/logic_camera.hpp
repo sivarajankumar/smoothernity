@@ -53,8 +53,8 @@ public :
 private :
     void _reset_camera_rubber ( )
     {
-        _current_camera_origin = _scheduled_camera_origins [ 0 ] ;
-        _current_camera_target = _scheduled_camera_targets [ 0 ] ;
+        _current_camera_origin = _scheduled_camera_origins [ 2 ] ;
+        _current_camera_target = _scheduled_camera_targets [ 2 ] ;
     }
     void _fill_camera_schedules ( )
     {
@@ -79,7 +79,7 @@ private :
     void _update_desired_camera_origin ( )
     {
         static const int_32 CHANGE_ORIGIN_IN_FRAMES = 139 ;
-        if ( -- _frames_to_change_camera_origin < 0 )
+        if ( -- _frames_to_change_camera_origin <= 0 )
         {
             _frames_to_change_camera_origin = CHANGE_ORIGIN_IN_FRAMES ;
             int_32 new_origin_index = _random_camera_origin_index ( ) ;
@@ -93,7 +93,7 @@ private :
             _scheduled_camera_origins [ 3 ] = _mediator -> get_entity_origin ( new_origin_index ) ;
         }
         _desired_camera_origin = _mediator -> math_catmull_rom_spline
-            ( 1.0f - ( float_32 ( _frames_to_change_camera_origin ) / float_32 ( CHANGE_ORIGIN_IN_FRAMES ) )
+            ( 1.0f - float_32 ( _frames_to_change_camera_origin ) / float_32 ( CHANGE_ORIGIN_IN_FRAMES )
             , _scheduled_camera_origins [ 0 ]
             , _scheduled_camera_origins [ 1 ]
             , _scheduled_camera_origins [ 2 ]
@@ -103,7 +103,7 @@ private :
     void _update_desired_camera_target ( )
     {
         static const int_32 CHANGE_TARGET_IN_FRAMES = 181 ;
-        if ( -- _frames_to_change_camera_target < 0 )
+        if ( -- _frames_to_change_camera_target <= 0 )
         {
             _frames_to_change_camera_target = CHANGE_TARGET_IN_FRAMES ;
             int_32 new_target_index = _random_camera_target_index ( ) ;
@@ -117,7 +117,7 @@ private :
             _scheduled_camera_targets [ 3 ] = _mediator -> get_entity_origin ( new_target_index ) ;
         }
         _desired_camera_target = _mediator -> math_catmull_rom_spline
-            ( 1.0f - ( float_32 ( _frames_to_change_camera_target ) / float_32 ( CHANGE_TARGET_IN_FRAMES ) )
+            ( 1.0f - float_32 ( _frames_to_change_camera_target ) / float_32 ( CHANGE_TARGET_IN_FRAMES )
             , _scheduled_camera_targets [ 0 ]
             , _scheduled_camera_targets [ 1 ]
             , _scheduled_camera_targets [ 2 ]
@@ -126,7 +126,7 @@ private :
     }
     void _update_current_camera_origin ( )
     {
-        const float_32 origin_rubber = 0 ; //0.99f ;
+        const float_32 origin_rubber = 0.99f ;
         _current_camera_origin = platform :: vector_add
             ( platform :: vector_mul ( _current_camera_origin , origin_rubber )
             , platform :: vector_mul ( _desired_camera_origin , 1.0f - origin_rubber )
@@ -134,7 +134,7 @@ private :
     }
     void _update_current_camera_target ( )
     {
-        const float_32 target_rubber = 0 ; //0.9f ;
+        const float_32 target_rubber = 0.9f ;
         _current_camera_target = platform :: vector_add
             ( platform :: vector_mul ( _current_camera_target , target_rubber )
             , platform :: vector_mul ( _desired_camera_target , 1.0f - target_rubber )
