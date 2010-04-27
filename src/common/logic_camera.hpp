@@ -72,7 +72,10 @@ private :
             ) ;
         _mediator -> camera_matrix_look_at 
             ( _camera_matrix 
-            , _current_camera_origin
+            , platform :: vector_add 
+              ( _current_camera_origin
+              , platform :: vector_xyz ( 0.0f , platform :: render_get_aspect_height ( ) + 1.5f , 0.0f )
+              )
             , _current_camera_target
             , platform :: vector_xyz ( 0.0f , 1.0f , 0.0f )
             ) ;
@@ -84,10 +87,7 @@ private :
     }
     vector_data _random_camera_origin ( )
     {
-        return platform :: vector_add 
-            ( _random_entity_origin ( 0 , ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 ) )
-            , platform :: vector_xyz ( 0.0f , 3.0f , 0.0f )
-            ) ;
+        return _random_entity_origin ( 0 , ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 ) ) ;
     }
     vector_data _random_camera_target ( )
     {
