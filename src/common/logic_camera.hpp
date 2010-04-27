@@ -126,7 +126,7 @@ private :
     }
     void _update_current_camera_origin ( )
     {
-        const float_32 origin_rubber = 0.99f ;
+        const float_32 origin_rubber = 0 ; // 0.99f ;
         _current_camera_origin = platform :: vector_add
             ( platform :: vector_mul ( _current_camera_origin , origin_rubber )
             , platform :: vector_mul ( _desired_camera_origin , 1.0f - origin_rubber )
@@ -134,7 +134,7 @@ private :
     }
     void _update_current_camera_target ( )
     {
-        const float_32 target_rubber = 0.9f ;
+        const float_32 target_rubber = 0 ; // 0.9f ;
         _current_camera_target = platform :: vector_add
             ( platform :: vector_mul ( _current_camera_target , target_rubber )
             , platform :: vector_mul ( _desired_camera_target , 1.0f - target_rubber )
@@ -142,18 +142,12 @@ private :
     }
     void _update_camera_matrix ( )
     {
-        float_32 height = platform :: render_get_aspect_height ( ) ;
-        float_32 width = platform :: render_get_aspect_width ( ) ;
+        float_32 height = _mediator -> get_entity_height ( ) 
+                        + platform :: render_get_aspect_height ( ) 
+                        + _mediator -> get_near_plane_distance ( ) ;
         _mediator -> camera_matrix_look_at 
             ( _camera_matrix 
-            , platform :: vector_add 
-              ( _current_camera_origin
-              , platform :: vector_xyz 
-                ( 0.0f 
-                , height + ( height + width ) * 0.6f
-                , 0.0f 
-                )
-              )
+            , platform :: vector_add ( _current_camera_origin , platform :: vector_xyz ( 0.0f , height , 0.0f ) )
             , _current_camera_target
             , platform :: vector_xyz ( 0.0f , 1.0f , 0.0f )
             ) ;

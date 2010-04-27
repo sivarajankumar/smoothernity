@@ -1,5 +1,6 @@
 #define ENTITY_MESH_SPANS 50
 #define ENTITY_MESH_GRID 5
+#define ENTITY_MESH_HEIGHT 2
 #define PI 3.141592f
 
 template < typename mediator >
@@ -47,6 +48,10 @@ public :
     {
         return _get_entity_origin ( index ) ;
     }
+    float_32 get_entity_height ( )
+    {
+        return ENTITY_MESH_HEIGHT ;
+    }
 private :
     void _render_entities ( )
     {
@@ -89,7 +94,7 @@ private :
             platform :: render_set_vertex_position 
                 ( vertices [ vertices_count ] 
                 , x 
-                , 1.0f 
+                , 0.5f * ENTITY_MESH_HEIGHT
                 , z 
                 ) ;
             platform :: render_set_vertex_color 
@@ -105,7 +110,7 @@ private :
             platform :: render_set_vertex_position 
                 ( vertices [ vertices_count ] 
                 , x 
-                , - 1.0f 
+                , - 0.5f * ENTITY_MESH_HEIGHT
                 , z 
                 ) ;
             platform :: render_set_vertex_color 
@@ -122,7 +127,7 @@ private :
         platform :: render_set_vertex_position 
             ( vertices [ vertices_count ] 
             , 0.0f
-            , 1.0f 
+            , 0.5f * ENTITY_MESH_HEIGHT
             , 0.0f 
             ) ;
         platform :: render_set_vertex_color 
@@ -156,7 +161,7 @@ private :
         int_32 z = index / ENTITY_MESH_GRID ;
         return platform :: vector_xyz
             ( GRID_STEP * ( float_32 ) ( x - ( ENTITY_MESH_GRID / 2 ) )
-            , 1.0f
+            , 0.5f * ENTITY_MESH_HEIGHT
             , GRID_STEP * ( float_32 ) ( z - ( ENTITY_MESH_GRID / 2 ) )
             ) ;
     }

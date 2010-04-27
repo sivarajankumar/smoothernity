@@ -42,9 +42,17 @@ public :
     {
         _logic . done ( ) ;
     }
+    float_32 get_entity_height ( )
+    {
+        return _logic_entities . get_entity_height ( ) ;
+    }
     vector_data get_entity_origin ( int_32 index )
     {
         return _logic_entities . get_entity_origin ( index ) ;
+    }
+    float_32 get_near_plane_distance ( )
+    {
+        return _logic . get_near_plane_distance ( ) ;
     }
     void init ( )
     {

@@ -37,6 +37,10 @@ public :
     {
         _update_color ( ) ;
     }
+    float_32 get_near_plane_distance ( )
+    {
+        return _get_near_plane_distance ( ) ;
+    }
 private :
     void _render_scene ( )
     {
@@ -58,7 +62,7 @@ private :
     {
 		float_32 width = platform :: render_get_aspect_width ( ) ;
 		float_32 height = platform :: render_get_aspect_height ( ) ;
-        platform :: render_projection_frustum ( - width , width , - height , height , 0.5f * ( width + height ) , 50.0f ) ;
+        platform :: render_projection_frustum ( - width , width , - height , height , _get_near_plane_distance ( ) , 50.0f ) ;
         platform :: render_matrix_identity ( ) ;
     }
     void _use_ortho_projection ( )
@@ -77,6 +81,10 @@ private :
     {
         platform :: render_fog_linear ( 10 , 20 , _color_r , _color_g , _color_b , 0 ) ;
         platform :: render_clear_screen ( _color_r , _color_g , _color_b ) ;
+    }
+    float_32 _get_near_plane_distance ( )
+    {
+        return 0.5f * ( platform :: render_get_aspect_width ( ) + platform :: render_get_aspect_height ( ) ) ;
     }
     void _update_color ( )
     {
