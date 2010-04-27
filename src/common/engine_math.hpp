@@ -21,6 +21,6 @@ public :
             ( platform :: vector_mul ( p2 , p2_coeff )
             , platform :: vector_mul ( p3 , p3_coeff )
             ) ;
-        return platform :: vector_add ( result_p0_p1 , result_p2_p3 ) ;
+        return platform :: vector_mul ( platform :: vector_add ( result_p0_p1 , result_p2_p3 ) , 0.5f ) ;
     }
 } ;
