@@ -70,11 +70,17 @@ private :
             ( platform :: vector_mul ( _current_camera_target , target_rubber )
             , platform :: vector_mul ( _desired_camera_target , 1.0f - target_rubber )
             ) ;
+        float_32 height = platform :: render_get_aspect_height ( ) ;
+        float_32 width = platform :: render_get_aspect_width ( ) ;
         _mediator -> camera_matrix_look_at 
             ( _camera_matrix 
             , platform :: vector_add 
               ( _current_camera_origin
-              , platform :: vector_xyz ( 0.0f , platform :: render_get_aspect_height ( ) + 1.5f , 0.0f )
+              , platform :: vector_xyz 
+                ( 0.0f 
+                , height + ( height + width ) * 0.6f
+                , 0.0f 
+                )
               )
             , _current_camera_target
             , platform :: vector_xyz ( 0.0f , 1.0f , 0.0f )

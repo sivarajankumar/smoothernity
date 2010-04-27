@@ -58,7 +58,7 @@ private :
     {
 		float_32 width = platform :: render_get_aspect_width ( ) ;
 		float_32 height = platform :: render_get_aspect_height ( ) ;
-        platform :: render_projection_frustum ( - width , width , - height , height , 1.0f , 50.0f ) ;
+        platform :: render_projection_frustum ( - width , width , - height , height , 0.5f * ( width + height ) , 50.0f ) ;
         platform :: render_matrix_identity ( ) ;
     }
     void _use_ortho_projection ( )
