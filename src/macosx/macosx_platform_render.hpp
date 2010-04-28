@@ -13,6 +13,17 @@ inline void shy_macosx_platform :: render_disable_depth_test ( )
     glDisable ( GL_DEPTH_TEST ) ;
 }
 
+inline void shy_macosx_platform :: render_blend_disable ( )
+{
+    glDisable ( GL_BLEND ) ;
+}
+
+inline void shy_macosx_platform :: render_blend_src_alpha_dst_one_minus_alpha ( )
+{
+    glEnable ( GL_BLEND ) ;
+    glBlendFunc ( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA ) ;
+}
+
 inline void shy_macosx_platform :: render_enable_texturing ( )
 {
 	glEnable ( GL_TEXTURE_2D ) ;

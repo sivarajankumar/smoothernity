@@ -9,6 +9,7 @@ template
     , template < typename mediator > class logic_fidget
     , template < typename mediator > class logic_land
     , template < typename mediator > class logic_sound
+    , template < typename mediator > class logic_text
     , template < typename mediator > class logic_touch
     >
 class shy_mediator
@@ -30,6 +31,7 @@ public :
     , _logic_fidget ( this )
     , _logic_land ( this )
     , _logic_sound ( this )
+    , _logic_text ( this )
     , _logic_touch ( this )
     {
     }
@@ -105,6 +107,10 @@ public :
     {
         _logic_land . render_land ( ) ;
     }
+    void render_text ( )
+    {
+        _logic_text . render_text ( ) ;
+    }
     void render_touch ( )
     {
         _logic_touch . render_touch ( ) ;
@@ -117,6 +123,7 @@ public :
         _logic_fidget . update ( ) ;
         _logic_land . update ( ) ;
         _logic_sound . update ( ) ;
+        _logic_text . update ( ) ;
         _logic_touch . update ( ) ;
     }
     void use_camera_matrix ( )
@@ -133,5 +140,6 @@ private :
     logic_fidget < shy_mediator > _logic_fidget ;
     logic_land < shy_mediator > _logic_land ;
     logic_sound < shy_mediator > _logic_sound ;
+    logic_text < shy_mediator > _logic_text ;
     logic_touch < shy_mediator > _logic_touch ;
 } ;

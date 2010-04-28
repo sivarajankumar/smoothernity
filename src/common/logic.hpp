@@ -55,6 +55,7 @@ private :
         platform :: render_disable_depth_test ( ) ;
         platform :: render_fog_disable ( ) ;
         _use_ortho_projection ( ) ;
+        _mediator -> render_text ( ) ;
         _mediator -> render_touch ( ) ;
         _mediator -> render_fidget ( ) ;
     }
@@ -76,6 +77,7 @@ private :
     {
         platform :: render_enable_face_culling ( ) ;
 		platform :: render_set_modulate_texture_mode ( ) ;
+        platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     }
     void _clear_screen ( )
     {

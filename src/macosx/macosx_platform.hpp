@@ -164,6 +164,9 @@ public :
     static void render_fog_disable ( ) ;
     static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a ) ;
     
+    static void render_blend_disable ( ) ;
+    static void render_blend_src_alpha_dst_one_minus_alpha ( ) ;
+    
 	static void render_enable_texturing ( ) ;
 	static void render_disable_texturing ( ) ;
 	static void render_set_modulate_texture_mode ( ) ;
