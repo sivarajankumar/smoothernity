@@ -83,8 +83,54 @@ private :
                     ) ;
             }
         }
+        _generate_font_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
         platform :: render_create_texture_id ( _text_texture_id ) ;
         platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
+    }
+    float_32 _field_linear_distance ( float_32 x , float_32 y , float_32 radius_x , float_32 radius_y , float_32 center_x , float_32 center_y )
+    {
+        float_32 dx = x > center_x ? x - center_x : center_x - x ;
+        float_32 dy = y > center_y ? y - center_y : center_y - y ;
+        return _mediator -> math_clamp ( 1.0f - ( dx / radius_x + dy / radius_y ) , 0 , 1 ) ;
+    }
+    float_32 _field_inv_linear_distance ( float_32 x , float_32 y , float_32 radius_x , float_32 radius_y , float_32 center_x , float_32 center_y )
+    {
+        float_32 dx = x > center_x ? x - center_x : center_x - x ;
+        float_32 dy = y > center_y ? y - center_y : center_y - y ;
+        return _mediator -> math_clamp ( ( dx / radius_x + dy / radius_y ) - 1.0f , 0 , 1 ) ;
+    }
+    void _generate_font_english_A 
+        ( texel_data * starting_texel 
+        , int_32 texels_in_row 
+        , int_32 letter_size_x 
+        , int_32 letter_size_y
+        )
+    {
+        static const float_32 AMPL = 7 ;
+        for ( int_32 texel_y = 0 ; texel_y < letter_size_y ; texel_y ++ )
+        {
+            for ( int_32 texel_x = 0 ; texel_x < letter_size_x ; texel_x ++ )
+            {
+                float_32 x = float_32 ( texel_x ) / float_32 ( letter_size_x ) ;
+                float_32 y = float_32 ( texel_y ) / float_32 ( letter_size_y ) ;
+                float_32 tension = 0 ;
+                tension  = _mediator -> math_clamp ( AMPL * _field_linear_distance     ( x , y ,  0.5f ,  0.5f , 0.5f , 0.5f ) , 0 , 1 ) ;
+                tension *= _mediator -> math_clamp ( AMPL * _field_inv_linear_distance ( x , y , 0.25f , 0.25f , 0.5f , 0.5f ) , 0 , 1 ) ;
+                tension *= _mediator -> math_clamp ( AMPL * _field_inv_linear_distance ( x , y , 0.25f , 0.25f , 0.5f , 0.1f ) , 0 , 1 ) ;
+                tension += _mediator -> math_clamp ( AMPL * _field_linear_distance     ( x , y , 0.4f ,  0.1f , 0.5f , 0.5f ) , 0 , 1 ) ;
+                tension = _mediator -> math_clamp ( tension , 0 , 1 ) ;
+                if ( tension > 0.0f )
+                {
+                    platform :: render_set_texel_color 
+                        ( starting_texel [ texel_x + texels_in_row * texel_y ]
+                        , 255 
+                        , 255
+                        , 255
+                        , int_32 ( tension * 255.0f )
+                        ) ;
+                }
+            }
+        }
     }
 private :
     mediator * _mediator ;

@@ -23,4 +23,13 @@ public :
             ) ;
         return platform :: vector_mul ( platform :: vector_add ( result_p0_p1 , result_p2_p3 ) , 0.5f ) ;
     }
+    float_32 math_clamp ( float_32 f , float_32 from , float_32 to )
+    {
+        if ( f < from )
+            return from ;
+        else if ( f > to )
+            return to ;
+        else
+            return f ;
+    }
 } ;

@@ -65,6 +65,10 @@ public :
     {
         return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
     }
+    float_32 math_clamp ( float_32 f , float_32 from , float_32 to )
+    {
+        return _engine_math . math_clamp ( f , from , to ) ;
+    }
     mesh_id mesh_create 
         ( vertex_data * vertices 
         , index_data * triangle_strip_indices 
