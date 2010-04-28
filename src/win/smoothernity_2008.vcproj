@@ -609,7 +609,15 @@
 			>
 		</File>
 		<File
+			RelativePath="..\common\engine_math.hpp"
+			>
+		</File>
+		<File
 			RelativePath="..\common\engine_mesh.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\engine_rasterizer.hpp"
 			>
 		</File>
 		<File
@@ -641,6 +649,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\common\logic_text.hpp"
+			>
+		</File>
+		<File
 			RelativePath="..\common\logic_touch.hpp"
 			>
 		</File>
@@ -666,6 +678,10 @@
 		</File>
 		<File
 			RelativePath=".\win_platform_matrix.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_mouse.hpp"
 			>
 		</File>
 		<File

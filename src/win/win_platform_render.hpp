@@ -10,6 +10,26 @@ inline void shy_win_platform :: render_disable_depth_test ( )
 {
 }
 
+inline void shy_win_platform :: render_blend_disable ( )
+{
+}
+
+inline void shy_win_platform :: render_blend_src_alpha_dst_one_minus_alpha ( )
+{
+}
+
+inline void shy_win_platform :: render_enable_texturing ( )
+{
+}
+
+inline void shy_win_platform :: render_disable_texturing ( )
+{
+}
+
+inline void shy_win_platform :: render_set_modulate_texture_mode ( )
+{
+}
+
 inline void shy_win_platform :: render_fog_disable ( )
 {
 }
@@ -21,6 +41,26 @@ inline void shy_win_platform :: render_fog_linear
     , shy_win_platform :: float_32 g 
     , shy_win_platform :: float_32 b 
     , shy_win_platform :: float_32 a 
+    )
+{
+}
+
+inline void shy_win_platform :: render_create_texture_id ( render_texture_id & arg_texture_id )
+{
+}
+
+inline void shy_win_platform :: render_use_texture ( const render_texture_id & arg_texture_id )
+{
+}
+
+inline void shy_win_platform :: render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a )
+{
+}
+
+inline void shy_win_platform :: render_load_texture_data 
+    ( const render_texture_id & arg_texture_id 
+    , int_32 size_pow2_base 
+    , texel_data * data
     )
 {
 }
@@ -87,6 +127,7 @@ inline void shy_win_platform :: render_set_vertex_position
     , shy_win_platform :: float_32 z 
     )
 {
+	vertex . _position = D3DXVECTOR3 ( x , y , z ) ;
 }
 
 inline void shy_win_platform :: render_set_vertex_tex_coord
@@ -105,6 +146,7 @@ inline void shy_win_platform :: render_set_vertex_color
     , shy_win_platform :: int_32 a 
     )
 {
+	vertex . _color = D3DXVECTOR3 ( float ( r ) / 255.0f , float ( g ) / 255.0f , float ( b ) / 255.0f ) ;
 }
 
 inline void shy_win_platform :: render_load_index_buffer 
@@ -160,4 +202,18 @@ inline void shy_win_platform :: render_draw_triangle_fan
     , shy_win_platform :: int_32 indices_count
     )
 {
+}
+
+inline
+shy_win_platform :: float_32
+shy_win_platform :: render_get_aspect_width ( )
+{
+	return _aspect_width ;
+}
+
+inline
+shy_win_platform :: float_32
+shy_win_platform :: render_get_aspect_height ( )
+{
+	return _aspect_height ;
 }
