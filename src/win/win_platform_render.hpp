@@ -148,6 +148,32 @@ inline void shy_win_platform :: render_create_index_buffer
 	V ( arg_buffer_id . _buffer -> Unlock ( ) ) ;
 }
 
+inline void shy_win_platform :: render_draw_triangle_strip 
+    ( const shy_win_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_win_platform :: render_index_buffer_id & indices_buffer
+    , shy_win_platform :: int_32 indices_count
+    )
+{
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetStreamSource ( 0 , vertices_buffer . _buffer , 0 , sizeof ( vertex_data ) ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetFVF ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetIndices ( indices_buffer . _buffer ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> DrawIndexedPrimitive ( D3DPT_TRIANGLESTRIP , 0 , 0 , indices_count , 0 , indices_count - 2 ) ) ;
+}
+
+inline void shy_win_platform :: render_draw_triangle_fan
+    ( const shy_win_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_win_platform :: render_index_buffer_id & indices_buffer
+    , shy_win_platform :: int_32 indices_count
+    )
+{
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetStreamSource ( 0 , vertices_buffer . _buffer , 0 , sizeof ( vertex_data ) ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetFVF ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetIndices ( indices_buffer . _buffer ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> DrawIndexedPrimitive ( D3DPT_TRIANGLEFAN , 0 , 0 , indices_count , 0 , indices_count - 2 ) ) ;
+}
+
 inline void shy_win_platform :: render_set_vertex_position 
     ( shy_win_platform :: vertex_data & vertex 
     , shy_win_platform :: float_32 x 
@@ -183,6 +209,7 @@ inline void shy_win_platform :: render_set_index_value
     , shy_win_platform :: int_32 index 
     )
 {
+	data . _index = ( UINT ) index ;
 }
 
 inline void shy_win_platform :: render_matrix_identity ( )
@@ -206,22 +233,6 @@ inline void shy_win_platform :: render_matrix_push ( )
 }
 
 inline void shy_win_platform :: render_matrix_pop ( )
-{
-}
-
-inline void shy_win_platform :: render_draw_triangle_strip 
-    ( const shy_win_platform :: render_vertex_buffer_id & vertices_buffer 
-    , const shy_win_platform :: render_index_buffer_id & indices_buffer
-    , shy_win_platform :: int_32 indices_count
-    )
-{
-}
-
-inline void shy_win_platform :: render_draw_triangle_fan
-    ( const shy_win_platform :: render_vertex_buffer_id & vertices_buffer 
-    , const shy_win_platform :: render_index_buffer_id & indices_buffer
-    , shy_win_platform :: int_32 indices_count
-    )
 {
 }
 
