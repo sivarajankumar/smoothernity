@@ -89,7 +89,7 @@ inline void shy_win_platform :: render_projection_frustum
 {
     HRESULT hr ;
 	D3DXMATRIX matrix ;
-	D3DXMatrixPerspectiveOffCenterLH ( & matrix , left , right , bottom , top , znear , zfar ) ;
+	D3DXMatrixPerspectiveOffCenterRH ( & matrix , left , right , bottom , top , znear , zfar ) ;
 	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_PROJECTION , & matrix ) ) ;
 }
 
@@ -104,7 +104,7 @@ inline void shy_win_platform :: render_projection_ortho
 {
     HRESULT hr ;
 	D3DXMATRIX matrix ;
-	D3DXMatrixOrthoOffCenterLH ( & matrix , left , right , bottom , top , znear , zfar ) ;
+	D3DXMatrixOrthoOffCenterRH ( & matrix , left , right , bottom , top , znear , zfar ) ;
 	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_PROJECTION , & matrix ) ) ;
 }
 
@@ -221,7 +221,8 @@ inline void shy_win_platform :: render_matrix_identity ( )
 {
     HRESULT hr ;
 	V ( _matrix_stack -> LoadIdentity ( ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
+	D3DXMATRIX d3d_matrix = _convert_from_opengl ( * _matrix_stack -> GetTop ( ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , & d3d_matrix ) ) ;
 }
 
 inline void shy_win_platform :: render_matrix_load 
@@ -229,13 +230,9 @@ inline void shy_win_platform :: render_matrix_load
     )
 {
     HRESULT hr ;
-	D3DXMATRIX d3d_matrix ( matrix . _elements ) ;
-	d3d_matrix . _13 = - d3d_matrix . _13 ;
-	d3d_matrix . _23 = - d3d_matrix . _23 ;
-	d3d_matrix . _33 = - d3d_matrix . _33 ;
-	d3d_matrix . _43 = - d3d_matrix . _43 ;
-	V ( _matrix_stack -> LoadMatrix ( & d3d_matrix ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
+	V ( _matrix_stack -> LoadMatrix ( ( const D3DXMATRIX * ) ( & matrix ) ) ) ;
+	D3DXMATRIX d3d_matrix = _convert_from_opengl ( * _matrix_stack -> GetTop ( ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , & d3d_matrix ) ) ;
 }
 
 inline void shy_win_platform :: render_matrix_mult 
@@ -243,13 +240,9 @@ inline void shy_win_platform :: render_matrix_mult
     )
 {
     HRESULT hr ;
-	D3DXMATRIX d3d_matrix ( matrix . _elements ) ;
-	d3d_matrix . _13 = - d3d_matrix . _13 ;
-	d3d_matrix . _23 = - d3d_matrix . _23 ;
-	d3d_matrix . _33 = - d3d_matrix . _33 ;
-	d3d_matrix . _43 = - d3d_matrix . _43 ;
-	V ( _matrix_stack -> MultMatrix ( & d3d_matrix ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
+	V ( _matrix_stack -> MultMatrix ( ( const D3DXMATRIX * ) ( & matrix ) ) ) ;
+	D3DXMATRIX d3d_matrix = _convert_from_opengl ( * _matrix_stack -> GetTop ( ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , & d3d_matrix ) ) ;
 }
 
 inline void shy_win_platform :: render_matrix_push ( )
@@ -262,7 +255,8 @@ inline void shy_win_platform :: render_matrix_pop ( )
 {
 	HRESULT hr ;
 	V ( _matrix_stack -> Pop ( ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
+	D3DXMATRIX d3d_matrix = _convert_from_opengl ( * _matrix_stack -> GetTop ( ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , & d3d_matrix ) ) ;
 }
 
 inline

@@ -273,6 +273,7 @@ public :
 
 	static void _init ( ) ;
 	static void _done ( ) ;
+	static D3DXMATRIX _convert_from_opengl ( D3DXMATRIX ogl_matrix ) ;
 
 	static float_32 _aspect_width ;
 	static float_32 _aspect_height ;

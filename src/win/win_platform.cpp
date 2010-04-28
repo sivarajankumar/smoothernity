@@ -16,3 +16,13 @@ void shy_win_platform :: _init ( )
 void shy_win_platform :: _done ( )
 {
 }
+
+D3DXMATRIX shy_win_platform :: _convert_from_opengl ( D3DXMATRIX ogl_matrix )
+{
+	D3DXMATRIX d3d_matrix ( ogl_matrix ) ;
+	d3d_matrix . _31 = - d3d_matrix . _31 ;
+	d3d_matrix . _32 = - d3d_matrix . _32 ;
+	d3d_matrix . _33 = - d3d_matrix . _33 ;
+	d3d_matrix . _34 = - d3d_matrix . _34 ;
+	return d3d_matrix ;
+}
