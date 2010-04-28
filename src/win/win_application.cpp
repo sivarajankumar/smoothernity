@@ -16,6 +16,8 @@ static shy_facade < shy_win_platform > facade ;
 //--------------------------------------------------------------------------------------
 bool CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, void* pUserContext )
 {
+	pDeviceSettings -> d3d9 . pp . SwapEffect = D3DSWAPEFFECT_COPY ;
+	pDeviceSettings -> d3d9 . pp . PresentationInterval = D3DPRESENT_INTERVAL_ONE ;
     return true;
 }
 
