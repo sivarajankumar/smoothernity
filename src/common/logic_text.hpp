@@ -101,10 +101,10 @@ private :
         , int_32 y_bottom
         )
     {
-        for ( int_32 y = y_top ; y > y_mid ; y -- )
+        for ( int_32 y = y_top ; y >= y_mid ; y -- )
         {
-            int_32 x_top_mid    = x_top + ( ( y_top - y ) * ( x_mid    - x_top ) ) / ( y_top - y_mid    ) ;
-            int_32 x_top_bottom = x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
+            int_32 x_top_mid    = ( y_top == y_mid    ) ? x_mid : x_top + ( ( y_top - y ) * ( x_mid    - x_top ) ) / ( y_top - y_mid    ) ;
+            int_32 x_top_bottom = ( y_top == y_bottom ) ? x_top : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
             int_32 x_left  = _mediator -> math_min ( x_top_mid , x_top_bottom ) ;
             int_32 x_right = _mediator -> math_max ( x_top_mid , x_top_bottom ) ;
             for ( int_32 x = x_left ; x <= x_right ; x ++ )
@@ -123,10 +123,10 @@ private :
         , int_32 y_bottom
         )
     {
-        for ( int_32 y = y_mid ; y > y_bottom ; y -- )
+        for ( int_32 y = y_mid ; y >= y_bottom ; y -- )
         {
-            int_32 x_mid_bottom = x_mid + ( ( y_mid - y ) * ( x_bottom - x_mid ) ) / ( y_mid - y_bottom ) ;
-            int_32 x_top_bottom = x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
+            int_32 x_mid_bottom = ( y_mid == y_bottom ) ? x_mid    : x_mid + ( ( y_mid - y ) * ( x_bottom - x_mid ) ) / ( y_mid - y_bottom ) ;
+            int_32 x_top_bottom = ( y_top == y_bottom ) ? x_bottom : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
             int_32 x_left  = _mediator -> math_min ( x_mid_bottom , x_top_bottom ) ;
             int_32 x_right = _mediator -> math_max ( x_mid_bottom , x_top_bottom ) ;
             for ( int_32 x = x_left ; x <= x_right ; x ++ )
@@ -186,9 +186,9 @@ private :
         texel_data filler ;
         platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
         _generate_triangle ( starting_texel , filler , texels_in_row 
-            , 0 , letter_size_y / 2 
-            , letter_size_x - 1 , 0 
-            , letter_size_x / 2 , letter_size_y - 1 
+            , 0 , 0
+            , letter_size_x - 1 , letter_size_y / 3
+            , letter_size_x / 2 , letter_size_y - 1
             ) ;
     }
 private :
