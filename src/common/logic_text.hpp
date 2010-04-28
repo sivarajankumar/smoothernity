@@ -84,8 +84,8 @@ private :
             }
         }
         _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
-        _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
-        _generate_font_linear_english_A ( _text_texture_data + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
+//        _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
+//        _generate_font_linear_english_A ( _text_texture_data + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
         platform :: render_create_texture_id ( _text_texture_id ) ;
         platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
     }
@@ -125,7 +125,7 @@ private :
     {
         for ( int_32 y = y_mid ; y > y_bottom ; y -- )
         {
-            int_32 x_mid_bottom = x_mid + ( ( y_mid - y ) * ( x_mid - x_bottom ) ) / ( y_mid - y_bottom ) ;
+            int_32 x_mid_bottom = x_mid + ( ( y_mid - y ) * ( x_bottom - x_mid ) ) / ( y_mid - y_bottom ) ;
             int_32 x_top_bottom = x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
             int_32 x_left  = _mediator -> math_min ( x_mid_bottom , x_top_bottom ) ;
             int_32 x_right = _mediator -> math_max ( x_mid_bottom , x_top_bottom ) ;
@@ -186,9 +186,9 @@ private :
         texel_data filler ;
         platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
         _generate_triangle ( starting_texel , filler , texels_in_row 
-            , 0 , 0 
+            , 0 , letter_size_y / 2 
             , letter_size_x - 1 , 0 
-            , letter_size_x - 1 , letter_size_y - 1 
+            , letter_size_x / 2 , letter_size_y - 1 
             ) ;
     }
 private :
