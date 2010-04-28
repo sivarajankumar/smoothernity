@@ -1,4 +1,5 @@
 #include <math.h>
+#include "D3dx9math.h"
 #include "DXUT.h"
 
 class shy_win_platform
@@ -264,17 +265,17 @@ public :
 	static float_32 mouse_y ( ) ;
 
 	//
-	// variables
+	// private stuff
 	//
+
+	static void _init ( ) ;
+	static void _done ( ) ;
 
 	static float_32 _aspect_width ;
 	static float_32 _aspect_height ;
 
 private :
-    static vertex_data _reference_vertex ;
-    static void * _vertex_position_offset ;
-    static void * _vertex_tex_coord_offset ;
-    static void * _vertex_color_offset ;
+	static LPD3DXMATRIXSTACK _matrix_stack ;
 } ;
 
 template < typename T >

@@ -1,10 +1,17 @@
 #include "DXUT.h"
 #include "win_platform.hpp"
 
-shy_win_platform :: vertex_data shy_win_platform :: _reference_vertex ;
-void * shy_win_platform :: _vertex_position_offset = 0 ;
-void * shy_win_platform :: _vertex_tex_coord_offset = 0 ;
-void * shy_win_platform :: _vertex_color_offset = 0 ;
-
 shy_win_platform :: float_32 shy_win_platform :: _aspect_width = 1 ;
 shy_win_platform :: float_32 shy_win_platform :: _aspect_height = 1 ;
+
+LPD3DXMATRIXSTACK shy_win_platform :: _matrix_stack = 0 ;
+
+void shy_win_platform :: _init ( )
+{
+	HRESULT hr ;
+	V ( D3DXCreateMatrixStack ( 0 , & _matrix_stack ) ) ;
+}
+
+void shy_win_platform :: _done ( )
+{
+}

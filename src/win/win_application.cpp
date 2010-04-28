@@ -174,9 +174,11 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
     // Only require 10-level hardware
     DXUTCreateDevice( D3D_FEATURE_LEVEL_10_0, true, 640, 480 );
+	shy_win_platform :: _init ( ) ;
 	facade . init ( ) ;
     DXUTMainLoop(); // Enter into the DXUT render loop
 	facade . done ( ) ;
+	shy_win_platform :: _done ( ) ;
 
     // Perform any application-level cleanup here
 

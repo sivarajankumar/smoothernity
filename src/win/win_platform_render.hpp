@@ -1,5 +1,7 @@
 inline void shy_win_platform :: render_enable_face_culling ( )
 {
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_CULLMODE , D3DCULL_NONE ) ) ;
 }
 
 inline void shy_win_platform :: render_enable_depth_test ( )
@@ -214,26 +216,40 @@ inline void shy_win_platform :: render_set_index_value
 
 inline void shy_win_platform :: render_matrix_identity ( )
 {
+    HRESULT hr ;
+	V ( _matrix_stack -> LoadIdentity ( ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
 }
 
 inline void shy_win_platform :: render_matrix_load 
     ( const shy_win_platform :: matrix_data & matrix 
     )
 {
+    HRESULT hr ;
+	V ( _matrix_stack -> LoadMatrix ( ( const D3DXMATRIX * ) ( & matrix ) ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
 }
 
 inline void shy_win_platform :: render_matrix_mult 
     ( const shy_win_platform :: matrix_data & matrix 
     )
 {
+    HRESULT hr ;
+	V ( _matrix_stack -> MultMatrix ( ( const D3DXMATRIX * ) ( & matrix ) ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
 }
 
 inline void shy_win_platform :: render_matrix_push ( )
 {
+	HRESULT hr ;
+	V ( _matrix_stack -> Push ( ) ) ;
 }
 
 inline void shy_win_platform :: render_matrix_pop ( )
 {
+	HRESULT hr ;
+	V ( _matrix_stack -> Pop ( ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_WORLD , _matrix_stack -> GetTop ( ) ) ) ;
 }
 
 inline
