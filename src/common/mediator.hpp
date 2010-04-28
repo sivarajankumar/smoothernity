@@ -61,6 +61,10 @@ public :
         _logic . init ( ) ;
         _logic_sound . init ( ) ;
     }
+    float_32 math_abs ( float_32 f )
+    {
+        return _engine_math . math_abs ( f ) ;
+    }
     vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
     {
         return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
@@ -68,6 +72,14 @@ public :
     float_32 math_clamp ( float_32 f , float_32 from , float_32 to )
     {
         return _engine_math . math_clamp ( f , from , to ) ;
+    }
+    float_32 math_max ( float_32 f1 , float_32 f2 )
+    {
+        return _engine_math . math_max ( f1 , f2 ) ;
+    }
+    float_32 math_min ( float_32 f1 , float_32 f2 )
+    {
+        return _engine_math . math_min ( f1 , f2 ) ;
     }
     mesh_id mesh_create 
         ( vertex_data * vertices 

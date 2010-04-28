@@ -83,54 +83,113 @@ private :
                     ) ;
             }
         }
-        _generate_font_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
+        _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
+        _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
+        _generate_font_linear_english_A ( _text_texture_data + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
         platform :: render_create_texture_id ( _text_texture_id ) ;
         platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
     }
-    float_32 _field_linear_distance ( float_32 x , float_32 y , float_32 radius_x , float_32 radius_y , float_32 center_x , float_32 center_y )
+    void _generate_top_triangle_part
+        ( texel_data * starting_texel
+        , const texel_data & filler
+        , int_32 texels_in_row
+        , int_32 x_top
+        , int_32 y_top
+        , int_32 x_mid
+        , int_32 y_mid
+        , int_32 x_bottom
+        , int_32 y_bottom
+        )
     {
-        float_32 dx = x > center_x ? x - center_x : center_x - x ;
-        float_32 dy = y > center_y ? y - center_y : center_y - y ;
-        return _mediator -> math_clamp ( 1.0f - ( dx / radius_x + dy / radius_y ) , 0 , 1 ) ;
+        for ( int_32 y = y_top ; y > y_mid ; y -- )
+        {
+            int_32 x_top_mid    = x_top + ( ( y_top - y ) * ( x_mid    - x_top ) ) / ( y_top - y_mid    ) ;
+            int_32 x_top_bottom = x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
+            int_32 x_left  = _mediator -> math_min ( x_top_mid , x_top_bottom ) ;
+            int_32 x_right = _mediator -> math_max ( x_top_mid , x_top_bottom ) ;
+            for ( int_32 x = x_left ; x <= x_right ; x ++ )
+                starting_texel [ x + texels_in_row * y ] = filler ;
+        }
     }
-    float_32 _field_inv_linear_distance ( float_32 x , float_32 y , float_32 radius_x , float_32 radius_y , float_32 center_x , float_32 center_y )
+    void _generate_bottom_triangle_part
+        ( texel_data * starting_texel
+        , const texel_data & filler
+        , int_32 texels_in_row
+        , int_32 x_top
+        , int_32 y_top
+        , int_32 x_mid
+        , int_32 y_mid
+        , int_32 x_bottom
+        , int_32 y_bottom
+        )
     {
-        float_32 dx = x > center_x ? x - center_x : center_x - x ;
-        float_32 dy = y > center_y ? y - center_y : center_y - y ;
-        return _mediator -> math_clamp ( ( dx / radius_x + dy / radius_y ) - 1.0f , 0 , 1 ) ;
+        for ( int_32 y = y_mid ; y > y_bottom ; y -- )
+        {
+            int_32 x_mid_bottom = x_mid + ( ( y_mid - y ) * ( x_mid - x_bottom ) ) / ( y_mid - y_bottom ) ;
+            int_32 x_top_bottom = x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
+            int_32 x_left  = _mediator -> math_min ( x_mid_bottom , x_top_bottom ) ;
+            int_32 x_right = _mediator -> math_max ( x_mid_bottom , x_top_bottom ) ;
+            for ( int_32 x = x_left ; x <= x_right ; x ++ )
+                starting_texel [ x + texels_in_row * y ] = filler ;
+        }
     }
-    void _generate_font_english_A 
+    void _generate_triangle
+        ( texel_data * starting_texel
+        , const texel_data & filler
+        , int_32 texels_in_row
+        , int_32 x1
+        , int_32 y1
+        , int_32 x2
+        , int_32 y2
+        , int_32 x3
+        , int_32 y3
+        )
+    {
+        if ( y1 >= y2 && y2 >= y3 )
+        {
+            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
+            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
+        }
+        else if ( y1 >= y3 && y3 >= y2 )
+        {
+            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x1 , y1 , x3 , y3 , x2 , y2 ) ;
+            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x1 , y1 , x3 , y3 , x2 , y2 ) ;
+        }
+        else if ( y3 >= y1 && y1 >= y2 )
+        {
+            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x3 , y3 , x1 , y1 , x2 , y2 ) ;
+            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x3 , y3 , x1 , y1 , x2 , y2 ) ;
+        }
+        else if ( y3 >= y2 && y2 >= y1 )
+        {
+            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x3 , y3 , x2 , y2 , x1 , y1 ) ;
+            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x3 , y3 , x2 , y2 , x1 , y1 ) ;
+        }
+        else if ( y2 >= y1 && y1 >= y3 )
+        {
+            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x2 , y2 , x1 , y1 , x3 , y3 ) ;
+            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x1 , y1 , x3 , y3 ) ;
+        }
+        else if ( y2 >= y3 && y3 >= y1 )
+        {
+            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
+            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
+        }
+    }
+    void _generate_font_linear_english_A 
         ( texel_data * starting_texel 
         , int_32 texels_in_row 
         , int_32 letter_size_x 
         , int_32 letter_size_y
         )
     {
-        static const float_32 AMPL = 7 ;
-        for ( int_32 texel_y = 0 ; texel_y < letter_size_y ; texel_y ++ )
-        {
-            for ( int_32 texel_x = 0 ; texel_x < letter_size_x ; texel_x ++ )
-            {
-                float_32 x = float_32 ( texel_x ) / float_32 ( letter_size_x ) ;
-                float_32 y = float_32 ( texel_y ) / float_32 ( letter_size_y ) ;
-                float_32 tension = 0 ;
-                tension  = _mediator -> math_clamp ( AMPL * _field_linear_distance     ( x , y ,  0.5f ,  0.5f , 0.5f , 0.5f ) , 0 , 1 ) ;
-                tension *= _mediator -> math_clamp ( AMPL * _field_inv_linear_distance ( x , y , 0.25f , 0.25f , 0.5f , 0.5f ) , 0 , 1 ) ;
-                tension *= _mediator -> math_clamp ( AMPL * _field_inv_linear_distance ( x , y , 0.25f , 0.25f , 0.5f , 0.1f ) , 0 , 1 ) ;
-                tension += _mediator -> math_clamp ( AMPL * _field_linear_distance     ( x , y , 0.4f ,  0.1f , 0.5f , 0.5f ) , 0 , 1 ) ;
-                tension = _mediator -> math_clamp ( tension , 0 , 1 ) ;
-                if ( tension > 0.0f )
-                {
-                    platform :: render_set_texel_color 
-                        ( starting_texel [ texel_x + texels_in_row * texel_y ]
-                        , 255 
-                        , 255
-                        , 255
-                        , int_32 ( tension * 255.0f )
-                        ) ;
-                }
-            }
-        }
+        texel_data filler ;
+        platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
+        _generate_triangle ( starting_texel , filler , texels_in_row 
+            , 0 , 0 
+            , letter_size_x - 1 , 0 
+            , letter_size_x - 1 , letter_size_y - 1 
+            ) ;
     }
 private :
     mediator * _mediator ;

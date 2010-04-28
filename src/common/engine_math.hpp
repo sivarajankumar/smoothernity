@@ -32,4 +32,16 @@ public :
         else
             return f ;
     }
+    float_32 math_abs ( float_32 f )
+    {
+        return f < 0.0f ? - f : f ;
+    }
+    float_32 math_max ( float_32 f1 , float_32 f2 )
+    {
+        return f1 > f2 ? f1 : f2 ;
+    }
+    float_32 math_min ( float_32 f1 , float_32 f2 )
+    {
+        return f1 < f2 ? f1 : f2 ;
+    }
 } ;
