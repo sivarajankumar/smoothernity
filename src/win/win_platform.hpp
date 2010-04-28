@@ -40,9 +40,12 @@ public :
     {
         friend class shy_win_platform ;
     private :
-		D3DXVECTOR3 _position ;
-		D3DXCOLOR _color ;
-		D3DXVECTOR2 _tex_coords ;
+		FLOAT _x ;
+		FLOAT _y ;
+		FLOAT _z ;
+		DWORD _color ;
+		FLOAT _u ;
+		FLOAT _v ;
     } ;
     
     class index_data

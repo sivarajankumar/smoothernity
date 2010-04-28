@@ -183,7 +183,9 @@ inline void shy_win_platform :: render_set_vertex_position
     , shy_win_platform :: float_32 z 
     )
 {
-	vertex . _position = D3DXVECTOR3 ( x , y , z ) ;
+	vertex . _x = x ;
+	vertex . _y = y ;
+	vertex . _z = z ;
 }
 
 inline void shy_win_platform :: render_set_vertex_tex_coord
@@ -192,7 +194,8 @@ inline void shy_win_platform :: render_set_vertex_tex_coord
     , shy_win_platform :: float_32 v 
     )
 {
-	vertex . _tex_coords = D3DXVECTOR2 ( u , v ) ;
+	vertex . _u = u ;
+	vertex . _v = v ;
 }
 
 inline void shy_win_platform :: render_set_vertex_color 
@@ -203,7 +206,7 @@ inline void shy_win_platform :: render_set_vertex_color
     , shy_win_platform :: int_32 a 
     )
 {
-	vertex . _color = D3DXCOLOR ( float ( r ) / 255.0f , float ( g ) / 255.0f , float ( b ) / 255.0f , float ( a ) / 255.0f ) ;
+	vertex . _color = D3DCOLOR_ARGB ( a , r , g , b ) ;
 }
 
 inline void shy_win_platform :: render_set_index_value 
