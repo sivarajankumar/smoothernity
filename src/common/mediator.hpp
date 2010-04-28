@@ -3,6 +3,7 @@ template
     , template < typename mediator > class engine_camera
     , template < typename mediator > class engine_math
     , template < typename mediator > class engine_mesh
+    , template < typename mediator > class engine_rasterizer
     , template < typename mediator > class logic 
     , template < typename mediator > class logic_camera
     , template < typename mediator > class logic_entities
@@ -21,11 +22,13 @@ public :
     typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
+    typedef typename platform :: texel_data texel_data ;
     typedef typename platform :: vector_data vector_data ;
     typedef typename platform :: vertex_data vertex_data ;
 public :
     shy_mediator ( )
-    : _logic ( this )
+    : _engine_rasterizer ( this )
+    , _logic ( this )
     , _logic_camera ( this )
     , _logic_entities ( this )
     , _logic_fidget ( this )
@@ -107,6 +110,20 @@ public :
     {
         _engine_mesh . mesh_set_transform ( arg_mesh_id , transform ) ;
     }
+    void rasterize_triangle
+        ( texel_data * starting_texel
+        , const texel_data & filler
+        , int_32 texels_in_row
+        , int_32 x1
+        , int_32 y1
+        , int_32 x2
+        , int_32 y2
+        , int_32 x3
+        , int_32 y3
+        )
+    {
+        _engine_rasterizer . rasterize_triangle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
+    }
     void render ( )
     {
         _logic . render ( ) ;
@@ -150,6 +167,7 @@ private :
     engine_camera < shy_mediator > _engine_camera ;
     engine_math < shy_mediator > _engine_math ;
     engine_mesh < shy_mediator > _engine_mesh ;
+    engine_rasterizer < shy_mediator > _engine_rasterizer ;
     logic < shy_mediator > _logic ;
     logic_camera < shy_mediator > _logic_camera ;
     logic_entities < shy_mediator > _logic_entities ;

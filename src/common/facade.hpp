@@ -1,6 +1,7 @@
 #include "engine_camera.hpp"
 #include "engine_math.hpp"
 #include "engine_mesh.hpp"
+#include "engine_rasterizer.hpp"
 #include "logic.hpp"
 #include "logic_camera.hpp"
 #include "logic_entities.hpp"
@@ -40,6 +41,7 @@ private :
         , shy_engine_camera
         , shy_engine_math
         , shy_engine_mesh 
+        , shy_engine_rasterizer
         , shy_logic
         , shy_logic_camera
         , shy_logic_entities

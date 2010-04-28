@@ -89,93 +89,6 @@ private :
         platform :: render_create_texture_id ( _text_texture_id ) ;
         platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
     }
-    void _generate_top_triangle_part
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x_top
-        , int_32 y_top
-        , int_32 x_mid
-        , int_32 y_mid
-        , int_32 x_bottom
-        , int_32 y_bottom
-        )
-    {
-        for ( int_32 y = y_top ; y >= y_mid ; y -- )
-        {
-            int_32 x_top_mid    = ( y_top == y_mid    ) ? x_mid : x_top + ( ( y_top - y ) * ( x_mid    - x_top ) ) / ( y_top - y_mid    ) ;
-            int_32 x_top_bottom = ( y_top == y_bottom ) ? x_top : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
-            int_32 x_left  = _mediator -> math_min ( x_top_mid , x_top_bottom ) ;
-            int_32 x_right = _mediator -> math_max ( x_top_mid , x_top_bottom ) ;
-            for ( int_32 x = x_left ; x <= x_right ; x ++ )
-                starting_texel [ x + texels_in_row * y ] = filler ;
-        }
-    }
-    void _generate_bottom_triangle_part
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x_top
-        , int_32 y_top
-        , int_32 x_mid
-        , int_32 y_mid
-        , int_32 x_bottom
-        , int_32 y_bottom
-        )
-    {
-        for ( int_32 y = y_mid ; y >= y_bottom ; y -- )
-        {
-            int_32 x_mid_bottom = ( y_mid == y_bottom ) ? x_mid    : x_mid + ( ( y_mid - y ) * ( x_bottom - x_mid ) ) / ( y_mid - y_bottom ) ;
-            int_32 x_top_bottom = ( y_top == y_bottom ) ? x_bottom : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
-            int_32 x_left  = _mediator -> math_min ( x_mid_bottom , x_top_bottom ) ;
-            int_32 x_right = _mediator -> math_max ( x_mid_bottom , x_top_bottom ) ;
-            for ( int_32 x = x_left ; x <= x_right ; x ++ )
-                starting_texel [ x + texels_in_row * y ] = filler ;
-        }
-    }
-    void _generate_triangle
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x1
-        , int_32 y1
-        , int_32 x2
-        , int_32 y2
-        , int_32 x3
-        , int_32 y3
-        )
-    {
-        if ( y1 >= y2 && y2 >= y3 )
-        {
-            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
-            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
-        }
-        else if ( y1 >= y3 && y3 >= y2 )
-        {
-            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x1 , y1 , x3 , y3 , x2 , y2 ) ;
-            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x1 , y1 , x3 , y3 , x2 , y2 ) ;
-        }
-        else if ( y3 >= y1 && y1 >= y2 )
-        {
-            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x3 , y3 , x1 , y1 , x2 , y2 ) ;
-            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x3 , y3 , x1 , y1 , x2 , y2 ) ;
-        }
-        else if ( y3 >= y2 && y2 >= y1 )
-        {
-            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x3 , y3 , x2 , y2 , x1 , y1 ) ;
-            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x3 , y3 , x2 , y2 , x1 , y1 ) ;
-        }
-        else if ( y2 >= y1 && y1 >= y3 )
-        {
-            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x2 , y2 , x1 , y1 , x3 , y3 ) ;
-            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x1 , y1 , x3 , y3 ) ;
-        }
-        else if ( y2 >= y3 && y3 >= y1 )
-        {
-            _generate_top_triangle_part    ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
-            _generate_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
-        }
-    }
     void _generate_font_linear_english_A 
         ( texel_data * starting_texel 
         , int_32 texels_in_row 
@@ -184,8 +97,8 @@ private :
         )
     {
         texel_data filler ;
-        platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
-        _generate_triangle ( starting_texel , filler , texels_in_row 
+        platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 128 ) ;
+        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row 
             , 0 , 0
             , letter_size_x - 1 , letter_size_y / 3
             , letter_size_x / 2 , letter_size_y - 1
