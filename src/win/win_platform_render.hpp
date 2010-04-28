@@ -106,14 +106,20 @@ inline void shy_win_platform :: render_projection_ortho
 	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_PROJECTION , & matrix ) ) ;
 }
 
-inline void shy_win_platform :: render_create_buffer_id 
-    ( shy_win_platform :: render_buffer_id & arg_buffer_id 
+inline void shy_win_platform :: render_create_vertex_buffer_id 
+    ( shy_win_platform :: render_vertex_buffer_id & arg_buffer_id 
+    )
+{
+}
+
+inline void shy_win_platform :: render_create_index_buffer_id 
+    ( shy_win_platform :: render_index_buffer_id & arg_buffer_id 
     )
 {
 }
 
 inline void shy_win_platform :: render_load_vertex_buffer 
-    ( const shy_win_platform :: render_buffer_id & arg_buffer_id 
+    ( const shy_win_platform :: render_vertex_buffer_id & arg_buffer_id 
     , shy_win_platform :: int_32 elements 
     , shy_win_platform :: vertex_data * data 
     )
@@ -150,7 +156,7 @@ inline void shy_win_platform :: render_set_vertex_color
 }
 
 inline void shy_win_platform :: render_load_index_buffer 
-    ( const shy_win_platform :: render_buffer_id & arg_buffer_id 
+    ( const shy_win_platform :: render_index_buffer_id & arg_buffer_id 
     , shy_win_platform :: int_32 elements 
     , shy_win_platform :: index_data * data 
     )
@@ -189,16 +195,16 @@ inline void shy_win_platform :: render_matrix_pop ( )
 }
 
 inline void shy_win_platform :: render_draw_triangle_strip 
-    ( const shy_win_platform :: render_buffer_id & vertices_buffer 
-    , const shy_win_platform :: render_buffer_id & indices_buffer
+    ( const shy_win_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_win_platform :: render_index_buffer_id & indices_buffer
     , shy_win_platform :: int_32 indices_count
     )
 {
 }
 
 inline void shy_win_platform :: render_draw_triangle_fan
-    ( const shy_win_platform :: render_buffer_id & vertices_buffer 
-    , const shy_win_platform :: render_buffer_id & indices_buffer
+    ( const shy_win_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_win_platform :: render_index_buffer_id & indices_buffer
     , shy_win_platform :: int_32 indices_count
     )
 {

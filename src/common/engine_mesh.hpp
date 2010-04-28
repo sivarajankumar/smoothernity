@@ -4,7 +4,8 @@ template < typename mediator >
 class shy_engine_mesh
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: render_buffer_id render_buffer_id ;
+    typedef typename mediator :: platform :: render_index_buffer_id render_index_buffer_id ;
+    typedef typename mediator :: platform :: render_vertex_buffer_id render_vertex_buffer_id ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
@@ -20,9 +21,9 @@ private :
     class _mesh_data
     {
     public :
-        render_buffer_id vertex_buffer_id ;
-        render_buffer_id triangle_strip_index_buffer_id ;
-        render_buffer_id triangle_fan_index_buffer_id ;
+        render_vertex_buffer_id vertex_buffer_id ;
+        render_index_buffer_id triangle_strip_index_buffer_id ;
+        render_index_buffer_id triangle_fan_index_buffer_id ;
         int_32 triangle_strip_indices_count ;
         int_32 triangle_fan_indices_count ;
         matrix_data transform ;
@@ -45,11 +46,11 @@ public :
         mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
         mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
         platform :: matrix_identity ( mesh . transform ) ;
-        platform :: render_create_buffer_id ( mesh . vertex_buffer_id ) ;
+        platform :: render_create_vertex_buffer_id ( mesh . vertex_buffer_id ) ;
         platform :: render_load_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
         if ( triangle_strip_indices_count > 0 )
         {
-            platform :: render_create_buffer_id ( mesh . triangle_strip_index_buffer_id ) ;
+            platform :: render_create_index_buffer_id ( mesh . triangle_strip_index_buffer_id ) ;
             platform :: render_load_index_buffer 
                 ( mesh . triangle_strip_index_buffer_id 
                 , triangle_strip_indices_count 
@@ -58,7 +59,7 @@ public :
         }
         if ( triangle_fan_indices_count > 0 )
         {
-            platform :: render_create_buffer_id ( mesh . triangle_fan_index_buffer_id ) ;
+            platform :: render_create_index_buffer_id ( mesh . triangle_fan_index_buffer_id ) ;
             platform :: render_load_index_buffer 
                 ( mesh . triangle_fan_index_buffer_id 
                 , triangle_fan_indices_count 
