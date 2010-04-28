@@ -106,24 +106,46 @@ inline void shy_win_platform :: render_projection_ortho
 	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_PROJECTION , & matrix ) ) ;
 }
 
-inline void shy_win_platform :: render_create_vertex_buffer_id 
+inline void shy_win_platform :: render_create_vertex_buffer 
     ( shy_win_platform :: render_vertex_buffer_id & arg_buffer_id 
-    )
-{
-}
-
-inline void shy_win_platform :: render_create_index_buffer_id 
-    ( shy_win_platform :: render_index_buffer_id & arg_buffer_id 
-    )
-{
-}
-
-inline void shy_win_platform :: render_load_vertex_buffer 
-    ( const shy_win_platform :: render_vertex_buffer_id & arg_buffer_id 
     , shy_win_platform :: int_32 elements 
     , shy_win_platform :: vertex_data * data 
     )
 {
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> CreateVertexBuffer 
+		( sizeof ( vertex_data ) * elements
+		, D3DUSAGE_WRITEONLY
+		, D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1
+		, D3DPOOL_DEFAULT
+		, & arg_buffer_id . _buffer
+		, 0
+		) ) ;
+	void * mapped_vertices = 0 ;
+	V ( arg_buffer_id . _buffer -> Lock ( 0 , 0 , & mapped_vertices , 0 ) ) ;
+	memcpy ( mapped_vertices , data , sizeof ( vertex_data ) * elements ) ;
+	V ( arg_buffer_id . _buffer -> Unlock ( ) ) ;
+}
+
+inline void shy_win_platform :: render_create_index_buffer 
+    ( shy_win_platform :: render_index_buffer_id & arg_buffer_id 
+    , shy_win_platform :: int_32 elements 
+    , shy_win_platform :: index_data * data 
+    )
+{
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> CreateIndexBuffer
+		( sizeof ( index_data ) * elements
+		, D3DUSAGE_WRITEONLY
+		, D3DFMT_INDEX32
+		, D3DPOOL_DEFAULT
+		, & arg_buffer_id . _buffer 
+		, 0
+		) ) ;
+	void * mapped_indices = 0 ;
+	V ( arg_buffer_id . _buffer -> Lock ( 0 , 0 , & mapped_indices , 0 ) ) ;
+	memcpy ( mapped_indices , data , sizeof ( index_data ) * elements ) ;
+	V ( arg_buffer_id . _buffer -> Unlock ( ) ) ;
 }
 
 inline void shy_win_platform :: render_set_vertex_position 
@@ -142,6 +164,7 @@ inline void shy_win_platform :: render_set_vertex_tex_coord
     , shy_win_platform :: float_32 v 
     )
 {
+	vertex . _tex_coords = D3DXVECTOR2 ( u , v ) ;
 }
 
 inline void shy_win_platform :: render_set_vertex_color 
@@ -152,15 +175,7 @@ inline void shy_win_platform :: render_set_vertex_color
     , shy_win_platform :: int_32 a 
     )
 {
-	vertex . _color = D3DXVECTOR3 ( float ( r ) / 255.0f , float ( g ) / 255.0f , float ( b ) / 255.0f ) ;
-}
-
-inline void shy_win_platform :: render_load_index_buffer 
-    ( const shy_win_platform :: render_index_buffer_id & arg_buffer_id 
-    , shy_win_platform :: int_32 elements 
-    , shy_win_platform :: index_data * data 
-    )
-{
+	vertex . _color = D3DXCOLOR ( float ( r ) / 255.0f , float ( g ) / 255.0f , float ( b ) / 255.0f , float ( a ) / 255.0f ) ;
 }
 
 inline void shy_win_platform :: render_set_index_value 

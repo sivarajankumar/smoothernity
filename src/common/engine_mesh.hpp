@@ -46,12 +46,10 @@ public :
         mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
         mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
         platform :: matrix_identity ( mesh . transform ) ;
-        platform :: render_create_vertex_buffer_id ( mesh . vertex_buffer_id ) ;
-        platform :: render_load_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
+        platform :: render_create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
         if ( triangle_strip_indices_count > 0 )
         {
-            platform :: render_create_index_buffer_id ( mesh . triangle_strip_index_buffer_id ) ;
-            platform :: render_load_index_buffer 
+            platform :: render_create_index_buffer 
                 ( mesh . triangle_strip_index_buffer_id 
                 , triangle_strip_indices_count 
                 , triangle_strip_indices 
@@ -59,8 +57,7 @@ public :
         }
         if ( triangle_fan_indices_count > 0 )
         {
-            platform :: render_create_index_buffer_id ( mesh . triangle_fan_index_buffer_id ) ;
-            platform :: render_load_index_buffer 
+            platform :: render_create_index_buffer 
                 ( mesh . triangle_fan_index_buffer_id 
                 , triangle_fan_indices_count 
                 , triangle_fan_indices 
