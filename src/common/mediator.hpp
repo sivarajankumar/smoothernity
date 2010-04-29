@@ -50,72 +50,20 @@ public :
     typedef typename platform :: vector_data vector_data ;
     typedef typename platform :: vertex_data vertex_data ;
 public :
-    shy_mediator ( )
-    : _engine_rasterizer ( this )
-    , _logic ( this )
-    , _logic_camera ( this )
-    , _logic_entities ( this )
-    , _logic_fidget ( this )
-    , _logic_land ( this )
-    , _logic_sound ( this )
-    , _logic_text ( this )
-    , _logic_touch ( this )
-    {
-    }
+    shy_mediator ( ) ;
 public :
-    void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up )
-    {
-        _engine_camera . camera_matrix_look_at ( matrix , from , to , norm_up ) ;
-    }
-    void done ( )
-    {
-        _logic . done ( ) ;
-    }
-    float_32 get_entity_height ( )
-    {
-        return _logic_entities . get_entity_height ( ) ;
-    }
-    vector_data get_entity_origin ( int_32 index )
-    {
-        return _logic_entities . get_entity_origin ( index ) ;
-    }
-    float_32 get_near_plane_distance ( )
-    {
-        return _logic . get_near_plane_distance ( ) ;
-    }
-    void init ( )
-    {
-        _logic . init ( ) ;
-        _logic_sound . init ( ) ;
-    }
-    template < typename T >
-    T math_abs ( T f )
-    {
-        return _engine_math . math_abs < T > ( f ) ;
-    }
-    vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
-    {
-        return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
-    }
-    template < typename T >
-    T math_clamp ( T f , T from , T to )
-    {
-        return _engine_math . math_clamp < T > ( f , from , to ) ;
-    }
-    template < typename T >
-    T math_max ( T f1 , T f2 )
-    {
-        return _engine_math . math_max < T > ( f1 , f2 ) ;
-    }
-    template < typename T >
-    T math_min ( T f1 , T f2 )
-    {
-        return _engine_math . math_min < T > ( f1 , f2 ) ;
-    }
-    float_32 math_pi ( )
-    {
-        return _engine_math . math_pi ( ) ;
-    }
+    void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
+    void done ( ) ;
+    float_32 get_entity_height ( ) ;
+    vector_data get_entity_origin ( int_32 index ) ;
+    float_32 get_near_plane_distance ( ) ;
+    void init ( ) ;
+    template < typename T > T math_abs ( T f ) ;
+    vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
+    template < typename T > T math_clamp ( T f , T from , T to ) ;
+    template < typename T > T math_max ( T f1 , T f2 ) ;
+    template < typename T > T math_min ( T f1 , T f2 ) ;
+    float_32 math_pi ( ) ;
     mesh_id mesh_create 
         ( vertex_data * vertices 
         , index_data * triangle_strip_indices 
@@ -123,80 +71,21 @@ public :
         , int_32 vertices_count
         , int_32 triangle_strip_indices_count 
         , int_32 triangle_fan_indices_count
-        )
-    {
-        return _engine_mesh . mesh_create 
-            ( vertices
-            , triangle_strip_indices
-            , triangle_fan_indices
-            , vertices_count
-            , triangle_strip_indices_count
-            , triangle_fan_indices_count
-            ) ;
-    }
-    void mesh_render ( mesh_id arg_mesh_id )
-    {
-        _engine_mesh . mesh_render ( arg_mesh_id ) ;
-    }
-    void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform )
-    {
-        _engine_mesh . mesh_set_transform ( arg_mesh_id , transform ) ;
-    }
-    void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
-    {
-        _engine_rasterizer . rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
-    }
-    void rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row )
-    {
-        _engine_rasterizer . rasterize_use_context ( starting_texel , texels_in_row ) ;
-    }
-    void rasterize_use_texel ( const texel_data & texel )
-    {
-        _engine_rasterizer . rasterize_use_texel ( texel ) ;
-    }
-    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 )
-    {
-        _engine_rasterizer . rasterize_triangle ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
-    }
-    void render ( )
-    {
-        _logic . render ( ) ;
-    }
-    void render_entities ( )
-    {
-        _logic_entities . render_entities ( ) ;
-    }
-    void render_fidget ( )
-    {
-        _logic_fidget . render_fidget ( ) ;
-    }
-    void render_land ( )
-    {
-        _logic_land . render_land ( ) ;
-    }
-    void render_text ( )
-    {
-        _logic_text . render_text ( ) ;
-    }
-    void render_touch ( )
-    {
-        _logic_touch . render_touch ( ) ;
-    }
-    void update ( )
-    {
-        _logic . update ( ) ;
-        _logic_camera . update ( ) ;
-        _logic_entities . update ( ) ;
-        _logic_fidget . update ( ) ;
-        _logic_land . update ( ) ;
-        _logic_sound . update ( ) ;
-        _logic_text . update ( ) ;
-        _logic_touch . update ( ) ;
-    }
-    void use_camera_matrix ( )
-    {
-        _logic_camera . use_camera_matrix ( ) ;
-    }
+        ) ;
+    void mesh_render ( mesh_id arg_mesh_id ) ;
+    void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
+    void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
+    void rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row ) ;
+    void rasterize_use_texel ( const texel_data & texel ) ;
+    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
+    void render ( ) ;
+    void render_entities ( ) ;
+    void render_fidget ( ) ;
+    void render_land ( ) ;
+    void render_text ( ) ;
+    void render_touch ( ) ;
+    void update ( ) ;
+    void use_camera_matrix ( ) ;
 private :
     typename mediator_types :: template modules < shy_mediator > :: engine_camera _engine_camera ;
     typename mediator_types :: template modules < shy_mediator > :: engine_math _engine_math ;
@@ -211,3 +100,218 @@ private :
     typename mediator_types :: template modules < shy_mediator > :: logic_text _logic_text ;
     typename mediator_types :: template modules < shy_mediator > :: logic_touch _logic_touch ;
 } ;
+
+template < typename mediator_types >
+shy_mediator < mediator_types > :: shy_mediator ( )
+: _engine_rasterizer ( this )
+, _logic ( this )
+, _logic_camera ( this )
+, _logic_entities ( this )
+, _logic_fidget ( this )
+, _logic_land ( this )
+, _logic_sound ( this )
+, _logic_text ( this )
+, _logic_touch ( this )
+{
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: camera_matrix_look_at
+    ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up )
+{
+    _engine_camera . camera_matrix_look_at ( matrix , from , to , norm_up ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: done ( )
+{
+    _logic . done ( ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: float_32
+shy_mediator < mediator_types > :: get_entity_height ( )
+{
+    return _logic_entities . get_entity_height ( ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: vector_data
+shy_mediator < mediator_types > :: get_entity_origin ( int_32 index )
+{
+    return _logic_entities . get_entity_origin ( index ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: float_32
+shy_mediator < mediator_types > :: get_near_plane_distance ( )
+{
+    return _logic . get_near_plane_distance ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: init ( )
+{
+    _logic . init ( ) ;
+    _logic_sound . init ( ) ;
+}
+
+template < typename mediator_types >
+template < typename T >
+T shy_mediator < mediator_types > :: math_abs ( T f )
+{
+    return _engine_math . math_abs < T > ( f ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: vector_data
+shy_mediator < mediator_types > :: math_catmull_rom_spline
+    ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
+{
+    return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
+}
+
+template < typename mediator_types >
+template < typename T >
+T shy_mediator < mediator_types > :: math_clamp ( T f , T from , T to )
+{
+    return _engine_math . math_clamp < T > ( f , from , to ) ;
+}
+
+template < typename mediator_types >
+template < typename T >
+T shy_mediator < mediator_types > :: math_max ( T f1 , T f2 )
+{
+    return _engine_math . math_max < T > ( f1 , f2 ) ;
+}
+
+template < typename mediator_types >
+template < typename T >
+T shy_mediator < mediator_types > :: math_min ( T f1 , T f2 )
+{
+    return _engine_math . math_min < T > ( f1 , f2 ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: float_32
+shy_mediator < mediator_types > :: math_pi ( )
+{
+    return _engine_math . math_pi ( ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: mesh_id
+shy_mediator < mediator_types > :: mesh_create 
+    ( vertex_data * vertices 
+    , index_data * triangle_strip_indices 
+    , index_data * triangle_fan_indices
+    , int_32 vertices_count
+    , int_32 triangle_strip_indices_count 
+    , int_32 triangle_fan_indices_count
+    )
+{
+    return _engine_mesh . mesh_create 
+        ( vertices
+        , triangle_strip_indices
+        , triangle_fan_indices
+        , vertices_count
+        , triangle_strip_indices_count
+        , triangle_fan_indices_count
+        ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_render ( mesh_id arg_mesh_id )
+{
+    _engine_mesh . mesh_render ( arg_mesh_id ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_set_transform
+    ( mesh_id arg_mesh_id , const matrix_data & transform )
+{
+    _engine_mesh . mesh_set_transform ( arg_mesh_id , transform ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_ellipse_in_rect
+    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
+{
+    _engine_rasterizer . rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_use_context
+    ( texel_data * starting_texel , int_32 texels_in_row )
+{
+    _engine_rasterizer . rasterize_use_context ( starting_texel , texels_in_row ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_use_texel
+    ( const texel_data & texel )
+{
+    _engine_rasterizer . rasterize_use_texel ( texel ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_triangle
+    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 )
+{
+    _engine_rasterizer . rasterize_triangle ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: render ( )
+{
+    _logic . render ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: render_entities ( )
+{
+    _logic_entities . render_entities ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: render_fidget ( )
+{
+    _logic_fidget . render_fidget ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: render_land ( )
+{
+    _logic_land . render_land ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: render_text ( )
+{
+    _logic_text . render_text ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: render_touch ( )
+{
+    _logic_touch . render_touch ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: update ( )
+{
+    _logic . update ( ) ;
+    _logic_camera . update ( ) ;
+    _logic_entities . update ( ) ;
+    _logic_fidget . update ( ) ;
+    _logic_land . update ( ) ;
+    _logic_sound . update ( ) ;
+    _logic_text . update ( ) ;
+    _logic_touch . update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: use_camera_matrix ( )
+{
+    _logic_camera . use_camera_matrix ( ) ;
+}
