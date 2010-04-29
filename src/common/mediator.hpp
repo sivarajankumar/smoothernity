@@ -126,6 +126,14 @@ public :
     {
         _engine_rasterizer . rasterize_ellipse_in_rect ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
     }
+    void rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row )
+    {
+        _engine_rasterizer . rasterize_use_context ( starting_texel , texels_in_row ) ;
+    }
+    void rasterize_use_texel ( const texel_data & texel )
+    {
+        _engine_rasterizer . rasterize_use_texel ( texel ) ;
+    }
     void rasterize_triangle
         ( texel_data * starting_texel
         , const texel_data & filler

@@ -7,6 +7,8 @@ class shy_engine_rasterizer
 public :
     shy_engine_rasterizer ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
+    , _starting_texel ( 0 )
+    , _texels_in_row ( 0 )
     {
     }
     void rasterize_triangle
@@ -34,6 +36,15 @@ public :
         )
     {
         _rasterize_ellipse_in_rect ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
+    }
+    void rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row )
+    {
+        _starting_texel = starting_texel ;
+        _texels_in_row = texels_in_row ;
+    }
+    void rasterize_use_texel ( const texel_data & texel )
+    {
+        _texel = texel ;
     }
 private :
     void _rasterize_horizontal_line
@@ -208,4 +219,7 @@ private :
 
 private :
     mediator * _mediator ;
+    texel_data * _starting_texel ;
+    int_32 _texels_in_row ;
+    texel_data _texel ;
 } ;

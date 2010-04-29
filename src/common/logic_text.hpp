@@ -145,6 +145,9 @@ private :
         platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
         platform :: render_set_texel_color ( eraser , 0 , 0 , 0 , 0 ) ;
         
+        _mediator -> rasterize_use_context ( starting_texel , texels_in_row ) ;
+        _mediator -> rasterize_use_texel ( filler ) ;
+        
         _mediator -> rasterize_ellipse_in_rect ( starting_texel , filler , texels_in_row 
             , 0 , 0 
             , letter_size_x - 1 , letter_size_y / 2 
@@ -168,6 +171,8 @@ private :
             , spine_right , spine_top
             , spine_right , spine_bottom
             ) ;
+        
+        _mediator -> rasterize_use_texel ( eraser ) ;
         
         int_32 hole_left = ( letter_size_x * 4 ) / 16 ;
         int_32 hole_right = ( letter_size_x * 12 ) / 16 ;
