@@ -84,8 +84,8 @@ private :
             }
         }
         _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
-        _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
-        _generate_font_linear_english_A ( _text_texture_data + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
+        _generate_font_linear_english_A ( _text_texture_data + TEXT_TEXTURE_SIZE * ( TEXT_TEXTURE_SIZE - 32 ) , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
+        _generate_font_linear_english_A ( _text_texture_data + TEXT_TEXTURE_SIZE * ( TEXT_TEXTURE_SIZE - 32 ) + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
         platform :: render_create_texture_id ( _text_texture_id ) ;
         platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
     }
@@ -97,12 +97,25 @@ private :
         )
     {
         texel_data filler ;
-        platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 128 ) ;
-        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row 
-            , letter_size_x - 1 , 0
-            , 0 , letter_size_y / 3
+        texel_data eraser ;
+        platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
+        platform :: render_set_texel_color ( eraser , 0 , 0 , 0 , 0 ) ;
+        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row
             , letter_size_x / 2 , letter_size_y - 1
+            , 0 , 0
+            , letter_size_x - 1 , 0
             ) ;
+        _mediator -> rasterize_triangle ( starting_texel , eraser , texels_in_row
+            , letter_size_x / 2 , ( letter_size_y * 2 ) / 3
+            , letter_size_x / 5 , 0
+            , ( letter_size_x * 4 ) / 5 , 0
+            ) ;
+        int_32 top = ( letter_size_y * 3 ) / 7 ;
+        int_32 bottom = ( letter_size_y * 2 ) / 7 ;
+        int_32 left = ( letter_size_x * 2 ) / 7 ;
+        int_32 right = ( letter_size_x * 5 ) / 7 ;
+        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row , left , top , left , bottom , right , bottom ) ;
+        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row , left , top , right , top , right , bottom ) ;
     }
 private :
     mediator * _mediator ;
