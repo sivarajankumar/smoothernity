@@ -143,7 +143,7 @@ private :
         texel_data eraser ;
         platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
         platform :: render_set_texel_color ( eraser , 0 , 0 , 0 , 0 ) ;
-        _mediator -> rasterize_circle ( starting_texel , filler , texels_in_row , 0 , 0 , letter_size_x - 1 , letter_size_y - 1 ) ;
+        _mediator -> rasterize_ellipse_in_rect ( starting_texel , filler , texels_in_row , 0 , 0 , letter_size_x - 1 , letter_size_y - 1 ) ;
     }
 private :
     mediator * _mediator ;

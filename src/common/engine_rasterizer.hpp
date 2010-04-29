@@ -23,7 +23,7 @@ public :
     {
         _rasterize_triangle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
     }
-    void rasterize_circle 
+    void rasterize_ellipse_in_rect 
         ( texel_data * starting_texel
         , const texel_data & filler 
         , int_32 texels_in_row 
@@ -33,7 +33,7 @@ public :
         , int_32 y2
         )
     {
-        _rasterize_circle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
+        _rasterize_ellipse_in_rect ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
     }
 private :
     void _rasterize_horizontal_line
@@ -131,7 +131,7 @@ private :
             _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
         }
     }
-    void _rasterize_circle 
+    void _rasterize_ellipse_in_rect
         ( texel_data * starting_texel
         , const texel_data & filler 
         , int_32 texels_in_row 
@@ -141,15 +141,13 @@ private :
         , int_32 y2
         )
     {
-        int_32 top    = _mediator -> math_max ( y1 , y2 ) ;
-        int_32 bottom = _mediator -> math_min ( y1 , y2 ) ;
-        int_32 left   = _mediator -> math_min ( x1 , x2 ) ;
-        int_32 right  = _mediator -> math_max ( x1 , x2 ) ;
+        int_32 height = _mediator -> math_abs ( y1 - y2 ) ;
+        int_32 width  = _mediator -> math_abs ( x1 - x2 ) ;
         int_32 y_center = ( y1 + y2 ) / 2 ;
         int_32 x_center = ( x1 + x2 ) / 2 ;
-        _ellipse ( starting_texel , filler , texels_in_row , x_center , y_center , ( right - left ) / 2 , ( top - bottom ) / 2 ) ;
+        _rasterize_bresenham_ellipse ( starting_texel , filler , texels_in_row , x_center , y_center , width / 2 , height / 2 ) ;
     }
-	void _ellipse ( texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int_32 cx , int_32 cy, int_32 x_radius, int_32 y_radius )
+	void _rasterize_bresenham_ellipse ( texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int_32 cx , int_32 cy, int_32 x_radius, int_32 y_radius )
     {
 		int_32 x , y ;
 		int_32 x_change , y_change , ellipse_error , two_a_square , two_b_square , stopping_x , stopping_y ;
@@ -167,7 +165,8 @@ private :
 		
 		while ( stopping_x >= stopping_y )
         {
-			_plot_4_ellipse_points ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
+            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy - y ) ;
+            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy + y ) ;
             y ++ ;
 			stopping_y += two_a_square ;
 			ellipse_error += y_change ;
@@ -191,7 +190,8 @@ private :
 		
 		while ( stopping_x <= stopping_y )
         {
-			_plot_4_ellipse_points ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
+            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy - y ) ;
+            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy + y ) ;
 			x -- ;
 			stopping_x += two_b_square ;
 			ellipse_error += x_change ;
@@ -204,11 +204,6 @@ private :
                 y_change += two_a_square ;
 			}
 		}
-	}
-	void _plot_4_ellipse_points ( texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int_32 cx , int_32 cy , int_32 x , int_32 y )
-    {
-        _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy - y ) ;
-        _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy + y ) ;
 	}
 
 private :

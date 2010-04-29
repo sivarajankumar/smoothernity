@@ -114,7 +114,7 @@ public :
     {
         _engine_mesh . mesh_set_transform ( arg_mesh_id , transform ) ;
     }
-    void rasterize_circle 
+    void rasterize_ellipse_in_rect 
         ( texel_data * starting_texel
         , const texel_data & filler 
         , int_32 texels_in_row 
@@ -124,7 +124,7 @@ public :
         , int_32 y2
         )
     {
-        _engine_rasterizer . rasterize_circle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
+        _engine_rasterizer . rasterize_ellipse_in_rect ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
     }
     void rasterize_triangle
         ( texel_data * starting_texel
