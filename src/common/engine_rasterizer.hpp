@@ -11,31 +11,13 @@ public :
     , _texels_in_row ( 0 )
     {
     }
-    void rasterize_triangle
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x1
-        , int_32 y1
-        , int_32 x2
-        , int_32 y2
-        , int_32 x3
-        , int_32 y3
-        )
+    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 )
     {
-        _rasterize_triangle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
+        _rasterize_triangle ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
     }
-    void rasterize_ellipse_in_rect 
-        ( texel_data * starting_texel
-        , const texel_data & filler 
-        , int_32 texels_in_row 
-        , int_32 x1
-        , int_32 y1 
-        , int_32 x2
-        , int_32 y2
-        )
+    void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
     {
-        _rasterize_ellipse_in_rect ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
+        _rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
     }
     void rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row )
     {
@@ -47,118 +29,73 @@ public :
         _texel = texel ;
     }
 private :
-    void _rasterize_horizontal_line
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x1
-        , int_32 x2
-        , int_32 y
-        )
+    void _rasterize_horizontal_line ( int_32 x1 , int_32 x2 , int_32 y )
     {
         int_32 left  = _mediator -> math_min ( x1 , x2 ) ;
         int_32 right = _mediator -> math_max ( x1 , x2 ) ;
         for ( int_32 x = left ; x <= right ; x ++ )
-            starting_texel [ x + texels_in_row * y ] = filler ;
+            _starting_texel [ x + _texels_in_row * y ] = _texel ;
     }
-    void _rasterize_top_triangle_part
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x_top
-        , int_32 y_top
-        , int_32 x_mid
-        , int_32 y_mid
-        , int_32 x_bottom
-        , int_32 y_bottom
-        )
+    void _rasterize_top_triangle_part ( int_32 x_top , int_32 y_top , int_32 x_mid , int_32 y_mid , int_32 x_bottom , int_32 y_bottom )
     {
         for ( int_32 y = y_top ; y >= y_mid ; y -- )
         {
             int_32 x_top_mid    = ( y_top == y_mid    ) ? x_mid : x_top + ( ( y_top - y ) * ( x_mid    - x_top ) ) / ( y_top - y_mid    ) ;
             int_32 x_top_bottom = ( y_top == y_bottom ) ? x_top : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
-            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , x_top_mid , x_top_bottom , y ) ;
+            _rasterize_horizontal_line ( x_top_mid , x_top_bottom , y ) ;
         }
     }
-    void _rasterize_bottom_triangle_part
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x_top
-        , int_32 y_top
-        , int_32 x_mid
-        , int_32 y_mid
-        , int_32 x_bottom
-        , int_32 y_bottom
-        )
+    void _rasterize_bottom_triangle_part ( int_32 x_top , int_32 y_top , int_32 x_mid , int_32 y_mid , int_32 x_bottom , int_32 y_bottom )
     {
         for ( int_32 y = y_mid ; y >= y_bottom ; y -- )
         {
             int_32 x_mid_bottom = ( y_mid == y_bottom ) ? x_mid    : x_mid + ( ( y_mid - y ) * ( x_bottom - x_mid ) ) / ( y_mid - y_bottom ) ;
             int_32 x_top_bottom = ( y_top == y_bottom ) ? x_bottom : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
-            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , x_mid_bottom , x_top_bottom , y ) ;
+            _rasterize_horizontal_line ( x_mid_bottom , x_top_bottom , y ) ;
         }
     }
-    void _rasterize_triangle
-        ( texel_data * starting_texel
-        , const texel_data & filler
-        , int_32 texels_in_row
-        , int_32 x1
-        , int_32 y1
-        , int_32 x2
-        , int_32 y2
-        , int_32 x3
-        , int_32 y3
-        )
+    void _rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 )
     {
         if ( y1 >= y2 && y2 >= y3 )
         {
-            _rasterize_top_triangle_part    ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
-            _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
+            _rasterize_top_triangle_part    ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
+            _rasterize_bottom_triangle_part ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
         }
         else if ( y1 >= y3 && y3 >= y2 )
         {
-            _rasterize_top_triangle_part    ( starting_texel , filler , texels_in_row , x1 , y1 , x3 , y3 , x2 , y2 ) ;
-            _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x1 , y1 , x3 , y3 , x2 , y2 ) ;
+            _rasterize_top_triangle_part    ( x1 , y1 , x3 , y3 , x2 , y2 ) ;
+            _rasterize_bottom_triangle_part ( x1 , y1 , x3 , y3 , x2 , y2 ) ;
         }
         else if ( y3 >= y1 && y1 >= y2 )
         {
-            _rasterize_top_triangle_part    ( starting_texel , filler , texels_in_row , x3 , y3 , x1 , y1 , x2 , y2 ) ;
-            _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x3 , y3 , x1 , y1 , x2 , y2 ) ;
+            _rasterize_top_triangle_part    ( x3 , y3 , x1 , y1 , x2 , y2 ) ;
+            _rasterize_bottom_triangle_part ( x3 , y3 , x1 , y1 , x2 , y2 ) ;
         }
         else if ( y3 >= y2 && y2 >= y1 )
         {
-            _rasterize_top_triangle_part    ( starting_texel , filler , texels_in_row , x3 , y3 , x2 , y2 , x1 , y1 ) ;
-            _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x3 , y3 , x2 , y2 , x1 , y1 ) ;
+            _rasterize_top_triangle_part    ( x3 , y3 , x2 , y2 , x1 , y1 ) ;
+            _rasterize_bottom_triangle_part ( x3 , y3 , x2 , y2 , x1 , y1 ) ;
         }
         else if ( y2 >= y1 && y1 >= y3 )
         {
-            _rasterize_top_triangle_part    ( starting_texel , filler , texels_in_row , x2 , y2 , x1 , y1 , x3 , y3 ) ;
-            _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x1 , y1 , x3 , y3 ) ;
+            _rasterize_top_triangle_part    ( x2 , y2 , x1 , y1 , x3 , y3 ) ;
+            _rasterize_bottom_triangle_part ( x2 , y2 , x1 , y1 , x3 , y3 ) ;
         }
         else if ( y2 >= y3 && y3 >= y1 )
         {
-            _rasterize_top_triangle_part    ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
-            _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
+            _rasterize_top_triangle_part    ( x2 , y2 , x3 , y3 , x1 , y1 ) ;
+            _rasterize_bottom_triangle_part ( x2 , y2 , x3 , y3 , x1 , y1 ) ;
         }
     }
-    void _rasterize_ellipse_in_rect
-        ( texel_data * starting_texel
-        , const texel_data & filler 
-        , int_32 texels_in_row 
-        , int_32 x1
-        , int_32 y1 
-        , int_32 x2
-        , int_32 y2
-        )
+    void _rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
     {
         int_32 height = _mediator -> math_abs ( y1 - y2 ) ;
         int_32 width  = _mediator -> math_abs ( x1 - x2 ) ;
         int_32 y_center = ( y1 + y2 ) / 2 ;
         int_32 x_center = ( x1 + x2 ) / 2 ;
-        _rasterize_bresenham_ellipse ( starting_texel , filler , texels_in_row , x_center , y_center , width / 2 , height / 2 ) ;
+        _rasterize_bresenham_ellipse ( x_center , y_center , width / 2 , height / 2 ) ;
     }
-	void _rasterize_bresenham_ellipse ( texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int_32 cx , int_32 cy, int_32 x_radius, int_32 y_radius )
+	void _rasterize_bresenham_ellipse ( int_32 cx , int_32 cy, int_32 x_radius, int_32 y_radius )
     {
 		int_32 x , y ;
 		int_32 x_change , y_change , ellipse_error , two_a_square , two_b_square , stopping_x , stopping_y ;
@@ -176,8 +113,8 @@ private :
 		
 		while ( stopping_x >= stopping_y )
         {
-            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy - y ) ;
-            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy + y ) ;
+            _rasterize_horizontal_line ( cx - x , cx + x , cy - y ) ;
+            _rasterize_horizontal_line ( cx - x , cx + x , cy + y ) ;
             y ++ ;
 			stopping_y += two_a_square ;
 			ellipse_error += y_change ;
@@ -201,8 +138,8 @@ private :
 		
 		while ( stopping_x <= stopping_y )
         {
-            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy - y ) ;
-            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy + y ) ;
+            _rasterize_horizontal_line ( cx - x , cx + x , cy - y ) ;
+            _rasterize_horizontal_line ( cx - x , cx + x , cy + y ) ;
 			x -- ;
 			stopping_x += two_b_square ;
 			ellipse_error += x_change ;
