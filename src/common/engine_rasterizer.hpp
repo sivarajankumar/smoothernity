@@ -167,7 +167,7 @@ private :
 		
 		while ( stopping_x >= stopping_y )
         {
-			_plot4EllipsePoints ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
+			_plot_4_ellipse_points ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
             y ++ ;
 			stopping_y += two_a_square ;
 			ellipse_error += y_change ;
@@ -191,7 +191,7 @@ private :
 		
 		while ( stopping_x <= stopping_y )
         {
-			_plot4EllipsePoints ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
+			_plot_4_ellipse_points ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
 			x -- ;
 			stopping_x += two_b_square ;
 			ellipse_error += x_change ;
@@ -205,20 +205,12 @@ private :
 			}
 		}
 	}
+	void _plot_4_ellipse_points ( texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int_32 cx , int_32 cy , int_32 x , int_32 y )
+    {
+        _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy - y ) ;
+        _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , cx - x , cx + x , cy + y ) ;
+	}
 
-	void _plot4EllipsePoints(texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int CX, int CY,int x, int y)
-    {
-		_putPixel(starting_texel, filler, texels_in_row, CX+x, CY+y); // prvy kvadrant
-		_putPixel(starting_texel, filler, texels_in_row, CX-x, CY+y); // druhy
-		_putPixel(starting_texel, filler, texels_in_row, CX-x, CY-y); // treti
-		_putPixel(starting_texel, filler, texels_in_row, CX+x, CY-y); // stvrty		
-	}
-    
-	void _putPixel(texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int x0, int y0)
-    {
-        starting_texel [ x0 + texels_in_row * y0 ] = filler ;
-	}
-	
 private :
     mediator * _mediator ;
 } ;
