@@ -23,7 +23,8 @@ public :
             ) ;
         return platform :: vector_mul ( platform :: vector_add ( result_p0_p1 , result_p2_p3 ) , 0.5f ) ;
     }
-    float_32 math_clamp ( float_32 f , float_32 from , float_32 to )
+    template < typename T >
+    T math_clamp ( T f , T from , T to )
     {
         if ( f < from )
             return from ;
@@ -32,15 +33,18 @@ public :
         else
             return f ;
     }
-    float_32 math_abs ( float_32 f )
+    template < typename T >
+    T math_abs ( T f )
     {
-        return f < 0.0f ? - f : f ;
+        return f < T ( 0 ) ? - f : f ;
     }
-    float_32 math_max ( float_32 f1 , float_32 f2 )
+    template < typename T >
+    T math_max ( T f1 , T f2 )
     {
         return f1 > f2 ? f1 : f2 ;
     }
-    float_32 math_min ( float_32 f1 , float_32 f2 )
+    template < typename T >
+    T math_min ( T f1 , T f2 )
     {
         return f1 < f2 ? f1 : f2 ;
     }

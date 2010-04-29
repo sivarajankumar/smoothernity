@@ -23,6 +23,18 @@ public :
     {
         _rasterize_triangle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 , x3 , y3 ) ;
     }
+    void rasterize_circle 
+        ( texel_data * starting_texel
+        , const texel_data & filler 
+        , int_32 texels_in_row 
+        , int_32 x1
+        , int_32 y1 
+        , int_32 x2
+        , int_32 y2
+        )
+    {
+        _rasterize_circle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
+    }
 private :
     void _rasterize_top_triangle_part
         ( texel_data * starting_texel
@@ -110,6 +122,17 @@ private :
             _rasterize_top_triangle_part    ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
             _rasterize_bottom_triangle_part ( starting_texel , filler , texels_in_row , x2 , y2 , x3 , y3 , x1 , y1 ) ;
         }
+    }
+    void _rasterize_circle 
+        ( texel_data * starting_texel
+        , const texel_data & filler 
+        , int_32 texels_in_row 
+        , int_32 x1
+        , int_32 y1 
+        , int_32 x2
+        , int_32 y2
+        )
+    {
     }
 private :
     mediator * _mediator ;

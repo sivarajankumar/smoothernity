@@ -64,25 +64,29 @@ public :
         _logic . init ( ) ;
         _logic_sound . init ( ) ;
     }
-    float_32 math_abs ( float_32 f )
+    template < typename T >
+    T math_abs ( T f )
     {
-        return _engine_math . math_abs ( f ) ;
+        return _engine_math . math_abs < T > ( f ) ;
     }
     vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
     {
         return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
     }
-    float_32 math_clamp ( float_32 f , float_32 from , float_32 to )
+    template < typename T >
+    T math_clamp ( T f , T from , T to )
     {
-        return _engine_math . math_clamp ( f , from , to ) ;
+        return _engine_math . math_clamp < T > ( f , from , to ) ;
     }
-    float_32 math_max ( float_32 f1 , float_32 f2 )
+    template < typename T >
+    T math_max ( T f1 , T f2 )
     {
-        return _engine_math . math_max ( f1 , f2 ) ;
+        return _engine_math . math_max < T > ( f1 , f2 ) ;
     }
-    float_32 math_min ( float_32 f1 , float_32 f2 )
+    template < typename T >
+    T math_min ( T f1 , T f2 )
     {
-        return _engine_math . math_min ( f1 , f2 ) ;
+        return _engine_math . math_min < T > ( f1 , f2 ) ;
     }
     mesh_id mesh_create 
         ( vertex_data * vertices 
@@ -109,6 +113,18 @@ public :
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform )
     {
         _engine_mesh . mesh_set_transform ( arg_mesh_id , transform ) ;
+    }
+    void rasterize_circle 
+        ( texel_data * starting_texel
+        , const texel_data & filler 
+        , int_32 texels_in_row 
+        , int_32 x1
+        , int_32 y1 
+        , int_32 x2
+        , int_32 y2
+        )
+    {
+        _engine_rasterizer . rasterize_circle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
     }
     void rasterize_triangle
         ( texel_data * starting_texel
