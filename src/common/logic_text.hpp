@@ -83,13 +83,13 @@ private :
                     ) ;
             }
         }
-        _generate_font_linear_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
-        _generate_font_linear_english_A ( _text_texture_data + TEXT_TEXTURE_SIZE * ( TEXT_TEXTURE_SIZE - 32 ) , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
-        _generate_font_linear_english_A ( _text_texture_data + TEXT_TEXTURE_SIZE * ( TEXT_TEXTURE_SIZE - 32 ) + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
+        _generate_font_english_A ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
+        _generate_font_english_A ( _text_texture_data + TEXT_TEXTURE_SIZE * ( TEXT_TEXTURE_SIZE - 32 ) , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
+        _generate_font_english_A ( _text_texture_data + TEXT_TEXTURE_SIZE * ( TEXT_TEXTURE_SIZE - 32 ) + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
         platform :: render_create_texture_id ( _text_texture_id ) ;
         platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
     }
-    void _generate_font_linear_english_A 
+    void _generate_font_english_A 
         ( texel_data * starting_texel 
         , int_32 texels_in_row 
         , int_32 letter_size_x 
@@ -100,22 +100,49 @@ private :
         texel_data eraser ;
         platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
         platform :: render_set_texel_color ( eraser , 0 , 0 , 0 , 0 ) ;
-        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row
-            , letter_size_x / 2 , letter_size_y - 1
-            , 0 , 0
-            , letter_size_x - 1 , 0
+        
+        int_32 outer_top = letter_size_y - 1 ;
+        int_32 outer_bottom = 0 ;
+        int_32 outer_center = letter_size_x / 2 ;
+        int_32 outer_left = 0 ;
+        int_32 outer_right = letter_size_x - 1 ;
+        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row , outer_center , outer_top , outer_left , outer_bottom , outer_right , outer_bottom ) ;
+        
+        int_32 inner_top = ( letter_size_y * 2 ) / 3 ;
+        int_32 inner_bottom = 0 ;
+        int_32 inner_center = letter_size_x / 2 ;
+        int_32 inner_left = letter_size_x / 5 ;
+        int_32 inner_right = ( letter_size_x * 4 ) / 5 ;
+        _mediator -> rasterize_triangle ( starting_texel , eraser , texels_in_row , inner_center , inner_top , inner_left , inner_bottom , inner_right , inner_bottom ) ;
+        
+        int_32 board_top = ( letter_size_y * 3 ) / 7 ;
+        int_32 board_bottom = ( letter_size_y * 2 ) / 7 ;
+        int_32 board_top_left     = outer_center + ( ( outer_left  - outer_center ) * ( outer_top - board_top    ) ) / ( outer_top - outer_bottom ) ;
+        int_32 board_bottom_left  = outer_center + ( ( outer_left  - outer_center ) * ( outer_top - board_bottom ) ) / ( outer_top - outer_bottom ) ;
+        int_32 board_top_right    = outer_center + ( ( outer_right - outer_center ) * ( outer_top - board_top    ) ) / ( outer_top - outer_bottom ) ;
+        int_32 board_bottom_right = outer_center + ( ( outer_right - outer_center ) * ( outer_top - board_bottom ) ) / ( outer_top - outer_bottom ) ;
+        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row 
+            , board_top_left , board_top
+            , board_bottom_left , board_bottom 
+            , board_bottom_right , board_bottom
             ) ;
-        _mediator -> rasterize_triangle ( starting_texel , eraser , texels_in_row
-            , letter_size_x / 2 , ( letter_size_y * 2 ) / 3
-            , letter_size_x / 5 , 0
-            , ( letter_size_x * 4 ) / 5 , 0
+        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row 
+            , board_top_left , board_top 
+            , board_top_right , board_top 
+            , board_bottom_right , board_bottom 
             ) ;
-        int_32 top = ( letter_size_y * 3 ) / 7 ;
-        int_32 bottom = ( letter_size_y * 2 ) / 7 ;
-        int_32 left = ( letter_size_x * 2 ) / 7 ;
-        int_32 right = ( letter_size_x * 5 ) / 7 ;
-        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row , left , top , left , bottom , right , bottom ) ;
-        _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row , left , top , right , top , right , bottom ) ;
+    }
+    void _generate_font_english_B
+        ( texel_data * starting_texel 
+        , int_32 texels_in_row 
+        , int_32 letter_size_x 
+        , int_32 letter_size_y
+        )
+    {
+        texel_data filler ;
+        texel_data eraser ;
+        platform :: render_set_texel_color ( filler , 255 , 255 , 255 , 255 ) ;
+        platform :: render_set_texel_color ( eraser , 0 , 0 , 0 , 0 ) ;
     }
 private :
     mediator * _mediator ;
