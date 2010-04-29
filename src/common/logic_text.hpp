@@ -93,37 +93,39 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _create_text_texture ( )
 {
+    platform :: render_set_texel_color ( _filler , 255 , 255 , 255 , 255 ) ;
+    platform :: render_set_texel_color ( _eraser , 0 , 0 , 0 , 128 ) ;
+
     _text_texture_id = _mediator -> texture_create ( ) ;
 
     for ( int_32 x = 0 ; x < _mediator -> texture_width ( ) ; x ++ )
     {
         for ( int_32 y = 0 ; y < _mediator -> texture_height ( ) ; y ++ )
-        {
-            int_32 c = x ^ y ;
-            _mediator -> texture_set_texel 
-                ( _text_texture_id
-                , x
-                , y
-                , ( c % 32 ) * 8
-                , ( c % 64 ) * 4
-                , ( c % 128 ) * 2
-                , ( c % 64 ) * 4
-                ) ;
-        }
+            _mediator -> texture_set_texel ( _text_texture_id , x , y , _eraser ) ;
     }
     
-    platform :: render_set_texel_color ( _filler , 255 , 255 , 255 , 255 ) ;
-    platform :: render_set_texel_color ( _eraser , 0 , 0 , 0 , 0 ) ;
+    int_32 line = _mediator -> texture_height ( ) ;
 
-    _generate_font_english_A ( _text_texture_id ,   0 , 128 ,  16 ,  16 ) ;
-    _generate_font_english_A ( _text_texture_id ,  32 , 128 ,  32 ,  32 ) ;
-    _generate_font_english_A ( _text_texture_id ,  64 , 128 ,  64 ,  64 ) ;
-    _generate_font_english_A ( _text_texture_id , 128 , 128 , 128 , 128 ) ;
-
-    _generate_font_english_B ( _text_texture_id ,   0 , 0 ,  16 ,  16 ) ;
-    _generate_font_english_B ( _text_texture_id ,  32 , 0 ,  32 ,  32 ) ;
-    _generate_font_english_B ( _text_texture_id ,  64 , 0 ,  64 ,  64 ) ;
-    _generate_font_english_B ( _text_texture_id , 128 , 0 , 128 , 128 ) ;
+    line -= 16 ;
+    _generate_font_english_A ( _text_texture_id ,   0 , line ,  16 ,  16 ) ;
+    _generate_font_english_B ( _text_texture_id ,  16 , line ,  16 ,  16 ) ;
+    line -= 16 ;
+    line -= 16 ;
+    line -= 16 ;
+    
+    line -= 32 ;
+    _generate_font_english_A ( _text_texture_id ,   0 , line ,  32 ,  32 ) ;
+    _generate_font_english_B ( _text_texture_id ,  32 , line ,  32 ,  32 ) ;
+    line -= 32 ;
+    line -= 32 ;
+    line -= 32 ;
+    
+    line -= 64 ;
+    _generate_font_english_A ( _text_texture_id ,   0 , line ,  64 ,  64 ) ;
+    _generate_font_english_B ( _text_texture_id ,  64 , line ,  64 ,  64 ) ;
+    line -= 64 ;
+    line -= 64 ;
+    line -= 64 ;
     
     _mediator -> texture_finalize ( _text_texture_id ) ;
 }
