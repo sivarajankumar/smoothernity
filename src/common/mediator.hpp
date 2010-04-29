@@ -88,6 +88,10 @@ public :
     {
         return _engine_math . math_min < T > ( f1 , f2 ) ;
     }
+    float_32 math_pi ( )
+    {
+        return _engine_math . math_pi ( ) ;
+    }
     mesh_id mesh_create 
         ( vertex_data * vertices 
         , index_data * triangle_strip_indices 

@@ -8,7 +8,6 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
-    
 public :
     shy_logic_fidget ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
@@ -87,7 +86,7 @@ private :
         
         for ( int_32 i = 0 ; i < fidget_edges ; i ++ )
         {
-            float_32 angle = PI * 2.0f * float_32 ( i ) / float_32 ( fidget_edges ) ;
+            float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( fidget_edges ) ;
             platform :: render_set_vertex_position
                 ( vertices [ i ]
                 , fidget_size * platform :: math_cos ( angle )

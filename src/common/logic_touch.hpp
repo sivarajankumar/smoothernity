@@ -103,7 +103,7 @@ private :
         
         for ( int_32 i = 0 ; i < spot_edges ; i ++ )
         {
-            float_32 angle = PI * 2.0f * float_32 ( i ) / float_32 ( spot_edges ) ;
+            float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( spot_edges ) ;
             platform :: render_set_vertex_position
                 ( vertices [ i ]
                 , spot_size * platform :: math_cos ( angle )

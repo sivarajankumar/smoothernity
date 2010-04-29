@@ -10,6 +10,7 @@ public :
     template < typename T > T math_abs ( T f ) ;
     template < typename T > T math_max ( T f1 , T f2 ) ;
     template < typename T > T math_min ( T f1 , T f2 ) ;
+    float_32 math_pi ( ) ;
 } ;
 
 template < typename mediator >
@@ -65,4 +66,11 @@ template < typename T >
 T shy_engine_math < mediator > :: math_min ( T f1 , T f2 )
 {
     return f1 < f2 ? f1 : f2 ;
+}
+
+template < typename mediator >
+typename shy_engine_math < mediator > :: float_32
+shy_engine_math < mediator > :: math_pi ( )
+{
+    return 3.141592f ;
 }

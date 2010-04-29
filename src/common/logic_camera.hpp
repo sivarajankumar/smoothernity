@@ -13,7 +13,6 @@ class shy_logic_camera
 
     static const int_32 ENTITY_MESH_SPANS = 50 ;
     static const int_32 ENTITY_MESH_GRID = 5 ;
-    static const float_32 PI = 3.141592f ;
 
 public :
     shy_logic_camera ( mediator * arg_mediator ) ;

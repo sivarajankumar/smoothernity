@@ -111,7 +111,7 @@ private :
         int_32 next_sample = 0 ;
         for ( int_32 i = 0 ; i < mono_sound_samples_count ; ++ i )
         {
-            next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * PI / float_32 ( platform :: mono_sound_samples_per_second ) ) ) ) ;
+            next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * _mediator -> math_pi ( ) / float_32 ( platform :: mono_sound_samples_per_second ) ) ) ) ;
             platform :: sound_set_sample_value ( _mono_sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
         }
         sound_buffer_id mono_sound_buffer = platform :: sound_create_mono_buffer 

@@ -1,8 +1,3 @@
-#define ENTITY_MESH_SPANS 50
-#define ENTITY_MESH_GRID 5
-#define ENTITY_MESH_HEIGHT 2
-#define PI 3.141592f
-
 template < typename mediator >
 class shy_logic_entities
 {
@@ -15,6 +10,10 @@ class shy_logic_entities
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
+    static const int_32 ENTITY_MESH_SPANS = 50 ;
+    static const int_32 ENTITY_MESH_GRID = 5 ;
+    static const int_32 ENTITY_MESH_HEIGHT = 2 ;
+
 public :
     shy_logic_entities ( mediator * arg_mediator )
     : _mediator ( arg_mediator )
@@ -82,7 +81,7 @@ private :
 		{
 			float_32 angle 
                 = ( ( float_32 ) i ) 
-                * PI 
+                * _mediator -> math_pi ( )
                 * 2.0f 
                 / ( float_32 ) ENTITY_MESH_SPANS
                 ;
