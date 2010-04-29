@@ -36,6 +36,20 @@ public :
         _rasterize_circle ( starting_texel , filler , texels_in_row , x1 , y1 , x2 , y2 ) ;
     }
 private :
+    void _rasterize_horizontal_line
+        ( texel_data * starting_texel
+        , const texel_data & filler
+        , int_32 texels_in_row
+        , int_32 x1
+        , int_32 x2
+        , int_32 y
+        )
+    {
+        int_32 left  = _mediator -> math_min ( x1 , x2 ) ;
+        int_32 right = _mediator -> math_max ( x1 , x2 ) ;
+        for ( int_32 x = left ; x <= right ; x ++ )
+            starting_texel [ x + texels_in_row * y ] = filler ;
+    }
     void _rasterize_top_triangle_part
         ( texel_data * starting_texel
         , const texel_data & filler
@@ -52,10 +66,7 @@ private :
         {
             int_32 x_top_mid    = ( y_top == y_mid    ) ? x_mid : x_top + ( ( y_top - y ) * ( x_mid    - x_top ) ) / ( y_top - y_mid    ) ;
             int_32 x_top_bottom = ( y_top == y_bottom ) ? x_top : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
-            int_32 x_left  = _mediator -> math_min ( x_top_mid , x_top_bottom ) ;
-            int_32 x_right = _mediator -> math_max ( x_top_mid , x_top_bottom ) ;
-            for ( int_32 x = x_left ; x <= x_right ; x ++ )
-                starting_texel [ x + texels_in_row * y ] = filler ;
+            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , x_top_mid , x_top_bottom , y ) ;
         }
     }
     void _rasterize_bottom_triangle_part
@@ -74,10 +85,7 @@ private :
         {
             int_32 x_mid_bottom = ( y_mid == y_bottom ) ? x_mid    : x_mid + ( ( y_mid - y ) * ( x_bottom - x_mid ) ) / ( y_mid - y_bottom ) ;
             int_32 x_top_bottom = ( y_top == y_bottom ) ? x_bottom : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
-            int_32 x_left  = _mediator -> math_min ( x_mid_bottom , x_top_bottom ) ;
-            int_32 x_right = _mediator -> math_max ( x_mid_bottom , x_top_bottom ) ;
-            for ( int_32 x = x_left ; x <= x_right ; x ++ )
-                starting_texel [ x + texels_in_row * y ] = filler ;
+            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , x_mid_bottom , x_top_bottom , y ) ;
         }
     }
     void _rasterize_triangle
@@ -133,6 +141,15 @@ private :
         , int_32 y2
         )
     {
+        int_32 top    = _mediator -> math_max ( y1 , y2 ) ;
+        int_32 bottom = _mediator -> math_min ( y1 , y2 ) ;
+        int_32 left   = _mediator -> math_min ( x1 , x2 ) ;
+        int_32 right  = _mediator -> math_max ( x1 , x2 ) ;
+        int_32 y_center = ( y1 + y2 ) / 2 ;
+        for ( int_32 y = bottom ; y <= top ; y ++ )
+        {
+            _rasterize_horizontal_line ( starting_texel , filler , texels_in_row , x1 , x2 , y ) ;
+        }
     }
 private :
     mediator * _mediator ;
