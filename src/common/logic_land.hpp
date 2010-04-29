@@ -12,9 +12,6 @@ class shy_logic_land
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     
-    static const int_32 LAND_TEXTURE_SIZE_POW2_BASE = 8 ;
-    static const int_32 LAND_TEXTURE_SIZE = 1 << LAND_TEXTURE_SIZE_POW2_BASE ;
-    
 public :
     shy_logic_land ( mediator * arg_mediator ) ;
     void render_land ( ) ;
@@ -31,8 +28,7 @@ private :
     int_32 _land_texture_creation_row ;
     float_32 _land_scale ;
     mesh_id _land_mesh_id ;
-    render_texture_id _land_texture_id ;
-    texel_data _land_texture_data [ LAND_TEXTURE_SIZE * LAND_TEXTURE_SIZE ] ;
+    texture_id _land_texture_id ;
 } ;
 
 template < typename mediator >
@@ -72,8 +68,7 @@ void shy_logic_land < mediator > :: _render_land ( )
 {
     static const int_32 SCALE_IN_FRAMES = 60 ;
     static const float_32 SCALE_STEP = 1.0f / float_32 ( SCALE_IN_FRAMES ) ;
-    platform :: render_enable_texturing ( ) ;
-    platform :: render_use_texture ( _land_texture_id ) ;
+    _mediator -> texture_select ( _land_texture_id ) ;
     if ( _land_scale + SCALE_STEP < 1.0f )
         _land_scale += SCALE_STEP ;
     else
@@ -163,18 +158,22 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: _create_land_texture ( )
 {
+    if ( _land_texture_creation_row == 0 )
+        _land_texture_id = _mediator -> texture_create ( ) ;
     static const int_32 CREATE_ROWS_PER_FRAME = 8 ;
     int_32 prev_creation_row = _land_texture_creation_row ;
-    while ( _land_texture_creation_row < LAND_TEXTURE_SIZE 
+    while ( _land_texture_creation_row < _mediator -> texture_height ( )
          && ( _land_texture_creation_row - prev_creation_row ) <= CREATE_ROWS_PER_FRAME
           )
     {
         int_32 y = _land_texture_creation_row ;
-        for ( int_32 x = 0 ; x < LAND_TEXTURE_SIZE ; x ++ )
+        for ( int_32 x = 0 ; x < _mediator -> texture_width ( ) ; x ++ )
         {
             int_32 c = x ^ y ;
-            platform :: render_set_texel_color
-                ( _land_texture_data [ x + LAND_TEXTURE_SIZE * y ]
+            _mediator -> texture_set_texel
+                ( _land_texture_id
+                , x
+                , y
                 , ( c % 32 ) * 8
                 , ( c % 64 ) * 4
                 , ( c % 128 ) * 2
@@ -183,10 +182,9 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         }
         _land_texture_creation_row ++ ;
     }
-    if ( _land_texture_creation_row == LAND_TEXTURE_SIZE )
+    if ( _land_texture_creation_row == _mediator -> texture_height ( ) )
     {
-        platform :: render_create_texture_id ( _land_texture_id ) ;
-        platform :: render_load_texture_data ( _land_texture_id , LAND_TEXTURE_SIZE_POW2_BASE , _land_texture_data ) ;
+        _mediator -> texture_finalize ( _land_texture_id ) ;
         _land_texture_created = true ;
     }
 }

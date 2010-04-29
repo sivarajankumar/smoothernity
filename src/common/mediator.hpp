@@ -89,9 +89,12 @@ public :
     void render_touch ( ) ;
     texture_id texture_create ( ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
+    int_32 texture_height ( ) ;
     void texture_select ( texture_id arg_texture_id ) ;
-    void texture_set_texel ( texture_id arg_texture_id , const texel_data & texel , int_32 x , int_32 y ) ;
+    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
+    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     void texture_unselect ( ) ;
+    int_32 texture_width ( ) ;
     void update ( ) ;
     void use_camera_matrix ( ) ;
 private :
@@ -346,13 +349,34 @@ void shy_mediator < mediator_types > :: texture_select ( texture_id arg_texture_
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_set_texel 
-    ( texture_id arg_texture_id , const texel_data & texel , int_32 x , int_32 y )
+    ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel )
 {
-    _engine_texture . texture_set_texel ( arg_texture_id , texel , x , y ) ;
+    _engine_texture . texture_set_texel ( arg_texture_id , x , y , texel ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: texture_set_texel 
+    ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a )
+{
+    _engine_texture . texture_set_texel ( arg_texture_id , x , y , r , g , b , a ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_unselect ( )
 {
     _engine_texture . texture_unselect ( ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: int_32
+shy_mediator < mediator_types > :: texture_height ( )
+{
+    return _engine_texture . texture_height ( ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: int_32
+shy_mediator < mediator_types > :: texture_width ( )
+{
+    return _engine_texture . texture_width ( ) ;
 }
