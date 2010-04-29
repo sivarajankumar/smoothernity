@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_engine_rasterizer
 {
+    typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: texel_data texel_data ;
@@ -8,7 +9,7 @@ public :
     shy_engine_rasterizer ( mediator * arg_mediator ) ;
     void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
-    void rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row ) ;
+    void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
 private :
     void _rasterize_horizontal_line ( int_32 x1 , int_32 x2 , int_32 y ) ;
@@ -17,16 +18,17 @@ private :
 	void _rasterize_bresenham_ellipse ( int_32 cx , int_32 cy, int_32 x_radius, int_32 y_radius ) ;
 private :
     mediator * _mediator ;
-    texel_data * _starting_texel ;
-    int_32 _texels_in_row ;
+    texture_id _texture_id ;
     texel_data _texel ;
+    int_32 _origin_x ;
+    int_32 _origin_y ;
 } ;
 
 template < typename mediator >
 shy_engine_rasterizer < mediator > :: shy_engine_rasterizer ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
-, _starting_texel ( 0 )
-, _texels_in_row ( 0 )
+, _origin_x ( 0 )
+, _origin_y ( 0 )
 {
 }
 
@@ -76,10 +78,11 @@ void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( int_32 x1
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row )
+void shy_engine_rasterizer < mediator > :: rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y )
 {
-    _starting_texel = starting_texel ;
-    _texels_in_row = texels_in_row ;
+    _texture_id = arg_texture_id ;
+    _origin_x = origin_x ;
+    _origin_y = origin_y ;
 }
 
 template < typename mediator >
@@ -94,7 +97,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( int_32 x
     int_32 left  = _mediator -> math_min ( x1 , x2 ) ;
     int_32 right = _mediator -> math_max ( x1 , x2 ) ;
     for ( int_32 x = left ; x <= right ; x ++ )
-        _starting_texel [ x + _texels_in_row * y ] = _texel ;
+        _mediator -> texture_set_texel ( _texture_id , x + _origin_x , y + _origin_y , _texel ) ;
 }
 
 template < typename mediator >

@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_text
 {
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -9,10 +10,6 @@ class shy_logic_text
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
-    
-    static const int_32 TEXT_TEXTURE_SIZE_POW2_BASE = 8 ;
-    static const int_32 TEXT_TEXTURE_SIZE = 1 << TEXT_TEXTURE_SIZE_POW2_BASE ;
-
 public :
     shy_logic_text ( mediator * arg_mediator ) ;
     void render_text ( ) ;
@@ -21,14 +18,13 @@ private :
     void _render_text_mesh ( ) ;
     void _create_text_mesh ( ) ;
     void _create_text_texture ( ) ;
-    void _generate_font_english_A ( texel_data * starting_texel , int_32 texels_in_row , int_32 letter_size_x , int_32 letter_size_y ) ;
-    void _generate_font_english_B ( texel_data * starting_texel , int_32 texels_in_row , int_32 letter_size_x , int_32 letter_size_y ) ;
+    void _generate_font_english_A ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y , int_32 letter_size_x , int_32 letter_size_y ) ;
+    void _generate_font_english_B ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y , int_32 letter_size_x , int_32 letter_size_y ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
     mesh_id _text_mesh_id ;
-    render_texture_id _text_texture_id ;
-    texel_data _text_texture_data [ TEXT_TEXTURE_SIZE * TEXT_TEXTURE_SIZE ] ;
+    texture_id _text_texture_id ;
     texel_data _filler ;
     texel_data _eraser ;
 } ;
@@ -61,8 +57,7 @@ void shy_logic_text < mediator > :: update ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
-    platform :: render_enable_texturing ( ) ;
-    platform :: render_use_texture ( _text_texture_id ) ;
+    _mediator -> texture_select ( _text_texture_id ) ;
     _mediator -> mesh_render ( _text_mesh_id ) ;
 }
 
@@ -98,13 +93,17 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _create_text_texture ( )
 {
-    for ( int_32 x = 0 ; x < TEXT_TEXTURE_SIZE ; x ++ )
+    _text_texture_id = _mediator -> texture_create ( ) ;
+
+    for ( int_32 x = 0 ; x < _mediator -> texture_width ( ) ; x ++ )
     {
-        for ( int_32 y = 0 ; y < TEXT_TEXTURE_SIZE ; y ++ )
+        for ( int_32 y = 0 ; y < _mediator -> texture_height ( ) ; y ++ )
         {
             int_32 c = x ^ y ;
-            platform :: render_set_texel_color
-                ( _text_texture_data [ x + TEXT_TEXTURE_SIZE * y ]
+            _mediator -> texture_set_texel 
+                ( _text_texture_id
+                , x
+                , y
                 , ( c % 32 ) * 8
                 , ( c % 64 ) * 4
                 , ( c % 128 ) * 2
@@ -116,29 +115,29 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     platform :: render_set_texel_color ( _filler , 255 , 255 , 255 , 255 ) ;
     platform :: render_set_texel_color ( _eraser , 0 , 0 , 0 , 0 ) ;
 
-    _generate_font_english_A ( _text_texture_data       + TEXT_TEXTURE_SIZE * 128 , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
-    _generate_font_english_A ( _text_texture_data +  32 + TEXT_TEXTURE_SIZE * 128 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
-    _generate_font_english_A ( _text_texture_data +  64 + TEXT_TEXTURE_SIZE * 128 , TEXT_TEXTURE_SIZE , 64 , 64 ) ;
-    _generate_font_english_A ( _text_texture_data + 128 + TEXT_TEXTURE_SIZE * 128 , TEXT_TEXTURE_SIZE , 128 , 128 ) ;
+    _generate_font_english_A ( _text_texture_id ,   0 , 128 ,  16 ,  16 ) ;
+    _generate_font_english_A ( _text_texture_id ,  32 , 128 ,  32 ,  32 ) ;
+    _generate_font_english_A ( _text_texture_id ,  64 , 128 ,  64 ,  64 ) ;
+    _generate_font_english_A ( _text_texture_id , 128 , 128 , 128 , 128 ) ;
+
+    _generate_font_english_B ( _text_texture_id ,   0 , 0 ,  16 ,  16 ) ;
+    _generate_font_english_B ( _text_texture_id ,  32 , 0 ,  32 ,  32 ) ;
+    _generate_font_english_B ( _text_texture_id ,  64 , 0 ,  64 ,  64 ) ;
+    _generate_font_english_B ( _text_texture_id , 128 , 0 , 128 , 128 ) ;
     
-    _generate_font_english_B ( _text_texture_data       , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
-    _generate_font_english_B ( _text_texture_data +  32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
-    _generate_font_english_B ( _text_texture_data +  64 , TEXT_TEXTURE_SIZE , 64 , 64 ) ;
-    _generate_font_english_B ( _text_texture_data + 128 , TEXT_TEXTURE_SIZE , 128 , 128 ) ;
-    
-    platform :: render_create_texture_id ( _text_texture_id ) ;
-    platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
+    _mediator -> texture_finalize ( _text_texture_id ) ;
 }
 
 template < typename mediator >
 void shy_logic_text < mediator > :: _generate_font_english_A 
-    ( texel_data * starting_texel 
-    , int_32 texels_in_row 
+    ( texture_id arg_texture_id
+    , int_32 origin_x
+    , int_32 origin_y
     , int_32 letter_size_x 
     , int_32 letter_size_y
     )
 {
-    _mediator -> rasterize_use_context ( starting_texel , texels_in_row ) ;
+    _mediator -> rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
 
     int_32 outer_top = letter_size_y - 1 ;
     int_32 outer_bottom = 0 ;
@@ -169,13 +168,14 @@ void shy_logic_text < mediator > :: _generate_font_english_A
 
 template < typename mediator >
 void shy_logic_text < mediator > :: _generate_font_english_B
-    ( texel_data * starting_texel 
-    , int_32 texels_in_row 
+    ( texture_id arg_texture_id
+    , int_32 origin_x
+    , int_32 origin_y
     , int_32 letter_size_x 
     , int_32 letter_size_y
     )
 {
-    _mediator -> rasterize_use_context ( starting_texel , texels_in_row ) ;
+    _mediator -> rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , letter_size_x - 1 , letter_size_y / 2 ) ;
