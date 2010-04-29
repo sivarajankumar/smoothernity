@@ -83,10 +83,10 @@ private :
                     ) ;
             }
         }
-        _generate_font_english_B ( _text_texture_data , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE , TEXT_TEXTURE_SIZE ) ;
-//        _generate_font_english_B ( _text_texture_data      , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
-//        _generate_font_english_B ( _text_texture_data + 32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
-//        _generate_font_english_B ( _text_texture_data + 64 , TEXT_TEXTURE_SIZE , 64 , 64 ) ;
+        _generate_font_english_B ( _text_texture_data       , TEXT_TEXTURE_SIZE , 16 , 16 ) ;
+        _generate_font_english_B ( _text_texture_data +  32 , TEXT_TEXTURE_SIZE , 32 , 32 ) ;
+        _generate_font_english_B ( _text_texture_data +  64 , TEXT_TEXTURE_SIZE , 64 , 64 ) ;
+        _generate_font_english_B ( _text_texture_data + 128 , TEXT_TEXTURE_SIZE , 128 , 128 ) ;
         platform :: render_create_texture_id ( _text_texture_id ) ;
         platform :: render_load_texture_data ( _text_texture_id , TEXT_TEXTURE_SIZE_POW2_BASE , _text_texture_data ) ;
     }
@@ -154,19 +154,55 @@ private :
             , letter_size_x - 1 , letter_size_y - 1
             ) ;
             
-        int_32 left = 0 ;
-        int_32 right = letter_size_x / 2 ;
-        int_32 top = letter_size_y - 1 ;
-        int_32 bottom = 0 ;
+        int_32 spine_left = 0 ;
+        int_32 spine_right = letter_size_x / 2 ;
+        int_32 spine_top = letter_size_y - 1 ;
+        int_32 spine_bottom = 0 ;
         _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row
-            , left , top
-            , left , bottom
-            , right , bottom
+            , spine_left , spine_top
+            , spine_left , spine_bottom
+            , spine_right , spine_bottom
             ) ;
         _mediator -> rasterize_triangle ( starting_texel , filler , texels_in_row
-            , left , top
-            , right , top
-            , right , bottom
+            , spine_left , spine_top
+            , spine_right , spine_top
+            , spine_right , spine_bottom
+            ) ;
+        
+        int_32 hole_left = ( letter_size_x * 4 ) / 16 ;
+        int_32 hole_right = ( letter_size_x * 12 ) / 16 ;
+        int_32 hole_top = ( letter_size_y * 13 ) / 16 ;
+        int_32 hole_bottom = ( letter_size_y * 3 ) / 16 ;
+        int_32 hole_height = ( letter_size_y * 3 ) / 16 ;
+        _mediator -> rasterize_ellipse_in_rect ( starting_texel , eraser , texels_in_row 
+            , hole_left , hole_top
+            , hole_right , hole_top - hole_height
+            ) ;
+        _mediator -> rasterize_ellipse_in_rect ( starting_texel , eraser , texels_in_row 
+            , hole_left , hole_bottom
+            , hole_right , hole_bottom + hole_height
+            ) ;
+
+        int_32 hole_center_x = ( hole_left + hole_right ) / 2 ;
+        _mediator -> rasterize_triangle ( starting_texel , eraser , texels_in_row
+            , hole_left , hole_top
+            , hole_left , hole_top - hole_height
+            , hole_center_x , hole_top - hole_height
+            ) ;
+        _mediator -> rasterize_triangle ( starting_texel , eraser , texels_in_row
+            , hole_left , hole_top
+            , hole_center_x , hole_top
+            , hole_center_x , hole_top - hole_height
+            ) ;
+        _mediator -> rasterize_triangle ( starting_texel , eraser , texels_in_row
+            , hole_left , hole_bottom
+            , hole_left , hole_bottom + hole_height
+            , hole_center_x , hole_bottom + hole_height
+            ) ;
+        _mediator -> rasterize_triangle ( starting_texel , eraser , texels_in_row
+            , hole_left , hole_bottom
+            , hole_center_x , hole_bottom
+            , hole_center_x , hole_bottom + hole_height
             ) ;
     }
 private :
