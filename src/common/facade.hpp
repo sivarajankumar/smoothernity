@@ -16,25 +16,10 @@ template < typename platform >
 class shy_facade
 {
 public :
-    shy_facade ( )
-    {
-    }
-    void init ( )
-    {
-        _mediator . init ( ) ;
-    }
-    void done ( )
-    {
-        _mediator . done ( ) ;
-    }
-    void render ( )
-    {
-        _mediator . render ( ) ;
-    }
-    void update ( )
-    {
-        _mediator . update ( ) ;
-    }
+    void init ( ) ;
+    void done ( ) ;
+    void render ( ) ;
+    void update ( ) ;
 private :
     shy_mediator 
         < platform 
@@ -53,3 +38,27 @@ private :
         > 
         _mediator ;
 } ;
+
+template < typename platform >
+void shy_facade < platform > :: init ( )
+{
+    _mediator . init ( ) ;
+}
+
+template < typename platform >
+void shy_facade < platform > :: done ( )
+{
+    _mediator . done ( ) ;
+}
+
+template < typename platform >
+void shy_facade < platform > :: render ( )
+{
+    _mediator . render ( ) ;
+}
+
+template < typename platform >
+void shy_facade < platform > :: update ( )
+{
+    _mediator . update ( ) ;
+}
