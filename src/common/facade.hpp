@@ -21,7 +21,7 @@ public :
     void render ( ) ;
     void update ( ) ;
 private :
-    shy_mediator 
+    shy_mediator < shy_mediator_types
         < platform 
         , shy_engine_camera
         , shy_engine_math
@@ -35,7 +35,7 @@ private :
         , shy_logic_sound
         , shy_logic_text
         , shy_logic_touch
-        > 
+        > >
         _mediator ;
 } ;
 

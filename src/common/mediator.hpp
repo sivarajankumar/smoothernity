@@ -1,23 +1,47 @@
 template 
     < typename _platform
-    , template < typename mediator > class engine_camera
-    , template < typename mediator > class engine_math
-    , template < typename mediator > class engine_mesh
-    , template < typename mediator > class engine_rasterizer
-    , template < typename mediator > class logic 
-    , template < typename mediator > class logic_camera
-    , template < typename mediator > class logic_entities
-    , template < typename mediator > class logic_fidget
-    , template < typename mediator > class logic_land
-    , template < typename mediator > class logic_sound
-    , template < typename mediator > class logic_text
-    , template < typename mediator > class logic_touch
+    , template < typename mediator > class _engine_camera
+    , template < typename mediator > class _engine_math
+    , template < typename mediator > class _engine_mesh
+    , template < typename mediator > class _engine_rasterizer
+    , template < typename mediator > class _logic 
+    , template < typename mediator > class _logic_camera
+    , template < typename mediator > class _logic_entities
+    , template < typename mediator > class _logic_fidget
+    , template < typename mediator > class _logic_land
+    , template < typename mediator > class _logic_sound
+    , template < typename mediator > class _logic_text
+    , template < typename mediator > class _logic_touch
     >
-class shy_mediator
+class shy_mediator_types
 {
 public :
     typedef _platform platform ;
-    typedef typename engine_mesh < shy_mediator > :: mesh_id mesh_id ;
+    template < typename mediator >
+    class modules
+    {
+    public :
+        typedef _engine_camera < mediator > engine_camera ;
+        typedef _engine_math < mediator > engine_math ;
+        typedef _engine_mesh < mediator > engine_mesh ;
+        typedef _engine_rasterizer < mediator > engine_rasterizer ;
+        typedef _logic < mediator > logic ;
+        typedef _logic_camera < mediator > logic_camera ;
+        typedef _logic_entities < mediator > logic_entities ;
+        typedef _logic_fidget < mediator > logic_fidget ;
+        typedef _logic_land < mediator > logic_land ;
+        typedef _logic_sound < mediator > logic_sound ;
+        typedef _logic_text < mediator > logic_text ;
+        typedef _logic_touch < mediator > logic_touch ;
+    } ;
+} ;
+
+template < typename mediator_types >
+class shy_mediator
+{
+public :
+    typedef typename mediator_types :: platform platform ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
     typedef typename platform :: float_32 float_32 ;
     typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
@@ -174,16 +198,16 @@ public :
         _logic_camera . use_camera_matrix ( ) ;
     }
 private :
-    engine_camera < shy_mediator > _engine_camera ;
-    engine_math < shy_mediator > _engine_math ;
-    engine_mesh < shy_mediator > _engine_mesh ;
-    engine_rasterizer < shy_mediator > _engine_rasterizer ;
-    logic < shy_mediator > _logic ;
-    logic_camera < shy_mediator > _logic_camera ;
-    logic_entities < shy_mediator > _logic_entities ;
-    logic_fidget < shy_mediator > _logic_fidget ;
-    logic_land < shy_mediator > _logic_land ;
-    logic_sound < shy_mediator > _logic_sound ;
-    logic_text < shy_mediator > _logic_text ;
-    logic_touch < shy_mediator > _logic_touch ;
+    typename mediator_types :: template modules < shy_mediator > :: engine_camera _engine_camera ;
+    typename mediator_types :: template modules < shy_mediator > :: engine_math _engine_math ;
+    typename mediator_types :: template modules < shy_mediator > :: engine_mesh _engine_mesh ;
+    typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer _engine_rasterizer ;
+    typename mediator_types :: template modules < shy_mediator > :: logic _logic ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_camera _logic_camera ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_entities _logic_entities ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_fidget _logic_fidget ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_land _logic_land ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_sound _logic_sound ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_text _logic_text ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_touch _logic_touch ;
 } ;
