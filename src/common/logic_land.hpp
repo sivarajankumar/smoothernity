@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_land
 {
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;

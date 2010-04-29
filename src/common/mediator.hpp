@@ -4,6 +4,7 @@ template
     , template < typename mediator > class _engine_math
     , template < typename mediator > class _engine_mesh
     , template < typename mediator > class _engine_rasterizer
+    , template < typename mediator > class _engine_texture
     , template < typename mediator > class _logic 
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_entities
@@ -25,6 +26,7 @@ public :
         typedef _engine_math < mediator > engine_math ;
         typedef _engine_mesh < mediator > engine_mesh ;
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
+        typedef _engine_texture < mediator > engine_texture ;
         typedef _logic < mediator > logic ;
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_entities < mediator > logic_entities ;
@@ -42,6 +44,7 @@ class shy_mediator
 public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
     typedef typename platform :: float_32 float_32 ;
     typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
@@ -84,6 +87,11 @@ public :
     void render_land ( ) ;
     void render_text ( ) ;
     void render_touch ( ) ;
+    texture_id texture_create ( ) ;
+    void texture_finalize ( texture_id arg_texture_id ) ;
+    void texture_select ( texture_id arg_texture_id ) ;
+    void texture_set_texel ( texture_id arg_texture_id , const texel_data & texel , int_32 x , int_32 y ) ;
+    void texture_unselect ( ) ;
     void update ( ) ;
     void use_camera_matrix ( ) ;
 private :
@@ -91,6 +99,7 @@ private :
     typename mediator_types :: template modules < shy_mediator > :: engine_math _engine_math ;
     typename mediator_types :: template modules < shy_mediator > :: engine_mesh _engine_mesh ;
     typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer _engine_rasterizer ;
+    typename mediator_types :: template modules < shy_mediator > :: engine_texture _engine_texture ;
     typename mediator_types :: template modules < shy_mediator > :: logic _logic ;
     typename mediator_types :: template modules < shy_mediator > :: logic_camera _logic_camera ;
     typename mediator_types :: template modules < shy_mediator > :: logic_entities _logic_entities ;
@@ -314,4 +323,36 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: use_camera_matrix ( )
 {
     _logic_camera . use_camera_matrix ( ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: texture_id 
+shy_mediator < mediator_types > :: texture_create ( )
+{
+    return _engine_texture . texture_create ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: texture_finalize ( texture_id arg_texture_id )
+{
+    _engine_texture . texture_finalize ( arg_texture_id ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: texture_select ( texture_id arg_texture_id )
+{
+    _engine_texture . texture_select ( arg_texture_id ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: texture_set_texel 
+    ( texture_id arg_texture_id , const texel_data & texel , int_32 x , int_32 y )
+{
+    _engine_texture . texture_set_texel ( arg_texture_id , texel , x , y ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: texture_unselect ( )
+{
+    _engine_texture . texture_unselect ( ) ;
 }

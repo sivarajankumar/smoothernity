@@ -133,6 +133,7 @@
 		886AEA05117C8B36009CBB6F /* macosx_platform_vector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */; };
 		88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 		88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E76FEA1188A90100631276 /* engine_rasterizer.hpp */; };
+		88F391A1118A0B6400C25327 /* engine_texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F391A0118A0B6400C25327 /* engine_texture.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -184,6 +185,7 @@
 		886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_vector.hpp; sourceTree = "<group>"; };
 		88DBFFB211873D4600584A28 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 		88E76FEA1188A90100631276 /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
+		88F391A0118A0B6400C25327 /* engine_texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_texture.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +329,7 @@
 				88DBFFB211873D4600584A28 /* engine_math.hpp */,
 				8812CEC5117DE26A008F67D9 /* engine_mesh.hpp */,
 				88E76FEA1188A90100631276 /* engine_rasterizer.hpp */,
+				88F391A0118A0B6400C25327 /* engine_texture.hpp */,
 				8812CEC6117DE26A008F67D9 /* facade.hpp */,
 				8812CEC7117DE26A008F67D9 /* logic.hpp */,
 				8812CEC8117DE26A008F67D9 /* logic_camera.hpp */,
@@ -408,6 +411,7 @@
 				88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */,
 				881B850411886A6D00E31AA1 /* logic_text.hpp in Headers */,
 				88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */,
+				88F391A1118A0B6400C25327 /* engine_texture.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
