@@ -147,70 +147,74 @@ private :
         int_32 right  = _mediator -> math_max ( x1 , x2 ) ;
         int_32 y_center = ( y1 + y2 ) / 2 ;
         int_32 x_center = ( x1 + x2 ) / 2 ;
-        ellipse ( starting_texel , filler , texels_in_row , x_center , y_center , ( right - left ) / 2 , ( top - bottom ) / 2 ) ;
+        _ellipse ( starting_texel , filler , texels_in_row , x_center , y_center , ( right - left ) / 2 , ( top - bottom ) / 2 ) ;
     }
-	void ellipse ( texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int CX, int CY, int XRadius, int YRadius )
+	void _ellipse ( texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int_32 cx , int_32 cy, int_32 x_radius, int_32 y_radius )
     {
-		int x,y;
-		int XChange, YChange, EllipseError, TwoASquare, TwoBSquare, StoppingX, StoppingY;
+		int_32 x , y ;
+		int_32 x_change , y_change , ellipse_error , two_a_square , two_b_square , stopping_x , stopping_y ;
 	
-		TwoASquare = 2*XRadius*XRadius;
-		TwoBSquare = 2*YRadius*YRadius;
+		two_a_square = 2 * x_radius * x_radius ;
+		two_b_square = 2 * y_radius * y_radius ;
 		
-		x = XRadius;
-		y = 0;
-		XChange = YRadius*YRadius*(1-2*XRadius);
-		YChange = XRadius*XRadius;
-		EllipseError = 0;
-		StoppingX = TwoBSquare*XRadius;
-		StoppingY = 0;
+		x = x_radius ;
+		y = 0 ;
+		x_change = y_radius * y_radius * ( 1 - 2 * x_radius ) ;
+		y_change = x_radius * x_radius;
+		ellipse_error = 0 ;
+		stopping_x = two_b_square * x_radius ;
+		stopping_y = 0 ;
 		
-		while ( StoppingX >= StoppingY ) {
-			plot4EllipsePoints(starting_texel, filler, texels_in_row, CX, CY, x,y); // nakresli 4 body do 4 kvadrantov
-			y++;
-			StoppingY += TwoASquare;
-			EllipseError += YChange;
-		    YChange += TwoASquare;
-				if ((2*EllipseError + XChange) > 0 ) {
-					x--;
-					StoppingX -= TwoBSquare;
-					EllipseError += XChange;
-					XChange += TwoBSquare;
-				}	
+		while ( stopping_x >= stopping_y )
+        {
+			_plot4EllipsePoints ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
+            y ++ ;
+			stopping_y += two_a_square ;
+			ellipse_error += y_change ;
+		    y_change += two_a_square ;
+            if ( 2 * ellipse_error + x_change > 0 )
+            {
+				x -- ;
+				stopping_x -= two_b_square ;
+				ellipse_error += x_change ;
+				x_change += two_b_square ;
+			}
 		}
 		
-		x = 0;
-		y = YRadius;
-		XChange = YRadius*YRadius;
-		YChange = XRadius*XRadius*(1-2*YRadius);
-		EllipseError = 0;
-		StoppingX = 0;
-		StoppingY = TwoASquare*YRadius;
+		x = 0 ;
+		y = y_radius ;
+		x_change = y_radius * y_radius ;
+		y_change = x_radius * x_radius * ( 1 - 2 * y_radius ) ;
+		ellipse_error = 0 ;
+		stopping_x = 0 ;
+		stopping_y = two_a_square * y_radius ;
 		
-		while ( StoppingX <= StoppingY ) {
-			plot4EllipsePoints(starting_texel, filler, texels_in_row, CX, CY, x,y);
-			x--;
-			StoppingX += TwoBSquare;
-			EllipseError += XChange;
-			XChange += TwoBSquare;
-			if ((2*EllipseError + YChange) > 0 ) {
-			  y--;
-			  StoppingY -= TwoASquare;
-			  EllipseError += YChange;
-			  YChange += TwoASquare;
+		while ( stopping_x <= stopping_y )
+        {
+			_plot4EllipsePoints ( starting_texel , filler , texels_in_row , cx , cy , x , y ) ;
+			x -- ;
+			stopping_x += two_b_square ;
+			ellipse_error += x_change ;
+			x_change += two_b_square ;
+			if ( 2 * ellipse_error + y_change > 0 )
+            {
+                y -- ;
+                stopping_y -= two_a_square ;
+                ellipse_error += y_change ;
+                y_change += two_a_square ;
 			}
 		}
 	}
 
-	void plot4EllipsePoints(texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int CX, int CY,int x, int y)
+	void _plot4EllipsePoints(texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int CX, int CY,int x, int y)
     {
-		putPixel(starting_texel, filler, texels_in_row, CX+x, CY+y); // prvy kvadrant
-		putPixel(starting_texel, filler, texels_in_row, CX-x, CY+y); // druhy
-		putPixel(starting_texel, filler, texels_in_row, CX-x, CY-y); // treti
-		putPixel(starting_texel, filler, texels_in_row, CX+x, CY-y); // stvrty		
+		_putPixel(starting_texel, filler, texels_in_row, CX+x, CY+y); // prvy kvadrant
+		_putPixel(starting_texel, filler, texels_in_row, CX-x, CY+y); // druhy
+		_putPixel(starting_texel, filler, texels_in_row, CX-x, CY-y); // treti
+		_putPixel(starting_texel, filler, texels_in_row, CX+x, CY-y); // stvrty		
 	}
     
-	void putPixel(texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int x0, int y0)
+	void _putPixel(texel_data * starting_texel , const texel_data & filler , int_32 texels_in_row , int x0, int y0)
     {
         starting_texel [ x0 + texels_in_row * y0 ] = filler ;
 	}
