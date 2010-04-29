@@ -13,117 +13,17 @@ class shy_logic_touch
     static const int_32 _spot_lifetime_in_frames = 60 ;
     
 public :
-    shy_logic_touch ( mediator * arg_mediator )
-    : _mediator ( arg_mediator )
-    , _spot_frames_left ( 0 )
-    , _spot_mesh_created ( false )
-	, _should_place_new_spot ( false )
-	, _spot_x ( 0 )
-	, _spot_y ( 0 )
-    {
-    }
-    void render_touch ( )
-    {
-        if ( _spot_mesh_created && _spot_frames_left > 0 )
-            _render_spot_mesh ( ) ;
-    }
-    void update ( )
-    {
-        if ( ! _spot_mesh_created )
-        {
-            _create_spot_mesh ( ) ;
-            _spot_mesh_created = true ;
-        }
-        else
-            _update_spot ( ) ;
-    }
+    shy_logic_touch ( mediator * arg_mediator ) ;
+    void render_touch ( ) ;
+    void update ( ) ;
 private :
-    void _update_spot ( )
-    {
-		_decrease_spot_lifetime ( ) ;
-		_poll_touchscreen ( ) ;
-		_poll_mouse ( ) ;
-		_place_new_spot ( ) ;
-    }
-	void _decrease_spot_lifetime ( )
-	{
-        if ( _spot_frames_left > 0 )
-            _spot_frames_left -- ;
-	}
-	void _poll_touchscreen ( )
-	{
-        if ( platform :: touch_occured ( ) )
-        {
-			_should_place_new_spot = true ;
-			_spot_x = platform :: touch_x ( ) ;
-			_spot_y = platform :: touch_y ( ) ;
-        }
-	}
-	void _poll_mouse ( )
-	{
-		if ( platform :: mouse_left_button_down ( ) )
-		{
-			_should_place_new_spot = true ;
-			_spot_x = platform :: mouse_x ( ) ;
-			_spot_y = platform :: mouse_y ( ) ;
-		}
-	}
-	void _place_new_spot ( )
-	{
-		if ( _should_place_new_spot )
-		{
-			_should_place_new_spot = false ;
-            _spot_position = platform :: vector_xyz ( _spot_x , _spot_y , - 3.0f ) ;
-            _spot_frames_left = _spot_lifetime_in_frames ;
-		}
-	}
-    void _render_spot_mesh ( )
-    {
-        platform :: render_disable_texturing ( ) ;
-        matrix_data matrix ;
-        float_32 scale = float_32 ( _spot_frames_left ) / float_32 ( _spot_lifetime_in_frames ) ;
-        platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
-        platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
-        platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
-        platform :: matrix_set_origin ( matrix , _spot_position ) ;
-        _mediator -> mesh_set_transform ( _spot_mesh_id , matrix ) ;
-        _mediator -> mesh_render ( _spot_mesh_id ) ;
-    }
-    void _create_spot_mesh ( )
-    {
-        static const int_32 SPOT_R = 255 ;
-        static const int_32 SPOT_G = 255 ;
-        static const int_32 SPOT_B = 255 ;
-        
-        static const float_32 spot_size = 0.3f ;
-        static const int_32 spot_edges = 32 ;
-        
-        vertex_data vertices [ spot_edges ] ;
-        index_data indices [ spot_edges ] ;
-        
-        for ( int_32 i = 0 ; i < spot_edges ; i ++ )
-        {
-            float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( spot_edges ) ;
-            platform :: render_set_vertex_position
-                ( vertices [ i ]
-                , spot_size * platform :: math_cos ( angle )
-                , spot_size * platform :: math_sin ( angle )
-                , 0.0f
-                ) ;
-            platform :: render_set_vertex_color
-                ( vertices [ i ]
-                , SPOT_R
-                , SPOT_G
-                , SPOT_B
-                , 255
-                ) ;
-            platform :: render_set_index_value
-                ( indices [ i ]
-                , i
-                ) ;
-        }
-        _spot_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , spot_edges , 0 , spot_edges ) ;
-    }
+    void _update_spot ( ) ;
+	void _decrease_spot_lifetime ( ) ;
+	void _poll_touchscreen ( ) ;
+	void _poll_mouse ( ) ;
+	void _place_new_spot ( ) ;
+    void _render_spot_mesh ( ) ;
+    void _create_spot_mesh ( ) ;
 private :
     mediator * _mediator ;
     int_32 _spot_frames_left ;
@@ -134,3 +34,133 @@ private :
     mesh_id _spot_mesh_id ;
     vector_data _spot_position ;
 } ;
+
+template < typename mediator >
+shy_logic_touch < mediator > :: shy_logic_touch ( mediator * arg_mediator )
+: _mediator ( arg_mediator )
+, _spot_frames_left ( 0 )
+, _spot_mesh_created ( false )
+, _should_place_new_spot ( false )
+, _spot_x ( 0 )
+, _spot_y ( 0 )
+{
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: render_touch ( )
+{
+    if ( _spot_mesh_created && _spot_frames_left > 0 )
+        _render_spot_mesh ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: update ( )
+{
+    if ( ! _spot_mesh_created )
+    {
+        _create_spot_mesh ( ) ;
+        _spot_mesh_created = true ;
+    }
+    else
+        _update_spot ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: _update_spot ( )
+{
+    _decrease_spot_lifetime ( ) ;
+    _poll_touchscreen ( ) ;
+    _poll_mouse ( ) ;
+    _place_new_spot ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: _decrease_spot_lifetime ( )
+{
+    if ( _spot_frames_left > 0 )
+        _spot_frames_left -- ;
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: _poll_touchscreen ( )
+{
+    if ( platform :: touch_occured ( ) )
+    {
+        _should_place_new_spot = true ;
+        _spot_x = platform :: touch_x ( ) ;
+        _spot_y = platform :: touch_y ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: _poll_mouse ( )
+{
+    if ( platform :: mouse_left_button_down ( ) )
+    {
+        _should_place_new_spot = true ;
+        _spot_x = platform :: mouse_x ( ) ;
+        _spot_y = platform :: mouse_y ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: _place_new_spot ( )
+{
+    if ( _should_place_new_spot )
+    {
+        _should_place_new_spot = false ;
+        _spot_position = platform :: vector_xyz ( _spot_x , _spot_y , - 3.0f ) ;
+        _spot_frames_left = _spot_lifetime_in_frames ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: _render_spot_mesh ( )
+{
+    platform :: render_disable_texturing ( ) ;
+    matrix_data matrix ;
+    float_32 scale = float_32 ( _spot_frames_left ) / float_32 ( _spot_lifetime_in_frames ) ;
+    platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
+    platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
+    platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
+    platform :: matrix_set_origin ( matrix , _spot_position ) ;
+    _mediator -> mesh_set_transform ( _spot_mesh_id , matrix ) ;
+    _mediator -> mesh_render ( _spot_mesh_id ) ;
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: _create_spot_mesh ( )
+{
+    static const int_32 SPOT_R = 255 ;
+    static const int_32 SPOT_G = 255 ;
+    static const int_32 SPOT_B = 255 ;
+    
+    static const float_32 spot_size = 0.3f ;
+    static const int_32 spot_edges = 32 ;
+    
+    vertex_data vertices [ spot_edges ] ;
+    index_data indices [ spot_edges ] ;
+    
+    for ( int_32 i = 0 ; i < spot_edges ; i ++ )
+    {
+        float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( spot_edges ) ;
+        platform :: render_set_vertex_position
+            ( vertices [ i ]
+            , spot_size * platform :: math_cos ( angle )
+            , spot_size * platform :: math_sin ( angle )
+            , 0.0f
+            ) ;
+        platform :: render_set_vertex_color
+            ( vertices [ i ]
+            , SPOT_R
+            , SPOT_G
+            , SPOT_B
+            , 255
+            ) ;
+        platform :: render_set_index_value
+            ( indices [ i ]
+            , i
+            ) ;
+    }
+    _spot_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , spot_edges , 0 , spot_edges ) ;
+}
