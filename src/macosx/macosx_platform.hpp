@@ -16,7 +16,14 @@ public :
     typedef int int_32 ;
     typedef float float_32 ;
     
-    class render_buffer_id
+    class render_index_buffer_id
+    {
+        friend class shy_macosx_platform ;
+    private :
+        GLuint _buffer_id ;
+    } ;
+    
+    class render_vertex_buffer_id
     {
         friend class shy_macosx_platform ;
     private :
@@ -180,22 +187,21 @@ public :
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     static void render_projection_ortho ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     
-    static void render_create_buffer_id ( render_buffer_id & arg_buffer_id ) ;
-    static void render_load_vertex_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;
+    static void render_create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;
     static void render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z ) ;
     static void render_set_vertex_tex_coord ( vertex_data & vertex , float_32 u , float_32 v ) ;
     static void render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a ) ;
-    static void render_load_index_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
+    static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
     static void render_set_index_value ( index_data & data , int_32 index ) ;
     
     static void render_draw_triangle_strip 
-        ( const render_buffer_id & vertices_buffer 
-        , const render_buffer_id & indices_buffer
+        ( const render_vertex_buffer_id & vertices_buffer 
+        , const render_index_buffer_id & indices_buffer
         , int_32 indices_count
         ) ;
     static void render_draw_triangle_fan
-        ( const render_buffer_id & vertices_buffer 
-        , const render_buffer_id & indices_buffer
+        ( const render_vertex_buffer_id & vertices_buffer 
+        , const render_index_buffer_id & indices_buffer
         , int_32 indices_count
         ) ;
         

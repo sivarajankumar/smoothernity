@@ -136,19 +136,13 @@ inline void shy_macosx_platform :: render_projection_ortho
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
-inline void shy_macosx_platform :: render_create_buffer_id 
-    ( shy_macosx_platform :: render_buffer_id & arg_buffer_id 
-    )
-{
-    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
-}
-
-inline void shy_macosx_platform :: render_load_vertex_buffer 
-    ( const shy_macosx_platform :: render_buffer_id & arg_buffer_id 
+inline void shy_macosx_platform :: render_create_vertex_buffer 
+    ( shy_macosx_platform :: render_vertex_buffer_id & arg_buffer_id 
     , shy_macosx_platform :: int_32 elements 
     , shy_macosx_platform :: vertex_data * data 
     )
 {
+    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
@@ -194,12 +188,13 @@ inline void shy_macosx_platform :: render_set_vertex_color
     vertex . _color [ 3 ] = ( GLubyte ) a ;
 }
 
-inline void shy_macosx_platform :: render_load_index_buffer 
-    ( const shy_macosx_platform :: render_buffer_id & arg_buffer_id 
+inline void shy_macosx_platform :: render_create_index_buffer 
+    ( shy_macosx_platform :: render_index_buffer_id & arg_buffer_id 
     , shy_macosx_platform :: int_32 elements 
     , shy_macosx_platform :: index_data * data 
     )
 {
+    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
@@ -247,8 +242,8 @@ inline void shy_macosx_platform :: render_matrix_pop ( )
 }
 
 inline void shy_macosx_platform :: render_draw_triangle_strip 
-    ( const shy_macosx_platform :: render_buffer_id & vertices_buffer 
-    , const shy_macosx_platform :: render_buffer_id & indices_buffer
+    ( const shy_macosx_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_macosx_platform :: render_index_buffer_id & indices_buffer
     , shy_macosx_platform :: int_32 indices_count
     )
 {
@@ -264,8 +259,8 @@ inline void shy_macosx_platform :: render_draw_triangle_strip
 }
 
 inline void shy_macosx_platform :: render_draw_triangle_fan
-    ( const shy_macosx_platform :: render_buffer_id & vertices_buffer 
-    , const shy_macosx_platform :: render_buffer_id & indices_buffer
+    ( const shy_macosx_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_macosx_platform :: render_index_buffer_id & indices_buffer
     , shy_macosx_platform :: int_32 indices_count
     )
 {
