@@ -75,9 +75,9 @@ public :
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
+    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
     void rasterize_use_context ( texel_data * starting_texel , int_32 texels_in_row ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
-    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
     void render ( ) ;
     void render_entities ( ) ;
     void render_fidget ( ) ;
