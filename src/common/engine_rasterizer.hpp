@@ -8,6 +8,7 @@ class shy_engine_rasterizer
 public :
     shy_engine_rasterizer ( mediator * arg_mediator ) ;
     void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
+    void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
@@ -75,6 +76,13 @@ void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( int_32 x1
     int_32 y_center = ( y1 + y2 ) / 2 ;
     int_32 x_center = ( x1 + x2 ) / 2 ;
     _rasterize_bresenham_ellipse ( x_center , y_center , width / 2 , height / 2 ) ;
+}
+
+template < typename mediator >
+void shy_engine_rasterizer < mediator > :: rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
+{
+    rasterize_triangle ( x1 , y1 , x1 , y2 , x2 , y2 ) ;
+    rasterize_triangle ( x1 , y1 , x2 , y1 , x2 , y2 ) ;
 }
 
 template < typename mediator >

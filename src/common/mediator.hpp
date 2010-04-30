@@ -78,6 +78,7 @@ public :
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
+    void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
     void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
@@ -251,6 +252,13 @@ void shy_mediator < mediator_types > :: rasterize_ellipse_in_rect
     ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
 {
     _engine_rasterizer . rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_rect
+    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
+{
+    _engine_rasterizer . rasterize_rect ( x1 , y1 , x2 , y2 ) ;
 }
 
 template < typename mediator_types >
