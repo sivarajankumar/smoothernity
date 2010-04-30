@@ -33,6 +33,7 @@ private :
     void _rasterize_font_english_J ( ) ;
     void _rasterize_font_english_K ( ) ;
     void _rasterize_font_english_L ( ) ;
+    void _rasterize_font_english_M ( ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
@@ -147,6 +148,7 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
     _rasterize_font_english_J ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_K ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_L ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_M ( ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -454,3 +456,28 @@ void shy_logic_text < mediator > :: _rasterize_font_english_L ( )
     _mediator -> rasterize_rect ( hole_left , _letter_size_y - 1 , right , hole_bottom ) ;
 }
 
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_font_english_M ( )
+{
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    
+    int_32 spine_1_left = 0 ;
+    int_32 spine_1_right = _letter_size_x / 5 ;
+    int_32 spine_2_left = ( _letter_size_x * 3 ) / 5 ;
+    int_32 spine_2_right = ( _letter_size_x * 4 ) / 5 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_rect ( spine_1_left , 0 , spine_2_right , _letter_size_y - 1 ) ;
+    
+    int_32 tri_bottom = ( _letter_size_y * 4 ) / 9 ;
+    int_32 tri_top = ( _letter_size_y * 7 ) / 9 ;
+    int_32 tri_center_x = ( spine_1_left + spine_2_right ) / 2 ;
+    _mediator -> rasterize_use_texel ( _eraser ) ;
+    _mediator -> rasterize_rect ( spine_1_right , 0 , spine_2_left , tri_top ) ;
+    
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_triangle ( spine_1_left , tri_top , spine_2_right , tri_top , tri_center_x , tri_bottom ) ;
+    
+    int_32 hole_bottom = _letter_size_y - ( tri_top - tri_bottom ) ;
+    _mediator -> rasterize_use_texel ( _eraser ) ;
+    _mediator -> rasterize_triangle ( spine_1_left , _letter_size_y - 1 , spine_2_right , _letter_size_y - 1 , tri_center_x , hole_bottom ) ;
+}
