@@ -18,6 +18,8 @@ private :
     void _render_text_mesh ( ) ;
     void _create_text_mesh ( ) ;
     void _create_text_texture ( ) ;
+    void _next_letter_col ( ) ;
+    void _next_letter_row ( ) ;
     void _rasterize_english_alphabet ( int_32 letter_size_x , int_32 letter_size_y ) ;
     void _rasterize_font_english_A ( ) ;
     void _rasterize_font_english_B ( ) ;
@@ -128,18 +130,31 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
 {
     _letter_size_x = letter_size_x ;
     _letter_size_y = letter_size_y ;
-    _origin_y -= _letter_size_y ; _origin_x = 0 ;
-    _rasterize_font_english_A ( ) ; _origin_x += _letter_size_x ;
-    _rasterize_font_english_B ( ) ; _origin_x += _letter_size_x ;
-    _rasterize_font_english_C ( ) ; _origin_x += _letter_size_x ;
-    _rasterize_font_english_D ( ) ; _origin_x += _letter_size_x ;
-    _rasterize_font_english_E ( ) ; _origin_x += _letter_size_x ;
-    _rasterize_font_english_F ( ) ; _origin_x += _letter_size_x ;
-    _rasterize_font_english_G ( ) ; _origin_x += _letter_size_x ;
-    _rasterize_font_english_H ( ) ; _origin_x += _letter_size_x ;
-    _origin_y -= _letter_size_y ; _origin_x = 0 ;
-    _origin_y -= _letter_size_y ; _origin_x = 0 ;
-    _origin_y -= _letter_size_y ; _origin_x = 0 ;
+    _next_letter_row ( ) ;
+    _rasterize_font_english_A ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_B ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_C ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_D ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_E ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_F ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_G ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_H ( ) ; _next_letter_col ( ) ;
+    _next_letter_row ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _next_letter_col ( )
+{
+    _origin_x += _letter_size_x ;
+    if ( _origin_x >= _mediator -> texture_width ( ) )
+        _next_letter_row ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _next_letter_row ( )
+{
+    _origin_y -= _letter_size_y ;
+    _origin_x = 0 ;
 }
 
 template < typename mediator >
