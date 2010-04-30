@@ -1,3 +1,9 @@
+#define int NO_INTS
+#define short NO_SHORTS
+#define char NO_CHARS
+#define float NO_FLOATS
+#define double NO_DOUBLES
+
 #include "engine_camera.hpp"
 #include "engine_math.hpp"
 #include "engine_mesh.hpp"
@@ -71,3 +77,9 @@ void shy_facade < platform > :: video_mode_changed ( )
 {
     _mediator . video_mode_changed ( ) ;
 }
+
+#undef int
+#undef short
+#undef char
+#undef float
+#undef double
