@@ -17,6 +17,7 @@ public :
     void done ( ) ;
     void render ( ) ;
     void update ( ) ;
+    void video_mode_changed ( ) ;
     float_32 get_near_plane_distance ( ) ;
 private :
     void _render_scene ( ) ;
@@ -68,6 +69,12 @@ template < typename mediator >
 void shy_logic < mediator > :: update ( )
 {
     _update_color ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: video_mode_changed ( )
+{
+    _init_render ( ) ;
 }
 
 template < typename mediator >

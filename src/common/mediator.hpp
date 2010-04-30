@@ -97,6 +97,7 @@ public :
     int_32 texture_width ( ) ;
     void update ( ) ;
     void use_camera_matrix ( ) ;
+    void video_mode_changed ( ) ;
 private :
     typename mediator_types :: template modules < shy_mediator > :: engine_camera _engine_camera ;
     typename mediator_types :: template modules < shy_mediator > :: engine_math _engine_math ;
@@ -379,4 +380,10 @@ typename shy_mediator < mediator_types > :: int_32
 shy_mediator < mediator_types > :: texture_width ( )
 {
     return _engine_texture . texture_width ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: video_mode_changed ( )
+{
+    _logic . video_mode_changed ( ) ;
 }

@@ -13,5 +13,6 @@
 - ( void ) render ;
 - ( void ) set_mouse_position : ( NSPoint ) position ;
 - ( void ) mouse_left_button_down ;
+- ( void ) video_mode_changed ;
 
 @end

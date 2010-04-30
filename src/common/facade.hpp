@@ -21,6 +21,7 @@ public :
     void done ( ) ;
     void render ( ) ;
     void update ( ) ;
+    void video_mode_changed ( ) ;
 private :
     shy_mediator < shy_mediator_types
         < platform 
@@ -63,4 +64,10 @@ template < typename platform >
 void shy_facade < platform > :: update ( )
 {
     _mediator . update ( ) ;
+}
+
+template < typename platform >
+void shy_facade < platform > :: video_mode_changed ( )
+{
+    _mediator . video_mode_changed ( ) ;
 }

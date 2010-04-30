@@ -48,7 +48,6 @@
 
 - ( void ) set_mouse_position : ( NSPoint ) position
 {
-	NSLog ( @"mouse y: %f, origin y: %f" , position . y , _bounds . origin . y ) ;
 	if ( _bounds . size . width > _bounds . size . height )
 	{
 		shy_macosx_platform :: _mouse_x = ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . height ;
@@ -72,6 +71,11 @@
 	_measurer -> update ( ) ;
 	shy_macosx_platform :: _mouse_left_button_down = false ;
     glFinish ( ) ;
+}
+
+- ( void ) video_mode_changed
+{
+    _measurer -> video_mode_changed ( ) ;
 }
 
 @end

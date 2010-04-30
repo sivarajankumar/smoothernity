@@ -82,6 +82,8 @@
 		) 
 	] ;
 
+    [ scene video_mode_changed ] ;
+    
     stay_in_full_screen_mode = YES ;
     while ( stay_in_full_screen_mode )
 	{
