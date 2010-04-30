@@ -30,6 +30,7 @@ private :
     void _rasterize_font_english_G ( ) ;
     void _rasterize_font_english_H ( ) ;
     void _rasterize_font_english_I ( ) ;
+    void _rasterize_font_english_J ( ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
@@ -141,6 +142,7 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
     _rasterize_font_english_G ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_H ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_I ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_J ( ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -149,7 +151,10 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
 {
     _origin_x += _letter_size_x ;
     if ( _origin_x >= _mediator -> texture_width ( ) )
+    {
+        _origin_y -= _letter_size_y / 4 ;
         _next_letter_row ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -375,3 +380,34 @@ void shy_logic_text < mediator > :: _rasterize_font_english_I ( )
     _mediator -> rasterize_rect ( hole_left , hole_top , hole_mid_left , hole_bottom ) ;
     _mediator -> rasterize_rect ( hole_mid_right , hole_top , hole_right , hole_bottom ) ;
 }
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
+{
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    
+    int_32 right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 circle_top = ( _letter_size_y * 4 ) / 5 ;
+    int_32 circle_bottom = 0 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , circle_bottom , right , circle_top ) ;
+
+    int_32 circle_center_y = ( circle_top + circle_bottom ) / 2 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_rect ( 0 , circle_center_y , right , _letter_size_y - 1 ) ;
+    
+    int_32 hole_left = _letter_size_x / 5 ;
+    int_32 hole_right = ( _letter_size_x * 3 ) / 5 ;
+    int_32 hole_top = ( _letter_size_y * 3 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y / 5 ;
+    _mediator -> rasterize_use_texel ( _eraser ) ;
+    _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
+    
+    int_32 hole_center_y = ( hole_top + hole_bottom ) / 2 ;
+    _mediator -> rasterize_use_texel ( _eraser ) ;
+    _mediator -> rasterize_rect ( hole_left , circle_top , hole_right , hole_center_y ) ;
+    
+    _mediator -> rasterize_use_texel ( _eraser ) ;
+    _mediator -> rasterize_rect ( 0 , _letter_size_y - 1 , hole_left , hole_center_y ) ;
+}
+
