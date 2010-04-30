@@ -32,6 +32,7 @@ private :
     void _rasterize_font_english_I ( ) ;
     void _rasterize_font_english_J ( ) ;
     void _rasterize_font_english_K ( ) ;
+    void _rasterize_font_english_L ( ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
@@ -145,6 +146,7 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
     _rasterize_font_english_I ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_J ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_K ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_L ( ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -435,5 +437,20 @@ void shy_logic_text < mediator > :: _rasterize_font_english_K ( )
     int_32 spine_right = _letter_size_x / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( 0 , 0 , spine_right , _letter_size_y - 1 ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_font_english_L ( )
+{
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    
+    int_32 right = ( _letter_size_x * 4 ) / 5 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    
+    int_32 hole_left = _letter_size_x / 5 ;
+    int_32 hole_bottom = _letter_size_y / 5 ;
+    _mediator -> rasterize_use_texel ( _eraser ) ;
+    _mediator -> rasterize_rect ( hole_left , _letter_size_y - 1 , right , hole_bottom ) ;
 }
 
