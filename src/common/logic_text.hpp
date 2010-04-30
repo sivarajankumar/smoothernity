@@ -22,6 +22,7 @@ private :
     void _generate_font_english_B ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y , int_32 letter_size_x , int_32 letter_size_y ) ;
     void _generate_font_english_C ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y , int_32 letter_size_x , int_32 letter_size_y ) ;
     void _generate_font_english_D ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y , int_32 letter_size_x , int_32 letter_size_y ) ;
+    void _generate_font_english_E ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y , int_32 letter_size_x , int_32 letter_size_y ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
@@ -116,6 +117,7 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _generate_font_english_B ( _text_texture_id , col , row , size , size ) ; col += size ;
     _generate_font_english_C ( _text_texture_id , col , row , size , size ) ; col += size ;
     _generate_font_english_D ( _text_texture_id , col , row , size , size ) ; col += size ;
+    _generate_font_english_E ( _text_texture_id , col , row , size , size ) ; col += size ;
     row -= size ; col = 0 ;
     row -= size ; col = 0 ;
     row -= size ; col = 0 ;
@@ -126,6 +128,7 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _generate_font_english_B ( _text_texture_id , col , row , size , size ) ; col += size ;
     _generate_font_english_C ( _text_texture_id , col , row , size , size ) ; col += size ;
     _generate_font_english_D ( _text_texture_id , col , row , size , size ) ; col += size ;
+    _generate_font_english_E ( _text_texture_id , col , row , size , size ) ; col += size ;
     row -= size ; col = 0 ;
     row -= size ; col = 0 ;
     row -= size ; col = 0 ;
@@ -136,6 +139,7 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _generate_font_english_B ( _text_texture_id , col , row , size , size ) ; col += size ;
     _generate_font_english_C ( _text_texture_id , col , row , size , size ) ; col += size ;
     _generate_font_english_D ( _text_texture_id , col , row , size , size ) ; col += size ;
+    _generate_font_english_E ( _text_texture_id , col , row , size , size ) ; col += size ;
     row -= size ; col = 0 ;
     row -= size ; col = 0 ;
     row -= size ; col = 0 ;
@@ -279,4 +283,32 @@ void shy_logic_text < mediator > :: _generate_font_english_D
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_triangle ( hole_left , hole_bottom , hole_left , hole_top , hole_center_x , hole_top ) ;
     _mediator -> rasterize_triangle ( hole_left , hole_bottom , hole_center_x , hole_bottom , hole_center_x , hole_top ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _generate_font_english_E
+    ( texture_id arg_texture_id
+    , int_32 origin_x
+    , int_32 origin_y
+    , int_32 letter_size_x 
+    , int_32 letter_size_y
+    )
+{
+    _mediator -> rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
+    
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_triangle ( 0 , 0 , 0 , letter_size_y - 1 , letter_size_x - 1 , letter_size_y - 1 ) ;
+    _mediator -> rasterize_triangle ( 0 , 0 , letter_size_x - 1 , 0 , letter_size_x - 1 , letter_size_y - 1 ) ;
+    
+    int_32 hole_left = letter_size_x / 5 ;
+    int_32 hole_right = letter_size_x - 1 ;
+    int_32 hole_top = ( letter_size_y * 4 ) / 5 ;
+    int_32 hole_mid_top = ( letter_size_y * 3 ) / 5 ;
+    int_32 hole_mid_bottom = ( letter_size_y * 2 ) / 5 ;
+    int_32 hole_bottom = letter_size_y / 5 ;
+    _mediator -> rasterize_use_texel ( _eraser ) ;
+    _mediator -> rasterize_triangle ( hole_left , hole_top , hole_left , hole_mid_top , hole_right , hole_mid_top ) ;
+    _mediator -> rasterize_triangle ( hole_left , hole_top , hole_right , hole_top , hole_right , hole_mid_top ) ;
+    _mediator -> rasterize_triangle ( hole_left , hole_mid_bottom , hole_left , hole_bottom , hole_right , hole_bottom ) ;
+    _mediator -> rasterize_triangle ( hole_left , hole_mid_bottom , hole_right , hole_mid_bottom , hole_right , hole_bottom ) ;
 }
