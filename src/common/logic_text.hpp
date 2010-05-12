@@ -44,6 +44,7 @@ private :
     void _rasterize_font_english_U ( ) ;
     void _rasterize_font_english_V ( ) ;
     void _rasterize_font_english_W ( ) ;
+    void _rasterize_font_english_X ( ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
@@ -169,6 +170,7 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
     _rasterize_font_english_U ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_V ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_W ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_X ( ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -774,4 +776,22 @@ void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
     _mediator -> rasterize_triangle ( high_2_left , high_top , low_2_left , low_bottom , low_2_right , low_bottom ) ;
     _mediator -> rasterize_triangle ( high_3_left , high_top , high_3_right , high_top , low_2_right , low_bottom ) ;
     _mediator -> rasterize_triangle ( high_3_left , high_top , low_2_left , low_bottom , low_2_right , low_bottom ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
+{
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+
+    int_32 left_1 = 0 ;
+    int_32 right_1 = _letter_size_x / 4 ;
+    int_32 left_2 = ( _letter_size_x * 3 ) / 4 ;
+    int_32 right_2 = _letter_size_x - 1 ;
+    int_32 top_y = _letter_size_y - 1 ;
+    int_32 bottom_y = 0 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_triangle ( left_1 , top_y , right_1 , top_y , right_2 , bottom_y ) ;
+    _mediator -> rasterize_triangle ( left_1 , top_y , left_2 , bottom_y , right_2 , bottom_y ) ;
+    _mediator -> rasterize_triangle ( left_2 , top_y , right_2 , top_y , right_1 , bottom_y ) ;
+    _mediator -> rasterize_triangle ( left_2 , top_y , left_1 , bottom_y , right_1 , bottom_y ) ;
 }
