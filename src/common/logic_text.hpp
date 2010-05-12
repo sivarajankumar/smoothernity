@@ -45,6 +45,7 @@ private :
     void _rasterize_font_english_V ( ) ;
     void _rasterize_font_english_W ( ) ;
     void _rasterize_font_english_X ( ) ;
+    void _rasterize_font_english_Y ( ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
@@ -171,6 +172,7 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
     _rasterize_font_english_V ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_W ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_X ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_Y ( ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -794,4 +796,26 @@ void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
     _mediator -> rasterize_triangle ( left_1 , top_y , left_2 , bottom_y , right_2 , bottom_y ) ;
     _mediator -> rasterize_triangle ( left_2 , top_y , right_2 , top_y , right_1 , bottom_y ) ;
     _mediator -> rasterize_triangle ( left_2 , top_y , left_1 , bottom_y , right_1 , bottom_y ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
+{
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+
+    int_32 high_1_left = 0 ;
+    int_32 high_1_right = _letter_size_x / 4 ;
+    int_32 high_2_left = ( _letter_size_x * 3 ) / 4 ;
+    int_32 high_2_right = _letter_size_x - 1 ;
+    int_32 high_top = _letter_size_y - 1 ;
+    int_32 low_left = ( _letter_size_x * 2 ) / 5 ;
+    int_32 low_right = ( _letter_size_x * 3 ) / 5 ;
+    int_32 low_bottom = 0 ;
+    int_32 mid_y = _letter_size_y / 2 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_triangle ( high_1_left , high_top , high_1_right , high_top , low_right , mid_y ) ;
+    _mediator -> rasterize_triangle ( high_1_left , high_top , low_left , mid_y , low_right , mid_y ) ;
+    _mediator -> rasterize_triangle ( high_2_left , high_top , high_2_right , high_top , low_right , mid_y ) ;
+    _mediator -> rasterize_triangle ( high_2_left , high_top , low_left , mid_y , low_right , mid_y ) ;
+    _mediator -> rasterize_rect ( low_left , mid_y , low_right , low_bottom ) ;
 }
