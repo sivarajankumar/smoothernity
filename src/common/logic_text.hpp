@@ -46,6 +46,7 @@ private :
     void _rasterize_font_english_W ( ) ;
     void _rasterize_font_english_X ( ) ;
     void _rasterize_font_english_Y ( ) ;
+    void _rasterize_font_english_Z ( ) ;
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
@@ -173,6 +174,7 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
     _rasterize_font_english_W ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_X ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_Y ( ) ; _next_letter_col ( ) ;
+    _rasterize_font_english_Z ( ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -818,4 +820,27 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
     _mediator -> rasterize_triangle ( high_2_left , high_top , high_2_right , high_top , low_right , mid_y ) ;
     _mediator -> rasterize_triangle ( high_2_left , high_top , low_left , mid_y , low_right , mid_y ) ;
     _mediator -> rasterize_rect ( low_left , mid_y , low_right , low_bottom ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_font_english_Z ( )
+{
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    
+    int_32 hor_left = 0 ;
+    int_32 hor_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 high_top = _letter_size_y - 1 ;
+    int_32 high_bottom = ( _letter_size_y * 4 ) / 5 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_rect ( hor_left , high_top , hor_right , high_bottom ) ;
+    
+    int_32 low_top = _letter_size_y / 5 ;
+    int_32 low_bottom = 0 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_rect ( hor_left , low_top , hor_right , low_bottom ) ;
+    
+    int_32 board_width = _letter_size_y / 4 ;
+    _mediator -> rasterize_use_texel ( _filler ) ;
+    _mediator -> rasterize_triangle ( hor_right - board_width , high_bottom , hor_right , high_bottom , board_width , low_top ) ;
+    _mediator -> rasterize_triangle ( hor_right - board_width , high_bottom , hor_left , low_top , board_width , low_top ) ;
 }
