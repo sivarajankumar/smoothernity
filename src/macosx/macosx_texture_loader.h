@@ -2,6 +2,10 @@
 
 @interface shy_macosx_texture_loader : NSObject
 {
+@private
+    bool _is_ready ;
+    int _resource_index ;
+    void * _buffer ;
 }
 
 - ( bool ) loader_ready ;

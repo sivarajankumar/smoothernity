@@ -28,7 +28,7 @@
     CGImageSourceRef src ;
     CGImageRef image ;
     CGContextRef context = nil ;
-    CGColorSpaceRef colorSpace ;
+    CGColorSpaceRef color_space ;
     GLubyte * data = ( GLubyte * ) buffer ;
     url = [ NSURL fileURLWithPath : [ [ NSBundle mainBundle ] pathForResource : 
         [ NSString stringWithFormat : @"texture_resource_%i" , resource_index ] 
@@ -41,22 +41,25 @@
         CFRelease ( src ) ;
         width = CGImageGetWidth ( image ) ;
         height = CGImageGetHeight ( image ) ;
-        colorSpace = CGColorSpaceCreateDeviceRGB ( ) ;
-        context = CGBitmapContextCreate 
-            ( data 
-            , width 
-            , height 
-            , 8 
-            , 4 * width 
-            , colorSpace 
-            , kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Host 
-            ) ;
-        CGColorSpaceRelease ( colorSpace ) ;
-        CGContextTranslateCTM ( context , 0 , height ) ;
-        CGContextScaleCTM ( context , 1 , - 1 ) ;
-        CGContextSetBlendMode ( context , kCGBlendModeCopy ) ;
-        CGContextDrawImage ( context , CGRectMake ( 0 , 0 , width , height ) , image ) ;
-        CGContextRelease ( context ) ;
+        if ( width == side_size && height == side_size )
+        {
+            color_space = CGColorSpaceCreateDeviceRGB ( ) ;
+            context = CGBitmapContextCreate 
+                ( data 
+                , width 
+                , height 
+                , 8 
+                , 4 * width 
+                , color_space 
+                , kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Host 
+                ) ;
+            CGColorSpaceRelease ( color_space ) ;
+            CGContextTranslateCTM ( context , 0 , height ) ;
+            CGContextScaleCTM ( context , 1 , - 1 ) ;
+            CGContextSetBlendMode ( context , kCGBlendModeCopy ) ;
+            CGContextDrawImage ( context , CGRectMake ( 0 , 0 , width , height ) , image ) ;
+            CGContextRelease ( context ) ;
+        }
         CGImageRelease ( image ) ;
     }
 }
