@@ -4,6 +4,7 @@ class shy_engine_texture
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
+    typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     
     static const int_32 MAX_TEXTURES = 5 ;
@@ -28,6 +29,7 @@ public :
     shy_engine_texture ( ) ;
     texture_id texture_create ( ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
+    void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_unselect ( ) ;
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
@@ -61,6 +63,13 @@ void shy_engine_texture < mediator > :: texture_finalize ( texture_id arg_textur
     _texture_data & tex_data = _textures_datas [ arg_texture_id . _texture_id ] ;
     platform :: render_create_texture_id ( tex_data . render_id ) ;
     platform :: render_load_texture_data ( tex_data . render_id , TEXTURE_SIZE_POW2_BASE , tex_data . texels ) ;
+}
+
+template < typename mediator >
+void shy_engine_texture < mediator > :: texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id )
+{
+    _texture_data & tex_data = _textures_datas [ arg_texture_id . _texture_id ] ;
+    platform :: render_load_texture_resource ( arg_resource_id , TEXTURE_SIZE_POW2_BASE , tex_data . texels ) ;
 }
 
 template < typename mediator >

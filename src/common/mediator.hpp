@@ -52,6 +52,7 @@ public :
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
     typedef typename platform :: texel_data texel_data ;
+    typedef typename platform :: texture_resource_id texture_resource_id ;
     typedef typename platform :: vector_data vector_data ;
     typedef typename platform :: vertex_data vertex_data ;
 public :
@@ -94,6 +95,7 @@ public :
     texture_id texture_create ( ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
     int_32 texture_height ( ) ;
+    void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
@@ -360,6 +362,15 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_finalize ( texture_id arg_texture_id )
 {
     _engine_texture . texture_finalize ( arg_texture_id ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: texture_load_from_resource 
+    ( texture_id arg_texture_id 
+    , texture_resource_id arg_resource_id 
+    )
+{
+    _engine_texture . texture_load_from_resource ( arg_texture_id , arg_resource_id ) ;
 }
 
 template < typename mediator_types >

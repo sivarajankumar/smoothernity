@@ -9,7 +9,10 @@ class shy_logic_image
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
+    typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
+    
+    static const int_32 logo_resource_index = 1 ;
 public :
     shy_logic_image ( mediator * arg_mediator ) ;
     void render_image ( ) ;
@@ -21,6 +24,8 @@ private :
 private :
     mediator * _mediator ;
     int_32 _image_mesh_created ;
+    int_32 _image_texture_created ;
+    int_32 _image_texture_loaded ;
     mesh_id _image_mesh_id ;
     texture_id _image_texture_id ;
 } ;
@@ -29,13 +34,14 @@ template < typename mediator >
 shy_logic_image < mediator > :: shy_logic_image ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
 , _image_mesh_created ( false )
+, _image_texture_loaded ( false )
 {
 }
 
 template < typename mediator >
 void shy_logic_image < mediator > :: render_image ( )
 {
-    if ( _image_mesh_created )
+    if ( _image_mesh_created && _image_texture_loaded )
         _render_image_mesh ( ) ;
 }
 
@@ -45,8 +51,22 @@ void shy_logic_image < mediator > :: update ( )
     if ( ! _image_mesh_created )
     {
         _create_image_mesh ( ) ;
-        _create_image_texture ( ) ;
         _image_mesh_created = true ;
+    }
+    if ( ! _image_texture_created )
+    {
+        _create_image_texture ( ) ;
+        _image_texture_created = true ;
+    }
+    if ( ! _image_texture_loaded )
+    {
+        int_32 loader_ready = false ;
+        platform :: render_texture_loader_ready ( loader_ready ) ;
+        if ( loader_ready )
+        {
+            _mediator -> texture_finalize ( _image_texture_id ) ;
+            _image_texture_loaded = true ;
+        }
     }
 }
 
@@ -90,12 +110,7 @@ template < typename mediator >
 void shy_logic_image < mediator > :: _create_image_texture ( )
 {
     _image_texture_id = _mediator -> texture_create ( ) ;
-    texel_data filler ;
-    platform :: render_set_texel_color ( filler , 0 , 255 , 0 , 128 ) ;
-    for ( int_32 x = 0 ; x < _mediator -> texture_width ( ) ; x ++ )
-    {
-        for ( int_32 y = 0 ; y < _mediator -> texture_height ( ) ; y ++ )
-            _mediator -> texture_set_texel ( _image_texture_id , x , y , filler ) ;
-    }
-    _mediator -> texture_finalize ( _image_texture_id ) ;
+    texture_resource_id logo_resource_id ;
+    platform :: render_create_texture_resource_id ( logo_resource_id , logo_resource_index ) ;
+    _mediator -> texture_load_from_resource ( _image_texture_id , logo_resource_id ) ;
 }
