@@ -5,6 +5,10 @@
 - ( id ) init
 {
    	self = [ super init ] ;
+    _is_ready = true ;
+    _resource_index = 0 ;
+    _buffer = 0 ;
+    _side_size = 0 ;
 	return self ;
 }
 
@@ -15,13 +19,28 @@
 
 - ( bool ) loader_ready
 {
-    return true ;
+    return _is_ready ;
 }
 
 - ( void ) load_texture_from_png_resource : ( int ) resource_index
     to_buffer : ( void * ) buffer
     with_side_size_of : ( int ) side_size
 {
+    if ( _is_ready )
+    {
+        _is_ready = false ;
+        _resource_index = resource_index ;
+        _buffer = buffer ;
+        _side_size = side_size ;
+        [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
+    }
+}
+
+- ( void ) _thread_main_method
+{
+	[ NSThread sleepForTimeInterval : 0.1 ] ;
+    NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
+    
     NSUInteger width ;
     NSUInteger height ;
     NSURL * url = nil ;
@@ -29,9 +48,9 @@
     CGImageRef image ;
     CGContextRef context = nil ;
     CGColorSpaceRef color_space ;
-    GLubyte * data = ( GLubyte * ) buffer ;
+    GLubyte * data = ( GLubyte * ) _buffer ;
     url = [ NSURL fileURLWithPath : [ [ NSBundle mainBundle ] pathForResource : 
-        [ NSString stringWithFormat : @"texture_resource_%i" , resource_index ] 
+        [ NSString stringWithFormat : @"texture_resource_%i" , _resource_index ] 
         ofType : @"png"
         ] ] ;
     src = CGImageSourceCreateWithURL ( ( CFURLRef ) url , 0 ) ;
@@ -41,7 +60,7 @@
         CFRelease ( src ) ;
         width = CGImageGetWidth ( image ) ;
         height = CGImageGetHeight ( image ) ;
-        if ( width == side_size && height == side_size )
+        if ( width == _side_size && height == _side_size )
         {
             color_space = CGColorSpaceCreateDeviceRGB ( ) ;
             context = CGBitmapContextCreate 
@@ -62,6 +81,9 @@
         }
         CGImageRelease ( image ) ;
     }
+    
+    [ pool release ] ;
+    _is_ready = true ;
 }
 
 @end

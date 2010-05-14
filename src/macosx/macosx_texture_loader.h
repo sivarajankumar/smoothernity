@@ -6,6 +6,7 @@
     bool _is_ready ;
     int _resource_index ;
     void * _buffer ;
+    int _side_size ;
 }
 
 - ( bool ) loader_ready ;
@@ -13,5 +14,6 @@
     to_buffer : ( void * ) buffer
     with_side_size_of : ( int ) max_samples_count
     ;
+- ( void ) _thread_main_method ;
 
 @end
