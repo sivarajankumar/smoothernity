@@ -73,9 +73,9 @@ inline void shy_macosx_platform :: render_use_texture ( const render_texture_id 
 
 inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a )
 {
-    texel . _color [ 0 ] = ( GLubyte ) r ;
+    texel . _color [ 0 ] = ( GLubyte ) b ;
     texel . _color [ 1 ] = ( GLubyte ) g ;
-    texel . _color [ 2 ] = ( GLubyte ) b ;
+    texel . _color [ 2 ] = ( GLubyte ) r ;
     texel . _color [ 3 ] = ( GLubyte ) a ;
 }
 
@@ -92,7 +92,7 @@ inline void shy_macosx_platform :: render_load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
-    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_RGBA , GL_UNSIGNED_BYTE , data ) ;
+    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE , data ) ;
 }
 
 inline void shy_macosx_platform :: render_create_texture_resource_id 
