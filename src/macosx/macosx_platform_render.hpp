@@ -95,6 +95,32 @@ inline void shy_macosx_platform :: render_load_texture_data
     glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_RGBA , GL_UNSIGNED_BYTE , data ) ;
 }
 
+inline void shy_macosx_platform :: render_create_texture_resource_id 
+    ( texture_resource_id & resource_id 
+    , int_32 resource_index 
+    )
+{
+    resource_id . _resource_id = resource_index ;
+}
+
+inline void shy_macosx_platform :: render_load_texture_resource
+    ( const texture_resource_id & resource_id 
+    , int_32 size_pow2_base 
+    , texel_data * data 
+    )
+{
+    [ _texture_loader 
+        load_texture_from_png_resource : resource_id . _resource_id 
+        to_buffer : ( void * ) data
+        with_side_size_of : 1 << size_pow2_base
+    ] ;
+}
+
+inline void shy_macosx_platform :: render_texture_loader_ready ( int_32 & is_ready )
+{
+    is_ready = [ _texture_loader loader_ready ] ;
+}
+
 inline void shy_macosx_platform :: render_clear_screen 
     ( shy_macosx_platform :: float_32 r 
     , shy_macosx_platform :: float_32 g 

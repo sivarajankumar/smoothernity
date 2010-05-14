@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "macosx_sound_loader.h"
+#import "macosx_texture_loader.h"
 
 class shy_macosx_platform
 {
@@ -36,6 +37,13 @@ public :
 	private :
 		GLuint _texture_id ;
 	} ;
+
+    class texture_resource_id
+    {
+        friend class shy_macosx_platform ;
+    private :
+        int _resource_id ;
+    } ;
 	
     class texel_data
     {
@@ -181,6 +189,9 @@ public :
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
     static void render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     static void render_load_texture_data ( const render_texture_id & arg_texture_id , int_32 size_pow2_base , texel_data * data ) ;
+    static void render_load_texture_resource ( const texture_resource_id & resource_id , int_32 size_pow2_base , texel_data * data ) ;
+    static void render_create_texture_resource_id ( texture_resource_id & resource_id , int_32 resource_index ) ;
+    static void render_texture_loader_ready ( int_32 & is_ready ) ;
     
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
     
@@ -278,6 +289,7 @@ public :
 	//
 
     static shy_macosx_sound_loader * _sound_loader ;
+    static shy_macosx_texture_loader * _texture_loader ;
 	
 	static float_32 _aspect_width ;
 	static float_32 _aspect_height ;

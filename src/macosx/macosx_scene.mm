@@ -8,6 +8,7 @@
     if ( self )
 	{
 		shy_macosx_platform :: _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
+        shy_macosx_platform :: _texture_loader = [ [ shy_macosx_texture_loader alloc ] init ] ;
 		_measurer = new shy_facade < shy_macosx_platform > ( ) ;
 		_measurer -> init ( ) ;
 	}
@@ -17,7 +18,9 @@
 - ( void ) dealloc
 {
     [ shy_macosx_platform :: _sound_loader release ] ;
+    [ shy_macosx_platform :: _texture_loader release ] ;
     shy_macosx_platform :: _sound_loader = nil ;
+    shy_macosx_platform :: _texture_loader = nil ;
 	_measurer -> done ( ) ;
 	delete _measurer ;
 	_measurer = 0 ;
