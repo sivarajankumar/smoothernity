@@ -1,8 +1,11 @@
-#define int NO_INTS
-#define short NO_SHORTS
 #define char NO_CHARS
-#define float NO_FLOATS
 #define double NO_DOUBLES
+#define float NO_FLOATS
+#define int NO_INTS
+#define long NO_LONGS
+#define signed NO_SIGNED
+#define short NO_SHORTS
+#define unsigned NO_UNSIGNED
 
 #include "engine_camera.hpp"
 #include "engine_math.hpp"
@@ -13,6 +16,7 @@
 #include "logic_camera.hpp"
 #include "logic_entities.hpp"
 #include "logic_fidget.hpp"
+#include "logic_image.hpp"
 #include "logic_land.hpp"
 #include "logic_sound.hpp"
 #include "logic_text.hpp"
@@ -40,6 +44,7 @@ private :
         , shy_logic_camera
         , shy_logic_entities
         , shy_logic_fidget
+        , shy_logic_image
         , shy_logic_land
         , shy_logic_sound
         , shy_logic_text
@@ -78,8 +83,11 @@ void shy_facade < platform > :: video_mode_changed ( )
     _mediator . video_mode_changed ( ) ;
 }
 
-#undef int
-#undef short
 #undef char
-#undef float
 #undef double
+#undef float
+#undef int
+#undef long
+#undef signed
+#undef short
+#undef unsigned

@@ -9,6 +9,7 @@ template
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_entities
     , template < typename mediator > class _logic_fidget
+    , template < typename mediator > class _logic_image
     , template < typename mediator > class _logic_land
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_text
@@ -31,6 +32,7 @@ public :
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_entities < mediator > logic_entities ;
         typedef _logic_fidget < mediator > logic_fidget ;
+        typedef _logic_image < mediator > logic_image ;
         typedef _logic_land < mediator > logic_land ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_text < mediator > logic_text ;
@@ -85,6 +87,7 @@ public :
     void render ( ) ;
     void render_entities ( ) ;
     void render_fidget ( ) ;
+    void render_image ( ) ;
     void render_land ( ) ;
     void render_text ( ) ;
     void render_touch ( ) ;
@@ -109,6 +112,7 @@ private :
     typename mediator_types :: template modules < shy_mediator > :: logic_camera _logic_camera ;
     typename mediator_types :: template modules < shy_mediator > :: logic_entities _logic_entities ;
     typename mediator_types :: template modules < shy_mediator > :: logic_fidget _logic_fidget ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_image _logic_image ;
     typename mediator_types :: template modules < shy_mediator > :: logic_land _logic_land ;
     typename mediator_types :: template modules < shy_mediator > :: logic_sound _logic_sound ;
     typename mediator_types :: template modules < shy_mediator > :: logic_text _logic_text ;
@@ -122,6 +126,7 @@ shy_mediator < mediator_types > :: shy_mediator ( )
 , _logic_camera ( this )
 , _logic_entities ( this )
 , _logic_fidget ( this )
+, _logic_image ( this )
 , _logic_land ( this )
 , _logic_sound ( this )
 , _logic_text ( this )
@@ -301,6 +306,12 @@ void shy_mediator < mediator_types > :: render_fidget ( )
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: render_image ( )
+{
+    _logic_image . render_image ( ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: render_land ( )
 {
     _logic_land . render_land ( ) ;
@@ -325,6 +336,7 @@ void shy_mediator < mediator_types > :: update ( )
     _logic_camera . update ( ) ;
     _logic_entities . update ( ) ;
     _logic_fidget . update ( ) ;
+    _logic_image . update ( ) ;
     _logic_land . update ( ) ;
     _logic_sound . update ( ) ;
     _logic_text . update ( ) ;

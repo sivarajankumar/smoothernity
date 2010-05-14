@@ -103,6 +103,7 @@ void shy_logic < mediator > :: _render_hud ( )
     _mediator -> render_touch ( ) ;
     _mediator -> render_fidget ( ) ;
     _mediator -> render_text ( ) ;
+    _mediator -> render_image ( ) ;
 }
 
 template < typename mediator >
