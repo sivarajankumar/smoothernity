@@ -96,13 +96,7 @@ template < typename mediator >
 void shy_engine_texture < mediator > :: texture_set_texel
     ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a )
 {
-    platform :: render_set_texel_color
-        ( _textures_datas [ arg_texture_id . _texture_id ] . texels [ x + TEXTURE_SIZE * y ]
-        , r
-        , g
-        , b
-        , a
-        ) ;
+    platform :: render_set_texel_color ( _textures_datas [ arg_texture_id . _texture_id ] . texels [ x + TEXTURE_SIZE * y ] , r , g , b , a ) ;
 }
 
 template < typename mediator >
