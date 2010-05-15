@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "iphone_sound_loader.h"
+#import "iphone_texture_loader.h"
 
 class shy_iphone_platform
 {
@@ -16,7 +17,14 @@ public :
     typedef int int_32 ;
     typedef float float_32 ;
     
-    class render_buffer_id
+    class render_index_buffer_id
+    {
+        friend class shy_iphone_platform ;
+    private :
+        GLuint _buffer_id ;
+    } ;
+    
+    class render_vertex_buffer_id
     {
         friend class shy_iphone_platform ;
     private :
@@ -29,6 +37,13 @@ public :
 	private :
 		GLuint _texture_id ;
 	} ;
+	
+    class texture_resource_id
+    {
+        friend class shy_iphone_platform ;
+    private :
+        int _resource_id ;
+    } ;
 	
     class texel_data
     {
@@ -164,6 +179,9 @@ public :
     static void render_fog_disable ( ) ;
     static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a ) ;
     
+    static void render_blend_disable ( ) ;
+    static void render_blend_src_alpha_dst_one_minus_alpha ( ) ;
+    
 	static void render_enable_texturing ( ) ;
 	static void render_disable_texturing ( ) ;
 	static void render_set_modulate_texture_mode ( ) ;
@@ -171,28 +189,31 @@ public :
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
     static void render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     static void render_load_texture_data ( const render_texture_id & arg_texture_id , int_32 size_pow2_base , texel_data * data ) ;
+    static void render_load_texture_resource ( const texture_resource_id & resource_id , int_32 size_pow2_base , texel_data * data ) ;
+    static void render_create_texture_resource_id ( texture_resource_id & resource_id , int_32 resource_index ) ;
+    static void render_texture_loader_ready ( int_32 & is_ready ) ;
     
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
     
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     static void render_projection_ortho ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     
-    static void render_create_buffer_id ( render_buffer_id & arg_buffer_id ) ;
-    static void render_load_vertex_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;
+    static void render_create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;
     static void render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z ) ;
     static void render_set_vertex_tex_coord ( vertex_data & vertex , float_32 u , float_32 v ) ;
     static void render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a ) ;
-    static void render_load_index_buffer ( const render_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
+    
+    static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
     static void render_set_index_value ( index_data & data , int_32 index ) ;
     
     static void render_draw_triangle_strip 
-        ( const render_buffer_id & vertices_buffer 
-        , const render_buffer_id & indices_buffer
+        ( const render_vertex_buffer_id & vertices_buffer 
+        , const render_index_buffer_id & indices_buffer
         , int_32 indices_count
         ) ;
     static void render_draw_triangle_fan
-        ( const render_buffer_id & vertices_buffer 
-        , const render_buffer_id & indices_buffer
+        ( const render_vertex_buffer_id & vertices_buffer 
+        , const render_index_buffer_id & indices_buffer
         , int_32 indices_count
         ) ;
         
@@ -269,6 +290,7 @@ public :
 	//
 
     static shy_iphone_sound_loader * _sound_loader ;
+    static shy_iphone_texture_loader * _texture_loader ;
     static int_32 _touch_occured ;
     static float_32 _touch_x ;
     static float_32 _touch_y ;

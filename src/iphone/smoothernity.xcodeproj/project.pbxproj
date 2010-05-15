@@ -11,6 +11,9 @@
 		194E85C1117E393D000AAADA /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 194E85C0117E393D000AAADA /* stereo_sound_resource_1.mp3 */; };
 		19A8DDC8115E122F0062EAB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A8DDC7115E122F0062EAB6 /* OpenAL.framework */; };
 		19A8DE65115E2B230062EAB6 /* iphone_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19A8DE64115E2B230062EAB6 /* iphone_platform.mm */; };
+		19B3CCB3119E9F7B0075357E /* iphone_texture_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B3CCB2119E9F7B0075357E /* iphone_texture_loader.m */; };
+		19B3CCB9119EA0A60075357E /* texture_resource_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B3CCB8119EA0A60075357E /* texture_resource_1.png */; };
+		19B3CD04119EAA350075357E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B3CD03119EAA350075357E /* CoreGraphics.framework */; };
 		19BA211B11676CA4007398AF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BA211A11676CA4007398AF /* AudioToolbox.framework */; };
 		19BFEEB5111DD0FA00424782 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 19BFEEB4111DD0FA00424782 /* Icon.png */; };
 		1D3623260D0F684500981E51 /* iphone_app_delegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iphone_app_delegate.mm */; };
@@ -50,6 +53,14 @@
 		19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_math.hpp; sourceTree = "<group>"; };
 		19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_time.hpp; sourceTree = "<group>"; };
 		19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_sound.hpp; sourceTree = "<group>"; };
+		19B3CC9F119E9F0E0075357E /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
+		19B3CCA0119E9F0E0075357E /* engine_texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_texture.hpp; sourceTree = "<group>"; };
+		19B3CCA1119E9F0E0075357E /* logic_image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_image.hpp; sourceTree = "<group>"; };
+		19B3CCA2119E9F0E0075357E /* logic_text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_text.hpp; sourceTree = "<group>"; };
+		19B3CCB1119E9F7B0075357E /* iphone_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_texture_loader.h; sourceTree = "<group>"; };
+		19B3CCB2119E9F7B0075357E /* iphone_texture_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_texture_loader.m; sourceTree = "<group>"; };
+		19B3CCB8119EA0A60075357E /* texture_resource_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture_resource_1.png; path = ../../resources/texture_resource_1.png; sourceTree = SOURCE_ROOT; };
+		19B3CD03119EAA350075357E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		19BA211A11676CA4007398AF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		19BFEEB4111DD0FA00424782 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -78,6 +89,7 @@
 				28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */,
 				19A8DDC8115E122F0062EAB6 /* OpenAL.framework in Frameworks */,
 				19BA211B11676CA4007398AF /* AudioToolbox.framework in Frameworks */,
+				19B3CD04119EAA350075357E /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +114,8 @@
 				19A8DE8E115E32A00062EAB6 /* iphone_platform_vector.hpp */,
 				19111313116897E900F5E355 /* iphone_sound_loader.h */,
 				1911131411689BDB00F5E355 /* iphone_sound_loader.m */,
+				19B3CCB1119E9F7B0075357E /* iphone_texture_loader.h */,
+				19B3CCB2119E9F7B0075357E /* iphone_texture_loader.m */,
 				28FD14FC0DC6FC130079059D /* iphone_view.h */,
 				28FD14FD0DC6FC130079059D /* iphone_view.mm */,
 			);
@@ -114,13 +128,17 @@
 				194E85B5117E3921000AAADA /* engine_camera.hpp */,
 				194C97E31187976E00AA38A1 /* engine_math.hpp */,
 				194E85B6117E3921000AAADA /* engine_mesh.hpp */,
+				19B3CC9F119E9F0E0075357E /* engine_rasterizer.hpp */,
+				19B3CCA0119E9F0E0075357E /* engine_texture.hpp */,
 				194E85B7117E3921000AAADA /* facade.hpp */,
 				194E85B8117E3921000AAADA /* logic.hpp */,
 				194E85B9117E3921000AAADA /* logic_camera.hpp */,
 				194E85BA117E3921000AAADA /* logic_entities.hpp */,
 				194E85BB117E3921000AAADA /* logic_fidget.hpp */,
+				19B3CCA1119E9F0E0075357E /* logic_image.hpp */,
 				194E85BC117E3921000AAADA /* logic_land.hpp */,
 				194E85BD117E3921000AAADA /* logic_sound.hpp */,
+				19B3CCA2119E9F0E0075357E /* logic_text.hpp */,
 				194E85BE117E3921000AAADA /* logic_touch.hpp */,
 				194E85BF117E3921000AAADA /* mediator.hpp */,
 			);
@@ -160,6 +178,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				19B3CCB8119EA0A60075357E /* texture_resource_1.png */,
 				194E85C0117E393D000AAADA /* stereo_sound_resource_1.mp3 */,
 				19BFEEB4111DD0FA00424782 /* Icon.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -171,6 +190,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19B3CD03119EAA350075357E /* CoreGraphics.framework */,
 				28FD15070DC6FC5B0079059D /* QuartzCore.framework */,
 				28FD14FF0DC6FC520079059D /* OpenGLES.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -226,6 +246,7 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				19BFEEB5111DD0FA00424782 /* Icon.png in Resources */,
 				194E85C1117E393D000AAADA /* stereo_sound_resource_1.mp3 in Resources */,
+				19B3CCB9119EA0A60075357E /* texture_resource_1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +262,7 @@
 				28FD14FE0DC6FC130079059D /* iphone_view.mm in Sources */,
 				19A8DE65115E2B230062EAB6 /* iphone_platform.mm in Sources */,
 				1911131511689BDB00F5E355 /* iphone_sound_loader.m in Sources */,
+				19B3CCB3119E9F7B0075357E /* iphone_texture_loader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

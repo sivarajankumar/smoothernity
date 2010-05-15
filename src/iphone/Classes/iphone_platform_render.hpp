@@ -13,6 +13,17 @@ inline void shy_iphone_platform :: render_disable_depth_test ( )
     glDisable ( GL_DEPTH_TEST ) ;
 }
 
+inline void shy_iphone_platform :: render_blend_disable ( )
+{
+    glDisable ( GL_BLEND ) ;
+}
+
+inline void shy_iphone_platform :: render_blend_src_alpha_dst_one_minus_alpha ( )
+{
+    glEnable ( GL_BLEND ) ;
+    glBlendFunc ( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA ) ;
+}
+
 inline void shy_iphone_platform :: render_enable_texturing ( )
 {
 	glEnable ( GL_TEXTURE_2D ) ;
@@ -62,9 +73,9 @@ inline void shy_iphone_platform :: render_use_texture ( const render_texture_id 
 
 inline void shy_iphone_platform :: render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a )
 {
-    texel . _color [ 0 ] = ( GLubyte ) r ;
+    texel . _color [ 0 ] = ( GLubyte ) b ;
     texel . _color [ 1 ] = ( GLubyte ) g ;
-    texel . _color [ 2 ] = ( GLubyte ) b ;
+    texel . _color [ 2 ] = ( GLubyte ) r ;
     texel . _color [ 3 ] = ( GLubyte ) a ;
 }
 
@@ -81,7 +92,33 @@ inline void shy_iphone_platform :: render_load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
-    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_RGBA , GL_UNSIGNED_BYTE , data ) ;
+    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE , data ) ;
+}
+
+inline void shy_iphone_platform :: render_create_texture_resource_id 
+    ( texture_resource_id & resource_id 
+    , int_32 resource_index 
+    )
+{
+    resource_id . _resource_id = resource_index ;
+}
+
+inline void shy_iphone_platform :: render_load_texture_resource
+    ( const texture_resource_id & resource_id 
+    , int_32 size_pow2_base 
+    , texel_data * data 
+    )
+{
+    [ _texture_loader 
+        load_texture_from_png_resource : resource_id . _resource_id 
+        to_buffer : ( void * ) data
+        with_side_size_of : 1 << size_pow2_base
+    ] ;
+}
+
+inline void shy_iphone_platform :: render_texture_loader_ready ( int_32 & is_ready )
+{
+    is_ready = [ _texture_loader loader_ready ] ;
 }
 
 inline void shy_iphone_platform :: render_clear_screen 
@@ -125,19 +162,13 @@ inline void shy_iphone_platform :: render_projection_ortho
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
-inline void shy_iphone_platform :: render_create_buffer_id 
-    ( shy_iphone_platform :: render_buffer_id & arg_buffer_id 
-    )
-{
-    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
-}
-
-inline void shy_iphone_platform :: render_load_vertex_buffer 
-    ( const shy_iphone_platform :: render_buffer_id & arg_buffer_id 
+inline void shy_iphone_platform :: render_create_vertex_buffer 
+    ( shy_iphone_platform :: render_vertex_buffer_id & arg_buffer_id 
     , shy_iphone_platform :: int_32 elements 
     , shy_iphone_platform :: vertex_data * data 
     )
 {
+    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
@@ -183,12 +214,13 @@ inline void shy_iphone_platform :: render_set_vertex_color
     vertex . _color [ 3 ] = ( GLubyte ) a ;
 }
 
-inline void shy_iphone_platform :: render_load_index_buffer 
-    ( const shy_iphone_platform :: render_buffer_id & arg_buffer_id 
+inline void shy_iphone_platform :: render_create_index_buffer 
+    ( shy_iphone_platform :: render_index_buffer_id & arg_buffer_id 
     , shy_iphone_platform :: int_32 elements 
     , shy_iphone_platform :: index_data * data 
     )
 {
+    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
@@ -236,8 +268,8 @@ inline void shy_iphone_platform :: render_matrix_pop ( )
 }
 
 inline void shy_iphone_platform :: render_draw_triangle_strip 
-    ( const shy_iphone_platform :: render_buffer_id & vertices_buffer 
-    , const shy_iphone_platform :: render_buffer_id & indices_buffer
+    ( const shy_iphone_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_iphone_platform :: render_index_buffer_id & indices_buffer
     , shy_iphone_platform :: int_32 indices_count
     )
 {
@@ -253,8 +285,8 @@ inline void shy_iphone_platform :: render_draw_triangle_strip
 }
 
 inline void shy_iphone_platform :: render_draw_triangle_fan
-    ( const shy_iphone_platform :: render_buffer_id & vertices_buffer 
-    , const shy_iphone_platform :: render_buffer_id & indices_buffer
+    ( const shy_iphone_platform :: render_vertex_buffer_id & vertices_buffer 
+    , const shy_iphone_platform :: render_index_buffer_id & indices_buffer
     , shy_iphone_platform :: int_32 indices_count
     )
 {
