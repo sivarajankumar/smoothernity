@@ -63,7 +63,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 {
     static const int_32 SCALE_IN_FRAMES = 60 ;
     
-    platform :: render_disable_texturing ( ) ;
+    _mediator -> texture_unselect ( ) ;
     float_32 scale = float_32 ( _fidget_scale ) / float_32 ( SCALE_IN_FRAMES ) ;
     if ( _fidget_scale < SCALE_IN_FRAMES )
         _fidget_scale ++ ;

@@ -117,7 +117,7 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _render_spot_mesh ( )
 {
-    platform :: render_disable_texturing ( ) ;
+    _mediator -> texture_unselect ( ) ;
     matrix_data matrix ;
     float_32 scale = float_32 ( _spot_frames_left ) / float_32 ( _spot_lifetime_in_frames ) ;
     platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;

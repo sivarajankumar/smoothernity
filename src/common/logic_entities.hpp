@@ -85,7 +85,7 @@ shy_logic_entities < mediator > :: get_entity_height ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _render_entities ( )
 {
-    platform :: render_disable_texturing ( ) ;
+    _mediator -> texture_unselect ( ) ;
     for ( int_32 i = 0 ; i < ENTITY_MESH_GRID * ENTITY_MESH_GRID ; i ++ )
     {
         _mediator -> mesh_set_transform ( _entity_mesh_id , _entities_grid_matrices [ i ] ) ;

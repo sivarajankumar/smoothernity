@@ -100,10 +100,10 @@ void shy_logic < mediator > :: _render_hud ( )
     platform :: render_disable_depth_test ( ) ;
     platform :: render_fog_disable ( ) ;
     _use_ortho_projection ( ) ;
-    _mediator -> render_touch ( ) ;
     _mediator -> render_fidget ( ) ;
     _mediator -> render_text ( ) ;
     _mediator -> render_image ( ) ;
+    _mediator -> render_touch ( ) ;
 }
 
 template < typename mediator >
