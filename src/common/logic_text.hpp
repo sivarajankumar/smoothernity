@@ -13,6 +13,7 @@ class shy_logic_text
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 public :
     shy_logic_text ( mediator * arg_mediator ) ;
+    void prepare_text ( ) ;
     void render_text ( ) ;
     void update ( ) ;
 private :
@@ -51,6 +52,7 @@ private :
 private :
     mediator * _mediator ;
     int_32 _text_mesh_created ;
+    int_32 _text_prepare_permitted ;
     mesh_id _text_mesh_id ;
     texture_id _text_texture_id ;
     texel_data _filler ;
@@ -65,11 +67,18 @@ template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
 , _text_mesh_created ( false )
+, _text_prepare_permitted ( false )
 , _origin_x ( 0 )
 , _origin_y ( 0 )
 , _letter_size_x ( 0 )
 , _letter_size_y ( 0 )
 {
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: prepare_text ( )
+{
+    _text_prepare_permitted = true ;
 }
 
 template < typename mediator >
@@ -82,11 +91,15 @@ void shy_logic_text < mediator > :: render_text ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: update ( )
 {
-    if ( ! _text_mesh_created )
+    if ( _text_prepare_permitted )
     {
-        _create_text_mesh ( ) ;
-        _create_text_texture ( ) ;
-        _text_mesh_created = true ;
+        if ( ! _text_mesh_created )
+        {
+            _create_text_mesh ( ) ;
+            _create_text_texture ( ) ;
+            _text_mesh_created = true ;
+            _mediator -> text_prepared ( ) ;
+        }
     }
 }
 

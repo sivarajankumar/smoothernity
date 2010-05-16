@@ -17,13 +17,14 @@ public :
     void done ( ) ;
     void render ( ) ;
     void update ( ) ;
+    void video_mode_changed ( ) ;
     void camera_prepared ( ) ;
     void entities_prepared ( ) ;
     void fidget_prepared ( ) ;
     void image_prepared ( ) ;
     void land_prepared ( ) ;
     void sound_prepared ( ) ;
-    void video_mode_changed ( ) ;
+    void text_prepared ( ) ;
     float_32 get_near_plane_distance ( ) ;
 private :
     void _render_scene ( ) ;
@@ -98,6 +99,12 @@ void shy_logic < mediator > :: land_prepared ( )
 
 template < typename mediator >
 void shy_logic < mediator > :: entities_prepared ( )
+{
+    _mediator -> prepare_text ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: text_prepared ( )
 {
     _mediator -> prepare_image ( ) ;
 }
