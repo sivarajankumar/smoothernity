@@ -17,6 +17,7 @@ class shy_logic_entities
 public :
     shy_logic_entities ( mediator * arg_mediator ) ;
     void render_entities ( ) ;
+    void prepare_entities ( ) ;
     void update ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_entity_height ( ) ;
@@ -28,7 +29,7 @@ private :
 private :
     mediator * _mediator ;
     int_32 _entity_created ;
-    int_32 _frames_left_to_create ;
+    int_32 _entities_prepare_permitted ;
     int_32 _grid_scale ;
     mesh_id _entity_mesh_id ;
     matrix_data _entities_grid_matrices [ ENTITY_MESH_GRID * ENTITY_MESH_GRID ] ;
@@ -38,7 +39,7 @@ template < typename mediator >
 shy_logic_entities < mediator > :: shy_logic_entities ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
 , _entity_created ( false )
-, _frames_left_to_create ( 0 )
+, _entities_prepare_permitted ( false )
 , _grid_scale ( 0 )
 {
 }
@@ -51,17 +52,22 @@ void shy_logic_entities < mediator > :: render_entities ( )
 }
 
 template < typename mediator >
+void shy_logic_entities < mediator > :: prepare_entities ( )
+{
+    _entities_prepare_permitted = true ;
+}
+
+template < typename mediator >
 void shy_logic_entities < mediator > :: update ( )
 {
-    if ( _frames_left_to_create > 0 )
-        _frames_left_to_create -- ;
-    else
+    if ( _entities_prepare_permitted )
     {
         if ( ! _entity_created )
         {
             _create_entity_mesh ( ) ;
             _update_entity_grid ( ) ;
             _entity_created = true ;
+            _mediator -> entities_prepared ( ) ;
         }
         else
             _update_entity_grid ( ) ;

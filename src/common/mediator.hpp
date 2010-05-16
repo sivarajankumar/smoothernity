@@ -60,6 +60,7 @@ public :
 public :
     void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
     void done ( ) ;
+    void entities_prepared ( ) ;
     float_32 get_entity_height ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_near_plane_distance ( ) ;
@@ -81,6 +82,7 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
+    void prepare_entities ( ) ;
     void prepare_image ( ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
@@ -149,6 +151,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: done ( )
 {
     _logic . done ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: entities_prepared ( )
+{
+    _logic . entities_prepared ( ) ;
 }
 
 template < typename mediator_types >
@@ -260,6 +268,12 @@ void shy_mediator < mediator_types > :: mesh_set_transform
     ( mesh_id arg_mesh_id , const matrix_data & transform )
 {
     _engine_mesh . mesh_set_transform ( arg_mesh_id , transform ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: prepare_entities ( )
+{
+    _logic_entities . prepare_entities ( ) ;
 }
 
 template < typename mediator_types >
