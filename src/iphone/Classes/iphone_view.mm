@@ -44,11 +44,12 @@
     
     shy_iphone_platform :: _sound_loader = [ [ shy_iphone_sound_loader alloc ] init ] ;
     shy_iphone_platform :: _texture_loader = [ [ shy_iphone_texture_loader alloc ] init ] ;
+    [ shy_iphone_platform :: _sound_loader thread_run ] ;
 }
 
 - ( void ) _done_platform
 {
-    [ shy_iphone_platform :: _sound_loader release ] ;
+    [ shy_iphone_platform :: _sound_loader thread_stop ] ;
     [ shy_iphone_platform :: _texture_loader release ] ;
     shy_iphone_platform :: _sound_loader = nil ;
     shy_iphone_platform :: _texture_loader = nil ;

@@ -6,6 +6,7 @@
 {
    	self = [ super init ] ;
     _is_ready = true ;
+    _should_quit = false ;
     _resource_index = 0 ;
     _buffer = 0 ;
     _max_samples_count = 0 ;
@@ -26,6 +27,21 @@
 - ( void ) _thread_main_method
 {
     NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
+    while ( ! _should_quit )
+    {
+        [ NSThread sleepForTimeInterval : 0.1 ] ;
+        if ( ! _is_ready )
+        {
+            [ self _perform_load ] ;
+            _is_ready = true ;
+        }
+    }
+    [ pool release ] ;
+    [ self release ] ;
+}
+
+- ( void ) _perform_load
+{
     NSBundle * bundle = [ NSBundle mainBundle ] ;
     CFURLRef file_url = ( CFURLRef ) [ [ NSURL fileURLWithPath : [ bundle 
         pathForResource : [ NSString stringWithFormat : @"stereo_sound_resource_%i" , _resource_index ] 
@@ -64,9 +80,16 @@
     * _loaded_samples_count = file_length_in_frames ;
     ExtAudioFileDispose ( ext_ref ) ;
     CFRelease ( file_url ) ;
-    [ pool release ] ;
-    
-    _is_ready = true ;
+}
+
+- ( void ) thread_run
+{
+    [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
+}
+
+- ( void ) thread_stop
+{
+    _should_quit = true ;
 }
 
 - ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( int ) resource_index
@@ -76,12 +99,11 @@
 {
     if ( _is_ready )
     {
-        _is_ready = false ;
         _resource_index = resource_index ;
         _buffer = buffer ;
         _max_samples_count = max_samples_count ;
         _loaded_samples_count = loaded_samples_count ;
-        [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
+        _is_ready = false ;
     }
 }
 
