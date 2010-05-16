@@ -17,6 +17,7 @@ class shy_logic_sound
 public :
     shy_logic_sound ( mediator * arg_mediator ) ;
     void init ( ) ;
+    void prepare_sound ( ) ;
     void update ( ) ;
 private :
     void _load_sound ( ) ;
@@ -28,7 +29,7 @@ private :
     int_32 _mono_sound_created ;
     int_32 _stereo_sound_created ;
     int_32 _stereo_sound_loaded ;
-    int_32 _frames_left_to_create ;
+    int_32 _sound_prepare_permitted ;
     int_32 _loaded_stereo_sound_samples ;
     sound_source_id _stereo_sound_source ;
     sound_source_id _mono_sound_source ;
@@ -42,7 +43,7 @@ shy_logic_sound < mediator > :: shy_logic_sound ( mediator * arg_mediator )
 , _mono_sound_created ( false )
 , _stereo_sound_created ( false )
 , _stereo_sound_loaded ( false )
-, _frames_left_to_create ( 60 )
+, _sound_prepare_permitted ( false )
 , _loaded_stereo_sound_samples ( 0 )
 {
 }
@@ -59,11 +60,15 @@ void shy_logic_sound < mediator > :: init ( )
 }
 
 template < typename mediator >
+void shy_logic_sound < mediator > :: prepare_sound ( )
+{
+    _sound_prepare_permitted = true ;
+}
+
+template < typename mediator >
 void shy_logic_sound < mediator > :: update ( )
 {
-    if ( _frames_left_to_create > 0 )
-        _frames_left_to_create -- ;
-    else
+    if ( _sound_prepare_permitted )
     {
         if ( ! _stereo_sound_loaded )
         {
@@ -81,6 +86,7 @@ void shy_logic_sound < mediator > :: update ( )
                 {
                     _create_stereo_sound ( ) ;
                     _stereo_sound_created = true ;
+                    _mediator -> sound_prepared ( ) ;
                 }
             }
         }

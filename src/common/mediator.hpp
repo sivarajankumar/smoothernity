@@ -90,6 +90,7 @@ public :
     void prepare_fidget ( ) ;
     void prepare_image ( ) ;
     void prepare_land ( ) ;
+    void prepare_sound ( ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
@@ -102,6 +103,7 @@ public :
     void render_land ( ) ;
     void render_text ( ) ;
     void render_touch ( ) ;
+    void sound_prepared ( ) ;
     texture_id texture_create ( ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
     int_32 texture_height ( ) ;
@@ -325,6 +327,12 @@ void shy_mediator < mediator_types > :: prepare_land ( )
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: prepare_sound ( )
+{
+    _logic_sound . prepare_sound ( ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_ellipse_in_rect
     ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
 {
@@ -399,6 +407,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: render_touch ( )
 {
     _logic_touch . render_touch ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: sound_prepared ( )
+{
+    _logic . sound_prepared ( ) ;
 }
 
 template < typename mediator_types >
