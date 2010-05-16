@@ -72,6 +72,7 @@ public :
     template < typename T > T math_abs ( T f ) ;
     vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     template < typename T > T math_clamp ( T f , T from , T to ) ;
+    float_32 math_lerp ( float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     template < typename T > T math_max ( T f1 , T f2 ) ;
     template < typename T > T math_min ( T f1 , T f2 ) ;
     float_32 math_pi ( ) ;
@@ -236,6 +237,14 @@ shy_mediator < mediator_types > :: math_catmull_rom_spline
     ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
 {
     return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: float_32 
+shy_mediator < mediator_types > :: math_lerp 
+    ( float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight )
+{
+    return _engine_math . math_lerp ( from_value , from_weight , to_value , to_weight , weight ) ;
 }
 
 template < typename mediator_types >

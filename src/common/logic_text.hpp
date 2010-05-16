@@ -18,6 +18,7 @@ public :
     void update ( ) ;
 private :
     void _render_text_mesh ( ) ;
+    void _update_text_mesh ( ) ;
     void _create_text_mesh ( ) ;
     void _create_text_texture ( ) ;
     void _next_letter_col ( ) ;
@@ -61,6 +62,7 @@ private :
     int_32 _origin_y ;
     int_32 _letter_size_x ;
     int_32 _letter_size_y ;
+    int_32 _scale_frames ;
 } ;
 
 template < typename mediator >
@@ -72,6 +74,7 @@ shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
 , _origin_y ( 0 )
 , _letter_size_x ( 0 )
 , _letter_size_y ( 0 )
+, _scale_frames ( 0 )
 {
 }
 
@@ -101,6 +104,24 @@ void shy_logic_text < mediator > :: update ( )
             _mediator -> text_prepared ( ) ;
         }
     }
+    if ( _text_mesh_created )
+        _update_text_mesh ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _update_text_mesh ( )
+{
+    static const float_32 final_scale = 0.5f ;
+    static const int_32 scale_in_frames = 60 ;
+    if ( _scale_frames < scale_in_frames )
+        _scale_frames ++ ;
+    float_32 scale = _mediator -> math_lerp ( 0 , 0 , final_scale , scale_in_frames , _scale_frames ) ;
+    matrix_data matrix ;
+    platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
+    platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
+    platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
+    platform :: matrix_set_origin ( matrix , - 0.5f , 0 , - 3 ) ;
+    _mediator -> mesh_set_transform ( _text_mesh_id , matrix ) ;
 }
 
 template < typename mediator >
@@ -121,35 +142,27 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     static const int_32 blue = 255 ;
     static const int_32 alpha = 255 ;
 
-    platform :: render_set_vertex_position  ( vertices [ 0 ] , - 1 , 1 , - 3 ) ;
+    platform :: render_set_vertex_position  ( vertices [ 0 ] , - 1 , 1 , 0 ) ;
     platform :: render_set_vertex_color     ( vertices [ 0 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 0 ] , 0 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 0 ] , 0 ) ;
 
-    platform :: render_set_vertex_position  ( vertices [ 1 ] , - 1 , - 1 , - 3 ) ;
+    platform :: render_set_vertex_position  ( vertices [ 1 ] , - 1 , - 1 , 0 ) ;
     platform :: render_set_vertex_color     ( vertices [ 1 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 1 ] , 0 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 1 ] , 1 ) ;
 
-    platform :: render_set_vertex_position  ( vertices [ 2 ] , 1 , 1 , - 3 ) ;
+    platform :: render_set_vertex_position  ( vertices [ 2 ] , 1 , 1 , 0 ) ;
     platform :: render_set_vertex_color     ( vertices [ 2 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 2 ] , 1 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 2 ] , 2 ) ;
 
-    platform :: render_set_vertex_position  ( vertices [ 3 ] , 1 , - 1 , - 3 ) ;
+    platform :: render_set_vertex_position  ( vertices [ 3 ] , 1 , - 1 , 0 ) ;
     platform :: render_set_vertex_color     ( vertices [ 3 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , 1 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , 3 ) ;
 
-    _text_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 4 , 4 , 0 ) ;
-    
-    static const float_32 scale = 0.5f ;
-    matrix_data matrix ;
-    platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
-    platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
-    platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
-    platform :: matrix_set_origin ( matrix , - 0.5f , 0 , 0 ) ;
-    _mediator -> mesh_set_transform ( _text_mesh_id , matrix ) ;
+    _text_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 4 , 4 , 0 ) ;    
 }
 
 template < typename mediator >

@@ -10,6 +10,7 @@ public :
     template < typename T > T math_abs ( T f ) ;
     template < typename T > T math_max ( T f1 , T f2 ) ;
     template < typename T > T math_min ( T f1 , T f2 ) ;
+    float_32 math_lerp ( float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     float_32 math_pi ( ) ;
 } ;
 
@@ -73,4 +74,17 @@ typename shy_engine_math < mediator > :: float_32
 shy_engine_math < mediator > :: math_pi ( )
 {
     return 3.141592f ;
+}
+
+template < typename mediator >
+typename shy_engine_math < mediator > :: float_32 
+shy_engine_math < mediator > :: math_lerp 
+    ( float_32 from_value 
+    , float_32 from_weight 
+    , float_32 to_value 
+    , float_32 to_weight 
+    , float_32 weight 
+    )
+{
+    return from_value + ( to_value - from_value ) * ( weight - from_weight ) / ( to_weight - from_weight ) ;
 }
