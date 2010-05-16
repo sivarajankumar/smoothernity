@@ -14,6 +14,7 @@ class shy_logic_land
     
 public :
     shy_logic_land ( mediator * arg_mediator ) ;
+    void prepare_land ( ) ;
     void render_land ( ) ;
     void update ( ) ;
 private :
@@ -24,7 +25,7 @@ private :
     mediator * _mediator ;
     int_32 _land_mesh_created ;
     int_32 _land_texture_created ;
-    int_32 _frames_left_to_create ;
+    int_32 _land_prepare_permitted ;
     int_32 _land_texture_creation_row ;
     float_32 _land_scale ;
     mesh_id _land_mesh_id ;
@@ -36,10 +37,16 @@ shy_logic_land < mediator > :: shy_logic_land ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
 , _land_mesh_created ( false )
 , _land_texture_created ( false )
-, _frames_left_to_create ( 0 )
+, _land_prepare_permitted ( false )
 , _land_texture_creation_row ( 0 )
 , _land_scale ( 0 )
 {
+}
+
+template < typename mediator >
+void shy_logic_land < mediator > :: prepare_land ( )
+{
+    _land_prepare_permitted = true ;
 }
 
 template < typename mediator >
@@ -52,14 +59,16 @@ void shy_logic_land < mediator > :: render_land ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: update ( )
 {
-    if ( _frames_left_to_create > 0 )
-        _frames_left_to_create -- ;
-    else
+    if ( _land_prepare_permitted )
     {
         if ( ! _land_texture_created )
             _create_land_texture ( ) ;
         else if ( ! _land_mesh_created )
+        {
             _create_land_mesh ( ) ;
+            if ( _land_mesh_created )
+                _mediator -> land_prepared ( ) ;
+        }
     }
 }
 

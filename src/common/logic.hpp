@@ -19,6 +19,7 @@ public :
     void update ( ) ;
     void entities_prepared ( ) ;
     void image_prepared ( ) ;
+    void land_prepared ( ) ;
     void video_mode_changed ( ) ;
     float_32 get_near_plane_distance ( ) ;
 private :
@@ -77,12 +78,18 @@ void shy_logic < mediator > :: update ( )
 template < typename mediator >
 void shy_logic < mediator > :: entities_prepared ( )
 {
+    _mediator -> prepare_land ( ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: image_prepared ( )
 {
     _mediator -> prepare_entities ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: land_prepared ( )
+{
 }
 
 template < typename mediator >

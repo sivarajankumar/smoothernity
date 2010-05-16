@@ -66,6 +66,7 @@ public :
     float_32 get_near_plane_distance ( ) ;
     void image_prepared ( ) ;
     void init ( ) ;
+    void land_prepared ( ) ;
     template < typename T > T math_abs ( T f ) ;
     vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     template < typename T > T math_clamp ( T f , T from , T to ) ;
@@ -84,6 +85,7 @@ public :
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
     void prepare_entities ( ) ;
     void prepare_image ( ) ;
+    void prepare_land ( ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
@@ -194,6 +196,12 @@ void shy_mediator < mediator_types > :: init ( )
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: land_prepared ( )
+{
+    _logic . land_prepared ( ) ;
+}
+
+template < typename mediator_types >
 template < typename T >
 T shy_mediator < mediator_types > :: math_abs ( T f )
 {
@@ -280,6 +288,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: prepare_image ( )
 {
     _logic_image . prepare_image ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: prepare_land ( )
+{
+    _logic_land . prepare_land ( ) ;
 }
 
 template < typename mediator_types >
