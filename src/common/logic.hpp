@@ -17,6 +17,7 @@ public :
     void done ( ) ;
     void render ( ) ;
     void update ( ) ;
+    void camera_prepared ( ) ;
     void entities_prepared ( ) ;
     void fidget_prepared ( ) ;
     void image_prepared ( ) ;
@@ -78,6 +79,12 @@ void shy_logic < mediator > :: update ( )
 
 template < typename mediator >
 void shy_logic < mediator > :: fidget_prepared ( )
+{
+    _mediator -> prepare_camera ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: camera_prepared ( )
 {
     _mediator -> prepare_land ( ) ;
 }

@@ -16,6 +16,7 @@ class shy_logic_camera
 
 public :
     shy_logic_camera ( mediator * arg_mediator ) ;
+    void prepare_camera ( ) ;
     void use_camera_matrix ( ) ;
     void update ( ) ;
 private :
@@ -35,6 +36,7 @@ private :
 private :
     mediator * _mediator ;
     matrix_data _camera_matrix ;
+    int_32 _camera_prepare_permitted ;
     int_32 _frames_to_change_camera_target ;
     int_32 _frames_to_change_camera_origin ;
     int_32 _random_seed ;
@@ -52,6 +54,7 @@ private :
 template < typename mediator >
 shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
+, _camera_prepare_permitted ( false )
 , _frames_to_change_camera_target ( 0 )
 , _frames_to_change_camera_origin ( 0 )
 , _random_seed ( 0 )
@@ -76,17 +79,27 @@ void shy_logic_camera < mediator > :: use_camera_matrix ( )
 }
 
 template < typename mediator >
+void shy_logic_camera < mediator > :: prepare_camera ( )
+{
+    _camera_prepare_permitted = true ;
+}
+
+template < typename mediator >
 void shy_logic_camera < mediator > :: update ( )
 {
-    if ( ! _camera_created )
+    if ( _camera_prepare_permitted )
     {
-        _fill_camera_schedules ( ) ;
-        _reset_camera_rubber ( ) ;
-        _update_camera ( ) ;
-        _camera_created = true ;
+        if ( ! _camera_created )
+        {
+            _fill_camera_schedules ( ) ;
+            _reset_camera_rubber ( ) ;
+            _update_camera ( ) ;
+            _camera_created = true ;
+            _mediator -> camera_prepared ( ) ;
+        }
+        else
+            _update_camera ( ) ;
     }
-    else
-        _update_camera ( ) ;
 }
 
 template < typename mediator >
