@@ -17,6 +17,7 @@ public :
     void done ( ) ;
     void render ( ) ;
     void update ( ) ;
+    void image_prepared ( ) ;
     void video_mode_changed ( ) ;
     float_32 get_near_plane_distance ( ) ;
 private :
@@ -50,6 +51,7 @@ template < typename mediator >
 void shy_logic < mediator > :: init ( )
 {
     _init_render ( ) ;
+    _mediator -> prepare_image ( ) ;
 }
 
 template < typename mediator >
@@ -69,6 +71,11 @@ template < typename mediator >
 void shy_logic < mediator > :: update ( )
 {
     _update_color ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: image_prepared ( )
+{
 }
 
 template < typename mediator >

@@ -18,6 +18,7 @@ public :
     shy_logic_image ( mediator * arg_mediator ) ;
     void render_image ( ) ;
     void update ( ) ;
+    void prepare_image ( ) ;
 private :
     void _render_image_mesh ( ) ;
     void _create_image_mesh ( ) ;
@@ -27,6 +28,7 @@ private :
     int_32 _image_mesh_created ;
     int_32 _image_texture_created ;
     int_32 _image_texture_loaded ;
+    int_32 _image_prepare_permitted ;
     mesh_id _image_mesh_id ;
     texture_id _image_texture_id ;
 } ;
@@ -36,6 +38,7 @@ shy_logic_image < mediator > :: shy_logic_image ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
 , _image_mesh_created ( false )
 , _image_texture_loaded ( false )
+, _image_prepare_permitted ( false )
 {
 }
 
@@ -47,26 +50,36 @@ void shy_logic_image < mediator > :: render_image ( )
 }
 
 template < typename mediator >
+void shy_logic_image < mediator > :: prepare_image ( )
+{
+    _image_prepare_permitted = true ;
+}
+
+template < typename mediator >
 void shy_logic_image < mediator > :: update ( )
 {
-    if ( ! _image_mesh_created )
+    if ( _image_prepare_permitted )
     {
-        _create_image_mesh ( ) ;
-        _image_mesh_created = true ;
-    }
-    if ( ! _image_texture_created )
-    {
-        _create_image_texture ( ) ;
-        _image_texture_created = true ;
-    }
-    if ( ! _image_texture_loaded )
-    {
-        int_32 loader_ready = false ;
-        platform :: render_texture_loader_ready ( loader_ready ) ;
-        if ( loader_ready )
+        if ( ! _image_mesh_created )
         {
-            _mediator -> texture_finalize ( _image_texture_id ) ;
-            _image_texture_loaded = true ;
+            _create_image_mesh ( ) ;
+            _image_mesh_created = true ;
+        }
+        if ( ! _image_texture_created )
+        {
+            _create_image_texture ( ) ;
+            _image_texture_created = true ;
+        }
+        if ( ! _image_texture_loaded )
+        {
+            int_32 loader_ready = false ;
+            platform :: render_texture_loader_ready ( loader_ready ) ;
+            if ( loader_ready )
+            {
+                _mediator -> texture_finalize ( _image_texture_id ) ;
+                _image_texture_loaded = true ;
+                _mediator -> image_prepared ( ) ;
+            }
         }
     }
 }
