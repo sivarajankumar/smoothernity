@@ -6,6 +6,7 @@
 {
    	self = [ super init ] ;
     _is_ready = true ;
+    _should_quit = false ;
     _resource_index = 0 ;
     _buffer = 0 ;
     _side_size = 0 ;
@@ -22,25 +23,47 @@
     return _is_ready ;
 }
 
+- ( void ) thread_run
+{
+    [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
+}
+
+- ( void ) thread_stop
+{
+    _should_quit = true ;
+}
+
 - ( void ) load_texture_from_png_resource : ( int ) resource_index
     to_buffer : ( void * ) buffer
     with_side_size_of : ( int ) side_size
 {
     if ( _is_ready )
     {
-        _is_ready = false ;
         _resource_index = resource_index ;
         _buffer = buffer ;
         _side_size = side_size ;
-        [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
+        _is_ready = false ;
     }
 }
 
 - ( void ) _thread_main_method
 {
-	[ NSThread sleepForTimeInterval : 0.1 ] ;
     NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
-    
+    while ( ! _should_quit )
+    {
+        [ NSThread sleepForTimeInterval : 0.1 ] ;
+        if ( ! _is_ready )
+        {
+            [ self _perform_load ] ;
+            _is_ready = true ;
+        }
+    }
+    [ pool release ] ;
+    [ self release ] ;
+}
+
+- ( void ) _perform_load
+{
     NSUInteger width ;
     NSUInteger height ;
     NSURL * url = nil ;
@@ -80,9 +103,6 @@
         }
         CGImageRelease ( image ) ;
     }
-    
-    [ pool release ] ;
-    _is_ready = true ;
 }
 
 @end
