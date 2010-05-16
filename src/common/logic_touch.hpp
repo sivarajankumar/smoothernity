@@ -14,6 +14,7 @@ class shy_logic_touch
     
 public :
     shy_logic_touch ( mediator * arg_mediator ) ;
+    void prepare_touch ( ) ;
     void render_touch ( ) ;
     void update ( ) ;
 private :
@@ -28,6 +29,7 @@ private :
     mediator * _mediator ;
     int_32 _spot_frames_left ;
     int_32 _spot_mesh_created ;
+    int_32 _spot_prepare_permitted ;
 	int_32 _should_place_new_spot ;
 	float_32 _spot_x ;
 	float_32 _spot_y ;
@@ -40,10 +42,17 @@ shy_logic_touch < mediator > :: shy_logic_touch ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
 , _spot_frames_left ( 0 )
 , _spot_mesh_created ( false )
+, _spot_prepare_permitted ( false )
 , _should_place_new_spot ( false )
 , _spot_x ( 0 )
 , _spot_y ( 0 )
 {
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: prepare_touch ( )
+{
+    _spot_prepare_permitted = true ;
 }
 
 template < typename mediator >
@@ -56,13 +65,17 @@ void shy_logic_touch < mediator > :: render_touch ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: update ( )
 {
-    if ( ! _spot_mesh_created )
+    if ( _spot_prepare_permitted )
     {
-        _create_spot_mesh ( ) ;
-        _spot_mesh_created = true ;
+        if ( ! _spot_mesh_created )
+        {
+            _create_spot_mesh ( ) ;
+            _spot_mesh_created = true ;
+            _mediator -> touch_prepared ( ) ;
+        }
+        else
+            _update_spot ( ) ;
     }
-    else
-        _update_spot ( ) ;
 }
 
 template < typename mediator >

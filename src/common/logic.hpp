@@ -25,6 +25,7 @@ public :
     void land_prepared ( ) ;
     void sound_prepared ( ) ;
     void text_prepared ( ) ;
+    void touch_prepared ( ) ;
     float_32 get_near_plane_distance ( ) ;
 private :
     void _render_scene ( ) ;
@@ -111,6 +112,12 @@ void shy_logic < mediator > :: text_prepared ( )
 
 template < typename mediator >
 void shy_logic < mediator > :: image_prepared ( )
+{
+    _mediator -> prepare_touch ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: touch_prepared ( )
 {
     _mediator -> prepare_sound ( ) ;
 }

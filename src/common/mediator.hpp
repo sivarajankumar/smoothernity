@@ -92,6 +92,7 @@ public :
     void prepare_land ( ) ;
     void prepare_sound ( ) ;
     void prepare_text ( ) ;
+    void prepare_touch ( ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
@@ -115,6 +116,7 @@ public :
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     void texture_unselect ( ) ;
     int_32 texture_width ( ) ;
+    void touch_prepared ( ) ;
     void update ( ) ;
     void use_camera_matrix ( ) ;
     void video_mode_changed ( ) ;
@@ -341,6 +343,12 @@ void shy_mediator < mediator_types > :: prepare_text ( )
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: prepare_touch ( )
+{
+    _logic_touch . prepare_touch ( ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_ellipse_in_rect
     ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
 {
@@ -509,6 +517,12 @@ typename shy_mediator < mediator_types > :: int_32
 shy_mediator < mediator_types > :: texture_width ( )
 {
     return _engine_texture . texture_width ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: touch_prepared ( )
+{
+    _logic . touch_prepared ( ) ;
 }
 
 template < typename mediator_types >
