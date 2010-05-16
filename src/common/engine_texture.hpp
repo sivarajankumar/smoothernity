@@ -8,7 +8,7 @@ class shy_engine_texture
     typedef typename mediator :: platform :: int_32 int_32 ;
     
     static const int_32 MAX_TEXTURES = 5 ;
-    static const int_32 TEXTURE_SIZE_POW2_BASE = 9 ;
+    static const int_32 TEXTURE_SIZE_POW2_BASE = 8 ;
     static const int_32 TEXTURE_SIZE = 1 << TEXTURE_SIZE_POW2_BASE ;
     
 public :

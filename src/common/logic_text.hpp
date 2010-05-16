@@ -7,6 +7,7 @@ class shy_logic_text
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
+    typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -102,27 +103,40 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     vertex_data vertices [ 4 ] ;
     index_data indices [ 4 ] ;
 
+    static const int_32 red = 255 ;
+    static const int_32 green = 255 ;
+    static const int_32 blue = 255 ;
+    static const int_32 alpha = 255 ;
+
     platform :: render_set_vertex_position  ( vertices [ 0 ] , - 1 , 1 , - 3 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 0 ] , 255 , 255 , 255 , 255 ) ;
+    platform :: render_set_vertex_color     ( vertices [ 0 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 0 ] , 0 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 0 ] , 0 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 1 ] , - 1 , - 1 , - 3 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 1 ] , 255 , 255 , 255 , 255 ) ;
+    platform :: render_set_vertex_color     ( vertices [ 1 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 1 ] , 0 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 1 ] , 1 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 2 ] , 1 , 1 , - 3 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 2 ] , 255 , 255 , 255 , 255 ) ;
+    platform :: render_set_vertex_color     ( vertices [ 2 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 2 ] , 1 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 2 ] , 2 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 3 ] , 1 , - 1 , - 3 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 3 ] , 255 , 255 , 255 , 255 ) ;
+    platform :: render_set_vertex_color     ( vertices [ 3 ] , red , green , blue , alpha ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , 1 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , 3 ) ;
 
     _text_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 4 , 4 , 0 ) ;
+    
+    static const float_32 scale = 0.5f ;
+    matrix_data matrix ;
+    platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
+    platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
+    platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
+    platform :: matrix_set_origin ( matrix , - 0.5f , 0 , 0 ) ;
+    _mediator -> mesh_set_transform ( _text_mesh_id , matrix ) ;
 }
 
 template < typename mediator >
@@ -139,7 +153,6 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _origin_y = _mediator -> texture_height ( ) ;
     _rasterize_english_alphabet ( 16 , 16 ) ;
     _rasterize_english_alphabet ( 32 , 32 ) ;
-    _rasterize_english_alphabet ( 64 , 64 ) ;
     _mediator -> texture_finalize ( _text_texture_id ) ;
 }
 
