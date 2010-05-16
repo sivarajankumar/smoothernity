@@ -10,6 +10,7 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 public :
     shy_logic_fidget ( mediator * arg_mediator ) ;
+    void prepare_fidget ( ) ;
     void render_fidget ( ) ;
     void update ( ) ;
 private :
@@ -19,6 +20,7 @@ private :
 private :
     mediator * _mediator ;
     float_32 _fidget_angle ;
+    int_32 _fidget_prepare_permitted ;
     int_32 _fidget_mesh_created ;
     int_32 _fidget_scale ;
     mesh_id _fidget_mesh_id ;
@@ -28,6 +30,7 @@ template < typename mediator >
 shy_logic_fidget < mediator > :: shy_logic_fidget ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
 , _fidget_angle ( 0 )
+, _fidget_prepare_permitted ( false )
 , _fidget_mesh_created ( false )
 , _fidget_scale ( 0 )
 {
@@ -41,15 +44,25 @@ void shy_logic_fidget < mediator > :: render_fidget ( )
 }
 
 template < typename mediator >
+void shy_logic_fidget < mediator > :: prepare_fidget ( )
+{
+    _fidget_prepare_permitted = true ;
+}
+
+template < typename mediator >
 void shy_logic_fidget < mediator > :: update ( )
 {
-    if ( ! _fidget_mesh_created )
+    if ( _fidget_prepare_permitted )
     {
-        _create_fidget_mesh ( ) ;
-        _fidget_mesh_created = true ;
+        if ( ! _fidget_mesh_created )
+        {
+            _create_fidget_mesh ( ) ;
+            _fidget_mesh_created = true ;
+            _mediator -> fidget_prepared ( ) ;
+        }
+        else
+            _update_fidget ( ) ;
     }
-    else
-        _update_fidget ( ) ;
 }
 
 template < typename mediator >

@@ -18,6 +18,7 @@ public :
     void render ( ) ;
     void update ( ) ;
     void entities_prepared ( ) ;
+    void fidget_prepared ( ) ;
     void image_prepared ( ) ;
     void land_prepared ( ) ;
     void video_mode_changed ( ) ;
@@ -53,7 +54,7 @@ template < typename mediator >
 void shy_logic < mediator > :: init ( )
 {
     _init_render ( ) ;
-    _mediator -> prepare_image ( ) ;
+    _mediator -> prepare_fidget ( ) ;
 }
 
 template < typename mediator >
@@ -76,19 +77,25 @@ void shy_logic < mediator > :: update ( )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: entities_prepared ( )
+void shy_logic < mediator > :: fidget_prepared ( )
 {
     _mediator -> prepare_land ( ) ;
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: image_prepared ( )
+void shy_logic < mediator > :: land_prepared ( )
 {
     _mediator -> prepare_entities ( ) ;
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: land_prepared ( )
+void shy_logic < mediator > :: entities_prepared ( )
+{
+    _mediator -> prepare_image ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: image_prepared ( )
 {
 }
 
