@@ -12,7 +12,7 @@ public :
     shy_logic_fidget ( mediator * arg_mediator ) ;
     void fidget_prepare_permit ( ) ;
     void fidget_render ( ) ;
-    void update ( ) ;
+    void fidget_update ( ) ;
 private :
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
@@ -50,7 +50,7 @@ void shy_logic_fidget < mediator > :: fidget_prepare_permit ( )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: update ( )
+void shy_logic_fidget < mediator > :: fidget_update ( )
 {
     if ( _fidget_prepare_permitted )
     {

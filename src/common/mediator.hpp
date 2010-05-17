@@ -79,6 +79,7 @@ public :
     void fidget_prepare_permit ( ) ;
     void fidget_prepared ( ) ;
     void fidget_render ( ) ;
+    void fidget_update ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
     float_32 get_entity_height ( ) ;
@@ -504,12 +505,17 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: update ( )
 {
     _logic . update ( ) ;
-    _logic_fidget . update ( ) ;
     _logic_image . update ( ) ;
     _logic_land . update ( ) ;
     _logic_sound . update ( ) ;
     _logic_text . update ( ) ;
     _logic_touch . update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: fidget_update ( )
+{
+    _logic_fidget . fidget_update ( ) ;
 }
 
 template < typename mediator_types >
