@@ -17,6 +17,7 @@
 #include "logic_camera.hpp"
 #include "logic_entities.hpp"
 #include "logic_fidget.hpp"
+#include "logic_game.hpp"
 #include "logic_image.hpp"
 #include "logic_land.hpp"
 #include "logic_sound.hpp"
@@ -47,6 +48,7 @@ private :
         , shy_logic_camera
         , shy_logic_entities
         , shy_logic_fidget
+        , shy_logic_game
         , shy_logic_image
         , shy_logic_land
         , shy_logic_sound

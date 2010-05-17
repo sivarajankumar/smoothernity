@@ -10,6 +10,7 @@ template
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_entities
     , template < typename mediator > class _logic_fidget
+    , template < typename mediator > class _logic_game
     , template < typename mediator > class _logic_image
     , template < typename mediator > class _logic_land
     , template < typename mediator > class _logic_sound
@@ -35,6 +36,7 @@ public :
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_entities < mediator > logic_entities ;
         typedef _logic_fidget < mediator > logic_fidget ;
+        typedef _logic_game < mediator > logic_game ;
         typedef _logic_image < mediator > logic_image ;
         typedef _logic_land < mediator > logic_land ;
         typedef _logic_sound < mediator > logic_sound ;
@@ -69,6 +71,8 @@ public :
     void done ( ) ;
     void entities_prepared ( ) ;
     void fidget_prepared ( ) ;
+    void game_render ( ) ;
+    void game_update ( ) ;
     float_32 get_entity_height ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_near_plane_distance ( ) ;
@@ -142,6 +146,7 @@ private :
     typename mediator_types :: template modules < shy_mediator > :: logic_camera _logic_camera ;
     typename mediator_types :: template modules < shy_mediator > :: logic_entities _logic_entities ;
     typename mediator_types :: template modules < shy_mediator > :: logic_fidget _logic_fidget ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_game _logic_game ;
     typename mediator_types :: template modules < shy_mediator > :: logic_image _logic_image ;
     typename mediator_types :: template modules < shy_mediator > :: logic_land _logic_land ;
     typename mediator_types :: template modules < shy_mediator > :: logic_sound _logic_sound ;
@@ -158,6 +163,7 @@ shy_mediator < mediator_types > :: shy_mediator ( )
 , _logic_camera ( this )
 , _logic_entities ( this )
 , _logic_fidget ( this )
+, _logic_game ( this )
 , _logic_image ( this )
 , _logic_land ( this )
 , _logic_sound ( this )
@@ -208,6 +214,18 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: fidget_prepared ( )
 {
     _logic . fidget_prepared ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: game_render ( )
+{
+    _logic_game . render ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: game_update ( )
+{
+    _logic_game . update ( ) ;
 }
 
 template < typename mediator_types >

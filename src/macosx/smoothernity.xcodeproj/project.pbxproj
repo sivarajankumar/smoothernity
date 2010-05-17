@@ -133,6 +133,7 @@
 		881B850411886A6D00E31AA1 /* logic_text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881B850311886A6D00E31AA1 /* logic_text.hpp */; };
 		882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DA811A16B0900F05A15 /* logic_title.hpp */; };
 		882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DB911A1714B00F05A15 /* logic_application.hpp */; };
+		882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DD711A1740800F05A15 /* logic_game.hpp */; };
 		883E9406119D55F60040B1D6 /* logic_image.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 883E9405119D55F60040B1D6 /* logic_image.hpp */; };
 		883E9479119D62680040B1D6 /* macosx_texture_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 883E9477119D62680040B1D6 /* macosx_texture_loader.h */; };
 		883E947A119D62680040B1D6 /* macosx_texture_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 883E9478119D62680040B1D6 /* macosx_texture_loader.m */; };
@@ -191,6 +192,7 @@
 		881B850311886A6D00E31AA1 /* logic_text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_text.hpp; sourceTree = "<group>"; };
 		882B9DA811A16B0900F05A15 /* logic_title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_title.hpp; sourceTree = "<group>"; };
 		882B9DB911A1714B00F05A15 /* logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_application.hpp; sourceTree = "<group>"; };
+		882B9DD711A1740800F05A15 /* logic_game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_game.hpp; sourceTree = "<group>"; };
 		883E9405119D55F60040B1D6 /* logic_image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_image.hpp; sourceTree = "<group>"; };
 		883E9477119D62680040B1D6 /* macosx_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_texture_loader.h; sourceTree = "<group>"; };
 		883E9478119D62680040B1D6 /* macosx_texture_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = macosx_texture_loader.m; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				8812CEC8117DE26A008F67D9 /* logic_camera.hpp */,
 				8812CEC9117DE26A008F67D9 /* logic_entities.hpp */,
 				8812CECA117DE26A008F67D9 /* logic_fidget.hpp */,
+				882B9DD711A1740800F05A15 /* logic_game.hpp */,
 				883E9405119D55F60040B1D6 /* logic_image.hpp */,
 				8812CECB117DE26A008F67D9 /* logic_land.hpp */,
 				8812CECC117DE26A008F67D9 /* logic_sound.hpp */,
@@ -450,6 +453,7 @@
 				883E9479119D62680040B1D6 /* macosx_texture_loader.h in Headers */,
 				882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */,
 				882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */,
+				882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
