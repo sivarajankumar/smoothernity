@@ -75,6 +75,7 @@ public :
     void entities_prepare_permit ( ) ;
     void entities_prepared ( ) ;
     void entities_render ( ) ;
+    void entities_update ( ) ;
     void fidget_prepared ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
@@ -503,13 +504,18 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: update ( )
 {
     _logic . update ( ) ;
-    _logic_entities . update ( ) ;
     _logic_fidget . update ( ) ;
     _logic_image . update ( ) ;
     _logic_land . update ( ) ;
     _logic_sound . update ( ) ;
     _logic_text . update ( ) ;
     _logic_touch . update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: entities_update ( )
+{
+    _logic_entities . entities_update ( ) ;
 }
 
 template < typename mediator_types >

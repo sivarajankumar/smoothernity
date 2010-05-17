@@ -18,7 +18,7 @@ public :
     shy_logic_entities ( mediator * arg_mediator ) ;
     void entities_render ( ) ;
     void entities_prepare_permit ( ) ;
-    void update ( ) ;
+    void entities_update ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_entity_height ( ) ;
 private :
@@ -58,7 +58,7 @@ void shy_logic_entities < mediator > :: entities_prepare_permit ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: update ( )
+void shy_logic_entities < mediator > :: entities_update ( )
 {
     if ( _entities_prepare_permitted )
     {
