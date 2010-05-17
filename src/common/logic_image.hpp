@@ -18,7 +18,7 @@ public :
     shy_logic_image ( mediator * arg_mediator ) ;
     void image_render ( ) ;
     void image_update ( ) ;
-    void prepare_image ( ) ;
+    void image_prepare_permit ( ) ;
 private :
     void _render_image_mesh ( ) ;
     void _update_image_mesh ( ) ;
@@ -53,7 +53,7 @@ void shy_logic_image < mediator > :: image_render ( )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: prepare_image ( )
+void shy_logic_image < mediator > :: image_prepare_permit ( )
 {
     _image_prepare_permitted = true ;
 }

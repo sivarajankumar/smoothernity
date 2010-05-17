@@ -126,7 +126,7 @@ void shy_logic < mediator > :: entities_prepared ( )
 template < typename mediator >
 void shy_logic < mediator > :: text_prepared ( )
 {
-    _mediator -> prepare_image ( ) ;
+    _mediator -> image_prepare_permit ( ) ;
 }
 
 template < typename mediator >

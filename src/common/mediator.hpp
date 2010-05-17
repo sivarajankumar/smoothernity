@@ -85,6 +85,7 @@ public :
     float_32 get_entity_height ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_near_plane_distance ( ) ;
+    void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
     void image_render ( ) ;
     void image_update ( ) ;
@@ -107,7 +108,6 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void prepare_image ( ) ;
     void prepare_land ( ) ;
     void prepare_sound ( ) ;
     void prepare_text ( ) ;
@@ -384,9 +384,9 @@ void shy_mediator < mediator_types > :: fidget_prepare_permit ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_image ( )
+void shy_mediator < mediator_types > :: image_prepare_permit ( )
 {
-    _logic_image . prepare_image ( ) ;
+    _logic_image . image_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >
