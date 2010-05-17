@@ -9,16 +9,19 @@
 	{
 		shy_macosx_platform :: _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
         shy_macosx_platform :: _texture_loader = [ [ shy_macosx_texture_loader alloc ] init ] ;
+        [ shy_macosx_platform :: _sound_loader thread_run ] ;
+        [ shy_macosx_platform :: _texture_loader thread_run ] ;
 		_measurer = new shy_facade < shy_macosx_platform > ( ) ;
 		_measurer -> init ( ) ;
+        NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_macosx_platform > ) ) ;
 	}
     return self ;
 }
 
 - ( void ) dealloc
 {
-    [ shy_macosx_platform :: _sound_loader release ] ;
-    [ shy_macosx_platform :: _texture_loader release ] ;
+    [ shy_macosx_platform :: _sound_loader thread_stop ] ;
+    [ shy_macosx_platform :: _texture_loader thread_stop ] ;
     shy_macosx_platform :: _sound_loader = nil ;
     shy_macosx_platform :: _texture_loader = nil ;
 	_measurer -> done ( ) ;
