@@ -163,7 +163,7 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		17587328FF379C6511CA2CBB /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		19B3CC81119E9D300075357E /* Info-smoothernity__Upgraded_-2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-smoothernity__Upgraded_-2.plist"; sourceTree = "<group>"; };
+		19B3CC81119E9D300075357E /* Info-smoothernity__Upgraded.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-smoothernity__Upgraded.plist"; sourceTree = "<group>"; };
 		19B3CC82119E9D300075357E /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
@@ -306,7 +306,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				19B3CC81119E9D300075357E /* Info-smoothernity__Upgraded_-2.plist */,
+				19B3CC81119E9D300075357E /* Info-smoothernity__Upgraded.plist */,
 			);
 			name = NSOpenGLFullScreen;
 			sourceTree = "<group>";
@@ -588,7 +588,7 @@
 				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Info-smoothernity__Upgraded_-2.plist";
+				INFOPLIST_FILE = "Info-smoothernity__Upgraded.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
@@ -615,7 +615,7 @@
 				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Info-smoothernity__Upgraded_-2.plist";
+				INFOPLIST_FILE = "Info-smoothernity__Upgraded.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
@@ -640,7 +640,7 @@
 				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Info-smoothernity__Upgraded_-2.plist";
+				INFOPLIST_FILE = "Info-smoothernity__Upgraded.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
