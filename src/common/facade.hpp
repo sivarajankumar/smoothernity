@@ -13,6 +13,7 @@
 #include "engine_rasterizer.hpp"
 #include "engine_texture.hpp"
 #include "logic.hpp"
+#include "logic_application.hpp"
 #include "logic_camera.hpp"
 #include "logic_entities.hpp"
 #include "logic_fidget.hpp"
@@ -42,6 +43,7 @@ private :
         , shy_engine_rasterizer
         , shy_engine_texture
         , shy_logic
+        , shy_logic_application
         , shy_logic_camera
         , shy_logic_entities
         , shy_logic_fidget

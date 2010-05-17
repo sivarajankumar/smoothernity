@@ -6,6 +6,7 @@ template
     , template < typename mediator > class _engine_rasterizer
     , template < typename mediator > class _engine_texture
     , template < typename mediator > class _logic 
+    , template < typename mediator > class _logic_application
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_entities
     , template < typename mediator > class _logic_fidget
@@ -30,6 +31,7 @@ public :
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
         typedef _engine_texture < mediator > engine_texture ;
         typedef _logic < mediator > logic ;
+        typedef _logic_application < mediator > logic_application ;
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_entities < mediator > logic_entities ;
         typedef _logic_fidget < mediator > logic_fidget ;
@@ -60,6 +62,8 @@ public :
 public :
     shy_mediator ( ) ;
 public :
+    void application_render ( ) ;
+    void application_update ( ) ;
     void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
     void camera_prepared ( ) ;
     void done ( ) ;
@@ -134,6 +138,7 @@ private :
     typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer _engine_rasterizer ;
     typename mediator_types :: template modules < shy_mediator > :: engine_texture _engine_texture ;
     typename mediator_types :: template modules < shy_mediator > :: logic _logic ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_application _logic_application ;
     typename mediator_types :: template modules < shy_mediator > :: logic_camera _logic_camera ;
     typename mediator_types :: template modules < shy_mediator > :: logic_entities _logic_entities ;
     typename mediator_types :: template modules < shy_mediator > :: logic_fidget _logic_fidget ;
@@ -149,6 +154,7 @@ template < typename mediator_types >
 shy_mediator < mediator_types > :: shy_mediator ( )
 : _engine_rasterizer ( this )
 , _logic ( this )
+, _logic_application ( this )
 , _logic_camera ( this )
 , _logic_entities ( this )
 , _logic_fidget ( this )
@@ -159,6 +165,18 @@ shy_mediator < mediator_types > :: shy_mediator ( )
 , _logic_title ( this )
 , _logic_touch ( this )
 {
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: application_render ( )
+{
+    _logic_application . application_render ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: application_update ( )
+{
+    _logic_application . application_update ( ) ;
 }
 
 template < typename mediator_types >
