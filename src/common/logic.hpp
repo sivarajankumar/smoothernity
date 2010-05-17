@@ -111,7 +111,7 @@ void shy_logic < mediator > :: camera_prepared ( )
 template < typename mediator >
 void shy_logic < mediator > :: land_prepared ( )
 {
-    _mediator -> prepare_entities ( ) ;
+    _mediator -> entities_prepare_permit ( ) ;
 }
 
 template < typename mediator >

@@ -72,6 +72,7 @@ public :
     void camera_prepared ( ) ;
     void camera_update ( ) ;
     void done ( ) ;
+    void entities_prepare_permit ( ) ;
     void entities_prepared ( ) ;
     void entities_render ( ) ;
     void fidget_prepared ( ) ;
@@ -100,7 +101,6 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void prepare_entities ( ) ;
     void prepare_fidget ( ) ;
     void prepare_image ( ) ;
     void prepare_land ( ) ;
@@ -369,9 +369,9 @@ void shy_mediator < mediator_types > :: camera_prepare_permit ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_entities ( )
+void shy_mediator < mediator_types > :: entities_prepare_permit ( )
 {
-    _logic_entities . prepare_entities ( ) ;
+    _logic_entities . entities_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >
