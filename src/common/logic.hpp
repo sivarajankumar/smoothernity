@@ -207,9 +207,9 @@ void shy_logic < mediator > :: _use_ortho_projection ( )
 template < typename mediator >
 void shy_logic < mediator > :: _init_render ( )
 {
+    platform :: render_blend_disable ( ) ;
     platform :: render_enable_face_culling ( ) ;
     platform :: render_set_modulate_texture_mode ( ) ;
-    platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
 }
 
 template < typename mediator >

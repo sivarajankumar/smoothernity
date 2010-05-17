@@ -128,8 +128,10 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
+    platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator -> texture_select ( _text_texture_id ) ;
     _mediator -> mesh_render ( _text_mesh_id ) ;
+    platform :: render_blend_disable ( ) ;
 }
 
 template < typename mediator >

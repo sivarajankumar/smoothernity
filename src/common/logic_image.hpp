@@ -108,8 +108,10 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _render_image_mesh ( )
 {
+    platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator -> texture_select ( _image_texture_id ) ;
     _mediator -> mesh_render ( _image_mesh_id ) ;
+    platform :: render_blend_disable ( ) ;
 }
 
 template < typename mediator >
