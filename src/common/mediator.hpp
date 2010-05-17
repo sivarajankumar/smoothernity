@@ -76,6 +76,7 @@ public :
     void entities_prepared ( ) ;
     void entities_render ( ) ;
     void entities_update ( ) ;
+    void fidget_prepare_permit ( ) ;
     void fidget_prepared ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
@@ -102,7 +103,6 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void prepare_fidget ( ) ;
     void prepare_image ( ) ;
     void prepare_land ( ) ;
     void prepare_sound ( ) ;
@@ -376,9 +376,9 @@ void shy_mediator < mediator_types > :: entities_prepare_permit ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_fidget ( )
+void shy_mediator < mediator_types > :: fidget_prepare_permit ( )
 {
-    _logic_fidget . prepare_fidget ( ) ;
+    _logic_fidget . fidget_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >

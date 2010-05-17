@@ -61,7 +61,7 @@ template < typename mediator >
 void shy_logic < mediator > :: init ( )
 {
     _init_render ( ) ;
-    _mediator -> prepare_fidget ( ) ;
+    _mediator -> fidget_prepare_permit ( ) ;
 }
 
 template < typename mediator >

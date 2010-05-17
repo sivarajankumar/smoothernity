@@ -10,7 +10,7 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 public :
     shy_logic_fidget ( mediator * arg_mediator ) ;
-    void prepare_fidget ( ) ;
+    void fidget_prepare_permit ( ) ;
     void render_fidget ( ) ;
     void update ( ) ;
 private :
@@ -44,7 +44,7 @@ void shy_logic_fidget < mediator > :: render_fidget ( )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: prepare_fidget ( )
+void shy_logic_fidget < mediator > :: fidget_prepare_permit ( )
 {
     _fidget_prepare_permitted = true ;
 }
