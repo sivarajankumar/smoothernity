@@ -134,6 +134,8 @@ public :
     void touch_prepared ( ) ;
     void update ( ) ;
     void use_camera_matrix ( ) ;
+    void use_ortho_projection ( ) ;
+    void use_perspective_projection ( ) ;
     void video_mode_changed ( ) ;
 private :
     typename mediator_types :: template modules < shy_mediator > :: engine_camera _engine_camera ;
@@ -606,4 +608,16 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: video_mode_changed ( )
 {
     _logic . video_mode_changed ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: use_perspective_projection ( )
+{
+    _logic . use_perspective_projection ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: use_ortho_projection ( )
+{
+    _logic . use_ortho_projection ( ) ;
 }

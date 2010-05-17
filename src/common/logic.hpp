@@ -17,6 +17,8 @@ public :
     void done ( ) ;
     void render ( ) ;
     void update ( ) ;
+    void use_perspective_projection ( ) ;
+    void use_ortho_projection ( ) ;
     void video_mode_changed ( ) ;
     void camera_prepared ( ) ;
     void entities_prepared ( ) ;
@@ -79,6 +81,18 @@ template < typename mediator >
 void shy_logic < mediator > :: update ( )
 {
     _update_color ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: use_perspective_projection ( )
+{
+    _use_perspective_projection ( ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: use_ortho_projection ( )
+{
+    _use_ortho_projection ( ) ;
 }
 
 template < typename mediator >

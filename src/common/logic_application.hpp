@@ -18,9 +18,11 @@ shy_logic_application < mediator > :: shy_logic_application ( mediator * arg_med
 template < typename mediator >
 void shy_logic_application < mediator > :: application_render ( )
 {
+    _mediator -> game_render ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: application_update ( )
 {
+    _mediator -> game_update ( ) ;
 }
