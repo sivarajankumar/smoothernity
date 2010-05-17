@@ -11,15 +11,13 @@ class shy_logic_camera
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 
-    static const int_32 ENTITY_MESH_SPANS = 50 ;
-    static const int_32 ENTITY_MESH_GRID = 5 ;
-
 public :
     shy_logic_camera ( mediator * arg_mediator ) ;
     void camera_update ( ) ;
     void camera_prepare_permit ( ) ;
     void camera_matrix_use ( ) ;
 private :
+    int_32 _get_entity_mesh_grid ( ) ;
     void _reset_camera_rubber ( ) ;
     void _fill_camera_schedules ( ) ;
     void _update_camera ( ) ;
@@ -103,6 +101,13 @@ void shy_logic_camera < mediator > :: camera_update ( )
 }
 
 template < typename mediator >
+typename shy_logic_camera < mediator > :: int_32
+shy_logic_camera < mediator > :: _get_entity_mesh_grid ( )
+{
+    return _mediator -> get_entity_mesh_grid ( ) ;
+}
+
+template < typename mediator >
 void shy_logic_camera < mediator > :: _reset_camera_rubber ( )
 {
     _current_camera_origin = _scheduled_camera_origins [ 2 ] ;
@@ -136,10 +141,10 @@ void shy_logic_camera < mediator > :: _update_camera ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 {
-    static const int_32 CHANGE_ORIGIN_IN_FRAMES = 139 ;
+    static const int_32 change_origin_in_frames = 139 ;
     if ( -- _frames_to_change_camera_origin <= 0 )
     {
-        _frames_to_change_camera_origin = CHANGE_ORIGIN_IN_FRAMES ;
+        _frames_to_change_camera_origin = change_origin_in_frames ;
         int_32 new_origin_index = _random_camera_origin_index ( ) ;
         _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
         _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
@@ -151,7 +156,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         _scheduled_camera_origins [ 3 ] = _mediator -> get_entity_origin ( new_origin_index ) ;
     }
     _desired_camera_origin = _mediator -> math_catmull_rom_spline
-        ( 1.0f - float_32 ( _frames_to_change_camera_origin ) / float_32 ( CHANGE_ORIGIN_IN_FRAMES )
+        ( 1.0f - float_32 ( _frames_to_change_camera_origin ) / float_32 ( change_origin_in_frames )
         , _scheduled_camera_origins [ 0 ]
         , _scheduled_camera_origins [ 1 ]
         , _scheduled_camera_origins [ 2 ]
@@ -162,10 +167,10 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 {
-    static const int_32 CHANGE_TARGET_IN_FRAMES = 181 ;
+    static const int_32 change_target_in_frames = 181 ;
     if ( -- _frames_to_change_camera_target <= 0 )
     {
-        _frames_to_change_camera_target = CHANGE_TARGET_IN_FRAMES ;
+        _frames_to_change_camera_target = change_target_in_frames ;
         int_32 new_target_index = _random_camera_target_index ( ) ;
         _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
         _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
@@ -177,7 +182,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         _scheduled_camera_targets [ 3 ] = _mediator -> get_entity_origin ( new_target_index ) ;
     }
     _desired_camera_target = _mediator -> math_catmull_rom_spline
-        ( 1.0f - float_32 ( _frames_to_change_camera_target ) / float_32 ( CHANGE_TARGET_IN_FRAMES )
+        ( 1.0f - float_32 ( _frames_to_change_camera_target ) / float_32 ( change_target_in_frames )
         , _scheduled_camera_targets [ 0 ]
         , _scheduled_camera_targets [ 1 ]
         , _scheduled_camera_targets [ 2 ]
@@ -226,7 +231,7 @@ shy_logic_camera < mediator > :: _random_camera_origin_index ( )
     int_32 index = 0 ;
     do
     {
-        index = _get_random_index ( 0 , ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 ) ) ;
+        index = _get_random_index ( 0 , _get_entity_mesh_grid ( ) * ( _get_entity_mesh_grid ( ) / 2 ) ) ;
     } while ( _camera_origin_index_is_duplicate ( index ) ) ;
     return index ;
 }
@@ -239,8 +244,8 @@ shy_logic_camera < mediator > :: _random_camera_target_index ( )
     do
     {
         index = _get_random_index
-            ( ENTITY_MESH_GRID * ( ENTITY_MESH_GRID / 2 )
-            , ENTITY_MESH_GRID * ENTITY_MESH_GRID
+            ( _get_entity_mesh_grid ( ) * ( _get_entity_mesh_grid ( ) / 2 )
+            , _get_entity_mesh_grid ( ) * _get_entity_mesh_grid ( )
             ) ;
     } while ( _camera_target_index_is_duplicate ( index ) ) ;
     return index ;

@@ -1,11 +1,11 @@
-#define char NO_CHARS
-#define double NO_DOUBLES
-#define float NO_FLOATS
-#define int NO_INTS
-#define long NO_LONGS
-#define signed NO_SIGNED
-#define short NO_SHORTS
-#define unsigned NO_UNSIGNED
+#define char no_chars
+#define double no_doubles
+#define float no_floats
+#define int no_ints
+#define long no_longs
+#define signed no_signeds
+#define short no_shorts
+#define unsigned no_unsigneds
 
 #include "engine_camera.hpp"
 #include "engine_math.hpp"
@@ -97,3 +97,4 @@ void shy_facade < platform > :: video_mode_changed ( )
 #undef signed
 #undef short
 #undef unsigned
+

@@ -83,6 +83,7 @@ public :
     void game_render ( ) ;
     void game_update ( ) ;
     float_32 get_entity_height ( ) ;
+    int_32 get_entity_mesh_grid ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_near_plane_distance ( ) ;
     void image_prepare_permit ( ) ;
@@ -249,6 +250,13 @@ typename shy_mediator < mediator_types > :: float_32
 shy_mediator < mediator_types > :: get_entity_height ( )
 {
     return _logic_entities . get_entity_height ( ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: int_32
+shy_mediator < mediator_types > :: get_entity_mesh_grid ( )
+{
+    return _logic_entities . get_entity_mesh_grid ( ) ;
 }
 
 template < typename mediator_types >

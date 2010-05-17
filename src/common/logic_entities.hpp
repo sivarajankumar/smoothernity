@@ -21,6 +21,7 @@ public :
     void entities_update ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_entity_height ( ) ;
+    int_32 get_entity_mesh_grid ( ) ;
 private :
     void _entities_render ( ) ;
     void _create_entity_mesh ( ) ;
@@ -79,6 +80,13 @@ typename shy_logic_entities < mediator > :: vector_data
 shy_logic_entities < mediator > :: get_entity_origin ( int_32 index )
 {
     return _get_entity_origin ( index ) ;
+}
+
+template < typename mediator >
+typename shy_logic_entities < mediator > :: int_32
+shy_logic_entities < mediator > :: get_entity_mesh_grid ( )
+{
+    return ENTITY_MESH_GRID ;
 }
 
 template < typename mediator >
