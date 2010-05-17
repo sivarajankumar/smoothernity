@@ -18,8 +18,6 @@ public :
     void title_finished ( ) ;
     float_32 get_near_plane_distance ( ) ;
 private :
-    void _use_perspective_projection ( ) ;
-    void _use_ortho_projection ( ) ;
     void _init_render ( ) ;
     float_32 _get_near_plane_distance ( ) ;
 private :
@@ -59,13 +57,19 @@ void shy_logic < mediator > :: update ( )
 template < typename mediator >
 void shy_logic < mediator > :: use_perspective_projection ( )
 {
-    _use_perspective_projection ( ) ;
+    float_32 width = platform :: render_get_aspect_width ( ) ;
+    float_32 height = platform :: render_get_aspect_height ( ) ;
+    platform :: render_projection_frustum ( - width , width , - height , height , _get_near_plane_distance ( ) , 50.0f ) ;
+    platform :: render_matrix_identity ( ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: use_ortho_projection ( )
 {
-    _use_ortho_projection ( ) ;
+    float_32 width = platform :: render_get_aspect_width ( ) ;
+    float_32 height = platform :: render_get_aspect_height ( ) ;
+    platform :: render_projection_ortho ( - width , width , - height , height , 1.0f , 50.0f ) ;
+    platform :: render_matrix_identity ( ) ;
 }
 
 template < typename mediator >
@@ -89,24 +93,6 @@ typename shy_logic < mediator > :: float_32
 shy_logic < mediator > :: get_near_plane_distance ( )
 {
     return _get_near_plane_distance ( ) ;
-}
-
-template < typename mediator >
-void shy_logic < mediator > :: _use_perspective_projection ( )
-{
-    float_32 width = platform :: render_get_aspect_width ( ) ;
-    float_32 height = platform :: render_get_aspect_height ( ) ;
-    platform :: render_projection_frustum ( - width , width , - height , height , _get_near_plane_distance ( ) , 50.0f ) ;
-    platform :: render_matrix_identity ( ) ;
-}
-
-template < typename mediator >
-void shy_logic < mediator > :: _use_ortho_projection ( )
-{
-    float_32 width = platform :: render_get_aspect_width ( ) ;
-    float_32 height = platform :: render_get_aspect_height ( ) ;
-    platform :: render_projection_ortho ( - width , width , - height , height , 1.0f , 50.0f ) ;
-    platform :: render_matrix_identity ( ) ;
 }
 
 template < typename mediator >

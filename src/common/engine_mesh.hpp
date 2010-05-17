@@ -9,7 +9,7 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
-    static const int_32 MAX_MESHES = 100 ;
+    static const int_32 _max_meshes = 100 ;
     
 public :
     class mesh_id
@@ -43,7 +43,7 @@ public :
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
 private :
     int_32 _next_mesh_id ;
-    _mesh_data _meshes_data [ MAX_MESHES ] ;
+    _mesh_data _meshes_data [ _max_meshes ] ;
 } ;
 
 template < typename mediator >

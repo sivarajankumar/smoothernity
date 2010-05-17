@@ -6,10 +6,10 @@ class shy_engine_math
     typedef typename mediator :: platform :: vector_data vector_data ;
 public :
     vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    template < typename T > T math_clamp ( T f , T from , T to ) ;
-    template < typename T > T math_abs ( T f ) ;
-    template < typename T > T math_max ( T f1 , T f2 ) ;
-    template < typename T > T math_min ( T f1 , T f2 ) ;
+    template < typename type > type math_clamp ( type f , type from , type to ) ;
+    template < typename type > type math_abs ( type f ) ;
+    template < typename type > type math_max ( type f1 , type f2 ) ;
+    template < typename type > type math_min ( type f1 , type f2 ) ;
     float_32 math_lerp ( float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     float_32 math_pi ( ) ;
 } ;
@@ -37,8 +37,8 @@ shy_engine_math < mediator > :: math_catmull_rom_spline
 }
 
 template < typename mediator >
-template < typename T >
-T shy_engine_math < mediator > :: math_clamp ( T f , T from , T to )
+template < typename type >
+type shy_engine_math < mediator > :: math_clamp ( type f , type from , type to )
 {
     if ( f < from )
         return from ;
@@ -49,22 +49,22 @@ T shy_engine_math < mediator > :: math_clamp ( T f , T from , T to )
 }
 
 template < typename mediator >
-template < typename T >
-T shy_engine_math < mediator > :: math_abs ( T f )
+template < typename type >
+type shy_engine_math < mediator > :: math_abs ( type f )
 {
-    return f < T ( 0 ) ? - f : f ;
+    return f < type ( 0 ) ? - f : f ;
 }
 
 template < typename mediator >
-template < typename T >
-T shy_engine_math < mediator > :: math_max ( T f1 , T f2 )
+template < typename type >
+type shy_engine_math < mediator > :: math_max ( type f1 , type f2 )
 {
     return f1 > f2 ? f1 : f2 ;
 }
 
 template < typename mediator >
-template < typename T >
-T shy_engine_math < mediator > :: math_min ( T f1 , T f2 )
+template < typename type >
+type shy_engine_math < mediator > :: math_min ( type f1 , type f2 )
 {
     return f1 < f2 ? f1 : f2 ;
 }
