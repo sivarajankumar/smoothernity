@@ -503,7 +503,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: update ( )
 {
     _logic . update ( ) ;
-    _logic_camera . update ( ) ;
     _logic_entities . update ( ) ;
     _logic_fidget . update ( ) ;
     _logic_image . update ( ) ;

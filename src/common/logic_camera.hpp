@@ -19,7 +19,6 @@ public :
     void camera_update ( ) ;
     void camera_prepare_permit ( ) ;
     void camera_matrix_use ( ) ;
-    void update ( ) ;
 private :
     void _reset_camera_rubber ( ) ;
     void _fill_camera_schedules ( ) ;
@@ -101,12 +100,6 @@ void shy_logic_camera < mediator > :: camera_update ( )
         else
             _update_camera ( ) ;
     }
-}
-
-template < typename mediator >
-void shy_logic_camera < mediator > :: update ( )
-{
-    camera_update ( ) ;
 }
 
 template < typename mediator >
