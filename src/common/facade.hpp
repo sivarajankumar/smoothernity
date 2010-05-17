@@ -20,6 +20,7 @@
 #include "logic_land.hpp"
 #include "logic_sound.hpp"
 #include "logic_text.hpp"
+#include "logic_title.hpp"
 #include "logic_touch.hpp"
 #include "mediator.hpp"
 
@@ -48,6 +49,7 @@ private :
         , shy_logic_land
         , shy_logic_sound
         , shy_logic_text
+        , shy_logic_title
         , shy_logic_touch
         > >
         _mediator ;

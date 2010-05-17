@@ -13,6 +13,7 @@ template
     , template < typename mediator > class _logic_land
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_text
+    , template < typename mediator > class _logic_title
     , template < typename mediator > class _logic_touch
     >
 class shy_mediator_types
@@ -36,6 +37,7 @@ public :
         typedef _logic_land < mediator > logic_land ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_text < mediator > logic_text ;
+        typedef _logic_title < mediator > logic_title ;
         typedef _logic_touch < mediator > logic_touch ;
     } ;
 } ;
@@ -117,6 +119,10 @@ public :
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     void texture_unselect ( ) ;
     int_32 texture_width ( ) ;
+    void title_finished ( ) ;
+    void title_launch_permit ( ) ;
+    void title_render ( ) ;
+    void title_update ( ) ;
     void touch_prepared ( ) ;
     void update ( ) ;
     void use_camera_matrix ( ) ;
@@ -135,6 +141,7 @@ private :
     typename mediator_types :: template modules < shy_mediator > :: logic_land _logic_land ;
     typename mediator_types :: template modules < shy_mediator > :: logic_sound _logic_sound ;
     typename mediator_types :: template modules < shy_mediator > :: logic_text _logic_text ;
+    typename mediator_types :: template modules < shy_mediator > :: logic_title _logic_title ;
     typename mediator_types :: template modules < shy_mediator > :: logic_touch _logic_touch ;
 } ;
 
@@ -149,6 +156,7 @@ shy_mediator < mediator_types > :: shy_mediator ( )
 , _logic_land ( this )
 , _logic_sound ( this )
 , _logic_text ( this )
+, _logic_title ( this )
 , _logic_touch ( this )
 {
 }
@@ -526,6 +534,30 @@ typename shy_mediator < mediator_types > :: int_32
 shy_mediator < mediator_types > :: texture_width ( )
 {
     return _engine_texture . texture_width ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: title_finished ( )
+{
+    _logic . title_finished ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: title_launch_permit ( )
+{
+    _logic_title . title_launch_permit ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: title_render ( )
+{
+    _logic_title . title_render ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: title_update ( )
+{
+    _logic_title . title_update ( ) ;
 }
 
 template < typename mediator_types >

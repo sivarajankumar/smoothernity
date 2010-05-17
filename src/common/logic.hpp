@@ -26,6 +26,7 @@ public :
     void sound_prepared ( ) ;
     void text_prepared ( ) ;
     void touch_prepared ( ) ;
+    void title_finished ( ) ;
     float_32 get_near_plane_distance ( ) ;
 private :
     void _render_scene ( ) ;
@@ -124,6 +125,11 @@ void shy_logic < mediator > :: touch_prepared ( )
 
 template < typename mediator >
 void shy_logic < mediator > :: sound_prepared ( )
+{
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: title_finished ( )
 {
 }
 
