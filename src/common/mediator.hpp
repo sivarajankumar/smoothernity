@@ -67,6 +67,7 @@ public :
     void application_render ( ) ;
     void application_update ( ) ;
     void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
+    void camera_matrix_use ( ) ;
     void camera_prepare_permit ( ) ;
     void camera_prepared ( ) ;
     void camera_update ( ) ;
@@ -134,7 +135,6 @@ public :
     void title_update ( ) ;
     void touch_prepared ( ) ;
     void update ( ) ;
-    void use_camera_matrix ( ) ;
     void use_ortho_projection ( ) ;
     void use_perspective_projection ( ) ;
     void video_mode_changed ( ) ;
@@ -514,9 +514,9 @@ void shy_mediator < mediator_types > :: update ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: use_camera_matrix ( )
+void shy_mediator < mediator_types > :: camera_matrix_use ( )
 {
-    _logic_camera . use_camera_matrix ( ) ;
+    _logic_camera . camera_matrix_use ( ) ;
 }
 
 template < typename mediator_types >

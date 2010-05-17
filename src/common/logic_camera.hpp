@@ -18,7 +18,7 @@ public :
     shy_logic_camera ( mediator * arg_mediator ) ;
     void camera_update ( ) ;
     void camera_prepare_permit ( ) ;
-    void use_camera_matrix ( ) ;
+    void camera_matrix_use ( ) ;
     void update ( ) ;
 private :
     void _reset_camera_rubber ( ) ;
@@ -71,7 +71,7 @@ shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: use_camera_matrix ( )
+void shy_logic_camera < mediator > :: camera_matrix_use ( )
 {
     if ( _camera_created )
         platform :: render_matrix_load ( _camera_matrix ) ;

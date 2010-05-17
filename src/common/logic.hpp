@@ -165,7 +165,7 @@ void shy_logic < mediator > :: _render_scene ( )
 {
     platform :: render_enable_depth_test ( ) ;
     _use_perspective_projection ( ) ;
-    _mediator -> use_camera_matrix ( ) ;
+    _mediator -> camera_matrix_use ( ) ;
     _mediator -> render_land ( ) ;
     _mediator -> render_entities ( ) ;
 }
