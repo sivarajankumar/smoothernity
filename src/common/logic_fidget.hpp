@@ -11,7 +11,7 @@ class shy_logic_fidget
 public :
     shy_logic_fidget ( mediator * arg_mediator ) ;
     void fidget_prepare_permit ( ) ;
-    void render_fidget ( ) ;
+    void fidget_render ( ) ;
     void update ( ) ;
 private :
     void _update_fidget ( ) ;
@@ -37,7 +37,7 @@ shy_logic_fidget < mediator > :: shy_logic_fidget ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: render_fidget ( )
+void shy_logic_fidget < mediator > :: fidget_render ( )
 {
     if ( _fidget_mesh_created )
         _render_fidget_mesh ( ) ;

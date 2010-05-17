@@ -78,6 +78,7 @@ public :
     void entities_update ( ) ;
     void fidget_prepare_permit ( ) ;
     void fidget_prepared ( ) ;
+    void fidget_render ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
     float_32 get_entity_height ( ) ;
@@ -114,7 +115,6 @@ public :
     void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     void render ( ) ;
-    void render_fidget ( ) ;
     void render_image ( ) ;
     void render_land ( ) ;
     void render_text ( ) ;
@@ -459,9 +459,9 @@ void shy_mediator < mediator_types > :: entities_render ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: render_fidget ( )
+void shy_mediator < mediator_types > :: fidget_render ( )
 {
-    _logic_fidget . render_fidget ( ) ;
+    _logic_fidget . fidget_render ( ) ;
 }
 
 template < typename mediator_types >
