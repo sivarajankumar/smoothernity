@@ -11,6 +11,10 @@ class shy_logic_camera
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 
+    static const int_32 _change_origin_in_frames = 139 ;
+    static const int_32 _change_target_in_frames = 181 ;
+    static const float_32 _origin_rubber ( ) { return 0 ; } // 0.99f ;
+    static const float_32 _target_rubber ( ) { return 0 ; } // 0.9f ;
 public :
     shy_logic_camera ( mediator * arg_mediator ) ;
     void camera_update ( ) ;
@@ -141,10 +145,9 @@ void shy_logic_camera < mediator > :: _update_camera ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 {
-    static const int_32 change_origin_in_frames = 139 ;
     if ( -- _frames_to_change_camera_origin <= 0 )
     {
-        _frames_to_change_camera_origin = change_origin_in_frames ;
+        _frames_to_change_camera_origin = _change_origin_in_frames ;
         int_32 new_origin_index = _random_camera_origin_index ( ) ;
         _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
         _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
@@ -156,7 +159,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         _scheduled_camera_origins [ 3 ] = _mediator -> get_entity_origin ( new_origin_index ) ;
     }
     _desired_camera_origin = _mediator -> math_catmull_rom_spline
-        ( 1.0f - float_32 ( _frames_to_change_camera_origin ) / float_32 ( change_origin_in_frames )
+        ( 1.0f - float_32 ( _frames_to_change_camera_origin ) / float_32 ( _change_origin_in_frames )
         , _scheduled_camera_origins [ 0 ]
         , _scheduled_camera_origins [ 1 ]
         , _scheduled_camera_origins [ 2 ]
@@ -167,10 +170,9 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 {
-    static const int_32 change_target_in_frames = 181 ;
     if ( -- _frames_to_change_camera_target <= 0 )
     {
-        _frames_to_change_camera_target = change_target_in_frames ;
+        _frames_to_change_camera_target = _change_target_in_frames ;
         int_32 new_target_index = _random_camera_target_index ( ) ;
         _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
         _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
@@ -182,7 +184,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         _scheduled_camera_targets [ 3 ] = _mediator -> get_entity_origin ( new_target_index ) ;
     }
     _desired_camera_target = _mediator -> math_catmull_rom_spline
-        ( 1.0f - float_32 ( _frames_to_change_camera_target ) / float_32 ( change_target_in_frames )
+        ( 1.0f - float_32 ( _frames_to_change_camera_target ) / float_32 ( _change_target_in_frames )
         , _scheduled_camera_targets [ 0 ]
         , _scheduled_camera_targets [ 1 ]
         , _scheduled_camera_targets [ 2 ]
@@ -193,20 +195,18 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
 {
-    const float_32 origin_rubber = 0 ; // 0.99f ;
     _current_camera_origin = platform :: vector_add
-        ( platform :: vector_mul ( _current_camera_origin , origin_rubber )
-        , platform :: vector_mul ( _desired_camera_origin , 1.0f - origin_rubber )
+        ( platform :: vector_mul ( _current_camera_origin , _origin_rubber ( ) )
+        , platform :: vector_mul ( _desired_camera_origin , 1.0f - _origin_rubber ( ) )
         ) ;
 }
 
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_current_camera_target ( )
 {
-    const float_32 target_rubber = 0 ; // 0.9f ;
     _current_camera_target = platform :: vector_add
-        ( platform :: vector_mul ( _current_camera_target , target_rubber )
-        , platform :: vector_mul ( _desired_camera_target , 1.0f - target_rubber )
+        ( platform :: vector_mul ( _current_camera_target , _target_rubber ( ) )
+        , platform :: vector_mul ( _desired_camera_target , 1.0f - _target_rubber ( ) )
         ) ;
 }
 
