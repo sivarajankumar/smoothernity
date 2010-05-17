@@ -168,7 +168,7 @@ void shy_logic < mediator > :: _render_scene ( )
     _use_perspective_projection ( ) ;
     _mediator -> camera_matrix_use ( ) ;
     _mediator -> render_land ( ) ;
-    _mediator -> render_entities ( ) ;
+    _mediator -> entities_render ( ) ;
 }
 
 template < typename mediator >

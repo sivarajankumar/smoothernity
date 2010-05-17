@@ -16,13 +16,13 @@ class shy_logic_entities
 
 public :
     shy_logic_entities ( mediator * arg_mediator ) ;
-    void render_entities ( ) ;
+    void entities_render ( ) ;
     void prepare_entities ( ) ;
     void update ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_entity_height ( ) ;
 private :
-    void _render_entities ( ) ;
+    void _entities_render ( ) ;
     void _create_entity_mesh ( ) ;
     vector_data _get_entity_origin ( int_32 index ) ;
     void _update_entity_grid ( ) ;
@@ -45,10 +45,10 @@ shy_logic_entities < mediator > :: shy_logic_entities ( mediator * arg_mediator 
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: render_entities ( )
+void shy_logic_entities < mediator > :: entities_render ( )
 {
     if ( _entity_created )
-        _render_entities ( ) ;
+        _entities_render ( ) ;
 }
 
 template < typename mediator >
@@ -89,7 +89,7 @@ shy_logic_entities < mediator > :: get_entity_height ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: _render_entities ( )
+void shy_logic_entities < mediator > :: _entities_render ( )
 {
     _mediator -> texture_unselect ( ) ;
     for ( int_32 i = 0 ; i < ENTITY_MESH_GRID * ENTITY_MESH_GRID ; i ++ )

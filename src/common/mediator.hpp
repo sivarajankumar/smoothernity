@@ -73,6 +73,7 @@ public :
     void camera_update ( ) ;
     void done ( ) ;
     void entities_prepared ( ) ;
+    void entities_render ( ) ;
     void fidget_prepared ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
@@ -112,7 +113,6 @@ public :
     void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     void render ( ) ;
-    void render_entities ( ) ;
     void render_fidget ( ) ;
     void render_image ( ) ;
     void render_land ( ) ;
@@ -452,9 +452,9 @@ void shy_mediator < mediator_types > :: render ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: render_entities ( )
+void shy_mediator < mediator_types > :: entities_render ( )
 {
-    _logic_entities . render_entities ( ) ;
+    _logic_entities . entities_render ( ) ;
 }
 
 template < typename mediator_types >
