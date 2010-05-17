@@ -90,6 +90,7 @@ public :
     void image_render ( ) ;
     void image_update ( ) ;
     void init ( ) ;
+    void land_prepare_permit ( ) ;
     void land_prepared ( ) ;
     template < typename T > T math_abs ( T f ) ;
     vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
@@ -108,7 +109,6 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void prepare_land ( ) ;
     void prepare_sound ( ) ;
     void prepare_text ( ) ;
     void prepare_touch ( ) ;
@@ -390,9 +390,9 @@ void shy_mediator < mediator_types > :: image_prepare_permit ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_land ( )
+void shy_mediator < mediator_types > :: land_prepare_permit ( )
 {
-    _logic_land . prepare_land ( ) ;
+    _logic_land . land_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >

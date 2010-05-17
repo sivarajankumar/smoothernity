@@ -108,7 +108,7 @@ void shy_logic < mediator > :: fidget_prepared ( )
 template < typename mediator >
 void shy_logic < mediator > :: camera_prepared ( )
 {
-    _mediator -> prepare_land ( ) ;
+    _mediator -> land_prepare_permit ( ) ;
 }
 
 template < typename mediator >

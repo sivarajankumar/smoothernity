@@ -14,7 +14,7 @@ class shy_logic_land
     
 public :
     shy_logic_land ( mediator * arg_mediator ) ;
-    void prepare_land ( ) ;
+    void land_prepare_permit ( ) ;
     void render_land ( ) ;
     void update ( ) ;
 private :
@@ -44,7 +44,7 @@ shy_logic_land < mediator > :: shy_logic_land ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: prepare_land ( )
+void shy_logic_land < mediator > :: land_prepare_permit ( )
 {
     _land_prepare_permitted = true ;
 }
