@@ -87,6 +87,7 @@ public :
     float_32 get_near_plane_distance ( ) ;
     void image_prepared ( ) ;
     void image_render ( ) ;
+    void image_update ( ) ;
     void init ( ) ;
     void land_prepared ( ) ;
     template < typename T > T math_abs ( T f ) ;
@@ -505,11 +506,16 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: update ( )
 {
     _logic . update ( ) ;
-    _logic_image . update ( ) ;
     _logic_land . update ( ) ;
     _logic_sound . update ( ) ;
     _logic_text . update ( ) ;
     _logic_touch . update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: image_update ( )
+{
+    _logic_image . image_update ( ) ;
 }
 
 template < typename mediator_types >

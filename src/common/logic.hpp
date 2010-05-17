@@ -84,6 +84,7 @@ void shy_logic < mediator > :: update ( )
     _mediator -> camera_update ( ) ;
     _mediator -> entities_update ( ) ;
     _mediator -> fidget_update ( ) ;
+    _mediator -> image_update ( ) ;
 }
 
 template < typename mediator >
