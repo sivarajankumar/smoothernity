@@ -98,7 +98,7 @@ void shy_logic < mediator > :: use_ortho_projection ( )
 template < typename mediator >
 void shy_logic < mediator > :: fidget_prepared ( )
 {
-    _mediator -> prepare_camera ( ) ;
+    _mediator -> camera_prepare_permit ( ) ;
 }
 
 template < typename mediator >

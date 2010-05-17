@@ -67,6 +67,7 @@ public :
     void application_render ( ) ;
     void application_update ( ) ;
     void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
+    void camera_prepare_permit ( ) ;
     void camera_prepared ( ) ;
     void camera_update ( ) ;
     void done ( ) ;
@@ -97,7 +98,6 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void prepare_camera ( ) ;
     void prepare_entities ( ) ;
     void prepare_fidget ( ) ;
     void prepare_image ( ) ;
@@ -363,9 +363,9 @@ void shy_mediator < mediator_types > :: mesh_set_transform
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_camera ( )
+void shy_mediator < mediator_types > :: camera_prepare_permit ( )
 {
-    _logic_camera . prepare_camera ( ) ;
+    _logic_camera . camera_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >
