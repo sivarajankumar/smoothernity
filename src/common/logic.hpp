@@ -181,7 +181,7 @@ void shy_logic < mediator > :: _render_hud ( )
     _use_ortho_projection ( ) ;
     _mediator -> fidget_render ( ) ;
     _mediator -> render_text ( ) ;
-    _mediator -> render_image ( ) ;
+    _mediator -> image_render ( ) ;
     _mediator -> render_touch ( ) ;
 }
 

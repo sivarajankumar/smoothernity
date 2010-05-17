@@ -16,7 +16,7 @@ class shy_logic_image
     static const int_32 logo_resource_index = 1 ;
 public :
     shy_logic_image ( mediator * arg_mediator ) ;
-    void render_image ( ) ;
+    void image_render ( ) ;
     void update ( ) ;
     void prepare_image ( ) ;
 private :
@@ -46,7 +46,7 @@ shy_logic_image < mediator > :: shy_logic_image ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: render_image ( )
+void shy_logic_image < mediator > :: image_render ( )
 {
     if ( _image_mesh_created && _image_texture_loaded )
         _render_image_mesh ( ) ;

@@ -86,6 +86,7 @@ public :
     vector_data get_entity_origin ( int_32 index ) ;
     float_32 get_near_plane_distance ( ) ;
     void image_prepared ( ) ;
+    void image_render ( ) ;
     void init ( ) ;
     void land_prepared ( ) ;
     template < typename T > T math_abs ( T f ) ;
@@ -116,7 +117,6 @@ public :
     void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     void render ( ) ;
-    void render_image ( ) ;
     void render_land ( ) ;
     void render_text ( ) ;
     void render_touch ( ) ;
@@ -466,9 +466,9 @@ void shy_mediator < mediator_types > :: fidget_render ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: render_image ( )
+void shy_mediator < mediator_types > :: image_render ( )
 {
-    _logic_image . render_image ( ) ;
+    _logic_image . image_render ( ) ;
 }
 
 template < typename mediator_types >
