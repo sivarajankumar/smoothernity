@@ -17,8 +17,8 @@ class shy_logic_sound
 public :
     shy_logic_sound ( mediator * arg_mediator ) ;
     void init ( ) ;
-    void prepare_sound ( ) ;
-    void update ( ) ;
+    void sound_prepare_permit ( ) ;
+    void sound_update ( ) ;
 private :
     void _load_sound ( ) ;
     float_32 _int_to_sample ( int_32 i ) ;
@@ -60,13 +60,13 @@ void shy_logic_sound < mediator > :: init ( )
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: prepare_sound ( )
+void shy_logic_sound < mediator > :: sound_prepare_permit ( )
 {
     _sound_prepare_permitted = true ;
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: update ( )
+void shy_logic_sound < mediator > :: sound_update ( )
 {
     if ( _sound_prepare_permitted )
     {

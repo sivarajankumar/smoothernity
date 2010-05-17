@@ -92,6 +92,8 @@ public :
     void init ( ) ;
     void land_prepare_permit ( ) ;
     void land_prepared ( ) ;
+    void land_render ( ) ;
+    void land_update ( ) ;
     template < typename T > T math_abs ( T f ) ;
     vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     template < typename T > T math_clamp ( T f , T from , T to ) ;
@@ -109,20 +111,19 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void prepare_sound ( ) ;
-    void prepare_text ( ) ;
-    void prepare_touch ( ) ;
     void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
     void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
     void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     void render ( ) ;
-    void render_land ( ) ;
-    void render_text ( ) ;
-    void render_touch ( ) ;
+    void sound_prepare_permit ( ) ;
     void sound_prepared ( ) ;
+    void sound_update ( ) ;
+    void text_prepare_permit ( ) ;
     void text_prepared ( ) ;
+    void text_render ( ) ;
+    void text_update ( ) ;
     texture_id texture_create ( ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
     int_32 texture_height ( ) ;
@@ -136,7 +137,10 @@ public :
     void title_launch_permit ( ) ;
     void title_render ( ) ;
     void title_update ( ) ;
+    void touch_prepare_permit ( ) ;
     void touch_prepared ( ) ;
+    void touch_render ( ) ;
+    void touch_update ( ) ;
     void update ( ) ;
     void use_ortho_projection ( ) ;
     void use_perspective_projection ( ) ;
@@ -201,7 +205,7 @@ void shy_mediator < mediator_types > :: camera_matrix_look_at
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: camera_prepared ( )
 {
-    _logic . camera_prepared ( ) ;
+    _logic_game . camera_prepared ( ) ;
 }
 
 template < typename mediator_types >
@@ -219,7 +223,7 @@ void shy_mediator < mediator_types > :: done ( )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: entities_prepared ( )
 {
-    _logic . entities_prepared ( ) ;
+    _logic_game . entities_prepared ( ) ;
 }
 
 template < typename mediator_types >
@@ -231,13 +235,13 @@ void shy_mediator < mediator_types > :: fidget_prepared ( )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: game_render ( )
 {
-    _logic_game . render ( ) ;
+    _logic_game . game_render ( ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: game_update ( )
 {
-    _logic_game . update ( ) ;
+    _logic_game . game_update ( ) ;
 }
 
 template < typename mediator_types >
@@ -264,7 +268,7 @@ shy_mediator < mediator_types > :: get_near_plane_distance ( )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: image_prepared ( )
 {
-    _logic . image_prepared ( ) ;
+    _logic_game . image_prepared ( ) ;
 }
 
 template < typename mediator_types >
@@ -277,7 +281,7 @@ void shy_mediator < mediator_types > :: init ( )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: land_prepared ( )
 {
-    _logic . land_prepared ( ) ;
+    _logic_game . land_prepared ( ) ;
 }
 
 template < typename mediator_types >
@@ -396,21 +400,21 @@ void shy_mediator < mediator_types > :: land_prepare_permit ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_sound ( )
+void shy_mediator < mediator_types > :: sound_prepare_permit ( )
 {
-    _logic_sound . prepare_sound ( ) ;
+    _logic_sound . sound_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_text ( )
+void shy_mediator < mediator_types > :: text_prepare_permit ( )
 {
-    _logic_text . prepare_text ( ) ;
+    _logic_text . text_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: prepare_touch ( )
+void shy_mediator < mediator_types > :: touch_prepare_permit ( )
 {
-    _logic_touch . prepare_touch ( ) ;
+    _logic_touch . touch_prepare_permit ( ) ;
 }
 
 template < typename mediator_types >
@@ -473,43 +477,63 @@ void shy_mediator < mediator_types > :: image_render ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: render_land ( )
+void shy_mediator < mediator_types > :: land_render ( )
 {
-    _logic_land . render_land ( ) ;
+    _logic_land . land_render ( ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: render_text ( )
+void shy_mediator < mediator_types > :: text_render ( )
 {
-    _logic_text . render_text ( ) ;
+    _logic_text . text_render ( ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: render_touch ( )
+void shy_mediator < mediator_types > :: touch_render ( )
 {
-    _logic_touch . render_touch ( ) ;
+    _logic_touch . touch_render ( ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: sound_prepared ( )
 {
-    _logic . sound_prepared ( ) ;
+    _logic_game . sound_prepared ( ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: text_prepared ( )
 {
-    _logic . text_prepared ( ) ;
+    _logic_game . text_prepared ( ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: update ( )
 {
     _logic . update ( ) ;
-    _logic_land . update ( ) ;
-    _logic_sound . update ( ) ;
-    _logic_text . update ( ) ;
-    _logic_touch . update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: touch_update ( )
+{
+    _logic_touch . touch_update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: text_update ( )
+{
+    _logic_text . text_update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: sound_update ( )
+{
+    _logic_sound . sound_update ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: land_update ( )
+{
+    _logic_land . land_update ( ) ;
 }
 
 template < typename mediator_types >
@@ -625,7 +649,7 @@ void shy_mediator < mediator_types > :: title_update ( )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: touch_prepared ( )
 {
-    _logic . touch_prepared ( ) ;
+    _logic_game . touch_prepared ( ) ;
 }
 
 template < typename mediator_types >

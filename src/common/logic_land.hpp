@@ -15,8 +15,8 @@ class shy_logic_land
 public :
     shy_logic_land ( mediator * arg_mediator ) ;
     void land_prepare_permit ( ) ;
-    void render_land ( ) ;
-    void update ( ) ;
+    void land_render ( ) ;
+    void land_update ( ) ;
 private :
     void _render_land ( ) ;
     void _create_land_mesh ( ) ;
@@ -50,14 +50,14 @@ void shy_logic_land < mediator > :: land_prepare_permit ( )
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: render_land ( )
+void shy_logic_land < mediator > :: land_render ( )
 {
     if ( _land_mesh_created && _land_texture_created )
         _render_land ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: update ( )
+void shy_logic_land < mediator > :: land_update ( )
 {
     if ( _land_prepare_permitted )
     {
