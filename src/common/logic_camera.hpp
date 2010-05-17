@@ -16,6 +16,7 @@ class shy_logic_camera
 
 public :
     shy_logic_camera ( mediator * arg_mediator ) ;
+    void camera_update ( ) ;
     void prepare_camera ( ) ;
     void use_camera_matrix ( ) ;
     void update ( ) ;
@@ -85,7 +86,7 @@ void shy_logic_camera < mediator > :: prepare_camera ( )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: update ( )
+void shy_logic_camera < mediator > :: camera_update ( )
 {
     if ( _camera_prepare_permitted )
     {
@@ -100,6 +101,12 @@ void shy_logic_camera < mediator > :: update ( )
         else
             _update_camera ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: update ( )
+{
+    camera_update ( ) ;
 }
 
 template < typename mediator >

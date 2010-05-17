@@ -68,6 +68,7 @@ public :
     void application_update ( ) ;
     void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
     void camera_prepared ( ) ;
+    void camera_update ( ) ;
     void done ( ) ;
     void entities_prepared ( ) ;
     void fidget_prepared ( ) ;
@@ -198,6 +199,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: camera_prepared ( )
 {
     _logic . camera_prepared ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: camera_update ( )
+{
+    _logic_camera . camera_update ( ) ;
 }
 
 template < typename mediator_types >
