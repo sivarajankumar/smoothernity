@@ -4,6 +4,11 @@ class shy_logic_game
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: int_32 int_32 ;
+    
+    static const int_32 _fade_in_frames = 90 ;
+    static const float_32 _final_r ( ) { return 0.0f ; }
+    static const float_32 _final_g ( ) { return 0.1f ; }
+    static const float_32 _final_b ( ) { return 0.4f ; }
 public :
     shy_logic_game ( mediator * arg_mediator ) ;
     void game_launch_permit ( ) ;
@@ -165,14 +170,10 @@ void shy_logic_game < mediator > :: _clear_screen ( )
 template < typename mediator >
 void shy_logic_game < mediator > :: _update_color ( )
 {
-    static const float_32 FINAL_R = 0.0f ;
-    static const float_32 FINAL_G = 0.1f ;
-    static const float_32 FINAL_B = 0.4f ;
-    static const int_32 FADE_IN_FRAMES = 90 ;
-    if ( _color_frames < FADE_IN_FRAMES )
+    if ( _color_frames < _fade_in_frames )
         _color_frames ++ ;
-    float_32 scale = float_32 ( _color_frames ) / float_32 ( FADE_IN_FRAMES ) ;
-    _color_r = scale * FINAL_R ;
-    _color_g = scale * FINAL_G ;
-    _color_b = scale * FINAL_B ;
+    float_32 scale = float_32 ( _color_frames ) / float_32 ( _fade_in_frames ) ;
+    _color_r = scale * _final_r ( ) ;
+    _color_g = scale * _final_g ( ) ;
+    _color_b = scale * _final_b ( ) ;
 }
