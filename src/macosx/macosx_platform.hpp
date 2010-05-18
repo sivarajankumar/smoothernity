@@ -267,15 +267,15 @@ public :
     //
     
     static void time_get_current ( time_data & time ) ;
-    static int_32 time_diff_in_microseconds ( const time_data & time1 , const time_data & time2 ) ;
+    static void time_diff_in_microseconds ( int_32 & result , const time_data & time1 , const time_data & time2 ) ;
 
     //
     // touch
     //
     
-    static int_32 touch_occured ( ) ;
-    static float_32 touch_x ( ) ;
-    static float_32 touch_y ( ) ;
+    static void touch_occured ( int_32 & result ) ;
+    static void touch_x ( float_32 & result ) ;
+    static void touch_y ( float_32 & result ) ;
 
 	//
 	// mouse

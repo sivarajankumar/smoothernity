@@ -1,20 +1,14 @@
-inline
-shy_macosx_platform :: int_32 
-shy_macosx_platform :: touch_occured ( )
+inline void shy_macosx_platform :: touch_occured ( int_32 & result )
 {
-	return false ;
+    result = false ;
 }
 
-inline
-shy_macosx_platform :: float_32 
-shy_macosx_platform :: touch_x ( )
+inline void shy_macosx_platform :: touch_x ( float_32 & result )
 {
-	return 0 ;
+    result = 0 ;
 }
 
-inline
-shy_macosx_platform :: float_32 
-shy_macosx_platform :: touch_y ( )
+inline void shy_macosx_platform :: touch_y ( float_32 & result )
 {
-	return 0 ;
+    result = 0 ;
 }

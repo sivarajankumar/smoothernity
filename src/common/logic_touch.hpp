@@ -102,11 +102,17 @@ void shy_logic_touch < mediator > :: _decrease_spot_lifetime ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 {
-    if ( platform :: touch_occured ( ) )
+    int_32 touch ;
+    platform :: touch_occured ( touch ) ;
+    if ( touch )
     {
+        float_32 x ;
+        float_32 y ;
+        platform :: touch_x ( x ) ;
+        platform :: touch_y ( y ) ;
         _should_place_new_spot = true ;
-        _spot_x = platform :: touch_x ( ) ;
-        _spot_y = platform :: touch_y ( ) ;
+        _spot_x = x ;
+        _spot_y = y ;
     }
 }
 
