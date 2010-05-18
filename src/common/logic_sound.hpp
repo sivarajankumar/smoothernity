@@ -111,8 +111,10 @@ void shy_logic_sound < mediator > :: sound_update ( )
     if ( _mono_sound_created )
     {
         int_32 touch ;
+        int_32 mouse_button ;
         platform :: touch_occured ( touch ) ;
-        if ( touch || platform :: mouse_left_button_down ( ) )
+        platform :: mouse_left_button_down ( mouse_button ) ;
+        if ( touch || mouse_button )
         {
             platform :: sound_source_stop ( _mono_sound_source ) ;
             platform :: sound_source_play ( _mono_sound_source ) ;

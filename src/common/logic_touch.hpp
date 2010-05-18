@@ -119,11 +119,17 @@ void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_mouse ( )
 {
-    if ( platform :: mouse_left_button_down ( ) )
+    int_32 mouse_button ;
+    platform :: mouse_left_button_down ( mouse_button ) ;
+    if ( mouse_button )
     {
+        float_32 x ;
+        float_32 y ;
+        platform :: mouse_x ( x ) ;
+        platform :: mouse_y ( y ) ;
         _should_place_new_spot = true ;
-        _spot_x = platform :: mouse_x ( ) ;
-        _spot_y = platform :: mouse_y ( ) ;
+        _spot_x = x ;
+        _spot_y = y ;
     }
 }
 

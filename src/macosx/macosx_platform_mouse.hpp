@@ -1,20 +1,14 @@
-inline
-shy_macosx_platform :: int_32 
-shy_macosx_platform :: mouse_left_button_down ( )
+inline void shy_macosx_platform :: mouse_left_button_down ( int_32 & result )
 {
-	return _mouse_left_button_down != false ;
+    result = ( _mouse_left_button_down != false ) ;
 }
 
-inline
-shy_macosx_platform :: float_32 
-shy_macosx_platform :: mouse_x ( )
+inline void shy_macosx_platform :: mouse_x ( float_32 & result )
 {
-	return _mouse_x ;
+    result = _mouse_x ;
 }
 
-inline
-shy_macosx_platform :: float_32 
-shy_macosx_platform :: mouse_y ( )
+inline void shy_macosx_platform :: mouse_y ( float_32 & result )
 {
-	return _mouse_y ;
+    result = _mouse_y ;
 }

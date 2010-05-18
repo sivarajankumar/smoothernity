@@ -281,9 +281,9 @@ public :
 	// mouse
 	//
 
-	static int_32 mouse_left_button_down ( ) ;
-	static float_32 mouse_x ( ) ;
-	static float_32 mouse_y ( ) ;
+	static void mouse_left_button_down ( int_32 & result ) ;
+	static void mouse_x ( float_32 & result ) ;
+	static void mouse_y ( float_32 & result ) ;
 
 	//
 	// variables
