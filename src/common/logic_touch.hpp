@@ -11,7 +11,12 @@ class shy_logic_touch
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const int_32 _spot_lifetime_in_frames = 60 ;
-    
+    static const int_32 _spot_r = 255 ;
+    static const int_32 _spot_g = 255 ;
+    static const int_32 _spot_b = 255 ;
+    static const int_32 _spot_edges = 32 ;    
+    static const float_32 _spot_size ( ) { return 0.3f ; }
+
 public :
     shy_logic_touch ( mediator * arg_mediator ) ;
     void touch_prepare_permit ( ) ;
@@ -144,30 +149,23 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _create_spot_mesh ( )
 {
-    static const int_32 SPOT_R = 255 ;
-    static const int_32 SPOT_G = 255 ;
-    static const int_32 SPOT_B = 255 ;
+    vertex_data vertices [ _spot_edges ] ;
+    index_data indices [ _spot_edges ] ;
     
-    static const float_32 spot_size = 0.3f ;
-    static const int_32 spot_edges = 32 ;
-    
-    vertex_data vertices [ spot_edges ] ;
-    index_data indices [ spot_edges ] ;
-    
-    for ( int_32 i = 0 ; i < spot_edges ; i ++ )
+    for ( int_32 i = 0 ; i < _spot_edges ; i ++ )
     {
-        float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( spot_edges ) ;
+        float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( _spot_edges ) ;
         platform :: render_set_vertex_position
             ( vertices [ i ]
-            , spot_size * platform :: math_cos ( angle )
-            , spot_size * platform :: math_sin ( angle )
+            , _spot_size ( ) * platform :: math_cos ( angle )
+            , _spot_size ( ) * platform :: math_sin ( angle )
             , 0.0f
             ) ;
         platform :: render_set_vertex_color
             ( vertices [ i ]
-            , SPOT_R
-            , SPOT_G
-            , SPOT_B
+            , _spot_r
+            , _spot_g
+            , _spot_b
             , 255
             ) ;
         platform :: render_set_index_value
@@ -175,5 +173,5 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
             , i
             ) ;
     }
-    _spot_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , spot_edges , 0 , spot_edges ) ;
+    _spot_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , _spot_edges , 0 , _spot_edges ) ;
 }
