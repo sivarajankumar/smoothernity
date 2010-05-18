@@ -10,6 +10,9 @@ class shy_logic_entities
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
+    static const int_32 _grid_step = 5 ;
+    static const int_32 _scale_in_frames = 120 ;
+    static const int_32 _scale_wave = 2 ;
     static const int_32 _entity_mesh_spans = 50 ;
     static const int_32 _entity_mesh_grid = 5 ;
     static const int_32 _entity_mesh_height = 2 ;
@@ -203,22 +206,22 @@ template < typename mediator >
 typename shy_logic_entities < mediator > :: vector_data
 shy_logic_entities < mediator > :: _get_entity_origin ( int_32 index )
 {
-    const float_32 grid_step = 5.0f ;
     int_32 x = index % _entity_mesh_grid ;
     int_32 z = index / _entity_mesh_grid ;
-    return platform :: vector_xyz
-        ( grid_step * ( float_32 ) ( x - ( _entity_mesh_grid / 2 ) )
+    vector_data origin ;
+    platform :: vector_xyz
+        ( origin
+        , ( float_32 ) ( _grid_step * ( x - ( _entity_mesh_grid / 2 ) ) )
         , 0.5f * _entity_mesh_height
-        , grid_step * ( float_32 ) ( z - ( _entity_mesh_grid / 2 ) )
+        , ( float_32 ) ( _grid_step * ( z - ( _entity_mesh_grid / 2 ) ) )
         ) ;
+    return origin ;
 }
 
 template < typename mediator >
 void shy_logic_entities < mediator > :: _update_entity_grid ( )
 {
-    static const int_32 scale_in_frames = 120 ;
-    static const float_32 scale_wave = 2 ;
-    if ( _grid_scale <= scale_in_frames )
+    if ( _grid_scale <= _scale_in_frames )
     {
         for ( int_32 x = 0 ; x < _entity_mesh_grid ; x ++ )
         {
@@ -226,8 +229,8 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
             {
                 int_32 index = x + _entity_mesh_grid * z ;
                 matrix_data & matrix = _entities_grid_matrices [ index ] ;
-                float_32 scale = scale_wave * float_32 ( x + z ) / float_32 ( _entity_mesh_grid * 2 ) ;
-                scale = scale - scale_wave + ( 1.0f + scale_wave ) * float_32 ( _grid_scale ) / float_32 ( scale_in_frames ) ;
+                float_32 scale = float_32 ( _scale_wave * ( x + z ) ) / float_32 ( _entity_mesh_grid * 2 ) ;
+                scale = scale - float_32 ( _scale_wave ) + float_32 ( 1 + _scale_wave ) * float_32 ( _grid_scale ) / float_32 ( _scale_in_frames ) ;
                 if ( scale < 0.0f )
                     scale = 0.0f ;
                 else if ( scale > 1.0f )

@@ -139,14 +139,14 @@ public :
     // vector
     //
     
-    static vector_data vector_xyz ( float_32 x , float_32 y , float_32 z ) ;
-    static float_32 vector_dot_product ( vector_data v1 , vector_data v2 ) ;
-    static vector_data vector_cross_product ( vector_data v1 , vector_data v2 ) ;
-    static vector_data vector_add ( vector_data v1 , vector_data v2 ) ;
-    static vector_data vector_sub ( vector_data v1 , vector_data v2 ) ;
-    static vector_data vector_mul ( vector_data v , float_32 f ) ;
-    static float_32 vector_length ( vector_data v ) ;
-    static vector_data vector_normalize ( vector_data v ) ;
+    static void vector_xyz ( vector_data & result , float_32 x , float_32 y , float_32 z ) ;
+    static void vector_dot_product ( float_32 & result , vector_data v1 , vector_data v2 ) ;
+    static void vector_cross_product ( vector_data & result , vector_data v1 , vector_data v2 ) ;
+    static void vector_add ( vector_data & result , vector_data v1 , vector_data v2 ) ;
+    static void vector_sub ( vector_data & result , vector_data v1 , vector_data v2 ) ;
+    static void vector_mul ( vector_data & result , vector_data v , float_32 f ) ;
+    static void vector_length ( float_32 & result , vector_data v ) ;
+    static void vector_normalize ( vector_data & result , vector_data v ) ;
     
     //
     // matrix
@@ -160,10 +160,10 @@ public :
     static void matrix_set_axis_y ( matrix_data & matrix , vector_data v ) ;
     static void matrix_set_axis_z ( matrix_data & matrix , vector_data v ) ;
     static void matrix_set_origin ( matrix_data & matrix , vector_data v ) ;
-    static vector_data matrix_get_axis_x ( const matrix_data & matrix ) ;
-    static vector_data matrix_get_axis_y ( const matrix_data & matrix ) ;
-    static vector_data matrix_get_axis_z ( const matrix_data & matrix ) ;
-    static vector_data matrix_get_origin ( const matrix_data & matrix ) ;
+    static void matrix_get_axis_x ( vector_data & result , const matrix_data & matrix ) ;
+    static void matrix_get_axis_y ( vector_data & result , const matrix_data & matrix ) ;
+    static void matrix_get_axis_z ( vector_data & result , const matrix_data & matrix ) ;
+    static void matrix_get_origin ( vector_data & result , const matrix_data & matrix ) ;
     static void matrix_identity ( matrix_data & matrix ) ;
     static void matrix_inverse_rotation_translation ( matrix_data & matrix ) ;
     

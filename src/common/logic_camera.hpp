@@ -66,8 +66,8 @@ shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
     {
         _scheduled_camera_origin_indices [ i ] = 0 ;
         _scheduled_camera_target_indices [ i ] = 0 ;
-        _scheduled_camera_origins [ i ] = platform :: vector_xyz ( 0 , 0 , 0 ) ;
-        _scheduled_camera_targets [ i ] = platform :: vector_xyz ( 0 , 0 , 0 ) ;
+        platform :: vector_xyz ( _scheduled_camera_origins [ i ] , 0 , 0 , 0 ) ;
+        platform :: vector_xyz ( _scheduled_camera_targets [ i ] , 0 , 0 , 0 ) ;
     }
 }
 
@@ -195,19 +195,21 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
 {
-    _current_camera_origin = platform :: vector_add
-        ( platform :: vector_mul ( _current_camera_origin , _origin_rubber ( ) )
-        , platform :: vector_mul ( _desired_camera_origin , 1.0f - _origin_rubber ( ) )
-        ) ;
+    vector_data old_part ;
+    vector_data new_part ;
+    platform :: vector_mul ( old_part , _current_camera_origin , _origin_rubber ( ) ) ;
+    platform :: vector_mul ( new_part , _desired_camera_origin , 1.0f - _origin_rubber ( ) ) ;
+    platform :: vector_add ( _current_camera_origin , old_part , new_part ) ;
 }
 
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_current_camera_target ( )
 {
-    _current_camera_target = platform :: vector_add
-        ( platform :: vector_mul ( _current_camera_target , _target_rubber ( ) )
-        , platform :: vector_mul ( _desired_camera_target , 1.0f - _target_rubber ( ) )
-        ) ;
+    vector_data old_part ;
+    vector_data new_part ;
+    platform :: vector_mul ( old_part , _current_camera_target , _target_rubber ( ) ) ;
+    platform :: vector_mul ( new_part , _desired_camera_target , 1.0f - _target_rubber ( ) ) ;
+    platform :: vector_add ( _current_camera_target , old_part , new_part ) ;
 }
 
 template < typename mediator >
@@ -216,12 +218,13 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     float_32 height = _mediator -> get_entity_height ( ) 
                     + platform :: render_get_aspect_height ( ) 
                     + _mediator -> get_near_plane_distance ( ) ;
-    _mediator -> camera_matrix_look_at 
-        ( _camera_matrix 
-        , platform :: vector_add ( _current_camera_origin , platform :: vector_xyz ( 0.0f , height , 0.0f ) )
-        , _current_camera_target
-        , platform :: vector_xyz ( 0 , 1 , 0 )
-        ) ;
+    vector_data shift ;
+    vector_data shifted_origin ;
+    vector_data up ;
+    platform :: vector_xyz ( shift , 0.0f , height , 0.0f ) ;
+    platform :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
+    platform :: vector_xyz ( up , 0 , 1 , 0 ) ;
+    _mediator -> camera_matrix_look_at ( _camera_matrix , shifted_origin , _current_camera_target , up ) ;
 }
 
 template < typename mediator >

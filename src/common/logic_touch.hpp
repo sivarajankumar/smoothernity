@@ -127,7 +127,7 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
     if ( _should_place_new_spot )
     {
         _should_place_new_spot = false ;
-        _spot_position = platform :: vector_xyz ( _spot_x , _spot_y , - 3.0f ) ;
+        platform :: vector_xyz ( _spot_position , _spot_x , _spot_y , - 3.0f ) ;
         _spot_frames_left = _spot_lifetime_in_frames ;
     }
 }

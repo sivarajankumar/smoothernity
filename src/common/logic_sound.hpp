@@ -52,12 +52,19 @@ shy_logic_sound < mediator > :: shy_logic_sound ( mediator * arg_mediator )
 template < typename mediator >
 void shy_logic_sound < mediator > :: init ( )
 {
-    platform :: sound_set_listener_position ( platform :: vector_xyz ( 0 , 0 , 4 ) ) ;
-    platform :: sound_set_listener_velocity ( platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
-    platform :: sound_set_listener_orientation
-        ( platform :: vector_xyz ( 0 , 0 , 1 )
-        , platform :: vector_xyz ( 0 , 1 , 0 )
-        ) ;
+    vector_data listener_pos ;
+    platform :: vector_xyz ( listener_pos , 0 , 0 , 4 ) ;
+    platform :: sound_set_listener_position ( listener_pos ) ;
+    
+    vector_data listener_vel ;
+    platform :: vector_xyz ( listener_vel , 0 , 0 , 0 ) ;
+    platform :: sound_set_listener_velocity ( listener_vel ) ;
+    
+    vector_data look_at ;
+    vector_data up ;
+    platform :: vector_xyz ( look_at , 0 , 0 , 1 ) ;
+    platform :: vector_xyz ( up , 0 , 1 , 0 ) ;
+    platform :: sound_set_listener_orientation ( look_at , up ) ;
 }
 
 template < typename mediator >
@@ -138,11 +145,17 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     _stereo_sound_source = platform :: sound_create_source ( ) ;
     platform :: sound_set_source_pitch ( _stereo_sound_source , 1 ) ;
     platform :: sound_set_source_gain ( _stereo_sound_source , 0.7f ) ;
-    platform :: sound_set_source_position ( _stereo_sound_source , platform :: vector_xyz ( 0 , 0 , - 2 ) ) ;
-    platform :: sound_set_source_velocity ( _stereo_sound_source , platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
     platform :: sound_set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
     platform :: sound_set_source_playback_looping ( _stereo_sound_source ) ;
     platform :: sound_source_play ( _stereo_sound_source ) ;
+    
+    vector_data source_pos ;
+    platform :: vector_xyz ( source_pos , 0 , 0 , - 2 ) ;
+    platform :: sound_set_source_position ( _stereo_sound_source , source_pos ) ;
+    
+    vector_data source_vel ;
+    platform :: vector_xyz ( source_vel , 0 , 0 , 0 ) ;
+    platform :: sound_set_source_velocity ( _stereo_sound_source , source_vel ) ;    
 }
 
 template < typename mediator >
@@ -161,8 +174,14 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     _mono_sound_source = platform :: sound_create_source ( ) ;
     platform :: sound_set_source_pitch ( _mono_sound_source , 1 ) ;
     platform :: sound_set_source_gain ( _mono_sound_source , 1 ) ;
-    platform :: sound_set_source_position ( _mono_sound_source , platform :: vector_xyz ( 0 , 0 , - 2 ) ) ;
-    platform :: sound_set_source_velocity ( _mono_sound_source , platform :: vector_xyz ( 0 , 0 , 0 ) ) ;
     platform :: sound_set_source_buffer ( _mono_sound_source , mono_sound_buffer ) ;
     platform :: sound_set_source_playback_once ( _mono_sound_source ) ;
+
+    vector_data source_pos ;
+    platform :: vector_xyz ( source_pos , 0 , 0 , - 2 ) ;
+    platform :: sound_set_source_position ( _mono_sound_source , source_pos ) ;
+    
+    vector_data source_vel ;
+    platform :: vector_xyz ( source_vel , 0 , 0 , 0 ) ;
+    platform :: sound_set_source_velocity ( _mono_sound_source , source_vel ) ;    
 }
