@@ -6,6 +6,7 @@ class shy_logic_game
     typedef typename mediator :: platform :: int_32 int_32 ;
 public :
     shy_logic_game ( mediator * arg_mediator ) ;
+    void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
     void camera_prepared ( ) ;
@@ -27,6 +28,7 @@ private :
     float_32 _color_b ;
     int_32 _color_frames ;
     int_32 _game_launched ;
+    int_32 _game_launch_permitted ;
 } ;
 
 template < typename mediator >
@@ -37,7 +39,14 @@ shy_logic_game < mediator > :: shy_logic_game ( mediator * arg_mediator )
 , _color_b ( 0 )
 , _color_frames ( 0 )
 , _game_launched ( false )
+, _game_launch_permitted ( false )
 {
+}
+
+template < typename mediator >
+void shy_logic_game < mediator > :: game_launch_permit ( )
+{
+    _game_launch_permitted = true ;
 }
 
 template < typename mediator >
@@ -54,12 +63,15 @@ void shy_logic_game < mediator > :: game_render ( )
 template < typename mediator >
 void shy_logic_game < mediator > :: game_update ( )
 {
-    if ( ! _game_launched )
+    if ( _game_launch_permitted )
     {
-        _mediator -> camera_prepare_permit ( ) ;
-        _game_launched = true ;
+        if ( ! _game_launched )
+        {
+            _mediator -> camera_prepare_permit ( ) ;
+            _game_launched = true ;
+        }
     }
-    else
+    if ( _game_launched )
     {
         _update_color ( ) ;
         _mediator -> camera_update ( ) ;

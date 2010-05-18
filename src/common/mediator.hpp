@@ -80,6 +80,7 @@ public :
     void fidget_prepared ( ) ;
     void fidget_render ( ) ;
     void fidget_update ( ) ;
+    void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
     float_32 get_entity_height ( ) ;
@@ -676,4 +677,10 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: use_ortho_projection ( )
 {
     _logic . use_ortho_projection ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: game_launch_permit ( )
+{
+    _logic_game . game_launch_permit ( ) ;
 }
