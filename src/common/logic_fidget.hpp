@@ -8,6 +8,13 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
+
+    static const int_32 _scale_in_frames = 60 ;
+    static const int_32 _fidget_r = 255 ;
+    static const int_32 _fidget_g = 128 ;
+    static const int_32 _fidget_b = 0 ;    
+    static const int_32 _fidget_edges = 3 ;
+    static const float_32 _fidget_size ( ) { return 0.3f ; }
 public :
     shy_logic_fidget ( mediator * arg_mediator ) ;
     void fidget_prepare_permit ( ) ;
@@ -73,12 +80,10 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
 
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
-{
-    static const int_32 SCALE_IN_FRAMES = 60 ;
-    
+{    
     _mediator -> texture_unselect ( ) ;
-    float_32 scale = float_32 ( _fidget_scale ) / float_32 ( SCALE_IN_FRAMES ) ;
-    if ( _fidget_scale < SCALE_IN_FRAMES )
+    float_32 scale = float_32 ( _fidget_scale ) / float_32 ( _scale_in_frames ) ;
+    if ( _fidget_scale < _scale_in_frames )
         _fidget_scale ++ ;
     matrix_data matrix ;
     platform :: matrix_set_axis_x
@@ -111,31 +116,24 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
-{
-    static const int_32 FIDGET_R = 255 ;
-    static const int_32 FIDGET_G = 128 ;
-    static const int_32 FIDGET_B = 0 ;
+{    
+    vertex_data vertices [ _fidget_edges ] ;
+    index_data indices [ _fidget_edges ] ;
     
-    static const float_32 fidget_size = 0.3f ;
-    static const int_32 fidget_edges = 3 ;
-    
-    vertex_data vertices [ fidget_edges ] ;
-    index_data indices [ fidget_edges ] ;
-    
-    for ( int_32 i = 0 ; i < fidget_edges ; i ++ )
+    for ( int_32 i = 0 ; i < _fidget_edges ; i ++ )
     {
-        float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( fidget_edges ) ;
+        float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( _fidget_edges ) ;
         platform :: render_set_vertex_position
             ( vertices [ i ]
-            , fidget_size * platform :: math_cos ( angle )
-            , fidget_size * platform :: math_sin ( angle )
+            , _fidget_size ( ) * platform :: math_cos ( angle )
+            , _fidget_size ( ) * platform :: math_sin ( angle )
             , 0.0f
             ) ;
         platform :: render_set_vertex_color
             ( vertices [ i ]
-            , FIDGET_R
-            , FIDGET_G
-            , FIDGET_B
+            , _fidget_r
+            , _fidget_g
+            , _fidget_b
             , 255
             ) ;
         platform :: render_set_index_value
@@ -143,5 +141,5 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
             , i
             ) ;
     }
-    _fidget_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , fidget_edges , 0 , fidget_edges ) ;
+    _fidget_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , _fidget_edges , 0 , _fidget_edges ) ;
 }

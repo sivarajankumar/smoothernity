@@ -13,12 +13,12 @@ class shy_logic_entities
     static const int_32 _entity_mesh_spans = 50 ;
     static const int_32 _entity_mesh_grid = 5 ;
     static const int_32 _entity_mesh_height = 2 ;
-    static const int_32 * _entity_colors_r ( ) { static const int_32 c [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ; return c ; }
-    static const int_32 * _entity_colors_g ( ) { static const int_32 c [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ; return c ; }
-    static const int_32 * _entity_colors_b ( ) { static const int_32 c [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ; return c ; }
     static const int_32 _entity_color_roof_r = 255 ;
     static const int_32 _entity_color_roof_g = 255 ;
     static const int_32 _entity_color_roof_b = 255 ;
+    static const int_32 * _entity_colors_r ( ) { static const int_32 c [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ; return c ; }
+    static const int_32 * _entity_colors_g ( ) { static const int_32 c [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ; return c ; }
+    static const int_32 * _entity_colors_b ( ) { static const int_32 c [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ; return c ; }
 
 public :
     shy_logic_entities ( mediator * arg_mediator ) ;
