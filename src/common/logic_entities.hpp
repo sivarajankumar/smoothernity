@@ -13,6 +13,12 @@ class shy_logic_entities
     static const int_32 _entity_mesh_spans = 50 ;
     static const int_32 _entity_mesh_grid = 5 ;
     static const int_32 _entity_mesh_height = 2 ;
+    static const int_32 * _entity_colors_r ( ) { static const int_32 c [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ; return c ; }
+    static const int_32 * _entity_colors_g ( ) { static const int_32 c [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ; return c ; }
+    static const int_32 * _entity_colors_b ( ) { static const int_32 c [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ; return c ; }
+    static const int_32 _entity_color_roof_r = 255 ;
+    static const int_32 _entity_color_roof_g = 255 ;
+    static const int_32 _entity_color_roof_b = 255 ;
 
 public :
     shy_logic_entities ( mediator * arg_mediator ) ;
@@ -110,14 +116,6 @@ void shy_logic_entities < mediator > :: _entities_render ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 {
-    static const int_32 colors_r [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ;
-    static const int_32 colors_g [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ;
-    static const int_32 colors_b [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ;
-    
-    static const int_32 color_roof_r = 255 ;
-    static const int_32 color_roof_g = 255 ;
-    static const int_32 color_roof_b = 255 ;
-
     vertex_data vertices [ ( _entity_mesh_spans + 1 ) * 2 + 1 ] ;
     index_data strip_indices [ ( _entity_mesh_spans + 1 ) * 2 ] ;
     index_data fan_indices [ _entity_mesh_spans + 2 ] ;
@@ -145,9 +143,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             ) ;
         platform :: render_set_vertex_color 
             ( vertices [ vertices_count ] 
-            , colors_r [ color1 ]
-            , colors_g [ color1 ]
-            , colors_b [ color1 ]
+            , _entity_colors_r ( ) [ color1 ]
+            , _entity_colors_g ( ) [ color1 ]
+            , _entity_colors_b ( ) [ color1 ]
             , 255
             ) ;
         platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , vertices_count ) ;
@@ -161,9 +159,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             ) ;
         platform :: render_set_vertex_color 
             ( vertices [ vertices_count ] 
-            , colors_r [ color2 ]
-            , colors_g [ color2 ]
-            , colors_b [ color2 ]
+            , _entity_colors_r ( ) [ color2 ]
+            , _entity_colors_g ( ) [ color2 ]
+            , _entity_colors_b ( ) [ color2 ]
             , 255
             ) ;
         platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , vertices_count ) ;
@@ -178,9 +176,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         ) ;
     platform :: render_set_vertex_color 
         ( vertices [ vertices_count ] 
-        , color_roof_r
-        , color_roof_g
-        , color_roof_b
+        , _entity_color_roof_r
+        , _entity_color_roof_g
+        , _entity_color_roof_b
         , 255
         ) ;
     platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , vertices_count ) ;
