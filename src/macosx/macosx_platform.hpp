@@ -306,10 +306,10 @@ private :
     static void * _vertex_color_offset ;
 } ;
 
-template < typename T >
-void swap_values ( T & a , T & b )
+template < typename type >
+void swap_values ( type & a , type & b )
 {
-    T c = b ;
+    type c = b ;
     b = a ;
     a = c ;
 }

@@ -96,13 +96,13 @@ public :
     void land_prepared ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
-    template < typename T > T math_abs ( T f ) ;
-    vector_data math_catmull_rom_spline ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    template < typename T > T math_clamp ( T f , T from , T to ) ;
-    float_32 math_lerp ( float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
-    template < typename T > T math_max ( T f1 , T f2 ) ;
-    template < typename T > T math_min ( T f1 , T f2 ) ;
-    float_32 math_pi ( ) ;
+    template < typename T > void math_abs ( T & result , T f ) ;
+    void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
+    template < typename T > void math_clamp ( T & result , T f , T from , T to ) ;
+    void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
+    template < typename T > void math_max ( T & result , T f1 , T f2 ) ;
+    template < typename T > void math_min ( T & result , T f1 , T f2 ) ;
+    void math_pi ( float_32 & result ) ;
     mesh_id mesh_create 
         ( vertex_data * vertices 
         , index_data * triangle_strip_indices 
@@ -295,53 +295,50 @@ void shy_mediator < mediator_types > :: land_prepared ( )
 
 template < typename mediator_types >
 template < typename T >
-T shy_mediator < mediator_types > :: math_abs ( T f )
+void shy_mediator < mediator_types > :: math_abs ( T & result , T f )
 {
-    return _engine_math . math_abs < T > ( f ) ;
+    _engine_math . math_abs < T > ( result , f ) ;
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: vector_data
-shy_mediator < mediator_types > :: math_catmull_rom_spline
-    ( float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
+void shy_mediator < mediator_types > :: math_catmull_rom_spline
+    ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
 {
-    return _engine_math . math_catmull_rom_spline ( t , p0 , p1 , p2 , p3 ) ;
+    _engine_math . math_catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: float_32 
-shy_mediator < mediator_types > :: math_lerp 
-    ( float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight )
+void shy_mediator < mediator_types > :: math_lerp 
+    ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight )
 {
-    return _engine_math . math_lerp ( from_value , from_weight , to_value , to_weight , weight ) ;
-}
-
-template < typename mediator_types >
-template < typename T >
-T shy_mediator < mediator_types > :: math_clamp ( T f , T from , T to )
-{
-    return _engine_math . math_clamp < T > ( f , from , to ) ;
+    _engine_math . math_lerp ( result , from_value , from_weight , to_value , to_weight , weight ) ;
 }
 
 template < typename mediator_types >
 template < typename T >
-T shy_mediator < mediator_types > :: math_max ( T f1 , T f2 )
+void shy_mediator < mediator_types > :: math_clamp ( T & result , T f , T from , T to )
 {
-    return _engine_math . math_max < T > ( f1 , f2 ) ;
+    _engine_math . math_clamp < T > ( result , f , from , to ) ;
 }
 
 template < typename mediator_types >
 template < typename T >
-T shy_mediator < mediator_types > :: math_min ( T f1 , T f2 )
+void shy_mediator < mediator_types > :: math_max ( T & result , T f1 , T f2 )
 {
-    return _engine_math . math_min < T > ( f1 , f2 ) ;
+    _engine_math . math_max < T > ( result , f1 , f2 ) ;
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: float_32
-shy_mediator < mediator_types > :: math_pi ( )
+template < typename T >
+void shy_mediator < mediator_types > :: math_min ( T & result , T f1 , T f2 )
 {
-    return _engine_math . math_pi ( ) ;
+    _engine_math . math_min < T > ( result , f1 , f2 ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: math_pi ( float_32 & result )
+{
+    _engine_math . math_pi ( result ) ;
 }
 
 template < typename mediator_types >

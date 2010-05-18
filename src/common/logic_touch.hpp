@@ -166,7 +166,9 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
     
     for ( int_32 i = 0 ; i < _spot_edges ; i ++ )
     {
-        float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( _spot_edges ) ;
+        float_32 pi ;
+        _mediator -> math_pi ( pi ) ;
+        float_32 angle = pi * 2.0f * float_32 ( i ) / float_32 ( _spot_edges ) ;
         float_32 angle_cos ;
         float_32 angle_sin ;
         platform :: math_cos ( angle_cos , angle ) ;

@@ -71,10 +71,12 @@ void shy_engine_rasterizer < mediator > :: rasterize_triangle ( int_32 x1 , int_
 template < typename mediator >
 void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
 {
-    int_32 height = _mediator -> math_abs ( y1 - y2 ) ;
-    int_32 width  = _mediator -> math_abs ( x1 - x2 ) ;
+    int_32 width ;
+    int_32 height ;
     int_32 y_center = ( y1 + y2 ) / 2 ;
     int_32 x_center = ( x1 + x2 ) / 2 ;
+    _mediator -> math_abs ( width , x1 - x2 ) ;
+    _mediator -> math_abs ( height , y1 - y2 ) ;
     _rasterize_bresenham_ellipse ( x_center , y_center , width / 2 , height / 2 ) ;
 }
 
@@ -102,8 +104,10 @@ void shy_engine_rasterizer < mediator > :: rasterize_use_texel ( const texel_dat
 template < typename mediator >
 void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( int_32 x1 , int_32 x2 , int_32 y )
 {
-    int_32 left  = _mediator -> math_min ( x1 , x2 ) ;
-    int_32 right = _mediator -> math_max ( x1 , x2 ) ;
+    int_32 left ;
+    int_32 right ;
+    _mediator -> math_min ( left , x1 , x2 ) ;
+    _mediator -> math_max ( right , x1 , x2 ) ;
     for ( int_32 x = left ; x <= right ; x ++ )
         _mediator -> texture_set_texel ( _texture_id , x + _origin_x , y + _origin_y , _texel ) ;
 }

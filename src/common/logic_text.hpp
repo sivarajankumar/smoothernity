@@ -121,7 +121,8 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
 {
     if ( _scale_frames < _scale_in_frames )
         _scale_frames ++ ;
-    float_32 scale = _mediator -> math_lerp ( 0 , 0 , _final_scale ( ) , _scale_in_frames , _scale_frames ) ;
+    float_32 scale ;
+    _mediator -> math_lerp ( scale , 0 , 0 , _final_scale ( ) , _scale_in_frames , _scale_frames ) ;
     matrix_data matrix ;
     platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
     platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;

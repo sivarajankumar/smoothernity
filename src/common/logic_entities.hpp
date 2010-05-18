@@ -127,12 +127,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     int_32 vertices_count = 0 ;
     for ( int_32 i = 0; i < _entity_mesh_spans + 1 ; i ++ )
     {
-        float_32 angle 
-            = ( ( float_32 ) i ) 
-            * _mediator -> math_pi ( )
-            * 2.0f 
-            / ( float_32 ) _entity_mesh_spans
-            ;
+        float_32 pi ;
+        _mediator -> math_pi ( pi ) ;
+        float_32 angle = float_32 ( i ) * pi * 2.0f / float_32 ( _entity_mesh_spans ) ;
         float_32 x ;
         float_32 z ;
         platform :: math_sin ( x , angle ) ;
