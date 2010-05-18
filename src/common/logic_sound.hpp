@@ -80,7 +80,9 @@ void shy_logic_sound < mediator > :: sound_update ( )
     {
         if ( ! _stereo_sound_loaded )
         {
-            if ( platform :: sound_loader_ready ( ) )
+            int_32 ready ;
+            platform :: sound_loader_ready ( ready ) ;
+            if ( ready )
             {
                 _load_sound ( ) ;
                 _stereo_sound_loaded = true ;
@@ -88,7 +90,9 @@ void shy_logic_sound < mediator > :: sound_update ( )
         }
         else
         {
-            if ( platform :: sound_loader_ready ( ) )
+            int_32 ready ;
+            platform :: sound_loader_ready ( ready ) ;
+            if ( ready )
             {
                 if ( ! _stereo_sound_created )
                 {
@@ -117,8 +121,10 @@ void shy_logic_sound < mediator > :: sound_update ( )
 template < typename mediator >
 void shy_logic_sound < mediator > :: _load_sound ( )
 {
-    stereo_sound_resource_id music_resource_id = platform :: sound_create_stereo_resource_id 
-        ( _music_rough_and_heavy_resource_index 
+    stereo_sound_resource_id music_resource_id ;
+    platform :: sound_create_stereo_resource_id 
+        ( music_resource_id 
+        , _music_rough_and_heavy_resource_index 
         ) ;
     platform :: sound_load_stereo_sample_data
         ( _stereo_sound_data
@@ -138,11 +144,13 @@ shy_logic_sound < mediator > :: _int_to_sample ( int_32 i )
 template < typename mediator >
 void shy_logic_sound < mediator > :: _create_stereo_sound ( )
 {            
-    sound_buffer_id stereo_sound_buffer = platform :: sound_create_stereo_buffer 
-        ( _stereo_sound_data 
+    sound_buffer_id stereo_sound_buffer ;
+    platform :: sound_create_stereo_buffer 
+        ( stereo_sound_buffer
+        , _stereo_sound_data 
         , _loaded_stereo_sound_samples - 2293 
         ) ;
-    _stereo_sound_source = platform :: sound_create_source ( ) ;
+    platform :: sound_create_source ( _stereo_sound_source ) ;
     platform :: sound_set_source_pitch ( _stereo_sound_source , 1 ) ;
     platform :: sound_set_source_gain ( _stereo_sound_source , 0.7f ) ;
     platform :: sound_set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
@@ -167,11 +175,9 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * _mediator -> math_pi ( ) / float_32 ( platform :: mono_sound_samples_per_second ) ) ) ) ;
         platform :: sound_set_sample_value ( _mono_sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
     }
-    sound_buffer_id mono_sound_buffer = platform :: sound_create_mono_buffer 
-        ( _mono_sound_data 
-        , _max_mono_sound_samples
-        ) ;
-    _mono_sound_source = platform :: sound_create_source ( ) ;
+    sound_buffer_id mono_sound_buffer ;
+    platform :: sound_create_mono_buffer ( mono_sound_buffer , _mono_sound_data , _max_mono_sound_samples ) ;
+    platform :: sound_create_source ( _mono_sound_source ) ;
     platform :: sound_set_source_pitch ( _mono_sound_source , 1 ) ;
     platform :: sound_set_source_gain ( _mono_sound_source , 1 ) ;
     platform :: sound_set_source_buffer ( _mono_sound_source , mono_sound_buffer ) ;

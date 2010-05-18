@@ -234,17 +234,17 @@ public :
     static void sound_set_listener_velocity ( vector_data velocity ) ;
     static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
     static void sound_set_sample_value ( mono_sound_sample & sample , float_32 value ) ;
-    static stereo_sound_resource_id sound_create_stereo_resource_id ( int_32 resource_index ) ;
+    static void sound_create_stereo_resource_id ( stereo_sound_resource_id & result , int_32 resource_index ) ;
     static void sound_load_stereo_sample_data
         ( stereo_sound_sample * samples 
         , int_32 max_samples_count
         , int_32 & loaded_samples_count
         , const stereo_sound_resource_id & resource_id 
         ) ;
-    static int_32 sound_loader_ready ( ) ;
-    static sound_buffer_id sound_create_mono_buffer ( mono_sound_sample * samples , int_32 samples_count ) ;
-    static sound_buffer_id sound_create_stereo_buffer ( stereo_sound_sample * samples , int_32 samples_count ) ;
-    static sound_source_id sound_create_source ( ) ;
+    static void sound_loader_ready ( int_32 & result ) ;
+    static void sound_create_mono_buffer ( sound_buffer_id & result , mono_sound_sample * samples , int_32 samples_count ) ;
+    static void sound_create_stereo_buffer ( sound_buffer_id & result , stereo_sound_sample * samples , int_32 samples_count ) ;
+    static void sound_create_source ( sound_source_id & result ) ;
     static void sound_set_source_pitch ( const sound_source_id & source_id , float_32 pitch ) ;
     static void sound_set_source_gain ( const sound_source_id & source_id , float_32 gain ) ;
     static void sound_set_source_position ( const sound_source_id & source_id , vector_data position ) ;
