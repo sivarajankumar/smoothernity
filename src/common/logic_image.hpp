@@ -13,7 +13,13 @@ class shy_logic_image
     typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
-    static const int_32 logo_resource_index = 1 ;
+    static const int_32 _logo_resource_index = 1 ;
+    static const int_32 _scale_in_frames = 60 ;
+    static const int_32 _image_r = 255 ;
+    static const int_32 _image_g = 255 ;
+    static const int_32 _image_b = 255 ;
+    static const int_32 _image_a = 255 ;
+    static const float_32 _final_scale ( ) { return 0.5f ; }
 public :
     shy_logic_image ( mediator * arg_mediator ) ;
     void image_render ( ) ;
@@ -92,11 +98,9 @@ void shy_logic_image < mediator > :: image_update ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _update_image_mesh ( )
 {
-    static const float_32 final_scale = 0.5f ;
-    static const int_32 scale_in_frames = 60 ;
-    if ( _scale_frames < scale_in_frames )
+    if ( _scale_frames < _scale_in_frames )
         _scale_frames ++ ;
-    float_32 scale = _mediator -> math_lerp ( 0 , 0 , final_scale , scale_in_frames , _scale_frames ) ;
+    float_32 scale = _mediator -> math_lerp ( 0 , 0 , _final_scale ( ) , _scale_in_frames , _scale_frames ) ;
     matrix_data matrix ;
     platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
     platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
@@ -120,28 +124,23 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     vertex_data vertices [ 4 ] ;
     index_data indices [ 4 ] ;
 
-    static const int_32 red = 255 ;
-    static const int_32 green = 255 ;
-    static const int_32 blue = 255 ;
-    static const int_32 alpha = 255 ;
-
     platform :: render_set_vertex_position  ( vertices [ 0 ] , - 1 , 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 0 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 0 ] , _image_r , _image_g , _image_b , _image_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 0 ] , 0 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 0 ] , 0 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 1 ] , - 1 , - 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 1 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 1 ] , _image_r , _image_g , _image_b , _image_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 1 ] , 0 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 1 ] , 1 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 2 ] , 1 , 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 2 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 2 ] , _image_r , _image_g , _image_b , _image_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 2 ] , 1 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 2 ] , 2 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 3 ] , 1 , - 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 3 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 3 ] , _image_r , _image_g , _image_b , _image_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , 1 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , 3 ) ;
 
@@ -153,6 +152,6 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
 {
     _image_texture_id = _mediator -> texture_create ( ) ;
     texture_resource_id logo_resource_id ;
-    platform :: render_create_texture_resource_id ( logo_resource_id , logo_resource_index ) ;
+    platform :: render_create_texture_resource_id ( logo_resource_id , _logo_resource_index ) ;
     _mediator -> texture_load_from_resource ( _image_texture_id , logo_resource_id ) ;
 }
