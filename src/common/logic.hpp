@@ -57,8 +57,10 @@ void shy_logic < mediator > :: update ( )
 template < typename mediator >
 void shy_logic < mediator > :: use_perspective_projection ( )
 {
-    float_32 width = platform :: render_get_aspect_width ( ) ;
-    float_32 height = platform :: render_get_aspect_height ( ) ;
+    float_32 width ;
+    float_32 height ;
+    platform :: render_get_aspect_width ( width ) ;
+    platform :: render_get_aspect_height ( height ) ;
     platform :: render_projection_frustum ( - width , width , - height , height , _get_near_plane_distance ( ) , 50.0f ) ;
     platform :: render_matrix_identity ( ) ;
 }
@@ -66,8 +68,10 @@ void shy_logic < mediator > :: use_perspective_projection ( )
 template < typename mediator >
 void shy_logic < mediator > :: use_ortho_projection ( )
 {
-    float_32 width = platform :: render_get_aspect_width ( ) ;
-    float_32 height = platform :: render_get_aspect_height ( ) ;
+    float_32 width ;
+    float_32 height ;
+    platform :: render_get_aspect_width ( width ) ;
+    platform :: render_get_aspect_height ( height ) ;
     platform :: render_projection_ortho ( - width , width , - height , height , 1.0f , 50.0f ) ;
     platform :: render_matrix_identity ( ) ;
 }
@@ -107,5 +111,9 @@ template < typename mediator >
 typename shy_logic < mediator > :: float_32
 shy_logic < mediator > :: _get_near_plane_distance ( )
 {
-    return platform :: render_get_aspect_width ( ) + platform :: render_get_aspect_height ( ) ;
+    float_32 width ;
+    float_32 height ;
+    platform :: render_get_aspect_width ( width ) ;
+    platform :: render_get_aspect_height ( height ) ;
+    return width + height ;
 }

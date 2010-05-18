@@ -45,12 +45,12 @@ inline void shy_macosx_platform :: render_fog_disable ( )
 }
 
 inline void shy_macosx_platform :: render_fog_linear 
-    ( shy_macosx_platform :: float_32 near 
-    , shy_macosx_platform :: float_32 far 
-    , shy_macosx_platform :: float_32 r 
-    , shy_macosx_platform :: float_32 g 
-    , shy_macosx_platform :: float_32 b 
-    , shy_macosx_platform :: float_32 a 
+    ( float_32 near 
+    , float_32 far 
+    , float_32 r 
+    , float_32 g 
+    , float_32 b 
+    , float_32 a 
     )
 {
     GLfloat color [ ] = { r , g , b , a } ;
@@ -121,11 +121,7 @@ inline void shy_macosx_platform :: render_texture_loader_ready ( int_32 & is_rea
     is_ready = [ _texture_loader loader_ready ] ;
 }
 
-inline void shy_macosx_platform :: render_clear_screen 
-    ( shy_macosx_platform :: float_32 r 
-    , shy_macosx_platform :: float_32 g 
-    , shy_macosx_platform :: float_32 b 
-    )
+inline void shy_macosx_platform :: render_clear_screen ( float_32 r , float_32 g , float_32 b )
 {
     glClearColor ( ( GLfloat ) r , ( GLfloat ) g , ( GLfloat ) b , ( GLfloat ) 0 ) ;
     glClearDepth ( 1 ) ;
@@ -133,12 +129,12 @@ inline void shy_macosx_platform :: render_clear_screen
 }
 
 inline void shy_macosx_platform :: render_projection_frustum 
-    ( shy_macosx_platform :: float_32 left 
-    , shy_macosx_platform :: float_32 right 
-    , shy_macosx_platform :: float_32 bottom 
-    , shy_macosx_platform :: float_32 top 
-    , shy_macosx_platform :: float_32 near 
-    , shy_macosx_platform :: float_32 far 
+    ( float_32 left 
+    , float_32 right 
+    , float_32 bottom 
+    , float_32 top 
+    , float_32 near 
+    , float_32 far 
     )
 {
     glMatrixMode ( GL_PROJECTION ) ;
@@ -148,12 +144,12 @@ inline void shy_macosx_platform :: render_projection_frustum
 }
 
 inline void shy_macosx_platform :: render_projection_ortho 
-    ( shy_macosx_platform :: float_32 left 
-    , shy_macosx_platform :: float_32 right 
-    , shy_macosx_platform :: float_32 bottom 
-    , shy_macosx_platform :: float_32 top 
-    , shy_macosx_platform :: float_32 near 
-    , shy_macosx_platform :: float_32 far 
+    ( float_32 left 
+    , float_32 right 
+    , float_32 bottom 
+    , float_32 top 
+    , float_32 near 
+    , float_32 far 
     )
 {
     glMatrixMode ( GL_PROJECTION ) ;
@@ -163,9 +159,9 @@ inline void shy_macosx_platform :: render_projection_ortho
 }
 
 inline void shy_macosx_platform :: render_create_vertex_buffer 
-    ( shy_macosx_platform :: render_vertex_buffer_id & arg_buffer_id 
-    , shy_macosx_platform :: int_32 elements 
-    , shy_macosx_platform :: vertex_data * data 
+    ( render_vertex_buffer_id & arg_buffer_id 
+    , int_32 elements 
+    , vertex_data * data 
     )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
@@ -178,35 +174,20 @@ inline void shy_macosx_platform :: render_create_vertex_buffer
         ) ;
 }
 
-inline void shy_macosx_platform :: render_set_vertex_position 
-    ( shy_macosx_platform :: vertex_data & vertex 
-    , shy_macosx_platform :: float_32 x 
-    , shy_macosx_platform :: float_32 y 
-    , shy_macosx_platform :: float_32 z 
-    )
+inline void shy_macosx_platform :: render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z )
 {
     vertex . _position [ 0 ] = ( GLfloat ) x ;
     vertex . _position [ 1 ] = ( GLfloat ) y ;
     vertex . _position [ 2 ] = ( GLfloat ) z ;
 }
 
-inline void shy_macosx_platform :: render_set_vertex_tex_coord
-    ( shy_macosx_platform :: vertex_data & vertex 
-    , shy_macosx_platform :: float_32 u
-    , shy_macosx_platform :: float_32 v 
-    )
+inline void shy_macosx_platform :: render_set_vertex_tex_coord ( vertex_data & vertex , float_32 u , float_32 v )
 {
     vertex . _tex_coord [ 0 ] = ( GLfloat ) u ;
     vertex . _tex_coord [ 1 ] = ( GLfloat ) v ;
 }
 
-inline void shy_macosx_platform :: render_set_vertex_color 
-    ( shy_macosx_platform :: vertex_data & vertex 
-    , shy_macosx_platform :: int_32 r 
-    , shy_macosx_platform :: int_32 g 
-    , shy_macosx_platform :: int_32 b 
-    , shy_macosx_platform :: int_32 a 
-    )
+inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a )
 {
     vertex . _color [ 0 ] = ( GLubyte ) r ;
     vertex . _color [ 1 ] = ( GLubyte ) g ;
@@ -215,9 +196,9 @@ inline void shy_macosx_platform :: render_set_vertex_color
 }
 
 inline void shy_macosx_platform :: render_create_index_buffer 
-    ( shy_macosx_platform :: render_index_buffer_id & arg_buffer_id 
-    , shy_macosx_platform :: int_32 elements 
-    , shy_macosx_platform :: index_data * data 
+    ( render_index_buffer_id & arg_buffer_id 
+    , int_32 elements 
+    , index_data * data 
     )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
@@ -230,10 +211,7 @@ inline void shy_macosx_platform :: render_create_index_buffer
         ) ;
 }
 
-inline void shy_macosx_platform :: render_set_index_value 
-    ( shy_macosx_platform :: index_data & data 
-    , shy_macosx_platform :: int_32 index 
-    )
+inline void shy_macosx_platform :: render_set_index_value ( index_data & data , int_32 index )
 {
     data . _index = ( GLushort ) index ;
 }
@@ -243,16 +221,12 @@ inline void shy_macosx_platform :: render_matrix_identity ( )
     glLoadIdentity ( ) ;
 }
 
-inline void shy_macosx_platform :: render_matrix_load 
-    ( const shy_macosx_platform :: matrix_data & matrix 
-    )
+inline void shy_macosx_platform :: render_matrix_load ( const matrix_data & matrix )
 {
     glLoadMatrixf ( matrix . _elements ) ;
 }
 
-inline void shy_macosx_platform :: render_matrix_mult 
-    ( const shy_macosx_platform :: matrix_data & matrix 
-    )
+inline void shy_macosx_platform :: render_matrix_mult ( const matrix_data & matrix )
 {
     glMultMatrixf ( matrix . _elements ) ;
 }
@@ -268,9 +242,9 @@ inline void shy_macosx_platform :: render_matrix_pop ( )
 }
 
 inline void shy_macosx_platform :: render_draw_triangle_strip 
-    ( const shy_macosx_platform :: render_vertex_buffer_id & vertices_buffer 
-    , const shy_macosx_platform :: render_index_buffer_id & indices_buffer
-    , shy_macosx_platform :: int_32 indices_count
+    ( const render_vertex_buffer_id & vertices_buffer 
+    , const render_index_buffer_id & indices_buffer
+    , int_32 indices_count
     )
 {
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
@@ -285,9 +259,9 @@ inline void shy_macosx_platform :: render_draw_triangle_strip
 }
 
 inline void shy_macosx_platform :: render_draw_triangle_fan
-    ( const shy_macosx_platform :: render_vertex_buffer_id & vertices_buffer 
-    , const shy_macosx_platform :: render_index_buffer_id & indices_buffer
-    , shy_macosx_platform :: int_32 indices_count
+    ( const render_vertex_buffer_id & vertices_buffer 
+    , const render_index_buffer_id & indices_buffer
+    , int_32 indices_count
     )
 {
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
@@ -301,16 +275,12 @@ inline void shy_macosx_platform :: render_draw_triangle_fan
     glDrawElements ( GL_TRIANGLE_FAN , ( GLsizei ) indices_count , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
 }
 
-inline
-shy_macosx_platform :: float_32
-shy_macosx_platform :: render_get_aspect_width ( )
+inline void shy_macosx_platform :: render_get_aspect_width ( float_32 & result )
 {
-	return _aspect_width ;
+	result = _aspect_width ;
 }
 
-inline
-shy_macosx_platform :: float_32
-shy_macosx_platform :: render_get_aspect_height ( )
+inline void shy_macosx_platform :: render_get_aspect_height ( float_32 & result )
 {
-	return _aspect_height ;
+	result = _aspect_height ;
 }

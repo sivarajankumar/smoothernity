@@ -172,7 +172,10 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     int_32 next_sample = 0 ;
     for ( int_32 i = 0 ; i < _max_mono_sound_samples ; ++ i )
     {
-        next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * _mediator -> math_pi ( ) / float_32 ( platform :: mono_sound_samples_per_second ) ) ) ) ;
+        float_32 angle = float_32 ( i ) * 2.0f * _mediator -> math_pi ( ) / float_32 ( platform :: mono_sound_samples_per_second ) ;
+        float_32 angle_sin ;
+        platform :: math_sin ( angle_sin , angle ) ;
+        next_sample += int_32 ( 128.0f * ( 1.0f + angle_sin ) ) ;
         platform :: sound_set_sample_value ( _mono_sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
     }
     sound_buffer_id mono_sound_buffer ;

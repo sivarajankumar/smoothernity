@@ -223,8 +223,8 @@ public :
     static void render_matrix_push ( ) ;
     static void render_matrix_pop ( ) ;
     
-	static float_32 render_get_aspect_width ( ) ;
-	static float_32 render_get_aspect_height ( ) ;
+	static void render_get_aspect_width ( float_32 & result ) ;
+	static void render_get_aspect_height ( float_32 & result ) ;
     
     //
     // sound
@@ -259,8 +259,8 @@ public :
     // math
     //
     
-    static float_32 math_sin ( float_32 a ) ;
-    static float_32 math_cos ( float_32 a ) ;
+    static void math_sin ( float_32 & result , float_32 a ) ;
+    static void math_cos ( float_32 & result , float_32 a ) ;
     
     //
     // time

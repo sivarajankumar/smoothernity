@@ -1,17 +1,9 @@
-inline
-shy_macosx_platform :: float_32 
-shy_macosx_platform :: math_sin 
-    ( shy_macosx_platform :: float_32 a 
-    )
+inline void shy_macosx_platform :: math_sin ( float_32 & result , float_32 a )
 {
-    return sinf ( a ) ;
+    result = sinf ( a ) ;
 }
 
-inline 
-shy_macosx_platform :: float_32 
-shy_macosx_platform :: math_cos 
-    ( shy_macosx_platform :: float_32 a 
-    )
+inline void shy_macosx_platform :: math_cos ( float_32 & result , float_32 a )
 {
-    return cosf ( a ) ;
+    result = cosf ( a ) ;
 }

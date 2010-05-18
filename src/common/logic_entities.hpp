@@ -133,8 +133,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             * 2.0f 
             / ( float_32 ) _entity_mesh_spans
             ;
-        float_32 x = platform :: math_sin ( angle ) ;
-        float_32 z = platform :: math_cos ( angle ) ;
+        float_32 x ;
+        float_32 z ;
+        platform :: math_sin ( x , angle ) ;
+        platform :: math_cos ( z , angle ) ;
         int_32 color = ( i * 21 / ( _entity_mesh_spans + 1 ) ) % 7;
         int_32 color1 = color;
         int_32 color2 = ( color + 1 ) % 7;

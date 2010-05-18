@@ -85,31 +85,17 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     float_32 scale = float_32 ( _fidget_scale ) / float_32 ( _scale_in_frames ) ;
     if ( _fidget_scale < _scale_in_frames )
         _fidget_scale ++ ;
+    float_32 height ;
+    float_32 angle_cos ;
+    float_32 angle_sin ;
     matrix_data matrix ;
-    platform :: matrix_set_axis_x
-        ( matrix
-        , platform :: math_cos ( _fidget_angle ) * scale
-        , platform :: math_sin ( _fidget_angle ) * scale
-        , 0.0f
-        ) ;
-    platform :: matrix_set_axis_y
-        ( matrix
-        , - platform :: math_sin ( _fidget_angle ) * scale
-        , platform :: math_cos ( _fidget_angle ) * scale
-        , 0.0f
-        ) ;
-    platform :: matrix_set_axis_z
-        ( matrix
-        , 0.0f
-        , 0.0f
-        , 1.0f
-        ) ;
-    platform :: matrix_set_origin
-        ( matrix
-        , 0.0f
-        , platform :: render_get_aspect_height ( ) - 0.5f
-        , - 3.0f
-        ) ;
+    platform :: render_get_aspect_height ( height ) ;
+    platform :: math_cos ( angle_cos , _fidget_angle ) ;
+    platform :: math_sin ( angle_sin , _fidget_angle ) ;
+    platform :: matrix_set_axis_x ( matrix , angle_cos * scale , angle_sin * scale , 0.0f ) ;
+    platform :: matrix_set_axis_y ( matrix , - angle_sin * scale , angle_cos * scale , 0.0f ) ;
+    platform :: matrix_set_axis_z ( matrix , 0.0f , 0.0f , 1.0f ) ;
+    platform :: matrix_set_origin ( matrix , 0.0f , height - 0.5f , - 3.0f ) ;
     _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
     _mediator -> mesh_render ( _fidget_mesh_id ) ;
 }
@@ -123,10 +109,14 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
     for ( int_32 i = 0 ; i < _fidget_edges ; i ++ )
     {
         float_32 angle = _mediator -> math_pi ( ) * 2.0f * float_32 ( i ) / float_32 ( _fidget_edges ) ;
+        float_32 angle_cos ;
+        float_32 angle_sin ;
+        platform :: math_cos ( angle_cos , angle ) ;
+        platform :: math_sin ( angle_sin , angle ) ;
         platform :: render_set_vertex_position
             ( vertices [ i ]
-            , _fidget_size ( ) * platform :: math_cos ( angle )
-            , _fidget_size ( ) * platform :: math_sin ( angle )
+            , _fidget_size ( ) * angle_cos
+            , _fidget_size ( ) * angle_sin
             , 0.0f
             ) ;
         platform :: render_set_vertex_color
