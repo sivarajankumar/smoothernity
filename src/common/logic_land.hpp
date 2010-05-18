@@ -12,6 +12,13 @@ class shy_logic_land
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     
+    static const int_32 _scale_in_frames = 60 ;
+    static const int_32 _land_r = 255 ;
+    static const int_32 _land_g = 255 ;
+    static const int_32 _land_b = 255 ;
+    static const int_32 _land_grid = 10 ;
+    static const int_32 _land_radius = 10 ;
+    static const int_32 _create_rows_per_frame = 8 ;
 public :
     shy_logic_land ( mediator * arg_mediator ) ;
     void land_prepare_permit ( ) ;
@@ -75,11 +82,10 @@ void shy_logic_land < mediator > :: land_update ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: _render_land ( )
 {
-    static const int_32 SCALE_IN_FRAMES = 60 ;
-    static const float_32 SCALE_STEP = 1.0f / float_32 ( SCALE_IN_FRAMES ) ;
     _mediator -> texture_select ( _land_texture_id ) ;
-    if ( _land_scale + SCALE_STEP < 1.0f )
-        _land_scale += SCALE_STEP ;
+    float_32 scale_step = 1.0f / float_32 ( _scale_in_frames ) ;
+    if ( _land_scale + scale_step < 1.0f )
+        _land_scale += scale_step ;
     else
         _land_scale = 1 ;
     matrix_data matrix ;
@@ -93,25 +99,19 @@ void shy_logic_land < mediator > :: _render_land ( )
 
 template < typename mediator >
 void shy_logic_land < mediator > :: _create_land_mesh ( )
-{
-    static const int_32 LAND_R = 255 ;
-    static const int_32 LAND_G = 255 ;
-    static const int_32 LAND_B = 255 ;
-    static const int_32 LAND_GRID = 10 ;
-    static const float_32 LAND_RADIUS = 10 ;
-    
-    vertex_data vertices [ ( LAND_GRID + 1 ) * ( LAND_GRID + 1 ) ] ;
-    index_data indices [ ( LAND_GRID + 1 ) * 2 * LAND_GRID ] ;
+{    
+    vertex_data vertices [ ( _land_grid + 1 ) * ( _land_grid + 1 ) ] ;
+    index_data indices [ ( _land_grid + 1 ) * 2 * _land_grid ] ;
     int_32 vertices_count = 0 ;
     int_32 indices_count = 0 ;
     
-    const float_32 grid_step = LAND_RADIUS * 2.0f / ( float_32 ) LAND_GRID ;
-    const float_32 grid_origin_x = - LAND_RADIUS ;
-    const float_32 grid_origin_z = - LAND_RADIUS ;
+    float_32 grid_step = float_32 ( _land_radius ) * 2.0f / float_32 ( _land_grid ) ;
+    float_32 grid_origin_x = - _land_radius ;
+    float_32 grid_origin_z = - _land_radius ;
     
-    for ( int_32 iz = 0 ; iz < LAND_GRID + 1 ; iz ++ )
+    for ( int_32 iz = 0 ; iz < _land_grid + 1 ; iz ++ )
     {
-        for ( int_32 ix = 0 ; ix < LAND_GRID + 1 ; ix ++ )
+        for ( int_32 ix = 0 ; ix < _land_grid + 1 ; ix ++ )
         {
             float_32 x = grid_origin_x + grid_step * ( float_32 ) ix ;
             float_32 z = grid_origin_z + grid_step * ( float_32 ) iz ;
@@ -123,37 +123,37 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 ) ;
             platform :: render_set_vertex_color
                 ( vertices [ vertices_count ]
-                , LAND_R
-                , LAND_G
-                , LAND_B
+                , _land_r
+                , _land_g
+                , _land_b
                 , 255
                 ) ;
             platform :: render_set_vertex_tex_coord
                 ( vertices [ vertices_count ]
-                , float_32 ( iz ) / float_32 ( LAND_GRID )
-                , float_32 ( ix ) / float_32 ( LAND_GRID )
+                , float_32 ( iz ) / float_32 ( _land_grid )
+                , float_32 ( ix ) / float_32 ( _land_grid )
                 ) ;
             ++ vertices_count ;
         }
     }
     
-    for ( int_32 iz = 0 ; iz < LAND_GRID ; iz ++ )
+    for ( int_32 iz = 0 ; iz < _land_grid ; iz ++ )
     {
-        for ( int_32 ix = 0 ; ix < LAND_GRID + 1 ; ix ++ )
+        for ( int_32 ix = 0 ; ix < _land_grid + 1 ; ix ++ )
         {
             int_32 index = 0 ;
             if ( iz % 2 == 0 )
             {
-                index = ix + ( LAND_GRID + 1 ) * iz ;
+                index = ix + ( _land_grid + 1 ) * iz ;
                 platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
                 ++ indices_count ;
-                platform :: render_set_index_value ( indices [ indices_count ] , index + LAND_GRID + 1 ) ;
+                platform :: render_set_index_value ( indices [ indices_count ] , index + _land_grid + 1 ) ;
                 ++ indices_count ;
             }
             else
             {
-                index = LAND_GRID - ix + ( LAND_GRID + 1 ) * iz ;
-                platform :: render_set_index_value ( indices [ indices_count ] , index + LAND_GRID + 1 ) ;
+                index = _land_grid - ix + ( _land_grid + 1 ) * iz ;
+                platform :: render_set_index_value ( indices [ indices_count ] , index + _land_grid + 1 ) ;
                 ++ indices_count ;
                 platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
                 ++ indices_count ;
@@ -169,10 +169,9 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
 {
     if ( _land_texture_creation_row == 0 )
         _land_texture_id = _mediator -> texture_create ( ) ;
-    static const int_32 CREATE_ROWS_PER_FRAME = 8 ;
     int_32 prev_creation_row = _land_texture_creation_row ;
     while ( _land_texture_creation_row < _mediator -> texture_height ( )
-         && ( _land_texture_creation_row - prev_creation_row ) <= CREATE_ROWS_PER_FRAME
+         && ( _land_texture_creation_row - prev_creation_row ) <= _create_rows_per_frame
           )
     {
         int_32 y = _land_texture_creation_row ;
