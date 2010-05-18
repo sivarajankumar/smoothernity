@@ -11,6 +11,13 @@ class shy_logic_text
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
+    
+    static const int_32 _scale_in_frames = 60 ;
+    static const int_32 _canvas_r = 255 ;
+    static const int_32 _canvas_g = 255 ;
+    static const int_32 _canvas_b = 255 ;
+    static const int_32 _canvas_a = 255 ;
+    static const float_32 _final_scale ( ) { return 0.5f ; }
 public :
     shy_logic_text ( mediator * arg_mediator ) ;
     void text_prepare_permit ( ) ;
@@ -112,11 +119,9 @@ void shy_logic_text < mediator > :: text_update ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _update_text_mesh ( )
 {
-    static const float_32 final_scale = 0.5f ;
-    static const int_32 scale_in_frames = 60 ;
-    if ( _scale_frames < scale_in_frames )
+    if ( _scale_frames < _scale_in_frames )
         _scale_frames ++ ;
-    float_32 scale = _mediator -> math_lerp ( 0 , 0 , final_scale , scale_in_frames , _scale_frames ) ;
+    float_32 scale = _mediator -> math_lerp ( 0 , 0 , _final_scale ( ) , _scale_in_frames , _scale_frames ) ;
     matrix_data matrix ;
     platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
     platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
@@ -140,28 +145,23 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     vertex_data vertices [ 4 ] ;
     index_data indices [ 4 ] ;
 
-    static const int_32 red = 255 ;
-    static const int_32 green = 255 ;
-    static const int_32 blue = 255 ;
-    static const int_32 alpha = 255 ;
-
     platform :: render_set_vertex_position  ( vertices [ 0 ] , - 1 , 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 0 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 0 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 0 ] , 0 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 0 ] , 0 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 1 ] , - 1 , - 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 1 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 1 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 1 ] , 0 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 1 ] , 1 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 2 ] , 1 , 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 2 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 2 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 2 ] , 1 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 2 ] , 2 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 3 ] , 1 , - 1 , 0 ) ;
-    platform :: render_set_vertex_color     ( vertices [ 3 ] , red , green , blue , alpha ) ;
+    platform :: render_set_vertex_color     ( vertices [ 3 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , 1 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , 3 ) ;
 
