@@ -11,8 +11,9 @@ class shy_logic_sound
     typedef typename mediator :: platform :: stereo_sound_sample stereo_sound_sample ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     
-    static const int_32 music_rough_and_heavy_resource_index = 1 ;
-    static const int_32 max_stereo_sound_samples = platform :: stereo_sound_samples_per_second * 60 ;
+    static const int_32 _music_rough_and_heavy_resource_index = 1 ;
+    static const int_32 _max_stereo_sound_samples = platform :: stereo_sound_samples_per_second * 60 ;
+    static const int_32 _max_mono_sound_samples = platform :: mono_sound_samples_per_second / 2 ;
     
 public :
     shy_logic_sound ( mediator * arg_mediator ) ;
@@ -33,8 +34,8 @@ private :
     int_32 _loaded_stereo_sound_samples ;
     sound_source_id _stereo_sound_source ;
     sound_source_id _mono_sound_source ;
-    stereo_sound_sample _stereo_sound_data [ max_stereo_sound_samples ] ;
-    mono_sound_sample _mono_sound_data [ platform :: mono_sound_samples_per_second ] ;
+    stereo_sound_sample _stereo_sound_data [ _max_stereo_sound_samples ] ;
+    mono_sound_sample _mono_sound_data [ _max_mono_sound_samples ] ;
 } ;
 
 template < typename mediator >
@@ -110,11 +111,11 @@ template < typename mediator >
 void shy_logic_sound < mediator > :: _load_sound ( )
 {
     stereo_sound_resource_id music_resource_id = platform :: sound_create_stereo_resource_id 
-        ( music_rough_and_heavy_resource_index 
+        ( _music_rough_and_heavy_resource_index 
         ) ;
     platform :: sound_load_stereo_sample_data
         ( _stereo_sound_data
-        , max_stereo_sound_samples
+        , _max_stereo_sound_samples
         , _loaded_stereo_sound_samples
         , music_resource_id
         ) ;
@@ -147,16 +148,15 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
 template < typename mediator >
 void shy_logic_sound < mediator > :: _create_mono_sound ( )
 {
-    const int_32 mono_sound_samples_count = platform :: mono_sound_samples_per_second / 2 ;
     int_32 next_sample = 0 ;
-    for ( int_32 i = 0 ; i < mono_sound_samples_count ; ++ i )
+    for ( int_32 i = 0 ; i < _max_mono_sound_samples ; ++ i )
     {
         next_sample += int_32 ( 128.0f * ( 1.0f + platform :: math_sin ( float_32 ( i ) * 2.0f * _mediator -> math_pi ( ) / float_32 ( platform :: mono_sound_samples_per_second ) ) ) ) ;
         platform :: sound_set_sample_value ( _mono_sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
     }
     sound_buffer_id mono_sound_buffer = platform :: sound_create_mono_buffer 
         ( _mono_sound_data 
-        , mono_sound_samples_count
+        , _max_mono_sound_samples
         ) ;
     _mono_sound_source = platform :: sound_create_source ( ) ;
     platform :: sound_set_source_pitch ( _mono_sound_source , 1 ) ;
