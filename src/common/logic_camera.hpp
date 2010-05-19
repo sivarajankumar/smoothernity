@@ -218,10 +218,12 @@ template < typename mediator >
 void shy_logic_camera < mediator > :: _update_camera_matrix ( )
 {
     float_32 aspect_height ;
+    float_32 near_plane ;
+    _mediator -> get_near_plane_distance ( near_plane ) ;
     platform :: render_get_aspect_height ( aspect_height ) ;
     float_32 height = _mediator -> get_entity_height ( ) 
                     + aspect_height
-                    + _mediator -> get_near_plane_distance ( ) ;
+                    + near_plane ;
     vector_data shift ;
     vector_data shifted_origin ;
     vector_data up ;

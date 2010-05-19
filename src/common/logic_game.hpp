@@ -156,9 +156,11 @@ void shy_logic_game < mediator > :: _render_hud ( )
 template < typename mediator >
 void shy_logic_game < mediator > :: _clear_screen ( )
 {
+    float_32 near_plane ;
+    _mediator -> get_near_plane_distance ( near_plane ) ;
     platform :: render_fog_linear 
-        ( 10 + _mediator -> get_near_plane_distance ( ) 
-        , 20 + _mediator -> get_near_plane_distance ( ) 
+        ( 10.0f + near_plane
+        , 20.0f + near_plane
         , _color_r 
         , _color_g 
         , _color_b 

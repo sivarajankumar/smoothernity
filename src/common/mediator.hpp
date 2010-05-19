@@ -86,7 +86,7 @@ public :
     float_32 get_entity_height ( ) ;
     int_32 get_entity_mesh_grid ( ) ;
     vector_data get_entity_origin ( int_32 index ) ;
-    float_32 get_near_plane_distance ( ) ;
+    void get_near_plane_distance ( float_32 & result ) ;
     void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
     void image_render ( ) ;
@@ -269,10 +269,9 @@ shy_mediator < mediator_types > :: get_entity_origin ( int_32 index )
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: float_32
-shy_mediator < mediator_types > :: get_near_plane_distance ( )
+void shy_mediator < mediator_types > :: get_near_plane_distance ( float_32 & result )
 {
-    return _logic . get_near_plane_distance ( ) ;
+    _logic . get_near_plane_distance ( result ) ;
 }
 
 template < typename mediator_types >
