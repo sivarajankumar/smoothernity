@@ -31,8 +31,9 @@ private :
     } ;
 public :
     shy_engine_mesh ( ) ;
-    mesh_id mesh_create 
-        ( vertex_data * vertices 
+    void mesh_create 
+        ( mesh_id & result
+        , vertex_data * vertices 
         , index_data * triangle_strip_indices 
         , index_data * triangle_fan_indices
         , int_32 vertices_count
@@ -53,9 +54,9 @@ shy_engine_mesh < mediator > :: shy_engine_mesh ( )
 }
 
 template < typename mediator >
-typename shy_engine_mesh < mediator > :: mesh_id
-shy_engine_mesh < mediator > :: mesh_create 
-    ( vertex_data * vertices 
+void shy_engine_mesh < mediator > :: mesh_create 
+    ( mesh_id & result
+    , vertex_data * vertices 
     , index_data * triangle_strip_indices 
     , index_data * triangle_fan_indices
     , int_32 vertices_count
@@ -84,10 +85,8 @@ shy_engine_mesh < mediator > :: mesh_create
             , triangle_fan_indices 
             ) ;
     }
-    mesh_id new_id ;
-    new_id . _mesh_id = _next_mesh_id ;
+    result . _mesh_id = _next_mesh_id ;
     ++ _next_mesh_id ;
-    return new_id ;
 }
 
 template < typename mediator >

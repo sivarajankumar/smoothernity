@@ -160,7 +160,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             }
         }
     }
-    _land_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
+    _mediator -> mesh_create ( _land_mesh_id , vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
     _land_mesh_created = true ;
 }
 

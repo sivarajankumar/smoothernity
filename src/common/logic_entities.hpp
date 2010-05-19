@@ -191,8 +191,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , i * 2 ) ;
         ++ fan_indices_count ;
     }
-    _entity_mesh_id = _mediator -> mesh_create 
-        ( vertices 
+    _mediator -> mesh_create 
+        ( _entity_mesh_id
+        , vertices 
         , strip_indices 
         , fan_indices 
         , vertices_count 

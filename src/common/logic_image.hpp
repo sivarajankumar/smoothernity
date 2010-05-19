@@ -145,7 +145,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , 1 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , 3 ) ;
 
-    _image_mesh_id = _mediator -> mesh_create ( vertices , indices , 0 , 4 , 4 , 0 ) ;
+    _mediator -> mesh_create ( _image_mesh_id , vertices , indices , 0 , 4 , 4 , 0 ) ;
 }
 
 template < typename mediator >

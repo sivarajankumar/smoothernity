@@ -133,5 +133,5 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
             , i
             ) ;
     }
-    _fidget_mesh_id = _mediator -> mesh_create ( vertices , 0 , indices , _fidget_edges , 0 , _fidget_edges ) ;
+    _mediator -> mesh_create ( _fidget_mesh_id , vertices , 0 , indices , _fidget_edges , 0 , _fidget_edges ) ;
 }

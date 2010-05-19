@@ -103,8 +103,9 @@ public :
     template < typename T > void math_max ( T & result , T f1 , T f2 ) ;
     template < typename T > void math_min ( T & result , T f1 , T f2 ) ;
     void math_pi ( float_32 & result ) ;
-    mesh_id mesh_create 
-        ( vertex_data * vertices 
+    void mesh_create 
+        ( mesh_id & result
+        , vertex_data * vertices 
         , index_data * triangle_strip_indices 
         , index_data * triangle_fan_indices
         , int_32 vertices_count
@@ -342,9 +343,9 @@ void shy_mediator < mediator_types > :: math_pi ( float_32 & result )
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: mesh_id
-shy_mediator < mediator_types > :: mesh_create 
-    ( vertex_data * vertices 
+void shy_mediator < mediator_types > :: mesh_create 
+    ( mesh_id & result
+    , vertex_data * vertices 
     , index_data * triangle_strip_indices 
     , index_data * triangle_fan_indices
     , int_32 vertices_count
@@ -352,8 +353,9 @@ shy_mediator < mediator_types > :: mesh_create
     , int_32 triangle_fan_indices_count
     )
 {
-    return _engine_mesh . mesh_create 
-        ( vertices
+    _engine_mesh . mesh_create 
+        ( result
+        , vertices
         , triangle_strip_indices
         , triangle_fan_indices
         , vertices_count
