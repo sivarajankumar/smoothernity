@@ -99,9 +99,11 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     num_fract origin_x ;
     num_fract origin_y ;
     num_fract origin_z ;
+    num_fract angle ;
     platform :: render_get_aspect_height ( height ) ;
-    platform :: math_cos ( angle_cos , _fidget_angle ) ;
-    platform :: math_sin ( angle_sin , _fidget_angle ) ;
+    platform :: math_make_num_fract ( angle , int_32 ( _fidget_angle * 1000.0f ) , 1000 ) ;
+    platform :: math_cos ( angle_cos , angle ) ;
+    platform :: math_sin ( angle_sin , angle ) ;
     platform :: math_make_num_fract ( zero , 0 , 1 ) ;
     platform :: math_make_num_fract ( z_dist , 1 , 1 ) ;
     platform :: math_make_num_fract ( cos_by_scale , int_32 ( angle_cos * scale * 1000.0f ) , 1000 ) ;
@@ -131,6 +133,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         float_32 angle = pi * 2.0f * float_32 ( i ) / float_32 ( _fidget_edges ) ;
         float_32 angle_cos ;
         float_32 angle_sin ;
+        num_fract num_angle ;
         num_fract vertex_x ;
         num_fract vertex_y ;
         num_fract vertex_z ;
@@ -139,8 +142,9 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         num_whole vertex_b ;
         num_whole vertex_a ;
         num_whole index ;
-        platform :: math_cos ( angle_cos , angle ) ;
-        platform :: math_sin ( angle_sin , angle ) ;
+        platform :: math_make_num_fract ( num_angle , int_32 ( angle * 1000.0f ) , 1000 ) ;
+        platform :: math_cos ( angle_cos , num_angle ) ;
+        platform :: math_sin ( angle_sin , num_angle ) ;
         platform :: math_make_num_fract ( vertex_x , int_32 ( _fidget_size ( ) * angle_cos * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_y , int_32 ( _fidget_size ( ) * angle_sin * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;

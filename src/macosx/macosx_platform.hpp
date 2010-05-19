@@ -284,8 +284,8 @@ public :
     // math
     //
     
-    static void math_sin ( float_32 & result , float_32 a ) ;
-    static void math_cos ( float_32 & result , float_32 a ) ;
+    static void math_sin ( float_32 & result , num_fract a ) ;
+    static void math_cos ( float_32 & result , num_fract a ) ;
     static void math_sub_wholes ( num_whole & result , num_whole from , num_whole what ) ;
     static void math_add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
     static void math_make_num_whole ( num_whole & result , const_int_32 value ) ;

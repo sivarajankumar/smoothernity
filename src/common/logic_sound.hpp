@@ -228,7 +228,9 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         _mediator -> math_pi ( pi ) ;
         float_32 angle = float_32 ( i ) * 2.0f * pi / float_32 ( platform :: mono_sound_samples_per_second ) ;
         float_32 angle_sin ;
-        platform :: math_sin ( angle_sin , angle ) ;
+        num_fract num_angle ;
+        platform :: math_make_num_fract ( num_angle , int_32 ( angle * 1000.0f ) , 1000 ) ;
+        platform :: math_sin ( angle_sin , num_angle ) ;
         next_sample += int_32 ( 128.0f * ( 1.0f + angle_sin ) ) ;
         num_fract sample ;
         _int_to_sample ( sample , next_sample ) ;

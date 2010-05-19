@@ -183,6 +183,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         float_32 angle = pi * 2.0f * float_32 ( i ) / float_32 ( _spot_edges ) ;
         float_32 angle_cos ;
         float_32 angle_sin ;
+        num_fract num_angle ;
         num_fract vertex_x ;
         num_fract vertex_y ;
         num_fract vertex_z ;
@@ -191,8 +192,9 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         num_whole vertex_b ;
         num_whole vertex_a ;
         num_whole index ;
-        platform :: math_cos ( angle_cos , angle ) ;
-        platform :: math_sin ( angle_sin , angle ) ;
+        platform :: math_make_num_fract ( num_angle , int_32 ( angle * 1000.0f ) , 1000 ) ;
+        platform :: math_cos ( angle_cos , num_angle ) ;
+        platform :: math_sin ( angle_sin , num_angle ) ;
         platform :: math_make_num_fract ( vertex_x , int_32 ( _spot_size ( ) * angle_cos * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_y , int_32 ( _spot_size ( ) * angle_sin * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;

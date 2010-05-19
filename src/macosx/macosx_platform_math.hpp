@@ -1,11 +1,11 @@
-inline void shy_macosx_platform :: math_sin ( float_32 & result , float_32 a )
+inline void shy_macosx_platform :: math_sin ( float_32 & result , num_fract a )
 {
-    result = sinf ( a ) ;
+    result = sinf ( a . _value ) ;
 }
 
-inline void shy_macosx_platform :: math_cos ( float_32 & result , float_32 a )
+inline void shy_macosx_platform :: math_cos ( float_32 & result , num_fract a )
 {
-    result = cosf ( a ) ;
+    result = cosf ( a . _value ) ;
 }
 
 inline void shy_macosx_platform :: math_sub_wholes ( num_whole & result , num_whole from , num_whole what )
