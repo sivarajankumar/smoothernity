@@ -8,6 +8,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -126,6 +127,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_fract vertex_x ;
     num_fract vertex_y ;
     num_fract vertex_z ;
+    num_whole vertex_r ;
+    num_whole vertex_g ;
+    num_whole vertex_b ;
+    num_whole vertex_a ;
     for ( int_32 i = 0; i < _entity_mesh_spans + 1 ; i ++ )
     {
         float_32 pi ;
@@ -141,26 +146,22 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_make_num_fract ( vertex_x , int_32 ( x * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_z , int_32 ( z * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_whole ( vertex_r , _entity_colors_r ( ) [ color1 ] ) ;
+        platform :: math_make_num_whole ( vertex_g , _entity_colors_g ( ) [ color1 ] ) ;
+        platform :: math_make_num_whole ( vertex_b , _entity_colors_b ( ) [ color1 ] ) ;
+        platform :: math_make_num_whole ( vertex_a , 255 ) ;
         platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color 
-            ( vertices [ vertices_count ] 
-            , _entity_colors_r ( ) [ color1 ]
-            , _entity_colors_g ( ) [ color1 ]
-            , _entity_colors_b ( ) [ color1 ]
-            , 255
-            ) ;
+        platform :: render_set_vertex_color ( vertices [ vertices_count ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , vertices_count ) ;
         ++ strip_indices_count ;
         ++ vertices_count ;
         platform :: math_make_num_fract ( vertex_y , int_32 ( - 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_whole ( vertex_r , _entity_colors_r ( ) [ color2 ] ) ;
+        platform :: math_make_num_whole ( vertex_g , _entity_colors_g ( ) [ color2 ] ) ;
+        platform :: math_make_num_whole ( vertex_b , _entity_colors_b ( ) [ color2 ] ) ;
+        platform :: math_make_num_whole ( vertex_a , 255 ) ;
         platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color 
-            ( vertices [ vertices_count ] 
-            , _entity_colors_r ( ) [ color2 ]
-            , _entity_colors_g ( ) [ color2 ]
-            , _entity_colors_b ( ) [ color2 ]
-            , 255
-            ) ;
+        platform :: render_set_vertex_color ( vertices [ vertices_count ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , vertices_count ) ;
         ++ strip_indices_count ;
         ++ vertices_count ;
@@ -168,14 +169,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform :: math_make_num_fract ( vertex_x , 0 , 1 ) ;
     platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
     platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
+    platform :: math_make_num_whole ( vertex_r , _entity_color_roof_r ) ;
+    platform :: math_make_num_whole ( vertex_g , _entity_color_roof_g ) ;
+    platform :: math_make_num_whole ( vertex_b , _entity_color_roof_b ) ;
+    platform :: math_make_num_whole ( vertex_a , 255 ) ;
     platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-    platform :: render_set_vertex_color 
-        ( vertices [ vertices_count ] 
-        , _entity_color_roof_r
-        , _entity_color_roof_g
-        , _entity_color_roof_b
-        , 255
-        ) ;
+    platform :: render_set_vertex_color ( vertices [ vertices_count ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
     platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , vertices_count ) ;
     ++ fan_indices_count ;
     ++ vertices_count ;

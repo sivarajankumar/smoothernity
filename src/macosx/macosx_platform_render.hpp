@@ -187,12 +187,12 @@ inline void shy_macosx_platform :: render_set_vertex_tex_coord ( vertex_data & v
     vertex . _tex_coord [ 1 ] = ( GLfloat ) v . _value ;
 }
 
-inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a )
+inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a )
 {
-    vertex . _color [ 0 ] = ( GLubyte ) r ;
-    vertex . _color [ 1 ] = ( GLubyte ) g ;
-    vertex . _color [ 2 ] = ( GLubyte ) b ;
-    vertex . _color [ 3 ] = ( GLubyte ) a ;
+    vertex . _color [ 0 ] = ( GLubyte ) r . _value ;
+    vertex . _color [ 1 ] = ( GLubyte ) g . _value ;
+    vertex . _color [ 2 ] = ( GLubyte ) b . _value ;
+    vertex . _color [ 3 ] = ( GLubyte ) a . _value ;
 }
 
 inline void shy_macosx_platform :: render_create_index_buffer 

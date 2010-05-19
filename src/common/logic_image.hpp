@@ -136,6 +136,10 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     num_fract v_top ;
     num_fract v_bottom ;
     num_fract z ;
+    num_whole color_r ;
+    num_whole color_g ;
+    num_whole color_b ;
+    num_whole color_a ;
     platform :: math_make_num_fract ( x_left , - 1 , 1 ) ;
     platform :: math_make_num_fract ( x_right , 1 , 1 ) ;
     platform :: math_make_num_fract ( y_top , 1 , 1 ) ;
@@ -145,24 +149,28 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform :: math_make_num_fract ( v_top , 1 , 1 ) ;
     platform :: math_make_num_fract ( v_bottom , 0 , 1 ) ;
     platform :: math_make_num_fract ( z , 0 , 1 ) ;
+    platform :: math_make_num_whole ( color_r , _image_r ) ;
+    platform :: math_make_num_whole ( color_g , _image_g ) ;
+    platform :: math_make_num_whole ( color_b , _image_b ) ;
+    platform :: math_make_num_whole ( color_a , _image_a ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 0 ] , x_left , y_top , z ) ;
-    platform :: render_set_vertex_color     ( vertices [ 0 ] , _image_r , _image_g , _image_b , _image_a ) ;
+    platform :: render_set_vertex_color     ( vertices [ 0 ] , color_r , color_g , color_b , color_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 0 ] , u_left , v_top ) ;
     platform :: render_set_index_value      ( indices  [ 0 ] , 0 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 1 ] , x_left , y_bottom , z ) ;
-    platform :: render_set_vertex_color     ( vertices [ 1 ] , _image_r , _image_g , _image_b , _image_a ) ;
+    platform :: render_set_vertex_color     ( vertices [ 1 ] , color_r , color_g , color_b , color_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 1 ] , u_left , v_bottom ) ;
     platform :: render_set_index_value      ( indices  [ 1 ] , 1 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 2 ] , x_right , y_top , z ) ;
-    platform :: render_set_vertex_color     ( vertices [ 2 ] , _image_r , _image_g , _image_b , _image_a ) ;
+    platform :: render_set_vertex_color     ( vertices [ 2 ] , color_r , color_g , color_b , color_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 2 ] , u_right , v_top ) ;
     platform :: render_set_index_value      ( indices  [ 2 ] , 2 ) ;
 
     platform :: render_set_vertex_position  ( vertices [ 3 ] , x_right , y_bottom , z ) ;
-    platform :: render_set_vertex_color     ( vertices [ 3 ] , _image_r , _image_g , _image_b , _image_a ) ;
+    platform :: render_set_vertex_color     ( vertices [ 3 ] , color_r , color_g , color_b , color_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , u_right , v_bottom ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , 3 ) ;
 

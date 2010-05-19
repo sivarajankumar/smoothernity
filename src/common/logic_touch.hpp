@@ -8,6 +8,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -175,23 +176,22 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         num_fract vertex_x ;
         num_fract vertex_y ;
         num_fract vertex_z ;
+        num_whole vertex_r ;
+        num_whole vertex_g ;
+        num_whole vertex_b ;
+        num_whole vertex_a ;
         platform :: math_cos ( angle_cos , angle ) ;
         platform :: math_sin ( angle_sin , angle ) ;
         platform :: math_make_num_fract ( vertex_x , int_32 ( _spot_size ( ) * angle_cos * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_y , int_32 ( _spot_size ( ) * angle_sin * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
+        platform :: math_make_num_whole ( vertex_r , _spot_r ) ;
+        platform :: math_make_num_whole ( vertex_g , _spot_g ) ;
+        platform :: math_make_num_whole ( vertex_b , _spot_b ) ;
+        platform :: math_make_num_whole ( vertex_a , 255 ) ;
         platform :: render_set_vertex_position ( vertices [ i ] , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color
-            ( vertices [ i ]
-            , _spot_r
-            , _spot_g
-            , _spot_b
-            , 255
-            ) ;
-        platform :: render_set_index_value
-            ( indices [ i ]
-            , i
-            ) ;
+        platform :: render_set_vertex_color ( vertices [ i ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        platform :: render_set_index_value ( indices [ i ] , i ) ;
     }
     _mediator -> mesh_create ( _spot_mesh_id , vertices , 0 , indices , _spot_edges , 0 , _spot_edges ) ;
 }

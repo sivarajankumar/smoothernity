@@ -226,7 +226,7 @@ public :
     static void render_create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , vertex_data * data ) ;
     static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
     static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
-    static void render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a ) ;
+    static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
 
     static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
     static void render_set_index_value ( index_data & data , int_32 index ) ;

@@ -9,6 +9,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
@@ -121,13 +122,21 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             num_fract vertex_z ;
             num_fract vertex_u ;
             num_fract vertex_v ;
+            num_whole vertex_r ;
+            num_whole vertex_g ;
+            num_whole vertex_b ;
+            num_whole vertex_a ;
             platform :: math_make_num_fract ( vertex_x , int_32 ( x * 1000.0f ) , 1000 ) ;
             platform :: math_make_num_fract ( vertex_y , 0 , 1 ) ;
             platform :: math_make_num_fract ( vertex_z , int_32 ( z * 1000.0f ) , 1000 ) ;
             platform :: math_make_num_fract ( vertex_u , int_32 ( float_32 ( iz * 1000.0f ) / float_32 ( _land_grid ) ) , 1000 ) ;
             platform :: math_make_num_fract ( vertex_v , int_32 ( float_32 ( ix * 1000.0f ) / float_32 ( _land_grid ) ) , 1000 ) ;
+            platform :: math_make_num_whole ( vertex_r , _land_r ) ;
+            platform :: math_make_num_whole ( vertex_g , _land_g ) ;
+            platform :: math_make_num_whole ( vertex_b , _land_b ) ;
+            platform :: math_make_num_whole ( vertex_a , 255 ) ;
             platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-            platform :: render_set_vertex_color ( vertices [ vertices_count ] , _land_r , _land_g , _land_b , 255 ) ;
+            platform :: render_set_vertex_color ( vertices [ vertices_count ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
             platform :: render_set_vertex_tex_coord ( vertices [ vertices_count ] , vertex_u , vertex_v ) ;
             ++ vertices_count ;
         }
