@@ -284,10 +284,22 @@ public :
     // math
     //
     
-    static void math_sin ( float_32 & result , num_fract a ) ;
-    static void math_cos ( float_32 & result , num_fract a ) ;
+    static void math_add_to_whole ( num_whole & a , num_whole b ) ;
     static void math_sub_wholes ( num_whole & result , num_whole from , num_whole what ) ;
+    static void math_sub_from_whole ( num_whole & a , num_whole b ) ;
+    static void math_mod_wholes ( num_whole & result , num_whole value , num_whole modulator ) ;
+
+    static void math_sin ( num_fract & result , num_fract a ) ;
+    static void math_cos ( num_fract & result , num_fract a ) ;    
     static void math_add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
+    static void math_mul_fracts ( num_fract & result , num_fract a , num_fract b ) ;
+    static void math_mul_fract_by ( num_fract & a , num_fract b ) ;
+    static void math_div_fract_by ( num_fract & a , num_fract b ) ;
+    static void math_neg_fract ( num_fract & result , num_fract a ) ;
+    
+    static void math_make_whole_from_fract ( num_whole & result , num_fract fract ) ;
+    static void math_make_fract_from_whole ( num_fract & result , num_whole whole ) ;
+    
     static void math_make_num_whole ( num_whole & result , const_int_32 value ) ;
     static void math_make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator ) ;
 

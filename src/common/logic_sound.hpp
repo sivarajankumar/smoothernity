@@ -24,7 +24,7 @@ public :
     void sound_update ( ) ;
 private :
     void _load_sound ( ) ;
-    void _int_to_sample ( num_fract & result , int_32 i ) ;
+    void _int_to_sample ( num_fract & result , num_whole i ) ;
     void _create_stereo_sound ( ) ;
     void _create_mono_sound ( ) ;
 private :
@@ -172,9 +172,19 @@ void shy_logic_sound < mediator > :: _load_sound ( )
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: _int_to_sample ( num_fract & result , int_32 i )
+void shy_logic_sound < mediator > :: _int_to_sample ( num_fract & result , num_whole i )
 {
-    platform :: math_make_num_fract ( result , ( i % 256 ) - 128 , 128 ) ;
+    num_whole whole_sample ;
+    num_whole modulator ;
+    num_whole half_modulator ;
+    num_fract fract_half_modulator ;
+    platform :: math_make_num_whole ( modulator , 256 ) ;
+    platform :: math_make_num_whole ( half_modulator , 128 ) ;
+    platform :: math_make_num_fract ( fract_half_modulator , 128 , 1 ) ;
+    platform :: math_mod_wholes ( whole_sample , i , modulator ) ;
+    platform :: math_sub_from_whole ( whole_sample , half_modulator ) ;
+    platform :: math_make_fract_from_whole ( result , whole_sample ) ;
+    platform :: math_div_fract_by ( result , fract_half_modulator ) ;
 }
 
 template < typename mediator >
@@ -221,17 +231,27 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
 template < typename mediator >
 void shy_logic_sound < mediator > :: _create_mono_sound ( )
 {
-    int_32 next_sample = 0 ;
+    num_whole next_sample ;
+    platform :: math_make_num_whole ( next_sample , 0 ) ;
     for ( int_32 i = 0 ; i < _max_mono_sound_samples ; ++ i )
     {
         float_32 pi ;
         _mediator -> math_pi ( pi ) ;
         float_32 angle = float_32 ( i ) * 2.0f * pi / float_32 ( platform :: mono_sound_samples_per_second ) ;
-        float_32 angle_sin ;
+        num_fract num_1 ;
+        num_fract magnitude ;
+        num_fract angle_sin ;
         num_fract num_angle ;
+        num_fract fract_sample_delta ;
+        num_whole whole_sample_delta ;
+        platform :: math_make_num_fract ( num_1 , 1 , 1 ) ;
+        platform :: math_make_num_fract ( magnitude , 128 , 1 ) ;
         platform :: math_make_num_fract ( num_angle , int_32 ( angle * 1000.0f ) , 1000 ) ;
         platform :: math_sin ( angle_sin , num_angle ) ;
-        next_sample += int_32 ( 128.0f * ( 1.0f + angle_sin ) ) ;
+        platform :: math_add_fracts ( fract_sample_delta , num_1 , angle_sin ) ;
+        platform :: math_mul_fract_by ( fract_sample_delta , magnitude ) ;
+        platform :: math_make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
+        platform :: math_add_to_whole ( next_sample , whole_sample_delta ) ;
         num_fract sample ;
         _int_to_sample ( sample , next_sample ) ;
         platform :: sound_set_sample_value ( _mono_sound_data [ i ] , sample ) ;
