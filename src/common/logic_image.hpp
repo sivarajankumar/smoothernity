@@ -82,9 +82,9 @@ void shy_logic_image < mediator > :: image_update ( )
         }
         if ( ! _image_texture_loaded )
         {
-            int_32 loader_ready = false ;
+            num_whole loader_ready ;
             platform :: render_texture_loader_ready ( loader_ready ) ;
-            if ( loader_ready )
+            if ( platform :: condition_true ( loader_ready ) )
             {
                 _mediator -> texture_finalize ( _image_texture_id ) ;
                 _image_texture_loaded = true ;

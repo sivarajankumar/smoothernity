@@ -116,9 +116,9 @@ inline void shy_macosx_platform :: render_load_texture_resource
     ] ;
 }
 
-inline void shy_macosx_platform :: render_texture_loader_ready ( int_32 & is_ready )
+inline void shy_macosx_platform :: render_texture_loader_ready ( num_whole & is_ready )
 {
-    is_ready = [ _texture_loader loader_ready ] ;
+    is_ready . _value = [ _texture_loader loader_ready ] ;
 }
 
 inline void shy_macosx_platform :: render_clear_screen ( float_32 r , float_32 g , float_32 b )
