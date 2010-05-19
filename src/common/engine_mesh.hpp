@@ -61,18 +61,22 @@ void shy_engine_mesh < mediator > :: mesh_create
     , index_data * triangle_strip_indices 
     , index_data * triangle_fan_indices
     , int_32 vertices_count_int_32
-    , int_32 triangle_strip_indices_count 
-    , int_32 triangle_fan_indices_count
+    , int_32 triangle_strip_indices_count_int_32
+    , int_32 triangle_fan_indices_count_int_32
     )
 {
     num_whole vertices_count ;
+    num_whole triangle_fan_indices_count ;
+    num_whole triangle_strip_indices_count ;
     _mesh_data & mesh = _meshes_data [ _next_mesh_id ] ;
-    mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
-    mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
+    mesh . triangle_strip_indices_count = triangle_strip_indices_count_int_32 ;
+    mesh . triangle_fan_indices_count = triangle_fan_indices_count_int_32 ;
     platform :: matrix_identity ( mesh . transform ) ;
     platform :: math_make_num_whole ( vertices_count , vertices_count_int_32 ) ;
+    platform :: math_make_num_whole ( triangle_fan_indices_count , triangle_fan_indices_count_int_32 ) ;
+    platform :: math_make_num_whole ( triangle_strip_indices_count , triangle_strip_indices_count_int_32 ) ;
     platform :: render_create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
-    if ( triangle_strip_indices_count > 0 )
+    if ( triangle_strip_indices_count_int_32 > 0 )
     {
         platform :: render_create_index_buffer 
             ( mesh . triangle_strip_index_buffer_id 
@@ -80,7 +84,7 @@ void shy_engine_mesh < mediator > :: mesh_create
             , triangle_strip_indices 
             ) ;
     }
-    if ( triangle_fan_indices_count > 0 )
+    if ( triangle_fan_indices_count_int_32 > 0 )
     {
         platform :: render_create_index_buffer 
             ( mesh . triangle_fan_index_buffer_id 

@@ -228,7 +228,7 @@ public :
     static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
     static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
 
-    static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , int_32 elements , index_data * data ) ;
+    static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , index_data * data ) ;
     static void render_set_index_value ( index_data & data , int_32 index ) ;
     
     static void render_draw_triangle_strip 

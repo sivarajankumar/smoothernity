@@ -197,7 +197,7 @@ inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & verte
 
 inline void shy_macosx_platform :: render_create_index_buffer 
     ( render_index_buffer_id & arg_buffer_id 
-    , int_32 elements 
+    , num_whole elements 
     , index_data * data 
     )
 {
@@ -205,7 +205,7 @@ inline void shy_macosx_platform :: render_create_index_buffer
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
-        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) elements )
+        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) elements . _value )
         , data
         , GL_STATIC_DRAW
         ) ;
