@@ -160,7 +160,7 @@ inline void shy_macosx_platform :: render_projection_ortho
 
 inline void shy_macosx_platform :: render_create_vertex_buffer 
     ( render_vertex_buffer_id & arg_buffer_id 
-    , int_32 elements 
+    , num_whole elements 
     , vertex_data * data 
     )
 {
@@ -168,7 +168,7 @@ inline void shy_macosx_platform :: render_create_vertex_buffer
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
-        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) elements ) 
+        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) elements . _value ) 
         , data
         , GL_STATIC_DRAW 
         ) ;

@@ -7,6 +7,7 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const int_32 _max_meshes = 100 ;
@@ -59,15 +60,17 @@ void shy_engine_mesh < mediator > :: mesh_create
     , vertex_data * vertices 
     , index_data * triangle_strip_indices 
     , index_data * triangle_fan_indices
-    , int_32 vertices_count
+    , int_32 vertices_count_int_32
     , int_32 triangle_strip_indices_count 
     , int_32 triangle_fan_indices_count
     )
 {
+    num_whole vertices_count ;
     _mesh_data & mesh = _meshes_data [ _next_mesh_id ] ;
     mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
     mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
     platform :: matrix_identity ( mesh . transform ) ;
+    platform :: math_make_num_whole ( vertices_count , vertices_count_int_32 ) ;
     platform :: render_create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
     if ( triangle_strip_indices_count > 0 )
     {
