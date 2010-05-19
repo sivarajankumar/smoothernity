@@ -220,7 +220,7 @@ public :
     
     static void render_clear_screen ( num_fract r , num_fract g , num_fract b ) ;
     
-    static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
+    static void render_projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     static void render_projection_ortho ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     
     static void render_create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , int_32 elements , vertex_data * data ) ;

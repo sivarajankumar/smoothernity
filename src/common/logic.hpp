@@ -4,7 +4,7 @@ class shy_logic
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: int_32 int_32 ;
-    
+    typedef typename mediator :: platform :: num_fract num_fract ;
 public :
     shy_logic ( mediator * arg_mediator ) ;
     void init ( ) ;
@@ -60,10 +60,22 @@ void shy_logic < mediator > :: use_perspective_projection ( )
     float_32 width ;
     float_32 height ;
     float_32 near_plane ;
+    num_fract y_top ;
+    num_fract y_bottom ;
+    num_fract x_left ;
+    num_fract x_right ;
+    num_fract z_far ;
+    num_fract z_near ;
     _get_near_plane_distance ( near_plane ) ;
     platform :: render_get_aspect_width ( width ) ;
     platform :: render_get_aspect_height ( height ) ;
-    platform :: render_projection_frustum ( - width , width , - height , height , near_plane , 50.0f ) ;
+    platform :: math_make_num_fract ( x_left , int_32 ( - width * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( x_right , int_32 ( width * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( y_bottom , int_32 ( - height * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( y_top , int_32 ( height * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( z_near , int_32 ( near_plane * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( z_far , 50 , 1 ) ;
+    platform :: render_projection_frustum ( x_left , x_right , y_bottom , y_top , z_near , z_far ) ;
     platform :: render_matrix_identity ( ) ;
 }
 
