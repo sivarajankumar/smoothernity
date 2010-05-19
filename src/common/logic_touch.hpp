@@ -38,8 +38,8 @@ private :
     int_32 _spot_mesh_created ;
     int_32 _spot_prepare_permitted ;
 	int_32 _should_place_new_spot ;
-	float_32 _spot_x ;
-	float_32 _spot_y ;
+	num_fract _spot_x ;
+	num_fract _spot_y ;
     mesh_id _spot_mesh_id ;
     vector_data _spot_position ;
 } ;
@@ -51,8 +51,6 @@ shy_logic_touch < mediator > :: shy_logic_touch ( mediator * arg_mediator )
 , _spot_mesh_created ( false )
 , _spot_prepare_permitted ( false )
 , _should_place_new_spot ( false )
-, _spot_x ( 0 )
-, _spot_y ( 0 )
 {
 }
 
@@ -108,13 +106,9 @@ void shy_logic_touch < mediator > :: _poll_touchscreen ( )
     platform :: touch_occured ( touch ) ;
     if ( platform :: condition_true ( touch ) )
     {
-        float_32 x ;
-        float_32 y ;
-        platform :: touch_x ( x ) ;
-        platform :: touch_y ( y ) ;
+        platform :: touch_x ( _spot_x ) ;
+        platform :: touch_y ( _spot_y ) ;
         _should_place_new_spot = true ;
-        _spot_x = x ;
-        _spot_y = y ;
     }
 }
 
@@ -125,13 +119,9 @@ void shy_logic_touch < mediator > :: _poll_mouse ( )
     platform :: mouse_left_button_down ( mouse_button ) ;
     if ( platform :: condition_true ( mouse_button ) )
     {
-        float_32 x ;
-        float_32 y ;
-        platform :: mouse_x ( x ) ;
-        platform :: mouse_y ( y ) ;
+        platform :: mouse_x ( _spot_x ) ;
+        platform :: mouse_y ( _spot_y ) ;
         _should_place_new_spot = true ;
-        _spot_x = x ;
-        _spot_y = y ;
     }
 }
 
@@ -140,13 +130,9 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
 {
     if ( _should_place_new_spot )
     {
-        num_fract pos_x ;
-        num_fract pos_y ;
         num_fract pos_z ;
-        platform :: math_make_num_fract ( pos_x , int_32 ( _spot_x * 1000.0f ) , 1000 ) ;
-        platform :: math_make_num_fract ( pos_y , int_32 ( _spot_y * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_fract ( pos_z , - 3 , 1 ) ;
-        platform :: vector_xyz ( _spot_position , pos_x , pos_y , pos_z ) ;
+        platform :: vector_xyz ( _spot_position , _spot_x , _spot_y , pos_z ) ;
         _spot_frames_left = _spot_lifetime_in_frames ;
         _should_place_new_spot = false ;
     }

@@ -311,16 +311,16 @@ public :
     //
     
     static void touch_occured ( num_whole & result ) ;
-    static void touch_x ( float_32 & result ) ;
-    static void touch_y ( float_32 & result ) ;
+    static void touch_x ( num_fract & result ) ;
+    static void touch_y ( num_fract & result ) ;
 
 	//
 	// mouse
 	//
 
 	static void mouse_left_button_down ( num_whole & result ) ;
-	static void mouse_x ( float_32 & result ) ;
-	static void mouse_y ( float_32 & result ) ;
+	static void mouse_x ( num_fract & result ) ;
+	static void mouse_y ( num_fract & result ) ;
 
 	//
 	// variables
