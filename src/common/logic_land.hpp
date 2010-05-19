@@ -91,10 +91,14 @@ void shy_logic_land < mediator > :: _render_land ( )
     else
         _land_scale = 1 ;
     matrix_data matrix ;
-    platform :: matrix_set_axis_x ( matrix , _land_scale , 0 , 0 ) ;
-    platform :: matrix_set_axis_y ( matrix , 0 , _land_scale , 0 ) ;
-    platform :: matrix_set_axis_z ( matrix , 0 , 0 , _land_scale ) ;
-    platform :: matrix_set_origin ( matrix , 0 , 0 , 0 ) ;
+    num_fract num_scale ;
+    num_fract num_zero ;
+    platform :: math_make_num_fract ( num_scale , int_32 ( _land_scale * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( num_zero , 0 , 1 ) ;
+    platform :: matrix_set_axis_x ( matrix , num_scale , num_zero , num_zero ) ;
+    platform :: matrix_set_axis_y ( matrix , num_zero , num_scale , num_zero ) ;
+    platform :: matrix_set_axis_z ( matrix , num_zero , num_zero , num_scale ) ;
+    platform :: matrix_set_origin ( matrix , num_zero , num_zero , num_zero ) ;
     _mediator -> mesh_set_transform ( _land_mesh_id , matrix ) ;
     _mediator -> mesh_render ( _land_mesh_id ) ;
 }

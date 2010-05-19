@@ -104,11 +104,21 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
         _scale_frames ++ ;
     float_32 scale ;
     matrix_data matrix ;
+    num_fract num_scale ;
+    num_fract num_zero ;
+    num_fract origin_x ;
+    num_fract origin_y ;
+    num_fract origin_z ;
     _mediator -> math_lerp ( scale , 0 , 0 , _final_scale ( ) , _scale_in_frames , _scale_frames ) ;
-    platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
-    platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
-    platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
-    platform :: matrix_set_origin ( matrix , 0.5f , 0 , - 3 ) ;
+    platform :: math_make_num_fract ( num_scale , int_32 ( scale * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( num_zero , 0 , 1 ) ;
+    platform :: math_make_num_fract ( origin_x , 1 , 2 ) ;
+    platform :: math_make_num_fract ( origin_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( origin_z , - 3 , 1 ) ;
+    platform :: matrix_set_axis_x ( matrix , num_scale , num_zero , num_zero ) ;
+    platform :: matrix_set_axis_y ( matrix , num_zero , num_scale , num_zero ) ;
+    platform :: matrix_set_axis_z ( matrix , num_zero , num_zero , num_scale ) ;
+    platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     _mediator -> mesh_set_transform ( _image_mesh_id , matrix ) ;
 }
 

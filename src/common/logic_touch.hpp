@@ -158,9 +158,13 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     _mediator -> texture_unselect ( ) ;
     matrix_data matrix ;
     float_32 scale = float_32 ( _spot_frames_left ) / float_32 ( _spot_lifetime_in_frames ) ;
-    platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
-    platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
-    platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
+    num_fract num_scale ;
+    num_fract num_zero ;
+    platform :: math_make_num_fract ( num_scale , int_32 ( scale * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( num_zero , 0 , 1 ) ;
+    platform :: matrix_set_axis_x ( matrix , num_scale , num_zero , num_zero ) ;
+    platform :: matrix_set_axis_y ( matrix , num_zero , num_scale , num_zero ) ;
+    platform :: matrix_set_axis_z ( matrix , num_zero , num_zero , num_scale ) ;
     platform :: matrix_set_origin ( matrix , _spot_position ) ;
     _mediator -> mesh_set_transform ( _spot_mesh_id , matrix ) ;
     _mediator -> mesh_render ( _spot_mesh_id ) ;

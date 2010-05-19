@@ -1,53 +1,65 @@
-inline void shy_macosx_platform :: matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+inline void shy_macosx_platform :: matrix_set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 0 ] = x ;
-    matrix . _elements [ 1 ] = y ;
-    matrix . _elements [ 2 ] = z ;
+    matrix . _elements [ 0 ] = x . _value ;
+    matrix . _elements [ 1 ] = y . _value ;
+    matrix . _elements [ 2 ] = z . _value ;
     matrix . _elements [ 3 ] = 0 ;
 }
 
-inline void shy_macosx_platform :: matrix_set_axis_y ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+inline void shy_macosx_platform :: matrix_set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 4 ] = x ;
-    matrix . _elements [ 5 ] = y ;
-    matrix . _elements [ 6 ] = z ;
+    matrix . _elements [ 4 ] = x . _value ;
+    matrix . _elements [ 5 ] = y . _value ;
+    matrix . _elements [ 6 ] = z . _value ;
     matrix . _elements [ 7 ] = 0 ;
 }
 
-inline void shy_macosx_platform :: matrix_set_axis_z ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+inline void shy_macosx_platform :: matrix_set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [  8 ] = x ;
-    matrix . _elements [  9 ] = y ;
-    matrix . _elements [ 10 ] = z ;
+    matrix . _elements [  8 ] = x . _value ;
+    matrix . _elements [  9 ] = y . _value ;
+    matrix . _elements [ 10 ] = z . _value ;
     matrix . _elements [ 11 ] = 0 ;
 }
 
-inline void shy_macosx_platform :: matrix_set_origin ( matrix_data & matrix , float_32 x , float_32 y , float_32 z )
+inline void shy_macosx_platform :: matrix_set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 12 ] = x ;
-    matrix . _elements [ 13 ] = y ;
-    matrix . _elements [ 14 ] = z ;
+    matrix . _elements [ 12 ] = x . _value ;
+    matrix . _elements [ 13 ] = y . _value ;
+    matrix . _elements [ 14 ] = z . _value ;
     matrix . _elements [ 15 ] = 1 ;
 }
 
 inline void shy_macosx_platform :: matrix_set_axis_x ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_axis_x ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [ 0 ] = v . _x ;
+    matrix . _elements [ 1 ] = v . _y ;
+    matrix . _elements [ 2 ] = v . _z ;
+    matrix . _elements [ 3 ] = 0 ;
 }
 
 inline void shy_macosx_platform :: matrix_set_axis_y ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_axis_y ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [ 4 ] = v . _x ;
+    matrix . _elements [ 5 ] = v . _y ;
+    matrix . _elements [ 6 ] = v . _z ;
+    matrix . _elements [ 7 ] = 0 ;
 }
 
 inline void shy_macosx_platform :: matrix_set_axis_z ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_axis_z ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [  8 ] = v . _x ;
+    matrix . _elements [  9 ] = v . _y ;
+    matrix . _elements [ 10 ] = v . _z ;
+    matrix . _elements [ 11 ] = 0 ;
 }
 
 inline void shy_macosx_platform :: matrix_set_origin ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_origin ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [ 12 ] = v . _x ;
+    matrix . _elements [ 13 ] = v . _y ;
+    matrix . _elements [ 14 ] = v . _z ;
+    matrix . _elements [ 15 ] = 1 ;
 }
 
 inline void shy_macosx_platform :: matrix_get_axis_x ( vector_data & result , const matrix_data & matrix )

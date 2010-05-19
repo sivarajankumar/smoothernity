@@ -233,9 +233,13 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                     scale = 1.0f ;
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
-                platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
-                platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
-                platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
+                num_fract num_zero ;
+                num_fract num_scale ;
+                platform :: math_make_num_fract ( num_zero , 0 , 1 ) ;
+                platform :: math_make_num_fract ( num_scale , int_32 ( scale * 1000.0f ) , 1000 ) ;
+                platform :: matrix_set_axis_x ( matrix , num_scale , num_zero , num_zero ) ;
+                platform :: matrix_set_axis_y ( matrix , num_zero , num_scale , num_zero ) ;
+                platform :: matrix_set_axis_z ( matrix , num_zero , num_zero , num_scale ) ;
                 platform :: matrix_set_origin ( matrix , origin ) ;
             }
         }

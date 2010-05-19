@@ -177,10 +177,10 @@ public :
     // matrix
     //
     
-    static void matrix_set_axis_x ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
-    static void matrix_set_axis_y ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
-    static void matrix_set_axis_z ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
-    static void matrix_set_origin ( matrix_data & matrix , float_32 x , float_32 y , float_32 z ) ;
+    static void matrix_set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
+    static void matrix_set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
+    static void matrix_set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
+    static void matrix_set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
     static void matrix_set_axis_x ( matrix_data & matrix , vector_data v ) ;
     static void matrix_set_axis_y ( matrix_data & matrix , vector_data v ) ;
     static void matrix_set_axis_z ( matrix_data & matrix , vector_data v ) ;
