@@ -28,13 +28,13 @@ public :
     void entities_render ( ) ;
     void entities_prepare_permit ( ) ;
     void entities_update ( ) ;
-    vector_data get_entity_origin ( int_32 index ) ;
-    float_32 get_entity_height ( ) ;
-    int_32 get_entity_mesh_grid ( ) ;
+    void get_entity_origin ( vector_data & result , int_32 index ) ;
+    void get_entity_height ( float_32 & result ) ;
+    void get_entity_mesh_grid ( int_32 & result ) ;
 private :
     void _entities_render ( ) ;
     void _create_entity_mesh ( ) ;
-    vector_data _get_entity_origin ( int_32 index ) ;
+    void _get_entity_origin ( vector_data & result , int_32 index ) ;
     void _update_entity_grid ( ) ;
 private :
     mediator * _mediator ;
@@ -85,24 +85,21 @@ void shy_logic_entities < mediator > :: entities_update ( )
 }
 
 template < typename mediator >
-typename shy_logic_entities < mediator > :: vector_data 
-shy_logic_entities < mediator > :: get_entity_origin ( int_32 index )
+void shy_logic_entities < mediator > :: get_entity_origin ( vector_data & result , int_32 index )
 {
-    return _get_entity_origin ( index ) ;
+    _get_entity_origin ( result , index ) ;
 }
 
 template < typename mediator >
-typename shy_logic_entities < mediator > :: int_32
-shy_logic_entities < mediator > :: get_entity_mesh_grid ( )
+void shy_logic_entities < mediator > :: get_entity_mesh_grid ( int_32 & result )
 {
-    return _entity_mesh_grid ;
+    result = _entity_mesh_grid ;
 }
 
 template < typename mediator >
-typename shy_logic_entities < mediator > :: float_32
-shy_logic_entities < mediator > :: get_entity_height ( )
+void shy_logic_entities < mediator > :: get_entity_height ( float_32 & result )
 {
-    return _entity_mesh_height ;
+    result = _entity_mesh_height ;
 }
 
 template < typename mediator >
@@ -203,19 +200,16 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 }
 
 template < typename mediator >
-typename shy_logic_entities < mediator > :: vector_data
-shy_logic_entities < mediator > :: _get_entity_origin ( int_32 index )
+void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & result , int_32 index )
 {
     int_32 x = index % _entity_mesh_grid ;
     int_32 z = index / _entity_mesh_grid ;
-    vector_data origin ;
     platform :: vector_xyz
-        ( origin
+        ( result
         , ( float_32 ) ( _grid_step * ( x - ( _entity_mesh_grid / 2 ) ) )
         , 0.5f * _entity_mesh_height
         , ( float_32 ) ( _grid_step * ( z - ( _entity_mesh_grid / 2 ) ) )
         ) ;
-    return origin ;
 }
 
 template < typename mediator >
@@ -235,10 +229,12 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                     scale = 0.0f ;
                 else if ( scale > 1.0f )
                     scale = 1.0f ;
+                vector_data origin ;
+                _get_entity_origin ( origin , index ) ;
                 platform :: matrix_set_axis_x ( matrix , scale , 0 , 0 ) ;
                 platform :: matrix_set_axis_y ( matrix , 0 , scale , 0 ) ;
                 platform :: matrix_set_axis_z ( matrix , 0 , 0 , scale ) ;
-                platform :: matrix_set_origin ( matrix , _get_entity_origin ( index ) ) ;
+                platform :: matrix_set_origin ( matrix , origin ) ;
             }
         }
         _grid_scale ++ ;

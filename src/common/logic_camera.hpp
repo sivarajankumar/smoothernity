@@ -107,7 +107,7 @@ void shy_logic_camera < mediator > :: camera_update ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( int_32 & result )
 {
-    result = _mediator -> get_entity_mesh_grid ( ) ;
+    _mediator -> get_entity_mesh_grid ( result ) ;
 }
 
 template < typename mediator >
@@ -124,12 +124,16 @@ void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
     {
         int_32 origin_index ;
         int_32 target_index ;
+        vector_data origin_pos ;
+        vector_data target_pos ;
         _random_camera_origin_index ( origin_index ) ;
         _random_camera_target_index ( target_index ) ;
+        _mediator -> get_entity_origin ( origin_pos , origin_index ) ;
+        _mediator -> get_entity_origin ( target_pos , target_index ) ;
         _scheduled_camera_origin_indices [ i ] = origin_index ;
         _scheduled_camera_target_indices [ i ] = target_index ;
-        _scheduled_camera_origins [ i ] = _mediator -> get_entity_origin ( origin_index ) ;
-        _scheduled_camera_targets [ i ] = _mediator -> get_entity_origin ( target_index ) ;
+        _scheduled_camera_origins [ i ] = origin_pos ;
+        _scheduled_camera_targets [ i ] = target_pos ;
     }
 }
 
@@ -150,7 +154,9 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     {
         _frames_to_change_camera_origin = _change_origin_in_frames ;
         int_32 new_origin_index ;
+        vector_data new_origin_pos ;
         _random_camera_origin_index ( new_origin_index ) ;
+        _mediator -> get_entity_origin ( new_origin_pos , new_origin_index ) ;
         _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
         _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
         _scheduled_camera_origin_indices [ 2 ] = _scheduled_camera_origin_indices [ 3 ] ;
@@ -158,7 +164,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         _scheduled_camera_origins [ 0 ] = _scheduled_camera_origins [ 1 ] ;
         _scheduled_camera_origins [ 1 ] = _scheduled_camera_origins [ 2 ] ;
         _scheduled_camera_origins [ 2 ] = _scheduled_camera_origins [ 3 ] ;
-        _scheduled_camera_origins [ 3 ] = _mediator -> get_entity_origin ( new_origin_index ) ;
+        _scheduled_camera_origins [ 3 ] = new_origin_pos ;
     }
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_origin
@@ -177,7 +183,9 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     {
         _frames_to_change_camera_target = _change_target_in_frames ;
         int_32 new_target_index ;
+        vector_data new_target_pos ;
         _random_camera_target_index ( new_target_index ) ;
+        _mediator -> get_entity_origin ( new_target_pos , new_target_index ) ;
         _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
         _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
         _scheduled_camera_target_indices [ 2 ] = _scheduled_camera_target_indices [ 3 ] ;
@@ -185,7 +193,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         _scheduled_camera_targets [ 0 ] = _scheduled_camera_targets [ 1 ] ;
         _scheduled_camera_targets [ 1 ] = _scheduled_camera_targets [ 2 ] ;
         _scheduled_camera_targets [ 2 ] = _scheduled_camera_targets [ 3 ] ;
-        _scheduled_camera_targets [ 3 ] = _mediator -> get_entity_origin ( new_target_index ) ;
+        _scheduled_camera_targets [ 3 ] = new_target_pos ;
     }
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_target
@@ -220,19 +228,18 @@ void shy_logic_camera < mediator > :: _update_current_camera_target ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_camera_matrix ( )
 {
-    float_32 aspect_height ;
     float_32 near_plane ;
-    _mediator -> get_near_plane_distance ( near_plane ) ;
-    platform :: render_get_aspect_height ( aspect_height ) ;
-    float_32 height = _mediator -> get_entity_height ( ) 
-                    + aspect_height
-                    + near_plane ;
+    float_32 aspect_height ;
+    float_32 entity_height ;
+    vector_data up ;
     vector_data shift ;
     vector_data shifted_origin ;
-    vector_data up ;
-    platform :: vector_xyz ( shift , 0.0f , height , 0.0f ) ;
-    platform :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
+    _mediator -> get_entity_height ( entity_height ) ;
+    _mediator -> get_near_plane_distance ( near_plane ) ;
+    platform :: render_get_aspect_height ( aspect_height ) ;
     platform :: vector_xyz ( up , 0 , 1 , 0 ) ;
+    platform :: vector_xyz ( shift , 0.0f , entity_height + aspect_height + near_plane , 0.0f ) ;
+    platform :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
     _mediator -> camera_matrix_look_at ( _camera_matrix , shifted_origin , _current_camera_target , up ) ;
 }
 

@@ -83,9 +83,9 @@ public :
     void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
-    float_32 get_entity_height ( ) ;
-    int_32 get_entity_mesh_grid ( ) ;
-    vector_data get_entity_origin ( int_32 index ) ;
+    void get_entity_height ( float_32 & result ) ;
+    void get_entity_mesh_grid ( int_32 & result ) ;
+    void get_entity_origin ( vector_data & result , int_32 index ) ;
     void get_near_plane_distance ( float_32 & result ) ;
     void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
@@ -248,24 +248,21 @@ void shy_mediator < mediator_types > :: game_update ( )
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: float_32
-shy_mediator < mediator_types > :: get_entity_height ( )
+void shy_mediator < mediator_types > :: get_entity_height ( float_32 & result )
 {
-    return _logic_entities . get_entity_height ( ) ;
+    _logic_entities . get_entity_height ( result ) ;
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: int_32
-shy_mediator < mediator_types > :: get_entity_mesh_grid ( )
+void shy_mediator < mediator_types > :: get_entity_mesh_grid ( int_32 & result )
 {
-    return _logic_entities . get_entity_mesh_grid ( ) ;
+    _logic_entities . get_entity_mesh_grid ( result ) ;
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: vector_data
-shy_mediator < mediator_types > :: get_entity_origin ( int_32 index )
+void shy_mediator < mediator_types > :: get_entity_origin ( vector_data & result , int_32 index )
 {
-    return _logic_entities . get_entity_origin ( index ) ;
+    _logic_entities . get_entity_origin ( result , index ) ;
 }
 
 template < typename mediator_types >
