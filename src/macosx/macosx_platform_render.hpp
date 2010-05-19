@@ -144,17 +144,17 @@ inline void shy_macosx_platform :: render_projection_frustum
 }
 
 inline void shy_macosx_platform :: render_projection_ortho 
-    ( float_32 left 
-    , float_32 right 
-    , float_32 bottom 
-    , float_32 top 
-    , float_32 near 
-    , float_32 far 
+    ( num_fract left 
+    , num_fract right 
+    , num_fract bottom 
+    , num_fract top 
+    , num_fract near 
+    , num_fract far 
     )
 {
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
-    glOrtho ( left , right , bottom , top , near , far ) ;
+    glOrtho ( left . _value , right . _value , bottom . _value , top . _value , near . _value , far . _value ) ;
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
