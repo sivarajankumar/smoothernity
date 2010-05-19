@@ -151,7 +151,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _create_image_texture ( )
 {
-    _image_texture_id = _mediator -> texture_create ( ) ;
+    _mediator -> texture_create ( _image_texture_id ) ;
     texture_resource_id logo_resource_id ;
     platform :: render_create_texture_resource_id ( logo_resource_id , _logo_resource_index ) ;
     _mediator -> texture_load_from_resource ( _image_texture_id , logo_resource_id ) ;

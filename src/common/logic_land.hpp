@@ -168,14 +168,18 @@ template < typename mediator >
 void shy_logic_land < mediator > :: _create_land_texture ( )
 {
     if ( _land_texture_creation_row == 0 )
-        _land_texture_id = _mediator -> texture_create ( ) ;
+        _mediator -> texture_create ( _land_texture_id ) ;
     int_32 prev_creation_row = _land_texture_creation_row ;
-    while ( _land_texture_creation_row < _mediator -> texture_height ( )
+    int_32 texture_width ;
+    int_32 texture_height ;
+    _mediator -> texture_width ( texture_width ) ;
+    _mediator -> texture_height ( texture_height ) ;
+    while ( _land_texture_creation_row < texture_height
          && ( _land_texture_creation_row - prev_creation_row ) <= _create_rows_per_frame
           )
     {
         int_32 y = _land_texture_creation_row ;
-        for ( int_32 x = 0 ; x < _mediator -> texture_width ( ) ; x ++ )
+        for ( int_32 x = 0 ; x < texture_width ; x ++ )
         {
             int_32 c = x ^ y ;
             _mediator -> texture_set_texel
@@ -190,7 +194,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         }
         _land_texture_creation_row ++ ;
     }
-    if ( _land_texture_creation_row == _mediator -> texture_height ( ) )
+    if ( _land_texture_creation_row == texture_height )
     {
         _mediator -> texture_finalize ( _land_texture_id ) ;
         _land_texture_created = true ;

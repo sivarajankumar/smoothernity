@@ -27,15 +27,15 @@ private :
     } ;
 public :
     shy_engine_texture ( ) ;
-    texture_id texture_create ( ) ;
+    void texture_create ( texture_id & result ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_unselect ( ) ;
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
-    int_32 texture_width ( ) ;
-    int_32 texture_height ( ) ;
+    void texture_width ( int_32 & result ) ;
+    void texture_height ( int_32 & result ) ;
 private :
     int_32 _next_texture_id ;
     _texture_data _textures_datas [ _max_textures ] ;
@@ -48,13 +48,10 @@ shy_engine_texture < mediator > :: shy_engine_texture ( )
 }
 
 template < typename mediator >
-typename shy_engine_texture < mediator > :: texture_id
-shy_engine_texture < mediator > :: texture_create ( )
+void shy_engine_texture < mediator > :: texture_create ( texture_id & result )
 {
-    texture_id new_id ;
-    new_id . _texture_id = _next_texture_id ;
+    result . _texture_id = _next_texture_id ;
     _next_texture_id ++ ;
-    return new_id ;
 }
 
 template < typename mediator >
@@ -100,15 +97,13 @@ void shy_engine_texture < mediator > :: texture_set_texel
 }
 
 template < typename mediator >
-typename shy_engine_texture < mediator > :: int_32
-shy_engine_texture < mediator > :: texture_width ( )
+void shy_engine_texture < mediator > :: texture_width ( int_32 & result )
 {
-    return _texture_size ;
+    result = _texture_size ;
 }
 
 template < typename mediator >
-typename shy_engine_texture < mediator > :: int_32 
-shy_engine_texture < mediator > :: texture_height ( )
+void shy_engine_texture < mediator > :: texture_height ( int_32 & result )
 {
-    return _texture_size ;
+    result = _texture_size ;
 }

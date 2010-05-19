@@ -127,15 +127,15 @@ public :
     void text_prepared ( ) ;
     void text_render ( ) ;
     void text_update ( ) ;
-    texture_id texture_create ( ) ;
+    void texture_create ( texture_id & result ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
-    int_32 texture_height ( ) ;
+    void texture_height ( int_32 & result ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
     void texture_unselect ( ) ;
-    int_32 texture_width ( ) ;
+    void texture_width ( int_32 & result ) ;
     void title_finished ( ) ;
     void title_launch_permit ( ) ;
     void title_render ( ) ;
@@ -569,10 +569,9 @@ void shy_mediator < mediator_types > :: camera_matrix_use ( )
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: texture_id 
-shy_mediator < mediator_types > :: texture_create ( )
+void shy_mediator < mediator_types > :: texture_create ( texture_id & result )
 {
-    return _engine_texture . texture_create ( ) ;
+    _engine_texture . texture_create ( result ) ;
 }
 
 template < typename mediator_types >
@@ -617,17 +616,15 @@ void shy_mediator < mediator_types > :: texture_unselect ( )
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: int_32
-shy_mediator < mediator_types > :: texture_height ( )
+void shy_mediator < mediator_types > :: texture_height ( int_32 & result )
 {
-    return _engine_texture . texture_height ( ) ;
+    _engine_texture . texture_height ( result ) ;
 }
 
 template < typename mediator_types >
-typename shy_mediator < mediator_types > :: int_32
-shy_mediator < mediator_types > :: texture_width ( )
+void shy_mediator < mediator_types > :: texture_width ( int_32 & result )
 {
-    return _engine_texture . texture_width ( ) ;
+    _engine_texture . texture_width ( result ) ;
 }
 
 template < typename mediator_types >

@@ -172,15 +172,19 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _create_text_texture ( )
 {
+    int_32 texture_width ;
+    int_32 texture_height ;
+    _mediator -> texture_width ( texture_width ) ;
+    _mediator -> texture_height ( texture_height ) ;
     platform :: render_set_texel_color ( _filler , 0 , 255 , 0 , 255 ) ;
     platform :: render_set_texel_color ( _eraser , 0 , 0 , 0 , 128 ) ;
-    _text_texture_id = _mediator -> texture_create ( ) ;
-    for ( int_32 x = 0 ; x < _mediator -> texture_width ( ) ; x ++ )
+    _mediator -> texture_create ( _text_texture_id ) ;
+    for ( int_32 x = 0 ; x < texture_width ; x ++ )
     {
-        for ( int_32 y = 0 ; y < _mediator -> texture_height ( ) ; y ++ )
+        for ( int_32 y = 0 ; y < texture_height ; y ++ )
             _mediator -> texture_set_texel ( _text_texture_id , x , y , _eraser ) ;
     }
-    _origin_y = _mediator -> texture_height ( ) ;
+    _origin_y = texture_height ;
     _rasterize_english_alphabet ( 16 , 16 ) ;
     _rasterize_english_alphabet ( 32 , 32 ) ;
     _mediator -> texture_finalize ( _text_texture_id ) ;
@@ -225,8 +229,10 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
 template < typename mediator >
 void shy_logic_text < mediator > :: _next_letter_col ( )
 {
+    int_32 texture_width ;
+    _mediator -> texture_width ( texture_width ) ;
     _origin_x += _letter_size_x ;
-    if ( _origin_x >= _mediator -> texture_width ( ) )
+    if ( _origin_x >= texture_width )
     {
         _origin_y -= _letter_size_y / 4 ;
         _next_letter_row ( ) ;
