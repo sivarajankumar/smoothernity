@@ -7,6 +7,7 @@ class shy_logic_camera
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -66,8 +67,10 @@ shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
     {
         _scheduled_camera_origin_indices [ i ] = 0 ;
         _scheduled_camera_target_indices [ i ] = 0 ;
-        platform :: vector_xyz ( _scheduled_camera_origins [ i ] , 0 , 0 , 0 ) ;
-        platform :: vector_xyz ( _scheduled_camera_targets [ i ] , 0 , 0 , 0 ) ;
+        num_fract zero ;
+        platform :: math_make_num_fract ( zero , 0 , 1 ) ;
+        platform :: vector_xyz ( _scheduled_camera_origins [ i ] , zero , zero , zero ) ;
+        platform :: vector_xyz ( _scheduled_camera_targets [ i ] , zero , zero , zero ) ;
     }
 }
 
@@ -228,17 +231,30 @@ void shy_logic_camera < mediator > :: _update_current_camera_target ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_camera_matrix ( )
 {
-    float_32 near_plane ;
-    float_32 aspect_height ;
-    float_32 entity_height ;
+    num_fract up_x ;
+    num_fract up_y ;
+    num_fract up_z ;
+    num_fract shift_x ;
+    num_fract shift_y ;
+    num_fract shift_z ;
     vector_data up ;
     vector_data shift ;
     vector_data shifted_origin ;
+    float_32 near_plane ;
+    float_32 aspect_height ;
+    float_32 entity_height ;
+    
     _mediator -> get_entity_height ( entity_height ) ;
     _mediator -> get_near_plane_distance ( near_plane ) ;
     platform :: render_get_aspect_height ( aspect_height ) ;
-    platform :: vector_xyz ( up , 0 , 1 , 0 ) ;
-    platform :: vector_xyz ( shift , 0.0f , entity_height + aspect_height + near_plane , 0.0f ) ;
+    platform :: math_make_num_fract ( up_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( up_y , 1 , 1 ) ;
+    platform :: math_make_num_fract ( up_z , 0 , 1 ) ;
+    platform :: math_make_num_fract ( shift_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( shift_y , int_32 ( 1000.0f * ( entity_height + aspect_height + near_plane ) ) , 1000 ) ;
+    platform :: math_make_num_fract ( shift_z , 0 , 1 ) ;
+    platform :: vector_xyz ( up , up_x , up_y , up_z ) ;
+    platform :: vector_xyz ( shift , shift_x , shift_y , shift_z ) ;
     platform :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
     _mediator -> camera_matrix_look_at ( _camera_matrix , shifted_origin , _current_camera_target , up ) ;
 }

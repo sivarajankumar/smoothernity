@@ -140,9 +140,15 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
 {
     if ( _should_place_new_spot )
     {
-        _should_place_new_spot = false ;
-        platform :: vector_xyz ( _spot_position , _spot_x , _spot_y , - 3.0f ) ;
+        num_fract pos_x ;
+        num_fract pos_y ;
+        num_fract pos_z ;
+        platform :: math_make_num_fract ( pos_x , int_32 ( _spot_x * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_fract ( pos_y , int_32 ( _spot_y * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_fract ( pos_z , - 3 , 1 ) ;
+        platform :: vector_xyz ( _spot_position , pos_x , pos_y , pos_z ) ;
         _spot_frames_left = _spot_lifetime_in_frames ;
+        _should_place_new_spot = false ;
     }
 }
 

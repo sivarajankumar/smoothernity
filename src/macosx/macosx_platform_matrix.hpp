@@ -52,22 +52,30 @@ inline void shy_macosx_platform :: matrix_set_origin ( matrix_data & matrix , ve
 
 inline void shy_macosx_platform :: matrix_get_axis_x ( vector_data & result , const matrix_data & matrix )
 {
-    vector_xyz ( result , matrix . _elements [ 0 ] , matrix . _elements [ 1 ] , matrix . _elements [ 2 ] ) ;
+    result . _x = matrix . _elements [ 0 ] ;
+    result . _y = matrix . _elements [ 1 ] ;
+    result . _z = matrix . _elements [ 2 ] ;
 }
 
 inline void shy_macosx_platform :: matrix_get_axis_y ( vector_data & result , const matrix_data & matrix )
 {
-    vector_xyz ( result , matrix . _elements [ 4 ] , matrix . _elements [ 5 ] , matrix . _elements [ 6 ] ) ;
+    result . _x = matrix . _elements [ 4 ] ;
+    result . _y = matrix . _elements [ 5 ] ;
+    result . _z = matrix . _elements [ 6 ] ;
 }
 
 inline void shy_macosx_platform :: matrix_get_axis_z ( vector_data & result , const matrix_data & matrix )
 {
-    vector_xyz ( result , matrix . _elements [ 8 ] , matrix . _elements [ 9 ] , matrix . _elements [ 10 ] ) ;
+    result . _x = matrix . _elements [ 8 ] ;
+    result . _y = matrix . _elements [ 9 ] ;
+    result . _z = matrix . _elements [ 10 ] ;
 }
 
 inline void shy_macosx_platform :: matrix_get_origin ( vector_data & result , const matrix_data & matrix )
 {
-    vector_xyz ( result , matrix . _elements [ 12 ] , matrix . _elements [ 13 ] , matrix . _elements [ 14 ] ) ;
+    result . _x = matrix . _elements [ 12 ] ;
+    result . _y = matrix . _elements [ 13 ] ;
+    result . _z = matrix . _elements [ 14 ] ;
 }
 
 inline void shy_macosx_platform :: matrix_identity ( matrix_data & matrix )
@@ -100,7 +108,9 @@ inline void shy_macosx_platform :: matrix_inverse_rotation_translation ( matrix_
     vector_dot_product ( dot_z , origin , axis_z ) ;
     
     vector_data new_origin ;
-    vector_xyz ( new_origin , - dot_x , - dot_y , - dot_z ) ;
+    new_origin . _x = - dot_x ;
+    new_origin . _y = - dot_y ;
+    new_origin . _z = - dot_z ;
     
     matrix_set_origin ( matrix , new_origin ) ;
     swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;

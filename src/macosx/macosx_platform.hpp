@@ -111,9 +111,9 @@ public :
     {
         friend class shy_macosx_platform ;
     private :
-        float_32 _x ;
-        float_32 _y ;
-        float_32 _z ;
+        float _x ;
+        float _y ;
+        float _z ;
     } ;
     
     class mono_sound_sample
@@ -164,7 +164,7 @@ public :
     // vector
     //
     
-    static void vector_xyz ( vector_data & result , float_32 x , float_32 y , float_32 z ) ;
+    static void vector_xyz ( vector_data & result , num_fract x , num_fract y , num_fract z ) ;
     static void vector_dot_product ( float_32 & result , vector_data v1 , vector_data v2 ) ;
     static void vector_cross_product ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_add ( vector_data & result , vector_data v1 , vector_data v2 ) ;

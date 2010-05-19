@@ -53,18 +53,50 @@ shy_logic_sound < mediator > :: shy_logic_sound ( mediator * arg_mediator )
 template < typename mediator >
 void shy_logic_sound < mediator > :: init ( )
 {
+    num_fract pos_x ;
+    num_fract pos_y ;
+    num_fract pos_z ;
+    
+    num_fract vel_x ;
+    num_fract vel_y ;
+    num_fract vel_z ;
+    
+    num_fract look_at_x ;
+    num_fract look_at_y ;
+    num_fract look_at_z ;
+    
+    num_fract up_x ;
+    num_fract up_y ;
+    num_fract up_z ;
+    
     vector_data listener_pos ;
-    platform :: vector_xyz ( listener_pos , 0 , 0 , 4 ) ;
-    platform :: sound_set_listener_position ( listener_pos ) ;
-    
     vector_data listener_vel ;
-    platform :: vector_xyz ( listener_vel , 0 , 0 , 0 ) ;
-    platform :: sound_set_listener_velocity ( listener_vel ) ;
-    
     vector_data look_at ;
     vector_data up ;
-    platform :: vector_xyz ( look_at , 0 , 0 , 1 ) ;
-    platform :: vector_xyz ( up , 0 , 1 , 0 ) ;
+    
+    platform :: math_make_num_fract ( pos_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( pos_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( pos_z , 4 , 1 ) ;
+    
+    platform :: math_make_num_fract ( vel_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( vel_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( vel_z , 0 , 1 ) ;
+    
+    platform :: math_make_num_fract ( look_at_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( look_at_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( look_at_z , 1 , 1 ) ;
+    
+    platform :: math_make_num_fract ( up_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( up_y , 1 , 1 ) ;
+    platform :: math_make_num_fract ( up_z , 0 , 1 ) ;
+    
+    platform :: vector_xyz ( listener_pos , pos_x , pos_y , pos_z ) ;
+    platform :: vector_xyz ( listener_vel , vel_x , vel_y , vel_z ) ;
+    platform :: vector_xyz ( look_at , look_at_x , look_at_y , look_at_z ) ;
+    platform :: vector_xyz ( up , up_x , up_y , up_z ) ;
+    
+    platform :: sound_set_listener_position ( listener_pos ) ;
+    platform :: sound_set_listener_velocity ( listener_vel ) ;
     platform :: sound_set_listener_orientation ( look_at , up ) ;
 }
 
@@ -150,9 +182,27 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
 {
     num_fract gain ;
     num_fract pitch ;
+    num_fract pos_x ;
+    num_fract pos_y ;
+    num_fract pos_z ;
+    num_fract vel_x ;
+    num_fract vel_y ;
+    num_fract vel_z ;
+    vector_data source_pos ;
+    vector_data source_vel ;
     sound_buffer_id stereo_sound_buffer ;
+    
     platform :: math_make_num_fract ( gain , 7 , 10 ) ;
     platform :: math_make_num_fract ( pitch , 1 , 1 ) ;
+    platform :: math_make_num_fract ( pos_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( pos_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( pos_z , - 2 , 1 ) ;
+    platform :: math_make_num_fract ( vel_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( vel_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( vel_z , 0 , 1 ) ;
+    platform :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    platform :: vector_xyz ( source_vel , vel_x , vel_y , vel_z ) ;
+    
     platform :: sound_create_stereo_buffer 
         ( stereo_sound_buffer
         , _stereo_sound_data 
@@ -163,14 +213,8 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     platform :: sound_set_source_pitch ( _stereo_sound_source , pitch ) ;
     platform :: sound_set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
     platform :: sound_set_source_playback_looping ( _stereo_sound_source ) ;
-    platform :: sound_source_play ( _stereo_sound_source ) ;
-    
-    vector_data source_pos ;
-    platform :: vector_xyz ( source_pos , 0 , 0 , - 2 ) ;
+    platform :: sound_source_play ( _stereo_sound_source ) ;    
     platform :: sound_set_source_position ( _stereo_sound_source , source_pos ) ;
-    
-    vector_data source_vel ;
-    platform :: vector_xyz ( source_vel , 0 , 0 , 0 ) ;
     platform :: sound_set_source_velocity ( _stereo_sound_source , source_vel ) ;    
 }
 
@@ -190,25 +234,38 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         _int_to_sample ( sample , next_sample ) ;
         platform :: sound_set_sample_value ( _mono_sound_data [ i ] , sample ) ;
     }
+    
     num_fract gain ;
     num_fract pitch ;
+    num_fract pos_x ;
+    num_fract pos_y ;
+    num_fract pos_z ;
+    num_fract vel_x ;
+    num_fract vel_y ;
+    num_fract vel_z ;
+    vector_data source_pos ;
+    vector_data source_vel ;
     num_whole max_sound_samples ;
     sound_buffer_id mono_sound_buffer ;
+    
     platform :: math_make_num_fract ( gain , 1 , 1 ) ;
     platform :: math_make_num_fract ( pitch , 1 , 1 ) ;
+    platform :: math_make_num_fract ( pos_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( pos_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( pos_z , - 2 , 1 ) ;
+    platform :: math_make_num_fract ( vel_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( vel_y , 0 , 1 ) ;
+    platform :: math_make_num_fract ( vel_z , 0 , 1 ) ;
     platform :: math_make_num_whole ( max_sound_samples , _max_mono_sound_samples ) ;
+    platform :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    platform :: vector_xyz ( source_vel , pos_x , pos_y , pos_z ) ;
+    
     platform :: sound_create_mono_buffer ( mono_sound_buffer , _mono_sound_data , max_sound_samples ) ;
     platform :: sound_create_source ( _mono_sound_source ) ;
     platform :: sound_set_source_gain ( _mono_sound_source , gain ) ;
     platform :: sound_set_source_pitch ( _mono_sound_source , pitch ) ;
     platform :: sound_set_source_buffer ( _mono_sound_source , mono_sound_buffer ) ;
     platform :: sound_set_source_playback_once ( _mono_sound_source ) ;
-
-    vector_data source_pos ;
-    platform :: vector_xyz ( source_pos , 0 , 0 , - 2 ) ;
     platform :: sound_set_source_position ( _mono_sound_source , source_pos ) ;
-    
-    vector_data source_vel ;
-    platform :: vector_xyz ( source_vel , 0 , 0 , 0 ) ;
     platform :: sound_set_source_velocity ( _mono_sound_source , source_vel ) ;    
 }

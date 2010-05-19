@@ -202,14 +202,16 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & result , int_32 index )
 {
+    num_fract entity_x ;
+    num_fract entity_y ;
+    num_fract entity_z ;
     int_32 x = index % _entity_mesh_grid ;
     int_32 z = index / _entity_mesh_grid ;
-    platform :: vector_xyz
-        ( result
-        , ( float_32 ) ( _grid_step * ( x - ( _entity_mesh_grid / 2 ) ) )
-        , 0.5f * _entity_mesh_height
-        , ( float_32 ) ( _grid_step * ( z - ( _entity_mesh_grid / 2 ) ) )
-        ) ;
+    
+    platform :: math_make_num_fract ( entity_x , ( _grid_step * ( x - ( _entity_mesh_grid / 2 ) ) ) , 1 ) ;
+    platform :: math_make_num_fract ( entity_y , int_32 ( 0.5f * _entity_mesh_height * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( entity_z , ( _grid_step * ( z - ( _entity_mesh_grid / 2 ) ) ) , 1 ) ;
+    platform :: vector_xyz ( result , entity_x , entity_y , entity_z ) ;
 }
 
 template < typename mediator >
