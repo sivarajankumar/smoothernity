@@ -5,6 +5,7 @@ class shy_logic_sound
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: mono_sound_sample mono_sound_sample ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: sound_buffer_id sound_buffer_id ;
     typedef typename mediator :: platform :: sound_source_id sound_source_id ;
     typedef typename mediator :: platform :: stereo_sound_resource_id stereo_sound_resource_id ;
@@ -146,16 +147,20 @@ void shy_logic_sound < mediator > :: _int_to_sample ( float_32 & result , int_32
 
 template < typename mediator >
 void shy_logic_sound < mediator > :: _create_stereo_sound ( )
-{            
+{
+    num_fract gain ;
+    num_fract pitch ;
     sound_buffer_id stereo_sound_buffer ;
+    platform :: math_make_num_fract ( gain , 7 , 10 ) ;
+    platform :: math_make_num_fract ( pitch , 1 , 1 ) ;
     platform :: sound_create_stereo_buffer 
         ( stereo_sound_buffer
         , _stereo_sound_data 
         , _loaded_stereo_sound_samples - 2293 
         ) ;
     platform :: sound_create_source ( _stereo_sound_source ) ;
-    platform :: sound_set_source_pitch ( _stereo_sound_source , 1 ) ;
-    platform :: sound_set_source_gain ( _stereo_sound_source , 0.7f ) ;
+    platform :: sound_set_source_gain ( _stereo_sound_source , gain ) ;
+    platform :: sound_set_source_pitch ( _stereo_sound_source , pitch ) ;
     platform :: sound_set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
     platform :: sound_set_source_playback_looping ( _stereo_sound_source ) ;
     platform :: sound_source_play ( _stereo_sound_source ) ;
@@ -185,11 +190,15 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         _int_to_sample ( sample , next_sample ) ;
         platform :: sound_set_sample_value ( _mono_sound_data [ i ] , sample ) ;
     }
+    num_fract gain ;
+    num_fract pitch ;
     sound_buffer_id mono_sound_buffer ;
+    platform :: math_make_num_fract ( gain , 1 , 1 ) ;
+    platform :: math_make_num_fract ( pitch , 1 , 1 ) ;
     platform :: sound_create_mono_buffer ( mono_sound_buffer , _mono_sound_data , _max_mono_sound_samples ) ;
     platform :: sound_create_source ( _mono_sound_source ) ;
-    platform :: sound_set_source_pitch ( _mono_sound_source , 1 ) ;
-    platform :: sound_set_source_gain ( _mono_sound_source , 1 ) ;
+    platform :: sound_set_source_gain ( _mono_sound_source , gain ) ;
+    platform :: sound_set_source_pitch ( _mono_sound_source , pitch ) ;
     platform :: sound_set_source_buffer ( _mono_sound_source , mono_sound_buffer ) ;
     platform :: sound_set_source_playback_once ( _mono_sound_source ) ;
 

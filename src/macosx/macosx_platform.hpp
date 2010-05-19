@@ -156,9 +156,9 @@ public :
     // constants
     //
     
-    static const int_32 frames_per_second = 60 ;
-    static const int_32 mono_sound_samples_per_second = 22050 ;
-    static const int_32 stereo_sound_samples_per_second = 44100 ;
+    static const_int_32 frames_per_second = 60 ;
+    static const_int_32 mono_sound_samples_per_second = 22050 ;
+    static const_int_32 stereo_sound_samples_per_second = 44100 ;
     
     //
     // vector
@@ -270,8 +270,8 @@ public :
     static void sound_create_mono_buffer ( sound_buffer_id & result , mono_sound_sample * samples , int_32 samples_count ) ;
     static void sound_create_stereo_buffer ( sound_buffer_id & result , stereo_sound_sample * samples , int_32 samples_count ) ;
     static void sound_create_source ( sound_source_id & result ) ;
-    static void sound_set_source_pitch ( const sound_source_id & source_id , float_32 pitch ) ;
-    static void sound_set_source_gain ( const sound_source_id & source_id , float_32 gain ) ;
+    static void sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch ) ;
+    static void sound_set_source_gain ( const sound_source_id & source_id , num_fract gain ) ;
     static void sound_set_source_position ( const sound_source_id & source_id , vector_data position ) ;
     static void sound_set_source_velocity ( const sound_source_id & source_id , vector_data velocity ) ;
     static void sound_set_source_buffer ( const sound_source_id & source_id , sound_buffer_id & buffer_id ) ;

@@ -97,14 +97,14 @@ inline void shy_macosx_platform :: sound_create_source ( sound_source_id & resul
     alGenSources ( 1 , & result . _source_id ) ;
 }
 
-inline void shy_macosx_platform :: sound_set_source_pitch ( const sound_source_id & source_id , float_32 pitch )
+inline void shy_macosx_platform :: sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch )
 {
-    alSourcef ( source_id . _source_id , AL_PITCH , pitch ) ;
+    alSourcef ( source_id . _source_id , AL_PITCH , pitch . _value ) ;
 }
 
-inline void shy_macosx_platform :: sound_set_source_gain ( const sound_source_id & source_id , float_32 gain )
+inline void shy_macosx_platform :: sound_set_source_gain ( const sound_source_id & source_id , num_fract gain )
 {
-    alSourcef ( source_id . _source_id , AL_GAIN , gain ) ;
+    alSourcef ( source_id . _source_id , AL_GAIN , gain . _value ) ;
 }
 
 inline void shy_macosx_platform :: sound_set_source_position ( const sound_source_id & source_id , vector_data position )
