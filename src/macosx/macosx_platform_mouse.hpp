@@ -1,6 +1,6 @@
-inline void shy_macosx_platform :: mouse_left_button_down ( int_32 & result )
+inline void shy_macosx_platform :: mouse_left_button_down ( num_whole & result )
 {
-    result = ( _mouse_left_button_down != false ) ;
+    result . _value = ( _mouse_left_button_down != false ) ;
 }
 
 inline void shy_macosx_platform :: mouse_x ( float_32 & result )

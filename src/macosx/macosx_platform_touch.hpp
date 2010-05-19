@@ -1,6 +1,6 @@
-inline void shy_macosx_platform :: touch_occured ( int_32 & result )
+inline void shy_macosx_platform :: touch_occured ( num_whole & result )
 {
-    result = false ;
+    result . _value = false ;
 }
 
 inline void shy_macosx_platform :: touch_x ( float_32 & result )

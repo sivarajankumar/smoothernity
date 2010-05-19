@@ -104,9 +104,9 @@ void shy_logic_touch < mediator > :: _decrease_spot_lifetime ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 {
-    int_32 touch ;
+    num_whole touch ;
     platform :: touch_occured ( touch ) ;
-    if ( touch )
+    if ( platform :: condition_true ( touch ) )
     {
         float_32 x ;
         float_32 y ;
@@ -121,9 +121,9 @@ void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_mouse ( )
 {
-    int_32 mouse_button ;
+    num_whole mouse_button ;
     platform :: mouse_left_button_down ( mouse_button ) ;
-    if ( mouse_button )
+    if ( platform :: condition_true ( mouse_button ) )
     {
         float_32 x ;
         float_32 y ;

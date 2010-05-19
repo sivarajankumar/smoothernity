@@ -310,7 +310,7 @@ public :
     // touch
     //
     
-    static void touch_occured ( int_32 & result ) ;
+    static void touch_occured ( num_whole & result ) ;
     static void touch_x ( float_32 & result ) ;
     static void touch_y ( float_32 & result ) ;
 
@@ -318,7 +318,7 @@ public :
 	// mouse
 	//
 
-	static void mouse_left_button_down ( int_32 & result ) ;
+	static void mouse_left_button_down ( num_whole & result ) ;
 	static void mouse_x ( float_32 & result ) ;
 	static void mouse_y ( float_32 & result ) ;
 
