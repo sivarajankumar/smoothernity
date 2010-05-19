@@ -15,7 +15,32 @@ class shy_macosx_platform
 {
 public :
     typedef int int_32 ;
-    typedef float float_32 ;
+    typedef float float_32 ;    
+    typedef const int const_int_32 ;
+    
+    class num_whole
+    {
+        friend class shy_macosx_platform ;
+    public :
+        num_whole ( )
+        : _value ( 0 )
+        {
+        }
+    private :
+        int _value ;
+    } ;
+    
+    class num_fract
+    {
+        friend class shy_macosx_platform ;
+    public :
+        num_fract ( )
+        : _value ( 0 )
+        {
+        }
+    private :
+        float _value ;
+    } ;
     
     class render_index_buffer_id
     {
@@ -261,6 +286,8 @@ public :
     
     static void math_sin ( float_32 & result , float_32 a ) ;
     static void math_cos ( float_32 & result , float_32 a ) ;
+    static void math_make_num_whole ( num_whole & result , const_int_32 value ) ;
+    static void math_make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator ) ;
     
     //
     // time
