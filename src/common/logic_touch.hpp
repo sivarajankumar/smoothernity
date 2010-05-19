@@ -180,6 +180,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         num_whole vertex_g ;
         num_whole vertex_b ;
         num_whole vertex_a ;
+        num_whole index ;
         platform :: math_cos ( angle_cos , angle ) ;
         platform :: math_sin ( angle_sin , angle ) ;
         platform :: math_make_num_fract ( vertex_x , int_32 ( _spot_size ( ) * angle_cos * 1000.0f ) , 1000 ) ;
@@ -189,9 +190,10 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform :: math_make_num_whole ( vertex_g , _spot_g ) ;
         platform :: math_make_num_whole ( vertex_b , _spot_b ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
+        platform :: math_make_num_whole ( index , i ) ;
         platform :: render_set_vertex_position ( vertices [ i ] , vertex_x , vertex_y , vertex_z ) ;
         platform :: render_set_vertex_color ( vertices [ i ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        platform :: render_set_index_value ( indices [ i ] , i ) ;
+        platform :: render_set_index_value ( indices [ i ] , index ) ;
     }
     _mediator -> mesh_create ( _spot_mesh_id , vertices , 0 , indices , _spot_edges , 0 , _spot_edges ) ;
 }

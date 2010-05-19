@@ -211,9 +211,9 @@ inline void shy_macosx_platform :: render_create_index_buffer
         ) ;
 }
 
-inline void shy_macosx_platform :: render_set_index_value ( index_data & data , int_32 index )
+inline void shy_macosx_platform :: render_set_index_value ( index_data & data , num_whole index )
 {
-    data . _index = ( GLushort ) index ;
+    data . _index = ( GLushort ) index . _value ;
 }
 
 inline void shy_macosx_platform :: render_matrix_identity ( )

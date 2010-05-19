@@ -146,20 +146,25 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     {
         for ( int_32 ix = 0 ; ix < _land_grid + 1 ; ix ++ )
         {
-            int_32 index = 0 ;
             if ( iz % 2 == 0 )
             {
-                index = ix + ( _land_grid + 1 ) * iz ;
+                num_whole index ;
+                int_32 index_int_32 = ix + ( _land_grid + 1 ) * iz ;
+                platform :: math_make_num_whole ( index , index_int_32 ) ;
                 platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
                 ++ indices_count ;
-                platform :: render_set_index_value ( indices [ indices_count ] , index + _land_grid + 1 ) ;
+                platform :: math_make_num_whole ( index , index_int_32 + _land_grid + 1 ) ;
+                platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
                 ++ indices_count ;
             }
             else
             {
-                index = _land_grid - ix + ( _land_grid + 1 ) * iz ;
-                platform :: render_set_index_value ( indices [ indices_count ] , index + _land_grid + 1 ) ;
+                num_whole index ;
+                int_32 index_int_32 = _land_grid - ix + ( _land_grid + 1 ) * iz ;
+                platform :: math_make_num_whole ( index , index_int_32 + _land_grid + 1 ) ;
+                platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
                 ++ indices_count ;
+                platform :: math_make_num_whole ( index , index_int_32 ) ;
                 platform :: render_set_index_value ( indices [ indices_count ] , index ) ;
                 ++ indices_count ;
             }

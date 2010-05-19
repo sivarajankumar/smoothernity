@@ -229,7 +229,7 @@ public :
     static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
 
     static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , index_data * data ) ;
-    static void render_set_index_value ( index_data & data , int_32 index ) ;
+    static void render_set_index_value ( index_data & data , num_whole index ) ;
     
     static void render_draw_triangle_strip 
         ( const render_vertex_buffer_id & vertices_buffer 
