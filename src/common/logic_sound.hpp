@@ -22,7 +22,7 @@ public :
     void sound_update ( ) ;
 private :
     void _load_sound ( ) ;
-    float_32 _int_to_sample ( int_32 i ) ;
+    void _int_to_sample ( float_32 & result , int_32 i ) ;
     void _create_stereo_sound ( ) ;
     void _create_mono_sound ( ) ;
 private :
@@ -139,10 +139,9 @@ void shy_logic_sound < mediator > :: _load_sound ( )
 }
 
 template < typename mediator >
-typename shy_logic_sound < mediator > :: float_32
-shy_logic_sound < mediator > :: _int_to_sample ( int_32 i )
+void shy_logic_sound < mediator > :: _int_to_sample ( float_32 & result , int_32 i )
 {
-    return float_32 ( ( i % 256 ) - 128 ) / 128.0f ;
+    result = float_32 ( ( i % 256 ) - 128 ) / 128.0f ;
 }
 
 template < typename mediator >
@@ -182,7 +181,9 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         float_32 angle_sin ;
         platform :: math_sin ( angle_sin , angle ) ;
         next_sample += int_32 ( 128.0f * ( 1.0f + angle_sin ) ) ;
-        platform :: sound_set_sample_value ( _mono_sound_data [ i ] , _int_to_sample ( next_sample ) ) ;
+        float_32 sample ;
+        _int_to_sample ( sample , next_sample ) ;
+        platform :: sound_set_sample_value ( _mono_sound_data [ i ] , sample ) ;
     }
     sound_buffer_id mono_sound_buffer ;
     platform :: sound_create_mono_buffer ( mono_sound_buffer , _mono_sound_data , _max_mono_sound_samples ) ;
