@@ -202,7 +202,7 @@ public :
     static void render_disable_depth_test ( ) ;
     
     static void render_fog_disable ( ) ;
-    static void render_fog_linear ( float_32 near , float_32 far , float_32 r , float_32 g , float_32 b , float_32 a ) ;
+    static void render_fog_linear ( num_fract near , num_fract far , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     
     static void render_blend_disable ( ) ;
     static void render_blend_src_alpha_dst_one_minus_alpha ( ) ;
@@ -212,7 +212,7 @@ public :
 	static void render_set_modulate_texture_mode ( ) ;
     static void render_use_texture ( const render_texture_id & arg_texture_id ) ;
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
-    static void render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a ) ;
+    static void render_set_texel_color ( texel_data & texel , num_whole r , num_whole g , num_whole b , num_whole a ) ;
     static void render_load_texture_data ( const render_texture_id & arg_texture_id , int_32 size_pow2_base , texel_data * data ) ;
     static void render_load_texture_resource ( const texture_resource_id & resource_id , int_32 size_pow2_base , texel_data * data ) ;
     static void render_create_texture_resource_id ( texture_resource_id & resource_id , int_32 resource_index ) ;
@@ -258,17 +258,17 @@ public :
     static void sound_set_listener_position ( vector_data position ) ;
     static void sound_set_listener_velocity ( vector_data velocity ) ;
     static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
-    static void sound_set_sample_value ( mono_sound_sample & sample , float_32 value ) ;
-    static void sound_create_stereo_resource_id ( stereo_sound_resource_id & result , int_32 resource_index ) ;
+    static void sound_set_sample_value ( mono_sound_sample & sample , num_fract value ) ;
+    static void sound_create_stereo_resource_id ( stereo_sound_resource_id & result , num_whole resource_index ) ;
     static void sound_load_stereo_sample_data
         ( stereo_sound_sample * samples 
-        , int_32 max_samples_count
-        , int_32 & loaded_samples_count
+        , num_whole max_samples_count
+        , num_whole & loaded_samples_count
         , const stereo_sound_resource_id & resource_id 
         ) ;
-    static void sound_loader_ready ( int_32 & result ) ;
-    static void sound_create_mono_buffer ( sound_buffer_id & result , mono_sound_sample * samples , int_32 samples_count ) ;
-    static void sound_create_stereo_buffer ( sound_buffer_id & result , stereo_sound_sample * samples , int_32 samples_count ) ;
+    static void sound_loader_ready ( num_whole & result ) ;
+    static void sound_create_mono_buffer ( sound_buffer_id & result , mono_sound_sample * samples , num_whole samples_count ) ;
+    static void sound_create_stereo_buffer ( sound_buffer_id & result , stereo_sound_sample * samples , num_whole samples_count ) ;
     static void sound_create_source ( sound_source_id & result ) ;
     static void sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch ) ;
     static void sound_set_source_gain ( const sound_source_id & source_id , num_fract gain ) ;
@@ -286,15 +286,25 @@ public :
     
     static void math_sin ( float_32 & result , float_32 a ) ;
     static void math_cos ( float_32 & result , float_32 a ) ;
+    static void math_sub_wholes ( num_whole & result , num_whole from , num_whole what ) ;
+    static void math_add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
     static void math_make_num_whole ( num_whole & result , const_int_32 value ) ;
     static void math_make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator ) ;
+
+    //
+    // condition
+    //
+    
+    static int condition_equal ( num_whole a , num_whole b ) ;
+    static int condition_true ( num_whole num ) ;
+    static int condition_false ( num_whole num ) ;
     
     //
     // time
     //
     
     static void time_get_current ( time_data & time ) ;
-    static void time_diff_in_microseconds ( int_32 & result , const time_data & time1 , const time_data & time2 ) ;
+    static void time_diff_in_microseconds ( num_whole & result , const time_data & time1 , const time_data & time2 ) ;
 
     //
     // touch
@@ -341,6 +351,7 @@ void swap_values ( type & a , type & b )
     a = c ;
 }
 
+#include "macosx_platform_condition.hpp"
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
 #include "macosx_platform_mouse.hpp"

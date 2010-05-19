@@ -4,6 +4,7 @@ class shy_logic_game
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: int_32 int_32 ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
     
     static const int_32 _fade_in_frames = 90 ;
     static const float_32 _final_r ( ) { return 0.0f ; }
@@ -156,16 +157,27 @@ void shy_logic_game < mediator > :: _render_hud ( )
 template < typename mediator >
 void shy_logic_game < mediator > :: _clear_screen ( )
 {
-    float_32 near_plane ;
-    _mediator -> get_near_plane_distance ( near_plane ) ;
-    platform :: render_fog_linear 
-        ( 10.0f + near_plane
-        , 20.0f + near_plane
-        , _color_r 
-        , _color_g 
-        , _color_b 
-        , 0 
-        ) ;
+    num_fract fog_r ;
+    num_fract fog_g ;
+    num_fract fog_b ;
+    num_fract fog_a ;
+    num_fract fog_far ;
+    num_fract fog_near ;
+    num_fract near_plane ;
+    num_fract fog_far_shift ;
+    num_fract fog_near_shift ;
+    float_32 near_plane_float ;
+    _mediator -> get_near_plane_distance ( near_plane_float ) ;
+    platform :: math_make_num_fract ( fog_a , 0 , 1 ) ;
+    platform :: math_make_num_fract ( fog_r , int_32 ( _color_r * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( fog_g , int_32 ( _color_g * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( fog_b , int_32 ( _color_b * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( near_plane , int_32 ( near_plane_float * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( fog_far_shift , 20 , 1 ) ;
+    platform :: math_make_num_fract ( fog_near_shift , 10 , 1 ) ;
+    platform :: math_add_fracts ( fog_far , fog_far_shift , near_plane ) ;
+    platform :: math_add_fracts ( fog_near , fog_near_shift , near_plane ) ;
+    platform :: render_fog_linear ( fog_near , fog_far , fog_r , fog_g , fog_b , fog_a ) ;
     platform :: render_clear_screen ( _color_r , _color_g , _color_b ) ;
 }
 

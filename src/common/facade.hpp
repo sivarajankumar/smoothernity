@@ -97,4 +97,3 @@ void shy_facade < platform > :: video_mode_changed ( )
 #undef signed
 #undef short
 #undef unsigned
-

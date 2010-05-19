@@ -45,19 +45,19 @@ inline void shy_macosx_platform :: render_fog_disable ( )
 }
 
 inline void shy_macosx_platform :: render_fog_linear 
-    ( float_32 near 
-    , float_32 far 
-    , float_32 r 
-    , float_32 g 
-    , float_32 b 
-    , float_32 a 
+    ( num_fract near 
+    , num_fract far 
+    , num_fract r 
+    , num_fract g 
+    , num_fract b 
+    , num_fract a 
     )
 {
-    GLfloat color [ ] = { r , g , b , a } ;
+    GLfloat color [ ] = { r . _value , g . _value , b . _value , a . _value } ;
     glEnable ( GL_FOG ) ;
     glFogf ( GL_FOG_MODE , GL_LINEAR ) ;
-    glFogf ( GL_FOG_START , ( GLfloat ) near ) ;
-    glFogf ( GL_FOG_END , ( GLfloat ) far ) ;
+    glFogf ( GL_FOG_START , ( GLfloat ) near . _value ) ;
+    glFogf ( GL_FOG_END , ( GLfloat ) far . _value ) ;
     glFogfv ( GL_FOG_COLOR , color ) ;
 }
 
@@ -71,12 +71,12 @@ inline void shy_macosx_platform :: render_use_texture ( const render_texture_id 
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
 }
 
-inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel , int_32 r , int_32 g , int_32 b , int_32 a )
+inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel , num_whole r , num_whole g , num_whole b , num_whole a )
 {
-    texel . _color [ 0 ] = ( GLubyte ) b ;
-    texel . _color [ 1 ] = ( GLubyte ) g ;
-    texel . _color [ 2 ] = ( GLubyte ) r ;
-    texel . _color [ 3 ] = ( GLubyte ) a ;
+    texel . _color [ 0 ] = ( GLubyte ) b . _value ;
+    texel . _color [ 1 ] = ( GLubyte ) g . _value ;
+    texel . _color [ 2 ] = ( GLubyte ) r . _value ;
+    texel . _color [ 3 ] = ( GLubyte ) a . _value ;
 }
 
 inline void shy_macosx_platform :: render_load_texture_data 

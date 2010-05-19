@@ -23,43 +23,43 @@ inline void shy_macosx_platform :: sound_set_listener_orientation ( vector_data 
     alListenerfv ( AL_ORIENTATION , al_orientation ) ;
 }
 
-inline void shy_macosx_platform :: sound_set_sample_value ( mono_sound_sample & sample , float_32 value )
+inline void shy_macosx_platform :: sound_set_sample_value ( mono_sound_sample & sample , num_fract value )
 {
-    sample . _value = ( ALubyte ) ( ( value * 127.0f ) + 127.0f ) ;
+    sample . _value = ( ALubyte ) ( ( value . _value * 127.0f ) + 127.0f ) ;
 }
 
 inline void shy_macosx_platform :: sound_create_stereo_resource_id 
     ( stereo_sound_resource_id & result 
-    , int_32 resource_index
+    , num_whole resource_index
     )
 {
-    result . _resource_id = resource_index ;
+    result . _resource_id = resource_index . _value ;
 }
 
 inline void shy_macosx_platform :: sound_load_stereo_sample_data
     ( stereo_sound_sample * samples 
-    , int_32 max_samples_count
-    , int_32 & loaded_samples_count
+    , num_whole max_samples_count
+    , num_whole & loaded_samples_count
     , const stereo_sound_resource_id & resource_id 
     )
 {
     [ _sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
         to_buffer : ( void * ) samples
-        with_max_samples_count_of : max_samples_count
-        put_loaded_samples_count_to : & loaded_samples_count
+        with_max_samples_count_of : max_samples_count . _value
+        put_loaded_samples_count_to : & loaded_samples_count . _value
     ] ;
 }
 
-inline void shy_macosx_platform :: sound_loader_ready ( int_32 & result )
+inline void shy_macosx_platform :: sound_loader_ready ( num_whole & result )
 {
-    result = [ _sound_loader loader_ready ] ;
+    result . _value = [ _sound_loader loader_ready ] ;
 }
 
 inline void shy_macosx_platform :: sound_create_mono_buffer 
     ( sound_buffer_id & result
     , mono_sound_sample * samples 
-    , int_32 samples_count 
+    , num_whole samples_count 
     )
 {
     alBufferDataStaticProcPtr al_buffer_data_static_proc = 
@@ -69,7 +69,7 @@ inline void shy_macosx_platform :: sound_create_mono_buffer
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
         , ( ALvoid * ) samples
-        , samples_count * sizeof ( mono_sound_sample )
+        , samples_count . _value * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
 }
@@ -77,7 +77,7 @@ inline void shy_macosx_platform :: sound_create_mono_buffer
 inline void shy_macosx_platform :: sound_create_stereo_buffer 
     ( sound_buffer_id & result
     , stereo_sound_sample * samples 
-    , int_32 samples_count 
+    , num_whole samples_count 
     )
 {
     alBufferDataStaticProcPtr al_buffer_data_static_proc = 
@@ -87,7 +87,7 @@ inline void shy_macosx_platform :: sound_create_stereo_buffer
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
         , ( ALvoid * ) samples 
-        , samples_count * sizeof ( stereo_sound_sample )
+        , samples_count . _value * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;
 }

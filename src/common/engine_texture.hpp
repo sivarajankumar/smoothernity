@@ -6,6 +6,7 @@ class shy_engine_texture
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: int_32 int_32 ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     
     static const int_32 _max_textures = 5 ;
     static const int_32 _texture_size_pow2_base = 8 ;
@@ -93,7 +94,21 @@ template < typename mediator >
 void shy_engine_texture < mediator > :: texture_set_texel
     ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a )
 {
-    platform :: render_set_texel_color ( _textures_datas [ arg_texture_id . _texture_id ] . texels [ x + _texture_size * y ] , r , g , b , a ) ;
+    num_whole num_r ;
+    num_whole num_g ;
+    num_whole num_b ;
+    num_whole num_a ;
+    platform :: math_make_num_whole ( num_r , r ) ;
+    platform :: math_make_num_whole ( num_g , g ) ;
+    platform :: math_make_num_whole ( num_b , b ) ;
+    platform :: math_make_num_whole ( num_a , a ) ;
+    platform :: render_set_texel_color 
+        ( _textures_datas [ arg_texture_id . _texture_id ] . texels [ x + _texture_size * y ] 
+        , num_r 
+        , num_g 
+        , num_b 
+        , num_a 
+        ) ;
 }
 
 template < typename mediator >

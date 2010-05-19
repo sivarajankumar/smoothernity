@@ -8,6 +8,7 @@ class shy_logic_text
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -174,10 +175,26 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
 {
     int_32 texture_width ;
     int_32 texture_height ;
+    num_whole filler_r ;
+    num_whole filler_g ;
+    num_whole filler_b ;
+    num_whole filler_a ;
+    num_whole eraser_r ;
+    num_whole eraser_g ;
+    num_whole eraser_b ;
+    num_whole eraser_a ;
     _mediator -> texture_width ( texture_width ) ;
     _mediator -> texture_height ( texture_height ) ;
-    platform :: render_set_texel_color ( _filler , 0 , 255 , 0 , 255 ) ;
-    platform :: render_set_texel_color ( _eraser , 0 , 0 , 0 , 128 ) ;
+    platform :: math_make_num_whole ( filler_r , 0 ) ;
+    platform :: math_make_num_whole ( filler_g , 255 ) ;
+    platform :: math_make_num_whole ( filler_b , 0 ) ;
+    platform :: math_make_num_whole ( filler_a , 255 ) ;
+    platform :: math_make_num_whole ( eraser_r , 0 ) ;
+    platform :: math_make_num_whole ( eraser_g , 0 ) ;
+    platform :: math_make_num_whole ( eraser_b , 0 ) ;
+    platform :: math_make_num_whole ( eraser_a , 128 ) ;
+    platform :: render_set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
+    platform :: render_set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
     _mediator -> texture_create ( _text_texture_id ) ;
     for ( int_32 x = 0 ; x < texture_width ; x ++ )
     {

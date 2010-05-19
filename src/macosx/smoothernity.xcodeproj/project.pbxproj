@@ -138,6 +138,7 @@
 		883E9479119D62680040B1D6 /* macosx_texture_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 883E9477119D62680040B1D6 /* macosx_texture_loader.h */; };
 		883E947A119D62680040B1D6 /* macosx_texture_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 883E9478119D62680040B1D6 /* macosx_texture_loader.m */; };
 		883E94DA119D67C00040B1D6 /* texture_resource_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 883E94D9119D67C00040B1D6 /* texture_resource_1.png */; };
+		8840916C11A4080E00939F1B /* macosx_platform_condition.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8840916B11A4080E00939F1B /* macosx_platform_condition.hpp */; };
 		886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
 		886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886AE9F5117C8B36009CBB6F /* macosx_platform.mm */; };
 		886AE9FF117C8B36009CBB6F /* macosx_platform_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */; };
@@ -197,6 +198,7 @@
 		883E9477119D62680040B1D6 /* macosx_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_texture_loader.h; sourceTree = "<group>"; };
 		883E9478119D62680040B1D6 /* macosx_texture_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = macosx_texture_loader.m; sourceTree = "<group>"; };
 		883E94D9119D67C00040B1D6 /* texture_resource_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture_resource_1.png; path = ../../resources/texture_resource_1.png; sourceTree = SOURCE_ROOT; };
+		8840916B11A4080E00939F1B /* macosx_platform_condition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_condition.hpp; sourceTree = "<group>"; };
 		886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform.hpp; sourceTree = "<group>"; };
 		886AE9F5117C8B36009CBB6F /* macosx_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_platform.mm; sourceTree = "<group>"; };
 		886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_math.hpp; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				05689226046B13F600000102 /* macosx_opengl_view.mm */,
 				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
 				886AE9F5117C8B36009CBB6F /* macosx_platform.mm */,
+				8840916B11A4080E00939F1B /* macosx_platform_condition.hpp */,
 				886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */,
 				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
 				880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */,
@@ -454,6 +457,7 @@
 				882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */,
 				882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */,
 				882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */,
+				8840916C11A4080E00939F1B /* macosx_platform_condition.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
