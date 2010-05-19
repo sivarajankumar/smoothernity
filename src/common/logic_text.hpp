@@ -8,6 +8,7 @@ class shy_logic_text
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
@@ -147,22 +148,33 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     vertex_data vertices [ 4 ] ;
     index_data indices [ 4 ] ;
 
-    platform :: render_set_vertex_position  ( vertices [ 0 ] , - 1 , 1 , 0 ) ;
+    num_fract x_left ;
+    num_fract x_right ;
+    num_fract y_top ;
+    num_fract y_bottom ;
+    num_fract z ;
+    platform :: math_make_num_fract ( x_left , - 1 , 1 ) ;
+    platform :: math_make_num_fract ( x_right , 1 , 1 ) ;
+    platform :: math_make_num_fract ( y_top , 1 , 1 ) ;
+    platform :: math_make_num_fract ( y_bottom , - 1 , 1 ) ;
+    platform :: math_make_num_fract ( z , 0 , 1 ) ;
+
+    platform :: render_set_vertex_position  ( vertices [ 0 ] , x_left , y_top , z ) ;
     platform :: render_set_vertex_color     ( vertices [ 0 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 0 ] , 0 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 0 ] , 0 ) ;
 
-    platform :: render_set_vertex_position  ( vertices [ 1 ] , - 1 , - 1 , 0 ) ;
+    platform :: render_set_vertex_position  ( vertices [ 1 ] , x_left , y_bottom , z ) ;
     platform :: render_set_vertex_color     ( vertices [ 1 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 1 ] , 0 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 1 ] , 1 ) ;
 
-    platform :: render_set_vertex_position  ( vertices [ 2 ] , 1 , 1 , 0 ) ;
+    platform :: render_set_vertex_position  ( vertices [ 2 ] , x_right , y_top , z ) ;
     platform :: render_set_vertex_color     ( vertices [ 2 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 2 ] , 1 , 1 ) ;
     platform :: render_set_index_value      ( indices  [ 2 ] , 2 ) ;
 
-    platform :: render_set_vertex_position  ( vertices [ 3 ] , 1 , - 1 , 0 ) ;
+    platform :: render_set_vertex_position  ( vertices [ 3 ] , x_right , y_bottom , z ) ;
     platform :: render_set_vertex_color     ( vertices [ 3 ] , _canvas_r , _canvas_g , _canvas_b , _canvas_a ) ;
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , 1 , 0 ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , 3 ) ;

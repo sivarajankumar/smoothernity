@@ -7,6 +7,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -122,6 +123,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     int_32 strip_indices_count = 0 ;
     int_32 fan_indices_count = 0 ;
     int_32 vertices_count = 0 ;
+    num_fract vertex_x ;
+    num_fract vertex_y ;
+    num_fract vertex_z ;
     for ( int_32 i = 0; i < _entity_mesh_spans + 1 ; i ++ )
     {
         float_32 pi ;
@@ -134,12 +138,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         int_32 color = ( i * 21 / ( _entity_mesh_spans + 1 ) ) % 7;
         int_32 color1 = color;
         int_32 color2 = ( color + 1 ) % 7;
-        platform :: render_set_vertex_position 
-            ( vertices [ vertices_count ] 
-            , x 
-            , 0.5f * _entity_mesh_height
-            , z 
-            ) ;
+        platform :: math_make_num_fract ( vertex_x , int_32 ( x * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_fract ( vertex_z , int_32 ( z * 1000.0f ) , 1000 ) ;
+        platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
         platform :: render_set_vertex_color 
             ( vertices [ vertices_count ] 
             , _entity_colors_r ( ) [ color1 ]
@@ -150,12 +152,8 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , vertices_count ) ;
         ++ strip_indices_count ;
         ++ vertices_count ;
-        platform :: render_set_vertex_position 
-            ( vertices [ vertices_count ] 
-            , x 
-            , - 0.5f * _entity_mesh_height
-            , z 
-            ) ;
+        platform :: math_make_num_fract ( vertex_y , int_32 ( - 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
+        platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
         platform :: render_set_vertex_color 
             ( vertices [ vertices_count ] 
             , _entity_colors_r ( ) [ color2 ]
@@ -167,12 +165,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         ++ strip_indices_count ;
         ++ vertices_count ;
     }
-    platform :: render_set_vertex_position 
-        ( vertices [ vertices_count ] 
-        , 0.0f
-        , 0.5f * _entity_mesh_height
-        , 0.0f 
-        ) ;
+    platform :: math_make_num_fract ( vertex_x , 0 , 1 ) ;
+    platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
+    platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
     platform :: render_set_vertex_color 
         ( vertices [ vertices_count ] 
         , _entity_color_roof_r

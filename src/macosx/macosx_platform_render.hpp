@@ -174,11 +174,11 @@ inline void shy_macosx_platform :: render_create_vertex_buffer
         ) ;
 }
 
-inline void shy_macosx_platform :: render_set_vertex_position ( vertex_data & vertex , float_32 x , float_32 y , float_32 z )
+inline void shy_macosx_platform :: render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z )
 {
-    vertex . _position [ 0 ] = ( GLfloat ) x ;
-    vertex . _position [ 1 ] = ( GLfloat ) y ;
-    vertex . _position [ 2 ] = ( GLfloat ) z ;
+    vertex . _position [ 0 ] = ( GLfloat ) x . _value ;
+    vertex . _position [ 1 ] = ( GLfloat ) y . _value ;
+    vertex . _position [ 2 ] = ( GLfloat ) z . _value ;
 }
 
 inline void shy_macosx_platform :: render_set_vertex_tex_coord ( vertex_data & vertex , float_32 u , float_32 v )

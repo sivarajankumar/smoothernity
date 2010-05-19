@@ -8,6 +8,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
@@ -115,12 +116,13 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
         {
             float_32 x = grid_origin_x + grid_step * ( float_32 ) ix ;
             float_32 z = grid_origin_z + grid_step * ( float_32 ) iz ;
-            platform :: render_set_vertex_position 
-                ( vertices [ vertices_count ]
-                , x
-                , 0.0f
-                , z
-                ) ;
+            num_fract vertex_x ;
+            num_fract vertex_y ;
+            num_fract vertex_z ;
+            platform :: math_make_num_fract ( vertex_x , int_32 ( x * 1000.0f ) , 1000 ) ;
+            platform :: math_make_num_fract ( vertex_y , 0 , 1 ) ;
+            platform :: math_make_num_fract ( vertex_z , int_32 ( z * 1000.0f ) , 1000 ) ;
+            platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color
                 ( vertices [ vertices_count ]
                 , _land_r

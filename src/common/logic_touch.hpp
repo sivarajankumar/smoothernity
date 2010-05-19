@@ -7,6 +7,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -171,14 +172,15 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         float_32 angle = pi * 2.0f * float_32 ( i ) / float_32 ( _spot_edges ) ;
         float_32 angle_cos ;
         float_32 angle_sin ;
+        num_fract vertex_x ;
+        num_fract vertex_y ;
+        num_fract vertex_z ;
         platform :: math_cos ( angle_cos , angle ) ;
         platform :: math_sin ( angle_sin , angle ) ;
-        platform :: render_set_vertex_position
-            ( vertices [ i ]
-            , _spot_size ( ) * angle_cos
-            , _spot_size ( ) * angle_sin
-            , 0.0f
-            ) ;
+        platform :: math_make_num_fract ( vertex_x , int_32 ( _spot_size ( ) * angle_cos * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_fract ( vertex_y , int_32 ( _spot_size ( ) * angle_sin * 1000.0f ) , 1000 ) ;
+        platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
+        platform :: render_set_vertex_position ( vertices [ i ] , vertex_x , vertex_y , vertex_z ) ;
         platform :: render_set_vertex_color
             ( vertices [ i ]
             , _spot_r
