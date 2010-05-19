@@ -211,20 +211,28 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
 {
+    num_fract rubber ;
+    num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform :: vector_mul ( old_part , _current_camera_origin , _origin_rubber ( ) ) ;
-    platform :: vector_mul ( new_part , _desired_camera_origin , 1.0f - _origin_rubber ( ) ) ;
+    platform :: math_make_num_fract ( rubber , int_32 ( _origin_rubber ( ) * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( inv_rubber , int_32 ( ( 1.0f - _origin_rubber ( ) ) * 1000.0f ) , 1000 ) ;
+    platform :: vector_mul ( old_part , _current_camera_origin , rubber ) ;
+    platform :: vector_mul ( new_part , _desired_camera_origin , inv_rubber ) ;
     platform :: vector_add ( _current_camera_origin , old_part , new_part ) ;
 }
 
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_current_camera_target ( )
 {
+    num_fract rubber ;
+    num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform :: vector_mul ( old_part , _current_camera_target , _target_rubber ( ) ) ;
-    platform :: vector_mul ( new_part , _desired_camera_target , 1.0f - _target_rubber ( ) ) ;
+    platform :: math_make_num_fract ( rubber , int_32 ( _target_rubber ( ) * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( inv_rubber , int_32 ( ( 1.0f - _target_rubber ( ) ) * 1000.0f ) , 1000 ) ;
+    platform :: vector_mul ( old_part , _current_camera_target , rubber ) ;
+    platform :: vector_mul ( new_part , _desired_camera_target , inv_rubber ) ;
     platform :: vector_add ( _current_camera_target , old_part , new_part ) ;
 }
 

@@ -169,7 +169,7 @@ public :
     static void vector_cross_product ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_add ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_sub ( vector_data & result , vector_data v1 , vector_data v2 ) ;
-    static void vector_mul ( vector_data & result , vector_data v , float_32 f ) ;
+    static void vector_mul ( vector_data & result , vector_data v , num_fract f ) ;
     static void vector_length ( float_32 & result , vector_data v ) ;
     static void vector_normalize ( vector_data & result , vector_data v ) ;
     
