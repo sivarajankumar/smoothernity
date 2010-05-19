@@ -234,12 +234,12 @@ public :
     static void render_draw_triangle_strip 
         ( const render_vertex_buffer_id & vertices_buffer 
         , const render_index_buffer_id & indices_buffer
-        , int_32 indices_count
+        , num_whole indices_count
         ) ;
     static void render_draw_triangle_fan
         ( const render_vertex_buffer_id & vertices_buffer 
         , const render_index_buffer_id & indices_buffer
-        , int_32 indices_count
+        , num_whole indices_count
         ) ;
         
     static void render_matrix_identity ( ) ;

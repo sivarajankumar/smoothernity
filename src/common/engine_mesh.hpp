@@ -104,18 +104,22 @@ void shy_engine_mesh < mediator > :: mesh_render ( mesh_id arg_mesh_id )
     platform :: render_matrix_mult ( mesh . transform ) ;
     if ( mesh . triangle_strip_indices_count > 0 )
     {
+        num_whole indices_count ;
+        platform :: math_make_num_whole ( indices_count , mesh . triangle_strip_indices_count ) ;
         platform :: render_draw_triangle_strip 
             ( mesh . vertex_buffer_id 
             , mesh . triangle_strip_index_buffer_id 
-            , mesh . triangle_strip_indices_count 
+            , indices_count
             ) ;
     }
     if ( mesh . triangle_fan_indices_count > 0 )
     {
+        num_whole indices_count ;
+        platform :: math_make_num_whole ( indices_count , mesh . triangle_fan_indices_count ) ;
         platform :: render_draw_triangle_fan 
             ( mesh . vertex_buffer_id 
             , mesh . triangle_fan_index_buffer_id 
-            , mesh . triangle_fan_indices_count 
+            , indices_count
             ) ;
     }
     platform :: render_matrix_pop ( ) ;
