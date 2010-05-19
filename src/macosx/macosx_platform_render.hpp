@@ -181,10 +181,10 @@ inline void shy_macosx_platform :: render_set_vertex_position ( vertex_data & ve
     vertex . _position [ 2 ] = ( GLfloat ) z . _value ;
 }
 
-inline void shy_macosx_platform :: render_set_vertex_tex_coord ( vertex_data & vertex , float_32 u , float_32 v )
+inline void shy_macosx_platform :: render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v )
 {
-    vertex . _tex_coord [ 0 ] = ( GLfloat ) u ;
-    vertex . _tex_coord [ 1 ] = ( GLfloat ) v ;
+    vertex . _tex_coord [ 0 ] = ( GLfloat ) u . _value ;
+    vertex . _tex_coord [ 1 ] = ( GLfloat ) v . _value ;
 }
 
 inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & vertex , int_32 r , int_32 g , int_32 b , int_32 a )

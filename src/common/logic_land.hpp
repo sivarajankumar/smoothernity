@@ -119,22 +119,16 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             num_fract vertex_x ;
             num_fract vertex_y ;
             num_fract vertex_z ;
+            num_fract vertex_u ;
+            num_fract vertex_v ;
             platform :: math_make_num_fract ( vertex_x , int_32 ( x * 1000.0f ) , 1000 ) ;
             platform :: math_make_num_fract ( vertex_y , 0 , 1 ) ;
             platform :: math_make_num_fract ( vertex_z , int_32 ( z * 1000.0f ) , 1000 ) ;
+            platform :: math_make_num_fract ( vertex_u , int_32 ( float_32 ( iz * 1000.0f ) / float_32 ( _land_grid ) ) , 1000 ) ;
+            platform :: math_make_num_fract ( vertex_v , int_32 ( float_32 ( ix * 1000.0f ) / float_32 ( _land_grid ) ) , 1000 ) ;
             platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-            platform :: render_set_vertex_color
-                ( vertices [ vertices_count ]
-                , _land_r
-                , _land_g
-                , _land_b
-                , 255
-                ) ;
-            platform :: render_set_vertex_tex_coord
-                ( vertices [ vertices_count ]
-                , float_32 ( iz ) / float_32 ( _land_grid )
-                , float_32 ( ix ) / float_32 ( _land_grid )
-                ) ;
+            platform :: render_set_vertex_color ( vertices [ vertices_count ] , _land_r , _land_g , _land_b , 255 ) ;
+            platform :: render_set_vertex_tex_coord ( vertices [ vertices_count ] , vertex_u , vertex_v ) ;
             ++ vertices_count ;
         }
     }
