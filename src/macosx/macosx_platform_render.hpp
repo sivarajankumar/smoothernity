@@ -97,10 +97,10 @@ inline void shy_macosx_platform :: render_load_texture_data
 
 inline void shy_macosx_platform :: render_create_texture_resource_id 
     ( texture_resource_id & resource_id 
-    , int_32 resource_index 
+    , num_whole resource_index 
     )
 {
-    resource_id . _resource_id = resource_index ;
+    resource_id . _resource_id = resource_index . _value ;
 }
 
 inline void shy_macosx_platform :: render_load_texture_resource

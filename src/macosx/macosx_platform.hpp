@@ -215,7 +215,7 @@ public :
     static void render_set_texel_color ( texel_data & texel , num_whole r , num_whole g , num_whole b , num_whole a ) ;
     static void render_load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , texel_data * data ) ;
     static void render_load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , texel_data * data ) ;
-    static void render_create_texture_resource_id ( texture_resource_id & resource_id , int_32 resource_index ) ;
+    static void render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     static void render_texture_loader_ready ( int_32 & is_ready ) ;
     
     static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;

@@ -8,6 +8,7 @@ class shy_logic_image
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
@@ -151,8 +152,10 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _create_image_texture ( )
 {
-    _mediator -> texture_create ( _image_texture_id ) ;
+    num_whole resource_index ;
     texture_resource_id logo_resource_id ;
-    platform :: render_create_texture_resource_id ( logo_resource_id , _logo_resource_index ) ;
+    platform :: math_make_num_whole ( resource_index , _logo_resource_index ) ;
+    platform :: render_create_texture_resource_id ( logo_resource_id , resource_index ) ;
+    _mediator -> texture_create ( _image_texture_id ) ;
     _mediator -> texture_load_from_resource ( _image_texture_id , logo_resource_id ) ;
 }
