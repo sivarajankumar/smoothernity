@@ -21,7 +21,7 @@ public :
     void camera_prepare_permit ( ) ;
     void camera_matrix_use ( ) ;
 private :
-    int_32 _get_entity_mesh_grid ( ) ;
+    void _get_entity_mesh_grid ( int_32 & result ) ;
     void _reset_camera_rubber ( ) ;
     void _fill_camera_schedules ( ) ;
     void _update_camera ( ) ;
@@ -30,11 +30,11 @@ private :
     void _update_current_camera_origin ( ) ;
     void _update_current_camera_target ( ) ;
     void _update_camera_matrix ( ) ;
-    int_32 _random_camera_origin_index ( ) ;
-    int_32 _random_camera_target_index ( ) ;
-    int_32 _get_random_index ( int_32 index_min , int_32 index_max ) ;
-    int_32 _camera_origin_index_is_duplicate ( int_32 index ) ;
-    int_32 _camera_target_index_is_duplicate ( int_32 index ) ;
+    void _random_camera_origin_index ( int_32 & result ) ;
+    void _random_camera_target_index ( int_32 & result ) ;
+    void _get_random_index ( int_32 & result , int_32 index_min , int_32 index_max ) ;
+    void _camera_origin_index_is_duplicate ( int_32 & result , int_32 index ) ;
+    void _camera_target_index_is_duplicate ( int_32 & result , int_32 index ) ;
 private :
     mediator * _mediator ;
     matrix_data _camera_matrix ;
@@ -105,10 +105,9 @@ void shy_logic_camera < mediator > :: camera_update ( )
 }
 
 template < typename mediator >
-typename shy_logic_camera < mediator > :: int_32
-shy_logic_camera < mediator > :: _get_entity_mesh_grid ( )
+void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( int_32 & result )
 {
-    return _mediator -> get_entity_mesh_grid ( ) ;
+    result = _mediator -> get_entity_mesh_grid ( ) ;
 }
 
 template < typename mediator >
@@ -123,8 +122,10 @@ void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
 {
     for ( int_32 i = 0 ; i < 4 ; i ++ )
     {
-        int_32 origin_index = _random_camera_origin_index ( ) ;
-        int_32 target_index = _random_camera_target_index ( ) ;
+        int_32 origin_index ;
+        int_32 target_index ;
+        _random_camera_origin_index ( origin_index ) ;
+        _random_camera_target_index ( target_index ) ;
         _scheduled_camera_origin_indices [ i ] = origin_index ;
         _scheduled_camera_target_indices [ i ] = target_index ;
         _scheduled_camera_origins [ i ] = _mediator -> get_entity_origin ( origin_index ) ;
@@ -148,7 +149,8 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     if ( -- _frames_to_change_camera_origin <= 0 )
     {
         _frames_to_change_camera_origin = _change_origin_in_frames ;
-        int_32 new_origin_index = _random_camera_origin_index ( ) ;
+        int_32 new_origin_index ;
+        _random_camera_origin_index ( new_origin_index ) ;
         _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
         _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
         _scheduled_camera_origin_indices [ 2 ] = _scheduled_camera_origin_indices [ 3 ] ;
@@ -174,7 +176,8 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     if ( -- _frames_to_change_camera_target <= 0 )
     {
         _frames_to_change_camera_target = _change_target_in_frames ;
-        int_32 new_target_index = _random_camera_target_index ( ) ;
+        int_32 new_target_index ;
+        _random_camera_target_index ( new_target_index ) ;
         _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
         _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
         _scheduled_camera_target_indices [ 2 ] = _scheduled_camera_target_indices [ 3 ] ;
@@ -234,60 +237,66 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
 }
 
 template < typename mediator >
-typename shy_logic_camera < mediator > :: int_32
-shy_logic_camera < mediator > :: _random_camera_origin_index ( )
+void shy_logic_camera < mediator > :: _random_camera_origin_index ( int_32 & result )
 {
     int_32 index = 0 ;
+    int_32 mesh_grid ;
+    int_32 is_duplicate ;
+    _get_entity_mesh_grid ( mesh_grid ) ;
     do
     {
-        index = _get_random_index ( 0 , _get_entity_mesh_grid ( ) * ( _get_entity_mesh_grid ( ) / 2 ) ) ;
-    } while ( _camera_origin_index_is_duplicate ( index ) ) ;
-    return index ;
+        _get_random_index ( index , 0 , mesh_grid * ( mesh_grid / 2 ) ) ;
+        _camera_origin_index_is_duplicate ( is_duplicate , index ) ;
+    } while ( is_duplicate ) ;
+    result = index ;
 }
 
 template < typename mediator >
-typename shy_logic_camera < mediator > :: int_32
-shy_logic_camera < mediator > :: _random_camera_target_index ( )
+void shy_logic_camera < mediator > :: _random_camera_target_index ( int_32 & result )
 {
     int_32 index = 0 ;
+    int_32 mesh_grid ;
+    int_32 is_duplicate ;
+    _get_entity_mesh_grid ( mesh_grid ) ;
     do
     {
-        index = _get_random_index
-            ( _get_entity_mesh_grid ( ) * ( _get_entity_mesh_grid ( ) / 2 )
-            , _get_entity_mesh_grid ( ) * _get_entity_mesh_grid ( )
-            ) ;
-    } while ( _camera_target_index_is_duplicate ( index ) ) ;
-    return index ;
+        _get_random_index ( index , mesh_grid * ( mesh_grid / 2 ) , mesh_grid * mesh_grid ) ;
+        _camera_target_index_is_duplicate ( is_duplicate , index ) ;
+    } while ( is_duplicate ) ;
+    result = index ;
 }
 
 template < typename mediator >
-typename shy_logic_camera < mediator > :: int_32
-shy_logic_camera < mediator > :: _get_random_index ( int_32 index_min , int_32 index_max )
+void shy_logic_camera < mediator > :: _get_random_index ( int_32 & result , int_32 index_min , int_32 index_max )
 {
     _random_seed = ( _random_seed + 181 ) % 139 ;
-    return index_min + ( _random_seed % ( index_max - index_min ) ) ;
+    result = index_min + ( _random_seed % ( index_max - index_min ) ) ;
 }
 
 template < typename mediator >
-typename shy_logic_camera < mediator > :: int_32
-shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( int_32 index )
+void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( int_32 & result , int_32 index )
 {
+    result = false ;
     for ( int_32 i = 0 ; i < 4 ; i ++ )
     {
         if ( _scheduled_camera_origin_indices [ i ] == index )
-            return true ;
+        {
+            result = true ;
+            break ;
+        }
     }
-    return false ;
 }
 
 template < typename mediator >
-typename shy_logic_camera < mediator > :: int_32
-shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( int_32 index )
+void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( int_32 & result , int_32 index )
 {
+    result = false ;
     for ( int_32 i = 0 ; i < 4 ; i ++ )
     {
         if ( _scheduled_camera_target_indices [ i ] == index )
-            return true ;
+        {
+            result = true ;
+            break ;
+        }
     }
-    return false ;
 }
