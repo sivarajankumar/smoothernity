@@ -178,7 +178,7 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     platform :: math_add_fracts ( fog_far , fog_far_shift , near_plane ) ;
     platform :: math_add_fracts ( fog_near , fog_near_shift , near_plane ) ;
     platform :: render_fog_linear ( fog_near , fog_far , fog_r , fog_g , fog_b , fog_a ) ;
-    platform :: render_clear_screen ( _color_r , _color_g , _color_b ) ;
+    platform :: render_clear_screen ( fog_r , fog_g , fog_b ) ;
 }
 
 template < typename mediator >

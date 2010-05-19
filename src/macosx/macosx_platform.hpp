@@ -218,7 +218,7 @@ public :
     static void render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     static void render_texture_loader_ready ( num_whole & is_ready ) ;
     
-    static void render_clear_screen ( float_32 r , float_32 g , float_32 b ) ;
+    static void render_clear_screen ( num_fract r , num_fract g , num_fract b ) ;
     
     static void render_projection_frustum ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;
     static void render_projection_ortho ( float_32 left , float_32 right , float_32 bottom , float_32 top , float_32 near , float_32 far ) ;

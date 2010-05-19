@@ -121,9 +121,9 @@ inline void shy_macosx_platform :: render_texture_loader_ready ( num_whole & is_
     is_ready . _value = [ _texture_loader loader_ready ] ;
 }
 
-inline void shy_macosx_platform :: render_clear_screen ( float_32 r , float_32 g , float_32 b )
+inline void shy_macosx_platform :: render_clear_screen ( num_fract r , num_fract g , num_fract b )
 {
-    glClearColor ( ( GLfloat ) r , ( GLfloat ) g , ( GLfloat ) b , ( GLfloat ) 0 ) ;
+    glClearColor ( ( GLfloat ) r . _value , ( GLfloat ) g . _value , ( GLfloat ) b . _value , ( GLfloat ) 0 ) ;
     glClearDepth ( 1 ) ;
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) ;
 }
