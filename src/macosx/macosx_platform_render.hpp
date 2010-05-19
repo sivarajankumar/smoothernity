@@ -81,11 +81,11 @@ inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel ,
 
 inline void shy_macosx_platform :: render_load_texture_data 
     ( const render_texture_id & arg_texture_id 
-    , int_32 size_pow2_base 
+    , num_whole size_pow2_base 
     , texel_data * data
     )
 {
-    GLsizei size = 1 << size_pow2_base ;
+    GLsizei size = 1 << size_pow2_base . _value ;
     glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
@@ -105,14 +105,14 @@ inline void shy_macosx_platform :: render_create_texture_resource_id
 
 inline void shy_macosx_platform :: render_load_texture_resource
     ( const texture_resource_id & resource_id 
-    , int_32 size_pow2_base 
+    , num_whole size_pow2_base 
     , texel_data * data 
     )
 {
     [ _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
         to_buffer : ( void * ) data
-        with_side_size_of : 1 << size_pow2_base
+        with_side_size_of : 1 << size_pow2_base . _value
     ] ;
 }
 

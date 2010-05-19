@@ -58,16 +58,20 @@ void shy_engine_texture < mediator > :: texture_create ( texture_id & result )
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_finalize ( texture_id arg_texture_id )
 {
+    num_whole size_pow2_base ;
     _texture_data & tex_data = _textures_datas [ arg_texture_id . _texture_id ] ;
+    platform :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
     platform :: render_create_texture_id ( tex_data . render_id ) ;
-    platform :: render_load_texture_data ( tex_data . render_id , _texture_size_pow2_base , tex_data . texels ) ;
+    platform :: render_load_texture_data ( tex_data . render_id , size_pow2_base , tex_data . texels ) ;
 }
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id )
 {
+    num_whole size_pow2_base ;
     _texture_data & tex_data = _textures_datas [ arg_texture_id . _texture_id ] ;
-    platform :: render_load_texture_resource ( arg_resource_id , _texture_size_pow2_base , tex_data . texels ) ;
+    platform :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
+    platform :: render_load_texture_resource ( arg_resource_id , size_pow2_base , tex_data . texels ) ;
 }
 
 template < typename mediator >
