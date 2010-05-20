@@ -165,12 +165,12 @@ public :
     //
     
     static void vector_xyz ( vector_data & result , num_fract x , num_fract y , num_fract z ) ;
-    static void vector_dot_product ( float_32 & result , vector_data v1 , vector_data v2 ) ;
+    static void vector_dot_product ( num_fract & result , vector_data v1 , vector_data v2 ) ;
     static void vector_cross_product ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_add ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_sub ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_mul ( vector_data & result , vector_data v , num_fract f ) ;
-    static void vector_length ( float_32 & result , vector_data v ) ;
+    static void vector_length ( num_fract & result , vector_data v ) ;
     static void vector_normalize ( vector_data & result , vector_data v ) ;
     
     //

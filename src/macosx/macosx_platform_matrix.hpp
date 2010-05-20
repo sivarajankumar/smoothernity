@@ -112,17 +112,17 @@ inline void shy_macosx_platform :: matrix_inverse_rotation_translation ( matrix_
     matrix_get_axis_z ( axis_z , matrix ) ;
     matrix_get_origin ( origin , matrix ) ;
     
-    float_32 dot_x ;
-    float_32 dot_y ;
-    float_32 dot_z ;
+    num_fract dot_x ;
+    num_fract dot_y ;
+    num_fract dot_z ;
     vector_dot_product ( dot_x , origin , axis_x ) ;
     vector_dot_product ( dot_y , origin , axis_y ) ;
     vector_dot_product ( dot_z , origin , axis_z ) ;
     
     vector_data new_origin ;
-    new_origin . _x = - dot_x ;
-    new_origin . _y = - dot_y ;
-    new_origin . _z = - dot_z ;
+    new_origin . _x = - dot_x . _value ;
+    new_origin . _y = - dot_y . _value ;
+    new_origin . _z = - dot_z . _value ;
     
     matrix_set_origin ( matrix , new_origin ) ;
     swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
