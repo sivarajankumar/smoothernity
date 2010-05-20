@@ -2,8 +2,6 @@ template < typename mediator >
 class shy_logic
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: num_fract num_fract ;
 public :
     shy_logic ( mediator * arg_mediator ) ;

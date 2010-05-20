@@ -82,3 +82,63 @@ inline void shy_macosx_platform :: math_add_to_fract ( num_fract & a , num_fract
 {
     a . _value += b . _value ;
 }
+
+inline void shy_macosx_platform :: math_inc_whole ( num_whole & a )
+{
+    ++ a . _value ;
+}
+
+inline void shy_macosx_platform :: math_mul_wholes ( num_whole & result , num_whole a , num_whole b )
+{
+    result . _value = a . _value + b . _value ;
+}
+
+inline void shy_macosx_platform :: math_div_fracts ( num_fract & result , num_fract a , num_fract b )
+{
+    result . _value = a . _value / b . _value ;
+}
+
+inline void shy_macosx_platform :: math_mod_whole_by ( num_whole & a , num_whole b )
+{
+    a . _value %= b . _value ;
+}
+
+inline void shy_macosx_platform :: math_div_whole_by ( num_whole & a , num_whole b )
+{
+    a . _value /= b . _value ;
+}
+
+inline void shy_macosx_platform :: math_add_wholes ( num_whole & result , num_whole a , num_whole b )
+{
+    result . _value = a . _value + b . _value ;
+}
+
+inline void shy_macosx_platform :: math_sub_from_fract ( num_fract & from , num_fract what )
+{
+    from . _value -= what . _value ;
+}
+
+inline void shy_macosx_platform :: math_xor_wholes ( num_whole & result , num_whole a , num_whole b )
+{
+    result . _value = a . _value ^ b . _value ;
+}
+
+inline void shy_macosx_platform :: math_mul_whole_by ( num_whole & a , num_whole b )
+{
+    a . _value *= b . _value ;
+}
+
+inline void shy_macosx_platform :: math_div_wholes ( num_whole & result , num_whole a , num_whole b )
+{
+    result . _value = a . _value / b . _value ;
+}
+
+inline void shy_macosx_platform :: math_dec_whole ( num_whole & a )
+{
+    -- a . _value ;
+}
+
+inline void shy_macosx_platform :: math_neg_fract ( num_fract & a )
+{
+    a . _value = - a . _value ;
+}

@@ -18,9 +18,24 @@ void * shy_macosx_platform :: _vertex_color_offset = reinterpret_cast < void * >
 shy_macosx_sound_loader * shy_macosx_platform :: _sound_loader = 0 ;
 shy_macosx_texture_loader * shy_macosx_platform :: _texture_loader = 0 ;
 
-shy_macosx_platform :: float_32 shy_macosx_platform :: _aspect_width = 1.0f ;
-shy_macosx_platform :: float_32 shy_macosx_platform :: _aspect_height = 1.0f ;
+float shy_macosx_platform :: _aspect_width = 1.0f ;
+float shy_macosx_platform :: _aspect_height = 1.0f ;
 
-shy_macosx_platform :: int_32 shy_macosx_platform :: _mouse_left_button_down = false ;
-shy_macosx_platform :: float_32 shy_macosx_platform :: _mouse_x = 0 ;
-shy_macosx_platform :: float_32 shy_macosx_platform :: _mouse_y = 0 ;
+int shy_macosx_platform :: _mouse_left_button_down = false ;
+float shy_macosx_platform :: _mouse_x = 0 ;
+float shy_macosx_platform :: _mouse_y = 0 ;
+
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_pi ( 3.141592f ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_2pi ( 6.283184f ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_0 ( 0 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_1 ( 1 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_0 ( 0 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_1 ( 1 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_2 ( 2 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_3 ( 3 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_4 ( 4 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_5 ( 5 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_6 ( 6 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_7 ( 7 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_8 ( 8 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_9 ( 9 ) ;

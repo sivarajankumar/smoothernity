@@ -4,9 +4,8 @@ class shy_logic_image
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
+    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -15,13 +14,13 @@ class shy_logic_image
     typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
-    static const int_32 _logo_resource_index = 1 ;
-    static const int_32 _scale_in_frames = 60 ;
-    static const int_32 _image_r = 255 ;
-    static const int_32 _image_g = 255 ;
-    static const int_32 _image_b = 255 ;
-    static const int_32 _image_a = 255 ;
-    static const float_32 _final_scale ( ) { return 0.5f ; }
+    static const_int_32 _logo_resource_index = 1 ;
+    static const_int_32 _scale_in_frames = 60 ;
+    static const_int_32 _image_r = 255 ;
+    static const_int_32 _image_g = 255 ;
+    static const_int_32 _image_b = 255 ;
+    static const_int_32 _image_a = 255 ;
+    static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
     shy_logic_image ( mediator * arg_mediator ) ;
     void image_render ( ) ;
@@ -34,11 +33,11 @@ private :
     void _create_image_texture ( ) ;
 private :
     mediator * _mediator ;
-    int_32 _image_mesh_created ;
-    int_32 _image_texture_created ;
-    int_32 _image_texture_loaded ;
-    int_32 _image_prepare_permitted ;
-    int_32 _scale_frames ;
+    num_whole _image_mesh_created ;
+    num_whole _image_texture_created ;
+    num_whole _image_texture_loaded ;
+    num_whole _image_prepare_permitted ;
+    num_whole _scale_frames ;
     mesh_id _image_mesh_id ;
     texture_id _image_texture_id ;
 } ;
@@ -46,17 +45,17 @@ private :
 template < typename mediator >
 shy_logic_image < mediator > :: shy_logic_image ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
-, _image_mesh_created ( false )
-, _image_texture_loaded ( false )
-, _image_prepare_permitted ( false )
-, _scale_frames ( 0 )
 {
+    platform :: math_make_num_whole ( _image_mesh_created , false ) ;
+    platform :: math_make_num_whole ( _image_texture_loaded , false ) ;
+    platform :: math_make_num_whole ( _image_prepare_permitted , false ) ;
+    platform :: math_make_num_whole ( _scale_frames , 0 ) ;
 }
 
 template < typename mediator >
 void shy_logic_image < mediator > :: image_render ( )
 {
-    if ( _image_mesh_created && _image_texture_loaded )
+    if ( platform :: condition_true ( _image_mesh_created ) && platform :: condition_true ( _image_texture_loaded ) )
         _render_image_mesh ( ) ;
 }
 
@@ -69,57 +68,59 @@ void shy_logic_image < mediator > :: image_prepare_permit ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: image_update ( )
 {
-    if ( _image_prepare_permitted )
+    if ( platform :: condition_true ( _image_prepare_permitted ) )
     {
-        if ( ! _image_mesh_created )
+        if ( platform :: condition_false ( _image_mesh_created ) )
         {
             _create_image_mesh ( ) ;
-            _image_mesh_created = true ;
+            platform :: math_make_num_whole ( _image_mesh_created , true ) ;
         }
-        if ( ! _image_texture_created )
+        if ( platform :: condition_false ( _image_texture_created ) )
         {
             _create_image_texture ( ) ;
-            _image_texture_created = true ;
+            platform :: math_make_num_whole ( _image_texture_created , true ) ;
         }
-        if ( ! _image_texture_loaded )
+        if ( platform :: condition_false ( _image_texture_loaded ) )
         {
             num_whole loader_ready ;
             platform :: render_texture_loader_ready ( loader_ready ) ;
             if ( platform :: condition_true ( loader_ready ) )
             {
                 _mediator -> texture_finalize ( _image_texture_id ) ;
-                _image_texture_loaded = true ;
+                platform :: math_make_num_whole ( _image_texture_loaded , true ) ;
                 _mediator -> image_prepared ( ) ;
             }
         }
     }
-    if ( _image_mesh_created && _image_texture_loaded )
+    if ( platform :: condition_true ( _image_mesh_created ) && platform :: condition_true ( _image_texture_loaded ) )
         _update_image_mesh ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_image < mediator > :: _update_image_mesh ( )
 {
-    if ( _scale_frames < _scale_in_frames )
-        _scale_frames ++ ;
-    float_32 scale ;
     matrix_data matrix ;
-    num_fract num_scale ;
-    num_fract num_zero ;
+    num_fract scale ;
     num_fract origin_x ;
     num_fract origin_y ;
     num_fract origin_z ;
-    _mediator -> math_lerp ( scale , 0 , 0 , _final_scale ( ) , _scale_in_frames , _scale_frames ) ;
-    platform :: math_make_num_fract ( num_scale , int_32 ( scale * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( num_zero , 0 , 1 ) ;
+    num_fract fract_scale_frames ;
+    num_fract fract_scale_in_frames ;
+    num_whole whole_scale_in_frames ;
+    platform :: math_make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
+    platform :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
+    platform :: math_make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
+    _mediator -> math_lerp ( scale , platform :: fract_0 , platform :: fract_0 , _final_scale ( ) , fract_scale_in_frames , fract_scale_frames ) ;
     platform :: math_make_num_fract ( origin_x , 1 , 2 ) ;
     platform :: math_make_num_fract ( origin_y , 0 , 1 ) ;
     platform :: math_make_num_fract ( origin_z , - 3 , 1 ) ;
-    platform :: matrix_set_axis_x ( matrix , num_scale , num_zero , num_zero ) ;
-    platform :: matrix_set_axis_y ( matrix , num_zero , num_scale , num_zero ) ;
-    platform :: matrix_set_axis_z ( matrix , num_zero , num_zero , num_scale ) ;
+    platform :: matrix_set_axis_x ( matrix , scale , platform :: fract_0 , platform :: fract_0 ) ;
+    platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
+    platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
     platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     _mediator -> mesh_set_transform ( _image_mesh_id , matrix ) ;
+    if ( platform :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
+        platform :: math_inc_whole ( _scale_frames ) ;
 }
 
 template < typename mediator >
@@ -151,6 +152,8 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     num_whole color_b ;
     num_whole color_a ;
     num_whole index ;
+    num_whole vertices_count ;
+    
     platform :: math_make_num_fract ( x_left , - 1 , 1 ) ;
     platform :: math_make_num_fract ( x_right , 1 , 1 ) ;
     platform :: math_make_num_fract ( y_top , 1 , 1 ) ;
@@ -164,6 +167,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform :: math_make_num_whole ( color_g , _image_g ) ;
     platform :: math_make_num_whole ( color_b , _image_b ) ;
     platform :: math_make_num_whole ( color_a , _image_a ) ;
+    platform :: math_make_num_whole ( vertices_count , 4 ) ;
 
     platform :: math_make_num_whole ( index , 0 ) ;
     platform :: render_set_vertex_position  ( vertices [ 0 ] , x_left , y_top , z ) ;
@@ -189,7 +193,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , u_right , v_bottom ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , index ) ;
 
-    _mediator -> mesh_create ( _image_mesh_id , vertices , indices , 0 , 4 , 4 , 0 ) ;
+    _mediator -> mesh_create ( _image_mesh_id , vertices , indices , 0 , vertices_count , vertices_count , platform :: whole_0 ) ;
 }
 
 template < typename mediator >

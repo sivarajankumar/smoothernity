@@ -5,19 +5,19 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: render_index_buffer_id render_index_buffer_id ;
     typedef typename mediator :: platform :: render_vertex_buffer_id render_vertex_buffer_id ;
     typedef typename mediator :: platform :: index_data index_data ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
+    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
-    static const int_32 _max_meshes = 100 ;
+    static const_int_32 _max_meshes = 100 ;
     
 public :
     class mesh_id
     {
         friend class shy_engine_mesh ;
     private :
-        int_32 _mesh_id ;
+        num_whole _mesh_id ;
     } ;
 private :
     class _mesh_data
@@ -26,8 +26,8 @@ private :
         render_vertex_buffer_id vertex_buffer_id ;
         render_index_buffer_id triangle_strip_index_buffer_id ;
         render_index_buffer_id triangle_fan_index_buffer_id ;
-        int_32 triangle_strip_indices_count ;
-        int_32 triangle_fan_indices_count ;
+        num_whole triangle_strip_indices_count ;
+        num_whole triangle_fan_indices_count ;
         matrix_data transform ;
     } ;
 public :
@@ -37,21 +37,21 @@ public :
         , vertex_data * vertices 
         , index_data * triangle_strip_indices 
         , index_data * triangle_fan_indices
-        , int_32 vertices_count
-        , int_32 triangle_strip_indices_count 
-        , int_32 triangle_fan_indices_count
+        , num_whole vertices_count
+        , num_whole triangle_strip_indices_count 
+        , num_whole triangle_fan_indices_count
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
 private :
-    int_32 _next_mesh_id ;
+    num_whole _next_mesh_id ;
     _mesh_data _meshes_data [ _max_meshes ] ;
 } ;
 
 template < typename mediator >
 shy_engine_mesh < mediator > :: shy_engine_mesh ( )
-: _next_mesh_id ( 0 )
 {
+    platform :: math_make_num_whole ( _next_mesh_id , 0 ) ;
 }
 
 template < typename mediator >
@@ -60,40 +60,35 @@ void shy_engine_mesh < mediator > :: mesh_create
     , vertex_data * vertices 
     , index_data * triangle_strip_indices 
     , index_data * triangle_fan_indices
-    , int_32 vertices_count_int_32
-    , int_32 triangle_strip_indices_count_int_32
-    , int_32 triangle_fan_indices_count_int_32
+    , num_whole vertices_count
+    , num_whole triangle_strip_indices_count
+    , num_whole triangle_fan_indices_count
     )
 {
-    num_whole vertices_count ;
-    num_whole triangle_fan_indices_count ;
-    num_whole triangle_strip_indices_count ;
-    _mesh_data & mesh = _meshes_data [ _next_mesh_id ] ;
-    mesh . triangle_strip_indices_count = triangle_strip_indices_count_int_32 ;
-    mesh . triangle_fan_indices_count = triangle_fan_indices_count_int_32 ;
-    platform :: matrix_identity ( mesh . transform ) ;
-    platform :: math_make_num_whole ( vertices_count , vertices_count_int_32 ) ;
-    platform :: math_make_num_whole ( triangle_fan_indices_count , triangle_fan_indices_count_int_32 ) ;
-    platform :: math_make_num_whole ( triangle_strip_indices_count , triangle_strip_indices_count_int_32 ) ;
-    platform :: render_create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
-    if ( triangle_strip_indices_count_int_32 > 0 )
+    _mesh_data * mesh_ptr = 0 ;
+    platform :: memory_pointer_offset ( mesh_ptr , _meshes_data , _next_mesh_id ) ;
+    mesh_ptr -> triangle_strip_indices_count = triangle_strip_indices_count ;
+    mesh_ptr -> triangle_fan_indices_count = triangle_fan_indices_count ;
+    platform :: matrix_identity ( mesh_ptr -> transform ) ;
+    platform :: render_create_vertex_buffer ( mesh_ptr -> vertex_buffer_id , vertices_count , vertices ) ;
+    if ( platform :: condition_whole_greater_than_zero ( triangle_strip_indices_count ) )
     {
         platform :: render_create_index_buffer 
-            ( mesh . triangle_strip_index_buffer_id 
+            ( mesh_ptr -> triangle_strip_index_buffer_id 
             , triangle_strip_indices_count 
             , triangle_strip_indices 
             ) ;
     }
-    if ( triangle_fan_indices_count_int_32 > 0 )
+    if ( platform :: condition_whole_greater_than_zero ( triangle_fan_indices_count ) )
     {
         platform :: render_create_index_buffer 
-            ( mesh . triangle_fan_index_buffer_id 
+            ( mesh_ptr -> triangle_fan_index_buffer_id 
             , triangle_fan_indices_count 
             , triangle_fan_indices 
             ) ;
     }
     result . _mesh_id = _next_mesh_id ;
-    ++ _next_mesh_id ;
+    platform :: math_inc_whole ( _next_mesh_id ) ;
 }
 
 template < typename mediator >
@@ -128,5 +123,7 @@ void shy_engine_mesh < mediator > :: mesh_render ( mesh_id arg_mesh_id )
 template < typename mediator >
 void shy_engine_mesh < mediator > :: mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform )
 {
-    _meshes_data [ arg_mesh_id . _mesh_id ] . transform = transform ;
+    _mesh_data * mesh_ptr = 0 ;
+    platform :: memory_pointer_offset ( mesh_ptr , _meshes_data , arg_mesh_id . _mesh_id ) ;
+    mesh_ptr -> transform = transform ;
 }

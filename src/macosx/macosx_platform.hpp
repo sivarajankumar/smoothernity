@@ -13,9 +13,8 @@
 
 class shy_macosx_platform
 {
+    static const int _uninitialized_value = 0xC0C0C0C0 ;    
 public :
-    typedef int int_32 ;
-    typedef float float_32 ;    
     typedef const int const_int_32 ;
     
     class num_whole
@@ -23,7 +22,12 @@ public :
         friend class shy_macosx_platform ;
     public :
         num_whole ( )
-        : _value ( 0xC0C0C0C0 )
+        : _value ( _uninitialized_value )
+        {
+        }
+    private :
+        num_whole ( int arg_value )
+        : _value ( arg_value )
         {
         }
     private :
@@ -35,11 +39,45 @@ public :
         friend class shy_macosx_platform ;
     public :
         num_fract ( )
-        : _value ( 0xC0C0C0C0 )
+        : _value ( _uninitialized_value )
+        {
+        }
+    private :
+        num_fract ( float arg_value )
+        : _value ( arg_value )
         {
         }
     private :
         float _value ;
+    } ;
+    
+    class matrix_data
+    {
+        friend class shy_macosx_platform ;
+    public :
+        matrix_data ( )
+        {
+            for ( int i = 0 ; i < 16 ; i ++ )
+                _elements [ i ] = _uninitialized_value ;
+        }
+    private :
+        GLfloat _elements [ 16 ] ;
+    } ;
+    
+    class vector_data
+    {
+        friend class shy_macosx_platform ;
+    public :
+        vector_data ( )
+        : _x ( _uninitialized_value )
+        , _y ( _uninitialized_value )
+        , _z ( _uninitialized_value )
+        {
+        }
+    private :
+        float _x ;
+        float _y ;
+        float _z ;
     } ;
     
     class render_index_buffer_id
@@ -100,22 +138,6 @@ public :
         CFAbsoluteTime _time ;
     } ;
     
-    class matrix_data
-    {
-        friend class shy_macosx_platform ;
-    private :
-        GLfloat _elements [ 16 ] ;
-    } ;
-    
-    class vector_data
-    {
-        friend class shy_macosx_platform ;
-    private :
-        float _x ;
-        float _y ;
-        float _z ;
-    } ;
-    
     class mono_sound_sample
     {
         friend class shy_macosx_platform ;
@@ -159,6 +181,20 @@ public :
     static const_int_32 frames_per_second = 60 ;
     static const_int_32 mono_sound_samples_per_second = 22050 ;
     static const_int_32 stereo_sound_samples_per_second = 44100 ;
+    static const num_fract fract_pi ;
+    static const num_fract fract_2pi ;
+    static const num_fract fract_0 ;
+    static const num_fract fract_1 ;
+    static const num_whole whole_0 ;
+    static const num_whole whole_1 ;
+    static const num_whole whole_2 ;
+    static const num_whole whole_3 ;
+    static const num_whole whole_4 ;
+    static const num_whole whole_5 ;
+    static const num_whole whole_6 ;
+    static const num_whole whole_7 ;
+    static const num_whole whole_8 ;
+    static const num_whole whole_9 ;
     
     //
     // vector
@@ -284,19 +320,31 @@ public :
     // math
     //
     
+    static void math_add_wholes ( num_whole & result , num_whole a , num_whole b ) ;
     static void math_add_to_whole ( num_whole & a , num_whole b ) ;
     static void math_sub_wholes ( num_whole & result , num_whole from , num_whole what ) ;
     static void math_sub_from_whole ( num_whole & a , num_whole b ) ;
+    static void math_mul_wholes ( num_whole & result , num_whole a , num_whole b ) ;
+    static void math_mul_whole_by ( num_whole & a , num_whole b ) ;
     static void math_mod_wholes ( num_whole & result , num_whole value , num_whole modulator ) ;
+    static void math_mod_whole_by ( num_whole & a , num_whole b ) ;
+    static void math_div_wholes ( num_whole & result , num_whole a , num_whole b ) ;
+    static void math_div_whole_by ( num_whole & a , num_whole b ) ;
+    static void math_inc_whole ( num_whole & a ) ;
+    static void math_dec_whole ( num_whole & a ) ;
+    static void math_xor_wholes ( num_whole & result , num_whole a , num_whole b ) ;
 
     static void math_sin ( num_fract & result , num_fract a ) ;
     static void math_cos ( num_fract & result , num_fract a ) ;    
     static void math_sub_fracts ( num_fract & result , num_fract from , num_fract what ) ;
+    static void math_sub_from_fract ( num_fract & from , num_fract what ) ;
     static void math_add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
     static void math_add_to_fract ( num_fract & a , num_fract b ) ;
     static void math_mul_fracts ( num_fract & result , num_fract a , num_fract b ) ;
     static void math_mul_fract_by ( num_fract & a , num_fract b ) ;
+    static void math_div_fracts ( num_fract & result , num_fract a , num_fract b ) ;
     static void math_div_fract_by ( num_fract & a , num_fract b ) ;
+    static void math_neg_fract ( num_fract & a ) ;
     static void math_neg_fract ( num_fract & result , num_fract a ) ;
     
     static void math_make_whole_from_fract ( num_whole & result , num_fract fract ) ;
@@ -309,10 +357,28 @@ public :
     // condition
     //
     
-    static int condition_equal ( num_whole a , num_whole b ) ;
     static int condition_true ( num_whole num ) ;
     static int condition_false ( num_whole num ) ;
+
+    static int condition_fract_less_than_fract ( num_fract a , num_fract b ) ;
+    static int condition_fract_greater_than_fract ( num_fract a , num_fract b ) ;
     
+    static int condition_wholes_are_equal ( num_whole a , num_whole b ) ;
+    static int condition_whole_greater_or_equal_to_whole ( num_whole a , num_whole b ) ;
+    static int condition_whole_greater_than_zero ( num_whole num ) ;
+    static int condition_whole_less_than_whole ( num_whole a , num_whole b ) ;
+    static int condition_whole_less_or_equal_to_zero ( num_whole a ) ;
+    static int condition_whole_less_or_equal_to_whole ( num_whole a , num_whole b ) ;
+    static int condition_whole_is_zero ( num_whole num ) ;
+    static int condition_whole_is_even ( num_whole num ) ;
+    
+    //
+    // memory
+    //
+    
+    template < typename type >
+    static void memory_pointer_offset ( type * & result , type * base , num_whole offset ) ;
+        
     //
     // time
     //
@@ -343,12 +409,12 @@ public :
     static shy_macosx_sound_loader * _sound_loader ;
     static shy_macosx_texture_loader * _texture_loader ;
 	
-	static float_32 _aspect_width ;
-	static float_32 _aspect_height ;
+	static float _aspect_width ;
+	static float _aspect_height ;
 	
-	static int_32 _mouse_left_button_down ;
-	static float_32 _mouse_x ;
-	static float_32 _mouse_y ;
+	static int _mouse_left_button_down ;
+	static float _mouse_x ;
+	static float _mouse_y ;
 
 private :
     static vertex_data _reference_vertex ;
@@ -368,6 +434,7 @@ void swap_values ( type & a , type & b )
 #include "macosx_platform_condition.hpp"
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
+#include "macosx_platform_memory.hpp"
 #include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"

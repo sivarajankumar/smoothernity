@@ -151,6 +151,7 @@
 		88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 		88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E76FEA1188A90100631276 /* engine_rasterizer.hpp */; };
 		88F391A1118A0B6400C25327 /* engine_texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F391A0118A0B6400C25327 /* engine_texture.hpp */; };
+		88F56BFE11A5468800618E3C /* macosx_platform_memory.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F56BFD11A5468800618E3C /* macosx_platform_memory.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +212,7 @@
 		88DBFFB211873D4600584A28 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 		88E76FEA1188A90100631276 /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
 		88F391A0118A0B6400C25327 /* engine_texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_texture.hpp; sourceTree = "<group>"; };
+		88F56BFD11A5468800618E3C /* macosx_platform_memory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_memory.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +256,7 @@
 				8840916B11A4080E00939F1B /* macosx_platform_condition.hpp */,
 				886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */,
 				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
+				88F56BFD11A5468800618E3C /* macosx_platform_memory.hpp */,
 				880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */,
 				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
 				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
@@ -458,6 +461,7 @@
 				882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */,
 				882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */,
 				8840916C11A4080E00939F1B /* macosx_platform_condition.hpp in Headers */,
+				88F56BFE11A5468800618E3C /* macosx_platform_memory.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
