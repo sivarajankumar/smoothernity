@@ -87,8 +87,8 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     float_32 scale = float_32 ( _fidget_scale ) / float_32 ( _scale_in_frames ) ;
     if ( _fidget_scale < _scale_in_frames )
         _fidget_scale ++ ;
-    float_32 height ;
     matrix_data matrix ;
+    num_fract height ;
     num_fract num_scale ;
     num_fract angle_cos ;
     num_fract angle_sin ;
@@ -101,7 +101,9 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     num_fract origin_y ;
     num_fract origin_z ;
     num_fract angle ;
+    num_fract num_half ;
     platform :: render_get_aspect_height ( height ) ;
+    platform :: math_make_num_fract ( num_half , 1 , 2 ) ;
     platform :: math_make_num_fract ( num_scale , int_32 ( scale * 1000.0f ) , 1000 ) ;
     platform :: math_make_num_fract ( angle , int_32 ( _fidget_angle * 1000.0f ) , 1000 ) ;
     platform :: math_cos ( angle_cos , angle ) ;
@@ -112,7 +114,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform :: math_mul_fracts ( sin_by_scale , angle_sin , num_scale ) ;
     platform :: math_neg_fract ( neg_sin_by_scale , sin_by_scale ) ;
     platform :: math_make_num_fract ( origin_x , 0 , 1 ) ;
-    platform :: math_make_num_fract ( origin_y , int_32 ( ( height - 0.5f ) * 1000.0f ) , 1000 ) ;
+    platform :: math_sub_fracts ( origin_y , height , num_half ) ;
     platform :: math_make_num_fract ( origin_z , - 3 , 1 ) ;
     platform :: matrix_set_axis_x ( matrix , cos_by_scale , sin_by_scale , zero ) ;
     platform :: matrix_set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , zero ) ;

@@ -166,13 +166,11 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     num_fract near_plane ;
     num_fract fog_far_shift ;
     num_fract fog_near_shift ;
-    float_32 near_plane_float ;
-    _mediator -> get_near_plane_distance ( near_plane_float ) ;
+    _mediator -> get_near_plane_distance ( near_plane ) ;
     platform :: math_make_num_fract ( fog_a , 0 , 1 ) ;
     platform :: math_make_num_fract ( fog_r , int_32 ( _color_r * 1000.0f ) , 1000 ) ;
     platform :: math_make_num_fract ( fog_g , int_32 ( _color_g * 1000.0f ) , 1000 ) ;
     platform :: math_make_num_fract ( fog_b , int_32 ( _color_b * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( near_plane , int_32 ( near_plane_float * 1000.0f ) , 1000 ) ;
     platform :: math_make_num_fract ( fog_far_shift , 20 , 1 ) ;
     platform :: math_make_num_fract ( fog_near_shift , 10 , 1 ) ;
     platform :: math_add_fracts ( fog_far , fog_far_shift , near_plane ) ;

@@ -57,6 +57,7 @@ public :
     typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
+    typedef typename platform :: num_fract num_fract ;
     typedef typename platform :: texel_data texel_data ;
     typedef typename platform :: texture_resource_id texture_resource_id ;
     typedef typename platform :: vector_data vector_data ;
@@ -86,7 +87,7 @@ public :
     void get_entity_height ( float_32 & result ) ;
     void get_entity_mesh_grid ( int_32 & result ) ;
     void get_entity_origin ( vector_data & result , int_32 index ) ;
-    void get_near_plane_distance ( float_32 & result ) ;
+    void get_near_plane_distance ( num_fract & result ) ;
     void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
     void image_render ( ) ;
@@ -266,7 +267,7 @@ void shy_mediator < mediator_types > :: get_entity_origin ( vector_data & result
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_near_plane_distance ( float_32 & result )
+void shy_mediator < mediator_types > :: get_near_plane_distance ( num_fract & result )
 {
     _logic . get_near_plane_distance ( result ) ;
 }

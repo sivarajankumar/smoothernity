@@ -275,12 +275,12 @@ inline void shy_macosx_platform :: render_draw_triangle_fan
     glDrawElements ( GL_TRIANGLE_FAN , ( GLsizei ) indices_count . _value , GL_UNSIGNED_SHORT , ( void * ) 0 ) ;
 }
 
-inline void shy_macosx_platform :: render_get_aspect_width ( float_32 & result )
+inline void shy_macosx_platform :: render_get_aspect_width ( num_fract & result )
 {
-	result = _aspect_width ;
+	result . _value = _aspect_width ;
 }
 
-inline void shy_macosx_platform :: render_get_aspect_height ( float_32 & result )
+inline void shy_macosx_platform :: render_get_aspect_height ( num_fract & result )
 {
-	result = _aspect_height ;
+	result . _value = _aspect_height ;
 }

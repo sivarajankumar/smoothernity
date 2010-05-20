@@ -72,3 +72,13 @@ inline void shy_macosx_platform :: math_make_fract_from_whole ( num_fract & resu
 {
     result . _value = float ( whole . _value ) ;
 }
+
+inline void shy_macosx_platform :: math_sub_fracts ( num_fract & result , num_fract from , num_fract what )
+{
+    result . _value = from . _value - what . _value ;
+}
+
+inline void shy_macosx_platform :: math_add_to_fract ( num_fract & a , num_fract b )
+{
+    a . _value += b . _value ;
+}

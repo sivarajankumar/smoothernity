@@ -16,10 +16,10 @@ public :
     void video_mode_changed ( ) ;
     void fidget_prepared ( ) ;
     void title_finished ( ) ;
-    void get_near_plane_distance ( float_32 & result ) ;
+    void get_near_plane_distance ( num_fract & result ) ;
 private :
     void _init_render ( ) ;
-    void _get_near_plane_distance ( float_32 & result ) ;
+    void _get_near_plane_distance ( num_fract & result ) ;
 private :
     mediator * _mediator ;
 } ;
@@ -57,48 +57,38 @@ void shy_logic < mediator > :: update ( )
 template < typename mediator >
 void shy_logic < mediator > :: use_perspective_projection ( )
 {
-    float_32 width ;
-    float_32 height ;
-    float_32 near_plane ;
-    num_fract y_top ;
-    num_fract y_bottom ;
-    num_fract x_left ;
-    num_fract x_right ;
+    num_fract width ;
+    num_fract height ;
+    num_fract neg_width ;
+    num_fract neg_height ;
     num_fract z_far ;
     num_fract z_near ;
-    _get_near_plane_distance ( near_plane ) ;
+    _get_near_plane_distance ( z_near ) ;
+    platform :: math_make_num_fract ( z_far , 50 , 1 ) ;
     platform :: render_get_aspect_width ( width ) ;
     platform :: render_get_aspect_height ( height ) ;
-    platform :: math_make_num_fract ( x_left , int_32 ( - width * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( x_right , int_32 ( width * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( y_bottom , int_32 ( - height * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( y_top , int_32 ( height * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( z_near , int_32 ( near_plane * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( z_far , 50 , 1 ) ;
-    platform :: render_projection_frustum ( x_left , x_right , y_bottom , y_top , z_near , z_far ) ;
+    platform :: math_neg_fract ( neg_width , width ) ;
+    platform :: math_neg_fract ( neg_height , height ) ;
+    platform :: render_projection_frustum ( neg_width , width , neg_height , height , z_near , z_far ) ;
     platform :: render_matrix_identity ( ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: use_ortho_projection ( )
 {
-    float_32 width ;
-    float_32 height ;
-    num_fract y_top ;
-    num_fract y_bottom ;
-    num_fract x_left ;
-    num_fract x_right ;
+    num_fract width ;
+    num_fract height ;
+    num_fract neg_width ;
+    num_fract neg_height ;
     num_fract z_far ;
     num_fract z_near ;
     platform :: render_get_aspect_width ( width ) ;
     platform :: render_get_aspect_height ( height ) ;
-    platform :: math_make_num_fract ( x_left , int_32 ( - width * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( x_right , int_32 ( width * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( y_bottom , int_32 ( - height * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( y_top , int_32 ( height * 1000.0f ) , 1000 ) ;
+    platform :: math_neg_fract ( neg_width , width ) ;
+    platform :: math_neg_fract ( neg_height , height ) ;
     platform :: math_make_num_fract ( z_near , 1 , 1 ) ;
     platform :: math_make_num_fract ( z_far , 50 , 1 ) ;
-    platform :: render_projection_ortho ( x_left , x_right , y_bottom , y_top , z_near , z_far ) ;
+    platform :: render_projection_ortho ( neg_width , width , neg_height , height , z_near , z_far ) ;
     platform :: render_matrix_identity ( ) ;
 }
 
@@ -119,7 +109,7 @@ void shy_logic < mediator > :: video_mode_changed ( )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: get_near_plane_distance ( float_32 & result )
+void shy_logic < mediator > :: get_near_plane_distance ( num_fract & result )
 {
     _get_near_plane_distance ( result ) ;
 }
@@ -133,11 +123,11 @@ void shy_logic < mediator > :: _init_render ( )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: _get_near_plane_distance ( float_32 & result )
+void shy_logic < mediator > :: _get_near_plane_distance ( num_fract & result )
 {
-    float_32 width ;
-    float_32 height ;
+    num_fract width ;
+    num_fract height ;
     platform :: render_get_aspect_width ( width ) ;
     platform :: render_get_aspect_height ( height ) ;
-    result = width + height ;
+    platform :: math_add_fracts ( result , width , height ) ;
 }

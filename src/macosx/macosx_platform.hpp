@@ -23,7 +23,7 @@ public :
         friend class shy_macosx_platform ;
     public :
         num_whole ( )
-        : _value ( 0 )
+        : _value ( 0xC0C0C0C0 )
         {
         }
     private :
@@ -35,7 +35,7 @@ public :
         friend class shy_macosx_platform ;
     public :
         num_fract ( )
-        : _value ( 0 )
+        : _value ( 0xC0C0C0C0 )
         {
         }
     private :
@@ -248,8 +248,8 @@ public :
     static void render_matrix_push ( ) ;
     static void render_matrix_pop ( ) ;
     
-	static void render_get_aspect_width ( float_32 & result ) ;
-	static void render_get_aspect_height ( float_32 & result ) ;
+	static void render_get_aspect_width ( num_fract & result ) ;
+	static void render_get_aspect_height ( num_fract & result ) ;
     
     //
     // sound
@@ -291,7 +291,9 @@ public :
 
     static void math_sin ( num_fract & result , num_fract a ) ;
     static void math_cos ( num_fract & result , num_fract a ) ;    
+    static void math_sub_fracts ( num_fract & result , num_fract from , num_fract what ) ;
     static void math_add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
+    static void math_add_to_fract ( num_fract & a , num_fract b ) ;
     static void math_mul_fracts ( num_fract & result , num_fract a , num_fract b ) ;
     static void math_mul_fract_by ( num_fract & a , num_fract b ) ;
     static void math_div_fract_by ( num_fract & a , num_fract b ) ;
