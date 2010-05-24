@@ -648,19 +648,28 @@ void shy_logic_text < mediator > :: _rasterize_font_english_H ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    num_whole right = ( _letter_size_x * 4 ) / 5 ;
+    num_whole top_limit ;
+    num_whole right ;
+    platform :: math_sub_wholes ( top_limit , _letter_size_y , platform :: whole_1 ) ;        
+    platform :: math_mul_wholes ( right , _letter_size_x , platform :: whole_4 ) ;
+    platform :: math_div_whole_by ( right , platform :: whole_5 ) ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( platform :: whole_0 , platform :: whole_0 , right , top_limit ) ;
     
-    num_whole hole_left = _letter_size_x / 5 ;
-    num_whole hole_right = ( _letter_size_x * 3 ) / 5 ;
-    num_whole hole_top = _letter_size_y - 1 ;
-    num_whole hole_mid_top = ( _letter_size_y * 3 ) / 5 ;
-    num_whole hole_mid_bottom = ( _letter_size_y * 2 ) / 5 ;
-    num_whole hole_bottom = 0 ;
+    num_whole hole_left ;
+    num_whole hole_right ;
+    num_whole hole_mid_top ;
+    num_whole hole_mid_bottom ;
+    platform :: math_div_wholes ( hole_left , _letter_size_x , platform :: whole_5 ) ;    
+    platform :: math_mul_wholes ( hole_right , _letter_size_x , platform :: whole_3 ) ;
+    platform :: math_div_whole_by ( hole_right , platform :: whole_5 ) ;    
+    platform :: math_mul_wholes ( hole_mid_top , _letter_size_y , platform :: whole_3 ) ;
+    platform :: math_div_whole_by ( hole_mid_top , platform :: whole_5 ) ;    
+    platform :: math_mul_wholes ( hole_mid_bottom , _letter_size_y , platform :: whole_2 ) ;
+    platform :: math_div_whole_by ( hole_mid_bottom , platform :: whole_5 ) ;    
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_rect ( hole_left , hole_top , hole_right , hole_mid_top ) ;
-    _mediator -> rasterize_rect ( hole_left , hole_mid_bottom , hole_right , hole_bottom ) ;
+    _mediator -> rasterize_rect ( hole_left , top_limit , hole_right , hole_mid_top ) ;
+    _mediator -> rasterize_rect ( hole_left , hole_mid_bottom , hole_right , platform :: whole_0 ) ;
 }
 
 template < typename mediator >
@@ -668,19 +677,28 @@ void shy_logic_text < mediator > :: _rasterize_font_english_I ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    num_whole right = ( _letter_size_x * 6 ) / 7 ;
+    num_whole top_limit ;
+    num_whole right ;
+    platform :: math_sub_wholes ( top_limit , _letter_size_y , platform :: whole_1 ) ;    
+    platform :: math_mul_wholes ( right , _letter_size_x , platform :: whole_6 ) ;
+    platform :: math_div_whole_by ( right , platform :: whole_7 ) ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( platform :: whole_0 , platform :: whole_0 , right , top_limit ) ;
     
-    num_whole hole_left = 0 ;
-    num_whole hole_right = right ;
-    num_whole hole_mid_left = ( _letter_size_x * 2 ) / 7 ;
-    num_whole hole_mid_right = ( _letter_size_x * 4 ) / 7 ;
-    num_whole hole_top = ( _letter_size_y * 4 ) / 5 ;
-    num_whole hole_bottom = _letter_size_y / 5 ;
+    num_whole hole_mid_left ;
+    num_whole hole_mid_right ;
+    num_whole hole_top ;
+    num_whole hole_bottom ;
+    platform :: math_mul_wholes ( hole_mid_left , _letter_size_x , platform :: whole_2 ) ;
+    platform :: math_div_whole_by ( hole_mid_left , platform :: whole_7 ) ;    
+    platform :: math_mul_wholes ( hole_mid_right , _letter_size_x , platform :: whole_4 ) ;
+    platform :: math_div_whole_by ( hole_mid_right , platform :: whole_7 ) ;    
+    platform :: math_mul_wholes ( hole_top , _letter_size_y , platform :: whole_4 ) ;
+    platform :: math_div_whole_by ( hole_top , platform :: whole_5 ) ;    
+    platform :: math_div_wholes ( hole_bottom , _letter_size_y , platform :: whole_5 ) ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_rect ( hole_left , hole_top , hole_mid_left , hole_bottom ) ;
-    _mediator -> rasterize_rect ( hole_mid_right , hole_top , hole_right , hole_bottom ) ;
+    _mediator -> rasterize_rect ( platform :: whole_0 , hole_top , hole_mid_left , hole_bottom ) ;
+    _mediator -> rasterize_rect ( hole_mid_right , hole_top , right , hole_bottom ) ;
 }
 
 template < typename mediator >
@@ -688,29 +706,43 @@ void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    num_whole right = ( _letter_size_x * 4 ) / 5 ;
-    num_whole circle_top = ( _letter_size_y * 4 ) / 5 ;
-    num_whole circle_bottom = 0 ;
+    num_whole top_limit ;
+    num_whole right ;
+    num_whole circle_top ;
+    platform :: math_sub_wholes ( top_limit , _letter_size_y , platform :: whole_1 ) ;    
+    platform :: math_mul_wholes ( right , _letter_size_x , platform :: whole_4 ) ;
+    platform :: math_div_whole_by ( right , platform :: whole_5 ) ;
+    platform :: math_mul_wholes ( circle_top , _letter_size_y , platform :: whole_4 ) ;
+    platform :: math_div_whole_by ( circle_top , platform :: whole_5 ) ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , circle_bottom , right , circle_top ) ;
+    _mediator -> rasterize_ellipse_in_rect ( platform :: whole_0 , platform :: whole_0 , right , circle_top ) ;
 
-    num_whole circle_center_y = ( circle_top + circle_bottom ) / 2 ;
+    num_whole circle_center_y ;
+    platform :: math_div_wholes ( circle_center_y , circle_top , platform :: whole_2 ) ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , circle_center_y , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( platform :: whole_0 , circle_center_y , right , top_limit ) ;
     
-    num_whole hole_left = _letter_size_x / 5 ;
-    num_whole hole_right = ( _letter_size_x * 3 ) / 5 ;
-    num_whole hole_top = ( _letter_size_y * 3 ) / 5 ;
-    num_whole hole_bottom = _letter_size_y / 5 ;
+    num_whole hole_left ;
+    num_whole hole_right ;
+    num_whole hole_top ;
+    num_whole hole_bottom ;
+    platform :: math_div_wholes ( hole_left , _letter_size_x , platform :: whole_5 ) ;    
+    platform :: math_mul_wholes ( hole_right , _letter_size_x , platform :: whole_3 ) ;
+    platform :: math_div_whole_by ( hole_right , platform :: whole_5 ) ;    
+    platform :: math_mul_wholes ( hole_top , _letter_size_y , platform :: whole_3 ) ;
+    platform :: math_div_whole_by ( hole_top , platform :: whole_5 ) ;    
+    platform :: math_div_wholes ( hole_bottom , _letter_size_y , platform :: whole_5 ) ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
     
-    num_whole hole_center_y = ( hole_top + hole_bottom ) / 2 ;
+    num_whole hole_center_y ;
+    platform :: math_add_wholes ( hole_center_y , hole_top , hole_bottom ) ;
+    platform :: math_div_whole_by ( hole_center_y , platform :: whole_2 ) ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_rect ( hole_left , circle_top , hole_right , hole_center_y ) ;
     
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_rect ( 0 , _letter_size_y - 1 , hole_left , hole_center_y ) ;
+    _mediator -> rasterize_rect ( platform :: whole_0 , top_limit , hole_left , hole_center_y ) ;
 }
 
 template < typename mediator >
