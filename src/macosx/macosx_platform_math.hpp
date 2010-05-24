@@ -142,3 +142,8 @@ inline void shy_macosx_platform :: math_neg_fract ( num_fract & a )
 {
     a . _value = - a . _value ;
 }
+
+inline void shy_macosx_platform :: math_neg_whole ( num_whole & result , num_whole a )
+{
+    result . _value = - a . _value ;
+}

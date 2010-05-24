@@ -29,6 +29,14 @@ const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_pi ( 3.14159
 const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_2pi ( 6.283184f ) ;
 const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_0 ( 0 ) ;
 const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_1 ( 1 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_2 ( 2 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_3 ( 3 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_4 ( 4 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_5 ( 5 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_6 ( 6 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_7 ( 7 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_8 ( 8 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_9 ( 9 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_0 ( 0 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_1 ( 1 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_2 ( 2 ) ;

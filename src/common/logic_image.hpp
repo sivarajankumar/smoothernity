@@ -62,7 +62,7 @@ void shy_logic_image < mediator > :: image_render ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: image_prepare_permit ( )
 {
-    _image_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _image_prepare_permitted , true ) ;
 }
 
 template < typename mediator >

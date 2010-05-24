@@ -96,13 +96,12 @@ public :
     void land_prepared ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
-    template < typename T > void math_abs ( T & result , T f ) ;
+    void math_abs_whole ( num_whole & result , num_whole a ) ;
     void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    template < typename T > void math_clamp ( T & result , T f , T from , T to ) ;
     void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
-    template < typename T > void math_max ( T & result , T f1 , T f2 ) ;
-    template < typename T > void math_min ( T & result , T f1 , T f2 ) ;
+    void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
+    void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
     void math_pi ( num_fract & result ) ;
     void mesh_create 
         ( mesh_id & result
@@ -292,10 +291,9 @@ void shy_mediator < mediator_types > :: land_prepared ( )
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_abs ( T & result , T f )
+void shy_mediator < mediator_types > :: math_abs_whole ( num_whole & result , num_whole a )
 {
-    _engine_math . math_abs < T > ( result , f ) ;
+    _engine_math . math_abs_whole ( result , a ) ;
 }
 
 template < typename mediator_types >
@@ -313,24 +311,15 @@ void shy_mediator < mediator_types > :: math_lerp
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_clamp ( T & result , T f , T from , T to )
+void shy_mediator < mediator_types > :: math_max_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    _engine_math . math_clamp < T > ( result , f , from , to ) ;
+    _engine_math . math_max_whole ( result , a , b ) ;
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_max ( T & result , T f1 , T f2 )
+void shy_mediator < mediator_types > :: math_min_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    _engine_math . math_max < T > ( result , f1 , f2 ) ;
-}
-
-template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_min ( T & result , T f1 , T f2 )
-{
-    _engine_math . math_min < T > ( result , f1 , f2 ) ;
+    _engine_math . math_min_whole ( result , a , b ) ;
 }
 
 template < typename mediator_types >

@@ -79,8 +79,10 @@ void shy_engine_texture < mediator > :: texture_load_from_resource ( texture_id 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_select ( texture_id arg_texture_id )
 {
+    _texture_data * texture_ptr = 0 ;
+    platform :: memory_pointer_offset ( texture_ptr , _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: render_enable_texturing ( ) ;
-    platform :: render_use_texture ( _textures_datas [ arg_texture_id . _texture_id ] . render_id ) ;
+    platform :: render_use_texture ( texture_ptr -> render_id ) ;
 }
 
 template < typename mediator >

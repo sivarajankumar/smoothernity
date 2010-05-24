@@ -77,7 +77,7 @@ template < typename mediator >
 void shy_logic_fidget < mediator > :: _update_fidget ( )
 {
     num_fract angle_delta ;
-    platform :: math_make_num_fract ( angle_delta , 125 , 100 ) ;
+    platform :: math_make_num_fract ( angle_delta , 125 , 1000 ) ;
     platform :: math_add_to_fract ( _fidget_angle , angle_delta ) ;
 }
 

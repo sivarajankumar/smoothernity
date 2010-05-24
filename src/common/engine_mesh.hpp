@@ -94,27 +94,24 @@ void shy_engine_mesh < mediator > :: mesh_create
 template < typename mediator >
 void shy_engine_mesh < mediator > :: mesh_render ( mesh_id arg_mesh_id )
 {
-    _mesh_data & mesh = _meshes_data [ arg_mesh_id . _mesh_id ] ;
+    _mesh_data * mesh_ptr = 0 ;
+    platform :: memory_pointer_offset ( mesh_ptr , _meshes_data , arg_mesh_id . _mesh_id ) ;
     platform :: render_matrix_push ( ) ;
-    platform :: render_matrix_mult ( mesh . transform ) ;
-    if ( mesh . triangle_strip_indices_count > 0 )
+    platform :: render_matrix_mult ( mesh_ptr -> transform ) ;
+    if ( platform :: condition_whole_greater_than_zero ( mesh_ptr -> triangle_strip_indices_count ) )
     {
-        num_whole indices_count ;
-        platform :: math_make_num_whole ( indices_count , mesh . triangle_strip_indices_count ) ;
         platform :: render_draw_triangle_strip 
-            ( mesh . vertex_buffer_id 
-            , mesh . triangle_strip_index_buffer_id 
-            , indices_count
+            ( mesh_ptr -> vertex_buffer_id 
+            , mesh_ptr -> triangle_strip_index_buffer_id 
+            , mesh_ptr -> triangle_strip_indices_count
             ) ;
     }
-    if ( mesh . triangle_fan_indices_count > 0 )
+    if ( platform :: condition_whole_greater_than_zero ( mesh_ptr -> triangle_fan_indices_count ) )
     {
-        num_whole indices_count ;
-        platform :: math_make_num_whole ( indices_count , mesh . triangle_fan_indices_count ) ;
         platform :: render_draw_triangle_fan 
-            ( mesh . vertex_buffer_id 
-            , mesh . triangle_fan_index_buffer_id 
-            , indices_count
+            ( mesh_ptr -> vertex_buffer_id 
+            , mesh_ptr -> triangle_fan_index_buffer_id 
+            , mesh_ptr -> triangle_fan_indices_count
             ) ;
     }
     platform :: render_matrix_pop ( ) ;

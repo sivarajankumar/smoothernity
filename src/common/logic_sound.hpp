@@ -102,7 +102,7 @@ void shy_logic_sound < mediator > :: init ( )
 template < typename mediator >
 void shy_logic_sound < mediator > :: sound_prepare_permit ( )
 {
-    _sound_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _sound_prepare_permitted , true ) ;
 }
 
 template < typename mediator >

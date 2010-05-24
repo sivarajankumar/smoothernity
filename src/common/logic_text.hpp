@@ -90,7 +90,7 @@ shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
 template < typename mediator >
 void shy_logic_text < mediator > :: text_prepare_permit ( )
 {
-    _text_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _text_prepare_permitted , true ) ;
 }
 
 template < typename mediator >

@@ -185,6 +185,14 @@ public :
     static const num_fract fract_2pi ;
     static const num_fract fract_0 ;
     static const num_fract fract_1 ;
+    static const num_fract fract_2 ;
+    static const num_fract fract_3 ;
+    static const num_fract fract_4 ;
+    static const num_fract fract_5 ;
+    static const num_fract fract_6 ;
+    static const num_fract fract_7 ;
+    static const num_fract fract_8 ;
+    static const num_fract fract_9 ;
     static const num_whole whole_0 ;
     static const num_whole whole_1 ;
     static const num_whole whole_2 ;
@@ -333,6 +341,7 @@ public :
     static void math_inc_whole ( num_whole & a ) ;
     static void math_dec_whole ( num_whole & a ) ;
     static void math_xor_wholes ( num_whole & result , num_whole a , num_whole b ) ;
+    static void math_neg_whole ( num_whole & result , num_whole a ) ;
 
     static void math_sin ( num_fract & result , num_fract a ) ;
     static void math_cos ( num_fract & result , num_fract a ) ;    
@@ -365,8 +374,10 @@ public :
     
     static int condition_wholes_are_equal ( num_whole a , num_whole b ) ;
     static int condition_whole_greater_or_equal_to_whole ( num_whole a , num_whole b ) ;
+    static int condition_whole_greater_than_whole ( num_whole a , num_whole b ) ;
     static int condition_whole_greater_than_zero ( num_whole num ) ;
     static int condition_whole_less_than_whole ( num_whole a , num_whole b ) ;
+    static int condition_whole_less_than_zero ( num_whole a ) ;
     static int condition_whole_less_or_equal_to_zero ( num_whole a ) ;
     static int condition_whole_less_or_equal_to_whole ( num_whole a , num_whole b ) ;
     static int condition_whole_is_zero ( num_whole num ) ;

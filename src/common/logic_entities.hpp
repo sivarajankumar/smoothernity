@@ -65,7 +65,7 @@ void shy_logic_entities < mediator > :: entities_render ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: entities_prepare_permit ( )
 {
-    _entities_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _entities_prepare_permitted , true ) ;
 }
 
 template < typename mediator >
@@ -94,13 +94,13 @@ void shy_logic_entities < mediator > :: get_entity_origin ( vector_data & result
 template < typename mediator >
 void shy_logic_entities < mediator > :: get_entity_mesh_grid ( num_whole & result )
 {
-    result = _entity_mesh_grid ;
+    platform :: math_make_num_whole ( result , _entity_mesh_grid ) ;
 }
 
 template < typename mediator >
 void shy_logic_entities < mediator > :: get_entity_height ( num_fract & result )
 {
-    result = _entity_mesh_height ;
+    platform :: math_make_num_fract ( result , _entity_mesh_height , 1 ) ;
 }
 
 template < typename mediator >

@@ -56,7 +56,7 @@ shy_logic_touch < mediator > :: shy_logic_touch ( mediator * arg_mediator )
 template < typename mediator >
 void shy_logic_touch < mediator > :: touch_prepare_permit ( )
 {
-    _spot_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _spot_prepare_permitted , true ) ;
 }
 
 template < typename mediator >

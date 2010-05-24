@@ -57,3 +57,13 @@ inline int shy_macosx_platform :: condition_whole_greater_or_equal_to_whole ( nu
 {
     return a . _value >= b . _value ;
 }
+
+inline int shy_macosx_platform :: condition_whole_less_than_zero ( num_whole a )
+{
+    return a . _value < 0 ;
+}
+
+inline int shy_macosx_platform :: condition_whole_greater_than_whole ( num_whole a , num_whole b )
+{
+    return a . _value > b . _value ;
+}
