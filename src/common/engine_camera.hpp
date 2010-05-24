@@ -2,7 +2,6 @@ template < typename mediator >
 class shy_engine_camera
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
 public :
