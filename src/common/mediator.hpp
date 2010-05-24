@@ -110,15 +110,6 @@ public :
         , vertex_data * vertices 
         , index_data * triangle_strip_indices 
         , index_data * triangle_fan_indices
-        , int_32 vertices_count
-        , int_32 triangle_strip_indices_count 
-        , int_32 triangle_fan_indices_count
-        ) ;
-    void mesh_create 
-        ( mesh_id & result
-        , vertex_data * vertices 
-        , index_data * triangle_strip_indices 
-        , index_data * triangle_fan_indices
         , num_whole vertices_count
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
@@ -347,28 +338,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_pi ( float_32 & result )
 {
     _engine_math . math_pi ( result ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_create 
-    ( mesh_id & result
-    , vertex_data * vertices 
-    , index_data * triangle_strip_indices 
-    , index_data * triangle_fan_indices
-    , int_32 vertices_count
-    , int_32 triangle_strip_indices_count 
-    , int_32 triangle_fan_indices_count
-    )
-{
-    _engine_mesh . mesh_create 
-        ( result
-        , vertices
-        , triangle_strip_indices
-        , triangle_fan_indices
-        , vertices_count
-        , triangle_strip_indices_count
-        , triangle_fan_indices_count
-        ) ;
 }
 
 template < typename mediator_types >

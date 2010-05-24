@@ -210,7 +210,7 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     platform :: render_set_vertex_tex_coord ( vertices [ 3 ] , u_right , v_bottom ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , index ) ;
 
-    _mediator -> mesh_create ( _text_mesh_id , vertices , indices , 0 , 4 , 4 , 0 ) ;    
+    _mediator -> mesh_create ( _text_mesh_id , vertices , indices , 0 , platform :: whole_4 , platform :: whole_4 , platform :: whole_0 ) ;    
 }
 
 template < typename mediator >

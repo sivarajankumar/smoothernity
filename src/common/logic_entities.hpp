@@ -186,14 +186,22 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , index ) ;
         ++ fan_indices_count ;
     }
+    
+    num_whole num_vertices_count ;
+    num_whole num_strip_indices_count ;
+    num_whole num_fan_indices_count ;
+    platform :: math_make_num_whole ( num_vertices_count , vertices_count ) ;
+    platform :: math_make_num_whole ( num_strip_indices_count , strip_indices_count ) ;
+    platform :: math_make_num_whole ( num_fan_indices_count , fan_indices_count ) ;
+    
     _mediator -> mesh_create 
         ( _entity_mesh_id
         , vertices 
         , strip_indices 
         , fan_indices 
-        , vertices_count 
-        , strip_indices_count 
-        , fan_indices_count
+        , num_vertices_count 
+        , num_strip_indices_count 
+        , num_fan_indices_count
         ) ;
 }
 

@@ -195,5 +195,9 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform :: render_set_vertex_color ( vertices [ i ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         platform :: render_set_index_value ( indices [ i ] , index ) ;
     }
-    _mediator -> mesh_create ( _spot_mesh_id , vertices , 0 , indices , _spot_edges , 0 , _spot_edges ) ;
+    
+    num_whole num_edges ;
+    platform :: math_make_num_whole ( num_edges , _spot_edges ) ;
+    
+    _mediator -> mesh_create ( _spot_mesh_id , vertices , 0 , indices , num_edges , platform :: whole_0 , num_edges ) ;
 }

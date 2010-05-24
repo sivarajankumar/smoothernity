@@ -174,7 +174,11 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             }
         }
     }
-    _mediator -> mesh_create ( _land_mesh_id , vertices , indices , 0 , vertices_count , indices_count , 0 ) ;
+    num_whole num_vertices_count ;
+    num_whole num_indices_count ;
+    platform :: math_make_num_whole ( num_vertices_count , vertices_count ) ;
+    platform :: math_make_num_whole ( num_indices_count , indices_count ) ;
+    _mediator -> mesh_create ( _land_mesh_id , vertices , indices , 0 , num_vertices_count , num_indices_count , platform :: whole_0 ) ;
     _land_mesh_created = true ;
 }
 
