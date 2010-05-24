@@ -16,6 +16,8 @@ class shy_macosx_platform
     static const int _uninitialized_value = 0xC0C0C0C0 ;    
 public :
     typedef const int const_int_32 ;
+    typedef int int_32 ;
+    typedef float float_32 ;
     
     class num_whole
     {
@@ -24,6 +26,10 @@ public :
         num_whole ( )
         : _value ( _uninitialized_value )
         {
+        }
+        int_32 debug_to_int_32 ( )
+        {
+            return _value ;
         }
     private :
         num_whole ( int arg_value )
@@ -41,6 +47,10 @@ public :
         num_fract ( )
         : _value ( _uninitialized_value )
         {
+        }
+        float_32 debug_to_float_32 ( )
+        {
+            return _value ;
         }
     private :
         num_fract ( float arg_value )

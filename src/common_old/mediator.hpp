@@ -58,7 +58,6 @@ public :
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
     typedef typename platform :: num_fract num_fract ;
-    typedef typename platform :: num_whole num_whole ;
     typedef typename platform :: texel_data texel_data ;
     typedef typename platform :: texture_resource_id texture_resource_id ;
     typedef typename platform :: vector_data vector_data ;
@@ -113,15 +112,6 @@ public :
         , int_32 vertices_count
         , int_32 triangle_strip_indices_count 
         , int_32 triangle_fan_indices_count
-        ) ;
-    void mesh_create 
-        ( mesh_id & result
-        , vertex_data * vertices 
-        , index_data * triangle_strip_indices 
-        , index_data * triangle_fan_indices
-        , num_whole vertices_count
-        , num_whole triangle_strip_indices_count 
-        , num_whole triangle_fan_indices_count
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
@@ -358,28 +348,6 @@ void shy_mediator < mediator_types > :: mesh_create
     , int_32 vertices_count
     , int_32 triangle_strip_indices_count 
     , int_32 triangle_fan_indices_count
-    )
-{
-    _engine_mesh . mesh_create 
-        ( result
-        , vertices
-        , triangle_strip_indices
-        , triangle_fan_indices
-        , vertices_count
-        , triangle_strip_indices_count
-        , triangle_fan_indices_count
-        ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_create 
-    ( mesh_id & result
-    , vertex_data * vertices 
-    , index_data * triangle_strip_indices 
-    , index_data * triangle_fan_indices
-    , num_whole vertices_count
-    , num_whole triangle_strip_indices_count 
-    , num_whole triangle_fan_indices_count
     )
 {
     _engine_mesh . mesh_create 

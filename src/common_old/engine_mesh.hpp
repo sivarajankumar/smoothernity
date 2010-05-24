@@ -41,15 +41,6 @@ public :
         , int_32 triangle_strip_indices_count 
         , int_32 triangle_fan_indices_count
         ) ;
-    void mesh_create 
-        ( mesh_id & result
-        , vertex_data * vertices 
-        , index_data * triangle_strip_indices 
-        , index_data * triangle_fan_indices
-        , num_whole vertices_count
-        , num_whole triangle_strip_indices_count 
-        , num_whole triangle_fan_indices_count
-        ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
 private :
@@ -61,28 +52,6 @@ template < typename mediator >
 shy_engine_mesh < mediator > :: shy_engine_mesh ( )
 : _next_mesh_id ( 0 )
 {
-}
-
-template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_create 
-    ( mesh_id & result
-    , vertex_data * vertices 
-    , index_data * triangle_strip_indices 
-    , index_data * triangle_fan_indices
-    , num_whole vertices_count
-    , num_whole triangle_strip_indices_count
-    , num_whole triangle_fan_indices_count
-    )
-{
-    mesh_create 
-        ( result 
-        , vertices 
-        , triangle_strip_indices 
-        , triangle_fan_indices
-        , vertices_count . debug_to_int_32 ( )
-        , triangle_strip_indices_count . debug_to_int_32 ( )
-        , triangle_fan_indices_count . debug_to_int_32 ( )
-        ) ;
 }
 
 template < typename mediator >

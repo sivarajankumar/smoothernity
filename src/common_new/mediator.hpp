@@ -53,8 +53,6 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
-    typedef typename platform :: float_32 float_32 ;
-    typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
     typedef typename platform :: num_fract num_fract ;
@@ -85,9 +83,9 @@ public :
     void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
-    void get_entity_height ( float_32 & result ) ;
-    void get_entity_mesh_grid ( int_32 & result ) ;
-    void get_entity_origin ( vector_data & result , int_32 index ) ;
+    void get_entity_height ( num_fract & result ) ;
+    void get_entity_mesh_grid ( num_whole & result ) ;
+    void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
     void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
@@ -98,22 +96,13 @@ public :
     void land_prepared ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
-    template < typename T > void math_abs ( T & result , T f ) ;
-    void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    template < typename T > void math_clamp ( T & result , T f , T from , T to ) ;
-    void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
-    template < typename T > void math_max ( T & result , T f1 , T f2 ) ;
-    template < typename T > void math_min ( T & result , T f1 , T f2 ) ;
-    void math_pi ( float_32 & result ) ;
-    void mesh_create 
-        ( mesh_id & result
-        , vertex_data * vertices 
-        , index_data * triangle_strip_indices 
-        , index_data * triangle_fan_indices
-        , int_32 vertices_count
-        , int_32 triangle_strip_indices_count 
-        , int_32 triangle_fan_indices_count
-        ) ;
+    void math_abs_whole ( num_whole & result , num_whole a ) ;
+    void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
+    void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
+    void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
+    void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
+    void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
+    void math_pi ( num_fract & result ) ;
     void mesh_create 
         ( mesh_id & result
         , vertex_data * vertices 
@@ -125,10 +114,10 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
-    void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
-    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
-    void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
+    void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
+    void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     void render ( ) ;
     void sound_prepare_permit ( ) ;
@@ -140,13 +129,13 @@ public :
     void text_update ( ) ;
     void texture_create ( texture_id & result ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
-    void texture_height ( int_32 & result ) ;
+    void texture_height ( num_whole & result ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
-    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
-    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a ) ;
     void texture_unselect ( ) ;
-    void texture_width ( int_32 & result ) ;
+    void texture_width ( num_whole & result ) ;
     void title_finished ( ) ;
     void title_launch_permit ( ) ;
     void title_render ( ) ;
@@ -259,19 +248,19 @@ void shy_mediator < mediator_types > :: game_update ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_entity_height ( float_32 & result )
+void shy_mediator < mediator_types > :: get_entity_height ( num_fract & result )
 {
     _logic_entities . get_entity_height ( result ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_entity_mesh_grid ( int_32 & result )
+void shy_mediator < mediator_types > :: get_entity_mesh_grid ( num_whole & result )
 {
     _logic_entities . get_entity_mesh_grid ( result ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_entity_origin ( vector_data & result , int_32 index )
+void shy_mediator < mediator_types > :: get_entity_origin ( vector_data & result , num_whole index )
 {
     _logic_entities . get_entity_origin ( result , index ) ;
 }
@@ -302,73 +291,41 @@ void shy_mediator < mediator_types > :: land_prepared ( )
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_abs ( T & result , T f )
+void shy_mediator < mediator_types > :: math_abs_whole ( num_whole & result , num_whole a )
 {
-    _engine_math . math_abs < T > ( result , f ) ;
+    _engine_math . math_abs_whole ( result , a ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_catmull_rom_spline
-    ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
+    ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
 {
     _engine_math . math_catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_lerp 
-    ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight )
+    ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight )
 {
     _engine_math . math_lerp ( result , from_value , from_weight , to_value , to_weight , weight ) ;
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_clamp ( T & result , T f , T from , T to )
+void shy_mediator < mediator_types > :: math_max_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    _engine_math . math_clamp < T > ( result , f , from , to ) ;
+    _engine_math . math_max_whole ( result , a , b ) ;
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_max ( T & result , T f1 , T f2 )
+void shy_mediator < mediator_types > :: math_min_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    _engine_math . math_max < T > ( result , f1 , f2 ) ;
+    _engine_math . math_min_whole ( result , a , b ) ;
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_min ( T & result , T f1 , T f2 )
-{
-    _engine_math . math_min < T > ( result , f1 , f2 ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_pi ( float_32 & result )
+void shy_mediator < mediator_types > :: math_pi ( num_fract & result )
 {
     _engine_math . math_pi ( result ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_create 
-    ( mesh_id & result
-    , vertex_data * vertices 
-    , index_data * triangle_strip_indices 
-    , index_data * triangle_fan_indices
-    , int_32 vertices_count
-    , int_32 triangle_strip_indices_count 
-    , int_32 triangle_fan_indices_count
-    )
-{
-    _engine_mesh . mesh_create 
-        ( result
-        , vertices
-        , triangle_strip_indices
-        , triangle_fan_indices
-        , vertices_count
-        , triangle_strip_indices_count
-        , triangle_fan_indices_count
-        ) ;
 }
 
 template < typename mediator_types >
@@ -456,21 +413,21 @@ void shy_mediator < mediator_types > :: touch_prepare_permit ( )
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_ellipse_in_rect
-    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
+    ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
     _engine_rasterizer . rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_rect
-    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
+    ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
     _engine_rasterizer . rasterize_rect ( x1 , y1 , x2 , y2 ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_use_texture 
-    ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y )
+    ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y )
 {
     _engine_rasterizer . rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
 }
@@ -484,7 +441,7 @@ void shy_mediator < mediator_types > :: rasterize_use_texel
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_triangle
-    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 )
+    ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 )
 {
     _engine_rasterizer . rasterize_triangle ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
 }
@@ -626,14 +583,14 @@ void shy_mediator < mediator_types > :: texture_select ( texture_id arg_texture_
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_set_texel 
-    ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel )
 {
     _engine_texture . texture_set_texel ( arg_texture_id , x , y , texel ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_set_texel 
-    ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a )
 {
     _engine_texture . texture_set_texel ( arg_texture_id , x , y , r , g , b , a ) ;
 }
@@ -645,13 +602,13 @@ void shy_mediator < mediator_types > :: texture_unselect ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_height ( int_32 & result )
+void shy_mediator < mediator_types > :: texture_height ( num_whole & result )
 {
     _engine_texture . texture_height ( result ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_width ( int_32 & result )
+void shy_mediator < mediator_types > :: texture_width ( num_whole & result )
 {
     _engine_texture . texture_width ( result ) ;
 }
@@ -708,4 +665,11 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: game_launch_permit ( )
 {
     _logic_game . game_launch_permit ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: math_clamp_fract 
+    ( num_fract & result , num_fract num , num_fract from , num_fract to )
+{
+    _engine_math . math_clamp_fract ( result , num , from , to ) ;
 }
