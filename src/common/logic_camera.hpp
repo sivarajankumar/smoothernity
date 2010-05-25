@@ -35,9 +35,9 @@ private :
     void _update_camera_matrix ( ) ;
     void _random_camera_origin_index ( num_whole & result ) ;
     void _random_camera_target_index ( num_whole & result ) ;
-    void _get_random_index ( int_32 & result , int_32 index_min , int_32 index_max ) ;
-    void _camera_origin_index_is_duplicate ( int_32 & result , int_32 index ) ;
-    void _camera_target_index_is_duplicate ( int_32 & result , int_32 index ) ;
+    void _get_random_index ( num_whole & result , num_whole index_min , num_whole index_max ) ;
+    void _camera_origin_index_is_duplicate ( num_whole & result , num_whole index ) ;
+    void _camera_target_index_is_duplicate ( num_whole & result , num_whole index ) ;
 private :
     mediator * _mediator ;
     matrix_data _camera_matrix ;
@@ -336,12 +336,8 @@ void shy_logic_camera < mediator > :: _random_camera_origin_index ( num_whole & 
     platform :: math_mul_whole_by ( index_max , mesh_grid ) ;
     do
     {
-        int_32 index_int_32 ;
-        int_32 is_duplicate_int_32 ;
-        _get_random_index ( index_int_32 , platform :: whole_0 . debug_to_int_32 ( ) , index_max . debug_to_int_32 ( ) ) ;
-        platform :: math_make_num_whole ( index , index_int_32 ) ;
-        _camera_origin_index_is_duplicate ( is_duplicate_int_32 , index . debug_to_int_32 ( ) ) ;
-        platform :: math_make_num_whole ( is_duplicate , is_duplicate_int_32 ) ;
+        _get_random_index ( index , platform :: whole_0 , index_max ) ;
+        _camera_origin_index_is_duplicate ( is_duplicate , index ) ;
     } while ( platform :: condition_true ( is_duplicate ) ) ;
     result = index ;
 }
@@ -361,43 +357,30 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( num_whole & 
     platform :: math_mul_wholes ( index_max , mesh_grid , mesh_grid ) ;
     do
     {
-        int_32 index_int_32 ;
-        int_32 is_duplicate_int_32 ;
-        _get_random_index ( index_int_32 , index_min . debug_to_int_32 ( ) , index_max . debug_to_int_32 ( ) ) ;
-        platform :: math_make_num_whole ( index , index_int_32 ) ;
-        _camera_target_index_is_duplicate ( is_duplicate_int_32 , index . debug_to_int_32 ( ) ) ;
-        platform :: math_make_num_whole ( is_duplicate , is_duplicate_int_32 ) ;
+        _get_random_index ( index , index_min , index_max ) ;
+        _camera_target_index_is_duplicate ( is_duplicate , index ) ;
     } while ( platform :: condition_true ( is_duplicate ) ) ;
     result = index ;
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _get_random_index ( int_32 & result_int_32 , int_32 index_min_int_32 , int_32 index_max_int_32 )
+void shy_logic_camera < mediator > :: _get_random_index ( num_whole & result , num_whole index_min , num_whole index_max )
 {
     num_whole random_const_1 ;
     num_whole random_const_2 ;
-    num_whole result ;
-    num_whole index_min ;
-    num_whole index_max ;
     num_whole index_diff ;
     platform :: math_make_num_whole ( random_const_1 , 181 ) ;
     platform :: math_make_num_whole ( random_const_2 , 139 ) ;
-    platform :: math_make_num_whole ( index_min , index_min_int_32 ) ;
-    platform :: math_make_num_whole ( index_max , index_max_int_32 ) ;
     platform :: math_add_to_whole ( _random_seed , random_const_1 ) ;
     platform :: math_mod_whole_by ( _random_seed , random_const_2 ) ;
     platform :: math_sub_wholes ( index_diff , index_max , index_min ) ;
     platform :: math_mod_wholes ( result , _random_seed , index_diff ) ;
     platform :: math_add_to_whole ( result , index_min ) ;
-    result_int_32 = result . debug_to_int_32 ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( int_32 & result_int_32 , int_32 index_int_32 )
+void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_whole & result , num_whole index )
 {
-    num_whole index ;
-    num_whole result ;
-    platform :: math_make_num_whole ( index , index_int_32 ) ;
     platform :: math_make_num_whole ( result , false ) ;
     for ( num_whole i = platform :: whole_0 
         ; platform :: condition_whole_less_than_whole ( i , platform :: whole_4 ) 
@@ -412,15 +395,11 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( int_32
             break ;
         }
     }
-    result_int_32 = result . debug_to_int_32 ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( int_32 & result_int_32 , int_32 index_int_32 )
+void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( num_whole & result , num_whole index )
 {
-    num_whole index ;
-    num_whole result ;
-    platform :: math_make_num_whole ( index , index_int_32 ) ;
     platform :: math_make_num_whole ( result , false ) ;
     for ( num_whole i = platform :: whole_0 
         ; platform :: condition_whole_less_than_whole ( i , platform :: whole_4 ) 
@@ -435,5 +414,4 @@ void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( int_32
             break ;
         }
     }
-    result_int_32 = result . debug_to_int_32 ( ) ;
 }
