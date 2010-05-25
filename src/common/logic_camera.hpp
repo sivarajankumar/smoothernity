@@ -177,13 +177,18 @@ void shy_logic_camera < mediator > :: _update_camera ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 {
-    if ( -- _frames_to_change_camera_origin <= 0 )
+    num_whole whole_frames_to_change_camera_origin ;
+    platform :: math_make_num_whole ( whole_frames_to_change_camera_origin , _frames_to_change_camera_origin ) ;
+    platform :: math_dec_whole ( whole_frames_to_change_camera_origin ) ;
+    if ( platform :: condition_whole_less_or_equal_to_zero ( whole_frames_to_change_camera_origin ) )
     {
-        _frames_to_change_camera_origin = _change_origin_in_frames ;
         int_32 new_origin_index ;
         vector_data new_origin_pos ;
+        
+        platform :: math_make_num_whole ( whole_frames_to_change_camera_origin , _change_origin_in_frames ) ;
         _random_camera_origin_index ( new_origin_index ) ;
         _mediator -> get_entity_origin ( new_origin_pos , new_origin_index ) ;
+        
         _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
         _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
         _scheduled_camera_origin_indices [ 2 ] = _scheduled_camera_origin_indices [ 3 ] ;
@@ -193,14 +198,26 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         _scheduled_camera_origins [ 2 ] = _scheduled_camera_origins [ 3 ] ;
         _scheduled_camera_origins [ 3 ] = new_origin_pos ;
     }
+    
+    num_fract fract_frames_to_change_camera_origin ;
+    num_fract fract_change_origin_in_frames ;
+    num_fract spline_pos ;
+    platform :: math_make_fract_from_whole ( fract_frames_to_change_camera_origin , whole_frames_to_change_camera_origin ) ;
+    platform :: math_make_num_fract ( fract_change_origin_in_frames , _change_origin_in_frames , 1 ) ;
+    platform :: math_div_fracts ( spline_pos , fract_frames_to_change_camera_origin , fract_change_origin_in_frames ) ;
+    platform :: math_neg_fract ( spline_pos ) ;
+    platform :: math_add_to_fract ( spline_pos , platform :: fract_1 ) ;
+    
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_origin
-        , 1.0f - float_32 ( _frames_to_change_camera_origin ) / float_32 ( _change_origin_in_frames )
+        , spline_pos . debug_to_float_32 ( )
         , _scheduled_camera_origins [ 0 ]
         , _scheduled_camera_origins [ 1 ]
         , _scheduled_camera_origins [ 2 ]
         , _scheduled_camera_origins [ 3 ]
         ) ;
+        
+    _frames_to_change_camera_origin = whole_frames_to_change_camera_origin . debug_to_int_32 ( ) ;    
 }
 
 template < typename mediator >
