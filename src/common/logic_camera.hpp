@@ -407,17 +407,28 @@ void shy_logic_camera < mediator > :: _get_random_index ( int_32 & result_int_32
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( int_32 & result , int_32 index )
+void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( int_32 & result_int_32 , int_32 index_int_32 )
 {
-    result = false ;
-    for ( int_32 i = 0 ; i < 4 ; i ++ )
+    num_whole index ;
+    num_whole result ;
+    platform :: math_make_num_whole ( index , index_int_32 ) ;
+    platform :: math_make_num_whole ( result , false ) ;
+    for ( num_whole i = platform :: whole_0 
+        ; platform :: condition_whole_less_than_whole ( i , platform :: whole_4 ) 
+        ; platform :: math_inc_whole ( i )
+        )
     {
-        if ( _scheduled_camera_origin_indices [ i ] == index )
+        num_whole num_index ;
+        int_32 * index_ptr = 0 ;
+        platform :: memory_pointer_offset ( index_ptr , _scheduled_camera_origin_indices , i ) ;
+        platform :: math_make_num_whole ( num_index , * index_ptr ) ;
+        if ( platform :: condition_wholes_are_equal ( num_index , index ) )
         {
-            result = true ;
+            platform :: math_make_num_whole ( result , true ) ;
             break ;
         }
     }
+    result_int_32 = result . debug_to_int_32 ( ) ;
 }
 
 template < typename mediator >
