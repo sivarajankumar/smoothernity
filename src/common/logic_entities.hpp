@@ -265,49 +265,85 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & result , int_32 index )
+void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & result , int_32 index_int_32 )
 {
+    num_whole index ;
+    num_whole x ;
+    num_whole z ;
+    num_whole whole_entity_mesh_grid ;
+    num_whole half_entity_mesh_grid ;
+    num_whole whole_grid_step ;
+    num_fract fract_entity_mesh_height ;
     num_fract entity_x ;
     num_fract entity_y ;
     num_fract entity_z ;
-    int_32 x = index % _entity_mesh_grid ;
-    int_32 z = index / _entity_mesh_grid ;
     
-    platform :: math_make_num_fract ( entity_x , ( _grid_step * ( x - ( _entity_mesh_grid / 2 ) ) ) , 1 ) ;
-    platform :: math_make_num_fract ( entity_y , int_32 ( 0.5f * _entity_mesh_height * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( entity_z , ( _grid_step * ( z - ( _entity_mesh_grid / 2 ) ) ) , 1 ) ;
+    platform :: math_make_num_fract ( fract_entity_mesh_height , int_32 ( _entity_mesh_height * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_whole ( index , index_int_32 ) ;
+    platform :: math_make_num_whole ( whole_grid_step , _grid_step ) ;
+    platform :: math_make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
+    platform :: math_div_wholes ( half_entity_mesh_grid , whole_entity_mesh_grid , platform :: whole_2 ) ;
+    
+    platform :: math_mod_wholes ( x , index , whole_entity_mesh_grid ) ;
+    platform :: math_sub_from_whole ( x , half_entity_mesh_grid ) ;
+    platform :: math_mul_whole_by ( x , whole_grid_step ) ;
+    
+    platform :: math_div_wholes ( z , index , whole_entity_mesh_grid ) ;
+    platform :: math_sub_from_whole ( z , half_entity_mesh_grid ) ;
+    platform :: math_mul_whole_by ( z , whole_grid_step ) ;
+    
+    platform :: math_make_fract_from_whole ( entity_x , x ) ;
+    platform :: math_div_fracts ( entity_y , fract_entity_mesh_height , platform :: fract_2 ) ;
+    platform :: math_make_fract_from_whole ( entity_z , z ) ;
     platform :: vector_xyz ( result , entity_x , entity_y , entity_z ) ;
 }
 
 template < typename mediator >
 void shy_logic_entities < mediator > :: _update_entity_grid ( )
 {
-    if ( _grid_scale <= _scale_in_frames )
+    num_whole whole_grid_scale ;
+    num_whole whole_scale_in_frames ;
+    num_whole whole_entity_mesh_grid ;
+    platform :: math_make_num_whole ( whole_grid_scale , _grid_scale ) ;
+    platform :: math_make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
+    platform :: math_make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
+    if ( platform :: condition_whole_less_or_equal_to_whole ( whole_grid_scale , whole_scale_in_frames ) )
     {
-        for ( int_32 x = 0 ; x < _entity_mesh_grid ; x ++ )
+        for ( num_whole x = platform :: whole_0 
+            ; platform :: condition_whole_less_than_whole ( x , whole_entity_mesh_grid ) 
+            ; platform :: math_inc_whole ( x )
+            )
         {
-            for ( int_32 z = 0 ; z < _entity_mesh_grid ; z ++ )
+            for ( num_whole z = platform :: whole_0 
+                ; platform :: condition_whole_less_than_whole ( z , whole_entity_mesh_grid )
+                ; platform :: math_inc_whole ( z )
+                )
             {
-                int_32 index = x + _entity_mesh_grid * z ;
-                matrix_data & matrix = _entities_grid_matrices [ index ] ;
-                float_32 scale = float_32 ( _scale_wave * ( x + z ) ) / float_32 ( _entity_mesh_grid * 2 ) ;
-                scale = scale - float_32 ( _scale_wave ) + float_32 ( 1 + _scale_wave ) * float_32 ( _grid_scale ) / float_32 ( _scale_in_frames ) ;
+                num_whole index ;
+                matrix_data * matrix_ptr = 0 ;
+                
+                platform :: math_mul_wholes ( index , z , whole_entity_mesh_grid ) ;
+                platform :: math_add_to_whole ( index , x ) ;
+                
+                float_32 scale = float_32 ( _scale_wave * ( x . debug_to_int_32 ( ) + z . debug_to_int_32 ( ) ) ) / float_32 ( _entity_mesh_grid * 2 ) ;
+                scale = scale - float_32 ( _scale_wave ) + float_32 ( 1 + _scale_wave ) * float_32 ( whole_grid_scale . debug_to_int_32 ( ) ) / float_32 ( _scale_in_frames ) ;
                 if ( scale < 0.0f )
                     scale = 0.0f ;
                 else if ( scale > 1.0f )
                     scale = 1.0f ;
                 vector_data origin ;
-                _get_entity_origin ( origin , index ) ;
-                num_fract num_zero ;
+                _get_entity_origin ( origin , index . debug_to_int_32 ( ) ) ;
                 num_fract num_scale ;
-                platform :: math_make_num_fract ( num_zero , 0 , 1 ) ;
                 platform :: math_make_num_fract ( num_scale , int_32 ( scale * 1000.0f ) , 1000 ) ;
-                platform :: matrix_set_axis_x ( matrix , num_scale , num_zero , num_zero ) ;
-                platform :: matrix_set_axis_y ( matrix , num_zero , num_scale , num_zero ) ;
-                platform :: matrix_set_axis_z ( matrix , num_zero , num_zero , num_scale ) ;
-                platform :: matrix_set_origin ( matrix , origin ) ;
+                
+                platform :: memory_pointer_offset ( matrix_ptr , _entities_grid_matrices , index ) ;
+                platform :: matrix_set_axis_x ( * matrix_ptr , num_scale , platform :: fract_0 , platform :: fract_0 ) ;
+                platform :: matrix_set_axis_y ( * matrix_ptr , platform :: fract_0 , num_scale , platform :: fract_0 ) ;
+                platform :: matrix_set_axis_z ( * matrix_ptr , platform :: fract_0 , platform :: fract_0 , num_scale ) ;
+                platform :: matrix_set_origin ( * matrix_ptr , origin ) ;
             }
         }
-        _grid_scale ++ ;
+        platform :: math_inc_whole ( whole_grid_scale ) ;
     }
+    _grid_scale = whole_grid_scale . debug_to_int_32 ( ) ;
 }
