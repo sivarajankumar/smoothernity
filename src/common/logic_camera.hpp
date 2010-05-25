@@ -3,6 +3,7 @@ class shy_logic_camera
 {
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
@@ -13,17 +14,17 @@ class shy_logic_camera
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 
-    static const int_32 _change_origin_in_frames = 139 ;
-    static const int_32 _change_target_in_frames = 181 ;
-    static const float_32 _origin_rubber ( ) { return 0 ; } // 0.99f ;
-    static const float_32 _target_rubber ( ) { return 0 ; } // 0.9f ;
+    static const_int_32 _change_origin_in_frames = 139 ;
+    static const_int_32 _change_target_in_frames = 181 ;
+    static const num_fract _origin_rubber ( ) { return platform :: fract_0 ; } // 0.99f ;
+    static const num_fract _target_rubber ( ) { return platform :: fract_0 ; } // 0.9f ;
 public :
     shy_logic_camera ( mediator * arg_mediator ) ;
     void camera_update ( ) ;
     void camera_prepare_permit ( ) ;
     void camera_matrix_use ( ) ;
 private :
-    void _get_entity_mesh_grid ( int_32 & result ) ;
+    void _get_entity_mesh_grid ( num_whole & result ) ;
     void _reset_camera_rubber ( ) ;
     void _fill_camera_schedules ( ) ;
     void _update_camera ( ) ;
@@ -32,8 +33,8 @@ private :
     void _update_current_camera_origin ( ) ;
     void _update_current_camera_target ( ) ;
     void _update_camera_matrix ( ) ;
-    void _random_camera_origin_index ( int_32 & result ) ;
-    void _random_camera_target_index ( int_32 & result ) ;
+    void _random_camera_origin_index ( num_whole & result ) ;
+    void _random_camera_target_index ( num_whole & result ) ;
     void _get_random_index ( int_32 & result , int_32 index_min , int_32 index_max ) ;
     void _camera_origin_index_is_duplicate ( int_32 & result , int_32 index ) ;
     void _camera_target_index_is_duplicate ( int_32 & result , int_32 index ) ;
@@ -48,8 +49,8 @@ private :
     vector_data _desired_camera_target ;
     vector_data _current_camera_origin ;
     vector_data _current_camera_target ;
-    int_32 _scheduled_camera_origin_indices [ 4 ] ;
-    int_32 _scheduled_camera_target_indices [ 4 ] ;
+    num_whole _scheduled_camera_origin_indices [ 4 ] ;
+    num_whole _scheduled_camera_target_indices [ 4 ] ;
     vector_data _scheduled_camera_origins [ 4 ] ;
     vector_data _scheduled_camera_targets [ 4 ] ;
     num_whole _camera_created ;
@@ -69,16 +70,16 @@ shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
         ; platform :: math_inc_whole ( i )
         )
     {
-        int_32 * origin_index_ptr = 0 ;
-        int_32 * target_index_ptr = 0 ;
+        num_whole * origin_index_ptr = 0 ;
+        num_whole * target_index_ptr = 0 ;
         vector_data * origin_pos_ptr = 0 ;
         vector_data * target_pos_ptr = 0 ;
         platform :: memory_pointer_offset ( origin_index_ptr , _scheduled_camera_origin_indices , i ) ;
         platform :: memory_pointer_offset ( target_index_ptr , _scheduled_camera_target_indices , i ) ;
         platform :: memory_pointer_offset ( origin_pos_ptr , _scheduled_camera_origins , i ) ;
         platform :: memory_pointer_offset ( target_pos_ptr , _scheduled_camera_targets , i ) ;
-        * origin_index_ptr = 0 ;
-        * target_index_ptr = 0 ;
+        * origin_index_ptr = platform :: whole_0 ;
+        * target_index_ptr = platform :: whole_0 ;
         platform :: vector_xyz ( * origin_pos_ptr , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
         platform :: vector_xyz ( * target_pos_ptr , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     }
@@ -118,9 +119,11 @@ void shy_logic_camera < mediator > :: camera_update ( )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( int_32 & result )
+void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( num_whole & result )
 {
-    _mediator -> get_entity_mesh_grid ( result ) ;
+    int_32 result_int_32 ;
+    _mediator -> get_entity_mesh_grid ( result_int_32 ) ;
+    platform :: math_make_num_whole ( result , result_int_32 ) ;
 }
 
 template < typename mediator >
@@ -138,19 +141,19 @@ void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
         ; platform :: math_inc_whole ( i )
         )
     {
-        int_32 origin_index ;
-        int_32 target_index ;
+        num_whole origin_index ;
+        num_whole target_index ;
         vector_data origin_pos ;
         vector_data target_pos ;
-        int_32 * origin_index_ptr = 0 ;
-        int_32 * target_index_ptr = 0 ;
+        num_whole * origin_index_ptr = 0 ;
+        num_whole * target_index_ptr = 0 ;
         vector_data * origin_pos_ptr = 0 ;
         vector_data * target_pos_ptr = 0 ;
         
         _random_camera_origin_index ( origin_index ) ;
         _random_camera_target_index ( target_index ) ;
-        _mediator -> get_entity_origin ( origin_pos , origin_index ) ;
-        _mediator -> get_entity_origin ( target_pos , target_index ) ;
+        _mediator -> get_entity_origin ( origin_pos , origin_index . debug_to_int_32 ( ) ) ;
+        _mediator -> get_entity_origin ( target_pos , target_index . debug_to_int_32 ( ) ) ;
         
         platform :: memory_pointer_offset ( origin_index_ptr , _scheduled_camera_origin_indices , i ) ;
         platform :: memory_pointer_offset ( target_index_ptr , _scheduled_camera_target_indices , i ) ;
@@ -180,12 +183,12 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     platform :: math_dec_whole ( _frames_to_change_camera_origin ) ;
     if ( platform :: condition_whole_less_or_equal_to_zero ( _frames_to_change_camera_origin ) )
     {
-        int_32 new_origin_index ;
+        num_whole new_origin_index ;
         vector_data new_origin_pos ;
         
         platform :: math_make_num_whole ( _frames_to_change_camera_origin , _change_origin_in_frames ) ;
         _random_camera_origin_index ( new_origin_index ) ;
-        _mediator -> get_entity_origin ( new_origin_pos , new_origin_index ) ;
+        _mediator -> get_entity_origin ( new_origin_pos , new_origin_index . debug_to_int_32 ( ) ) ;
         
         _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
         _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
@@ -222,12 +225,12 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     platform :: math_dec_whole ( _frames_to_change_camera_target ) ;
     if ( platform :: condition_whole_less_or_equal_to_zero ( _frames_to_change_camera_target ) )
     {
-        int_32 new_target_index ;
+        num_whole new_target_index ;
         vector_data new_target_pos ;
         
         platform :: math_make_num_whole ( _frames_to_change_camera_target , _change_target_in_frames ) ;
         _random_camera_target_index ( new_target_index ) ;
-        _mediator -> get_entity_origin ( new_target_pos , new_target_index ) ;
+        _mediator -> get_entity_origin ( new_target_pos , new_target_index . debug_to_int_32 ( ) ) ;
         
         _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
         _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
@@ -265,9 +268,8 @@ void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
     num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform :: math_make_num_fract ( rubber , int_32 ( _origin_rubber ( ) * 1000.0f ) , 1000 ) ;
-    platform :: math_sub_fracts ( inv_rubber , platform :: fract_1 , rubber ) ;
-    platform :: vector_mul ( old_part , _current_camera_origin , rubber ) ;
+    platform :: math_sub_fracts ( inv_rubber , platform :: fract_1 , _origin_rubber ( ) ) ;
+    platform :: vector_mul ( old_part , _current_camera_origin , _origin_rubber ( ) ) ;
     platform :: vector_mul ( new_part , _desired_camera_origin , inv_rubber ) ;
     platform :: vector_add ( _current_camera_origin , old_part , new_part ) ;
 }
@@ -279,9 +281,8 @@ void shy_logic_camera < mediator > :: _update_current_camera_target ( )
     num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform :: math_make_num_fract ( rubber , int_32 ( _target_rubber ( ) * 1000.0f ) , 1000 ) ;
-    platform :: math_sub_fracts ( inv_rubber , platform :: fract_1 , rubber ) ;
-    platform :: vector_mul ( old_part , _current_camera_target , rubber ) ;
+    platform :: math_sub_fracts ( inv_rubber , platform :: fract_1 , _target_rubber ( ) ) ;
+    platform :: vector_mul ( old_part , _current_camera_target , _target_rubber ( ) ) ;
     platform :: vector_mul ( new_part , _desired_camera_target , inv_rubber ) ;
     platform :: vector_add ( _current_camera_target , old_part , new_part ) ;
 }
@@ -323,16 +324,14 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _random_camera_origin_index ( int_32 & result )
+void shy_logic_camera < mediator > :: _random_camera_origin_index ( num_whole & result )
 {
     num_whole index ;
     num_whole index_max ;
     num_whole mesh_grid ;
     num_whole is_duplicate ;
-    int_32 mesh_grid_int_32 ;
     platform :: math_make_num_whole ( index , 0 ) ;
-    _get_entity_mesh_grid ( mesh_grid_int_32 ) ;
-    platform :: math_make_num_whole ( mesh_grid , mesh_grid_int_32 ) ;
+    _get_entity_mesh_grid ( mesh_grid ) ;
     platform :: math_div_wholes ( index_max , mesh_grid , platform :: whole_2 ) ;
     platform :: math_mul_whole_by ( index_max , mesh_grid ) ;
     do
@@ -344,21 +343,19 @@ void shy_logic_camera < mediator > :: _random_camera_origin_index ( int_32 & res
         _camera_origin_index_is_duplicate ( is_duplicate_int_32 , index . debug_to_int_32 ( ) ) ;
         platform :: math_make_num_whole ( is_duplicate , is_duplicate_int_32 ) ;
     } while ( platform :: condition_true ( is_duplicate ) ) ;
-    result = index . debug_to_int_32 ( ) ;
+    result = index ;
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _random_camera_target_index ( int_32 & result )
+void shy_logic_camera < mediator > :: _random_camera_target_index ( num_whole & result )
 {
     num_whole index ;
     num_whole index_min ;
     num_whole index_max ;
     num_whole mesh_grid ;
     num_whole is_duplicate ;
-    int_32 mesh_grid_int_32 ;
     platform :: math_make_num_whole ( index , 0 ) ;
-    _get_entity_mesh_grid ( mesh_grid_int_32 ) ;
-    platform :: math_make_num_whole ( mesh_grid , mesh_grid_int_32 ) ;
+    _get_entity_mesh_grid ( mesh_grid ) ;
     platform :: math_div_wholes ( index_min , mesh_grid , platform :: whole_2 ) ;
     platform :: math_mul_whole_by ( index_min , mesh_grid ) ;
     platform :: math_mul_wholes ( index_max , mesh_grid , mesh_grid ) ;
@@ -371,7 +368,7 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( int_32 & res
         _camera_target_index_is_duplicate ( is_duplicate_int_32 , index . debug_to_int_32 ( ) ) ;
         platform :: math_make_num_whole ( is_duplicate , is_duplicate_int_32 ) ;
     } while ( platform :: condition_true ( is_duplicate ) ) ;
-    result = index . debug_to_int_32 ( ) ;
+    result = index ;
 }
 
 template < typename mediator >
@@ -407,11 +404,9 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( int_32
         ; platform :: math_inc_whole ( i )
         )
     {
-        num_whole num_index ;
-        int_32 * index_ptr = 0 ;
+        num_whole * index_ptr = 0 ;
         platform :: memory_pointer_offset ( index_ptr , _scheduled_camera_origin_indices , i ) ;
-        platform :: math_make_num_whole ( num_index , * index_ptr ) ;
-        if ( platform :: condition_wholes_are_equal ( num_index , index ) )
+        if ( platform :: condition_wholes_are_equal ( * index_ptr , index ) )
         {
             platform :: math_make_num_whole ( result , true ) ;
             break ;
@@ -432,11 +427,9 @@ void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( int_32
         ; platform :: math_inc_whole ( i )
         )
     {
-        num_whole num_index ;
-        int_32 * index_ptr = 0 ;
+        num_whole * index_ptr = 0 ;
         platform :: memory_pointer_offset ( index_ptr , _scheduled_camera_target_indices , i ) ;
-        platform :: math_make_num_whole ( num_index , * index_ptr ) ;
-        if ( platform :: condition_wholes_are_equal ( num_index , index ) )
+        if ( platform :: condition_wholes_are_equal ( * index_ptr , index ) )
         {
             platform :: math_make_num_whole ( result , true ) ;
             break ;
