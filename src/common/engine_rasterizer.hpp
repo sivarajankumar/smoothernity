@@ -155,13 +155,58 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( int_32 x
 
 template < typename mediator >
 void shy_engine_rasterizer < mediator > :: _rasterize_top_triangle_part
-    ( int_32 x_top , int_32 y_top , int_32 x_mid , int_32 y_mid , int_32 x_bottom , int_32 y_bottom )
+    ( int_32 x_top_int_32 , int_32 y_top_int_32 , int_32 x_mid_int_32 , int_32 y_mid_int_32 , int_32 x_bottom_int_32 , int_32 y_bottom_int_32 )
 {
-    for ( int_32 y = y_top ; y >= y_mid ; y -- )
+    num_whole x_top ;
+    num_whole y_top ;
+    num_whole x_mid ;
+    num_whole y_mid ;
+    num_whole x_bottom ;
+    num_whole y_bottom ;
+    platform :: math_make_num_whole ( x_top , x_top_int_32 ) ;
+    platform :: math_make_num_whole ( y_top , y_top_int_32 ) ;
+    platform :: math_make_num_whole ( x_mid , x_mid_int_32 ) ;
+    platform :: math_make_num_whole ( y_mid , y_mid_int_32 ) ;
+    platform :: math_make_num_whole ( x_bottom , x_bottom_int_32 ) ;
+    platform :: math_make_num_whole ( y_bottom , y_bottom_int_32 ) ;
+    for ( num_whole y = y_top 
+        ; platform :: condition_whole_greater_or_equal_to_whole ( y , y_mid ) 
+        ; platform :: math_dec_whole ( y )
+        )
     {
-        int_32 x_top_mid    = ( y_top == y_mid    ) ? x_mid : x_top + ( ( y_top - y ) * ( x_mid    - x_top ) ) / ( y_top - y_mid    ) ;
-        int_32 x_top_bottom = ( y_top == y_bottom ) ? x_top : x_top + ( ( y_top - y ) * ( x_bottom - x_top ) ) / ( y_top - y_bottom ) ;
-        _rasterize_horizontal_line ( x_top_mid , x_top_bottom , y ) ;
+        num_whole x_top_mid ;
+        if ( platform :: condition_wholes_are_equal ( y_top , y_mid ) ) 
+            x_top_mid = x_mid ;
+        else
+        {
+            num_whole y_top_minus_y ;
+            num_whole y_top_minus_y_mid ;
+            num_whole x_mid_minus_x_top ;
+            platform :: math_sub_wholes ( y_top_minus_y , y_top , y ) ;
+            platform :: math_sub_wholes ( y_top_minus_y_mid , y_top , y_mid ) ;
+            platform :: math_sub_wholes ( x_mid_minus_x_top , x_mid , x_top ) ;
+            platform :: math_mul_wholes ( x_top_mid , y_top_minus_y , x_mid_minus_x_top ) ;
+            platform :: math_div_whole_by ( x_top_mid , y_top_minus_y_mid ) ;
+            platform :: math_add_to_whole ( x_top_mid , x_top ) ;
+        }
+            
+        num_whole x_top_bottom ;
+        if ( platform :: condition_wholes_are_equal ( y_top , y_bottom ) ) 
+            x_top_bottom = x_top ;
+        else
+        {
+            num_whole y_top_minus_y ;
+            num_whole y_top_minus_y_bottom ;
+            num_whole x_bottom_minus_x_top ;
+            platform :: math_sub_wholes ( y_top_minus_y , y_top , y ) ;
+            platform :: math_sub_wholes ( y_top_minus_y_bottom , y_top , y_bottom ) ;
+            platform :: math_sub_wholes ( x_bottom_minus_x_top , x_bottom , x_top ) ;
+            platform :: math_mul_wholes ( x_top_bottom , y_top_minus_y , x_bottom_minus_x_top ) ;
+            platform :: math_div_whole_by ( x_top_bottom , y_top_minus_y_bottom ) ;
+            platform :: math_add_to_whole ( x_top_bottom , x_top ) ;
+        }
+            
+        _rasterize_horizontal_line ( x_top_mid . debug_to_int_32 ( ) , x_top_bottom . debug_to_int_32 ( ) , y . debug_to_int_32 ( ) ) ;
     }
 }
 

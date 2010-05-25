@@ -90,7 +90,7 @@ inline void shy_macosx_platform :: math_inc_whole ( num_whole & a )
 
 inline void shy_macosx_platform :: math_mul_wholes ( num_whole & result , num_whole a , num_whole b )
 {
-    result . _value = a . _value + b . _value ;
+    result . _value = a . _value * b . _value ;
 }
 
 inline void shy_macosx_platform :: math_div_fracts ( num_fract & result , num_fract a , num_fract b )
