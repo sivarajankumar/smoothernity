@@ -12,6 +12,7 @@ class shy_engine_math
 public :
     void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
+    void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     void math_pi ( float_32 & result ) ;
     template < typename type > void math_clamp ( type & result , type f , type from , type to ) ;
     template < typename type > void math_abs ( type & result , type f ) ;
@@ -102,4 +103,25 @@ void shy_engine_math < mediator > :: math_lerp
     )
 {
     result = from_value + ( to_value - from_value ) * ( weight - from_weight ) / ( to_weight - from_weight ) ;
+}
+
+template < typename mediator >
+void shy_engine_math < mediator > :: math_lerp 
+    ( num_fract & result
+    , num_fract from_value 
+    , num_fract from_weight 
+    , num_fract to_value 
+    , num_fract to_weight 
+    , num_fract weight 
+    )
+{
+    num_fract value_diff ;
+    num_fract weight_diff ;
+    num_fract current_diff ;
+    platform :: math_sub_fracts ( value_diff , to_value , from_value ) ;
+    platform :: math_sub_fracts ( weight_diff , to_weight , from_weight ) ;
+    platform :: math_sub_fracts ( current_diff , weight , from_weight ) ;
+    platform :: math_mul_fracts ( result , value_diff , current_diff ) ;
+    platform :: math_div_fract_by ( result , weight_diff ) ;
+    platform :: math_add_to_fract ( result , from_value ) ;
 }

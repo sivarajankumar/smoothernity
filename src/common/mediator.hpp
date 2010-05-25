@@ -102,6 +102,7 @@ public :
     void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     template < typename T > void math_clamp ( T & result , T f , T from , T to ) ;
     void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
+    void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     template < typename T > void math_max ( T & result , T f1 , T f2 ) ;
     template < typename T > void math_min ( T & result , T f1 , T f2 ) ;
     void math_pi ( float_32 & result ) ;
@@ -677,4 +678,11 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: game_launch_permit ( )
 {
     _logic_game . game_launch_permit ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: math_lerp 
+    ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight )
+{
+    _engine_math . math_lerp ( result , from_value , from_weight , to_value , to_weight , weight ) ;
 }
