@@ -62,7 +62,7 @@ private :
     void _rasterize_font_whitespace ( ) ;
 private :
     mediator * _mediator ;
-    int_32 _text_mesh_created ;
+    num_whole _text_mesh_created ;
     int_32 _text_prepare_permitted ;
     mesh_id _text_mesh_id ;
     texture_id _text_texture_id ;
@@ -70,22 +70,22 @@ private :
     texel_data _eraser ;
     int_32 _origin_x ;
     int_32 _origin_y ;
-    int_32 _letter_size_x ;
-    int_32 _letter_size_y ;
+    int_32 _letter_size_x_int_32 ;
+    int_32 _letter_size_y_int_32 ;
     int_32 _scale_frames ;
 } ;
 
 template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
-, _text_mesh_created ( false )
 , _text_prepare_permitted ( false )
 , _origin_x ( 0 )
 , _origin_y ( 0 )
-, _letter_size_x ( 0 )
-, _letter_size_y ( 0 )
+, _letter_size_x_int_32 ( 0 )
+, _letter_size_y_int_32 ( 0 )
 , _scale_frames ( 0 )
 {
+    platform :: math_make_num_whole ( _text_mesh_created , false ) ;
 }
 
 template < typename mediator >
@@ -97,7 +97,7 @@ void shy_logic_text < mediator > :: text_prepare_permit ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: text_render ( )
 {
-    if ( _text_mesh_created )
+    if ( platform :: condition_true ( _text_mesh_created ) )
         _render_text_mesh ( ) ;
 }
 
@@ -106,15 +106,15 @@ void shy_logic_text < mediator > :: text_update ( )
 {
     if ( _text_prepare_permitted )
     {
-        if ( ! _text_mesh_created )
+        if ( platform :: condition_false ( _text_mesh_created ) )
         {
             _create_text_mesh ( ) ;
             _create_text_texture ( ) ;
-            _text_mesh_created = true ;
+            platform :: math_make_num_whole ( _text_mesh_created , true ) ;
             _mediator -> text_prepared ( ) ;
         }
     }
-    if ( _text_mesh_created )
+    if ( platform :: condition_true ( _text_mesh_created ) )
         _update_text_mesh ( ) ;
 }
 
@@ -253,8 +253,8 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_size_x , int_32 letter_size_y )
 {
-    _letter_size_x = letter_size_x ;
-    _letter_size_y = letter_size_y ;
+    _letter_size_x_int_32 = letter_size_x ;
+    _letter_size_y_int_32 = letter_size_y ;
     _next_letter_row ( ) ;
     _rasterize_font_english_A ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_B ( ) ; _next_letter_col ( ) ;
@@ -291,10 +291,10 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
 {
     int_32 texture_width ;
     _mediator -> texture_width ( texture_width ) ;
-    _origin_x += _letter_size_x ;
+    _origin_x += _letter_size_x_int_32 ;
     if ( _origin_x >= texture_width )
     {
-        _origin_y -= _letter_size_y / 4 ;
+        _origin_y -= _letter_size_y_int_32 / 4 ;
         _next_letter_row ( ) ;
     }
 }
@@ -302,7 +302,7 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _next_letter_row ( )
 {
-    _origin_y -= _letter_size_y ;
+    _origin_y -= _letter_size_y_int_32 ;
     _origin_x = 0 ;
 }
 
@@ -311,24 +311,24 @@ void shy_logic_text < mediator > :: _rasterize_font_english_A ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
 
-    int_32 outer_top = _letter_size_y - 1 ;
+    int_32 outer_top = _letter_size_y_int_32 - 1 ;
     int_32 outer_bottom = 0 ;
-    int_32 outer_center = _letter_size_x / 2 ;
+    int_32 outer_center = _letter_size_x_int_32 / 2 ;
     int_32 outer_left = 0 ;
-    int_32 outer_right = _letter_size_x - 1 ;
+    int_32 outer_right = _letter_size_x_int_32 - 1 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_triangle ( outer_center , outer_top , outer_left , outer_bottom , outer_right , outer_bottom ) ;
 
-    int_32 inner_top = ( _letter_size_y * 2 ) / 3 ;
+    int_32 inner_top = ( _letter_size_y_int_32 * 2 ) / 3 ;
     int_32 inner_bottom = 0 ;
-    int_32 inner_center = _letter_size_x / 2 ;
-    int_32 inner_left = _letter_size_x / 5 ;
-    int_32 inner_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 inner_center = _letter_size_x_int_32 / 2 ;
+    int_32 inner_left = _letter_size_x_int_32 / 5 ;
+    int_32 inner_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_triangle ( inner_center , inner_top , inner_left , inner_bottom , inner_right , inner_bottom ) ;
     
-    int_32 board_top = ( _letter_size_y * 3 ) / 7 ;
-    int_32 board_bottom = ( _letter_size_y * 2 ) / 7 ;
+    int_32 board_top = ( _letter_size_y_int_32 * 3 ) / 7 ;
+    int_32 board_bottom = ( _letter_size_y_int_32 * 2 ) / 7 ;
     int_32 board_top_left     = outer_center + ( ( outer_left  - outer_center ) * ( outer_top - board_top    ) ) / ( outer_top - outer_bottom ) ;
     int_32 board_bottom_left  = outer_center + ( ( outer_left  - outer_center ) * ( outer_top - board_bottom ) ) / ( outer_top - outer_bottom ) ;
     int_32 board_top_right    = outer_center + ( ( outer_right - outer_center ) * ( outer_top - board_top    ) ) / ( outer_top - outer_bottom ) ;
@@ -344,21 +344,21 @@ void shy_logic_text < mediator > :: _rasterize_font_english_B ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x - 1 , _letter_size_y / 2 ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , _letter_size_y / 2 , _letter_size_x - 1 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 / 2 ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , _letter_size_y_int_32 / 2 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 ) ;
 
     int_32 spine_left = 0 ;
-    int_32 spine_right = _letter_size_x / 2 ;
-    int_32 spine_top = _letter_size_y - 1 ;
+    int_32 spine_right = _letter_size_x_int_32 / 2 ;
+    int_32 spine_top = _letter_size_y_int_32 - 1 ;
     int_32 spine_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( spine_left , spine_top , spine_right , spine_bottom ) ;
             
-    int_32 hole_left = ( _letter_size_x * 4 ) / 16 ;
-    int_32 hole_right = ( _letter_size_x * 12 ) / 16 ;
-    int_32 hole_top = ( _letter_size_y * 13 ) / 16 ;
-    int_32 hole_bottom = ( _letter_size_y * 3 ) / 16 ;
-    int_32 hole_height = ( _letter_size_y * 3 ) / 16 ;
+    int_32 hole_left = ( _letter_size_x_int_32 * 4 ) / 16 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 12 ) / 16 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 13 ) / 16 ;
+    int_32 hole_bottom = ( _letter_size_y_int_32 * 3 ) / 16 ;
+    int_32 hole_height = ( _letter_size_y_int_32 * 3 ) / 16 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_top - hole_height ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_bottom , hole_right , hole_bottom + hole_height ) ;
@@ -375,20 +375,20 @@ void shy_logic_text < mediator > :: _rasterize_font_english_C ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x - 1 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
 
     int_32 hole_center_x = ( hole_left + hole_right ) / 2 ;
-    int_32 hole_center_top = ( _letter_size_y * 5 ) / 7 ;
-    int_32 hole_center_bottom = ( _letter_size_y * 2 ) / 7 ;
+    int_32 hole_center_top = ( _letter_size_y_int_32 * 5 ) / 7 ;
+    int_32 hole_center_bottom = ( _letter_size_y_int_32 * 2 ) / 7 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_rect ( hole_center_x , hole_center_top , _letter_size_x - 1 , hole_center_bottom ) ;
+    _mediator -> rasterize_rect ( hole_center_x , hole_center_top , _letter_size_x_int_32 - 1 , hole_center_bottom ) ;
 }
 
 template < typename mediator >
@@ -397,15 +397,15 @@ void shy_logic_text < mediator > :: _rasterize_font_english_D ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x - 1 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 ) ;
 
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , _letter_size_x / 2 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , _letter_size_x_int_32 / 2 , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
     
@@ -419,16 +419,16 @@ void shy_logic_text < mediator > :: _rasterize_font_english_E ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    int_32 right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = _letter_size_x - 1 ;
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_mid_top = ( _letter_size_y * 3 ) / 5 ;
-    int_32 hole_mid_bottom = ( _letter_size_y * 2 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = _letter_size_x_int_32 - 1 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_mid_top = ( _letter_size_y_int_32 * 3 ) / 5 ;
+    int_32 hole_mid_bottom = ( _letter_size_y_int_32 * 2 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_rect ( hole_left , hole_top , hole_right , hole_mid_top ) ;
     _mediator -> rasterize_rect ( hole_left , hole_mid_bottom , hole_right , hole_bottom ) ;
@@ -439,15 +439,15 @@ void shy_logic_text < mediator > :: _rasterize_font_english_F ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    int_32 right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = _letter_size_x - 1 ;
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_mid_top = ( _letter_size_y * 3 ) / 5 ;
-    int_32 hole_mid_bottom = ( _letter_size_y * 2 ) / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = _letter_size_x_int_32 - 1 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_mid_top = ( _letter_size_y_int_32 * 3 ) / 5 ;
+    int_32 hole_mid_bottom = ( _letter_size_y_int_32 * 2 ) / 5 ;
     int_32 hole_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_rect ( hole_left , hole_top , hole_right , hole_mid_top ) ;
@@ -460,25 +460,25 @@ void shy_logic_text < mediator > :: _rasterize_font_english_G ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x - 1 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
 
     int_32 hole_center_x = ( hole_left + hole_right ) / 2 ;
-    int_32 hole_center_top = ( _letter_size_y * 5 ) / 7 ;
-    int_32 hole_center_bottom = ( _letter_size_y * 3 ) / 7 ;
+    int_32 hole_center_top = ( _letter_size_y_int_32 * 5 ) / 7 ;
+    int_32 hole_center_bottom = ( _letter_size_y_int_32 * 3 ) / 7 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_rect ( hole_center_x , hole_center_top , _letter_size_x - 1 , hole_center_bottom ) ;
+    _mediator -> rasterize_rect ( hole_center_x , hole_center_top , _letter_size_x_int_32 - 1 , hole_center_bottom ) ;
     
-    int_32 brick_top = ( _letter_size_y * 4 ) / 7 ;
-    int_32 brick_bottom = ( _letter_size_y * 3 ) / 7 ;
-    int_32 brick_left = ( _letter_size_x * 2 ) / 5 ;
-    int_32 brick_right = _letter_size_x - 1 ;
+    int_32 brick_top = ( _letter_size_y_int_32 * 4 ) / 7 ;
+    int_32 brick_bottom = ( _letter_size_y_int_32 * 3 ) / 7 ;
+    int_32 brick_left = ( _letter_size_x_int_32 * 2 ) / 5 ;
+    int_32 brick_right = _letter_size_x_int_32 - 1 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( brick_left , brick_top , brick_right , brick_bottom ) ;
 }
@@ -488,15 +488,15 @@ void shy_logic_text < mediator > :: _rasterize_font_english_H ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    int_32 right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 3 ) / 5 ;
-    int_32 hole_top = _letter_size_y - 1 ;
-    int_32 hole_mid_top = ( _letter_size_y * 3 ) / 5 ;
-    int_32 hole_mid_bottom = ( _letter_size_y * 2 ) / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 3 ) / 5 ;
+    int_32 hole_top = _letter_size_y_int_32 - 1 ;
+    int_32 hole_mid_top = ( _letter_size_y_int_32 * 3 ) / 5 ;
+    int_32 hole_mid_bottom = ( _letter_size_y_int_32 * 2 ) / 5 ;
     int_32 hole_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_rect ( hole_left , hole_top , hole_right , hole_mid_top ) ;
@@ -508,16 +508,16 @@ void shy_logic_text < mediator > :: _rasterize_font_english_I ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    int_32 right = ( _letter_size_x * 6 ) / 7 ;
+    int_32 right = ( _letter_size_x_int_32 * 6 ) / 7 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y_int_32 - 1 ) ;
     
     int_32 hole_left = 0 ;
     int_32 hole_right = right ;
-    int_32 hole_mid_left = ( _letter_size_x * 2 ) / 7 ;
-    int_32 hole_mid_right = ( _letter_size_x * 4 ) / 7 ;
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
+    int_32 hole_mid_left = ( _letter_size_x_int_32 * 2 ) / 7 ;
+    int_32 hole_mid_right = ( _letter_size_x_int_32 * 4 ) / 7 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_rect ( hole_left , hole_top , hole_mid_left , hole_bottom ) ;
     _mediator -> rasterize_rect ( hole_mid_right , hole_top , hole_right , hole_bottom ) ;
@@ -528,20 +528,20 @@ void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    int_32 right = ( _letter_size_x * 4 ) / 5 ;
-    int_32 circle_top = ( _letter_size_y * 4 ) / 5 ;
+    int_32 right = ( _letter_size_x_int_32 * 4 ) / 5 ;
+    int_32 circle_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
     int_32 circle_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , circle_bottom , right , circle_top ) ;
 
     int_32 circle_center_y = ( circle_top + circle_bottom ) / 2 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , circle_center_y , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , circle_center_y , right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 3 ) / 5 ;
-    int_32 hole_top = ( _letter_size_y * 3 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 3 ) / 5 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 3 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
     
@@ -550,7 +550,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
     _mediator -> rasterize_rect ( hole_left , circle_top , hole_right , hole_center_y ) ;
     
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_rect ( 0 , _letter_size_y - 1 , hole_left , hole_center_y ) ;
+    _mediator -> rasterize_rect ( 0 , _letter_size_y_int_32 - 1 , hole_left , hole_center_y ) ;
 }
 
 template < typename mediator >
@@ -559,22 +559,22 @@ void shy_logic_text < mediator > :: _rasterize_font_english_K ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , _letter_size_x - 1 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 ) ;
 
-    int_32 hole_1_left = ( _letter_size_x * 3 ) / 9 ;
+    int_32 hole_1_left = ( _letter_size_x_int_32 * 3 ) / 9 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_triangle ( hole_1_left , _letter_size_y / 2 , _letter_size_x - 1 , _letter_size_y - 1 , _letter_size_x - 1 , 0 ) ;
+    _mediator -> rasterize_triangle ( hole_1_left , _letter_size_y_int_32 / 2 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 , _letter_size_x_int_32 - 1 , 0 ) ;
 
-    int_32 hole_2_right = ( _letter_size_x * 6 ) / 9 ;
+    int_32 hole_2_right = ( _letter_size_x_int_32 * 6 ) / 9 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_triangle ( 0 , _letter_size_y - 1 , hole_2_right , _letter_size_y - 1 , 0 , _letter_size_y / 2 ) ;
+    _mediator -> rasterize_triangle ( 0 , _letter_size_y_int_32 - 1 , hole_2_right , _letter_size_y_int_32 - 1 , 0 , _letter_size_y_int_32 / 2 ) ;
 
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_triangle ( 0 , 0 , hole_2_right , 0 , 0 , _letter_size_y / 2 ) ;
+    _mediator -> rasterize_triangle ( 0 , 0 , hole_2_right , 0 , 0 , _letter_size_y_int_32 / 2 ) ;
 
-    int_32 spine_right = _letter_size_x / 5 ;
+    int_32 spine_right = _letter_size_x_int_32 / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , spine_right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , spine_right , _letter_size_y_int_32 - 1 ) ;
 }
 
 template < typename mediator >
@@ -582,14 +582,14 @@ void shy_logic_text < mediator > :: _rasterize_font_english_L ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    int_32 right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
-    _mediator -> rasterize_rect ( hole_left , _letter_size_y - 1 , right , hole_bottom ) ;
+    _mediator -> rasterize_rect ( hole_left , _letter_size_y_int_32 - 1 , right , hole_bottom ) ;
 }
 
 template < typename mediator >
@@ -598,20 +598,20 @@ void shy_logic_text < mediator > :: _rasterize_font_english_M ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     int_32 spine_1_left = 0 ;
-    int_32 spine_1_right = _letter_size_x / 5 ;
-    int_32 spine_2_left = ( _letter_size_x * 3 ) / 5 ;
-    int_32 spine_2_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 spine_1_right = _letter_size_x_int_32 / 5 ;
+    int_32 spine_2_left = ( _letter_size_x_int_32 * 3 ) / 5 ;
+    int_32 spine_2_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( spine_1_left , 0 , spine_1_right , _letter_size_y - 1 ) ;
-    _mediator -> rasterize_rect ( spine_2_left , 0 , spine_2_right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( spine_1_left , 0 , spine_1_right , _letter_size_y_int_32 - 1 ) ;
+    _mediator -> rasterize_rect ( spine_2_left , 0 , spine_2_right , _letter_size_y_int_32 - 1 ) ;
 
-    int_32 board_height = ( _letter_size_y * 2 ) / 5 ;
+    int_32 board_height = ( _letter_size_y_int_32 * 2 ) / 5 ;
     int_32 board_center_x = ( spine_1_left + spine_2_right ) / 2 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y - 1 , board_center_x , board_height , board_center_x , 0 ) ;
-    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y - 1 , spine_1_right , _letter_size_y - board_height , board_center_x , 0 ) ;
-    _mediator -> rasterize_triangle ( board_center_x , board_height , spine_2_left , _letter_size_y - 1 , spine_2_left , _letter_size_y - board_height ) ;
-    _mediator -> rasterize_triangle ( board_center_x , board_height , board_center_x , 0 , spine_2_left , _letter_size_y - board_height ) ;
+    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y_int_32 - 1 , board_center_x , board_height , board_center_x , 0 ) ;
+    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y_int_32 - 1 , spine_1_right , _letter_size_y_int_32 - board_height , board_center_x , 0 ) ;
+    _mediator -> rasterize_triangle ( board_center_x , board_height , spine_2_left , _letter_size_y_int_32 - 1 , spine_2_left , _letter_size_y_int_32 - board_height ) ;
+    _mediator -> rasterize_triangle ( board_center_x , board_height , board_center_x , 0 , spine_2_left , _letter_size_y_int_32 - board_height ) ;
 }
 
 template < typename mediator >
@@ -620,17 +620,17 @@ void shy_logic_text < mediator > :: _rasterize_font_english_N ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     int_32 spine_1_left = 0 ;
-    int_32 spine_1_right = _letter_size_x / 5 ;
-    int_32 spine_2_left = ( _letter_size_x * 3 ) / 5 ;
-    int_32 spine_2_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 spine_1_right = _letter_size_x_int_32 / 5 ;
+    int_32 spine_2_left = ( _letter_size_x_int_32 * 3 ) / 5 ;
+    int_32 spine_2_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( spine_1_left , 0 , spine_1_right , _letter_size_y - 1 ) ;
-    _mediator -> rasterize_rect ( spine_2_left , 0 , spine_2_right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( spine_1_left , 0 , spine_1_right , _letter_size_y_int_32 - 1 ) ;
+    _mediator -> rasterize_rect ( spine_2_left , 0 , spine_2_right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 board_height = _letter_size_y / 3 ;
+    int_32 board_height = _letter_size_y_int_32 / 3 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y - 1 , spine_2_left , board_height , spine_2_left , 0 ) ;
-    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y - 1 , spine_1_right , _letter_size_y - board_height , spine_2_left , 0 ) ;
+    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y_int_32 - 1 , spine_2_left , board_height , spine_2_left , 0 ) ;
+    _mediator -> rasterize_triangle ( spine_1_right , _letter_size_y_int_32 - 1 , spine_1_right , _letter_size_y_int_32 - board_height , spine_2_left , 0 ) ;
 }
 
 template < typename mediator >
@@ -639,12 +639,12 @@ void shy_logic_text < mediator > :: _rasterize_font_english_O ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x - 1 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
 }
@@ -655,14 +655,14 @@ void shy_logic_text < mediator > :: _rasterize_font_english_P ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     int_32 spine_left = 0 ;
-    int_32 spine_right = _letter_size_x / 5 ;
+    int_32 spine_right = _letter_size_x_int_32 / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( spine_left , 0 , spine_right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( spine_left , 0 , spine_right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 ellipse_left = _letter_size_x / 2 ;
-    int_32 ellipse_right = _letter_size_x - 1 ;
-    int_32 ellipse_top = _letter_size_y - 1 ;
-    int_32 ellipse_bottom = ( _letter_size_y * 2 ) / 5 ;
+    int_32 ellipse_left = _letter_size_x_int_32 / 2 ;
+    int_32 ellipse_right = _letter_size_x_int_32 - 1 ;
+    int_32 ellipse_top = _letter_size_y_int_32 - 1 ;
+    int_32 ellipse_bottom = ( _letter_size_y_int_32 * 2 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( ellipse_left , ellipse_top , ellipse_right , ellipse_bottom ) ;
     
@@ -670,10 +670,10 @@ void shy_logic_text < mediator > :: _rasterize_font_english_P ( )
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( spine_right , ellipse_top , ellipse_center_x , ellipse_bottom ) ;
 
-    int_32 hole_left = ( _letter_size_x * 4 ) / 6 ;
-    int_32 hole_right = ( _letter_size_x * 5 ) / 6 ;
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = ( _letter_size_y * 3 ) / 5 ;
+    int_32 hole_left = ( _letter_size_x_int_32 * 4 ) / 6 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 5 ) / 6 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = ( _letter_size_y_int_32 * 3 ) / 5 ;
     int_32 hole_center_x = ( hole_left + hole_right ) / 2 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
@@ -686,21 +686,21 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Q ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x - 1 , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x_int_32 - 1 , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = _letter_size_y / 5 ;
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 4 ) / 5 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 5 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
     
-    int_32 board_width = _letter_size_x / 5 ;
-    int_32 board_left = _letter_size_x / 2 ;
-    int_32 board_top = ( _letter_size_y * 2 ) / 5 ;
+    int_32 board_width = _letter_size_x_int_32 / 5 ;
+    int_32 board_left = _letter_size_x_int_32 / 2 ;
+    int_32 board_top = ( _letter_size_y_int_32 * 2 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_triangle ( board_left , board_top , _letter_size_x - board_width , 0 , _letter_size_x , 0 ) ;
-    _mediator -> rasterize_triangle ( board_left , board_top , board_left + board_width , board_top , _letter_size_x , 0 ) ;
+    _mediator -> rasterize_triangle ( board_left , board_top , _letter_size_x_int_32 - board_width , 0 , _letter_size_x_int_32 , 0 ) ;
+    _mediator -> rasterize_triangle ( board_left , board_top , board_left + board_width , board_top , _letter_size_x_int_32 , 0 ) ;
 }
 
 template < typename mediator >
@@ -709,14 +709,14 @@ void shy_logic_text < mediator > :: _rasterize_font_english_R ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     int_32 spine_left = 0 ;
-    int_32 spine_right = _letter_size_x / 5 ;
+    int_32 spine_right = _letter_size_x_int_32 / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( spine_left , 0 , spine_right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( spine_left , 0 , spine_right , _letter_size_y_int_32 - 1 ) ;
     
-    int_32 ellipse_left = _letter_size_x / 2 ;
-    int_32 ellipse_right = _letter_size_x - 1 ;
-    int_32 ellipse_top = _letter_size_y - 1 ;
-    int_32 ellipse_bottom = ( _letter_size_y * 2 ) / 5 ;
+    int_32 ellipse_left = _letter_size_x_int_32 / 2 ;
+    int_32 ellipse_right = _letter_size_x_int_32 - 1 ;
+    int_32 ellipse_top = _letter_size_y_int_32 - 1 ;
+    int_32 ellipse_bottom = ( _letter_size_y_int_32 * 2 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( ellipse_left , ellipse_top , ellipse_right , ellipse_bottom ) ;
     
@@ -724,19 +724,19 @@ void shy_logic_text < mediator > :: _rasterize_font_english_R ( )
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( spine_right , ellipse_top , ellipse_center_x , ellipse_bottom ) ;
 
-    int_32 hole_left = ( _letter_size_x * 4 ) / 6 ;
-    int_32 hole_right = ( _letter_size_x * 5 ) / 6 ;
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
-    int_32 hole_bottom = ( _letter_size_y * 3 ) / 5 ;
+    int_32 hole_left = ( _letter_size_x_int_32 * 4 ) / 6 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 5 ) / 6 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
+    int_32 hole_bottom = ( _letter_size_y_int_32 * 3 ) / 5 ;
     int_32 hole_center_x = ( hole_left + hole_right ) / 2 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_bottom ) ;
     _mediator -> rasterize_rect ( spine_right , hole_top , hole_center_x , hole_bottom ) ;
 
-    int_32 board_width = ( _letter_size_x * 2 ) / 7 ;
+    int_32 board_width = ( _letter_size_x_int_32 * 2 ) / 7 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_triangle ( spine_right , ellipse_bottom , _letter_size_x - board_width , 0 , _letter_size_x , 0 ) ;
-    _mediator -> rasterize_triangle ( spine_right , ellipse_bottom , spine_right + board_width , ellipse_bottom , _letter_size_x , 0 ) ;
+    _mediator -> rasterize_triangle ( spine_right , ellipse_bottom , _letter_size_x_int_32 - board_width , 0 , _letter_size_x_int_32 , 0 ) ;
+    _mediator -> rasterize_triangle ( spine_right , ellipse_bottom , spine_right + board_width , ellipse_bottom , _letter_size_x_int_32 , 0 ) ;
 }
 
 template < typename mediator >
@@ -745,48 +745,48 @@ void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     int_32 circle_high_left = 0 ;
-    int_32 circle_high_right = _letter_size_x / 2 ;
-    int_32 circle_high_top = _letter_size_y - 1 ;
-    int_32 circle_high_bottom = ( _letter_size_y * 2 ) / 5 ;
+    int_32 circle_high_right = _letter_size_x_int_32 / 2 ;
+    int_32 circle_high_top = _letter_size_y_int_32 - 1 ;
+    int_32 circle_high_bottom = ( _letter_size_y_int_32 * 2 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( circle_high_left , circle_high_top , circle_high_right , circle_high_bottom ) ;
     
-    int_32 circle_low_left = _letter_size_x / 2 ;
-    int_32 circle_low_right = _letter_size_x - 1 ;
-    int_32 circle_low_top = ( _letter_size_y * 3 ) / 5 ;
+    int_32 circle_low_left = _letter_size_x_int_32 / 2 ;
+    int_32 circle_low_right = _letter_size_x_int_32 - 1 ;
+    int_32 circle_low_top = ( _letter_size_y_int_32 * 3 ) / 5 ;
     int_32 circle_low_bottom = 0 ;
     _mediator -> rasterize_ellipse_in_rect ( circle_low_left , circle_low_top , circle_low_right , circle_low_bottom ) ;
 
-    int_32 board_mid_left = _letter_size_x / 4 ;
-    int_32 board_mid_right = ( _letter_size_x * 3 ) / 4 ;
+    int_32 board_mid_left = _letter_size_x_int_32 / 4 ;
+    int_32 board_mid_right = ( _letter_size_x_int_32 * 3 ) / 4 ;
     int_32 board_mid_top = circle_low_top ;
     int_32 board_mid_bottom = circle_high_bottom ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( board_mid_left , board_mid_top , board_mid_right , board_mid_bottom ) ;
     
     int_32 board_high_left = board_mid_left ;
-    int_32 board_high_right = ( _letter_size_x * 8 ) / 9 ;
-    int_32 board_high_top = _letter_size_y - 1 ;
-    int_32 board_high_bottom = ( _letter_size_y * 4 ) / 5 ;
+    int_32 board_high_right = ( _letter_size_x_int_32 * 8 ) / 9 ;
+    int_32 board_high_top = _letter_size_y_int_32 - 1 ;
+    int_32 board_high_bottom = ( _letter_size_y_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( board_high_left , board_high_top , board_high_right , board_high_bottom ) ;
     
-    int_32 board_low_left = _letter_size_x / 9 ;
+    int_32 board_low_left = _letter_size_x_int_32 / 9 ;
     int_32 board_low_right = board_mid_right ;
-    int_32 board_low_top = _letter_size_y / 5 ;
+    int_32 board_low_top = _letter_size_y_int_32 / 5 ;
     int_32 board_low_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( board_low_left , board_low_top , board_low_right , board_low_bottom ) ;
         
-    int_32 hole_high_left = _letter_size_x / 6 ;
-    int_32 hole_high_right = _letter_size_x / 3 ;
+    int_32 hole_high_left = _letter_size_x_int_32 / 6 ;
+    int_32 hole_high_right = _letter_size_x_int_32 / 3 ;
     int_32 hole_high_top = board_high_bottom - 1 ;
     int_32 hole_high_bottom = board_mid_top + 1 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_high_left , hole_high_top , hole_high_right , hole_high_bottom ) ;
 
-    int_32 hole_low_left = ( _letter_size_x * 2 ) / 3 ;
-    int_32 hole_low_right = ( _letter_size_x * 5 ) / 6 ;
+    int_32 hole_low_left = ( _letter_size_x_int_32 * 2 ) / 3 ;
+    int_32 hole_low_right = ( _letter_size_x_int_32 * 5 ) / 6 ;
     int_32 hole_low_top = board_mid_bottom - 1 ;
     int_32 hole_low_bottom = board_low_top + 1 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
@@ -806,15 +806,15 @@ void shy_logic_text < mediator > :: _rasterize_font_english_T ( )
 {
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
-    int_32 right = ( _letter_size_x * 6 ) / 7 ;
+    int_32 right = ( _letter_size_x_int_32 * 6 ) / 7 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y - 1 ) ;
+    _mediator -> rasterize_rect ( 0 , 0 , right , _letter_size_y_int_32 - 1 ) ;
     
     int_32 hole_left = 0 ;
     int_32 hole_right = right ;
-    int_32 hole_mid_left = ( _letter_size_x * 2 ) / 7 ;
-    int_32 hole_mid_right = ( _letter_size_x * 4 ) / 7 ;
-    int_32 hole_top = ( _letter_size_y * 4 ) / 5 ;
+    int_32 hole_mid_left = ( _letter_size_x_int_32 * 2 ) / 7 ;
+    int_32 hole_mid_right = ( _letter_size_x_int_32 * 4 ) / 7 ;
+    int_32 hole_top = ( _letter_size_y_int_32 * 4 ) / 5 ;
     int_32 hole_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_rect ( hole_left , hole_top , hole_mid_left , hole_bottom ) ;
@@ -827,23 +827,23 @@ void shy_logic_text < mediator > :: _rasterize_font_english_U ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
 
     int_32 ellipse_left = 0 ;
-    int_32 ellipse_right = ( _letter_size_x * 4 ) / 5 ;
-    int_32 ellipse_top = _letter_size_y / 2 ;
+    int_32 ellipse_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
+    int_32 ellipse_top = _letter_size_y_int_32 / 2 ;
     int_32 ellipse_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( ellipse_left , ellipse_top , ellipse_right , ellipse_bottom ) ;    
     
-    int_32 ellipse_center_y = _letter_size_y / 4 ;
+    int_32 ellipse_center_y = _letter_size_y_int_32 / 4 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_rect ( ellipse_left , _letter_size_y - 1 , ellipse_right , ellipse_center_y ) ;
+    _mediator -> rasterize_rect ( ellipse_left , _letter_size_y_int_32 - 1 , ellipse_right , ellipse_center_y ) ;
     
-    int_32 hole_left = _letter_size_x / 5 ;
-    int_32 hole_right = ( _letter_size_x * 3 ) / 5 ;
-    int_32 hole_top = _letter_size_y / 3 ;
-    int_32 hole_bottom = _letter_size_y / 6 ;
+    int_32 hole_left = _letter_size_x_int_32 / 5 ;
+    int_32 hole_right = ( _letter_size_x_int_32 * 3 ) / 5 ;
+    int_32 hole_top = _letter_size_y_int_32 / 3 ;
+    int_32 hole_bottom = _letter_size_y_int_32 / 6 ;
     _mediator -> rasterize_use_texel ( _eraser ) ;
     _mediator -> rasterize_ellipse_in_rect ( hole_left + 1 , hole_top - 1 , hole_right - 1 , hole_bottom + 1 ) ;
-    _mediator -> rasterize_rect ( hole_left + 1 , _letter_size_y - 1 , hole_right - 1 , ellipse_center_y ) ;
+    _mediator -> rasterize_rect ( hole_left + 1 , _letter_size_y_int_32 - 1 , hole_right - 1 , ellipse_center_y ) ;
 }
 
 template < typename mediator >
@@ -852,16 +852,16 @@ void shy_logic_text < mediator > :: _rasterize_font_english_V ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
 
     int_32 high_1_left = 0 ;
-    int_32 high_1_right = _letter_size_x / 5 ;
-    int_32 high_2_left = ( _letter_size_x * 4 ) / 5 ;
-    int_32 high_2_right = _letter_size_x - 1 ;
-    int_32 low_left = ( _letter_size_x * 2 ) / 5 ;
-    int_32 low_right = ( _letter_size_x * 3 ) / 5 ;
+    int_32 high_1_right = _letter_size_x_int_32 / 5 ;
+    int_32 high_2_left = ( _letter_size_x_int_32 * 4 ) / 5 ;
+    int_32 high_2_right = _letter_size_x_int_32 - 1 ;
+    int_32 low_left = ( _letter_size_x_int_32 * 2 ) / 5 ;
+    int_32 low_right = ( _letter_size_x_int_32 * 3 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
-    _mediator -> rasterize_triangle ( high_1_left , _letter_size_y - 1 , high_1_right , _letter_size_y - 1 , low_right , 0 ) ;
-    _mediator -> rasterize_triangle ( high_1_left , _letter_size_y - 1 , low_left , 0 , low_right , 0 ) ;
-    _mediator -> rasterize_triangle ( high_2_left , _letter_size_y - 1 , high_2_right , _letter_size_y - 1 , low_right , 0 ) ;
-    _mediator -> rasterize_triangle ( high_2_left , _letter_size_y - 1 , low_left , 0 , low_right , 0 ) ;
+    _mediator -> rasterize_triangle ( high_1_left , _letter_size_y_int_32 - 1 , high_1_right , _letter_size_y_int_32 - 1 , low_right , 0 ) ;
+    _mediator -> rasterize_triangle ( high_1_left , _letter_size_y_int_32 - 1 , low_left , 0 , low_right , 0 ) ;
+    _mediator -> rasterize_triangle ( high_2_left , _letter_size_y_int_32 - 1 , high_2_right , _letter_size_y_int_32 - 1 , low_right , 0 ) ;
+    _mediator -> rasterize_triangle ( high_2_left , _letter_size_y_int_32 - 1 , low_left , 0 , low_right , 0 ) ;
 }
 
 template < typename mediator >
@@ -870,16 +870,16 @@ void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
 
     int_32 high_1_left = 0 ;
-    int_32 high_1_right = _letter_size_x / 5 ;
-    int_32 high_2_left = ( _letter_size_x * 2 ) / 5 ;
-    int_32 high_2_right = ( _letter_size_x * 3 ) / 5 ;
-    int_32 high_3_left = ( _letter_size_x * 4 ) / 5 ;
-    int_32 high_3_right = _letter_size_x - 1 ;
-    int_32 low_1_left = _letter_size_x / 5 ;
-    int_32 low_1_right = ( _letter_size_x * 2 ) / 5 ;
-    int_32 low_2_left = ( _letter_size_x * 3 ) / 5 ;
-    int_32 low_2_right = ( _letter_size_x * 4 ) / 5 ;
-    int_32 high_top = _letter_size_y - 1 ;
+    int_32 high_1_right = _letter_size_x_int_32 / 5 ;
+    int_32 high_2_left = ( _letter_size_x_int_32 * 2 ) / 5 ;
+    int_32 high_2_right = ( _letter_size_x_int_32 * 3 ) / 5 ;
+    int_32 high_3_left = ( _letter_size_x_int_32 * 4 ) / 5 ;
+    int_32 high_3_right = _letter_size_x_int_32 - 1 ;
+    int_32 low_1_left = _letter_size_x_int_32 / 5 ;
+    int_32 low_1_right = ( _letter_size_x_int_32 * 2 ) / 5 ;
+    int_32 low_2_left = ( _letter_size_x_int_32 * 3 ) / 5 ;
+    int_32 low_2_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
+    int_32 high_top = _letter_size_y_int_32 - 1 ;
     int_32 low_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_triangle ( high_1_left , high_top , high_1_right , high_top , low_1_right , low_bottom ) ;
@@ -898,10 +898,10 @@ void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
 
     int_32 left_1 = 0 ;
-    int_32 right_1 = _letter_size_x / 4 ;
-    int_32 left_2 = ( _letter_size_x * 3 ) / 4 ;
-    int_32 right_2 = _letter_size_x - 1 ;
-    int_32 top_y = _letter_size_y - 1 ;
+    int_32 right_1 = _letter_size_x_int_32 / 4 ;
+    int_32 left_2 = ( _letter_size_x_int_32 * 3 ) / 4 ;
+    int_32 right_2 = _letter_size_x_int_32 - 1 ;
+    int_32 top_y = _letter_size_y_int_32 - 1 ;
     int_32 bottom_y = 0 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_triangle ( left_1 , top_y , right_1 , top_y , right_2 , bottom_y ) ;
@@ -916,14 +916,14 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
 
     int_32 high_1_left = 0 ;
-    int_32 high_1_right = _letter_size_x / 4 ;
-    int_32 high_2_left = ( _letter_size_x * 3 ) / 4 ;
-    int_32 high_2_right = _letter_size_x - 1 ;
-    int_32 high_top = _letter_size_y - 1 ;
-    int_32 low_left = ( _letter_size_x * 2 ) / 5 ;
-    int_32 low_right = ( _letter_size_x * 3 ) / 5 ;
+    int_32 high_1_right = _letter_size_x_int_32 / 4 ;
+    int_32 high_2_left = ( _letter_size_x_int_32 * 3 ) / 4 ;
+    int_32 high_2_right = _letter_size_x_int_32 - 1 ;
+    int_32 high_top = _letter_size_y_int_32 - 1 ;
+    int_32 low_left = ( _letter_size_x_int_32 * 2 ) / 5 ;
+    int_32 low_right = ( _letter_size_x_int_32 * 3 ) / 5 ;
     int_32 low_bottom = 0 ;
-    int_32 mid_y = _letter_size_y / 2 ;
+    int_32 mid_y = _letter_size_y_int_32 / 2 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_triangle ( high_1_left , high_top , high_1_right , high_top , low_right , mid_y ) ;
     _mediator -> rasterize_triangle ( high_1_left , high_top , low_left , mid_y , low_right , mid_y ) ;
@@ -938,18 +938,18 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Z ( )
     _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
     
     int_32 hor_left = 0 ;
-    int_32 hor_right = ( _letter_size_x * 4 ) / 5 ;
-    int_32 high_top = _letter_size_y - 1 ;
-    int_32 high_bottom = ( _letter_size_y * 4 ) / 5 ;
+    int_32 hor_right = ( _letter_size_x_int_32 * 4 ) / 5 ;
+    int_32 high_top = _letter_size_y_int_32 - 1 ;
+    int_32 high_bottom = ( _letter_size_y_int_32 * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( hor_left , high_top , hor_right , high_bottom ) ;
     
-    int_32 low_top = _letter_size_y / 5 ;
+    int_32 low_top = _letter_size_y_int_32 / 5 ;
     int_32 low_bottom = 0 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( hor_left , low_top , hor_right , low_bottom ) ;
     
-    int_32 board_width = _letter_size_y / 4 ;
+    int_32 board_width = _letter_size_y_int_32 / 4 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_triangle ( hor_right - board_width , high_bottom , hor_right , high_bottom , board_width , low_top ) ;
     _mediator -> rasterize_triangle ( hor_right - board_width , high_bottom , hor_left , low_top , board_width , low_top ) ;

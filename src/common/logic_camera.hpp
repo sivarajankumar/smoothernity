@@ -4,9 +4,7 @@ class shy_logic_camera
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -121,9 +119,7 @@ void shy_logic_camera < mediator > :: camera_update ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( num_whole & result )
 {
-    int_32 result_int_32 ;
-    _mediator -> get_entity_mesh_grid ( result_int_32 ) ;
-    platform :: math_make_num_whole ( result , result_int_32 ) ;
+    _mediator -> get_entity_mesh_grid ( result ) ;
 }
 
 template < typename mediator >
@@ -152,8 +148,8 @@ void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
         
         _random_camera_origin_index ( origin_index ) ;
         _random_camera_target_index ( target_index ) ;
-        _mediator -> get_entity_origin ( origin_pos , origin_index . debug_to_int_32 ( ) ) ;
-        _mediator -> get_entity_origin ( target_pos , target_index . debug_to_int_32 ( ) ) ;
+        _mediator -> get_entity_origin ( origin_pos , origin_index ) ;
+        _mediator -> get_entity_origin ( target_pos , target_index ) ;
         
         platform :: memory_pointer_offset ( origin_index_ptr , _scheduled_camera_origin_indices , i ) ;
         platform :: memory_pointer_offset ( target_index_ptr , _scheduled_camera_target_indices , i ) ;
@@ -188,7 +184,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         
         platform :: math_make_num_whole ( _frames_to_change_camera_origin , _change_origin_in_frames ) ;
         _random_camera_origin_index ( new_origin_index ) ;
-        _mediator -> get_entity_origin ( new_origin_pos , new_origin_index . debug_to_int_32 ( ) ) ;
+        _mediator -> get_entity_origin ( new_origin_pos , new_origin_index ) ;
         
         _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
         _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
@@ -211,7 +207,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_origin
-        , spline_pos . debug_to_float_32 ( )
+        , spline_pos
         , _scheduled_camera_origins [ 0 ]
         , _scheduled_camera_origins [ 1 ]
         , _scheduled_camera_origins [ 2 ]
@@ -230,7 +226,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         
         platform :: math_make_num_whole ( _frames_to_change_camera_target , _change_target_in_frames ) ;
         _random_camera_target_index ( new_target_index ) ;
-        _mediator -> get_entity_origin ( new_target_pos , new_target_index . debug_to_int_32 ( ) ) ;
+        _mediator -> get_entity_origin ( new_target_pos , new_target_index ) ;
         
         _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
         _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
@@ -253,7 +249,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_target
-        , spline_pos . debug_to_float_32 ( )
+        , spline_pos
         , _scheduled_camera_targets [ 0 ]
         , _scheduled_camera_targets [ 1 ]
         , _scheduled_camera_targets [ 2 ]
@@ -303,10 +299,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     num_fract aspect_height ;
     num_fract entity_height ;
     
-    float_32 entity_height_float_32 ;
-    _mediator -> get_entity_height ( entity_height_float_32 ) ;
-    platform :: math_make_num_fract ( entity_height , int_32 ( entity_height_float_32 * 1000.0f ) , 1000 ) ;
-    
+    _mediator -> get_entity_height ( entity_height ) ;    
     _mediator -> get_near_plane_distance ( near_plane ) ;
     platform :: render_get_aspect_height ( aspect_height ) ;
     platform :: math_make_num_fract ( up_x , 0 , 1 ) ;

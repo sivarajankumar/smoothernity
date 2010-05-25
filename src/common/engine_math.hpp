@@ -9,7 +9,7 @@ class shy_engine_math
     typedef typename mediator :: platform :: vector_data vector_data ;
     
 public :
-    void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
+    void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
@@ -25,9 +25,8 @@ public :
 
 template < typename mediator >
 void shy_engine_math < mediator > :: math_catmull_rom_spline
-    ( vector_data & result , float_32 t_float_32 , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
+    ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
 {
-    num_fract t ;
     num_fract t2 ;
     num_fract t3 ;
     num_fract t2_mul_2 ;
@@ -46,7 +45,6 @@ void shy_engine_math < mediator > :: math_catmull_rom_spline
     vector_data result_p0_p1 ;
     vector_data result_p2_p3 ;
     vector_data result_p0_p1_p2_p3 ;
-    platform :: math_make_num_fract ( t , int_32 ( t_float_32 * 10000.0f ) , 10000 ) ;
     platform :: math_mul_fracts ( t2 , t , t ) ;
     platform :: math_mul_fracts ( t3 , t2 , t ) ;
     platform :: math_mul_fracts ( t2_mul_2 , t2 , platform :: fract_2 ) ;

@@ -4,9 +4,7 @@ class shy_logic_entities
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -31,9 +29,9 @@ public :
     void entities_render ( ) ;
     void entities_prepare_permit ( ) ;
     void entities_update ( ) ;
-    void get_entity_origin ( vector_data & result , int_32 index ) ;
-    void get_entity_height ( float_32 & result ) ;
-    void get_entity_mesh_grid ( int_32 & result ) ;
+    void get_entity_origin ( vector_data & result , num_whole index ) ;
+    void get_entity_height ( num_fract & result ) ;
+    void get_entity_mesh_grid ( num_whole & result ) ;
 private :
     void _entities_render ( ) ;
     void _create_entity_mesh ( ) ;
@@ -88,23 +86,21 @@ void shy_logic_entities < mediator > :: entities_update ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: get_entity_origin ( vector_data & result , int_32 index_int_32 )
+void shy_logic_entities < mediator > :: get_entity_origin ( vector_data & result , num_whole index )
 {
-    num_whole index ;
-    platform :: math_make_num_whole ( index , index_int_32 ) ;
     _get_entity_origin ( result , index ) ;
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: get_entity_mesh_grid ( int_32 & result )
+void shy_logic_entities < mediator > :: get_entity_mesh_grid ( num_whole & result )
 {
-    result = _entity_mesh_grid ;
+    platform :: math_make_num_whole ( result , _entity_mesh_grid ) ;
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: get_entity_height ( float_32 & result )
+void shy_logic_entities < mediator > :: get_entity_height ( num_fract & result )
 {
-    result = float_32 ( _entity_mesh_height ) ;
+    platform :: math_make_num_fract ( result , _entity_mesh_height , 1 ) ;
 }
 
 template < typename mediator >

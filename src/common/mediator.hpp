@@ -85,9 +85,9 @@ public :
     void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
-    void get_entity_height ( float_32 & result ) ;
-    void get_entity_mesh_grid ( int_32 & result ) ;
-    void get_entity_origin ( vector_data & result , int_32 index ) ;
+    void get_entity_height ( num_fract & result ) ;
+    void get_entity_mesh_grid ( num_whole & result ) ;
+    void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
     void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
@@ -100,7 +100,7 @@ public :
     void land_update ( ) ;
     template < typename T > void math_abs ( T & result , T f ) ;
     void math_abs_whole ( num_whole & result , num_whole a ) ;
-    void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
+    void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     template < typename T > void math_clamp ( T & result , T f , T from , T to ) ;
     void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
     void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
@@ -255,19 +255,19 @@ void shy_mediator < mediator_types > :: game_update ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_entity_height ( float_32 & result )
+void shy_mediator < mediator_types > :: get_entity_height ( num_fract & result )
 {
     _logic_entities . get_entity_height ( result ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_entity_mesh_grid ( int_32 & result )
+void shy_mediator < mediator_types > :: get_entity_mesh_grid ( num_whole & result )
 {
     _logic_entities . get_entity_mesh_grid ( result ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_entity_origin ( vector_data & result , int_32 index )
+void shy_mediator < mediator_types > :: get_entity_origin ( vector_data & result , num_whole index )
 {
     _logic_entities . get_entity_origin ( result , index ) ;
 }
@@ -312,7 +312,7 @@ void shy_mediator < mediator_types > :: math_abs_whole ( num_whole & result , nu
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_catmull_rom_spline
-    ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
+    ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
 {
     _engine_math . math_catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
 }
