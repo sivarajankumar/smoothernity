@@ -383,10 +383,27 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( int_32 & res
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _get_random_index ( int_32 & result , int_32 index_min , int_32 index_max )
+void shy_logic_camera < mediator > :: _get_random_index ( int_32 & result_int_32 , int_32 index_min_int_32 , int_32 index_max_int_32 )
 {
-    _random_seed = ( _random_seed + 181 ) % 139 ;
-    result = index_min + ( _random_seed % ( index_max - index_min ) ) ;
+    num_whole num_random_seed ;
+    num_whole random_const_1 ;
+    num_whole random_const_2 ;
+    num_whole result ;
+    num_whole index_min ;
+    num_whole index_max ;
+    num_whole index_diff ;
+    platform :: math_make_num_whole ( num_random_seed , _random_seed ) ;
+    platform :: math_make_num_whole ( random_const_1 , 181 ) ;
+    platform :: math_make_num_whole ( random_const_2 , 139 ) ;
+    platform :: math_make_num_whole ( index_min , index_min_int_32 ) ;
+    platform :: math_make_num_whole ( index_max , index_max_int_32 ) ;
+    platform :: math_add_to_whole ( num_random_seed , random_const_1 ) ;
+    platform :: math_mod_whole_by ( num_random_seed , random_const_2 ) ;
+    platform :: math_sub_wholes ( index_diff , index_max , index_min ) ;
+    platform :: math_mod_wholes ( result , num_random_seed , index_diff ) ;
+    platform :: math_add_to_whole ( result , index_min ) ;
+    _random_seed = num_random_seed . debug_to_int_32 ( ) ;
+    result_int_32 = result . debug_to_int_32 ( ) ;
 }
 
 template < typename mediator >
