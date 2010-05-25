@@ -133,20 +133,34 @@ void shy_logic_camera < mediator > :: _reset_camera_rubber ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
 {
-    for ( int_32 i = 0 ; i < 4 ; i ++ )
+    for ( num_whole i = platform :: whole_0
+        ; platform :: condition_whole_less_than_whole ( i , platform :: whole_4 ) 
+        ; platform :: math_inc_whole ( i )
+        )
     {
         int_32 origin_index ;
         int_32 target_index ;
         vector_data origin_pos ;
         vector_data target_pos ;
+        int_32 * origin_index_ptr = 0 ;
+        int_32 * target_index_ptr = 0 ;
+        vector_data * origin_pos_ptr = 0 ;
+        vector_data * target_pos_ptr = 0 ;
+        
         _random_camera_origin_index ( origin_index ) ;
         _random_camera_target_index ( target_index ) ;
         _mediator -> get_entity_origin ( origin_pos , origin_index ) ;
         _mediator -> get_entity_origin ( target_pos , target_index ) ;
-        _scheduled_camera_origin_indices [ i ] = origin_index ;
-        _scheduled_camera_target_indices [ i ] = target_index ;
-        _scheduled_camera_origins [ i ] = origin_pos ;
-        _scheduled_camera_targets [ i ] = target_pos ;
+        
+        platform :: memory_pointer_offset ( origin_index_ptr , _scheduled_camera_origin_indices , i ) ;
+        platform :: memory_pointer_offset ( target_index_ptr , _scheduled_camera_target_indices , i ) ;
+        platform :: memory_pointer_offset ( origin_pos_ptr , _scheduled_camera_origins , i ) ;
+        platform :: memory_pointer_offset ( target_pos_ptr , _scheduled_camera_targets , i ) ;
+        
+        * origin_index_ptr = origin_index ;
+        * target_index_ptr = target_index ;
+        * origin_pos_ptr = origin_pos ;
+        * target_pos_ptr = target_pos ;
     }
 }
 
