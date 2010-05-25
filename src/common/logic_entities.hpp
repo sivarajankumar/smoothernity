@@ -40,8 +40,8 @@ private :
     void _update_entity_grid ( ) ;
 private :
     mediator * _mediator ;
-    int_32 _entity_created ;
-    int_32 _entities_prepare_permitted ;
+    num_whole _entity_created ;
+    num_whole _entities_prepare_permitted ;
     int_32 _grid_scale ;
     mesh_id _entity_mesh_id ;
     matrix_data _entities_grid_matrices [ _entity_mesh_grid * _entity_mesh_grid ] ;
@@ -50,35 +50,35 @@ private :
 template < typename mediator >
 shy_logic_entities < mediator > :: shy_logic_entities ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
-, _entity_created ( false )
-, _entities_prepare_permitted ( false )
 , _grid_scale ( 0 )
 {
+    platform :: math_make_num_whole ( _entity_created , false ) ;
+    platform :: math_make_num_whole ( _entities_prepare_permitted , false ) ;
 }
 
 template < typename mediator >
 void shy_logic_entities < mediator > :: entities_render ( )
 {
-    if ( _entity_created )
+    if ( platform :: condition_true ( _entity_created ) )
         _entities_render ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_entities < mediator > :: entities_prepare_permit ( )
 {
-    _entities_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _entities_prepare_permitted , true ) ;
 }
 
 template < typename mediator >
 void shy_logic_entities < mediator > :: entities_update ( )
 {
-    if ( _entities_prepare_permitted )
+    if ( platform :: condition_true ( _entities_prepare_permitted ) )
     {
-        if ( ! _entity_created )
+        if ( platform :: condition_false ( _entity_created ) )
         {
             _create_entity_mesh ( ) ;
             _update_entity_grid ( ) ;
-            _entity_created = true ;
+            platform :: math_make_num_whole ( _entity_created , true ) ;
             _mediator -> entities_prepared ( ) ;
         }
         else
@@ -107,10 +107,19 @@ void shy_logic_entities < mediator > :: get_entity_height ( float_32 & result )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _entities_render ( )
 {
+    num_whole i_max ;
+    num_whole whole_entity_mesh_grid ;
+    platform :: math_make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
+    platform :: math_mul_wholes ( i_max , whole_entity_mesh_grid , whole_entity_mesh_grid ) ;
     _mediator -> texture_unselect ( ) ;
-    for ( int_32 i = 0 ; i < _entity_mesh_grid * _entity_mesh_grid ; i ++ )
+    for ( num_whole i = platform :: whole_0 
+        ; platform :: condition_whole_less_than_whole ( i , i_max )
+        ; platform :: math_inc_whole ( i )
+        )
     {
-        _mediator -> mesh_set_transform ( _entity_mesh_id , _entities_grid_matrices [ i ] ) ;
+        matrix_data * matrix_ptr = 0 ;
+        platform :: memory_pointer_offset ( matrix_ptr , _entities_grid_matrices , i ) ;
+        _mediator -> mesh_set_transform ( _entity_mesh_id , * matrix_ptr ) ;
         _mediator -> mesh_render ( _entity_mesh_id ) ;
     }
 }

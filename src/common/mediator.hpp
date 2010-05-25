@@ -324,6 +324,12 @@ void shy_mediator < mediator_types > :: math_lerp
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: math_clamp_fract ( num_fract & result , num_fract f , num_fract from , num_fract to )
+{
+    _engine_math . math_clamp_fract ( result , f , from , to ) ;
+}
+
+template < typename mediator_types >
 template < typename T >
 void shy_mediator < mediator_types > :: math_clamp ( T & result , T f , T from , T to )
 {
