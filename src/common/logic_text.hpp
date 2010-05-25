@@ -19,7 +19,7 @@ class shy_logic_text
     static const int_32 _canvas_g = 255 ;
     static const int_32 _canvas_b = 255 ;
     static const int_32 _canvas_a = 255 ;
-    static const float_32 _final_scale ( ) { return 0.5f ; }
+    static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
     shy_logic_text ( mediator * arg_mediator ) ;
     void text_prepare_permit ( ) ;
@@ -63,7 +63,7 @@ private :
 private :
     mediator * _mediator ;
     num_whole _text_mesh_created ;
-    int_32 _text_prepare_permitted ;
+    num_whole _text_prepare_permitted ;
     mesh_id _text_mesh_id ;
     texture_id _text_texture_id ;
     texel_data _filler ;
@@ -72,26 +72,26 @@ private :
     int_32 _origin_y ;
     int_32 _letter_size_x_int_32 ;
     int_32 _letter_size_y_int_32 ;
-    int_32 _scale_frames ;
+    num_whole _scale_frames ;
 } ;
 
 template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
-, _text_prepare_permitted ( false )
 , _origin_x ( 0 )
 , _origin_y ( 0 )
 , _letter_size_x_int_32 ( 0 )
 , _letter_size_y_int_32 ( 0 )
-, _scale_frames ( 0 )
 {
     platform :: math_make_num_whole ( _text_mesh_created , false ) ;
+    platform :: math_make_num_whole ( _text_prepare_permitted , false ) ;
+    platform :: math_make_num_whole ( _scale_frames , 0 ) ;
 }
 
 template < typename mediator >
 void shy_logic_text < mediator > :: text_prepare_permit ( )
 {
-    _text_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _text_prepare_permitted , true ) ;
 }
 
 template < typename mediator >
@@ -104,7 +104,7 @@ void shy_logic_text < mediator > :: text_render ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: text_update ( )
 {
-    if ( _text_prepare_permitted )
+    if ( platform :: condition_true ( _text_prepare_permitted ) )
     {
         if ( platform :: condition_false ( _text_mesh_created ) )
         {
@@ -121,26 +121,29 @@ void shy_logic_text < mediator > :: text_update ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _update_text_mesh ( )
 {
-    if ( _scale_frames < _scale_in_frames )
-        _scale_frames ++ ;
-    float_32 scale ;
     matrix_data matrix ;
-    num_fract num_scale ;
-    num_fract num_zero ;
+    num_fract fract_scale_frames ;    
+    num_whole whole_scale_in_frames ;
+    num_fract fract_scale_in_frames ;
+    num_fract scale ;
     num_fract origin_x ;
     num_fract origin_y ;
     num_fract origin_z ;
-    _mediator -> math_lerp ( scale , 0 , 0 , _final_scale ( ) , _scale_in_frames , _scale_frames ) ;
-    platform :: math_make_num_fract ( num_scale , int_32 ( scale * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( num_zero , 0 , 1 ) ;
+    
+    platform :: math_make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
+    platform :: math_make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
+    platform :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
+    _mediator -> math_lerp ( scale , platform :: fract_0 , platform :: fract_0 , _final_scale ( ) , fract_scale_in_frames , fract_scale_frames ) ;
     platform :: math_make_num_fract ( origin_x , - 1 , 2 ) ;
     platform :: math_make_num_fract ( origin_y , 0 , 1 ) ;
     platform :: math_make_num_fract ( origin_z , - 3 , 1 ) ;
-    platform :: matrix_set_axis_x ( matrix , num_scale , num_zero , num_zero ) ;
-    platform :: matrix_set_axis_y ( matrix , num_zero , num_scale , num_zero ) ;
-    platform :: matrix_set_axis_z ( matrix , num_zero , num_zero , num_scale ) ;
+    platform :: matrix_set_axis_x ( matrix , scale , platform :: fract_0 , platform :: fract_0 ) ;
+    platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
+    platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
     platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     _mediator -> mesh_set_transform ( _text_mesh_id , matrix ) ;
+    if ( platform :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
+        platform :: math_inc_whole ( _scale_frames ) ;
 }
 
 template < typename mediator >
