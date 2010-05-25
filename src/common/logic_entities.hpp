@@ -130,9 +130,6 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     vertex_data vertices [ ( _entity_mesh_spans + 1 ) * 2 + 1 ] ;
     index_data strip_indices [ ( _entity_mesh_spans + 1 ) * 2 ] ;
     index_data fan_indices [ _entity_mesh_spans + 2 ] ;
-    num_whole strip_indices_count ;
-    num_whole fan_indices_count ;
-    num_whole vertices_count ;
     num_fract vertex_x ;
     num_fract vertex_y ;
     num_fract vertex_z ;
@@ -140,21 +137,31 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_whole vertex_g ;
     num_whole vertex_b ;
     num_whole vertex_a ;
+    num_whole strip_indices_count ;
+    num_whole fan_indices_count ;
+    num_whole vertices_count ;
+    num_whole whole_entity_mesh_spans ;
+    num_fract fract_entity_mesh_spans ;
     platform :: math_make_num_whole ( strip_indices_count , 0 ) ;
     platform :: math_make_num_whole ( fan_indices_count , 0 ) ;
     platform :: math_make_num_whole ( vertices_count , 0 ) ;
-    for ( int_32 i = 0; i < _entity_mesh_spans + 1 ; i ++ )
+    platform :: math_make_num_whole ( whole_entity_mesh_spans , _entity_mesh_spans ) ;
+    platform :: math_make_num_fract ( fract_entity_mesh_spans , _entity_mesh_spans , 1 ) ;
+    for ( num_whole i = platform :: whole_0 
+        ; platform :: condition_whole_less_or_equal_to_whole ( i , whole_entity_mesh_spans ) 
+        ; platform :: math_inc_whole ( i )
+        )
     {
-        float_32 pi = platform :: fract_pi . debug_to_float_32 ( ) ;
-        float_32 angle = float_32 ( i ) * pi * 2.0f / float_32 ( _entity_mesh_spans ) ;
-        num_fract num_angle ;
-        platform :: math_make_num_fract ( num_angle , int_32 ( angle * 1000.0f ) , 1000 ) ;
-        int_32 color = ( i * 21 / ( _entity_mesh_spans + 1 ) ) % 7;
+        num_fract angle ;
+        platform :: math_make_fract_from_whole ( angle , i ) ;
+        platform :: math_mul_fract_by ( angle , platform :: fract_2pi ) ;
+        platform :: math_div_fract_by ( angle , fract_entity_mesh_spans ) ;
+        int_32 color = ( i . debug_to_int_32 ( ) * 21 / ( _entity_mesh_spans + 1 ) ) % 7;
         int_32 color1 = color;
         int_32 color2 = ( color + 1 ) % 7;
-        platform :: math_sin ( vertex_x , num_angle ) ;
+        platform :: math_sin ( vertex_x , angle ) ;
         platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
-        platform :: math_cos ( vertex_z , num_angle ) ;
+        platform :: math_cos ( vertex_z , angle ) ;
         platform :: math_make_num_whole ( vertex_r , _entity_colors_r ( ) [ color1 ] ) ;
         platform :: math_make_num_whole ( vertex_g , _entity_colors_g ( ) [ color1 ] ) ;
         platform :: math_make_num_whole ( vertex_b , _entity_colors_b ( ) [ color1 ] ) ;
@@ -188,7 +195,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform :: render_set_index_value ( fan_indices [ fan_indices_count . debug_to_int_32 ( ) ] , vertices_count ) ;
     platform :: math_inc_whole ( fan_indices_count ) ;
     platform :: math_inc_whole ( vertices_count ) ;
-    for ( int_32 i = 0 ; i < _entity_mesh_spans + 1 ; ++ i )
+    for ( int_32 i = 0 ; i <= _entity_mesh_spans ; ++ i )
     {
         num_whole index ;
         platform :: math_make_num_whole ( index , i * 2 ) ;
