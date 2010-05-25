@@ -22,8 +22,15 @@ public :
 
 template < typename mediator >
 void shy_engine_math < mediator > :: math_catmull_rom_spline
-    ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
+    ( vector_data & result , float_32 t_float_32 , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
 {
+    num_fract t ;
+    num_fract t2 ;
+    num_fract t3 ;
+    num_fract t2_mul_2 ;
+    num_fract t2_mul_4 ;
+    num_fract t2_mul_5 ;
+    num_fract t3_mul_3 ;
     num_fract p0_coeff ;
     num_fract p1_coeff ;
     num_fract p2_coeff ;
@@ -36,13 +43,21 @@ void shy_engine_math < mediator > :: math_catmull_rom_spline
     vector_data result_p0_p1 ;
     vector_data result_p2_p3 ;
     vector_data result_p0_p1_p2_p3 ;
-    float_32 t2 = t * t ;
-    float_32 t3 = t * t * t ;
-    platform :: math_make_num_fract ( half , 1 , 2 ) ;
-    platform :: math_make_num_fract ( p0_coeff , int_32 ( ( - t + 2.0f * t2 - t3 ) * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( p1_coeff , int_32 ( ( 2.0f - 5.0f * t2 + 3.0f * t3 ) * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( p2_coeff , int_32 ( ( t + 4.0f * t2 - 3.0f * t3 ) * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( p3_coeff , int_32 ( ( - t2 + t3 ) * 1000.0f ) , 1000 ) ;
+    platform :: math_make_num_fract ( t , int_32 ( t_float_32 * 10000.0f ) , 10000 ) ;
+    platform :: math_mul_fracts ( t2 , t , t ) ;
+    platform :: math_mul_fracts ( t3 , t2 , t ) ;
+    platform :: math_mul_fracts ( t2_mul_2 , t2 , platform :: fract_2 ) ;
+    platform :: math_mul_fracts ( t2_mul_4 , t2 , platform :: fract_4 ) ;
+    platform :: math_mul_fracts ( t2_mul_5 , t2 , platform :: fract_5 ) ;
+    platform :: math_mul_fracts ( t3_mul_3 , t3 , platform :: fract_3 ) ;
+    platform :: math_make_num_fract ( half , 1 , 2 ) ;    
+    platform :: math_sub_fracts ( p0_coeff , t2_mul_2 , t ) ;
+    platform :: math_sub_from_fract ( p0_coeff , t3 ) ;
+    platform :: math_sub_fracts ( p1_coeff , t3_mul_3 , t2_mul_5 ) ;
+    platform :: math_add_to_fract ( p1_coeff , platform :: fract_2 ) ;
+    platform :: math_sub_fracts ( p2_coeff , t2_mul_4 , t3_mul_3 ) ;
+    platform :: math_add_to_fract ( p2_coeff , t ) ;
+    platform :: math_sub_fracts ( p3_coeff , t3 , t2 ) ;
     platform :: vector_mul ( p0_scaled , p0 , p0_coeff ) ;
     platform :: vector_mul ( p1_scaled , p1 , p1_coeff ) ;
     platform :: vector_mul ( p2_scaled , p2 , p2_coeff ) ;
