@@ -131,6 +131,8 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     vertex_data vertices [ ( _entity_mesh_spans + 1 ) * 2 + 1 ] ;
     index_data strip_indices [ ( _entity_mesh_spans + 1 ) * 2 ] ;
     index_data fan_indices [ _entity_mesh_spans + 2 ] ;
+    vertex_data * vertex_ptr = 0 ;
+    index_data * index_ptr = 0 ;
     num_fract vertex_x ;
     num_fract vertex_y ;
     num_fract vertex_z ;
@@ -167,8 +169,6 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         const_int_32 * entity_color_r_ptr = 0 ;
         const_int_32 * entity_color_g_ptr = 0 ;
         const_int_32 * entity_color_b_ptr = 0 ;
-        vertex_data * vertex_ptr = 0 ;
-        index_data * index_ptr = 0 ;
                 
         platform :: math_make_fract_from_whole ( angle , i ) ;
         platform :: math_mul_fract_by ( angle , platform :: fract_2pi ) ;
@@ -222,23 +222,34 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_inc_whole ( strip_indices_count ) ;
         platform :: math_inc_whole ( vertices_count ) ;
     }
-    platform :: math_make_num_fract ( vertex_x , 0 , 1 ) ;
-    platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
+    
+    vertex_x = platform :: fract_0 ;
+    platform :: math_div_fracts ( vertex_y , fract_entity_mesh_height , platform :: fract_2 ) ;
+    vertex_z = platform :: fract_0 ;
+    
     platform :: math_make_num_whole ( vertex_r , _entity_color_roof_r ) ;
     platform :: math_make_num_whole ( vertex_g , _entity_color_roof_g ) ;
     platform :: math_make_num_whole ( vertex_b , _entity_color_roof_b ) ;
     platform :: math_make_num_whole ( vertex_a , 255 ) ;
-    platform :: render_set_vertex_position ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_x , vertex_y , vertex_z ) ;
-    platform :: render_set_vertex_color ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-    platform :: render_set_index_value ( fan_indices [ fan_indices_count . debug_to_int_32 ( ) ] , vertices_count ) ;
+
+    platform :: memory_pointer_offset ( vertex_ptr , vertices , vertices_count ) ;
+    platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
+    platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+    
+    platform :: memory_pointer_offset ( index_ptr , fan_indices , fan_indices_count ) ;
+    platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
     platform :: math_inc_whole ( fan_indices_count ) ;
     platform :: math_inc_whole ( vertices_count ) ;
-    for ( int_32 i = 0 ; i <= _entity_mesh_spans ; ++ i )
+    
+    for ( num_whole i = platform :: whole_0
+        ; platform :: condition_whole_less_or_equal_to_whole ( i , whole_entity_mesh_spans ) 
+        ; platform :: math_inc_whole ( i )
+        )
     {
         num_whole index ;
-        platform :: math_make_num_whole ( index , i * 2 ) ;
-        platform :: render_set_index_value ( fan_indices [ fan_indices_count . debug_to_int_32 ( ) ] , index ) ;
+        platform :: math_mul_wholes ( index , i , platform :: whole_2 ) ;
+        platform :: memory_pointer_offset ( index_ptr , fan_indices , fan_indices_count ) ;
+        platform :: render_set_index_value ( * index_ptr , index ) ;
         platform :: math_inc_whole ( fan_indices_count ) ;
     }
     
