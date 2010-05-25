@@ -8,6 +8,7 @@ class shy_logic_camera
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -63,14 +64,23 @@ shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
 , _random_seed ( 0 )
 , _camera_created ( false )
 {
-    for ( int_32 i = 0 ; i < 4 ; i ++ )
+    for ( num_whole i = platform :: whole_0
+        ; platform :: condition_whole_less_than_whole ( i , platform :: whole_4 )
+        ; platform :: math_inc_whole ( i )
+        )
     {
-        _scheduled_camera_origin_indices [ i ] = 0 ;
-        _scheduled_camera_target_indices [ i ] = 0 ;
-        num_fract zero ;
-        platform :: math_make_num_fract ( zero , 0 , 1 ) ;
-        platform :: vector_xyz ( _scheduled_camera_origins [ i ] , zero , zero , zero ) ;
-        platform :: vector_xyz ( _scheduled_camera_targets [ i ] , zero , zero , zero ) ;
+        int_32 * origin_index_ptr = 0 ;
+        int_32 * target_index_ptr = 0 ;
+        vector_data * origin_pos_ptr = 0 ;
+        vector_data * target_pos_ptr = 0 ;
+        platform :: memory_pointer_offset ( origin_index_ptr , _scheduled_camera_origin_indices , i ) ;
+        platform :: memory_pointer_offset ( target_index_ptr , _scheduled_camera_target_indices , i ) ;
+        platform :: memory_pointer_offset ( origin_pos_ptr , _scheduled_camera_origins , i ) ;
+        platform :: memory_pointer_offset ( target_pos_ptr , _scheduled_camera_targets , i ) ;
+        * origin_index_ptr = 0 ;
+        * target_index_ptr = 0 ;
+        platform :: vector_xyz ( * origin_pos_ptr , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+        platform :: vector_xyz ( * target_pos_ptr , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     }
 }
 
