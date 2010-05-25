@@ -70,15 +70,36 @@ void shy_engine_rasterizer < mediator > :: rasterize_triangle ( int_32 x1 , int_
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
+void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( int_32 x1_int_32 , int_32 y1_int_32 , int_32 x2_int_32 , int_32 y2_int_32 )
 {
-    int_32 width ;
-    int_32 height ;
-    int_32 y_center = ( y1 + y2 ) / 2 ;
-    int_32 x_center = ( x1 + x2 ) / 2 ;
-    _mediator -> math_abs ( width , x1 - x2 ) ;
-    _mediator -> math_abs ( height , y1 - y2 ) ;
-    _rasterize_bresenham_ellipse ( x_center , y_center , width / 2 , height / 2 ) ;
+    num_whole x1 ;
+    num_whole x2 ;
+    num_whole y1 ;
+    num_whole y2 ;
+    num_whole width ;
+    num_whole height ;
+    num_whole y_center ;
+    num_whole x_center ;
+    num_whole x_diff ;
+    num_whole y_diff ;
+    platform :: math_make_num_whole ( x1 , x1_int_32 ) ;
+    platform :: math_make_num_whole ( x2 , x2_int_32 ) ;
+    platform :: math_make_num_whole ( y1 , y1_int_32 ) ;
+    platform :: math_make_num_whole ( y2 , y2_int_32 ) ;
+    platform :: math_add_wholes ( y_center , y1 , y2 ) ;
+    platform :: math_div_whole_by ( y_center , platform :: whole_2 ) ;
+    platform :: math_add_wholes ( x_center , x1 , x2 ) ;
+    platform :: math_div_whole_by ( x_center , platform :: whole_2 ) ;
+    platform :: math_sub_wholes ( x_diff , x1 , x2 ) ;
+    platform :: math_sub_wholes ( y_diff , y1 , y2 ) ;
+    _mediator -> math_abs_whole ( width , x_diff ) ;
+    _mediator -> math_abs_whole ( height , y_diff ) ;
+    
+    num_whole half_width ;
+    num_whole half_height ;
+    platform :: math_div_wholes ( half_width , width , platform :: whole_2 ) ;    
+    platform :: math_div_wholes ( half_height , height , platform :: whole_2 ) ;
+    _rasterize_bresenham_ellipse ( x_center . debug_to_int_32 ( ) , y_center . debug_to_int_32 ( ) , half_width . debug_to_int_32 ( ) , half_height . debug_to_int_32 ( ) ) ;
 }
 
 template < typename mediator >
