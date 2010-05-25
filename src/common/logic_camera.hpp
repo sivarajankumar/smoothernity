@@ -223,13 +223,18 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 {
-    if ( -- _frames_to_change_camera_target <= 0 )
+    num_whole whole_frames_to_change_camera_target ;
+    platform :: math_make_num_whole ( whole_frames_to_change_camera_target , _frames_to_change_camera_target ) ;
+    platform :: math_dec_whole ( whole_frames_to_change_camera_target ) ;
+    if ( platform :: condition_whole_less_or_equal_to_zero ( whole_frames_to_change_camera_target ) )
     {
-        _frames_to_change_camera_target = _change_target_in_frames ;
         int_32 new_target_index ;
         vector_data new_target_pos ;
+        
+        platform :: math_make_num_whole ( whole_frames_to_change_camera_target , _change_target_in_frames ) ;
         _random_camera_target_index ( new_target_index ) ;
         _mediator -> get_entity_origin ( new_target_pos , new_target_index ) ;
+        
         _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
         _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
         _scheduled_camera_target_indices [ 2 ] = _scheduled_camera_target_indices [ 3 ] ;
@@ -239,14 +244,26 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         _scheduled_camera_targets [ 2 ] = _scheduled_camera_targets [ 3 ] ;
         _scheduled_camera_targets [ 3 ] = new_target_pos ;
     }
+    
+    num_fract fract_frames_to_change_camera_target ;
+    num_fract fract_change_target_in_frames ;
+    num_fract spline_pos ;
+    platform :: math_make_fract_from_whole ( fract_frames_to_change_camera_target , whole_frames_to_change_camera_target ) ;
+    platform :: math_make_num_fract ( fract_change_target_in_frames , _change_target_in_frames , 1 ) ;
+    platform :: math_div_fracts ( spline_pos , fract_frames_to_change_camera_target , fract_change_target_in_frames ) ;
+    platform :: math_neg_fract ( spline_pos ) ;
+    platform :: math_add_to_fract ( spline_pos , platform :: fract_1 ) ;
+    
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_target
-        , 1.0f - float_32 ( _frames_to_change_camera_target ) / float_32 ( _change_target_in_frames )
+        , spline_pos . debug_to_float_32 ( )
         , _scheduled_camera_targets [ 0 ]
         , _scheduled_camera_targets [ 1 ]
         , _scheduled_camera_targets [ 2 ]
         , _scheduled_camera_targets [ 3 ]
         ) ;
+        
+    _frames_to_change_camera_target = whole_frames_to_change_camera_target . debug_to_int_32 ( ) ;    
 }
 
 template < typename mediator >
@@ -257,7 +274,7 @@ void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
     vector_data old_part ;
     vector_data new_part ;
     platform :: math_make_num_fract ( rubber , int_32 ( _origin_rubber ( ) * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( inv_rubber , int_32 ( ( 1.0f - _origin_rubber ( ) ) * 1000.0f ) , 1000 ) ;
+    platform :: math_sub_fracts ( inv_rubber , platform :: fract_1 , rubber ) ;
     platform :: vector_mul ( old_part , _current_camera_origin , rubber ) ;
     platform :: vector_mul ( new_part , _desired_camera_origin , inv_rubber ) ;
     platform :: vector_add ( _current_camera_origin , old_part , new_part ) ;
@@ -271,7 +288,7 @@ void shy_logic_camera < mediator > :: _update_current_camera_target ( )
     vector_data old_part ;
     vector_data new_part ;
     platform :: math_make_num_fract ( rubber , int_32 ( _target_rubber ( ) * 1000.0f ) , 1000 ) ;
-    platform :: math_make_num_fract ( inv_rubber , int_32 ( ( 1.0f - _target_rubber ( ) ) * 1000.0f ) , 1000 ) ;
+    platform :: math_sub_fracts ( inv_rubber , platform :: fract_1 , rubber ) ;
     platform :: vector_mul ( old_part , _current_camera_target , rubber ) ;
     platform :: vector_mul ( new_part , _desired_camera_target , inv_rubber ) ;
     platform :: vector_add ( _current_camera_target , old_part , new_part ) ;
@@ -291,16 +308,19 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     vector_data shifted_origin ;
     num_fract near_plane ;
     num_fract aspect_height ;
-    float_32 entity_height ;
+    num_fract entity_height ;
     
-    _mediator -> get_entity_height ( entity_height ) ;
+    float_32 entity_height_float_32 ;
+    _mediator -> get_entity_height ( entity_height_float_32 ) ;
+    platform :: math_make_num_fract ( entity_height , int_32 ( entity_height_float_32 * 1000.0f ) , 1000 ) ;
+    
     _mediator -> get_near_plane_distance ( near_plane ) ;
     platform :: render_get_aspect_height ( aspect_height ) ;
     platform :: math_make_num_fract ( up_x , 0 , 1 ) ;
     platform :: math_make_num_fract ( up_y , 1 , 1 ) ;
     platform :: math_make_num_fract ( up_z , 0 , 1 ) ;
     platform :: math_make_num_fract ( shift_x , 0 , 1 ) ;
-    platform :: math_make_num_fract ( shift_y , int_32 ( 1000.0f * entity_height ) , 1000 ) ;
+    shift_y = entity_height ;
     platform :: math_add_to_fract ( shift_y , aspect_height ) ;
     platform :: math_add_to_fract ( shift_y , near_plane ) ;
     platform :: math_make_num_fract ( shift_z , 0 , 1 ) ;
@@ -313,31 +333,53 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _random_camera_origin_index ( int_32 & result )
 {
-    int_32 index = 0 ;
-    int_32 mesh_grid ;
-    int_32 is_duplicate ;
-    _get_entity_mesh_grid ( mesh_grid ) ;
+    num_whole index ;
+    num_whole index_max ;
+    num_whole mesh_grid ;
+    num_whole is_duplicate ;
+    int_32 mesh_grid_int_32 ;
+    platform :: math_make_num_whole ( index , 0 ) ;
+    _get_entity_mesh_grid ( mesh_grid_int_32 ) ;
+    platform :: math_make_num_whole ( mesh_grid , mesh_grid_int_32 ) ;
+    platform :: math_div_wholes ( index_max , mesh_grid , platform :: whole_2 ) ;
+    platform :: math_mul_whole_by ( index_max , mesh_grid ) ;
     do
     {
-        _get_random_index ( index , 0 , mesh_grid * ( mesh_grid / 2 ) ) ;
-        _camera_origin_index_is_duplicate ( is_duplicate , index ) ;
-    } while ( is_duplicate ) ;
-    result = index ;
+        int_32 index_int_32 ;
+        int_32 is_duplicate_int_32 ;
+        _get_random_index ( index_int_32 , platform :: whole_0 . debug_to_int_32 ( ) , index_max . debug_to_int_32 ( ) ) ;
+        platform :: math_make_num_whole ( index , index_int_32 ) ;
+        _camera_origin_index_is_duplicate ( is_duplicate_int_32 , index . debug_to_int_32 ( ) ) ;
+        platform :: math_make_num_whole ( is_duplicate , is_duplicate_int_32 ) ;
+    } while ( platform :: condition_true ( is_duplicate ) ) ;
+    result = index . debug_to_int_32 ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_camera < mediator > :: _random_camera_target_index ( int_32 & result )
 {
-    int_32 index = 0 ;
-    int_32 mesh_grid ;
-    int_32 is_duplicate ;
-    _get_entity_mesh_grid ( mesh_grid ) ;
+    num_whole index ;
+    num_whole index_min ;
+    num_whole index_max ;
+    num_whole mesh_grid ;
+    num_whole is_duplicate ;
+    int_32 mesh_grid_int_32 ;
+    platform :: math_make_num_whole ( index , 0 ) ;
+    _get_entity_mesh_grid ( mesh_grid_int_32 ) ;
+    platform :: math_make_num_whole ( mesh_grid , mesh_grid_int_32 ) ;
+    platform :: math_div_wholes ( index_min , mesh_grid , platform :: whole_2 ) ;
+    platform :: math_mul_whole_by ( index_min , mesh_grid ) ;
+    platform :: math_mul_wholes ( index_max , mesh_grid , mesh_grid ) ;
     do
     {
-        _get_random_index ( index , mesh_grid * ( mesh_grid / 2 ) , mesh_grid * mesh_grid ) ;
-        _camera_target_index_is_duplicate ( is_duplicate , index ) ;
-    } while ( is_duplicate ) ;
-    result = index ;
+        int_32 index_int_32 ;
+        int_32 is_duplicate_int_32 ;
+        _get_random_index ( index_int_32 , index_min . debug_to_int_32 ( ) , index_max . debug_to_int_32 ( ) ) ;
+        platform :: math_make_num_whole ( index , index_int_32 ) ;
+        _camera_target_index_is_duplicate ( is_duplicate_int_32 , index . debug_to_int_32 ( ) ) ;
+        platform :: math_make_num_whole ( is_duplicate , is_duplicate_int_32 ) ;
+    } while ( platform :: condition_true ( is_duplicate ) ) ;
+    result = index . debug_to_int_32 ( ) ;
 }
 
 template < typename mediator >
