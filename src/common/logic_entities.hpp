@@ -3,6 +3,7 @@ class shy_logic_entities
 {
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
@@ -12,18 +13,18 @@ class shy_logic_entities
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
-    static const int_32 _grid_step = 5 ;
-    static const int_32 _scale_in_frames = 120 ;
-    static const int_32 _scale_wave = 2 ;
-    static const int_32 _entity_mesh_spans = 50 ;
-    static const int_32 _entity_mesh_grid = 5 ;
-    static const int_32 _entity_mesh_height = 2 ;
-    static const int_32 _entity_color_roof_r = 255 ;
-    static const int_32 _entity_color_roof_g = 255 ;
-    static const int_32 _entity_color_roof_b = 255 ;
-    static const int_32 * _entity_colors_r ( ) { static const int_32 c [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ; return c ; }
-    static const int_32 * _entity_colors_g ( ) { static const int_32 c [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ; return c ; }
-    static const int_32 * _entity_colors_b ( ) { static const int_32 c [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ; return c ; }
+    static const_int_32 _grid_step = 5 ;
+    static const_int_32 _scale_in_frames = 120 ;
+    static const_int_32 _scale_wave = 2 ;
+    static const_int_32 _entity_mesh_spans = 50 ;
+    static const_int_32 _entity_mesh_grid = 5 ;
+    static const_int_32 _entity_mesh_height = 2 ;
+    static const_int_32 _entity_color_roof_r = 255 ;
+    static const_int_32 _entity_color_roof_g = 255 ;
+    static const_int_32 _entity_color_roof_b = 255 ;
+    static const_int_32 * _entity_colors_r ( ) { static const_int_32 c [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ; return c ; }
+    static const_int_32 * _entity_colors_g ( ) { static const_int_32 c [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ; return c ; }
+    static const_int_32 * _entity_colors_b ( ) { static const_int_32 c [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ; return c ; }
 
 public :
     shy_logic_entities ( mediator * arg_mediator ) ;
@@ -137,49 +138,87 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_whole vertex_g ;
     num_whole vertex_b ;
     num_whole vertex_a ;
+    num_whole color_bias ;
+    num_whole colors_max ;
     num_whole strip_indices_count ;
     num_whole fan_indices_count ;
     num_whole vertices_count ;
-    num_whole whole_entity_mesh_spans ;
+    num_fract fract_entity_mesh_height ;
     num_fract fract_entity_mesh_spans ;
+    num_whole whole_entity_mesh_spans ;
+    num_whole whole_entity_mesh_spans_plus_1 ;
+    platform :: math_make_num_whole ( color_bias , 21 ) ;
+    platform :: math_make_num_whole ( colors_max , 7 ) ;
     platform :: math_make_num_whole ( strip_indices_count , 0 ) ;
     platform :: math_make_num_whole ( fan_indices_count , 0 ) ;
     platform :: math_make_num_whole ( vertices_count , 0 ) ;
     platform :: math_make_num_whole ( whole_entity_mesh_spans , _entity_mesh_spans ) ;
     platform :: math_make_num_fract ( fract_entity_mesh_spans , _entity_mesh_spans , 1 ) ;
+    platform :: math_add_wholes ( whole_entity_mesh_spans_plus_1 , whole_entity_mesh_spans , platform :: whole_1 ) ;
+    platform :: math_make_num_fract ( fract_entity_mesh_height , int_32 ( _entity_mesh_height * 1000.0f ) , 1000 ) ;
     for ( num_whole i = platform :: whole_0 
         ; platform :: condition_whole_less_or_equal_to_whole ( i , whole_entity_mesh_spans ) 
         ; platform :: math_inc_whole ( i )
         )
     {
         num_fract angle ;
+        num_whole color1 ;
+        num_whole color2 ;
+        const_int_32 * entity_color_r_ptr = 0 ;
+        const_int_32 * entity_color_g_ptr = 0 ;
+        const_int_32 * entity_color_b_ptr = 0 ;
+        vertex_data * vertex_ptr = 0 ;
+        index_data * index_ptr = 0 ;
+                
         platform :: math_make_fract_from_whole ( angle , i ) ;
         platform :: math_mul_fract_by ( angle , platform :: fract_2pi ) ;
         platform :: math_div_fract_by ( angle , fract_entity_mesh_spans ) ;
-        int_32 color = ( i . debug_to_int_32 ( ) * 21 / ( _entity_mesh_spans + 1 ) ) % 7;
-        int_32 color1 = color;
-        int_32 color2 = ( color + 1 ) % 7;
+        
+        platform :: math_mul_wholes ( color1 , i , color_bias ) ;
+        platform :: math_div_whole_by ( color1 , whole_entity_mesh_spans_plus_1 ) ;
+        platform :: math_mod_whole_by ( color1 , colors_max ) ;
+        platform :: math_add_wholes ( color2 , color1 , platform :: whole_1 ) ;
+        platform :: math_mod_whole_by ( color2 , colors_max ) ;
+        
         platform :: math_sin ( vertex_x , angle ) ;
-        platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
+        platform :: math_div_fracts ( vertex_y , fract_entity_mesh_height , platform :: fract_2 ) ;
         platform :: math_cos ( vertex_z , angle ) ;
-        platform :: math_make_num_whole ( vertex_r , _entity_colors_r ( ) [ color1 ] ) ;
-        platform :: math_make_num_whole ( vertex_g , _entity_colors_g ( ) [ color1 ] ) ;
-        platform :: math_make_num_whole ( vertex_b , _entity_colors_b ( ) [ color1 ] ) ;
+        
+        platform :: memory_pointer_offset ( entity_color_r_ptr , _entity_colors_r ( ) , color1 ) ;
+        platform :: memory_pointer_offset ( entity_color_g_ptr , _entity_colors_g ( ) , color1 ) ;
+        platform :: memory_pointer_offset ( entity_color_b_ptr , _entity_colors_b ( ) , color1 ) ;
+        platform :: math_make_num_whole ( vertex_r , * entity_color_r_ptr ) ;
+        platform :: math_make_num_whole ( vertex_g , * entity_color_g_ptr ) ;
+        platform :: math_make_num_whole ( vertex_b , * entity_color_b_ptr ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
-        platform :: render_set_vertex_position ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        platform :: render_set_index_value ( strip_indices [ strip_indices_count . debug_to_int_32 ( ) ] , vertices_count ) ;
+        
+        platform :: memory_pointer_offset ( vertex_ptr , vertices , vertices_count ) ;
+        platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
+        platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+
+        platform :: memory_pointer_offset ( index_ptr , strip_indices , strip_indices_count ) ;
+        platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
+
         platform :: math_inc_whole ( strip_indices_count ) ;
         platform :: math_inc_whole ( vertices_count ) ;
         
-        platform :: math_make_num_fract ( vertex_y , int_32 ( - 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
-        platform :: math_make_num_whole ( vertex_r , _entity_colors_r ( ) [ color2 ] ) ;
-        platform :: math_make_num_whole ( vertex_g , _entity_colors_g ( ) [ color2 ] ) ;
-        platform :: math_make_num_whole ( vertex_b , _entity_colors_b ( ) [ color2 ] ) ;
+        platform :: math_neg_fract ( vertex_y ) ;
+        
+        platform :: memory_pointer_offset ( entity_color_r_ptr , _entity_colors_r ( ) , color2 ) ;
+        platform :: memory_pointer_offset ( entity_color_g_ptr , _entity_colors_g ( ) , color2 ) ;
+        platform :: memory_pointer_offset ( entity_color_b_ptr , _entity_colors_b ( ) , color2 ) ;
+        platform :: math_make_num_whole ( vertex_r , * entity_color_r_ptr ) ;
+        platform :: math_make_num_whole ( vertex_g , * entity_color_g_ptr ) ;
+        platform :: math_make_num_whole ( vertex_b , * entity_color_b_ptr ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
-        platform :: render_set_vertex_position ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        platform :: render_set_index_value ( strip_indices [ strip_indices_count . debug_to_int_32 ( ) ] , vertices_count ) ;
+        
+        platform :: memory_pointer_offset ( vertex_ptr , vertices , vertices_count ) ;
+        platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
+        platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+
+        platform :: memory_pointer_offset ( index_ptr , strip_indices , strip_indices_count ) ;
+        platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
+
         platform :: math_inc_whole ( strip_indices_count ) ;
         platform :: math_inc_whole ( vertices_count ) ;
     }
