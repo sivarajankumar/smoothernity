@@ -134,8 +134,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_whole index ;
     for ( int_32 i = 0; i < _entity_mesh_spans + 1 ; i ++ )
     {
-        float_32 pi ;
-        _mediator -> math_pi ( pi ) ;
+        float_32 pi = platform :: fract_pi . debug_to_float_32 ( ) ;
         float_32 angle = float_32 ( i ) * pi * 2.0f / float_32 ( _entity_mesh_spans ) ;
         num_fract num_angle ;
         platform :: math_make_num_fract ( num_angle , int_32 ( angle * 1000.0f ) , 1000 ) ;

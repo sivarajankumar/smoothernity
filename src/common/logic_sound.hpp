@@ -235,8 +235,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform :: math_make_num_whole ( next_sample , 0 ) ;
     for ( int_32 i = 0 ; i < _max_mono_sound_samples ; ++ i )
     {
-        float_32 pi ;
-        _mediator -> math_pi ( pi ) ;
+        float_32 pi = platform :: fract_pi . debug_to_float_32 ( ) ;
         float_32 angle = float_32 ( i ) * 2.0f * pi / float_32 ( platform :: mono_sound_samples_per_second ) ;
         num_fract num_1 ;
         num_fract magnitude ;

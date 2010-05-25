@@ -4,6 +4,7 @@ class shy_engine_rasterizer
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: int_32 int_32 ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: texel_data texel_data ;
 public :
     shy_engine_rasterizer ( mediator * arg_mediator ) ;
@@ -102,14 +103,33 @@ void shy_engine_rasterizer < mediator > :: rasterize_use_texel ( const texel_dat
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( int_32 x1 , int_32 x2 , int_32 y )
+void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( int_32 x1_int_32 , int_32 x2_int_32 , int_32 y_int_32 )
 {
-    int_32 left ;
-    int_32 right ;
-    _mediator -> math_min ( left , x1 , x2 ) ;
-    _mediator -> math_max ( right , x1 , x2 ) ;
-    for ( int_32 x = left ; x <= right ; x ++ )
-        _mediator -> texture_set_texel ( _texture_id , x + _origin_x , y + _origin_y , _texel ) ;
+    num_whole num_origin_x ;
+    num_whole num_origin_y ;
+    num_whole left ;
+    num_whole right ;
+    num_whole x1 ;
+    num_whole x2 ;
+    num_whole y ;
+    platform :: math_make_num_whole ( x1 , x1_int_32 ) ;
+    platform :: math_make_num_whole ( x2 , x2_int_32 ) ;
+    platform :: math_make_num_whole ( y , y_int_32 ) ;
+    platform :: math_make_num_whole ( num_origin_x , _origin_x ) ;
+    platform :: math_make_num_whole ( num_origin_y , _origin_y ) ;
+    _mediator -> math_min_whole ( left , x1 , x2 ) ;
+    _mediator -> math_max_whole ( right , x1 , x2 ) ;
+    for ( num_whole x = left 
+        ; platform :: condition_whole_less_or_equal_to_whole ( x , right )
+        ; platform :: math_inc_whole ( x )
+        )
+    {
+        num_whole x_plus_origin_x ;
+        num_whole y_plus_origin_y ;
+        platform :: math_add_wholes ( x_plus_origin_x , x , num_origin_x ) ;
+        platform :: math_add_wholes ( y_plus_origin_y , y , num_origin_y ) ;
+        _mediator -> texture_set_texel ( _texture_id , x_plus_origin_x . debug_to_int_32 ( ) , y_plus_origin_y . debug_to_int_32 ( ) , _texel ) ;
+    }
 }
 
 template < typename mediator >

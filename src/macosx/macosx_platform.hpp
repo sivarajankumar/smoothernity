@@ -27,7 +27,7 @@ public :
         : _value ( _uninitialized_value )
         {
         }
-        int_32 debug_to_int_32 ( )
+        int_32 debug_to_int_32 ( ) const
         {
             return _value ;
         }
@@ -48,7 +48,7 @@ public :
         : _value ( _uninitialized_value )
         {
         }
-        float_32 debug_to_float_32 ( )
+        float_32 debug_to_float_32 ( ) const
         {
             return _value ;
         }

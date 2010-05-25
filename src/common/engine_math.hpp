@@ -5,15 +5,17 @@ class shy_engine_math
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: vector_data vector_data ;
-    
-    static const float_32 _pi ( ) { return 3.141592f ; }
     
 public :
     void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
-    void math_pi ( float_32 & result ) ;
+    void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
+    void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
+    void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
+    void math_abs_whole ( num_whole & result , num_whole a ) ;
     template < typename type > void math_clamp ( type & result , type f , type from , type to ) ;
     template < typename type > void math_abs ( type & result , type f ) ;
     template < typename type > void math_max ( type & result , type f1 , type f2 ) ;
@@ -102,12 +104,6 @@ void shy_engine_math < mediator > :: math_min ( type & result , type f1 , type f
 }
 
 template < typename mediator >
-void shy_engine_math < mediator > :: math_pi ( float_32 & result )
-{
-    result = _pi ( ) ;
-}
-
-template < typename mediator >
 void shy_engine_math < mediator > :: math_lerp 
     ( float_32 & result
     , float_32 from_value 
@@ -139,4 +135,42 @@ void shy_engine_math < mediator > :: math_lerp
     platform :: math_mul_fracts ( result , value_diff , current_diff ) ;
     platform :: math_div_fract_by ( result , weight_diff ) ;
     platform :: math_add_to_fract ( result , from_value ) ;
+}
+
+template < typename mediator >
+void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to )
+{
+    if ( platform :: condition_fract_less_than_fract ( num , from ) )
+        result = from ;
+    else if ( platform :: condition_fract_greater_than_fract ( num , to ) )
+        result = to ;
+    else
+        result = num ;
+}
+
+template < typename mediator >
+void shy_engine_math < mediator > :: math_min_whole ( num_whole & result , num_whole a , num_whole b )
+{
+    if ( platform :: condition_whole_less_than_whole ( a , b ) )
+        result = a ;
+    else
+        result = b ;
+}
+
+template < typename mediator >
+void shy_engine_math < mediator > :: math_max_whole ( num_whole & result , num_whole a , num_whole b )
+{
+    if ( platform :: condition_whole_greater_than_whole ( a , b ) )
+        result = a ;
+    else
+        result = b ;
+}
+    
+template < typename mediator >
+void shy_engine_math < mediator > :: math_abs_whole ( num_whole & result , num_whole a )
+{
+    if ( platform :: condition_whole_less_than_zero ( a ) )
+        platform :: math_neg_whole ( result , a ) ;
+    else
+        result = a ;
 }
