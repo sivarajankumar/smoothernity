@@ -103,6 +103,7 @@ public :
     void math_catmull_rom_spline ( vector_data & result , float_32 t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     template < typename T > void math_clamp ( T & result , T f , T from , T to ) ;
     void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
+    void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
     void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     template < typename T > void math_max ( T & result , T f1 , T f2 ) ;
@@ -327,6 +328,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_clamp_fract ( num_fract & result , num_fract f , num_fract from , num_fract to )
 {
     _engine_math . math_clamp_fract ( result , f , from , to ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: math_clamp_fract ( num_fract & f , num_fract from , num_fract to )
+{
+    _engine_math . math_clamp_fract ( f , from , to ) ;
 }
 
 template < typename mediator_types >

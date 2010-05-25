@@ -13,6 +13,7 @@ public :
     void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
+    void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
     void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
     void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
     void math_abs_whole ( num_whole & result , num_whole a ) ;
@@ -146,6 +147,15 @@ void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & result , num
         result = to ;
     else
         result = num ;
+}
+
+template < typename mediator >
+void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & num , num_fract from , num_fract to )
+{
+    if ( platform :: condition_fract_less_than_fract ( num , from ) )
+        num = from ;
+    else if ( platform :: condition_fract_greater_than_fract ( num , to ) )
+        num = to ;
 }
 
 template < typename mediator >
