@@ -130,9 +130,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     vertex_data vertices [ ( _entity_mesh_spans + 1 ) * 2 + 1 ] ;
     index_data strip_indices [ ( _entity_mesh_spans + 1 ) * 2 ] ;
     index_data fan_indices [ _entity_mesh_spans + 2 ] ;
-    int_32 strip_indices_count = 0 ;
-    int_32 fan_indices_count = 0 ;
-    int_32 vertices_count = 0 ;
+    num_whole strip_indices_count ;
+    num_whole fan_indices_count ;
+    num_whole vertices_count ;
     num_fract vertex_x ;
     num_fract vertex_y ;
     num_fract vertex_z ;
@@ -140,7 +140,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_whole vertex_g ;
     num_whole vertex_b ;
     num_whole vertex_a ;
-    num_whole index ;
+    platform :: math_make_num_whole ( strip_indices_count , 0 ) ;
+    platform :: math_make_num_whole ( fan_indices_count , 0 ) ;
+    platform :: math_make_num_whole ( vertices_count , 0 ) ;
     for ( int_32 i = 0; i < _entity_mesh_spans + 1 ; i ++ )
     {
         float_32 pi = platform :: fract_pi . debug_to_float_32 ( ) ;
@@ -157,23 +159,22 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_make_num_whole ( vertex_g , _entity_colors_g ( ) [ color1 ] ) ;
         platform :: math_make_num_whole ( vertex_b , _entity_colors_b ( ) [ color1 ] ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
-        platform :: math_make_num_whole ( index , vertices_count ) ;
-        platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( vertices [ vertices_count ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , index ) ;
-        ++ strip_indices_count ;
-        ++ vertices_count ;
+        platform :: render_set_vertex_position ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_x , vertex_y , vertex_z ) ;
+        platform :: render_set_vertex_color ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        platform :: render_set_index_value ( strip_indices [ strip_indices_count . debug_to_int_32 ( ) ] , vertices_count ) ;
+        platform :: math_inc_whole ( strip_indices_count ) ;
+        platform :: math_inc_whole ( vertices_count ) ;
+        
         platform :: math_make_num_fract ( vertex_y , int_32 ( - 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
         platform :: math_make_num_whole ( vertex_r , _entity_colors_r ( ) [ color2 ] ) ;
         platform :: math_make_num_whole ( vertex_g , _entity_colors_g ( ) [ color2 ] ) ;
         platform :: math_make_num_whole ( vertex_b , _entity_colors_b ( ) [ color2 ] ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
-        platform :: math_make_num_whole ( index , vertices_count ) ;
-        platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( vertices [ vertices_count ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        platform :: render_set_index_value ( strip_indices [ strip_indices_count ] , index ) ;
-        ++ strip_indices_count ;
-        ++ vertices_count ;
+        platform :: render_set_vertex_position ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_x , vertex_y , vertex_z ) ;
+        platform :: render_set_vertex_color ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        platform :: render_set_index_value ( strip_indices [ strip_indices_count . debug_to_int_32 ( ) ] , vertices_count ) ;
+        platform :: math_inc_whole ( strip_indices_count ) ;
+        platform :: math_inc_whole ( vertices_count ) ;
     }
     platform :: math_make_num_fract ( vertex_x , 0 , 1 ) ;
     platform :: math_make_num_fract ( vertex_y , int_32 ( 0.5f * float_32 ( _entity_mesh_height ) * 1000.0f ) , 1000 ) ;
@@ -182,34 +183,27 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform :: math_make_num_whole ( vertex_g , _entity_color_roof_g ) ;
     platform :: math_make_num_whole ( vertex_b , _entity_color_roof_b ) ;
     platform :: math_make_num_whole ( vertex_a , 255 ) ;
-    platform :: math_make_num_whole ( index , vertices_count ) ;
-    platform :: render_set_vertex_position ( vertices [ vertices_count ] , vertex_x , vertex_y , vertex_z ) ;
-    platform :: render_set_vertex_color ( vertices [ vertices_count ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-    platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , index ) ;
-    ++ fan_indices_count ;
-    ++ vertices_count ;
+    platform :: render_set_vertex_position ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_x , vertex_y , vertex_z ) ;
+    platform :: render_set_vertex_color ( vertices [ vertices_count . debug_to_int_32 ( ) ] , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+    platform :: render_set_index_value ( fan_indices [ fan_indices_count . debug_to_int_32 ( ) ] , vertices_count ) ;
+    platform :: math_inc_whole ( fan_indices_count ) ;
+    platform :: math_inc_whole ( vertices_count ) ;
     for ( int_32 i = 0 ; i < _entity_mesh_spans + 1 ; ++ i )
     {
+        num_whole index ;
         platform :: math_make_num_whole ( index , i * 2 ) ;
-        platform :: render_set_index_value ( fan_indices [ fan_indices_count ] , index ) ;
-        ++ fan_indices_count ;
+        platform :: render_set_index_value ( fan_indices [ fan_indices_count . debug_to_int_32 ( ) ] , index ) ;
+        platform :: math_inc_whole ( fan_indices_count ) ;
     }
-    
-    num_whole num_vertices_count ;
-    num_whole num_strip_indices_count ;
-    num_whole num_fan_indices_count ;
-    platform :: math_make_num_whole ( num_vertices_count , vertices_count ) ;
-    platform :: math_make_num_whole ( num_strip_indices_count , strip_indices_count ) ;
-    platform :: math_make_num_whole ( num_fan_indices_count , fan_indices_count ) ;
     
     _mediator -> mesh_create 
         ( _entity_mesh_id
         , vertices 
         , strip_indices 
         , fan_indices 
-        , num_vertices_count 
-        , num_strip_indices_count 
-        , num_fan_indices_count
+        , vertices_count 
+        , strip_indices_count 
+        , fan_indices_count
         ) ;
 }
 
