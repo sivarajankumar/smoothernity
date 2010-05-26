@@ -2,8 +2,7 @@ template < typename mediator >
 class shy_logic_sound
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
+    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: mono_sound_sample mono_sound_sample ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -13,9 +12,9 @@ class shy_logic_sound
     typedef typename mediator :: platform :: stereo_sound_sample stereo_sound_sample ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     
-    static const int_32 _music_rough_and_heavy_resource_index = 1 ;
-    static const int_32 _max_stereo_sound_samples = platform :: stereo_sound_samples_per_second * 60 ;
-    static const int_32 _max_mono_sound_samples = platform :: mono_sound_samples_per_second / 2 ;
+    static const_int_32 _music_rough_and_heavy_resource_index = 1 ;
+    static const_int_32 _max_stereo_sound_samples = platform :: stereo_sound_samples_per_second * 60 ;
+    static const_int_32 _max_mono_sound_samples = platform :: mono_sound_samples_per_second / 2 ;
     
 public :
     shy_logic_sound ( mediator * arg_mediator ) ;
@@ -29,10 +28,10 @@ private :
     void _create_mono_sound ( ) ;
 private :
     mediator * _mediator ;
-    int_32 _mono_sound_created ;
-    int_32 _stereo_sound_created ;
-    int_32 _stereo_sound_loaded ;
-    int_32 _sound_prepare_permitted ;
+    num_whole _mono_sound_created ;
+    num_whole _stereo_sound_created ;
+    num_whole _stereo_sound_loaded ;
+    num_whole _sound_prepare_permitted ;
     sound_source_id _stereo_sound_source ;
     sound_source_id _mono_sound_source ;
     stereo_sound_sample _stereo_sound_data [ _max_stereo_sound_samples ] ;
@@ -42,11 +41,11 @@ private :
 template < typename mediator >
 shy_logic_sound < mediator > :: shy_logic_sound ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
-, _mono_sound_created ( false )
-, _stereo_sound_created ( false )
-, _stereo_sound_loaded ( false )
-, _sound_prepare_permitted ( false )
 {
+    platform :: math_make_num_whole ( _mono_sound_created , false ) ;
+    platform :: math_make_num_whole ( _stereo_sound_created , false ) ;
+    platform :: math_make_num_whole ( _stereo_sound_loaded , false ) ;
+    platform :: math_make_num_whole ( _sound_prepare_permitted , false ) ;
 }
 
 template < typename mediator >
@@ -102,22 +101,22 @@ void shy_logic_sound < mediator > :: init ( )
 template < typename mediator >
 void shy_logic_sound < mediator > :: sound_prepare_permit ( )
 {
-    _sound_prepare_permitted = true ;
+    platform :: math_make_num_whole ( _sound_prepare_permitted , true ) ;
 }
 
 template < typename mediator >
 void shy_logic_sound < mediator > :: sound_update ( )
 {
-    if ( _sound_prepare_permitted )
+    if ( platform :: condition_true ( _sound_prepare_permitted ) )
     {
-        if ( ! _stereo_sound_loaded )
+        if ( platform :: condition_false ( _stereo_sound_loaded ) )
         {
             num_whole ready ;
             platform :: sound_loader_ready ( ready ) ;
             if ( platform :: condition_true ( ready ) )
             {
                 _load_sound ( ) ;
-                _stereo_sound_loaded = true ;
+                platform :: math_make_num_whole ( _stereo_sound_loaded , true ) ;
             }
         }
         else
@@ -126,21 +125,21 @@ void shy_logic_sound < mediator > :: sound_update ( )
             platform :: sound_loader_ready ( ready ) ;
             if ( platform :: condition_true ( ready ) )
             {
-                if ( ! _stereo_sound_created )
+                if ( platform :: condition_false ( _stereo_sound_created ) )
                 {
                     _create_stereo_sound ( ) ;
-                    _stereo_sound_created = true ;
+                    platform :: math_make_num_whole ( _stereo_sound_created , true ) ;
                     _mediator -> sound_prepared ( ) ;
                 }
             }
         }
-        if ( ! _mono_sound_created )
+        if ( platform :: condition_false ( _mono_sound_created ) )
         {
             _create_mono_sound ( ) ;
-            _mono_sound_created = true ;
+            platform :: math_make_num_whole ( _mono_sound_created , true ) ;
         }
     }
-    if ( _mono_sound_created )
+    if ( platform :: condition_true ( _mono_sound_created ) )
     {
         num_whole touch ;
         num_whole mouse_button ;
@@ -235,28 +234,38 @@ template < typename mediator >
 void shy_logic_sound < mediator > :: _create_mono_sound ( )
 {
     num_whole next_sample ;
+    num_whole whole_max_mono_sound_samples ;
+    num_fract fract_mono_sound_samples_per_second ;
+    platform :: math_make_num_whole ( whole_max_mono_sound_samples , _max_mono_sound_samples ) ;
+    platform :: math_make_num_fract ( fract_mono_sound_samples_per_second , platform :: mono_sound_samples_per_second , 1 ) ;
     platform :: math_make_num_whole ( next_sample , 0 ) ;
-    for ( int_32 i = 0 ; i < _max_mono_sound_samples ; ++ i )
+    for ( num_whole i = platform :: whole_0 
+        ; platform :: condition_whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
+        ; platform :: math_inc_whole ( i )
+        )
     {
-        float_32 pi = platform :: fract_pi . debug_to_float_32 ( ) ;
-        float_32 angle = float_32 ( i ) * 2.0f * pi / float_32 ( platform :: mono_sound_samples_per_second ) ;
+        num_fract fract_i ;
+        num_fract angle ;
         num_fract num_1 ;
         num_fract magnitude ;
         num_fract angle_sin ;
-        num_fract num_angle ;
         num_fract fract_sample_delta ;
+        num_fract sample ;
         num_whole whole_sample_delta ;
+        mono_sound_sample * sample_ptr = 0 ;
+        platform :: math_make_fract_from_whole ( fract_i , i ) ;
+        platform :: math_mul_fracts ( angle , fract_i , platform :: fract_2pi ) ;
+        platform :: math_div_fract_by ( angle , fract_mono_sound_samples_per_second ) ;        
         platform :: math_make_num_fract ( num_1 , 1 , 1 ) ;
         platform :: math_make_num_fract ( magnitude , 128 , 1 ) ;
-        platform :: math_make_num_fract ( num_angle , int_32 ( angle * 1000.0f ) , 1000 ) ;
-        platform :: math_sin ( angle_sin , num_angle ) ;
+        platform :: math_sin ( angle_sin , angle ) ;
         platform :: math_add_fracts ( fract_sample_delta , num_1 , angle_sin ) ;
         platform :: math_mul_fract_by ( fract_sample_delta , magnitude ) ;
         platform :: math_make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
         platform :: math_add_to_whole ( next_sample , whole_sample_delta ) ;
-        num_fract sample ;
         _int_to_sample ( sample , next_sample ) ;
-        platform :: sound_set_sample_value ( _mono_sound_data [ i ] , sample ) ;
+        platform :: memory_pointer_offset ( sample_ptr , _mono_sound_data , i ) ;
+        platform :: sound_set_sample_value ( * sample_ptr , sample ) ;
     }
     
     num_fract gain ;
