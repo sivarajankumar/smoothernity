@@ -39,14 +39,13 @@ inline void shy_macosx_platform :: sound_create_stereo_resource_id
 template < shy_macosx_platform :: const_int_32 samples_array_size >
 inline void shy_macosx_platform :: sound_load_stereo_sample_data
     ( const static_array < stereo_sound_sample , samples_array_size > & samples 
-    , num_whole max_samples_count
     , const stereo_sound_resource_id & resource_id 
     )
 {
     [ _sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
         to_buffer : ( void * ) samples . _elements
-        with_max_samples_count_of : max_samples_count . _value
+        with_max_samples_count_of : samples_array_size
     ] ;
 }
 

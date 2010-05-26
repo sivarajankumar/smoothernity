@@ -352,7 +352,6 @@ public :
     template < const_int_32 samples_array_size >
     static void sound_load_stereo_sample_data
         ( const static_array < stereo_sound_sample , samples_array_size > & samples 
-        , num_whole max_samples_count
         , const stereo_sound_resource_id & resource_id 
         ) ;
     template < const_int_32 samples_array_size >

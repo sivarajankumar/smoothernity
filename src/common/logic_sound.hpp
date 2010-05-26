@@ -156,13 +156,11 @@ void shy_logic_sound < mediator > :: sound_update ( )
 template < typename mediator >
 void shy_logic_sound < mediator > :: _load_sound ( )
 {
-    num_whole max_music_samples ;
     num_whole music_resource_index ;
     stereo_sound_resource_id music_resource_id ;
-    platform :: math_make_num_whole ( max_music_samples , _max_stereo_sound_samples ) ;
     platform :: math_make_num_whole ( music_resource_index , _music_rough_and_heavy_resource_index ) ;
     platform :: sound_create_stereo_resource_id ( music_resource_id , music_resource_index ) ;
-    platform :: sound_load_stereo_sample_data ( _stereo_sound_data , max_music_samples , music_resource_id ) ;
+    platform :: sound_load_stereo_sample_data ( _stereo_sound_data , music_resource_id ) ;
 }
 
 template < typename mediator >
