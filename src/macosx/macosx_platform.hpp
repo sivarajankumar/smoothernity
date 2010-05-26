@@ -83,6 +83,11 @@ public :
     class render_index_buffer_id
     {
         friend class shy_macosx_platform ;
+    public :
+        render_index_buffer_id ( )
+        : _buffer_id ( _uninitialized_value )
+        {
+        }
     private :
         GLuint _buffer_id ;
     } ;
@@ -90,6 +95,11 @@ public :
     class render_vertex_buffer_id
     {
         friend class shy_macosx_platform ;
+    public :
+        render_vertex_buffer_id ( )
+        : _buffer_id ( _uninitialized_value )
+        {
+        }
     private :
         GLuint _buffer_id ;
     } ;
@@ -97,6 +107,11 @@ public :
 	class render_texture_id
 	{
 		friend class shy_macosx_platform ;
+    public :
+        render_texture_id ( )
+        : _texture_id ( _uninitialized_value )
+        {
+        }
 	private :
 		GLuint _texture_id ;
 	} ;
@@ -104,6 +119,11 @@ public :
     class texture_resource_id
     {
         friend class shy_macosx_platform ;
+    public :
+        texture_resource_id ( )
+        : _resource_id ( _uninitialized_value )
+        {
+        }
     private :
         int _resource_id ;
     } ;
@@ -111,6 +131,12 @@ public :
     class texel_data
     {
         friend class shy_macosx_platform ;
+    public :
+        texel_data ( )
+        {
+            for ( int i = 0 ; i < 4 ; i ++ )
+                _color [ i ] = _uninitialized_value ;
+        }
     private :
         GLubyte _color [ 4 ] ;
     } ;
@@ -118,6 +144,16 @@ public :
     class vertex_data
     {
         friend class shy_macosx_platform ;
+    public :
+        vertex_data ( )
+        {
+            for ( int i = 0 ; i < 3 ; i ++ )
+                _position [ i ] = _uninitialized_value ;
+            for ( int i = 0 ; i < 2 ; i ++ )
+                _tex_coord [ i ] = _uninitialized_value ;
+            for ( int i = 0 ; i < 4 ; i ++ )
+                _color [ i ] = _uninitialized_value ;
+        }
     private :
         GLfloat _position [ 3 ] ;
         GLfloat _tex_coord [ 2 ] ;
@@ -127,6 +163,11 @@ public :
     class index_data
     {
         friend class shy_macosx_platform ;
+    public :
+        index_data ( )
+        : _index ( _uninitialized_value )
+        {
+        }
     private :
         GLushort _index ;
     } ;
@@ -134,6 +175,11 @@ public :
     class time_data
     {
         friend class shy_macosx_platform ;
+    public :
+        time_data ( )
+        : _time ( _uninitialized_value )
+        {
+        }
     private :
         CFAbsoluteTime _time ;
     } ;
@@ -141,6 +187,11 @@ public :
     class mono_sound_sample
     {
         friend class shy_macosx_platform ;
+    public :
+        mono_sound_sample ( )
+        : _value ( _uninitialized_value )
+        {
+        }
     private :
         ALubyte _value ;
     } ;
@@ -148,6 +199,12 @@ public :
     class stereo_sound_sample
     {
         friend class shy_macosx_platform ;
+    public :
+        stereo_sound_sample ( )
+        : _left_channel_value ( _uninitialized_value )
+        , _right_channel_value ( _uninitialized_value )
+        {
+        }
     private :
         ALushort _left_channel_value ;
         ALushort _right_channel_value ; 
@@ -156,6 +213,11 @@ public :
     class sound_buffer_id
     {
         friend class shy_macosx_platform ;
+    public :
+        sound_buffer_id ( )
+        : _buffer_id ( _uninitialized_value )
+        {
+        }
     private :
         ALuint _buffer_id ;
     } ;
@@ -163,6 +225,11 @@ public :
     class sound_source_id
     {
         friend class shy_macosx_platform ;
+    public :
+        sound_source_id ( )
+        : _source_id ( _uninitialized_value )
+        {
+        }
     private :
         ALuint _source_id ;
     } ;
@@ -170,6 +237,11 @@ public :
     class stereo_sound_resource_id
     {
         friend class shy_macosx_platform ;
+    public :
+        stereo_sound_resource_id ( )
+        : _resource_id ( _uninitialized_value )
+        {
+        }
     private :
         int _resource_id ;
     } ;
