@@ -23,7 +23,7 @@ private :
     class _texture_data
     {
     public :
-        texel_data texels [ _texture_size * _texture_size ] ;
+        typename platform :: template static_array < texel_data , _texture_size * _texture_size > texels ;
         render_texture_id render_id ;
     } ;
 public :
@@ -94,13 +94,11 @@ void shy_engine_texture < mediator > :: texture_set_texel
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    texel_data * texel_ptr = 0 ;
     _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
     platform :: math_add_to_whole ( texel_offset , x ) ;
-    platform :: memory_pointer_offset ( texel_ptr , texture . texels , texel_offset ) ;
-    * texel_ptr = texel ;
+    platform :: array_element ( texture . texels , texel_offset ) = texel ;
 }
 
 template < typename mediator >
@@ -109,13 +107,12 @@ void shy_engine_texture < mediator > :: texture_set_texel
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    texel_data * texel_ptr = 0 ;
     _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
     platform :: math_add_to_whole ( texel_offset , x ) ;
-    platform :: memory_pointer_offset ( texel_ptr , texture . texels , texel_offset ) ;
-    platform :: render_set_texel_color ( * texel_ptr , r , g , b , a ) ;
+    texel_data & texel = platform :: array_element ( texture . texels , texel_offset ) ;
+    platform :: render_set_texel_color ( texel , r , g , b , a ) ;
 }
 
 template < typename mediator >

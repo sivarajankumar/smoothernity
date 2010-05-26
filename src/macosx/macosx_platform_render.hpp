@@ -79,10 +79,11 @@ inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel ,
     texel . _color [ 3 ] = ( GLubyte ) a . _value ;
 }
 
+template < shy_macosx_platform :: const_int_32 texel_array_size >
 inline void shy_macosx_platform :: render_load_texture_data 
     ( const render_texture_id & arg_texture_id 
     , num_whole size_pow2_base 
-    , texel_data * data
+    , const static_array < texel_data , texel_array_size > & data
     )
 {
     GLsizei size = 1 << size_pow2_base . _value ;
@@ -92,7 +93,7 @@ inline void shy_macosx_platform :: render_load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
-    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE , data ) ;
+    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE , data . _elements ) ;
 }
 
 inline void shy_macosx_platform :: render_create_texture_resource_id 
@@ -103,15 +104,16 @@ inline void shy_macosx_platform :: render_create_texture_resource_id
     resource_id . _resource_id = resource_index . _value ;
 }
 
+template < shy_macosx_platform :: const_int_32 texel_array_size >
 inline void shy_macosx_platform :: render_load_texture_resource
     ( const texture_resource_id & resource_id 
     , num_whole size_pow2_base 
-    , texel_data * data 
+    , const static_array < texel_data , texel_array_size > & data 
     )
 {
     [ _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) data
+        to_buffer : ( void * ) data . _elements
         with_side_size_of : 1 << size_pow2_base . _value
     ] ;
 }

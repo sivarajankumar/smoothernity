@@ -271,10 +271,21 @@ public :
     static void render_use_texture ( const render_texture_id & arg_texture_id ) ;
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
     static void render_set_texel_color ( texel_data & texel , num_whole r , num_whole g , num_whole b , num_whole a ) ;
-    static void render_load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , texel_data * data ) ;
-    static void render_load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , texel_data * data ) ;
     static void render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     static void render_texture_loader_ready ( num_whole & is_ready ) ;
+    
+    template < const_int_32 texel_array_size >
+    static void render_load_texture_data 
+        ( const render_texture_id & arg_texture_id 
+        , num_whole size_pow2_base 
+        , const static_array < texel_data , texel_array_size > & data 
+        ) ;
+    template < const_int_32 texel_array_size >
+    static void render_load_texture_resource 
+        ( const texture_resource_id & resource_id 
+        , num_whole size_pow2_base 
+        , const static_array < texel_data , texel_array_size > & data 
+        ) ;
     
     static void render_clear_screen ( num_fract r , num_fract g , num_fract b ) ;
     
