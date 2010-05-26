@@ -104,10 +104,10 @@ public :
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
     void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
-    template < const_int_32 vertex_array_size >
+    template < typename vertex_array >
     void mesh_create 
         ( mesh_id & result
-        , typename platform :: template static_array < vertex_data , vertex_array_size > & vertices 
+        , const vertex_array & vertices 
         , index_data * triangle_strip_indices 
         , index_data * triangle_fan_indices
         , num_whole vertices_count
@@ -330,10 +330,10 @@ void shy_mediator < mediator_types > :: math_min_whole ( num_whole & result , nu
 }
 
 template < typename mediator_types >
-template < typename shy_mediator < mediator_types > :: const_int_32 vertex_array_size >
+template < typename vertex_array >
 void shy_mediator < mediator_types > :: mesh_create 
     ( mesh_id & result
-    , typename platform :: template static_array < vertex_data , vertex_array_size > & vertices 
+    , const vertex_array & vertices 
     , index_data * triangle_strip_indices 
     , index_data * triangle_fan_indices
     , num_whole vertices_count
@@ -341,7 +341,7 @@ void shy_mediator < mediator_types > :: mesh_create
     , num_whole triangle_fan_indices_count
     )
 {
-    _engine_mesh . template mesh_create < vertex_array_size >
+    _engine_mesh . template mesh_create < vertex_array >
         ( result
         , vertices
         , triangle_strip_indices

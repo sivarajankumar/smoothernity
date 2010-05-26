@@ -162,7 +162,7 @@ template < int vertex_array_size >
 inline void shy_macosx_platform :: render_create_vertex_buffer 
     ( render_vertex_buffer_id & arg_buffer_id 
     , num_whole elements 
-    , static_array < vertex_data , vertex_array_size > & data 
+    , const static_array < vertex_data , vertex_array_size > & data 
     )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;

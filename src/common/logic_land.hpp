@@ -107,7 +107,8 @@ void shy_logic_land < mediator > :: _render_land ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: _create_land_mesh ( )
 {    
-    typename platform :: template static_array < vertex_data , ( _land_grid + 1 ) * ( _land_grid + 1 ) > vertices ;
+    typedef typename platform :: template static_array < vertex_data , ( _land_grid + 1 ) * ( _land_grid + 1 ) > vertex_array ;
+    vertex_array vertices ;
     index_data indices [ ( _land_grid + 1 ) * 2 * _land_grid ] ;
     num_whole vertices_count ;
     num_whole indices_count ;
@@ -228,7 +229,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             }
         }
     }
-    _mediator -> template mesh_create < ( _land_grid + 1 ) * ( _land_grid + 1 ) >
+    _mediator -> template mesh_create < vertex_array >
         ( _land_mesh_id 
         , vertices 
         , indices 

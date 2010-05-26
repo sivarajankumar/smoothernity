@@ -32,9 +32,10 @@ private :
     } ;
 public :
     shy_engine_mesh ( ) ;
-    template < const_int_32 vertex_array_size > void mesh_create 
+    template < typename vertex_array > 
+    void mesh_create 
         ( mesh_id & result
-        , typename platform :: template static_array < vertex_data , vertex_array_size > & vertices 
+        , const vertex_array & vertices 
         , index_data * triangle_strip_indices 
         , index_data * triangle_fan_indices
         , num_whole vertices_count
@@ -55,10 +56,10 @@ shy_engine_mesh < mediator > :: shy_engine_mesh ( )
 }
 
 template < typename mediator >
-template < typename shy_engine_mesh < mediator > :: const_int_32 vertex_array_size >
+template < typename vertex_array >
 void shy_engine_mesh < mediator > :: mesh_create 
     ( mesh_id & result
-    , typename platform :: template static_array < vertex_data , vertex_array_size > & vertices 
+    , const vertex_array & vertices 
     , index_data * triangle_strip_indices 
     , index_data * triangle_fan_indices
     , num_whole vertices_count

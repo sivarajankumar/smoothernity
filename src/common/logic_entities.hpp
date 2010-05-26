@@ -126,7 +126,8 @@ void shy_logic_entities < mediator > :: _entities_render ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 {
-    typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > vertices ;
+    typedef typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > vertex_array ;
+    vertex_array vertices ;
     index_data strip_indices [ ( _entity_mesh_spans + 1 ) * 2 ] ;
     index_data fan_indices [ _entity_mesh_spans + 2 ] ;
     index_data * index_ptr = 0 ;
@@ -256,7 +257,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_inc_whole ( fan_indices_count ) ;
     }
     
-    _mediator -> template mesh_create < ( _entity_mesh_spans + 1 ) * 2 + 1 >
+    _mediator -> template mesh_create < vertex_array >
         ( _entity_mesh_id
         , vertices 
         , strip_indices 

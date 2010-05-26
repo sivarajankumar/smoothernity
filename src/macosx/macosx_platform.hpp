@@ -17,12 +17,12 @@ class shy_macosx_platform
 public :
     typedef const int const_int_32 ;
 
-    template < typename data_type , int size >
+    template < typename data_type , const_int_32 size >
     class static_array
     {
         friend class shy_macosx_platform ;
     private :
-        static const int _array_size = size ;
+        static const_int_32 _array_size = size ;
         data_type _elements [ _array_size ] ;
     } ;
     
@@ -282,11 +282,11 @@ public :
     static void render_projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     
     // PUT const BEFORE static_array < ... >
-    template < int vertex_array_size >
+    template < const_int_32 vertex_array_size >
     static void render_create_vertex_buffer 
         ( render_vertex_buffer_id & arg_buffer_id 
         , num_whole elements 
-        , static_array < vertex_data , vertex_array_size > & data 
+        , const static_array < vertex_data , vertex_array_size > & data 
         ) ;
     
     static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
