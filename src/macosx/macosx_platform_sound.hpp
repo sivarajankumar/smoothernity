@@ -39,7 +39,6 @@ inline void shy_macosx_platform :: sound_create_stereo_resource_id
 inline void shy_macosx_platform :: sound_load_stereo_sample_data
     ( stereo_sound_sample * samples 
     , num_whole max_samples_count
-    , num_whole & loaded_samples_count
     , const stereo_sound_resource_id & resource_id 
     )
 {
@@ -47,13 +46,17 @@ inline void shy_macosx_platform :: sound_load_stereo_sample_data
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
         to_buffer : ( void * ) samples
         with_max_samples_count_of : max_samples_count . _value
-        put_loaded_samples_count_to : & loaded_samples_count . _value
     ] ;
 }
 
 inline void shy_macosx_platform :: sound_loader_ready ( num_whole & result )
 {
     result . _value = [ _sound_loader loader_ready ] ;
+}
+
+inline void shy_macosx_platform :: sound_loaded_samples_count ( num_whole & result )
+{
+    result . _value = [ _sound_loader loaded_samples_count ] ;
 }
 
 inline void shy_macosx_platform :: sound_create_mono_buffer 

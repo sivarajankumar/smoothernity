@@ -317,10 +317,10 @@ public :
     static void sound_load_stereo_sample_data
         ( stereo_sound_sample * samples 
         , num_whole max_samples_count
-        , num_whole & loaded_samples_count
         , const stereo_sound_resource_id & resource_id 
         ) ;
     static void sound_loader_ready ( num_whole & result ) ;
+    static void sound_loaded_samples_count ( num_whole & result ) ;
     static void sound_create_mono_buffer ( sound_buffer_id & result , mono_sound_sample * samples , num_whole samples_count ) ;
     static void sound_create_stereo_buffer ( sound_buffer_id & result , stereo_sound_sample * samples , num_whole samples_count ) ;
     static void sound_create_source ( sound_source_id & result ) ;

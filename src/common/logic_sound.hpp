@@ -33,7 +33,6 @@ private :
     int_32 _stereo_sound_created ;
     int_32 _stereo_sound_loaded ;
     int_32 _sound_prepare_permitted ;
-    num_whole _loaded_stereo_sound_samples ;
     sound_source_id _stereo_sound_source ;
     sound_source_id _mono_sound_source ;
     stereo_sound_sample _stereo_sound_data [ _max_stereo_sound_samples ] ;
@@ -158,17 +157,13 @@ void shy_logic_sound < mediator > :: sound_update ( )
 template < typename mediator >
 void shy_logic_sound < mediator > :: _load_sound ( )
 {
-    num_whole music_tail_cut ;
     num_whole max_music_samples ;
     num_whole music_resource_index ;
-    num_whole music_samples_loaded ;
     stereo_sound_resource_id music_resource_id ;
-    platform :: math_make_num_whole ( music_tail_cut , 2293 ) ;
     platform :: math_make_num_whole ( max_music_samples , _max_stereo_sound_samples ) ;
     platform :: math_make_num_whole ( music_resource_index , _music_rough_and_heavy_resource_index ) ;
     platform :: sound_create_stereo_resource_id ( music_resource_id , music_resource_index ) ;
-    platform :: sound_load_stereo_sample_data ( _stereo_sound_data , max_music_samples , music_samples_loaded , music_resource_id ) ;
-    platform :: math_sub_wholes ( _loaded_stereo_sound_samples , music_samples_loaded , music_tail_cut ) ;
+    platform :: sound_load_stereo_sample_data ( _stereo_sound_data , max_music_samples , music_resource_id ) ;
 }
 
 template < typename mediator >
@@ -198,10 +193,13 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     num_fract vel_x ;
     num_fract vel_y ;
     num_fract vel_z ;
+    num_whole music_tail_cut ;
+    num_whole loaded_samples_count ;
     vector_data source_pos ;
     vector_data source_vel ;
     sound_buffer_id stereo_sound_buffer ;
-    
+        
+    platform :: math_make_num_whole ( music_tail_cut , 2293 ) ;
     platform :: math_make_num_fract ( gain , 7 , 10 ) ;
     platform :: math_make_num_fract ( pitch , 1 , 1 ) ;
     platform :: math_make_num_fract ( pos_x , 0 , 1 ) ;
@@ -213,19 +211,24 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     platform :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
     platform :: vector_xyz ( source_vel , vel_x , vel_y , vel_z ) ;
     
+    platform :: sound_loaded_samples_count ( loaded_samples_count ) ;
+    platform :: math_sub_from_whole ( loaded_samples_count , music_tail_cut ) ;
+    
+    num_whole max_music_samples ;
+    platform :: math_make_num_whole ( max_music_samples , _max_stereo_sound_samples ) ;
     platform :: sound_create_stereo_buffer 
         ( stereo_sound_buffer
         , _stereo_sound_data 
-        , _loaded_stereo_sound_samples
+        , loaded_samples_count
         ) ;
     platform :: sound_create_source ( _stereo_sound_source ) ;
     platform :: sound_set_source_gain ( _stereo_sound_source , gain ) ;
     platform :: sound_set_source_pitch ( _stereo_sound_source , pitch ) ;
     platform :: sound_set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
     platform :: sound_set_source_playback_looping ( _stereo_sound_source ) ;
-    platform :: sound_source_play ( _stereo_sound_source ) ;    
     platform :: sound_set_source_position ( _stereo_sound_source , source_pos ) ;
     platform :: sound_set_source_velocity ( _stereo_sound_source , source_vel ) ;    
+    platform :: sound_source_play ( _stereo_sound_source ) ;    
 }
 
 template < typename mediator >
