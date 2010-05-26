@@ -47,3 +47,108 @@ const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_6 ( 6 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_7 ( 7 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_8 ( 8 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_9 ( 9 ) ;
+
+shy_macosx_platform :: num_whole :: num_whole ( )
+: _value ( _uninitialized_value )
+{
+}
+
+shy_macosx_platform :: num_whole :: num_whole ( int arg_value )
+: _value ( arg_value )
+{
+}
+
+shy_macosx_platform :: num_fract :: num_fract ( )
+: _value ( _uninitialized_value )
+{
+}
+
+shy_macosx_platform :: num_fract :: num_fract ( float arg_value )
+: _value ( arg_value )
+{
+}
+
+shy_macosx_platform :: matrix_data :: matrix_data ( )
+{
+    for ( int i = 0 ; i < 16 ; i ++ )
+        _elements [ i ] = _uninitialized_value ;
+}
+    
+shy_macosx_platform :: vector_data :: vector_data ( )
+: _x ( _uninitialized_value )
+, _y ( _uninitialized_value )
+, _z ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: render_index_buffer_id :: render_index_buffer_id ( )
+: _buffer_id ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: render_vertex_buffer_id :: render_vertex_buffer_id ( )
+: _buffer_id ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: render_texture_id :: render_texture_id ( )
+: _texture_id ( _uninitialized_value )
+{
+}
+
+shy_macosx_platform :: texture_resource_id :: texture_resource_id ( )
+: _resource_id ( _uninitialized_value )
+{
+}
+	
+shy_macosx_platform :: texel_data :: texel_data ( )
+{
+    for ( int i = 0 ; i < 4 ; i ++ )
+        _color [ i ] = _uninitialized_value ;
+}
+    
+shy_macosx_platform :: vertex_data :: vertex_data ( )
+{
+    for ( int i = 0 ; i < 3 ; i ++ )
+        _position [ i ] = _uninitialized_value ;
+    for ( int i = 0 ; i < 2 ; i ++ )
+        _tex_coord [ i ] = _uninitialized_value ;
+    for ( int i = 0 ; i < 4 ; i ++ )
+        _color [ i ] = _uninitialized_value ;
+}
+    
+shy_macosx_platform :: index_data :: index_data ( )
+: _index ( _uninitialized_value )
+{
+}
+
+shy_macosx_platform :: time_data :: time_data ( )
+: _time ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: mono_sound_sample :: mono_sound_sample ( )
+: _value ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: stereo_sound_sample :: stereo_sound_sample ( )
+: _left_channel_value ( _uninitialized_value )
+, _right_channel_value ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: sound_buffer_id :: sound_buffer_id ( )
+: _buffer_id ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: sound_source_id :: sound_source_id ( )
+: _source_id ( _uninitialized_value )
+{
+}
+    
+shy_macosx_platform :: stereo_sound_resource_id :: stereo_sound_resource_id ( )
+: _resource_id ( _uninitialized_value )
+{
+}

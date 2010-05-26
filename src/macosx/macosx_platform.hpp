@@ -21,15 +21,9 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        num_whole ( )
-        : _value ( _uninitialized_value )
-        {
-        }
+        num_whole ( ) ;
     private :
-        num_whole ( int arg_value )
-        : _value ( arg_value )
-        {
-        }
+        num_whole ( int arg_value ) ;
     private :
         int _value ;
     } ;
@@ -38,15 +32,9 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        num_fract ( )
-        : _value ( _uninitialized_value )
-        {
-        }
+        num_fract ( ) ;
     private :
-        num_fract ( float arg_value )
-        : _value ( arg_value )
-        {
-        }
+        num_fract ( float arg_value ) ;
     private :
         float _value ;
     } ;
@@ -55,11 +43,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        matrix_data ( )
-        {
-            for ( int i = 0 ; i < 16 ; i ++ )
-                _elements [ i ] = _uninitialized_value ;
-        }
+        matrix_data ( ) ;
     private :
         GLfloat _elements [ 16 ] ;
     } ;
@@ -68,12 +52,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        vector_data ( )
-        : _x ( _uninitialized_value )
-        , _y ( _uninitialized_value )
-        , _z ( _uninitialized_value )
-        {
-        }
+        vector_data ( ) ;
     private :
         float _x ;
         float _y ;
@@ -84,10 +63,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        render_index_buffer_id ( )
-        : _buffer_id ( _uninitialized_value )
-        {
-        }
+        render_index_buffer_id ( ) ;
     private :
         GLuint _buffer_id ;
     } ;
@@ -96,10 +72,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        render_vertex_buffer_id ( )
-        : _buffer_id ( _uninitialized_value )
-        {
-        }
+        render_vertex_buffer_id ( ) ;
     private :
         GLuint _buffer_id ;
     } ;
@@ -108,10 +81,7 @@ public :
 	{
 		friend class shy_macosx_platform ;
     public :
-        render_texture_id ( )
-        : _texture_id ( _uninitialized_value )
-        {
-        }
+        render_texture_id ( ) ;
 	private :
 		GLuint _texture_id ;
 	} ;
@@ -120,10 +90,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        texture_resource_id ( )
-        : _resource_id ( _uninitialized_value )
-        {
-        }
+        texture_resource_id ( ) ;
     private :
         int _resource_id ;
     } ;
@@ -132,11 +99,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        texel_data ( )
-        {
-            for ( int i = 0 ; i < 4 ; i ++ )
-                _color [ i ] = _uninitialized_value ;
-        }
+        texel_data ( ) ;
     private :
         GLubyte _color [ 4 ] ;
     } ;
@@ -145,15 +108,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        vertex_data ( )
-        {
-            for ( int i = 0 ; i < 3 ; i ++ )
-                _position [ i ] = _uninitialized_value ;
-            for ( int i = 0 ; i < 2 ; i ++ )
-                _tex_coord [ i ] = _uninitialized_value ;
-            for ( int i = 0 ; i < 4 ; i ++ )
-                _color [ i ] = _uninitialized_value ;
-        }
+        vertex_data ( ) ;
     private :
         GLfloat _position [ 3 ] ;
         GLfloat _tex_coord [ 2 ] ;
@@ -164,10 +119,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        index_data ( )
-        : _index ( _uninitialized_value )
-        {
-        }
+        index_data ( ) ;
     private :
         GLushort _index ;
     } ;
@@ -176,10 +128,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        time_data ( )
-        : _time ( _uninitialized_value )
-        {
-        }
+        time_data ( ) ;
     private :
         CFAbsoluteTime _time ;
     } ;
@@ -188,10 +137,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        mono_sound_sample ( )
-        : _value ( _uninitialized_value )
-        {
-        }
+        mono_sound_sample ( ) ;
     private :
         ALubyte _value ;
     } ;
@@ -200,11 +146,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        stereo_sound_sample ( )
-        : _left_channel_value ( _uninitialized_value )
-        , _right_channel_value ( _uninitialized_value )
-        {
-        }
+        stereo_sound_sample ( ) ;
     private :
         ALushort _left_channel_value ;
         ALushort _right_channel_value ; 
@@ -214,10 +156,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        sound_buffer_id ( )
-        : _buffer_id ( _uninitialized_value )
-        {
-        }
+        sound_buffer_id ( ) ;
     private :
         ALuint _buffer_id ;
     } ;
@@ -226,10 +165,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        sound_source_id ( )
-        : _source_id ( _uninitialized_value )
-        {
-        }
+        sound_source_id ( ) ;
     private :
         ALuint _source_id ;
     } ;
@@ -238,10 +174,7 @@ public :
     {
         friend class shy_macosx_platform ;
     public :
-        stereo_sound_resource_id ( )
-        : _resource_id ( _uninitialized_value )
-        {
-        }
+        stereo_sound_resource_id ( ) ;
     private :
         int _resource_id ;
     } ;
