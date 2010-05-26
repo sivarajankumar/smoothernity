@@ -126,10 +126,9 @@ void shy_logic_entities < mediator > :: _entities_render ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 {
-    vertex_data vertices [ ( _entity_mesh_spans + 1 ) * 2 + 1 ] ;
+    typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > vertices ;
     index_data strip_indices [ ( _entity_mesh_spans + 1 ) * 2 ] ;
     index_data fan_indices [ _entity_mesh_spans + 2 ] ;
-    vertex_data * vertex_ptr = 0 ;
     index_data * index_ptr = 0 ;
     num_fract vertex_x ;
     num_fract vertex_y ;
@@ -189,10 +188,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_make_num_whole ( vertex_g , * entity_color_g_ptr ) ;
         platform :: math_make_num_whole ( vertex_b , * entity_color_b_ptr ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
-        
-        platform :: memory_pointer_offset ( vertex_ptr , vertices , vertices_count ) ;
-        platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+
+        {
+            vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
+            platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        }
 
         platform :: memory_pointer_offset ( index_ptr , strip_indices , strip_indices_count ) ;
         platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
@@ -210,9 +211,11 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_make_num_whole ( vertex_b , * entity_color_b_ptr ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
         
-        platform :: memory_pointer_offset ( vertex_ptr , vertices , vertices_count ) ;
-        platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        {
+            vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
+            platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        }
 
         platform :: memory_pointer_offset ( index_ptr , strip_indices , strip_indices_count ) ;
         platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
@@ -230,9 +233,11 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform :: math_make_num_whole ( vertex_b , _entity_color_roof_b ) ;
     platform :: math_make_num_whole ( vertex_a , 255 ) ;
 
-    platform :: memory_pointer_offset ( vertex_ptr , vertices , vertices_count ) ;
-    platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
-    platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+    {
+        vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
+        platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+        platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+    }
     
     platform :: memory_pointer_offset ( index_ptr , fan_indices , fan_indices_count ) ;
     platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
@@ -251,7 +256,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_inc_whole ( fan_indices_count ) ;
     }
     
-    _mediator -> mesh_create 
+    _mediator -> template mesh_create < ( _entity_mesh_spans + 1 ) * 2 + 1 >
         ( _entity_mesh_id
         , vertices 
         , strip_indices 

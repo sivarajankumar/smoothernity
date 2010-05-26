@@ -128,7 +128,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
 {    
-    vertex_data vertices [ _fidget_edges ] ;
+    typename platform :: template static_array < vertex_data , _fidget_edges > vertices ;
     index_data indices [ _fidget_edges ] ;
     num_whole i ;
     num_whole whole_fidget_edges ;
@@ -154,7 +154,6 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         num_whole vertex_b ;
         num_whole vertex_a ;
         num_whole index ;
-        vertex_data * vertex_ptr = 0 ;
         index_data * index_ptr = 0 ;
         platform :: math_make_fract_from_whole ( fract_i , i ) ;
         platform :: math_mul_fracts ( angle , platform :: fract_2pi , fract_i ) ;
@@ -168,11 +167,21 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         platform :: math_make_num_whole ( vertex_g , _fidget_g ) ;
         platform :: math_make_num_whole ( vertex_b , _fidget_b ) ;
         platform :: math_make_num_whole ( vertex_a , 255 ) ;
-        platform :: memory_pointer_offset ( vertex_ptr , vertices , i ) ;
+        {
+            vertex_data & vertex = platform :: array_element ( vertices , i ) ;
+            platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        }
         platform :: memory_pointer_offset ( index_ptr , indices , i ) ;
-        platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         platform :: render_set_index_value ( * index_ptr , i ) ;
     }
-    _mediator -> mesh_create ( _fidget_mesh_id , vertices , 0 , indices , whole_fidget_edges , platform :: whole_0 , whole_fidget_edges ) ;
+    _mediator -> template mesh_create < _fidget_edges >
+        ( _fidget_mesh_id 
+        , vertices 
+        , 0 
+        , indices 
+        , whole_fidget_edges 
+        , platform :: whole_0 
+        , whole_fidget_edges 
+        ) ;
 }

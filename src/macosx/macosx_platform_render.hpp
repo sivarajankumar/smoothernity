@@ -158,10 +158,11 @@ inline void shy_macosx_platform :: render_projection_ortho
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
+template < int vertex_array_size >
 inline void shy_macosx_platform :: render_create_vertex_buffer 
     ( render_vertex_buffer_id & arg_buffer_id 
     , num_whole elements 
-    , vertex_data * data 
+    , static_array < vertex_data , vertex_array_size > & data 
     )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
@@ -169,7 +170,7 @@ inline void shy_macosx_platform :: render_create_vertex_buffer
     glBufferData
         ( GL_ARRAY_BUFFER 
         , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) elements . _value ) 
-        , data
+        , data . _elements
         , GL_STATIC_DRAW 
         ) ;
 }

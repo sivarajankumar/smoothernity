@@ -107,7 +107,7 @@ void shy_logic_land < mediator > :: _render_land ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: _create_land_mesh ( )
 {    
-    vertex_data vertices [ ( _land_grid + 1 ) * ( _land_grid + 1 ) ] ;
+    typename platform :: template static_array < vertex_data , ( _land_grid + 1 ) * ( _land_grid + 1 ) > vertices ;
     index_data indices [ ( _land_grid + 1 ) * 2 * _land_grid ] ;
     num_whole vertices_count ;
     num_whole indices_count ;
@@ -154,7 +154,6 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             num_whole vertex_g ;
             num_whole vertex_b ;
             num_whole vertex_a ;
-            vertex_data * vertex_ptr = 0 ;
             
             platform :: math_make_fract_from_whole ( fract_ix , ix ) ;
             platform :: math_make_fract_from_whole ( fract_iz , iz ) ;
@@ -171,10 +170,12 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             platform :: math_make_num_whole ( vertex_g , _land_g ) ;
             platform :: math_make_num_whole ( vertex_b , _land_b ) ;
             platform :: math_make_num_whole ( vertex_a , 255 ) ;
-            platform :: memory_pointer_offset ( vertex_ptr , vertices , vertices_count ) ;
-            platform :: render_set_vertex_position ( * vertex_ptr , vertex_x , vertex_y , vertex_z ) ;
-            platform :: render_set_vertex_color ( * vertex_ptr , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-            platform :: render_set_vertex_tex_coord ( * vertex_ptr , vertex_u , vertex_v ) ;
+            {
+                vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
+                platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+                platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+                platform :: render_set_vertex_tex_coord ( vertex , vertex_u , vertex_v ) ;
+            }
             platform :: math_inc_whole ( vertices_count ) ;
         }
     }
@@ -227,7 +228,15 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             }
         }
     }
-    _mediator -> mesh_create ( _land_mesh_id , vertices , indices , 0 , vertices_count , indices_count , platform :: whole_0 ) ;
+    _mediator -> template mesh_create < ( _land_grid + 1 ) * ( _land_grid + 1 ) >
+        ( _land_mesh_id 
+        , vertices 
+        , indices 
+        , 0 
+        , vertices_count 
+        , indices_count 
+        , platform :: whole_0 
+        ) ;
     platform :: math_make_num_whole ( _land_mesh_created , true ) ;
 }
 

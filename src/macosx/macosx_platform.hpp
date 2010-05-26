@@ -281,7 +281,14 @@ public :
     static void render_projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     static void render_projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     
-    static void render_create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , vertex_data * data ) ;
+    // PUT const BEFORE static_array < ... >
+    template < int vertex_array_size >
+    static void render_create_vertex_buffer 
+        ( render_vertex_buffer_id & arg_buffer_id 
+        , num_whole elements 
+        , static_array < vertex_data , vertex_array_size > & data 
+        ) ;
+    
     static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
     static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
     static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
