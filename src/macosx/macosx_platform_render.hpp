@@ -158,7 +158,7 @@ inline void shy_macosx_platform :: render_projection_ortho
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
-template < int vertex_array_size >
+template < shy_macosx_platform :: const_int_32 vertex_array_size >
 inline void shy_macosx_platform :: render_create_vertex_buffer 
     ( render_vertex_buffer_id & arg_buffer_id 
     , num_whole elements 
@@ -196,10 +196,11 @@ inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & verte
     vertex . _color [ 3 ] = ( GLubyte ) a . _value ;
 }
 
+template < shy_macosx_platform :: const_int_32 index_array_size >
 inline void shy_macosx_platform :: render_create_index_buffer 
     ( render_index_buffer_id & arg_buffer_id 
     , num_whole elements 
-    , index_data * data 
+    , const static_array < index_data , index_array_size > & data 
     )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
@@ -207,7 +208,7 @@ inline void shy_macosx_platform :: render_create_index_buffer
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
         , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) elements . _value )
-        , data
+        , data . _elements
         , GL_STATIC_DRAW
         ) ;
 }

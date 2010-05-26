@@ -129,7 +129,7 @@ template < typename mediator >
 void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
 {    
     typename platform :: template static_array < vertex_data , _fidget_edges > vertices ;
-    index_data indices [ _fidget_edges ] ;
+    typename platform :: template static_array < index_data , _fidget_edges > indices ;
     num_whole i ;
     num_whole whole_fidget_edges ;
     num_fract fract_fidget_edges ;
@@ -153,8 +153,6 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         num_whole vertex_g ;
         num_whole vertex_b ;
         num_whole vertex_a ;
-        num_whole index ;
-        index_data * index_ptr = 0 ;
         platform :: math_make_fract_from_whole ( fract_i , i ) ;
         platform :: math_mul_fracts ( angle , platform :: fract_2pi , fract_i ) ;
         platform :: math_div_fract_by ( angle , fract_fidget_edges ) ;
@@ -172,13 +170,15 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
-        platform :: memory_pointer_offset ( index_ptr , indices , i ) ;
-        platform :: render_set_index_value ( * index_ptr , i ) ;
+        {
+            index_data & index = platform :: array_element ( indices , i ) ;
+            platform :: render_set_index_value ( index , i ) ;
+        }
     }
     _mediator -> mesh_create
         ( _fidget_mesh_id 
         , vertices 
-        , 0 
+        , indices
         , indices 
         , whole_fidget_edges 
         , platform :: whole_0 

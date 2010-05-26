@@ -127,9 +127,8 @@ template < typename mediator >
 void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 {
     typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > vertices ;
-    index_data strip_indices [ ( _entity_mesh_spans + 1 ) * 2 ] ;
-    index_data fan_indices [ _entity_mesh_spans + 2 ] ;
-    index_data * index_ptr = 0 ;
+    typename platform :: template static_array < index_data , ( _entity_mesh_spans + 1 ) * 2 > strip_indices ;
+    typename platform :: template static_array < index_data , _entity_mesh_spans + 2 > fan_indices ;
     num_fract vertex_x ;
     num_fract vertex_y ;
     num_fract vertex_z ;
@@ -194,9 +193,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
-
-        platform :: memory_pointer_offset ( index_ptr , strip_indices , strip_indices_count ) ;
-        platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
+        {
+            index_data & index = platform :: array_element ( strip_indices , strip_indices_count ) ;
+            platform :: render_set_index_value ( index , vertices_count ) ;
+        }
 
         platform :: math_inc_whole ( strip_indices_count ) ;
         platform :: math_inc_whole ( vertices_count ) ;
@@ -216,9 +216,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
-
-        platform :: memory_pointer_offset ( index_ptr , strip_indices , strip_indices_count ) ;
-        platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
+        {
+            index_data & index = platform :: array_element ( strip_indices , strip_indices_count ) ;
+            platform :: render_set_index_value ( index , vertices_count ) ;
+        }
 
         platform :: math_inc_whole ( strip_indices_count ) ;
         platform :: math_inc_whole ( vertices_count ) ;
@@ -238,9 +239,11 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
         platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
     }
+    {
+        index_data & index = platform :: array_element ( fan_indices , fan_indices_count ) ;
+        platform :: render_set_index_value ( index , vertices_count ) ;
+    }
     
-    platform :: memory_pointer_offset ( index_ptr , fan_indices , fan_indices_count ) ;
-    platform :: render_set_index_value ( * index_ptr , vertices_count ) ;
     platform :: math_inc_whole ( fan_indices_count ) ;
     platform :: math_inc_whole ( vertices_count ) ;
     
@@ -251,8 +254,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     {
         num_whole index ;
         platform :: math_mul_wholes ( index , i , platform :: whole_2 ) ;
-        platform :: memory_pointer_offset ( index_ptr , fan_indices , fan_indices_count ) ;
-        platform :: render_set_index_value ( * index_ptr , index ) ;
+        {
+            index_data & index_ptr = platform :: array_element ( fan_indices , fan_indices_count ) ;
+            platform :: render_set_index_value ( index_ptr , index ) ;
+        }
         platform :: math_inc_whole ( fan_indices_count ) ;
     }
     

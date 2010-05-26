@@ -108,7 +108,7 @@ template < typename mediator >
 void shy_logic_land < mediator > :: _create_land_mesh ( )
 {    
     typename platform :: template static_array < vertex_data , ( _land_grid + 1 ) * ( _land_grid + 1 ) > vertices ;
-    index_data indices [ ( _land_grid + 1 ) * 2 * _land_grid ] ;
+    typename platform :: template static_array < index_data , ( _land_grid + 1 ) * 2 * _land_grid > indices ;
     num_whole vertices_count ;
     num_whole indices_count ;
     num_whole ix ;
@@ -194,7 +194,6 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
         {
             num_whole index ;
             num_whole row_size ;
-            index_data * index_ptr = 0 ;
             
             platform :: math_make_num_whole ( row_size , _land_grid + 1 ) ;
             
@@ -202,13 +201,17 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             {
                 platform :: math_mul_wholes ( index , row_size , iz ) ;
                 platform :: math_add_to_whole ( index , ix ) ;
-                platform :: memory_pointer_offset ( index_ptr , indices , indices_count ) ;
-                platform :: render_set_index_value ( * index_ptr , index ) ;
+                {
+                    index_data & index_ptr = platform :: array_element ( indices , indices_count ) ;
+                    platform :: render_set_index_value ( index_ptr , index ) ;
+                }
                 platform :: math_inc_whole ( indices_count ) ;
                 
                 platform :: math_add_to_whole ( index , row_size ) ;
-                platform :: memory_pointer_offset ( index_ptr , indices , indices_count ) ;
-                platform :: render_set_index_value ( * index_ptr , index ) ;
+                {
+                    index_data & index_ptr = platform :: array_element ( indices , indices_count ) ;
+                    platform :: render_set_index_value ( index_ptr , index ) ;
+                }
                 platform :: math_inc_whole ( indices_count ) ;
             }
             else
@@ -217,13 +220,17 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 platform :: math_add_to_whole ( index , whole_land_grid ) ;
                 platform :: math_sub_from_whole ( index , ix ) ;
                 platform :: math_add_to_whole ( index , row_size ) ;
-                platform :: memory_pointer_offset ( index_ptr , indices , indices_count ) ;
-                platform :: render_set_index_value ( * index_ptr , index ) ;
+                {
+                    index_data & index_ptr = platform :: array_element ( indices , indices_count ) ;
+                    platform :: render_set_index_value ( index_ptr , index ) ;
+                }
                 platform :: math_inc_whole ( indices_count ) ;
                 
                 platform :: math_sub_from_whole ( index , row_size ) ;
-                platform :: memory_pointer_offset ( index_ptr , indices , indices_count ) ;
-                platform :: render_set_index_value ( * index_ptr , index ) ;
+                {
+                    index_data & index_ptr = platform :: array_element ( indices , indices_count ) ;
+                    platform :: render_set_index_value ( index_ptr , index ) ;
+                }
                 platform :: math_inc_whole ( indices_count ) ;
             }
         }
@@ -232,7 +239,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
         ( _land_mesh_id 
         , vertices 
         , indices 
-        , 0 
+        , indices
         , vertices_count 
         , indices_count 
         , platform :: whole_0 

@@ -287,14 +287,12 @@ public :
         , num_whole elements 
         , const static_array < vertex_data , vertex_array_size > & data 
         ) ;
-    
-    static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
-    static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
-    static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
-
-    static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , index_data * data ) ;
-    static void render_set_index_value ( index_data & data , num_whole index ) ;
-    
+    template < const_int_32 index_array_size >
+    static void render_create_index_buffer 
+        ( render_index_buffer_id & arg_buffer_id 
+        , num_whole elements 
+        , const static_array < index_data , index_array_size > & data 
+        ) ;    
     static void render_draw_triangle_strip 
         ( const render_vertex_buffer_id & vertices_buffer 
         , const render_index_buffer_id & indices_buffer
@@ -304,8 +302,13 @@ public :
         ( const render_vertex_buffer_id & vertices_buffer 
         , const render_index_buffer_id & indices_buffer
         , num_whole indices_count
-        ) ;
-        
+        ) ;        
+    
+    static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
+    static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
+    static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
+    static void render_set_index_value ( index_data & data , num_whole index ) ;
+    
     static void render_matrix_identity ( ) ;
     static void render_matrix_load ( const matrix_data & matrix ) ;
     static void render_matrix_mult ( const matrix_data & matrix ) ;
