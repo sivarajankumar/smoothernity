@@ -4,6 +4,7 @@ class shy_logic_text
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
@@ -14,11 +15,11 @@ class shy_logic_text
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
-    static const int_32 _scale_in_frames = 60 ;
-    static const int_32 _canvas_r = 255 ;
-    static const int_32 _canvas_g = 255 ;
-    static const int_32 _canvas_b = 255 ;
-    static const int_32 _canvas_a = 255 ;
+    static const_int_32 _scale_in_frames = 60 ;
+    static const_int_32 _canvas_r = 255 ;
+    static const_int_32 _canvas_g = 255 ;
+    static const_int_32 _canvas_b = 255 ;
+    static const_int_32 _canvas_a = 255 ;
     static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
     shy_logic_text ( mediator * arg_mediator ) ;
@@ -68,8 +69,8 @@ private :
     texture_id _text_texture_id ;
     texel_data _filler ;
     texel_data _eraser ;
-    int_32 _origin_x ;
-    int_32 _origin_y ;
+    num_whole _origin_x ;
+    num_whole _origin_y ;
     num_whole _letter_size_x ;
     num_whole _letter_size_y ;
     num_whole _scale_frames ;
@@ -78,14 +79,14 @@ private :
 template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
 : _mediator ( arg_mediator )
-, _origin_x ( 0 )
-, _origin_y ( 0 )
 {
     platform :: math_make_num_whole ( _text_mesh_created , false ) ;
     platform :: math_make_num_whole ( _text_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _scale_frames , 0 ) ;
     platform :: math_make_num_whole ( _letter_size_x , 0 ) ;
     platform :: math_make_num_whole ( _letter_size_y , 0 ) ;
+    platform :: math_make_num_whole ( _origin_x , 0 ) ;
+    platform :: math_make_num_whole ( _origin_y , 0 ) ;
 }
 
 template < typename mediator >
@@ -259,7 +260,7 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
             _mediator -> texture_set_texel ( _text_texture_id , x . debug_to_int_32 ( ) , y . debug_to_int_32 ( ) , _eraser ) ;
         }
     }
-    _origin_y = texture_height_int_32 ;
+    _origin_y = texture_height ;
     _rasterize_english_alphabet ( 16 , 16 ) ;
     _rasterize_english_alphabet ( 32 , 32 ) ;
     _mediator -> texture_finalize ( _text_texture_id ) ;
@@ -306,10 +307,12 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
 {
     int_32 texture_width_int_32 ;
     _mediator -> texture_width ( texture_width_int_32 ) ;
-    _origin_x += _letter_size_x . debug_to_int_32 ( ) ;
-    if ( _origin_x >= texture_width_int_32 )
+    platform :: math_add_to_whole ( _origin_x , _letter_size_x ) ;
+    if ( _origin_x . debug_to_int_32 ( ) >= texture_width_int_32 )
     {
-        _origin_y -= _letter_size_y . debug_to_int_32 ( ) / 4 ;
+        num_whole delta_y ;
+        platform :: math_div_wholes ( delta_y , _letter_size_y , platform :: whole_4 ) ;
+        platform :: math_sub_from_whole ( _origin_y , delta_y ) ;
         _next_letter_row ( ) ;
     }
 }
@@ -317,14 +320,14 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _next_letter_row ( )
 {
-    _origin_y -= _letter_size_y . debug_to_int_32 ( ) ;
-    _origin_x = 0 ;
+    platform :: math_sub_from_whole ( _origin_y , _letter_size_y ) ;
+    platform :: math_make_num_whole ( _origin_x , 0 ) ;
 }
 
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_A ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
 
     int_32 outer_top = _letter_size_y . debug_to_int_32 ( ) - 1 ;
     int_32 outer_bottom = 0 ;
@@ -356,7 +359,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_A ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_B ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x . debug_to_int_32 ( ) - 1 , _letter_size_y . debug_to_int_32 ( ) / 2 ) ;
@@ -387,7 +390,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_B ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_C ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x . debug_to_int_32 ( ) - 1 , _letter_size_y . debug_to_int_32 ( ) - 1 ) ;
@@ -409,7 +412,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_C ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_D ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x . debug_to_int_32 ( ) - 1 , _letter_size_y . debug_to_int_32 ( ) - 1 ) ;
@@ -432,7 +435,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_D ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_E ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 right = ( _letter_size_x . debug_to_int_32 ( ) * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
@@ -452,7 +455,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_E ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_F ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 right = ( _letter_size_x . debug_to_int_32 ( ) * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
@@ -472,7 +475,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_F ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_G ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x . debug_to_int_32 ( ) - 1 , _letter_size_y . debug_to_int_32 ( ) - 1 ) ;
@@ -501,7 +504,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_G ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_H ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 right = ( _letter_size_x . debug_to_int_32 ( ) * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
@@ -521,7 +524,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_H ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_I ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 right = ( _letter_size_x . debug_to_int_32 ( ) * 6 ) / 7 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
@@ -541,7 +544,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_I ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 right = ( _letter_size_x . debug_to_int_32 ( ) * 4 ) / 5 ;
     int_32 circle_top = ( _letter_size_y . debug_to_int_32 ( ) * 4 ) / 5 ;
@@ -571,7 +574,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_K ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_rect ( 0 , 0 , _letter_size_x . debug_to_int_32 ( ) - 1 , _letter_size_y . debug_to_int_32 ( ) - 1 ) ;
@@ -595,7 +598,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_K ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_L ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 right = ( _letter_size_x . debug_to_int_32 ( ) * 4 ) / 5 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
@@ -610,7 +613,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_L ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_M ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 spine_1_left = 0 ;
     int_32 spine_1_right = _letter_size_x . debug_to_int_32 ( ) / 5 ;
@@ -632,7 +635,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_M ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_N ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 spine_1_left = 0 ;
     int_32 spine_1_right = _letter_size_x . debug_to_int_32 ( ) / 5 ;
@@ -651,7 +654,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_N ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_O ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x . debug_to_int_32 ( ) - 1 , _letter_size_y . debug_to_int_32 ( ) - 1 ) ;
@@ -667,7 +670,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_O ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_P ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 spine_left = 0 ;
     int_32 spine_right = _letter_size_x . debug_to_int_32 ( ) / 5 ;
@@ -698,7 +701,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_P ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_Q ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     _mediator -> rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_ellipse_in_rect ( 0 , 0 , _letter_size_x . debug_to_int_32 ( ) - 1 , _letter_size_y . debug_to_int_32 ( ) - 1 ) ;
@@ -721,7 +724,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Q ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_R ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 spine_left = 0 ;
     int_32 spine_right = _letter_size_x . debug_to_int_32 ( ) / 5 ;
@@ -757,7 +760,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_R ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 circle_high_left = 0 ;
     int_32 circle_high_right = _letter_size_x . debug_to_int_32 ( ) / 2 ;
@@ -819,7 +822,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_T ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 right = ( _letter_size_x . debug_to_int_32 ( ) * 6 ) / 7 ;
     _mediator -> rasterize_use_texel ( _filler ) ;
@@ -839,7 +842,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_T ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_U ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
 
     int_32 ellipse_left = 0 ;
     int_32 ellipse_right = ( _letter_size_x . debug_to_int_32 ( ) * 4 ) / 5 ;
@@ -864,7 +867,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_U ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_V ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
 
     int_32 high_1_left = 0 ;
     int_32 high_1_right = _letter_size_x . debug_to_int_32 ( ) / 5 ;
@@ -882,7 +885,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_V ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
 
     int_32 high_1_left = 0 ;
     int_32 high_1_right = _letter_size_x . debug_to_int_32 ( ) / 5 ;
@@ -910,7 +913,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
 
     int_32 left_1 = 0 ;
     int_32 right_1 = _letter_size_x . debug_to_int_32 ( ) / 4 ;
@@ -928,7 +931,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
 
     int_32 high_1_left = 0 ;
     int_32 high_1_right = _letter_size_x . debug_to_int_32 ( ) / 4 ;
@@ -950,7 +953,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_Z ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x . debug_to_int_32 ( ) , _origin_y . debug_to_int_32 ( ) ) ;
     
     int_32 hor_left = 0 ;
     int_32 hor_right = ( _letter_size_x . debug_to_int_32 ( ) * 4 ) / 5 ;
