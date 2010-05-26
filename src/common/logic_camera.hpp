@@ -43,15 +43,15 @@ private :
     num_whole _frames_to_change_camera_target ;
     num_whole _frames_to_change_camera_origin ;
     num_whole _random_seed ;
+    num_whole _camera_created ;
     vector_data _desired_camera_origin ;
     vector_data _desired_camera_target ;
     vector_data _current_camera_origin ;
     vector_data _current_camera_target ;
-    num_whole _scheduled_camera_origin_indices [ 4 ] ;
-    num_whole _scheduled_camera_target_indices [ 4 ] ;
-    vector_data _scheduled_camera_origins [ 4 ] ;
-    vector_data _scheduled_camera_targets [ 4 ] ;
-    num_whole _camera_created ;
+    typename platform :: template static_array < num_whole , 4 > _scheduled_camera_origin_indices ;
+    typename platform :: template static_array < num_whole , 4 > _scheduled_camera_target_indices ;
+    typename platform :: template static_array < vector_data , 4 > _scheduled_camera_origins ;
+    typename platform :: template static_array < vector_data , 4 > _scheduled_camera_targets ;
 } ;
 
 template < typename mediator >
@@ -68,18 +68,14 @@ shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
         ; platform :: math_inc_whole ( i )
         )
     {
-        num_whole * origin_index_ptr = 0 ;
-        num_whole * target_index_ptr = 0 ;
-        vector_data * origin_pos_ptr = 0 ;
-        vector_data * target_pos_ptr = 0 ;
-        platform :: memory_pointer_offset ( origin_index_ptr , _scheduled_camera_origin_indices , i ) ;
-        platform :: memory_pointer_offset ( target_index_ptr , _scheduled_camera_target_indices , i ) ;
-        platform :: memory_pointer_offset ( origin_pos_ptr , _scheduled_camera_origins , i ) ;
-        platform :: memory_pointer_offset ( target_pos_ptr , _scheduled_camera_targets , i ) ;
-        * origin_index_ptr = platform :: whole_0 ;
-        * target_index_ptr = platform :: whole_0 ;
-        platform :: vector_xyz ( * origin_pos_ptr , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
-        platform :: vector_xyz ( * target_pos_ptr , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+        num_whole & origin_index = platform :: array_element ( _scheduled_camera_origin_indices , i ) ;
+        num_whole & target_index = platform :: array_element ( _scheduled_camera_target_indices , i ) ;
+        vector_data & origin_pos = platform :: array_element ( _scheduled_camera_origins , i ) ;
+        vector_data & target_pos = platform :: array_element ( _scheduled_camera_targets , i ) ;
+        origin_index = platform :: whole_0 ;
+        target_index = platform :: whole_0 ;
+        platform :: vector_xyz ( origin_pos , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+        platform :: vector_xyz ( target_pos , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     }
 }
 
@@ -125,8 +121,8 @@ void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( num_whole & result
 template < typename mediator >
 void shy_logic_camera < mediator > :: _reset_camera_rubber ( )
 {
-    _current_camera_origin = _scheduled_camera_origins [ 2 ] ;
-    _current_camera_target = _scheduled_camera_targets [ 2 ] ;
+    _current_camera_origin = platform :: array_element ( _scheduled_camera_origins , platform :: whole_2 ) ;
+    _current_camera_target = platform :: array_element ( _scheduled_camera_targets , platform :: whole_2 ) ;
 }
 
 template < typename mediator >
@@ -141,25 +137,16 @@ void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
         num_whole target_index ;
         vector_data origin_pos ;
         vector_data target_pos ;
-        num_whole * origin_index_ptr = 0 ;
-        num_whole * target_index_ptr = 0 ;
-        vector_data * origin_pos_ptr = 0 ;
-        vector_data * target_pos_ptr = 0 ;
         
         _random_camera_origin_index ( origin_index ) ;
         _random_camera_target_index ( target_index ) ;
         _mediator -> get_entity_origin ( origin_pos , origin_index ) ;
         _mediator -> get_entity_origin ( target_pos , target_index ) ;
         
-        platform :: memory_pointer_offset ( origin_index_ptr , _scheduled_camera_origin_indices , i ) ;
-        platform :: memory_pointer_offset ( target_index_ptr , _scheduled_camera_target_indices , i ) ;
-        platform :: memory_pointer_offset ( origin_pos_ptr , _scheduled_camera_origins , i ) ;
-        platform :: memory_pointer_offset ( target_pos_ptr , _scheduled_camera_targets , i ) ;
-        
-        * origin_index_ptr = origin_index ;
-        * target_index_ptr = target_index ;
-        * origin_pos_ptr = origin_pos ;
-        * target_pos_ptr = target_pos ;
+        platform :: array_element ( _scheduled_camera_origin_indices , i ) = origin_index ;
+        platform :: array_element ( _scheduled_camera_target_indices , i ) = target_index ;
+        platform :: array_element ( _scheduled_camera_origins , i ) = origin_pos ;
+        platform :: array_element ( _scheduled_camera_targets , i ) = target_pos ;
     }
 }
 
@@ -186,14 +173,21 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         _random_camera_origin_index ( new_origin_index ) ;
         _mediator -> get_entity_origin ( new_origin_pos , new_origin_index ) ;
         
-        _scheduled_camera_origin_indices [ 0 ] = _scheduled_camera_origin_indices [ 1 ] ;
-        _scheduled_camera_origin_indices [ 1 ] = _scheduled_camera_origin_indices [ 2 ] ;
-        _scheduled_camera_origin_indices [ 2 ] = _scheduled_camera_origin_indices [ 3 ] ;
-        _scheduled_camera_origin_indices [ 3 ] = new_origin_index ;
-        _scheduled_camera_origins [ 0 ] = _scheduled_camera_origins [ 1 ] ;
-        _scheduled_camera_origins [ 1 ] = _scheduled_camera_origins [ 2 ] ;
-        _scheduled_camera_origins [ 2 ] = _scheduled_camera_origins [ 3 ] ;
-        _scheduled_camera_origins [ 3 ] = new_origin_pos ;
+        platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_0 ) =
+        platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_1 ) ;
+        platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_1 ) = 
+        platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_2 ) ;
+        platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_2 ) =
+        platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_3 ) ;
+        platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_3 ) = new_origin_index ;
+
+        platform :: array_element ( _scheduled_camera_origins , platform :: whole_0 ) = 
+        platform :: array_element ( _scheduled_camera_origins , platform :: whole_1 ) ;
+        platform :: array_element ( _scheduled_camera_origins , platform :: whole_1 ) = 
+        platform :: array_element ( _scheduled_camera_origins , platform :: whole_2 ) ;
+        platform :: array_element ( _scheduled_camera_origins , platform :: whole_2 ) = 
+        platform :: array_element ( _scheduled_camera_origins , platform :: whole_3 ) ;
+        platform :: array_element ( _scheduled_camera_origins , platform :: whole_3 ) = new_origin_pos ;
     }
     
     num_fract fract_frames_to_change_camera_origin ;
@@ -208,10 +202,10 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_origin
         , spline_pos
-        , _scheduled_camera_origins [ 0 ]
-        , _scheduled_camera_origins [ 1 ]
-        , _scheduled_camera_origins [ 2 ]
-        , _scheduled_camera_origins [ 3 ]
+        , platform :: array_element ( _scheduled_camera_origins , platform :: whole_0 )
+        , platform :: array_element ( _scheduled_camera_origins , platform :: whole_1 )
+        , platform :: array_element ( _scheduled_camera_origins , platform :: whole_2 )
+        , platform :: array_element ( _scheduled_camera_origins , platform :: whole_3 )
         ) ;        
 }
 
@@ -228,14 +222,21 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         _random_camera_target_index ( new_target_index ) ;
         _mediator -> get_entity_origin ( new_target_pos , new_target_index ) ;
         
-        _scheduled_camera_target_indices [ 0 ] = _scheduled_camera_target_indices [ 1 ] ;
-        _scheduled_camera_target_indices [ 1 ] = _scheduled_camera_target_indices [ 2 ] ;
-        _scheduled_camera_target_indices [ 2 ] = _scheduled_camera_target_indices [ 3 ] ;
-        _scheduled_camera_target_indices [ 3 ] = new_target_index ;
-        _scheduled_camera_targets [ 0 ] = _scheduled_camera_targets [ 1 ] ;
-        _scheduled_camera_targets [ 1 ] = _scheduled_camera_targets [ 2 ] ;
-        _scheduled_camera_targets [ 2 ] = _scheduled_camera_targets [ 3 ] ;
-        _scheduled_camera_targets [ 3 ] = new_target_pos ;
+        platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_0 ) = 
+        platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_1 ) ;
+        platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_1 ) = 
+        platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_2 ) ;
+        platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_2 ) = 
+        platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_3 ) ;
+        platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_3 ) = new_target_index ;
+        
+        platform :: array_element ( _scheduled_camera_targets , platform :: whole_0 ) = 
+        platform :: array_element ( _scheduled_camera_targets , platform :: whole_1 ) ;
+        platform :: array_element ( _scheduled_camera_targets , platform :: whole_1 ) = 
+        platform :: array_element ( _scheduled_camera_targets , platform :: whole_2 ) ;
+        platform :: array_element ( _scheduled_camera_targets , platform :: whole_2 ) = 
+        platform :: array_element ( _scheduled_camera_targets , platform :: whole_3 ) ;
+        platform :: array_element ( _scheduled_camera_targets , platform :: whole_3 ) = new_target_pos ;
     }
     
     num_fract fract_frames_to_change_camera_target ;
@@ -250,10 +251,10 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     _mediator -> math_catmull_rom_spline
         ( _desired_camera_target
         , spline_pos
-        , _scheduled_camera_targets [ 0 ]
-        , _scheduled_camera_targets [ 1 ]
-        , _scheduled_camera_targets [ 2 ]
-        , _scheduled_camera_targets [ 3 ]
+        , platform :: array_element ( _scheduled_camera_targets , platform :: whole_0 )
+        , platform :: array_element ( _scheduled_camera_targets , platform :: whole_1 )
+        , platform :: array_element ( _scheduled_camera_targets , platform :: whole_2 )
+        , platform :: array_element ( _scheduled_camera_targets , platform :: whole_3 )
         ) ;        
 }
 
@@ -380,9 +381,8 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_wh
         ; platform :: math_inc_whole ( i )
         )
     {
-        num_whole * index_ptr = 0 ;
-        platform :: memory_pointer_offset ( index_ptr , _scheduled_camera_origin_indices , i ) ;
-        if ( platform :: condition_wholes_are_equal ( * index_ptr , index ) )
+        num_whole & index_ptr = platform :: array_element ( _scheduled_camera_origin_indices , i ) ;
+        if ( platform :: condition_wholes_are_equal ( index_ptr , index ) )
         {
             platform :: math_make_num_whole ( result , true ) ;
             break ;
@@ -399,9 +399,8 @@ void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( num_wh
         ; platform :: math_inc_whole ( i )
         )
     {
-        num_whole * index_ptr = 0 ;
-        platform :: memory_pointer_offset ( index_ptr , _scheduled_camera_target_indices , i ) ;
-        if ( platform :: condition_wholes_are_equal ( * index_ptr , index ) )
+        num_whole & index_ptr = platform :: array_element ( _scheduled_camera_target_indices , i ) ;
+        if ( platform :: condition_wholes_are_equal ( index_ptr , index ) )
         {
             platform :: math_make_num_whole ( result , true ) ;
             break ;
