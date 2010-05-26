@@ -34,8 +34,8 @@ private :
     num_whole _sound_prepare_permitted ;
     sound_source_id _stereo_sound_source ;
     sound_source_id _mono_sound_source ;
-    stereo_sound_sample _stereo_sound_data [ _max_stereo_sound_samples ] ;
-    mono_sound_sample _mono_sound_data [ _max_mono_sound_samples ] ;
+    typename platform :: template static_array < stereo_sound_sample , _max_stereo_sound_samples > _stereo_sound_data ;
+    typename platform :: template static_array < mono_sound_sample , _max_mono_sound_samples > _mono_sound_data ;
 } ;
 
 template < typename mediator >
@@ -252,7 +252,6 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         num_fract fract_sample_delta ;
         num_fract sample ;
         num_whole whole_sample_delta ;
-        mono_sound_sample * sample_ptr = 0 ;
         platform :: math_make_fract_from_whole ( fract_i , i ) ;
         platform :: math_mul_fracts ( angle , fract_i , platform :: fract_2pi ) ;
         platform :: math_div_fract_by ( angle , fract_mono_sound_samples_per_second ) ;        
@@ -264,8 +263,8 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform :: math_make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
         platform :: math_add_to_whole ( next_sample , whole_sample_delta ) ;
         _int_to_sample ( sample , next_sample ) ;
-        platform :: memory_pointer_offset ( sample_ptr , _mono_sound_data , i ) ;
-        platform :: sound_set_sample_value ( * sample_ptr , sample ) ;
+        mono_sound_sample & sample_ptr = platform :: array_element ( _mono_sound_data , i ) ;
+        platform :: sound_set_sample_value ( sample_ptr , sample ) ;
     }
     
     num_fract gain ;

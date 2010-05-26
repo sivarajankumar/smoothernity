@@ -338,15 +338,8 @@ public :
     static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
     static void sound_set_sample_value ( mono_sound_sample & sample , num_fract value ) ;
     static void sound_create_stereo_resource_id ( stereo_sound_resource_id & result , num_whole resource_index ) ;
-    static void sound_load_stereo_sample_data
-        ( stereo_sound_sample * samples 
-        , num_whole max_samples_count
-        , const stereo_sound_resource_id & resource_id 
-        ) ;
     static void sound_loader_ready ( num_whole & result ) ;
-    static void sound_loaded_samples_count ( num_whole & result ) ;
-    static void sound_create_mono_buffer ( sound_buffer_id & result , mono_sound_sample * samples , num_whole samples_count ) ;
-    static void sound_create_stereo_buffer ( sound_buffer_id & result , stereo_sound_sample * samples , num_whole samples_count ) ;
+    static void sound_loaded_samples_count ( num_whole & result ) ;    
     static void sound_create_source ( sound_source_id & result ) ;
     static void sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch ) ;
     static void sound_set_source_gain ( const sound_source_id & source_id , num_fract gain ) ;
@@ -357,6 +350,25 @@ public :
     static void sound_set_source_playback_once ( const sound_source_id & source_id ) ;
     static void sound_source_play ( const sound_source_id & source_id ) ;
     static void sound_source_stop ( const sound_source_id & source_id ) ;
+    
+    template < const_int_32 samples_array_size >
+    static void sound_load_stereo_sample_data
+        ( const static_array < stereo_sound_sample , samples_array_size > & samples 
+        , num_whole max_samples_count
+        , const stereo_sound_resource_id & resource_id 
+        ) ;
+    template < const_int_32 samples_array_size >
+    static void sound_create_mono_buffer 
+        ( sound_buffer_id & result 
+        , const static_array < mono_sound_sample , samples_array_size > & samples 
+        , num_whole samples_count 
+        ) ;
+    template < const_int_32 samples_array_size >
+    static void sound_create_stereo_buffer 
+        ( sound_buffer_id & result 
+        , const static_array < stereo_sound_sample , samples_array_size > & samples 
+        , num_whole samples_count 
+        ) ;
 
     //
     // math

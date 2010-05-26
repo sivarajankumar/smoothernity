@@ -36,15 +36,16 @@ inline void shy_macosx_platform :: sound_create_stereo_resource_id
     result . _resource_id = resource_index . _value ;
 }
 
+template < shy_macosx_platform :: const_int_32 samples_array_size >
 inline void shy_macosx_platform :: sound_load_stereo_sample_data
-    ( stereo_sound_sample * samples 
+    ( const static_array < stereo_sound_sample , samples_array_size > & samples 
     , num_whole max_samples_count
     , const stereo_sound_resource_id & resource_id 
     )
 {
     [ _sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) samples
+        to_buffer : ( void * ) samples . _elements
         with_max_samples_count_of : max_samples_count . _value
     ] ;
 }
@@ -59,9 +60,10 @@ inline void shy_macosx_platform :: sound_loaded_samples_count ( num_whole & resu
     result . _value = [ _sound_loader loaded_samples_count ] ;
 }
 
+template < shy_macosx_platform :: const_int_32 samples_array_size >
 inline void shy_macosx_platform :: sound_create_mono_buffer 
     ( sound_buffer_id & result
-    , mono_sound_sample * samples 
+    , const static_array < mono_sound_sample , samples_array_size > & samples 
     , num_whole samples_count 
     )
 {
@@ -71,15 +73,16 @@ inline void shy_macosx_platform :: sound_create_mono_buffer
     al_buffer_data_static_proc
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
-        , ( ALvoid * ) samples
+        , ( ALvoid * ) samples . _elements
         , samples_count . _value * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
 }
 
+template < shy_macosx_platform :: const_int_32 samples_array_size >
 inline void shy_macosx_platform :: sound_create_stereo_buffer 
     ( sound_buffer_id & result
-    , stereo_sound_sample * samples 
+    , const static_array < stereo_sound_sample , samples_array_size > & samples 
     , num_whole samples_count 
     )
 {
@@ -89,7 +92,7 @@ inline void shy_macosx_platform :: sound_create_stereo_buffer
     al_buffer_data_static_proc
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
-        , ( ALvoid * ) samples 
+        , ( ALvoid * ) samples . _elements
         , samples_count . _value * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;
