@@ -281,7 +281,6 @@ public :
     static void render_projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     static void render_projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     
-    // PUT const BEFORE static_array < ... >
     template < const_int_32 vertex_array_size >
     static void render_create_vertex_buffer 
         ( render_vertex_buffer_id & arg_buffer_id 

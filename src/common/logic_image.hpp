@@ -136,8 +136,7 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _create_image_mesh ( )
 {
-    typedef typename platform :: template static_array < vertex_data , 4 > vertex_array ;
-    vertex_array vertices ;
+    typename platform :: template static_array < vertex_data , 4 > vertices ;
     index_data indices [ 4 ] ;
 
     num_fract x_left ;
@@ -195,7 +194,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform :: render_set_vertex_tex_coord ( platform :: array_element ( vertices , platform :: whole_3 ) , u_right , v_bottom ) ;
     platform :: render_set_index_value      ( indices  [ 3 ] , index ) ;
 
-    _mediator -> template mesh_create < vertex_array >
+    _mediator -> mesh_create
         ( _image_mesh_id 
         , vertices 
         , indices 

@@ -159,8 +159,7 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _create_spot_mesh ( )
 {
-    typedef typename platform :: template static_array < vertex_data , _spot_edges > vertex_array ;
-    vertex_array vertices ;
+    typename platform :: template static_array < vertex_data , _spot_edges > vertices ;
     index_data indices [ _spot_edges ] ;
     num_whole i ;
     num_whole whole_spot_edges ;
@@ -206,7 +205,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform :: memory_pointer_offset ( index_ptr , indices , i ) ;
         platform :: render_set_index_value ( * index_ptr , i ) ;
     }
-    _mediator -> template mesh_create < vertex_array >
+    _mediator -> mesh_create
         ( _spot_mesh_id 
         , vertices 
         , 0 

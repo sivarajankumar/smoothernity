@@ -341,7 +341,7 @@ void shy_mediator < mediator_types > :: mesh_create
     , num_whole triangle_fan_indices_count
     )
 {
-    _engine_mesh . template mesh_create < vertex_array >
+    _engine_mesh . mesh_create
         ( result
         , vertices
         , triangle_strip_indices

@@ -128,8 +128,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
 {    
-    typedef typename platform :: template static_array < vertex_data , _fidget_edges > vertex_array ;
-    vertex_array vertices ;
+    typename platform :: template static_array < vertex_data , _fidget_edges > vertices ;
     index_data indices [ _fidget_edges ] ;
     num_whole i ;
     num_whole whole_fidget_edges ;
@@ -176,7 +175,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         platform :: memory_pointer_offset ( index_ptr , indices , i ) ;
         platform :: render_set_index_value ( * index_ptr , i ) ;
     }
-    _mediator -> template mesh_create < vertex_array >
+    _mediator -> mesh_create
         ( _fidget_mesh_id 
         , vertices 
         , 0 
