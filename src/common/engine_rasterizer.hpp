@@ -3,15 +3,14 @@ class shy_engine_rasterizer
 {
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: texel_data texel_data ;
 public :
     shy_engine_rasterizer ( mediator * arg_mediator ) ;
-    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
-    void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
-    void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
-    void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
+    void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
+    void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
 private :
     void _rasterize_horizontal_line ( num_whole x1 , num_whole x2 , num_whole y ) ;
@@ -35,20 +34,8 @@ shy_engine_rasterizer < mediator > :: shy_engine_rasterizer ( mediator * arg_med
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_triangle ( int_32 x1_int_32 , int_32 y1_int_32 , int_32 x2_int_32 , int_32 y2_int_32 , int_32 x3_int_32 , int_32 y3_int_32 )
+void shy_engine_rasterizer < mediator > :: rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 )
 {
-    num_whole x1 ;
-    num_whole y1 ;
-    num_whole x2 ;
-    num_whole y2 ;
-    num_whole x3 ;
-    num_whole y3 ;
-    platform :: math_make_num_whole ( x1 , x1_int_32 ) ;
-    platform :: math_make_num_whole ( y1 , y1_int_32 ) ;
-    platform :: math_make_num_whole ( x2 , x2_int_32 ) ;
-    platform :: math_make_num_whole ( y2 , y2_int_32 ) ;
-    platform :: math_make_num_whole ( x3 , x3_int_32 ) ;
-    platform :: math_make_num_whole ( y3 , y3_int_32 ) ;
     if ( platform :: condition_whole_greater_or_equal_to_whole ( y1 , y2 ) 
       && platform :: condition_whole_greater_or_equal_to_whole ( y2 , y3 )
        )
@@ -94,22 +81,14 @@ void shy_engine_rasterizer < mediator > :: rasterize_triangle ( int_32 x1_int_32
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( int_32 x1_int_32 , int_32 y1_int_32 , int_32 x2_int_32 , int_32 y2_int_32 )
+void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
-    num_whole x1 ;
-    num_whole x2 ;
-    num_whole y1 ;
-    num_whole y2 ;
     num_whole width ;
     num_whole height ;
     num_whole y_center ;
     num_whole x_center ;
     num_whole x_diff ;
     num_whole y_diff ;
-    platform :: math_make_num_whole ( x1 , x1_int_32 ) ;
-    platform :: math_make_num_whole ( x2 , x2_int_32 ) ;
-    platform :: math_make_num_whole ( y1 , y1_int_32 ) ;
-    platform :: math_make_num_whole ( y2 , y2_int_32 ) ;
     platform :: math_add_wholes ( y_center , y1 , y2 ) ;
     platform :: math_div_whole_by ( y_center , platform :: whole_2 ) ;
     platform :: math_add_wholes ( x_center , x1 , x2 ) ;
@@ -127,18 +106,18 @@ void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( int_32 x1
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
+void shy_engine_rasterizer < mediator > :: rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
     rasterize_triangle ( x1 , y1 , x1 , y2 , x2 , y2 ) ;
     rasterize_triangle ( x1 , y1 , x2 , y1 , x2 , y2 ) ;
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y )
+void shy_engine_rasterizer < mediator > :: rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y )
 {
     _texture_id = arg_texture_id ;
-    platform :: math_make_num_whole ( _origin_x , origin_x ) ;
-    platform :: math_make_num_whole ( _origin_y , origin_y ) ;
+    _origin_x = origin_x ;
+    _origin_y = origin_y ;
 }
 
 template < typename mediator >

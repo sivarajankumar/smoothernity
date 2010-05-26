@@ -53,8 +53,6 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
-    typedef typename platform :: float_32 float_32 ;
-    typedef typename platform :: int_32 int_32 ;
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
     typedef typename platform :: num_fract num_fract ;
@@ -116,10 +114,10 @@ public :
         ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
-    void rasterize_ellipse_in_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
-    void rasterize_rect ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 ) ;
-    void rasterize_triangle ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 ) ;
-    void rasterize_use_texture ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y ) ;
+    void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
+    void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     void render ( ) ;
     void sound_prepare_permit ( ) ;
@@ -413,27 +411,6 @@ void shy_mediator < mediator_types > :: touch_prepare_permit ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: rasterize_ellipse_in_rect
-    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
-{
-    _engine_rasterizer . rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: rasterize_rect
-    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 )
-{
-    _engine_rasterizer . rasterize_rect ( x1 , y1 , x2 , y2 ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: rasterize_use_texture 
-    ( texture_id arg_texture_id , int_32 origin_x , int_32 origin_y )
-{
-    _engine_rasterizer . rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_use_texel
     ( const texel_data & texel )
 {
@@ -441,8 +418,29 @@ void shy_mediator < mediator_types > :: rasterize_use_texel
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_ellipse_in_rect
+    ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
+{
+    _engine_rasterizer . rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_rect
+    ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
+{
+    _engine_rasterizer . rasterize_rect ( x1 , y1 , x2 , y2 ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: rasterize_use_texture 
+    ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y )
+{
+    _engine_rasterizer . rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: rasterize_triangle
-    ( int_32 x1 , int_32 y1 , int_32 x2 , int_32 y2 , int_32 x3 , int_32 y3 )
+    ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 )
 {
     _engine_rasterizer . rasterize_triangle ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
 }
