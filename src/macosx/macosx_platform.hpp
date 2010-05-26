@@ -273,6 +273,24 @@ public :
     static void render_set_texel_color ( texel_data & texel , num_whole r , num_whole g , num_whole b , num_whole a ) ;
     static void render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     static void render_texture_loader_ready ( num_whole & is_ready ) ;
+
+    static void render_clear_screen ( num_fract r , num_fract g , num_fract b ) ;    
+    static void render_projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
+    static void render_projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
+    
+    static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
+    static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
+    static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
+    static void render_set_index_value ( index_data & data , num_whole index ) ;
+    
+    static void render_matrix_identity ( ) ;
+    static void render_matrix_load ( const matrix_data & matrix ) ;
+    static void render_matrix_mult ( const matrix_data & matrix ) ;
+    static void render_matrix_push ( ) ;
+    static void render_matrix_pop ( ) ;
+    
+	static void render_get_aspect_width ( num_fract & result ) ;
+	static void render_get_aspect_height ( num_fract & result ) ;
     
     template < const_int_32 texel_array_size >
     static void render_load_texture_data 
@@ -285,13 +303,7 @@ public :
         ( const texture_resource_id & resource_id 
         , num_whole size_pow2_base 
         , const static_array < texel_data , texel_array_size > & data 
-        ) ;
-    
-    static void render_clear_screen ( num_fract r , num_fract g , num_fract b ) ;
-    
-    static void render_projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
-    static void render_projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
-    
+        ) ;    
     template < const_int_32 vertex_array_size >
     static void render_create_vertex_buffer 
         ( render_vertex_buffer_id & arg_buffer_id 
@@ -314,20 +326,6 @@ public :
         , const render_index_buffer_id & indices_buffer
         , num_whole indices_count
         ) ;        
-    
-    static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
-    static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
-    static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
-    static void render_set_index_value ( index_data & data , num_whole index ) ;
-    
-    static void render_matrix_identity ( ) ;
-    static void render_matrix_load ( const matrix_data & matrix ) ;
-    static void render_matrix_mult ( const matrix_data & matrix ) ;
-    static void render_matrix_push ( ) ;
-    static void render_matrix_pop ( ) ;
-    
-	static void render_get_aspect_width ( num_fract & result ) ;
-	static void render_get_aspect_height ( num_fract & result ) ;
     
     //
     // sound
