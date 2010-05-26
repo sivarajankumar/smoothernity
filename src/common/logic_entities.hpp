@@ -196,6 +196,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_fract fract_entity_mesh_spans ;
     num_whole whole_entity_mesh_spans ;
     num_whole whole_entity_mesh_spans_plus_1 ;
+    
     platform :: math_make_num_whole ( color_bias , 21 ) ;
     platform :: math_make_num_whole ( colors_max , 7 ) ;
     platform :: math_make_num_whole ( strip_indices_count , 0 ) ;
@@ -205,6 +206,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform :: math_make_num_fract ( fract_entity_mesh_spans , _entity_mesh_spans , 1 ) ;
     platform :: math_add_wholes ( whole_entity_mesh_spans_plus_1 , whole_entity_mesh_spans , platform :: whole_1 ) ;
     platform :: math_make_num_fract ( fract_entity_mesh_height , _entity_mesh_height , 1 ) ;
+    
     for ( num_whole i = platform :: whole_0 
         ; platform :: condition_whole_less_or_equal_to_whole ( i , whole_entity_mesh_spans ) 
         ; platform :: math_inc_whole ( i )
@@ -349,12 +351,14 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
     num_fract fract_scale_wave ;
     num_fract fract_scale_in_frames ;
     num_fract fract_grid_scale ;
+    
     platform :: math_make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
     platform :: math_make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
     platform :: math_make_num_fract ( fract_entity_mesh_grid , _entity_mesh_grid , 1 ) ;
     platform :: math_make_num_fract ( fract_scale_wave , _scale_wave , 1 ) ;
     platform :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform :: math_make_fract_from_whole ( fract_grid_scale , _grid_scale ) ;
+    
     if ( platform :: condition_whole_less_or_equal_to_whole ( _grid_scale , whole_scale_in_frames ) )
     {
         for ( num_whole x = platform :: whole_0 
