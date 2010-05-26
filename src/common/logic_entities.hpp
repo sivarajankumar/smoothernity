@@ -20,9 +20,6 @@ class shy_logic_entities
     static const_int_32 _entity_color_roof_r = 255 ;
     static const_int_32 _entity_color_roof_g = 255 ;
     static const_int_32 _entity_color_roof_b = 255 ;
-    static const_int_32 * _entity_colors_r ( ) { static const_int_32 c [ ] = { 255 , 255 , 255 ,   0 ,   0 ,   0 , 255 } ; return c ; }
-    static const_int_32 * _entity_colors_g ( ) { static const_int_32 c [ ] = {   0 , 128 , 255 , 255 , 255 ,   0 ,   0 } ; return c ; }
-    static const_int_32 * _entity_colors_b ( ) { static const_int_32 c [ ] = {   0 ,   0 ,   0 ,   0 , 255 , 255 , 255 } ; return c ; }
 
 public :
     shy_logic_entities ( mediator * arg_mediator ) ;
@@ -34,6 +31,7 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
 private :
     void _entities_render ( ) ;
+    void _entity_color ( num_whole & r , num_whole & g , num_whole & b , num_whole & a , num_whole i ) ;
     void _create_entity_mesh ( ) ;
     void _get_entity_origin ( vector_data & result , num_whole index ) ;
     void _update_entity_grid ( ) ;
@@ -43,7 +41,7 @@ private :
     num_whole _entities_prepare_permitted ;
     num_whole _grid_scale ;
     mesh_id _entity_mesh_id ;
-    matrix_data _entities_grid_matrices [ _entity_mesh_grid * _entity_mesh_grid ] ;
+    typename platform :: template static_array < matrix_data , _entity_mesh_grid * _entity_mesh_grid > _entities_grid_matrices ;
 } ;
 
 template < typename mediator >
@@ -116,10 +114,63 @@ void shy_logic_entities < mediator > :: _entities_render ( )
         ; platform :: math_inc_whole ( i )
         )
     {
-        matrix_data * matrix_ptr = 0 ;
-        platform :: memory_pointer_offset ( matrix_ptr , _entities_grid_matrices , i ) ;
-        _mediator -> mesh_set_transform ( _entity_mesh_id , * matrix_ptr ) ;
+        matrix_data & matrix = platform :: array_element ( _entities_grid_matrices , i ) ;
+        _mediator -> mesh_set_transform ( _entity_mesh_id , matrix ) ;
         _mediator -> mesh_render ( _entity_mesh_id ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: _entity_color ( num_whole & r , num_whole & g , num_whole & b , num_whole & a , num_whole i )
+{
+    if ( platform :: condition_wholes_are_equal ( i , platform :: whole_0 ) )
+    {
+        platform :: math_make_num_whole ( r , 255 ) ;
+        platform :: math_make_num_whole ( g , 0 ) ;
+        platform :: math_make_num_whole ( b , 0 ) ;
+        platform :: math_make_num_whole ( a , 255 ) ;
+    }
+    else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_1 ) )
+    {
+        platform :: math_make_num_whole ( r , 255 ) ;
+        platform :: math_make_num_whole ( g , 128 ) ;
+        platform :: math_make_num_whole ( b , 0 ) ;
+        platform :: math_make_num_whole ( a , 255 ) ;
+    }
+    else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_2 ) )
+    {
+        platform :: math_make_num_whole ( r , 255 ) ;
+        platform :: math_make_num_whole ( g , 255 ) ;
+        platform :: math_make_num_whole ( b , 0 ) ;
+        platform :: math_make_num_whole ( a , 255 ) ;
+    }
+    else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_3 ) )
+    {
+        platform :: math_make_num_whole ( r , 0 ) ;
+        platform :: math_make_num_whole ( g , 255 ) ;
+        platform :: math_make_num_whole ( b , 0 ) ;
+        platform :: math_make_num_whole ( a , 255 ) ;
+    }
+    else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_4 ) )
+    {
+        platform :: math_make_num_whole ( r , 0 ) ;
+        platform :: math_make_num_whole ( g , 255 ) ;
+        platform :: math_make_num_whole ( b , 255 ) ;
+        platform :: math_make_num_whole ( a , 255 ) ;
+    }
+    else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_5 ) )
+    {
+        platform :: math_make_num_whole ( r , 0 ) ;
+        platform :: math_make_num_whole ( g , 0 ) ;
+        platform :: math_make_num_whole ( b , 255 ) ;
+        platform :: math_make_num_whole ( a , 255 ) ;
+    }
+    else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_6 ) )
+    {
+        platform :: math_make_num_whole ( r , 255 ) ;
+        platform :: math_make_num_whole ( g , 0 ) ;
+        platform :: math_make_num_whole ( b , 255 ) ;
+        platform :: math_make_num_whole ( a , 255 ) ;
     }
 }
 
@@ -162,9 +213,6 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         num_fract angle ;
         num_whole color1 ;
         num_whole color2 ;
-        const_int_32 * entity_color_r_ptr = 0 ;
-        const_int_32 * entity_color_g_ptr = 0 ;
-        const_int_32 * entity_color_b_ptr = 0 ;
                 
         platform :: math_make_fract_from_whole ( angle , i ) ;
         platform :: math_mul_fract_by ( angle , platform :: fract_2pi ) ;
@@ -179,14 +227,8 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform :: math_sin ( vertex_x , angle ) ;
         platform :: math_div_fracts ( vertex_y , fract_entity_mesh_height , platform :: fract_2 ) ;
         platform :: math_cos ( vertex_z , angle ) ;
-        
-        platform :: memory_pointer_offset ( entity_color_r_ptr , _entity_colors_r ( ) , color1 ) ;
-        platform :: memory_pointer_offset ( entity_color_g_ptr , _entity_colors_g ( ) , color1 ) ;
-        platform :: memory_pointer_offset ( entity_color_b_ptr , _entity_colors_b ( ) , color1 ) ;
-        platform :: math_make_num_whole ( vertex_r , * entity_color_r_ptr ) ;
-        platform :: math_make_num_whole ( vertex_g , * entity_color_g_ptr ) ;
-        platform :: math_make_num_whole ( vertex_b , * entity_color_b_ptr ) ;
-        platform :: math_make_num_whole ( vertex_a , 255 ) ;
+
+        _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
 
         {
             vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
@@ -203,13 +245,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         
         platform :: math_neg_fract ( vertex_y ) ;
         
-        platform :: memory_pointer_offset ( entity_color_r_ptr , _entity_colors_r ( ) , color2 ) ;
-        platform :: memory_pointer_offset ( entity_color_g_ptr , _entity_colors_g ( ) , color2 ) ;
-        platform :: memory_pointer_offset ( entity_color_b_ptr , _entity_colors_b ( ) , color2 ) ;
-        platform :: math_make_num_whole ( vertex_r , * entity_color_r_ptr ) ;
-        platform :: math_make_num_whole ( vertex_g , * entity_color_g_ptr ) ;
-        platform :: math_make_num_whole ( vertex_b , * entity_color_b_ptr ) ;
-        platform :: math_make_num_whole ( vertex_a , 255 ) ;
+        _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color2 ) ;
         
         {
             vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
@@ -337,7 +373,6 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 num_fract scale_wave_part ;
                 num_fract scale_frame_part ;
                 num_whole index ;
-                matrix_data * matrix_ptr = 0 ;
                 
                 platform :: math_mul_wholes ( index , z , whole_entity_mesh_grid ) ;
                 platform :: math_add_to_whole ( index , x ) ;
@@ -361,11 +396,11 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
                 
-                platform :: memory_pointer_offset ( matrix_ptr , _entities_grid_matrices , index ) ;
-                platform :: matrix_set_axis_x ( * matrix_ptr , scale , platform :: fract_0 , platform :: fract_0 ) ;
-                platform :: matrix_set_axis_y ( * matrix_ptr , platform :: fract_0 , scale , platform :: fract_0 ) ;
-                platform :: matrix_set_axis_z ( * matrix_ptr , platform :: fract_0 , platform :: fract_0 , scale ) ;
-                platform :: matrix_set_origin ( * matrix_ptr , origin ) ;
+                matrix_data & matrix = platform :: array_element ( _entities_grid_matrices , index ) ;
+                platform :: matrix_set_axis_x ( matrix , scale , platform :: fract_0 , platform :: fract_0 ) ;
+                platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
+                platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
+                platform :: matrix_set_origin ( matrix , origin ) ;
             }
         }
         platform :: math_inc_whole ( _grid_scale ) ;

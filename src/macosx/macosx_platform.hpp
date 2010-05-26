@@ -430,13 +430,6 @@ public :
     static int condition_whole_is_even ( num_whole num ) ;
     
     //
-    // memory
-    //
-    
-    template < typename type >
-    static void memory_pointer_offset ( type * & result , type * base , num_whole offset ) ;
-        
-    //
     // array
     //
     
@@ -501,7 +494,6 @@ void swap_values ( type & a , type & b )
 #include "macosx_platform_condition.hpp"
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
-#include "macosx_platform_memory.hpp"
 #include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
