@@ -2,12 +2,12 @@ template < typename mediator >
 class shy_engine_mesh
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: render_index_buffer_id render_index_buffer_id ;
-    typedef typename mediator :: platform :: render_vertex_buffer_id render_vertex_buffer_id ;
-    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
+    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: render_index_buffer_id render_index_buffer_id ;
+    typedef typename mediator :: platform :: render_vertex_buffer_id render_vertex_buffer_id ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const_int_32 _max_meshes = 100 ;

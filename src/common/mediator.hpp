@@ -98,17 +98,12 @@ public :
     void land_prepared ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
-    template < typename T > void math_abs ( T & result , T f ) ;
     void math_abs_whole ( num_whole & result , num_whole a ) ;
     void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    template < typename T > void math_clamp ( T & result , T f , T from , T to ) ;
     void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
     void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
-    void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
-    template < typename T > void math_max ( T & result , T f1 , T f2 ) ;
     void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
-    template < typename T > void math_min ( T & result , T f1 , T f2 ) ;
     void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
     void mesh_create 
         ( mesh_id & result
@@ -136,13 +131,13 @@ public :
     void text_update ( ) ;
     void texture_create ( texture_id & result ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
-    void texture_height ( int_32 & result ) ;
+    void texture_height ( num_whole & result ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
-    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
-    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a ) ;
     void texture_unselect ( ) ;
-    void texture_width ( int_32 & result ) ;
+    void texture_width ( num_whole & result ) ;
     void title_finished ( ) ;
     void title_launch_permit ( ) ;
     void title_render ( ) ;
@@ -298,13 +293,6 @@ void shy_mediator < mediator_types > :: land_prepared ( )
 }
 
 template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_abs ( T & result , T f )
-{
-    _engine_math . math_abs < T > ( result , f ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_abs_whole ( num_whole & result , num_whole a )
 {
     _engine_math . math_abs_whole ( result , a ) ;
@@ -318,13 +306,6 @@ void shy_mediator < mediator_types > :: math_catmull_rom_spline
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_lerp 
-    ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight )
-{
-    _engine_math . math_lerp ( result , from_value , from_weight , to_value , to_weight , weight ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_clamp_fract ( num_fract & result , num_fract f , num_fract from , num_fract to )
 {
     _engine_math . math_clamp_fract ( result , f , from , to ) ;
@@ -334,27 +315,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: math_clamp_fract ( num_fract & f , num_fract from , num_fract to )
 {
     _engine_math . math_clamp_fract ( f , from , to ) ;
-}
-
-template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_clamp ( T & result , T f , T from , T to )
-{
-    _engine_math . math_clamp < T > ( result , f , from , to ) ;
-}
-
-template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_max ( T & result , T f1 , T f2 )
-{
-    _engine_math . math_max < T > ( result , f1 , f2 ) ;
-}
-
-template < typename mediator_types >
-template < typename T >
-void shy_mediator < mediator_types > :: math_min ( T & result , T f1 , T f2 )
-{
-    _engine_math . math_min < T > ( result , f1 , f2 ) ;
 }
 
 template < typename mediator_types >
@@ -624,14 +584,14 @@ void shy_mediator < mediator_types > :: texture_select ( texture_id arg_texture_
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_set_texel 
-    ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel )
 {
     _engine_texture . texture_set_texel ( arg_texture_id , x , y , texel ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_set_texel 
-    ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a )
 {
     _engine_texture . texture_set_texel ( arg_texture_id , x , y , r , g , b , a ) ;
 }
@@ -643,13 +603,13 @@ void shy_mediator < mediator_types > :: texture_unselect ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_height ( int_32 & result )
+void shy_mediator < mediator_types > :: texture_height ( num_whole & result )
 {
     _engine_texture . texture_height ( result ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_width ( int_32 & result )
+void shy_mediator < mediator_types > :: texture_width ( num_whole & result )
 {
     _engine_texture . texture_width ( result ) ;
 }

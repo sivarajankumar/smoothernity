@@ -6,7 +6,6 @@ class shy_logic_land
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -244,12 +243,8 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         _mediator -> texture_create ( _land_texture_id ) ;
     platform :: math_make_num_whole ( whole_create_rows_per_frame , _create_rows_per_frame ) ;
     
-    int_32 texture_width_int_32 ;
-    int_32 texture_height_int_32 ;
-    _mediator -> texture_width ( texture_width_int_32 ) ;
-    _mediator -> texture_height ( texture_height_int_32 ) ;
-    platform :: math_make_num_whole ( texture_width , texture_width_int_32 ) ;
-    platform :: math_make_num_whole ( texture_height , texture_height_int_32 ) ;
+    _mediator -> texture_width ( texture_width ) ;
+    _mediator -> texture_height ( texture_height ) ;
     while ( true )
     {
         num_whole x ;
@@ -295,15 +290,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             platform :: math_mul_whole_by ( texel_g , multiplier_2 ) ;
             platform :: math_mul_whole_by ( texel_b , multiplier_3 ) ;
 
-            _mediator -> texture_set_texel 
-                ( _land_texture_id 
-                , x . debug_to_int_32 ( ) 
-                , y . debug_to_int_32 ( ) 
-                , texel_r . debug_to_int_32 ( ) 
-                , texel_g . debug_to_int_32 ( ) 
-                , texel_b . debug_to_int_32 ( ) 
-                , texel_a . debug_to_int_32 ( ) 
-                ) ;
+            _mediator -> texture_set_texel ( _land_texture_id , x , y , texel_r , texel_g , texel_b , texel_a ) ;
         }
         platform :: math_inc_whole ( _land_texture_creation_row ) ;
     }

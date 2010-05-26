@@ -163,7 +163,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( num_whol
         num_whole y_plus_origin_y ;
         platform :: math_add_wholes ( x_plus_origin_x , x , _origin_x ) ;
         platform :: math_add_wholes ( y_plus_origin_y , y , _origin_y ) ;
-        _mediator -> texture_set_texel ( _texture_id , x_plus_origin_x . debug_to_int_32 ( ) , y_plus_origin_y . debug_to_int_32 ( ) , _texel ) ;
+        _mediator -> texture_set_texel ( _texture_id , x_plus_origin_x , y_plus_origin_y , _texel ) ;
     }
 }
 

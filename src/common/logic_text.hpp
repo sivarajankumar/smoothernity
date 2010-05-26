@@ -5,7 +5,6 @@ class shy_logic_text
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
@@ -33,7 +32,7 @@ private :
     void _create_text_texture ( ) ;
     void _next_letter_col ( ) ;
     void _next_letter_row ( ) ;
-    void _rasterize_english_alphabet ( int_32 letter_size_x , int_32 letter_size_y ) ;
+    void _rasterize_english_alphabet ( num_whole letter_size_x , num_whole letter_size_y ) ;
     void _rasterize_font_english_A ( ) ;
     void _rasterize_font_english_B ( ) ;
     void _rasterize_font_english_C ( ) ;
@@ -220,8 +219,6 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _create_text_texture ( )
 {
-    int_32 texture_width_int_32 ;
-    int_32 texture_height_int_32 ;
     num_whole texture_width ;
     num_whole texture_height ;
     num_whole filler_r ;
@@ -232,10 +229,12 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     num_whole eraser_g ;
     num_whole eraser_b ;
     num_whole eraser_a ;
-    _mediator -> texture_width ( texture_width_int_32 ) ;
-    _mediator -> texture_height ( texture_height_int_32 ) ;
-    platform :: math_make_num_whole ( texture_width , texture_width_int_32 ) ;
-    platform :: math_make_num_whole ( texture_height , texture_height_int_32 ) ;
+    num_whole small_size ;
+    num_whole big_size ;
+    _mediator -> texture_width ( texture_width ) ;
+    _mediator -> texture_height ( texture_height ) ;
+    platform :: math_make_num_whole ( small_size , 16 ) ;
+    platform :: math_make_num_whole ( big_size , 32 ) ;
     platform :: math_make_num_whole ( filler_r , 0 ) ;
     platform :: math_make_num_whole ( filler_g , 255 ) ;
     platform :: math_make_num_whole ( filler_b , 0 ) ;
@@ -257,20 +256,20 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
             ; platform :: math_inc_whole ( y )
             )
         {
-            _mediator -> texture_set_texel ( _text_texture_id , x . debug_to_int_32 ( ) , y . debug_to_int_32 ( ) , _eraser ) ;
+            _mediator -> texture_set_texel ( _text_texture_id , x , y , _eraser ) ;
         }
     }
     _origin_y = texture_height ;
-    _rasterize_english_alphabet ( 16 , 16 ) ;
-    _rasterize_english_alphabet ( 32 , 32 ) ;
+    _rasterize_english_alphabet ( small_size , small_size ) ;
+    _rasterize_english_alphabet ( big_size , big_size ) ;
     _mediator -> texture_finalize ( _text_texture_id ) ;
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_size_x_int_32 , int_32 letter_size_y_int_32 )
+void shy_logic_text < mediator > :: _rasterize_english_alphabet ( num_whole letter_size_x , num_whole letter_size_y )
 {
-    platform :: math_make_num_whole ( _letter_size_x , letter_size_x_int_32 ) ;
-    platform :: math_make_num_whole ( _letter_size_y , letter_size_y_int_32 ) ;
+    _letter_size_x = letter_size_x ;
+    _letter_size_y = letter_size_y ;
     _next_letter_row ( ) ;
     _rasterize_font_english_A ( ) ; _next_letter_col ( ) ;
     _rasterize_font_english_B ( ) ; _next_letter_col ( ) ;
@@ -305,10 +304,10 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( int_32 letter_
 template < typename mediator >
 void shy_logic_text < mediator > :: _next_letter_col ( )
 {
-    int_32 texture_width_int_32 ;
-    _mediator -> texture_width ( texture_width_int_32 ) ;
+    num_whole texture_width ;
+    _mediator -> texture_width ( texture_width ) ;
     platform :: math_add_to_whole ( _origin_x , _letter_size_x ) ;
-    if ( _origin_x . debug_to_int_32 ( ) >= texture_width_int_32 )
+    if ( platform :: condition_whole_greater_or_equal_to_whole ( _origin_x , texture_width ) )
     {
         num_whole delta_y ;
         platform :: math_div_wholes ( delta_y , _letter_size_y , platform :: whole_4 ) ;

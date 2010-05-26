@@ -2,25 +2,18 @@ template < typename mediator >
 class shy_engine_math
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: float_32 float_32 ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     
 public :
     void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    void math_lerp ( float_32 & result , float_32 from_value , float_32 from_weight , float_32 to_value , float_32 to_weight , float_32 weight ) ;
     void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
     void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
     void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
     void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
     void math_abs_whole ( num_whole & result , num_whole a ) ;
-    template < typename type > void math_clamp ( type & result , type f , type from , type to ) ;
-    template < typename type > void math_abs ( type & result , type f ) ;
-    template < typename type > void math_max ( type & result , type f1 , type f2 ) ;
-    template < typename type > void math_min ( type & result , type f1 , type f2 ) ;
 } ;
 
 template < typename mediator >
@@ -67,52 +60,6 @@ void shy_engine_math < mediator > :: math_catmull_rom_spline
     platform :: vector_add ( result_p2_p3 , p2_scaled , p3_scaled ) ;
     platform :: vector_add ( result_p0_p1_p2_p3 , result_p0_p1 , result_p2_p3 ) ;
     platform :: vector_mul ( result , result_p0_p1_p2_p3 , half ) ;
-}
-
-template < typename mediator >
-template < typename type >
-void shy_engine_math < mediator > :: math_clamp ( type & result , type f , type from , type to )
-{
-    if ( f < from )
-        result = from ;
-    else if ( f > to )
-        result = to ;
-    else
-        result = f ;
-}
-
-template < typename mediator >
-template < typename type >
-void shy_engine_math < mediator > :: math_abs ( type & result , type f )
-{
-    result = f < type ( 0 ) ? - f : f ;
-}
-
-template < typename mediator >
-template < typename type >
-void shy_engine_math < mediator > :: math_max ( type & result , type f1 , type f2 )
-{
-    result = f1 > f2 ? f1 : f2 ;
-}
-
-template < typename mediator >
-template < typename type >
-void shy_engine_math < mediator > :: math_min ( type & result , type f1 , type f2 )
-{
-    result = f1 < f2 ? f1 : f2 ;
-}
-
-template < typename mediator >
-void shy_engine_math < mediator > :: math_lerp 
-    ( float_32 & result
-    , float_32 from_value 
-    , float_32 from_weight 
-    , float_32 to_value 
-    , float_32 to_weight 
-    , float_32 weight 
-    )
-{
-    result = from_value + ( to_value - from_value ) * ( weight - from_weight ) / ( to_weight - from_weight ) ;
 }
 
 template < typename mediator >

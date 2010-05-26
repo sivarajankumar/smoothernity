@@ -6,7 +6,6 @@ class shy_engine_texture
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
-    typedef typename mediator :: platform :: int_32 int_32 ;
     typedef typename mediator :: platform :: num_whole num_whole ;
     
     static const_int_32 _max_textures = 5 ;
@@ -34,10 +33,10 @@ public :
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_unselect ( ) ;
-    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , const texel_data & texel ) ;
-    void texture_set_texel ( texture_id arg_texture_id , int_32 x , int_32 y , int_32 r , int_32 g , int_32 b , int_32 a ) ;
-    void texture_width ( int_32 & result ) ;
-    void texture_height ( int_32 & result ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a ) ;
+    void texture_width ( num_whole & result ) ;
+    void texture_height ( num_whole & result ) ;
 private :
     num_whole _next_texture_id ;
     _texture_data _textures_datas [ _max_textures ] ;
@@ -94,16 +93,12 @@ void shy_engine_texture < mediator > :: texture_unselect ( )
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_set_texel
-    ( texture_id arg_texture_id , int_32 x_int_32 , int_32 y_int_32 , const texel_data & texel )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel )
 {
-    num_whole x ;
-    num_whole y ;
     num_whole texel_offset ;
     num_whole num_texture_size ;
     texel_data * texel_ptr = 0 ;
     _texture_data * texture_ptr = 0 ;
-    platform :: math_make_num_whole ( x , x_int_32 ) ;
-    platform :: math_make_num_whole ( y , y_int_32 ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
     platform :: math_add_to_whole ( texel_offset , x ) ;
@@ -114,24 +109,12 @@ void shy_engine_texture < mediator > :: texture_set_texel
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_set_texel
-    ( texture_id arg_texture_id , int_32 x_int_32 , int_32 y_int_32 , int_32 r_int_32 , int_32 g_int_32 , int_32 b_int_32 , int_32 a_int_32 )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a )
 {
-    num_whole x ;
-    num_whole y ;
-    num_whole r ;
-    num_whole g ;
-    num_whole b ;
-    num_whole a ;
     num_whole texel_offset ;
     num_whole num_texture_size ;
     texel_data * texel_ptr = 0 ;
     _texture_data * texture_ptr = 0 ;
-    platform :: math_make_num_whole ( x , x_int_32 ) ;
-    platform :: math_make_num_whole ( y , y_int_32 ) ;
-    platform :: math_make_num_whole ( r , r_int_32 ) ;
-    platform :: math_make_num_whole ( g , g_int_32 ) ;
-    platform :: math_make_num_whole ( b , b_int_32 ) ;
-    platform :: math_make_num_whole ( a , a_int_32 ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
     platform :: math_add_to_whole ( texel_offset , x ) ;
@@ -141,13 +124,13 @@ void shy_engine_texture < mediator > :: texture_set_texel
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: texture_width ( int_32 & result )
+void shy_engine_texture < mediator > :: texture_width ( num_whole & result )
 {
-    result = _texture_size ;
+    platform :: math_make_num_whole ( result , _texture_size ) ;
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: texture_height ( int_32 & result )
+void shy_engine_texture < mediator > :: texture_height ( num_whole & result )
 {
-    result = _texture_size ;
+    platform :: math_make_num_whole ( result , _texture_size ) ;
 }
