@@ -16,6 +16,15 @@ class shy_macosx_platform
     static const int _uninitialized_value = 0xC0C0C0C0 ;    
 public :
     typedef const int const_int_32 ;
+
+    template < typename data_type , int size >
+    class static_array
+    {
+        friend class shy_macosx_platform ;
+    private :
+        static const int _array_size = size ;
+        data_type _elements [ _array_size ] ;
+    } ;
     
     class num_whole
     {
@@ -396,6 +405,15 @@ public :
     static void memory_pointer_offset ( type * & result , type * base , num_whole offset ) ;
         
     //
+    // array
+    //
+    
+    template < typename data_type , int size >
+    static data_type & array_element ( static_array < data_type , size > & array , num_whole index ) ;
+    template < typename data_type , int size >
+    static const data_type & array_element ( const static_array < data_type , size > & array , num_whole index ) ;
+        
+    //
     // time
     //
     
@@ -447,6 +465,7 @@ void swap_values ( type & a , type & b )
     a = c ;
 }
 
+#include "macosx_platform_array.hpp"
 #include "macosx_platform_condition.hpp"
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
