@@ -39,7 +39,7 @@ public :
     void texture_height ( num_whole & result ) ;
 private :
     num_whole _next_texture_id ;
-    _texture_data _textures_datas [ _max_textures ] ;
+    typename platform :: template static_array < _texture_data , _max_textures > _textures_datas ;
 } ;
 
 template < typename mediator >
@@ -59,30 +59,27 @@ template < typename mediator >
 void shy_engine_texture < mediator > :: texture_finalize ( texture_id arg_texture_id )
 {
     num_whole size_pow2_base ;
-    _texture_data * texture_ptr = 0 ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
-    platform :: memory_pointer_offset ( texture_ptr , _textures_datas , arg_texture_id . _texture_id ) ;
-    platform :: render_create_texture_id ( texture_ptr -> render_id ) ;
-    platform :: render_load_texture_data ( texture_ptr -> render_id , size_pow2_base , texture_ptr -> texels ) ;
+    platform :: render_create_texture_id ( texture . render_id ) ;
+    platform :: render_load_texture_data ( texture . render_id , size_pow2_base , texture . texels ) ;
 }
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id )
 {
     num_whole size_pow2_base ;
-    _texture_data * texture_ptr = 0 ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
-    platform :: memory_pointer_offset ( texture_ptr , _textures_datas , arg_texture_id . _texture_id ) ;
-    platform :: render_load_texture_resource ( arg_resource_id , size_pow2_base , texture_ptr -> texels ) ;
+    platform :: render_load_texture_resource ( arg_resource_id , size_pow2_base , texture . texels ) ;
 }
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_select ( texture_id arg_texture_id )
 {
-    _texture_data * texture_ptr = 0 ;
-    platform :: memory_pointer_offset ( texture_ptr , _textures_datas , arg_texture_id . _texture_id ) ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: render_enable_texturing ( ) ;
-    platform :: render_use_texture ( texture_ptr -> render_id ) ;
+    platform :: render_use_texture ( texture . render_id ) ;
 }
 
 template < typename mediator >
@@ -98,12 +95,11 @@ void shy_engine_texture < mediator > :: texture_set_texel
     num_whole texel_offset ;
     num_whole num_texture_size ;
     texel_data * texel_ptr = 0 ;
-    _texture_data * texture_ptr = 0 ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
     platform :: math_add_to_whole ( texel_offset , x ) ;
-    platform :: memory_pointer_offset ( texture_ptr , _textures_datas , arg_texture_id . _texture_id ) ;
-    platform :: memory_pointer_offset ( texel_ptr , texture_ptr -> texels , texel_offset ) ;
+    platform :: memory_pointer_offset ( texel_ptr , texture . texels , texel_offset ) ;
     * texel_ptr = texel ;
 }
 
@@ -114,12 +110,11 @@ void shy_engine_texture < mediator > :: texture_set_texel
     num_whole texel_offset ;
     num_whole num_texture_size ;
     texel_data * texel_ptr = 0 ;
-    _texture_data * texture_ptr = 0 ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
     platform :: math_add_to_whole ( texel_offset , x ) ;
-    platform :: memory_pointer_offset ( texture_ptr , _textures_datas , arg_texture_id . _texture_id ) ;
-    platform :: memory_pointer_offset ( texel_ptr , texture_ptr -> texels , texel_offset ) ;
+    platform :: memory_pointer_offset ( texel_ptr , texture . texels , texel_offset ) ;
     platform :: render_set_texel_color ( * texel_ptr , r , g , b , a ) ;
 }
 
