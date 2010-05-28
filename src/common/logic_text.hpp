@@ -66,6 +66,7 @@ private :
     void _next_letter_col ( ) ;
     void _next_letter_row ( ) ;
     void _rasterize_english_alphabet ( num_whole letter_size_x , num_whole letter_size_y ) ;
+    void _rasterize_title_word ( num_whole letter_size_x , num_whole letter_size_y ) ;
     void _rasterize_letter ( num_whole letter_code ) ;
     void _rasterize_font_english_A ( ) ;
     void _rasterize_font_english_B ( ) ;
@@ -379,6 +380,27 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( num_whole lett
     _rasterize_letter ( _alphabet_english . X ) ; _next_letter_col ( ) ;
     _rasterize_letter ( _alphabet_english . Y ) ; _next_letter_col ( ) ;
     _rasterize_letter ( _alphabet_english . Z ) ; _next_letter_col ( ) ;
+    _next_letter_row ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_title_word ( num_whole letter_size_x , num_whole letter_size_y )
+{
+    _letter_size_x = letter_size_x ;
+    _letter_size_y = letter_size_y ;
+    _next_letter_row ( ) ;
+    _rasterize_letter ( _alphabet_english . S ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . M ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . O ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . O ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . T ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . H ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . E ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . R ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . N ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . I ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . T ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . Y ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
