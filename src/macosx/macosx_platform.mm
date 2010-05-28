@@ -1,18 +1,18 @@
 #include "macosx_platform.hpp"
 
-shy_macosx_platform :: vertex_data shy_macosx_platform :: _reference_vertex ;
-void * shy_macosx_platform :: _vertex_position_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_macosx_platform :: _reference_vertex . _position ) 
-    - reinterpret_cast < char * > ( & shy_macosx_platform :: _reference_vertex )
+shy_macosx_platform :: vertex_data shy_macosx_platform_utility :: _reference_vertex ;
+void * shy_macosx_platform_utility :: _vertex_position_offset = reinterpret_cast < void * >
+    ( reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex . _position ) 
+    - reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex )
     ) ;
 
-void * shy_macosx_platform :: _vertex_tex_coord_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_macosx_platform :: _reference_vertex . _tex_coord ) 
-    - reinterpret_cast < char * > ( & shy_macosx_platform :: _reference_vertex )
+void * shy_macosx_platform_utility :: _vertex_tex_coord_offset = reinterpret_cast < void * >
+    ( reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex . _tex_coord ) 
+    - reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex )
     ) ;
-void * shy_macosx_platform :: _vertex_color_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_macosx_platform :: _reference_vertex . _color ) 
-    - reinterpret_cast < char * > ( & shy_macosx_platform :: _reference_vertex )
+void * shy_macosx_platform_utility :: _vertex_color_offset = reinterpret_cast < void * >
+    ( reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex . _color ) 
+    - reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex )
     ) ;
     
 shy_macosx_sound_loader * shy_macosx_platform_utility :: _sound_loader = 0 ;
@@ -49,7 +49,7 @@ const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_8 ( 8 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_9 ( 9 ) ;
 
 shy_macosx_platform :: num_whole :: num_whole ( )
-: _value ( _uninitialized_value )
+: _value ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
 
@@ -59,7 +59,7 @@ shy_macosx_platform :: num_whole :: num_whole ( int arg_value )
 }
 
 shy_macosx_platform :: num_fract :: num_fract ( )
-: _value ( _uninitialized_value )
+: _value ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
 
@@ -71,84 +71,84 @@ shy_macosx_platform :: num_fract :: num_fract ( float arg_value )
 shy_macosx_platform :: matrix_data :: matrix_data ( )
 {
     for ( int i = 0 ; i < 16 ; i ++ )
-        _elements [ i ] = _uninitialized_value ;
+        _elements [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
 }
     
 shy_macosx_platform :: vector_data :: vector_data ( )
-: _x ( _uninitialized_value )
-, _y ( _uninitialized_value )
-, _z ( _uninitialized_value )
+: _x ( shy_macosx_platform_utility :: _uninitialized_value )
+, _y ( shy_macosx_platform_utility :: _uninitialized_value )
+, _z ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: render_index_buffer_id :: render_index_buffer_id ( )
-: _buffer_id ( _uninitialized_value )
+: _buffer_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: render_vertex_buffer_id :: render_vertex_buffer_id ( )
-: _buffer_id ( _uninitialized_value )
+: _buffer_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: render_texture_id :: render_texture_id ( )
-: _texture_id ( _uninitialized_value )
+: _texture_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
 
 shy_macosx_platform :: texture_resource_id :: texture_resource_id ( )
-: _resource_id ( _uninitialized_value )
+: _resource_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
 	
 shy_macosx_platform :: texel_data :: texel_data ( )
 {
     for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = _uninitialized_value ;
+        _color [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
 }
     
 shy_macosx_platform :: vertex_data :: vertex_data ( )
 {
     for ( int i = 0 ; i < 3 ; i ++ )
-        _position [ i ] = _uninitialized_value ;
+        _position [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
     for ( int i = 0 ; i < 2 ; i ++ )
-        _tex_coord [ i ] = _uninitialized_value ;
+        _tex_coord [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
     for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = _uninitialized_value ;
+        _color [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
 }
     
 shy_macosx_platform :: index_data :: index_data ( )
-: _index ( _uninitialized_value )
+: _index ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
 
 shy_macosx_platform :: time_data :: time_data ( )
-: _time ( _uninitialized_value )
+: _time ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: mono_sound_sample :: mono_sound_sample ( )
-: _value ( _uninitialized_value )
+: _value ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: stereo_sound_sample :: stereo_sound_sample ( )
-: _left_channel_value ( _uninitialized_value )
-, _right_channel_value ( _uninitialized_value )
+: _left_channel_value ( shy_macosx_platform_utility :: _uninitialized_value )
+, _right_channel_value ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: sound_buffer_id :: sound_buffer_id ( )
-: _buffer_id ( _uninitialized_value )
+: _buffer_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: sound_source_id :: sound_source_id ( )
-: _source_id ( _uninitialized_value )
+: _source_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: stereo_sound_resource_id :: stereo_sound_resource_id ( )
-: _resource_id ( _uninitialized_value )
+: _resource_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
 }

@@ -13,7 +13,6 @@
 
 class shy_macosx_platform
 {
-    static const int _uninitialized_value = 0xC0C0C0C0 ;    
 public :
     typedef const int const_int_32 ;
 
@@ -116,6 +115,7 @@ public :
     class vertex_data
     {
         friend class shy_macosx_platform ;
+        friend class shy_macosx_platform_utility ;
     public :
         vertex_data ( ) ;
     private :
@@ -457,17 +457,13 @@ public :
 	static void mouse_left_button_down ( num_whole & result ) ;
 	static void mouse_x ( num_fract & result ) ;
 	static void mouse_y ( num_fract & result ) ;
-
-private :
-    static vertex_data _reference_vertex ;
-    static void * _vertex_position_offset ;
-    static void * _vertex_tex_coord_offset ;
-    static void * _vertex_color_offset ;
 } ;
 
 class shy_macosx_platform_utility
 {
 public :
+    static const int _uninitialized_value = 0xC0C0C0C0 ;    
+    
     static shy_macosx_sound_loader * _sound_loader ;
     static shy_macosx_texture_loader * _texture_loader ;
 	
@@ -477,6 +473,11 @@ public :
 	static int _mouse_left_button_down ;
 	static float _mouse_x ;
 	static float _mouse_y ;
+
+    static shy_macosx_platform :: vertex_data _reference_vertex ;
+    static void * _vertex_position_offset ;
+    static void * _vertex_tex_coord_offset ;
+    static void * _vertex_color_offset ;
 } ;
 
 template < typename type >
