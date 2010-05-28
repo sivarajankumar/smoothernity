@@ -3,10 +3,11 @@ class shy_engine_texture
 {
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
+    typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
-    typedef typename mediator :: platform :: num_whole num_whole ;
     
     static const_int_32 _max_textures = 5 ;
     static const_int_32 _texture_size_pow2_base = 8 ;
@@ -103,10 +104,24 @@ void shy_engine_texture < mediator > :: texture_set_texel
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_set_texel
-    ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole whole_r , num_whole whole_g , num_whole whole_b , num_whole whole_a )
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
+    num_fract color_scale ;
+    num_fract r ;
+    num_fract g ;
+    num_fract b ;
+    num_fract a ;
+    platform :: math_make_num_fract ( color_scale , 255 , 1 ) ;
+    platform :: math_make_fract_from_whole ( r , whole_r ) ;
+    platform :: math_make_fract_from_whole ( g , whole_g ) ;
+    platform :: math_make_fract_from_whole ( b , whole_b ) ;
+    platform :: math_make_fract_from_whole ( a , whole_a ) ;
+    platform :: math_div_fract_by ( r , color_scale ) ;
+    platform :: math_div_fract_by ( g , color_scale ) ;
+    platform :: math_div_fract_by ( b , color_scale ) ;
+    platform :: math_div_fract_by ( a , color_scale ) ;
     _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;

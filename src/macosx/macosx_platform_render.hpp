@@ -71,12 +71,12 @@ inline void shy_macosx_platform :: render_use_texture ( const render_texture_id 
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
 }
 
-inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel , num_whole r , num_whole g , num_whole b , num_whole a )
+inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    texel . _color [ 0 ] = ( GLubyte ) b . _value ;
-    texel . _color [ 1 ] = ( GLubyte ) g . _value ;
-    texel . _color [ 2 ] = ( GLubyte ) r . _value ;
-    texel . _color [ 3 ] = ( GLubyte ) a . _value ;
+    texel . _color [ 0 ] = ( GLubyte ) ( b . _value * 255.0f ) ;
+    texel . _color [ 1 ] = ( GLubyte ) ( g . _value * 255.0f ) ;
+    texel . _color [ 2 ] = ( GLubyte ) ( r . _value * 255.0f ) ;
+    texel . _color [ 3 ] = ( GLubyte ) ( a . _value * 255.0f ) ;
 }
 
 template < shy_macosx_platform :: const_int_32 texel_array_size >

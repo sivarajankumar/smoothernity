@@ -270,7 +270,7 @@ public :
 	static void render_set_modulate_texture_mode ( ) ;
     static void render_use_texture ( const render_texture_id & arg_texture_id ) ;
 	static void render_create_texture_id ( render_texture_id & arg_texture_id ) ;
-    static void render_set_texel_color ( texel_data & texel , num_whole r , num_whole g , num_whole b , num_whole a ) ;
+    static void render_set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     static void render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     static void render_texture_loader_ready ( num_whole & is_ready ) ;
 
