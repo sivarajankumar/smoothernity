@@ -311,10 +311,15 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( num_whole lett
 template < typename mediator >
 void shy_logic_text < mediator > :: _next_letter_col ( )
 {
+    num_whole delta_x ;
     num_whole texture_width ;
+    num_whole right_limit ;
     _mediator -> texture_width ( texture_width ) ;
+    platform :: math_div_wholes ( delta_x , _letter_size_x , platform :: whole_8 ) ;
     platform :: math_add_to_whole ( _origin_x , _letter_size_x ) ;
-    if ( platform :: condition_whole_greater_or_equal_to_whole ( _origin_x , texture_width ) )
+    platform :: math_add_to_whole ( _origin_x , delta_x ) ;
+    platform :: math_sub_wholes ( right_limit , texture_width , _letter_size_x ) ;
+    if ( platform :: condition_whole_greater_or_equal_to_whole ( _origin_x , right_limit ) )
     {
         num_whole delta_y ;
         platform :: math_div_wholes ( delta_y , _letter_size_y , platform :: whole_4 ) ;
