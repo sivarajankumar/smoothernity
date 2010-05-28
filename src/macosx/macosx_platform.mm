@@ -15,15 +15,15 @@ void * shy_macosx_platform :: _vertex_color_offset = reinterpret_cast < void * >
     - reinterpret_cast < char * > ( & shy_macosx_platform :: _reference_vertex )
     ) ;
     
-shy_macosx_sound_loader * shy_macosx_platform :: _sound_loader = 0 ;
-shy_macosx_texture_loader * shy_macosx_platform :: _texture_loader = 0 ;
+shy_macosx_sound_loader * shy_macosx_platform_utility :: _sound_loader = 0 ;
+shy_macosx_texture_loader * shy_macosx_platform_utility :: _texture_loader = 0 ;
 
-float shy_macosx_platform :: _aspect_width = 1.0f ;
-float shy_macosx_platform :: _aspect_height = 1.0f ;
+float shy_macosx_platform_utility :: _aspect_width = 1.0f ;
+float shy_macosx_platform_utility :: _aspect_height = 1.0f ;
 
-int shy_macosx_platform :: _mouse_left_button_down = false ;
-float shy_macosx_platform :: _mouse_x = 0 ;
-float shy_macosx_platform :: _mouse_y = 0 ;
+int shy_macosx_platform_utility :: _mouse_left_button_down = false ;
+float shy_macosx_platform_utility :: _mouse_x = 0 ;
+float shy_macosx_platform_utility :: _mouse_y = 0 ;
 
 const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_pi ( 3.141592f ) ;
 const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_2pi ( 6.283184f ) ;

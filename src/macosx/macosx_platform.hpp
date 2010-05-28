@@ -458,10 +458,16 @@ public :
 	static void mouse_x ( num_fract & result ) ;
 	static void mouse_y ( num_fract & result ) ;
 
-	//
-	// variables
-	//
+private :
+    static vertex_data _reference_vertex ;
+    static void * _vertex_position_offset ;
+    static void * _vertex_tex_coord_offset ;
+    static void * _vertex_color_offset ;
+} ;
 
+class shy_macosx_platform_utility
+{
+public :
     static shy_macosx_sound_loader * _sound_loader ;
     static shy_macosx_texture_loader * _texture_loader ;
 	
@@ -471,12 +477,6 @@ public :
 	static int _mouse_left_button_down ;
 	static float _mouse_x ;
 	static float _mouse_y ;
-
-private :
-    static vertex_data _reference_vertex ;
-    static void * _vertex_position_offset ;
-    static void * _vertex_tex_coord_offset ;
-    static void * _vertex_color_offset ;
 } ;
 
 template < typename type >

@@ -111,7 +111,7 @@ inline void shy_macosx_platform :: render_load_texture_resource
     , const static_array < texel_data , texel_array_size > & data 
     )
 {
-    [ _texture_loader 
+    [ shy_macosx_platform_utility :: _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
         to_buffer : ( void * ) data . _elements
         with_side_size_of : 1 << size_pow2_base . _value
@@ -120,7 +120,7 @@ inline void shy_macosx_platform :: render_load_texture_resource
 
 inline void shy_macosx_platform :: render_texture_loader_ready ( num_whole & is_ready )
 {
-    is_ready . _value = [ _texture_loader loader_ready ] ;
+    is_ready . _value = [ shy_macosx_platform_utility :: _texture_loader loader_ready ] ;
 }
 
 inline void shy_macosx_platform :: render_clear_screen ( num_fract r , num_fract g , num_fract b )
@@ -281,10 +281,10 @@ inline void shy_macosx_platform :: render_draw_triangle_fan
 
 inline void shy_macosx_platform :: render_get_aspect_width ( num_fract & result )
 {
-	result . _value = _aspect_width ;
+	result . _value = shy_macosx_platform_utility :: _aspect_width ;
 }
 
 inline void shy_macosx_platform :: render_get_aspect_height ( num_fract & result )
 {
-	result . _value = _aspect_height ;
+	result . _value = shy_macosx_platform_utility :: _aspect_height ;
 }
