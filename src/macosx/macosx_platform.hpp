@@ -280,7 +280,7 @@ public :
     
     static void render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
     static void render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
-    static void render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a ) ;
+    static void render_set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     static void render_set_index_value ( index_data & data , num_whole index ) ;
     
     static void render_matrix_identity ( ) ;

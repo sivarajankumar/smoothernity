@@ -150,10 +150,10 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             num_fract vertex_z ;
             num_fract vertex_u ;
             num_fract vertex_v ;
-            num_whole vertex_r ;
-            num_whole vertex_g ;
-            num_whole vertex_b ;
-            num_whole vertex_a ;
+            num_fract vertex_r ;
+            num_fract vertex_g ;
+            num_fract vertex_b ;
+            num_fract vertex_a ;
             
             platform :: math_make_fract_from_whole ( fract_ix , ix ) ;
             platform :: math_make_fract_from_whole ( fract_iz , iz ) ;
@@ -166,10 +166,10 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             vertex_z = z ;
             platform :: math_div_fracts ( vertex_u , fract_iz , fract_land_grid ) ;
             platform :: math_div_fracts ( vertex_v , fract_ix , fract_land_grid ) ;
-            platform :: math_make_num_whole ( vertex_r , _land_r ) ;
-            platform :: math_make_num_whole ( vertex_g , _land_g ) ;
-            platform :: math_make_num_whole ( vertex_b , _land_b ) ;
-            platform :: math_make_num_whole ( vertex_a , 255 ) ;
+            platform :: math_make_num_fract ( vertex_r , _land_r , 255 ) ;
+            platform :: math_make_num_fract ( vertex_g , _land_g , 255 ) ;
+            platform :: math_make_num_fract ( vertex_b , _land_b , 255 ) ;
+            platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
             {
                 vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
                 platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;

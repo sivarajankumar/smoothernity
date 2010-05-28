@@ -149,10 +149,10 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         num_fract vertex_x ;
         num_fract vertex_y ;
         num_fract vertex_z ;
-        num_whole vertex_r ;
-        num_whole vertex_g ;
-        num_whole vertex_b ;
-        num_whole vertex_a ;
+        num_fract vertex_r ;
+        num_fract vertex_g ;
+        num_fract vertex_b ;
+        num_fract vertex_a ;
         platform :: math_make_fract_from_whole ( fract_i , i ) ;
         platform :: math_mul_fracts ( angle , platform :: fract_2pi , fract_i ) ;
         platform :: math_div_fract_by ( angle , fract_fidget_edges ) ;
@@ -161,10 +161,10 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         platform :: math_mul_fracts ( vertex_x , _fidget_size ( ) , angle_cos ) ;
         platform :: math_mul_fracts ( vertex_y , _fidget_size ( ) , angle_sin ) ;
         platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
-        platform :: math_make_num_whole ( vertex_r , _fidget_r ) ;
-        platform :: math_make_num_whole ( vertex_g , _fidget_g ) ;
-        platform :: math_make_num_whole ( vertex_b , _fidget_b ) ;
-        platform :: math_make_num_whole ( vertex_a , 255 ) ;
+        platform :: math_make_num_fract ( vertex_r , _fidget_r , 255 ) ;
+        platform :: math_make_num_fract ( vertex_g , _fidget_g , 255 ) ;
+        platform :: math_make_num_fract ( vertex_b , _fidget_b , 255 ) ;
+        platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
         {
             vertex_data & vertex = platform :: array_element ( vertices , i ) ;
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;

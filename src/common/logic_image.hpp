@@ -148,10 +148,10 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     num_fract v_top ;
     num_fract v_bottom ;
     num_fract z ;
-    num_whole color_r ;
-    num_whole color_g ;
-    num_whole color_b ;
-    num_whole color_a ;
+    num_fract color_r ;
+    num_fract color_g ;
+    num_fract color_b ;
+    num_fract color_a ;
     num_whole index ;
     num_whole vertices_count ;
     
@@ -164,10 +164,10 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform :: math_make_num_fract ( v_top , 1 , 1 ) ;
     platform :: math_make_num_fract ( v_bottom , 0 , 1 ) ;
     platform :: math_make_num_fract ( z , 0 , 1 ) ;
-    platform :: math_make_num_whole ( color_r , _image_r ) ;
-    platform :: math_make_num_whole ( color_g , _image_g ) ;
-    platform :: math_make_num_whole ( color_b , _image_b ) ;
-    platform :: math_make_num_whole ( color_a , _image_a ) ;
+    platform :: math_make_num_fract ( color_r , _image_r , 255 ) ;
+    platform :: math_make_num_fract ( color_g , _image_g , 255 ) ;
+    platform :: math_make_num_fract ( color_b , _image_b , 255 ) ;
+    platform :: math_make_num_fract ( color_a , _image_a , 255 ) ;
     platform :: math_make_num_whole ( vertices_count , 4 ) ;
 
     platform :: math_make_num_whole ( index , 0 ) ;

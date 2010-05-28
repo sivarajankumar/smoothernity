@@ -31,7 +31,7 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
 private :
     void _entities_render ( ) ;
-    void _entity_color ( num_whole & r , num_whole & g , num_whole & b , num_whole & a , num_whole i ) ;
+    void _entity_color ( num_fract & r , num_fract & g , num_fract & b , num_fract & a , num_whole i ) ;
     void _create_entity_mesh ( ) ;
     void _get_entity_origin ( vector_data & result , num_whole index ) ;
     void _update_entity_grid ( ) ;
@@ -121,56 +121,56 @@ void shy_logic_entities < mediator > :: _entities_render ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: _entity_color ( num_whole & r , num_whole & g , num_whole & b , num_whole & a , num_whole i )
+void shy_logic_entities < mediator > :: _entity_color ( num_fract & r , num_fract & g , num_fract & b , num_fract & a , num_whole i )
 {
     if ( platform :: condition_wholes_are_equal ( i , platform :: whole_0 ) )
     {
-        platform :: math_make_num_whole ( r , 255 ) ;
-        platform :: math_make_num_whole ( g , 0 ) ;
-        platform :: math_make_num_whole ( b , 0 ) ;
-        platform :: math_make_num_whole ( a , 255 ) ;
+        platform :: math_make_num_fract ( r , 1 , 1 ) ;
+        platform :: math_make_num_fract ( g , 0 , 1 ) ;
+        platform :: math_make_num_fract ( b , 0 , 1 ) ;
+        platform :: math_make_num_fract ( a , 1 , 1 ) ;
     }
     else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_1 ) )
     {
-        platform :: math_make_num_whole ( r , 255 ) ;
-        platform :: math_make_num_whole ( g , 128 ) ;
-        platform :: math_make_num_whole ( b , 0 ) ;
-        platform :: math_make_num_whole ( a , 255 ) ;
+        platform :: math_make_num_fract ( r , 1 , 1 ) ;
+        platform :: math_make_num_fract ( g , 1 , 2 ) ;
+        platform :: math_make_num_fract ( b , 0 , 1 ) ;
+        platform :: math_make_num_fract ( a , 1 , 1 ) ;
     }
     else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_2 ) )
     {
-        platform :: math_make_num_whole ( r , 255 ) ;
-        platform :: math_make_num_whole ( g , 255 ) ;
-        platform :: math_make_num_whole ( b , 0 ) ;
-        platform :: math_make_num_whole ( a , 255 ) ;
+        platform :: math_make_num_fract ( r , 1 , 1 ) ;
+        platform :: math_make_num_fract ( g , 1 , 1 ) ;
+        platform :: math_make_num_fract ( b , 0 , 1 ) ;
+        platform :: math_make_num_fract ( a , 1 , 1 ) ;
     }
     else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_3 ) )
     {
-        platform :: math_make_num_whole ( r , 0 ) ;
-        platform :: math_make_num_whole ( g , 255 ) ;
-        platform :: math_make_num_whole ( b , 0 ) ;
-        platform :: math_make_num_whole ( a , 255 ) ;
+        platform :: math_make_num_fract ( r , 0 , 1 ) ;
+        platform :: math_make_num_fract ( g , 1 , 1 ) ;
+        platform :: math_make_num_fract ( b , 0 , 1 ) ;
+        platform :: math_make_num_fract ( a , 1 , 1 ) ;
     }
     else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_4 ) )
     {
-        platform :: math_make_num_whole ( r , 0 ) ;
-        platform :: math_make_num_whole ( g , 255 ) ;
-        platform :: math_make_num_whole ( b , 255 ) ;
-        platform :: math_make_num_whole ( a , 255 ) ;
+        platform :: math_make_num_fract ( r , 0 , 1 ) ;
+        platform :: math_make_num_fract ( g , 1 , 1 ) ;
+        platform :: math_make_num_fract ( b , 1 , 1 ) ;
+        platform :: math_make_num_fract ( a , 1 , 1 ) ;
     }
     else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_5 ) )
     {
-        platform :: math_make_num_whole ( r , 0 ) ;
-        platform :: math_make_num_whole ( g , 0 ) ;
-        platform :: math_make_num_whole ( b , 255 ) ;
-        platform :: math_make_num_whole ( a , 255 ) ;
+        platform :: math_make_num_fract ( r , 0 , 1 ) ;
+        platform :: math_make_num_fract ( g , 0 , 1 ) ;
+        platform :: math_make_num_fract ( b , 1 , 1 ) ;
+        platform :: math_make_num_fract ( a , 1 , 1 ) ;
     }
     else if ( platform :: condition_wholes_are_equal ( i , platform :: whole_6 ) )
     {
-        platform :: math_make_num_whole ( r , 255 ) ;
-        platform :: math_make_num_whole ( g , 0 ) ;
-        platform :: math_make_num_whole ( b , 255 ) ;
-        platform :: math_make_num_whole ( a , 255 ) ;
+        platform :: math_make_num_fract ( r , 1 , 1 ) ;
+        platform :: math_make_num_fract ( g , 0 , 1 ) ;
+        platform :: math_make_num_fract ( b , 1 , 1 ) ;
+        platform :: math_make_num_fract ( a , 1 , 1 ) ;
     }
 }
 
@@ -183,10 +183,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_fract vertex_x ;
     num_fract vertex_y ;
     num_fract vertex_z ;
-    num_whole vertex_r ;
-    num_whole vertex_g ;
-    num_whole vertex_b ;
-    num_whole vertex_a ;
+    num_fract vertex_r ;
+    num_fract vertex_g ;
+    num_fract vertex_b ;
+    num_fract vertex_a ;
     num_whole color_bias ;
     num_whole colors_max ;
     num_whole strip_indices_count ;
@@ -267,10 +267,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform :: math_div_fracts ( vertex_y , fract_entity_mesh_height , platform :: fract_2 ) ;
     vertex_z = platform :: fract_0 ;
     
-    platform :: math_make_num_whole ( vertex_r , _entity_color_roof_r ) ;
-    platform :: math_make_num_whole ( vertex_g , _entity_color_roof_g ) ;
-    platform :: math_make_num_whole ( vertex_b , _entity_color_roof_b ) ;
-    platform :: math_make_num_whole ( vertex_a , 255 ) ;
+    platform :: math_make_num_fract ( vertex_r , _entity_color_roof_r , 255 ) ;
+    platform :: math_make_num_fract ( vertex_g , _entity_color_roof_g , 255 ) ;
+    platform :: math_make_num_fract ( vertex_b , _entity_color_roof_b , 255 ) ;
+    platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
 
     {
         vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;

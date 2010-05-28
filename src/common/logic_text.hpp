@@ -169,10 +169,10 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     num_fract v_top ;
     num_fract v_bottom ;
     num_fract z ;
-    num_whole color_r ;
-    num_whole color_g ;
-    num_whole color_b ;
-    num_whole color_a ;
+    num_fract color_r ;
+    num_fract color_g ;
+    num_fract color_b ;
+    num_fract color_a ;
     num_whole index ;
     platform :: math_make_num_fract ( x_left , - 1 , 1 ) ;
     platform :: math_make_num_fract ( x_right , 1 , 1 ) ;
@@ -183,10 +183,10 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     platform :: math_make_num_fract ( v_top , 1 , 1 ) ;
     platform :: math_make_num_fract ( v_bottom , 0 , 1 ) ;
     platform :: math_make_num_fract ( z , 0 , 1 ) ;
-    platform :: math_make_num_whole ( color_r , _canvas_r ) ;
-    platform :: math_make_num_whole ( color_g , _canvas_g ) ;
-    platform :: math_make_num_whole ( color_b , _canvas_b ) ;
-    platform :: math_make_num_whole ( color_a , _canvas_a ) ;
+    platform :: math_make_num_fract ( color_r , _canvas_r , 255 ) ;
+    platform :: math_make_num_fract ( color_g , _canvas_g , 255 ) ;
+    platform :: math_make_num_fract ( color_b , _canvas_b , 255 ) ;
+    platform :: math_make_num_fract ( color_a , _canvas_a , 255 ) ;
 
     platform :: math_make_num_whole ( index , 0 ) ;
     platform :: render_set_vertex_position  ( platform :: array_element ( vertices , platform :: whole_0 ) , x_left , y_top , z ) ;

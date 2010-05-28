@@ -190,12 +190,12 @@ inline void shy_macosx_platform :: render_set_vertex_tex_coord ( vertex_data & v
     vertex . _tex_coord [ 1 ] = ( GLfloat ) v . _value ;
 }
 
-inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & vertex , num_whole r , num_whole g , num_whole b , num_whole a )
+inline void shy_macosx_platform :: render_set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    vertex . _color [ 0 ] = ( GLubyte ) r . _value ;
-    vertex . _color [ 1 ] = ( GLubyte ) g . _value ;
-    vertex . _color [ 2 ] = ( GLubyte ) b . _value ;
-    vertex . _color [ 3 ] = ( GLubyte ) a . _value ;
+    vertex . _color [ 0 ] = ( GLubyte ) ( r . _value * 255.0f ) ;
+    vertex . _color [ 1 ] = ( GLubyte ) ( g . _value * 255.0f ) ;
+    vertex . _color [ 2 ] = ( GLubyte ) ( b . _value * 255.0f ) ;
+    vertex . _color [ 3 ] = ( GLubyte ) ( a . _value * 255.0f ) ;
 }
 
 template < shy_macosx_platform :: const_int_32 index_array_size >
