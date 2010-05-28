@@ -20,10 +20,44 @@ class shy_logic_text
     static const_int_32 _canvas_a = 255 ;
     static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
+    class alphabet_english
+    {
+    public :
+        alphabet_english ( ) ;
+    public :
+        num_whole A ;
+        num_whole B ;
+        num_whole C ;
+        num_whole D ;
+        num_whole E ;
+        num_whole F ;
+        num_whole G ;
+        num_whole H ;
+        num_whole I ;
+        num_whole J ;
+        num_whole K ;
+        num_whole L ;
+        num_whole M ;
+        num_whole N ;
+        num_whole O ;
+        num_whole P ;
+        num_whole Q ;
+        num_whole R ;
+        num_whole S ;
+        num_whole T ;
+        num_whole U ;
+        num_whole V ;
+        num_whole W ;
+        num_whole X ;
+        num_whole Y ;
+        num_whole Z ;
+    } ;
+public :
     shy_logic_text ( mediator * arg_mediator ) ;
     void text_prepare_permit ( ) ;
     void text_render ( ) ;
     void text_update ( ) ;
+    const alphabet_english & text_alphabet_english ( ) ;
 private :
     void _render_text_mesh ( ) ;
     void _update_text_mesh ( ) ;
@@ -32,6 +66,7 @@ private :
     void _next_letter_col ( ) ;
     void _next_letter_row ( ) ;
     void _rasterize_english_alphabet ( num_whole letter_size_x , num_whole letter_size_y ) ;
+    void _rasterize_letter ( num_whole letter_code ) ;
     void _rasterize_font_english_A ( ) ;
     void _rasterize_font_english_B ( ) ;
     void _rasterize_font_english_C ( ) ;
@@ -72,6 +107,7 @@ private :
     num_whole _letter_size_x ;
     num_whole _letter_size_y ;
     num_whole _scale_frames ;
+    alphabet_english _alphabet_english ;
 } ;
 
 template < typename mediator >
@@ -85,6 +121,45 @@ shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _letter_size_y , 0 ) ;
     platform :: math_make_num_whole ( _origin_x , 0 ) ;
     platform :: math_make_num_whole ( _origin_y , 0 ) ;
+}
+
+template < typename mediator >
+shy_logic_text < mediator > :: alphabet_english :: alphabet_english ( )
+{
+    num_whole index = platform :: whole_0 ;
+    A = index ; platform :: math_inc_whole ( index ) ;
+    B = index ; platform :: math_inc_whole ( index ) ;
+    C = index ; platform :: math_inc_whole ( index ) ;
+    D = index ; platform :: math_inc_whole ( index ) ;
+    E = index ; platform :: math_inc_whole ( index ) ;
+    F = index ; platform :: math_inc_whole ( index ) ;
+    G = index ; platform :: math_inc_whole ( index ) ;
+    H = index ; platform :: math_inc_whole ( index ) ;
+    I = index ; platform :: math_inc_whole ( index ) ;
+    J = index ; platform :: math_inc_whole ( index ) ;
+    K = index ; platform :: math_inc_whole ( index ) ;
+    L = index ; platform :: math_inc_whole ( index ) ;
+    M = index ; platform :: math_inc_whole ( index ) ;
+    N = index ; platform :: math_inc_whole ( index ) ;
+    O = index ; platform :: math_inc_whole ( index ) ;
+    P = index ; platform :: math_inc_whole ( index ) ;
+    Q = index ; platform :: math_inc_whole ( index ) ;
+    R = index ; platform :: math_inc_whole ( index ) ;
+    S = index ; platform :: math_inc_whole ( index ) ;
+    T = index ; platform :: math_inc_whole ( index ) ;
+    U = index ; platform :: math_inc_whole ( index ) ;
+    V = index ; platform :: math_inc_whole ( index ) ;
+    W = index ; platform :: math_inc_whole ( index ) ;
+    X = index ; platform :: math_inc_whole ( index ) ;
+    Y = index ; platform :: math_inc_whole ( index ) ;
+    Z = index ; platform :: math_inc_whole ( index ) ;
+}
+
+template < typename mediator >
+const typename shy_logic_text < mediator > :: alphabet_english & 
+shy_logic_text < mediator > :: text_alphabet_english ( )
+{
+    return _alphabet_english ;
 }
 
 template < typename mediator >
@@ -278,33 +353,32 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet ( num_whole lett
     _letter_size_x = letter_size_x ;
     _letter_size_y = letter_size_y ;
     _next_letter_row ( ) ;
-    _rasterize_font_english_A ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_B ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_C ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_D ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_E ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_F ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_G ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_H ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_I ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_J ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_K ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_L ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_M ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_N ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_O ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_P ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_Q ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_R ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_S ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_T ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_U ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_V ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_W ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_X ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_Y ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_english_Z ( ) ; _next_letter_col ( ) ;
-    _rasterize_font_whitespace ( ) ;
+    _rasterize_letter ( _alphabet_english . A ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . B ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . C ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . D ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . E ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . F ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . G ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . H ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . I ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . J ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . K ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . L ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . M ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . N ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . O ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . P ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . Q ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . R ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . S ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . T ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . U ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . V ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . W ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . X ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . Y ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( _alphabet_english . Z ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -333,6 +407,37 @@ void shy_logic_text < mediator > :: _next_letter_row ( )
 {
     platform :: math_sub_from_whole ( _origin_y , _letter_size_y ) ;
     platform :: math_make_num_whole ( _origin_x , 0 ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_letter ( num_whole letter_code )
+{
+    if      ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . A ) ) _rasterize_font_english_A ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . B ) ) _rasterize_font_english_B ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . C ) ) _rasterize_font_english_C ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . D ) ) _rasterize_font_english_D ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . E ) ) _rasterize_font_english_E ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . F ) ) _rasterize_font_english_F ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . G ) ) _rasterize_font_english_G ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . H ) ) _rasterize_font_english_H ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . I ) ) _rasterize_font_english_I ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . J ) ) _rasterize_font_english_J ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . K ) ) _rasterize_font_english_K ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . L ) ) _rasterize_font_english_L ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . M ) ) _rasterize_font_english_M ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . N ) ) _rasterize_font_english_N ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . O ) ) _rasterize_font_english_O ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . P ) ) _rasterize_font_english_P ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . Q ) ) _rasterize_font_english_Q ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . R ) ) _rasterize_font_english_R ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . S ) ) _rasterize_font_english_S ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . T ) ) _rasterize_font_english_T ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . U ) ) _rasterize_font_english_U ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . V ) ) _rasterize_font_english_V ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . W ) ) _rasterize_font_english_W ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . X ) ) _rasterize_font_english_X ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . Y ) ) _rasterize_font_english_Y ( ) ;
+    else if ( platform :: condition_wholes_are_equal ( letter_code , _alphabet_english . Z ) ) _rasterize_font_english_Z ( ) ;
 }
 
 template < typename mediator >
