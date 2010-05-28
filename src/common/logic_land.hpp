@@ -290,6 +290,11 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             num_whole texel_g ;
             num_whole texel_b ;
             num_whole texel_a ;
+            num_fract fract_r ;
+            num_fract fract_g ;
+            num_fract fract_b ;
+            num_fract fract_a ;
+            num_fract color_scale ;
             
             platform :: math_make_num_whole ( modulator_1 , 32 ) ;
             platform :: math_make_num_whole ( modulator_2 , 64 ) ;
@@ -306,7 +311,17 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             platform :: math_mul_whole_by ( texel_g , multiplier_2 ) ;
             platform :: math_mul_whole_by ( texel_b , multiplier_3 ) ;
 
-            _mediator -> texture_set_texel ( _land_texture_id , x , y , texel_r , texel_g , texel_b , texel_a ) ;
+            platform :: math_make_num_fract ( color_scale , 255 , 1 ) ;
+            platform :: math_make_fract_from_whole ( fract_r , texel_r ) ;
+            platform :: math_make_fract_from_whole ( fract_g , texel_g ) ;
+            platform :: math_make_fract_from_whole ( fract_b , texel_b ) ;
+            platform :: math_make_fract_from_whole ( fract_a , texel_a ) ;
+            platform :: math_div_fract_by ( fract_r , color_scale ) ;
+            platform :: math_div_fract_by ( fract_g , color_scale ) ;
+            platform :: math_div_fract_by ( fract_b , color_scale ) ;
+            platform :: math_div_fract_by ( fract_a , color_scale ) ;
+            
+            _mediator -> texture_set_texel ( _land_texture_id , x , y , fract_r , fract_g , fract_b , fract_a ) ;
         }
         platform :: math_inc_whole ( _land_texture_creation_row ) ;
     }

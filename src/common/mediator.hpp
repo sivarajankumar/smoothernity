@@ -139,7 +139,7 @@ public :
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
-    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_unselect ( ) ;
     void texture_width ( num_whole & result ) ;
     void title_finished ( ) ;
@@ -600,7 +600,7 @@ void shy_mediator < mediator_types > :: texture_set_texel
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: texture_set_texel 
-    ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a )
 {
     _engine_texture . texture_set_texel ( arg_texture_id , x , y , r , g , b , a ) ;
 }

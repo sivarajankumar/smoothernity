@@ -35,7 +35,7 @@ public :
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_unselect ( ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
-    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole r , num_whole g , num_whole b , num_whole a ) ;
+    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
     void texture_height ( num_whole & result ) ;
 private :
@@ -104,24 +104,10 @@ void shy_engine_texture < mediator > :: texture_set_texel
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: texture_set_texel
-    ( texture_id arg_texture_id , num_whole x , num_whole y , num_whole whole_r , num_whole whole_g , num_whole whole_b , num_whole whole_a )
+    ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a )
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    num_fract color_scale ;
-    num_fract r ;
-    num_fract g ;
-    num_fract b ;
-    num_fract a ;
-    platform :: math_make_num_fract ( color_scale , 255 , 1 ) ;
-    platform :: math_make_fract_from_whole ( r , whole_r ) ;
-    platform :: math_make_fract_from_whole ( g , whole_g ) ;
-    platform :: math_make_fract_from_whole ( b , whole_b ) ;
-    platform :: math_make_fract_from_whole ( a , whole_a ) ;
-    platform :: math_div_fract_by ( r , color_scale ) ;
-    platform :: math_div_fract_by ( g , color_scale ) ;
-    platform :: math_div_fract_by ( b , color_scale ) ;
-    platform :: math_div_fract_by ( a , color_scale ) ;
     _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
