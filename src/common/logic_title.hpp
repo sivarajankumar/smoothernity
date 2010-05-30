@@ -19,18 +19,10 @@ class shy_logic_title
     class _letter_state
     {
     public :
-        num_fract pos_radius_current ;
-        num_fract pos_radius_desired ;
-        num_fract pos_radius_rubber ;
-        num_fract pos_angle_current ;
-        num_fract pos_angle_desired ;
-        num_fract pos_angle_rubber ;
-        num_fract rot_angle_current ;
-        num_fract rot_angle_desired ;
-        num_fract rot_angle_rubber ;
-        num_fract scale_current ;
-        num_fract scale_desired ;
-        num_fract scale_rubber ;
+        num_fract pos_radius ;
+        num_fract pos_angle ;
+        num_fract rot_angle ;
+        num_fract scale ;
         mesh_id mesh ;
         letter_id letter ;
     } ;
@@ -162,22 +154,36 @@ void shy_logic_title < mediator > :: _title_update ( )
         ; platform :: math_inc_whole ( i )
         )
     {
-        num_fract x ;
+        num_fract offset_x ;
         num_fract fract_i ;
+        num_fract rot_cos ;
+        num_fract rot_sin ;
+        num_fract neg_rot_sin ;
+        vector_data axis_x ;
+        vector_data axis_y ;
         matrix_data tm ;
         _letter_state & letter = platform :: array_element ( _letters , i ) ;
         
         platform :: math_make_fract_from_whole ( fract_i , i ) ;
-        platform :: math_mul_fracts ( x , aspect_width , platform :: fract_2 ) ;
-        platform :: math_mul_fract_by ( x , fract_i ) ;
-        platform :: math_div_fract_by ( x , fract_letters_count ) ;
-        platform :: math_sub_from_fract ( x , aspect_width ) ;
-        platform :: math_add_to_fract ( x , letter_size ) ;
+        platform :: math_mul_fracts ( offset_x , aspect_width , platform :: fract_2 ) ;
+        platform :: math_mul_fract_by ( offset_x , fract_i ) ;
+        platform :: math_div_fract_by ( offset_x , fract_letters_count ) ;
+        platform :: math_sub_from_fract ( offset_x , aspect_width ) ;
+        platform :: math_add_to_fract ( offset_x , letter_size ) ;
         
-        platform :: matrix_set_axis_x ( tm , letter_size , platform :: fract_0 , platform :: fract_0 ) ;
-        platform :: matrix_set_axis_y ( tm , platform :: fract_0 , letter_size , platform :: fract_0 ) ;
-        platform :: matrix_set_axis_z ( tm , platform :: fract_0 , platform :: fract_0 , letter_size ) ;
-        platform :: matrix_set_origin ( tm , x , platform :: fract_0 , platform :: fract_minus_3 ) ;
+        platform :: math_sin ( rot_sin , letter . rot_angle ) ;
+        platform :: math_cos ( rot_cos , letter . rot_angle ) ;
+        platform :: math_neg_fract ( neg_rot_sin , rot_sin ) ;
+        
+        platform :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: fract_0 ) ;
+        platform :: vector_xyz ( axis_y , neg_rot_sin , rot_cos , platform :: fract_0 ) ;
+        platform :: vector_mul_by ( axis_x , letter_size ) ;
+        platform :: vector_mul_by ( axis_y , letter_size ) ;
+        
+        platform :: matrix_set_axis_x ( tm , axis_x ) ;
+        platform :: matrix_set_axis_y ( tm , axis_y ) ;
+        platform :: matrix_set_axis_z ( tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_1 ) ;
+        platform :: matrix_set_origin ( tm , offset_x , platform :: fract_0 , platform :: fract_minus_3 ) ;
         
         _mediator -> mesh_set_transform ( letter . mesh , tm ) ;
     }
@@ -258,6 +264,10 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         num_fract tex_right ;
         num_fract tex_top ;
         _letter_state & letter = platform :: array_element ( _letters , i ) ;
+        letter . scale = platform :: fract_1 ;
+        letter . pos_radius = platform :: fract_0 ;
+        letter . pos_angle = platform :: fract_0 ;
+        platform :: math_make_num_fract ( letter . rot_angle , 1 , 10 ) ;
         _mediator -> get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
         platform :: render_set_vertex_tex_coord 
             ( platform :: array_element ( vertices , platform :: whole_0 )

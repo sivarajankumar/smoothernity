@@ -122,7 +122,7 @@ shy_macosx_platform :: texture_resource_id :: texture_resource_id ( )
 shy_macosx_platform :: texel_data :: texel_data ( )
 {
     for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
+        _color [ i ] = ( GLubyte ) shy_macosx_platform_utility :: _uninitialized_value ;
 }
     
 shy_macosx_platform :: vertex_data :: vertex_data ( )
@@ -132,11 +132,11 @@ shy_macosx_platform :: vertex_data :: vertex_data ( )
     for ( int i = 0 ; i < 2 ; i ++ )
         _tex_coord [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
     for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
+        _color [ i ] = ( GLubyte ) shy_macosx_platform_utility :: _uninitialized_value ;
 }
     
 shy_macosx_platform :: index_data :: index_data ( )
-: _index ( shy_macosx_platform_utility :: _uninitialized_value )
+: _index ( ( GLushort ) shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
 
@@ -146,13 +146,13 @@ shy_macosx_platform :: time_data :: time_data ( )
 }
     
 shy_macosx_platform :: mono_sound_sample :: mono_sound_sample ( )
-: _value ( shy_macosx_platform_utility :: _uninitialized_value )
+: _value ( ( GLubyte ) shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     
 shy_macosx_platform :: stereo_sound_sample :: stereo_sound_sample ( )
-: _left_channel_value ( shy_macosx_platform_utility :: _uninitialized_value )
-, _right_channel_value ( shy_macosx_platform_utility :: _uninitialized_value )
+: _left_channel_value ( ( GLushort ) shy_macosx_platform_utility :: _uninitialized_value )
+, _right_channel_value ( ( GLushort ) shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
     

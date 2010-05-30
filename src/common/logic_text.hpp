@@ -414,14 +414,14 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _mediator -> texture_height ( texture_height ) ;
     platform :: math_make_num_whole ( small_size , 16 ) ;
     platform :: math_make_num_whole ( big_size , 32 ) ;
-    platform :: math_make_num_fract ( filler_r , 0 , 1 ) ;
+    platform :: math_make_num_fract ( filler_r , 1 , 1 ) ;
     platform :: math_make_num_fract ( filler_g , 1 , 1 ) ;
     platform :: math_make_num_fract ( filler_b , 0 , 1 ) ;
     platform :: math_make_num_fract ( filler_a , 1 , 1 ) ;
     platform :: math_make_num_fract ( eraser_r , 0 , 1 ) ;
     platform :: math_make_num_fract ( eraser_g , 0 , 1 ) ;
-    platform :: math_make_num_fract ( eraser_b , 0 , 1 ) ;
-    platform :: math_make_num_fract ( eraser_a , 1 , 2 ) ;
+    platform :: math_make_num_fract ( eraser_b , 1 , 1 ) ;
+    platform :: math_make_num_fract ( eraser_a , 1 , 1 ) ;
     platform :: render_set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
     platform :: render_set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
     _mediator -> texture_create ( _text_texture_id ) ;

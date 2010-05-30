@@ -246,6 +246,7 @@ public :
     static void vector_add ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_sub ( vector_data & result , vector_data v1 , vector_data v2 ) ;
     static void vector_mul ( vector_data & result , vector_data v , num_fract f ) ;
+    static void vector_mul_by ( vector_data & v , num_fract f ) ;
     static void vector_length ( num_fract & result , vector_data v ) ;
     static void vector_normalize ( vector_data & result , vector_data v ) ;
     

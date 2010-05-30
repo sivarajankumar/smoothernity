@@ -41,6 +41,13 @@ inline void shy_macosx_platform :: vector_mul ( vector_data & result , vector_da
     result . _z = f . _value * v . _z ;
 }
 
+inline void shy_macosx_platform :: vector_mul_by ( vector_data & v , num_fract f )
+{
+    v . _x *= f . _value ;
+    v . _y *= f . _value ;
+    v . _z *= f . _value ;
+}
+
 inline void shy_macosx_platform :: vector_length ( num_fract & result , vector_data v )
 {
     result . _value = float ( sqrt ( v . _x * v . _x + v . _y * v . _y + v . _z * v . _z ) ) ;
