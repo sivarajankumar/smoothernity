@@ -13,7 +13,6 @@ public :
     void use_ortho_projection ( ) ;
     void video_mode_changed ( ) ;
     void fidget_prepared ( ) ;
-    void title_finished ( ) ;
     void get_near_plane_distance ( num_fract & result ) ;
 private :
     void _init_render ( ) ;
@@ -92,11 +91,6 @@ void shy_logic < mediator > :: use_ortho_projection ( )
 
 template < typename mediator >
 void shy_logic < mediator > :: fidget_prepared ( )
-{
-}
-
-template < typename mediator >
-void shy_logic < mediator > :: title_finished ( )
 {
 }
 

@@ -39,17 +39,17 @@ void shy_logic_title < mediator > :: title_render ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: title_launch_permit ( )
 {
-    _title_launch_permitted = true ;
+    platform :: math_make_num_whole ( _title_launch_permitted , true ) ;
 }
 
 template < typename mediator >
 void shy_logic_title < mediator > :: title_update ( )
 {
-    if ( _title_launch_permitted )
+    if ( platform :: condition_true ( _title_launch_permitted ) )
     {
-        if ( ! _title_finished )
+        if ( platform :: condition_false ( _title_finished ) )
         {
-            _title_finished = true ;
+            platform :: math_make_num_whole ( _title_finished , true ) ;
             _mediator -> title_finished ( ) ;
         }
     }

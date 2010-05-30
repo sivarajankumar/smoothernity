@@ -626,7 +626,7 @@ void shy_mediator < mediator_types > :: texture_width ( num_whole & result )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: title_finished ( )
 {
-    _logic . title_finished ( ) ;
+    _logic_application . title_finished ( ) ;
 }
 
 template < typename mediator_types >
