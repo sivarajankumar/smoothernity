@@ -53,6 +53,8 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english alphabet_english ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
     typedef typename platform :: const_int_32 const_int_32 ;
     typedef typename platform :: index_data index_data ;
     typedef typename platform :: matrix_data matrix_data ;
@@ -84,6 +86,8 @@ public :
     void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
+    void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
+    void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     void get_entity_height ( num_fract & result ) ;
     void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
@@ -129,6 +133,7 @@ public :
     void sound_prepare_permit ( ) ;
     void sound_prepared ( ) ;
     void sound_update ( ) ;
+    const alphabet_english & text_alphabet_english ( ) ;
     void text_prepare_permit ( ) ;
     void text_prepared ( ) ;
     void text_render ( ) ;
@@ -153,6 +158,7 @@ public :
     void update ( ) ;
     void use_ortho_projection ( ) ;
     void use_perspective_projection ( ) ;
+    void use_text_texture ( ) ;
     void video_mode_changed ( ) ;
 private :
     typename mediator_types :: template modules < shy_mediator > :: engine_camera _engine_camera ;
@@ -683,3 +689,41 @@ void shy_mediator < mediator_types > :: math_lerp
 {
     _engine_math . math_lerp ( result , from_value , from_weight , to_value , to_weight , weight ) ;
 }
+
+template < typename mediator_types >
+const typename shy_mediator < mediator_types > :: alphabet_english & 
+shy_mediator < mediator_types > :: text_alphabet_english ( )
+{
+    return _logic_text . text_alphabet_english ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: use_text_texture ( )
+{
+    _logic_text . use_text_texture ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: get_big_letter_tex_coords 
+    ( num_fract & left 
+    , num_fract & bottom 
+    , num_fract & right 
+    , num_fract & top 
+    , letter_id letter 
+    )
+{
+    _logic_text . get_big_letter_tex_coords ( left , bottom , right , top ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: get_small_letter_tex_coords 
+    ( num_fract & left 
+    , num_fract & bottom 
+    , num_fract & right 
+    , num_fract & top 
+    , letter_id letter 
+    )
+{
+    _logic_text . get_small_letter_tex_coords ( left , bottom , right , top ) ;
+}
+
