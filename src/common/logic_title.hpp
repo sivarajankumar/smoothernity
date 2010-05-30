@@ -1,8 +1,9 @@
 template < typename mediator >
 class shy_logic_title
 {
+    typedef typename mediator :: alphabet_english alphabet_english ;
+    typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: mesh_id mesh_id ;
-    typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -35,6 +36,7 @@ class shy_logic_title
         num_fract scale_rubber ;
         vector_data pos_offset ;
         mesh_id mesh ;
+        letter_id letter ;
     } ;
     
 public :
@@ -42,6 +44,12 @@ public :
     void title_render ( ) ;
     void title_update ( ) ;
     void title_launch_permit ( ) ;
+private :
+    void _title_create ( ) ;
+    void _title_render ( ) ;
+    void _title_update ( ) ;
+    void _add_letter ( letter_id letter ) ;
+    void _bake_letters ( ) ;
 private :
     mediator * _mediator ;
     num_whole _title_launch_permitted ;
@@ -71,6 +79,8 @@ void shy_logic_title < mediator > :: title_render ( )
     platform :: render_fog_disable ( ) ;
     _mediator -> use_ortho_projection ( ) ;
     _mediator -> fidget_render ( ) ;
+    if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
+        _title_render ( ) ;
 }
 
 template < typename mediator >
@@ -86,6 +96,7 @@ void shy_logic_title < mediator > :: title_update ( )
     {
         if ( platform :: condition_false ( _title_created ) )
         {
+            _title_create ( ) ;
             platform :: math_make_num_whole ( _title_created , true ) ;
         }
     }
@@ -99,5 +110,50 @@ void shy_logic_title < mediator > :: title_update ( )
             platform :: math_make_num_whole ( _title_finished , true ) ;
             _mediator -> title_finished ( ) ;
         }
+        else
+        {
+            _title_update ( ) ;
+        }
     }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _title_create ( )
+{
+    const alphabet_english & eng = _mediator -> text_alphabet_english ( ) ;
+    _add_letter ( eng . S ) ;
+    _add_letter ( eng . M ) ;
+    _add_letter ( eng . O ) ;
+    _add_letter ( eng . O ) ;
+    _add_letter ( eng . T ) ;
+    _add_letter ( eng . H ) ;
+    _add_letter ( eng . E ) ;
+    _add_letter ( eng . R ) ;
+    _add_letter ( eng . N ) ;
+    _add_letter ( eng . I ) ;
+    _add_letter ( eng . T ) ;
+    _add_letter ( eng . Y ) ;
+    _bake_letters ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _title_render ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _title_update ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
+{
+    platform :: array_element ( _letters , _letters_count ) . letter = letter ;
+    platform :: math_inc_whole ( _letters_count ) ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _bake_letters ( )
+{
 }
