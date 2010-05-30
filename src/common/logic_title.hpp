@@ -45,6 +45,10 @@ private :
     num_whole _title_finished ;
     num_whole _title_frames ;
     num_whole _letters_count ;
+    num_fract _desired_pos_radius_coeff ;
+    num_fract _desired_pos_angle ;
+    num_fract _desired_rot_angle ;
+    num_fract _desired_scale ;
     typename platform :: template static_array < _letter_state , _max_letters > _letters ;
 } ;
 
@@ -86,6 +90,12 @@ void shy_logic_title < mediator > :: title_update ( )
         {
             _title_create ( ) ;
             platform :: math_make_num_whole ( _title_created , true ) ;
+            
+            platform :: math_make_num_fract ( _desired_pos_radius_coeff , 2 , 1 ) ;
+            platform :: math_make_num_fract ( _desired_pos_angle , 11 , 2 ) ;
+            platform :: math_mul_fract_by ( _desired_pos_angle , platform :: fract_pi ) ;
+            platform :: math_mul_fracts ( _desired_rot_angle , platform :: fract_2pi , platform :: fract_3 ) ;
+            platform :: math_make_num_fract ( _desired_scale , 1 , 1 ) ;    
         }
     }
     if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
@@ -147,26 +157,16 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract letter_size ;
     num_fract aspect_width ;
     num_fract desired_pos_radius ;
-    num_fract desired_pos_angle ;
-    num_fract desired_rot_angle ;
-    num_fract desired_scale ;
     num_fract rubber_first ;
     num_fract rubber_last ;
     num_whole frames_between_letters ;
     
     platform :: render_get_aspect_width ( aspect_width ) ;
     platform :: math_make_fract_from_whole ( fract_letters_count , _letters_count ) ;
-    platform :: math_div_fracts ( letter_size , aspect_width , fract_letters_count ) ;
-    
-    platform :: math_make_num_fract ( desired_pos_angle , 11 , 2 ) ;
-    platform :: math_mul_fract_by ( desired_pos_angle , platform :: fract_pi ) ;
-    platform :: math_mul_fracts ( desired_pos_radius , letter_size , platform :: fract_2 ) ;
-    platform :: math_mul_fracts ( desired_rot_angle , platform :: fract_2pi , platform :: fract_3 ) ;
-    platform :: math_make_num_fract ( desired_scale , 1 , 1 ) ;
-    
+    platform :: math_div_fracts ( letter_size , aspect_width , fract_letters_count ) ;    
+    platform :: math_mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;
     platform :: math_make_num_fract ( rubber_first , 29 , 30 ) ;
     platform :: math_make_num_fract ( rubber_last , 29 , 30 ) ;
-    
     platform :: math_make_num_whole ( frames_between_letters , 5 ) ;
     
     for ( num_whole i = platform :: whole_0
@@ -215,7 +215,7 @@ void shy_logic_title < mediator > :: _title_update ( )
             
             platform :: math_mul_fracts ( pos_angle_old_part , letter . pos_angle , rubber ) ;
             platform :: math_sub_fracts ( pos_angle_new_part , platform :: fract_1 , rubber ) ;
-            platform :: math_mul_fract_by ( pos_angle_new_part , desired_pos_angle ) ;
+            platform :: math_mul_fract_by ( pos_angle_new_part , _desired_pos_angle ) ;
             platform :: math_add_fracts ( letter . pos_angle , pos_angle_old_part , pos_angle_new_part ) ;
             
             platform :: math_mul_fracts ( pos_radius_old_part , letter . pos_radius , rubber ) ;
@@ -225,12 +225,12 @@ void shy_logic_title < mediator > :: _title_update ( )
             
             platform :: math_mul_fracts ( rot_angle_old_part , letter . rot_angle , rubber ) ;
             platform :: math_sub_fracts ( rot_angle_new_part , platform :: fract_1 , rubber ) ;
-            platform :: math_mul_fract_by ( rot_angle_new_part , desired_rot_angle ) ;
+            platform :: math_mul_fract_by ( rot_angle_new_part , _desired_rot_angle ) ;
             platform :: math_add_fracts ( letter . rot_angle , rot_angle_old_part , rot_angle_new_part ) ;
             
             platform :: math_mul_fracts ( scale_old_part , letter . scale , rubber ) ;
             platform :: math_sub_fracts ( scale_new_part , platform :: fract_1 , rubber ) ;
-            platform :: math_mul_fract_by ( scale_new_part , desired_scale ) ;
+            platform :: math_mul_fract_by ( scale_new_part , _desired_scale ) ;
             platform :: math_add_fracts ( letter . scale , scale_old_part , scale_new_part ) ;
         }
         
