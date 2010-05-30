@@ -219,10 +219,10 @@ void shy_logic_text < mediator > :: get_big_letter_tex_coords
     if ( platform :: condition_true ( _text_mesh_created ) )
     {
         _tex_coords & coords = platform :: array_element ( _letters_big , letter . _letter_id ) ;
-        left = coords . _left ;
-        bottom = coords . _bottom ;
-        right = coords . _right ;
-        top = coords . _top ;
+        left = coords . left ;
+        bottom = coords . bottom ;
+        right = coords . right ;
+        top = coords . top ;
     }
     else
     {
@@ -245,10 +245,10 @@ void shy_logic_text < mediator > :: get_small_letter_tex_coords
     if ( platform :: condition_true ( _text_mesh_created ) )
     {
         _tex_coords & coords = platform :: array_element ( _letters_small , letter . _letter_id ) ;
-        left = coords . _left ;
-        bottom = coords . _bottom ;
-        right = coords . _right ;
-        top = coords . _top ;
+        left = coords . left ;
+        bottom = coords . bottom ;
+        right = coords . right ;
+        top = coords . top ;
     }
     else
     {

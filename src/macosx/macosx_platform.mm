@@ -47,6 +47,24 @@ const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_6 ( 6 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_7 ( 7 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_8 ( 8 ) ;
 const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_9 ( 9 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_1 ( - 1 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_2 ( - 2 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_3 ( - 3 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_4 ( - 4 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_5 ( - 5 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_6 ( - 6 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_7 ( - 7 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_8 ( - 8 ) ;
+const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_9 ( - 9 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_1 ( - 1 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_2 ( - 2 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_3 ( - 3 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_4 ( - 4 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_5 ( - 5 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_6 ( - 6 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_7 ( - 7 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_8 ( - 8 ) ;
+const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_9 ( - 9 ) ;
 
 shy_macosx_platform :: num_whole :: num_whole ( )
 : _value ( shy_macosx_platform_utility :: _uninitialized_value )

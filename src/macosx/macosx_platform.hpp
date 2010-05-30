@@ -217,6 +217,24 @@ public :
     static const num_whole whole_7 ;
     static const num_whole whole_8 ;
     static const num_whole whole_9 ;
+    static const num_fract fract_minus_1 ;
+    static const num_fract fract_minus_2 ;
+    static const num_fract fract_minus_3 ;
+    static const num_fract fract_minus_4 ;
+    static const num_fract fract_minus_5 ;
+    static const num_fract fract_minus_6 ;
+    static const num_fract fract_minus_7 ;
+    static const num_fract fract_minus_8 ;
+    static const num_fract fract_minus_9 ;
+    static const num_whole whole_minus_1 ;
+    static const num_whole whole_minus_2 ;
+    static const num_whole whole_minus_3 ;
+    static const num_whole whole_minus_4 ;
+    static const num_whole whole_minus_5 ;
+    static const num_whole whole_minus_6 ;
+    static const num_whole whole_minus_7 ;
+    static const num_whole whole_minus_8 ;
+    static const num_whole whole_minus_9 ;
     
     //
     // vector

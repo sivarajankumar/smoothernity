@@ -10,9 +10,6 @@ class shy_logic_title
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
-    typedef typename mediator :: platform :: render_texture_id render_texture_id ;
-    typedef typename mediator :: platform :: texel_data texel_data ;
-    typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -34,7 +31,6 @@ class shy_logic_title
         num_fract scale_current ;
         num_fract scale_desired ;
         num_fract scale_rubber ;
-        vector_data pos_offset ;
         mesh_id mesh ;
         letter_id letter ;
     } ;
@@ -139,11 +135,52 @@ void shy_logic_title < mediator > :: _title_create ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _title_render ( )
 {
+    _mediator -> use_text_texture ( ) ;
+    for ( num_whole i = platform :: whole_0
+        ; platform :: condition_whole_less_than_whole ( i , _letters_count )
+        ; platform :: math_inc_whole ( i )
+        )
+    {
+        _letter_state & letter = platform :: array_element ( _letters , i ) ;
+        _mediator -> mesh_render ( letter . mesh ) ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_title < mediator > :: _title_update ( )
 {
+    num_fract fract_letters_count ;
+    num_fract letter_size ;
+    num_fract aspect_width ;
+    
+    platform :: render_get_aspect_width ( aspect_width ) ;
+    platform :: math_make_fract_from_whole ( fract_letters_count , _letters_count ) ;
+    platform :: math_div_fracts ( letter_size , aspect_width , fract_letters_count ) ;
+    
+    for ( num_whole i = platform :: whole_0
+        ; platform :: condition_whole_less_than_whole ( i , _letters_count )
+        ; platform :: math_inc_whole ( i )
+        )
+    {
+        num_fract x ;
+        num_fract fract_i ;
+        matrix_data tm ;
+        _letter_state & letter = platform :: array_element ( _letters , i ) ;
+        
+        platform :: math_make_fract_from_whole ( fract_i , i ) ;
+        platform :: math_mul_fracts ( x , aspect_width , platform :: fract_2 ) ;
+        platform :: math_mul_fract_by ( x , fract_i ) ;
+        platform :: math_div_fract_by ( x , fract_letters_count ) ;
+        platform :: math_sub_from_fract ( x , aspect_width ) ;
+        platform :: math_add_to_fract ( x , letter_size ) ;
+        
+        platform :: matrix_set_axis_x ( tm , letter_size , platform :: fract_0 , platform :: fract_0 ) ;
+        platform :: matrix_set_axis_y ( tm , platform :: fract_0 , letter_size , platform :: fract_0 ) ;
+        platform :: matrix_set_axis_z ( tm , platform :: fract_0 , platform :: fract_0 , letter_size ) ;
+        platform :: matrix_set_origin ( tm , x , platform :: fract_0 , platform :: fract_minus_3 ) ;
+        
+        _mediator -> mesh_set_transform ( letter . mesh , tm ) ;
+    }
 }
 
 template < typename mediator >
@@ -156,4 +193,100 @@ void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 template < typename mediator >
 void shy_logic_title < mediator > :: _bake_letters ( )
 {
+    typename platform :: template static_array < vertex_data , 4 > vertices ;
+    typename platform :: template static_array < index_data , 4 > indices ;
+    
+    {
+        vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_0 ) ;
+        index_data & index = platform :: array_element ( indices , platform :: whole_0 ) ;
+        platform :: render_set_index_value ( index , platform :: whole_0 ) ;
+        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_position 
+            ( vertex 
+            , platform :: fract_minus_1 
+            , platform :: fract_1 
+            , platform :: fract_0 
+            ) ;
+    }
+    
+    {
+        vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_1 ) ;
+        index_data & index = platform :: array_element ( indices , platform :: whole_1 ) ;
+        platform :: render_set_index_value ( index , platform :: whole_1 ) ;
+        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_position 
+            ( vertex 
+            , platform :: fract_minus_1 
+            , platform :: fract_minus_1 
+            , platform :: fract_0 
+            ) ;
+    }
+    
+    {
+        vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_2 ) ;
+        index_data & index = platform :: array_element ( indices , platform :: whole_2 ) ;
+        platform :: render_set_index_value ( index , platform :: whole_2 ) ;
+        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_position 
+            ( vertex 
+            , platform :: fract_1 
+            , platform :: fract_1 
+            , platform :: fract_0 
+            ) ;
+    }
+    
+    {
+        vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_3 ) ;
+        index_data & index = platform :: array_element ( indices , platform :: whole_3 ) ;
+        platform :: render_set_index_value ( index , platform :: whole_3 ) ;
+        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_position 
+            ( vertex 
+            , platform :: fract_1 
+            , platform :: fract_minus_1 
+            , platform :: fract_0 
+            ) ;
+    }
+    
+    for ( num_whole i = platform :: whole_0
+        ; platform :: condition_whole_less_than_whole ( i , _letters_count )
+        ; platform :: math_inc_whole ( i )
+        )
+    {
+        num_fract tex_left ;
+        num_fract tex_bottom ;
+        num_fract tex_right ;
+        num_fract tex_top ;
+        _letter_state & letter = platform :: array_element ( _letters , i ) ;
+        _mediator -> get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
+        platform :: render_set_vertex_tex_coord 
+            ( platform :: array_element ( vertices , platform :: whole_0 )
+            , tex_left
+            , tex_top
+            ) ;
+        platform :: render_set_vertex_tex_coord 
+            ( platform :: array_element ( vertices , platform :: whole_1 )
+            , tex_left
+            , tex_bottom
+            ) ;
+        platform :: render_set_vertex_tex_coord 
+            ( platform :: array_element ( vertices , platform :: whole_2 )
+            , tex_right
+            , tex_top
+            ) ;
+        platform :: render_set_vertex_tex_coord 
+            ( platform :: array_element ( vertices , platform :: whole_3 )
+            , tex_right
+            , tex_bottom
+            ) ;
+        _mediator -> mesh_create
+            ( letter . mesh
+            , vertices 
+            , indices 
+            , indices
+            , platform :: whole_4 
+            , platform :: whole_4 
+            , platform :: whole_0 
+            ) ;
+    }
 }

@@ -712,7 +712,7 @@ void shy_mediator < mediator_types > :: get_big_letter_tex_coords
     , letter_id letter 
     )
 {
-    _logic_text . get_big_letter_tex_coords ( left , bottom , right , top ) ;
+    _logic_text . get_big_letter_tex_coords ( left , bottom , right , top , letter ) ;
 }
 
 template < typename mediator_types >
@@ -724,6 +724,6 @@ void shy_mediator < mediator_types > :: get_small_letter_tex_coords
     , letter_id letter 
     )
 {
-    _logic_text . get_small_letter_tex_coords ( left , bottom , right , top ) ;
+    _logic_text . get_small_letter_tex_coords ( left , bottom , right , top , letter ) ;
 }
 
