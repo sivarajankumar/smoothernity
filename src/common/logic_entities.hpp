@@ -40,8 +40,16 @@ private :
     num_whole _entity_created ;
     num_whole _entities_prepare_permitted ;
     num_whole _grid_scale ;
+    num_whole _current_strip_mesh_span ;
+    num_whole _current_fan_mesh_span ;
+    num_whole _strip_indices_count ;
+    num_whole _fan_indices_count ;
+    num_whole _vertices_count ;
     mesh_id _entity_mesh_id ;
     typename platform :: template static_array < matrix_data , _entity_mesh_grid * _entity_mesh_grid > _entities_grid_matrices ;
+    typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > _vertices ;
+    typename platform :: template static_array < index_data , ( _entity_mesh_spans + 1 ) * 2 > _strip_indices ;
+    typename platform :: template static_array < index_data , _entity_mesh_spans + 2 > _fan_indices ;
 } ;
 
 template < typename mediator >
@@ -51,6 +59,11 @@ shy_logic_entities < mediator > :: shy_logic_entities ( mediator * arg_mediator 
     platform :: math_make_num_whole ( _entity_created , false ) ;
     platform :: math_make_num_whole ( _entities_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _grid_scale , 0 ) ;
+    platform :: math_make_num_whole ( _current_strip_mesh_span , 0 ) ;
+    platform :: math_make_num_whole ( _current_fan_mesh_span , 0 ) ;
+    platform :: math_make_num_whole ( _strip_indices_count , 0 ) ;
+    platform :: math_make_num_whole ( _fan_indices_count , 0 ) ;
+    platform :: math_make_num_whole ( _vertices_count , 0 ) ;
 }
 
 template < typename mediator >
@@ -72,13 +85,8 @@ void shy_logic_entities < mediator > :: entities_update ( )
     if ( platform :: condition_true ( _entities_prepare_permitted ) )
     {
         if ( platform :: condition_false ( _entity_created ) )
-        {
             _create_entity_mesh ( ) ;
-            _update_entity_grid ( ) ;
-            platform :: math_make_num_whole ( _entity_created , true ) ;
-            _mediator -> entities_prepared ( ) ;
-        }
-        else
+        if ( platform :: condition_true ( _entity_created ) )
             _update_entity_grid ( ) ;
     }
 }
@@ -177,9 +185,6 @@ void shy_logic_entities < mediator > :: _entity_color ( num_fract & r , num_frac
 template < typename mediator >
 void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 {
-    typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > vertices ;
-    typename platform :: template static_array < index_data , ( _entity_mesh_spans + 1 ) * 2 > strip_indices ;
-    typename platform :: template static_array < index_data , _entity_mesh_spans + 2 > fan_indices ;
     num_fract vertex_x ;
     num_fract vertex_y ;
     num_fract vertex_z ;
@@ -189,9 +194,6 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_fract vertex_a ;
     num_whole color_bias ;
     num_whole colors_max ;
-    num_whole strip_indices_count ;
-    num_whole fan_indices_count ;
-    num_whole vertices_count ;
     num_fract fract_entity_mesh_height ;
     num_fract fract_entity_mesh_spans ;
     num_whole whole_entity_mesh_spans ;
@@ -199,28 +201,22 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     
     platform :: math_make_num_whole ( color_bias , 21 ) ;
     platform :: math_make_num_whole ( colors_max , 7 ) ;
-    platform :: math_make_num_whole ( strip_indices_count , 0 ) ;
-    platform :: math_make_num_whole ( fan_indices_count , 0 ) ;
-    platform :: math_make_num_whole ( vertices_count , 0 ) ;
     platform :: math_make_num_whole ( whole_entity_mesh_spans , _entity_mesh_spans ) ;
     platform :: math_make_num_fract ( fract_entity_mesh_spans , _entity_mesh_spans , 1 ) ;
     platform :: math_add_wholes ( whole_entity_mesh_spans_plus_1 , whole_entity_mesh_spans , platform :: whole_1 ) ;
     platform :: math_make_num_fract ( fract_entity_mesh_height , _entity_mesh_height , 1 ) ;
-    
-    for ( num_whole i = platform :: whole_0 
-        ; platform :: condition_whole_less_or_equal_to_whole ( i , whole_entity_mesh_spans ) 
-        ; platform :: math_inc_whole ( i )
-        )
+
+    if ( platform :: condition_whole_less_or_equal_to_whole ( _current_strip_mesh_span , whole_entity_mesh_spans ) )
     {
         num_fract angle ;
         num_whole color1 ;
         num_whole color2 ;
                 
-        platform :: math_make_fract_from_whole ( angle , i ) ;
+        platform :: math_make_fract_from_whole ( angle , _current_strip_mesh_span ) ;
         platform :: math_mul_fract_by ( angle , platform :: fract_2pi ) ;
         platform :: math_div_fract_by ( angle , fract_entity_mesh_spans ) ;
         
-        platform :: math_mul_wholes ( color1 , i , color_bias ) ;
+        platform :: math_mul_wholes ( color1 , _current_strip_mesh_span , color_bias ) ;
         platform :: math_div_whole_by ( color1 , whole_entity_mesh_spans_plus_1 ) ;
         platform :: math_mod_whole_by ( color1 , colors_max ) ;
         platform :: math_add_wholes ( color2 , color1 , platform :: whole_1 ) ;
@@ -233,81 +229,88 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
 
         {
-            vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
+            vertex_data & vertex = platform :: array_element ( _vertices , _vertices_count ) ;
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
-            index_data & index = platform :: array_element ( strip_indices , strip_indices_count ) ;
-            platform :: render_set_index_value ( index , vertices_count ) ;
+            index_data & index = platform :: array_element ( _strip_indices , _strip_indices_count ) ;
+            platform :: render_set_index_value ( index , _vertices_count ) ;
         }
 
-        platform :: math_inc_whole ( strip_indices_count ) ;
-        platform :: math_inc_whole ( vertices_count ) ;
+        platform :: math_inc_whole ( _strip_indices_count ) ;
+        platform :: math_inc_whole ( _vertices_count ) ;
         
         platform :: math_neg_fract ( vertex_y ) ;
         
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color2 ) ;
         
         {
-            vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
+            vertex_data & vertex = platform :: array_element ( _vertices , _vertices_count ) ;
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
-            index_data & index = platform :: array_element ( strip_indices , strip_indices_count ) ;
-            platform :: render_set_index_value ( index , vertices_count ) ;
+            index_data & index = platform :: array_element ( _strip_indices , _strip_indices_count ) ;
+            platform :: render_set_index_value ( index , _vertices_count ) ;
         }
 
-        platform :: math_inc_whole ( strip_indices_count ) ;
-        platform :: math_inc_whole ( vertices_count ) ;
+        platform :: math_inc_whole ( _strip_indices_count ) ;
+        platform :: math_inc_whole ( _vertices_count ) ;
+        platform :: math_inc_whole ( _current_strip_mesh_span ) ;
     }
-    
-    vertex_x = platform :: fract_0 ;
-    platform :: math_div_fracts ( vertex_y , fract_entity_mesh_height , platform :: fract_2 ) ;
-    vertex_z = platform :: fract_0 ;
-    
-    platform :: math_make_num_fract ( vertex_r , _entity_color_roof_r , 255 ) ;
-    platform :: math_make_num_fract ( vertex_g , _entity_color_roof_g , 255 ) ;
-    platform :: math_make_num_fract ( vertex_b , _entity_color_roof_b , 255 ) ;
-    platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
-
+    else
     {
-        vertex_data & vertex = platform :: array_element ( vertices , vertices_count ) ;
-        platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-        platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-    }
-    {
-        index_data & index = platform :: array_element ( fan_indices , fan_indices_count ) ;
-        platform :: render_set_index_value ( index , vertices_count ) ;
-    }
-    
-    platform :: math_inc_whole ( fan_indices_count ) ;
-    platform :: math_inc_whole ( vertices_count ) ;
-    
-    for ( num_whole i = platform :: whole_0
-        ; platform :: condition_whole_less_or_equal_to_whole ( i , whole_entity_mesh_spans ) 
-        ; platform :: math_inc_whole ( i )
-        )
-    {
-        num_whole index ;
-        platform :: math_mul_wholes ( index , i , platform :: whole_2 ) ;
+        if ( platform :: condition_whole_is_zero ( _current_fan_mesh_span ) )
         {
-            index_data & index_ptr = platform :: array_element ( fan_indices , fan_indices_count ) ;
-            platform :: render_set_index_value ( index_ptr , index ) ;
+            vertex_x = platform :: fract_0 ;
+            platform :: math_div_fracts ( vertex_y , fract_entity_mesh_height , platform :: fract_2 ) ;
+            vertex_z = platform :: fract_0 ;
+            
+            platform :: math_make_num_fract ( vertex_r , _entity_color_roof_r , 255 ) ;
+            platform :: math_make_num_fract ( vertex_g , _entity_color_roof_g , 255 ) ;
+            platform :: math_make_num_fract ( vertex_b , _entity_color_roof_b , 255 ) ;
+            platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
+
+            {
+                vertex_data & vertex = platform :: array_element ( _vertices , _vertices_count ) ;
+                platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+                platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            }
+            {
+                index_data & index = platform :: array_element ( _fan_indices , _fan_indices_count ) ;
+                platform :: render_set_index_value ( index , _vertices_count ) ;
+            }
+            
+            platform :: math_inc_whole ( _fan_indices_count ) ;
+            platform :: math_inc_whole ( _vertices_count ) ;
         }
-        platform :: math_inc_whole ( fan_indices_count ) ;
+        if ( platform :: condition_whole_less_or_equal_to_whole ( _current_fan_mesh_span , whole_entity_mesh_spans ) )
+        {
+            num_whole index ;
+            platform :: math_mul_wholes ( index , _current_fan_mesh_span , platform :: whole_2 ) ;
+            {
+                index_data & index_ptr = platform :: array_element ( _fan_indices , _fan_indices_count ) ;
+                platform :: render_set_index_value ( index_ptr , index ) ;
+            }
+            platform :: math_inc_whole ( _fan_indices_count ) ;
+            platform :: math_inc_whole ( _current_fan_mesh_span ) ;
+        }
+        else
+        {
+            _mediator -> mesh_create
+                ( _entity_mesh_id
+                , _vertices 
+                , _strip_indices 
+                , _fan_indices 
+                , _vertices_count 
+                , _strip_indices_count 
+                , _fan_indices_count
+                ) ;                
+            platform :: math_make_num_whole ( _entity_created , true ) ;
+            _mediator -> entities_prepared ( ) ;
+        }
     }
-    
-    _mediator -> mesh_create
-        ( _entity_mesh_id
-        , vertices 
-        , strip_indices 
-        , fan_indices 
-        , vertices_count 
-        , strip_indices_count 
-        , fan_indices_count
-        ) ;
 }
 
 template < typename mediator >
