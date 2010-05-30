@@ -160,7 +160,7 @@ void shy_logic_title < mediator > :: _title_update ( )
     
     platform :: math_make_num_fract ( desired_pos_angle , 11 , 2 ) ;
     platform :: math_mul_fract_by ( desired_pos_angle , platform :: fract_pi ) ;
-    platform :: math_mul_fracts ( desired_pos_radius , letter_size , platform :: fract_1 ) ;
+    platform :: math_mul_fracts ( desired_pos_radius , letter_size , platform :: fract_2 ) ;
     platform :: math_mul_fracts ( desired_rot_angle , platform :: fract_2pi , platform :: fract_3 ) ;
     platform :: math_make_num_fract ( desired_scale , 1 , 1 ) ;
     
@@ -276,11 +276,16 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     typename platform :: template static_array < vertex_data , 4 > vertices ;
     typename platform :: template static_array < index_data , 4 > indices ;
     
+    num_fract title_r = platform :: fract_0 ;
+    num_fract title_g = platform :: fract_1 ;
+    num_fract title_b = platform :: fract_0 ;
+    num_fract title_a = platform :: fract_1 ;
+    
     {
         vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_0 ) ;
         index_data & index = platform :: array_element ( indices , platform :: whole_0 ) ;
         platform :: render_set_index_value ( index , platform :: whole_0 ) ;
-        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
             , platform :: fract_minus_1 
@@ -293,7 +298,7 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_1 ) ;
         index_data & index = platform :: array_element ( indices , platform :: whole_1 ) ;
         platform :: render_set_index_value ( index , platform :: whole_1 ) ;
-        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
             , platform :: fract_minus_1 
@@ -306,7 +311,7 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_2 ) ;
         index_data & index = platform :: array_element ( indices , platform :: whole_2 ) ;
         platform :: render_set_index_value ( index , platform :: whole_2 ) ;
-        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
             , platform :: fract_1 
@@ -319,7 +324,7 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         vertex_data & vertex = platform :: array_element ( vertices , platform :: whole_3 ) ;
         index_data & index = platform :: array_element ( indices , platform :: whole_3 ) ;
         platform :: render_set_index_value ( index , platform :: whole_3 ) ;
-        platform :: render_set_vertex_color ( vertex , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 , platform :: fract_1 ) ;
+        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
             , platform :: fract_1 
