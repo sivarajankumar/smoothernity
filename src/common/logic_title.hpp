@@ -52,6 +52,8 @@ private :
     num_fract _desired_pos_angle ;
     num_fract _desired_rot_angle ;
     num_fract _desired_scale ;
+    num_fract _scene_scale ;
+    num_fract _scene_scale_frames ;
     num_fract _rubber_first ;
     num_fract _rubber_last ;
     typename platform :: template static_array < _letter_state , _max_letters > _letters ;
@@ -65,6 +67,8 @@ shy_logic_title < mediator > :: shy_logic_title ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _title_finished , false ) ;
     platform :: math_make_num_whole ( _title_created , false ) ;
     platform :: math_make_num_whole ( _title_appeared , false ) ;
+    platform :: math_make_num_fract ( _scene_scale , 1 , 1 ) ;
+    platform :: math_make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
     _letters_count = platform :: whole_0 ;
     _title_frames = platform :: whole_0 ;
 }
@@ -170,8 +174,17 @@ void shy_logic_title < mediator > :: _title_create ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _title_render ( )
 {
+    matrix_data scene_tm ;
+
+    platform :: matrix_set_axis_x ( scene_tm , _scene_scale , platform :: fract_0 , platform :: fract_0 ) ;
+    platform :: matrix_set_axis_y ( scene_tm , platform :: fract_0 , _scene_scale , platform :: fract_0 ) ;
+    platform :: matrix_set_axis_z ( scene_tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_1 ) ;
+    platform :: matrix_set_origin ( scene_tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+    
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator -> use_text_texture ( ) ;
+    platform :: render_matrix_load ( scene_tm ) ;
+    
     for ( num_whole i = platform :: whole_0
         ; platform :: condition_whole_less_than_whole ( i , _letters_count )
         ; platform :: math_inc_whole ( i )
@@ -191,6 +204,9 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract aspect_width ;
     num_fract desired_pos_radius ;
     num_fract offset_y ;
+    num_fract fract_appear_duration_in_frames ;
+    num_fract scale_min ;
+    num_fract scale_max ;
     num_whole frames_between_letters ;
     
     platform :: render_get_aspect_width ( aspect_width ) ;
@@ -200,7 +216,20 @@ void shy_logic_title < mediator > :: _title_update ( )
     platform :: math_make_num_whole ( frames_between_letters , 5 ) ;
     platform :: math_make_num_fract ( offset_y , _spin_radius_in_letters , 1 ) ;
     platform :: math_mul_fract_by ( offset_y , letter_size ) ;
+    platform :: math_make_num_fract ( fract_appear_duration_in_frames , _appear_duration_in_frames , 1 ) ;
+    platform :: math_make_num_fract ( scale_min , 7 , 10 ) ;
+    platform :: math_make_num_fract ( scale_max , 9 , 10 ) ;
     
+    _mediator -> math_lerp 
+        ( _scene_scale 
+        , scale_min
+        , platform :: fract_0 
+        , scale_max 
+        , fract_appear_duration_in_frames
+        , _scene_scale_frames
+        ) ;
+    platform :: math_add_to_fract ( _scene_scale_frames , platform :: fract_1 ) ;
+                    
     for ( num_whole i = platform :: whole_0
         ; platform :: condition_whole_less_than_whole ( i , _letters_count )
         ; platform :: math_inc_whole ( i )
