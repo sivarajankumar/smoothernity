@@ -145,17 +145,39 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract letter_size ;
     num_fract aspect_width ;
     num_fract desired_rot_angle ;
+    num_fract desired_rot_angle_sin ;
+    num_fract desired_rot_angle_ampl ;
     num_fract desired_scale ;
+    num_fract desired_scale_sin ;
+    num_fract desired_scale_ampl ;
     num_fract rubber_first ;
     num_fract rubber_last ;
+    num_fract title_angle ;
+    num_fract title_sin ;
+    num_fract period_in_frames ;
     
     platform :: render_get_aspect_width ( aspect_width ) ;
     platform :: math_make_fract_from_whole ( fract_letters_count , _letters_count ) ;
     platform :: math_div_fracts ( letter_size , aspect_width , fract_letters_count ) ;
-    platform :: math_mul_fracts ( desired_rot_angle , platform :: fract_2pi , platform :: fract_1 ) ;
-    desired_scale = platform :: fract_1 ;
+    
+    platform :: math_make_num_fract ( period_in_frames , 120 , 1 ) ;    
+    platform :: math_make_fract_from_whole ( title_angle , _title_frames ) ;
+    platform :: math_mul_fract_by ( title_angle , platform :: fract_2pi ) ;
+    platform :: math_div_fract_by ( title_angle , period_in_frames ) ;
+    platform :: math_sin ( title_sin , title_angle ) ;
+    
+    platform :: math_mul_fracts ( desired_rot_angle , platform :: fract_2pi , platform :: fract_3 ) ;
+    platform :: math_make_num_fract ( desired_rot_angle_ampl , 1 , 10 ) ;
+    platform :: math_mul_fracts ( desired_rot_angle_sin , desired_rot_angle_ampl , title_sin ) ;
+    platform :: math_add_to_fract ( desired_rot_angle , desired_rot_angle_sin ) ;
+    
+    platform :: math_make_num_fract ( desired_scale , 1 , 1 ) ;
+    platform :: math_make_num_fract ( desired_scale_ampl , 1 , 10 ) ;
+    platform :: math_mul_fracts ( desired_scale_sin , desired_scale_ampl , title_sin ) ;
+    platform :: math_add_to_fract ( desired_scale , desired_scale_sin ) ;
+    
     platform :: math_make_num_fract ( rubber_first , 9 , 10 ) ;
-    platform :: math_make_num_fract ( rubber_last , 49 , 50 ) ;
+    platform :: math_make_num_fract ( rubber_last , 99 , 100 ) ;
     
     for ( num_whole i = platform :: whole_0
         ; platform :: condition_whole_less_than_whole ( i , _letters_count )
