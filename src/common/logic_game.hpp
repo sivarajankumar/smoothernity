@@ -20,7 +20,6 @@ public :
     void image_prepared ( ) ;
     void land_prepared ( ) ;
     void sound_prepared ( ) ;
-    void text_prepared ( ) ;
     void touch_prepared ( ) ;
 private :
     void _render_scene ( ) ;
@@ -105,12 +104,6 @@ void shy_logic_game < mediator > :: land_prepared ( )
 
 template < typename mediator >
 void shy_logic_game < mediator > :: entities_prepared ( )
-{
-    _mediator -> text_prepare_permit ( ) ;
-}
-
-template < typename mediator >
-void shy_logic_game < mediator > :: text_prepared ( )
 {
     _mediator -> image_prepare_permit ( ) ;
 }

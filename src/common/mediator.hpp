@@ -513,7 +513,7 @@ void shy_mediator < mediator_types > :: sound_prepared ( )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: text_prepared ( )
 {
-    _logic_game . text_prepared ( ) ;
+    _logic_application . text_prepared ( ) ;
 }
 
 template < typename mediator_types >

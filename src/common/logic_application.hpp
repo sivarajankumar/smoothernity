@@ -9,10 +9,12 @@ public :
     void application_render ( ) ;
     void application_update ( ) ;
     void title_finished ( ) ;
+    void text_prepared ( ) ;
 private :
     mediator * _mediator ;
     num_whole _application_launched ;
     num_whole _title_active ;
+    num_whole _text_active ;
     num_whole _game_active ;
 } ;
 
@@ -23,14 +25,23 @@ shy_logic_application < mediator > :: shy_logic_application ( mediator * arg_med
     platform :: math_make_num_whole ( _application_launched , false ) ;
     platform :: math_make_num_whole ( _title_active , false ) ;
     platform :: math_make_num_whole ( _game_active , false ) ;
+    platform :: math_make_num_whole ( _text_active , false ) ;
+}
+
+template < typename mediator >
+void shy_logic_application < mediator > :: text_prepared ( )
+{
+    platform :: math_make_num_whole ( _text_active , false ) ;
+    platform :: math_make_num_whole ( _title_active , true ) ;
+    _mediator -> title_launch_permit ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: title_finished ( )
 {
-    _mediator -> game_launch_permit ( ) ;
     platform :: math_make_num_whole ( _title_active , false ) ;
     platform :: math_make_num_whole ( _game_active , true ) ;
+    _mediator -> game_launch_permit ( ) ;
 }
 
 template < typename mediator >
@@ -54,9 +65,11 @@ void shy_logic_application < mediator > :: application_update ( )
     if ( platform :: condition_false ( _application_launched ) )
     {
         platform :: math_make_num_whole ( _application_launched , true ) ;
-        platform :: math_make_num_whole ( _title_active , true ) ;
-        _mediator -> title_launch_permit ( ) ;
+        platform :: math_make_num_whole ( _text_active , true ) ;
+        _mediator -> text_prepare_permit ( ) ;
     }
+    if ( platform :: condition_true ( _text_active ) )
+        _mediator -> text_update ( ) ;
     if ( platform :: condition_true ( _game_active ) )
         _mediator -> game_update ( ) ;
     if ( platform :: condition_true ( _title_active ) )
