@@ -1,20 +1,14 @@
-inline
-shy_iphone_platform :: int_32 
-shy_iphone_platform :: mouse_left_button_down ( )
+inline void shy_iphone_platform :: mouse_left_button_down ( num_whole & result )
 {
-	return false ;
+    result . _value = false ;
 }
 
-inline
-shy_iphone_platform :: float_32 
-shy_iphone_platform :: mouse_x ( )
+inline void shy_iphone_platform :: mouse_x ( num_fract & result )
 {
-	return 0 ;
+    result . _value = 0 ;
 }
 
-inline
-shy_iphone_platform :: float_32 
-shy_iphone_platform :: mouse_y ( )
+inline void shy_iphone_platform :: mouse_y ( num_fract & result )
 {
-	return 0 ;
+    result . _value = 0 ;
 }

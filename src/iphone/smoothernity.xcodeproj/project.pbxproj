@@ -53,6 +53,11 @@
 		19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_math.hpp; sourceTree = "<group>"; };
 		19A8DEB3115E3D040062EAB6 /* iphone_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_time.hpp; sourceTree = "<group>"; };
 		19A8DEB6115E44850062EAB6 /* iphone_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_sound.hpp; sourceTree = "<group>"; };
+		19AE141611B2CC6B00A5B332 /* logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_application.hpp; sourceTree = "<group>"; };
+		19AE141911B2CC7D00A5B332 /* logic_game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_game.hpp; sourceTree = "<group>"; };
+		19AE141A11B2CC9100A5B332 /* logic_title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_title.hpp; sourceTree = "<group>"; };
+		19AE141D11B2D05A00A5B332 /* iphone_platform_array.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_array.hpp; sourceTree = "<group>"; };
+		19AE142C11B2D0A500A5B332 /* iphone_platform_condition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iphone_platform_condition.hpp; sourceTree = "<group>"; };
 		19B3CC9F119E9F0E0075357E /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
 		19B3CCA0119E9F0E0075357E /* engine_texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_texture.hpp; sourceTree = "<group>"; };
 		19B3CCA1119E9F0E0075357E /* logic_image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_image.hpp; sourceTree = "<group>"; };
@@ -104,6 +109,8 @@
 				1D3623250D0F684500981E51 /* iphone_app_delegate.mm */,
 				19A8DE13115E24C40062EAB6 /* iphone_platform.hpp */,
 				19A8DE64115E2B230062EAB6 /* iphone_platform.mm */,
+				19AE141D11B2D05A00A5B332 /* iphone_platform_array.hpp */,
+				19AE142C11B2D0A500A5B332 /* iphone_platform_condition.hpp */,
 				19A8DEAB115E3BC00062EAB6 /* iphone_platform_math.hpp */,
 				19A8DE99115E350A0062EAB6 /* iphone_platform_matrix.hpp */,
 				19850CAB11860F8800378E2E /* iphone_platform_mouse.hpp */,
@@ -132,13 +139,16 @@
 				19B3CCA0119E9F0E0075357E /* engine_texture.hpp */,
 				194E85B7117E3921000AAADA /* facade.hpp */,
 				194E85B8117E3921000AAADA /* logic.hpp */,
+				19AE141611B2CC6B00A5B332 /* logic_application.hpp */,
 				194E85B9117E3921000AAADA /* logic_camera.hpp */,
 				194E85BA117E3921000AAADA /* logic_entities.hpp */,
 				194E85BB117E3921000AAADA /* logic_fidget.hpp */,
+				19AE141911B2CC7D00A5B332 /* logic_game.hpp */,
 				19B3CCA1119E9F0E0075357E /* logic_image.hpp */,
 				194E85BC117E3921000AAADA /* logic_land.hpp */,
 				194E85BD117E3921000AAADA /* logic_sound.hpp */,
 				19B3CCA2119E9F0E0075357E /* logic_text.hpp */,
+				19AE141A11B2CC9100A5B332 /* logic_title.hpp */,
 				194E85BE117E3921000AAADA /* logic_touch.hpp */,
 				194E85BF117E3921000AAADA /* mediator.hpp */,
 			);

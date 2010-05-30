@@ -24,6 +24,35 @@
     return _is_ready ;
 }
 
+- ( int ) loaded_samples_count
+{
+    return _loaded_samples_count ;
+}
+
+- ( void ) thread_run
+{
+    [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
+}
+
+- ( void ) thread_stop
+{
+    _should_quit = true ;
+}
+
+- ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( int ) resource_index
+    to_buffer : ( void * ) buffer
+    with_max_samples_count_of : ( int ) max_samples_count
+{
+    if ( _is_ready )
+    {
+        _resource_index = resource_index ;
+        _buffer = buffer ;
+        _max_samples_count = max_samples_count ;
+        _loaded_samples_count = 0 ;
+        _is_ready = false ;
+    }
+}
+
 - ( void ) _thread_main_method
 {
     NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
@@ -77,34 +106,9 @@
     data_buffer . mBuffers [ 0 ] . mData = _buffer ;
     
     ExtAudioFileRead ( ext_ref , ( UInt32 * ) & file_length_in_frames , & data_buffer ) ;
-    * _loaded_samples_count = file_length_in_frames ;
+    _loaded_samples_count = file_length_in_frames ;
     ExtAudioFileDispose ( ext_ref ) ;
     CFRelease ( file_url ) ;
-}
-
-- ( void ) thread_run
-{
-    [ self performSelectorInBackground : @selector ( _thread_main_method ) withObject : nil ] ;
-}
-
-- ( void ) thread_stop
-{
-    _should_quit = true ;
-}
-
-- ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( int ) resource_index
-    to_buffer : ( void * ) buffer
-    with_max_samples_count_of : ( int ) max_samples_count
-    put_loaded_samples_count_to : ( int * ) loaded_samples_count
-{
-    if ( _is_ready )
-    {
-        _resource_index = resource_index ;
-        _buffer = buffer ;
-        _max_samples_count = max_samples_count ;
-        _loaded_samples_count = loaded_samples_count ;
-        _is_ready = false ;
-    }
 }
 
 @end

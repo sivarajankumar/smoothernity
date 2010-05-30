@@ -1,20 +1,14 @@
-inline
-shy_iphone_platform :: int_32 
-shy_iphone_platform :: touch_occured ( )
+inline void shy_iphone_platform :: touch_occured ( num_whole & result )
 {
-    return _touch_occured == true ;
+    result . _value = ( shy_iphone_platform_utility :: _touch_occured == true ) ;
 }
 
-inline
-shy_iphone_platform :: float_32 
-shy_iphone_platform :: touch_x ( )
+inline void shy_iphone_platform :: touch_x ( num_fract & result )
 {
-    return _touch_x ;
+    result . _value = shy_iphone_platform_utility :: _touch_x ;
 }
 
-inline
-shy_iphone_platform :: float_32 
-shy_iphone_platform :: touch_y ( )
+inline void shy_iphone_platform :: touch_y ( num_fract & result )
 {
-    return _touch_y ;
+    result . _value = shy_iphone_platform_utility :: _touch_y ;
 }

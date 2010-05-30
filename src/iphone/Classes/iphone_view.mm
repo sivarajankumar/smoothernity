@@ -42,18 +42,18 @@
     _al_context = alcCreateContext ( _al_device , NULL ) ;
     alcMakeContextCurrent ( _al_context ) ;
     
-    shy_iphone_platform :: _sound_loader = [ [ shy_iphone_sound_loader alloc ] init ] ;
-    shy_iphone_platform :: _texture_loader = [ [ shy_iphone_texture_loader alloc ] init ] ;
-    [ shy_iphone_platform :: _sound_loader thread_run ] ;
-    [ shy_iphone_platform :: _texture_loader thread_run ] ;
+    shy_iphone_platform_utility :: _sound_loader = [ [ shy_iphone_sound_loader alloc ] init ] ;
+    shy_iphone_platform_utility :: _texture_loader = [ [ shy_iphone_texture_loader alloc ] init ] ;
+    [ shy_iphone_platform_utility :: _sound_loader thread_run ] ;
+    [ shy_iphone_platform_utility :: _texture_loader thread_run ] ;
 }
 
 - ( void ) _done_platform
 {
-    [ shy_iphone_platform :: _sound_loader thread_stop ] ;
-    [ shy_iphone_platform :: _texture_loader thread_stop ] ;
-    shy_iphone_platform :: _sound_loader = nil ;
-    shy_iphone_platform :: _texture_loader = nil ;
+    [ shy_iphone_platform_utility :: _sound_loader thread_stop ] ;
+    [ shy_iphone_platform_utility :: _texture_loader thread_stop ] ;
+    shy_iphone_platform_utility :: _sound_loader = nil ;
+    shy_iphone_platform_utility :: _texture_loader = nil ;
 	
 	if ( _gl_default_framebuffer )
 	{
@@ -104,9 +104,9 @@
 {
     UITouch * touch = [ touches anyObject ] ;
     CGPoint point = [ touch locationInView : [ touch view ] ] ;
-    shy_iphone_platform :: _touch_occured = true ;
-    shy_iphone_platform :: _touch_x =   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ;
-    shy_iphone_platform :: _touch_y = - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ;
+    shy_iphone_platform_utility :: _touch_occured = true ;
+    shy_iphone_platform_utility :: _touch_x =   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ;
+    shy_iphone_platform_utility :: _touch_y = - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ;
 }
 
 - ( void ) draw_view : ( id ) sender
@@ -117,7 +117,7 @@
 	_facade . update ( ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
-    shy_iphone_platform :: _touch_occured = false ;
+    shy_iphone_platform_utility :: _touch_occured = false ;
     [ self _schedule_draw ] ;
 }
 
