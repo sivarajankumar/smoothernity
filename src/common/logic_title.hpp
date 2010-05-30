@@ -16,7 +16,7 @@ class shy_logic_title
     static const_int_32 _max_letters = 32 ;
     static const_int_32 _spin_radius_in_letters = 2 ;
     static const_int_32 _appear_duration_in_frames = 250 ;
-    static const_int_32 _disappear_duration_in_frames = 200 ;
+    static const_int_32 _disappear_duration_in_frames = 150 ;
     
     class _letter_state
     {
@@ -48,6 +48,7 @@ private :
     num_whole _title_frames ;
     num_whole _title_appeared ;
     num_whole _letters_count ;
+    num_whole _disappear_at_frames ;
     num_fract _desired_pos_radius_coeff ;
     num_fract _desired_pos_angle ;
     num_fract _desired_rot_angle ;
@@ -67,6 +68,7 @@ shy_logic_title < mediator > :: shy_logic_title ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _title_finished , false ) ;
     platform :: math_make_num_whole ( _title_created , false ) ;
     platform :: math_make_num_whole ( _title_appeared , false ) ;
+    platform :: math_make_num_whole ( _disappear_at_frames , 0 ) ;
     platform :: math_make_num_fract ( _scene_scale , 1 , 1 ) ;
     platform :: math_make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
     _letters_count = platform :: whole_0 ;
@@ -108,6 +110,7 @@ void shy_logic_title < mediator > :: title_update ( )
             platform :: math_make_num_fract ( _desired_scale , 1 , 1 ) ;    
             platform :: math_make_num_fract ( _rubber_first , 19 , 20 ) ;
             platform :: math_make_num_fract ( _rubber_last , 19 , 20 ) ;
+            platform :: math_make_num_whole ( _disappear_at_frames , 9999 ) ;
         }
     }
     if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
@@ -128,6 +131,7 @@ void shy_logic_title < mediator > :: title_update ( )
                 platform :: math_make_num_whole ( _title_appeared , true ) ;
                 platform :: math_make_num_fract ( _rubber_first , 59 , 60 ) ;
                 platform :: math_make_num_fract ( _rubber_last , 29 , 30 ) ;
+                platform :: math_make_num_whole ( _disappear_at_frames , _disappear_duration_in_frames ) ;
             }
             else
             {
@@ -253,6 +257,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         num_fract scale_old_part ;
         num_fract scale_new_part ;
         num_whole starting_frame ;
+        num_whole finishing_frame ;
         vector_data axis_x ;
         vector_data axis_y ;
         vector_data origin ;
@@ -270,6 +275,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform :: vector_xyz ( offset , offset_x , offset_y , platform :: fract_minus_3 ) ;        
         
         platform :: math_mul_wholes ( starting_frame , frames_between_letters , i ) ;
+        platform :: math_sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
         if ( platform :: condition_whole_greater_than_whole ( _title_frames , starting_frame ) )
         {
             _mediator -> math_lerp ( rubber , _rubber_first , platform :: fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
@@ -306,12 +312,20 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform :: vector_xyz ( pos , pos_cos , pos_sin , platform :: fract_0 ) ;
         platform :: vector_mul_by ( pos , letter . pos_radius ) ;
         
-        platform :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: fract_0 ) ;
-        platform :: vector_xyz ( axis_y , rot_neg_sin , rot_cos , platform :: fract_0 ) ;
-        platform :: vector_mul_by ( axis_x , letter . scale ) ;
-        platform :: vector_mul_by ( axis_y , letter . scale ) ;
-        platform :: vector_mul_by ( axis_x , letter_size ) ;
-        platform :: vector_mul_by ( axis_y , letter_size ) ;
+        if ( platform :: condition_whole_less_than_whole ( _title_frames , finishing_frame ) )
+        {
+            platform :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: fract_0 ) ;
+            platform :: vector_xyz ( axis_y , rot_neg_sin , rot_cos , platform :: fract_0 ) ;
+            platform :: vector_mul_by ( axis_x , letter . scale ) ;
+            platform :: vector_mul_by ( axis_y , letter . scale ) ;
+            platform :: vector_mul_by ( axis_x , letter_size ) ;
+            platform :: vector_mul_by ( axis_y , letter_size ) ;
+        }
+        else
+        {
+            platform :: vector_xyz ( axis_x , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+            platform :: vector_xyz ( axis_y , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+        }
         
         platform :: vector_add ( origin , pos , offset ) ;
         
