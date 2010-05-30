@@ -16,6 +16,7 @@ class shy_logic_title
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const_int_32 _max_letters = 32 ;
+    static const_int_32 _title_duration_in_frames = 200 ;
     
     class _letter_state
     {
@@ -44,7 +45,9 @@ public :
 private :
     mediator * _mediator ;
     num_whole _title_launch_permitted ;
+    num_whole _title_created ;
     num_whole _title_finished ;
+    num_whole _title_frames ;
     num_whole _letters_count ;
     typename platform :: template static_array < _letter_state , _max_letters > _letters ;
 } ;
@@ -55,12 +58,19 @@ shy_logic_title < mediator > :: shy_logic_title ( mediator * arg_mediator )
 {
     platform :: math_make_num_whole ( _title_launch_permitted , false ) ;
     platform :: math_make_num_whole ( _title_finished , false ) ;
+    platform :: math_make_num_whole ( _title_created , false ) ;
     _letters_count = platform :: whole_0 ;
+    _title_frames = platform :: whole_0 ;
 }
 
 template < typename mediator >
 void shy_logic_title < mediator > :: title_render ( )
 {
+    platform :: render_clear_screen ( platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+    platform :: render_disable_depth_test ( ) ;
+    platform :: render_fog_disable ( ) ;
+    _mediator -> use_ortho_projection ( ) ;
+    _mediator -> fidget_render ( ) ;
 }
 
 template < typename mediator >
@@ -74,7 +84,17 @@ void shy_logic_title < mediator > :: title_update ( )
 {
     if ( platform :: condition_true ( _title_launch_permitted ) )
     {
-        if ( platform :: condition_false ( _title_finished ) )
+        if ( platform :: condition_false ( _title_created ) )
+        {
+            platform :: math_make_num_whole ( _title_created , true ) ;
+        }
+    }
+    if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
+    {
+        num_whole whole_title_duration_in_frames ;
+        platform :: math_make_num_whole ( whole_title_duration_in_frames , _title_duration_in_frames ) ;
+        platform :: math_inc_whole ( _title_frames ) ;
+        if ( platform :: condition_whole_greater_than_whole ( _title_frames , whole_title_duration_in_frames ) )
         {
             platform :: math_make_num_whole ( _title_finished , true ) ;
             _mediator -> title_finished ( ) ;

@@ -49,6 +49,7 @@ template < typename mediator >
 void shy_logic < mediator > :: update ( )
 {
     _mediator -> application_update ( ) ;
+    _mediator -> fidget_update ( ) ;
 }
 
 template < typename mediator >
