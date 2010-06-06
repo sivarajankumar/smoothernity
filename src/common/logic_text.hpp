@@ -74,6 +74,7 @@ public :
     } ;
 public :
     shy_logic_text ( mediator * arg_mediator ) ;
+    void text_done ( ) ;
     void text_prepare_permit ( ) ;
     void text_render ( ) ;
     void text_update ( ) ;
@@ -159,6 +160,13 @@ shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _letter_size_y , 0 ) ;
     platform :: math_make_num_whole ( _origin_x , 0 ) ;
     platform :: math_make_num_whole ( _origin_y , 0 ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: text_done ( )
+{
+    if ( platform :: condition_true ( _text_mesh_created ) )
+        _mediator -> mesh_delete ( _text_mesh_id ) ;
 }
 
 template < typename mediator >

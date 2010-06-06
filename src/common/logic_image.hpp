@@ -23,6 +23,7 @@ class shy_logic_image
     static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
     shy_logic_image ( mediator * arg_mediator ) ;
+    void image_done ( ) ;
     void image_render ( ) ;
     void image_update ( ) ;
     void image_prepare_permit ( ) ;
@@ -51,6 +52,13 @@ shy_logic_image < mediator > :: shy_logic_image ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _image_texture_loaded , false ) ;
     platform :: math_make_num_whole ( _image_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _scale_frames , 0 ) ;
+}
+
+template < typename mediator >
+void shy_logic_image < mediator > :: image_done ( )
+{
+    if ( platform :: condition_true ( _image_mesh_created ) )
+        _mediator -> mesh_delete ( _image_mesh_id ) ;
 }
 
 template < typename mediator >

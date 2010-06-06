@@ -20,6 +20,7 @@ class shy_logic_touch
 
 public :
     shy_logic_touch ( mediator * arg_mediator ) ;
+    void touch_done ( ) ;
     void touch_prepare_permit ( ) ;
     void touch_render ( ) ;
     void touch_update ( ) ;
@@ -51,6 +52,13 @@ shy_logic_touch < mediator > :: shy_logic_touch ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _spot_mesh_created , false ) ;
     platform :: math_make_num_whole ( _spot_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _should_place_new_spot , false ) ;
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: touch_done ( )
+{
+    if ( platform :: condition_true ( _spot_mesh_created ) )
+        _mediator -> mesh_delete ( _spot_mesh_id ) ;
 }
 
 template < typename mediator >

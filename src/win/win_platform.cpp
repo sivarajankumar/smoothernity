@@ -15,6 +15,8 @@ void shy_win_platform :: _init ( )
 
 void shy_win_platform :: _done ( )
 {
+    HRESULT hr ;
+    V ( _matrix_stack -> Release ( ) ) ;
 }
 
 D3DXMATRIX shy_win_platform :: _convert_from_opengl ( D3DXMATRIX ogl_matrix )

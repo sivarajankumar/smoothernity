@@ -148,6 +148,12 @@ inline void shy_win_platform :: render_create_vertex_buffer
 	V ( arg_buffer_id . _buffer -> Unlock ( ) ) ;
 }
 
+inline void shy_win_platform :: render_delete_vertex_buffer ( render_vertex_buffer_id arg_buffer_id )
+{
+    arg_buffer_id . _buffer -> Release ( ) ;
+    arg_buffer_id . _buffer = 0 ;
+}
+
 inline void shy_win_platform :: render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z )
 {
 	vertex . _x = x . _value ;
@@ -191,6 +197,12 @@ inline void shy_win_platform :: render_create_index_buffer
 	V ( arg_buffer_id . _buffer -> Lock ( 0 , 0 , & mapped_indices , 0 ) ) ;
 	memcpy ( mapped_indices , data . _elements , sizeof ( index_data ) * elements . _value ) ;
 	V ( arg_buffer_id . _buffer -> Unlock ( ) ) ;
+}
+
+inline void shy_win_platform :: render_delete_index_buffer ( render_index_buffer_id arg_buffer_id )
+{
+    arg_buffer_id . _buffer -> Release ( ) ;
+    arg_buffer_id . _buffer = 0 ;
 }
 
 inline void shy_win_platform :: render_set_index_value ( index_data & data , num_whole index )

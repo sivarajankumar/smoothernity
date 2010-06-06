@@ -18,6 +18,7 @@ class shy_logic_fidget
     static const num_fract _fidget_size ( ) { num_fract n ; platform :: math_make_num_fract ( n , 3 , 10 ) ; return n ; }
 public :
     shy_logic_fidget ( mediator * arg_mediator ) ;
+    void fidget_done ( ) ;
     void fidget_prepare_permit ( ) ;
     void fidget_render ( ) ;
     void fidget_update ( ) ;
@@ -42,6 +43,13 @@ shy_logic_fidget < mediator > :: shy_logic_fidget ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _fidget_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _fidget_mesh_created , false ) ;
     platform :: math_make_num_whole ( _fidget_scale , 0 ) ;
+}
+
+template < typename mediator >
+void shy_logic_fidget < mediator > :: fidget_done ( )
+{
+    if ( platform :: condition_true ( _fidget_mesh_created ) )
+        _mediator -> mesh_delete ( _fidget_mesh_id ) ;
 }
 
 template < typename mediator >

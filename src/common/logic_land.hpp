@@ -22,6 +22,7 @@ class shy_logic_land
     static const_int_32 _create_rows_per_frame = 8 ;
 public :
     shy_logic_land ( mediator * arg_mediator ) ;
+    void land_done ( ) ;
     void land_prepare_permit ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
@@ -49,6 +50,13 @@ shy_logic_land < mediator > :: shy_logic_land ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _land_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _land_texture_creation_row , 0 ) ;
     platform :: math_make_num_fract ( _land_scale , 0 , 1 ) ;
+}
+
+template < typename mediator >
+void shy_logic_land < mediator > :: land_done ( )
+{
+    if ( platform :: condition_true ( _land_mesh_created ) )
+        _mediator -> mesh_delete ( _land_mesh_id ) ;
 }
 
 template < typename mediator >

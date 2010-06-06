@@ -75,10 +75,12 @@ public :
     void camera_prepared ( ) ;
     void camera_update ( ) ;
     void done ( ) ;
+    void entities_done ( ) ;
     void entities_prepare_permit ( ) ;
     void entities_prepared ( ) ;
     void entities_render ( ) ;
     void entities_update ( ) ;
+    void fidget_done ( ) ;
     void fidget_prepare_permit ( ) ;
     void fidget_prepared ( ) ;
     void fidget_render ( ) ;
@@ -92,11 +94,13 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
+    void image_done ( ) ;
     void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
     void image_render ( ) ;
     void image_update ( ) ;
     void init ( ) ;
+    void land_done ( ) ;
     void land_prepare_permit ( ) ;
     void land_prepared ( ) ;
     void land_render ( ) ;
@@ -122,6 +126,7 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
+    void mesh_delete ( mesh_id arg_mesh_id ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
     void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
@@ -134,6 +139,7 @@ public :
     void sound_prepared ( ) ;
     void sound_update ( ) ;
     const alphabet_english & text_alphabet_english ( ) ;
+    void text_done ( ) ;
     void text_prepare_permit ( ) ;
     void text_prepared ( ) ;
     void text_render ( ) ;
@@ -147,10 +153,12 @@ public :
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_unselect ( ) ;
     void texture_width ( num_whole & result ) ;
+    void title_done ( ) ;
     void title_finished ( ) ;
     void title_launch_permit ( ) ;
     void title_render ( ) ;
     void title_update ( ) ;
+    void touch_done ( ) ;
     void touch_prepare_permit ( ) ;
     void touch_prepared ( ) ;
     void touch_render ( ) ;
@@ -367,6 +375,12 @@ void shy_mediator < mediator_types > :: mesh_create
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_delete ( mesh_id arg_mesh_id )
+{
+    _engine_mesh . mesh_delete ( arg_mesh_id ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: mesh_render ( mesh_id arg_mesh_id )
 {
     _engine_mesh . mesh_render ( arg_mesh_id ) ;
@@ -469,9 +483,21 @@ void shy_mediator < mediator_types > :: render ( )
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: entities_done ( )
+{
+    _logic_entities . entities_done ( ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: entities_render ( )
 {
     _logic_entities . entities_render ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: fidget_done ( )
+{
+    _logic_fidget . fidget_done ( ) ;
 }
 
 template < typename mediator_types >
@@ -481,9 +507,21 @@ void shy_mediator < mediator_types > :: fidget_render ( )
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: image_done ( )
+{
+    _logic_image . image_done ( ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: image_render ( )
 {
     _logic_image . image_render ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: land_done ( )
+{
+    _logic_land . land_done ( ) ;
 }
 
 template < typename mediator_types >
@@ -493,9 +531,21 @@ void shy_mediator < mediator_types > :: land_render ( )
 }
 
 template < typename mediator_types >
+void shy_mediator < mediator_types > :: text_done ( )
+{
+    _logic_text . text_done ( ) ;
+}
+
+template < typename mediator_types >
 void shy_mediator < mediator_types > :: text_render ( )
 {
     _logic_text . text_render ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: touch_done ( )
+{
+    _logic_touch . touch_done ( ) ;
 }
 
 template < typename mediator_types >
@@ -639,6 +689,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: title_launch_permit ( )
 {
     _logic_title . title_launch_permit ( ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: title_done ( )
+{
+    _logic_title . title_done ( ) ;
 }
 
 template < typename mediator_types >

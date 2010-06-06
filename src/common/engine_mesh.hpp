@@ -46,6 +46,7 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
+    void mesh_delete ( mesh_id arg_mesh_id ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
 private :
@@ -98,6 +99,17 @@ void shy_engine_mesh < mediator > :: mesh_create
     }
     result . _mesh_id = _next_mesh_id ;
     platform :: math_inc_whole ( _next_mesh_id ) ;
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_delete ( mesh_id arg_mesh_id )
+{
+    _mesh_data & mesh = platform :: array_element ( _meshes_data , arg_mesh_id . _mesh_id ) ;
+    platform :: render_delete_vertex_buffer ( mesh . vertex_buffer_id ) ;
+    if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
+        platform :: render_delete_index_buffer ( mesh . triangle_strip_index_buffer_id ) ;
+    if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
+        platform :: render_delete_index_buffer ( mesh . triangle_fan_index_buffer_id ) ;
 }
 
 template < typename mediator >

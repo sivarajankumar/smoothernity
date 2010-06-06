@@ -31,6 +31,7 @@ class shy_logic_title
     
 public :
     shy_logic_title ( mediator * arg_mediator ) ;
+    void title_done ( ) ;
     void title_render ( ) ;
     void title_update ( ) ;
     void title_launch_permit ( ) ;
@@ -73,6 +74,22 @@ shy_logic_title < mediator > :: shy_logic_title ( mediator * arg_mediator )
     platform :: math_make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
     _letters_count = platform :: whole_0 ;
     _title_frames = platform :: whole_0 ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: title_done ( ) 
+{
+    if ( platform :: condition_true ( _title_created ) )
+    {
+        for ( num_whole i = platform :: whole_0
+            ; platform :: condition_whole_less_than_whole ( i , _letters_count )
+            ; platform :: math_inc_whole ( i )
+            )
+        {
+            _letter_state & letter = platform :: array_element ( _letters , i ) ;
+            _mediator -> mesh_delete ( letter . mesh ) ;
+        }
+    }
 }
 
 template < typename mediator >

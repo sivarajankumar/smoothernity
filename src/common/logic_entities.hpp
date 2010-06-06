@@ -23,6 +23,7 @@ class shy_logic_entities
 
 public :
     shy_logic_entities ( mediator * arg_mediator ) ;
+    void entities_done ( ) ;
     void entities_render ( ) ;
     void entities_prepare_permit ( ) ;
     void entities_update ( ) ;
@@ -71,6 +72,13 @@ void shy_logic_entities < mediator > :: entities_render ( )
 {
     if ( platform :: condition_true ( _entity_created ) )
         _entities_render ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: entities_done ( )
+{
+    if ( platform :: condition_true ( _entity_created ) )
+        _mediator -> mesh_delete ( _entity_mesh_id ) ;
 }
 
 template < typename mediator >

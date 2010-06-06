@@ -37,6 +37,13 @@ void shy_logic < mediator > :: init ( )
 template < typename mediator >
 void shy_logic < mediator > :: done ( )
 {
+    _mediator -> entities_done ( ) ;
+    _mediator -> fidget_done ( ) ;
+    _mediator -> image_done ( ) ;
+    _mediator -> land_done ( ) ;
+    _mediator -> text_done ( ) ;
+    _mediator -> title_done ( ) ;
+    _mediator -> touch_done ( ) ;
 }
 
 template < typename mediator >
