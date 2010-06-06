@@ -22,7 +22,8 @@ class shy_logic_image
     static const_int_32 _image_a = 255 ;
     static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
-    shy_logic_image ( mediator * arg_mediator ) ;
+    shy_logic_image ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void image_done ( ) ;
     void image_render ( ) ;
     void image_update ( ) ;
@@ -44,14 +45,20 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_image < mediator > :: shy_logic_image ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_image < mediator > :: shy_logic_image ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _image_mesh_created , false ) ;
     platform :: math_make_num_whole ( _image_texture_created , false ) ;
     platform :: math_make_num_whole ( _image_texture_loaded , false ) ;
     platform :: math_make_num_whole ( _image_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _scale_frames , 0 ) ;
+}
+
+template < typename mediator >
+void shy_logic_image < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

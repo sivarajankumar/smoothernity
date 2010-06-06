@@ -19,7 +19,8 @@ class shy_logic_touch
     static const num_fract _spot_size ( ) { num_fract n ; platform :: math_make_num_fract ( n , 3 , 10 ) ; return n ; }
 
 public :
-    shy_logic_touch ( mediator * arg_mediator ) ;
+    shy_logic_touch ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void touch_done ( ) ;
     void touch_prepare_permit ( ) ;
     void touch_render ( ) ;
@@ -45,13 +46,19 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_touch < mediator > :: shy_logic_touch ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_touch < mediator > :: shy_logic_touch ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _spot_frames_left , 0 ) ;
     platform :: math_make_num_whole ( _spot_mesh_created , false ) ;
     platform :: math_make_num_whole ( _spot_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _should_place_new_spot , false ) ;
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

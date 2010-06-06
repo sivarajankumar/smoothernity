@@ -17,7 +17,8 @@ class shy_logic_camera
     static const num_fract _origin_rubber ( ) { return platform :: fract_0 ; } // 0.99f ;
     static const num_fract _target_rubber ( ) { return platform :: fract_0 ; } // 0.9f ;
 public :
-    shy_logic_camera ( mediator * arg_mediator ) ;
+    shy_logic_camera ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void camera_update ( ) ;
     void camera_prepare_permit ( ) ;
     void camera_matrix_use ( ) ;
@@ -55,8 +56,8 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_camera < mediator > :: shy_logic_camera ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _camera_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _camera_created , false ) ;
@@ -77,6 +78,12 @@ shy_logic_camera < mediator > :: shy_logic_camera ( mediator * arg_mediator )
         platform :: vector_xyz ( origin_pos , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
         platform :: vector_xyz ( target_pos , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

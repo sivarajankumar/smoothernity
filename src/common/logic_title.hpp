@@ -30,7 +30,8 @@ class shy_logic_title
     } ;
     
 public :
-    shy_logic_title ( mediator * arg_mediator ) ;
+    shy_logic_title ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void title_done ( ) ;
     void title_render ( ) ;
     void title_update ( ) ;
@@ -62,8 +63,8 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_title < mediator > :: shy_logic_title ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_title < mediator > :: shy_logic_title ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _title_launch_permitted , false ) ;
     platform :: math_make_num_whole ( _title_finished , false ) ;
@@ -74,6 +75,12 @@ shy_logic_title < mediator > :: shy_logic_title ( mediator * arg_mediator )
     platform :: math_make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
     _letters_count = platform :: whole_0 ;
     _title_frames = platform :: whole_0 ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

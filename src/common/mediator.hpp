@@ -190,20 +190,20 @@ private :
 
 template < typename mediator_types >
 shy_mediator < mediator_types > :: shy_mediator ( )
-: _engine_rasterizer ( this )
-, _logic ( this )
-, _logic_application ( this )
-, _logic_camera ( this )
-, _logic_entities ( this )
-, _logic_fidget ( this )
-, _logic_game ( this )
-, _logic_image ( this )
-, _logic_land ( this )
-, _logic_sound ( this )
-, _logic_text ( this )
-, _logic_title ( this )
-, _logic_touch ( this )
 {
+    _engine_rasterizer . set_mediator ( this ) ;
+    _logic . set_mediator ( this ) ;
+    _logic_application . set_mediator ( this ) ;
+    _logic_camera . set_mediator ( this ) ;
+    _logic_entities . set_mediator ( this ) ;
+    _logic_fidget . set_mediator ( this ) ;
+    _logic_game . set_mediator ( this ) ;
+    _logic_image . set_mediator ( this ) ;
+    _logic_land . set_mediator ( this ) ;
+    _logic_sound . set_mediator ( this ) ;
+    _logic_text . set_mediator ( this ) ;
+    _logic_title . set_mediator ( this ) ;
+    _logic_touch . set_mediator ( this ) ;
 }
 
 template < typename mediator_types >

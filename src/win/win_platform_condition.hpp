@@ -5,12 +5,12 @@ inline int shy_win_platform :: condition_wholes_are_equal ( num_whole a , num_wh
 
 inline int shy_win_platform :: condition_true ( num_whole num )
 {
-    return num . _value == true ;
+    return num . _value == int ( true ) ;
 }
 
 inline int shy_win_platform :: condition_false ( num_whole num )
 {
-    return num . _value == false ;
+    return num . _value == int ( false ) ;
 }
 
 inline int shy_win_platform :: condition_whole_greater_than_zero ( num_whole num )

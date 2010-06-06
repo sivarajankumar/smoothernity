@@ -5,7 +5,8 @@ class shy_logic_application
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
 public :
-    shy_logic_application ( mediator * arg_mediator ) ;
+    shy_logic_application ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void application_render ( ) ;
     void application_update ( ) ;
     void title_finished ( ) ;
@@ -19,13 +20,19 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_application < mediator > :: shy_logic_application ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_application < mediator > :: shy_logic_application ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _application_launched , false ) ;
     platform :: math_make_num_whole ( _title_active , false ) ;
     platform :: math_make_num_whole ( _game_active , false ) ;
     platform :: math_make_num_whole ( _text_active , false ) ;
+}
+
+template < typename mediator >
+void shy_logic_application < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

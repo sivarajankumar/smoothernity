@@ -73,7 +73,8 @@ public :
         letter_id Z ;
     } ;
 public :
-    shy_logic_text ( mediator * arg_mediator ) ;
+    shy_logic_text ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void text_done ( ) ;
     void text_prepare_permit ( ) ;
     void text_render ( ) ;
@@ -150,8 +151,8 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_text < mediator > :: shy_logic_text ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _text_mesh_created , false ) ;
     platform :: math_make_num_whole ( _text_prepare_permitted , false ) ;
@@ -160,6 +161,12 @@ shy_logic_text < mediator > :: shy_logic_text ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _letter_size_y , 0 ) ;
     platform :: math_make_num_whole ( _origin_x , 0 ) ;
     platform :: math_make_num_whole ( _origin_y , 0 ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

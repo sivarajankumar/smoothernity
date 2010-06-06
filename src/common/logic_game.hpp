@@ -11,7 +11,8 @@ class shy_logic_game
     static const num_fract _final_g ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 10 ) ; return n ; }
     static const num_fract _final_b ( ) { num_fract n ; platform :: math_make_num_fract ( n , 4 , 10 ) ; return n ; }
 public :
-    shy_logic_game ( mediator * arg_mediator ) ;
+    shy_logic_game ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
@@ -37,8 +38,8 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_game < mediator > :: shy_logic_game ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_game < mediator > :: shy_logic_game ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_fract ( _color_r , 0 , 1 ) ;
     platform :: math_make_num_fract ( _color_g , 0 , 1 ) ;
@@ -46,6 +47,12 @@ shy_logic_game < mediator > :: shy_logic_game ( mediator * arg_mediator )
     platform :: math_make_num_whole ( _color_frames , 0 ) ;
     platform :: math_make_num_whole ( _game_launched , false ) ;
     platform :: math_make_num_whole ( _game_launch_permitted , false ) ;
+}
+
+template < typename mediator >
+void shy_logic_game < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

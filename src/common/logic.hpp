@@ -4,7 +4,8 @@ class shy_logic
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
 public :
-    shy_logic ( mediator * arg_mediator ) ;
+    shy_logic ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
@@ -22,9 +23,15 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic < mediator > :: shy_logic ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic < mediator > :: shy_logic ( )
+: _mediator ( 0 )
 {
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

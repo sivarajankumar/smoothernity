@@ -6,7 +6,8 @@ class shy_engine_rasterizer
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: texel_data texel_data ;
 public :
-    shy_engine_rasterizer ( mediator * arg_mediator ) ;
+    shy_engine_rasterizer ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
@@ -26,11 +27,17 @@ private :
 } ;
 
 template < typename mediator >
-shy_engine_rasterizer < mediator > :: shy_engine_rasterizer ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_engine_rasterizer < mediator > :: shy_engine_rasterizer ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _origin_x , 0 ) ;
     platform :: math_make_num_whole ( _origin_y , 0 ) ;
+}
+
+template < typename mediator >
+void shy_engine_rasterizer < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

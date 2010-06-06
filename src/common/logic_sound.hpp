@@ -17,7 +17,8 @@ class shy_logic_sound
     static const_int_32 _max_mono_sound_samples = platform :: mono_sound_samples_per_second / 2 ;
     
 public :
-    shy_logic_sound ( mediator * arg_mediator ) ;
+    shy_logic_sound ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void init ( ) ;
     void sound_prepare_permit ( ) ;
     void sound_update ( ) ;
@@ -39,13 +40,19 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_sound < mediator > :: shy_logic_sound ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_sound < mediator > :: shy_logic_sound ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _mono_sound_created , false ) ;
     platform :: math_make_num_whole ( _stereo_sound_created , false ) ;
     platform :: math_make_num_whole ( _stereo_sound_loaded , false ) ;
     platform :: math_make_num_whole ( _sound_prepare_permitted , false ) ;
+}
+
+template < typename mediator >
+void shy_logic_sound < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >

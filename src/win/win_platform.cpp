@@ -129,17 +129,17 @@ shy_win_platform :: texel_data :: texel_data ( )
 }
     
 shy_win_platform :: vertex_data :: vertex_data ( )
-: _x ( shy_win_platform_utility :: _uninitialized_value )
-, _y ( shy_win_platform_utility :: _uninitialized_value )
-, _z ( shy_win_platform_utility :: _uninitialized_value )
-, _color ( shy_win_platform_utility :: _uninitialized_value )
-, _u ( shy_win_platform_utility :: _uninitialized_value )
-, _v ( shy_win_platform_utility :: _uninitialized_value )
+: _x ( FLOAT ( shy_win_platform_utility :: _uninitialized_value ) )
+, _y ( FLOAT ( shy_win_platform_utility :: _uninitialized_value ) )
+, _z ( FLOAT ( shy_win_platform_utility :: _uninitialized_value ) )
+, _color ( DWORD ( shy_win_platform_utility :: _uninitialized_value ) )
+, _u ( FLOAT ( shy_win_platform_utility :: _uninitialized_value ) )
+, _v ( FLOAT ( shy_win_platform_utility :: _uninitialized_value ) )
 {
 }
     
 shy_win_platform :: index_data :: index_data ( )
-: _index ( shy_win_platform_utility :: _uninitialized_value )
+: _index ( UINT ( shy_win_platform_utility :: _uninitialized_value ) )
 {
 }
 

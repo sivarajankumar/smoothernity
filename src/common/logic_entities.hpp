@@ -22,7 +22,8 @@ class shy_logic_entities
     static const_int_32 _entity_color_roof_b = 255 ;
 
 public :
-    shy_logic_entities ( mediator * arg_mediator ) ;
+    shy_logic_entities ( ) ;
+    void set_mediator ( mediator * arg_mediator ) ;
     void entities_done ( ) ;
     void entities_render ( ) ;
     void entities_prepare_permit ( ) ;
@@ -54,8 +55,8 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_entities < mediator > :: shy_logic_entities ( mediator * arg_mediator )
-: _mediator ( arg_mediator )
+shy_logic_entities < mediator > :: shy_logic_entities ( )
+: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _entity_created , false ) ;
     platform :: math_make_num_whole ( _entities_prepare_permitted , false ) ;
@@ -65,6 +66,12 @@ shy_logic_entities < mediator > :: shy_logic_entities ( mediator * arg_mediator 
     platform :: math_make_num_whole ( _strip_indices_count , 0 ) ;
     platform :: math_make_num_whole ( _fan_indices_count , 0 ) ;
     platform :: math_make_num_whole ( _vertices_count , 0 ) ;
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: set_mediator ( mediator * arg_mediator )
+{
+    _mediator = arg_mediator ;
 }
 
 template < typename mediator >
