@@ -1,20 +1,14 @@
-inline
-shy_win_platform :: int_32 
-shy_win_platform :: touch_occured ( )
+inline void shy_win_platform :: touch_occured ( num_whole & result )
 {
-    return 0 ;
+    result . _value = false ;
 }
 
-inline
-shy_win_platform :: float_32 
-shy_win_platform :: touch_x ( )
+inline void shy_win_platform :: touch_x ( num_fract & result )
 {
-    return 0 ;
+    result . _value = 0 ;
 }
 
-inline
-shy_win_platform :: float_32 
-shy_win_platform :: touch_y ( )
+inline void shy_win_platform :: touch_y ( num_fract & result )
 {
-    return 0 ;
+    result . _value = 0 ;
 }

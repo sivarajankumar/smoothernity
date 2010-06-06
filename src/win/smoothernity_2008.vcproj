@@ -621,11 +621,19 @@
 			>
 		</File>
 		<File
+			RelativePath="..\common\engine_texture.hpp"
+			>
+		</File>
+		<File
 			RelativePath="..\common\facade.hpp"
 			>
 		</File>
 		<File
 			RelativePath="..\common\logic.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\logic_application.hpp"
 			>
 		</File>
 		<File
@@ -641,6 +649,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\common\logic_game.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\logic_image.hpp"
+			>
+		</File>
+		<File
 			RelativePath="..\common\logic_land.hpp"
 			>
 		</File>
@@ -650,6 +666,10 @@
 		</File>
 		<File
 			RelativePath="..\common\logic_text.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\common\logic_title.hpp"
 			>
 		</File>
 		<File
@@ -670,6 +690,14 @@
 		</File>
 		<File
 			RelativePath=".\win_platform.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_array.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\win_platform_condition.hpp"
 			>
 		</File>
 		<File

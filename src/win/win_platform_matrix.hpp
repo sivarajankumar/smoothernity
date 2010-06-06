@@ -1,144 +1,96 @@
-inline
-void
-shy_win_platform :: matrix_set_axis_x 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: float_32 x 
-    , shy_win_platform :: float_32 y 
-    , shy_win_platform :: float_32 z 
-    )
+inline void shy_win_platform :: matrix_set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 0 ] = x ;
-    matrix . _elements [ 1 ] = y ;
-    matrix . _elements [ 2 ] = z ;
+    matrix . _elements [ 0 ] = x . _value ;
+    matrix . _elements [ 1 ] = y . _value ;
+    matrix . _elements [ 2 ] = z . _value ;
     matrix . _elements [ 3 ] = 0 ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_set_axis_y 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: float_32 x 
-    , shy_win_platform :: float_32 y 
-    , shy_win_platform :: float_32 z 
-    )
+inline void shy_win_platform :: matrix_set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 4 ] = x ;
-    matrix . _elements [ 5 ] = y ;
-    matrix . _elements [ 6 ] = z ;
+    matrix . _elements [ 4 ] = x . _value ;
+    matrix . _elements [ 5 ] = y . _value ;
+    matrix . _elements [ 6 ] = z . _value ;
     matrix . _elements [ 7 ] = 0 ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_set_axis_z 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: float_32 x 
-    , shy_win_platform :: float_32 y 
-    , shy_win_platform :: float_32 z 
-    )
+inline void shy_win_platform :: matrix_set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [  8 ] = x ;
-    matrix . _elements [  9 ] = y ;
-    matrix . _elements [ 10 ] = z ;
+    matrix . _elements [  8 ] = x . _value ;
+    matrix . _elements [  9 ] = y . _value ;
+    matrix . _elements [ 10 ] = z . _value ;
     matrix . _elements [ 11 ] = 0 ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_set_origin 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: float_32 x 
-    , shy_win_platform :: float_32 y 
-    , shy_win_platform :: float_32 z 
-    )
+inline void shy_win_platform :: matrix_set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 12 ] = x ;
-    matrix . _elements [ 13 ] = y ;
-    matrix . _elements [ 14 ] = z ;
+    matrix . _elements [ 12 ] = x . _value ;
+    matrix . _elements [ 13 ] = y . _value ;
+    matrix . _elements [ 14 ] = z . _value ;
     matrix . _elements [ 15 ] = 1 ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_set_axis_x 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: vector_data v 
-    )
+inline void shy_win_platform :: matrix_set_axis_x ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_axis_x ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [ 0 ] = v . _x ;
+    matrix . _elements [ 1 ] = v . _y ;
+    matrix . _elements [ 2 ] = v . _z ;
+    matrix . _elements [ 3 ] = 0 ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_set_axis_y 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: vector_data v 
-    )
+inline void shy_win_platform :: matrix_set_axis_y ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_axis_y ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [ 4 ] = v . _x ;
+    matrix . _elements [ 5 ] = v . _y ;
+    matrix . _elements [ 6 ] = v . _z ;
+    matrix . _elements [ 7 ] = 0 ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_set_axis_z 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: vector_data v 
-    )
+inline void shy_win_platform :: matrix_set_axis_z ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_axis_z ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [  8 ] = v . _x ;
+    matrix . _elements [  9 ] = v . _y ;
+    matrix . _elements [ 10 ] = v . _z ;
+    matrix . _elements [ 11 ] = 0 ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_set_origin 
-    ( shy_win_platform :: matrix_data & matrix 
-    , shy_win_platform :: vector_data v 
-    )
+inline void shy_win_platform :: matrix_set_origin ( matrix_data & matrix , vector_data v )
 {
-    matrix_set_origin ( matrix , v . _x , v . _y , v . _z ) ;
+    matrix . _elements [ 12 ] = v . _x ;
+    matrix . _elements [ 13 ] = v . _y ;
+    matrix . _elements [ 14 ] = v . _z ;
+    matrix . _elements [ 15 ] = 1 ;
 }
 
-inline 
-shy_win_platform :: vector_data 
-shy_win_platform :: matrix_get_axis_x 
-    ( const shy_win_platform :: matrix_data & matrix 
-    )
+inline void shy_win_platform :: matrix_get_axis_x ( vector_data & result , const matrix_data & matrix )
 {
-    return vector_xyz ( matrix . _elements [ 0 ] , matrix . _elements [ 1 ] , matrix . _elements [ 2 ] ) ;
+    result . _x = matrix . _elements [ 0 ] ;
+    result . _y = matrix . _elements [ 1 ] ;
+    result . _z = matrix . _elements [ 2 ] ;
 }
 
-inline
-shy_win_platform :: vector_data 
-shy_win_platform :: matrix_get_axis_y 
-    ( const shy_win_platform :: matrix_data & matrix 
-    )
+inline void shy_win_platform :: matrix_get_axis_y ( vector_data & result , const matrix_data & matrix )
 {
-    return vector_xyz ( matrix . _elements [ 4 ] , matrix . _elements [ 5 ] , matrix . _elements [ 6 ] ) ;
+    result . _x = matrix . _elements [ 4 ] ;
+    result . _y = matrix . _elements [ 5 ] ;
+    result . _z = matrix . _elements [ 6 ] ;
 }
 
-inline
-shy_win_platform :: vector_data 
-shy_win_platform :: matrix_get_axis_z 
-    ( const shy_win_platform :: matrix_data & matrix 
-    )
+inline void shy_win_platform :: matrix_get_axis_z ( vector_data & result , const matrix_data & matrix )
 {
-    return vector_xyz ( matrix . _elements [ 8 ] , matrix . _elements [ 9 ] , matrix . _elements [ 10 ] ) ;
+    result . _x = matrix . _elements [ 8 ] ;
+    result . _y = matrix . _elements [ 9 ] ;
+    result . _z = matrix . _elements [ 10 ] ;
 }
 
-inline
-shy_win_platform :: vector_data 
-shy_win_platform :: matrix_get_origin 
-    ( const shy_win_platform :: matrix_data & matrix 
-    )
+inline void shy_win_platform :: matrix_get_origin ( vector_data & result , const matrix_data & matrix )
 {
-    return vector_xyz ( matrix . _elements [ 12 ] , matrix . _elements [ 13 ] , matrix . _elements [ 14 ] ) ;
+    result . _x = matrix . _elements [ 12 ] ;
+    result . _y = matrix . _elements [ 13 ] ;
+    result . _z = matrix . _elements [ 14 ] ;
 }
 
-inline
-void 
-shy_win_platform :: matrix_identity 
-    ( shy_win_platform :: matrix_data & matrix 
-    )
+inline void shy_win_platform :: matrix_identity ( matrix_data & matrix )
 {
     for ( int i = 0 ; i < 16 ; i ++ )
     {
@@ -149,17 +101,30 @@ shy_win_platform :: matrix_identity
     }
 }
 
-inline
-void 
-shy_win_platform :: matrix_inverse_rotation_translation 
-    ( shy_win_platform :: matrix_data & matrix 
-    )
+inline void shy_win_platform :: matrix_inverse_rotation_translation ( matrix_data & matrix )
 {
-    matrix_set_origin ( matrix , vector_xyz
-        ( - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_x ( matrix ) )
-        , - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_y ( matrix ) )
-        , - vector_dot_product ( matrix_get_origin ( matrix ) , matrix_get_axis_z ( matrix ) )
-        ) ) ;
+    vector_data axis_x ;
+    vector_data axis_y ;
+    vector_data axis_z ;
+    vector_data origin ;
+    matrix_get_axis_x ( axis_x , matrix ) ;
+    matrix_get_axis_y ( axis_y , matrix ) ;
+    matrix_get_axis_z ( axis_z , matrix ) ;
+    matrix_get_origin ( origin , matrix ) ;
+    
+    num_fract dot_x ;
+    num_fract dot_y ;
+    num_fract dot_z ;
+    vector_dot_product ( dot_x , origin , axis_x ) ;
+    vector_dot_product ( dot_y , origin , axis_y ) ;
+    vector_dot_product ( dot_z , origin , axis_z ) ;
+    
+    vector_data new_origin ;
+    new_origin . _x = - dot_x . _value ;
+    new_origin . _y = - dot_y . _value ;
+    new_origin . _z = - dot_z . _value ;
+    
+    matrix_set_origin ( matrix , new_origin ) ;
     swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
     swap_values ( matrix . _elements [ 2 ] , matrix . _elements [ 8 ] ) ;
     swap_values ( matrix . _elements [ 6 ] , matrix . _elements [ 9 ] ) ;
