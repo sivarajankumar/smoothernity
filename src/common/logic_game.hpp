@@ -88,7 +88,7 @@ void shy_logic_game < mediator > :: game_update ( )
     {
         _update_color ( ) ;
         _mediator -> send ( typename messages :: camera_update ( ) ) ;
-        _mediator -> entities_update ( ) ;
+        _mediator -> send ( typename messages :: entities_update ( ) ) ;
         _mediator -> land_update ( ) ;
         _mediator -> image_update ( ) ;
         _mediator -> sound_update ( ) ;

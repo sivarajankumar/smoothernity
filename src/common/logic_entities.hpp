@@ -29,7 +29,7 @@ public :
     void receive ( typename messages :: entities_done msg ) ;
     void receive ( typename messages :: entities_render msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
-    void entities_update ( ) ;
+    void receive ( typename messages :: entities_update msg ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_entity_height ( num_fract & result ) ;
     void get_entity_mesh_grid ( num_whole & result ) ;
@@ -97,7 +97,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: entities_update ( )
+void shy_logic_entities < mediator > :: receive ( typename messages :: entities_update msg )
 {
     if ( platform :: condition_true ( _entities_prepare_permitted ) )
     {
