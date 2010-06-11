@@ -37,7 +37,7 @@ public :
     void receive ( typename messages :: title_done msg ) ;
     void title_render ( ) ;
     void title_update ( ) ;
-    void title_launch_permit ( ) ;
+    void receive ( typename messages :: title_launch_permit msg ) ;
 private :
     void _title_create ( ) ;
     void _title_render ( ) ;
@@ -114,7 +114,7 @@ void shy_logic_title < mediator > :: title_render ( )
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: title_launch_permit ( )
+void shy_logic_title < mediator > :: receive ( typename messages :: title_launch_permit msg )
 {
     platform :: math_make_num_whole ( _title_launch_permitted , true ) ;
 }

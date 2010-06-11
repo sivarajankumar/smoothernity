@@ -41,7 +41,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: text_p
 {
     platform :: math_make_num_whole ( _text_active , false ) ;
     platform :: math_make_num_whole ( _title_active , true ) ;
-    _mediator -> title_launch_permit ( ) ;
+    _mediator -> send ( typename messages :: title_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
