@@ -28,7 +28,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: entities_done msg ) ;
     void entities_render ( ) ;
-    void entities_prepare_permit ( ) ;
+    void receive ( typename messages :: entities_prepare_permit msg ) ;
     void entities_update ( ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_entity_height ( num_fract & result ) ;
@@ -91,7 +91,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: entities_prepare_permit ( )
+void shy_logic_entities < mediator > :: receive ( typename messages :: entities_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _entities_prepare_permitted , true ) ;
 }

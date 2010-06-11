@@ -93,6 +93,7 @@ public :
         class camera_update { } ;
         class done { } ;
         class entities_done { } ;
+        class entities_prepare_permit { } ;
         class init { } ;
         class render { } ;
         class update { } ;
@@ -127,12 +128,12 @@ public :
     void send ( typename messages :: camera_update msg ) ;
     void send ( typename messages :: done msg ) ;
     void send ( typename messages :: entities_done msg ) ;
+    void send ( typename messages :: entities_prepare_permit msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
-    void entities_prepare_permit ( ) ;
     void entities_prepared ( ) ;
     void entities_render ( ) ;
     void entities_update ( ) ;
@@ -436,9 +437,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: camera_prepa
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: entities_prepare_permit ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_prepare_permit msg )
 {
-    _logic_entities . get ( ) . entities_prepare_permit ( ) ;
+    _logic_entities . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
