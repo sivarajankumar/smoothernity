@@ -9,7 +9,7 @@ public :
     shy_logic_application ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: application_render msg ) ;
-    void application_update ( ) ;
+    void receive ( typename messages :: application_update msg ) ;
     void title_finished ( ) ;
     void text_prepared ( ) ;
 private :
@@ -68,7 +68,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: application_update ( )
+void shy_logic_application < mediator > :: receive ( typename messages :: application_update msg )
 {
     if ( platform :: condition_false ( _application_launched ) )
     {
