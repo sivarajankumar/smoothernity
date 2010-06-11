@@ -29,7 +29,7 @@ public :
     void receive ( typename messages :: image_done msg ) ;
     void image_render ( ) ;
     void image_update ( ) ;
-    void image_prepare_permit ( ) ;
+    void receive ( typename messages :: image_prepare_permit msg ) ;
 private :
     void _render_image_mesh ( ) ;
     void _update_image_mesh ( ) ;
@@ -78,7 +78,7 @@ void shy_logic_image < mediator > :: image_render ( )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: image_prepare_permit ( )
+void shy_logic_image < mediator > :: receive ( typename messages :: image_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _image_prepare_permitted , true ) ;
 }
