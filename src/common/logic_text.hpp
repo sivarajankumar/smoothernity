@@ -78,8 +78,8 @@ public :
 public :
     shy_logic_text ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void receive ( typename mediator :: messages :: text_done msg ) ;
-    void text_prepare_permit ( ) ;
+    void receive ( typename messages :: text_done msg ) ;
+    void receive ( typename messages :: text_prepare_permit msg ) ;
     void text_render ( ) ;
     void text_update ( ) ;
     const alphabet_english & text_alphabet_english ( ) ;
@@ -173,7 +173,7 @@ void shy_logic_text < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename mediator :: messages :: text_done msg )
+void shy_logic_text < mediator > :: receive ( typename messages :: text_done msg )
 {
     if ( platform :: condition_true ( _text_mesh_created ) )
         _mediator -> mesh_delete ( _text_mesh_id ) ;
@@ -278,7 +278,7 @@ void shy_logic_text < mediator > :: get_small_letter_tex_coords
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: text_prepare_permit ( )
+void shy_logic_text < mediator > :: receive ( typename messages :: text_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _text_prepare_permitted , true ) ;
 }

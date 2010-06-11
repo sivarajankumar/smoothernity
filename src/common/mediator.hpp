@@ -123,6 +123,7 @@ public :
         class sound_prepared { } ;
         class sound_update { } ;
         class text_done { } ;
+        class text_prepare_permit { } ;
         class update { } ;
         class video_mode_changed { } ;
     } ;
@@ -183,6 +184,7 @@ public :
     void send ( typename messages :: sound_prepared msg ) ;
     void send ( typename messages :: sound_update msg ) ;
     void send ( typename messages :: text_done msg ) ;
+    void send ( typename messages :: text_prepare_permit msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
@@ -215,7 +217,6 @@ public :
     void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     const alphabet_english & text_alphabet_english ( ) ;
-    void text_prepare_permit ( ) ;
     void text_prepared ( ) ;
     void text_render ( ) ;
     void text_update ( ) ;
@@ -494,9 +495,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: sound_prepar
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: text_prepare_permit ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: text_prepare_permit msg )
 {
-    _logic_text . get ( ) . text_prepare_permit ( ) ;
+    _logic_text . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

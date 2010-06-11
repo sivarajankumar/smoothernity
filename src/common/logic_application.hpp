@@ -74,7 +74,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
     {
         platform :: math_make_num_whole ( _application_launched , true ) ;
         platform :: math_make_num_whole ( _text_active , true ) ;
-        _mediator -> text_prepare_permit ( ) ;
+        _mediator -> send ( typename messages :: text_prepare_permit ( ) ) ;
     }
     if ( platform :: condition_true ( _text_active ) )
         _mediator -> text_update ( ) ;
