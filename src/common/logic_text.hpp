@@ -300,7 +300,7 @@ void shy_logic_text < mediator > :: text_update ( )
             _create_text_mesh ( ) ;
             _create_text_texture ( ) ;
             platform :: math_make_num_whole ( _text_mesh_created , true ) ;
-            _mediator -> text_prepared ( ) ;
+            _mediator -> send ( typename messages :: text_prepared ( ) ) ;
         }
     }
     if ( platform :: condition_true ( _text_mesh_created ) )

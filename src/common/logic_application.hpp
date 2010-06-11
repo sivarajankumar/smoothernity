@@ -11,7 +11,7 @@ public :
     void receive ( typename messages :: application_render msg ) ;
     void receive ( typename messages :: application_update msg ) ;
     void title_finished ( ) ;
-    void text_prepared ( ) ;
+    void receive ( typename messages :: text_prepared msg ) ;
 private :
     mediator * _mediator ;
     num_whole _application_launched ;
@@ -37,7 +37,7 @@ void shy_logic_application < mediator > :: set_mediator ( mediator * arg_mediato
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: text_prepared ( )
+void shy_logic_application < mediator > :: receive ( typename messages :: text_prepared msg )
 {
     platform :: math_make_num_whole ( _text_active , false ) ;
     platform :: math_make_num_whole ( _title_active , true ) ;
