@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_camera
 {
+    typedef typename mediator :: engine_camera engine_camera ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
@@ -321,7 +322,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     platform :: vector_xyz ( up , up_x , up_y , up_z ) ;
     platform :: vector_xyz ( shift , shift_x , shift_y , shift_z ) ;
     platform :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
-    _mediator -> camera_matrix_look_at ( _camera_matrix , shifted_origin , _current_camera_target , up ) ;
+    engine_camera :: camera_matrix_look_at ( _camera_matrix , shifted_origin , _current_camera_target , up ) ;
 }
 
 template < typename mediator >

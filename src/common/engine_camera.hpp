@@ -5,7 +5,7 @@ class shy_engine_camera
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
 public :
-    void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
+    static void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
 } ;
 
 template < typename mediator >

@@ -51,6 +51,8 @@ class shy_mediator
 {
 public :
     typedef typename mediator_types :: platform platform ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english alphabet_english ;
@@ -69,7 +71,6 @@ public :
 public :
     void application_render ( ) ;
     void application_update ( ) ;
-    void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
     void camera_matrix_use ( ) ;
     void camera_prepare_permit ( ) ;
     void camera_prepared ( ) ;
@@ -216,13 +217,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: application_update ( )
 {
     _logic_application . application_update ( ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: camera_matrix_look_at
-    ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up )
-{
-    _engine_camera . camera_matrix_look_at ( matrix , from , to , norm_up ) ;
 }
 
 template < typename mediator_types >
