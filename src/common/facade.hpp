@@ -122,7 +122,7 @@ void shy_facade < platform > :: render ( )
 template < typename platform >
 void shy_facade < platform > :: update ( )
 {
-    _mediator . update ( ) ;
+    _mediator . send ( typename messages :: update ( ) ) ;
 }
 
 template < typename platform >

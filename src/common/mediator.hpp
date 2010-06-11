@@ -88,6 +88,7 @@ public :
         class done { } ;
         class init { } ;
         class render { } ;
+        class update { } ;
     } ;
     
 public :
@@ -113,6 +114,7 @@ public :
     void send ( typename messages :: done msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
+    void send ( typename messages :: update msg ) ;
 public :
     void application_render ( ) ;
     void application_update ( ) ;
@@ -199,7 +201,6 @@ public :
     void touch_prepared ( ) ;
     void touch_render ( ) ;
     void touch_update ( ) ;
-    void update ( ) ;
     void use_ortho_projection ( ) ;
     void use_perspective_projection ( ) ;
     void use_text_texture ( ) ;
@@ -594,9 +595,9 @@ void shy_mediator < mediator_types > :: text_prepared ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: update ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: update msg )
 {
-    _logic . get ( ) . update ( ) ;
+    _logic . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

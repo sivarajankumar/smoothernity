@@ -10,7 +10,7 @@ public :
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: done msg ) ;
     void receive ( typename messages :: render msg ) ;
-    void update ( ) ;
+    void receive ( typename messages :: update msg ) ;
     void use_perspective_projection ( ) ;
     void use_ortho_projection ( ) ;
     void video_mode_changed ( ) ;
@@ -61,7 +61,7 @@ void shy_logic < mediator > :: receive ( typename messages :: render msg )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: update ( )
+void shy_logic < mediator > :: receive ( typename messages :: update msg )
 {
     _mediator -> application_update ( ) ;
     _mediator -> fidget_update ( ) ;
