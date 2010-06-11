@@ -117,6 +117,7 @@ public :
         class land_render { } ;
         class render { } ;
         class sound_prepare_permit { } ;
+        class sound_prepared { } ;
         class update { } ;
         class video_mode_changed { } ;
     } ;
@@ -173,6 +174,7 @@ public :
     void send ( typename messages :: land_render msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: sound_prepare_permit msg ) ;
+    void send ( typename messages :: sound_prepared msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
@@ -205,7 +207,6 @@ public :
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
-    void sound_prepared ( ) ;
     void sound_update ( ) ;
     const alphabet_english & text_alphabet_english ( ) ;
     void text_done ( ) ;
@@ -613,9 +614,9 @@ void shy_mediator < mediator_types > :: touch_render ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sound_prepared ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: sound_prepared msg )
 {
-    _logic_game . get ( ) . sound_prepared ( ) ;
+    _logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

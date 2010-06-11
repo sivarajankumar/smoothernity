@@ -21,7 +21,7 @@ public :
     void receive ( typename messages :: entities_prepared msg ) ;
     void receive ( typename messages :: image_prepared msg ) ;
     void receive ( typename messages :: land_prepared msg ) ;
-    void sound_prepared ( ) ;
+    void receive ( typename messages :: sound_prepared msg ) ;
     void touch_prepared ( ) ;
 private :
     void _render_scene ( ) ;
@@ -128,7 +128,7 @@ void shy_logic_game < mediator > :: touch_prepared ( )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: sound_prepared ( )
+void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepared msg )
 {
 }
 

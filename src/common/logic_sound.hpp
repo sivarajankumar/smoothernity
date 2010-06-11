@@ -137,7 +137,7 @@ void shy_logic_sound < mediator > :: sound_update ( )
                 {
                     _create_stereo_sound ( ) ;
                     platform :: math_make_num_whole ( _stereo_sound_created , true ) ;
-                    _mediator -> sound_prepared ( ) ;
+                    _mediator -> send ( typename messages :: sound_prepared ( ) ) ;
                 }
             }
         }
