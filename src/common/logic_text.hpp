@@ -81,7 +81,7 @@ public :
     void receive ( typename messages :: text_done msg ) ;
     void receive ( typename messages :: text_prepare_permit msg ) ;
     void receive ( typename messages :: text_render msg ) ;
-    void text_update ( ) ;
+    void receive ( typename messages :: text_update msg ) ;
     const alphabet_english & text_alphabet_english ( ) ;
     void use_text_texture ( ) ;
     void get_big_letter_tex_coords 
@@ -291,7 +291,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_render m
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: text_update ( )
+void shy_logic_text < mediator > :: receive ( typename messages :: text_update msg )
 {
     if ( platform :: condition_true ( _text_prepare_permitted ) )
     {

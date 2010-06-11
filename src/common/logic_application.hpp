@@ -77,7 +77,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
         _mediator -> send ( typename messages :: text_prepare_permit ( ) ) ;
     }
     if ( platform :: condition_true ( _text_active ) )
-        _mediator -> text_update ( ) ;
+        _mediator -> send ( typename messages :: text_update ( ) ) ;
     if ( platform :: condition_true ( _game_active ) )
         _mediator -> send ( typename messages :: game_update ( ) ) ;
     if ( platform :: condition_true ( _title_active ) )

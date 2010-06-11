@@ -126,6 +126,7 @@ public :
         class text_prepare_permit { } ;
         class text_prepared { } ;
         class text_render { } ;
+        class text_update { } ;
         class update { } ;
         class video_mode_changed { } ;
     } ;
@@ -189,6 +190,7 @@ public :
     void send ( typename messages :: text_prepare_permit msg ) ;
     void send ( typename messages :: text_prepared msg ) ;
     void send ( typename messages :: text_render msg ) ;
+    void send ( typename messages :: text_update msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
@@ -221,7 +223,6 @@ public :
     void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     const alphabet_english & text_alphabet_english ( ) ;
-    void text_update ( ) ;
     void texture_create ( texture_id & result ) ;
     void texture_finalize ( texture_id arg_texture_id ) ;
     void texture_height ( num_whole & result ) ;
@@ -646,9 +647,9 @@ void shy_mediator < mediator_types > :: touch_update ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: text_update ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: text_update msg )
 {
-    _logic_text . get ( ) . text_update ( ) ;
+    _logic_text . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
