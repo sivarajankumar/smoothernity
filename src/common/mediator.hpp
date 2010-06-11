@@ -132,6 +132,7 @@ public :
         class title_finished { } ;
         class title_launch_permit { } ;
         class title_render { } ;
+        class title_update { } ;
         class update { } ;
         class video_mode_changed { } ;
     } ;
@@ -201,6 +202,7 @@ public :
     void send ( typename messages :: title_finished msg ) ;
     void send ( typename messages :: title_launch_permit msg ) ;
     void send ( typename messages :: title_render msg ) ;
+    void send ( typename messages :: title_update msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
@@ -241,7 +243,6 @@ public :
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
-    void title_update ( ) ;
     void touch_done ( ) ;
     void touch_prepare_permit ( ) ;
     void touch_prepared ( ) ;
@@ -777,9 +778,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: title_render
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: title_update ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: title_update msg )
 {
-    _logic_title . get ( ) . title_update ( ) ;
+    _logic_title . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

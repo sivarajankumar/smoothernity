@@ -36,7 +36,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: title_done msg ) ;
     void receive ( typename messages :: title_render msg ) ;
-    void title_update ( ) ;
+    void receive ( typename messages :: title_update msg ) ;
     void receive ( typename messages :: title_launch_permit msg ) ;
 private :
     void _title_create ( ) ;
@@ -120,7 +120,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_launch
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: title_update ( )
+void shy_logic_title < mediator > :: receive ( typename messages :: title_update msg )
 {
     if ( platform :: condition_true ( _title_launch_permitted ) )
     {

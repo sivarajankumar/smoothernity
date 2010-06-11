@@ -81,5 +81,5 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
     if ( platform :: condition_true ( _game_active ) )
         _mediator -> send ( typename messages :: game_update ( ) ) ;
     if ( platform :: condition_true ( _title_active ) )
-        _mediator -> title_update ( ) ;
+        _mediator -> send ( typename messages :: title_update ( ) ) ;
 }
