@@ -81,6 +81,15 @@ public :
     typedef typename platform :: texture_resource_id texture_resource_id ;
     typedef typename platform :: vector_data vector_data ;
     typedef typename platform :: vertex_data vertex_data ;
+    
+    class messages
+    {
+    public :
+        class init
+        {
+        } ;
+    } ;
+    
 public :
     shy_mediator ( ) ;
     void register_modules 
@@ -100,6 +109,8 @@ public :
         , typename platform :: template pointer < logic_title > arg_logic_title
         , typename platform :: template pointer < logic_touch > arg_logic_touch
         ) ;
+public :
+    void send ( typename messages :: init ) ;
 public :
     void application_render ( ) ;
     void application_update ( ) ;
@@ -132,7 +143,6 @@ public :
     void image_prepared ( ) ;
     void image_render ( ) ;
     void image_update ( ) ;
-    void init ( ) ;
     void land_done ( ) ;
     void land_prepare_permit ( ) ;
     void land_prepared ( ) ;
@@ -352,7 +362,7 @@ void shy_mediator < mediator_types > :: image_prepared ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: init ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: init )
 {
     _logic . get ( ) . init ( ) ;
     _logic_sound . get ( ) . init ( ) ;

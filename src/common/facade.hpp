@@ -103,7 +103,7 @@ shy_facade < platform > :: shy_facade ( )
 template < typename platform >
 void shy_facade < platform > :: init ( )
 {
-    _mediator . init ( ) ;
+    _mediator . send ( typename _mediator_type :: messages :: init ( ) ) ;
 }
 
 template < typename platform >
