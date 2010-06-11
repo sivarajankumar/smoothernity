@@ -87,6 +87,7 @@ public :
     public :
         class done { } ;
         class init { } ;
+        class render { } ;
     } ;
     
 public :
@@ -111,6 +112,7 @@ public :
 public :
     void send ( typename messages :: done msg ) ;
     void send ( typename messages :: init msg ) ;
+    void send ( typename messages :: render msg ) ;
 public :
     void application_render ( ) ;
     void application_update ( ) ;
@@ -169,7 +171,6 @@ public :
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
-    void render ( ) ;
     void sound_prepare_permit ( ) ;
     void sound_prepared ( ) ;
     void sound_update ( ) ;
@@ -503,9 +504,9 @@ void shy_mediator < mediator_types > :: rasterize_triangle
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: render ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: render msg )
 {
-    _logic . get ( ) . render ( ) ;
+    _logic . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

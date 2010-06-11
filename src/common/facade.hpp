@@ -116,7 +116,7 @@ void shy_facade < platform > :: done ( )
 template < typename platform >
 void shy_facade < platform > :: render ( )
 {
-    _mediator . render ( ) ;
+    _mediator . send ( typename messages :: render ( ) ) ;
 }
 
 template < typename platform >

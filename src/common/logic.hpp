@@ -9,7 +9,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: done msg ) ;
-    void render ( ) ;
+    void receive ( typename messages :: render msg ) ;
     void update ( ) ;
     void use_perspective_projection ( ) ;
     void use_ortho_projection ( ) ;
@@ -55,7 +55,7 @@ void shy_logic < mediator > :: receive ( typename messages :: done msg )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: render ( )
+void shy_logic < mediator > :: receive ( typename messages :: render msg )
 {
     _mediator -> application_render ( ) ;
 }
