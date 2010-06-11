@@ -56,7 +56,7 @@ template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: application_render msg )
 {
     if ( platform :: condition_true ( _game_active ) )
-        _mediator -> game_render ( ) ;
+        _mediator -> send ( typename messages :: game_render ( ) ) ;
     if ( platform :: condition_true ( _title_active ) )
         _mediator -> title_render ( ) ;
     if ( platform :: condition_false ( _application_launched ) )

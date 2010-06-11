@@ -15,7 +15,7 @@ public :
     shy_logic_game ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: game_launch_permit msg ) ;
-    void game_render ( ) ;
+    void receive ( typename messages :: game_render msg ) ;
     void game_update ( ) ;
     void receive ( typename messages :: camera_prepared msg ) ;
     void receive ( typename messages :: entities_prepared msg ) ;
@@ -63,7 +63,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_p
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: game_render ( )
+void shy_logic_game < mediator > :: receive ( typename messages :: game_render msg )
 {
     if ( platform :: condition_true ( _game_launched ) )
     {
