@@ -95,6 +95,7 @@ public :
         class entities_done { } ;
         class entities_prepare_permit { } ;
         class entities_prepared { } ;
+        class entities_render { } ;
         class init { } ;
         class render { } ;
         class update { } ;
@@ -131,12 +132,12 @@ public :
     void send ( typename messages :: entities_done msg ) ;
     void send ( typename messages :: entities_prepare_permit msg ) ;
     void send ( typename messages :: entities_prepared msg ) ;
+    void send ( typename messages :: entities_render msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
-    void entities_render ( ) ;
     void entities_update ( ) ;
     void fidget_done ( ) ;
     void fidget_prepare_permit ( ) ;
@@ -527,9 +528,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: entities_don
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: entities_render ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_render msg )
 {
-    _logic_entities . get ( ) . entities_render ( ) ;
+    _logic_entities . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

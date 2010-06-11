@@ -139,7 +139,7 @@ void shy_logic_game < mediator > :: _render_scene ( )
     _mediator -> use_perspective_projection ( ) ;
     _mediator -> send ( typename messages :: camera_matrix_use ( ) ) ;
     _mediator -> land_render ( ) ;
-    _mediator -> entities_render ( ) ;
+    _mediator -> send ( typename messages :: entities_render ( ) ) ;
 }
 
 template < typename mediator >

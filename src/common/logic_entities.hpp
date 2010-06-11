@@ -27,7 +27,7 @@ public :
     shy_logic_entities ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: entities_done msg ) ;
-    void entities_render ( ) ;
+    void receive ( typename messages :: entities_render msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
     void entities_update ( ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
@@ -77,7 +77,7 @@ void shy_logic_entities < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: entities_render ( )
+void shy_logic_entities < mediator > :: receive ( typename messages :: entities_render msg )
 {
     if ( platform :: condition_true ( _entity_created ) )
         _entities_render ( ) ;
