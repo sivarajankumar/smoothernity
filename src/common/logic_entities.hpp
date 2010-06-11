@@ -3,6 +3,7 @@ class shy_logic_entities
 {
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -25,7 +26,7 @@ class shy_logic_entities
 public :
     shy_logic_entities ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void entities_done ( ) ;
+    void receive ( typename messages :: entities_done msg ) ;
     void entities_render ( ) ;
     void entities_prepare_permit ( ) ;
     void entities_update ( ) ;
@@ -83,7 +84,7 @@ void shy_logic_entities < mediator > :: entities_render ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: entities_done ( )
+void shy_logic_entities < mediator > :: receive ( typename messages :: entities_done msg )
 {
     if ( platform :: condition_true ( _entity_created ) )
         _mediator -> mesh_delete ( _entity_mesh_id ) ;
