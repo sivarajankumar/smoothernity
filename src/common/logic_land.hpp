@@ -26,7 +26,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: land_done msg ) ;
     void receive ( typename messages :: land_prepare_permit msg ) ;
-    void land_render ( ) ;
+    void receive ( typename messages :: land_render msg ) ;
     void land_update ( ) ;
 private :
     void _render_land ( ) ;
@@ -74,7 +74,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_prepare_
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: land_render ( )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_render msg )
 {
     if ( platform :: condition_true ( _land_mesh_created ) && platform :: condition_true ( _land_texture_created ) )
         _render_land ( ) ;
