@@ -4,6 +4,7 @@ class shy_logic_camera
     typedef typename mediator :: engine_camera engine_camera ;
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -23,7 +24,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void camera_update ( ) ;
     void camera_prepare_permit ( ) ;
-    void camera_matrix_use ( ) ;
+    void receive ( typename messages :: camera_matrix_use msg ) ;
 private :
     void _get_entity_mesh_grid ( num_whole & result ) ;
     void _reset_camera_rubber ( ) ;
@@ -89,7 +90,7 @@ void shy_logic_camera < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: camera_matrix_use ( )
+void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_use msg )
 {
     if ( platform :: condition_true ( _camera_created ) )
         platform :: render_matrix_load ( _camera_matrix ) ;

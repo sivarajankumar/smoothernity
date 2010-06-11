@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_game
 {
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: num_fract num_fract ;
@@ -136,7 +137,7 @@ void shy_logic_game < mediator > :: _render_scene ( )
 {
     platform :: render_enable_depth_test ( ) ;
     _mediator -> use_perspective_projection ( ) ;
-    _mediator -> camera_matrix_use ( ) ;
+    _mediator -> send ( typename messages :: camera_matrix_use ( ) ) ;
     _mediator -> land_render ( ) ;
     _mediator -> entities_render ( ) ;
 }
