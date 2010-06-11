@@ -16,6 +16,20 @@ class shy_macosx_platform
 public :
     typedef const int const_int_32 ;
 
+    template < typename data_type >
+    class pointer
+    {
+        friend class shy_macosx_platform ;
+    public :
+        pointer ( ) ;
+        pointer ( data_type & arg_data ) ;
+    public :
+        data_type & get ( ) ;
+        void set ( data_type & arg_data ) ;
+    private :
+        data_type * _data_ptr ;
+    } ;
+
     template < typename data_type , const_int_32 size >
     class static_array
     {
@@ -515,6 +529,7 @@ void swap_values ( type & a , type & b )
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
 #include "macosx_platform_mouse.hpp"
+#include "macosx_platform_pointer.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
 #include "macosx_platform_time.hpp"
