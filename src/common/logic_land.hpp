@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_land
 {
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
@@ -23,7 +24,7 @@ class shy_logic_land
 public :
     shy_logic_land ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void land_done ( ) ;
+    void receive ( typename messages :: land_done msg ) ;
     void land_prepare_permit ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
@@ -60,7 +61,7 @@ void shy_logic_land < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: land_done ( )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_done msg )
 {
     if ( platform :: condition_true ( _land_mesh_created ) )
         _mediator -> mesh_delete ( _land_mesh_id ) ;

@@ -111,6 +111,7 @@ public :
         class image_render { } ;
         class image_update { } ;
         class init { } ;
+        class land_done { } ;
         class render { } ;
         class update { } ;
         class video_mode_changed { } ;
@@ -162,6 +163,7 @@ public :
     void send ( typename messages :: image_render msg ) ;
     void send ( typename messages :: image_update msg ) ;
     void send ( typename messages :: init msg ) ;
+    void send ( typename messages :: land_done msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
@@ -172,7 +174,6 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
-    void land_done ( ) ;
     void land_prepare_permit ( ) ;
     void land_prepared ( ) ;
     void land_render ( ) ;
@@ -572,9 +573,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: image_render
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: land_done ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: land_done msg )
 {
-    _logic_land . get ( ) . land_done ( ) ;
+    _logic_land . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
