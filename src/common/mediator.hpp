@@ -89,6 +89,7 @@ public :
         class init { } ;
         class render { } ;
         class update { } ;
+        class video_mode_changed { } ;
     } ;
     
 public :
@@ -115,6 +116,7 @@ public :
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
+    void send ( typename messages :: video_mode_changed msg ) ;
 public :
     void application_render ( ) ;
     void application_update ( ) ;
@@ -204,7 +206,6 @@ public :
     void use_ortho_projection ( ) ;
     void use_perspective_projection ( ) ;
     void use_text_texture ( ) ;
-    void video_mode_changed ( ) ;
 private :
     typename platform :: template pointer < engine_mesh > _engine_mesh ;
     typename platform :: template pointer < engine_rasterizer > _engine_rasterizer ;
@@ -744,9 +745,9 @@ void shy_mediator < mediator_types > :: touch_prepared ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: video_mode_changed ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: video_mode_changed msg )
 {
-    _logic . get ( ) . video_mode_changed ( ) ;
+    _logic . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

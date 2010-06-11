@@ -128,7 +128,7 @@ void shy_facade < platform > :: update ( )
 template < typename platform >
 void shy_facade < platform > :: video_mode_changed ( )
 {
-    _mediator . video_mode_changed ( ) ;
+    _mediator . send ( typename messages :: video_mode_changed ( ) ) ;
 }
 
 #undef char

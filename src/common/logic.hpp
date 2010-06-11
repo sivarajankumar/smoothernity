@@ -13,7 +13,7 @@ public :
     void receive ( typename messages :: update msg ) ;
     void use_perspective_projection ( ) ;
     void use_ortho_projection ( ) ;
-    void video_mode_changed ( ) ;
+    void receive ( typename messages :: video_mode_changed msg ) ;
     void fidget_prepared ( ) ;
     void get_near_plane_distance ( num_fract & result ) ;
 private :
@@ -111,7 +111,7 @@ void shy_logic < mediator > :: fidget_prepared ( )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: video_mode_changed ( )
+void shy_logic < mediator > :: receive ( typename messages :: video_mode_changed msg )
 {
     _init_render ( ) ;
 }
