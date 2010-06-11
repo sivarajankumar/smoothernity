@@ -106,7 +106,7 @@ void shy_logic_image < mediator > :: image_update ( )
             {
                 _mediator -> texture_finalize ( _image_texture_id ) ;
                 platform :: math_make_num_whole ( _image_texture_loaded , true ) ;
-                _mediator -> image_prepared ( ) ;
+                _mediator -> send ( typename messages :: image_prepared ( ) ) ;
             }
         }
     }

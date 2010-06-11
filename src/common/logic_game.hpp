@@ -19,7 +19,7 @@ public :
     void receive ( typename messages :: game_update msg ) ;
     void receive ( typename messages :: camera_prepared msg ) ;
     void receive ( typename messages :: entities_prepared msg ) ;
-    void image_prepared ( ) ;
+    void receive ( typename messages :: image_prepared msg ) ;
     void land_prepared ( ) ;
     void sound_prepared ( ) ;
     void touch_prepared ( ) ;
@@ -116,7 +116,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: entities_prep
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: image_prepared ( )
+void shy_logic_game < mediator > :: receive ( typename messages :: image_prepared msg )
 {
     _mediator -> touch_prepare_permit ( ) ;
 }
