@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_camera
 {
     typedef typename mediator :: engine_camera engine_camera ;
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
@@ -207,7 +208,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     platform :: math_neg_fract ( spline_pos ) ;
     platform :: math_add_to_fract ( spline_pos , platform :: fract_1 ) ;
     
-    _mediator -> math_catmull_rom_spline
+    engine_math :: math_catmull_rom_spline
         ( _desired_camera_origin
         , spline_pos
         , platform :: array_element ( _scheduled_camera_origins , platform :: whole_0 )
@@ -256,7 +257,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     platform :: math_neg_fract ( spline_pos ) ;
     platform :: math_add_to_fract ( spline_pos , platform :: fract_1 ) ;
     
-    _mediator -> math_catmull_rom_spline
+    engine_math :: math_catmull_rom_spline
         ( _desired_camera_target
         , spline_pos
         , platform :: array_element ( _scheduled_camera_targets , platform :: whole_0 )

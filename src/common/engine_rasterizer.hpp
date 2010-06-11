@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_engine_rasterizer
 {
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -102,8 +103,8 @@ void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( num_whole
     platform :: math_div_whole_by ( x_center , platform :: whole_2 ) ;
     platform :: math_sub_wholes ( x_diff , x1 , x2 ) ;
     platform :: math_sub_wholes ( y_diff , y1 , y2 ) ;
-    _mediator -> math_abs_whole ( width , x_diff ) ;
-    _mediator -> math_abs_whole ( height , y_diff ) ;
+    engine_math :: math_abs_whole ( width , x_diff ) ;
+    engine_math :: math_abs_whole ( height , y_diff ) ;
     
     num_whole half_width ;
     num_whole half_height ;
@@ -138,8 +139,8 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( num_whol
 {
     num_whole left ;
     num_whole right ;
-    _mediator -> math_min_whole ( left , x1 , x2 ) ;
-    _mediator -> math_max_whole ( right , x1 , x2 ) ;
+    engine_math :: math_min_whole ( left , x1 , x2 ) ;
+    engine_math :: math_max_whole ( right , x1 , x2 ) ;
     for ( num_whole x = left 
         ; platform :: condition_whole_less_or_equal_to_whole ( x , right )
         ; platform :: math_inc_whole ( x )

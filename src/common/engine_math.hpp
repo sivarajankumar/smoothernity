@@ -7,13 +7,13 @@ class shy_engine_math
     typedef typename mediator :: platform :: vector_data vector_data ;
     
 public :
-    void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
-    void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
-    void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
-    void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
-    void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
-    void math_abs_whole ( num_whole & result , num_whole a ) ;
+    static void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
+    static void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
+    static void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
+    static void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
+    static void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
+    static void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
+    static void math_abs_whole ( num_whole & result , num_whole a ) ;
 } ;
 
 template < typename mediator >

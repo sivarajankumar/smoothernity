@@ -106,13 +106,6 @@ public :
     void land_prepared ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
-    void math_abs_whole ( num_whole & result , num_whole a ) ;
-    void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
-    void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
-    void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
-    void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
-    void math_max_whole ( num_whole & result , num_whole a , num_whole b ) ;
-    void math_min_whole ( num_whole & result , num_whole a , num_whole b ) ;
     template 
         < typename vertex_array 
         , typename strip_index_array
@@ -302,43 +295,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: land_prepared ( )
 {
     _logic_game . land_prepared ( ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_abs_whole ( num_whole & result , num_whole a )
-{
-    _engine_math . math_abs_whole ( result , a ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_catmull_rom_spline
-    ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 )
-{
-    _engine_math . math_catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_clamp_fract ( num_fract & result , num_fract f , num_fract from , num_fract to )
-{
-    _engine_math . math_clamp_fract ( result , f , from , to ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_clamp_fract ( num_fract & f , num_fract from , num_fract to )
-{
-    _engine_math . math_clamp_fract ( f , from , to ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_max_whole ( num_whole & result , num_whole a , num_whole b )
-{
-    _engine_math . math_max_whole ( result , a , b ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_min_whole ( num_whole & result , num_whole a , num_whole b )
-{
-    _engine_math . math_min_whole ( result , a , b ) ;
 }
 
 template < typename mediator_types >
@@ -731,13 +687,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: game_launch_permit ( )
 {
     _logic_game . game_launch_permit ( ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: math_lerp 
-    ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight )
-{
-    _engine_math . math_lerp ( result , from_value , from_weight , to_value , to_weight , weight ) ;
 }
 
 template < typename mediator_types >

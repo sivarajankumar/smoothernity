@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_entities
 {
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
@@ -413,7 +414,7 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 platform :: math_sub_from_fract ( scale_frame_part , fract_scale_wave ) ;
                 
                 platform :: math_add_fracts ( scale , scale_wave_part , scale_frame_part ) ;
-                _mediator -> math_clamp_fract ( scale , platform :: fract_0 , platform :: fract_1 ) ;
+                engine_math :: math_clamp_fract ( scale , platform :: fract_0 , platform :: fract_1 ) ;
                 
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;

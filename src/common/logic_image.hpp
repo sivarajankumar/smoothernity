@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_image
 {
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
@@ -126,7 +127,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     platform :: math_make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
     platform :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform :: math_make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
-    _mediator -> math_lerp ( scale , platform :: fract_0 , platform :: fract_0 , _final_scale ( ) , fract_scale_in_frames , fract_scale_frames ) ;
+    engine_math :: math_lerp ( scale , platform :: fract_0 , platform :: fract_0 , _final_scale ( ) , fract_scale_in_frames , fract_scale_frames ) ;
     platform :: math_make_num_fract ( origin_x , 1 , 2 ) ;
     platform :: math_make_num_fract ( origin_y , 0 , 1 ) ;
     platform :: math_make_num_fract ( origin_z , - 3 , 1 ) ;

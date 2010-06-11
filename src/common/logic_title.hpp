@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_title
 {
     typedef typename mediator :: alphabet_english alphabet_english ;
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: platform platform ;
@@ -248,7 +249,7 @@ void shy_logic_title < mediator > :: _title_update ( )
     platform :: math_make_num_fract ( scale_min , 7 , 10 ) ;
     platform :: math_make_num_fract ( scale_max , 9 , 10 ) ;
     
-    _mediator -> math_lerp 
+    engine_math :: math_lerp 
         ( _scene_scale 
         , scale_min
         , platform :: fract_0 
@@ -302,7 +303,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform :: math_sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
         if ( platform :: condition_whole_greater_than_whole ( _title_frames , starting_frame ) )
         {
-            _mediator -> math_lerp ( rubber , _rubber_first , platform :: fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
+            engine_math :: math_lerp ( rubber , _rubber_first , platform :: fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
             
             platform :: math_mul_fracts ( pos_angle_old_part , letter . pos_angle , rubber ) ;
             platform :: math_sub_fracts ( pos_angle_new_part , platform :: fract_1 , rubber ) ;
