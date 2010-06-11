@@ -115,6 +115,7 @@ public :
         class land_prepare_permit { } ;
         class land_prepared { } ;
         class land_render { } ;
+        class land_update { } ;
         class render { } ;
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
@@ -173,6 +174,7 @@ public :
     void send ( typename messages :: land_prepare_permit msg ) ;
     void send ( typename messages :: land_prepared msg ) ;
     void send ( typename messages :: land_render msg ) ;
+    void send ( typename messages :: land_update msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
@@ -186,7 +188,6 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
-    void land_update ( ) ;
     template 
         < typename vertex_array 
         , typename strip_index_array
@@ -651,9 +652,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: sound_update
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: land_update ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: land_update msg )
 {
-    _logic_land . get ( ) . land_update ( ) ;
+    _logic_land . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

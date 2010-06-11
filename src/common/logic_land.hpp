@@ -27,7 +27,7 @@ public :
     void receive ( typename messages :: land_done msg ) ;
     void receive ( typename messages :: land_prepare_permit msg ) ;
     void receive ( typename messages :: land_render msg ) ;
-    void land_update ( ) ;
+    void receive ( typename messages :: land_update msg ) ;
 private :
     void _render_land ( ) ;
     void _create_land_mesh ( ) ;
@@ -81,7 +81,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_render m
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: land_update ( )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_update msg )
 {
     if ( platform :: condition_true ( _land_prepare_permitted ) )
     {
