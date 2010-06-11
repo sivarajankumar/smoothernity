@@ -100,7 +100,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update m
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: camera_prepared msg )
 {
-    _mediator -> land_prepare_permit ( ) ;
+    _mediator -> send ( typename messages :: land_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >

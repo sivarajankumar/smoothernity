@@ -25,7 +25,7 @@ public :
     shy_logic_land ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: land_done msg ) ;
-    void land_prepare_permit ( ) ;
+    void receive ( typename messages :: land_prepare_permit msg ) ;
     void land_render ( ) ;
     void land_update ( ) ;
 private :
@@ -68,7 +68,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_done msg
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: land_prepare_permit ( )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _land_prepare_permitted , true ) ;
 }
