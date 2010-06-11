@@ -29,14 +29,6 @@
 template < typename platform >
 class shy_facade
 {
-public :
-    shy_facade ( ) ;
-    void init ( ) ;
-    void done ( ) ;
-    void render ( ) ;
-    void update ( ) ;
-    void video_mode_changed ( ) ;
-private :
     typedef shy_mediator < shy_mediator_types
         < platform 
         , shy_engine_camera
@@ -58,6 +50,15 @@ private :
         , shy_logic_touch
         > >
         _mediator_type ;
+    typedef typename _mediator_type :: messages messages ;
+public :
+    shy_facade ( ) ;
+    void init ( ) ;
+    void done ( ) ;
+    void render ( ) ;
+    void update ( ) ;
+    void video_mode_changed ( ) ;
+private :
     _mediator_type _mediator ;
     shy_engine_camera < _mediator_type > _engine_camera ;
     shy_engine_math < _mediator_type > _engine_math ;
@@ -103,13 +104,13 @@ shy_facade < platform > :: shy_facade ( )
 template < typename platform >
 void shy_facade < platform > :: init ( )
 {
-    _mediator . send ( typename _mediator_type :: messages :: init ( ) ) ;
+    _mediator . send ( typename messages :: init ( ) ) ;
 }
 
 template < typename platform >
 void shy_facade < platform > :: done ( )
 {
-    _mediator . done ( ) ;
+    _mediator . send ( typename messages :: done ( ) ) ;
 }
 
 template < typename platform >

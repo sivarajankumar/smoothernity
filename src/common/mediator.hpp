@@ -85,9 +85,8 @@ public :
     class messages
     {
     public :
-        class init
-        {
-        } ;
+        class done { } ;
+        class init { } ;
     } ;
     
 public :
@@ -110,6 +109,7 @@ public :
         , typename platform :: template pointer < logic_touch > arg_logic_touch
         ) ;
 public :
+    void send ( typename messages :: done msg ) ;
     void send ( typename messages :: init msg ) ;
 public :
     void application_render ( ) ;
@@ -118,7 +118,6 @@ public :
     void camera_prepare_permit ( ) ;
     void camera_prepared ( ) ;
     void camera_update ( ) ;
-    void done ( ) ;
     void entities_done ( ) ;
     void entities_prepare_permit ( ) ;
     void entities_prepared ( ) ;
@@ -302,9 +301,9 @@ void shy_mediator < mediator_types > :: camera_update ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: done ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: done msg )
 {
-    _logic . get ( ) . done ( ) ;
+    _logic . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

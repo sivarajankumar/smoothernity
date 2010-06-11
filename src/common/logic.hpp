@@ -8,8 +8,7 @@ public :
     shy_logic ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void init ( ) ;
-    void done ( ) ;
+    void receive ( typename messages :: done msg ) ;
     void render ( ) ;
     void update ( ) ;
     void use_perspective_projection ( ) ;
@@ -44,7 +43,7 @@ void shy_logic < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: done ( )
+void shy_logic < mediator > :: receive ( typename messages :: done msg )
 {
     _mediator -> entities_done ( ) ;
     _mediator -> fidget_done ( ) ;
