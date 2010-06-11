@@ -110,7 +110,7 @@ public :
         , typename platform :: template pointer < logic_touch > arg_logic_touch
         ) ;
 public :
-    void send ( typename messages :: init ) ;
+    void send ( typename messages :: init msg ) ;
 public :
     void application_render ( ) ;
     void application_update ( ) ;
@@ -362,10 +362,10 @@ void shy_mediator < mediator_types > :: image_prepared ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: init )
+void shy_mediator < mediator_types > :: send ( typename messages :: init msg )
 {
-    _logic . get ( ) . init ( ) ;
-    _logic_sound . get ( ) . init ( ) ;
+    _logic . get ( ) . receive ( msg ) ;
+    _logic_sound . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

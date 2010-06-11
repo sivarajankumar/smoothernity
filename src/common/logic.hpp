@@ -1,11 +1,13 @@
 template < typename mediator >
 class shy_logic
 {
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
 public :
     shy_logic ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
@@ -35,7 +37,7 @@ void shy_logic < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: init ( )
+void shy_logic < mediator > :: receive ( typename messages :: init msg )
 {
     _init_render ( ) ;
     _mediator -> fidget_prepare_permit ( ) ;

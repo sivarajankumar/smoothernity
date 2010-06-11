@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_sound
 {
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: mono_sound_sample mono_sound_sample ;
@@ -19,7 +20,7 @@ class shy_logic_sound
 public :
     shy_logic_sound ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void init ( ) ;
+    void receive ( typename messages :: init msg ) ;
     void sound_prepare_permit ( ) ;
     void sound_update ( ) ;
 private :
@@ -56,7 +57,7 @@ void shy_logic_sound < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: init ( )
+void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 {
     num_fract pos_x ;
     num_fract pos_y ;
