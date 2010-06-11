@@ -23,7 +23,7 @@ public :
     shy_logic_camera ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void camera_update ( ) ;
-    void camera_prepare_permit ( ) ;
+    void receive ( typename messages :: camera_prepare_permit msg ) ;
     void receive ( typename messages :: camera_matrix_use msg ) ;
 private :
     void _get_entity_mesh_grid ( num_whole & result ) ;
@@ -99,7 +99,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matr
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: camera_prepare_permit ( )
+void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _camera_prepare_permitted , true ) ;
 }

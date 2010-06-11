@@ -80,7 +80,7 @@ void shy_logic_game < mediator > :: game_update ( )
     {
         if ( platform :: condition_false ( _game_launched ) )
         {
-            _mediator -> camera_prepare_permit ( ) ;
+            _mediator -> send ( typename messages :: camera_prepare_permit ( ) ) ;
             platform :: math_make_num_whole ( _game_launched , true ) ;
         }
     }
