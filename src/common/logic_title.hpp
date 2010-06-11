@@ -172,7 +172,7 @@ void shy_logic_title < mediator > :: title_update ( )
             if ( platform :: condition_whole_greater_than_whole ( _title_frames , whole_disappear_duration_in_frames ) )
             {
                 platform :: math_make_num_whole ( _title_finished , true ) ;
-                _mediator -> title_finished ( ) ;
+                _mediator -> send ( typename messages :: title_finished ( ) ) ;
             }
             else
             {
