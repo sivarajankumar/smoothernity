@@ -35,7 +35,7 @@ public :
     shy_logic_title ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: title_done msg ) ;
-    void title_render ( ) ;
+    void receive ( typename messages :: title_render msg ) ;
     void title_update ( ) ;
     void receive ( typename messages :: title_launch_permit msg ) ;
 private :
@@ -102,7 +102,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: title_render ( )
+void shy_logic_title < mediator > :: receive ( typename messages :: title_render msg )
 {
     platform :: render_clear_screen ( platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     platform :: render_disable_depth_test ( ) ;
