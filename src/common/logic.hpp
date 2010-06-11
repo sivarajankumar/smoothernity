@@ -39,7 +39,7 @@ template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: init msg )
 {
     _init_render ( ) ;
-    _mediator -> fidget_prepare_permit ( ) ;
+    _mediator -> send ( typename messages :: fidget_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >

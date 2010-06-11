@@ -21,7 +21,7 @@ public :
     shy_logic_fidget ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: fidget_done msg ) ;
-    void fidget_prepare_permit ( ) ;
+    void receive ( typename messages :: fidget_prepare_permit msg ) ;
     void fidget_render ( ) ;
     void fidget_update ( ) ;
 private :
@@ -68,7 +68,7 @@ void shy_logic_fidget < mediator > :: fidget_render ( )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: fidget_prepare_permit ( )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _fidget_prepare_permitted , true ) ;
 }
