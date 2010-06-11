@@ -28,7 +28,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: image_done msg ) ;
     void receive ( typename messages :: image_render msg ) ;
-    void image_update ( ) ;
+    void receive ( typename messages :: image_update msg ) ;
     void receive ( typename messages :: image_prepare_permit msg ) ;
 private :
     void _render_image_mesh ( ) ;
@@ -84,7 +84,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_prepar
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: image_update ( )
+void shy_logic_image < mediator > :: receive ( typename messages :: image_update msg )
 {
     if ( platform :: condition_true ( _image_prepare_permitted ) )
     {

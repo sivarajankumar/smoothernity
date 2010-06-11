@@ -109,6 +109,7 @@ public :
         class image_prepare_permit { } ;
         class image_prepared { } ;
         class image_render { } ;
+        class image_update { } ;
         class init { } ;
         class render { } ;
         class update { } ;
@@ -159,6 +160,7 @@ public :
     void send ( typename messages :: image_prepare_permit msg ) ;
     void send ( typename messages :: image_prepared msg ) ;
     void send ( typename messages :: image_render msg ) ;
+    void send ( typename messages :: image_update msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
@@ -170,7 +172,6 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
-    void image_update ( ) ;
     void land_done ( ) ;
     void land_prepare_permit ( ) ;
     void land_prepared ( ) ;
@@ -649,9 +650,9 @@ void shy_mediator < mediator_types > :: land_update ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: image_update ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: image_update msg )
 {
-    _logic_image . get ( ) . image_update ( ) ;
+    _logic_image . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
