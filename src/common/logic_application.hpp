@@ -1,13 +1,14 @@
 template < typename mediator >
 class shy_logic_application
 {
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
 public :
     shy_logic_application ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void application_render ( ) ;
+    void receive ( typename messages :: application_render msg ) ;
     void application_update ( ) ;
     void title_finished ( ) ;
     void text_prepared ( ) ;
@@ -52,7 +53,7 @@ void shy_logic_application < mediator > :: title_finished ( )
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: application_render ( )
+void shy_logic_application < mediator > :: receive ( typename messages :: application_render msg )
 {
     if ( platform :: condition_true ( _game_active ) )
         _mediator -> game_render ( ) ;

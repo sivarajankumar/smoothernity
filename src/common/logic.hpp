@@ -57,7 +57,7 @@ void shy_logic < mediator > :: receive ( typename messages :: done msg )
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: render msg )
 {
-    _mediator -> application_render ( ) ;
+    _mediator -> send ( typename messages :: application_render ( ) ) ;
 }
 
 template < typename mediator >
