@@ -34,7 +34,7 @@ class shy_logic_title
 public :
     shy_logic_title ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void title_done ( ) ;
+    void receive ( typename messages :: title_done msg ) ;
     void title_render ( ) ;
     void title_update ( ) ;
     void title_launch_permit ( ) ;
@@ -86,7 +86,7 @@ void shy_logic_title < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: title_done ( ) 
+void shy_logic_title < mediator > :: receive ( typename messages :: title_done msg ) 
 {
     if ( platform :: condition_true ( _title_created ) )
     {
