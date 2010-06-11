@@ -21,7 +21,7 @@ public :
     shy_logic_sound ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void sound_prepare_permit ( ) ;
+    void receive ( typename messages :: sound_prepare_permit msg ) ;
     void sound_update ( ) ;
 private :
     void _load_sound ( ) ;
@@ -107,7 +107,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: sound_prepare_permit ( )
+void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _sound_prepare_permitted , true ) ;
 }

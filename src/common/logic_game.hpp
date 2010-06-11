@@ -124,7 +124,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: image_prepare
 template < typename mediator >
 void shy_logic_game < mediator > :: touch_prepared ( )
 {
-    _mediator -> sound_prepare_permit ( ) ;
+    _mediator -> send ( typename messages :: sound_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
