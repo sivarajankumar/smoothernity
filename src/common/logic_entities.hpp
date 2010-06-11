@@ -325,7 +325,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
                 , _fan_indices_count
                 ) ;                
             platform :: math_make_num_whole ( _entity_created , true ) ;
-            _mediator -> entities_prepared ( ) ;
+            _mediator -> send ( typename messages :: entities_prepared ( ) ) ;
         }
     }
 }
