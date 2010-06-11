@@ -150,7 +150,7 @@ void shy_logic_game < mediator > :: _render_hud ( )
     _mediator -> use_ortho_projection ( ) ;
     _mediator -> send ( typename messages :: fidget_render ( ) ) ;
     _mediator -> text_render ( ) ;
-    _mediator -> image_render ( ) ;
+    _mediator -> send ( typename messages :: image_render ( ) ) ;
     _mediator -> touch_render ( ) ;
 }
 
