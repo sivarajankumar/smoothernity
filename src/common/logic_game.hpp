@@ -17,7 +17,7 @@ public :
     void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
-    void camera_prepared ( ) ;
+    void receive ( typename messages :: camera_prepared msg ) ;
     void entities_prepared ( ) ;
     void image_prepared ( ) ;
     void land_prepared ( ) ;
@@ -98,7 +98,7 @@ void shy_logic_game < mediator > :: game_update ( )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: camera_prepared ( )
+void shy_logic_game < mediator > :: receive ( typename messages :: camera_prepared msg )
 {
     _mediator -> land_prepare_permit ( ) ;
 }

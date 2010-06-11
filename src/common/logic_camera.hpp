@@ -115,7 +115,7 @@ void shy_logic_camera < mediator > :: camera_update ( )
             _reset_camera_rubber ( ) ;
             _update_camera ( ) ;
             platform :: math_make_num_whole ( _camera_created , true ) ;
-            _mediator -> camera_prepared ( ) ;
+            _mediator -> send ( typename messages :: camera_prepared ( ) ) ;
         }
         else
             _update_camera ( ) ;
