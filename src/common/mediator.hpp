@@ -84,9 +84,7 @@ public :
 public :
     shy_mediator ( ) ;
     void register_modules 
-        ( typename platform :: template pointer < engine_camera > arg_engine_camera 
-        , typename platform :: template pointer < engine_math > arg_engine_math
-        , typename platform :: template pointer < engine_mesh > arg_engine_mesh
+        ( typename platform :: template pointer < engine_mesh > arg_engine_mesh
         , typename platform :: template pointer < engine_rasterizer > arg_engine_rasterizer
         , typename platform :: template pointer < engine_texture > arg_engine_texture
         , typename platform :: template pointer < logic > arg_logic
@@ -197,8 +195,6 @@ public :
     void use_text_texture ( ) ;
     void video_mode_changed ( ) ;
 private :
-    typename platform :: template pointer < engine_camera > _engine_camera ;
-    typename platform :: template pointer < engine_math > _engine_math ;
     typename platform :: template pointer < engine_mesh > _engine_mesh ;
     typename platform :: template pointer < engine_rasterizer > _engine_rasterizer ;
     typename platform :: template pointer < engine_texture > _engine_texture ;
@@ -223,9 +219,7 @@ shy_mediator < mediator_types > :: shy_mediator ( )
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: register_modules 
-    ( typename platform :: template pointer < engine_camera > arg_engine_camera 
-    , typename platform :: template pointer < engine_math > arg_engine_math
-    , typename platform :: template pointer < engine_mesh > arg_engine_mesh
+    ( typename platform :: template pointer < engine_mesh > arg_engine_mesh
     , typename platform :: template pointer < engine_rasterizer > arg_engine_rasterizer
     , typename platform :: template pointer < engine_texture > arg_engine_texture
     , typename platform :: template pointer < logic > arg_logic
@@ -242,8 +236,6 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform :: template pointer < logic_touch > arg_logic_touch
     )
 {
-    _engine_camera = arg_engine_camera ;
-    _engine_math = arg_engine_math ;
     _engine_mesh = arg_engine_mesh ;
     _engine_rasterizer = arg_engine_rasterizer ;
     _engine_texture = arg_engine_texture ;

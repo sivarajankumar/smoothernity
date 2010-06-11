@@ -82,9 +82,7 @@ template < typename platform >
 shy_facade < platform > :: shy_facade ( )
 {
     _mediator . register_modules
-        ( _engine_camera
-        , _engine_math
-        , _engine_mesh
+        ( _engine_mesh
         , _engine_rasterizer
         , _engine_texture
         , _logic
