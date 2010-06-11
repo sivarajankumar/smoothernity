@@ -105,6 +105,7 @@ public :
         class game_launch_permit { } ;
         class game_render { } ;
         class game_update { } ;
+        class image_done { } ;
         class init { } ;
         class render { } ;
         class update { } ;
@@ -151,6 +152,7 @@ public :
     void send ( typename messages :: game_launch_permit msg ) ;
     void send ( typename messages :: game_render msg ) ;
     void send ( typename messages :: game_update msg ) ;
+    void send ( typename messages :: image_done msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
@@ -162,7 +164,6 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
-    void image_done ( ) ;
     void image_prepare_permit ( ) ;
     void image_prepared ( ) ;
     void image_render ( ) ;
@@ -555,9 +556,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: fidget_rende
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: image_done ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: image_done msg )
 {
-    _logic_image . get ( ) . image_done ( ) ;
+    _logic_image . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

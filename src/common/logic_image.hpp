@@ -3,6 +3,7 @@ class shy_logic_image
 {
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
@@ -25,7 +26,7 @@ class shy_logic_image
 public :
     shy_logic_image ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void image_done ( ) ;
+    void receive ( typename messages :: image_done msg ) ;
     void image_render ( ) ;
     void image_update ( ) ;
     void image_prepare_permit ( ) ;
@@ -63,7 +64,7 @@ void shy_logic_image < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: image_done ( )
+void shy_logic_image < mediator > :: receive ( typename messages :: image_done msg )
 {
     if ( platform :: condition_true ( _image_mesh_created ) )
         _mediator -> mesh_delete ( _image_mesh_id ) ;
