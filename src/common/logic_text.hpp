@@ -80,7 +80,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: text_done msg ) ;
     void receive ( typename messages :: text_prepare_permit msg ) ;
-    void text_render ( ) ;
+    void receive ( typename messages :: text_render msg ) ;
     void text_update ( ) ;
     const alphabet_english & text_alphabet_english ( ) ;
     void use_text_texture ( ) ;
@@ -284,7 +284,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_prepare_
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: text_render ( )
+void shy_logic_text < mediator > :: receive ( typename messages :: text_render msg )
 {
     if ( platform :: condition_true ( _text_mesh_created ) )
         _render_text_mesh ( ) ;
