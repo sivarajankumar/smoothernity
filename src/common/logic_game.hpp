@@ -14,7 +14,7 @@ class shy_logic_game
 public :
     shy_logic_game ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void game_launch_permit ( ) ;
+    void receive ( typename messages :: game_launch_permit msg ) ;
     void game_render ( ) ;
     void game_update ( ) ;
     void receive ( typename messages :: camera_prepared msg ) ;
@@ -57,7 +57,7 @@ void shy_logic_game < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: game_launch_permit ( )
+void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_permit msg )
 {
     platform :: math_make_num_whole ( _game_launch_permitted , true ) ;
 }

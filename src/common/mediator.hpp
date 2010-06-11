@@ -102,6 +102,7 @@ public :
         class fidget_prepared { } ;
         class fidget_render { } ;
         class fidget_update { } ;
+        class game_launch_permit { } ;
         class init { } ;
         class render { } ;
         class update { } ;
@@ -145,12 +146,12 @@ public :
     void send ( typename messages :: fidget_prepared msg ) ;
     void send ( typename messages :: fidget_render msg ) ;
     void send ( typename messages :: fidget_update msg ) ;
+    void send ( typename messages :: game_launch_permit msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
-    void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
@@ -779,9 +780,9 @@ void shy_mediator < mediator_types > :: use_ortho_projection ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: game_launch_permit ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: game_launch_permit msg )
 {
-    _logic_game . get ( ) . game_launch_permit ( ) ;
+    _logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

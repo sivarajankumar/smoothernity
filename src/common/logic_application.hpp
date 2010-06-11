@@ -49,7 +49,7 @@ void shy_logic_application < mediator > :: title_finished ( )
 {
     platform :: math_make_num_whole ( _title_active , false ) ;
     platform :: math_make_num_whole ( _game_active , true ) ;
-    _mediator -> game_launch_permit ( ) ;
+    _mediator -> send ( typename messages :: game_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
