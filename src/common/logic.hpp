@@ -46,7 +46,7 @@ template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: done msg )
 {
     _mediator -> send ( typename messages :: entities_done ( ) ) ;
-    _mediator -> fidget_done ( ) ;
+    _mediator -> send ( typename messages :: fidget_done ( ) ) ;
     _mediator -> image_done ( ) ;
     _mediator -> land_done ( ) ;
     _mediator -> text_done ( ) ;

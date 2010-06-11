@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_fidget
 {
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -19,7 +20,7 @@ class shy_logic_fidget
 public :
     shy_logic_fidget ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void fidget_done ( ) ;
+    void receive ( typename messages :: fidget_done msg ) ;
     void fidget_prepare_permit ( ) ;
     void fidget_render ( ) ;
     void fidget_update ( ) ;
@@ -53,7 +54,7 @@ void shy_logic_fidget < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: fidget_done ( )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_done msg )
 {
     if ( platform :: condition_true ( _fidget_mesh_created ) )
         _mediator -> mesh_delete ( _fidget_mesh_id ) ;
