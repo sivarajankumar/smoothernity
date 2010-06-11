@@ -22,7 +22,7 @@ class shy_logic_camera
 public :
     shy_logic_camera ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void camera_update ( ) ;
+    void receive ( typename messages :: camera_update msg ) ;
     void receive ( typename messages :: camera_prepare_permit msg ) ;
     void receive ( typename messages :: camera_matrix_use msg ) ;
 private :
@@ -105,7 +105,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prep
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: camera_update ( )
+void shy_logic_camera < mediator > :: receive ( typename messages :: camera_update msg )
 {
     if ( platform :: condition_true ( _camera_prepare_permitted ) )
     {

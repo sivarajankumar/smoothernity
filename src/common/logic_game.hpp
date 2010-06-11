@@ -87,7 +87,7 @@ void shy_logic_game < mediator > :: game_update ( )
     if ( platform :: condition_true ( _game_launched ) )
     {
         _update_color ( ) ;
-        _mediator -> camera_update ( ) ;
+        _mediator -> send ( typename messages :: camera_update ( ) ) ;
         _mediator -> entities_update ( ) ;
         _mediator -> land_update ( ) ;
         _mediator -> image_update ( ) ;
