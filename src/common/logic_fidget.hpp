@@ -82,7 +82,7 @@ void shy_logic_fidget < mediator > :: fidget_update ( )
         {
             _create_fidget_mesh ( ) ;
             platform :: math_make_num_whole ( _fidget_mesh_created , true ) ;
-            _mediator -> fidget_prepared ( ) ;
+            _mediator -> send ( typename messages :: fidget_prepared ( ) ) ;
         }
         else
             _update_fidget ( ) ;
