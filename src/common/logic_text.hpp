@@ -36,6 +36,7 @@ public :
     class letter_id
     {
         friend class shy_logic_text ;
+        friend class shy_logic_text :: alphabet_english ;
     private :
         num_whole _letter_id ;
     } ;

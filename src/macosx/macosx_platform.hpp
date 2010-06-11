@@ -311,6 +311,9 @@ public :
 	static void render_get_aspect_width ( num_fract & result ) ;
 	static void render_get_aspect_height ( num_fract & result ) ;
     
+    static void render_delete_vertex_buffer ( const render_vertex_buffer_id & arg_buffer_id ) ;
+    static void render_delete_index_buffer ( const render_index_buffer_id & arg_buffer_id ) ;
+    
     template < const_int_32 texel_array_size >
     static void render_load_texture_data 
         ( const render_texture_id & arg_texture_id 

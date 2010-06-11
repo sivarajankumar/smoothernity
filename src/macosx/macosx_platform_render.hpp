@@ -288,3 +288,11 @@ inline void shy_macosx_platform :: render_get_aspect_height ( num_fract & result
 {
 	result . _value = shy_macosx_platform_utility :: _aspect_height ;
 }
+
+inline void shy_macosx_platform :: render_delete_vertex_buffer ( const render_vertex_buffer_id & arg_buffer_id )
+{
+}
+
+inline void shy_macosx_platform :: render_delete_index_buffer ( const render_index_buffer_id & arg_buffer_id )
+{
+}
