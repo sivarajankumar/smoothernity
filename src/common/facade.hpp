@@ -30,13 +30,14 @@ template < typename platform >
 class shy_facade
 {
 public :
+    shy_facade ( ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
     void update ( ) ;
     void video_mode_changed ( ) ;
 private :
-    shy_mediator < shy_mediator_types
+    typedef shy_mediator < shy_mediator_types
         < platform 
         , shy_engine_camera
         , shy_engine_math
@@ -56,8 +57,50 @@ private :
         , shy_logic_title
         , shy_logic_touch
         > >
-        _mediator ;
+        _mediator_type ;
+    _mediator_type _mediator ;
+    shy_engine_camera < _mediator_type > _engine_camera ;
+    shy_engine_math < _mediator_type > _engine_math ;
+    shy_engine_mesh < _mediator_type > _engine_mesh ;
+    shy_engine_rasterizer < _mediator_type > _engine_rasterizer ;
+    shy_engine_texture < _mediator_type > _engine_texture ;
+    shy_logic < _mediator_type > _logic ;
+    shy_logic_application < _mediator_type > _logic_application ;
+    shy_logic_camera < _mediator_type > _logic_camera ;
+    shy_logic_entities < _mediator_type > _logic_entities ;
+    shy_logic_fidget < _mediator_type > _logic_fidget ;
+    shy_logic_game < _mediator_type > _logic_game ;
+    shy_logic_image < _mediator_type > _logic_image ;
+    shy_logic_land < _mediator_type > _logic_land ;
+    shy_logic_sound < _mediator_type > _logic_sound ;
+    shy_logic_text < _mediator_type > _logic_text ;
+    shy_logic_title < _mediator_type > _logic_title ;
+    shy_logic_touch < _mediator_type > _logic_touch ;
 } ;
+
+template < typename platform >
+shy_facade < platform > :: shy_facade ( )
+{
+    _mediator . register_modules
+        ( & _engine_camera
+        , & _engine_math
+        , & _engine_mesh
+        , & _engine_rasterizer
+        , & _engine_texture
+        , & _logic
+        , & _logic_application
+        , & _logic_camera
+        , & _logic_entities
+        , & _logic_fidget
+        , & _logic_game
+        , & _logic_image
+        , & _logic_land
+        , & _logic_sound
+        , & _logic_text
+        , & _logic_title
+        , & _logic_touch
+        ) ;
+}
 
 template < typename platform >
 void shy_facade < platform > :: init ( )
