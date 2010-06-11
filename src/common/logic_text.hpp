@@ -3,6 +3,7 @@ class shy_logic_text
 {
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
@@ -77,7 +78,7 @@ public :
 public :
     shy_logic_text ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void text_done ( ) ;
+    void receive ( typename mediator :: messages :: text_done msg ) ;
     void text_prepare_permit ( ) ;
     void text_render ( ) ;
     void text_update ( ) ;
@@ -172,7 +173,7 @@ void shy_logic_text < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: text_done ( )
+void shy_logic_text < mediator > :: receive ( typename mediator :: messages :: text_done msg )
 {
     if ( platform :: condition_true ( _text_mesh_created ) )
         _mediator -> mesh_delete ( _text_mesh_id ) ;

@@ -50,6 +50,8 @@ template < typename mediator_types >
 class shy_mediator
 {
 public :
+    class messages ;
+
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
@@ -120,6 +122,7 @@ public :
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
         class sound_update { } ;
+        class text_done { } ;
         class update { } ;
         class video_mode_changed { } ;
     } ;
@@ -179,6 +182,7 @@ public :
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
     void send ( typename messages :: sound_update msg ) ;
+    void send ( typename messages :: text_done msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
@@ -211,7 +215,6 @@ public :
     void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void rasterize_use_texel ( const texel_data & texel ) ;
     const alphabet_english & text_alphabet_english ( ) ;
-    void text_done ( ) ;
     void text_prepare_permit ( ) ;
     void text_prepared ( ) ;
     void text_render ( ) ;
@@ -592,9 +595,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: land_render 
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: text_done ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: text_done msg )
 {
-    _logic_text . get ( ) . text_done ( ) ;
+    _logic_text . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

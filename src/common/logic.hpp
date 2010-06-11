@@ -49,7 +49,7 @@ void shy_logic < mediator > :: receive ( typename messages :: done msg )
     _mediator -> send ( typename messages :: fidget_done ( ) ) ;
     _mediator -> send ( typename messages :: image_done ( ) ) ;
     _mediator -> send ( typename messages :: land_done ( ) ) ;
-    _mediator -> text_done ( ) ;
+    _mediator -> send ( typename messages :: text_done ( ) ) ;
     _mediator -> title_done ( ) ;
     _mediator -> touch_done ( ) ;
 }
