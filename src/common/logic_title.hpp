@@ -5,6 +5,7 @@ class shy_logic_title
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -107,7 +108,7 @@ void shy_logic_title < mediator > :: title_render ( )
     platform :: render_disable_depth_test ( ) ;
     platform :: render_fog_disable ( ) ;
     _mediator -> use_ortho_projection ( ) ;
-    _mediator -> fidget_render ( ) ;
+    _mediator -> send ( typename messages :: fidget_render ( ) ) ;
     if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
         _title_render ( ) ;
 }

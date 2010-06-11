@@ -64,7 +64,7 @@ template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: update msg )
 {
     _mediator -> send ( typename messages :: application_update ( ) ) ;
-    _mediator -> fidget_update ( ) ;
+    _mediator -> send ( typename messages :: fidget_update ( ) ) ;
 }
 
 template < typename mediator >

@@ -100,6 +100,8 @@ public :
         class fidget_done { } ;
         class fidget_prepare_permit { } ;
         class fidget_prepared { } ;
+        class fidget_render { } ;
+        class fidget_update { } ;
         class init { } ;
         class render { } ;
         class update { } ;
@@ -141,13 +143,13 @@ public :
     void send ( typename messages :: fidget_done msg ) ;
     void send ( typename messages :: fidget_prepare_permit msg ) ;
     void send ( typename messages :: fidget_prepared msg ) ;
+    void send ( typename messages :: fidget_render msg ) ;
+    void send ( typename messages :: fidget_update msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
-    void fidget_render ( ) ;
-    void fidget_update ( ) ;
     void game_launch_permit ( ) ;
     void game_render ( ) ;
     void game_update ( ) ;
@@ -544,9 +546,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: fidget_done 
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: fidget_render ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: fidget_render msg )
 {
-    _logic_fidget . get ( ) . fidget_render ( ) ;
+    _logic_fidget . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -646,9 +648,9 @@ void shy_mediator < mediator_types > :: image_update ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: fidget_update ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: fidget_update msg )
 {
-    _logic_fidget . get ( ) . fidget_update ( ) ;
+    _logic_fidget . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

@@ -22,8 +22,8 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: fidget_done msg ) ;
     void receive ( typename messages :: fidget_prepare_permit msg ) ;
-    void fidget_render ( ) ;
-    void fidget_update ( ) ;
+    void receive ( typename messages :: fidget_render msg ) ;
+    void receive ( typename messages :: fidget_update msg ) ;
 private :
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
@@ -61,7 +61,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_done
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: fidget_render ( )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_render msg )
 {
     if ( platform :: condition_true ( _fidget_mesh_created ) )
         _render_fidget_mesh ( ) ;
@@ -74,7 +74,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prep
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: fidget_update ( )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_update msg )
 {
     if ( platform :: condition_true ( _fidget_prepare_permitted ) )
     {
