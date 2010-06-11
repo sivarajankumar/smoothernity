@@ -113,6 +113,7 @@ public :
         class init { } ;
         class land_done { } ;
         class land_prepare_permit { } ;
+        class land_prepared { } ;
         class render { } ;
         class update { } ;
         class video_mode_changed { } ;
@@ -166,6 +167,7 @@ public :
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: land_done msg ) ;
     void send ( typename messages :: land_prepare_permit msg ) ;
+    void send ( typename messages :: land_prepared msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
@@ -176,7 +178,6 @@ public :
     void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
-    void land_prepared ( ) ;
     void land_render ( ) ;
     void land_update ( ) ;
     template 
@@ -397,9 +398,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: init msg )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: land_prepared ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: land_prepared msg )
 {
-    _logic_game . get ( ) . land_prepared ( ) ;
+    _logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

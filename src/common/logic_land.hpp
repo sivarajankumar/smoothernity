@@ -91,7 +91,7 @@ void shy_logic_land < mediator > :: land_update ( )
         {
             _create_land_mesh ( ) ;
             if ( platform :: condition_true ( _land_mesh_created ) )
-                _mediator -> land_prepared ( ) ;
+                _mediator -> send ( typename messages :: land_prepared ( ) ) ;
         }
     }
 }
