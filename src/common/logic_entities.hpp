@@ -133,7 +133,7 @@ void shy_logic_entities < mediator > :: _entities_render ( )
     num_whole whole_entity_mesh_grid ;
     platform :: math_make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
     platform :: math_mul_wholes ( i_max , whole_entity_mesh_grid , whole_entity_mesh_grid ) ;
-    _mediator -> texture_unselect ( ) ;
+    _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
     for ( num_whole i = platform :: whole_0 
         ; platform :: condition_whole_less_than_whole ( i , i_max )
         ; platform :: math_inc_whole ( i )

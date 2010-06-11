@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_touch
 {
     typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -166,7 +167,7 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
     platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
     platform :: matrix_set_origin ( matrix , _spot_position ) ;
-    _mediator -> texture_unselect ( ) ;
+    _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
     _mediator -> mesh_set_transform ( _spot_mesh_id , matrix ) ;
     _mediator -> mesh_render ( _spot_mesh_id ) ;
 }

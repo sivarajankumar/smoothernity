@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_engine_texture
 {
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: num_fract num_fract ;
@@ -33,7 +34,7 @@ public :
     void texture_finalize ( texture_id arg_texture_id ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
-    void texture_unselect ( ) ;
+    void receive ( typename messages :: texture_unselect msg ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
@@ -84,7 +85,7 @@ void shy_engine_texture < mediator > :: texture_select ( texture_id arg_texture_
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: texture_unselect ( )
+void shy_engine_texture < mediator > :: receive ( typename messages :: texture_unselect msg )
 {
     platform :: render_disable_texturing ( ) ;
 }

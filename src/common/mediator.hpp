@@ -127,6 +127,7 @@ public :
         class text_prepared { } ;
         class text_render { } ;
         class text_update { } ;
+        class texture_unselect { } ;
         class update { } ;
         class video_mode_changed { } ;
     } ;
@@ -191,6 +192,7 @@ public :
     void send ( typename messages :: text_prepared msg ) ;
     void send ( typename messages :: text_render msg ) ;
     void send ( typename messages :: text_update msg ) ;
+    void send ( typename messages :: texture_unselect msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
@@ -230,7 +232,6 @@ public :
     void texture_select ( texture_id arg_texture_id ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void texture_unselect ( ) ;
     void texture_width ( num_whole & result ) ;
     void title_done ( ) ;
     void title_finished ( ) ;
@@ -730,9 +731,9 @@ void shy_mediator < mediator_types > :: texture_set_texel
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_unselect ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: texture_unselect msg )
 {
-    _engine_texture . get ( ) . texture_unselect ( ) ;
+    _engine_texture . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

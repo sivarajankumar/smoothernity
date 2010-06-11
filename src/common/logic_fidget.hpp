@@ -134,7 +134,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform :: matrix_set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , platform :: fract_0 ) ;
     platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , platform :: fract_1 ) ;
     platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
-    _mediator -> texture_unselect ( ) ;
+    _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
     _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
     _mediator -> mesh_render ( _fidget_mesh_id ) ;
     if ( platform :: condition_whole_less_than_whole ( _fidget_scale , whole_scale_in_frames ) )
