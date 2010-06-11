@@ -22,7 +22,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: sound_prepare_permit msg ) ;
-    void sound_update ( ) ;
+    void receive ( typename messages :: sound_update msg ) ;
 private :
     void _load_sound ( ) ;
     void _int_to_sample ( num_fract & result , num_whole i ) ;
@@ -113,7 +113,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepar
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: sound_update ( )
+void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update msg )
 {
     if ( platform :: condition_true ( _sound_prepare_permitted ) )
     {
