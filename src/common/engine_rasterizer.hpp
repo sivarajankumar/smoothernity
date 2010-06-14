@@ -12,7 +12,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
-    void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
     void receive ( typename messages :: rasterize_use_texture msg ) ;
     void receive ( typename messages :: rasterize_use_texel msg ) ;
 private :
@@ -90,7 +90,7 @@ void shy_engine_rasterizer < mediator > :: rasterize_triangle ( num_whole x1 , n
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_ellipse_in_rect msg )
 {
     num_whole width ;
     num_whole height ;
@@ -98,12 +98,12 @@ void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( num_whole
     num_whole x_center ;
     num_whole x_diff ;
     num_whole y_diff ;
-    platform :: math_add_wholes ( y_center , y1 , y2 ) ;
+    platform :: math_add_wholes ( y_center , msg . y1 , msg . y2 ) ;
     platform :: math_div_whole_by ( y_center , platform :: whole_2 ) ;
-    platform :: math_add_wholes ( x_center , x1 , x2 ) ;
+    platform :: math_add_wholes ( x_center , msg . x1 , msg . x2 ) ;
     platform :: math_div_whole_by ( x_center , platform :: whole_2 ) ;
-    platform :: math_sub_wholes ( x_diff , x1 , x2 ) ;
-    platform :: math_sub_wholes ( y_diff , y1 , y2 ) ;
+    platform :: math_sub_wholes ( x_diff , msg . x1 , msg . x2 ) ;
+    platform :: math_sub_wholes ( y_diff , msg . y1 , msg . y2 ) ;
     engine_math :: math_abs_whole ( width , x_diff ) ;
     engine_math :: math_abs_whole ( height , y_diff ) ;
     

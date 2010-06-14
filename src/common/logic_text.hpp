@@ -652,7 +652,12 @@ void shy_logic_text < mediator > :: _rasterize_triangle ( num_whole x1 , num_who
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
-    _mediator -> rasterize_ellipse_in_rect ( x1 , y1 , x2 , y2 ) ;
+    typename messages :: rasterize_ellipse_in_rect rasterize_ellipse_in_rect_msg ;
+    rasterize_ellipse_in_rect_msg . x1 = x1 ;
+    rasterize_ellipse_in_rect_msg . y1 = y1 ;
+    rasterize_ellipse_in_rect_msg . x2 = x2 ;
+    rasterize_ellipse_in_rect_msg . y2 = y2 ;
+    _mediator -> send ( rasterize_ellipse_in_rect_msg ) ;
 }
 
 template < typename mediator >
