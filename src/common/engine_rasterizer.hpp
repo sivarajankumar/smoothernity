@@ -141,17 +141,10 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( num_whol
     num_whole right ;
     engine_math :: math_min_whole ( left , x1 , x2 ) ;
     engine_math :: math_max_whole ( right , x1 , x2 ) ;
-    for ( num_whole x = left 
-        ; platform :: condition_whole_less_or_equal_to_whole ( x , right )
-        ; platform :: math_inc_whole ( x )
-        )
-    {
-        num_whole x_plus_origin_x ;
-        num_whole y_plus_origin_y ;
-        platform :: math_add_wholes ( x_plus_origin_x , x , _origin_x ) ;
-        platform :: math_add_wholes ( y_plus_origin_y , y , _origin_y ) ;
-        _mediator -> texture_set_texel ( _texture_id , x_plus_origin_x , y_plus_origin_y , _texel ) ;
-    }
+    platform :: math_add_to_whole ( left , _origin_x ) ;
+    platform :: math_add_to_whole ( right , _origin_x ) ;
+    platform :: math_add_to_whole ( y , _origin_y ) ;
+    _mediator -> texture_set_texels_rect ( _texture_id , left , y , right , y , _texel ) ;
 }
 
 template < typename mediator >

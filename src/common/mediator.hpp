@@ -264,6 +264,7 @@ public :
     void texture_height ( num_whole & result ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void texture_set_texels_rect ( texture_id arg_texture_id , num_whole left , num_whole bottom , num_whole right , num_whole top , texel_data texel ) ;
     void texture_width ( num_whole & result ) ;
 private :
     typename platform :: template pointer < engine_mesh > _engine_mesh ;
@@ -743,6 +744,13 @@ void shy_mediator < mediator_types > :: texture_set_texel
     ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a )
 {
     _engine_texture . get ( ) . texture_set_texel ( arg_texture_id , x , y , r , g , b , a ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: texture_set_texels_rect
+    ( texture_id arg_texture_id , num_whole left , num_whole bottom , num_whole right , num_whole top , texel_data texel )
+{
+    _engine_texture . get ( ) . texture_set_texels_rect ( arg_texture_id , left , bottom , right , top , texel ) ;
 }
 
 template < typename mediator_types >

@@ -35,6 +35,7 @@ public :
     void receive ( typename messages :: texture_load_from_resource msg ) ;
     void receive ( typename messages :: texture_select msg ) ;
     void receive ( typename messages :: texture_unselect msg ) ;
+    void texture_set_texels_rect ( texture_id arg_texture_id , num_whole left , num_whole bottom , num_whole right , num_whole top , texel_data texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
@@ -115,6 +116,31 @@ void shy_engine_texture < mediator > :: texture_set_texel
     platform :: math_add_to_whole ( texel_offset , x ) ;
     texel_data & texel = platform :: array_element ( texture . texels , texel_offset ) ;
     platform :: render_set_texel_color ( texel , r , g , b , a ) ;
+}
+
+template < typename mediator >
+void shy_engine_texture < mediator > :: texture_set_texels_rect 
+    ( texture_id arg_texture_id , num_whole left , num_whole bottom , num_whole right , num_whole top , texel_data texel )
+{
+    num_whole texel_offset ;
+    num_whole num_texture_size ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
+    platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
+    for ( num_whole y = bottom
+        ; platform :: condition_whole_less_or_equal_to_whole ( y , top )
+        ; platform :: math_inc_whole ( y )
+        )
+    {
+        for ( num_whole x = left
+            ; platform :: condition_whole_less_or_equal_to_whole ( x , right )
+            ; platform :: math_inc_whole ( x )
+            )
+        {
+            platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
+            platform :: math_add_to_whole ( texel_offset , x ) ;
+            platform :: array_element ( texture . texels , texel_offset ) = texel ;
+        }
+    }
 }
 
 template < typename mediator >
