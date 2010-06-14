@@ -118,6 +118,7 @@ public :
         class land_prepared { } ;
         class land_render { } ;
         class land_update { } ;
+        class mesh_delete { public : mesh_id mesh ; } ;
         class render { } ;
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
@@ -196,6 +197,7 @@ public :
     void send ( typename messages :: land_prepared msg ) ;
     void send ( typename messages :: land_render msg ) ;
     void send ( typename messages :: land_update msg ) ;
+    void send ( typename messages :: mesh_delete msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
@@ -242,7 +244,6 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
-    void mesh_delete ( mesh_id arg_mesh_id ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
     void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
@@ -457,9 +458,9 @@ void shy_mediator < mediator_types > :: mesh_create
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_delete ( mesh_id arg_mesh_id )
+void shy_mediator < mediator_types > :: send ( typename messages :: mesh_delete msg )
 {
-    _engine_mesh . get ( ) . mesh_delete ( arg_mesh_id ) ;
+    _engine_mesh . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

@@ -96,7 +96,9 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
             )
         {
             _letter_state & letter = platform :: array_element ( _letters , i ) ;
-            _mediator -> mesh_delete ( letter . mesh ) ;
+            typename messages :: mesh_delete mesh_delete_msg ;
+            mesh_delete_msg . mesh = letter . mesh ;
+            _mediator -> send ( mesh_delete_msg ) ;
         }
     }
 }

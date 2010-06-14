@@ -64,7 +64,11 @@ template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: land_done msg )
 {
     if ( platform :: condition_true ( _land_mesh_created ) )
-        _mediator -> mesh_delete ( _land_mesh_id ) ;
+    {
+        typename messages :: mesh_delete mesh_delete_msg ;
+        mesh_delete_msg . mesh = _land_mesh_id ;
+        _mediator -> send ( mesh_delete_msg ) ;
+    }
 }
 
 template < typename mediator >

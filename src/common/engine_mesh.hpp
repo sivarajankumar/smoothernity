@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_engine_mesh
 {
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
@@ -46,7 +47,7 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
-    void mesh_delete ( mesh_id arg_mesh_id ) ;
+    void receive ( typename messages :: mesh_delete msg ) ;
     void mesh_render ( mesh_id arg_mesh_id ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
 private :
@@ -102,9 +103,9 @@ void shy_engine_mesh < mediator > :: mesh_create
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_delete ( mesh_id arg_mesh_id )
+void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_delete msg )
 {
-    _mesh_data & mesh = platform :: array_element ( _meshes_data , arg_mesh_id . _mesh_id ) ;
+    _mesh_data & mesh = platform :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
     platform :: render_delete_vertex_buffer ( mesh . vertex_buffer_id ) ;
     if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
         platform :: render_delete_index_buffer ( mesh . triangle_strip_index_buffer_id ) ;

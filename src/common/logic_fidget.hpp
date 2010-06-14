@@ -57,7 +57,11 @@ template < typename mediator >
 void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_done msg )
 {
     if ( platform :: condition_true ( _fidget_mesh_created ) )
-        _mediator -> mesh_delete ( _fidget_mesh_id ) ;
+    {
+        typename messages :: mesh_delete mesh_delete_msg ;
+        mesh_delete_msg . mesh = _fidget_mesh_id ;
+        _mediator -> send ( mesh_delete_msg ) ;
+    }
 }
 
 template < typename mediator >
