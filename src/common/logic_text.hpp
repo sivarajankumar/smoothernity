@@ -344,7 +344,11 @@ void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator -> texture_select ( _text_texture_id ) ;
-    _mediator -> mesh_render ( _text_mesh_id ) ;
+    {
+        typename messages :: mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = _text_mesh_id ;
+        _mediator -> send ( mesh_render_msg ) ;
+    }
     platform :: render_blend_disable ( ) ;
 }
 

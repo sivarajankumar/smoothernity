@@ -150,7 +150,11 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
 {
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator -> texture_select ( _image_texture_id ) ;
-    _mediator -> mesh_render ( _image_mesh_id ) ;
+    {
+        typename messages :: mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = _image_mesh_id ;
+        _mediator -> send ( mesh_render_msg ) ;
+    }
     platform :: render_blend_disable ( ) ;
 }
 

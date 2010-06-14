@@ -48,7 +48,7 @@ public :
         , num_whole triangle_fan_indices_count
         ) ;
     void receive ( typename messages :: mesh_delete msg ) ;
-    void mesh_render ( mesh_id arg_mesh_id ) ;
+    void receive ( typename messages :: mesh_render msg ) ;
     void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
 private :
     num_whole _next_mesh_id ;
@@ -114,9 +114,9 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_delete 
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_render ( mesh_id arg_mesh_id )
+void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_render msg )
 {
-    _mesh_data & mesh = platform :: array_element ( _meshes_data , arg_mesh_id . _mesh_id ) ;
+    _mesh_data & mesh = platform :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
     platform :: render_matrix_push ( ) ;
     platform :: render_matrix_mult ( mesh . transform ) ;
     if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )

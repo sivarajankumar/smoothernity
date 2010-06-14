@@ -140,7 +140,11 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
     _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
-    _mediator -> mesh_render ( _fidget_mesh_id ) ;
+    {
+        typename messages :: mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = _fidget_mesh_id ;
+        _mediator -> send ( mesh_render_msg ) ;
+    }
     if ( platform :: condition_whole_less_than_whole ( _fidget_scale , whole_scale_in_frames ) )
         platform :: math_inc_whole ( _fidget_scale ) ;
 }

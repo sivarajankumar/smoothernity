@@ -223,7 +223,9 @@ void shy_logic_title < mediator > :: _title_render ( )
         )
     {
         _letter_state & letter = platform :: array_element ( _letters , i ) ;
-        _mediator -> mesh_render ( letter . mesh ) ;
+        typename messages :: mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = letter . mesh ;
+        _mediator -> send ( mesh_render_msg ) ;
     }
     platform :: render_blend_disable ( ) ;
 }
