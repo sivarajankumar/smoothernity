@@ -354,7 +354,15 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             platform :: math_div_fract_by ( fract_b , color_scale ) ;
             platform :: math_div_fract_by ( fract_a , color_scale ) ;
             
-            _mediator -> texture_set_texel ( _land_texture_id , x , y , fract_r , fract_g , fract_b , fract_a ) ;
+            typename messages :: texture_set_texel_rgba texture_set_texel_rgba_msg ;
+            texture_set_texel_rgba_msg . texture = _land_texture_id ;
+            texture_set_texel_rgba_msg . x = x ;
+            texture_set_texel_rgba_msg . y = y ;
+            texture_set_texel_rgba_msg . r = fract_r ;
+            texture_set_texel_rgba_msg . g = fract_g ;
+            texture_set_texel_rgba_msg . b = fract_b ;
+            texture_set_texel_rgba_msg . a = fract_a ;
+            _mediator -> send ( texture_set_texel_rgba_msg ) ;
         }
         platform :: math_inc_whole ( _land_texture_creation_row ) ;
     }
