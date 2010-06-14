@@ -212,7 +212,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     platform :: matrix_set_origin ( scene_tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
-    _mediator -> use_text_texture ( ) ;
+    _mediator -> send ( typename messages :: use_text_texture ( ) ) ;
     platform :: render_matrix_load ( scene_tm ) ;
     
     for ( num_whole i = platform :: whole_0

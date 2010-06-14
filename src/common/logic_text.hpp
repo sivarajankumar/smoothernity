@@ -83,7 +83,7 @@ public :
     void receive ( typename messages :: text_render msg ) ;
     void receive ( typename messages :: text_update msg ) ;
     const alphabet_english & text_alphabet_english ( ) ;
-    void use_text_texture ( ) ;
+    void receive ( typename messages :: use_text_texture msg ) ;
     void get_big_letter_tex_coords 
         ( num_fract & left 
         , num_fract & bottom 
@@ -219,7 +219,7 @@ shy_logic_text < mediator > :: text_alphabet_english ( )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: use_text_texture ( )
+void shy_logic_text < mediator > :: receive ( typename messages :: use_text_texture msg )
 {
     if ( platform :: condition_true ( _text_mesh_created ) )
         _mediator -> texture_select ( _text_texture_id ) ;
