@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_engine_rasterizer
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -128,7 +129,16 @@ void shy_engine_rasterizer < mediator > :: rasterize_rect ( num_whole x1 , num_w
     platform :: math_add_to_whole ( right , _origin_x ) ;
     platform :: math_add_to_whole ( bottom , _origin_y ) ;
     platform :: math_add_to_whole ( top , _origin_y ) ;
-    _mediator -> texture_set_texels_rect ( _texture_id , left , bottom , right , top , _texel ) ;
+    {
+        typename messages :: texture_set_texels_rect texture_set_texels_rect_msg ;
+        texture_set_texels_rect_msg . left = left ;
+        texture_set_texels_rect_msg . right = right ;
+        texture_set_texels_rect_msg . bottom = bottom ;
+        texture_set_texels_rect_msg . top = top ;
+        texture_set_texels_rect_msg . texture = _texture_id ;
+        texture_set_texels_rect_msg . texel = _texel ;
+        _mediator -> send ( texture_set_texels_rect_msg ) ;
+    }
 }
 
 template < typename mediator >
@@ -155,7 +165,16 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( num_whol
     platform :: math_add_to_whole ( left , _origin_x ) ;
     platform :: math_add_to_whole ( right , _origin_x ) ;
     platform :: math_add_to_whole ( y , _origin_y ) ;
-    _mediator -> texture_set_texels_rect ( _texture_id , left , y , right , y , _texel ) ;
+    {
+        typename messages :: texture_set_texels_rect texture_set_texels_rect_msg ;
+        texture_set_texels_rect_msg . left = left ;
+        texture_set_texels_rect_msg . right = right ;
+        texture_set_texels_rect_msg . bottom = y ;
+        texture_set_texels_rect_msg . top = y ;
+        texture_set_texels_rect_msg . texture = _texture_id ;
+        texture_set_texels_rect_msg . texel = _texel ;
+        _mediator -> send ( texture_set_texels_rect_msg ) ;
+    }
 }
 
 template < typename mediator >
