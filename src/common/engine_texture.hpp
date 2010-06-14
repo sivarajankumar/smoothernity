@@ -31,7 +31,7 @@ private :
 public :
     shy_engine_texture ( ) ;
     void texture_create ( texture_id & result ) ;
-    void texture_finalize ( texture_id arg_texture_id ) ;
+    void receive ( typename messages :: texture_finalize msg ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
     void texture_select ( texture_id arg_texture_id ) ;
     void receive ( typename messages :: texture_unselect msg ) ;
@@ -58,10 +58,10 @@ void shy_engine_texture < mediator > :: texture_create ( texture_id & result )
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: texture_finalize ( texture_id arg_texture_id )
+void shy_engine_texture < mediator > :: receive ( typename messages :: texture_finalize msg )
 {
     num_whole size_pow2_base ;
-    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
     platform :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
     platform :: render_create_texture_id ( texture . render_id ) ;
     platform :: render_load_texture_data ( texture . render_id , size_pow2_base , texture . texels ) ;

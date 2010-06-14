@@ -108,7 +108,11 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
             platform :: render_texture_loader_ready ( loader_ready ) ;
             if ( platform :: condition_true ( loader_ready ) )
             {
-                _mediator -> texture_finalize ( _image_texture_id ) ;
+                {
+                    typename messages :: texture_finalize texture_finalize_msg ;
+                    texture_finalize_msg . texture = _image_texture_id ;
+                    _mediator -> send ( texture_finalize_msg ) ;
+                }
                 platform :: math_make_num_whole ( _image_texture_loaded , true ) ;
                 _mediator -> send ( typename messages :: image_prepared ( ) ) ;
             }

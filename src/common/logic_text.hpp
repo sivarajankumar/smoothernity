@@ -472,7 +472,11 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _origin_y = texture_height ;
     _rasterize_english_alphabet ( small_size , small_size , _letters_small ) ;
     _rasterize_english_alphabet ( big_size , big_size , _letters_big ) ;
-    _mediator -> texture_finalize ( _text_texture_id ) ;
+    {
+        typename messages :: texture_finalize texture_finalize_msg ;
+        texture_finalize_msg . texture = _text_texture_id ;
+        _mediator -> send ( texture_finalize_msg ) ;
+    }
 }
 
 template < typename mediator >
