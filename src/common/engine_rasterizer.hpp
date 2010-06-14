@@ -11,7 +11,7 @@ public :
     shy_engine_rasterizer ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
-    void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void receive ( typename messages :: rasterize_rect msg ) ;
     void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
     void receive ( typename messages :: rasterize_use_texture msg ) ;
     void receive ( typename messages :: rasterize_use_texel msg ) ;
@@ -115,16 +115,16 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_rect msg )
 {
     num_whole left ;
     num_whole right ;
     num_whole bottom ;
     num_whole top ;
-    engine_math :: math_min_whole ( left , x1 , x2 ) ;
-    engine_math :: math_max_whole ( right , x1 , x2 ) ;
-    engine_math :: math_min_whole ( bottom , y1 , y2 ) ;
-    engine_math :: math_max_whole ( top , y1 , y2 ) ;
+    engine_math :: math_min_whole ( left , msg . x1 , msg . x2 ) ;
+    engine_math :: math_max_whole ( right , msg . x1 , msg . x2 ) ;
+    engine_math :: math_min_whole ( bottom , msg . y1 , msg . y2 ) ;
+    engine_math :: math_max_whole ( top , msg . y1 , msg . y2 ) ;
     platform :: math_add_to_whole ( left , _origin_x ) ;
     platform :: math_add_to_whole ( right , _origin_x ) ;
     platform :: math_add_to_whole ( bottom , _origin_y ) ;

@@ -122,6 +122,7 @@ public :
         class mesh_render { public : mesh_id mesh ; } ;
         class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
+        class rasterize_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
         class render { } ;
@@ -212,6 +213,7 @@ public :
     void send ( typename messages :: mesh_render msg ) ;
     void send ( typename messages :: mesh_set_transform msg ) ;
     void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
+    void send ( typename messages :: rasterize_rect msg ) ;
     void send ( typename messages :: rasterize_use_texel msg ) ;
     void send ( typename messages :: rasterize_use_texture msg ) ;
     void send ( typename messages :: render msg ) ;
@@ -266,7 +268,6 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
-    void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     const alphabet_english & text_alphabet_english ( ) ;
     void texture_create ( texture_id & result ) ;
@@ -548,10 +549,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: rasterize_el
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: rasterize_rect
-    ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
+void shy_mediator < mediator_types > :: send ( typename messages :: rasterize_rect msg )
 {
-    _engine_rasterizer . get ( ) . rasterize_rect ( x1 , y1 , x2 , y2 ) ;
+    _engine_rasterizer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
