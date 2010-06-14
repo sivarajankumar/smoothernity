@@ -24,7 +24,7 @@ public :
     void set_mediator ( mediator * arg_mediator ) ;
     void receive ( typename messages :: touch_done msg ) ;
     void receive ( typename messages :: touch_prepare_permit msg ) ;
-    void touch_render ( ) ;
+    void receive ( typename messages :: touch_render msg ) ;
     void touch_update ( ) ;
 private :
     void _update_spot ( ) ;
@@ -76,7 +76,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepar
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: touch_render ( )
+void shy_logic_touch < mediator > :: receive ( typename messages :: touch_render msg )
 {
     if ( platform :: condition_true ( _spot_mesh_created ) && platform :: condition_whole_greater_than_zero ( _spot_frames_left ) )
         _render_spot_mesh ( ) ;

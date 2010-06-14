@@ -151,7 +151,7 @@ void shy_logic_game < mediator > :: _render_hud ( )
     _mediator -> send ( typename messages :: fidget_render ( ) ) ;
     _mediator -> send ( typename messages :: text_render ( ) ) ;
     _mediator -> send ( typename messages :: image_render ( ) ) ;
-    _mediator -> touch_render ( ) ;
+    _mediator -> send ( typename messages :: touch_render ( ) ) ;
 }
 
 template < typename mediator >
