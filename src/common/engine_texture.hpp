@@ -32,7 +32,7 @@ public :
     shy_engine_texture ( ) ;
     void texture_create ( texture_id & result ) ;
     void receive ( typename messages :: texture_finalize msg ) ;
-    void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
+    void receive ( typename messages :: texture_load_from_resource msg ) ;
     void receive ( typename messages :: texture_select msg ) ;
     void receive ( typename messages :: texture_unselect msg ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
@@ -68,12 +68,12 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_f
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id )
+void shy_engine_texture < mediator > :: receive ( typename messages :: texture_load_from_resource msg )
 {
     num_whole size_pow2_base ;
-    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
     platform :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
-    platform :: render_load_texture_resource ( arg_resource_id , size_pow2_base , texture . texels ) ;
+    platform :: render_load_texture_resource ( msg . resource , size_pow2_base , texture . texels ) ;
 }
 
 template < typename mediator >

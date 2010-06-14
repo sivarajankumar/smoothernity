@@ -251,5 +251,10 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
     platform :: math_make_num_whole ( resource_index , _logo_resource_index ) ;
     platform :: render_create_texture_resource_id ( logo_resource_id , resource_index ) ;
     _mediator -> texture_create ( _image_texture_id ) ;
-    _mediator -> texture_load_from_resource ( _image_texture_id , logo_resource_id ) ;
+    {
+        typename messages :: texture_load_from_resource texture_load_from_resource_msg ;
+        texture_load_from_resource_msg . texture = _image_texture_id ;
+        texture_load_from_resource_msg . resource = logo_resource_id ;
+        _mediator -> send ( texture_load_from_resource_msg ) ;
+    }
 }
