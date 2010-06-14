@@ -10,7 +10,7 @@ class shy_engine_rasterizer
 public :
     shy_engine_rasterizer ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
+    void receive ( typename messages :: rasterize_triangle msg ) ;
     void receive ( typename messages :: rasterize_rect msg ) ;
     void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
     void receive ( typename messages :: rasterize_use_texture msg ) ;
@@ -43,8 +43,14 @@ void shy_engine_rasterizer < mediator > :: set_mediator ( mediator * arg_mediato
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_triangle msg )
 {
+    num_whole x1 = msg . x1 ;
+    num_whole y1 = msg . y1 ;
+    num_whole x2 = msg . x2 ;
+    num_whole y2 = msg . y2 ;
+    num_whole x3 = msg . x3 ;
+    num_whole y3 = msg . y3 ;
     if ( platform :: condition_whole_greater_or_equal_to_whole ( y1 , y2 ) 
       && platform :: condition_whole_greater_or_equal_to_whole ( y2 , y3 )
        )

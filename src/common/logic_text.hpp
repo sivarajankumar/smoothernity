@@ -646,7 +646,14 @@ void shy_logic_text < mediator > :: _rasterize_use_texel ( texel_data texel )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 )
 {
-    _mediator -> rasterize_triangle ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
+    typename messages :: rasterize_triangle rasterize_triangle_msg ;
+    rasterize_triangle_msg . x1 = x1 ;
+    rasterize_triangle_msg . y1 = y1 ;
+    rasterize_triangle_msg . x2 = x2 ;
+    rasterize_triangle_msg . y2 = y2 ;
+    rasterize_triangle_msg . x3 = x3 ;
+    rasterize_triangle_msg . y3 = y3 ;
+    _mediator -> send ( rasterize_triangle_msg ) ;
 }
 
 template < typename mediator >
