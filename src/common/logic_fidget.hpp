@@ -104,6 +104,8 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 {    
+    typename messages :: mesh_set_transform mesh_set_transform_msg ;
+    typename messages :: mesh_render mesh_render_msg ;
     matrix_data matrix ;
     num_whole whole_scale_in_frames ;
     num_fract fract_scale_in_frames ;
@@ -138,13 +140,15 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform :: matrix_set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , platform :: fract_0 ) ;
     platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , platform :: fract_1 ) ;
     platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
+    
+    mesh_set_transform_msg . mesh = _fidget_mesh_id ;
+    mesh_set_transform_msg . transform = matrix ;
+    mesh_render_msg . mesh = _fidget_mesh_id ;
+    
     _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
-    _mediator -> mesh_set_transform ( _fidget_mesh_id , matrix ) ;
-    {
-        typename messages :: mesh_render mesh_render_msg ;
-        mesh_render_msg . mesh = _fidget_mesh_id ;
-        _mediator -> send ( mesh_render_msg ) ;
-    }
+    _mediator -> send ( mesh_set_transform_msg ) ;
+    _mediator -> send ( mesh_render_msg ) ;
+
     if ( platform :: condition_whole_less_than_whole ( _fidget_scale , whole_scale_in_frames ) )
         platform :: math_inc_whole ( _fidget_scale ) ;
 }

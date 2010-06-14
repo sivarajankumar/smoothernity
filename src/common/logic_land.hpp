@@ -120,7 +120,12 @@ void shy_logic_land < mediator > :: _render_land ( )
     platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , _land_scale , platform :: fract_0 ) ;
     platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , _land_scale ) ;
     platform :: matrix_set_origin ( matrix , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
-    _mediator -> mesh_set_transform ( _land_mesh_id , matrix ) ;
+    {
+        typename messages :: mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = _land_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        _mediator -> send ( mesh_set_transform_msg ) ;
+    }
     {
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _land_mesh_id ;

@@ -120,6 +120,7 @@ public :
         class land_update { } ;
         class mesh_delete { public : mesh_id mesh ; } ;
         class mesh_render { public : mesh_id mesh ; } ;
+        class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
         class render { } ;
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
@@ -200,6 +201,7 @@ public :
     void send ( typename messages :: land_update msg ) ;
     void send ( typename messages :: mesh_delete msg ) ;
     void send ( typename messages :: mesh_render msg ) ;
+    void send ( typename messages :: mesh_set_transform msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
@@ -246,7 +248,6 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
-    void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
     void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
@@ -471,10 +472,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: mesh_render 
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_set_transform
-    ( mesh_id arg_mesh_id , const matrix_data & transform )
+void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_transform msg )
 {
-    _engine_mesh . get ( ) . mesh_set_transform ( arg_mesh_id , transform ) ;
+    _engine_mesh . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

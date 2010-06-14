@@ -364,7 +364,12 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform :: matrix_set_axis_z ( tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_1 ) ;
         platform :: matrix_set_origin ( tm , origin ) ;
         
-        _mediator -> mesh_set_transform ( letter . mesh , tm ) ;
+        {
+            typename messages :: mesh_set_transform mesh_set_transform_msg ;
+            mesh_set_transform_msg . mesh = letter . mesh ;
+            mesh_set_transform_msg . transform = tm ;
+            _mediator -> send ( mesh_set_transform_msg ) ;
+        }
     }
 }
 

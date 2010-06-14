@@ -144,7 +144,12 @@ void shy_logic_entities < mediator > :: _entities_render ( )
         )
     {
         matrix_data & matrix = platform :: array_element ( _entities_grid_matrices , i ) ;
-        _mediator -> mesh_set_transform ( _entity_mesh_id , matrix ) ;
+        {
+            typename messages :: mesh_set_transform mesh_set_transform_msg ;
+            mesh_set_transform_msg . mesh = _entity_mesh_id ;
+            mesh_set_transform_msg . transform = matrix ;
+            _mediator -> send ( mesh_set_transform_msg ) ;
+        }
         {
             typename messages :: mesh_render mesh_render_msg ;
             mesh_render_msg . mesh = _entity_mesh_id ;

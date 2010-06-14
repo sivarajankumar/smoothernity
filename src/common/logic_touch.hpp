@@ -172,7 +172,12 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
     platform :: matrix_set_origin ( matrix , _spot_position ) ;
     _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
-    _mediator -> mesh_set_transform ( _spot_mesh_id , matrix ) ;
+    {
+        typename messages :: mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = _spot_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        _mediator -> send ( mesh_set_transform_msg ) ;
+    }
     {
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _spot_mesh_id ;

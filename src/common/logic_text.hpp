@@ -334,7 +334,12 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
     platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
     platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
     platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
-    _mediator -> mesh_set_transform ( _text_mesh_id , matrix ) ;
+    {
+        typename messages :: mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = _text_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        _mediator -> send ( mesh_set_transform_msg ) ;
+    }
     if ( platform :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
         platform :: math_inc_whole ( _scale_frames ) ;
 }

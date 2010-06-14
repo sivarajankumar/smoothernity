@@ -49,7 +49,7 @@ public :
         ) ;
     void receive ( typename messages :: mesh_delete msg ) ;
     void receive ( typename messages :: mesh_render msg ) ;
-    void mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform ) ;
+    void receive ( typename messages :: mesh_set_transform msg ) ;
 private :
     num_whole _next_mesh_id ;
     typename platform :: template static_array < _mesh_data , _max_meshes > _meshes_data ;
@@ -139,8 +139,8 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_render 
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_transform ( mesh_id arg_mesh_id , const matrix_data & transform )
+void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_set_transform msg )
 {
-    _mesh_data & mesh = platform :: array_element ( _meshes_data , arg_mesh_id . _mesh_id ) ;
-    mesh . transform = transform ;
+    _mesh_data & mesh = platform :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    mesh . transform = msg . transform ;
 }
