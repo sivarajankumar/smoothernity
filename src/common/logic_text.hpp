@@ -474,7 +474,12 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
             ; platform :: math_inc_whole ( y )
             )
         {
-            _mediator -> texture_set_texel ( _text_texture_id , x , y , _eraser ) ;
+            typename messages :: texture_set_texel texture_set_texel_msg ;
+            texture_set_texel_msg . texture = _text_texture_id ;
+            texture_set_texel_msg . x = x ;
+            texture_set_texel_msg . y = y ;
+            texture_set_texel_msg . texel = _eraser ;
+            _mediator -> send ( texture_set_texel_msg ) ;
         }
     }
     _origin_y = texture_height ;

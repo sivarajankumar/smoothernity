@@ -36,7 +36,7 @@ public :
     void receive ( typename messages :: texture_select msg ) ;
     void receive ( typename messages :: texture_unselect msg ) ;
     void receive ( typename messages :: texture_set_texels_rect msg ) ;
-    void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
+    void receive ( typename messages :: texture_set_texel msg ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
     void texture_height ( num_whole & result ) ;
@@ -92,16 +92,15 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_u
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: texture_set_texel
-    ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel )
+void shy_engine_texture < mediator > :: receive ( typename messages :: texture_set_texel msg )
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
     platform :: math_make_num_whole ( num_texture_size , _texture_size ) ;
-    platform :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
-    platform :: math_add_to_whole ( texel_offset , x ) ;
-    platform :: array_element ( texture . texels , texel_offset ) = texel ;
+    platform :: math_mul_wholes ( texel_offset , num_texture_size , msg . y ) ;
+    platform :: math_add_to_whole ( texel_offset , msg . x ) ;
+    platform :: array_element ( texture . texels , texel_offset ) = msg . texel ;
 }
 
 template < typename mediator >
