@@ -33,7 +33,7 @@ public :
     void texture_create ( texture_id & result ) ;
     void receive ( typename messages :: texture_finalize msg ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
-    void texture_select ( texture_id arg_texture_id ) ;
+    void receive ( typename messages :: texture_select msg ) ;
     void receive ( typename messages :: texture_unselect msg ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
@@ -77,9 +77,9 @@ void shy_engine_texture < mediator > :: texture_load_from_resource ( texture_id 
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: texture_select ( texture_id arg_texture_id )
+void shy_engine_texture < mediator > :: receive ( typename messages :: texture_select msg )
 {
-    _texture_data & texture = platform :: array_element ( _textures_datas , arg_texture_id . _texture_id ) ;
+    _texture_data & texture = platform :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
     platform :: render_enable_texturing ( ) ;
     platform :: render_use_texture ( texture . render_id ) ;
 }

@@ -108,7 +108,11 @@ void shy_logic_land < mediator > :: _render_land ( )
     num_fract increased_scale ;
     num_fract fract_scale_in_frames ;
     
-    _mediator -> texture_select ( _land_texture_id ) ;
+    {
+        typename messages :: texture_select texture_select_msg ;
+        texture_select_msg . texture = _land_texture_id ;
+        _mediator -> send ( texture_select_msg ) ;
+    }
     platform :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform :: math_div_fracts ( scale_step , platform :: fract_1 , fract_scale_in_frames ) ;
     platform :: math_add_fracts ( increased_scale , _land_scale , scale_step ) ;

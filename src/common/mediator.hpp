@@ -131,6 +131,7 @@ public :
         class text_render { } ;
         class text_update { } ;
         class texture_finalize { public : texture_id texture ; } ;
+        class texture_select { public : texture_id texture ; } ;
         class texture_unselect { } ;
         class title_done { } ;
         class title_finished { } ;
@@ -213,6 +214,7 @@ public :
     void send ( typename messages :: text_render msg ) ;
     void send ( typename messages :: text_update msg ) ;
     void send ( typename messages :: texture_finalize msg ) ;
+    void send ( typename messages :: texture_select msg ) ;
     void send ( typename messages :: texture_unselect msg ) ;
     void send ( typename messages :: title_done msg ) ;
     void send ( typename messages :: title_finished msg ) ;
@@ -259,7 +261,6 @@ public :
     void texture_create ( texture_id & result ) ;
     void texture_height ( num_whole & result ) ;
     void texture_load_from_resource ( texture_id arg_texture_id , texture_resource_id arg_resource_id ) ;
-    void texture_select ( texture_id arg_texture_id ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
@@ -727,9 +728,9 @@ void shy_mediator < mediator_types > :: texture_load_from_resource
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_select ( texture_id arg_texture_id )
+void shy_mediator < mediator_types > :: send ( typename messages :: texture_select msg )
 {
-    _engine_texture . get ( ) . texture_select ( arg_texture_id ) ;
+    _engine_texture . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

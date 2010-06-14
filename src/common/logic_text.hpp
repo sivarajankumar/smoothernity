@@ -226,7 +226,11 @@ template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: use_text_texture msg )
 {
     if ( platform :: condition_true ( _text_mesh_created ) )
-        _mediator -> texture_select ( _text_texture_id ) ;
+    {
+        typename messages :: texture_select texture_select_msg ;
+        texture_select_msg . texture = _text_texture_id ;
+        _mediator -> send ( texture_select_msg ) ;
+    }
 }
 
 template < typename mediator >
@@ -348,7 +352,11 @@ template < typename mediator >
 void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
-    _mediator -> texture_select ( _text_texture_id ) ;
+    {
+        typename messages :: texture_select texture_select_msg ;
+        texture_select_msg . texture = _text_texture_id ;
+        _mediator -> send ( texture_select_msg ) ;
+    }
     {
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _text_mesh_id ;
