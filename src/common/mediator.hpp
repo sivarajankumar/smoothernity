@@ -135,6 +135,7 @@ public :
         class title_update { } ;
         class touch_done { } ;
         class touch_prepare_permit { } ;
+        class touch_prepared { } ;
         class update { } ;
         class video_mode_changed { } ;
     } ;
@@ -209,6 +210,7 @@ public :
     void send ( typename messages :: touch_prepare_permit msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
+    void send ( typename messages :: touch_prepared msg ) ;
 public :
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
@@ -247,7 +249,6 @@ public :
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
-    void touch_prepared ( ) ;
     void touch_render ( ) ;
     void touch_update ( ) ;
     void use_ortho_projection ( ) ;
@@ -786,9 +787,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: title_update
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: touch_prepared ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: touch_prepared msg )
 {
-    _logic_game . get ( ) . touch_prepared ( ) ;
+    _logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

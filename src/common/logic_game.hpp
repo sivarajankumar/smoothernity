@@ -22,7 +22,7 @@ public :
     void receive ( typename messages :: image_prepared msg ) ;
     void receive ( typename messages :: land_prepared msg ) ;
     void receive ( typename messages :: sound_prepared msg ) ;
-    void touch_prepared ( ) ;
+    void receive ( typename messages :: touch_prepared msg ) ;
 private :
     void _render_scene ( ) ;
     void _render_hud ( ) ;
@@ -122,7 +122,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: image_prepare
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: touch_prepared ( )
+void shy_logic_game < mediator > :: receive ( typename messages :: touch_prepared msg )
 {
     _mediator -> send ( typename messages :: sound_prepare_permit ( ) ) ;
 }

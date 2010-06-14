@@ -91,7 +91,7 @@ void shy_logic_touch < mediator > :: touch_update ( )
         {
             _create_spot_mesh ( ) ;
             platform :: math_make_num_whole ( _spot_mesh_created , true ) ;
-            _mediator -> touch_prepared ( ) ;
+            _mediator -> send ( typename messages :: touch_prepared ( ) ) ;
         }
         else
             _update_spot ( ) ;
