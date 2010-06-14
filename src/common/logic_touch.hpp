@@ -25,7 +25,7 @@ public :
     void receive ( typename messages :: touch_done msg ) ;
     void receive ( typename messages :: touch_prepare_permit msg ) ;
     void receive ( typename messages :: touch_render msg ) ;
-    void touch_update ( ) ;
+    void receive ( typename messages :: touch_update msg ) ;
 private :
     void _update_spot ( ) ;
 	void _decrease_spot_lifetime ( ) ;
@@ -83,7 +83,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_render
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: touch_update ( )
+void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update msg )
 {
     if ( platform :: condition_true ( _spot_prepare_permitted ) )
     {

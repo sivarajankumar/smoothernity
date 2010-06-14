@@ -93,7 +93,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update m
         _mediator -> send ( typename messages :: image_update ( ) ) ;
         _mediator -> send ( typename messages :: sound_update ( ) ) ;
         _mediator -> send ( typename messages :: text_update ( ) ) ;
-        _mediator -> touch_update ( ) ;
+        _mediator -> send ( typename messages :: touch_update ( ) ) ;
     }
 }
 
