@@ -13,7 +13,6 @@ public :
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
-    void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     void receive ( typename messages :: rasterize_use_texture msg ) ;
     void receive ( typename messages :: rasterize_use_texel msg ) ;
 private :
@@ -140,14 +139,6 @@ void shy_engine_rasterizer < mediator > :: rasterize_rect ( num_whole x1 , num_w
         texture_set_texels_rect_msg . texel = _texel ;
         _mediator -> send ( texture_set_texels_rect_msg ) ;
     }
-}
-
-template < typename mediator >
-void shy_engine_rasterizer < mediator > :: rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y )
-{
-    _texture_id = arg_texture_id ;
-    _origin_x = origin_x ;
-    _origin_y = origin_y ;
 }
 
 template < typename mediator >

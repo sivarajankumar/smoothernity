@@ -267,7 +267,6 @@ public :
     void rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
-    void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
     const alphabet_english & text_alphabet_english ( ) ;
     void texture_create ( texture_id & result ) ;
     void texture_height ( num_whole & result ) ;
@@ -553,13 +552,6 @@ void shy_mediator < mediator_types > :: rasterize_rect
     ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
     _engine_rasterizer . get ( ) . rasterize_rect ( x1 , y1 , x2 , y2 ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: rasterize_use_texture 
-    ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y )
-{
-    _engine_rasterizer . get ( ) . rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
 }
 
 template < typename mediator_types >

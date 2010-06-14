@@ -105,8 +105,10 @@ private :
     void _create_text_texture ( ) ;
     void _next_letter_col ( ) ;
     void _next_letter_row ( ) ;
+    void _prepare_rasterizer_for_drawing ( ) ;
     void _store_tex_coords ( letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
     void _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
+    void _rasterize_use_texel ( texel_data texel ) ;
     void _rasterize_english_alphabet ( num_whole letter_size_x , num_whole letter_size_y , _letters_tex_coords & letters_tex_coords ) ;
     void _rasterize_font_english_A ( ) ;
     void _rasterize_font_english_B ( ) ;
@@ -589,6 +591,16 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
 }
 
 template < typename mediator >
+void shy_logic_text < mediator > :: _prepare_rasterizer_for_drawing ( )
+{
+    typename messages :: rasterize_use_texture rasterize_use_texture_msg ;
+    rasterize_use_texture_msg . texture = _text_texture_id ;
+    rasterize_use_texture_msg . origin_x = _origin_x ;
+    rasterize_use_texture_msg . origin_y = _origin_y ;
+    _mediator -> send ( rasterize_use_texture_msg ) ;
+}
+
+template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords )
 {
     _store_tex_coords ( letter , letters_tex_coords ) ;
@@ -621,9 +633,17 @@ void shy_logic_text < mediator > :: _rasterize_letter ( letter_id letter , _lett
 }
 
 template < typename mediator >
+void shy_logic_text < mediator > :: _rasterize_use_texel ( texel_data texel )
+{
+    typename messages :: rasterize_use_texel rasterize_use_texel_msg ;
+    rasterize_use_texel_msg . texel = texel ;
+    _mediator -> send ( rasterize_use_texel_msg ) ;
+}
+
+template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_A ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
 
     num_whole outer_top ;
     num_whole outer_bottom = platform :: whole_0 ;
@@ -633,11 +653,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_A ( )
     platform :: math_sub_wholes ( outer_top , _letter_size_y , platform :: whole_1 ) ;
     platform :: math_div_wholes ( outer_center , _letter_size_x , platform :: whole_2 ) ;
     platform :: math_sub_wholes ( outer_right , _letter_size_x , platform :: whole_1 ) ;
-    {
-        typename messages :: rasterize_use_texel rasterize_use_texel_msg ;
-        rasterize_use_texel_msg . texel = _filler ;
-        _mediator -> send ( rasterize_use_texel_msg ) ;
-    }
+    _rasterize_use_texel ( _filler ) ;
     _mediator -> rasterize_triangle ( outer_center , outer_top , outer_left , outer_bottom , outer_right , outer_bottom ) ;
 
     num_whole inner_top ;
@@ -702,7 +718,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_A ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_B ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole ellipse_y_top ;
     num_whole ellipse_y_mid ;
@@ -775,7 +791,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_B ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_C ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole right_limit ;
     num_whole top_limit ;
@@ -825,7 +841,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_C ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_D ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole right_limit ;
     num_whole top_limit ;
@@ -878,7 +894,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_D ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_E ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole right ;
     num_whole top_limit ;
@@ -919,7 +935,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_E ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_F ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right ;
@@ -958,7 +974,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_F ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_G ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole right_limit ;
     num_whole top_limit ;
@@ -1026,7 +1042,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_G ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_H ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right ;
@@ -1063,7 +1079,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_H ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_I ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right ;
@@ -1100,7 +1116,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_I ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right ;
@@ -1164,7 +1180,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_J ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_K ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right_limit ;
@@ -1219,7 +1235,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_K ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_L ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right ;
@@ -1248,7 +1264,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_L ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_M ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole spine_1_right ;
@@ -1289,7 +1305,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_M ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_N ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole spine_1_right ;
@@ -1325,7 +1341,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_N ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_O ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole right_limit ;
     num_whole top_limit ;
@@ -1359,7 +1375,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_O ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_P ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole spine_right ;
@@ -1423,7 +1439,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_P ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_Q ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right_limit ;
@@ -1476,7 +1492,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Q ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_R ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
 
     num_whole top_limit ;
     num_whole spine_right ;
@@ -1557,7 +1573,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_R ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole circle_high_left ;
     num_whole circle_high_right ;
@@ -1690,7 +1706,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_T ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole top_limit ;
     num_whole right ;
@@ -1731,7 +1747,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_T ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_U ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
 
     num_whole top_limit ;
     num_whole ellipse_left ;
@@ -1785,7 +1801,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_U ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_V ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
 
     num_whole top_limit ;
     num_whole high_1_left ;
@@ -1818,7 +1834,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_V ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
 
     num_whole high_1_left ;
     num_whole high_1_right ;
@@ -1868,7 +1884,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
 
     num_whole left_1 ;
     num_whole right_1 ;
@@ -1897,7 +1913,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
 
     num_whole high_1_left ;
     num_whole high_1_right ;
@@ -1935,7 +1951,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_font_english_Z ( )
 {
-    _mediator -> rasterize_use_texture ( _text_texture_id , _origin_x , _origin_y ) ;
+    _prepare_rasterizer_for_drawing ( ) ;
     
     num_whole hor_left ;
     num_whole hor_right ;
