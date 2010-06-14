@@ -118,7 +118,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: entities_prep
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: image_prepared msg )
 {
-    _mediator -> touch_prepare_permit ( ) ;
+    _mediator -> send ( typename messages :: touch_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >

@@ -22,8 +22,8 @@ class shy_logic_touch
 public :
     shy_logic_touch ( ) ;
     void set_mediator ( mediator * arg_mediator ) ;
-    void touch_done ( ) ;
-    void touch_prepare_permit ( ) ;
+    void receive ( typename messages :: touch_done msg ) ;
+    void receive ( typename messages :: touch_prepare_permit msg ) ;
     void touch_render ( ) ;
     void touch_update ( ) ;
 private :
@@ -63,14 +63,14 @@ void shy_logic_touch < mediator > :: set_mediator ( mediator * arg_mediator )
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: touch_done ( )
+void shy_logic_touch < mediator > :: receive ( typename messages :: touch_done msg )
 {
     if ( platform :: condition_true ( _spot_mesh_created ) )
         _mediator -> mesh_delete ( _spot_mesh_id ) ;
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: touch_prepare_permit ( )
+void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepare_permit msg )
 {
     platform :: math_make_num_whole ( _spot_prepare_permitted , true ) ;
 }
