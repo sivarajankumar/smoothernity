@@ -133,6 +133,7 @@ public :
         class texture_finalize { public : texture_id texture ; } ;
         class texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
         class texture_select { public : texture_id texture ; } ;
+        class texture_set_texels_rect { public : texture_id texture ; num_whole left ; num_whole bottom ; num_whole right ; num_whole top ; texel_data texel } ;
         class texture_unselect { } ;
         class title_done { } ;
         class title_finished { } ;
@@ -264,7 +265,6 @@ public :
     void texture_height ( num_whole & result ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void texture_set_texels_rect ( texture_id arg_texture_id , num_whole left , num_whole bottom , num_whole right , num_whole top , texel_data texel ) ;
     void texture_width ( num_whole & result ) ;
 private :
     typename platform :: template pointer < engine_mesh > _engine_mesh ;
