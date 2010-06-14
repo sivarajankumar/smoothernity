@@ -12,7 +12,7 @@ public :
     void receive ( typename messages :: render msg ) ;
     void receive ( typename messages :: update msg ) ;
     void use_perspective_projection ( ) ;
-    void use_ortho_projection ( ) ;
+    void receive ( typename messages :: use_ortho_projection msg ) ;
     void receive ( typename messages :: video_mode_changed msg ) ;
     void receive ( typename messages :: fidget_prepared msg ) ;
     void get_near_plane_distance ( num_fract & result ) ;
@@ -87,7 +87,7 @@ void shy_logic < mediator > :: use_perspective_projection ( )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: use_ortho_projection ( )
+void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projection msg )
 {
     num_fract width ;
     num_fract height ;

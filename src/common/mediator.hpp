@@ -139,6 +139,7 @@ public :
         class touch_render { } ;
         class touch_update { } ;
         class update { } ;
+        class use_ortho_projection { } ;
         class video_mode_changed { } ;
     } ;
     
@@ -210,11 +211,12 @@ public :
     void send ( typename messages :: title_update msg ) ;
     void send ( typename messages :: touch_done msg ) ;
     void send ( typename messages :: touch_prepare_permit msg ) ;
+    void send ( typename messages :: touch_prepared msg ) ;
     void send ( typename messages :: touch_render msg ) ;
     void send ( typename messages :: touch_update msg ) ;
     void send ( typename messages :: update msg ) ;
+    void send ( typename messages :: use_ortho_projection msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
-    void send ( typename messages :: touch_prepared msg ) ;
 public :
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
@@ -253,7 +255,6 @@ public :
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
-    void use_ortho_projection ( ) ;
     void use_perspective_projection ( ) ;
     void use_text_texture ( ) ;
 private :
@@ -807,9 +808,9 @@ void shy_mediator < mediator_types > :: use_perspective_projection ( )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: use_ortho_projection ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: use_ortho_projection msg )
 {
-    _logic . get ( ) . use_ortho_projection ( ) ;
+    _logic . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

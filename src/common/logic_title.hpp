@@ -107,7 +107,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_render
     platform :: render_clear_screen ( platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     platform :: render_disable_depth_test ( ) ;
     platform :: render_fog_disable ( ) ;
-    _mediator -> use_ortho_projection ( ) ;
+    _mediator -> send ( typename messages :: use_ortho_projection ( ) ) ;
     _mediator -> send ( typename messages :: fidget_render ( ) ) ;
     if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
         _title_render ( ) ;
