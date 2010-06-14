@@ -136,7 +136,7 @@ template < typename mediator >
 void shy_logic_game < mediator > :: _render_scene ( )
 {
     platform :: render_enable_depth_test ( ) ;
-    _mediator -> use_perspective_projection ( ) ;
+    _mediator -> send ( typename messages :: use_perspective_projection ( ) ) ;
     _mediator -> send ( typename messages :: camera_matrix_use ( ) ) ;
     _mediator -> send ( typename messages :: land_render ( ) ) ;
     _mediator -> send ( typename messages :: entities_render ( ) ) ;

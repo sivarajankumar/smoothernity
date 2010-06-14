@@ -11,7 +11,7 @@ public :
     void receive ( typename messages :: done msg ) ;
     void receive ( typename messages :: render msg ) ;
     void receive ( typename messages :: update msg ) ;
-    void use_perspective_projection ( ) ;
+    void receive ( typename messages :: use_perspective_projection msg ) ;
     void receive ( typename messages :: use_ortho_projection msg ) ;
     void receive ( typename messages :: video_mode_changed msg ) ;
     void receive ( typename messages :: fidget_prepared msg ) ;
@@ -68,7 +68,7 @@ void shy_logic < mediator > :: receive ( typename messages :: update msg )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: use_perspective_projection ( )
+void shy_logic < mediator > :: receive ( typename messages :: use_perspective_projection msg )
 {
     num_fract width ;
     num_fract height ;

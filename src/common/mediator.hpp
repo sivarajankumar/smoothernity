@@ -140,6 +140,7 @@ public :
         class touch_update { } ;
         class update { } ;
         class use_ortho_projection { } ;
+        class use_perspective_projection { } ;
         class video_mode_changed { } ;
     } ;
     
@@ -216,6 +217,7 @@ public :
     void send ( typename messages :: touch_update msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: use_ortho_projection msg ) ;
+    void send ( typename messages :: use_perspective_projection msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
@@ -255,7 +257,6 @@ public :
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , const texel_data & texel ) ;
     void texture_set_texel ( texture_id arg_texture_id , num_whole x , num_whole y , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void texture_width ( num_whole & result ) ;
-    void use_perspective_projection ( ) ;
     void use_text_texture ( ) ;
 private :
     typename platform :: template pointer < engine_mesh > _engine_mesh ;
@@ -802,9 +803,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: video_mode_c
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: use_perspective_projection ( )
+void shy_mediator < mediator_types > :: send ( typename messages :: use_perspective_projection msg )
 {
-    _logic . get ( ) . use_perspective_projection ( ) ;
+    _logic . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
