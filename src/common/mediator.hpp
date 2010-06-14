@@ -121,6 +121,7 @@ public :
         class mesh_delete { public : mesh_id mesh ; } ;
         class mesh_render { public : mesh_id mesh ; } ;
         class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
+        class rasterize_use_texel { public : texel_data texel ; } ;
         class render { } ;
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
@@ -208,6 +209,7 @@ public :
     void send ( typename messages :: mesh_delete msg ) ;
     void send ( typename messages :: mesh_render msg ) ;
     void send ( typename messages :: mesh_set_transform msg ) ;
+    void send ( typename messages :: rasterize_use_texel msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
@@ -264,7 +266,6 @@ public :
     void rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     void rasterize_use_texture ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y ) ;
-    void rasterize_use_texel ( const texel_data & texel ) ;
     const alphabet_english & text_alphabet_english ( ) ;
     void texture_create ( texture_id & result ) ;
     void texture_height ( num_whole & result ) ;
@@ -533,10 +534,9 @@ void shy_mediator < mediator_types > :: send ( typename messages :: touch_prepar
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: rasterize_use_texel
-    ( const texel_data & texel )
+void shy_mediator < mediator_types > :: send ( typename messages :: rasterize_use_texel msg )
 {
-    _engine_rasterizer . get ( ) . rasterize_use_texel ( texel ) ;
+    _engine_rasterizer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
