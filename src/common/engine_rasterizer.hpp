@@ -116,8 +116,19 @@ void shy_engine_rasterizer < mediator > :: rasterize_ellipse_in_rect ( num_whole
 template < typename mediator >
 void shy_engine_rasterizer < mediator > :: rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
-    rasterize_triangle ( x1 , y1 , x1 , y2 , x2 , y2 ) ;
-    rasterize_triangle ( x1 , y1 , x2 , y1 , x2 , y2 ) ;
+    num_whole left ;
+    num_whole right ;
+    num_whole bottom ;
+    num_whole top ;
+    engine_math :: math_min_whole ( left , x1 , x2 ) ;
+    engine_math :: math_max_whole ( right , x1 , x2 ) ;
+    engine_math :: math_min_whole ( bottom , y1 , y2 ) ;
+    engine_math :: math_max_whole ( top , y1 , y2 ) ;
+    platform :: math_add_to_whole ( left , _origin_x ) ;
+    platform :: math_add_to_whole ( right , _origin_x ) ;
+    platform :: math_add_to_whole ( bottom , _origin_y ) ;
+    platform :: math_add_to_whole ( top , _origin_y ) ;
+    _mediator -> texture_set_texels_rect ( _texture_id , left , bottom , right , top , _texel ) ;
 }
 
 template < typename mediator >
