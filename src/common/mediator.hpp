@@ -122,6 +122,7 @@ public :
         class mesh_render { public : mesh_id mesh ; } ;
         class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
         class rasterize_use_texel { public : texel_data texel ; } ;
+        class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
         class render { } ;
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
@@ -210,6 +211,7 @@ public :
     void send ( typename messages :: mesh_render msg ) ;
     void send ( typename messages :: mesh_set_transform msg ) ;
     void send ( typename messages :: rasterize_use_texel msg ) ;
+    void send ( typename messages :: rasterize_use_texture msg ) ;
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
@@ -558,6 +560,12 @@ void shy_mediator < mediator_types > :: rasterize_use_texture
     ( texture_id arg_texture_id , num_whole origin_x , num_whole origin_y )
 {
     _engine_rasterizer . get ( ) . rasterize_use_texture ( arg_texture_id , origin_x , origin_y ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: rasterize_use_texture msg )
+{
+    _engine_rasterizer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
