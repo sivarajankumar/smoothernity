@@ -13,7 +13,7 @@ class shy_logic_game
     static const num_fract _final_b ( ) { num_fract n ; platform :: math_make_num_fract ( n , 4 , 10 ) ; return n ; }
 public :
     shy_logic_game ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: game_launch_permit msg ) ;
     void receive ( typename messages :: game_render msg ) ;
     void receive ( typename messages :: game_update msg ) ;
@@ -29,7 +29,7 @@ private :
     void _clear_screen ( ) ;
     void _update_color ( ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     num_fract _color_r ;
     num_fract _color_g ;
     num_fract _color_b ;
@@ -40,7 +40,6 @@ private :
 
 template < typename mediator >
 shy_logic_game < mediator > :: shy_logic_game ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_fract ( _color_r , 0 , 1 ) ;
     platform :: math_make_num_fract ( _color_g , 0 , 1 ) ;
@@ -51,7 +50,7 @@ shy_logic_game < mediator > :: shy_logic_game ( )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_game < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -80,51 +79,51 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update m
     {
         if ( platform :: condition_false ( _game_launched ) )
         {
-            _mediator -> send ( typename messages :: camera_prepare_permit ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: camera_prepare_permit ( ) ) ;
             platform :: math_make_num_whole ( _game_launched , true ) ;
         }
     }
     if ( platform :: condition_true ( _game_launched ) )
     {
         _update_color ( ) ;
-        _mediator -> send ( typename messages :: camera_update ( ) ) ;
-        _mediator -> send ( typename messages :: entities_update ( ) ) ;
-        _mediator -> send ( typename messages :: land_update ( ) ) ;
-        _mediator -> send ( typename messages :: image_update ( ) ) ;
-        _mediator -> send ( typename messages :: sound_update ( ) ) ;
-        _mediator -> send ( typename messages :: text_update ( ) ) ;
-        _mediator -> send ( typename messages :: touch_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: camera_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: entities_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: land_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: image_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: sound_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: text_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: touch_update ( ) ) ;
     }
 }
 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: camera_prepared msg )
 {
-    _mediator -> send ( typename messages :: land_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: land_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: land_prepared msg )
 {
-    _mediator -> send ( typename messages :: entities_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: entities_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: entities_prepared msg )
 {
-    _mediator -> send ( typename messages :: image_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: image_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: image_prepared msg )
 {
-    _mediator -> send ( typename messages :: touch_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: touch_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: touch_prepared msg )
 {
-    _mediator -> send ( typename messages :: sound_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: sound_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
@@ -136,10 +135,10 @@ template < typename mediator >
 void shy_logic_game < mediator > :: _render_scene ( )
 {
     platform :: render_enable_depth_test ( ) ;
-    _mediator -> send ( typename messages :: use_perspective_projection ( ) ) ;
-    _mediator -> send ( typename messages :: camera_matrix_use ( ) ) ;
-    _mediator -> send ( typename messages :: land_render ( ) ) ;
-    _mediator -> send ( typename messages :: entities_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: use_perspective_projection ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: camera_matrix_use ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: land_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: entities_render ( ) ) ;
 }
 
 template < typename mediator >
@@ -147,11 +146,11 @@ void shy_logic_game < mediator > :: _render_hud ( )
 {
     platform :: render_disable_depth_test ( ) ;
     platform :: render_fog_disable ( ) ;
-    _mediator -> send ( typename messages :: use_ortho_projection ( ) ) ;
-    _mediator -> send ( typename messages :: fidget_render ( ) ) ;
-    _mediator -> send ( typename messages :: text_render ( ) ) ;
-    _mediator -> send ( typename messages :: image_render ( ) ) ;
-    _mediator -> send ( typename messages :: touch_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: text_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: image_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: touch_render ( ) ) ;
 }
 
 template < typename mediator >
@@ -163,7 +162,7 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     num_fract near_plane ;
     num_fract fog_far_shift ;
     num_fract fog_near_shift ;
-    _mediator -> get_near_plane_distance ( near_plane ) ;
+    _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
     platform :: math_make_num_fract ( fog_a , 0 , 1 ) ;
     platform :: math_make_num_fract ( fog_far_shift , 20 , 1 ) ;
     platform :: math_make_num_fract ( fog_near_shift , 10 , 1 ) ;
