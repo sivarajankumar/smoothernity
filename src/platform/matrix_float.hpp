@@ -5,8 +5,10 @@ template < typename platform >
 class shy_platform_matrix_float
 {
     typedef typename platform :: _platform_math_insider _platform_math_insider ;
+    typedef typename platform :: _platform_vector_insider _platform_vector_insider ;
     typedef typename platform :: num_fract num_fract ;
-    typedef typename platform :: vector_data vector_data ;
+    typedef typename platform :: platform_vector platform_vector ;
+    typedef typename platform :: platform_vector :: vector_data vector_data ;
 public :
     class matrix_data
     {
@@ -100,69 +102,69 @@ inline void shy_platform_matrix_float < platform > :: matrix_set_origin ( matrix
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_set_axis_x ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [ 0 ] = v . _x ;
-    matrix . _elements [ 1 ] = v . _y ;
-    matrix . _elements [ 2 ] = v . _z ;
+    matrix . _elements [ 0 ] = _platform_vector_insider :: vector_x_unsafe_get ( v ) ;
+    matrix . _elements [ 1 ] = _platform_vector_insider :: vector_y_unsafe_get ( v ) ;
+    matrix . _elements [ 2 ] = _platform_vector_insider :: vector_z_unsafe_get ( v ) ;
     matrix . _elements [ 3 ] = 0 ;
 }
 
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_set_axis_y ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [ 4 ] = v . _x ;
-    matrix . _elements [ 5 ] = v . _y ;
-    matrix . _elements [ 6 ] = v . _z ;
+    matrix . _elements [ 4 ] = _platform_vector_insider :: vector_x_unsafe_get ( v ) ;
+    matrix . _elements [ 5 ] = _platform_vector_insider :: vector_y_unsafe_get ( v ) ;
+    matrix . _elements [ 6 ] = _platform_vector_insider :: vector_z_unsafe_get ( v ) ;
     matrix . _elements [ 7 ] = 0 ;
 }
 
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_set_axis_z ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [  8 ] = v . _x ;
-    matrix . _elements [  9 ] = v . _y ;
-    matrix . _elements [ 10 ] = v . _z ;
+    matrix . _elements [  8 ] = _platform_vector_insider :: vector_x_unsafe_get ( v ) ;
+    matrix . _elements [  9 ] = _platform_vector_insider :: vector_y_unsafe_get ( v ) ;
+    matrix . _elements [ 10 ] = _platform_vector_insider :: vector_z_unsafe_get ( v ) ;
     matrix . _elements [ 11 ] = 0 ;
 }
 
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_set_origin ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [ 12 ] = v . _x ;
-    matrix . _elements [ 13 ] = v . _y ;
-    matrix . _elements [ 14 ] = v . _z ;
+    matrix . _elements [ 12 ] = _platform_vector_insider :: vector_x_unsafe_get ( v ) ;
+    matrix . _elements [ 13 ] = _platform_vector_insider :: vector_y_unsafe_get ( v ) ;
+    matrix . _elements [ 14 ] = _platform_vector_insider :: vector_z_unsafe_get ( v ) ;
     matrix . _elements [ 15 ] = 1 ;
 }
 
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_get_axis_x ( vector_data & result , const matrix_data & matrix )
 {
-    result . _x = matrix . _elements [ 0 ] ;
-    result . _y = matrix . _elements [ 1 ] ;
-    result . _z = matrix . _elements [ 2 ] ;
+    _platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 0 ] ) ;
+    _platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 1 ] ) ;
+    _platform_vector_insider :: vector_z_unsafe_set ( result , matrix . _elements [ 2 ] ) ;
 }
 
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_get_axis_y ( vector_data & result , const matrix_data & matrix )
 {
-    result . _x = matrix . _elements [ 4 ] ;
-    result . _y = matrix . _elements [ 5 ] ;
-    result . _z = matrix . _elements [ 6 ] ;
+    _platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 4 ] ) ;
+    _platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 5 ] ) ;
+    _platform_vector_insider :: vector_z_unsafe_set ( result , matrix . _elements [ 6 ] ) ;
 }
 
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_get_axis_z ( vector_data & result , const matrix_data & matrix )
 {
-    result . _x = matrix . _elements [ 8 ] ;
-    result . _y = matrix . _elements [ 9 ] ;
-    result . _z = matrix . _elements [ 10 ] ;
+    _platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 8 ] ) ;
+    _platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 9 ] ) ;
+    _platform_vector_insider :: vector_z_unsafe_set ( result , matrix . _elements [ 10 ] ) ;
 }
 
 template < typename platform >
 inline void shy_platform_matrix_float < platform > :: matrix_get_origin ( vector_data & result , const matrix_data & matrix )
 {
-    result . _x = matrix . _elements [ 12 ] ;
-    result . _y = matrix . _elements [ 13 ] ;
-    result . _z = matrix . _elements [ 14 ] ;
+    _platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 12 ] ) ;
+    _platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 13 ] ) ;
+    _platform_vector_insider :: vector_z_unsafe_set ( result , matrix . _elements [ 14 ] ) ;
 }
 
 template < typename platform >
@@ -192,14 +194,14 @@ inline void shy_platform_matrix_float < platform > :: matrix_inverse_rotation_tr
     num_fract dot_x ;
     num_fract dot_y ;
     num_fract dot_z ;
-    platform :: vector_dot_product ( dot_x , origin , axis_x ) ;
-    platform :: vector_dot_product ( dot_y , origin , axis_y ) ;
-    platform :: vector_dot_product ( dot_z , origin , axis_z ) ;
+    platform_vector :: vector_dot_product ( dot_x , origin , axis_x ) ;
+    platform_vector :: vector_dot_product ( dot_y , origin , axis_y ) ;
+    platform_vector :: vector_dot_product ( dot_z , origin , axis_z ) ;
     
     vector_data new_origin ;
-    new_origin . _x = - _platform_math_insider :: num_fract_unsafe_value_get ( dot_x ) ;
-    new_origin . _y = - _platform_math_insider :: num_fract_unsafe_value_get ( dot_y ) ;
-    new_origin . _z = - _platform_math_insider :: num_fract_unsafe_value_get ( dot_z ) ;
+    _platform_vector_insider :: vector_x_unsafe_set ( new_origin , - _platform_math_insider :: num_fract_unsafe_value_get ( dot_x ) ) ;
+    _platform_vector_insider :: vector_y_unsafe_set ( new_origin , - _platform_math_insider :: num_fract_unsafe_value_get ( dot_y ) ) ;
+    _platform_vector_insider :: vector_z_unsafe_set ( new_origin , - _platform_math_insider :: num_fract_unsafe_value_get ( dot_z ) ) ;
     
     matrix_set_origin ( matrix , new_origin ) ;
     _swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;

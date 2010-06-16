@@ -20,6 +20,8 @@
 #import "../platform/pointer.hpp"
 #import "../platform/static_array.hpp"
 #import "../platform/static_array_insider.hpp"
+#import "../platform/vector_float.hpp"
+#import "../platform/vector_float_insider.hpp"
 
 class shy_macosx_platform
 {
@@ -29,33 +31,25 @@ class shy_macosx_platform
     friend class shy_platform_matrix_float < shy_macosx_platform > ;
     friend class shy_platform_pointer < shy_macosx_platform > ;
     friend class shy_platform_static_array < shy_macosx_platform > ;
+    friend class shy_platform_vector_float < shy_macosx_platform > ;
 private :
     typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
     typedef shy_platform_matrix_float_insider < shy_macosx_platform > _platform_matrix_insider ;
     typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
+    typedef shy_platform_vector_float_insider < shy_macosx_platform > _platform_vector_insider ;
 public :
     typedef shy_platform_conditions < shy_macosx_platform > platform_conditions ;
     typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
     typedef shy_platform_matrix_float < shy_macosx_platform > platform_matrix ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
-    
-    class vector_data
-    {
-        friend class shy_macosx_platform ;
-        friend class shy_platform_matrix_float < shy_macosx_platform > ;
-    public :
-        vector_data ( ) ;
-    private :
-        float _x ;
-        float _y ;
-        float _z ;
-    } ;
-    
+    typedef shy_platform_vector_float < shy_macosx_platform > platform_vector ;
+        
     typedef const int const_int_32 ;
     typedef platform_math :: num_fract num_fract ;
     typedef platform_math :: num_whole num_whole ;
     typedef platform_matrix :: matrix_data matrix_data ;
+    typedef platform_vector :: vector_data vector_data ;
 
     class render_index_buffer_id
     {
@@ -187,20 +181,6 @@ public :
     static const_int_32 stereo_sound_samples_per_second = 44100 ;
     
     static const shy_platform_math_consts < shy_macosx_platform > math_consts ;
-    
-    //
-    // vector
-    //
-    
-    static void vector_xyz ( vector_data & result , num_fract x , num_fract y , num_fract z ) ;
-    static void vector_dot_product ( num_fract & result , vector_data v1 , vector_data v2 ) ;
-    static void vector_cross_product ( vector_data & result , vector_data v1 , vector_data v2 ) ;
-    static void vector_add ( vector_data & result , vector_data v1 , vector_data v2 ) ;
-    static void vector_sub ( vector_data & result , vector_data v1 , vector_data v2 ) ;
-    static void vector_mul ( vector_data & result , vector_data v , num_fract f ) ;
-    static void vector_mul_by ( vector_data & v , num_fract f ) ;
-    static void vector_length ( num_fract & result , vector_data v ) ;
-    static void vector_normalize ( vector_data & result , vector_data v ) ;
     
     //
     // render
@@ -354,4 +334,3 @@ public :
 #include "macosx_platform_sound.hpp"
 #include "macosx_platform_time.hpp"
 #include "macosx_platform_touch.hpp"
-#include "macosx_platform_vector.hpp"

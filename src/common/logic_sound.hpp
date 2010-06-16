@@ -11,6 +11,7 @@ class shy_logic_sound
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: sound_buffer_id sound_buffer_id ;
     typedef typename mediator :: platform :: sound_source_id sound_source_id ;
     typedef typename mediator :: platform :: stereo_sound_resource_id stereo_sound_resource_id ;
@@ -99,10 +100,10 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
     platform_math :: math_make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: math_make_num_fract ( up_z , 0 , 1 ) ;
     
-    platform :: vector_xyz ( listener_pos , pos_x , pos_y , pos_z ) ;
-    platform :: vector_xyz ( listener_vel , vel_x , vel_y , vel_z ) ;
-    platform :: vector_xyz ( look_at , look_at_x , look_at_y , look_at_z ) ;
-    platform :: vector_xyz ( up , up_x , up_y , up_z ) ;
+    platform_vector :: vector_xyz ( listener_pos , pos_x , pos_y , pos_z ) ;
+    platform_vector :: vector_xyz ( listener_vel , vel_x , vel_y , vel_z ) ;
+    platform_vector :: vector_xyz ( look_at , look_at_x , look_at_y , look_at_z ) ;
+    platform_vector :: vector_xyz ( up , up_x , up_y , up_z ) ;
     
     platform :: sound_set_listener_position ( listener_pos ) ;
     platform :: sound_set_listener_velocity ( listener_vel ) ;
@@ -216,8 +217,8 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     platform_math :: math_make_num_fract ( vel_x , 0 , 1 ) ;
     platform_math :: math_make_num_fract ( vel_y , 0 , 1 ) ;
     platform_math :: math_make_num_fract ( vel_z , 0 , 1 ) ;
-    platform :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
-    platform :: vector_xyz ( source_vel , vel_x , vel_y , vel_z ) ;
+    platform_vector :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    platform_vector :: vector_xyz ( source_vel , vel_x , vel_y , vel_z ) ;
     
     platform :: sound_loaded_samples_count ( loaded_samples_count ) ;
     platform_math :: math_sub_from_whole ( loaded_samples_count , music_tail_cut ) ;
@@ -298,8 +299,8 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform_math :: math_make_num_fract ( vel_y , 0 , 1 ) ;
     platform_math :: math_make_num_fract ( vel_z , 0 , 1 ) ;
     platform_math :: math_make_num_whole ( max_sound_samples , _max_mono_sound_samples ) ;
-    platform :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
-    platform :: vector_xyz ( source_vel , pos_x , pos_y , pos_z ) ;
+    platform_vector :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    platform_vector :: vector_xyz ( source_vel , pos_x , pos_y , pos_z ) ;
     
     platform :: sound_create_mono_buffer ( mono_sound_buffer , _mono_sound_data , max_sound_samples ) ;
     platform :: sound_create_source ( _mono_sound_source ) ;

@@ -15,6 +15,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -387,7 +388,7 @@ void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & resul
     platform_math :: math_make_fract_from_whole ( entity_x , x ) ;
     platform_math :: math_div_fracts ( entity_y , fract_entity_mesh_height , platform :: math_consts . fract_2 ) ;
     platform_math :: math_make_fract_from_whole ( entity_z , z ) ;
-    platform :: vector_xyz ( result , entity_x , entity_y , entity_z ) ;
+    platform_vector :: vector_xyz ( result , entity_x , entity_y , entity_z ) ;
 }
 
 template < typename mediator >

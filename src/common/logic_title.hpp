@@ -17,6 +17,7 @@ class shy_logic_title
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -306,7 +307,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_math :: math_div_fract_by ( offset_x , fract_letters_count ) ;
         platform_math :: math_sub_from_fract ( offset_x , aspect_width ) ;
         platform_math :: math_add_to_fract ( offset_x , letter_size ) ;
-        platform :: vector_xyz ( offset , offset_x , offset_y , platform :: math_consts . fract_minus_3 ) ;        
+        platform_vector :: vector_xyz ( offset , offset_x , offset_y , platform :: math_consts . fract_minus_3 ) ;        
         
         platform_math :: math_mul_wholes ( starting_frame , frames_between_letters , i ) ;
         platform_math :: math_sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
@@ -343,25 +344,25 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_math :: math_cos ( pos_cos , letter . pos_angle ) ;
         platform_math :: math_neg_fract ( pos_neg_sin , pos_sin ) ;
         
-        platform :: vector_xyz ( pos , pos_cos , pos_sin , platform :: math_consts . fract_0 ) ;
-        platform :: vector_mul_by ( pos , letter . pos_radius ) ;
+        platform_vector :: vector_xyz ( pos , pos_cos , pos_sin , platform :: math_consts . fract_0 ) ;
+        platform_vector :: vector_mul_by ( pos , letter . pos_radius ) ;
         
         if ( platform_conditions :: condition_whole_less_than_whole ( _title_frames , finishing_frame ) )
         {
-            platform :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: math_consts . fract_0 ) ;
-            platform :: vector_xyz ( axis_y , rot_neg_sin , rot_cos , platform :: math_consts . fract_0 ) ;
-            platform :: vector_mul_by ( axis_x , letter . scale ) ;
-            platform :: vector_mul_by ( axis_y , letter . scale ) ;
-            platform :: vector_mul_by ( axis_x , letter_size ) ;
-            platform :: vector_mul_by ( axis_y , letter_size ) ;
+            platform_vector :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: math_consts . fract_0 ) ;
+            platform_vector :: vector_xyz ( axis_y , rot_neg_sin , rot_cos , platform :: math_consts . fract_0 ) ;
+            platform_vector :: vector_mul_by ( axis_x , letter . scale ) ;
+            platform_vector :: vector_mul_by ( axis_y , letter . scale ) ;
+            platform_vector :: vector_mul_by ( axis_x , letter_size ) ;
+            platform_vector :: vector_mul_by ( axis_y , letter_size ) ;
         }
         else
         {
-            platform :: vector_xyz ( axis_x , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-            platform :: vector_xyz ( axis_y , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+            platform_vector :: vector_xyz ( axis_x , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+            platform_vector :: vector_xyz ( axis_y , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
         }
         
-        platform :: vector_add ( origin , pos , offset ) ;
+        platform_vector :: vector_add ( origin , pos , offset ) ;
         
         platform_matrix :: matrix_set_axis_x ( tm , axis_x ) ;
         platform_matrix :: matrix_set_axis_y ( tm , axis_y ) ;

@@ -15,6 +15,7 @@ class shy_logic_camera
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -85,8 +86,8 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
         vector_data & target_pos = platform_static_array :: array_element ( _scheduled_camera_targets , i ) ;
         origin_index = platform :: math_consts . whole_0 ;
         target_index = platform :: math_consts . whole_0 ;
-        platform :: vector_xyz ( origin_pos , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-        platform :: vector_xyz ( target_pos , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+        platform_vector :: vector_xyz ( origin_pos , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+        platform_vector :: vector_xyz ( target_pos , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     }
 }
 
@@ -296,9 +297,9 @@ void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
     vector_data old_part ;
     vector_data new_part ;
     platform_math :: math_sub_fracts ( inv_rubber , platform :: math_consts . fract_1 , _origin_rubber ( ) ) ;
-    platform :: vector_mul ( old_part , _current_camera_origin , _origin_rubber ( ) ) ;
-    platform :: vector_mul ( new_part , _desired_camera_origin , inv_rubber ) ;
-    platform :: vector_add ( _current_camera_origin , old_part , new_part ) ;
+    platform_vector :: vector_mul ( old_part , _current_camera_origin , _origin_rubber ( ) ) ;
+    platform_vector :: vector_mul ( new_part , _desired_camera_origin , inv_rubber ) ;
+    platform_vector :: vector_add ( _current_camera_origin , old_part , new_part ) ;
 }
 
 template < typename mediator >
@@ -309,9 +310,9 @@ void shy_logic_camera < mediator > :: _update_current_camera_target ( )
     vector_data old_part ;
     vector_data new_part ;
     platform_math :: math_sub_fracts ( inv_rubber , platform :: math_consts . fract_1 , _target_rubber ( ) ) ;
-    platform :: vector_mul ( old_part , _current_camera_target , _target_rubber ( ) ) ;
-    platform :: vector_mul ( new_part , _desired_camera_target , inv_rubber ) ;
-    platform :: vector_add ( _current_camera_target , old_part , new_part ) ;
+    platform_vector :: vector_mul ( old_part , _current_camera_target , _target_rubber ( ) ) ;
+    platform_vector :: vector_mul ( new_part , _desired_camera_target , inv_rubber ) ;
+    platform_vector :: vector_add ( _current_camera_target , old_part , new_part ) ;
 }
 
 template < typename mediator >
@@ -340,9 +341,9 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     platform_math :: math_add_to_fract ( shift_y , aspect_height ) ;
     platform_math :: math_add_to_fract ( shift_y , near_plane ) ;
     platform_math :: math_make_num_fract ( shift_z , 0 , 1 ) ;
-    platform :: vector_xyz ( up , up_x , up_y , up_z ) ;
-    platform :: vector_xyz ( shift , shift_x , shift_y , shift_z ) ;
-    platform :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
+    platform_vector :: vector_xyz ( up , up_x , up_y , up_z ) ;
+    platform_vector :: vector_xyz ( shift , shift_x , shift_y , shift_z ) ;
+    platform_vector :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
     engine_camera :: camera_matrix_look_at ( _camera_matrix , shifted_origin , _current_camera_target , up ) ;
 }
 

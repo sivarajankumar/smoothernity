@@ -1,24 +1,32 @@
 inline void shy_macosx_platform :: sound_set_listener_position ( vector_data position )
 {
-    ALfloat al_position [ ] = { position . _x , position . _y , position . _z } ;
+    ALfloat al_position [ ] = 
+        { _platform_vector_insider :: vector_x_unsafe_get ( position )
+        , _platform_vector_insider :: vector_y_unsafe_get ( position )
+        , _platform_vector_insider :: vector_z_unsafe_get ( position ) 
+        } ;
     alListenerfv ( AL_POSITION , al_position ) ;
 }
 
 inline void shy_macosx_platform :: sound_set_listener_velocity ( vector_data velocity )
 {
-    ALfloat al_velocity [ ] = { velocity . _x , velocity . _y , velocity . _z } ;
+    ALfloat al_velocity [ ] =
+        { _platform_vector_insider :: vector_x_unsafe_get ( velocity )
+        , _platform_vector_insider :: vector_y_unsafe_get ( velocity )
+        , _platform_vector_insider :: vector_z_unsafe_get ( velocity ) 
+        } ;
     alListenerfv ( AL_VELOCITY , al_velocity ) ;
 }
 
 inline void shy_macosx_platform :: sound_set_listener_orientation ( vector_data look_at , vector_data up )
 {
     ALfloat al_orientation [ ] = 
-        { look_at . _x 
-        , look_at . _y 
-        , look_at . _z 
-        , up . _x 
-        , up . _y 
-        , up . _z 
+        { _platform_vector_insider :: vector_x_unsafe_get ( look_at )
+        , _platform_vector_insider :: vector_y_unsafe_get ( look_at )
+        , _platform_vector_insider :: vector_z_unsafe_get ( look_at )
+        , _platform_vector_insider :: vector_x_unsafe_get ( up )
+        , _platform_vector_insider :: vector_y_unsafe_get ( up )
+        , _platform_vector_insider :: vector_z_unsafe_get ( up )
         } ;
     alListenerfv ( AL_ORIENTATION , al_orientation ) ;
 }
@@ -114,13 +122,21 @@ inline void shy_macosx_platform :: sound_set_source_gain ( const sound_source_id
 
 inline void shy_macosx_platform :: sound_set_source_position ( const sound_source_id & source_id , vector_data position )
 {
-    ALfloat al_position [ ] = { position . _x , position . _y , position . _z } ;
+    ALfloat al_position [ ] = 
+        { _platform_vector_insider :: vector_x_unsafe_get ( position )
+        , _platform_vector_insider :: vector_y_unsafe_get ( position )
+        , _platform_vector_insider :: vector_z_unsafe_get ( position ) 
+        } ;
     alSourcefv ( source_id . _source_id , AL_POSITION , al_position ) ;
 }
 
 inline void shy_macosx_platform :: sound_set_source_velocity ( const sound_source_id & source_id , vector_data velocity )
 {
-    ALfloat al_velocity [ ] = { velocity . _x , velocity . _y , velocity . _z } ;
+    ALfloat al_velocity [ ] =
+        { _platform_vector_insider :: vector_x_unsafe_get ( velocity )
+        , _platform_vector_insider :: vector_y_unsafe_get ( velocity )
+        , _platform_vector_insider :: vector_z_unsafe_get ( velocity ) 
+        } ;
     alSourcefv ( source_id . _source_id , AL_VELOCITY , al_velocity ) ;
 }
 

@@ -27,13 +27,6 @@ float shy_macosx_platform_utility :: _mouse_y = 0 ;
 
 const shy_platform_math_consts < shy_macosx_platform > shy_macosx_platform :: math_consts ;
 
-shy_macosx_platform :: vector_data :: vector_data ( )
-: _x ( shy_macosx_platform_utility :: _uninitialized_value )
-, _y ( shy_macosx_platform_utility :: _uninitialized_value )
-, _z ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
 shy_macosx_platform :: render_index_buffer_id :: render_index_buffer_id ( )
 : _buffer_id ( shy_macosx_platform_utility :: _uninitialized_value )
 {
