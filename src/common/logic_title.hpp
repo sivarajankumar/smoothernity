@@ -33,7 +33,7 @@ class shy_logic_title
     
 public :
     shy_logic_title ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: title_done msg ) ;
     void receive ( typename messages :: title_render msg ) ;
     void receive ( typename messages :: title_update msg ) ;
@@ -45,7 +45,7 @@ private :
     void _add_letter ( letter_id letter ) ;
     void _bake_letters ( ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     num_whole _title_launch_permitted ;
     num_whole _title_created ;
     num_whole _title_finished ;
@@ -66,7 +66,6 @@ private :
 
 template < typename mediator >
 shy_logic_title < mediator > :: shy_logic_title ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _title_launch_permitted , false ) ;
     platform :: math_make_num_whole ( _title_finished , false ) ;
@@ -80,7 +79,7 @@ shy_logic_title < mediator > :: shy_logic_title ( )
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_title < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -98,7 +97,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
             _letter_state & letter = platform :: array_element ( _letters , i ) ;
             typename messages :: mesh_delete mesh_delete_msg ;
             mesh_delete_msg . mesh = letter . mesh ;
-            _mediator -> send ( mesh_delete_msg ) ;
+            _mediator . get ( ) . send ( mesh_delete_msg ) ;
         }
     }
 }
@@ -109,8 +108,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_render
     platform :: render_clear_screen ( platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     platform :: render_disable_depth_test ( ) ;
     platform :: render_fog_disable ( ) ;
-    _mediator -> send ( typename messages :: use_ortho_projection ( ) ) ;
-    _mediator -> send ( typename messages :: fidget_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
     if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
         _title_render ( ) ;
 }
@@ -174,7 +173,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
             if ( platform :: condition_whole_greater_than_whole ( _title_frames , whole_disappear_duration_in_frames ) )
             {
                 platform :: math_make_num_whole ( _title_finished , true ) ;
-                _mediator -> send ( typename messages :: title_finished ( ) ) ;
+                _mediator . get ( ) . send ( typename messages :: title_finished ( ) ) ;
             }
             else
             {
@@ -187,7 +186,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
 template < typename mediator >
 void shy_logic_title < mediator > :: _title_create ( )
 {
-    const alphabet_english & eng = _mediator -> text_alphabet_english ( ) ;
+    const alphabet_english & eng = _mediator . get ( ) . text_alphabet_english ( ) ;
     _add_letter ( eng . S ) ;
     _add_letter ( eng . M ) ;
     _add_letter ( eng . O ) ;
@@ -214,7 +213,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     platform :: matrix_set_origin ( scene_tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
     
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
-    _mediator -> send ( typename messages :: use_text_texture ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
     platform :: render_matrix_load ( scene_tm ) ;
     
     for ( num_whole i = platform :: whole_0
@@ -225,7 +224,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         _letter_state & letter = platform :: array_element ( _letters , i ) ;
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . mesh ;
-        _mediator -> send ( mesh_render_msg ) ;
+        _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
     platform :: render_blend_disable ( ) ;
 }
@@ -368,7 +367,7 @@ void shy_logic_title < mediator > :: _title_update ( )
             typename messages :: mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = letter . mesh ;
             mesh_set_transform_msg . transform = tm ;
-            _mediator -> send ( mesh_set_transform_msg ) ;
+            _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
         }
     }
 }
@@ -457,7 +456,7 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         letter . pos_radius = platform :: fract_0 ;
         letter . pos_angle = platform :: fract_0 ;
         letter . rot_angle = platform :: fract_0 ;
-        _mediator -> get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
+        _mediator . get ( ) . get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
         platform :: render_set_vertex_tex_coord 
             ( platform :: array_element ( vertices , platform :: whole_0 )
             , tex_left
@@ -478,7 +477,7 @@ void shy_logic_title < mediator > :: _bake_letters ( )
             , tex_right
             , tex_bottom
             ) ;
-        _mediator -> mesh_create
+        _mediator . get ( ) . mesh_create
             ( letter . mesh
             , vertices 
             , indices 
