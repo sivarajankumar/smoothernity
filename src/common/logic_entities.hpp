@@ -10,6 +10,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -51,7 +52,7 @@ private :
     num_whole _fan_indices_count ;
     num_whole _vertices_count ;
     mesh_id _entity_mesh_id ;
-    typename platform :: template static_array < matrix_data , _entity_mesh_grid * _entity_mesh_grid > _entities_grid_matrices ;
+    typename platform_static_array :: template static_array < matrix_data , _entity_mesh_grid * _entity_mesh_grid > _entities_grid_matrices ;
     typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > _vertices ;
     typename platform :: template static_array < index_data , ( _entity_mesh_spans + 1 ) * 2 > _strip_indices ;
     typename platform :: template static_array < index_data , _entity_mesh_spans + 2 > _fan_indices ;
@@ -153,7 +154,7 @@ void shy_logic_entities < mediator > :: _entities_render ( )
         ; platform :: math_inc_whole ( i )
         )
     {
-        matrix_data & matrix = platform :: array_element ( _entities_grid_matrices , i ) ;
+        matrix_data & matrix = platform_static_array :: array_element ( _entities_grid_matrices , i ) ;
         {
             typename messages :: mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = _entity_mesh_id ;
@@ -443,7 +444,7 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
                 
-                matrix_data & matrix = platform :: array_element ( _entities_grid_matrices , index ) ;
+                matrix_data & matrix = platform_static_array :: array_element ( _entities_grid_matrices , index ) ;
                 platform :: matrix_set_axis_x ( matrix , scale , platform :: fract_0 , platform :: fract_0 ) ;
                 platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
                 platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
