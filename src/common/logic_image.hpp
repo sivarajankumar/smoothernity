@@ -25,7 +25,7 @@ class shy_logic_image
     static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
     shy_logic_image ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: image_done msg ) ;
     void receive ( typename messages :: image_render msg ) ;
     void receive ( typename messages :: image_update msg ) ;
@@ -36,7 +36,7 @@ private :
     void _create_image_mesh ( ) ;
     void _create_image_texture ( ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     num_whole _image_mesh_created ;
     num_whole _image_texture_created ;
     num_whole _image_texture_loaded ;
@@ -48,7 +48,6 @@ private :
 
 template < typename mediator >
 shy_logic_image < mediator > :: shy_logic_image ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _image_mesh_created , false ) ;
     platform :: math_make_num_whole ( _image_texture_created , false ) ;
@@ -58,7 +57,7 @@ shy_logic_image < mediator > :: shy_logic_image ( )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_image < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -70,7 +69,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_done m
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _image_mesh_id ;
-        _mediator -> send ( mesh_delete_msg ) ;
+        _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
 }
 
@@ -111,10 +110,10 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
                 {
                     typename messages :: texture_finalize texture_finalize_msg ;
                     texture_finalize_msg . texture = _image_texture_id ;
-                    _mediator -> send ( texture_finalize_msg ) ;
+                    _mediator . get ( ) . send ( texture_finalize_msg ) ;
                 }
                 platform :: math_make_num_whole ( _image_texture_loaded , true ) ;
-                _mediator -> send ( typename messages :: image_prepared ( ) ) ;
+                _mediator . get ( ) . send ( typename messages :: image_prepared ( ) ) ;
             }
         }
     }
@@ -148,7 +147,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
         typename messages :: mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _image_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
-        _mediator -> send ( mesh_set_transform_msg ) ;
+        _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
     if ( platform :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
         platform :: math_inc_whole ( _scale_frames ) ;
@@ -161,12 +160,12 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
     {
         typename messages :: texture_select texture_select_msg ;
         texture_select_msg . texture = _image_texture_id ;
-        _mediator -> send ( texture_select_msg ) ;
+        _mediator . get ( ) . send ( texture_select_msg ) ;
     }
     {
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _image_mesh_id ;
-        _mediator -> send ( mesh_render_msg ) ;
+        _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
     platform :: render_blend_disable ( ) ;
 }
@@ -232,7 +231,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform :: render_set_vertex_tex_coord ( platform :: array_element ( vertices , platform :: whole_3 ) , u_right , v_bottom ) ;
     platform :: render_set_index_value      ( platform :: array_element ( indices  , platform :: whole_3 ) , index ) ;
 
-    _mediator -> mesh_create
+    _mediator . get ( ) . mesh_create
         ( _image_mesh_id 
         , vertices 
         , indices 
@@ -250,11 +249,11 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
     texture_resource_id logo_resource_id ;
     platform :: math_make_num_whole ( resource_index , _logo_resource_index ) ;
     platform :: render_create_texture_resource_id ( logo_resource_id , resource_index ) ;
-    _mediator -> texture_create ( _image_texture_id ) ;
+    _mediator . get ( ) . texture_create ( _image_texture_id ) ;
     {
         typename messages :: texture_load_from_resource texture_load_from_resource_msg ;
         texture_load_from_resource_msg . texture = _image_texture_id ;
         texture_load_from_resource_msg . resource = logo_resource_id ;
-        _mediator -> send ( texture_load_from_resource_msg ) ;
+        _mediator . get ( ) . send ( texture_load_from_resource_msg ) ;
     }
 }

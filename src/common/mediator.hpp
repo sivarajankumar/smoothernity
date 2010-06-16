@@ -349,7 +349,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_entities . get ( ) . set_mediator ( * this ) ;
     _logic_fidget . get ( ) . set_mediator ( * this ) ;
     _logic_game . get ( ) . set_mediator ( * this ) ;
-    _logic_image . get ( ) . set_mediator ( this ) ;
+    _logic_image . get ( ) . set_mediator ( * this ) ;
     _logic_land . get ( ) . set_mediator ( this ) ;
     _logic_sound . get ( ) . set_mediator ( this ) ;
     _logic_text . get ( ) . set_mediator ( this ) ;
