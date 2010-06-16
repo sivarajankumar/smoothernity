@@ -13,6 +13,7 @@ public :
         friend class shy_platform_static_array ;
         friend class shy_platform_static_array_insider < platform > ;
     private :
+        typedef data_type _data_type ;
         static const_int_32 _array_size = size ;
         data_type _elements [ _array_size ] ;
     } ;

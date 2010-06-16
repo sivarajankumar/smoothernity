@@ -391,28 +391,14 @@ public :
     static void sound_source_play ( const sound_source_id & source_id ) ;
     static void sound_source_stop ( const sound_source_id & source_id ) ;
     
-    template < const_int_32 samples_array_size >
-    static void sound_load_stereo_sample_data
-        ( const static_array < stereo_sound_sample , samples_array_size > & samples 
-        , const stereo_sound_resource_id & resource_id 
-        ) ;
-    template < const_int_32 samples_array_size >
-    static void sound_load_stereo_sample_data
-        ( const platform_static_array :: static_array < stereo_sound_sample , samples_array_size > & samples 
-        , const stereo_sound_resource_id & resource_id 
-        ) ;
-    template < const_int_32 samples_array_size >
-    static void sound_create_mono_buffer 
-        ( sound_buffer_id & result 
-        , const static_array < mono_sound_sample , samples_array_size > & samples 
-        , num_whole samples_count 
-        ) ;
-    template < const_int_32 samples_array_size >
-    static void sound_create_stereo_buffer 
-        ( sound_buffer_id & result 
-        , const static_array < stereo_sound_sample , samples_array_size > & samples 
-        , num_whole samples_count 
-        ) ;
+    template < typename samples_array >
+    static void sound_load_stereo_sample_data ( const samples_array & samples , const stereo_sound_resource_id & resource_id ) ;
+    
+    template < typename samples_array >
+    static void sound_create_mono_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
+    
+    template < typename samples_array >
+    static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
     template < const_int_32 samples_array_size >
     static void sound_create_stereo_buffer 
         ( sound_buffer_id & result 
