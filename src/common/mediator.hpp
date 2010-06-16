@@ -55,11 +55,15 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh engine_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english alphabet_english ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
+    
+private :
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh engine_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture engine_texture ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
@@ -70,8 +74,6 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english alphabet_english ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
     typedef typename platform :: const_int_32 const_int_32 ;
@@ -84,6 +86,7 @@ public :
     typedef typename platform :: vector_data vector_data ;
     typedef typename platform :: vertex_data vertex_data ;
     
+public :
     class messages
     {
     public :
