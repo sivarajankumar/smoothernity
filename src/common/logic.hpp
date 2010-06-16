@@ -6,7 +6,7 @@ class shy_logic
     typedef typename mediator :: platform :: num_fract num_fract ;
 public :
     shy_logic ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: done msg ) ;
     void receive ( typename messages :: render msg ) ;
@@ -20,17 +20,16 @@ private :
     void _init_render ( ) ;
     void _get_near_plane_distance ( num_fract & result ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
 } ;
 
 template < typename mediator >
 shy_logic < mediator > :: shy_logic ( )
-: _mediator ( 0 )
 {
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -39,32 +38,32 @@ template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: init msg )
 {
     _init_render ( ) ;
-    _mediator -> send ( typename messages :: fidget_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: fidget_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: done msg )
 {
-    _mediator -> send ( typename messages :: entities_done ( ) ) ;
-    _mediator -> send ( typename messages :: fidget_done ( ) ) ;
-    _mediator -> send ( typename messages :: image_done ( ) ) ;
-    _mediator -> send ( typename messages :: land_done ( ) ) ;
-    _mediator -> send ( typename messages :: text_done ( ) ) ;
-    _mediator -> send ( typename messages :: title_done ( ) ) ;
-    _mediator -> send ( typename messages :: touch_done ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: entities_done ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: fidget_done ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: image_done ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: land_done ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: text_done ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: title_done ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: touch_done ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: render msg )
 {
-    _mediator -> send ( typename messages :: application_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: update msg )
 {
-    _mediator -> send ( typename messages :: application_update ( ) ) ;
-    _mediator -> send ( typename messages :: fidget_update ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: application_update ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: fidget_update ( ) ) ;
 }
 
 template < typename mediator >
