@@ -413,6 +413,12 @@ public :
         , const static_array < stereo_sound_sample , samples_array_size > & samples 
         , num_whole samples_count 
         ) ;
+    template < const_int_32 samples_array_size >
+    static void sound_create_stereo_buffer 
+        ( sound_buffer_id & result 
+        , const platform_static_array :: static_array < stereo_sound_sample , samples_array_size > & samples 
+        , num_whole samples_count 
+        ) ;
 
     //
     // math
