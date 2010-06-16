@@ -79,12 +79,9 @@ inline void shy_macosx_platform :: render_set_texel_color ( texel_data & texel ,
     texel . _color [ 3 ] = ( GLubyte ) ( a . _value * 255.0f ) ;
 }
 
-template < shy_macosx_platform :: const_int_32 texel_array_size >
+template < typename texels_array >
 inline void shy_macosx_platform :: render_load_texture_data 
-    ( const render_texture_id & arg_texture_id 
-    , num_whole size_pow2_base 
-    , const static_array < texel_data , texel_array_size > & data
-    )
+    ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data )
 {
     GLsizei size = 1 << size_pow2_base . _value ;
     glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
@@ -93,27 +90,23 @@ inline void shy_macosx_platform :: render_load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
-    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE , data . _elements ) ;
+    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE 
+        , _platform_static_array_insider :: array_elements_unsafe_ptr ( data ) 
+        ) ;
 }
 
-inline void shy_macosx_platform :: render_create_texture_resource_id 
-    ( texture_resource_id & resource_id 
-    , num_whole resource_index 
-    )
+inline void shy_macosx_platform :: render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
     resource_id . _resource_id = resource_index . _value ;
 }
 
-template < shy_macosx_platform :: const_int_32 texel_array_size >
+template < typename texels_array >
 inline void shy_macosx_platform :: render_load_texture_resource
-    ( const texture_resource_id & resource_id 
-    , num_whole size_pow2_base 
-    , const static_array < texel_data , texel_array_size > & data 
-    )
+    ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data )
 {
     [ shy_macosx_platform_utility :: _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) data . _elements
+        to_buffer : ( void * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( data )
         with_side_size_of : 1 << size_pow2_base . _value
     ] ;
 }

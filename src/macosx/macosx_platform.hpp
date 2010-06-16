@@ -334,18 +334,12 @@ public :
     static void render_delete_vertex_buffer ( const render_vertex_buffer_id & arg_buffer_id ) ;
     static void render_delete_index_buffer ( const render_index_buffer_id & arg_buffer_id ) ;
     
-    template < const_int_32 texel_array_size >
-    static void render_load_texture_data 
-        ( const render_texture_id & arg_texture_id 
-        , num_whole size_pow2_base 
-        , const static_array < texel_data , texel_array_size > & data 
-        ) ;
-    template < const_int_32 texel_array_size >
-    static void render_load_texture_resource 
-        ( const texture_resource_id & resource_id 
-        , num_whole size_pow2_base 
-        , const static_array < texel_data , texel_array_size > & data 
-        ) ;    
+    template < typename texels_array >
+    static void render_load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
+    
+    template < typename texels_array >
+    static void render_load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data ) ;
+    
     template < const_int_32 vertex_array_size >
     static void render_create_vertex_buffer 
         ( render_vertex_buffer_id & arg_buffer_id 
