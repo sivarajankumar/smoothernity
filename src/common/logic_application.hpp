@@ -7,13 +7,13 @@ class shy_logic_application
     typedef typename mediator :: platform :: num_whole num_whole ;
 public :
     shy_logic_application ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: application_render msg ) ;
     void receive ( typename messages :: application_update msg ) ;
     void receive ( typename messages :: title_finished msg ) ;
     void receive ( typename messages :: text_prepared msg ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     num_whole _application_launched ;
     num_whole _title_active ;
     num_whole _text_active ;
@@ -22,7 +22,6 @@ private :
 
 template < typename mediator >
 shy_logic_application < mediator > :: shy_logic_application ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _application_launched , false ) ;
     platform :: math_make_num_whole ( _title_active , false ) ;
@@ -31,7 +30,7 @@ shy_logic_application < mediator > :: shy_logic_application ( )
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_application < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -41,7 +40,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: text_p
 {
     platform :: math_make_num_whole ( _text_active , false ) ;
     platform :: math_make_num_whole ( _title_active , true ) ;
-    _mediator -> send ( typename messages :: title_launch_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: title_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
@@ -49,16 +48,16 @@ void shy_logic_application < mediator > :: receive ( typename messages :: title_
 {
     platform :: math_make_num_whole ( _title_active , false ) ;
     platform :: math_make_num_whole ( _game_active , true ) ;
-    _mediator -> send ( typename messages :: game_launch_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: game_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: application_render msg )
 {
     if ( platform :: condition_true ( _game_active ) )
-        _mediator -> send ( typename messages :: game_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: game_render ( ) ) ;
     if ( platform :: condition_true ( _title_active ) )
-        _mediator -> send ( typename messages :: title_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: title_render ( ) ) ;
     if ( platform :: condition_false ( _application_launched ) )
     {
         num_fract black ;
@@ -74,12 +73,12 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
     {
         platform :: math_make_num_whole ( _application_launched , true ) ;
         platform :: math_make_num_whole ( _text_active , true ) ;
-        _mediator -> send ( typename messages :: text_prepare_permit ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: text_prepare_permit ( ) ) ;
     }
     if ( platform :: condition_true ( _text_active ) )
-        _mediator -> send ( typename messages :: text_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: text_update ( ) ) ;
     if ( platform :: condition_true ( _game_active ) )
-        _mediator -> send ( typename messages :: game_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: game_update ( ) ) ;
     if ( platform :: condition_true ( _title_active ) )
-        _mediator -> send ( typename messages :: title_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: title_update ( ) ) ;
 }

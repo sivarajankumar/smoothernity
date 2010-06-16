@@ -344,7 +344,7 @@ void shy_mediator < mediator_types > :: register_modules
 
     _engine_rasterizer . get ( ) . set_mediator ( * this ) ;
     _logic . get ( ) . set_mediator ( * this ) ;
-    _logic_application . get ( ) . set_mediator ( this ) ;
+    _logic_application . get ( ) . set_mediator ( * this ) ;
     _logic_camera . get ( ) . set_mediator ( this ) ;
     _logic_entities . get ( ) . set_mediator ( this ) ;
     _logic_fidget . get ( ) . set_mediator ( this ) ;
