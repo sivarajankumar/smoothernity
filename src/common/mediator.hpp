@@ -100,6 +100,8 @@ public :
         class entities_done { } ;
         class entities_height_reply { public : num_fract height ; } ;
         class entities_height_request { } ;
+        class entities_mesh_grid_reply { public : num_whole grid ; } ;
+        class entities_mesh_grid_request { } ;
         class entities_prepare_permit { } ;
         class entities_prepared { } ;
         class entities_render { } ;
@@ -194,6 +196,8 @@ public :
     void send ( typename messages :: entities_done msg ) ;
     void send ( typename messages :: entities_height_reply msg ) ;
     void send ( typename messages :: entities_height_request msg ) ;
+    void send ( typename messages :: entities_mesh_grid_reply msg ) ;
+    void send ( typename messages :: entities_mesh_grid_request msg ) ;
     void send ( typename messages :: entities_prepare_permit msg ) ;
     void send ( typename messages :: entities_prepared msg ) ;
     void send ( typename messages :: entities_render msg ) ;
@@ -415,6 +419,17 @@ void shy_mediator < mediator_types > :: send ( typename messages :: entities_hei
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_height_request msg )
+{
+    _logic_entities . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_mesh_grid_reply msg )
+{
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_mesh_grid_request msg )
 {
     _logic_entities . get ( ) . receive ( msg ) ;
 }
