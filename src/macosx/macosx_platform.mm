@@ -27,12 +27,6 @@ float shy_macosx_platform_utility :: _mouse_y = 0 ;
 
 const shy_platform_math_consts < shy_macosx_platform > shy_macosx_platform :: math_consts ;
 
-shy_macosx_platform :: matrix_data :: matrix_data ( )
-{
-    for ( int i = 0 ; i < 16 ; i ++ )
-        _elements [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
-}
-    
 shy_macosx_platform :: vector_data :: vector_data ( )
 : _x ( shy_macosx_platform_utility :: _uninitialized_value )
 , _y ( shy_macosx_platform_utility :: _uninitialized_value )

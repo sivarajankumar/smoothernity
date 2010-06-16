@@ -11,6 +11,7 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -139,10 +140,10 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform_math :: math_make_num_fract ( origin_x , 0 , 1 ) ;
     platform_math :: math_sub_fracts ( origin_y , height , num_half ) ;
     platform_math :: math_make_num_fract ( origin_z , - 3 , 1 ) ;
-    platform :: matrix_set_axis_x ( matrix , cos_by_scale , sin_by_scale , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
-    platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
+    platform_matrix :: matrix_set_axis_x ( matrix , cos_by_scale , sin_by_scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+    platform_matrix :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     
     mesh_set_transform_msg . mesh = _fidget_mesh_id ;
     mesh_set_transform_msg . transform = matrix ;

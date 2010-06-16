@@ -14,6 +14,7 @@ class shy_logic_title
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
@@ -211,10 +212,10 @@ void shy_logic_title < mediator > :: _title_render ( )
 {
     matrix_data scene_tm ;
 
-    platform :: matrix_set_axis_x ( scene_tm , _scene_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_y ( scene_tm , platform :: math_consts . fract_0 , _scene_scale , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
-    platform :: matrix_set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_x ( scene_tm , _scene_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_y ( scene_tm , platform :: math_consts . fract_0 , _scene_scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+    platform_matrix :: matrix_set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
@@ -362,10 +363,10 @@ void shy_logic_title < mediator > :: _title_update ( )
         
         platform :: vector_add ( origin , pos , offset ) ;
         
-        platform :: matrix_set_axis_x ( tm , axis_x ) ;
-        platform :: matrix_set_axis_y ( tm , axis_y ) ;
-        platform :: matrix_set_axis_z ( tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
-        platform :: matrix_set_origin ( tm , origin ) ;
+        platform_matrix :: matrix_set_axis_x ( tm , axis_x ) ;
+        platform_matrix :: matrix_set_axis_y ( tm , axis_y ) ;
+        platform_matrix :: matrix_set_axis_z ( tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+        platform_matrix :: matrix_set_origin ( tm , origin ) ;
         
         {
             typename messages :: mesh_set_transform mesh_set_transform_msg ;

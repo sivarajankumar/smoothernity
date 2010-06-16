@@ -11,6 +11,8 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
+#import "../platform/matrix_float.hpp"
+#import "../platform/matrix_float_insider.hpp"
 #import "../platform/conditions.hpp"
 #import "../platform/math_consts.hpp"
 #import "../platform/math_int_float.hpp"
@@ -24,33 +26,24 @@ class shy_macosx_platform
     friend class shy_platform_conditions < shy_macosx_platform > ;
     friend class shy_platform_math_consts < shy_macosx_platform > ;
     friend class shy_platform_math_int_float < shy_macosx_platform > ;
+    friend class shy_platform_matrix_float < shy_macosx_platform > ;
     friend class shy_platform_pointer < shy_macosx_platform > ;
     friend class shy_platform_static_array < shy_macosx_platform > ;
 private :
     typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
+    typedef shy_platform_matrix_float_insider < shy_macosx_platform > _platform_matrix_insider ;
     typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
 public :
     typedef shy_platform_conditions < shy_macosx_platform > platform_conditions ;
     typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
+    typedef shy_platform_matrix_float < shy_macosx_platform > platform_matrix ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
-    
-    typedef const int const_int_32 ;
-    typedef platform_math :: num_fract num_fract ;
-    typedef platform_math :: num_whole num_whole ;
-
-    class matrix_data
-    {
-        friend class shy_macosx_platform ;
-    public :
-        matrix_data ( ) ;
-    private :
-        GLfloat _elements [ 16 ] ;
-    } ;
     
     class vector_data
     {
         friend class shy_macosx_platform ;
+        friend class shy_platform_matrix_float < shy_macosx_platform > ;
     public :
         vector_data ( ) ;
     private :
@@ -59,6 +52,11 @@ public :
         float _z ;
     } ;
     
+    typedef const int const_int_32 ;
+    typedef platform_math :: num_fract num_fract ;
+    typedef platform_math :: num_whole num_whole ;
+    typedef platform_matrix :: matrix_data matrix_data ;
+
     class render_index_buffer_id
     {
         friend class shy_macosx_platform ;
@@ -203,25 +201,6 @@ public :
     static void vector_mul_by ( vector_data & v , num_fract f ) ;
     static void vector_length ( num_fract & result , vector_data v ) ;
     static void vector_normalize ( vector_data & result , vector_data v ) ;
-    
-    //
-    // matrix
-    //
-    
-    static void matrix_set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_axis_x ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_set_axis_y ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_set_axis_z ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_set_origin ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_get_axis_x ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_get_axis_y ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_get_axis_z ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_get_origin ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_identity ( matrix_data & matrix ) ;
-    static void matrix_inverse_rotation_translation ( matrix_data & matrix ) ;
     
     //
     // render
@@ -370,15 +349,6 @@ public :
     static void * _vertex_color_offset ;
 } ;
 
-template < typename type >
-void swap_values ( type & a , type & b )
-{
-    type c = b ;
-    b = a ;
-    a = c ;
-}
-
-#include "macosx_platform_matrix.hpp"
 #include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"

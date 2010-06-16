@@ -238,12 +238,12 @@ inline void shy_macosx_platform :: render_matrix_identity ( )
 
 inline void shy_macosx_platform :: render_matrix_load ( const matrix_data & matrix )
 {
-    glLoadMatrixf ( matrix . _elements ) ;
+    glLoadMatrixf ( _platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
 }
 
 inline void shy_macosx_platform :: render_matrix_mult ( const matrix_data & matrix )
 {
-    glMultMatrixf ( matrix . _elements ) ;
+    glMultMatrixf ( _platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
 }
 
 inline void shy_macosx_platform :: render_matrix_push ( )

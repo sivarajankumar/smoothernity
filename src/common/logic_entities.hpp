@@ -12,6 +12,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
@@ -448,10 +449,10 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 _get_entity_origin ( origin , index ) ;
                 
                 matrix_data & matrix = platform_static_array :: array_element ( _entities_grid_matrices , index ) ;
-                platform :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-                platform :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
-                platform :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
-                platform :: matrix_set_origin ( matrix , origin ) ;
+                platform_matrix :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+                platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
+                platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
+                platform_matrix :: matrix_set_origin ( matrix , origin ) ;
             }
         }
         platform_math :: math_inc_whole ( _grid_scale ) ;

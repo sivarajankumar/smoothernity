@@ -11,6 +11,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
@@ -170,10 +171,10 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     platform_math :: math_make_fract_from_whole ( fract_spot_frames_left , _spot_frames_left ) ;
     platform_math :: math_make_num_fract ( fract_spot_lifetime_in_frames , _spot_lifetime_in_frames , 1 ) ;
     platform_math :: math_div_fracts ( scale , fract_spot_frames_left , fract_spot_lifetime_in_frames ) ;
-    platform :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
-    platform :: matrix_set_origin ( matrix , _spot_position ) ;
+    platform_matrix :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
+    platform_matrix :: matrix_set_origin ( matrix , _spot_position ) ;
     _mediator . get ( ) . send ( typename messages :: texture_unselect ( ) ) ;
     {
         typename messages :: mesh_set_transform mesh_set_transform_msg ;

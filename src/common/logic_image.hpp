@@ -13,6 +13,7 @@ class shy_logic_image
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
@@ -143,10 +144,10 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     platform_math :: math_make_num_fract ( origin_x , 1 , 2 ) ;
     platform_math :: math_make_num_fract ( origin_y , 0 , 1 ) ;
     platform_math :: math_make_num_fract ( origin_z , - 3 , 1 ) ;
-    platform :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
-    platform :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
-    platform :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
+    platform_matrix :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
+    platform_matrix :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     {
         typename messages :: mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _image_mesh_id ;

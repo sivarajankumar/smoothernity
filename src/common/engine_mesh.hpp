@@ -9,6 +9,7 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: render_index_buffer_id render_index_buffer_id ;
     typedef typename mediator :: platform :: render_vertex_buffer_id render_vertex_buffer_id ;
@@ -83,7 +84,7 @@ void shy_engine_mesh < mediator > :: mesh_create
     _mesh_data & mesh = platform_static_array :: array_element ( _meshes_data , _next_mesh_id ) ;
     mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
     mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
-    platform :: matrix_identity ( mesh . transform ) ;
+    platform_matrix :: matrix_identity ( mesh . transform ) ;
     platform :: render_create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
     if ( platform_conditions :: condition_whole_greater_than_zero ( triangle_strip_indices_count ) )
     {

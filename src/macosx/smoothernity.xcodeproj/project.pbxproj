@@ -66,7 +66,6 @@
 		19AE0FEE11B269A300A5B332 /* macosx_main_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* macosx_main_controller.h */; };
 		19AE0FEF11B269A300A5B332 /* macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* macosx_scene.h */; };
 		19AE0FF011B269A300A5B332 /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
-		19AE0FF211B269A300A5B332 /* macosx_platform_matrix.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */; };
 		19AE0FF311B269A300A5B332 /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
 		19AE0FF411B269A300A5B332 /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		19AE0FF511B269A300A5B332 /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
@@ -139,6 +138,8 @@
 		8819C38D11C91814003A552B /* math_consts.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C38C11C91814003A552B /* math_consts.hpp */; };
 		8819C39011C9192D003A552B /* math_int_float_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C38F11C9192D003A552B /* math_int_float_insider.hpp */; };
 		8819C4C311C92E03003A552B /* conditions.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C4C211C92E03003A552B /* conditions.hpp */; };
+		8819C50F11C93512003A552B /* matrix_float.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C50E11C93512003A552B /* matrix_float.hpp */; };
+		8819C51B11C93635003A552B /* matrix_float_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C51A11C93635003A552B /* matrix_float_insider.hpp */; };
 		881B850411886A6D00E31AA1 /* logic_text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881B850311886A6D00E31AA1 /* logic_text.hpp */; };
 		882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DA811A16B0900F05A15 /* logic_title.hpp */; };
 		882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DB911A1714B00F05A15 /* logic_application.hpp */; };
@@ -149,7 +150,6 @@
 		883E94DA119D67C00040B1D6 /* texture_resource_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 883E94D9119D67C00040B1D6 /* texture_resource_1.png */; };
 		886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */; };
 		886AE9FE117C8B36009CBB6F /* macosx_platform.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886AE9F5117C8B36009CBB6F /* macosx_platform.mm */; };
-		886AEA00117C8B36009CBB6F /* macosx_platform_matrix.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */; };
 		886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
 		886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
@@ -204,6 +204,8 @@
 		8819C38C11C91814003A552B /* math_consts.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math_consts.hpp; sourceTree = "<group>"; };
 		8819C38F11C9192D003A552B /* math_int_float_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math_int_float_insider.hpp; sourceTree = "<group>"; };
 		8819C4C211C92E03003A552B /* conditions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = conditions.hpp; sourceTree = "<group>"; };
+		8819C50E11C93512003A552B /* matrix_float.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = matrix_float.hpp; sourceTree = "<group>"; };
+		8819C51A11C93635003A552B /* matrix_float_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = matrix_float_insider.hpp; sourceTree = "<group>"; };
 		881B850311886A6D00E31AA1 /* logic_text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_text.hpp; sourceTree = "<group>"; };
 		882B9DA811A16B0900F05A15 /* logic_title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_title.hpp; sourceTree = "<group>"; };
 		882B9DB911A1714B00F05A15 /* logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_application.hpp; sourceTree = "<group>"; };
@@ -214,7 +216,6 @@
 		883E94D9119D67C00040B1D6 /* texture_resource_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture_resource_1.png; path = ../../resources/texture_resource_1.png; sourceTree = SOURCE_ROOT; };
 		886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform.hpp; sourceTree = "<group>"; };
 		886AE9F5117C8B36009CBB6F /* macosx_platform.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_platform.mm; sourceTree = "<group>"; };
-		886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_matrix.hpp; sourceTree = "<group>"; };
 		886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render.hpp; sourceTree = "<group>"; };
 		886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound.hpp; sourceTree = "<group>"; };
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
@@ -264,7 +265,6 @@
 				05689226046B13F600000102 /* macosx_opengl_view.mm */,
 				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
 				886AE9F5117C8B36009CBB6F /* macosx_platform.mm */,
-				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
 				880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */,
 				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
 				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
@@ -396,6 +396,8 @@
 				8819C38C11C91814003A552B /* math_consts.hpp */,
 				8819C37D11C9143B003A552B /* math_int_float.hpp */,
 				8819C38F11C9192D003A552B /* math_int_float_insider.hpp */,
+				8819C50E11C93512003A552B /* matrix_float.hpp */,
+				8819C51A11C93635003A552B /* matrix_float_insider.hpp */,
 				8819C32511C90AAF003A552B /* pointer.hpp */,
 				8819C24411C8E11D003A552B /* static_array.hpp */,
 				8819C29011C8F262003A552B /* static_array_insider.hpp */,
@@ -416,7 +418,6 @@
 				19AE0FEE11B269A300A5B332 /* macosx_main_controller.h in Headers */,
 				19AE0FEF11B269A300A5B332 /* macosx_scene.h in Headers */,
 				19AE0FF011B269A300A5B332 /* macosx_platform.hpp in Headers */,
-				19AE0FF211B269A300A5B332 /* macosx_platform_matrix.hpp in Headers */,
 				19AE0FF311B269A300A5B332 /* macosx_platform_render.hpp in Headers */,
 				19AE0FF411B269A300A5B332 /* macosx_platform_sound.hpp in Headers */,
 				19AE0FF511B269A300A5B332 /* macosx_platform_time.hpp in Headers */,
@@ -451,6 +452,8 @@
 				8819C38D11C91814003A552B /* math_consts.hpp in Headers */,
 				8819C39011C9192D003A552B /* math_int_float_insider.hpp in Headers */,
 				8819C4C311C92E03003A552B /* conditions.hpp in Headers */,
+				8819C50F11C93512003A552B /* matrix_float.hpp in Headers */,
+				8819C51B11C93635003A552B /* matrix_float_insider.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,7 +466,6 @@
 				05689231046B14B900000102 /* macosx_main_controller.h in Headers */,
 				05689235046B2C0900000102 /* macosx_scene.h in Headers */,
 				886AE9FD117C8B36009CBB6F /* macosx_platform.hpp in Headers */,
-				886AEA00117C8B36009CBB6F /* macosx_platform_matrix.hpp in Headers */,
 				886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */,
 				886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */,
 				886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */,
