@@ -9,6 +9,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -187,8 +188,8 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _create_spot_mesh ( )
 {
-    typename platform :: template static_array < vertex_data , _spot_edges > vertices ;
-    typename platform :: template static_array < index_data , _spot_edges > indices ;
+    typename platform_static_array :: template static_array < vertex_data , _spot_edges > vertices ;
+    typename platform_static_array :: template static_array < index_data , _spot_edges > indices ;
     num_whole i ;
     num_whole whole_spot_edges ;
     num_fract fract_spot_edges ;
@@ -225,12 +226,12 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform :: math_make_num_fract ( vertex_b , _spot_b , 255 ) ;
         platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
         {
-            vertex_data & vertex = platform :: array_element ( vertices , i ) ;
+            vertex_data & vertex = platform_static_array :: array_element ( vertices , i ) ;
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
-            index_data & index = platform :: array_element ( indices , i ) ;
+            index_data & index = platform_static_array :: array_element ( indices , i ) ;
             platform :: render_set_index_value ( index , i ) ;
         }
     }

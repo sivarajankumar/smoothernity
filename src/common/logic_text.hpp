@@ -373,8 +373,8 @@ void shy_logic_text < mediator > :: _render_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _create_text_mesh ( )
 {
-    typename platform :: template static_array < vertex_data , 4 > vertices ;
-    typename platform :: template static_array < index_data , 4 > indices ;
+    typename platform_static_array :: template static_array < vertex_data , 4 > vertices ;
+    typename platform_static_array :: template static_array < index_data , 4 > indices ;
 
     num_fract x_left ;
     num_fract x_right ;
@@ -405,28 +405,28 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     platform :: math_make_num_fract ( color_a , _canvas_a , 255 ) ;
 
     platform :: math_make_num_whole ( index , 0 ) ;
-    platform :: render_set_vertex_position  ( platform :: array_element ( vertices , platform :: whole_0 ) , x_left , y_top , z ) ;
-    platform :: render_set_vertex_color     ( platform :: array_element ( vertices , platform :: whole_0 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform :: array_element ( vertices , platform :: whole_0 ) , u_left , v_top ) ;
-    platform :: render_set_index_value      ( platform :: array_element ( indices  , platform :: whole_0 ) , index ) ;
+    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: whole_0 ) , x_left , y_top , z ) ;
+    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: whole_0 ) , color_r , color_g , color_b , color_a ) ;
+    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: whole_0 ) , u_left , v_top ) ;
+    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: whole_0 ) , index ) ;
 
     platform :: math_make_num_whole ( index , 1 ) ;
-    platform :: render_set_vertex_position  ( platform :: array_element ( vertices , platform :: whole_1 ) , x_left , y_bottom , z ) ;
-    platform :: render_set_vertex_color     ( platform :: array_element ( vertices , platform :: whole_1 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform :: array_element ( vertices , platform :: whole_1 ) , u_left , v_bottom ) ;
-    platform :: render_set_index_value      ( platform :: array_element ( indices  , platform :: whole_1 ) , index ) ;
+    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: whole_1 ) , x_left , y_bottom , z ) ;
+    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: whole_1 ) , color_r , color_g , color_b , color_a ) ;
+    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: whole_1 ) , u_left , v_bottom ) ;
+    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: whole_1 ) , index ) ;
 
     platform :: math_make_num_whole ( index , 2 ) ;
-    platform :: render_set_vertex_position  ( platform :: array_element ( vertices , platform :: whole_2 ) , x_right , y_top , z ) ;
-    platform :: render_set_vertex_color     ( platform :: array_element ( vertices , platform :: whole_2 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform :: array_element ( vertices , platform :: whole_2 ) , u_right , v_top ) ;
-    platform :: render_set_index_value      ( platform :: array_element ( indices  , platform :: whole_2 ) , index ) ;
+    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: whole_2 ) , x_right , y_top , z ) ;
+    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: whole_2 ) , color_r , color_g , color_b , color_a ) ;
+    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: whole_2 ) , u_right , v_top ) ;
+    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: whole_2 ) , index ) ;
 
     platform :: math_make_num_whole ( index , 3 ) ;
-    platform :: render_set_vertex_position  ( platform :: array_element ( vertices , platform :: whole_3 ) , x_right , y_bottom , z ) ;
-    platform :: render_set_vertex_color     ( platform :: array_element ( vertices , platform :: whole_3 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform :: array_element ( vertices , platform :: whole_3 ) , u_right , v_bottom ) ;
-    platform :: render_set_index_value      ( platform :: array_element ( indices  , platform :: whole_3 ) , index ) ;
+    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: whole_3 ) , x_right , y_bottom , z ) ;
+    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: whole_3 ) , color_r , color_g , color_b , color_a ) ;
+    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: whole_3 ) , u_right , v_bottom ) ;
+    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: whole_3 ) , index ) ;
 
     _mediator . get ( ) . mesh_create
         ( _text_mesh_id 

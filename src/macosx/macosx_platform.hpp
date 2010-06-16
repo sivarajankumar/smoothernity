@@ -340,18 +340,12 @@ public :
     template < typename texels_array >
     static void render_load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data ) ;
     
-    template < const_int_32 vertex_array_size >
-    static void render_create_vertex_buffer 
-        ( render_vertex_buffer_id & arg_buffer_id 
-        , num_whole elements 
-        , const static_array < vertex_data , vertex_array_size > & data 
-        ) ;
-    template < const_int_32 index_array_size >
-    static void render_create_index_buffer 
-        ( render_index_buffer_id & arg_buffer_id 
-        , num_whole elements 
-        , const static_array < index_data , index_array_size > & data 
-        ) ;    
+    template < typename vertices_array >
+    static void render_create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , const vertices_array & data ) ;
+    
+    template < typename indices_array >
+    static void render_create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data ) ;
+    
     static void render_draw_triangle_strip 
         ( const render_vertex_buffer_id & vertices_buffer 
         , const render_index_buffer_id & indices_buffer

@@ -53,9 +53,9 @@ private :
     num_whole _vertices_count ;
     mesh_id _entity_mesh_id ;
     typename platform_static_array :: template static_array < matrix_data , _entity_mesh_grid * _entity_mesh_grid > _entities_grid_matrices ;
-    typename platform :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > _vertices ;
-    typename platform :: template static_array < index_data , ( _entity_mesh_spans + 1 ) * 2 > _strip_indices ;
-    typename platform :: template static_array < index_data , _entity_mesh_spans + 2 > _fan_indices ;
+    typename platform_static_array :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > _vertices ;
+    typename platform_static_array :: template static_array < index_data , ( _entity_mesh_spans + 1 ) * 2 > _strip_indices ;
+    typename platform_static_array :: template static_array < index_data , _entity_mesh_spans + 2 > _fan_indices ;
 } ;
 
 template < typename mediator >
@@ -270,12 +270,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
 
         {
-            vertex_data & vertex = platform :: array_element ( _vertices , _vertices_count ) ;
+            vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
-            index_data & index = platform :: array_element ( _strip_indices , _strip_indices_count ) ;
+            index_data & index = platform_static_array :: array_element ( _strip_indices , _strip_indices_count ) ;
             platform :: render_set_index_value ( index , _vertices_count ) ;
         }
 
@@ -287,12 +287,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color2 ) ;
         
         {
-            vertex_data & vertex = platform :: array_element ( _vertices , _vertices_count ) ;
+            vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
-            index_data & index = platform :: array_element ( _strip_indices , _strip_indices_count ) ;
+            index_data & index = platform_static_array :: array_element ( _strip_indices , _strip_indices_count ) ;
             platform :: render_set_index_value ( index , _vertices_count ) ;
         }
 
@@ -314,12 +314,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
 
             {
-                vertex_data & vertex = platform :: array_element ( _vertices , _vertices_count ) ;
+                vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
                 platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
                 platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
             }
             {
-                index_data & index = platform :: array_element ( _fan_indices , _fan_indices_count ) ;
+                index_data & index = platform_static_array :: array_element ( _fan_indices , _fan_indices_count ) ;
                 platform :: render_set_index_value ( index , _vertices_count ) ;
             }
             
@@ -331,7 +331,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             num_whole index ;
             platform :: math_mul_wholes ( index , _current_fan_mesh_span , platform :: whole_2 ) ;
             {
-                index_data & index_ptr = platform :: array_element ( _fan_indices , _fan_indices_count ) ;
+                index_data & index_ptr = platform_static_array :: array_element ( _fan_indices , _fan_indices_count ) ;
                 platform :: render_set_index_value ( index_ptr , index ) ;
             }
             platform :: math_inc_whole ( _fan_indices_count ) ;
