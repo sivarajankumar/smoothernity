@@ -6,6 +6,7 @@ class shy_logic_text
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
@@ -32,7 +33,7 @@ class shy_logic_text
         num_fract top ;
     } ;
 
-    typedef typename platform :: template static_array < _tex_coords , _max_letters_in_alphabet > _letters_tex_coords ;
+    typedef typename platform_static_array :: template static_array < _tex_coords , _max_letters_in_alphabet > _letters_tex_coords ;
 
 public :
     class letter_id
@@ -248,7 +249,7 @@ void shy_logic_text < mediator > :: get_big_letter_tex_coords
 {
     if ( platform :: condition_true ( _text_mesh_created ) )
     {
-        _tex_coords & coords = platform :: array_element ( _letters_big , letter . _letter_id ) ;
+        _tex_coords & coords = platform_static_array :: array_element ( _letters_big , letter . _letter_id ) ;
         left = coords . left ;
         bottom = coords . bottom ;
         right = coords . right ;
@@ -274,7 +275,7 @@ void shy_logic_text < mediator > :: get_small_letter_tex_coords
 {
     if ( platform :: condition_true ( _text_mesh_created ) )
     {
-        _tex_coords & coords = platform :: array_element ( _letters_small , letter . _letter_id ) ;
+        _tex_coords & coords = platform_static_array :: array_element ( _letters_small , letter . _letter_id ) ;
         left = coords . left ;
         bottom = coords . bottom ;
         right = coords . right ;
@@ -589,7 +590,7 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
     platform :: math_div_fract_by ( coords . right , fract_texture_width ) ;
     platform :: math_div_fract_by ( coords . top , fract_texture_height ) ;
     
-    platform :: array_element ( letters_tex_coords , letter . _letter_id ) = coords ;
+    platform_static_array :: array_element ( letters_tex_coords , letter . _letter_id ) = coords ;
 }
 
 template < typename mediator >

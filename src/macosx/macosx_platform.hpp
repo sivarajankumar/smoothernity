@@ -11,9 +11,12 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
+#import "../platform/static_array.hpp"
+
 class shy_macosx_platform
 {
 public :
+    typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
     typedef const int const_int_32 ;
 
     template < typename data_type >
@@ -42,6 +45,7 @@ public :
     class num_whole
     {
         friend class shy_macosx_platform ;
+        friend class shy_platform_static_array < shy_macosx_platform > ;
     public :
         num_whole ( ) ;
     private :
