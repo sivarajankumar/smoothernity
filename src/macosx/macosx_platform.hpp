@@ -11,16 +11,19 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
+#import "../platform/math_int_float.hpp"
 #import "../platform/pointer.hpp"
 #import "../platform/static_array.hpp"
 #import "../platform/static_array_insider.hpp"
 
 class shy_macosx_platform
 {
+    friend class shy_platform_math_int_float < shy_macosx_platform > ;
     friend class shy_platform_pointer < shy_macosx_platform > ;
 private :
     typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
 public :
+    typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
     typedef const int const_int_32 ;
