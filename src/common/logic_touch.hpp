@@ -21,7 +21,7 @@ class shy_logic_touch
 
 public :
     shy_logic_touch ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: touch_done msg ) ;
     void receive ( typename messages :: touch_prepare_permit msg ) ;
     void receive ( typename messages :: touch_render msg ) ;
@@ -35,7 +35,7 @@ private :
     void _render_spot_mesh ( ) ;
     void _create_spot_mesh ( ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     num_whole _spot_frames_left ;
     num_whole _spot_mesh_created ;
     num_whole _spot_prepare_permitted ;
@@ -48,7 +48,6 @@ private :
 
 template < typename mediator >
 shy_logic_touch < mediator > :: shy_logic_touch ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _spot_frames_left , 0 ) ;
     platform :: math_make_num_whole ( _spot_mesh_created , false ) ;
@@ -57,7 +56,7 @@ shy_logic_touch < mediator > :: shy_logic_touch ( )
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_touch < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -69,7 +68,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_done m
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _spot_mesh_id ;
-        _mediator -> send ( mesh_delete_msg ) ;
+        _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
 }
 
@@ -95,7 +94,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update
         {
             _create_spot_mesh ( ) ;
             platform :: math_make_num_whole ( _spot_mesh_created , true ) ;
-            _mediator -> send ( typename messages :: touch_prepared ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: touch_prepared ( ) ) ;
         }
         else
             _update_spot ( ) ;
@@ -171,17 +170,17 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
     platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
     platform :: matrix_set_origin ( matrix , _spot_position ) ;
-    _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: texture_unselect ( ) ) ;
     {
         typename messages :: mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _spot_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
-        _mediator -> send ( mesh_set_transform_msg ) ;
+        _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
     {
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _spot_mesh_id ;
-        _mediator -> send ( mesh_render_msg ) ;
+        _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
 }
 
@@ -235,7 +234,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
             platform :: render_set_index_value ( index , i ) ;
         }
     }
-    _mediator -> mesh_create
+    _mediator . get ( ) . mesh_create
         ( _spot_mesh_id 
         , vertices 
         , indices

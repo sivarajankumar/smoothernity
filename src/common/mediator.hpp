@@ -354,7 +354,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_sound . get ( ) . set_mediator ( * this ) ;
     _logic_text . get ( ) . set_mediator ( * this ) ;
     _logic_title . get ( ) . set_mediator ( * this ) ;
-    _logic_touch . get ( ) . set_mediator ( this ) ;
+    _logic_touch . get ( ) . set_mediator ( * this ) ;
 }
         
 template < typename mediator_types >
