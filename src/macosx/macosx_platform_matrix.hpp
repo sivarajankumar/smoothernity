@@ -1,32 +1,32 @@
 inline void shy_macosx_platform :: matrix_set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 0 ] = x . _value ;
-    matrix . _elements [ 1 ] = y . _value ;
-    matrix . _elements [ 2 ] = z . _value ;
+    matrix . _elements [ 0 ] = _platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
+    matrix . _elements [ 1 ] = _platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
+    matrix . _elements [ 2 ] = _platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
     matrix . _elements [ 3 ] = 0 ;
 }
 
 inline void shy_macosx_platform :: matrix_set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 4 ] = x . _value ;
-    matrix . _elements [ 5 ] = y . _value ;
-    matrix . _elements [ 6 ] = z . _value ;
+    matrix . _elements [ 4 ] = _platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
+    matrix . _elements [ 5 ] = _platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
+    matrix . _elements [ 6 ] = _platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
     matrix . _elements [ 7 ] = 0 ;
 }
 
 inline void shy_macosx_platform :: matrix_set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [  8 ] = x . _value ;
-    matrix . _elements [  9 ] = y . _value ;
-    matrix . _elements [ 10 ] = z . _value ;
+    matrix . _elements [  8 ] = _platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
+    matrix . _elements [  9 ] = _platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
+    matrix . _elements [ 10 ] = _platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
     matrix . _elements [ 11 ] = 0 ;
 }
 
 inline void shy_macosx_platform :: matrix_set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    matrix . _elements [ 12 ] = x . _value ;
-    matrix . _elements [ 13 ] = y . _value ;
-    matrix . _elements [ 14 ] = z . _value ;
+    matrix . _elements [ 12 ] = _platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
+    matrix . _elements [ 13 ] = _platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
+    matrix . _elements [ 14 ] = _platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
     matrix . _elements [ 15 ] = 1 ;
 }
 
@@ -120,9 +120,9 @@ inline void shy_macosx_platform :: matrix_inverse_rotation_translation ( matrix_
     vector_dot_product ( dot_z , origin , axis_z ) ;
     
     vector_data new_origin ;
-    new_origin . _x = - dot_x . _value ;
-    new_origin . _y = - dot_y . _value ;
-    new_origin . _z = - dot_z . _value ;
+    new_origin . _x = - _platform_math_insider :: num_fract_unsafe_value_get ( dot_x ) ;
+    new_origin . _y = - _platform_math_insider :: num_fract_unsafe_value_get ( dot_y ) ;
+    new_origin . _z = - _platform_math_insider :: num_fract_unsafe_value_get ( dot_z ) ;
     
     matrix_set_origin ( matrix , new_origin ) ;
     swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;

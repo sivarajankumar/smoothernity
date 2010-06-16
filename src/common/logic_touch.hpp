@@ -9,6 +9,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
@@ -19,7 +20,7 @@ class shy_logic_touch
     static const_int_32 _spot_g = 255 ;
     static const_int_32 _spot_b = 255 ;
     static const_int_32 _spot_edges = 32 ;    
-    static const num_fract _spot_size ( ) { num_fract n ; platform :: math_make_num_fract ( n , 3 , 10 ) ; return n ; }
+    static const num_fract _spot_size ( ) { num_fract n ; platform_math :: math_make_num_fract ( n , 3 , 10 ) ; return n ; }
 
 public :
     shy_logic_touch ( ) ;
@@ -51,10 +52,10 @@ private :
 template < typename mediator >
 shy_logic_touch < mediator > :: shy_logic_touch ( )
 {
-    platform :: math_make_num_whole ( _spot_frames_left , 0 ) ;
-    platform :: math_make_num_whole ( _spot_mesh_created , false ) ;
-    platform :: math_make_num_whole ( _spot_prepare_permitted , false ) ;
-    platform :: math_make_num_whole ( _should_place_new_spot , false ) ;
+    platform_math :: math_make_num_whole ( _spot_frames_left , 0 ) ;
+    platform_math :: math_make_num_whole ( _spot_mesh_created , false ) ;
+    platform_math :: math_make_num_whole ( _spot_prepare_permitted , false ) ;
+    platform_math :: math_make_num_whole ( _should_place_new_spot , false ) ;
 }
 
 template < typename mediator >
@@ -77,7 +78,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_done m
 template < typename mediator >
 void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepare_permit msg )
 {
-    platform :: math_make_num_whole ( _spot_prepare_permitted , true ) ;
+    platform_math :: math_make_num_whole ( _spot_prepare_permitted , true ) ;
 }
 
 template < typename mediator >
@@ -95,7 +96,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update
         if ( platform :: condition_false ( _spot_mesh_created ) )
         {
             _create_spot_mesh ( ) ;
-            platform :: math_make_num_whole ( _spot_mesh_created , true ) ;
+            platform_math :: math_make_num_whole ( _spot_mesh_created , true ) ;
             _mediator . get ( ) . send ( typename messages :: touch_prepared ( ) ) ;
         }
         else
@@ -116,7 +117,7 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: _decrease_spot_lifetime ( )
 {
     if ( platform :: condition_whole_greater_than_zero ( _spot_frames_left ) )
-        platform :: math_dec_whole ( _spot_frames_left ) ;
+        platform_math :: math_dec_whole ( _spot_frames_left ) ;
 }
 
 template < typename mediator >
@@ -128,7 +129,7 @@ void shy_logic_touch < mediator > :: _poll_touchscreen ( )
     {
         platform :: touch_x ( _spot_x ) ;
         platform :: touch_y ( _spot_y ) ;
-        platform :: math_make_num_whole ( _should_place_new_spot , true ) ;
+        platform_math :: math_make_num_whole ( _should_place_new_spot , true ) ;
     }
 }
 
@@ -141,7 +142,7 @@ void shy_logic_touch < mediator > :: _poll_mouse ( )
     {
         platform :: mouse_x ( _spot_x ) ;
         platform :: mouse_y ( _spot_y ) ;
-        platform :: math_make_num_whole ( _should_place_new_spot , true ) ;
+        platform_math :: math_make_num_whole ( _should_place_new_spot , true ) ;
     }
 }
 
@@ -151,10 +152,10 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
     if ( platform :: condition_true ( _should_place_new_spot ) )
     {
         num_fract pos_z ;
-        platform :: math_make_num_fract ( pos_z , - 3 , 1 ) ;
+        platform_math :: math_make_num_fract ( pos_z , - 3 , 1 ) ;
         platform :: vector_xyz ( _spot_position , _spot_x , _spot_y , pos_z ) ;
-        platform :: math_make_num_whole ( _spot_frames_left , _spot_lifetime_in_frames ) ;
-        platform :: math_make_num_whole ( _should_place_new_spot , false ) ;
+        platform_math :: math_make_num_whole ( _spot_frames_left , _spot_lifetime_in_frames ) ;
+        platform_math :: math_make_num_whole ( _should_place_new_spot , false ) ;
     }
 }
 
@@ -165,12 +166,12 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     num_fract fract_spot_frames_left ;
     num_fract fract_spot_lifetime_in_frames ;
     num_fract scale ;
-    platform :: math_make_fract_from_whole ( fract_spot_frames_left , _spot_frames_left ) ;
-    platform :: math_make_num_fract ( fract_spot_lifetime_in_frames , _spot_lifetime_in_frames , 1 ) ;
-    platform :: math_div_fracts ( scale , fract_spot_frames_left , fract_spot_lifetime_in_frames ) ;
-    platform :: matrix_set_axis_x ( matrix , scale , platform :: fract_0 , platform :: fract_0 ) ;
-    platform :: matrix_set_axis_y ( matrix , platform :: fract_0 , scale , platform :: fract_0 ) ;
-    platform :: matrix_set_axis_z ( matrix , platform :: fract_0 , platform :: fract_0 , scale ) ;
+    platform_math :: math_make_fract_from_whole ( fract_spot_frames_left , _spot_frames_left ) ;
+    platform_math :: math_make_num_fract ( fract_spot_lifetime_in_frames , _spot_lifetime_in_frames , 1 ) ;
+    platform_math :: math_div_fracts ( scale , fract_spot_frames_left , fract_spot_lifetime_in_frames ) ;
+    platform :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
+    platform :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
     platform :: matrix_set_origin ( matrix , _spot_position ) ;
     _mediator . get ( ) . send ( typename messages :: texture_unselect ( ) ) ;
     {
@@ -195,12 +196,12 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
     num_whole whole_spot_edges ;
     num_fract fract_spot_edges ;
     
-    platform :: math_make_num_whole ( whole_spot_edges , _spot_edges ) ;
-    platform :: math_make_num_fract ( fract_spot_edges , _spot_edges , 1 ) ;
+    platform_math :: math_make_num_whole ( whole_spot_edges , _spot_edges ) ;
+    platform_math :: math_make_num_fract ( fract_spot_edges , _spot_edges , 1 ) ;
     
-    for ( platform :: math_make_num_whole ( i , 0 )
+    for ( platform_math :: math_make_num_whole ( i , 0 )
         ; platform :: condition_whole_less_than_whole ( i , whole_spot_edges ) 
-        ; platform :: math_inc_whole ( i )
+        ; platform_math :: math_inc_whole ( i )
         )
     {
         num_fract angle ;
@@ -214,18 +215,18 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         num_fract vertex_g ;
         num_fract vertex_b ;
         num_fract vertex_a ;
-        platform :: math_make_fract_from_whole ( fract_i , i ) ;
-        platform :: math_mul_fracts ( angle , platform :: fract_2pi , fract_i ) ;
-        platform :: math_div_fract_by ( angle , fract_spot_edges ) ;
-        platform :: math_cos ( angle_cos , angle ) ;
-        platform :: math_sin ( angle_sin , angle ) ;
-        platform :: math_mul_fracts ( vertex_x , _spot_size ( ) , angle_cos ) ;
-        platform :: math_mul_fracts ( vertex_y , _spot_size ( ) , angle_sin ) ;
-        platform :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
-        platform :: math_make_num_fract ( vertex_r , _spot_r , 255 ) ;
-        platform :: math_make_num_fract ( vertex_g , _spot_g , 255 ) ;
-        platform :: math_make_num_fract ( vertex_b , _spot_b , 255 ) ;
-        platform :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
+        platform_math :: math_make_fract_from_whole ( fract_i , i ) ;
+        platform_math :: math_mul_fracts ( angle , platform :: math_consts . fract_2pi , fract_i ) ;
+        platform_math :: math_div_fract_by ( angle , fract_spot_edges ) ;
+        platform_math :: math_cos ( angle_cos , angle ) ;
+        platform_math :: math_sin ( angle_sin , angle ) ;
+        platform_math :: math_mul_fracts ( vertex_x , _spot_size ( ) , angle_cos ) ;
+        platform_math :: math_mul_fracts ( vertex_y , _spot_size ( ) , angle_sin ) ;
+        platform_math :: math_make_num_fract ( vertex_z , 0 , 1 ) ;
+        platform_math :: math_make_num_fract ( vertex_r , _spot_r , 255 ) ;
+        platform_math :: math_make_num_fract ( vertex_g , _spot_g , 255 ) ;
+        platform_math :: math_make_num_fract ( vertex_b , _spot_b , 255 ) ;
+        platform_math :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
         {
             vertex_data & vertex = platform_static_array :: array_element ( vertices , i ) ;
             platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
@@ -242,7 +243,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         , indices
         , indices 
         , whole_spot_edges 
-        , platform :: whole_0 
+        , platform :: math_consts . whole_0 
         , whole_spot_edges 
         ) ;
 }

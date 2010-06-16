@@ -12,6 +12,7 @@ class shy_logic_title
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
@@ -69,15 +70,15 @@ private :
 template < typename mediator >
 shy_logic_title < mediator > :: shy_logic_title ( )
 {
-    platform :: math_make_num_whole ( _title_launch_permitted , false ) ;
-    platform :: math_make_num_whole ( _title_finished , false ) ;
-    platform :: math_make_num_whole ( _title_created , false ) ;
-    platform :: math_make_num_whole ( _title_appeared , false ) ;
-    platform :: math_make_num_whole ( _disappear_at_frames , 0 ) ;
-    platform :: math_make_num_fract ( _scene_scale , 1 , 1 ) ;
-    platform :: math_make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
-    _letters_count = platform :: whole_0 ;
-    _title_frames = platform :: whole_0 ;
+    platform_math :: math_make_num_whole ( _title_launch_permitted , false ) ;
+    platform_math :: math_make_num_whole ( _title_finished , false ) ;
+    platform_math :: math_make_num_whole ( _title_created , false ) ;
+    platform_math :: math_make_num_whole ( _title_appeared , false ) ;
+    platform_math :: math_make_num_whole ( _disappear_at_frames , 0 ) ;
+    platform_math :: math_make_num_fract ( _scene_scale , 1 , 1 ) ;
+    platform_math :: math_make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
+    _letters_count = platform :: math_consts . whole_0 ;
+    _title_frames = platform :: math_consts . whole_0 ;
 }
 
 template < typename mediator >
@@ -91,9 +92,9 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
 {
     if ( platform :: condition_true ( _title_created ) )
     {
-        for ( num_whole i = platform :: whole_0
+        for ( num_whole i = platform :: math_consts . whole_0
             ; platform :: condition_whole_less_than_whole ( i , _letters_count )
-            ; platform :: math_inc_whole ( i )
+            ; platform_math :: math_inc_whole ( i )
             )
         {
             _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
@@ -107,7 +108,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: title_render msg )
 {
-    platform :: render_clear_screen ( platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+    platform :: render_clear_screen ( platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     platform :: render_disable_depth_test ( ) ;
     platform :: render_fog_disable ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
@@ -119,7 +120,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_render
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: title_launch_permit msg )
 {
-    platform :: math_make_num_whole ( _title_launch_permitted , true ) ;
+    platform_math :: math_make_num_whole ( _title_launch_permitted , true ) ;
 }
 
 template < typename mediator >
@@ -130,16 +131,16 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
         if ( platform :: condition_false ( _title_created ) )
         {
             _title_create ( ) ;
-            platform :: math_make_num_whole ( _title_created , true ) ;
+            platform_math :: math_make_num_whole ( _title_created , true ) ;
             
-            platform :: math_make_num_fract ( _desired_pos_radius_coeff , _spin_radius_in_letters , 1 ) ;
-            platform :: math_make_num_fract ( _desired_pos_angle , 11 , 2 ) ;
-            platform :: math_mul_fract_by ( _desired_pos_angle , platform :: fract_pi ) ;
-            platform :: math_mul_fracts ( _desired_rot_angle , platform :: fract_2pi , platform :: fract_3 ) ;
-            platform :: math_make_num_fract ( _desired_scale , 1 , 1 ) ;    
-            platform :: math_make_num_fract ( _rubber_first , 19 , 20 ) ;
-            platform :: math_make_num_fract ( _rubber_last , 19 , 20 ) ;
-            platform :: math_make_num_whole ( _disappear_at_frames , 9999 ) ;
+            platform_math :: math_make_num_fract ( _desired_pos_radius_coeff , _spin_radius_in_letters , 1 ) ;
+            platform_math :: math_make_num_fract ( _desired_pos_angle , 11 , 2 ) ;
+            platform_math :: math_mul_fract_by ( _desired_pos_angle , platform :: math_consts . fract_pi ) ;
+            platform_math :: math_mul_fracts ( _desired_rot_angle , platform :: math_consts . fract_2pi , platform :: math_consts . fract_3 ) ;
+            platform_math :: math_make_num_fract ( _desired_scale , 1 , 1 ) ;    
+            platform_math :: math_make_num_fract ( _rubber_first , 19 , 20 ) ;
+            platform_math :: math_make_num_fract ( _rubber_last , 19 , 20 ) ;
+            platform_math :: math_make_num_whole ( _disappear_at_frames , 9999 ) ;
         }
     }
     if ( platform :: condition_true ( _title_created ) && platform :: condition_false ( _title_finished ) )
@@ -147,20 +148,20 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
         if ( platform :: condition_false ( _title_appeared ) )
         {
             num_whole whole_appear_duration_in_frames ;
-            platform :: math_make_num_whole ( whole_appear_duration_in_frames , _appear_duration_in_frames ) ;
-            platform :: math_inc_whole ( _title_frames ) ;
+            platform_math :: math_make_num_whole ( whole_appear_duration_in_frames , _appear_duration_in_frames ) ;
+            platform_math :: math_inc_whole ( _title_frames ) ;
             if ( platform :: condition_whole_greater_than_whole ( _title_frames , whole_appear_duration_in_frames ) )
             {
-                _title_frames = platform :: whole_0 ;
-                platform :: math_make_num_fract ( _desired_pos_radius_coeff , 0 , 1 ) ;
-                platform :: math_make_num_fract ( _desired_pos_angle , 22 , 2 ) ;
-                platform :: math_mul_fract_by ( _desired_pos_angle , platform :: fract_pi ) ;
-                platform :: math_mul_fracts ( _desired_rot_angle , platform :: fract_2pi , platform :: fract_6 ) ;
-                platform :: math_make_num_fract ( _desired_scale , 0 , 1 ) ;    
-                platform :: math_make_num_whole ( _title_appeared , true ) ;
-                platform :: math_make_num_fract ( _rubber_first , 59 , 60 ) ;
-                platform :: math_make_num_fract ( _rubber_last , 29 , 30 ) ;
-                platform :: math_make_num_whole ( _disappear_at_frames , _disappear_duration_in_frames ) ;
+                _title_frames = platform :: math_consts . whole_0 ;
+                platform_math :: math_make_num_fract ( _desired_pos_radius_coeff , 0 , 1 ) ;
+                platform_math :: math_make_num_fract ( _desired_pos_angle , 22 , 2 ) ;
+                platform_math :: math_mul_fract_by ( _desired_pos_angle , platform :: math_consts . fract_pi ) ;
+                platform_math :: math_mul_fracts ( _desired_rot_angle , platform :: math_consts . fract_2pi , platform :: math_consts . fract_6 ) ;
+                platform_math :: math_make_num_fract ( _desired_scale , 0 , 1 ) ;    
+                platform_math :: math_make_num_whole ( _title_appeared , true ) ;
+                platform_math :: math_make_num_fract ( _rubber_first , 59 , 60 ) ;
+                platform_math :: math_make_num_fract ( _rubber_last , 29 , 30 ) ;
+                platform_math :: math_make_num_whole ( _disappear_at_frames , _disappear_duration_in_frames ) ;
             }
             else
             {
@@ -170,11 +171,11 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
         if ( platform :: condition_true ( _title_appeared ) )
         {
             num_whole whole_disappear_duration_in_frames ;
-            platform :: math_make_num_whole ( whole_disappear_duration_in_frames , _disappear_duration_in_frames ) ;
-            platform :: math_inc_whole ( _title_frames ) ;
+            platform_math :: math_make_num_whole ( whole_disappear_duration_in_frames , _disappear_duration_in_frames ) ;
+            platform_math :: math_inc_whole ( _title_frames ) ;
             if ( platform :: condition_whole_greater_than_whole ( _title_frames , whole_disappear_duration_in_frames ) )
             {
-                platform :: math_make_num_whole ( _title_finished , true ) ;
+                platform_math :: math_make_num_whole ( _title_finished , true ) ;
                 _mediator . get ( ) . send ( typename messages :: title_finished ( ) ) ;
             }
             else
@@ -209,18 +210,18 @@ void shy_logic_title < mediator > :: _title_render ( )
 {
     matrix_data scene_tm ;
 
-    platform :: matrix_set_axis_x ( scene_tm , _scene_scale , platform :: fract_0 , platform :: fract_0 ) ;
-    platform :: matrix_set_axis_y ( scene_tm , platform :: fract_0 , _scene_scale , platform :: fract_0 ) ;
-    platform :: matrix_set_axis_z ( scene_tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_1 ) ;
-    platform :: matrix_set_origin ( scene_tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+    platform :: matrix_set_axis_x ( scene_tm , _scene_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform :: matrix_set_axis_y ( scene_tm , platform :: math_consts . fract_0 , _scene_scale , platform :: math_consts . fract_0 ) ;
+    platform :: matrix_set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+    platform :: matrix_set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     
     platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
     platform :: render_matrix_load ( scene_tm ) ;
     
-    for ( num_whole i = platform :: whole_0
+    for ( num_whole i = platform :: math_consts . whole_0
         ; platform :: condition_whole_less_than_whole ( i , _letters_count )
-        ; platform :: math_inc_whole ( i )
+        ; platform_math :: math_inc_whole ( i )
         )
     {
         _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
@@ -245,29 +246,29 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_whole frames_between_letters ;
     
     platform :: render_get_aspect_width ( aspect_width ) ;
-    platform :: math_make_fract_from_whole ( fract_letters_count , _letters_count ) ;
-    platform :: math_div_fracts ( letter_size , aspect_width , fract_letters_count ) ;    
-    platform :: math_mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;
-    platform :: math_make_num_whole ( frames_between_letters , 5 ) ;
-    platform :: math_make_num_fract ( offset_y , _spin_radius_in_letters , 1 ) ;
-    platform :: math_mul_fract_by ( offset_y , letter_size ) ;
-    platform :: math_make_num_fract ( fract_appear_duration_in_frames , _appear_duration_in_frames , 1 ) ;
-    platform :: math_make_num_fract ( scale_min , 7 , 10 ) ;
-    platform :: math_make_num_fract ( scale_max , 9 , 10 ) ;
+    platform_math :: math_make_fract_from_whole ( fract_letters_count , _letters_count ) ;
+    platform_math :: math_div_fracts ( letter_size , aspect_width , fract_letters_count ) ;    
+    platform_math :: math_mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;
+    platform_math :: math_make_num_whole ( frames_between_letters , 5 ) ;
+    platform_math :: math_make_num_fract ( offset_y , _spin_radius_in_letters , 1 ) ;
+    platform_math :: math_mul_fract_by ( offset_y , letter_size ) ;
+    platform_math :: math_make_num_fract ( fract_appear_duration_in_frames , _appear_duration_in_frames , 1 ) ;
+    platform_math :: math_make_num_fract ( scale_min , 7 , 10 ) ;
+    platform_math :: math_make_num_fract ( scale_max , 9 , 10 ) ;
     
     engine_math :: math_lerp 
         ( _scene_scale 
         , scale_min
-        , platform :: fract_0 
+        , platform :: math_consts . fract_0 
         , scale_max 
         , fract_appear_duration_in_frames
         , _scene_scale_frames
         ) ;
-    platform :: math_add_to_fract ( _scene_scale_frames , platform :: fract_1 ) ;
+    platform_math :: math_add_to_fract ( _scene_scale_frames , platform :: math_consts . fract_1 ) ;
                     
-    for ( num_whole i = platform :: whole_0
+    for ( num_whole i = platform :: math_consts . whole_0
         ; platform :: condition_whole_less_than_whole ( i , _letters_count )
-        ; platform :: math_inc_whole ( i )
+        ; platform_math :: math_inc_whole ( i )
         )
     {
         num_fract offset_x ;
@@ -297,56 +298,56 @@ void shy_logic_title < mediator > :: _title_update ( )
         matrix_data tm ;
         _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
         
-        platform :: math_make_fract_from_whole ( fract_i , i ) ;
-        platform :: math_mul_fracts ( offset_x , aspect_width , platform :: fract_2 ) ;
-        platform :: math_mul_fract_by ( offset_x , fract_i ) ;
-        platform :: math_div_fract_by ( offset_x , fract_letters_count ) ;
-        platform :: math_sub_from_fract ( offset_x , aspect_width ) ;
-        platform :: math_add_to_fract ( offset_x , letter_size ) ;
-        platform :: vector_xyz ( offset , offset_x , offset_y , platform :: fract_minus_3 ) ;        
+        platform_math :: math_make_fract_from_whole ( fract_i , i ) ;
+        platform_math :: math_mul_fracts ( offset_x , aspect_width , platform :: math_consts . fract_2 ) ;
+        platform_math :: math_mul_fract_by ( offset_x , fract_i ) ;
+        platform_math :: math_div_fract_by ( offset_x , fract_letters_count ) ;
+        platform_math :: math_sub_from_fract ( offset_x , aspect_width ) ;
+        platform_math :: math_add_to_fract ( offset_x , letter_size ) ;
+        platform :: vector_xyz ( offset , offset_x , offset_y , platform :: math_consts . fract_minus_3 ) ;        
         
-        platform :: math_mul_wholes ( starting_frame , frames_between_letters , i ) ;
-        platform :: math_sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
+        platform_math :: math_mul_wholes ( starting_frame , frames_between_letters , i ) ;
+        platform_math :: math_sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
         if ( platform :: condition_whole_greater_than_whole ( _title_frames , starting_frame ) )
         {
-            engine_math :: math_lerp ( rubber , _rubber_first , platform :: fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
+            engine_math :: math_lerp ( rubber , _rubber_first , platform :: math_consts . fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
             
-            platform :: math_mul_fracts ( pos_angle_old_part , letter . pos_angle , rubber ) ;
-            platform :: math_sub_fracts ( pos_angle_new_part , platform :: fract_1 , rubber ) ;
-            platform :: math_mul_fract_by ( pos_angle_new_part , _desired_pos_angle ) ;
-            platform :: math_add_fracts ( letter . pos_angle , pos_angle_old_part , pos_angle_new_part ) ;
+            platform_math :: math_mul_fracts ( pos_angle_old_part , letter . pos_angle , rubber ) ;
+            platform_math :: math_sub_fracts ( pos_angle_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: math_mul_fract_by ( pos_angle_new_part , _desired_pos_angle ) ;
+            platform_math :: math_add_fracts ( letter . pos_angle , pos_angle_old_part , pos_angle_new_part ) ;
             
-            platform :: math_mul_fracts ( pos_radius_old_part , letter . pos_radius , rubber ) ;
-            platform :: math_sub_fracts ( pos_radius_new_part , platform :: fract_1 , rubber ) ;
-            platform :: math_mul_fract_by ( pos_radius_new_part , desired_pos_radius ) ;
-            platform :: math_add_fracts ( letter . pos_radius , pos_radius_old_part , pos_radius_new_part ) ;
+            platform_math :: math_mul_fracts ( pos_radius_old_part , letter . pos_radius , rubber ) ;
+            platform_math :: math_sub_fracts ( pos_radius_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: math_mul_fract_by ( pos_radius_new_part , desired_pos_radius ) ;
+            platform_math :: math_add_fracts ( letter . pos_radius , pos_radius_old_part , pos_radius_new_part ) ;
             
-            platform :: math_mul_fracts ( rot_angle_old_part , letter . rot_angle , rubber ) ;
-            platform :: math_sub_fracts ( rot_angle_new_part , platform :: fract_1 , rubber ) ;
-            platform :: math_mul_fract_by ( rot_angle_new_part , _desired_rot_angle ) ;
-            platform :: math_add_fracts ( letter . rot_angle , rot_angle_old_part , rot_angle_new_part ) ;
+            platform_math :: math_mul_fracts ( rot_angle_old_part , letter . rot_angle , rubber ) ;
+            platform_math :: math_sub_fracts ( rot_angle_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: math_mul_fract_by ( rot_angle_new_part , _desired_rot_angle ) ;
+            platform_math :: math_add_fracts ( letter . rot_angle , rot_angle_old_part , rot_angle_new_part ) ;
             
-            platform :: math_mul_fracts ( scale_old_part , letter . scale , rubber ) ;
-            platform :: math_sub_fracts ( scale_new_part , platform :: fract_1 , rubber ) ;
-            platform :: math_mul_fract_by ( scale_new_part , _desired_scale ) ;
-            platform :: math_add_fracts ( letter . scale , scale_old_part , scale_new_part ) ;
+            platform_math :: math_mul_fracts ( scale_old_part , letter . scale , rubber ) ;
+            platform_math :: math_sub_fracts ( scale_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: math_mul_fract_by ( scale_new_part , _desired_scale ) ;
+            platform_math :: math_add_fracts ( letter . scale , scale_old_part , scale_new_part ) ;
         }
         
-        platform :: math_sin ( rot_sin , letter . rot_angle ) ;
-        platform :: math_cos ( rot_cos , letter . rot_angle ) ;
-        platform :: math_neg_fract ( rot_neg_sin , rot_sin ) ;
+        platform_math :: math_sin ( rot_sin , letter . rot_angle ) ;
+        platform_math :: math_cos ( rot_cos , letter . rot_angle ) ;
+        platform_math :: math_neg_fract ( rot_neg_sin , rot_sin ) ;
         
-        platform :: math_sin ( pos_sin , letter . pos_angle ) ;
-        platform :: math_cos ( pos_cos , letter . pos_angle ) ;
-        platform :: math_neg_fract ( pos_neg_sin , pos_sin ) ;
+        platform_math :: math_sin ( pos_sin , letter . pos_angle ) ;
+        platform_math :: math_cos ( pos_cos , letter . pos_angle ) ;
+        platform_math :: math_neg_fract ( pos_neg_sin , pos_sin ) ;
         
-        platform :: vector_xyz ( pos , pos_cos , pos_sin , platform :: fract_0 ) ;
+        platform :: vector_xyz ( pos , pos_cos , pos_sin , platform :: math_consts . fract_0 ) ;
         platform :: vector_mul_by ( pos , letter . pos_radius ) ;
         
         if ( platform :: condition_whole_less_than_whole ( _title_frames , finishing_frame ) )
         {
-            platform :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: fract_0 ) ;
-            platform :: vector_xyz ( axis_y , rot_neg_sin , rot_cos , platform :: fract_0 ) ;
+            platform :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: math_consts . fract_0 ) ;
+            platform :: vector_xyz ( axis_y , rot_neg_sin , rot_cos , platform :: math_consts . fract_0 ) ;
             platform :: vector_mul_by ( axis_x , letter . scale ) ;
             platform :: vector_mul_by ( axis_y , letter . scale ) ;
             platform :: vector_mul_by ( axis_x , letter_size ) ;
@@ -354,15 +355,15 @@ void shy_logic_title < mediator > :: _title_update ( )
         }
         else
         {
-            platform :: vector_xyz ( axis_x , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
-            platform :: vector_xyz ( axis_y , platform :: fract_0 , platform :: fract_0 , platform :: fract_0 ) ;
+            platform :: vector_xyz ( axis_x , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+            platform :: vector_xyz ( axis_y , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
         }
         
         platform :: vector_add ( origin , pos , offset ) ;
         
         platform :: matrix_set_axis_x ( tm , axis_x ) ;
         platform :: matrix_set_axis_y ( tm , axis_y ) ;
-        platform :: matrix_set_axis_z ( tm , platform :: fract_0 , platform :: fract_0 , platform :: fract_1 ) ;
+        platform :: matrix_set_axis_z ( tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
         platform :: matrix_set_origin ( tm , origin ) ;
         
         {
@@ -378,7 +379,7 @@ template < typename mediator >
 void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 {
     platform_static_array :: array_element ( _letters , _letters_count ) . letter = letter ;
-    platform :: math_inc_whole ( _letters_count ) ;
+    platform_math :: math_inc_whole ( _letters_count ) ;
 }
 
 template < typename mediator >
@@ -387,66 +388,66 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     typename platform_static_array :: template static_array < vertex_data , 4 > vertices ;
     typename platform_static_array :: template static_array < index_data , 4 > indices ;
     
-    num_fract title_r = platform :: fract_0 ;
-    num_fract title_g = platform :: fract_1 ;
-    num_fract title_b = platform :: fract_0 ;
-    num_fract title_a = platform :: fract_1 ;
+    num_fract title_r = platform :: math_consts . fract_0 ;
+    num_fract title_g = platform :: math_consts . fract_1 ;
+    num_fract title_b = platform :: math_consts . fract_0 ;
+    num_fract title_a = platform :: math_consts . fract_1 ;
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: whole_0 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: whole_0 ) ;
-        platform :: render_set_index_value ( index , platform :: whole_0 ) ;
+        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) ;
+        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_0 ) ;
+        platform :: render_set_index_value ( index , platform :: math_consts . whole_0 ) ;
         platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
-            , platform :: fract_minus_1 
-            , platform :: fract_1 
-            , platform :: fract_0 
+            , platform :: math_consts . fract_minus_1 
+            , platform :: math_consts . fract_1 
+            , platform :: math_consts . fract_0 
             ) ;
     }
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: whole_1 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: whole_1 ) ;
-        platform :: render_set_index_value ( index , platform :: whole_1 ) ;
+        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) ;
+        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_1 ) ;
+        platform :: render_set_index_value ( index , platform :: math_consts . whole_1 ) ;
         platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
-            , platform :: fract_minus_1 
-            , platform :: fract_minus_1 
-            , platform :: fract_0 
+            , platform :: math_consts . fract_minus_1 
+            , platform :: math_consts . fract_minus_1 
+            , platform :: math_consts . fract_0 
             ) ;
     }
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: whole_2 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: whole_2 ) ;
-        platform :: render_set_index_value ( index , platform :: whole_2 ) ;
+        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) ;
+        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_2 ) ;
+        platform :: render_set_index_value ( index , platform :: math_consts . whole_2 ) ;
         platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
-            , platform :: fract_1 
-            , platform :: fract_1 
-            , platform :: fract_0 
+            , platform :: math_consts . fract_1 
+            , platform :: math_consts . fract_1 
+            , platform :: math_consts . fract_0 
             ) ;
     }
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: whole_3 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: whole_3 ) ;
-        platform :: render_set_index_value ( index , platform :: whole_3 ) ;
+        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) ;
+        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_3 ) ;
+        platform :: render_set_index_value ( index , platform :: math_consts . whole_3 ) ;
         platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform :: render_set_vertex_position 
             ( vertex 
-            , platform :: fract_1 
-            , platform :: fract_minus_1 
-            , platform :: fract_0 
+            , platform :: math_consts . fract_1 
+            , platform :: math_consts . fract_minus_1 
+            , platform :: math_consts . fract_0 
             ) ;
     }
     
-    for ( num_whole i = platform :: whole_0
+    for ( num_whole i = platform :: math_consts . whole_0
         ; platform :: condition_whole_less_than_whole ( i , _letters_count )
-        ; platform :: math_inc_whole ( i )
+        ; platform_math :: math_inc_whole ( i )
         )
     {
         num_fract tex_left ;
@@ -454,28 +455,28 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         num_fract tex_right ;
         num_fract tex_top ;
         _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
-        letter . scale = platform :: fract_0 ;
-        letter . pos_radius = platform :: fract_0 ;
-        letter . pos_angle = platform :: fract_0 ;
-        letter . rot_angle = platform :: fract_0 ;
+        letter . scale = platform :: math_consts . fract_0 ;
+        letter . pos_radius = platform :: math_consts . fract_0 ;
+        letter . pos_angle = platform :: math_consts . fract_0 ;
+        letter . rot_angle = platform :: math_consts . fract_0 ;
         _mediator . get ( ) . get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
         platform :: render_set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: whole_0 )
+            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 )
             , tex_left
             , tex_top
             ) ;
         platform :: render_set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: whole_1 )
+            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 )
             , tex_left
             , tex_bottom
             ) ;
         platform :: render_set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: whole_2 )
+            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 )
             , tex_right
             , tex_top
             ) ;
         platform :: render_set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: whole_3 )
+            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 )
             , tex_right
             , tex_bottom
             ) ;
@@ -484,9 +485,9 @@ void shy_logic_title < mediator > :: _bake_letters ( )
             , vertices 
             , indices 
             , indices
-            , platform :: whole_4 
-            , platform :: whole_4 
-            , platform :: whole_0 
+            , platform :: math_consts . whole_4 
+            , platform :: math_consts . whole_4 
+            , platform :: math_consts . whole_0 
             ) ;
     }
 }

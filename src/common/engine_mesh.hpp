@@ -7,6 +7,7 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: render_index_buffer_id render_index_buffer_id ;
     typedef typename mediator :: platform :: render_vertex_buffer_id render_vertex_buffer_id ;
@@ -59,7 +60,7 @@ private :
 template < typename mediator >
 shy_engine_mesh < mediator > :: shy_engine_mesh ( )
 {
-    platform :: math_make_num_whole ( _next_mesh_id , 0 ) ;
+    platform_math :: math_make_num_whole ( _next_mesh_id , 0 ) ;
 }
 
 template < typename mediator >
@@ -100,7 +101,7 @@ void shy_engine_mesh < mediator > :: mesh_create
             ) ;
     }
     result . _mesh_id = _next_mesh_id ;
-    platform :: math_inc_whole ( _next_mesh_id ) ;
+    platform_math :: math_inc_whole ( _next_mesh_id ) ;
 }
 
 template < typename mediator >

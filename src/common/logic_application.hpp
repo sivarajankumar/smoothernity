@@ -5,6 +5,7 @@ class shy_logic_application
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     shy_logic_application ( ) ;
@@ -24,10 +25,10 @@ private :
 template < typename mediator >
 shy_logic_application < mediator > :: shy_logic_application ( )
 {
-    platform :: math_make_num_whole ( _application_launched , false ) ;
-    platform :: math_make_num_whole ( _title_active , false ) ;
-    platform :: math_make_num_whole ( _game_active , false ) ;
-    platform :: math_make_num_whole ( _text_active , false ) ;
+    platform_math :: math_make_num_whole ( _application_launched , false ) ;
+    platform_math :: math_make_num_whole ( _title_active , false ) ;
+    platform_math :: math_make_num_whole ( _game_active , false ) ;
+    platform_math :: math_make_num_whole ( _text_active , false ) ;
 }
 
 template < typename mediator >
@@ -39,16 +40,16 @@ void shy_logic_application < mediator > :: set_mediator ( typename platform_poin
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: text_prepared msg )
 {
-    platform :: math_make_num_whole ( _text_active , false ) ;
-    platform :: math_make_num_whole ( _title_active , true ) ;
+    platform_math :: math_make_num_whole ( _text_active , false ) ;
+    platform_math :: math_make_num_whole ( _title_active , true ) ;
     _mediator . get ( ) . send ( typename messages :: title_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: title_finished msg )
 {
-    platform :: math_make_num_whole ( _title_active , false ) ;
-    platform :: math_make_num_whole ( _game_active , true ) ;
+    platform_math :: math_make_num_whole ( _title_active , false ) ;
+    platform_math :: math_make_num_whole ( _game_active , true ) ;
     _mediator . get ( ) . send ( typename messages :: game_launch_permit ( ) ) ;
 }
 
@@ -62,7 +63,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
     if ( platform :: condition_false ( _application_launched ) )
     {
         num_fract black ;
-        platform :: math_make_num_fract ( black , 0 , 1 ) ;
+        platform_math :: math_make_num_fract ( black , 0 , 1 ) ;
         platform :: render_clear_screen ( black , black , black ) ;
     }
 }
@@ -72,8 +73,8 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
 {
     if ( platform :: condition_false ( _application_launched ) )
     {
-        platform :: math_make_num_whole ( _application_launched , true ) ;
-        platform :: math_make_num_whole ( _text_active , true ) ;
+        platform_math :: math_make_num_whole ( _application_launched , true ) ;
+        platform_math :: math_make_num_whole ( _text_active , true ) ;
         _mediator . get ( ) . send ( typename messages :: text_prepare_permit ( ) ) ;
     }
     if ( platform :: condition_true ( _text_active ) )

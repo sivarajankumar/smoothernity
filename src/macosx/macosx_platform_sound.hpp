@@ -25,7 +25,7 @@ inline void shy_macosx_platform :: sound_set_listener_orientation ( vector_data 
 
 inline void shy_macosx_platform :: sound_set_sample_value ( mono_sound_sample & sample , num_fract value )
 {
-    sample . _value = ( ALubyte ) ( ( value . _value * 127.0f ) + 127.0f ) ;
+    sample . _value = ( ALubyte ) ( ( _platform_math_insider :: num_fract_unsafe_value_get ( value ) * 127.0f ) + 127.0f ) ;
 }
 
 inline void shy_macosx_platform :: sound_create_stereo_resource_id 
@@ -33,7 +33,7 @@ inline void shy_macosx_platform :: sound_create_stereo_resource_id
     , num_whole resource_index
     )
 {
-    result . _resource_id = resource_index . _value ;
+    result . _resource_id = _platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
 }
 
 template < typename samples_array >
@@ -51,12 +51,12 @@ inline void shy_macosx_platform :: sound_load_stereo_sample_data
 
 inline void shy_macosx_platform :: sound_loader_ready ( num_whole & result )
 {
-    result . _value = [ shy_macosx_platform_utility :: _sound_loader loader_ready ] ;
+    _platform_math_insider :: num_whole_unsafe_value_set ( result , [ shy_macosx_platform_utility :: _sound_loader loader_ready ] ) ;
 }
 
 inline void shy_macosx_platform :: sound_loaded_samples_count ( num_whole & result )
 {
-    result . _value = [ shy_macosx_platform_utility :: _sound_loader loaded_samples_count ] ;
+    _platform_math_insider :: num_whole_unsafe_value_set ( result , [ shy_macosx_platform_utility :: _sound_loader loaded_samples_count ] ) ;
 }
 
 template < typename samples_array >
@@ -73,7 +73,7 @@ inline void shy_macosx_platform :: sound_create_mono_buffer
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
         , ( ALvoid * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
-        , samples_count . _value * sizeof ( mono_sound_sample )
+        , _platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
 }
@@ -92,7 +92,7 @@ inline void shy_macosx_platform :: sound_create_stereo_buffer
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
         , ( ALvoid * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
-        , samples_count . _value * sizeof ( stereo_sound_sample )
+        , _platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;
 }
@@ -104,12 +104,12 @@ inline void shy_macosx_platform :: sound_create_source ( sound_source_id & resul
 
 inline void shy_macosx_platform :: sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch )
 {
-    alSourcef ( source_id . _source_id , AL_PITCH , pitch . _value ) ;
+    alSourcef ( source_id . _source_id , AL_PITCH , _platform_math_insider :: num_fract_unsafe_value_get ( pitch ) ) ;
 }
 
 inline void shy_macosx_platform :: sound_set_source_gain ( const sound_source_id & source_id , num_fract gain )
 {
-    alSourcef ( source_id . _source_id , AL_GAIN , gain . _value ) ;
+    alSourcef ( source_id . _source_id , AL_GAIN , _platform_math_insider :: num_fract_unsafe_value_get ( gain ) ) ;
 }
 
 inline void shy_macosx_platform :: sound_set_source_position ( const sound_source_id & source_id , vector_data position )

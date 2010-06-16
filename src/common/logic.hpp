@@ -4,6 +4,7 @@ class shy_logic
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     shy_logic ( ) ;
@@ -77,11 +78,11 @@ void shy_logic < mediator > :: receive ( typename messages :: use_perspective_pr
     num_fract z_far ;
     num_fract z_near ;
     _get_near_plane_distance ( z_near ) ;
-    platform :: math_make_num_fract ( z_far , 50 , 1 ) ;
+    platform_math :: math_make_num_fract ( z_far , 50 , 1 ) ;
     platform :: render_get_aspect_width ( width ) ;
     platform :: render_get_aspect_height ( height ) ;
-    platform :: math_neg_fract ( neg_width , width ) ;
-    platform :: math_neg_fract ( neg_height , height ) ;
+    platform_math :: math_neg_fract ( neg_width , width ) ;
+    platform_math :: math_neg_fract ( neg_height , height ) ;
     platform :: render_projection_frustum ( neg_width , width , neg_height , height , z_near , z_far ) ;
     platform :: render_matrix_identity ( ) ;
 }
@@ -97,10 +98,10 @@ void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projecti
     num_fract z_near ;
     platform :: render_get_aspect_width ( width ) ;
     platform :: render_get_aspect_height ( height ) ;
-    platform :: math_neg_fract ( neg_width , width ) ;
-    platform :: math_neg_fract ( neg_height , height ) ;
-    platform :: math_make_num_fract ( z_near , 1 , 1 ) ;
-    platform :: math_make_num_fract ( z_far , 50 , 1 ) ;
+    platform_math :: math_neg_fract ( neg_width , width ) ;
+    platform_math :: math_neg_fract ( neg_height , height ) ;
+    platform_math :: math_make_num_fract ( z_near , 1 , 1 ) ;
+    platform_math :: math_make_num_fract ( z_far , 50 , 1 ) ;
     platform :: render_projection_ortho ( neg_width , width , neg_height , height , z_near , z_far ) ;
     platform :: render_matrix_identity ( ) ;
 }
@@ -137,5 +138,5 @@ void shy_logic < mediator > :: _get_near_plane_distance ( num_fract & result )
     num_fract height ;
     platform :: render_get_aspect_width ( width ) ;
     platform :: render_get_aspect_height ( height ) ;
-    platform :: math_add_fracts ( result , width , height ) ;
+    platform_math :: math_add_fracts ( result , width , height ) ;
 }

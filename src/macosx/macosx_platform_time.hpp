@@ -10,5 +10,5 @@ inline void shy_macosx_platform :: time_diff_in_microseconds ( num_whole & resul
         diff = time1 . _time - time2 . _time ;
     else
         diff = time2 . _time - time1 . _time ;
-    result . _value = ( int ) ( diff * ( CFAbsoluteTime ) 1000000 ) ;
+    _platform_math_insider :: num_whole_unsafe_value_set ( result , ( int ) ( diff * ( CFAbsoluteTime ) 1000000 ) ) ;
 }

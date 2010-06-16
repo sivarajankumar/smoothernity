@@ -27,67 +27,6 @@ float shy_macosx_platform_utility :: _mouse_y = 0 ;
 
 const shy_platform_math_consts < shy_macosx_platform > shy_macosx_platform :: math_consts ;
 
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_pi ( 3.141592f ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_2pi ( 6.283184f ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_0 ( 0 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_1 ( 1 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_2 ( 2 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_3 ( 3 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_4 ( 4 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_5 ( 5 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_6 ( 6 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_7 ( 7 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_8 ( 8 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_9 ( 9 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_0 ( 0 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_1 ( 1 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_2 ( 2 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_3 ( 3 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_4 ( 4 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_5 ( 5 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_6 ( 6 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_7 ( 7 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_8 ( 8 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_9 ( 9 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_1 ( - 1 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_2 ( - 2 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_3 ( - 3 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_4 ( - 4 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_5 ( - 5 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_6 ( - 6 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_7 ( - 7 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_8 ( - 8 ) ;
-const shy_macosx_platform :: num_fract shy_macosx_platform :: fract_minus_9 ( - 9 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_1 ( - 1 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_2 ( - 2 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_3 ( - 3 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_4 ( - 4 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_5 ( - 5 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_6 ( - 6 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_7 ( - 7 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_8 ( - 8 ) ;
-const shy_macosx_platform :: num_whole shy_macosx_platform :: whole_minus_9 ( - 9 ) ;
-
-shy_macosx_platform :: num_whole :: num_whole ( )
-: _value ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-
-shy_macosx_platform :: num_whole :: num_whole ( int arg_value )
-: _value ( arg_value )
-{
-}
-
-shy_macosx_platform :: num_fract :: num_fract ( )
-: _value ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-
-shy_macosx_platform :: num_fract :: num_fract ( float arg_value )
-: _value ( arg_value )
-{
-}
-
 shy_macosx_platform :: matrix_data :: matrix_data ( )
 {
     for ( int i = 0 ; i < 16 ; i ++ )

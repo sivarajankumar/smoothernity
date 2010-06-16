@@ -20,8 +20,9 @@
 
 class shy_macosx_platform
 {
-    friend class shy_platform_math_int_float < shy_macosx_platform > ;
+    friend class shy_platform_static_array < shy_macosx_platform > ;
     friend class shy_platform_math_consts < shy_macosx_platform > ;
+    friend class shy_platform_math_int_float < shy_macosx_platform > ;
     friend class shy_platform_pointer < shy_macosx_platform > ;
 private :
     typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
@@ -30,31 +31,11 @@ public :
     typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
+    
     typedef const int const_int_32 ;
+    typedef platform_math :: num_fract num_fract ;
+    typedef platform_math :: num_whole num_whole ;
 
-    class num_whole
-    {
-        friend class shy_macosx_platform ;
-        friend class shy_platform_static_array < shy_macosx_platform > ;
-    public :
-        num_whole ( ) ;
-    private :
-        num_whole ( int arg_value ) ;
-    private :
-        int _value ;
-    } ;
-    
-    class num_fract
-    {
-        friend class shy_macosx_platform ;
-    public :
-        num_fract ( ) ;
-    private :
-        num_fract ( float arg_value ) ;
-    private :
-        float _value ;
-    } ;
-    
     class matrix_data
     {
         friend class shy_macosx_platform ;
@@ -203,46 +184,6 @@ public :
     static const_int_32 frames_per_second = 60 ;
     static const_int_32 mono_sound_samples_per_second = 22050 ;
     static const_int_32 stereo_sound_samples_per_second = 44100 ;
-    static const num_fract fract_pi ;
-    static const num_fract fract_2pi ;
-    static const num_fract fract_0 ;
-    static const num_fract fract_1 ;
-    static const num_fract fract_2 ;
-    static const num_fract fract_3 ;
-    static const num_fract fract_4 ;
-    static const num_fract fract_5 ;
-    static const num_fract fract_6 ;
-    static const num_fract fract_7 ;
-    static const num_fract fract_8 ;
-    static const num_fract fract_9 ;
-    static const num_whole whole_0 ;
-    static const num_whole whole_1 ;
-    static const num_whole whole_2 ;
-    static const num_whole whole_3 ;
-    static const num_whole whole_4 ;
-    static const num_whole whole_5 ;
-    static const num_whole whole_6 ;
-    static const num_whole whole_7 ;
-    static const num_whole whole_8 ;
-    static const num_whole whole_9 ;
-    static const num_fract fract_minus_1 ;
-    static const num_fract fract_minus_2 ;
-    static const num_fract fract_minus_3 ;
-    static const num_fract fract_minus_4 ;
-    static const num_fract fract_minus_5 ;
-    static const num_fract fract_minus_6 ;
-    static const num_fract fract_minus_7 ;
-    static const num_fract fract_minus_8 ;
-    static const num_fract fract_minus_9 ;
-    static const num_whole whole_minus_1 ;
-    static const num_whole whole_minus_2 ;
-    static const num_whole whole_minus_3 ;
-    static const num_whole whole_minus_4 ;
-    static const num_whole whole_minus_5 ;
-    static const num_whole whole_minus_6 ;
-    static const num_whole whole_minus_7 ;
-    static const num_whole whole_minus_8 ;
-    static const num_whole whole_minus_9 ;
     
     static const shy_platform_math_consts < shy_macosx_platform > math_consts ;
     
@@ -379,44 +320,6 @@ public :
     static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
     
     //
-    // math
-    //
-    
-    static void math_add_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_add_to_whole ( num_whole & a , num_whole b ) ;
-    static void math_sub_wholes ( num_whole & result , num_whole from , num_whole what ) ;
-    static void math_sub_from_whole ( num_whole & a , num_whole b ) ;
-    static void math_mul_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_mul_whole_by ( num_whole & a , num_whole b ) ;
-    static void math_mod_wholes ( num_whole & result , num_whole value , num_whole modulator ) ;
-    static void math_mod_whole_by ( num_whole & a , num_whole b ) ;
-    static void math_div_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_div_whole_by ( num_whole & a , num_whole b ) ;
-    static void math_inc_whole ( num_whole & a ) ;
-    static void math_dec_whole ( num_whole & a ) ;
-    static void math_xor_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_neg_whole ( num_whole & result , num_whole a ) ;
-
-    static void math_sin ( num_fract & result , num_fract a ) ;
-    static void math_cos ( num_fract & result , num_fract a ) ;    
-    static void math_sub_fracts ( num_fract & result , num_fract from , num_fract what ) ;
-    static void math_sub_from_fract ( num_fract & from , num_fract what ) ;
-    static void math_add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
-    static void math_add_to_fract ( num_fract & a , num_fract b ) ;
-    static void math_mul_fracts ( num_fract & result , num_fract a , num_fract b ) ;
-    static void math_mul_fract_by ( num_fract & a , num_fract b ) ;
-    static void math_div_fracts ( num_fract & result , num_fract a , num_fract b ) ;
-    static void math_div_fract_by ( num_fract & a , num_fract b ) ;
-    static void math_neg_fract ( num_fract & a ) ;
-    static void math_neg_fract ( num_fract & result , num_fract a ) ;
-    
-    static void math_make_whole_from_fract ( num_whole & result , num_fract fract ) ;
-    static void math_make_fract_from_whole ( num_fract & result , num_whole whole ) ;
-    
-    static void math_make_num_whole ( num_whole & result , const_int_32 value ) ;
-    static void math_make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator ) ;
-
-    //
     // condition
     //
     
@@ -494,7 +397,6 @@ void swap_values ( type & a , type & b )
 }
 
 #include "macosx_platform_condition.hpp"
-#include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
 #include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
