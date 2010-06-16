@@ -255,8 +255,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8819C24311C8E0E8003A552B /* platform */,
 				8812CEC3117DE26A008F67D9 /* common */,
+				8819C24311C8E0E8003A552B /* platform */,
 				0568922F046B14B900000102 /* macosx_main_controller.h */,
 				05689230046B14B900000102 /* macosx_main_controller.mm */,
 				05689225046B13F600000102 /* macosx_opengl_view.h */,

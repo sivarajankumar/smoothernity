@@ -12,6 +12,7 @@ class shy_logic_title
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     
@@ -61,7 +62,7 @@ private :
     num_fract _scene_scale_frames ;
     num_fract _rubber_first ;
     num_fract _rubber_last ;
-    typename platform :: template static_array < _letter_state , _max_letters > _letters ;
+    typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
 } ;
 
 template < typename mediator >
@@ -94,7 +95,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
             ; platform :: math_inc_whole ( i )
             )
         {
-            _letter_state & letter = platform :: array_element ( _letters , i ) ;
+            _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
             typename messages :: mesh_delete mesh_delete_msg ;
             mesh_delete_msg . mesh = letter . mesh ;
             _mediator . get ( ) . send ( mesh_delete_msg ) ;
@@ -221,7 +222,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         ; platform :: math_inc_whole ( i )
         )
     {
-        _letter_state & letter = platform :: array_element ( _letters , i ) ;
+        _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
@@ -293,7 +294,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         vector_data offset ;
         vector_data pos ;
         matrix_data tm ;
-        _letter_state & letter = platform :: array_element ( _letters , i ) ;
+        _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
         
         platform :: math_make_fract_from_whole ( fract_i , i ) ;
         platform :: math_mul_fracts ( offset_x , aspect_width , platform :: fract_2 ) ;
@@ -375,7 +376,7 @@ void shy_logic_title < mediator > :: _title_update ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 {
-    platform :: array_element ( _letters , _letters_count ) . letter = letter ;
+    platform_static_array :: array_element ( _letters , _letters_count ) . letter = letter ;
     platform :: math_inc_whole ( _letters_count ) ;
 }
 
@@ -451,7 +452,7 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         num_fract tex_bottom ;
         num_fract tex_right ;
         num_fract tex_top ;
-        _letter_state & letter = platform :: array_element ( _letters , i ) ;
+        _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
         letter . scale = platform :: fract_0 ;
         letter . pos_radius = platform :: fract_0 ;
         letter . pos_angle = platform :: fract_0 ;
