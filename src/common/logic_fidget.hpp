@@ -19,7 +19,7 @@ class shy_logic_fidget
     static const num_fract _fidget_size ( ) { num_fract n ; platform :: math_make_num_fract ( n , 3 , 10 ) ; return n ; }
 public :
     shy_logic_fidget ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: fidget_done msg ) ;
     void receive ( typename messages :: fidget_prepare_permit msg ) ;
     void receive ( typename messages :: fidget_render msg ) ;
@@ -29,7 +29,7 @@ private :
     void _render_fidget_mesh ( ) ;
     void _create_fidget_mesh ( ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     num_fract _fidget_angle ;
     num_whole _fidget_prepare_permitted ;
     num_whole _fidget_mesh_created ;
@@ -39,7 +39,6 @@ private :
 
 template < typename mediator >
 shy_logic_fidget < mediator > :: shy_logic_fidget ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_fract ( _fidget_angle , 0 , 1 ) ;
     platform :: math_make_num_whole ( _fidget_prepare_permitted , false ) ;
@@ -48,7 +47,7 @@ shy_logic_fidget < mediator > :: shy_logic_fidget ( )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_fidget < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -60,7 +59,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_done
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _fidget_mesh_id ;
-        _mediator -> send ( mesh_delete_msg ) ;
+        _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
 }
 
@@ -86,7 +85,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
         {
             _create_fidget_mesh ( ) ;
             platform :: math_make_num_whole ( _fidget_mesh_created , true ) ;
-            _mediator -> send ( typename messages :: fidget_prepared ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: fidget_prepared ( ) ) ;
         }
         else
             _update_fidget ( ) ;
@@ -145,9 +144,9 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     mesh_set_transform_msg . transform = matrix ;
     mesh_render_msg . mesh = _fidget_mesh_id ;
     
-    _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
-    _mediator -> send ( mesh_set_transform_msg ) ;
-    _mediator -> send ( mesh_render_msg ) ;
+    _mediator . get ( ) . send ( typename messages :: texture_unselect ( ) ) ;
+    _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
+    _mediator . get ( ) . send ( mesh_render_msg ) ;
 
     if ( platform :: condition_whole_less_than_whole ( _fidget_scale , whole_scale_in_frames ) )
         platform :: math_inc_whole ( _fidget_scale ) ;
@@ -203,7 +202,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
             platform :: render_set_index_value ( index , i ) ;
         }
     }
-    _mediator -> mesh_create
+    _mediator . get ( ) . mesh_create
         ( _fidget_mesh_id 
         , vertices 
         , indices
