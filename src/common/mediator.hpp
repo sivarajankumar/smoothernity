@@ -81,6 +81,7 @@ private :
     typedef typename platform :: matrix_data matrix_data ;
     typedef typename platform :: num_fract num_fract ;
     typedef typename platform :: num_whole num_whole ;
+    typedef typename platform :: platform_pointer platform_pointer ;
     typedef typename platform :: texel_data texel_data ;
     typedef typename platform :: texture_resource_id texture_resource_id ;
     typedef typename platform :: vector_data vector_data ;
@@ -169,21 +170,21 @@ public :
 public :
     shy_mediator ( ) ;
     void register_modules 
-        ( typename platform :: template pointer < engine_mesh > arg_engine_mesh
-        , typename platform :: template pointer < engine_rasterizer > arg_engine_rasterizer
-        , typename platform :: template pointer < engine_texture > arg_engine_texture
-        , typename platform :: template pointer < logic > arg_logic
-        , typename platform :: template pointer < logic_application > arg_logic_application
-        , typename platform :: template pointer < logic_camera > arg_logic_camera
-        , typename platform :: template pointer < logic_entities > arg_logic_entities
-        , typename platform :: template pointer < logic_fidget > arg_logic_fidget
-        , typename platform :: template pointer < logic_game > arg_logic_game
-        , typename platform :: template pointer < logic_image > arg_logic_image
-        , typename platform :: template pointer < logic_land > arg_logic_land
-        , typename platform :: template pointer < logic_sound > arg_logic_sound
-        , typename platform :: template pointer < logic_text > arg_logic_text
-        , typename platform :: template pointer < logic_title > arg_logic_title
-        , typename platform :: template pointer < logic_touch > arg_logic_touch
+        ( typename platform_pointer :: template pointer < engine_mesh > arg_engine_mesh
+        , typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
+        , typename platform_pointer :: template pointer < engine_texture > arg_engine_texture
+        , typename platform_pointer :: template pointer < logic > arg_logic
+        , typename platform_pointer :: template pointer < logic_application > arg_logic_application
+        , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
+        , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
+        , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
+        , typename platform_pointer :: template pointer < logic_game > arg_logic_game
+        , typename platform_pointer :: template pointer < logic_image > arg_logic_image
+        , typename platform_pointer :: template pointer < logic_land > arg_logic_land
+        , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
+        , typename platform_pointer :: template pointer < logic_text > arg_logic_text
+        , typename platform_pointer :: template pointer < logic_title > arg_logic_title
+        , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
         ) ;
 public :
     void send ( typename messages :: application_render msg ) ;
@@ -285,21 +286,21 @@ public :
     void texture_height ( num_whole & result ) ;
     void texture_width ( num_whole & result ) ;
 private :
-    typename platform :: template pointer < engine_mesh > _engine_mesh ;
-    typename platform :: template pointer < engine_rasterizer > _engine_rasterizer ;
-    typename platform :: template pointer < engine_texture > _engine_texture ;
-    typename platform :: template pointer < logic > _logic ;
-    typename platform :: template pointer < logic_application > _logic_application ;
-    typename platform :: template pointer < logic_camera > _logic_camera ;
-    typename platform :: template pointer < logic_entities > _logic_entities ;
-    typename platform :: template pointer < logic_fidget > _logic_fidget ;
-    typename platform :: template pointer < logic_game > _logic_game ;
-    typename platform :: template pointer < logic_image > _logic_image ;
-    typename platform :: template pointer < logic_land > _logic_land ;
-    typename platform :: template pointer < logic_sound > _logic_sound ;
-    typename platform :: template pointer < logic_text > _logic_text ;
-    typename platform :: template pointer < logic_title > _logic_title ;
-    typename platform :: template pointer < logic_touch > _logic_touch ;
+    typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
+    typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
+    typename platform_pointer :: template pointer < engine_texture > _engine_texture ;
+    typename platform_pointer :: template pointer < logic > _logic ;
+    typename platform_pointer :: template pointer < logic_application > _logic_application ;
+    typename platform_pointer :: template pointer < logic_camera > _logic_camera ;
+    typename platform_pointer :: template pointer < logic_entities > _logic_entities ;
+    typename platform_pointer :: template pointer < logic_fidget > _logic_fidget ;
+    typename platform_pointer :: template pointer < logic_game > _logic_game ;
+    typename platform_pointer :: template pointer < logic_image > _logic_image ;
+    typename platform_pointer :: template pointer < logic_land > _logic_land ;
+    typename platform_pointer :: template pointer < logic_sound > _logic_sound ;
+    typename platform_pointer :: template pointer < logic_text > _logic_text ;
+    typename platform_pointer :: template pointer < logic_title > _logic_title ;
+    typename platform_pointer :: template pointer < logic_touch > _logic_touch ;
 } ;
 
 template < typename mediator_types >
@@ -309,21 +310,21 @@ shy_mediator < mediator_types > :: shy_mediator ( )
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: register_modules 
-    ( typename platform :: template pointer < engine_mesh > arg_engine_mesh
-    , typename platform :: template pointer < engine_rasterizer > arg_engine_rasterizer
-    , typename platform :: template pointer < engine_texture > arg_engine_texture
-    , typename platform :: template pointer < logic > arg_logic
-    , typename platform :: template pointer < logic_application > arg_logic_application
-    , typename platform :: template pointer < logic_camera > arg_logic_camera
-    , typename platform :: template pointer < logic_entities > arg_logic_entities
-    , typename platform :: template pointer < logic_fidget > arg_logic_fidget
-    , typename platform :: template pointer < logic_game > arg_logic_game
-    , typename platform :: template pointer < logic_image > arg_logic_image
-    , typename platform :: template pointer < logic_land > arg_logic_land
-    , typename platform :: template pointer < logic_sound > arg_logic_sound
-    , typename platform :: template pointer < logic_text > arg_logic_text
-    , typename platform :: template pointer < logic_title > arg_logic_title
-    , typename platform :: template pointer < logic_touch > arg_logic_touch
+    ( typename platform_pointer :: template pointer < engine_mesh > arg_engine_mesh
+    , typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
+    , typename platform_pointer :: template pointer < engine_texture > arg_engine_texture
+    , typename platform_pointer :: template pointer < logic > arg_logic
+    , typename platform_pointer :: template pointer < logic_application > arg_logic_application
+    , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
+    , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
+    , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
+    , typename platform_pointer :: template pointer < logic_game > arg_logic_game
+    , typename platform_pointer :: template pointer < logic_image > arg_logic_image
+    , typename platform_pointer :: template pointer < logic_land > arg_logic_land
+    , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
+    , typename platform_pointer :: template pointer < logic_text > arg_logic_text
+    , typename platform_pointer :: template pointer < logic_title > arg_logic_title
+    , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
     )
 {
     _engine_mesh = arg_engine_mesh ;

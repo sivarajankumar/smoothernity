@@ -7,6 +7,7 @@ class shy_logic_sound
     typedef typename mediator :: platform :: mono_sound_sample mono_sound_sample ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: sound_buffer_id sound_buffer_id ;
     typedef typename mediator :: platform :: sound_source_id sound_source_id ;
@@ -20,7 +21,7 @@ class shy_logic_sound
     
 public :
     shy_logic_sound ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: sound_prepare_permit msg ) ;
     void receive ( typename messages :: sound_update msg ) ;
@@ -30,7 +31,7 @@ private :
     void _create_stereo_sound ( ) ;
     void _create_mono_sound ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _mono_sound_created ;
     num_whole _stereo_sound_created ;
     num_whole _stereo_sound_loaded ;
@@ -51,7 +52,7 @@ shy_logic_sound < mediator > :: shy_logic_sound ( )
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_sound < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

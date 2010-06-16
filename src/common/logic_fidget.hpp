@@ -9,6 +9,7 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 
@@ -20,7 +21,7 @@ class shy_logic_fidget
     static const num_fract _fidget_size ( ) { num_fract n ; platform :: math_make_num_fract ( n , 3 , 10 ) ; return n ; }
 public :
     shy_logic_fidget ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: fidget_done msg ) ;
     void receive ( typename messages :: fidget_prepare_permit msg ) ;
     void receive ( typename messages :: fidget_render msg ) ;
@@ -30,7 +31,7 @@ private :
     void _render_fidget_mesh ( ) ;
     void _create_fidget_mesh ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_fract _fidget_angle ;
     num_whole _fidget_prepare_permitted ;
     num_whole _fidget_mesh_created ;
@@ -48,7 +49,7 @@ shy_logic_fidget < mediator > :: shy_logic_fidget ( )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_fidget < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

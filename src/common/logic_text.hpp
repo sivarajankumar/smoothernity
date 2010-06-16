@@ -6,12 +6,13 @@ class shy_logic_text
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -78,7 +79,7 @@ public :
     } ;
 public :
     shy_logic_text ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: text_done msg ) ;
     void receive ( typename messages :: text_prepare_permit msg ) ;
     void receive ( typename messages :: text_render msg ) ;
@@ -142,7 +143,7 @@ private :
     void _rasterize_font_english_Z ( ) ;
     void _rasterize_font_whitespace ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _text_mesh_created ;
     num_whole _text_prepare_permitted ;
     mesh_id _text_mesh_id ;
@@ -172,7 +173,7 @@ shy_logic_text < mediator > :: shy_logic_text ( )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

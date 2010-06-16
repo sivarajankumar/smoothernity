@@ -6,10 +6,11 @@ class shy_engine_rasterizer
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: texel_data texel_data ;
 public :
     shy_engine_rasterizer ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: rasterize_triangle msg ) ;
     void receive ( typename messages :: rasterize_rect msg ) ;
     void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -21,7 +22,7 @@ private :
     void _rasterize_bottom_triangle_part ( num_whole x_top , num_whole y_top , num_whole x_mid , num_whole y_mid , num_whole x_bottom , num_whole y_bottom ) ;
 	void _rasterize_bresenham_ellipse ( num_whole cx , num_whole cy, num_whole x_radius, num_whole y_radius ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     texture_id _texture_id ;
     texel_data _texel ;
     num_whole _origin_x ;
@@ -36,7 +37,7 @@ shy_engine_rasterizer < mediator > :: shy_engine_rasterizer ( )
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

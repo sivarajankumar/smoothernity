@@ -6,6 +6,7 @@ class shy_logic_game
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
     static const_int_32 _fade_in_frames = 90 ;
     static const num_fract _final_r ( ) { num_fract n ; platform :: math_make_num_fract ( n , 0 , 1 ) ; return n ; }
@@ -13,7 +14,7 @@ class shy_logic_game
     static const num_fract _final_b ( ) { num_fract n ; platform :: math_make_num_fract ( n , 4 , 10 ) ; return n ; }
 public :
     shy_logic_game ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: game_launch_permit msg ) ;
     void receive ( typename messages :: game_render msg ) ;
     void receive ( typename messages :: game_update msg ) ;
@@ -29,7 +30,7 @@ private :
     void _clear_screen ( ) ;
     void _update_color ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_fract _color_r ;
     num_fract _color_g ;
     num_fract _color_b ;
@@ -50,7 +51,7 @@ shy_logic_game < mediator > :: shy_logic_game ( )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_game < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

@@ -9,6 +9,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -22,7 +23,7 @@ class shy_logic_touch
 
 public :
     shy_logic_touch ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: touch_done msg ) ;
     void receive ( typename messages :: touch_prepare_permit msg ) ;
     void receive ( typename messages :: touch_render msg ) ;
@@ -36,7 +37,7 @@ private :
     void _render_spot_mesh ( ) ;
     void _create_spot_mesh ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _spot_frames_left ;
     num_whole _spot_mesh_created ;
     num_whole _spot_prepare_permitted ;
@@ -57,7 +58,7 @@ shy_logic_touch < mediator > :: shy_logic_touch ( )
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_touch < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

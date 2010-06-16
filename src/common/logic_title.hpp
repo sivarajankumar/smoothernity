@@ -12,6 +12,7 @@ class shy_logic_title
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -34,7 +35,7 @@ class shy_logic_title
     
 public :
     shy_logic_title ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: title_done msg ) ;
     void receive ( typename messages :: title_render msg ) ;
     void receive ( typename messages :: title_update msg ) ;
@@ -46,7 +47,7 @@ private :
     void _add_letter ( letter_id letter ) ;
     void _bake_letters ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _title_launch_permitted ;
     num_whole _title_created ;
     num_whole _title_finished ;
@@ -80,7 +81,7 @@ shy_logic_title < mediator > :: shy_logic_title ( )
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_title < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

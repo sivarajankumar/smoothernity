@@ -11,29 +11,19 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
+#import "../platform/pointer.hpp"
 #import "../platform/static_array.hpp"
 #import "../platform/static_array_insider.hpp"
 
 class shy_macosx_platform
 {
+    friend class shy_platform_pointer < shy_macosx_platform > ;
+private :
     typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
 public :
+    typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
     typedef const int const_int_32 ;
-
-    template < typename data_type >
-    class pointer
-    {
-        friend class shy_macosx_platform ;
-    public :
-        pointer ( ) ;
-        pointer ( data_type & arg_data ) ;
-    public :
-        data_type & get ( ) ;
-        void set ( data_type & arg_data ) ;
-    private :
-        data_type * _data_ptr ;
-    } ;
 
     class num_whole
     {
@@ -460,6 +450,9 @@ public :
 	static void mouse_left_button_down ( num_whole & result ) ;
 	static void mouse_x ( num_fract & result ) ;
 	static void mouse_y ( num_fract & result ) ;
+    
+private :
+    static const int _uninitialized_value = 0xC0C0C0C0 ;
 } ;
 
 class shy_macosx_platform_utility
@@ -495,7 +488,6 @@ void swap_values ( type & a , type & b )
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"
 #include "macosx_platform_mouse.hpp"
-#include "macosx_platform_pointer.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
 #include "macosx_platform_time.hpp"

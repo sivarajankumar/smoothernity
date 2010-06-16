@@ -4,9 +4,10 @@ class shy_logic
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     shy_logic ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: done msg ) ;
     void receive ( typename messages :: render msg ) ;
@@ -20,7 +21,7 @@ private :
     void _init_render ( ) ;
     void _get_near_plane_distance ( num_fract & result ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
 } ;
 
 template < typename mediator >
@@ -29,7 +30,7 @@ shy_logic < mediator > :: shy_logic ( )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

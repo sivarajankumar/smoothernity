@@ -5,15 +5,16 @@ class shy_logic_application
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     shy_logic_application ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: application_render msg ) ;
     void receive ( typename messages :: application_update msg ) ;
     void receive ( typename messages :: title_finished msg ) ;
     void receive ( typename messages :: text_prepared msg ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _application_launched ;
     num_whole _title_active ;
     num_whole _text_active ;
@@ -30,7 +31,7 @@ shy_logic_application < mediator > :: shy_logic_application ( )
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_application < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

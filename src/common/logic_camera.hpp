@@ -11,6 +11,7 @@ class shy_logic_camera
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
@@ -22,7 +23,7 @@ class shy_logic_camera
     static const num_fract _target_rubber ( ) { return platform :: fract_0 ; } // 0.9f ;
 public :
     shy_logic_camera ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: camera_update msg ) ;
     void receive ( typename messages :: camera_prepare_permit msg ) ;
     void receive ( typename messages :: camera_matrix_use msg ) ;
@@ -43,7 +44,7 @@ private :
     void _camera_origin_index_is_duplicate ( num_whole & result , num_whole index ) ;
     void _camera_target_index_is_duplicate ( num_whole & result , num_whole index ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     matrix_data _camera_matrix ;
     num_whole _camera_prepare_permitted ;
     num_whole _frames_to_change_camera_target ;
@@ -88,7 +89,7 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_camera < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

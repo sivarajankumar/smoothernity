@@ -10,6 +10,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
@@ -24,7 +25,7 @@ class shy_logic_land
     static const_int_32 _create_rows_per_frame = 8 ;
 public :
     shy_logic_land ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: land_done msg ) ;
     void receive ( typename messages :: land_prepare_permit msg ) ;
     void receive ( typename messages :: land_render msg ) ;
@@ -34,7 +35,7 @@ private :
     void _create_land_mesh ( ) ;
     void _create_land_texture ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _land_mesh_created ;
     num_whole _land_texture_created ;
     num_whole _land_prepare_permitted ;
@@ -55,7 +56,7 @@ shy_logic_land < mediator > :: shy_logic_land ( )
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

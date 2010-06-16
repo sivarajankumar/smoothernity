@@ -10,6 +10,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -26,7 +27,7 @@ class shy_logic_entities
 
 public :
     shy_logic_entities ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: entities_done msg ) ;
     void receive ( typename messages :: entities_render msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
@@ -42,7 +43,7 @@ private :
     void _get_entity_origin ( vector_data & result , num_whole index ) ;
     void _update_entity_grid ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _entity_created ;
     num_whole _entities_prepare_permitted ;
     num_whole _grid_scale ;
@@ -72,7 +73,7 @@ shy_logic_entities < mediator > :: shy_logic_entities ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_entities < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

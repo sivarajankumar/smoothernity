@@ -11,6 +11,7 @@ class shy_logic_image
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: texel_data texel_data ;
@@ -26,7 +27,7 @@ class shy_logic_image
     static const num_fract _final_scale ( ) { num_fract n ; platform :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
     shy_logic_image ( ) ;
-    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: image_done msg ) ;
     void receive ( typename messages :: image_render msg ) ;
     void receive ( typename messages :: image_update msg ) ;
@@ -37,7 +38,7 @@ private :
     void _create_image_mesh ( ) ;
     void _create_image_texture ( ) ;
 private :
-    typename platform :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _image_mesh_created ;
     num_whole _image_texture_created ;
     num_whole _image_texture_loaded ;
@@ -58,7 +59,7 @@ shy_logic_image < mediator > :: shy_logic_image ( )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
+void shy_logic_image < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }

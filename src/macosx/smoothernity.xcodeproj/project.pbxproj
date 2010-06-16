@@ -136,8 +136,8 @@
 		8812CF52117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
 		8819C24511C8E11D003A552B /* static_array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C24411C8E11D003A552B /* static_array.hpp */; };
 		8819C29111C8F262003A552B /* static_array_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C29011C8F262003A552B /* static_array_insider.hpp */; };
+		8819C32611C90AAF003A552B /* pointer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C32511C90AAF003A552B /* pointer.hpp */; };
 		881B850411886A6D00E31AA1 /* logic_text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881B850311886A6D00E31AA1 /* logic_text.hpp */; };
-		881F95D411C2433D00CC8C36 /* macosx_platform_pointer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881F95D311C2433D00CC8C36 /* macosx_platform_pointer.hpp */; };
 		882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DA811A16B0900F05A15 /* logic_title.hpp */; };
 		882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DB911A1714B00F05A15 /* logic_application.hpp */; };
 		882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DD711A1740800F05A15 /* logic_game.hpp */; };
@@ -199,8 +199,8 @@
 		8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
 		8819C24411C8E11D003A552B /* static_array.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_array.hpp; sourceTree = "<group>"; };
 		8819C29011C8F262003A552B /* static_array_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_array_insider.hpp; sourceTree = "<group>"; };
+		8819C32511C90AAF003A552B /* pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointer.hpp; sourceTree = "<group>"; };
 		881B850311886A6D00E31AA1 /* logic_text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_text.hpp; sourceTree = "<group>"; };
-		881F95D311C2433D00CC8C36 /* macosx_platform_pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_pointer.hpp; sourceTree = "<group>"; };
 		882B9DA811A16B0900F05A15 /* logic_title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_title.hpp; sourceTree = "<group>"; };
 		882B9DB911A1714B00F05A15 /* logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_application.hpp; sourceTree = "<group>"; };
 		882B9DD711A1740800F05A15 /* logic_game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_game.hpp; sourceTree = "<group>"; };
@@ -266,7 +266,6 @@
 				886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */,
 				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
 				880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */,
-				881F95D311C2433D00CC8C36 /* macosx_platform_pointer.hpp */,
 				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
 				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
 				886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */,
@@ -393,6 +392,7 @@
 		8819C24311C8E0E8003A552B /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				8819C32511C90AAF003A552B /* pointer.hpp */,
 				8819C24411C8E11D003A552B /* static_array.hpp */,
 				8819C29011C8F262003A552B /* static_array_insider.hpp */,
 			);
@@ -444,6 +444,7 @@
 				19AE100E11B269A300A5B332 /* macosx_platform_condition.hpp in Headers */,
 				8819C24511C8E11D003A552B /* static_array.hpp in Headers */,
 				8819C29111C8F262003A552B /* static_array_insider.hpp in Headers */,
+				8819C32611C90AAF003A552B /* pointer.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,7 +487,6 @@
 				882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */,
 				882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */,
 				8840916C11A4080E00939F1B /* macosx_platform_condition.hpp in Headers */,
-				881F95D411C2433D00CC8C36 /* macosx_platform_pointer.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
