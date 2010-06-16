@@ -138,6 +138,8 @@
 		8819C29111C8F262003A552B /* static_array_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C29011C8F262003A552B /* static_array_insider.hpp */; };
 		8819C32611C90AAF003A552B /* pointer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C32511C90AAF003A552B /* pointer.hpp */; };
 		8819C37E11C9143B003A552B /* math_int_float.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C37D11C9143B003A552B /* math_int_float.hpp */; };
+		8819C38D11C91814003A552B /* math_consts.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C38C11C91814003A552B /* math_consts.hpp */; };
+		8819C39011C9192D003A552B /* math_int_float_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C38F11C9192D003A552B /* math_int_float_insider.hpp */; };
 		881B850411886A6D00E31AA1 /* logic_text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881B850311886A6D00E31AA1 /* logic_text.hpp */; };
 		882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DA811A16B0900F05A15 /* logic_title.hpp */; };
 		882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DB911A1714B00F05A15 /* logic_application.hpp */; };
@@ -202,6 +204,8 @@
 		8819C29011C8F262003A552B /* static_array_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_array_insider.hpp; sourceTree = "<group>"; };
 		8819C32511C90AAF003A552B /* pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointer.hpp; sourceTree = "<group>"; };
 		8819C37D11C9143B003A552B /* math_int_float.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math_int_float.hpp; sourceTree = "<group>"; };
+		8819C38C11C91814003A552B /* math_consts.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math_consts.hpp; sourceTree = "<group>"; };
+		8819C38F11C9192D003A552B /* math_int_float_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math_int_float_insider.hpp; sourceTree = "<group>"; };
 		881B850311886A6D00E31AA1 /* logic_text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_text.hpp; sourceTree = "<group>"; };
 		882B9DA811A16B0900F05A15 /* logic_title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_title.hpp; sourceTree = "<group>"; };
 		882B9DB911A1714B00F05A15 /* logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_application.hpp; sourceTree = "<group>"; };
@@ -394,7 +398,9 @@
 		8819C24311C8E0E8003A552B /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				8819C38C11C91814003A552B /* math_consts.hpp */,
 				8819C37D11C9143B003A552B /* math_int_float.hpp */,
+				8819C38F11C9192D003A552B /* math_int_float_insider.hpp */,
 				8819C32511C90AAF003A552B /* pointer.hpp */,
 				8819C24411C8E11D003A552B /* static_array.hpp */,
 				8819C29011C8F262003A552B /* static_array_insider.hpp */,
@@ -449,6 +455,8 @@
 				8819C29111C8F262003A552B /* static_array_insider.hpp in Headers */,
 				8819C32611C90AAF003A552B /* pointer.hpp in Headers */,
 				8819C37E11C9143B003A552B /* math_int_float.hpp in Headers */,
+				8819C38D11C91814003A552B /* math_consts.hpp in Headers */,
+				8819C39011C9192D003A552B /* math_int_float_insider.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

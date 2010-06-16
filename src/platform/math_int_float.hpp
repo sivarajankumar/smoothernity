@@ -1,4 +1,7 @@
 template < typename platform >
+class shy_platform_math_int_float_insider ;
+
+template < typename platform >
 class shy_platform_math_int_float
 {
     typedef typename platform :: const_int_32 const_int_32 ;
@@ -6,6 +9,7 @@ public :
     class num_whole
     {
         friend class shy_platform_math_int_float ;
+        friend class shy_platform_math_int_float_insider < platform > ;
     public :
         num_whole ( ) ;
     private :
@@ -17,6 +21,7 @@ public :
     class num_fract
     {
         friend class shy_platform_math_int_float ;
+        friend class shy_platform_math_int_float_insider < platform > ;
     public :
         num_fract ( ) ;
     private :
@@ -58,7 +63,39 @@ public :
     
     static void math_make_num_whole ( num_whole & result , const_int_32 value ) ;
     static void math_make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator ) ;
+private :
+    static int _uninitialized_value ( ) ;
 } ;
+
+template < typename platform >
+int shy_platform_math_int_float < platform > :: _uninitialized_value ( )
+{
+    return platform :: _uninitialized_value ;
+}
+
+template < typename platform >
+shy_platform_math_int_float < platform > :: num_whole :: num_whole ( )
+: _value ( shy_platform_math_int_float < platform > :: _uninitialized_value ( ) )
+{
+}
+
+template < typename platform >
+shy_platform_math_int_float < platform > :: num_whole :: num_whole ( int arg_value )
+: _value ( arg_value )
+{
+}
+
+template < typename platform >
+shy_platform_math_int_float < platform > :: num_fract :: num_fract ( )
+: _value ( shy_platform_math_int_float < platform > :: _uninitialized_value ( ) )
+{
+}
+
+template < typename platform >
+shy_platform_math_int_float < platform > :: num_fract :: num_fract ( float arg_value )
+: _value ( arg_value )
+{
+}
 
 template < typename platform >
 inline void shy_platform_math_int_float < platform > :: math_sin ( num_fract & result , num_fract a )

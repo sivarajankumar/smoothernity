@@ -11,7 +11,9 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
+#import "../platform/math_consts.hpp"
 #import "../platform/math_int_float.hpp"
+#import "../platform/math_int_float_insider.hpp"
 #import "../platform/pointer.hpp"
 #import "../platform/static_array.hpp"
 #import "../platform/static_array_insider.hpp"
@@ -19,8 +21,10 @@
 class shy_macosx_platform
 {
     friend class shy_platform_math_int_float < shy_macosx_platform > ;
+    friend class shy_platform_math_consts < shy_macosx_platform > ;
     friend class shy_platform_pointer < shy_macosx_platform > ;
 private :
+    typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
     typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
 public :
     typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
@@ -239,6 +243,8 @@ public :
     static const num_whole whole_minus_7 ;
     static const num_whole whole_minus_8 ;
     static const num_whole whole_minus_9 ;
+    
+    static const shy_platform_math_consts < shy_macosx_platform > math_consts ;
     
     //
     // vector
