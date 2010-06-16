@@ -35,15 +35,6 @@ public :
         data_type * _data_ptr ;
     } ;
 
-    template < typename data_type , const_int_32 size >
-    class static_array
-    {
-        friend class shy_macosx_platform ;
-    private :
-        static const_int_32 _array_size = size ;
-        data_type _elements [ _array_size ] ;
-    } ;
-    
     class num_whole
     {
         friend class shy_macosx_platform ;
@@ -448,15 +439,6 @@ public :
     static int condition_whole_is_even ( num_whole num ) ;
     
     //
-    // array
-    //
-    
-    template < typename data_type , int size >
-    static data_type & array_element ( static_array < data_type , size > & array , num_whole index ) ;
-    template < typename data_type , int size >
-    static const data_type & array_element ( const static_array < data_type , size > & array , num_whole index ) ;
-        
-    //
     // time
     //
     
@@ -509,7 +491,6 @@ void swap_values ( type & a , type & b )
     a = c ;
 }
 
-#include "macosx_platform_array.hpp"
 #include "macosx_platform_condition.hpp"
 #include "macosx_platform_math.hpp"
 #include "macosx_platform_matrix.hpp"

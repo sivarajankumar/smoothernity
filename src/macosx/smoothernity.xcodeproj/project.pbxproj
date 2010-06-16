@@ -96,7 +96,6 @@
 		19AE100C11B269A300A5B332 /* logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DB911A1714B00F05A15 /* logic_application.hpp */; };
 		19AE100D11B269A300A5B332 /* logic_game.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DD711A1740800F05A15 /* logic_game.hpp */; };
 		19AE100E11B269A300A5B332 /* macosx_platform_condition.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8840916B11A4080E00939F1B /* macosx_platform_condition.hpp */; };
-		19AE100F11B269A300A5B332 /* macosx_platform_array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88BABFC411AD44400081740C /* macosx_platform_array.hpp */; };
 		19AE101111B269A300A5B332 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		19AE101211B269A300A5B332 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		19AE101311B269A300A5B332 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
@@ -156,7 +155,6 @@
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
 		886AEA04117C8B36009CBB6F /* macosx_platform_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */; };
 		886AEA05117C8B36009CBB6F /* macosx_platform_vector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */; };
-		88BABFC511AD44400081740C /* macosx_platform_array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88BABFC411AD44400081740C /* macosx_platform_array.hpp */; };
 		88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 		88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E76FEA1188A90100631276 /* engine_rasterizer.hpp */; };
 		88F391A1118A0B6400C25327 /* engine_texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F391A0118A0B6400C25327 /* engine_texture.hpp */; };
@@ -220,7 +218,6 @@
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
 		886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_touch.hpp; sourceTree = "<group>"; };
 		886AE9FC117C8B36009CBB6F /* macosx_platform_vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_vector.hpp; sourceTree = "<group>"; };
-		88BABFC411AD44400081740C /* macosx_platform_array.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_array.hpp; sourceTree = "<group>"; };
 		88DBFFB211873D4600584A28 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 		88E76FEA1188A90100631276 /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
 		88F391A0118A0B6400C25327 /* engine_texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_texture.hpp; sourceTree = "<group>"; };
@@ -265,7 +262,6 @@
 				05689226046B13F600000102 /* macosx_opengl_view.mm */,
 				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
 				886AE9F5117C8B36009CBB6F /* macosx_platform.mm */,
-				88BABFC411AD44400081740C /* macosx_platform_array.hpp */,
 				8840916B11A4080E00939F1B /* macosx_platform_condition.hpp */,
 				886AE9F6117C8B36009CBB6F /* macosx_platform_math.hpp */,
 				886AE9F7117C8B36009CBB6F /* macosx_platform_matrix.hpp */,
@@ -446,7 +442,6 @@
 				19AE100C11B269A300A5B332 /* logic_application.hpp in Headers */,
 				19AE100D11B269A300A5B332 /* logic_game.hpp in Headers */,
 				19AE100E11B269A300A5B332 /* macosx_platform_condition.hpp in Headers */,
-				19AE100F11B269A300A5B332 /* macosx_platform_array.hpp in Headers */,
 				8819C24511C8E11D003A552B /* static_array.hpp in Headers */,
 				8819C29111C8F262003A552B /* static_array_insider.hpp in Headers */,
 			);
@@ -491,7 +486,6 @@
 				882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */,
 				882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */,
 				8840916C11A4080E00939F1B /* macosx_platform_condition.hpp in Headers */,
-				88BABFC511AD44400081740C /* macosx_platform_array.hpp in Headers */,
 				881F95D411C2433D00CC8C36 /* macosx_platform_pointer.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
