@@ -21,7 +21,7 @@ class shy_logic_camera
     static const num_fract _target_rubber ( ) { return platform :: fract_0 ; } // 0.9f ;
 public :
     shy_logic_camera ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: camera_update msg ) ;
     void receive ( typename messages :: camera_prepare_permit msg ) ;
     void receive ( typename messages :: camera_matrix_use msg ) ;
@@ -42,7 +42,7 @@ private :
     void _camera_origin_index_is_duplicate ( num_whole & result , num_whole index ) ;
     void _camera_target_index_is_duplicate ( num_whole & result , num_whole index ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     matrix_data _camera_matrix ;
     num_whole _camera_prepare_permitted ;
     num_whole _frames_to_change_camera_target ;
@@ -63,7 +63,6 @@ private :
 
 template < typename mediator >
 shy_logic_camera < mediator > :: shy_logic_camera ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _camera_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _camera_created , false ) ;
@@ -88,7 +87,7 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_camera < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -119,7 +118,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_upda
             _reset_camera_rubber ( ) ;
         }
         platform :: math_make_num_whole ( _entities_height_requested , true ) ;
-        _mediator -> send ( typename messages :: entities_height_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: entities_height_request ( ) ) ;
     }
 }
 
@@ -134,7 +133,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_he
         if ( platform :: condition_false ( _camera_created ) )
         {
             platform :: math_make_num_whole ( _camera_created , true ) ;
-            _mediator -> send ( typename messages :: camera_prepared ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: camera_prepared ( ) ) ;
         }
     }
 }
@@ -142,7 +141,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_he
 template < typename mediator >
 void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( num_whole & result )
 {
-    _mediator -> get_entity_mesh_grid ( result ) ;
+    _mediator . get ( ) . get_entity_mesh_grid ( result ) ;
 }
 
 template < typename mediator >
@@ -167,8 +166,8 @@ void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
         
         _random_camera_origin_index ( origin_index ) ;
         _random_camera_target_index ( target_index ) ;
-        _mediator -> get_entity_origin ( origin_pos , origin_index ) ;
-        _mediator -> get_entity_origin ( target_pos , target_index ) ;
+        _mediator . get ( ) . get_entity_origin ( origin_pos , origin_index ) ;
+        _mediator . get ( ) . get_entity_origin ( target_pos , target_index ) ;
         
         platform :: array_element ( _scheduled_camera_origin_indices , i ) = origin_index ;
         platform :: array_element ( _scheduled_camera_target_indices , i ) = target_index ;
@@ -198,7 +197,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         
         platform :: math_make_num_whole ( _frames_to_change_camera_origin , _change_origin_in_frames ) ;
         _random_camera_origin_index ( new_origin_index ) ;
-        _mediator -> get_entity_origin ( new_origin_pos , new_origin_index ) ;
+        _mediator . get ( ) . get_entity_origin ( new_origin_pos , new_origin_index ) ;
         
         platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_0 ) =
         platform :: array_element ( _scheduled_camera_origin_indices , platform :: whole_1 ) ;
@@ -247,7 +246,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         
         platform :: math_make_num_whole ( _frames_to_change_camera_target , _change_target_in_frames ) ;
         _random_camera_target_index ( new_target_index ) ;
-        _mediator -> get_entity_origin ( new_target_pos , new_target_index ) ;
+        _mediator . get ( ) . get_entity_origin ( new_target_pos , new_target_index ) ;
         
         platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_0 ) = 
         platform :: array_element ( _scheduled_camera_target_indices , platform :: whole_1 ) ;
@@ -327,7 +326,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     num_fract aspect_height ;
     num_fract entity_height ;
     
-    _mediator -> get_near_plane_distance ( near_plane ) ;
+    _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
     platform :: render_get_aspect_height ( aspect_height ) ;
     platform :: math_make_num_fract ( up_x , 0 , 1 ) ;
     platform :: math_make_num_fract ( up_y , 1 , 1 ) ;
