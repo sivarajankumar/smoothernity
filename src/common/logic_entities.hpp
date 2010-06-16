@@ -25,7 +25,7 @@ class shy_logic_entities
 
 public :
     shy_logic_entities ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: entities_done msg ) ;
     void receive ( typename messages :: entities_render msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
@@ -41,7 +41,7 @@ private :
     void _get_entity_origin ( vector_data & result , num_whole index ) ;
     void _update_entity_grid ( ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     num_whole _entity_created ;
     num_whole _entities_prepare_permitted ;
     num_whole _grid_scale ;
@@ -59,7 +59,6 @@ private :
 
 template < typename mediator >
 shy_logic_entities < mediator > :: shy_logic_entities ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _entity_created , false ) ;
     platform :: math_make_num_whole ( _entities_prepare_permitted , false ) ;
@@ -72,7 +71,7 @@ shy_logic_entities < mediator > :: shy_logic_entities ( )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_logic_entities < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -91,7 +90,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _entity_mesh_id ;
-        _mediator -> send ( mesh_delete_msg ) ;
+        _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
 }
 
@@ -118,7 +117,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 {
     typename messages :: entities_height_reply entities_height_reply_msg ;
     platform :: math_make_num_fract ( entities_height_reply_msg . height , _entity_mesh_height , 1 ) ;
-    _mediator -> send ( entities_height_reply_msg ) ;
+    _mediator . get ( ) . send ( entities_height_reply_msg ) ;
 }
 
 template < typename mediator >
@@ -132,7 +131,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 {
     typename messages :: entities_mesh_grid_reply entities_mesh_grid_reply_msg ;
     platform :: math_make_num_whole ( entities_mesh_grid_reply_msg . grid , _entity_mesh_grid ) ;
-    _mediator -> send ( entities_mesh_grid_reply_msg ) ;
+    _mediator . get ( ) . send ( entities_mesh_grid_reply_msg ) ;
 }
 
 template < typename mediator >
@@ -148,7 +147,7 @@ void shy_logic_entities < mediator > :: _entities_render ( )
     num_whole whole_entity_mesh_grid ;
     platform :: math_make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
     platform :: math_mul_wholes ( i_max , whole_entity_mesh_grid , whole_entity_mesh_grid ) ;
-    _mediator -> send ( typename messages :: texture_unselect ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: texture_unselect ( ) ) ;
     for ( num_whole i = platform :: whole_0 
         ; platform :: condition_whole_less_than_whole ( i , i_max )
         ; platform :: math_inc_whole ( i )
@@ -159,12 +158,12 @@ void shy_logic_entities < mediator > :: _entities_render ( )
             typename messages :: mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = _entity_mesh_id ;
             mesh_set_transform_msg . transform = matrix ;
-            _mediator -> send ( mesh_set_transform_msg ) ;
+            _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
         }
         {
             typename messages :: mesh_render mesh_render_msg ;
             mesh_render_msg . mesh = _entity_mesh_id ;
-            _mediator -> send ( mesh_render_msg ) ;
+            _mediator . get ( ) . send ( mesh_render_msg ) ;
         }
     }
 }
@@ -339,7 +338,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         }
         else
         {
-            _mediator -> mesh_create
+            _mediator . get ( ) . mesh_create
                 ( _entity_mesh_id
                 , _vertices 
                 , _strip_indices 
@@ -349,7 +348,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
                 , _fan_indices_count
                 ) ;                
             platform :: math_make_num_whole ( _entity_created , true ) ;
-            _mediator -> send ( typename messages :: entities_prepared ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
         }
     }
 }
