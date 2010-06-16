@@ -98,6 +98,8 @@ public :
         class camera_update { } ;
         class done { } ;
         class entities_done { } ;
+        class entities_height_reply { public : num_fract height ; } ;
+        class entities_height_request { } ;
         class entities_prepare_permit { } ;
         class entities_prepared { } ;
         class entities_render { } ;
@@ -190,6 +192,8 @@ public :
     void send ( typename messages :: camera_update msg ) ;
     void send ( typename messages :: done msg ) ;
     void send ( typename messages :: entities_done msg ) ;
+    void send ( typename messages :: entities_height_reply msg ) ;
+    void send ( typename messages :: entities_height_request msg ) ;
     void send ( typename messages :: entities_prepare_permit msg ) ;
     void send ( typename messages :: entities_prepared msg ) ;
     void send ( typename messages :: entities_render msg ) ;
@@ -402,6 +406,17 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: game_update msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_height_reply msg )
+{
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_height_request msg )
+{
+    _logic_entities . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

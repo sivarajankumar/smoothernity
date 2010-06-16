@@ -30,6 +30,7 @@ public :
     void receive ( typename messages :: entities_render msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
     void receive ( typename messages :: entities_update msg ) ;
+    void receive ( typename messages :: entities_height_request msg ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_entity_height ( num_fract & result ) ;
     void get_entity_mesh_grid ( num_whole & result ) ;
@@ -110,6 +111,14 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
         if ( platform :: condition_true ( _entity_created ) )
             _update_entity_grid ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: receive ( typename messages :: entities_height_request msg )
+{
+    typename messages :: entities_height_reply entities_height_reply_msg ;
+    platform :: math_make_num_fract ( entities_height_reply_msg . height , _entity_mesh_height , 1 ) ;
+    _mediator -> send ( entities_height_reply_msg ) ;
 }
 
 template < typename mediator >
