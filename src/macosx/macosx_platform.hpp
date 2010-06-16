@@ -11,6 +11,7 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
+#import "../platform/conditions.hpp"
 #import "../platform/math_consts.hpp"
 #import "../platform/math_int_float.hpp"
 #import "../platform/math_int_float_insider.hpp"
@@ -20,14 +21,16 @@
 
 class shy_macosx_platform
 {
-    friend class shy_platform_static_array < shy_macosx_platform > ;
+    friend class shy_platform_conditions < shy_macosx_platform > ;
     friend class shy_platform_math_consts < shy_macosx_platform > ;
     friend class shy_platform_math_int_float < shy_macosx_platform > ;
     friend class shy_platform_pointer < shy_macosx_platform > ;
+    friend class shy_platform_static_array < shy_macosx_platform > ;
 private :
     typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
     typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
 public :
+    typedef shy_platform_conditions < shy_macosx_platform > platform_conditions ;
     typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
@@ -320,27 +323,6 @@ public :
     static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
     
     //
-    // condition
-    //
-    
-    static int condition_true ( num_whole num ) ;
-    static int condition_false ( num_whole num ) ;
-
-    static int condition_fract_less_than_fract ( num_fract a , num_fract b ) ;
-    static int condition_fract_greater_than_fract ( num_fract a , num_fract b ) ;
-    
-    static int condition_wholes_are_equal ( num_whole a , num_whole b ) ;
-    static int condition_whole_greater_or_equal_to_whole ( num_whole a , num_whole b ) ;
-    static int condition_whole_greater_than_whole ( num_whole a , num_whole b ) ;
-    static int condition_whole_greater_than_zero ( num_whole num ) ;
-    static int condition_whole_less_than_whole ( num_whole a , num_whole b ) ;
-    static int condition_whole_less_than_zero ( num_whole a ) ;
-    static int condition_whole_less_or_equal_to_zero ( num_whole a ) ;
-    static int condition_whole_less_or_equal_to_whole ( num_whole a , num_whole b ) ;
-    static int condition_whole_is_zero ( num_whole num ) ;
-    static int condition_whole_is_even ( num_whole num ) ;
-    
-    //
     // time
     //
     
@@ -396,7 +378,6 @@ void swap_values ( type & a , type & b )
     a = c ;
 }
 
-#include "macosx_platform_condition.hpp"
 #include "macosx_platform_matrix.hpp"
 #include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"

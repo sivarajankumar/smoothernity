@@ -7,6 +7,7 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: render_index_buffer_id render_index_buffer_id ;
@@ -84,7 +85,7 @@ void shy_engine_mesh < mediator > :: mesh_create
     mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
     platform :: matrix_identity ( mesh . transform ) ;
     platform :: render_create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
-    if ( platform :: condition_whole_greater_than_zero ( triangle_strip_indices_count ) )
+    if ( platform_conditions :: condition_whole_greater_than_zero ( triangle_strip_indices_count ) )
     {
         platform :: render_create_index_buffer 
             ( mesh . triangle_strip_index_buffer_id 
@@ -92,7 +93,7 @@ void shy_engine_mesh < mediator > :: mesh_create
             , triangle_strip_indices 
             ) ;
     }
-    if ( platform :: condition_whole_greater_than_zero ( triangle_fan_indices_count ) )
+    if ( platform_conditions :: condition_whole_greater_than_zero ( triangle_fan_indices_count ) )
     {
         platform :: render_create_index_buffer 
             ( mesh . triangle_fan_index_buffer_id 
@@ -109,9 +110,9 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_delete 
 {
     _mesh_data & mesh = platform_static_array :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
     platform :: render_delete_vertex_buffer ( mesh . vertex_buffer_id ) ;
-    if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
+    if ( platform_conditions :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
         platform :: render_delete_index_buffer ( mesh . triangle_strip_index_buffer_id ) ;
-    if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
+    if ( platform_conditions :: condition_whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
         platform :: render_delete_index_buffer ( mesh . triangle_fan_index_buffer_id ) ;
 }
 
@@ -121,7 +122,7 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_render 
     _mesh_data & mesh = platform_static_array :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
     platform :: render_matrix_push ( ) ;
     platform :: render_matrix_mult ( mesh . transform ) ;
-    if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
+    if ( platform_conditions :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
     {
         platform :: render_draw_triangle_strip 
             ( mesh . vertex_buffer_id 
@@ -129,7 +130,7 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_render 
             , mesh . triangle_strip_indices_count
             ) ;
     }
-    if ( platform :: condition_whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
+    if ( platform_conditions :: condition_whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
     {
         platform :: render_draw_triangle_fan 
             ( mesh . vertex_buffer_id 

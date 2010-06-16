@@ -7,6 +7,7 @@ class shy_logic_sound
     typedef typename mediator :: platform :: mono_sound_sample mono_sound_sample ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
@@ -117,13 +118,13 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepar
 template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update msg )
 {
-    if ( platform :: condition_true ( _sound_prepare_permitted ) )
+    if ( platform_conditions :: condition_true ( _sound_prepare_permitted ) )
     {
-        if ( platform :: condition_false ( _stereo_sound_loaded ) )
+        if ( platform_conditions :: condition_false ( _stereo_sound_loaded ) )
         {
             num_whole ready ;
             platform :: sound_loader_ready ( ready ) ;
-            if ( platform :: condition_true ( ready ) )
+            if ( platform_conditions :: condition_true ( ready ) )
             {
                 _load_sound ( ) ;
                 platform_math :: math_make_num_whole ( _stereo_sound_loaded , true ) ;
@@ -133,9 +134,9 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         {
             num_whole ready ;
             platform :: sound_loader_ready ( ready ) ;
-            if ( platform :: condition_true ( ready ) )
+            if ( platform_conditions :: condition_true ( ready ) )
             {
-                if ( platform :: condition_false ( _stereo_sound_created ) )
+                if ( platform_conditions :: condition_false ( _stereo_sound_created ) )
                 {
                     _create_stereo_sound ( ) ;
                     platform_math :: math_make_num_whole ( _stereo_sound_created , true ) ;
@@ -143,19 +144,19 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
                 }
             }
         }
-        if ( platform :: condition_false ( _mono_sound_created ) )
+        if ( platform_conditions :: condition_false ( _mono_sound_created ) )
         {
             _create_mono_sound ( ) ;
             platform_math :: math_make_num_whole ( _mono_sound_created , true ) ;
         }
     }
-    if ( platform :: condition_true ( _mono_sound_created ) )
+    if ( platform_conditions :: condition_true ( _mono_sound_created ) )
     {
         num_whole touch ;
         num_whole mouse_button ;
         platform :: touch_occured ( touch ) ;
         platform :: mouse_left_button_down ( mouse_button ) ;
-        if ( platform :: condition_true ( touch ) || platform :: condition_true ( mouse_button ) )
+        if ( platform_conditions :: condition_true ( touch ) || platform_conditions :: condition_true ( mouse_button ) )
         {
             platform :: sound_source_stop ( _mono_sound_source ) ;
             platform :: sound_source_play ( _mono_sound_source ) ;
@@ -248,7 +249,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform_math :: math_make_num_fract ( fract_mono_sound_samples_per_second , platform :: mono_sound_samples_per_second , 1 ) ;
     platform_math :: math_make_num_whole ( next_sample , 0 ) ;
     for ( num_whole i = platform :: math_consts . whole_0 
-        ; platform :: condition_whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
+        ; platform_conditions :: condition_whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
         ; platform_math :: math_inc_whole ( i )
         )
     {

@@ -9,6 +9,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
@@ -67,7 +68,7 @@ void shy_logic_touch < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_touch < mediator > :: receive ( typename messages :: touch_done msg )
 {
-    if ( platform :: condition_true ( _spot_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _spot_mesh_created ) )
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _spot_mesh_id ;
@@ -84,16 +85,16 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepar
 template < typename mediator >
 void shy_logic_touch < mediator > :: receive ( typename messages :: touch_render msg )
 {
-    if ( platform :: condition_true ( _spot_mesh_created ) && platform :: condition_whole_greater_than_zero ( _spot_frames_left ) )
+    if ( platform_conditions :: condition_true ( _spot_mesh_created ) && platform_conditions :: condition_whole_greater_than_zero ( _spot_frames_left ) )
         _render_spot_mesh ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update msg )
 {
-    if ( platform :: condition_true ( _spot_prepare_permitted ) )
+    if ( platform_conditions :: condition_true ( _spot_prepare_permitted ) )
     {
-        if ( platform :: condition_false ( _spot_mesh_created ) )
+        if ( platform_conditions :: condition_false ( _spot_mesh_created ) )
         {
             _create_spot_mesh ( ) ;
             platform_math :: math_make_num_whole ( _spot_mesh_created , true ) ;
@@ -116,7 +117,7 @@ void shy_logic_touch < mediator > :: _update_spot ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _decrease_spot_lifetime ( )
 {
-    if ( platform :: condition_whole_greater_than_zero ( _spot_frames_left ) )
+    if ( platform_conditions :: condition_whole_greater_than_zero ( _spot_frames_left ) )
         platform_math :: math_dec_whole ( _spot_frames_left ) ;
 }
 
@@ -125,7 +126,7 @@ void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 {
     num_whole touch ;
     platform :: touch_occured ( touch ) ;
-    if ( platform :: condition_true ( touch ) )
+    if ( platform_conditions :: condition_true ( touch ) )
     {
         platform :: touch_x ( _spot_x ) ;
         platform :: touch_y ( _spot_y ) ;
@@ -138,7 +139,7 @@ void shy_logic_touch < mediator > :: _poll_mouse ( )
 {
     num_whole mouse_button ;
     platform :: mouse_left_button_down ( mouse_button ) ;
-    if ( platform :: condition_true ( mouse_button ) )
+    if ( platform_conditions :: condition_true ( mouse_button ) )
     {
         platform :: mouse_x ( _spot_x ) ;
         platform :: mouse_y ( _spot_y ) ;
@@ -149,7 +150,7 @@ void shy_logic_touch < mediator > :: _poll_mouse ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _place_new_spot ( )
 {
-    if ( platform :: condition_true ( _should_place_new_spot ) )
+    if ( platform_conditions :: condition_true ( _should_place_new_spot ) )
     {
         num_fract pos_z ;
         platform_math :: math_make_num_fract ( pos_z , - 3 , 1 ) ;
@@ -200,7 +201,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
     platform_math :: math_make_num_fract ( fract_spot_edges , _spot_edges , 1 ) ;
     
     for ( platform_math :: math_make_num_whole ( i , 0 )
-        ; platform :: condition_whole_less_than_whole ( i , whole_spot_edges ) 
+        ; platform_conditions :: condition_whole_less_than_whole ( i , whole_spot_edges ) 
         ; platform_math :: math_inc_whole ( i )
         )
     {

@@ -6,6 +6,7 @@ class shy_engine_texture
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: render_texture_id render_texture_id ;
@@ -126,12 +127,12 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
     _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     for ( num_whole y = msg . bottom
-        ; platform :: condition_whole_less_or_equal_to_whole ( y , msg . top )
+        ; platform_conditions :: condition_whole_less_or_equal_to_whole ( y , msg . top )
         ; platform_math :: math_inc_whole ( y )
         )
     {
         for ( num_whole x = msg . left
-            ; platform :: condition_whole_less_or_equal_to_whole ( x , msg . right )
+            ; platform_conditions :: condition_whole_less_or_equal_to_whole ( x , msg . right )
             ; platform_math :: math_inc_whole ( x )
             )
         {

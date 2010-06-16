@@ -11,6 +11,7 @@ class shy_logic_image
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
@@ -68,7 +69,7 @@ void shy_logic_image < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_image < mediator > :: receive ( typename messages :: image_done msg )
 {
-    if ( platform :: condition_true ( _image_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _image_mesh_created ) )
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _image_mesh_id ;
@@ -79,7 +80,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_done m
 template < typename mediator >
 void shy_logic_image < mediator > :: receive ( typename messages :: image_render msg )
 {
-    if ( platform :: condition_true ( _image_mesh_created ) && platform :: condition_true ( _image_texture_loaded ) )
+    if ( platform_conditions :: condition_true ( _image_mesh_created ) && platform_conditions :: condition_true ( _image_texture_loaded ) )
         _render_image_mesh ( ) ;
 }
 
@@ -92,23 +93,23 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_prepar
 template < typename mediator >
 void shy_logic_image < mediator > :: receive ( typename messages :: image_update msg )
 {
-    if ( platform :: condition_true ( _image_prepare_permitted ) )
+    if ( platform_conditions :: condition_true ( _image_prepare_permitted ) )
     {
-        if ( platform :: condition_false ( _image_mesh_created ) )
+        if ( platform_conditions :: condition_false ( _image_mesh_created ) )
         {
             _create_image_mesh ( ) ;
             platform_math :: math_make_num_whole ( _image_mesh_created , true ) ;
         }
-        if ( platform :: condition_false ( _image_texture_created ) )
+        if ( platform_conditions :: condition_false ( _image_texture_created ) )
         {
             _create_image_texture ( ) ;
             platform_math :: math_make_num_whole ( _image_texture_created , true ) ;
         }
-        if ( platform :: condition_false ( _image_texture_loaded ) )
+        if ( platform_conditions :: condition_false ( _image_texture_loaded ) )
         {
             num_whole loader_ready ;
             platform :: render_texture_loader_ready ( loader_ready ) ;
-            if ( platform :: condition_true ( loader_ready ) )
+            if ( platform_conditions :: condition_true ( loader_ready ) )
             {
                 {
                     typename messages :: texture_finalize texture_finalize_msg ;
@@ -120,7 +121,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
             }
         }
     }
-    if ( platform :: condition_true ( _image_mesh_created ) && platform :: condition_true ( _image_texture_loaded ) )
+    if ( platform_conditions :: condition_true ( _image_mesh_created ) && platform_conditions :: condition_true ( _image_texture_loaded ) )
         _update_image_mesh ( ) ;
 }
 
@@ -152,7 +153,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
-    if ( platform :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
+    if ( platform_conditions :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
         platform_math :: math_inc_whole ( _scale_frames ) ;
 }
 

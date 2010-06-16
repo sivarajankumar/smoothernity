@@ -5,6 +5,7 @@ class shy_logic_application
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
@@ -56,11 +57,11 @@ void shy_logic_application < mediator > :: receive ( typename messages :: title_
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: application_render msg )
 {
-    if ( platform :: condition_true ( _game_active ) )
+    if ( platform_conditions :: condition_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: game_render ( ) ) ;
-    if ( platform :: condition_true ( _title_active ) )
+    if ( platform_conditions :: condition_true ( _title_active ) )
         _mediator . get ( ) . send ( typename messages :: title_render ( ) ) ;
-    if ( platform :: condition_false ( _application_launched ) )
+    if ( platform_conditions :: condition_false ( _application_launched ) )
     {
         num_fract black ;
         platform_math :: math_make_num_fract ( black , 0 , 1 ) ;
@@ -71,16 +72,16 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: application_update msg )
 {
-    if ( platform :: condition_false ( _application_launched ) )
+    if ( platform_conditions :: condition_false ( _application_launched ) )
     {
         platform_math :: math_make_num_whole ( _application_launched , true ) ;
         platform_math :: math_make_num_whole ( _text_active , true ) ;
         _mediator . get ( ) . send ( typename messages :: text_prepare_permit ( ) ) ;
     }
-    if ( platform :: condition_true ( _text_active ) )
+    if ( platform_conditions :: condition_true ( _text_active ) )
         _mediator . get ( ) . send ( typename messages :: text_update ( ) ) ;
-    if ( platform :: condition_true ( _game_active ) )
+    if ( platform_conditions :: condition_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: game_update ( ) ) ;
-    if ( platform :: condition_true ( _title_active ) )
+    if ( platform_conditions :: condition_true ( _title_active ) )
         _mediator . get ( ) . send ( typename messages :: title_update ( ) ) ;
 }

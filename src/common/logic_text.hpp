@@ -11,6 +11,7 @@ class shy_logic_text
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
@@ -182,7 +183,7 @@ void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: text_done msg )
 {
-    if ( platform :: condition_true ( _text_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _text_mesh_created ) )
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _text_mesh_id ;
@@ -232,7 +233,7 @@ shy_logic_text < mediator > :: text_alphabet_english ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: use_text_texture msg )
 {
-    if ( platform :: condition_true ( _text_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _text_mesh_created ) )
     {
         typename messages :: texture_select texture_select_msg ;
         texture_select_msg . texture = _text_texture_id ;
@@ -249,7 +250,7 @@ void shy_logic_text < mediator > :: get_big_letter_tex_coords
     , letter_id letter 
     )
 {
-    if ( platform :: condition_true ( _text_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _text_mesh_created ) )
     {
         _tex_coords & coords = platform_static_array :: array_element ( _letters_big , letter . _letter_id ) ;
         left = coords . left ;
@@ -275,7 +276,7 @@ void shy_logic_text < mediator > :: get_small_letter_tex_coords
     , letter_id letter 
     )
 {
-    if ( platform :: condition_true ( _text_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _text_mesh_created ) )
     {
         _tex_coords & coords = platform_static_array :: array_element ( _letters_small , letter . _letter_id ) ;
         left = coords . left ;
@@ -301,16 +302,16 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_prepare_
 template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: text_render msg )
 {
-    if ( platform :: condition_true ( _text_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _text_mesh_created ) )
         _render_text_mesh ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: text_update msg )
 {
-    if ( platform :: condition_true ( _text_prepare_permitted ) )
+    if ( platform_conditions :: condition_true ( _text_prepare_permitted ) )
     {
-        if ( platform :: condition_false ( _text_mesh_created ) )
+        if ( platform_conditions :: condition_false ( _text_mesh_created ) )
         {
             _create_text_mesh ( ) ;
             _create_text_texture ( ) ;
@@ -318,7 +319,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_update m
             _mediator . get ( ) . send ( typename messages :: text_prepared ( ) ) ;
         }
     }
-    if ( platform :: condition_true ( _text_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _text_mesh_created ) )
         _update_text_mesh ( ) ;
 }
 
@@ -351,7 +352,7 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
-    if ( platform :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
+    if ( platform_conditions :: condition_whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
         platform_math :: math_inc_whole ( _scale_frames ) ;
 }
 
@@ -472,12 +473,12 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     platform :: render_set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
     _mediator . get ( ) . texture_create ( _text_texture_id ) ;
     for ( num_whole x = platform :: math_consts . whole_0
-        ; platform :: condition_whole_less_than_whole ( x , texture_width ) 
+        ; platform_conditions :: condition_whole_less_than_whole ( x , texture_width ) 
         ; platform_math :: math_inc_whole ( x )
         )
     {
         for ( num_whole y = platform :: math_consts . whole_0 
-            ; platform :: condition_whole_less_than_whole ( y , texture_height ) 
+            ; platform_conditions :: condition_whole_less_than_whole ( y , texture_height ) 
             ; platform_math :: math_inc_whole ( y )
             )
         {
@@ -546,7 +547,7 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
     platform_math :: math_add_to_whole ( _origin_x , _letter_size_x ) ;
     platform_math :: math_add_to_whole ( _origin_x , delta_x ) ;
     platform_math :: math_sub_wholes ( right_limit , texture_width , _letter_size_x ) ;
-    if ( platform :: condition_whole_greater_or_equal_to_whole ( _origin_x , right_limit ) )
+    if ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( _origin_x , right_limit ) )
     {
         num_whole delta_y ;
         platform_math :: math_div_wholes ( delta_y , _letter_size_y , platform :: math_consts . whole_4 ) ;
@@ -609,32 +610,32 @@ template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords )
 {
     _store_tex_coords ( letter , letters_tex_coords ) ;
-    if      ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . A . _letter_id ) ) _rasterize_font_english_A ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . B . _letter_id ) ) _rasterize_font_english_B ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . C . _letter_id ) ) _rasterize_font_english_C ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . D . _letter_id ) ) _rasterize_font_english_D ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . E . _letter_id ) ) _rasterize_font_english_E ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . F . _letter_id ) ) _rasterize_font_english_F ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . G . _letter_id ) ) _rasterize_font_english_G ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . H . _letter_id ) ) _rasterize_font_english_H ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . I . _letter_id ) ) _rasterize_font_english_I ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . J . _letter_id ) ) _rasterize_font_english_J ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . K . _letter_id ) ) _rasterize_font_english_K ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . L . _letter_id ) ) _rasterize_font_english_L ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . M . _letter_id ) ) _rasterize_font_english_M ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . N . _letter_id ) ) _rasterize_font_english_N ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . O . _letter_id ) ) _rasterize_font_english_O ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . P . _letter_id ) ) _rasterize_font_english_P ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . Q . _letter_id ) ) _rasterize_font_english_Q ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . R . _letter_id ) ) _rasterize_font_english_R ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . S . _letter_id ) ) _rasterize_font_english_S ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . T . _letter_id ) ) _rasterize_font_english_T ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . U . _letter_id ) ) _rasterize_font_english_U ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . V . _letter_id ) ) _rasterize_font_english_V ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . W . _letter_id ) ) _rasterize_font_english_W ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . X . _letter_id ) ) _rasterize_font_english_X ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . Y . _letter_id ) ) _rasterize_font_english_Y ( ) ;
-    else if ( platform :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . Z . _letter_id ) ) _rasterize_font_english_Z ( ) ;
+    if      ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . A . _letter_id ) ) _rasterize_font_english_A ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . B . _letter_id ) ) _rasterize_font_english_B ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . C . _letter_id ) ) _rasterize_font_english_C ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . D . _letter_id ) ) _rasterize_font_english_D ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . E . _letter_id ) ) _rasterize_font_english_E ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . F . _letter_id ) ) _rasterize_font_english_F ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . G . _letter_id ) ) _rasterize_font_english_G ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . H . _letter_id ) ) _rasterize_font_english_H ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . I . _letter_id ) ) _rasterize_font_english_I ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . J . _letter_id ) ) _rasterize_font_english_J ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . K . _letter_id ) ) _rasterize_font_english_K ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . L . _letter_id ) ) _rasterize_font_english_L ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . M . _letter_id ) ) _rasterize_font_english_M ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . N . _letter_id ) ) _rasterize_font_english_N ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . O . _letter_id ) ) _rasterize_font_english_O ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . P . _letter_id ) ) _rasterize_font_english_P ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . Q . _letter_id ) ) _rasterize_font_english_Q ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . R . _letter_id ) ) _rasterize_font_english_R ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . S . _letter_id ) ) _rasterize_font_english_S ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . T . _letter_id ) ) _rasterize_font_english_T ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . U . _letter_id ) ) _rasterize_font_english_U ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . V . _letter_id ) ) _rasterize_font_english_V ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . W . _letter_id ) ) _rasterize_font_english_W ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . X . _letter_id ) ) _rasterize_font_english_X ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . Y . _letter_id ) ) _rasterize_font_english_Y ( ) ;
+    else if ( platform_conditions :: condition_wholes_are_equal ( letter . _letter_id , _alphabet_english . Z . _letter_id ) ) _rasterize_font_english_Z ( ) ;
 }
 
 template < typename mediator >

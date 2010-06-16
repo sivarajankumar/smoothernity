@@ -10,6 +10,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
@@ -65,7 +66,7 @@ void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: land_done msg )
 {
-    if ( platform :: condition_true ( _land_mesh_created ) )
+    if ( platform_conditions :: condition_true ( _land_mesh_created ) )
     {
         typename messages :: mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _land_mesh_id ;
@@ -82,21 +83,21 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_prepare_
 template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: land_render msg )
 {
-    if ( platform :: condition_true ( _land_mesh_created ) && platform :: condition_true ( _land_texture_created ) )
+    if ( platform_conditions :: condition_true ( _land_mesh_created ) && platform_conditions :: condition_true ( _land_texture_created ) )
         _render_land ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: land_update msg )
 {
-    if ( platform :: condition_true ( _land_prepare_permitted ) )
+    if ( platform_conditions :: condition_true ( _land_prepare_permitted ) )
     {
-        if ( platform :: condition_false ( _land_texture_created ) )
+        if ( platform_conditions :: condition_false ( _land_texture_created ) )
             _create_land_texture ( ) ;
-        else if ( platform :: condition_false ( _land_mesh_created ) )
+        else if ( platform_conditions :: condition_false ( _land_mesh_created ) )
         {
             _create_land_mesh ( ) ;
-            if ( platform :: condition_true ( _land_mesh_created ) )
+            if ( platform_conditions :: condition_true ( _land_mesh_created ) )
                 _mediator . get ( ) . send ( typename messages :: land_prepared ( ) ) ;
         }
     }
@@ -118,7 +119,7 @@ void shy_logic_land < mediator > :: _render_land ( )
     platform_math :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform_math :: math_div_fracts ( scale_step , platform :: math_consts . fract_1 , fract_scale_in_frames ) ;
     platform_math :: math_add_fracts ( increased_scale , _land_scale , scale_step ) ;
-    if ( platform :: condition_fract_less_than_fract ( increased_scale , platform :: math_consts . fract_1 ) )
+    if ( platform_conditions :: condition_fract_less_than_fract ( increased_scale , platform :: math_consts . fract_1 ) )
         _land_scale = increased_scale ;
     else
         _land_scale = platform :: math_consts . fract_1 ;
@@ -166,13 +167,13 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     
     for ( platform_math :: math_make_num_whole ( iz , 0 )
         , platform_math :: math_make_num_whole ( iz_max , _land_grid + 1 )
-        ; platform :: condition_whole_less_than_whole ( iz , iz_max )
+        ; platform_conditions :: condition_whole_less_than_whole ( iz , iz_max )
         ; platform_math :: math_inc_whole ( iz )
         )
     {
         for ( platform_math :: math_make_num_whole ( ix , 0 )
             , platform_math :: math_make_num_whole ( ix_max , _land_grid + 1 )
-            ; platform :: condition_whole_less_than_whole ( ix , ix_max )
+            ; platform_conditions :: condition_whole_less_than_whole ( ix , ix_max )
             ; platform_math :: math_inc_whole ( ix )
             )
         {
@@ -217,13 +218,13 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     
     for ( platform_math :: math_make_num_whole ( iz , 0 ) 
         , platform_math :: math_make_num_whole ( iz_max , _land_grid )
-        ; platform :: condition_whole_less_than_whole ( iz , iz_max )
+        ; platform_conditions :: condition_whole_less_than_whole ( iz , iz_max )
         ; platform_math :: math_inc_whole ( iz )
         )
     {
         for ( platform_math :: math_make_num_whole ( ix , 0 ) 
             , platform_math :: math_make_num_whole ( ix_max , _land_grid + 1 )
-            ; platform :: condition_whole_less_than_whole ( ix , ix_max )
+            ; platform_conditions :: condition_whole_less_than_whole ( ix , ix_max )
             ; platform_math :: math_inc_whole ( ix )
             )
         {
@@ -232,7 +233,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             
             platform_math :: math_make_num_whole ( row_size , _land_grid + 1 ) ;
             
-            if ( platform :: condition_whole_is_even ( iz ) )
+            if ( platform_conditions :: condition_whole_is_even ( iz ) )
             {
                 platform_math :: math_mul_wholes ( index , row_size , iz ) ;
                 platform_math :: math_add_to_whole ( index , ix ) ;
@@ -290,7 +291,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
     num_whole whole_create_rows_per_frame ;
     num_whole prev_creation_row = _land_texture_creation_row ;
     
-    if ( platform :: condition_whole_is_zero ( _land_texture_creation_row ) )
+    if ( platform_conditions :: condition_whole_is_zero ( _land_texture_creation_row ) )
         _mediator . get ( ) . texture_create ( _land_texture_id ) ;
     platform_math :: math_make_num_whole ( whole_create_rows_per_frame , _create_rows_per_frame ) ;
     
@@ -303,14 +304,14 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         num_whole y = _land_texture_creation_row ;
         
         platform_math :: math_sub_wholes ( rows_delta , _land_texture_creation_row , prev_creation_row ) ;
-        if ( ! platform :: condition_whole_less_than_whole ( _land_texture_creation_row , texture_height )
-          || ! platform :: condition_whole_less_or_equal_to_whole ( rows_delta , whole_create_rows_per_frame )
+        if ( ! platform_conditions :: condition_whole_less_than_whole ( _land_texture_creation_row , texture_height )
+          || ! platform_conditions :: condition_whole_less_or_equal_to_whole ( rows_delta , whole_create_rows_per_frame )
            )
         {
             break ;
         }
         for ( platform_math :: math_make_num_whole ( x , 0 )
-            ; platform :: condition_whole_less_than_whole ( x , texture_width )
+            ; platform_conditions :: condition_whole_less_than_whole ( x , texture_width )
             ; platform_math :: math_inc_whole ( x )
             )
         {
@@ -368,7 +369,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         }
         platform_math :: math_inc_whole ( _land_texture_creation_row ) ;
     }
-    if ( platform :: condition_wholes_are_equal ( _land_texture_creation_row , texture_height ) )
+    if ( platform_conditions :: condition_wholes_are_equal ( _land_texture_creation_row , texture_height ) )
     {
         typename messages :: texture_finalize texture_finalize_msg ;
         texture_finalize_msg . texture = _land_texture_id ;

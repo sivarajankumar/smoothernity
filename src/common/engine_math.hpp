@@ -4,9 +4,9 @@ class shy_engine_math
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
-    typedef typename mediator :: platform :: vector_data vector_data ;
-    
+    typedef typename mediator :: platform :: vector_data vector_data ;    
 public :
     static void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     static void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
@@ -87,9 +87,9 @@ void shy_engine_math < mediator > :: math_lerp
 template < typename mediator >
 void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to )
 {
-    if ( platform :: condition_fract_less_than_fract ( num , from ) )
+    if ( platform_conditions :: condition_fract_less_than_fract ( num , from ) )
         result = from ;
-    else if ( platform :: condition_fract_greater_than_fract ( num , to ) )
+    else if ( platform_conditions :: condition_fract_greater_than_fract ( num , to ) )
         result = to ;
     else
         result = num ;
@@ -98,16 +98,16 @@ void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & result , num
 template < typename mediator >
 void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & num , num_fract from , num_fract to )
 {
-    if ( platform :: condition_fract_less_than_fract ( num , from ) )
+    if ( platform_conditions :: condition_fract_less_than_fract ( num , from ) )
         num = from ;
-    else if ( platform :: condition_fract_greater_than_fract ( num , to ) )
+    else if ( platform_conditions :: condition_fract_greater_than_fract ( num , to ) )
         num = to ;
 }
 
 template < typename mediator >
 void shy_engine_math < mediator > :: math_min_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    if ( platform :: condition_whole_less_than_whole ( a , b ) )
+    if ( platform_conditions :: condition_whole_less_than_whole ( a , b ) )
         result = a ;
     else
         result = b ;
@@ -116,7 +116,7 @@ void shy_engine_math < mediator > :: math_min_whole ( num_whole & result , num_w
 template < typename mediator >
 void shy_engine_math < mediator > :: math_max_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    if ( platform :: condition_whole_greater_than_whole ( a , b ) )
+    if ( platform_conditions :: condition_whole_greater_than_whole ( a , b ) )
         result = a ;
     else
         result = b ;
@@ -125,7 +125,7 @@ void shy_engine_math < mediator > :: math_max_whole ( num_whole & result , num_w
 template < typename mediator >
 void shy_engine_math < mediator > :: math_abs_whole ( num_whole & result , num_whole a )
 {
-    if ( platform :: condition_whole_less_than_zero ( a ) )
+    if ( platform_conditions :: condition_whole_less_than_zero ( a ) )
         platform_math :: math_neg_whole ( result , a ) ;
     else
         result = a ;
