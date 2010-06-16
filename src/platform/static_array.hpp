@@ -1,4 +1,7 @@
 template < typename platform >
+class shy_platform_static_array_insider ;
+
+template < typename platform >
 class shy_platform_static_array
 {
     typedef typename platform :: const_int_32 const_int_32 ;
@@ -8,10 +11,11 @@ public :
     class static_array
     {
         friend class shy_platform_static_array ;
+        friend class shy_platform_static_array_insider < platform > ;
     private :
         static const_int_32 _array_size = size ;
         data_type _elements [ _array_size ] ;
-    } ;    
+    } ;
 public :
     template < typename data_type , const_int_32 size >
     static data_type & array_element ( static_array < data_type , size > & array , num_whole index ) ;
@@ -20,14 +24,14 @@ public :
 } ;
 
 template < typename platform >
-template < typename data_type , typename platform :: const_int_32 size >
+template < typename data_type , typename shy_platform_static_array < platform > :: const_int_32 size >
 inline data_type & shy_platform_static_array < platform > :: array_element ( static_array < data_type , size > & array , num_whole index )
 {
     return array . _elements [ index . _value ] ;
 }
 
 template < typename platform >
-template < typename data_type , typename platform :: const_int_32 size >
+template < typename data_type , typename shy_platform_static_array < platform > :: const_int_32 size >
 inline const data_type & shy_platform_static_array < platform > :: array_element ( const static_array < data_type , size > & array , num_whole index )
 {
     return array . _elements [ index . _value ] ;

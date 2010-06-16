@@ -12,9 +12,11 @@
 #import "macosx_texture_loader.h"
 
 #import "../platform/static_array.hpp"
+#import "../platform/static_array_insider.hpp"
 
 class shy_macosx_platform
 {
+    typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
 public :
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
     typedef const int const_int_32 ;
@@ -392,6 +394,11 @@ public :
     template < const_int_32 samples_array_size >
     static void sound_load_stereo_sample_data
         ( const static_array < stereo_sound_sample , samples_array_size > & samples 
+        , const stereo_sound_resource_id & resource_id 
+        ) ;
+    template < const_int_32 samples_array_size >
+    static void sound_load_stereo_sample_data
+        ( const platform_static_array :: static_array < stereo_sound_sample , samples_array_size > & samples 
         , const stereo_sound_resource_id & resource_id 
         ) ;
     template < const_int_32 samples_array_size >

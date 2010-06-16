@@ -49,6 +49,19 @@ inline void shy_macosx_platform :: sound_load_stereo_sample_data
     ] ;
 }
 
+template < shy_macosx_platform :: const_int_32 samples_array_size >
+inline void shy_macosx_platform :: sound_load_stereo_sample_data
+    ( const platform_static_array :: static_array < stereo_sound_sample , samples_array_size > & samples 
+    , const stereo_sound_resource_id & resource_id 
+    )
+{
+    [ shy_macosx_platform_utility :: _sound_loader 
+        load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
+        to_buffer : ( void * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
+        with_max_samples_count_of : samples_array_size
+    ] ;
+}
+
 inline void shy_macosx_platform :: sound_loader_ready ( num_whole & result )
 {
     result . _value = [ shy_macosx_platform_utility :: _sound_loader loader_ready ] ;
