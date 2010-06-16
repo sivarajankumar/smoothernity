@@ -9,7 +9,7 @@ class shy_engine_rasterizer
     typedef typename mediator :: platform :: texel_data texel_data ;
 public :
     shy_engine_rasterizer ( ) ;
-    void set_mediator ( mediator * arg_mediator ) ;
+    void set_mediator ( typename platform :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: rasterize_triangle msg ) ;
     void receive ( typename messages :: rasterize_rect msg ) ;
     void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -21,7 +21,7 @@ private :
     void _rasterize_bottom_triangle_part ( num_whole x_top , num_whole y_top , num_whole x_mid , num_whole y_mid , num_whole x_bottom , num_whole y_bottom ) ;
 	void _rasterize_bresenham_ellipse ( num_whole cx , num_whole cy, num_whole x_radius, num_whole y_radius ) ;
 private :
-    mediator * _mediator ;
+    typename platform :: template pointer < mediator > _mediator ;
     texture_id _texture_id ;
     texel_data _texel ;
     num_whole _origin_x ;
@@ -30,14 +30,13 @@ private :
 
 template < typename mediator >
 shy_engine_rasterizer < mediator > :: shy_engine_rasterizer ( )
-: _mediator ( 0 )
 {
     platform :: math_make_num_whole ( _origin_x , 0 ) ;
     platform :: math_make_num_whole ( _origin_y , 0 ) ;
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: set_mediator ( mediator * arg_mediator )
+void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
@@ -143,7 +142,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
         texture_set_texels_rect_msg . top = top ;
         texture_set_texels_rect_msg . texture = _texture_id ;
         texture_set_texels_rect_msg . texel = _texel ;
-        _mediator -> send ( texture_set_texels_rect_msg ) ;
+        _mediator . get ( ) . send ( texture_set_texels_rect_msg ) ;
     }
 }
 
@@ -179,7 +178,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( num_whol
         texture_set_texels_rect_msg . top = y ;
         texture_set_texels_rect_msg . texture = _texture_id ;
         texture_set_texels_rect_msg . texel = _texel ;
-        _mediator -> send ( texture_set_texels_rect_msg ) ;
+        _mediator . get ( ) . send ( texture_set_texels_rect_msg ) ;
     }
 }
 
