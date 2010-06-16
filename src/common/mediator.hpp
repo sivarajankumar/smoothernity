@@ -411,6 +411,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: game_update 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_height_reply msg )
 {
+    _logic_camera . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

@@ -25,6 +25,7 @@ public :
     void receive ( typename messages :: camera_update msg ) ;
     void receive ( typename messages :: camera_prepare_permit msg ) ;
     void receive ( typename messages :: camera_matrix_use msg ) ;
+    void receive ( typename messages :: entities_height_reply msg ) ;
 private :
     void _get_entity_mesh_grid ( num_whole & result ) ;
     void _reset_camera_rubber ( ) ;
@@ -48,6 +49,8 @@ private :
     num_whole _frames_to_change_camera_origin ;
     num_whole _random_seed ;
     num_whole _camera_created ;
+    num_whole _entities_height_requested ;
+    num_fract _entities_height ;
     vector_data _desired_camera_origin ;
     vector_data _desired_camera_target ;
     vector_data _current_camera_origin ;
@@ -64,6 +67,7 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
 {
     platform :: math_make_num_whole ( _camera_prepare_permitted , false ) ;
     platform :: math_make_num_whole ( _camera_created , false ) ;
+    platform :: math_make_num_whole ( _entities_height_requested , false ) ;
     platform :: math_make_num_whole ( _random_seed , 0 ) ;
     platform :: math_make_num_whole ( _frames_to_change_camera_target , 0 ) ;
     platform :: math_make_num_whole ( _frames_to_change_camera_origin , 0 ) ;
@@ -113,12 +117,25 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_upda
         {
             _fill_camera_schedules ( ) ;
             _reset_camera_rubber ( ) ;
-            _update_camera ( ) ;
+        }
+        platform :: math_make_num_whole ( _entities_height_requested , true ) ;
+        _mediator -> send ( typename messages :: entities_height_request ( ) ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: receive ( typename messages :: entities_height_reply msg )
+{
+    if ( platform :: condition_true ( _entities_height_requested ) )
+    {
+        platform :: math_make_num_whole ( _entities_height_requested , false ) ;
+        _entities_height = msg . height ;
+        _update_camera ( ) ;
+        if ( platform :: condition_false ( _camera_created ) )
+        {
             platform :: math_make_num_whole ( _camera_created , true ) ;
             _mediator -> send ( typename messages :: camera_prepared ( ) ) ;
         }
-        else
-            _update_camera ( ) ;
     }
 }
 
@@ -310,14 +327,13 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     num_fract aspect_height ;
     num_fract entity_height ;
     
-    _mediator -> get_entity_height ( entity_height ) ;    
     _mediator -> get_near_plane_distance ( near_plane ) ;
     platform :: render_get_aspect_height ( aspect_height ) ;
     platform :: math_make_num_fract ( up_x , 0 , 1 ) ;
     platform :: math_make_num_fract ( up_y , 1 , 1 ) ;
     platform :: math_make_num_fract ( up_z , 0 , 1 ) ;
     platform :: math_make_num_fract ( shift_x , 0 , 1 ) ;
-    shift_y = entity_height ;
+    shift_y = _entities_height ;
     platform :: math_add_to_fract ( shift_y , aspect_height ) ;
     platform :: math_add_to_fract ( shift_y , near_plane ) ;
     platform :: math_make_num_fract ( shift_z , 0 , 1 ) ;
