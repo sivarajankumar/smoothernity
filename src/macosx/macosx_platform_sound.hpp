@@ -97,25 +97,6 @@ inline void shy_macosx_platform :: sound_create_stereo_buffer
         ) ;
 }
 
-template < shy_macosx_platform :: const_int_32 samples_array_size >
-inline void shy_macosx_platform :: sound_create_stereo_buffer 
-    ( sound_buffer_id & result
-    , const platform_static_array :: static_array < stereo_sound_sample , samples_array_size > & samples 
-    , num_whole samples_count 
-    )
-{
-    alBufferDataStaticProcPtr al_buffer_data_static_proc = 
-        ( alBufferDataStaticProcPtr ) alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
-    alGenBuffers ( 1 , & result . _buffer_id ) ;
-    al_buffer_data_static_proc
-        ( result . _buffer_id 
-        , AL_FORMAT_STEREO16 
-        , ( ALvoid * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
-        , samples_count . _value * sizeof ( stereo_sound_sample )
-        , stereo_sound_samples_per_second
-        ) ;
-}
-
 inline void shy_macosx_platform :: sound_create_source ( sound_source_id & result )
 {
     alGenSources ( 1 , & result . _source_id ) ;
