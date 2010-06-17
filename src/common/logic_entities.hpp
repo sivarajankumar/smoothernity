@@ -389,7 +389,7 @@ void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & resul
     platform_math :: make_fract_from_whole ( entity_x , x ) ;
     platform_math :: div_fracts ( entity_y , fract_entity_mesh_height , platform :: math_consts . fract_2 ) ;
     platform_math :: make_fract_from_whole ( entity_z , z ) ;
-    platform_vector :: vector_xyz ( result , entity_x , entity_y , entity_z ) ;
+    platform_vector :: xyz ( result , entity_x , entity_y , entity_z ) ;
 }
 
 template < typename mediator >

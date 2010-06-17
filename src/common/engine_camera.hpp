@@ -18,10 +18,10 @@ void shy_engine_camera < mediator > :: camera_matrix_look_at
     vector_data axis_x ;
     vector_data axis_y ;
     vector_data axis_z ;
-    platform_vector :: vector_sub ( dir , from , to ) ;
-    platform_vector :: vector_normalize ( axis_z , dir ) ;
-    platform_vector :: vector_cross_product ( axis_x , norm_up , axis_z ) ;
-    platform_vector :: vector_cross_product ( axis_y , axis_z , axis_x ) ;
+    platform_vector :: sub ( dir , from , to ) ;
+    platform_vector :: normalize ( axis_z , dir ) ;
+    platform_vector :: cross_product ( axis_x , norm_up , axis_z ) ;
+    platform_vector :: cross_product ( axis_y , axis_z , axis_x ) ;
     platform_matrix :: set_axis_x ( matrix , axis_x ) ;
     platform_matrix :: set_axis_y ( matrix , axis_y ) ;
     platform_matrix :: set_axis_z ( matrix , axis_z ) ;

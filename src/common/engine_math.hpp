@@ -54,14 +54,14 @@ void shy_engine_math < mediator > :: math_catmull_rom_spline
     platform_math :: sub_fracts ( p2_coeff , t2_mul_4 , t3_mul_3 ) ;
     platform_math :: add_to_fract ( p2_coeff , t ) ;
     platform_math :: sub_fracts ( p3_coeff , t3 , t2 ) ;
-    platform_vector :: vector_mul ( p0_scaled , p0 , p0_coeff ) ;
-    platform_vector :: vector_mul ( p1_scaled , p1 , p1_coeff ) ;
-    platform_vector :: vector_mul ( p2_scaled , p2 , p2_coeff ) ;
-    platform_vector :: vector_mul ( p3_scaled , p3 , p3_coeff ) ;
-    platform_vector :: vector_add ( result_p0_p1 , p0_scaled , p1_scaled ) ;
-    platform_vector :: vector_add ( result_p2_p3 , p2_scaled , p3_scaled ) ;
-    platform_vector :: vector_add ( result_p0_p1_p2_p3 , result_p0_p1 , result_p2_p3 ) ;
-    platform_vector :: vector_mul ( result , result_p0_p1_p2_p3 , half ) ;
+    platform_vector :: mul ( p0_scaled , p0 , p0_coeff ) ;
+    platform_vector :: mul ( p1_scaled , p1 , p1_coeff ) ;
+    platform_vector :: mul ( p2_scaled , p2 , p2_coeff ) ;
+    platform_vector :: mul ( p3_scaled , p3 , p3_coeff ) ;
+    platform_vector :: add ( result_p0_p1 , p0_scaled , p1_scaled ) ;
+    platform_vector :: add ( result_p2_p3 , p2_scaled , p3_scaled ) ;
+    platform_vector :: add ( result_p0_p1_p2_p3 , result_p0_p1 , result_p2_p3 ) ;
+    platform_vector :: mul ( result , result_p0_p1_p2_p3 , half ) ;
 }
 
 template < typename mediator >

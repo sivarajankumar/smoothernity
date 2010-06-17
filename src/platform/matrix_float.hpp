@@ -186,9 +186,9 @@ inline void shy_platform_matrix_float < platform_insider > :: inverse_rotation_t
     num_fract dot_x ;
     num_fract dot_y ;
     num_fract dot_z ;
-    platform_vector :: vector_dot_product ( dot_x , origin , axis_x ) ;
-    platform_vector :: vector_dot_product ( dot_y , origin , axis_y ) ;
-    platform_vector :: vector_dot_product ( dot_z , origin , axis_z ) ;
+    platform_vector :: dot_product ( dot_x , origin , axis_x ) ;
+    platform_vector :: dot_product ( dot_y , origin , axis_y ) ;
+    platform_vector :: dot_product ( dot_z , origin , axis_z ) ;
     
     vector_data new_origin ;
     platform_vector_insider :: vector_x_unsafe_set ( new_origin , - platform_math_insider :: num_fract_unsafe_value_get ( dot_x ) ) ;

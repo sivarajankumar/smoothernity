@@ -159,7 +159,7 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
     {
         num_fract pos_z ;
         platform_math :: make_num_fract ( pos_z , - 3 , 1 ) ;
-        platform_vector :: vector_xyz ( _spot_position , _spot_x , _spot_y , pos_z ) ;
+        platform_vector :: xyz ( _spot_position , _spot_x , _spot_y , pos_z ) ;
         platform_math :: make_num_whole ( _spot_frames_left , _spot_lifetime_in_frames ) ;
         platform_math :: make_num_whole ( _should_place_new_spot , false ) ;
     }

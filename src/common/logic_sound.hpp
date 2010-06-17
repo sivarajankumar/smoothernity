@@ -103,10 +103,10 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
     platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: make_num_fract ( up_z , 0 , 1 ) ;
     
-    platform_vector :: vector_xyz ( listener_pos , pos_x , pos_y , pos_z ) ;
-    platform_vector :: vector_xyz ( listener_vel , vel_x , vel_y , vel_z ) ;
-    platform_vector :: vector_xyz ( look_at , look_at_x , look_at_y , look_at_z ) ;
-    platform_vector :: vector_xyz ( up , up_x , up_y , up_z ) ;
+    platform_vector :: xyz ( listener_pos , pos_x , pos_y , pos_z ) ;
+    platform_vector :: xyz ( listener_vel , vel_x , vel_y , vel_z ) ;
+    platform_vector :: xyz ( look_at , look_at_x , look_at_y , look_at_z ) ;
+    platform_vector :: xyz ( up , up_x , up_y , up_z ) ;
     
     platform_sound :: sound_set_listener_position ( listener_pos ) ;
     platform_sound :: sound_set_listener_velocity ( listener_vel ) ;
@@ -220,8 +220,8 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     platform_math :: make_num_fract ( vel_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( vel_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( vel_z , 0 , 1 ) ;
-    platform_vector :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
-    platform_vector :: vector_xyz ( source_vel , vel_x , vel_y , vel_z ) ;
+    platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    platform_vector :: xyz ( source_vel , vel_x , vel_y , vel_z ) ;
     
     platform_sound :: sound_loaded_samples_count ( loaded_samples_count ) ;
     platform_math :: sub_from_whole ( loaded_samples_count , music_tail_cut ) ;
@@ -302,8 +302,8 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform_math :: make_num_fract ( vel_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( vel_z , 0 , 1 ) ;
     platform_math :: make_num_whole ( max_sound_samples , _max_mono_sound_samples ) ;
-    platform_vector :: vector_xyz ( source_pos , pos_x , pos_y , pos_z ) ;
-    platform_vector :: vector_xyz ( source_vel , pos_x , pos_y , pos_z ) ;
+    platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    platform_vector :: xyz ( source_vel , pos_x , pos_y , pos_z ) ;
     
     platform_sound :: sound_create_mono_buffer ( mono_sound_buffer , _mono_sound_data , max_sound_samples ) ;
     platform_sound :: sound_create_source ( _mono_sound_source ) ;
