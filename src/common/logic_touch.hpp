@@ -143,11 +143,11 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_mouse ( )
 {
     num_whole mouse_button ;
-    platform_mouse :: mouse_left_button_down ( mouse_button ) ;
+    platform_mouse :: left_button_down ( mouse_button ) ;
     if ( platform_conditions :: whole_is_true ( mouse_button ) )
     {
-        platform_mouse :: mouse_x ( _spot_x ) ;
-        platform_mouse :: mouse_y ( _spot_y ) ;
+        platform_mouse :: x ( _spot_x ) ;
+        platform_mouse :: y ( _spot_y ) ;
         platform_math :: make_num_whole ( _should_place_new_spot , true ) ;
     }
 }
