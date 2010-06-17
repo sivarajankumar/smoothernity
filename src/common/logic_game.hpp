@@ -9,6 +9,7 @@ class shy_logic_game
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
     
     static const_int_32 _fade_in_frames = 90 ;
     static const num_fract _final_r ( ) { num_fract n ; platform_math :: math_make_num_fract ( n , 0 , 1 ) ; return n ; }
@@ -137,7 +138,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepare
 template < typename mediator >
 void shy_logic_game < mediator > :: _render_scene ( )
 {
-    platform :: render_enable_depth_test ( ) ;
+    platform_render :: render_enable_depth_test ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_perspective_projection ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: camera_matrix_use ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: land_render ( ) ) ;
@@ -147,8 +148,8 @@ void shy_logic_game < mediator > :: _render_scene ( )
 template < typename mediator >
 void shy_logic_game < mediator > :: _render_hud ( )
 {
-    platform :: render_disable_depth_test ( ) ;
-    platform :: render_fog_disable ( ) ;
+    platform_render :: render_disable_depth_test ( ) ;
+    platform_render :: render_fog_disable ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: text_render ( ) ) ;
@@ -171,8 +172,8 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     platform_math :: math_make_num_fract ( fog_near_shift , 10 , 1 ) ;
     platform_math :: math_add_fracts ( fog_far , fog_far_shift , near_plane ) ;
     platform_math :: math_add_fracts ( fog_near , fog_near_shift , near_plane ) ;
-    platform :: render_fog_linear ( fog_near , fog_far , _color_r , _color_g , _color_b , fog_a ) ;
-    platform :: render_clear_screen ( _color_r , _color_g , _color_b ) ;
+    platform_render :: render_fog_linear ( fog_near , fog_far , _color_r , _color_g , _color_b , fog_a ) ;
+    platform_render :: render_clear_screen ( _color_r , _color_g , _color_b ) ;
 }
 
 template < typename mediator >

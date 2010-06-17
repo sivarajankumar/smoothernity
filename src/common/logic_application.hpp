@@ -8,6 +8,7 @@ class shy_logic_application
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
 public :
     shy_logic_application ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -65,7 +66,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
     {
         num_fract black ;
         platform_math :: math_make_num_fract ( black , 0 , 1 ) ;
-        platform :: render_clear_screen ( black , black , black ) ;
+        platform_render :: render_clear_screen ( black , black , black ) ;
     }
 }
 

@@ -8,7 +8,6 @@ class shy_logic_title
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -16,10 +15,12 @@ class shy_logic_title
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
+    typedef typename mediator :: platform :: platform_render :: index_data index_data ;
+    typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: vector_data vector_data ;
-    typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const_int_32 _max_letters = 32 ;
     static const_int_32 _spin_radius_in_letters = 2 ;
@@ -111,9 +112,9 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: title_render msg )
 {
-    platform :: render_clear_screen ( platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform :: render_disable_depth_test ( ) ;
-    platform :: render_fog_disable ( ) ;
+    platform_render :: render_clear_screen ( platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_render :: render_disable_depth_test ( ) ;
+    platform_render :: render_fog_disable ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
     if ( platform_conditions :: condition_true ( _title_created ) && platform_conditions :: condition_false ( _title_finished ) )
@@ -218,9 +219,9 @@ void shy_logic_title < mediator > :: _title_render ( )
     platform_matrix :: matrix_set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
     platform_matrix :: matrix_set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     
-    platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
+    platform_render :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
-    platform :: render_matrix_load ( scene_tm ) ;
+    platform_render :: render_matrix_load ( scene_tm ) ;
     
     for ( num_whole i = platform :: math_consts . whole_0
         ; platform_conditions :: condition_whole_less_than_whole ( i , _letters_count )
@@ -232,7 +233,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         mesh_render_msg . mesh = letter . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
-    platform :: render_blend_disable ( ) ;
+    platform_render :: render_blend_disable ( ) ;
 }
 
 template < typename mediator >
@@ -248,7 +249,7 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract scale_max ;
     num_whole frames_between_letters ;
     
-    platform :: render_get_aspect_width ( aspect_width ) ;
+    platform_render :: render_get_aspect_width ( aspect_width ) ;
     platform_math :: math_make_fract_from_whole ( fract_letters_count , _letters_count ) ;
     platform_math :: math_div_fracts ( letter_size , aspect_width , fract_letters_count ) ;    
     platform_math :: math_mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;
@@ -399,9 +400,9 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     {
         vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) ;
         index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_0 ) ;
-        platform :: render_set_index_value ( index , platform :: math_consts . whole_0 ) ;
-        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform :: render_set_vertex_position 
+        platform_render :: render_set_index_value ( index , platform :: math_consts . whole_0 ) ;
+        platform_render :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
+        platform_render :: render_set_vertex_position 
             ( vertex 
             , platform :: math_consts . fract_minus_1 
             , platform :: math_consts . fract_1 
@@ -412,9 +413,9 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     {
         vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) ;
         index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_1 ) ;
-        platform :: render_set_index_value ( index , platform :: math_consts . whole_1 ) ;
-        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform :: render_set_vertex_position 
+        platform_render :: render_set_index_value ( index , platform :: math_consts . whole_1 ) ;
+        platform_render :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
+        platform_render :: render_set_vertex_position 
             ( vertex 
             , platform :: math_consts . fract_minus_1 
             , platform :: math_consts . fract_minus_1 
@@ -425,9 +426,9 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     {
         vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) ;
         index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_2 ) ;
-        platform :: render_set_index_value ( index , platform :: math_consts . whole_2 ) ;
-        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform :: render_set_vertex_position 
+        platform_render :: render_set_index_value ( index , platform :: math_consts . whole_2 ) ;
+        platform_render :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
+        platform_render :: render_set_vertex_position 
             ( vertex 
             , platform :: math_consts . fract_1 
             , platform :: math_consts . fract_1 
@@ -438,9 +439,9 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     {
         vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) ;
         index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_3 ) ;
-        platform :: render_set_index_value ( index , platform :: math_consts . whole_3 ) ;
-        platform :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform :: render_set_vertex_position 
+        platform_render :: render_set_index_value ( index , platform :: math_consts . whole_3 ) ;
+        platform_render :: render_set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
+        platform_render :: render_set_vertex_position 
             ( vertex 
             , platform :: math_consts . fract_1 
             , platform :: math_consts . fract_minus_1 
@@ -463,22 +464,22 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         letter . pos_angle = platform :: math_consts . fract_0 ;
         letter . rot_angle = platform :: math_consts . fract_0 ;
         _mediator . get ( ) . get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
-        platform :: render_set_vertex_tex_coord 
+        platform_render :: render_set_vertex_tex_coord 
             ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 )
             , tex_left
             , tex_top
             ) ;
-        platform :: render_set_vertex_tex_coord 
+        platform_render :: render_set_vertex_tex_coord 
             ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 )
             , tex_left
             , tex_bottom
             ) ;
-        platform :: render_set_vertex_tex_coord 
+        platform_render :: render_set_vertex_tex_coord 
             ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 )
             , tex_right
             , tex_top
             ) ;
-        platform :: render_set_vertex_tex_coord 
+        platform_render :: render_set_vertex_tex_coord 
             ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 )
             , tex_right
             , tex_bottom

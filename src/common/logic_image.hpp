@@ -7,7 +7,6 @@ class shy_logic_image
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -15,11 +14,12 @@ class shy_logic_image
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
+    typedef typename mediator :: platform :: platform_render :: index_data index_data ;
+    typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
+    typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
+    typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
-    typedef typename mediator :: platform :: render_texture_id render_texture_id ;
-    typedef typename mediator :: platform :: texel_data texel_data ;
-    typedef typename mediator :: platform :: texture_resource_id texture_resource_id ;
-    typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const_int_32 _logo_resource_index = 1 ;
     static const_int_32 _scale_in_frames = 60 ;
@@ -109,7 +109,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
         if ( platform_conditions :: condition_false ( _image_texture_loaded ) )
         {
             num_whole loader_ready ;
-            platform :: render_texture_loader_ready ( loader_ready ) ;
+            platform_render :: render_texture_loader_ready ( loader_ready ) ;
             if ( platform_conditions :: condition_true ( loader_ready ) )
             {
                 {
@@ -161,7 +161,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _render_image_mesh ( )
 {
-    platform :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
+    platform_render :: render_blend_src_alpha_dst_one_minus_alpha ( ) ;
     {
         typename messages :: texture_select texture_select_msg ;
         texture_select_msg . texture = _image_texture_id ;
@@ -172,7 +172,7 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
         mesh_render_msg . mesh = _image_mesh_id ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
-    platform :: render_blend_disable ( ) ;
+    platform_render :: render_blend_disable ( ) ;
 }
 
 template < typename mediator >
@@ -213,28 +213,28 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform_math :: math_make_num_whole ( vertices_count , 4 ) ;
 
     platform_math :: math_make_num_whole ( index , 0 ) ;
-    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) , x_left , y_top , z ) ;
-    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) , u_left , v_top ) ;
-    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_0 ) , index ) ;
+    platform_render :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) , x_left , y_top , z ) ;
+    platform_render :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) , color_r , color_g , color_b , color_a ) ;
+    platform_render :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) , u_left , v_top ) ;
+    platform_render :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_0 ) , index ) ;
 
     platform_math :: math_make_num_whole ( index , 1 ) ;
-    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) , x_left , y_bottom , z ) ;
-    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) , u_left , v_bottom ) ;
-    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_1 ) , index ) ;
+    platform_render :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) , x_left , y_bottom , z ) ;
+    platform_render :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) , color_r , color_g , color_b , color_a ) ;
+    platform_render :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) , u_left , v_bottom ) ;
+    platform_render :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_1 ) , index ) ;
 
     platform_math :: math_make_num_whole ( index , 2 ) ;
-    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) , x_right , y_top , z ) ;
-    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) , u_right , v_top ) ;
-    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_2 ) , index ) ;
+    platform_render :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) , x_right , y_top , z ) ;
+    platform_render :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) , color_r , color_g , color_b , color_a ) ;
+    platform_render :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) , u_right , v_top ) ;
+    platform_render :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_2 ) , index ) ;
 
     platform_math :: math_make_num_whole ( index , 3 ) ;
-    platform :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) , x_right , y_bottom , z ) ;
-    platform :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) , color_r , color_g , color_b , color_a ) ;
-    platform :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) , u_right , v_bottom ) ;
-    platform :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_3 ) , index ) ;
+    platform_render :: render_set_vertex_position  ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) , x_right , y_bottom , z ) ;
+    platform_render :: render_set_vertex_color     ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) , color_r , color_g , color_b , color_a ) ;
+    platform_render :: render_set_vertex_tex_coord ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) , u_right , v_bottom ) ;
+    platform_render :: render_set_index_value      ( platform_static_array :: array_element ( indices  , platform :: math_consts . whole_3 ) , index ) ;
 
     _mediator . get ( ) . mesh_create
         ( _image_mesh_id 
@@ -253,7 +253,7 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
     num_whole resource_index ;
     texture_resource_id logo_resource_id ;
     platform_math :: math_make_num_whole ( resource_index , _logo_resource_index ) ;
-    platform :: render_create_texture_resource_id ( logo_resource_id , resource_index ) ;
+    platform_render :: render_create_texture_resource_id ( logo_resource_id , resource_index ) ;
     _mediator . get ( ) . texture_create ( _image_texture_id ) ;
     {
         typename messages :: texture_load_from_resource texture_load_from_resource_msg ;

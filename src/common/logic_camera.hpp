@@ -7,17 +7,18 @@ class shy_logic_camera
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
+    typedef typename mediator :: platform :: platform_render :: index_data index_data ;
+    typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: vector_data vector_data ;
-    typedef typename mediator :: platform :: vertex_data vertex_data ;
 
     static const_int_32 _change_origin_in_frames = 139 ;
     static const_int_32 _change_target_in_frames = 181 ;
@@ -100,9 +101,9 @@ template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_use msg )
 {
     if ( platform_conditions :: condition_true ( _camera_created ) )
-        platform :: render_matrix_load ( _camera_matrix ) ;
+        platform_render :: render_matrix_load ( _camera_matrix ) ;
     else
-        platform :: render_matrix_identity ( ) ;
+        platform_render :: render_matrix_identity ( ) ;
 }
 
 template < typename mediator >
@@ -331,7 +332,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     num_fract entity_height ;
     
     _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
-    platform :: render_get_aspect_height ( aspect_height ) ;
+    platform_render :: render_get_aspect_height ( aspect_height ) ;
     platform_math :: math_make_num_fract ( up_x , 0 , 1 ) ;
     platform_math :: math_make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: math_make_num_fract ( up_z , 0 , 1 ) ;

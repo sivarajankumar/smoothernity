@@ -6,7 +6,6 @@ class shy_logic_entities
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -14,10 +13,12 @@ class shy_logic_entities
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
+    typedef typename mediator :: platform :: platform_render :: index_data index_data ;
+    typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: vector_data vector_data ;
-    typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const_int_32 _grid_step = 5 ;
     static const_int_32 _scale_in_frames = 120 ;
@@ -276,12 +277,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 
         {
             vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
-            platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
             index_data & index = platform_static_array :: array_element ( _strip_indices , _strip_indices_count ) ;
-            platform :: render_set_index_value ( index , _vertices_count ) ;
+            platform_render :: render_set_index_value ( index , _vertices_count ) ;
         }
 
         platform_math :: math_inc_whole ( _strip_indices_count ) ;
@@ -293,12 +294,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         
         {
             vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
-            platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
             index_data & index = platform_static_array :: array_element ( _strip_indices , _strip_indices_count ) ;
-            platform :: render_set_index_value ( index , _vertices_count ) ;
+            platform_render :: render_set_index_value ( index , _vertices_count ) ;
         }
 
         platform_math :: math_inc_whole ( _strip_indices_count ) ;
@@ -320,12 +321,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 
             {
                 vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
-                platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-                platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+                platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+                platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
             }
             {
                 index_data & index = platform_static_array :: array_element ( _fan_indices , _fan_indices_count ) ;
-                platform :: render_set_index_value ( index , _vertices_count ) ;
+                platform_render :: render_set_index_value ( index , _vertices_count ) ;
             }
             
             platform_math :: math_inc_whole ( _fan_indices_count ) ;
@@ -337,7 +338,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform_math :: math_mul_wholes ( index , _current_fan_mesh_span , platform :: math_consts . whole_2 ) ;
             {
                 index_data & index_ptr = platform_static_array :: array_element ( _fan_indices , _fan_indices_count ) ;
-                platform :: render_set_index_value ( index_ptr , index ) ;
+                platform_render :: render_set_index_value ( index_ptr , index ) ;
             }
             platform_math :: math_inc_whole ( _fan_indices_count ) ;
             platform_math :: math_inc_whole ( _current_fan_mesh_span ) ;

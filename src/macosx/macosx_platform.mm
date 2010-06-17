@@ -1,6 +1,6 @@
 #include "macosx_platform.hpp"
 
-shy_macosx_platform :: vertex_data shy_macosx_platform_utility :: _reference_vertex ;
+shy_macosx_platform :: platform_render :: vertex_data shy_macosx_platform_utility :: _reference_vertex ;
 void * shy_macosx_platform_utility :: _vertex_position_offset = reinterpret_cast < void * >
     ( reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex . _position ) 
     - reinterpret_cast < char * > ( & shy_macosx_platform_utility :: _reference_vertex )
@@ -26,44 +26,3 @@ float shy_macosx_platform_utility :: _mouse_x = 0 ;
 float shy_macosx_platform_utility :: _mouse_y = 0 ;
 
 const shy_platform_math_consts < shy_macosx_platform > shy_macosx_platform :: math_consts ;
-
-shy_macosx_platform :: render_index_buffer_id :: render_index_buffer_id ( )
-: _buffer_id ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
-shy_macosx_platform :: render_vertex_buffer_id :: render_vertex_buffer_id ( )
-: _buffer_id ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
-shy_macosx_platform :: render_texture_id :: render_texture_id ( )
-: _texture_id ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-
-shy_macosx_platform :: texture_resource_id :: texture_resource_id ( )
-: _resource_id ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-	
-shy_macosx_platform :: texel_data :: texel_data ( )
-{
-    for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = ( GLubyte ) shy_macosx_platform_utility :: _uninitialized_value ;
-}
-    
-shy_macosx_platform :: vertex_data :: vertex_data ( )
-{
-    for ( int i = 0 ; i < 3 ; i ++ )
-        _position [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
-    for ( int i = 0 ; i < 2 ; i ++ )
-        _tex_coord [ i ] = shy_macosx_platform_utility :: _uninitialized_value ;
-    for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = ( GLubyte ) shy_macosx_platform_utility :: _uninitialized_value ;
-}
-    
-shy_macosx_platform :: index_data :: index_data ( )
-: _index ( ( GLushort ) shy_macosx_platform_utility :: _uninitialized_value )
-{
-}

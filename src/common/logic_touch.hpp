@@ -5,7 +5,6 @@ class shy_logic_touch
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -14,11 +13,13 @@ class shy_logic_touch
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
+    typedef typename mediator :: platform :: platform_render :: index_data index_data ;
+    typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_touch platform_touch ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: vector_data vector_data ;
-    typedef typename mediator :: platform :: vertex_data vertex_data ;
     
     static const_int_32 _spot_lifetime_in_frames = 60 ;
     static const_int_32 _spot_r = 255 ;
@@ -234,12 +235,12 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform_math :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
         {
             vertex_data & vertex = platform_static_array :: array_element ( vertices , i ) ;
-            platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
             index_data & index = platform_static_array :: array_element ( indices , i ) ;
-            platform :: render_set_index_value ( index , i ) ;
+            platform_render :: render_set_index_value ( index , i ) ;
         }
     }
     _mediator . get ( ) . mesh_create

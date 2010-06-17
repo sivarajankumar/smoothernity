@@ -6,7 +6,6 @@ class shy_logic_land
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: index_data index_data ;
     typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: num_whole num_whole ;
@@ -14,10 +13,11 @@ class shy_logic_land
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render platform_render ;
+    typedef typename mediator :: platform :: platform_render :: index_data index_data ;
+    typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
+    typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
-    typedef typename mediator :: platform :: vertex_data vertex_data ;
-    typedef typename mediator :: platform :: render_texture_id render_texture_id ;
-    typedef typename mediator :: platform :: texel_data texel_data ;
     
     static const_int_32 _scale_in_frames = 60 ;
     static const_int_32 _land_r = 255 ;
@@ -209,9 +209,9 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             platform_math :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
             {
                 vertex_data & vertex = platform_static_array :: array_element ( vertices , vertices_count ) ;
-                platform :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-                platform :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-                platform :: render_set_vertex_tex_coord ( vertex , vertex_u , vertex_v ) ;
+                platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+                platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+                platform_render :: render_set_vertex_tex_coord ( vertex , vertex_u , vertex_v ) ;
             }
             platform_math :: math_inc_whole ( vertices_count ) ;
         }
@@ -240,14 +240,14 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 platform_math :: math_add_to_whole ( index , ix ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: render_set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
                 
                 platform_math :: math_add_to_whole ( index , row_size ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: render_set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
             }
@@ -259,14 +259,14 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 platform_math :: math_add_to_whole ( index , row_size ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: render_set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
                 
                 platform_math :: math_sub_from_whole ( index , row_size ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: render_set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
             }

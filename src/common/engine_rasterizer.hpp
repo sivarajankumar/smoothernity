@@ -9,7 +9,7 @@ class shy_engine_rasterizer
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-    typedef typename mediator :: platform :: texel_data texel_data ;
+    typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
 public :
     shy_engine_rasterizer ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
