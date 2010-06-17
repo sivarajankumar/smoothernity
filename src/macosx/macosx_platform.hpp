@@ -24,10 +24,14 @@
 #include "../platform/vector_float.hpp"
 #include "../platform/vector_float_insider.hpp"
 
+#include "macosx_platform_mouse.hpp"
 #include "macosx_platform_time.hpp"
+
+class shy_macosx_platform_utility ;
 
 class shy_macosx_platform
 {
+    friend class shy_macosx_platform_mouse < shy_macosx_platform > ;
     friend class shy_macosx_platform_time < shy_macosx_platform > ;
     friend class shy_platform_conditions < shy_macosx_platform > ;
     friend class shy_platform_math_consts < shy_macosx_platform > ;
@@ -38,6 +42,7 @@ class shy_macosx_platform
     friend class shy_platform_touch_dummy < shy_macosx_platform > ;
     friend class shy_platform_vector_float < shy_macosx_platform > ;
 private :
+    typedef shy_macosx_platform_utility _platform_insider ;
     typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
     typedef shy_platform_matrix_float_insider < shy_macosx_platform > _platform_matrix_insider ;
     typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
@@ -46,6 +51,7 @@ public :
     typedef shy_platform_conditions < shy_macosx_platform > platform_conditions ;
     typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
     typedef shy_platform_matrix_float < shy_macosx_platform > platform_matrix ;
+    typedef shy_macosx_platform_mouse < shy_macosx_platform > platform_mouse ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
     typedef shy_macosx_platform_time < shy_macosx_platform > platform_time ;
@@ -279,14 +285,6 @@ public :
     template < typename samples_array >
     static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
     
-	//
-	// mouse
-	//
-
-	static void mouse_left_button_down ( num_whole & result ) ;
-	static void mouse_x ( num_fract & result ) ;
-	static void mouse_y ( num_fract & result ) ;
-    
 private :
     static const int _uninitialized_value = 0xC0C0C0C0 ;
 } ;
@@ -312,6 +310,5 @@ public :
     static void * _vertex_color_offset ;
 } ;
 
-#include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
