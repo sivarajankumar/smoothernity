@@ -180,8 +180,8 @@ inline void shy_macosx_platform_sound < platform_insider > :: sound_load_stereo_
 {
     [ platform_insider :: sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
-        with_max_samples_count_of : platform_static_array_insider :: template array_elements_count < samples_array > ( )
+        to_buffer : ( void * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
+        with_max_samples_count_of : platform_static_array_insider :: template elements_count < samples_array > ( )
     ] ;
 }
 
@@ -211,7 +211,7 @@ inline void shy_macosx_platform_sound < platform_insider > :: sound_create_mono_
     al_buffer_data_static_proc
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
-        , ( ALvoid * ) platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
+        , ( ALvoid * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
         , platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
@@ -231,7 +231,7 @@ inline void shy_macosx_platform_sound < platform_insider > :: sound_create_stere
     al_buffer_data_static_proc
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
-        , ( ALvoid * ) platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
+        , ( ALvoid * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
         , platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;

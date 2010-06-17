@@ -303,7 +303,7 @@ inline void shy_macosx_platform_render < platform_insider > :: load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
     glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE 
-        , platform_static_array_insider :: array_elements_unsafe_ptr ( data ) 
+        , platform_static_array_insider :: elements_unsafe_ptr ( data ) 
         ) ;
 }
 
@@ -320,7 +320,7 @@ inline void shy_macosx_platform_render < platform_insider > :: load_texture_reso
 {
     [ platform_insider :: texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) platform_static_array_insider :: array_elements_unsafe_ptr ( data )
+        to_buffer : ( void * ) platform_static_array_insider :: elements_unsafe_ptr ( data )
         with_side_size_of : 1 << platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base )
     ] ;
 }
@@ -400,7 +400,7 @@ inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buf
     glBufferData
         ( GL_ARRAY_BUFFER 
         , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) platform_math_insider :: num_whole_unsafe_value_get ( elements ) ) 
-        , platform_static_array_insider :: array_elements_unsafe_ptr ( data )
+        , platform_static_array_insider :: elements_unsafe_ptr ( data )
         , GL_STATIC_DRAW 
         ) ;
 }
@@ -440,7 +440,7 @@ inline void shy_macosx_platform_render < platform_insider > :: create_index_buff
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
         , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) platform_math_insider :: num_whole_unsafe_value_get ( elements ) )
-        , platform_static_array_insider :: array_elements_unsafe_ptr ( data )
+        , platform_static_array_insider :: elements_unsafe_ptr ( data )
         , GL_STATIC_DRAW
         ) ;
 }
@@ -460,13 +460,13 @@ inline void shy_macosx_platform_render < platform_insider > :: matrix_identity (
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: matrix_load ( const matrix_data & matrix )
 {
-    glLoadMatrixf ( platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
+    glLoadMatrixf ( platform_matrix_insider :: elements_unsafe_ptr ( matrix ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: matrix_mult ( const matrix_data & matrix )
 {
-    glMultMatrixf ( platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
+    glMultMatrixf ( platform_matrix_insider :: elements_unsafe_ptr ( matrix ) ) ;
 }
 
 template < typename platform_insider >
