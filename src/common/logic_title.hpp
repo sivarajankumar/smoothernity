@@ -94,10 +94,10 @@ void shy_logic_title < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: title_done msg ) 
 {
-    if ( platform_conditions :: condition_true ( _title_created ) )
+    if ( platform_conditions :: whole_is_true ( _title_created ) )
     {
         for ( num_whole i = platform :: math_consts . whole_0
-            ; platform_conditions :: condition_whole_less_than_whole ( i , _letters_count )
+            ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
             ; platform_math :: math_inc_whole ( i )
             )
         {
@@ -117,7 +117,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_render
     platform_render :: fog_disable ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
-    if ( platform_conditions :: condition_true ( _title_created ) && platform_conditions :: condition_false ( _title_finished ) )
+    if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
         _title_render ( ) ;
 }
 
@@ -130,9 +130,9 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_launch
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: title_update msg )
 {
-    if ( platform_conditions :: condition_true ( _title_launch_permitted ) )
+    if ( platform_conditions :: whole_is_true ( _title_launch_permitted ) )
     {
-        if ( platform_conditions :: condition_false ( _title_created ) )
+        if ( platform_conditions :: whole_is_false ( _title_created ) )
         {
             _title_create ( ) ;
             platform_math :: math_make_num_whole ( _title_created , true ) ;
@@ -147,14 +147,14 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
             platform_math :: math_make_num_whole ( _disappear_at_frames , 9999 ) ;
         }
     }
-    if ( platform_conditions :: condition_true ( _title_created ) && platform_conditions :: condition_false ( _title_finished ) )
+    if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
     {
-        if ( platform_conditions :: condition_false ( _title_appeared ) )
+        if ( platform_conditions :: whole_is_false ( _title_appeared ) )
         {
             num_whole whole_appear_duration_in_frames ;
             platform_math :: math_make_num_whole ( whole_appear_duration_in_frames , _appear_duration_in_frames ) ;
             platform_math :: math_inc_whole ( _title_frames ) ;
-            if ( platform_conditions :: condition_whole_greater_than_whole ( _title_frames , whole_appear_duration_in_frames ) )
+            if ( platform_conditions :: whole_greater_than_whole ( _title_frames , whole_appear_duration_in_frames ) )
             {
                 _title_frames = platform :: math_consts . whole_0 ;
                 platform_math :: math_make_num_fract ( _desired_pos_radius_coeff , 0 , 1 ) ;
@@ -172,12 +172,12 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
                 _title_update ( ) ;
             }
         }
-        if ( platform_conditions :: condition_true ( _title_appeared ) )
+        if ( platform_conditions :: whole_is_true ( _title_appeared ) )
         {
             num_whole whole_disappear_duration_in_frames ;
             platform_math :: math_make_num_whole ( whole_disappear_duration_in_frames , _disappear_duration_in_frames ) ;
             platform_math :: math_inc_whole ( _title_frames ) ;
-            if ( platform_conditions :: condition_whole_greater_than_whole ( _title_frames , whole_disappear_duration_in_frames ) )
+            if ( platform_conditions :: whole_greater_than_whole ( _title_frames , whole_disappear_duration_in_frames ) )
             {
                 platform_math :: math_make_num_whole ( _title_finished , true ) ;
                 _mediator . get ( ) . send ( typename messages :: title_finished ( ) ) ;
@@ -224,7 +224,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     platform_render :: matrix_load ( scene_tm ) ;
     
     for ( num_whole i = platform :: math_consts . whole_0
-        ; platform_conditions :: condition_whole_less_than_whole ( i , _letters_count )
+        ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
         ; platform_math :: math_inc_whole ( i )
         )
     {
@@ -271,7 +271,7 @@ void shy_logic_title < mediator > :: _title_update ( )
     platform_math :: math_add_to_fract ( _scene_scale_frames , platform :: math_consts . fract_1 ) ;
                     
     for ( num_whole i = platform :: math_consts . whole_0
-        ; platform_conditions :: condition_whole_less_than_whole ( i , _letters_count )
+        ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
         ; platform_math :: math_inc_whole ( i )
         )
     {
@@ -312,7 +312,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         
         platform_math :: math_mul_wholes ( starting_frame , frames_between_letters , i ) ;
         platform_math :: math_sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
-        if ( platform_conditions :: condition_whole_greater_than_whole ( _title_frames , starting_frame ) )
+        if ( platform_conditions :: whole_greater_than_whole ( _title_frames , starting_frame ) )
         {
             engine_math :: math_lerp ( rubber , _rubber_first , platform :: math_consts . fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
             
@@ -348,7 +348,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_vector :: vector_xyz ( pos , pos_cos , pos_sin , platform :: math_consts . fract_0 ) ;
         platform_vector :: vector_mul_by ( pos , letter . pos_radius ) ;
         
-        if ( platform_conditions :: condition_whole_less_than_whole ( _title_frames , finishing_frame ) )
+        if ( platform_conditions :: whole_less_than_whole ( _title_frames , finishing_frame ) )
         {
             platform_vector :: vector_xyz ( axis_x , rot_cos , rot_sin , platform :: math_consts . fract_0 ) ;
             platform_vector :: vector_xyz ( axis_y , rot_neg_sin , rot_cos , platform :: math_consts . fract_0 ) ;
@@ -450,7 +450,7 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     }
     
     for ( num_whole i = platform :: math_consts . whole_0
-        ; platform_conditions :: condition_whole_less_than_whole ( i , _letters_count )
+        ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
         ; platform_math :: math_inc_whole ( i )
         )
     {

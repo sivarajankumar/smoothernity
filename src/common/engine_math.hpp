@@ -88,9 +88,9 @@ void shy_engine_math < mediator > :: math_lerp
 template < typename mediator >
 void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to )
 {
-    if ( platform_conditions :: condition_fract_less_than_fract ( num , from ) )
+    if ( platform_conditions :: fract_less_than_fract ( num , from ) )
         result = from ;
-    else if ( platform_conditions :: condition_fract_greater_than_fract ( num , to ) )
+    else if ( platform_conditions :: fract_greater_than_fract ( num , to ) )
         result = to ;
     else
         result = num ;
@@ -99,16 +99,16 @@ void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & result , num
 template < typename mediator >
 void shy_engine_math < mediator > :: math_clamp_fract ( num_fract & num , num_fract from , num_fract to )
 {
-    if ( platform_conditions :: condition_fract_less_than_fract ( num , from ) )
+    if ( platform_conditions :: fract_less_than_fract ( num , from ) )
         num = from ;
-    else if ( platform_conditions :: condition_fract_greater_than_fract ( num , to ) )
+    else if ( platform_conditions :: fract_greater_than_fract ( num , to ) )
         num = to ;
 }
 
 template < typename mediator >
 void shy_engine_math < mediator > :: math_min_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    if ( platform_conditions :: condition_whole_less_than_whole ( a , b ) )
+    if ( platform_conditions :: whole_less_than_whole ( a , b ) )
         result = a ;
     else
         result = b ;
@@ -117,7 +117,7 @@ void shy_engine_math < mediator > :: math_min_whole ( num_whole & result , num_w
 template < typename mediator >
 void shy_engine_math < mediator > :: math_max_whole ( num_whole & result , num_whole a , num_whole b )
 {
-    if ( platform_conditions :: condition_whole_greater_than_whole ( a , b ) )
+    if ( platform_conditions :: whole_greater_than_whole ( a , b ) )
         result = a ;
     else
         result = b ;
@@ -126,7 +126,7 @@ void shy_engine_math < mediator > :: math_max_whole ( num_whole & result , num_w
 template < typename mediator >
 void shy_engine_math < mediator > :: math_abs_whole ( num_whole & result , num_whole a )
 {
-    if ( platform_conditions :: condition_whole_less_than_zero ( a ) )
+    if ( platform_conditions :: whole_less_than_zero ( a ) )
         platform_math :: math_neg_whole ( result , a ) ;
     else
         result = a ;

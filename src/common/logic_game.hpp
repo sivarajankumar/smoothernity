@@ -68,7 +68,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_p
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: game_render msg )
 {
-    if ( platform_conditions :: condition_true ( _game_launched ) )
+    if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
         _clear_screen ( ) ;
         _render_scene ( ) ;
@@ -79,15 +79,15 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_render m
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: game_update msg )
 {
-    if ( platform_conditions :: condition_true ( _game_launch_permitted ) )
+    if ( platform_conditions :: whole_is_true ( _game_launch_permitted ) )
     {
-        if ( platform_conditions :: condition_false ( _game_launched ) )
+        if ( platform_conditions :: whole_is_false ( _game_launched ) )
         {
             _mediator . get ( ) . send ( typename messages :: camera_prepare_permit ( ) ) ;
             platform_math :: math_make_num_whole ( _game_launched , true ) ;
         }
     }
-    if ( platform_conditions :: condition_true ( _game_launched ) )
+    if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
         _update_color ( ) ;
         _mediator . get ( ) . send ( typename messages :: camera_update ( ) ) ;
@@ -190,6 +190,6 @@ void shy_logic_game < mediator > :: _update_color ( )
     platform_math :: math_mul_fracts ( _color_r , scale , _final_r ( ) ) ;
     platform_math :: math_mul_fracts ( _color_g , scale , _final_g ( ) ) ;
     platform_math :: math_mul_fracts ( _color_b , scale , _final_b ( ) ) ;
-    if ( platform_conditions :: condition_whole_less_than_whole ( _color_frames , whole_fade_in_frames ) )
+    if ( platform_conditions :: whole_less_than_whole ( _color_frames , whole_fade_in_frames ) )
         platform_math :: math_inc_whole ( _color_frames ) ;
 }

@@ -122,13 +122,13 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepar
 template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update msg )
 {
-    if ( platform_conditions :: condition_true ( _sound_prepare_permitted ) )
+    if ( platform_conditions :: whole_is_true ( _sound_prepare_permitted ) )
     {
-        if ( platform_conditions :: condition_false ( _stereo_sound_loaded ) )
+        if ( platform_conditions :: whole_is_false ( _stereo_sound_loaded ) )
         {
             num_whole ready ;
             platform_sound :: sound_loader_ready ( ready ) ;
-            if ( platform_conditions :: condition_true ( ready ) )
+            if ( platform_conditions :: whole_is_true ( ready ) )
             {
                 _load_sound ( ) ;
                 platform_math :: math_make_num_whole ( _stereo_sound_loaded , true ) ;
@@ -138,9 +138,9 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         {
             num_whole ready ;
             platform_sound :: sound_loader_ready ( ready ) ;
-            if ( platform_conditions :: condition_true ( ready ) )
+            if ( platform_conditions :: whole_is_true ( ready ) )
             {
-                if ( platform_conditions :: condition_false ( _stereo_sound_created ) )
+                if ( platform_conditions :: whole_is_false ( _stereo_sound_created ) )
                 {
                     _create_stereo_sound ( ) ;
                     platform_math :: math_make_num_whole ( _stereo_sound_created , true ) ;
@@ -148,19 +148,19 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
                 }
             }
         }
-        if ( platform_conditions :: condition_false ( _mono_sound_created ) )
+        if ( platform_conditions :: whole_is_false ( _mono_sound_created ) )
         {
             _create_mono_sound ( ) ;
             platform_math :: math_make_num_whole ( _mono_sound_created , true ) ;
         }
     }
-    if ( platform_conditions :: condition_true ( _mono_sound_created ) )
+    if ( platform_conditions :: whole_is_true ( _mono_sound_created ) )
     {
         num_whole touch ;
         num_whole mouse_button ;
         platform_touch :: touch_occured ( touch ) ;
         platform_mouse :: mouse_left_button_down ( mouse_button ) ;
-        if ( platform_conditions :: condition_true ( touch ) || platform_conditions :: condition_true ( mouse_button ) )
+        if ( platform_conditions :: whole_is_true ( touch ) || platform_conditions :: whole_is_true ( mouse_button ) )
         {
             platform_sound :: sound_source_stop ( _mono_sound_source ) ;
             platform_sound :: sound_source_play ( _mono_sound_source ) ;
@@ -253,7 +253,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform_math :: math_make_num_fract ( fract_mono_sound_samples_per_second , platform_sound :: mono_sound_samples_per_second , 1 ) ;
     platform_math :: math_make_num_whole ( next_sample , 0 ) ;
     for ( num_whole i = platform :: math_consts . whole_0 
-        ; platform_conditions :: condition_whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
+        ; platform_conditions :: whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
         ; platform_math :: math_inc_whole ( i )
         )
     {

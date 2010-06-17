@@ -53,43 +53,43 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
     num_whole y2 = msg . y2 ;
     num_whole x3 = msg . x3 ;
     num_whole y3 = msg . y3 ;
-    if ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( y1 , y2 ) 
-      && platform_conditions :: condition_whole_greater_or_equal_to_whole ( y2 , y3 )
+    if ( platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y2 ) 
+      && platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y3 )
        )
     {
         _rasterize_top_triangle_part    ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
         _rasterize_bottom_triangle_part ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
     }
-    else if ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( y1 , y3 ) 
-           && platform_conditions :: condition_whole_greater_or_equal_to_whole ( y3 , y2 )
+    else if ( platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y3 ) 
+           && platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y2 )
             )
     {
         _rasterize_top_triangle_part    ( x1 , y1 , x3 , y3 , x2 , y2 ) ;
         _rasterize_bottom_triangle_part ( x1 , y1 , x3 , y3 , x2 , y2 ) ;
     }
-    else if ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( y3 , y1 )
-           && platform_conditions :: condition_whole_greater_or_equal_to_whole ( y1 , y2 )
+    else if ( platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y1 )
+           && platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y2 )
             )
     {
         _rasterize_top_triangle_part    ( x3 , y3 , x1 , y1 , x2 , y2 ) ;
         _rasterize_bottom_triangle_part ( x3 , y3 , x1 , y1 , x2 , y2 ) ;
     }
-    else if ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( y3 , y2 )
-           && platform_conditions :: condition_whole_greater_or_equal_to_whole ( y2 , y1 )
+    else if ( platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y2 )
+           && platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y1 )
             )
     {
         _rasterize_top_triangle_part    ( x3 , y3 , x2 , y2 , x1 , y1 ) ;
         _rasterize_bottom_triangle_part ( x3 , y3 , x2 , y2 , x1 , y1 ) ;
     }
-    else if ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( y2 , y1 )
-           && platform_conditions :: condition_whole_greater_or_equal_to_whole ( y1 , y3 )
+    else if ( platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y1 )
+           && platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y3 )
             )
     {
         _rasterize_top_triangle_part    ( x2 , y2 , x1 , y1 , x3 , y3 ) ;
         _rasterize_bottom_triangle_part ( x2 , y2 , x1 , y1 , x3 , y3 ) ;
     }
-    else if ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( y2 , y3 ) 
-           && platform_conditions :: condition_whole_greater_or_equal_to_whole ( y3 , y1 )
+    else if ( platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y3 ) 
+           && platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y1 )
             )
     {
         _rasterize_top_triangle_part    ( x2 , y2 , x3 , y3 , x1 , y1 ) ;
@@ -190,12 +190,12 @@ void shy_engine_rasterizer < mediator > :: _rasterize_top_triangle_part
     ( num_whole x_top , num_whole y_top , num_whole x_mid , num_whole y_mid , num_whole x_bottom , num_whole y_bottom )
 {
     for ( num_whole y = y_top 
-        ; platform_conditions :: condition_whole_greater_or_equal_to_whole ( y , y_mid ) 
+        ; platform_conditions :: whole_greater_or_equal_to_whole ( y , y_mid ) 
         ; platform_math :: math_dec_whole ( y )
         )
     {
         num_whole x_top_mid ;
-        if ( platform_conditions :: condition_wholes_are_equal ( y_top , y_mid ) ) 
+        if ( platform_conditions :: wholes_are_equal ( y_top , y_mid ) ) 
             x_top_mid = x_mid ;
         else
         {
@@ -211,7 +211,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_top_triangle_part
         }
             
         num_whole x_top_bottom ;
-        if ( platform_conditions :: condition_wholes_are_equal ( y_top , y_bottom ) ) 
+        if ( platform_conditions :: wholes_are_equal ( y_top , y_bottom ) ) 
             x_top_bottom = x_top ;
         else
         {
@@ -235,12 +235,12 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bottom_triangle_part
     ( num_whole x_top , num_whole y_top , num_whole x_mid , num_whole y_mid , num_whole x_bottom , num_whole y_bottom )
 {
     for ( num_whole y = y_mid 
-        ; platform_conditions :: condition_whole_greater_or_equal_to_whole ( y , y_bottom )
+        ; platform_conditions :: whole_greater_or_equal_to_whole ( y , y_bottom )
         ; platform_math :: math_dec_whole ( y )
         )
     {
         num_whole x_mid_bottom ;
-        if ( platform_conditions :: condition_wholes_are_equal ( y_mid , y_bottom ) )
+        if ( platform_conditions :: wholes_are_equal ( y_mid , y_bottom ) )
             x_mid_bottom = x_mid ;
         else
         {
@@ -256,7 +256,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bottom_triangle_part
         }
         
         num_whole x_top_bottom ;
-        if ( platform_conditions :: condition_wholes_are_equal ( y_top , y_bottom ) )
+        if ( platform_conditions :: wholes_are_equal ( y_top , y_bottom ) )
             x_top_bottom = x_bottom ;
         else
         {
@@ -301,7 +301,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
     platform_math :: math_mul_wholes ( stopping_x , two_b_square , x_radius ) ;    
     stopping_y = platform :: math_consts . whole_0 ;
     
-    while ( platform_conditions :: condition_whole_greater_or_equal_to_whole ( stopping_x , stopping_y ) )
+    while ( platform_conditions :: whole_greater_or_equal_to_whole ( stopping_x , stopping_y ) )
     {
         num_whole cx_minus_x ;
         num_whole cx_plus_x ;
@@ -322,7 +322,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
         platform_math :: math_add_to_whole ( y_change , two_a_square ) ;
         platform_math :: math_mul_wholes ( ellipse_error_mul_2_plus_x_change , ellipse_error , platform :: math_consts . whole_2 ) ;
         platform_math :: math_add_to_whole ( ellipse_error_mul_2_plus_x_change , x_change ) ;
-        if ( platform_conditions :: condition_whole_greater_than_zero ( ellipse_error_mul_2_plus_x_change ) )
+        if ( platform_conditions :: whole_greater_than_zero ( ellipse_error_mul_2_plus_x_change ) )
         {
             platform_math :: math_dec_whole ( x ) ;
             platform_math :: math_sub_from_whole ( stopping_x , two_b_square ) ;
@@ -340,7 +340,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
     stopping_x = platform :: math_consts . whole_0 ;
     platform_math :: math_mul_wholes ( stopping_y , two_a_square , y_radius ) ;
     
-    while ( platform_conditions :: condition_whole_less_or_equal_to_whole ( stopping_x , stopping_y ) )
+    while ( platform_conditions :: whole_less_or_equal_to_whole ( stopping_x , stopping_y ) )
     {
         num_whole cx_minus_x ;
         num_whole cx_plus_x ;
@@ -361,7 +361,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
         platform_math :: math_add_to_whole ( x_change , two_b_square ) ;
         platform_math :: math_mul_wholes ( ellipse_error_mul_2_plus_y_change , ellipse_error , platform :: math_consts . whole_2 ) ;
         platform_math :: math_add_to_whole ( ellipse_error_mul_2_plus_y_change , y_change ) ;
-        if ( platform_conditions :: condition_whole_greater_than_zero ( ellipse_error_mul_2_plus_y_change ) )
+        if ( platform_conditions :: whole_greater_than_zero ( ellipse_error_mul_2_plus_y_change ) )
         {
             platform_math :: math_dec_whole ( y ) ;
             platform_math :: math_sub_from_whole ( stopping_y , two_a_square ) ;

@@ -76,7 +76,7 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
     platform_math :: math_make_num_whole ( _frames_to_change_camera_target , 0 ) ;
     platform_math :: math_make_num_whole ( _frames_to_change_camera_origin , 0 ) ;
     for ( num_whole i = platform :: math_consts . whole_0
-        ; platform_conditions :: condition_whole_less_than_whole ( i , platform :: math_consts . whole_4 )
+        ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 )
         ; platform_math :: math_inc_whole ( i )
         )
     {
@@ -100,7 +100,7 @@ void shy_logic_camera < mediator > :: set_mediator ( typename platform_pointer :
 template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_use msg )
 {
-    if ( platform_conditions :: condition_true ( _camera_created ) )
+    if ( platform_conditions :: whole_is_true ( _camera_created ) )
         platform_render :: matrix_load ( _camera_matrix ) ;
     else
         platform_render :: matrix_identity ( ) ;
@@ -115,9 +115,9 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prep
 template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: camera_update msg )
 {
-    if ( platform_conditions :: condition_true ( _camera_prepare_permitted ) )
+    if ( platform_conditions :: whole_is_true ( _camera_prepare_permitted ) )
     {
-        if ( platform_conditions :: condition_false ( _camera_created ) )
+        if ( platform_conditions :: whole_is_false ( _camera_created ) )
         {
             _fill_camera_schedules ( ) ;
             _reset_camera_rubber ( ) ;
@@ -130,12 +130,12 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_upda
 template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: entities_height_reply msg )
 {
-    if ( platform_conditions :: condition_true ( _entities_height_requested ) )
+    if ( platform_conditions :: whole_is_true ( _entities_height_requested ) )
     {
         platform_math :: math_make_num_whole ( _entities_height_requested , false ) ;
         _entities_height = msg . height ;
         _update_camera ( ) ;
-        if ( platform_conditions :: condition_false ( _camera_created ) )
+        if ( platform_conditions :: whole_is_false ( _camera_created ) )
         {
             platform_math :: math_make_num_whole ( _camera_created , true ) ;
             _mediator . get ( ) . send ( typename messages :: camera_prepared ( ) ) ;
@@ -160,7 +160,7 @@ template < typename mediator >
 void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
 {
     for ( num_whole i = platform :: math_consts . whole_0
-        ; platform_conditions :: condition_whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
+        ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
         ; platform_math :: math_inc_whole ( i )
         )
     {
@@ -195,7 +195,7 @@ template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 {
     platform_math :: math_dec_whole ( _frames_to_change_camera_origin ) ;
-    if ( platform_conditions :: condition_whole_less_or_equal_to_zero ( _frames_to_change_camera_origin ) )
+    if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_origin ) )
     {
         num_whole new_origin_index ;
         vector_data new_origin_pos ;
@@ -244,7 +244,7 @@ template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 {
     platform_math :: math_dec_whole ( _frames_to_change_camera_target ) ;
-    if ( platform_conditions :: condition_whole_less_or_equal_to_zero ( _frames_to_change_camera_target ) )
+    if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_target ) )
     {
         num_whole new_target_index ;
         vector_data new_target_pos ;
@@ -362,7 +362,7 @@ void shy_logic_camera < mediator > :: _random_camera_origin_index ( num_whole & 
     {
         _get_random_index ( index , platform :: math_consts . whole_0 , index_max ) ;
         _camera_origin_index_is_duplicate ( is_duplicate , index ) ;
-    } while ( platform_conditions :: condition_true ( is_duplicate ) ) ;
+    } while ( platform_conditions :: whole_is_true ( is_duplicate ) ) ;
     result = index ;
 }
 
@@ -383,7 +383,7 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( num_whole & 
     {
         _get_random_index ( index , index_min , index_max ) ;
         _camera_target_index_is_duplicate ( is_duplicate , index ) ;
-    } while ( platform_conditions :: condition_true ( is_duplicate ) ) ;
+    } while ( platform_conditions :: whole_is_true ( is_duplicate ) ) ;
     result = index ;
 }
 
@@ -407,12 +407,12 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_wh
 {
     platform_math :: math_make_num_whole ( result , false ) ;
     for ( num_whole i = platform :: math_consts . whole_0 
-        ; platform_conditions :: condition_whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
+        ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
         ; platform_math :: math_inc_whole ( i )
         )
     {
         num_whole & index_ptr = platform_static_array :: element ( _scheduled_camera_origin_indices , i ) ;
-        if ( platform_conditions :: condition_wholes_are_equal ( index_ptr , index ) )
+        if ( platform_conditions :: wholes_are_equal ( index_ptr , index ) )
         {
             platform_math :: math_make_num_whole ( result , true ) ;
             break ;
@@ -425,12 +425,12 @@ void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( num_wh
 {
     platform_math :: math_make_num_whole ( result , false ) ;
     for ( num_whole i = platform :: math_consts . whole_0 
-        ; platform_conditions :: condition_whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
+        ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
         ; platform_math :: math_inc_whole ( i )
         )
     {
         num_whole & index_ptr = platform_static_array :: element ( _scheduled_camera_target_indices , i ) ;
-        if ( platform_conditions :: condition_wholes_are_equal ( index_ptr , index ) )
+        if ( platform_conditions :: wholes_are_equal ( index_ptr , index ) )
         {
             platform_math :: math_make_num_whole ( result , true ) ;
             break ;

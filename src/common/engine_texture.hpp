@@ -128,12 +128,12 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
     _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     for ( num_whole y = msg . bottom
-        ; platform_conditions :: condition_whole_less_or_equal_to_whole ( y , msg . top )
+        ; platform_conditions :: whole_less_or_equal_to_whole ( y , msg . top )
         ; platform_math :: math_inc_whole ( y )
         )
     {
         for ( num_whole x = msg . left
-            ; platform_conditions :: condition_whole_less_or_equal_to_whole ( x , msg . right )
+            ; platform_conditions :: whole_less_or_equal_to_whole ( x , msg . right )
             ; platform_math :: math_inc_whole ( x )
             )
         {
