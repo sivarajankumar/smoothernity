@@ -130,11 +130,11 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 {
     num_whole touch ;
-    platform_touch :: touch_occured ( touch ) ;
+    platform_touch :: occured ( touch ) ;
     if ( platform_conditions :: whole_is_true ( touch ) )
     {
-        platform_touch :: touch_x ( _spot_x ) ;
-        platform_touch :: touch_y ( _spot_y ) ;
+        platform_touch :: x ( _spot_x ) ;
+        platform_touch :: y ( _spot_y ) ;
         platform_math :: make_num_whole ( _should_place_new_spot , true ) ;
     }
 }
