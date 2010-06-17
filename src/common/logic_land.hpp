@@ -209,9 +209,9 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             platform_math :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
             {
                 vertex_data & vertex = platform_static_array :: array_element ( vertices , vertices_count ) ;
-                platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-                platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-                platform_render :: render_set_vertex_tex_coord ( vertex , vertex_u , vertex_v ) ;
+                platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+                platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+                platform_render :: set_vertex_tex_coord ( vertex , vertex_u , vertex_v ) ;
             }
             platform_math :: math_inc_whole ( vertices_count ) ;
         }
@@ -240,14 +240,14 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 platform_math :: math_add_to_whole ( index , ix ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform_render :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
                 
                 platform_math :: math_add_to_whole ( index , row_size ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform_render :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
             }
@@ -259,14 +259,14 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 platform_math :: math_add_to_whole ( index , row_size ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform_render :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
                 
                 platform_math :: math_sub_from_whole ( index , row_size ) ;
                 {
                     index_data & index_ptr = platform_static_array :: array_element ( indices , indices_count ) ;
-                    platform_render :: render_set_index_value ( index_ptr , index ) ;
+                    platform_render :: set_index_value ( index_ptr , index ) ;
                 }
                 platform_math :: math_inc_whole ( indices_count ) ;
             }

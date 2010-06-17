@@ -131,7 +131,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform_math :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform_math :: math_make_fract_from_whole ( fract_fidget_scale , _fidget_scale ) ;
     platform_math :: math_div_fracts ( scale , fract_fidget_scale , fract_scale_in_frames ) ;
-    platform_render :: render_get_aspect_height ( height ) ;
+    platform_render :: get_aspect_height ( height ) ;
     platform_math :: math_make_num_fract ( num_half , 1 , 2 ) ;
     platform_math :: math_cos ( angle_cos , _fidget_angle ) ;
     platform_math :: math_sin ( angle_sin , _fidget_angle ) ;
@@ -200,12 +200,12 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         platform_math :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
         {
             vertex_data & vertex = platform_static_array :: array_element ( vertices , i ) ;
-            platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
             index_data & index = platform_static_array :: array_element ( indices , i ) ;
-            platform_render :: render_set_index_value ( index , i ) ;
+            platform_render :: set_index_value ( index , i ) ;
         }
     }
     _mediator . get ( ) . mesh_create

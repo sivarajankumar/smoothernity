@@ -235,12 +235,12 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform_math :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
         {
             vertex_data & vertex = platform_static_array :: array_element ( vertices , i ) ;
-            platform_render :: render_set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform_render :: render_set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
+            platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
             index_data & index = platform_static_array :: array_element ( indices , i ) ;
-            platform_render :: render_set_index_value ( index , i ) ;
+            platform_render :: set_index_value ( index , i ) ;
         }
     }
     _mediator . get ( ) . mesh_create

@@ -66,7 +66,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
     {
         num_fract black ;
         platform_math :: math_make_num_fract ( black , 0 , 1 ) ;
-        platform_render :: render_clear_screen ( black , black , black ) ;
+        platform_render :: clear_screen ( black , black , black ) ;
     }
 }
 

@@ -80,12 +80,12 @@ void shy_logic < mediator > :: receive ( typename messages :: use_perspective_pr
     num_fract z_near ;
     _get_near_plane_distance ( z_near ) ;
     platform_math :: math_make_num_fract ( z_far , 50 , 1 ) ;
-    platform_render :: render_get_aspect_width ( width ) ;
-    platform_render :: render_get_aspect_height ( height ) ;
+    platform_render :: get_aspect_width ( width ) ;
+    platform_render :: get_aspect_height ( height ) ;
     platform_math :: math_neg_fract ( neg_width , width ) ;
     platform_math :: math_neg_fract ( neg_height , height ) ;
-    platform_render :: render_projection_frustum ( neg_width , width , neg_height , height , z_near , z_far ) ;
-    platform_render :: render_matrix_identity ( ) ;
+    platform_render :: projection_frustum ( neg_width , width , neg_height , height , z_near , z_far ) ;
+    platform_render :: matrix_identity ( ) ;
 }
 
 template < typename mediator >
@@ -97,14 +97,14 @@ void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projecti
     num_fract neg_height ;
     num_fract z_far ;
     num_fract z_near ;
-    platform_render :: render_get_aspect_width ( width ) ;
-    platform_render :: render_get_aspect_height ( height ) ;
+    platform_render :: get_aspect_width ( width ) ;
+    platform_render :: get_aspect_height ( height ) ;
     platform_math :: math_neg_fract ( neg_width , width ) ;
     platform_math :: math_neg_fract ( neg_height , height ) ;
     platform_math :: math_make_num_fract ( z_near , 1 , 1 ) ;
     platform_math :: math_make_num_fract ( z_far , 50 , 1 ) ;
-    platform_render :: render_projection_ortho ( neg_width , width , neg_height , height , z_near , z_far ) ;
-    platform_render :: render_matrix_identity ( ) ;
+    platform_render :: projection_ortho ( neg_width , width , neg_height , height , z_near , z_far ) ;
+    platform_render :: matrix_identity ( ) ;
 }
 
 template < typename mediator >
@@ -127,9 +127,9 @@ void shy_logic < mediator > :: get_near_plane_distance ( num_fract & result )
 template < typename mediator >
 void shy_logic < mediator > :: _init_render ( )
 {
-    platform_render :: render_blend_disable ( ) ;
-    platform_render :: render_enable_face_culling ( ) ;
-    platform_render :: render_set_modulate_texture_mode ( ) ;
+    platform_render :: blend_disable ( ) ;
+    platform_render :: enable_face_culling ( ) ;
+    platform_render :: set_modulate_texture_mode ( ) ;
 }
 
 template < typename mediator >
@@ -137,7 +137,7 @@ void shy_logic < mediator > :: _get_near_plane_distance ( num_fract & result )
 {
     num_fract width ;
     num_fract height ;
-    platform_render :: render_get_aspect_width ( width ) ;
-    platform_render :: render_get_aspect_height ( height ) ;
+    platform_render :: get_aspect_width ( width ) ;
+    platform_render :: get_aspect_height ( height ) ;
     platform_math :: math_add_fracts ( result , width , height ) ;
 }

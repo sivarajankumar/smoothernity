@@ -101,9 +101,9 @@ template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_use msg )
 {
     if ( platform_conditions :: condition_true ( _camera_created ) )
-        platform_render :: render_matrix_load ( _camera_matrix ) ;
+        platform_render :: matrix_load ( _camera_matrix ) ;
     else
-        platform_render :: render_matrix_identity ( ) ;
+        platform_render :: matrix_identity ( ) ;
 }
 
 template < typename mediator >
@@ -332,7 +332,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     num_fract entity_height ;
     
     _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
-    platform_render :: render_get_aspect_height ( aspect_height ) ;
+    platform_render :: get_aspect_height ( aspect_height ) ;
     platform_math :: math_make_num_fract ( up_x , 0 , 1 ) ;
     platform_math :: math_make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: math_make_num_fract ( up_z , 0 , 1 ) ;

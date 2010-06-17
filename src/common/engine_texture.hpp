@@ -68,8 +68,8 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_f
     num_whole size_pow2_base ;
     _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
-    platform_render :: render_create_texture_id ( texture . render_id ) ;
-    platform_render :: render_load_texture_data ( texture . render_id , size_pow2_base , texture . texels ) ;
+    platform_render :: create_texture_id ( texture . render_id ) ;
+    platform_render :: load_texture_data ( texture . render_id , size_pow2_base , texture . texels ) ;
 }
 
 template < typename mediator >
@@ -78,21 +78,21 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_l
     num_whole size_pow2_base ;
     _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
-    platform_render :: render_load_texture_resource ( msg . resource , size_pow2_base , texture . texels ) ;
+    platform_render :: load_texture_resource ( msg . resource , size_pow2_base , texture . texels ) ;
 }
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: receive ( typename messages :: texture_select msg )
 {
     _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
-    platform_render :: render_enable_texturing ( ) ;
-    platform_render :: render_use_texture ( texture . render_id ) ;
+    platform_render :: enable_texturing ( ) ;
+    platform_render :: use_texture ( texture . render_id ) ;
 }
 
 template < typename mediator >
 void shy_engine_texture < mediator > :: receive ( typename messages :: texture_unselect msg )
 {
-    platform_render :: render_disable_texturing ( ) ;
+    platform_render :: disable_texturing ( ) ;
 }
 
 template < typename mediator >
@@ -117,7 +117,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
     platform_math :: math_mul_wholes ( texel_offset , num_texture_size , msg . y ) ;
     platform_math :: math_add_to_whole ( texel_offset , msg . x ) ;
     texel_data & texel = platform_static_array :: array_element ( texture . texels , texel_offset ) ;
-    platform_render :: render_set_texel_color ( texel , msg . r , msg . g , msg . b , msg . a ) ;
+    platform_render :: set_texel_color ( texel , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >
