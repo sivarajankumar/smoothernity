@@ -22,9 +22,9 @@ void shy_engine_camera < mediator > :: camera_matrix_look_at
     platform_vector :: vector_normalize ( axis_z , dir ) ;
     platform_vector :: vector_cross_product ( axis_x , norm_up , axis_z ) ;
     platform_vector :: vector_cross_product ( axis_y , axis_z , axis_x ) ;
-    platform_matrix :: matrix_set_axis_x ( matrix , axis_x ) ;
-    platform_matrix :: matrix_set_axis_y ( matrix , axis_y ) ;
-    platform_matrix :: matrix_set_axis_z ( matrix , axis_z ) ;
-    platform_matrix :: matrix_set_origin ( matrix , from ) ;
-    platform_matrix :: matrix_inverse_rotation_translation ( matrix ) ;
+    platform_matrix :: set_axis_x ( matrix , axis_x ) ;
+    platform_matrix :: set_axis_y ( matrix , axis_y ) ;
+    platform_matrix :: set_axis_z ( matrix , axis_z ) ;
+    platform_matrix :: set_origin ( matrix , from ) ;
+    platform_matrix :: inverse_rotation_translation ( matrix ) ;
 }

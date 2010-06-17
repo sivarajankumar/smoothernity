@@ -85,7 +85,7 @@ void shy_engine_mesh < mediator > :: mesh_create
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
     mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
     mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
-    platform_matrix :: matrix_identity ( mesh . transform ) ;
+    platform_matrix :: identity ( mesh . transform ) ;
     platform_render :: create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
     if ( platform_conditions :: whole_greater_than_zero ( triangle_strip_indices_count ) )
     {

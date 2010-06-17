@@ -214,10 +214,10 @@ void shy_logic_title < mediator > :: _title_render ( )
 {
     matrix_data scene_tm ;
 
-    platform_matrix :: matrix_set_axis_x ( scene_tm , _scene_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_y ( scene_tm , platform :: math_consts . fract_0 , _scene_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
-    platform_matrix :: matrix_set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_x ( scene_tm , _scene_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_y ( scene_tm , platform :: math_consts . fract_0 , _scene_scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+    platform_matrix :: set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     
     platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
@@ -365,10 +365,10 @@ void shy_logic_title < mediator > :: _title_update ( )
         
         platform_vector :: vector_add ( origin , pos , offset ) ;
         
-        platform_matrix :: matrix_set_axis_x ( tm , axis_x ) ;
-        platform_matrix :: matrix_set_axis_y ( tm , axis_y ) ;
-        platform_matrix :: matrix_set_axis_z ( tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
-        platform_matrix :: matrix_set_origin ( tm , origin ) ;
+        platform_matrix :: set_axis_x ( tm , axis_x ) ;
+        platform_matrix :: set_axis_y ( tm , axis_y ) ;
+        platform_matrix :: set_axis_z ( tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+        platform_matrix :: set_origin ( tm , origin ) ;
         
         {
             typename messages :: mesh_set_transform mesh_set_transform_msg ;

@@ -451,10 +451,10 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 _get_entity_origin ( origin , index ) ;
                 
                 matrix_data & matrix = platform_static_array :: element ( _entities_grid_matrices , index ) ;
-                platform_matrix :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-                platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
-                platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
-                platform_matrix :: matrix_set_origin ( matrix , origin ) ;
+                platform_matrix :: set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+                platform_matrix :: set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
+                platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
+                platform_matrix :: set_origin ( matrix , origin ) ;
             }
         }
         platform_math :: inc_whole ( _grid_scale ) ;

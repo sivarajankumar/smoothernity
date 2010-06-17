@@ -343,10 +343,10 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
     platform_math :: make_num_fract ( origin_x , - 1 , 2 ) ;
     platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
-    platform_matrix :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
-    platform_matrix :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
+    platform_matrix :: set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
+    platform_matrix :: set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     {
         typename messages :: mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _text_mesh_id ;

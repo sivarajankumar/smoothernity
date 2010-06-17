@@ -141,10 +141,10 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform_math :: make_num_fract ( origin_x , 0 , 1 ) ;
     platform_math :: sub_fracts ( origin_y , height , num_half ) ;
     platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
-    platform_matrix :: matrix_set_axis_x ( matrix , cos_by_scale , sin_by_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
-    platform_matrix :: matrix_set_origin ( matrix , origin_x , origin_y , origin_z ) ;
+    platform_matrix :: set_axis_x ( matrix , cos_by_scale , sin_by_scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+    platform_matrix :: set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     
     mesh_set_transform_msg . mesh = _fidget_mesh_id ;
     mesh_set_transform_msg . transform = matrix ;

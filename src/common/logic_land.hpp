@@ -124,10 +124,10 @@ void shy_logic_land < mediator > :: _render_land ( )
         _land_scale = increased_scale ;
     else
         _land_scale = platform :: math_consts . fract_1 ;
-    platform_matrix :: matrix_set_axis_x ( matrix , _land_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , _land_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , _land_scale ) ;
-    platform_matrix :: matrix_set_origin ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_x ( matrix , _land_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_y ( matrix , platform :: math_consts . fract_0 , _land_scale , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , _land_scale ) ;
+    platform_matrix :: set_origin ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     {
         typename messages :: mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _land_mesh_id ;

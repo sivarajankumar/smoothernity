@@ -20,20 +20,20 @@ public :
         GLfloat _elements [ 16 ] ;
     } ;
 public :
-    static void matrix_set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void matrix_set_axis_x ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_set_axis_y ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_set_axis_z ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_set_origin ( matrix_data & matrix , vector_data v ) ;
-    static void matrix_get_axis_x ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_get_axis_y ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_get_axis_z ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_get_origin ( vector_data & result , const matrix_data & matrix ) ;
-    static void matrix_identity ( matrix_data & matrix ) ;
-    static void matrix_inverse_rotation_translation ( matrix_data & matrix ) ;
+    static void set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
+    static void set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
+    static void set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
+    static void set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
+    static void set_axis_x ( matrix_data & matrix , vector_data v ) ;
+    static void set_axis_y ( matrix_data & matrix , vector_data v ) ;
+    static void set_axis_z ( matrix_data & matrix , vector_data v ) ;
+    static void set_origin ( matrix_data & matrix , vector_data v ) ;
+    static void get_axis_x ( vector_data & result , const matrix_data & matrix ) ;
+    static void get_axis_y ( vector_data & result , const matrix_data & matrix ) ;
+    static void get_axis_z ( vector_data & result , const matrix_data & matrix ) ;
+    static void get_origin ( vector_data & result , const matrix_data & matrix ) ;
+    static void identity ( matrix_data & matrix ) ;
+    static void inverse_rotation_translation ( matrix_data & matrix ) ;
 private :
     template < typename type >
     static void _swap_values ( type & a , type & b ) ;
@@ -56,7 +56,7 @@ inline void shy_platform_matrix_float < platform_insider > :: _swap_values ( typ
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
+inline void shy_platform_matrix_float < platform_insider > :: set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
     matrix . _elements [ 0 ] = platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
     matrix . _elements [ 1 ] = platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
@@ -65,7 +65,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_x 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
+inline void shy_platform_matrix_float < platform_insider > :: set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
     matrix . _elements [ 4 ] = platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
     matrix . _elements [ 5 ] = platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
@@ -74,7 +74,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_y 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
+inline void shy_platform_matrix_float < platform_insider > :: set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
     matrix . _elements [  8 ] = platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
     matrix . _elements [  9 ] = platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
@@ -83,7 +83,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_z 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
+inline void shy_platform_matrix_float < platform_insider > :: set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
     matrix . _elements [ 12 ] = platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
     matrix . _elements [ 13 ] = platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
@@ -92,7 +92,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_origin 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_x ( matrix_data & matrix , vector_data v )
+inline void shy_platform_matrix_float < platform_insider > :: set_axis_x ( matrix_data & matrix , vector_data v )
 {
     matrix . _elements [ 0 ] = platform_vector_insider :: vector_x_unsafe_get ( v ) ;
     matrix . _elements [ 1 ] = platform_vector_insider :: vector_y_unsafe_get ( v ) ;
@@ -101,7 +101,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_x 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_y ( matrix_data & matrix , vector_data v )
+inline void shy_platform_matrix_float < platform_insider > :: set_axis_y ( matrix_data & matrix , vector_data v )
 {
     matrix . _elements [ 4 ] = platform_vector_insider :: vector_x_unsafe_get ( v ) ;
     matrix . _elements [ 5 ] = platform_vector_insider :: vector_y_unsafe_get ( v ) ;
@@ -110,7 +110,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_y 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_z ( matrix_data & matrix , vector_data v )
+inline void shy_platform_matrix_float < platform_insider > :: set_axis_z ( matrix_data & matrix , vector_data v )
 {
     matrix . _elements [  8 ] = platform_vector_insider :: vector_x_unsafe_get ( v ) ;
     matrix . _elements [  9 ] = platform_vector_insider :: vector_y_unsafe_get ( v ) ;
@@ -119,7 +119,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_axis_z 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_set_origin ( matrix_data & matrix , vector_data v )
+inline void shy_platform_matrix_float < platform_insider > :: set_origin ( matrix_data & matrix , vector_data v )
 {
     matrix . _elements [ 12 ] = platform_vector_insider :: vector_x_unsafe_get ( v ) ;
     matrix . _elements [ 13 ] = platform_vector_insider :: vector_y_unsafe_get ( v ) ;
@@ -128,7 +128,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_set_origin 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_get_axis_x ( vector_data & result , const matrix_data & matrix )
+inline void shy_platform_matrix_float < platform_insider > :: get_axis_x ( vector_data & result , const matrix_data & matrix )
 {
     platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 0 ] ) ;
     platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 1 ] ) ;
@@ -136,7 +136,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_get_axis_x 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_get_axis_y ( vector_data & result , const matrix_data & matrix )
+inline void shy_platform_matrix_float < platform_insider > :: get_axis_y ( vector_data & result , const matrix_data & matrix )
 {
     platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 4 ] ) ;
     platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 5 ] ) ;
@@ -144,7 +144,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_get_axis_y 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_get_axis_z ( vector_data & result , const matrix_data & matrix )
+inline void shy_platform_matrix_float < platform_insider > :: get_axis_z ( vector_data & result , const matrix_data & matrix )
 {
     platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 8 ] ) ;
     platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 9 ] ) ;
@@ -152,7 +152,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_get_axis_z 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_get_origin ( vector_data & result , const matrix_data & matrix )
+inline void shy_platform_matrix_float < platform_insider > :: get_origin ( vector_data & result , const matrix_data & matrix )
 {
     platform_vector_insider :: vector_x_unsafe_set ( result , matrix . _elements [ 12 ] ) ;
     platform_vector_insider :: vector_y_unsafe_set ( result , matrix . _elements [ 13 ] ) ;
@@ -160,7 +160,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_get_origin 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_identity ( matrix_data & matrix )
+inline void shy_platform_matrix_float < platform_insider > :: identity ( matrix_data & matrix )
 {
     for ( int i = 0 ; i < 16 ; i ++ )
     {
@@ -172,16 +172,16 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_identity ( 
 }
 
 template < typename platform_insider >
-inline void shy_platform_matrix_float < platform_insider > :: matrix_inverse_rotation_translation ( matrix_data & matrix )
+inline void shy_platform_matrix_float < platform_insider > :: inverse_rotation_translation ( matrix_data & matrix )
 {
     vector_data axis_x ;
     vector_data axis_y ;
     vector_data axis_z ;
     vector_data origin ;
-    matrix_get_axis_x ( axis_x , matrix ) ;
-    matrix_get_axis_y ( axis_y , matrix ) ;
-    matrix_get_axis_z ( axis_z , matrix ) ;
-    matrix_get_origin ( origin , matrix ) ;
+    get_axis_x ( axis_x , matrix ) ;
+    get_axis_y ( axis_y , matrix ) ;
+    get_axis_z ( axis_z , matrix ) ;
+    get_origin ( origin , matrix ) ;
     
     num_fract dot_x ;
     num_fract dot_y ;
@@ -195,7 +195,7 @@ inline void shy_platform_matrix_float < platform_insider > :: matrix_inverse_rot
     platform_vector_insider :: vector_y_unsafe_set ( new_origin , - platform_math_insider :: num_fract_unsafe_value_get ( dot_y ) ) ;
     platform_vector_insider :: vector_z_unsafe_set ( new_origin , - platform_math_insider :: num_fract_unsafe_value_get ( dot_z ) ) ;
     
-    matrix_set_origin ( matrix , new_origin ) ;
+    set_origin ( matrix , new_origin ) ;
     _swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
     _swap_values ( matrix . _elements [ 2 ] , matrix . _elements [ 8 ] ) ;
     _swap_values ( matrix . _elements [ 6 ] , matrix . _elements [ 9 ] ) ;
