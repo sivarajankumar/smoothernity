@@ -20,21 +20,21 @@ public :
     } ;
 public :
     template < typename array_type >
-    static typename array_type :: _data_type & array_element ( array_type & array , num_whole index ) ;
+    static typename array_type :: _data_type & element ( array_type & array , num_whole index ) ;
     template < typename array_type >
-    static const typename array_type :: _data_type & array_element ( const array_type & array , num_whole index ) ;
+    static const typename array_type :: _data_type & element ( const array_type & array , num_whole index ) ;
 } ;
 
 template < typename platform_insider >
 template < typename array_type >
-inline typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: array_element ( array_type & array , num_whole index )
+inline typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: element ( array_type & array , num_whole index )
 {
     return array . _elements [ platform_math_insider :: num_whole_unsafe_value_get ( index ) ] ;
 }
 
 template < typename platform_insider >
 template < typename array_type >
-inline const typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: array_element ( const array_type & array , num_whole index )
+inline const typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: element ( const array_type & array , num_whole index )
 {
     return array . _elements [ platform_math_insider :: num_whole_unsafe_value_get ( index ) ] ;
 }

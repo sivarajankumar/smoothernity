@@ -160,7 +160,7 @@ void shy_logic_entities < mediator > :: _entities_render ( )
         ; platform_math :: math_inc_whole ( i )
         )
     {
-        matrix_data & matrix = platform_static_array :: array_element ( _entities_grid_matrices , i ) ;
+        matrix_data & matrix = platform_static_array :: element ( _entities_grid_matrices , i ) ;
         {
             typename messages :: mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = _entity_mesh_id ;
@@ -276,12 +276,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
 
         {
-            vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
+            vertex_data & vertex = platform_static_array :: element ( _vertices , _vertices_count ) ;
             platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
-            index_data & index = platform_static_array :: array_element ( _strip_indices , _strip_indices_count ) ;
+            index_data & index = platform_static_array :: element ( _strip_indices , _strip_indices_count ) ;
             platform_render :: set_index_value ( index , _vertices_count ) ;
         }
 
@@ -293,12 +293,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color2 ) ;
         
         {
-            vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
+            vertex_data & vertex = platform_static_array :: element ( _vertices , _vertices_count ) ;
             platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
             platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         }
         {
-            index_data & index = platform_static_array :: array_element ( _strip_indices , _strip_indices_count ) ;
+            index_data & index = platform_static_array :: element ( _strip_indices , _strip_indices_count ) ;
             platform_render :: set_index_value ( index , _vertices_count ) ;
         }
 
@@ -320,12 +320,12 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform_math :: math_make_num_fract ( vertex_a , 1 , 1 ) ;
 
             {
-                vertex_data & vertex = platform_static_array :: array_element ( _vertices , _vertices_count ) ;
+                vertex_data & vertex = platform_static_array :: element ( _vertices , _vertices_count ) ;
                 platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
                 platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
             }
             {
-                index_data & index = platform_static_array :: array_element ( _fan_indices , _fan_indices_count ) ;
+                index_data & index = platform_static_array :: element ( _fan_indices , _fan_indices_count ) ;
                 platform_render :: set_index_value ( index , _vertices_count ) ;
             }
             
@@ -337,7 +337,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             num_whole index ;
             platform_math :: math_mul_wholes ( index , _current_fan_mesh_span , platform :: math_consts . whole_2 ) ;
             {
-                index_data & index_ptr = platform_static_array :: array_element ( _fan_indices , _fan_indices_count ) ;
+                index_data & index_ptr = platform_static_array :: element ( _fan_indices , _fan_indices_count ) ;
                 platform_render :: set_index_value ( index_ptr , index ) ;
             }
             platform_math :: math_inc_whole ( _fan_indices_count ) ;
@@ -450,7 +450,7 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
                 
-                matrix_data & matrix = platform_static_array :: array_element ( _entities_grid_matrices , index ) ;
+                matrix_data & matrix = platform_static_array :: element ( _entities_grid_matrices , index ) ;
                 platform_matrix :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
                 platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
                 platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;

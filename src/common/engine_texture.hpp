@@ -66,7 +66,7 @@ template < typename mediator >
 void shy_engine_texture < mediator > :: receive ( typename messages :: texture_finalize msg )
 {
     num_whole size_pow2_base ;
-    _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
+    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
     platform_render :: create_texture_id ( texture . render_id ) ;
     platform_render :: load_texture_data ( texture . render_id , size_pow2_base , texture . texels ) ;
@@ -76,7 +76,7 @@ template < typename mediator >
 void shy_engine_texture < mediator > :: receive ( typename messages :: texture_load_from_resource msg )
 {
     num_whole size_pow2_base ;
-    _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
+    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
     platform_render :: load_texture_resource ( msg . resource , size_pow2_base , texture . texels ) ;
 }
@@ -84,7 +84,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_l
 template < typename mediator >
 void shy_engine_texture < mediator > :: receive ( typename messages :: texture_select msg )
 {
-    _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
+    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_render :: enable_texturing ( ) ;
     platform_render :: use_texture ( texture . render_id ) ;
 }
@@ -100,11 +100,11 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
+    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform_math :: math_mul_wholes ( texel_offset , num_texture_size , msg . y ) ;
     platform_math :: math_add_to_whole ( texel_offset , msg . x ) ;
-    platform_static_array :: array_element ( texture . texels , texel_offset ) = msg . texel ;
+    platform_static_array :: element ( texture . texels , texel_offset ) = msg . texel ;
 }
 
 template < typename mediator >
@@ -112,11 +112,11 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
+    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     platform_math :: math_mul_wholes ( texel_offset , num_texture_size , msg . y ) ;
     platform_math :: math_add_to_whole ( texel_offset , msg . x ) ;
-    texel_data & texel = platform_static_array :: array_element ( texture . texels , texel_offset ) ;
+    texel_data & texel = platform_static_array :: element ( texture . texels , texel_offset ) ;
     platform_render :: set_texel_color ( texel , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
@@ -125,7 +125,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    _texture_data & texture = platform_static_array :: array_element ( _textures_datas , msg . texture . _texture_id ) ;
+    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: math_make_num_whole ( num_texture_size , _texture_size ) ;
     for ( num_whole y = msg . bottom
         ; platform_conditions :: condition_whole_less_or_equal_to_whole ( y , msg . top )
@@ -139,7 +139,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
         {
             platform_math :: math_mul_wholes ( texel_offset , num_texture_size , y ) ;
             platform_math :: math_add_to_whole ( texel_offset , x ) ;
-            platform_static_array :: array_element ( texture . texels , texel_offset ) = msg . texel ;
+            platform_static_array :: element ( texture . texels , texel_offset ) = msg . texel ;
         }
     }
 }

@@ -276,7 +276,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform_math :: math_make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
         platform_math :: math_add_to_whole ( next_sample , whole_sample_delta ) ;
         _int_to_sample ( sample , next_sample ) ;
-        mono_sound_sample & sample_ptr = platform_static_array :: array_element ( _mono_sound_data , i ) ;
+        mono_sound_sample & sample_ptr = platform_static_array :: element ( _mono_sound_data , i ) ;
         platform_sound :: sound_set_sample_value ( sample_ptr , sample ) ;
     }
     

@@ -82,7 +82,7 @@ void shy_engine_mesh < mediator > :: mesh_create
     , num_whole triangle_fan_indices_count
     )
 {
-    _mesh_data & mesh = platform_static_array :: array_element ( _meshes_data , _next_mesh_id ) ;
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
     mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
     mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
     platform_matrix :: matrix_identity ( mesh . transform ) ;
@@ -110,7 +110,7 @@ void shy_engine_mesh < mediator > :: mesh_create
 template < typename mediator >
 void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_delete msg )
 {
-    _mesh_data & mesh = platform_static_array :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     platform_render :: delete_vertex_buffer ( mesh . vertex_buffer_id ) ;
     if ( platform_conditions :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
         platform_render :: delete_index_buffer ( mesh . triangle_strip_index_buffer_id ) ;
@@ -121,7 +121,7 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_delete 
 template < typename mediator >
 void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_render msg )
 {
-    _mesh_data & mesh = platform_static_array :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     platform_render :: matrix_push ( ) ;
     platform_render :: matrix_mult ( mesh . transform ) ;
     if ( platform_conditions :: condition_whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
@@ -146,6 +146,6 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_render 
 template < typename mediator >
 void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_set_transform msg )
 {
-    _mesh_data & mesh = platform_static_array :: array_element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     mesh . transform = msg . transform ;
 }

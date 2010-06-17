@@ -101,7 +101,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
             ; platform_math :: math_inc_whole ( i )
             )
         {
-            _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
+            _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
             typename messages :: mesh_delete mesh_delete_msg ;
             mesh_delete_msg . mesh = letter . mesh ;
             _mediator . get ( ) . send ( mesh_delete_msg ) ;
@@ -228,7 +228,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         ; platform_math :: math_inc_whole ( i )
         )
     {
-        _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
+        _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
         typename messages :: mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
@@ -300,7 +300,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         vector_data offset ;
         vector_data pos ;
         matrix_data tm ;
-        _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
+        _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
         
         platform_math :: math_make_fract_from_whole ( fract_i , i ) ;
         platform_math :: math_mul_fracts ( offset_x , aspect_width , platform :: math_consts . fract_2 ) ;
@@ -382,7 +382,7 @@ void shy_logic_title < mediator > :: _title_update ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 {
-    platform_static_array :: array_element ( _letters , _letters_count ) . letter = letter ;
+    platform_static_array :: element ( _letters , _letters_count ) . letter = letter ;
     platform_math :: math_inc_whole ( _letters_count ) ;
 }
 
@@ -398,8 +398,8 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     num_fract title_a = platform :: math_consts . fract_1 ;
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_0 ) ;
+        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_0 ) ;
+        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_0 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_0 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -411,8 +411,8 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     }
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_1 ) ;
+        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_1 ) ;
+        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_1 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_1 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -424,8 +424,8 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     }
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_2 ) ;
+        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_2 ) ;
+        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_2 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_2 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -437,8 +437,8 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     }
     
     {
-        vertex_data & vertex = platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 ) ;
-        index_data & index = platform_static_array :: array_element ( indices , platform :: math_consts . whole_3 ) ;
+        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_3 ) ;
+        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_3 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_3 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -458,29 +458,29 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         num_fract tex_bottom ;
         num_fract tex_right ;
         num_fract tex_top ;
-        _letter_state & letter = platform_static_array :: array_element ( _letters , i ) ;
+        _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
         letter . scale = platform :: math_consts . fract_0 ;
         letter . pos_radius = platform :: math_consts . fract_0 ;
         letter . pos_angle = platform :: math_consts . fract_0 ;
         letter . rot_angle = platform :: math_consts . fract_0 ;
         _mediator . get ( ) . get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_0 )
+            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_0 )
             , tex_left
             , tex_top
             ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_1 )
+            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_1 )
             , tex_left
             , tex_bottom
             ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_2 )
+            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_2 )
             , tex_right
             , tex_top
             ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: array_element ( vertices , platform :: math_consts . whole_3 )
+            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_3 )
             , tex_right
             , tex_bottom
             ) ;
