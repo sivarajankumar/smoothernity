@@ -25,6 +25,7 @@
 #include "../platform/vector_float_insider.hpp"
 
 #include "macosx_platform_mouse.hpp"
+#include "macosx_platform_sound.hpp"
 #include "macosx_platform_time.hpp"
 
 class shy_macosx_platform_utility ;
@@ -32,6 +33,7 @@ class shy_macosx_platform_utility ;
 class shy_macosx_platform
 {
     friend class shy_macosx_platform_mouse < shy_macosx_platform > ;
+    friend class shy_macosx_platform_sound < shy_macosx_platform > ;
     friend class shy_macosx_platform_time < shy_macosx_platform > ;
     friend class shy_platform_conditions < shy_macosx_platform > ;
     friend class shy_platform_math_consts < shy_macosx_platform > ;
@@ -53,6 +55,7 @@ public :
     typedef shy_platform_matrix_float < shy_macosx_platform > platform_matrix ;
     typedef shy_macosx_platform_mouse < shy_macosx_platform > platform_mouse ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
+    typedef shy_macosx_platform_sound < shy_macosx_platform > platform_sound ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
     typedef shy_macosx_platform_time < shy_macosx_platform > platform_time ;
     typedef shy_platform_touch_dummy < shy_macosx_platform > platform_touch ;
@@ -130,59 +133,11 @@ public :
         GLushort _index ;
     } ;
 
-    class mono_sound_sample
-    {
-        friend class shy_macosx_platform ;
-    public :
-        mono_sound_sample ( ) ;
-    private :
-        ALubyte _value ;
-    } ;
-    
-    class stereo_sound_sample
-    {
-        friend class shy_macosx_platform ;
-    public :
-        stereo_sound_sample ( ) ;
-    private :
-        ALushort _left_channel_value ;
-        ALushort _right_channel_value ; 
-    } ;
-    
-    class sound_buffer_id
-    {
-        friend class shy_macosx_platform ;
-    public :
-        sound_buffer_id ( ) ;
-    private :
-        ALuint _buffer_id ;
-    } ;
-    
-    class sound_source_id
-    {
-        friend class shy_macosx_platform ;
-    public :
-        sound_source_id ( ) ;
-    private :
-        ALuint _source_id ;
-    } ;
-    
-    class stereo_sound_resource_id
-    {
-        friend class shy_macosx_platform ;
-    public :
-        stereo_sound_resource_id ( ) ;
-    private :
-        int _resource_id ;
-    } ;
-    
     //
     // constants
     //
     
     static const_int_32 frames_per_second = 60 ;
-    static const_int_32 mono_sound_samples_per_second = 22050 ;
-    static const_int_32 stereo_sound_samples_per_second = 44100 ;
     
     static const shy_platform_math_consts < shy_macosx_platform > math_consts ;
     
@@ -254,37 +209,6 @@ public :
         , num_whole indices_count
         ) ;        
     
-    //
-    // sound
-    //
-    
-    static void sound_set_listener_position ( vector_data position ) ;
-    static void sound_set_listener_velocity ( vector_data velocity ) ;
-    static void sound_set_listener_orientation ( vector_data look_at , vector_data up ) ;
-    static void sound_set_sample_value ( mono_sound_sample & sample , num_fract value ) ;
-    static void sound_create_stereo_resource_id ( stereo_sound_resource_id & result , num_whole resource_index ) ;
-    static void sound_loader_ready ( num_whole & result ) ;
-    static void sound_loaded_samples_count ( num_whole & result ) ;    
-    static void sound_create_source ( sound_source_id & result ) ;
-    static void sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch ) ;
-    static void sound_set_source_gain ( const sound_source_id & source_id , num_fract gain ) ;
-    static void sound_set_source_position ( const sound_source_id & source_id , vector_data position ) ;
-    static void sound_set_source_velocity ( const sound_source_id & source_id , vector_data velocity ) ;
-    static void sound_set_source_buffer ( const sound_source_id & source_id , sound_buffer_id & buffer_id ) ;
-    static void sound_set_source_playback_looping ( const sound_source_id & source_id ) ;
-    static void sound_set_source_playback_once ( const sound_source_id & source_id ) ;
-    static void sound_source_play ( const sound_source_id & source_id ) ;
-    static void sound_source_stop ( const sound_source_id & source_id ) ;
-    
-    template < typename samples_array >
-    static void sound_load_stereo_sample_data ( const samples_array & samples , const stereo_sound_resource_id & resource_id ) ;
-    
-    template < typename samples_array >
-    static void sound_create_mono_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
-    
-    template < typename samples_array >
-    static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
-    
 private :
     static const int _uninitialized_value = 0xC0C0C0C0 ;
 } ;
@@ -311,4 +235,3 @@ public :
 } ;
 
 #include "macosx_platform_render.hpp"
-#include "macosx_platform_sound.hpp"

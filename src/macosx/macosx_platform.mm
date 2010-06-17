@@ -67,29 +67,3 @@ shy_macosx_platform :: index_data :: index_data ( )
 : _index ( ( GLushort ) shy_macosx_platform_utility :: _uninitialized_value )
 {
 }
-
-shy_macosx_platform :: mono_sound_sample :: mono_sound_sample ( )
-: _value ( ( GLubyte ) shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
-shy_macosx_platform :: stereo_sound_sample :: stereo_sound_sample ( )
-: _left_channel_value ( ( GLushort ) shy_macosx_platform_utility :: _uninitialized_value )
-, _right_channel_value ( ( GLushort ) shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
-shy_macosx_platform :: sound_buffer_id :: sound_buffer_id ( )
-: _buffer_id ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
-shy_macosx_platform :: sound_source_id :: sound_source_id ( )
-: _source_id ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
-shy_macosx_platform :: stereo_sound_resource_id :: stereo_sound_resource_id ( )
-: _resource_id ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
