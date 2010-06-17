@@ -29,71 +29,60 @@
 #include "macosx_platform_sound.hpp"
 #include "macosx_platform_time.hpp"
 
-class shy_macosx_platform_utility ;
+class shy_macosx_platform_insider
+{
+public :
+    typedef shy_platform_math_int_float_insider < shy_macosx_platform_insider > platform_math_insider ;
+    typedef shy_platform_matrix_float_insider < shy_macosx_platform_insider > platform_matrix_insider ;
+    typedef shy_platform_static_array_insider < shy_macosx_platform_insider > platform_static_array_insider ;
+    typedef shy_platform_vector_float_insider < shy_macosx_platform_insider > platform_vector_insider ;
+
+    typedef shy_platform_conditions < shy_macosx_platform_insider > platform_conditions ;
+    typedef shy_platform_math_int_float < shy_macosx_platform_insider > platform_math ;
+    typedef shy_platform_matrix_float < shy_macosx_platform_insider > platform_matrix ;
+    typedef shy_macosx_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
+    typedef shy_platform_pointer < shy_macosx_platform_insider > platform_pointer ;
+    typedef shy_macosx_platform_render < shy_macosx_platform_insider > platform_render ;
+    typedef shy_macosx_platform_sound < shy_macosx_platform_insider > platform_sound ;
+    typedef shy_platform_static_array < shy_macosx_platform_insider > platform_static_array ;
+    typedef shy_macosx_platform_time < shy_macosx_platform_insider > platform_time ;
+    typedef shy_platform_touch_dummy < shy_macosx_platform_insider > platform_touch ;
+    typedef shy_platform_vector_float < shy_macosx_platform_insider > platform_vector ;
+        
+    static const int uninitialized_value = 0xC0C0C0C0 ;
+    
+    static shy_macosx_sound_loader * sound_loader ;
+    static shy_macosx_texture_loader * texture_loader ;
+	
+	static float aspect_width ;
+	static float aspect_height ;
+	
+	static int mouse_left_button_down ;
+	static float mouse_x ;
+	static float mouse_y ;
+
+    static platform_render :: vertex_data reference_vertex ;
+    static void * vertex_position_offset ;
+    static void * vertex_tex_coord_offset ;
+    static void * vertex_color_offset ;
+} ;
 
 class shy_macosx_platform
 {
-    friend class shy_macosx_platform_mouse < shy_macosx_platform > ;
-    friend class shy_macosx_platform_render < shy_macosx_platform > ;
-    friend class shy_macosx_platform_sound < shy_macosx_platform > ;
-    friend class shy_macosx_platform_time < shy_macosx_platform > ;
-    friend class shy_platform_conditions < shy_macosx_platform > ;
-    friend class shy_platform_math_consts < shy_macosx_platform > ;
-    friend class shy_platform_math_int_float < shy_macosx_platform > ;
-    friend class shy_platform_matrix_float < shy_macosx_platform > ;
-    friend class shy_platform_pointer < shy_macosx_platform > ;
-    friend class shy_platform_static_array < shy_macosx_platform > ;
-    friend class shy_platform_touch_dummy < shy_macosx_platform > ;
-    friend class shy_platform_vector_float < shy_macosx_platform > ;
-private :
-    typedef shy_macosx_platform_utility _platform_insider ;
-    typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
-    typedef shy_platform_matrix_float_insider < shy_macosx_platform > _platform_matrix_insider ;
-    typedef shy_platform_static_array_insider < shy_macosx_platform > _platform_static_array_insider ;
-    typedef shy_platform_vector_float_insider < shy_macosx_platform > _platform_vector_insider ;
 public :
-    typedef shy_platform_conditions < shy_macosx_platform > platform_conditions ;
-    typedef shy_platform_math_int_float < shy_macosx_platform > platform_math ;
-    typedef shy_platform_matrix_float < shy_macosx_platform > platform_matrix ;
-    typedef shy_macosx_platform_mouse < shy_macosx_platform > platform_mouse ;
-    typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
-    typedef shy_macosx_platform_render < shy_macosx_platform > platform_render ;
-    typedef shy_macosx_platform_sound < shy_macosx_platform > platform_sound ;
-    typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
-    typedef shy_macosx_platform_time < shy_macosx_platform > platform_time ;
-    typedef shy_platform_touch_dummy < shy_macosx_platform > platform_touch ;
-    typedef shy_platform_vector_float < shy_macosx_platform > platform_vector ;
+    typedef shy_platform_conditions < shy_macosx_platform_insider > platform_conditions ;
+    typedef shy_platform_math_int_float < shy_macosx_platform_insider > platform_math ;
+    typedef shy_platform_matrix_float < shy_macosx_platform_insider > platform_matrix ;
+    typedef shy_macosx_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
+    typedef shy_platform_pointer < shy_macosx_platform_insider > platform_pointer ;
+    typedef shy_macosx_platform_render < shy_macosx_platform_insider > platform_render ;
+    typedef shy_macosx_platform_sound < shy_macosx_platform_insider > platform_sound ;
+    typedef shy_platform_static_array < shy_macosx_platform_insider > platform_static_array ;
+    typedef shy_macosx_platform_time < shy_macosx_platform_insider > platform_time ;
+    typedef shy_platform_touch_dummy < shy_macosx_platform_insider > platform_touch ;
+    typedef shy_platform_vector_float < shy_macosx_platform_insider > platform_vector ;
         
-    typedef const int const_int_32 ;
-    typedef platform_math :: num_fract num_fract ;
-    typedef platform_math :: num_whole num_whole ;
-    typedef platform_matrix :: matrix_data matrix_data ;
-    typedef platform_vector :: vector_data vector_data ;
-
-    static const_int_32 frames_per_second = 60 ;    
-    static const shy_platform_math_consts < shy_macosx_platform > math_consts ;
-        
-private :
-    static const int _uninitialized_value = 0xC0C0C0C0 ;
+    static platform_math :: const_int_32 frames_per_second = 60 ;    
+    static const shy_platform_math_consts < shy_macosx_platform_insider > math_consts ;
 } ;
 
-class shy_macosx_platform_utility
-{
-public :
-    static const int _uninitialized_value = 0xC0C0C0C0 ;
-    
-    static shy_macosx_sound_loader * _sound_loader ;
-    static shy_macosx_texture_loader * _texture_loader ;
-	
-	static float _aspect_width ;
-	static float _aspect_height ;
-	
-	static int _mouse_left_button_down ;
-	static float _mouse_x ;
-	static float _mouse_y ;
-
-    static shy_macosx_platform :: platform_render :: vertex_data _reference_vertex ;
-    static void * _vertex_position_offset ;
-    static void * _vertex_tex_coord_offset ;
-    static void * _vertex_color_offset ;
-} ;

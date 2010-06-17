@@ -1,7 +1,7 @@
 template < typename platform >
 class shy_platform_static_array_insider
 {
-    typedef typename platform :: const_int_32 const_int_32 ;
+    typedef typename platform :: platform_math :: const_int_32 const_int_32 ;
 public :
     template < typename static_array >
     static typename static_array :: _data_type * array_elements_unsafe_ptr ( static_array & array ) ;

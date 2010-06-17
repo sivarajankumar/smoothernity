@@ -3,11 +3,11 @@ class shy_engine_texture
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: num_fract num_fract ;
-    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_render :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;

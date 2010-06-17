@@ -1,14 +1,13 @@
-template < typename platform >
+template < typename platform_insider >
 class shy_macosx_platform_sound
 {
-    typedef typename platform :: _platform_insider _platform_insider ;
-    typedef typename platform :: _platform_math_insider _platform_math_insider ;
-    typedef typename platform :: _platform_static_array_insider _platform_static_array_insider ;
-    typedef typename platform :: _platform_vector_insider _platform_vector_insider ;
-    typedef typename platform :: const_int_32 const_int_32 ;
-    typedef typename platform :: num_fract num_fract ;
-    typedef typename platform :: num_whole num_whole ;
-    typedef typename platform :: vector_data vector_data ;
+    typedef typename platform_insider :: platform_math :: const_int_32 const_int_32 ;
+    typedef typename platform_insider :: platform_math :: num_fract num_fract ;
+    typedef typename platform_insider :: platform_math :: num_whole num_whole ;
+    typedef typename platform_insider :: platform_math_insider platform_math_insider ;
+    typedef typename platform_insider :: platform_static_array_insider platform_static_array_insider ;
+    typedef typename platform_insider :: platform_vector :: vector_data vector_data ;
+    typedef typename platform_insider :: platform_vector_insider platform_vector_insider ;
 
 public :
     static const_int_32 mono_sound_samples_per_second = 22050 ;
@@ -88,128 +87,119 @@ public :
     
     template < typename samples_array >
     static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
-    
-private :
-    static int _uninitialized_value ( ) ;
 } ;
 
-template < typename platform >
-int shy_macosx_platform_sound < platform > :: _uninitialized_value ( )
-{
-    return platform :: _uninitialized_value ;
-}
-
-template < typename platform >
-shy_macosx_platform_sound < platform > :: mono_sound_sample :: mono_sound_sample ( )
-: _value ( ( GLubyte ) shy_macosx_platform_sound < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_sound < platform_insider > :: mono_sound_sample :: mono_sound_sample ( )
+: _value ( ( GLubyte ) platform_insider :: uninitialized_value )
 {
 }
     
-template < typename platform >
-shy_macosx_platform_sound < platform > :: stereo_sound_sample :: stereo_sound_sample ( )
-: _left_channel_value ( ( GLushort ) shy_macosx_platform_sound < platform > :: _uninitialized_value ( ) )
-, _right_channel_value ( ( GLushort ) shy_macosx_platform_sound < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_sound < platform_insider > :: stereo_sound_sample :: stereo_sound_sample ( )
+: _left_channel_value ( ( GLushort ) platform_insider :: uninitialized_value )
+, _right_channel_value ( ( GLushort ) platform_insider :: uninitialized_value )
 {
 }
     
-template < typename platform >
-shy_macosx_platform_sound < platform > :: sound_buffer_id :: sound_buffer_id ( )
-: _buffer_id ( shy_macosx_platform_sound < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_sound < platform_insider > :: sound_buffer_id :: sound_buffer_id ( )
+: _buffer_id ( platform_insider :: uninitialized_value )
 {
 }
     
-template < typename platform >
-shy_macosx_platform_sound < platform > :: sound_source_id :: sound_source_id ( )
-: _source_id ( shy_macosx_platform_sound < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_sound < platform_insider > :: sound_source_id :: sound_source_id ( )
+: _source_id ( platform_insider :: uninitialized_value )
 {
 }
     
-template < typename platform >
-shy_macosx_platform_sound < platform > :: stereo_sound_resource_id :: stereo_sound_resource_id ( )
-: _resource_id ( shy_macosx_platform_sound < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_sound < platform_insider > :: stereo_sound_resource_id :: stereo_sound_resource_id ( )
+: _resource_id ( platform_insider :: uninitialized_value )
 {
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_listener_position ( vector_data position )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_listener_position ( vector_data position )
 {
     ALfloat al_position [ ] = 
-        { _platform_vector_insider :: vector_x_unsafe_get ( position )
-        , _platform_vector_insider :: vector_y_unsafe_get ( position )
-        , _platform_vector_insider :: vector_z_unsafe_get ( position ) 
+        { platform_vector_insider :: vector_x_unsafe_get ( position )
+        , platform_vector_insider :: vector_y_unsafe_get ( position )
+        , platform_vector_insider :: vector_z_unsafe_get ( position ) 
         } ;
     alListenerfv ( AL_POSITION , al_position ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_listener_velocity ( vector_data velocity )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_listener_velocity ( vector_data velocity )
 {
     ALfloat al_velocity [ ] =
-        { _platform_vector_insider :: vector_x_unsafe_get ( velocity )
-        , _platform_vector_insider :: vector_y_unsafe_get ( velocity )
-        , _platform_vector_insider :: vector_z_unsafe_get ( velocity ) 
+        { platform_vector_insider :: vector_x_unsafe_get ( velocity )
+        , platform_vector_insider :: vector_y_unsafe_get ( velocity )
+        , platform_vector_insider :: vector_z_unsafe_get ( velocity ) 
         } ;
     alListenerfv ( AL_VELOCITY , al_velocity ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_listener_orientation ( vector_data look_at , vector_data up )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_listener_orientation ( vector_data look_at , vector_data up )
 {
     ALfloat al_orientation [ ] = 
-        { _platform_vector_insider :: vector_x_unsafe_get ( look_at )
-        , _platform_vector_insider :: vector_y_unsafe_get ( look_at )
-        , _platform_vector_insider :: vector_z_unsafe_get ( look_at )
-        , _platform_vector_insider :: vector_x_unsafe_get ( up )
-        , _platform_vector_insider :: vector_y_unsafe_get ( up )
-        , _platform_vector_insider :: vector_z_unsafe_get ( up )
+        { platform_vector_insider :: vector_x_unsafe_get ( look_at )
+        , platform_vector_insider :: vector_y_unsafe_get ( look_at )
+        , platform_vector_insider :: vector_z_unsafe_get ( look_at )
+        , platform_vector_insider :: vector_x_unsafe_get ( up )
+        , platform_vector_insider :: vector_y_unsafe_get ( up )
+        , platform_vector_insider :: vector_z_unsafe_get ( up )
         } ;
     alListenerfv ( AL_ORIENTATION , al_orientation ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_sample_value ( mono_sound_sample & sample , num_fract value )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_sample_value ( mono_sound_sample & sample , num_fract value )
 {
-    sample . _value = ( ALubyte ) ( ( _platform_math_insider :: num_fract_unsafe_value_get ( value ) * 127.0f ) + 127.0f ) ;
+    sample . _value = ( ALubyte ) ( ( platform_math_insider :: num_fract_unsafe_value_get ( value ) * 127.0f ) + 127.0f ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_create_stereo_resource_id 
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_create_stereo_resource_id 
     ( stereo_sound_resource_id & result 
     , num_whole resource_index
     )
 {
-    result . _resource_id = _platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
+    result . _resource_id = platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
 }
 
-template < typename platform >
+template < typename platform_insider >
 template < typename samples_array >
-inline void shy_macosx_platform_sound < platform > :: sound_load_stereo_sample_data
+inline void shy_macosx_platform_sound < platform_insider > :: sound_load_stereo_sample_data
     ( const samples_array & samples 
     , const stereo_sound_resource_id & resource_id 
     )
 {
-    [ _platform_insider :: _sound_loader 
+    [ platform_insider :: sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
-        with_max_samples_count_of : _platform_static_array_insider :: template array_elements_count < samples_array > ( )
+        to_buffer : ( void * ) platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
+        with_max_samples_count_of : platform_static_array_insider :: template array_elements_count < samples_array > ( )
     ] ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_loader_ready ( num_whole & result )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_loader_ready ( num_whole & result )
 {
-    _platform_math_insider :: num_whole_unsafe_value_set ( result , [ _platform_insider :: _sound_loader loader_ready ] ) ;
+    platform_math_insider :: num_whole_unsafe_value_set ( result , [ platform_insider :: sound_loader loader_ready ] ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_loaded_samples_count ( num_whole & result )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_loaded_samples_count ( num_whole & result )
 {
-    _platform_math_insider :: num_whole_unsafe_value_set ( result , [ _platform_insider :: _sound_loader loaded_samples_count ] ) ;
+    platform_math_insider :: num_whole_unsafe_value_set ( result , [ platform_insider :: sound_loader loaded_samples_count ] ) ;
 }
 
-template < typename platform >
+template < typename platform_insider >
 template < typename samples_array >
-inline void shy_macosx_platform_sound < platform > :: sound_create_mono_buffer 
+inline void shy_macosx_platform_sound < platform_insider > :: sound_create_mono_buffer 
     ( sound_buffer_id & result
     , const samples_array & samples 
     , num_whole samples_count 
@@ -221,15 +211,15 @@ inline void shy_macosx_platform_sound < platform > :: sound_create_mono_buffer
     al_buffer_data_static_proc
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
-        , ( ALvoid * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
-        , _platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( mono_sound_sample )
+        , ( ALvoid * ) platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
+        , platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
 }
 
-template < typename platform >
+template < typename platform_insider >
 template < typename samples_array >
-inline void shy_macosx_platform_sound < platform > :: sound_create_stereo_buffer 
+inline void shy_macosx_platform_sound < platform_insider > :: sound_create_stereo_buffer 
     ( sound_buffer_id & result
     , const samples_array & samples 
     , num_whole samples_count 
@@ -241,78 +231,78 @@ inline void shy_macosx_platform_sound < platform > :: sound_create_stereo_buffer
     al_buffer_data_static_proc
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
-        , ( ALvoid * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
-        , _platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( stereo_sound_sample )
+        , ( ALvoid * ) platform_static_array_insider :: array_elements_unsafe_ptr ( samples )
+        , platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_create_source ( sound_source_id & result )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_create_source ( sound_source_id & result )
 {
     alGenSources ( 1 , & result . _source_id ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_source_pitch ( const sound_source_id & source_id , num_fract pitch )
 {
-    alSourcef ( source_id . _source_id , AL_PITCH , _platform_math_insider :: num_fract_unsafe_value_get ( pitch ) ) ;
+    alSourcef ( source_id . _source_id , AL_PITCH , platform_math_insider :: num_fract_unsafe_value_get ( pitch ) ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_source_gain ( const sound_source_id & source_id , num_fract gain )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_source_gain ( const sound_source_id & source_id , num_fract gain )
 {
-    alSourcef ( source_id . _source_id , AL_GAIN , _platform_math_insider :: num_fract_unsafe_value_get ( gain ) ) ;
+    alSourcef ( source_id . _source_id , AL_GAIN , platform_math_insider :: num_fract_unsafe_value_get ( gain ) ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_source_position ( const sound_source_id & source_id , vector_data position )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_source_position ( const sound_source_id & source_id , vector_data position )
 {
     ALfloat al_position [ ] = 
-        { _platform_vector_insider :: vector_x_unsafe_get ( position )
-        , _platform_vector_insider :: vector_y_unsafe_get ( position )
-        , _platform_vector_insider :: vector_z_unsafe_get ( position ) 
+        { platform_vector_insider :: vector_x_unsafe_get ( position )
+        , platform_vector_insider :: vector_y_unsafe_get ( position )
+        , platform_vector_insider :: vector_z_unsafe_get ( position ) 
         } ;
     alSourcefv ( source_id . _source_id , AL_POSITION , al_position ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_source_velocity ( const sound_source_id & source_id , vector_data velocity )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_source_velocity ( const sound_source_id & source_id , vector_data velocity )
 {
     ALfloat al_velocity [ ] =
-        { _platform_vector_insider :: vector_x_unsafe_get ( velocity )
-        , _platform_vector_insider :: vector_y_unsafe_get ( velocity )
-        , _platform_vector_insider :: vector_z_unsafe_get ( velocity ) 
+        { platform_vector_insider :: vector_x_unsafe_get ( velocity )
+        , platform_vector_insider :: vector_y_unsafe_get ( velocity )
+        , platform_vector_insider :: vector_z_unsafe_get ( velocity ) 
         } ;
     alSourcefv ( source_id . _source_id , AL_VELOCITY , al_velocity ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_source_buffer ( const sound_source_id & source_id , sound_buffer_id & buffer_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_source_buffer ( const sound_source_id & source_id , sound_buffer_id & buffer_id )
 {
     alSourcei ( source_id . _source_id , AL_BUFFER , buffer_id . _buffer_id ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_source_playback_looping ( const sound_source_id & source_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_source_playback_looping ( const sound_source_id & source_id )
 {
     alSourcei ( source_id . _source_id , AL_LOOPING , AL_TRUE ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_set_source_playback_once ( const sound_source_id & source_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_set_source_playback_once ( const sound_source_id & source_id )
 {
     alSourcei ( source_id . _source_id , AL_LOOPING , AL_FALSE ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_source_play ( const sound_source_id & source_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_source_play ( const sound_source_id & source_id )
 {
     alSourcePlay ( source_id . _source_id ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_sound < platform > :: sound_source_stop ( const sound_source_id & source_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_sound < platform_insider > :: sound_source_stop ( const sound_source_id & source_id )
 {
     alSourceStop ( source_id . _source_id ) ;
 }

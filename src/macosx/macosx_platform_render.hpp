@@ -1,13 +1,12 @@
-template < typename platform >
+template < typename platform_insider >
 class shy_macosx_platform_render
 {
-    typedef typename platform :: _platform_insider _platform_insider ;
-    typedef typename platform :: _platform_math_insider _platform_math_insider ;
-    typedef typename platform :: _platform_matrix_insider _platform_matrix_insider ;
-    typedef typename platform :: _platform_static_array_insider _platform_static_array_insider ;
-    typedef typename platform :: num_fract num_fract ;
-    typedef typename platform :: num_whole num_whole ;
-    typedef typename platform :: matrix_data matrix_data ;
+    typedef typename platform_insider :: platform_math_insider platform_math_insider ;
+    typedef typename platform_insider :: platform_matrix_insider platform_matrix_insider ;
+    typedef typename platform_insider :: platform_static_array_insider platform_static_array_insider ;
+    typedef typename platform_insider :: platform_math :: num_fract num_fract ;
+    typedef typename platform_insider :: platform_math :: num_whole num_whole ;
+    typedef typename platform_insider :: platform_matrix :: matrix_data matrix_data ;
     
 public :
     class render_index_buffer_id
@@ -58,7 +57,7 @@ public :
     class vertex_data
     {
         friend class shy_macosx_platform_render ;
-        friend class shy_macosx_platform_utility ;
+        friend class shy_macosx_platform_insider ;
     public :
         vertex_data ( ) ;
     private :
@@ -141,121 +140,113 @@ public :
         , const render_index_buffer_id & indices_buffer
         , num_whole indices_count
         ) ;        
-private :
-    static int _uninitialized_value ( ) ;
 } ;
 
-template < typename platform >
-int shy_macosx_platform_render < platform > :: _uninitialized_value ( )
-{
-    return platform :: _uninitialized_value ;
-}
-
-template < typename platform >
-shy_macosx_platform_render < platform > :: render_index_buffer_id :: render_index_buffer_id ( )
-: _buffer_id ( shy_macosx_platform_render < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: render_index_buffer_id :: render_index_buffer_id ( )
+: _buffer_id ( platform_insider :: uninitialized_value )
 {
 }
     
-template < typename platform >
-shy_macosx_platform_render < platform > :: render_vertex_buffer_id :: render_vertex_buffer_id ( )
-: _buffer_id ( shy_macosx_platform_render < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_id :: render_vertex_buffer_id ( )
+: _buffer_id ( platform_insider :: uninitialized_value )
 {
 }
     
-template < typename platform >
-shy_macosx_platform_render < platform > :: render_texture_id :: render_texture_id ( )
-: _texture_id ( shy_macosx_platform_render < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: render_texture_id :: render_texture_id ( )
+: _texture_id ( platform_insider :: uninitialized_value )
 {
 }
 
-template < typename platform >
-shy_macosx_platform_render < platform > :: texture_resource_id :: texture_resource_id ( )
-: _resource_id ( shy_macosx_platform_render < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: texture_resource_id :: texture_resource_id ( )
+: _resource_id ( platform_insider :: uninitialized_value )
 {
 }
 	
-template < typename platform >
-shy_macosx_platform_render < platform > :: texel_data :: texel_data ( )
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: texel_data :: texel_data ( )
 {
     for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = ( GLubyte ) shy_macosx_platform_render < platform > :: _uninitialized_value ( ) ;
+        _color [ i ] = ( GLubyte ) platform_insider :: uninitialized_value ;
 }
     
-template < typename platform >
-shy_macosx_platform_render < platform > :: vertex_data :: vertex_data ( )
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: vertex_data :: vertex_data ( )
 {
     for ( int i = 0 ; i < 3 ; i ++ )
-        _position [ i ] = shy_macosx_platform_render < platform > :: _uninitialized_value ( ) ;
+        _position [ i ] = platform_insider :: uninitialized_value ;
     for ( int i = 0 ; i < 2 ; i ++ )
-        _tex_coord [ i ] = shy_macosx_platform_render < platform > :: _uninitialized_value ( ) ;
+        _tex_coord [ i ] = platform_insider :: uninitialized_value ;
     for ( int i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = ( GLubyte ) shy_macosx_platform_render < platform > :: _uninitialized_value ( ) ;
+        _color [ i ] = ( GLubyte ) platform_insider :: uninitialized_value ;
 }
     
-template < typename platform >
-shy_macosx_platform_render < platform > :: index_data :: index_data ( )
-: _index ( ( GLushort ) shy_macosx_platform_render < platform > :: _uninitialized_value ( ) )
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: index_data :: index_data ( )
+: _index ( ( GLushort ) platform_insider :: uninitialized_value )
 {
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_enable_face_culling ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_enable_face_culling ( )
 {
     glEnable ( GL_CULL_FACE ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_enable_depth_test ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_enable_depth_test ( )
 {
     glEnable ( GL_DEPTH_TEST ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_disable_depth_test ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_disable_depth_test ( )
 {
     glDisable ( GL_DEPTH_TEST ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_blend_disable ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_blend_disable ( )
 {
     glDisable ( GL_BLEND ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_blend_src_alpha_dst_one_minus_alpha ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_blend_src_alpha_dst_one_minus_alpha ( )
 {
     glEnable ( GL_BLEND ) ;
     glBlendFunc ( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_enable_texturing ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_enable_texturing ( )
 {
 	glEnable ( GL_TEXTURE_2D ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_disable_texturing ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_disable_texturing ( )
 {
 	glDisable ( GL_TEXTURE_2D ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_set_modulate_texture_mode ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_set_modulate_texture_mode ( )
 {
     glTexEnvf ( GL_TEXTURE_ENV , GL_TEXTURE_ENV_MODE , GL_MODULATE ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_fog_disable ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_fog_disable ( )
 {
     glDisable ( GL_FOG ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_fog_linear 
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_fog_linear 
     ( num_fract near 
     , num_fract far 
     , num_fract r 
@@ -265,45 +256,45 @@ inline void shy_macosx_platform_render < platform > :: render_fog_linear
     )
 {
     GLfloat color [ ] = 
-        { _platform_math_insider :: num_fract_unsafe_value_get ( r )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( g )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( b )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( a )
+        { platform_math_insider :: num_fract_unsafe_value_get ( r )
+        , platform_math_insider :: num_fract_unsafe_value_get ( g )
+        , platform_math_insider :: num_fract_unsafe_value_get ( b )
+        , platform_math_insider :: num_fract_unsafe_value_get ( a )
         } ;
     glEnable ( GL_FOG ) ;
     glFogf ( GL_FOG_MODE , GL_LINEAR ) ;
-    glFogf ( GL_FOG_START , ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( near ) ) ;
-    glFogf ( GL_FOG_END , ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( far ) ) ;
+    glFogf ( GL_FOG_START , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( near ) ) ;
+    glFogf ( GL_FOG_END , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( far ) ) ;
     glFogfv ( GL_FOG_COLOR , color ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_create_texture_id ( render_texture_id & arg_texture_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_create_texture_id ( render_texture_id & arg_texture_id )
 {
     glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_use_texture ( const render_texture_id & arg_texture_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_use_texture ( const render_texture_id & arg_texture_id )
 {
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    texel . _color [ 0 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( b ) * 255.0f ) ;
-    texel . _color [ 1 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( g ) * 255.0f ) ;
-    texel . _color [ 2 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( r ) * 255.0f ) ;
-    texel . _color [ 3 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( a ) * 255.0f ) ;
+    texel . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( b ) * 255.0f ) ;
+    texel . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( g ) * 255.0f ) ;
+    texel . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( r ) * 255.0f ) ;
+    texel . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( a ) * 255.0f ) ;
 }
 
-template < typename platform >
+template < typename platform_insider >
 template < typename texels_array >
-inline void shy_macosx_platform_render < platform > :: render_load_texture_data 
+inline void shy_macosx_platform_render < platform_insider > :: render_load_texture_data 
     ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data )
 {
-    GLsizei size = 1 << _platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base ) ;
+    GLsizei size = 1 << platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base ) ;
     glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
@@ -311,49 +302,49 @@ inline void shy_macosx_platform_render < platform > :: render_load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
     glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE 
-        , _platform_static_array_insider :: array_elements_unsafe_ptr ( data ) 
+        , platform_static_array_insider :: array_elements_unsafe_ptr ( data ) 
         ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
-    resource_id . _resource_id = _platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
+    resource_id . _resource_id = platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
 }
 
-template < typename platform >
+template < typename platform_insider >
 template < typename texels_array >
-inline void shy_macosx_platform_render < platform > :: render_load_texture_resource
+inline void shy_macosx_platform_render < platform_insider > :: render_load_texture_resource
     ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data )
 {
-    [ _platform_insider :: _texture_loader 
+    [ platform_insider :: texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) _platform_static_array_insider :: array_elements_unsafe_ptr ( data )
-        with_side_size_of : 1 << _platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base )
+        to_buffer : ( void * ) platform_static_array_insider :: array_elements_unsafe_ptr ( data )
+        with_side_size_of : 1 << platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base )
     ] ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_texture_loader_ready ( num_whole & is_ready )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_texture_loader_ready ( num_whole & is_ready )
 {
-    _platform_math_insider :: num_whole_unsafe_value_set ( is_ready , [ _platform_insider :: _texture_loader loader_ready ] ) ;
+    platform_math_insider :: num_whole_unsafe_value_set ( is_ready , [ platform_insider :: texture_loader loader_ready ] ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_clear_screen ( num_fract r , num_fract g , num_fract b )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_clear_screen ( num_fract r , num_fract g , num_fract b )
 {
     glClearColor 
-        ( ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( r )
-        , ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( g )
-        , ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( b )
+        ( ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( r )
+        , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( g )
+        , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( b )
         , ( GLfloat ) 0
         ) ;
     glClearDepth ( 1 ) ;
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_projection_frustum 
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_projection_frustum 
     ( num_fract left 
     , num_fract right 
     , num_fract bottom 
@@ -365,18 +356,18 @@ inline void shy_macosx_platform_render < platform > :: render_projection_frustum
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
     glFrustum 
-        ( _platform_math_insider :: num_fract_unsafe_value_get ( left )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( right )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( bottom )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( top )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( near )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( far )
+        ( platform_math_insider :: num_fract_unsafe_value_get ( left )
+        , platform_math_insider :: num_fract_unsafe_value_get ( right )
+        , platform_math_insider :: num_fract_unsafe_value_get ( bottom )
+        , platform_math_insider :: num_fract_unsafe_value_get ( top )
+        , platform_math_insider :: num_fract_unsafe_value_get ( near )
+        , platform_math_insider :: num_fract_unsafe_value_get ( far )
         ) ;
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_projection_ortho 
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_projection_ortho 
     ( num_fract left 
     , num_fract right 
     , num_fract bottom 
@@ -388,108 +379,108 @@ inline void shy_macosx_platform_render < platform > :: render_projection_ortho
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
     glOrtho 
-        ( _platform_math_insider :: num_fract_unsafe_value_get ( left )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( right )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( bottom )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( top )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( near )
-        , _platform_math_insider :: num_fract_unsafe_value_get ( far )
+        ( platform_math_insider :: num_fract_unsafe_value_get ( left )
+        , platform_math_insider :: num_fract_unsafe_value_get ( right )
+        , platform_math_insider :: num_fract_unsafe_value_get ( bottom )
+        , platform_math_insider :: num_fract_unsafe_value_get ( top )
+        , platform_math_insider :: num_fract_unsafe_value_get ( near )
+        , platform_math_insider :: num_fract_unsafe_value_get ( far )
         ) ;
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
-template < typename platform >
+template < typename platform_insider >
 template < typename vertices_array >
-inline void shy_macosx_platform_render < platform > :: render_create_vertex_buffer 
+inline void shy_macosx_platform_render < platform_insider > :: render_create_vertex_buffer 
     ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , const vertices_array & data )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
-        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) _platform_math_insider :: num_whole_unsafe_value_get ( elements ) ) 
-        , _platform_static_array_insider :: array_elements_unsafe_ptr ( data )
+        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) platform_math_insider :: num_whole_unsafe_value_get ( elements ) ) 
+        , platform_static_array_insider :: array_elements_unsafe_ptr ( data )
         , GL_STATIC_DRAW 
         ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z )
 {
-    vertex . _position [ 0 ] = ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
-    vertex . _position [ 1 ] = ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
-    vertex . _position [ 2 ] = ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
+    vertex . _position [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
+    vertex . _position [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
+    vertex . _position [ 2 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v )
 {
-    vertex . _tex_coord [ 0 ] = ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( u ) ;
-    vertex . _tex_coord [ 1 ] = ( GLfloat ) _platform_math_insider :: num_fract_unsafe_value_get ( v ) ;
+    vertex . _tex_coord [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( u ) ;
+    vertex . _tex_coord [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( v ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    vertex . _color [ 0 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( r ) * 255.0f ) ;
-    vertex . _color [ 1 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( g ) * 255.0f ) ;
-    vertex . _color [ 2 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( b ) * 255.0f ) ;
-    vertex . _color [ 3 ] = ( GLubyte ) ( _platform_math_insider :: num_fract_unsafe_value_get ( a ) * 255.0f ) ;
+    vertex . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( r ) * 255.0f ) ;
+    vertex . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( g ) * 255.0f ) ;
+    vertex . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( b ) * 255.0f ) ;
+    vertex . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( a ) * 255.0f ) ;
 }
 
-template < typename platform >
+template < typename platform_insider >
 template < typename indices_array >
-inline void shy_macosx_platform_render < platform > :: render_create_index_buffer 
+inline void shy_macosx_platform_render < platform_insider > :: render_create_index_buffer 
     ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
-        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) _platform_math_insider :: num_whole_unsafe_value_get ( elements ) )
-        , _platform_static_array_insider :: array_elements_unsafe_ptr ( data )
+        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) platform_math_insider :: num_whole_unsafe_value_get ( elements ) )
+        , platform_static_array_insider :: array_elements_unsafe_ptr ( data )
         , GL_STATIC_DRAW
         ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_set_index_value ( index_data & data , num_whole index )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_set_index_value ( index_data & data , num_whole index )
 {
-    data . _index = ( GLushort ) _platform_math_insider :: num_whole_unsafe_value_get ( index ) ;
+    data . _index = ( GLushort ) platform_math_insider :: num_whole_unsafe_value_get ( index ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_matrix_identity ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_matrix_identity ( )
 {
     glLoadIdentity ( ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_matrix_load ( const matrix_data & matrix )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_matrix_load ( const matrix_data & matrix )
 {
-    glLoadMatrixf ( _platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
+    glLoadMatrixf ( platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_matrix_mult ( const matrix_data & matrix )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_matrix_mult ( const matrix_data & matrix )
 {
-    glMultMatrixf ( _platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
+    glMultMatrixf ( platform_matrix_insider :: matrix_elements_unsafe_ptr ( matrix ) ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_matrix_push ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_matrix_push ( )
 {
     glPushMatrix ( ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_matrix_pop ( )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_matrix_pop ( )
 {
     glPopMatrix ( ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_draw_triangle_strip 
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_draw_triangle_strip 
     ( const render_vertex_buffer_id & vertices_buffer 
     , const render_index_buffer_id & indices_buffer
     , num_whole indices_count
@@ -498,21 +489,21 @@ inline void shy_macosx_platform_render < platform > :: render_draw_triangle_stri
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
-    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , _platform_insider :: _vertex_position_offset ) ;
+    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_position_offset ) ;
     glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
-    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , _platform_insider :: _vertex_tex_coord_offset ) ;
+    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_tex_coord_offset ) ;
     glEnableClientState ( GL_COLOR_ARRAY ) ;
-    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _platform_insider :: _vertex_color_offset ) ;
+    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , platform_insider :: vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_STRIP 
-        , ( GLsizei ) _platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
+        , ( GLsizei ) platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_draw_triangle_fan
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_draw_triangle_fan
     ( const render_vertex_buffer_id & vertices_buffer 
     , const render_index_buffer_id & indices_buffer
     , num_whole indices_count
@@ -521,37 +512,37 @@ inline void shy_macosx_platform_render < platform > :: render_draw_triangle_fan
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
-    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , _platform_insider :: _vertex_position_offset ) ;
+    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_position_offset ) ;
     glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
-    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , _platform_insider :: _vertex_tex_coord_offset ) ;
+    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_tex_coord_offset ) ;
     glEnableClientState ( GL_COLOR_ARRAY ) ;
-    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _platform_insider :: _vertex_color_offset ) ;
+    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , platform_insider :: vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_FAN 
-        , ( GLsizei ) _platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
+        , ( GLsizei ) platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_get_aspect_width ( num_fract & result )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_get_aspect_width ( num_fract & result )
 {
-    _platform_math_insider :: num_fract_unsafe_value_set ( result , _platform_insider :: _aspect_width ) ;
+    platform_math_insider :: num_fract_unsafe_value_set ( result , platform_insider :: aspect_width ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_get_aspect_height ( num_fract & result )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_get_aspect_height ( num_fract & result )
 {
-    _platform_math_insider :: num_fract_unsafe_value_set ( result , _platform_insider :: _aspect_height ) ;
+    platform_math_insider :: num_fract_unsafe_value_set ( result , platform_insider :: aspect_height ) ;
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_delete_vertex_buffer ( const render_vertex_buffer_id & arg_buffer_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_delete_vertex_buffer ( const render_vertex_buffer_id & arg_buffer_id )
 {
 }
 
-template < typename platform >
-inline void shy_macosx_platform_render < platform > :: render_delete_index_buffer ( const render_index_buffer_id & arg_buffer_id )
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: render_delete_index_buffer ( const render_index_buffer_id & arg_buffer_id )
 {
 }

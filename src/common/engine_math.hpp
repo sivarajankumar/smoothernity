@@ -2,12 +2,12 @@ template < typename mediator >
 class shy_engine_math
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: num_fract num_fract ;
-    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
-    typedef typename mediator :: platform :: vector_data vector_data ;    
+    typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 public :
     static void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     static void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;

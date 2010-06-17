@@ -2,10 +2,10 @@ template < typename mediator >
 class shy_engine_camera
 {
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
-    typedef typename mediator :: platform :: vector_data vector_data ;
+    typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 public :
     static void camera_matrix_look_at ( matrix_data & matrix , vector_data from , vector_data to , vector_data norm_up ) ;
 } ;

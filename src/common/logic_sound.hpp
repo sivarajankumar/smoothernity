@@ -3,11 +3,11 @@ class shy_logic_sound
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: const_int_32 const_int_32 ;
-    typedef typename mediator :: platform :: num_fract num_fract ;
-    typedef typename mediator :: platform :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_sound platform_sound ;
@@ -19,7 +19,7 @@ class shy_logic_sound
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_touch platform_touch ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
-    typedef typename mediator :: platform :: vector_data vector_data ;
+    typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
     
     static const_int_32 _music_rough_and_heavy_resource_index = 1 ;
     static const_int_32 _max_stereo_sound_samples = platform_sound :: stereo_sound_samples_per_second * 60 ;

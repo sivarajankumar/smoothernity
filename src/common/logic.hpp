@@ -3,8 +3,8 @@ class shy_logic
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
-    typedef typename mediator :: platform :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
 public :
