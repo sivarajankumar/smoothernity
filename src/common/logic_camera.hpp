@@ -69,15 +69,15 @@ private :
 template < typename mediator >
 shy_logic_camera < mediator > :: shy_logic_camera ( )
 {
-    platform_math :: math_make_num_whole ( _camera_prepare_permitted , false ) ;
-    platform_math :: math_make_num_whole ( _camera_created , false ) ;
-    platform_math :: math_make_num_whole ( _entities_height_requested , false ) ;
-    platform_math :: math_make_num_whole ( _random_seed , 0 ) ;
-    platform_math :: math_make_num_whole ( _frames_to_change_camera_target , 0 ) ;
-    platform_math :: math_make_num_whole ( _frames_to_change_camera_origin , 0 ) ;
+    platform_math :: make_num_whole ( _camera_prepare_permitted , false ) ;
+    platform_math :: make_num_whole ( _camera_created , false ) ;
+    platform_math :: make_num_whole ( _entities_height_requested , false ) ;
+    platform_math :: make_num_whole ( _random_seed , 0 ) ;
+    platform_math :: make_num_whole ( _frames_to_change_camera_target , 0 ) ;
+    platform_math :: make_num_whole ( _frames_to_change_camera_origin , 0 ) ;
     for ( num_whole i = platform :: math_consts . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 )
-        ; platform_math :: math_inc_whole ( i )
+        ; platform_math :: inc_whole ( i )
         )
     {
         num_whole & origin_index = platform_static_array :: element ( _scheduled_camera_origin_indices , i ) ;
@@ -109,7 +109,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matr
 template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prepare_permit msg )
 {
-    platform_math :: math_make_num_whole ( _camera_prepare_permitted , true ) ;
+    platform_math :: make_num_whole ( _camera_prepare_permitted , true ) ;
 }
 
 template < typename mediator >
@@ -122,7 +122,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_upda
             _fill_camera_schedules ( ) ;
             _reset_camera_rubber ( ) ;
         }
-        platform_math :: math_make_num_whole ( _entities_height_requested , true ) ;
+        platform_math :: make_num_whole ( _entities_height_requested , true ) ;
         _mediator . get ( ) . send ( typename messages :: entities_height_request ( ) ) ;
     }
 }
@@ -132,12 +132,12 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_he
 {
     if ( platform_conditions :: whole_is_true ( _entities_height_requested ) )
     {
-        platform_math :: math_make_num_whole ( _entities_height_requested , false ) ;
+        platform_math :: make_num_whole ( _entities_height_requested , false ) ;
         _entities_height = msg . height ;
         _update_camera ( ) ;
         if ( platform_conditions :: whole_is_false ( _camera_created ) )
         {
-            platform_math :: math_make_num_whole ( _camera_created , true ) ;
+            platform_math :: make_num_whole ( _camera_created , true ) ;
             _mediator . get ( ) . send ( typename messages :: camera_prepared ( ) ) ;
         }
     }
@@ -161,7 +161,7 @@ void shy_logic_camera < mediator > :: _fill_camera_schedules ( )
 {
     for ( num_whole i = platform :: math_consts . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
-        ; platform_math :: math_inc_whole ( i )
+        ; platform_math :: inc_whole ( i )
         )
     {
         num_whole origin_index ;
@@ -194,13 +194,13 @@ void shy_logic_camera < mediator > :: _update_camera ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 {
-    platform_math :: math_dec_whole ( _frames_to_change_camera_origin ) ;
+    platform_math :: dec_whole ( _frames_to_change_camera_origin ) ;
     if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_origin ) )
     {
         num_whole new_origin_index ;
         vector_data new_origin_pos ;
         
-        platform_math :: math_make_num_whole ( _frames_to_change_camera_origin , _change_origin_in_frames ) ;
+        platform_math :: make_num_whole ( _frames_to_change_camera_origin , _change_origin_in_frames ) ;
         _random_camera_origin_index ( new_origin_index ) ;
         _mediator . get ( ) . get_entity_origin ( new_origin_pos , new_origin_index ) ;
         
@@ -224,11 +224,11 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     num_fract fract_frames_to_change_camera_origin ;
     num_fract fract_change_origin_in_frames ;
     num_fract spline_pos ;
-    platform_math :: math_make_fract_from_whole ( fract_frames_to_change_camera_origin , _frames_to_change_camera_origin ) ;
-    platform_math :: math_make_num_fract ( fract_change_origin_in_frames , _change_origin_in_frames , 1 ) ;
-    platform_math :: math_div_fracts ( spline_pos , fract_frames_to_change_camera_origin , fract_change_origin_in_frames ) ;
-    platform_math :: math_neg_fract ( spline_pos ) ;
-    platform_math :: math_add_to_fract ( spline_pos , platform :: math_consts . fract_1 ) ;
+    platform_math :: make_fract_from_whole ( fract_frames_to_change_camera_origin , _frames_to_change_camera_origin ) ;
+    platform_math :: make_num_fract ( fract_change_origin_in_frames , _change_origin_in_frames , 1 ) ;
+    platform_math :: div_fracts ( spline_pos , fract_frames_to_change_camera_origin , fract_change_origin_in_frames ) ;
+    platform_math :: neg_fract ( spline_pos ) ;
+    platform_math :: add_to_fract ( spline_pos , platform :: math_consts . fract_1 ) ;
     
     engine_math :: math_catmull_rom_spline
         ( _desired_camera_origin
@@ -243,13 +243,13 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 {
-    platform_math :: math_dec_whole ( _frames_to_change_camera_target ) ;
+    platform_math :: dec_whole ( _frames_to_change_camera_target ) ;
     if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_target ) )
     {
         num_whole new_target_index ;
         vector_data new_target_pos ;
         
-        platform_math :: math_make_num_whole ( _frames_to_change_camera_target , _change_target_in_frames ) ;
+        platform_math :: make_num_whole ( _frames_to_change_camera_target , _change_target_in_frames ) ;
         _random_camera_target_index ( new_target_index ) ;
         _mediator . get ( ) . get_entity_origin ( new_target_pos , new_target_index ) ;
         
@@ -273,11 +273,11 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     num_fract fract_frames_to_change_camera_target ;
     num_fract fract_change_target_in_frames ;
     num_fract spline_pos ;
-    platform_math :: math_make_fract_from_whole ( fract_frames_to_change_camera_target , _frames_to_change_camera_target ) ;
-    platform_math :: math_make_num_fract ( fract_change_target_in_frames , _change_target_in_frames , 1 ) ;
-    platform_math :: math_div_fracts ( spline_pos , fract_frames_to_change_camera_target , fract_change_target_in_frames ) ;
-    platform_math :: math_neg_fract ( spline_pos ) ;
-    platform_math :: math_add_to_fract ( spline_pos , platform :: math_consts . fract_1 ) ;
+    platform_math :: make_fract_from_whole ( fract_frames_to_change_camera_target , _frames_to_change_camera_target ) ;
+    platform_math :: make_num_fract ( fract_change_target_in_frames , _change_target_in_frames , 1 ) ;
+    platform_math :: div_fracts ( spline_pos , fract_frames_to_change_camera_target , fract_change_target_in_frames ) ;
+    platform_math :: neg_fract ( spline_pos ) ;
+    platform_math :: add_to_fract ( spline_pos , platform :: math_consts . fract_1 ) ;
     
     engine_math :: math_catmull_rom_spline
         ( _desired_camera_target
@@ -296,7 +296,7 @@ void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
     num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform_math :: math_sub_fracts ( inv_rubber , platform :: math_consts . fract_1 , _origin_rubber ( ) ) ;
+    platform_math :: sub_fracts ( inv_rubber , platform :: math_consts . fract_1 , _origin_rubber ( ) ) ;
     platform_vector :: vector_mul ( old_part , _current_camera_origin , _origin_rubber ( ) ) ;
     platform_vector :: vector_mul ( new_part , _desired_camera_origin , inv_rubber ) ;
     platform_vector :: vector_add ( _current_camera_origin , old_part , new_part ) ;
@@ -309,7 +309,7 @@ void shy_logic_camera < mediator > :: _update_current_camera_target ( )
     num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform_math :: math_sub_fracts ( inv_rubber , platform :: math_consts . fract_1 , _target_rubber ( ) ) ;
+    platform_math :: sub_fracts ( inv_rubber , platform :: math_consts . fract_1 , _target_rubber ( ) ) ;
     platform_vector :: vector_mul ( old_part , _current_camera_target , _target_rubber ( ) ) ;
     platform_vector :: vector_mul ( new_part , _desired_camera_target , inv_rubber ) ;
     platform_vector :: vector_add ( _current_camera_target , old_part , new_part ) ;
@@ -333,14 +333,14 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     
     _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
     platform_render :: get_aspect_height ( aspect_height ) ;
-    platform_math :: math_make_num_fract ( up_x , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( up_y , 1 , 1 ) ;
-    platform_math :: math_make_num_fract ( up_z , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( shift_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
+    platform_math :: make_num_fract ( up_z , 0 , 1 ) ;
+    platform_math :: make_num_fract ( shift_x , 0 , 1 ) ;
     shift_y = _entities_height ;
-    platform_math :: math_add_to_fract ( shift_y , aspect_height ) ;
-    platform_math :: math_add_to_fract ( shift_y , near_plane ) ;
-    platform_math :: math_make_num_fract ( shift_z , 0 , 1 ) ;
+    platform_math :: add_to_fract ( shift_y , aspect_height ) ;
+    platform_math :: add_to_fract ( shift_y , near_plane ) ;
+    platform_math :: make_num_fract ( shift_z , 0 , 1 ) ;
     platform_vector :: vector_xyz ( up , up_x , up_y , up_z ) ;
     platform_vector :: vector_xyz ( shift , shift_x , shift_y , shift_z ) ;
     platform_vector :: vector_add ( shifted_origin , _current_camera_origin , shift ) ;
@@ -354,10 +354,10 @@ void shy_logic_camera < mediator > :: _random_camera_origin_index ( num_whole & 
     num_whole index_max ;
     num_whole mesh_grid ;
     num_whole is_duplicate ;
-    platform_math :: math_make_num_whole ( index , 0 ) ;
+    platform_math :: make_num_whole ( index , 0 ) ;
     _get_entity_mesh_grid ( mesh_grid ) ;
-    platform_math :: math_div_wholes ( index_max , mesh_grid , platform :: math_consts . whole_2 ) ;
-    platform_math :: math_mul_whole_by ( index_max , mesh_grid ) ;
+    platform_math :: div_wholes ( index_max , mesh_grid , platform :: math_consts . whole_2 ) ;
+    platform_math :: mul_whole_by ( index_max , mesh_grid ) ;
     do
     {
         _get_random_index ( index , platform :: math_consts . whole_0 , index_max ) ;
@@ -374,11 +374,11 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( num_whole & 
     num_whole index_max ;
     num_whole mesh_grid ;
     num_whole is_duplicate ;
-    platform_math :: math_make_num_whole ( index , 0 ) ;
+    platform_math :: make_num_whole ( index , 0 ) ;
     _get_entity_mesh_grid ( mesh_grid ) ;
-    platform_math :: math_div_wholes ( index_min , mesh_grid , platform :: math_consts . whole_2 ) ;
-    platform_math :: math_mul_whole_by ( index_min , mesh_grid ) ;
-    platform_math :: math_mul_wholes ( index_max , mesh_grid , mesh_grid ) ;
+    platform_math :: div_wholes ( index_min , mesh_grid , platform :: math_consts . whole_2 ) ;
+    platform_math :: mul_whole_by ( index_min , mesh_grid ) ;
+    platform_math :: mul_wholes ( index_max , mesh_grid , mesh_grid ) ;
     do
     {
         _get_random_index ( index , index_min , index_max ) ;
@@ -393,28 +393,28 @@ void shy_logic_camera < mediator > :: _get_random_index ( num_whole & result , n
     num_whole random_const_1 ;
     num_whole random_const_2 ;
     num_whole index_diff ;
-    platform_math :: math_make_num_whole ( random_const_1 , 181 ) ;
-    platform_math :: math_make_num_whole ( random_const_2 , 139 ) ;
-    platform_math :: math_add_to_whole ( _random_seed , random_const_1 ) ;
-    platform_math :: math_mod_whole_by ( _random_seed , random_const_2 ) ;
-    platform_math :: math_sub_wholes ( index_diff , index_max , index_min ) ;
-    platform_math :: math_mod_wholes ( result , _random_seed , index_diff ) ;
-    platform_math :: math_add_to_whole ( result , index_min ) ;
+    platform_math :: make_num_whole ( random_const_1 , 181 ) ;
+    platform_math :: make_num_whole ( random_const_2 , 139 ) ;
+    platform_math :: add_to_whole ( _random_seed , random_const_1 ) ;
+    platform_math :: mod_whole_by ( _random_seed , random_const_2 ) ;
+    platform_math :: sub_wholes ( index_diff , index_max , index_min ) ;
+    platform_math :: mod_wholes ( result , _random_seed , index_diff ) ;
+    platform_math :: add_to_whole ( result , index_min ) ;
 }
 
 template < typename mediator >
 void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_whole & result , num_whole index )
 {
-    platform_math :: math_make_num_whole ( result , false ) ;
+    platform_math :: make_num_whole ( result , false ) ;
     for ( num_whole i = platform :: math_consts . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
-        ; platform_math :: math_inc_whole ( i )
+        ; platform_math :: inc_whole ( i )
         )
     {
         num_whole & index_ptr = platform_static_array :: element ( _scheduled_camera_origin_indices , i ) ;
         if ( platform_conditions :: wholes_are_equal ( index_ptr , index ) )
         {
-            platform_math :: math_make_num_whole ( result , true ) ;
+            platform_math :: make_num_whole ( result , true ) ;
             break ;
         }
     }
@@ -423,16 +423,16 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_wh
 template < typename mediator >
 void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( num_whole & result , num_whole index )
 {
-    platform_math :: math_make_num_whole ( result , false ) ;
+    platform_math :: make_num_whole ( result , false ) ;
     for ( num_whole i = platform :: math_consts . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 ) 
-        ; platform_math :: math_inc_whole ( i )
+        ; platform_math :: inc_whole ( i )
         )
     {
         num_whole & index_ptr = platform_static_array :: element ( _scheduled_camera_target_indices , i ) ;
         if ( platform_conditions :: wholes_are_equal ( index_ptr , index ) )
         {
-            platform_math :: math_make_num_whole ( result , true ) ;
+            platform_math :: make_num_whole ( result , true ) ;
             break ;
         }
     }

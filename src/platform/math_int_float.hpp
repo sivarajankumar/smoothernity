@@ -31,39 +31,40 @@ public :
         float _value ;
     } ;
     
-    static void math_add_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_add_to_whole ( num_whole & a , num_whole b ) ;
-    static void math_sub_wholes ( num_whole & result , num_whole from , num_whole what ) ;
-    static void math_sub_from_whole ( num_whole & a , num_whole b ) ;
-    static void math_mul_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_mul_whole_by ( num_whole & a , num_whole b ) ;
-    static void math_mod_wholes ( num_whole & result , num_whole value , num_whole modulator ) ;
-    static void math_mod_whole_by ( num_whole & a , num_whole b ) ;
-    static void math_div_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_div_whole_by ( num_whole & a , num_whole b ) ;
-    static void math_inc_whole ( num_whole & a ) ;
-    static void math_dec_whole ( num_whole & a ) ;
-    static void math_xor_wholes ( num_whole & result , num_whole a , num_whole b ) ;
-    static void math_neg_whole ( num_whole & result , num_whole a ) ;
+public :
+    static void add_wholes ( num_whole & result , num_whole a , num_whole b ) ;
+    static void add_to_whole ( num_whole & a , num_whole b ) ;
+    static void sub_wholes ( num_whole & result , num_whole from , num_whole what ) ;
+    static void sub_from_whole ( num_whole & a , num_whole b ) ;
+    static void mul_wholes ( num_whole & result , num_whole a , num_whole b ) ;
+    static void mul_whole_by ( num_whole & a , num_whole b ) ;
+    static void mod_wholes ( num_whole & result , num_whole value , num_whole modulator ) ;
+    static void mod_whole_by ( num_whole & a , num_whole b ) ;
+    static void div_wholes ( num_whole & result , num_whole a , num_whole b ) ;
+    static void div_whole_by ( num_whole & a , num_whole b ) ;
+    static void inc_whole ( num_whole & a ) ;
+    static void dec_whole ( num_whole & a ) ;
+    static void xor_wholes ( num_whole & result , num_whole a , num_whole b ) ;
+    static void neg_whole ( num_whole & result , num_whole a ) ;
 
-    static void math_sin ( num_fract & result , num_fract a ) ;
-    static void math_cos ( num_fract & result , num_fract a ) ;    
-    static void math_sub_fracts ( num_fract & result , num_fract from , num_fract what ) ;
-    static void math_sub_from_fract ( num_fract & from , num_fract what ) ;
-    static void math_add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
-    static void math_add_to_fract ( num_fract & a , num_fract b ) ;
-    static void math_mul_fracts ( num_fract & result , num_fract a , num_fract b ) ;
-    static void math_mul_fract_by ( num_fract & a , num_fract b ) ;
-    static void math_div_fracts ( num_fract & result , num_fract a , num_fract b ) ;
-    static void math_div_fract_by ( num_fract & a , num_fract b ) ;
-    static void math_neg_fract ( num_fract & a ) ;
-    static void math_neg_fract ( num_fract & result , num_fract a ) ;
+    static void sin ( num_fract & result , num_fract a ) ;
+    static void cos ( num_fract & result , num_fract a ) ;    
+    static void sub_fracts ( num_fract & result , num_fract from , num_fract what ) ;
+    static void sub_from_fract ( num_fract & from , num_fract what ) ;
+    static void add_fracts ( num_fract & result , num_fract a , num_fract b ) ;
+    static void add_to_fract ( num_fract & a , num_fract b ) ;
+    static void mul_fracts ( num_fract & result , num_fract a , num_fract b ) ;
+    static void mul_fract_by ( num_fract & a , num_fract b ) ;
+    static void div_fracts ( num_fract & result , num_fract a , num_fract b ) ;
+    static void div_fract_by ( num_fract & a , num_fract b ) ;
+    static void neg_fract ( num_fract & a ) ;
+    static void neg_fract ( num_fract & result , num_fract a ) ;
     
-    static void math_make_whole_from_fract ( num_whole & result , num_fract fract ) ;
-    static void math_make_fract_from_whole ( num_fract & result , num_whole whole ) ;
+    static void make_whole_from_fract ( num_whole & result , num_fract fract ) ;
+    static void make_fract_from_whole ( num_fract & result , num_whole whole ) ;
     
-    static void math_make_num_whole ( num_whole & result , const_int_32 value ) ;
-    static void math_make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator ) ;
+    static void make_num_whole ( num_whole & result , const_int_32 value ) ;
+    static void make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator ) ;
 } ;
 
 template < typename platform_insider >
@@ -91,181 +92,181 @@ shy_platform_math_int_float < platform_insider > :: num_fract :: num_fract ( flo
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_sin ( num_fract & result , num_fract a )
+inline void shy_platform_math_int_float < platform_insider > :: sin ( num_fract & result , num_fract a )
 {
     result . _value = sinf ( a . _value ) ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_cos ( num_fract & result , num_fract a )
+inline void shy_platform_math_int_float < platform_insider > :: cos ( num_fract & result , num_fract a )
 {
     result . _value = cosf ( a . _value ) ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_add_to_whole ( num_whole & a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: add_to_whole ( num_whole & a , num_whole b )
 {
     a . _value += b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_sub_wholes ( num_whole & result , num_whole from , num_whole what )
+inline void shy_platform_math_int_float < platform_insider > :: sub_wholes ( num_whole & result , num_whole from , num_whole what )
 {
     result . _value = from . _value - what . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_add_fracts ( num_fract & result , num_fract a , num_fract b )
+inline void shy_platform_math_int_float < platform_insider > :: add_fracts ( num_fract & result , num_fract a , num_fract b )
 {
     result . _value = a . _value + b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_mul_fracts ( num_fract & result , num_fract a , num_fract b )
+inline void shy_platform_math_int_float < platform_insider > :: mul_fracts ( num_fract & result , num_fract a , num_fract b )
 {
     result . _value = a . _value * b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_mul_fract_by ( num_fract & a , num_fract b )
+inline void shy_platform_math_int_float < platform_insider > :: mul_fract_by ( num_fract & a , num_fract b )
 {
     a . _value *= b . _value ;
 }
     
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_make_num_whole ( num_whole & result , const_int_32 value )
+inline void shy_platform_math_int_float < platform_insider > :: make_num_whole ( num_whole & result , const_int_32 value )
 {
     result . _value = int ( value ) ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator )
+inline void shy_platform_math_int_float < platform_insider > :: make_num_fract ( num_fract & result , const_int_32 numerator , const_int_32 denominator )
 {
     result . _value = float ( numerator ) / float ( denominator ) ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_make_whole_from_fract ( num_whole & result , num_fract fract )
+inline void shy_platform_math_int_float < platform_insider > :: make_whole_from_fract ( num_whole & result , num_fract fract )
 {
     result . _value = int ( fract . _value ) ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_sub_from_whole ( num_whole & a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: sub_from_whole ( num_whole & a , num_whole b )
 {
     a . _value -= b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_mod_wholes ( num_whole & result , num_whole value , num_whole modulator )
+inline void shy_platform_math_int_float < platform_insider > :: mod_wholes ( num_whole & result , num_whole value , num_whole modulator )
 {
     result . _value = value . _value % modulator . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_div_fract_by ( num_fract & a , num_fract b )
+inline void shy_platform_math_int_float < platform_insider > :: div_fract_by ( num_fract & a , num_fract b )
 {
     a . _value /= b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_neg_fract ( num_fract & result , num_fract a )
+inline void shy_platform_math_int_float < platform_insider > :: neg_fract ( num_fract & result , num_fract a )
 {
     result . _value = - a . _value ;
 }
     
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_make_fract_from_whole ( num_fract & result , num_whole whole )
+inline void shy_platform_math_int_float < platform_insider > :: make_fract_from_whole ( num_fract & result , num_whole whole )
 {
     result . _value = float ( whole . _value ) ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_sub_fracts ( num_fract & result , num_fract from , num_fract what )
+inline void shy_platform_math_int_float < platform_insider > :: sub_fracts ( num_fract & result , num_fract from , num_fract what )
 {
     result . _value = from . _value - what . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_add_to_fract ( num_fract & a , num_fract b )
+inline void shy_platform_math_int_float < platform_insider > :: add_to_fract ( num_fract & a , num_fract b )
 {
     a . _value += b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_inc_whole ( num_whole & a )
+inline void shy_platform_math_int_float < platform_insider > :: inc_whole ( num_whole & a )
 {
     ++ a . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_mul_wholes ( num_whole & result , num_whole a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: mul_wholes ( num_whole & result , num_whole a , num_whole b )
 {
     result . _value = a . _value * b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_div_fracts ( num_fract & result , num_fract a , num_fract b )
+inline void shy_platform_math_int_float < platform_insider > :: div_fracts ( num_fract & result , num_fract a , num_fract b )
 {
     result . _value = a . _value / b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_mod_whole_by ( num_whole & a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: mod_whole_by ( num_whole & a , num_whole b )
 {
     a . _value %= b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_div_whole_by ( num_whole & a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: div_whole_by ( num_whole & a , num_whole b )
 {
     a . _value /= b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_add_wholes ( num_whole & result , num_whole a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: add_wholes ( num_whole & result , num_whole a , num_whole b )
 {
     result . _value = a . _value + b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_sub_from_fract ( num_fract & from , num_fract what )
+inline void shy_platform_math_int_float < platform_insider > :: sub_from_fract ( num_fract & from , num_fract what )
 {
     from . _value -= what . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_xor_wholes ( num_whole & result , num_whole a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: xor_wholes ( num_whole & result , num_whole a , num_whole b )
 {
     result . _value = a . _value ^ b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_mul_whole_by ( num_whole & a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: mul_whole_by ( num_whole & a , num_whole b )
 {
     a . _value *= b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_div_wholes ( num_whole & result , num_whole a , num_whole b )
+inline void shy_platform_math_int_float < platform_insider > :: div_wholes ( num_whole & result , num_whole a , num_whole b )
 {
     result . _value = a . _value / b . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_dec_whole ( num_whole & a )
+inline void shy_platform_math_int_float < platform_insider > :: dec_whole ( num_whole & a )
 {
     -- a . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_neg_fract ( num_fract & a )
+inline void shy_platform_math_int_float < platform_insider > :: neg_fract ( num_fract & a )
 {
     a . _value = - a . _value ;
 }
 
 template < typename platform_insider >
-inline void shy_platform_math_int_float < platform_insider > :: math_neg_whole ( num_whole & result , num_whole a )
+inline void shy_platform_math_int_float < platform_insider > :: neg_whole ( num_whole & result , num_whole a )
 {
     result . _value = - a . _value ;
 }

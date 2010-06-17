@@ -12,9 +12,9 @@ class shy_logic_game
     typedef typename mediator :: platform :: platform_render platform_render ;
     
     static const_int_32 _fade_in_frames = 90 ;
-    static const num_fract _final_r ( ) { num_fract n ; platform_math :: math_make_num_fract ( n , 0 , 1 ) ; return n ; }
-    static const num_fract _final_g ( ) { num_fract n ; platform_math :: math_make_num_fract ( n , 1 , 10 ) ; return n ; }
-    static const num_fract _final_b ( ) { num_fract n ; platform_math :: math_make_num_fract ( n , 4 , 10 ) ; return n ; }
+    static const num_fract _final_r ( ) { num_fract n ; platform_math :: make_num_fract ( n , 0 , 1 ) ; return n ; }
+    static const num_fract _final_g ( ) { num_fract n ; platform_math :: make_num_fract ( n , 1 , 10 ) ; return n ; }
+    static const num_fract _final_b ( ) { num_fract n ; platform_math :: make_num_fract ( n , 4 , 10 ) ; return n ; }
 public :
     shy_logic_game ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -45,12 +45,12 @@ private :
 template < typename mediator >
 shy_logic_game < mediator > :: shy_logic_game ( )
 {
-    platform_math :: math_make_num_fract ( _color_r , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( _color_g , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( _color_b , 0 , 1 ) ;
-    platform_math :: math_make_num_whole ( _color_frames , 0 ) ;
-    platform_math :: math_make_num_whole ( _game_launched , false ) ;
-    platform_math :: math_make_num_whole ( _game_launch_permitted , false ) ;
+    platform_math :: make_num_fract ( _color_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( _color_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( _color_b , 0 , 1 ) ;
+    platform_math :: make_num_whole ( _color_frames , 0 ) ;
+    platform_math :: make_num_whole ( _game_launched , false ) ;
+    platform_math :: make_num_whole ( _game_launch_permitted , false ) ;
 }
 
 template < typename mediator >
@@ -62,7 +62,7 @@ void shy_logic_game < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_permit msg )
 {
-    platform_math :: math_make_num_whole ( _game_launch_permitted , true ) ;
+    platform_math :: make_num_whole ( _game_launch_permitted , true ) ;
 }
 
 template < typename mediator >
@@ -84,7 +84,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update m
         if ( platform_conditions :: whole_is_false ( _game_launched ) )
         {
             _mediator . get ( ) . send ( typename messages :: camera_prepare_permit ( ) ) ;
-            platform_math :: math_make_num_whole ( _game_launched , true ) ;
+            platform_math :: make_num_whole ( _game_launched , true ) ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _game_launched ) )
@@ -167,11 +167,11 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     num_fract fog_far_shift ;
     num_fract fog_near_shift ;
     _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
-    platform_math :: math_make_num_fract ( fog_a , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( fog_far_shift , 20 , 1 ) ;
-    platform_math :: math_make_num_fract ( fog_near_shift , 10 , 1 ) ;
-    platform_math :: math_add_fracts ( fog_far , fog_far_shift , near_plane ) ;
-    platform_math :: math_add_fracts ( fog_near , fog_near_shift , near_plane ) ;
+    platform_math :: make_num_fract ( fog_a , 0 , 1 ) ;
+    platform_math :: make_num_fract ( fog_far_shift , 20 , 1 ) ;
+    platform_math :: make_num_fract ( fog_near_shift , 10 , 1 ) ;
+    platform_math :: add_fracts ( fog_far , fog_far_shift , near_plane ) ;
+    platform_math :: add_fracts ( fog_near , fog_near_shift , near_plane ) ;
     platform_render :: fog_linear ( fog_near , fog_far , _color_r , _color_g , _color_b , fog_a ) ;
     platform_render :: clear_screen ( _color_r , _color_g , _color_b ) ;
 }
@@ -183,13 +183,13 @@ void shy_logic_game < mediator > :: _update_color ( )
     num_fract fract_color_frames ;
     num_fract fract_fade_in_frames ;
     num_whole whole_fade_in_frames ;
-    platform_math :: math_make_num_whole ( whole_fade_in_frames , _fade_in_frames ) ;
-    platform_math :: math_make_num_fract ( fract_fade_in_frames , _fade_in_frames , 1 ) ;
-    platform_math :: math_make_fract_from_whole ( fract_color_frames , _color_frames ) ;
-    platform_math :: math_div_fracts ( scale , fract_color_frames , fract_fade_in_frames ) ;
-    platform_math :: math_mul_fracts ( _color_r , scale , _final_r ( ) ) ;
-    platform_math :: math_mul_fracts ( _color_g , scale , _final_g ( ) ) ;
-    platform_math :: math_mul_fracts ( _color_b , scale , _final_b ( ) ) ;
+    platform_math :: make_num_whole ( whole_fade_in_frames , _fade_in_frames ) ;
+    platform_math :: make_num_fract ( fract_fade_in_frames , _fade_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_color_frames , _color_frames ) ;
+    platform_math :: div_fracts ( scale , fract_color_frames , fract_fade_in_frames ) ;
+    platform_math :: mul_fracts ( _color_r , scale , _final_r ( ) ) ;
+    platform_math :: mul_fracts ( _color_g , scale , _final_g ( ) ) ;
+    platform_math :: mul_fracts ( _color_b , scale , _final_b ( ) ) ;
     if ( platform_conditions :: whole_less_than_whole ( _color_frames , whole_fade_in_frames ) )
-        platform_math :: math_inc_whole ( _color_frames ) ;
+        platform_math :: inc_whole ( _color_frames ) ;
 }

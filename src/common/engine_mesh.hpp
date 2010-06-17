@@ -63,7 +63,7 @@ private :
 template < typename mediator >
 shy_engine_mesh < mediator > :: shy_engine_mesh ( )
 {
-    platform_math :: math_make_num_whole ( _next_mesh_id , 0 ) ;
+    platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
 }
 
 template < typename mediator >
@@ -104,7 +104,7 @@ void shy_engine_mesh < mediator > :: mesh_create
             ) ;
     }
     result . _mesh_id = _next_mesh_id ;
-    platform_math :: math_inc_whole ( _next_mesh_id ) ;
+    platform_math :: inc_whole ( _next_mesh_id ) ;
 }
 
 template < typename mediator >

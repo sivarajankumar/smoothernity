@@ -27,7 +27,7 @@ class shy_logic_image
     static const_int_32 _image_g = 255 ;
     static const_int_32 _image_b = 255 ;
     static const_int_32 _image_a = 255 ;
-    static const num_fract _final_scale ( ) { num_fract n ; platform_math :: math_make_num_fract ( n , 1 , 2 ) ; return n ; }
+    static const num_fract _final_scale ( ) { num_fract n ; platform_math :: make_num_fract ( n , 1 , 2 ) ; return n ; }
 public :
     shy_logic_image ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -54,11 +54,11 @@ private :
 template < typename mediator >
 shy_logic_image < mediator > :: shy_logic_image ( )
 {
-    platform_math :: math_make_num_whole ( _image_mesh_created , false ) ;
-    platform_math :: math_make_num_whole ( _image_texture_created , false ) ;
-    platform_math :: math_make_num_whole ( _image_texture_loaded , false ) ;
-    platform_math :: math_make_num_whole ( _image_prepare_permitted , false ) ;
-    platform_math :: math_make_num_whole ( _scale_frames , 0 ) ;
+    platform_math :: make_num_whole ( _image_mesh_created , false ) ;
+    platform_math :: make_num_whole ( _image_texture_created , false ) ;
+    platform_math :: make_num_whole ( _image_texture_loaded , false ) ;
+    platform_math :: make_num_whole ( _image_prepare_permitted , false ) ;
+    platform_math :: make_num_whole ( _scale_frames , 0 ) ;
 }
 
 template < typename mediator >
@@ -88,7 +88,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_render
 template < typename mediator >
 void shy_logic_image < mediator > :: receive ( typename messages :: image_prepare_permit msg )
 {
-    platform_math :: math_make_num_whole ( _image_prepare_permitted , true ) ;
+    platform_math :: make_num_whole ( _image_prepare_permitted , true ) ;
 }
 
 template < typename mediator >
@@ -99,12 +99,12 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
         if ( platform_conditions :: whole_is_false ( _image_mesh_created ) )
         {
             _create_image_mesh ( ) ;
-            platform_math :: math_make_num_whole ( _image_mesh_created , true ) ;
+            platform_math :: make_num_whole ( _image_mesh_created , true ) ;
         }
         if ( platform_conditions :: whole_is_false ( _image_texture_created ) )
         {
             _create_image_texture ( ) ;
-            platform_math :: math_make_num_whole ( _image_texture_created , true ) ;
+            platform_math :: make_num_whole ( _image_texture_created , true ) ;
         }
         if ( platform_conditions :: whole_is_false ( _image_texture_loaded ) )
         {
@@ -117,7 +117,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
                     texture_finalize_msg . texture = _image_texture_id ;
                     _mediator . get ( ) . send ( texture_finalize_msg ) ;
                 }
-                platform_math :: math_make_num_whole ( _image_texture_loaded , true ) ;
+                platform_math :: make_num_whole ( _image_texture_loaded , true ) ;
                 _mediator . get ( ) . send ( typename messages :: image_prepared ( ) ) ;
             }
         }
@@ -137,13 +137,13 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     num_fract fract_scale_frames ;
     num_fract fract_scale_in_frames ;
     num_whole whole_scale_in_frames ;
-    platform_math :: math_make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
-    platform_math :: math_make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
-    platform_math :: math_make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
+    platform_math :: make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
+    platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
     engine_math :: math_lerp ( scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , _final_scale ( ) , fract_scale_in_frames , fract_scale_frames ) ;
-    platform_math :: math_make_num_fract ( origin_x , 1 , 2 ) ;
-    platform_math :: math_make_num_fract ( origin_y , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( origin_z , - 3 , 1 ) ;
+    platform_math :: make_num_fract ( origin_x , 1 , 2 ) ;
+    platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
+    platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
     platform_matrix :: matrix_set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     platform_matrix :: matrix_set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
     platform_matrix :: matrix_set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
@@ -155,7 +155,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
     if ( platform_conditions :: whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
-        platform_math :: math_inc_whole ( _scale_frames ) ;
+        platform_math :: inc_whole ( _scale_frames ) ;
 }
 
 template < typename mediator >
@@ -197,40 +197,40 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     num_whole index ;
     num_whole vertices_count ;
     
-    platform_math :: math_make_num_fract ( x_left , - 1 , 1 ) ;
-    platform_math :: math_make_num_fract ( x_right , 1 , 1 ) ;
-    platform_math :: math_make_num_fract ( y_top , 1 , 1 ) ;
-    platform_math :: math_make_num_fract ( y_bottom , - 1 , 1 ) ;
-    platform_math :: math_make_num_fract ( u_left , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( u_right , 1 , 1 ) ;
-    platform_math :: math_make_num_fract ( v_top , 1 , 1 ) ;
-    platform_math :: math_make_num_fract ( v_bottom , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( z , 0 , 1 ) ;
-    platform_math :: math_make_num_fract ( color_r , _image_r , 255 ) ;
-    platform_math :: math_make_num_fract ( color_g , _image_g , 255 ) ;
-    platform_math :: math_make_num_fract ( color_b , _image_b , 255 ) ;
-    platform_math :: math_make_num_fract ( color_a , _image_a , 255 ) ;
-    platform_math :: math_make_num_whole ( vertices_count , 4 ) ;
+    platform_math :: make_num_fract ( x_left , - 1 , 1 ) ;
+    platform_math :: make_num_fract ( x_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( y_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( y_bottom , - 1 , 1 ) ;
+    platform_math :: make_num_fract ( u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
+    platform_math :: make_num_fract ( z , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_r , _image_r , 255 ) ;
+    platform_math :: make_num_fract ( color_g , _image_g , 255 ) ;
+    platform_math :: make_num_fract ( color_b , _image_b , 255 ) ;
+    platform_math :: make_num_fract ( color_a , _image_a , 255 ) ;
+    platform_math :: make_num_whole ( vertices_count , 4 ) ;
 
-    platform_math :: math_make_num_whole ( index , 0 ) ;
+    platform_math :: make_num_whole ( index , 0 ) ;
     platform_render :: set_vertex_position  ( platform_static_array :: element ( vertices , platform :: math_consts . whole_0 ) , x_left , y_top , z ) ;
     platform_render :: set_vertex_color     ( platform_static_array :: element ( vertices , platform :: math_consts . whole_0 ) , color_r , color_g , color_b , color_a ) ;
     platform_render :: set_vertex_tex_coord ( platform_static_array :: element ( vertices , platform :: math_consts . whole_0 ) , u_left , v_top ) ;
     platform_render :: set_index_value      ( platform_static_array :: element ( indices  , platform :: math_consts . whole_0 ) , index ) ;
 
-    platform_math :: math_make_num_whole ( index , 1 ) ;
+    platform_math :: make_num_whole ( index , 1 ) ;
     platform_render :: set_vertex_position  ( platform_static_array :: element ( vertices , platform :: math_consts . whole_1 ) , x_left , y_bottom , z ) ;
     platform_render :: set_vertex_color     ( platform_static_array :: element ( vertices , platform :: math_consts . whole_1 ) , color_r , color_g , color_b , color_a ) ;
     platform_render :: set_vertex_tex_coord ( platform_static_array :: element ( vertices , platform :: math_consts . whole_1 ) , u_left , v_bottom ) ;
     platform_render :: set_index_value      ( platform_static_array :: element ( indices  , platform :: math_consts . whole_1 ) , index ) ;
 
-    platform_math :: math_make_num_whole ( index , 2 ) ;
+    platform_math :: make_num_whole ( index , 2 ) ;
     platform_render :: set_vertex_position  ( platform_static_array :: element ( vertices , platform :: math_consts . whole_2 ) , x_right , y_top , z ) ;
     platform_render :: set_vertex_color     ( platform_static_array :: element ( vertices , platform :: math_consts . whole_2 ) , color_r , color_g , color_b , color_a ) ;
     platform_render :: set_vertex_tex_coord ( platform_static_array :: element ( vertices , platform :: math_consts . whole_2 ) , u_right , v_top ) ;
     platform_render :: set_index_value      ( platform_static_array :: element ( indices  , platform :: math_consts . whole_2 ) , index ) ;
 
-    platform_math :: math_make_num_whole ( index , 3 ) ;
+    platform_math :: make_num_whole ( index , 3 ) ;
     platform_render :: set_vertex_position  ( platform_static_array :: element ( vertices , platform :: math_consts . whole_3 ) , x_right , y_bottom , z ) ;
     platform_render :: set_vertex_color     ( platform_static_array :: element ( vertices , platform :: math_consts . whole_3 ) , color_r , color_g , color_b , color_a ) ;
     platform_render :: set_vertex_tex_coord ( platform_static_array :: element ( vertices , platform :: math_consts . whole_3 ) , u_right , v_bottom ) ;
@@ -252,7 +252,7 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
 {
     num_whole resource_index ;
     texture_resource_id logo_resource_id ;
-    platform_math :: math_make_num_whole ( resource_index , _logo_resource_index ) ;
+    platform_math :: make_num_whole ( resource_index , _logo_resource_index ) ;
     platform_render :: create_texture_resource_id ( logo_resource_id , resource_index ) ;
     _mediator . get ( ) . texture_create ( _image_texture_id ) ;
     {

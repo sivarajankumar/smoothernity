@@ -40,20 +40,20 @@ void shy_engine_math < mediator > :: math_catmull_rom_spline
     vector_data result_p0_p1 ;
     vector_data result_p2_p3 ;
     vector_data result_p0_p1_p2_p3 ;
-    platform_math :: math_mul_fracts ( t2 , t , t ) ;
-    platform_math :: math_mul_fracts ( t3 , t2 , t ) ;
-    platform_math :: math_mul_fracts ( t2_mul_2 , t2 , platform :: math_consts . fract_2 ) ;
-    platform_math :: math_mul_fracts ( t2_mul_4 , t2 , platform :: math_consts . fract_4 ) ;
-    platform_math :: math_mul_fracts ( t2_mul_5 , t2 , platform :: math_consts . fract_5 ) ;
-    platform_math :: math_mul_fracts ( t3_mul_3 , t3 , platform :: math_consts . fract_3 ) ;
-    platform_math :: math_make_num_fract ( half , 1 , 2 ) ;    
-    platform_math :: math_sub_fracts ( p0_coeff , t2_mul_2 , t ) ;
-    platform_math :: math_sub_from_fract ( p0_coeff , t3 ) ;
-    platform_math :: math_sub_fracts ( p1_coeff , t3_mul_3 , t2_mul_5 ) ;
-    platform_math :: math_add_to_fract ( p1_coeff , platform :: math_consts . fract_2 ) ;
-    platform_math :: math_sub_fracts ( p2_coeff , t2_mul_4 , t3_mul_3 ) ;
-    platform_math :: math_add_to_fract ( p2_coeff , t ) ;
-    platform_math :: math_sub_fracts ( p3_coeff , t3 , t2 ) ;
+    platform_math :: mul_fracts ( t2 , t , t ) ;
+    platform_math :: mul_fracts ( t3 , t2 , t ) ;
+    platform_math :: mul_fracts ( t2_mul_2 , t2 , platform :: math_consts . fract_2 ) ;
+    platform_math :: mul_fracts ( t2_mul_4 , t2 , platform :: math_consts . fract_4 ) ;
+    platform_math :: mul_fracts ( t2_mul_5 , t2 , platform :: math_consts . fract_5 ) ;
+    platform_math :: mul_fracts ( t3_mul_3 , t3 , platform :: math_consts . fract_3 ) ;
+    platform_math :: make_num_fract ( half , 1 , 2 ) ;    
+    platform_math :: sub_fracts ( p0_coeff , t2_mul_2 , t ) ;
+    platform_math :: sub_from_fract ( p0_coeff , t3 ) ;
+    platform_math :: sub_fracts ( p1_coeff , t3_mul_3 , t2_mul_5 ) ;
+    platform_math :: add_to_fract ( p1_coeff , platform :: math_consts . fract_2 ) ;
+    platform_math :: sub_fracts ( p2_coeff , t2_mul_4 , t3_mul_3 ) ;
+    platform_math :: add_to_fract ( p2_coeff , t ) ;
+    platform_math :: sub_fracts ( p3_coeff , t3 , t2 ) ;
     platform_vector :: vector_mul ( p0_scaled , p0 , p0_coeff ) ;
     platform_vector :: vector_mul ( p1_scaled , p1 , p1_coeff ) ;
     platform_vector :: vector_mul ( p2_scaled , p2 , p2_coeff ) ;
@@ -77,12 +77,12 @@ void shy_engine_math < mediator > :: math_lerp
     num_fract value_diff ;
     num_fract weight_diff ;
     num_fract current_diff ;
-    platform_math :: math_sub_fracts ( value_diff , to_value , from_value ) ;
-    platform_math :: math_sub_fracts ( weight_diff , to_weight , from_weight ) ;
-    platform_math :: math_sub_fracts ( current_diff , weight , from_weight ) ;
-    platform_math :: math_mul_fracts ( result , value_diff , current_diff ) ;
-    platform_math :: math_div_fract_by ( result , weight_diff ) ;
-    platform_math :: math_add_to_fract ( result , from_value ) ;
+    platform_math :: sub_fracts ( value_diff , to_value , from_value ) ;
+    platform_math :: sub_fracts ( weight_diff , to_weight , from_weight ) ;
+    platform_math :: sub_fracts ( current_diff , weight , from_weight ) ;
+    platform_math :: mul_fracts ( result , value_diff , current_diff ) ;
+    platform_math :: div_fract_by ( result , weight_diff ) ;
+    platform_math :: add_to_fract ( result , from_value ) ;
 }
 
 template < typename mediator >
@@ -127,7 +127,7 @@ template < typename mediator >
 void shy_engine_math < mediator > :: math_abs_whole ( num_whole & result , num_whole a )
 {
     if ( platform_conditions :: whole_less_than_zero ( a ) )
-        platform_math :: math_neg_whole ( result , a ) ;
+        platform_math :: neg_whole ( result , a ) ;
     else
         result = a ;
 }
