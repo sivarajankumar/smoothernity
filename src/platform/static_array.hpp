@@ -19,22 +19,22 @@ public :
         data_type _elements [ _array_size ] ;
     } ;
 public :
-    template < typename data_type , const_int_32 size >
-    static data_type & array_element ( static_array < data_type , size > & array , num_whole index ) ;
-    template < typename data_type , const_int_32 size >
-    static const data_type & array_element ( const static_array < data_type , size > & array , num_whole index ) ;
+    template < typename array_type >
+    static typename array_type :: _data_type & array_element ( array_type & array , num_whole index ) ;
+    template < typename array_type >
+    static const typename array_type :: _data_type & array_element ( const array_type & array , num_whole index ) ;
 } ;
 
 template < typename platform_insider >
-template < typename data_type , typename shy_platform_static_array < platform_insider > :: const_int_32 size >
-inline data_type & shy_platform_static_array < platform_insider > :: array_element ( static_array < data_type , size > & array , num_whole index )
+template < typename array_type >
+inline typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: array_element ( array_type & array , num_whole index )
 {
     return array . _elements [ platform_math_insider :: num_whole_unsafe_value_get ( index ) ] ;
 }
 
 template < typename platform_insider >
-template < typename data_type , typename shy_platform_static_array < platform_insider > :: const_int_32 size >
-inline const data_type & shy_platform_static_array < platform_insider > :: array_element ( const static_array < data_type , size > & array , num_whole index )
+template < typename array_type >
+inline const typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: array_element ( const array_type & array , num_whole index )
 {
     return array . _elements [ platform_math_insider :: num_whole_unsafe_value_get ( index ) ] ;
 }
