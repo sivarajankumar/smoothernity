@@ -68,11 +68,6 @@ shy_macosx_platform :: index_data :: index_data ( )
 {
 }
 
-shy_macosx_platform :: time_data :: time_data ( )
-: _time ( shy_macosx_platform_utility :: _uninitialized_value )
-{
-}
-    
 shy_macosx_platform :: mono_sound_sample :: mono_sound_sample ( )
 : _value ( ( GLubyte ) shy_macosx_platform_utility :: _uninitialized_value )
 {

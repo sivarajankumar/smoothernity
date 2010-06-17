@@ -16,7 +16,6 @@ class shy_logic_camera
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
-    typedef typename mediator :: platform :: time_data time_data ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
 

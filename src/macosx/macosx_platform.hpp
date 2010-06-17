@@ -11,20 +11,23 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
-#import "../platform/matrix_float.hpp"
-#import "../platform/matrix_float_insider.hpp"
-#import "../platform/conditions.hpp"
-#import "../platform/math_consts.hpp"
-#import "../platform/math_int_float.hpp"
-#import "../platform/math_int_float_insider.hpp"
-#import "../platform/pointer.hpp"
-#import "../platform/static_array.hpp"
-#import "../platform/static_array_insider.hpp"
-#import "../platform/vector_float.hpp"
-#import "../platform/vector_float_insider.hpp"
+#include "../platform/matrix_float.hpp"
+#include "../platform/matrix_float_insider.hpp"
+#include "../platform/conditions.hpp"
+#include "../platform/math_consts.hpp"
+#include "../platform/math_int_float.hpp"
+#include "../platform/math_int_float_insider.hpp"
+#include "../platform/pointer.hpp"
+#include "../platform/static_array.hpp"
+#include "../platform/static_array_insider.hpp"
+#include "../platform/vector_float.hpp"
+#include "../platform/vector_float_insider.hpp"
+
+#include "macosx_platform_time.hpp"
 
 class shy_macosx_platform
 {
+    friend class shy_macosx_platform_time < shy_macosx_platform > ;
     friend class shy_platform_conditions < shy_macosx_platform > ;
     friend class shy_platform_math_consts < shy_macosx_platform > ;
     friend class shy_platform_math_int_float < shy_macosx_platform > ;
@@ -43,6 +46,7 @@ public :
     typedef shy_platform_matrix_float < shy_macosx_platform > platform_matrix ;
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
+    typedef shy_macosx_platform_time < shy_macosx_platform > platform_time ;
     typedef shy_platform_vector_float < shy_macosx_platform > platform_vector ;
         
     typedef const int const_int_32 ;
@@ -117,15 +121,6 @@ public :
         GLushort _index ;
     } ;
 
-    class time_data
-    {
-        friend class shy_macosx_platform ;
-    public :
-        time_data ( ) ;
-    private :
-        CFAbsoluteTime _time ;
-    } ;
-    
     class mono_sound_sample
     {
         friend class shy_macosx_platform ;
@@ -282,13 +277,6 @@ public :
     static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
     
     //
-    // time
-    //
-    
-    static void time_get_current ( time_data & time ) ;
-    static void time_diff_in_microseconds ( num_whole & result , const time_data & time1 , const time_data & time2 ) ;
-
-    //
     // touch
     //
     
@@ -311,7 +299,7 @@ private :
 class shy_macosx_platform_utility
 {
 public :
-    static const int _uninitialized_value = 0xC0C0C0C0 ;    
+    static const int _uninitialized_value = 0xC0C0C0C0 ;
     
     static shy_macosx_sound_loader * _sound_loader ;
     static shy_macosx_texture_loader * _texture_loader ;
@@ -332,5 +320,4 @@ public :
 #include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
-#include "macosx_platform_time.hpp"
 #include "macosx_platform_touch.hpp"
