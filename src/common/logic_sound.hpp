@@ -11,6 +11,7 @@ class shy_logic_sound
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: platform :: platform_touch platform_touch ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: sound_buffer_id sound_buffer_id ;
     typedef typename mediator :: platform :: sound_source_id sound_source_id ;
@@ -155,7 +156,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
     {
         num_whole touch ;
         num_whole mouse_button ;
-        platform :: touch_occured ( touch ) ;
+        platform_touch :: touch_occured ( touch ) ;
         platform :: mouse_left_button_down ( mouse_button ) ;
         if ( platform_conditions :: condition_true ( touch ) || platform_conditions :: condition_true ( mouse_button ) )
         {

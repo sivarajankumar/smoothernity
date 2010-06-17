@@ -69,7 +69,6 @@
 		19AE0FF311B269A300A5B332 /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
 		19AE0FF411B269A300A5B332 /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		19AE0FF511B269A300A5B332 /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
-		19AE0FF611B269A300A5B332 /* macosx_platform_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */; };
 		19AE0FF811B269A300A5B332 /* engine_camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC4117DE26A008F67D9 /* engine_camera.hpp */; };
 		19AE0FF911B269A300A5B332 /* engine_mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC5117DE26A008F67D9 /* engine_mesh.hpp */; };
 		19AE0FFA11B269A300A5B332 /* facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC6117DE26A008F67D9 /* facade.hpp */; };
@@ -154,7 +153,7 @@
 		886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
 		886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
-		886AEA04117C8B36009CBB6F /* macosx_platform_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */; };
+		886D5ECA11CA18B500C5EE01 /* touch_dummy.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */; };
 		88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 		88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E76FEA1188A90100631276 /* engine_rasterizer.hpp */; };
 		88F391A1118A0B6400C25327 /* engine_texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F391A0118A0B6400C25327 /* engine_texture.hpp */; };
@@ -221,7 +220,7 @@
 		886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render.hpp; sourceTree = "<group>"; };
 		886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound.hpp; sourceTree = "<group>"; };
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
-		886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_touch.hpp; sourceTree = "<group>"; };
+		886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch_dummy.hpp; sourceTree = "<group>"; };
 		88DBFFB211873D4600584A28 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 		88E76FEA1188A90100631276 /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
 		88F391A0118A0B6400C25327 /* engine_texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_texture.hpp; sourceTree = "<group>"; };
@@ -270,7 +269,6 @@
 				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
 				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
 				886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */,
-				886AE9FB117C8B36009CBB6F /* macosx_platform_touch.hpp */,
 				05689233046B2C0900000102 /* macosx_scene.h */,
 				05689234046B2C0900000102 /* macosx_scene.mm */,
 				8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */,
@@ -401,6 +399,7 @@
 				8819C32511C90AAF003A552B /* pointer.hpp */,
 				8819C24411C8E11D003A552B /* static_array.hpp */,
 				8819C29011C8F262003A552B /* static_array_insider.hpp */,
+				886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */,
 				8819C56B11C939AD003A552B /* vector_float.hpp */,
 				8819C56D11C939EF003A552B /* vector_float_insider.hpp */,
 			);
@@ -423,7 +422,6 @@
 				19AE0FF311B269A300A5B332 /* macosx_platform_render.hpp in Headers */,
 				19AE0FF411B269A300A5B332 /* macosx_platform_sound.hpp in Headers */,
 				19AE0FF511B269A300A5B332 /* macosx_platform_time.hpp in Headers */,
-				19AE0FF611B269A300A5B332 /* macosx_platform_touch.hpp in Headers */,
 				19AE0FF811B269A300A5B332 /* engine_camera.hpp in Headers */,
 				19AE0FF911B269A300A5B332 /* engine_mesh.hpp in Headers */,
 				19AE0FFA11B269A300A5B332 /* facade.hpp in Headers */,
@@ -457,6 +455,7 @@
 				8819C51B11C93635003A552B /* matrix_float_insider.hpp in Headers */,
 				8819C56C11C939AD003A552B /* vector_float.hpp in Headers */,
 				8819C56E11C939EF003A552B /* vector_float_insider.hpp in Headers */,
+				886D5ECA11CA18B500C5EE01 /* touch_dummy.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,7 +471,6 @@
 				886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */,
 				886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */,
 				886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */,
-				886AEA04117C8B36009CBB6F /* macosx_platform_touch.hpp in Headers */,
 				8812CECF117DE26A008F67D9 /* engine_camera.hpp in Headers */,
 				8812CED0117DE26A008F67D9 /* engine_mesh.hpp in Headers */,
 				8812CED1117DE26A008F67D9 /* facade.hpp in Headers */,

@@ -20,6 +20,7 @@
 #include "../platform/pointer.hpp"
 #include "../platform/static_array.hpp"
 #include "../platform/static_array_insider.hpp"
+#include "../platform/touch_dummy.hpp"
 #include "../platform/vector_float.hpp"
 #include "../platform/vector_float_insider.hpp"
 
@@ -34,6 +35,7 @@ class shy_macosx_platform
     friend class shy_platform_matrix_float < shy_macosx_platform > ;
     friend class shy_platform_pointer < shy_macosx_platform > ;
     friend class shy_platform_static_array < shy_macosx_platform > ;
+    friend class shy_platform_touch_dummy < shy_macosx_platform > ;
     friend class shy_platform_vector_float < shy_macosx_platform > ;
 private :
     typedef shy_platform_math_int_float_insider < shy_macosx_platform > _platform_math_insider ;
@@ -47,6 +49,7 @@ public :
     typedef shy_platform_pointer < shy_macosx_platform > platform_pointer ;
     typedef shy_platform_static_array < shy_macosx_platform > platform_static_array ;
     typedef shy_macosx_platform_time < shy_macosx_platform > platform_time ;
+    typedef shy_platform_touch_dummy < shy_macosx_platform > platform_touch ;
     typedef shy_platform_vector_float < shy_macosx_platform > platform_vector ;
         
     typedef const int const_int_32 ;
@@ -276,14 +279,6 @@ public :
     template < typename samples_array >
     static void sound_create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
     
-    //
-    // touch
-    //
-    
-    static void touch_occured ( num_whole & result ) ;
-    static void touch_x ( num_fract & result ) ;
-    static void touch_y ( num_fract & result ) ;
-
 	//
 	// mouse
 	//
@@ -320,4 +315,3 @@ public :
 #include "macosx_platform_mouse.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
-#include "macosx_platform_touch.hpp"

@@ -14,6 +14,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: platform :: platform_touch platform_touch ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: vector_data vector_data ;
     typedef typename mediator :: platform :: vertex_data vertex_data ;
@@ -127,11 +128,11 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 {
     num_whole touch ;
-    platform :: touch_occured ( touch ) ;
+    platform_touch :: touch_occured ( touch ) ;
     if ( platform_conditions :: condition_true ( touch ) )
     {
-        platform :: touch_x ( _spot_x ) ;
-        platform :: touch_y ( _spot_y ) ;
+        platform_touch :: touch_x ( _spot_x ) ;
+        platform_touch :: touch_y ( _spot_y ) ;
         platform_math :: math_make_num_whole ( _should_place_new_spot , true ) ;
     }
 }
