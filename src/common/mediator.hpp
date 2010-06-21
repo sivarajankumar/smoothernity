@@ -103,6 +103,8 @@ public :
         class entities_height_request { } ;
         class entities_mesh_grid_reply { public : num_whole grid ; } ;
         class entities_mesh_grid_request { } ;
+        class entities_origin_reply { public : vector_data origin ; num_whole index ; } ;
+        class entities_origin_request { public : num_whole index ; } ;
         class entities_prepare_permit { } ;
         class entities_prepared { } ;
         class entities_render { } ;
@@ -199,6 +201,8 @@ public :
     void send ( typename messages :: entities_height_request msg ) ;
     void send ( typename messages :: entities_mesh_grid_reply msg ) ;
     void send ( typename messages :: entities_mesh_grid_request msg ) ;
+    void send ( typename messages :: entities_origin_reply msg ) ;
+    void send ( typename messages :: entities_origin_request msg ) ;
     void send ( typename messages :: entities_prepare_permit msg ) ;
     void send ( typename messages :: entities_prepared msg ) ;
     void send ( typename messages :: entities_render msg ) ;
@@ -431,6 +435,17 @@ void shy_mediator < mediator_types > :: send ( typename messages :: entities_mes
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_mesh_grid_request msg )
+{
+    _logic_entities . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_origin_reply msg )
+{
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_origin_request msg )
 {
     _logic_entities . get ( ) . receive ( msg ) ;
 }
