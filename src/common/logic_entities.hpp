@@ -40,7 +40,6 @@ public :
     void receive ( typename messages :: entities_height_request msg ) ;
     void receive ( typename messages :: entities_mesh_grid_request msg ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
-    void get_entity_mesh_grid ( num_whole & result ) ;
 private :
     void _entities_render ( ) ;
     void _entity_color ( num_fract & r , num_fract & g , num_fract & b , num_fract & a , num_whole i ) ;
@@ -139,12 +138,6 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
     typename messages :: entities_mesh_grid_reply entities_mesh_grid_reply_msg ;
     platform_math :: make_num_whole ( entities_mesh_grid_reply_msg . grid , _entity_mesh_grid ) ;
     _mediator . get ( ) . send ( entities_mesh_grid_reply_msg ) ;
-}
-
-template < typename mediator >
-void shy_logic_entities < mediator > :: get_entity_mesh_grid ( num_whole & result )
-{
-    platform_math :: make_num_whole ( result , _entity_mesh_grid ) ;
 }
 
 template < typename mediator >

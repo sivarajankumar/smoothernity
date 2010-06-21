@@ -31,8 +31,9 @@ public :
     void receive ( typename messages :: camera_prepare_permit msg ) ;
     void receive ( typename messages :: camera_matrix_use msg ) ;
     void receive ( typename messages :: entities_height_reply msg ) ;
+    void receive ( typename messages :: entities_mesh_grid_reply msg ) ;
 private :
-    void _get_entity_mesh_grid ( num_whole & result ) ;
+    void _proceed_with_update ( ) ;
     void _reset_camera_rubber ( ) ;
     void _fill_camera_schedules ( ) ;
     void _update_camera ( ) ;
@@ -55,7 +56,11 @@ private :
     num_whole _random_seed ;
     num_whole _camera_created ;
     num_whole _entities_height_requested ;
+    num_whole _entities_height_replied ;
     num_fract _entities_height ;
+    num_whole _entities_mesh_grid_requested ;
+    num_whole _entities_mesh_grid_replied ;
+    num_whole _entities_mesh_grid ;
     vector_data _desired_camera_origin ;
     vector_data _desired_camera_target ;
     vector_data _current_camera_origin ;
@@ -69,12 +74,15 @@ private :
 template < typename mediator >
 shy_logic_camera < mediator > :: shy_logic_camera ( )
 {
-    platform_math :: make_num_whole ( _camera_prepare_permitted , false ) ;
-    platform_math :: make_num_whole ( _camera_created , false ) ;
-    platform_math :: make_num_whole ( _entities_height_requested , false ) ;
-    platform_math :: make_num_whole ( _random_seed , 0 ) ;
-    platform_math :: make_num_whole ( _frames_to_change_camera_target , 0 ) ;
-    platform_math :: make_num_whole ( _frames_to_change_camera_origin , 0 ) ;
+    _camera_prepare_permitted = platform :: math_consts . whole_false ;
+    _camera_created = platform :: math_consts . whole_false ;
+    _entities_height_requested = platform :: math_consts . whole_false ;
+    _entities_height_replied = platform :: math_consts . whole_false ;
+    _entities_mesh_grid_requested = platform :: math_consts . whole_false ;
+    _entities_mesh_grid_replied = platform :: math_consts . whole_false ;
+    _random_seed = platform :: math_consts . whole_0 ;
+    _frames_to_change_camera_target = platform :: math_consts . whole_0 ;
+    _frames_to_change_camera_origin = platform :: math_consts . whole_0 ;
     for ( num_whole i = platform :: math_consts . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 )
         ; platform_math :: inc_whole ( i )
@@ -117,13 +125,10 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_upda
 {
     if ( platform_conditions :: whole_is_true ( _camera_prepare_permitted ) )
     {
-        if ( platform_conditions :: whole_is_false ( _camera_created ) )
-        {
-            _fill_camera_schedules ( ) ;
-            _reset_camera_rubber ( ) ;
-        }
-        platform_math :: make_num_whole ( _entities_height_requested , true ) ;
+        _entities_height_requested = platform :: math_consts . whole_true ;
+        _entities_mesh_grid_requested = platform :: math_consts . whole_true ;
         _mediator . get ( ) . send ( typename messages :: entities_height_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: entities_mesh_grid_request ( ) ) ;
     }
 }
 
@@ -132,21 +137,43 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_he
 {
     if ( platform_conditions :: whole_is_true ( _entities_height_requested ) )
     {
-        platform_math :: make_num_whole ( _entities_height_requested , false ) ;
+        _entities_height_requested = platform :: math_consts . whole_false ;
+        _entities_height_replied = platform :: math_consts . whole_true ;
         _entities_height = msg . height ;
-        _update_camera ( ) ;
-        if ( platform_conditions :: whole_is_false ( _camera_created ) )
-        {
-            platform_math :: make_num_whole ( _camera_created , true ) ;
-            _mediator . get ( ) . send ( typename messages :: camera_prepared ( ) ) ;
-        }
+        _proceed_with_update ( ) ;
     }
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: _get_entity_mesh_grid ( num_whole & result )
+void shy_logic_camera < mediator > :: receive ( typename messages :: entities_mesh_grid_reply msg )
 {
-    _mediator . get ( ) . get_entity_mesh_grid ( result ) ;
+    if ( platform_conditions :: whole_is_true ( _entities_mesh_grid_requested ) )
+    {
+        _entities_mesh_grid_requested = platform :: math_consts . whole_false ;
+        _entities_mesh_grid_replied = platform :: math_consts . whole_true ;
+        _entities_mesh_grid = msg . grid ;
+        _proceed_with_update ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: _proceed_with_update ( )
+{
+    if ( platform_conditions :: whole_is_true ( _entities_height_replied ) 
+      && platform_conditions :: whole_is_true ( _entities_mesh_grid_replied )
+       )
+    {
+        _entities_height_replied = platform :: math_consts . whole_false ;
+        _entities_mesh_grid_replied = platform :: math_consts . whole_false ;
+        if ( platform_conditions :: whole_is_false ( _camera_created ) )
+        {
+            _fill_camera_schedules ( ) ;
+            _reset_camera_rubber ( ) ;
+            platform_math :: make_num_whole ( _camera_created , true ) ;
+            _mediator . get ( ) . send ( typename messages :: camera_prepared ( ) ) ;
+        }
+        _update_camera ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -352,12 +379,10 @@ void shy_logic_camera < mediator > :: _random_camera_origin_index ( num_whole & 
 {
     num_whole index ;
     num_whole index_max ;
-    num_whole mesh_grid ;
     num_whole is_duplicate ;
     platform_math :: make_num_whole ( index , 0 ) ;
-    _get_entity_mesh_grid ( mesh_grid ) ;
-    platform_math :: div_wholes ( index_max , mesh_grid , platform :: math_consts . whole_2 ) ;
-    platform_math :: mul_whole_by ( index_max , mesh_grid ) ;
+    platform_math :: div_wholes ( index_max , _entities_mesh_grid , platform :: math_consts . whole_2 ) ;
+    platform_math :: mul_whole_by ( index_max , _entities_mesh_grid ) ;
     do
     {
         _get_random_index ( index , platform :: math_consts . whole_0 , index_max ) ;
@@ -372,13 +397,11 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( num_whole & 
     num_whole index ;
     num_whole index_min ;
     num_whole index_max ;
-    num_whole mesh_grid ;
     num_whole is_duplicate ;
     platform_math :: make_num_whole ( index , 0 ) ;
-    _get_entity_mesh_grid ( mesh_grid ) ;
-    platform_math :: div_wholes ( index_min , mesh_grid , platform :: math_consts . whole_2 ) ;
-    platform_math :: mul_whole_by ( index_min , mesh_grid ) ;
-    platform_math :: mul_wholes ( index_max , mesh_grid , mesh_grid ) ;
+    platform_math :: div_wholes ( index_min , _entities_mesh_grid , platform :: math_consts . whole_2 ) ;
+    platform_math :: mul_whole_by ( index_min , _entities_mesh_grid ) ;
+    platform_math :: mul_wholes ( index_max , _entities_mesh_grid , _entities_mesh_grid ) ;
     do
     {
         _get_random_index ( index , index_min , index_max ) ;

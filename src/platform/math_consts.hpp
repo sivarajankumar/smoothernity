@@ -19,6 +19,8 @@ public :
     num_fract fract_7 ;
     num_fract fract_8 ;
     num_fract fract_9 ;
+    num_whole whole_true ;
+    num_whole whole_false ;
     num_whole whole_0 ;
     num_whole whole_1 ;
     num_whole whole_2 ;
@@ -65,6 +67,9 @@ shy_platform_math_consts < platform_insider > :: shy_platform_math_consts ( )
     platform_math_insider :: num_fract_unsafe_value_set ( fract_7 , 7 ) ;
     platform_math_insider :: num_fract_unsafe_value_set ( fract_8 , 8 ) ;
     platform_math_insider :: num_fract_unsafe_value_set ( fract_9 , 9 ) ;
+    
+    platform_math_insider :: num_whole_unsafe_value_set ( whole_true , true ) ;
+    platform_math_insider :: num_whole_unsafe_value_set ( whole_false , false ) ;
     
     platform_math_insider :: num_whole_unsafe_value_set ( whole_0 , 0 ) ;
     platform_math_insider :: num_whole_unsafe_value_set ( whole_1 , 1 ) ;

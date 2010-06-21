@@ -264,7 +264,6 @@ public :
 public :
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
-    void get_entity_mesh_grid ( num_whole & result ) ;
     void get_entity_origin ( vector_data & result , num_whole index ) ;
     void get_near_plane_distance ( num_fract & result ) ;
     template 
@@ -427,18 +426,13 @@ void shy_mediator < mediator_types > :: send ( typename messages :: entities_hei
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_mesh_grid_reply msg )
 {
+    _logic_camera . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_mesh_grid_request msg )
 {
     _logic_entities . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_entity_mesh_grid ( num_whole & result )
-{
-    _logic_entities . get ( ) . get_entity_mesh_grid ( result ) ;
 }
 
 template < typename mediator_types >
