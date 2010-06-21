@@ -44,6 +44,8 @@ private :
     void _update_current_camera_origin ( ) ;
     void _update_current_camera_target ( ) ;
     void _update_camera_matrix ( ) ;
+    void _calc_desired_camera_target_pos ( ) ;
+    void _calc_desired_camera_origin_pos ( ) ;
     void _random_camera_origin_index ( num_whole & result ) ;
     void _random_camera_target_index ( num_whole & result ) ;
     void _get_random_index ( num_whole & result , num_whole index_min , num_whole index_max ) ;
@@ -307,8 +309,15 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_2 ) = 
         platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_3 ) ;
         platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_3 ) = new_origin_pos ;
+        _calc_desired_camera_origin_pos ( ) ;
     }
-    
+    else
+        _calc_desired_camera_origin_pos ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: _calc_desired_camera_origin_pos ( )
+{
     num_fract fract_frames_to_change_camera_origin ;
     num_fract fract_change_origin_in_frames ;
     num_fract spline_pos ;
@@ -356,8 +365,15 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_2 ) = 
         platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_3 ) ;
         platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_3 ) = new_target_pos ;
+        _calc_desired_camera_target_pos ( ) ;
     }
-    
+    else
+        _calc_desired_camera_target_pos ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: _calc_desired_camera_target_pos ( )
+{
     num_fract fract_frames_to_change_camera_target ;
     num_fract fract_change_target_in_frames ;
     num_fract spline_pos ;
