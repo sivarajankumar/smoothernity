@@ -442,6 +442,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: entities_mes
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_origin_reply msg )
 {
+    _logic_camera . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
