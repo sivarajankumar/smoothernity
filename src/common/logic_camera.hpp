@@ -36,6 +36,9 @@ public :
 private :
     void _proceed_with_update ( ) ;
     void _proceed_with_fill_camera_schedules ( ) ;
+    void _proceed_with_camera_update ( ) ;
+    void _proceed_with_update_desired_camera_target ( ) ;
+    void _proceed_with_update_desired_camera_origin ( ) ;
     void _fill_next_camera_schedule ( ) ;
     void _reset_camera_rubber ( ) ;
     void _update_camera ( ) ;
@@ -59,26 +62,43 @@ private :
     num_whole _frames_to_change_camera_origin ;
     num_whole _random_seed ;
     num_whole _camera_created ;
+    
     num_whole _entities_height_requested ;
     num_whole _entities_height_replied ;
     num_fract _entities_height ;
+    
     num_whole _entities_mesh_grid_requested ;
     num_whole _entities_mesh_grid_replied ;
     num_whole _entities_mesh_grid ;
+    
     num_whole _filling_camera_schedules ;
     num_whole _fill_camera_schedules_index ;
+    
     num_whole _fill_schedules_origin_requested ;
     num_whole _fill_schedules_origin_replied ;
     num_whole _fill_schedules_origin_index ;
     vector_data _fill_schedules_origin ;
+    
     num_whole _fill_schedules_target_requested ;
     num_whole _fill_schedules_target_replied ;
     num_whole _fill_schedules_target_index ;
     vector_data _fill_schedules_target ;
+    
+    num_whole _desired_camera_origin_is_ready ;
     vector_data _desired_camera_origin ;
+    num_whole _desired_camera_origin_new_requested ;
+    num_whole _desired_camera_origin_new_index ;
+    vector_data _desired_camera_origin_new_position ;
+    
+    num_whole _desired_camera_target_is_ready ;
     vector_data _desired_camera_target ;
+    num_whole _desired_camera_target_new_requested ;
+    num_whole _desired_camera_target_new_index ;
+    vector_data _desired_camera_target_new_position ;
+    
     vector_data _current_camera_origin ;
     vector_data _current_camera_target ;
+    
     typename platform_static_array :: template static_array < num_whole , 4 > _scheduled_camera_origin_indices ;
     typename platform_static_array :: template static_array < num_whole , 4 > _scheduled_camera_target_indices ;
     typename platform_static_array :: template static_array < vector_data , 4 > _scheduled_camera_origins ;
@@ -103,6 +123,8 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
     _fill_schedules_origin_replied = platform :: math_consts . whole_false ;
     _fill_schedules_target_requested = platform :: math_consts . whole_false ;
     _fill_schedules_target_replied = platform :: math_consts . whole_false ;
+    _desired_camera_origin_new_requested = platform :: math_consts . whole_false ;
+    _desired_camera_target_new_requested = platform :: math_consts . whole_false ;
     for ( num_whole i = platform :: math_consts . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 )
         ; platform_math :: inc_whole ( i )
@@ -197,6 +219,22 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_or
         _fill_schedules_target = msg . origin ;
         _proceed_with_fill_camera_schedules ( ) ;
     }
+    if ( platform_conditions :: whole_is_true ( _desired_camera_origin_new_requested )
+      && platform_conditions :: wholes_are_equal ( _desired_camera_origin_new_index , msg . index )
+       )
+    {
+        _desired_camera_origin_new_requested = platform :: math_consts . whole_false ;
+        _desired_camera_origin_new_position = msg . origin ;
+        _proceed_with_update_desired_camera_origin ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _desired_camera_target_new_requested )
+      && platform_conditions :: wholes_are_equal ( _desired_camera_target_new_index , msg . index )
+       )
+    {
+        _desired_camera_target_new_requested = platform :: math_consts . whole_false ;
+        _desired_camera_target_new_position = msg . origin ;
+        _proceed_with_update_desired_camera_target ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -276,43 +314,66 @@ void shy_logic_camera < mediator > :: _update_camera ( )
 {
     _update_desired_camera_origin ( ) ;
     _update_desired_camera_target ( ) ;
-    _update_current_camera_origin ( ) ;
-    _update_current_camera_target ( ) ;
-    _update_camera_matrix ( ) ;
+    _proceed_with_camera_update ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: _proceed_with_camera_update ( )
+{
+    if ( platform_conditions :: whole_is_true ( _desired_camera_origin_is_ready ) 
+      && platform_conditions :: whole_is_true ( _desired_camera_target_is_ready )
+       )
+    {
+        _update_current_camera_origin ( ) ;
+        _update_current_camera_target ( ) ;
+        _update_camera_matrix ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: _proceed_with_update_desired_camera_origin ( )
+{
+    platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_0 ) =
+    platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_1 ) ;
+    platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_1 ) = 
+    platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_2 ) ;
+    platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_2 ) =
+    platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_3 ) ;
+    platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_3 ) = _desired_camera_origin_new_index ;
+
+    platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_0 ) = 
+    platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_1 ) ;
+    platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_1 ) = 
+    platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_2 ) ;
+    platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_2 ) = 
+    platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_3 ) ;
+    platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_3 ) = _desired_camera_origin_new_position ;
+    
+    _calc_desired_camera_origin_pos ( ) ;
+    _desired_camera_origin_is_ready = platform :: math_consts . whole_true ;
+    
+    _proceed_with_camera_update ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
 {
+    _desired_camera_origin_is_ready = platform :: math_consts . whole_false ;
     platform_math :: dec_whole ( _frames_to_change_camera_origin ) ;
     if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_origin ) )
     {
-        num_whole new_origin_index ;
-        vector_data new_origin_pos ;
-        
         platform_math :: make_num_whole ( _frames_to_change_camera_origin , _change_origin_in_frames ) ;
-        _random_camera_origin_index ( new_origin_index ) ;
-        _mediator . get ( ) . get_entity_origin ( new_origin_pos , new_origin_index ) ;
-        
-        platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_0 ) =
-        platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_1 ) ;
-        platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_1 ) = 
-        platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_2 ) ;
-        platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_2 ) =
-        platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_3 ) ;
-        platform_static_array :: element ( _scheduled_camera_origin_indices , platform :: math_consts . whole_3 ) = new_origin_index ;
-
-        platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_0 ) = 
-        platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_1 ) ;
-        platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_1 ) = 
-        platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_2 ) ;
-        platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_2 ) = 
-        platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_3 ) ;
-        platform_static_array :: element ( _scheduled_camera_origins , platform :: math_consts . whole_3 ) = new_origin_pos ;
-        _calc_desired_camera_origin_pos ( ) ;
+        _random_camera_origin_index ( _desired_camera_origin_new_index ) ;
+        _desired_camera_origin_new_requested = platform :: math_consts . whole_true ;
+        typename messages :: entities_origin_request entities_origin_request_msg ;
+        entities_origin_request_msg . index = _desired_camera_origin_new_index ;
+        _mediator . get ( ) . send ( entities_origin_request_msg ) ;
     }
     else
+    {
         _calc_desired_camera_origin_pos ( ) ;
+        _desired_camera_origin_is_ready = platform :: math_consts . whole_true ;
+    }
 }
 
 template < typename mediator >
@@ -338,37 +399,49 @@ void shy_logic_camera < mediator > :: _calc_desired_camera_origin_pos ( )
 }
 
 template < typename mediator >
+void shy_logic_camera < mediator > :: _proceed_with_update_desired_camera_target ( )
+{        
+    platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_0 ) = 
+    platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_1 ) ;
+    platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_1 ) = 
+    platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_2 ) ;
+    platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_2 ) = 
+    platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_3 ) ;
+    platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_3 ) = _desired_camera_target_new_index ;
+    
+    platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_0 ) = 
+    platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_1 ) ;
+    platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_1 ) = 
+    platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_2 ) ;
+    platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_2 ) = 
+    platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_3 ) ;
+    platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_3 ) = _desired_camera_target_new_position ;
+    
+    _calc_desired_camera_target_pos ( ) ;
+    _desired_camera_target_is_ready = platform :: math_consts . whole_true ;
+    
+    _proceed_with_camera_update ( ) ;
+}
+
+template < typename mediator >
 void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
 {
+    _desired_camera_target_is_ready = platform :: math_consts . whole_false ;
     platform_math :: dec_whole ( _frames_to_change_camera_target ) ;
     if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_target ) )
     {
-        num_whole new_target_index ;
-        vector_data new_target_pos ;
-        
         platform_math :: make_num_whole ( _frames_to_change_camera_target , _change_target_in_frames ) ;
-        _random_camera_target_index ( new_target_index ) ;
-        _mediator . get ( ) . get_entity_origin ( new_target_pos , new_target_index ) ;
-        
-        platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_0 ) = 
-        platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_1 ) ;
-        platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_1 ) = 
-        platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_2 ) ;
-        platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_2 ) = 
-        platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_3 ) ;
-        platform_static_array :: element ( _scheduled_camera_target_indices , platform :: math_consts . whole_3 ) = new_target_index ;
-        
-        platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_0 ) = 
-        platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_1 ) ;
-        platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_1 ) = 
-        platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_2 ) ;
-        platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_2 ) = 
-        platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_3 ) ;
-        platform_static_array :: element ( _scheduled_camera_targets , platform :: math_consts . whole_3 ) = new_target_pos ;
-        _calc_desired_camera_target_pos ( ) ;
+        _random_camera_target_index ( _desired_camera_target_new_index ) ;
+        _desired_camera_target_new_requested = platform :: math_consts . whole_true ;
+        typename messages :: entities_origin_request entities_origin_request_msg ;
+        entities_origin_request_msg . index = _desired_camera_target_new_index ;
+        _mediator . get ( ) . send ( entities_origin_request_msg ) ;
     }
     else
+    {
         _calc_desired_camera_target_pos ( ) ;
+        _desired_camera_target_is_ready = platform :: math_consts . whole_true ;
+    }
 }
 
 template < typename mediator >
