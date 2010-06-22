@@ -8,6 +8,7 @@ class shy_engine_texture
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_render :: render_texture_id render_texture_id ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
@@ -34,7 +35,9 @@ private :
     } ;
 public :
     shy_engine_texture ( ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void texture_create ( texture_id & result ) ;
+    void receive ( typename messages :: texture_create_request msg ) ;
     void receive ( typename messages :: texture_finalize msg ) ;
     void receive ( typename messages :: texture_load_from_resource msg ) ;
     void receive ( typename messages :: texture_select msg ) ;
@@ -45,8 +48,9 @@ public :
     void texture_width ( num_whole & result ) ;
     void texture_height ( num_whole & result ) ;
 private :
-    num_whole _next_texture_id ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _texture_data , _max_textures > _textures_datas ;
+    num_whole _next_texture_id ;
 } ;
 
 template < typename mediator >
@@ -56,10 +60,25 @@ shy_engine_texture < mediator > :: shy_engine_texture ( )
 }
 
 template < typename mediator >
+void shy_engine_texture < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
 void shy_engine_texture < mediator > :: texture_create ( texture_id & result )
 {
     result . _texture_id = _next_texture_id ;
     platform_math :: inc_whole ( _next_texture_id ) ;
+}
+
+template < typename mediator >
+void shy_engine_texture < mediator > :: receive ( typename messages :: texture_create_request msg )
+{
+    typename messages :: texture_create_reply texture_create_reply_msg ;
+    texture_create_reply_msg . texture . _texture_id = _next_texture_id ;
+    platform_math :: inc_whole ( _next_texture_id ) ;
+    _mediator . get ( ) . send ( texture_create_reply_msg ) ;
 }
 
 template < typename mediator >

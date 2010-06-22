@@ -147,6 +147,8 @@ public :
         class text_prepared { } ;
         class text_render { } ;
         class text_update { } ;
+        class texture_create_reply { public : texture_id texture ; } ;
+        class texture_create_request { } ;
         class texture_finalize { public : texture_id texture ; } ;
         class texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
         class texture_select { public : texture_id texture ; } ;
@@ -247,6 +249,8 @@ public :
     void send ( typename messages :: text_prepared msg ) ;
     void send ( typename messages :: text_render msg ) ;
     void send ( typename messages :: text_update msg ) ;
+    void send ( typename messages :: texture_create_reply msg ) ;
+    void send ( typename messages :: texture_create_request msg ) ;
     void send ( typename messages :: texture_finalize msg ) ;
     void send ( typename messages :: texture_load_from_resource msg ) ;
     void send ( typename messages :: texture_select msg ) ;
@@ -349,6 +353,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_touch = arg_logic_touch ;
 
     _engine_rasterizer . get ( ) . set_mediator ( * this ) ;
+    _engine_texture . get ( ) . set_mediator ( * this ) ;
     _logic . get ( ) . set_mediator ( * this ) ;
     _logic_application . get ( ) . set_mediator ( * this ) ;
     _logic_camera . get ( ) . set_mediator ( * this ) ;
@@ -750,6 +755,17 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: camera_matrix_use msg )
 {
     _logic_camera . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: texture_create_reply msg )
+{
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: texture_create_request msg )
+{
+    _engine_texture . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
