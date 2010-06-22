@@ -291,7 +291,6 @@ public :
         , num_whole triangle_fan_indices_count
         ) ;
     const alphabet_english & text_alphabet_english ( ) ;
-    void texture_create ( texture_id & result ) ;
     void texture_height ( num_whole & result ) ;
     void texture_width ( num_whole & result ) ;
 private :
@@ -762,18 +761,13 @@ void shy_mediator < mediator_types > :: send ( typename messages :: texture_crea
 {
     _logic_text . get ( ) . receive ( msg ) ;
     _logic_image . get ( ) . receive ( msg ) ;
+    _logic_land . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: texture_create_request msg )
 {
     _engine_texture . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_create ( texture_id & result )
-{
-    _engine_texture . get ( ) . texture_create ( result ) ;
 }
 
 template < typename mediator_types >

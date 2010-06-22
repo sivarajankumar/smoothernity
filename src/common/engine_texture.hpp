@@ -36,7 +36,6 @@ private :
 public :
     shy_engine_texture ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void texture_create ( texture_id & result ) ;
     void receive ( typename messages :: texture_create_request msg ) ;
     void receive ( typename messages :: texture_finalize msg ) ;
     void receive ( typename messages :: texture_load_from_resource msg ) ;
@@ -63,13 +62,6 @@ template < typename mediator >
 void shy_engine_texture < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
-}
-
-template < typename mediator >
-void shy_engine_texture < mediator > :: texture_create ( texture_id & result )
-{
-    result . _texture_id = _next_texture_id ;
-    platform_math :: inc_whole ( _next_texture_id ) ;
 }
 
 template < typename mediator >

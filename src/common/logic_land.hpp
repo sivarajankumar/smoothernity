@@ -33,6 +33,7 @@ public :
     void receive ( typename messages :: land_prepare_permit msg ) ;
     void receive ( typename messages :: land_render msg ) ;
     void receive ( typename messages :: land_update msg ) ;
+    void receive ( typename messages :: texture_create_reply msg ) ;
 private :
     void _render_land ( ) ;
     void _create_land_mesh ( ) ;
@@ -44,6 +45,8 @@ private :
     num_whole _land_prepare_permitted ;
     num_whole _land_texture_creation_row ;
     num_fract _land_scale ;
+    num_whole _texture_create_requested ;
+    num_whole _texture_create_replied ;
     mesh_id _land_mesh_id ;
     texture_id _land_texture_id ;
 } ;
@@ -56,6 +59,8 @@ shy_logic_land < mediator > :: shy_logic_land ( )
     platform_math :: make_num_whole ( _land_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _land_texture_creation_row , 0 ) ;
     platform_math :: make_num_fract ( _land_scale , 0 , 1 ) ;
+    _texture_create_requested = platform :: math_consts . whole_false ;
+    _texture_create_replied = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -89,12 +94,31 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_render m
 }
 
 template < typename mediator >
+void shy_logic_land < mediator > :: receive ( typename messages :: texture_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
+    {
+        _texture_create_requested = platform :: math_consts . whole_false ;
+        _texture_create_replied = platform :: math_consts . whole_true ;
+        _land_texture_id = msg . texture ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: land_update msg )
 {
     if ( platform_conditions :: whole_is_true ( _land_prepare_permitted ) )
     {
         if ( platform_conditions :: whole_is_false ( _land_texture_created ) )
-            _create_land_texture ( ) ;
+        {
+            if ( platform_conditions :: whole_is_false ( _texture_create_replied ) )
+            {
+                _texture_create_requested = platform :: math_consts . whole_true ;
+                _mediator . get ( ) . send ( typename messages :: texture_create_request ( ) ) ;
+            }
+            else
+                _create_land_texture ( ) ;
+        }
         else if ( platform_conditions :: whole_is_false ( _land_mesh_created ) )
         {
             _create_land_mesh ( ) ;
@@ -292,8 +316,6 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
     num_whole whole_create_rows_per_frame ;
     num_whole prev_creation_row = _land_texture_creation_row ;
     
-    if ( platform_conditions :: whole_is_zero ( _land_texture_creation_row ) )
-        _mediator . get ( ) . texture_create ( _land_texture_id ) ;
     platform_math :: make_num_whole ( whole_create_rows_per_frame , _create_rows_per_frame ) ;
     
     _mediator . get ( ) . texture_width ( texture_width ) ;
