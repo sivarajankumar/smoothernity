@@ -760,6 +760,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: camera_matri
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: texture_create_reply msg )
 {
+    _logic_text . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
