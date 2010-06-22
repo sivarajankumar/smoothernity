@@ -272,7 +272,6 @@ public :
 public :
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
-    void get_near_plane_distance ( num_fract & result ) ;
     template 
         < typename vertex_array 
         , typename strip_index_array
@@ -464,12 +463,7 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: near_plane_distance_reply msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_near_plane_distance ( num_fract & result )
-{
-    _logic . get ( ) . get_near_plane_distance ( result ) ;
+    _logic_camera . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

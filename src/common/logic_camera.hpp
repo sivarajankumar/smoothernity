@@ -33,6 +33,7 @@ public :
     void receive ( typename messages :: entities_height_reply msg ) ;
     void receive ( typename messages :: entities_mesh_grid_reply msg ) ;
     void receive ( typename messages :: entities_origin_reply msg ) ;
+    void receive ( typename messages :: near_plane_distance_reply msg ) ;
 private :
     void _proceed_with_update ( ) ;
     void _proceed_with_fill_camera_schedules ( ) ;
@@ -70,6 +71,10 @@ private :
     num_whole _entities_mesh_grid_requested ;
     num_whole _entities_mesh_grid_replied ;
     num_whole _entities_mesh_grid ;
+    
+    num_whole _near_plane_distance_requested ;
+    num_whole _near_plane_distance_replied ;
+    num_fract _near_plane_distance ;
     
     num_whole _filling_camera_schedules ;
     num_whole _fill_camera_schedules_index ;
@@ -114,6 +119,8 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
     _entities_height_replied = platform :: math_consts . whole_false ;
     _entities_mesh_grid_requested = platform :: math_consts . whole_false ;
     _entities_mesh_grid_replied = platform :: math_consts . whole_false ;
+    _near_plane_distance_requested = platform :: math_consts . whole_false ;
+    _near_plane_distance_replied = platform :: math_consts . whole_false ;
     _random_seed = platform :: math_consts . whole_0 ;
     _frames_to_change_camera_target = platform :: math_consts . whole_0 ;
     _frames_to_change_camera_origin = platform :: math_consts . whole_0 ;
@@ -169,8 +176,10 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_upda
     {
         _entities_height_requested = platform :: math_consts . whole_true ;
         _entities_mesh_grid_requested = platform :: math_consts . whole_true ;
+        _near_plane_distance_requested = platform :: math_consts . whole_true ;
         _mediator . get ( ) . send ( typename messages :: entities_height_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: entities_mesh_grid_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: near_plane_distance_request ( ) ) ;
     }
 }
 
@@ -194,6 +203,18 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_me
         _entities_mesh_grid_requested = platform :: math_consts . whole_false ;
         _entities_mesh_grid_replied = platform :: math_consts . whole_true ;
         _entities_mesh_grid = msg . grid ;
+        _proceed_with_update ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_camera < mediator > :: receive ( typename messages :: near_plane_distance_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _near_plane_distance_requested ) )
+    {
+        _near_plane_distance_requested = platform :: math_consts . whole_false ;
+        _near_plane_distance_replied = platform :: math_consts . whole_true ;
+        _near_plane_distance = msg . distance ;
         _proceed_with_update ( ) ;
     }
 }
@@ -242,6 +263,7 @@ void shy_logic_camera < mediator > :: _proceed_with_update ( )
 {
     if ( platform_conditions :: whole_is_true ( _entities_height_replied ) 
       && platform_conditions :: whole_is_true ( _entities_mesh_grid_replied )
+      && platform_conditions :: whole_is_true ( _near_plane_distance_replied )
        )
     {
         _entities_height_replied = platform :: math_consts . whole_false ;
@@ -504,11 +526,9 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     vector_data up ;
     vector_data shift ;
     vector_data shifted_origin ;
-    num_fract near_plane ;
     num_fract aspect_height ;
     num_fract entity_height ;
     
-    _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
     platform_render :: get_aspect_height ( aspect_height ) ;
     platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
@@ -516,7 +536,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     platform_math :: make_num_fract ( shift_x , 0 , 1 ) ;
     shift_y = _entities_height ;
     platform_math :: add_to_fract ( shift_y , aspect_height ) ;
-    platform_math :: add_to_fract ( shift_y , near_plane ) ;
+    platform_math :: add_to_fract ( shift_y , _near_plane_distance ) ;
     platform_math :: make_num_fract ( shift_z , 0 , 1 ) ;
     platform_vector :: xyz ( up , up_x , up_y , up_z ) ;
     platform_vector :: xyz ( shift , shift_x , shift_y , shift_z ) ;

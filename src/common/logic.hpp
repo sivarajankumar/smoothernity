@@ -19,7 +19,6 @@ public :
     void receive ( typename messages :: video_mode_changed msg ) ;
     void receive ( typename messages :: fidget_prepared msg ) ;
     void receive ( typename messages :: near_plane_distance_request msg ) ;
-    void get_near_plane_distance ( num_fract & result ) ;
 private :
     void _init_render ( ) ;
     void _get_near_plane_distance ( num_fract & result ) ;
@@ -125,12 +124,6 @@ void shy_logic < mediator > :: receive ( typename messages :: near_plane_distanc
     typename messages :: near_plane_distance_reply near_plane_distance_reply_msg ;
     _get_near_plane_distance ( near_plane_distance_reply_msg . distance ) ;
     _mediator . get ( ) . send ( near_plane_distance_reply_msg ) ;
-}
-
-template < typename mediator >
-void shy_logic < mediator > :: get_near_plane_distance ( num_fract & result )
-{
-    _get_near_plane_distance ( result ) ;
 }
 
 template < typename mediator >
