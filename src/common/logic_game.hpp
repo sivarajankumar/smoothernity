@@ -48,12 +48,12 @@ private :
 template < typename mediator >
 shy_logic_game < mediator > :: shy_logic_game ( )
 {
-    platform_math :: make_num_fract ( _color_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( _color_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( _color_b , 0 , 1 ) ;
-    platform_math :: make_num_whole ( _color_frames , 0 ) ;
-    platform_math :: make_num_whole ( _game_launched , false ) ;
-    platform_math :: make_num_whole ( _game_launch_permitted , false ) ;
+    _color_r = platform :: math_consts . fract_0 ;
+    _color_g = platform :: math_consts . fract_0 ;
+    _color_b = platform :: math_consts . fract_0 ;
+    _color_frames = platform :: math_consts . whole_0 ;
+    _game_launched = platform :: math_consts . whole_false ;
+    _game_launch_permitted = platform :: math_consts . whole_false ;
     _near_plane_distance_requested = platform :: math_consts . whole_false ;
 }
 
