@@ -463,6 +463,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: near_plane_d
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: near_plane_distance_reply msg )
 {
+    _logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

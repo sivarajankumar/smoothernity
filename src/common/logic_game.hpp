@@ -27,6 +27,7 @@ public :
     void receive ( typename messages :: land_prepared msg ) ;
     void receive ( typename messages :: sound_prepared msg ) ;
     void receive ( typename messages :: touch_prepared msg ) ;
+    void receive ( typename messages :: near_plane_distance_reply msg ) ;
 private :
     void _render_scene ( ) ;
     void _render_hud ( ) ;
@@ -40,6 +41,8 @@ private :
     num_whole _color_frames ;
     num_whole _game_launched ;
     num_whole _game_launch_permitted ;
+    num_fract _near_plane_distance ;
+    num_whole _near_plane_distance_requested ;
 } ;
 
 template < typename mediator >
@@ -51,6 +54,7 @@ shy_logic_game < mediator > :: shy_logic_game ( )
     platform_math :: make_num_whole ( _color_frames , 0 ) ;
     platform_math :: make_num_whole ( _game_launched , false ) ;
     platform_math :: make_num_whole ( _game_launch_permitted , false ) ;
+    _near_plane_distance_requested = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -70,6 +74,18 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_render m
 {
     if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
+        _near_plane_distance_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: near_plane_distance_request ( ) ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_game < mediator > :: receive ( typename messages :: near_plane_distance_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _near_plane_distance_requested ) )
+    {
+        _near_plane_distance_requested = platform :: math_consts . whole_false ;
+        _near_plane_distance = msg . distance ;
         _clear_screen ( ) ;
         _render_scene ( ) ;
         _render_hud ( ) ;
@@ -163,15 +179,13 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     num_fract fog_a ;
     num_fract fog_far ;
     num_fract fog_near ;
-    num_fract near_plane ;
     num_fract fog_far_shift ;
     num_fract fog_near_shift ;
-    _mediator . get ( ) . get_near_plane_distance ( near_plane ) ;
     platform_math :: make_num_fract ( fog_a , 0 , 1 ) ;
     platform_math :: make_num_fract ( fog_far_shift , 20 , 1 ) ;
     platform_math :: make_num_fract ( fog_near_shift , 10 , 1 ) ;
-    platform_math :: add_fracts ( fog_far , fog_far_shift , near_plane ) ;
-    platform_math :: add_fracts ( fog_near , fog_near_shift , near_plane ) ;
+    platform_math :: add_fracts ( fog_far , fog_far_shift , _near_plane_distance ) ;
+    platform_math :: add_fracts ( fog_near , fog_near_shift , _near_plane_distance ) ;
     platform_render :: fog_linear ( fog_near , fog_far , _color_r , _color_g , _color_b , fog_a ) ;
     platform_render :: clear_screen ( _color_r , _color_g , _color_b ) ;
 }
