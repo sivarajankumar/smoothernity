@@ -131,6 +131,8 @@ public :
         class mesh_delete { public : mesh_id mesh ; } ;
         class mesh_render { public : mesh_id mesh ; } ;
         class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
+        class near_plane_distance_reply { public : num_fract distance ; } ;
+        class near_plane_distance_request { } ;
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
         class rasterize_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
         class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
@@ -229,6 +231,8 @@ public :
     void send ( typename messages :: mesh_delete msg ) ;
     void send ( typename messages :: mesh_render msg ) ;
     void send ( typename messages :: mesh_set_transform msg ) ;
+    void send ( typename messages :: near_plane_distance_reply msg ) ;
+    void send ( typename messages :: near_plane_distance_request msg ) ;
     void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
     void send ( typename messages :: rasterize_rect msg ) ;
     void send ( typename messages :: rasterize_triangle msg ) ;
@@ -448,6 +452,17 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_origin_request msg )
 {
     _logic_entities . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: near_plane_distance_request msg )
+{
+    _logic . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: near_plane_distance_reply msg )
+{
 }
 
 template < typename mediator_types >
