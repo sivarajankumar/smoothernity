@@ -18,6 +18,8 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
     static const_int_32 _max_meshes = 100 ;
+    static const_int_32 _max_vertices = 1000 ;
+    static const_int_32 _max_indices = 1000 ;
     
 public :
     class mesh_id
@@ -36,6 +38,9 @@ private :
         num_whole triangle_strip_indices_count ;
         num_whole triangle_fan_indices_count ;
         matrix_data transform ;
+        typename platform_static_array :: template static_array < vertex_data , _max_vertices > vertices ;
+        typename platform_static_array :: template static_array < index_data , _max_indices > triangle_strip_indices ;
+        typename platform_static_array :: template static_array < index_data , _max_indices > triangle_fan_indices ;
     } ;
 public :
     shy_engine_mesh ( ) ;
@@ -53,12 +58,13 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
-    void mesh_create ( mesh_id & mesh ) ;
+    void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
     void mesh_finalize ( mesh_id mesh ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void mesh_set_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
+    void mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
+    void mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
     void receive ( typename messages :: mesh_delete msg ) ;
     void receive ( typename messages :: mesh_render msg ) ;
     void receive ( typename messages :: mesh_set_transform msg ) ;
@@ -115,33 +121,77 @@ void shy_engine_mesh < mediator > :: mesh_create
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_create ( mesh_id & mesh )
+void shy_engine_mesh < mediator > :: mesh_create ( mesh_id & result , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count )
 {
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
+    mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
+    mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
+    platform_matrix :: identity ( mesh . transform ) ;
+    result . _mesh_id = _next_mesh_id ;
+    platform_math :: inc_whole ( _next_mesh_id ) ;
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_finalize ( mesh_id mesh )
+void shy_engine_mesh < mediator > :: mesh_finalize ( mesh_id arg_mesh )
 {
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
+    platform_render :: create_vertex_buffer ( mesh . vertex_buffer_id , mesh . vertices_count , mesh . vertices ) ;
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
+    {
+        platform_render :: create_index_buffer 
+            ( mesh . triangle_strip_index_buffer_id 
+            , mesh . triangle_strip_indices_count 
+            , mesh . triangle_strip_indices 
+            ) ;
+    }
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
+    {
+        platform_render :: create_index_buffer 
+            ( mesh . triangle_fan_index_buffer_id 
+            , mesh . triangle_fan_indices_count 
+            , mesh . triangle_fan_indices 
+            ) ;
+    }
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
+void shy_engine_mesh < mediator > :: mesh_set_vertex_position ( mesh_id arg_mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
 {
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
+    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , offset ) ;
+    platform_render :: set_vertex_position ( vertex , x , y , z ) ;
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
+void shy_engine_mesh < mediator > :: mesh_set_vertex_tex_coord ( mesh_id arg_mesh , num_whole offset , num_fract u , num_fract v )
 {
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
+    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , offset ) ;
+    platform_render :: set_vertex_tex_coord ( vertex , u , v ) ;
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+void shy_engine_mesh < mediator > :: mesh_set_vertex_color ( mesh_id arg_mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
+    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , offset ) ;
+    platform_render :: set_vertex_color ( vertex , r , g , b , a ) ;
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+void shy_engine_mesh < mediator > :: mesh_set_triangle_strip_index_value ( mesh_id arg_mesh , num_whole offset , num_whole index_value )
 {
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
+    index_data & index = platform_static_array :: element ( mesh . triangle_strip_indices , offset ) ;
+    platform_render :: set_index_position ( index , index_value ) ;
+}
+    
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_set_triangle_fan_index_value ( mesh_id arg_mesh , num_whole offset , num_whole index_value )
+{
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
+    index_data & index = platform_static_array :: element ( mesh . triangle_fan_indices , offset ) ;
+    platform_render :: set_index_position ( index , index_value ) ;
 }
     
 template < typename mediator >
