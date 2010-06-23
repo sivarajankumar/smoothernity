@@ -57,7 +57,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english alphabet_english ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
     
 private :
@@ -75,6 +75,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: logic_text_consts_type logic_text_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
     typedef typename platform :: platform_math :: const_int_32 const_int_32 ;
@@ -276,6 +277,7 @@ public :
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
     const texture_consts_type & texture_consts ( ) ;
+    const logic_text_consts_type & logic_text_consts ( ) ;
 public :
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
@@ -293,7 +295,6 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
-    const alphabet_english & text_alphabet_english ( ) ;
 private :
     typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
@@ -373,6 +374,13 @@ const typename shy_mediator < mediator_types > :: texture_consts_type &
 shy_mediator < mediator_types > :: texture_consts ( )
 {
     return _engine_texture . get ( ) . texture_consts ;
+}
+
+template < typename mediator_types >
+const typename shy_mediator < mediator_types > :: logic_text_consts_type &
+shy_mediator < mediator_types > :: logic_text_consts ( )
+{
+    return _logic_text . get ( ) . logic_text_consts ;
 }
 
 template < typename mediator_types >
@@ -878,13 +886,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: game_launch_permit msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-const typename shy_mediator < mediator_types > :: alphabet_english & 
-shy_mediator < mediator_types > :: text_alphabet_english ( )
-{
-    return _logic_text . get ( ) . text_alphabet_english ( ) ;
 }
 
 template < typename mediator_types >

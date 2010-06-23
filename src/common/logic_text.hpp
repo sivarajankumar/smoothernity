@@ -43,15 +43,15 @@ public :
     class letter_id
     {
         friend class shy_logic_text ;
-        friend class shy_logic_text :: alphabet_english ;
+        friend class shy_logic_text :: alphabet_english_type ;
     private :
         num_whole _letter_id ;
     } ;
 
-    class alphabet_english
+    class alphabet_english_type
     {
     public :
-        alphabet_english ( ) ;
+        alphabet_english_type ( ) ;
     public :
         letter_id A ;
         letter_id B ;
@@ -80,6 +80,13 @@ public :
         letter_id Y ;
         letter_id Z ;
     } ;
+    
+    class logic_text_consts_type
+    {
+    public :
+        alphabet_english_type alphabet_english ;
+    } ;
+    
 public :
     shy_logic_text ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -87,7 +94,6 @@ public :
     void receive ( typename messages :: text_prepare_permit msg ) ;
     void receive ( typename messages :: text_render msg ) ;
     void receive ( typename messages :: text_update msg ) ;
-    const alphabet_english & text_alphabet_english ( ) ;
     void receive ( typename messages :: use_text_texture msg ) ;
     void receive ( typename messages :: texture_create_reply msg ) ;
     void get_big_letter_tex_coords 
@@ -146,6 +152,8 @@ private :
     void _rasterize_font_english_Y ( ) ;
     void _rasterize_font_english_Z ( ) ;
     void _rasterize_font_whitespace ( ) ;
+public :
+    const logic_text_consts_type logic_text_consts ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _texture_create_requested ;
@@ -160,7 +168,6 @@ private :
     num_whole _letter_size_x ;
     num_whole _letter_size_y ;
     num_whole _scale_frames ;
-    alphabet_english _alphabet_english ;
     _letters_tex_coords _letters_big ;
     _letters_tex_coords _letters_small ;
 } ;
@@ -196,7 +203,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_done msg
 }
 
 template < typename mediator >
-shy_logic_text < mediator > :: alphabet_english :: alphabet_english ( )
+shy_logic_text < mediator > :: alphabet_english_type :: alphabet_english_type ( )
 {
     num_whole index = platform :: math_consts . whole_0 ;
     A . _letter_id = index ; platform_math :: inc_whole ( index ) ;
@@ -225,13 +232,6 @@ shy_logic_text < mediator > :: alphabet_english :: alphabet_english ( )
     X . _letter_id = index ; platform_math :: inc_whole ( index ) ;
     Y . _letter_id = index ; platform_math :: inc_whole ( index ) ;
     Z . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-}
-
-template < typename mediator >
-const typename shy_logic_text < mediator > :: alphabet_english & 
-shy_logic_text < mediator > :: text_alphabet_english ( )
-{
-    return _alphabet_english ;
 }
 
 template < typename mediator >
@@ -523,32 +523,32 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet
     _letter_size_x = letter_size_x ;
     _letter_size_y = letter_size_y ;
     _next_letter_row ( ) ;
-    _rasterize_letter ( _alphabet_english . A , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . B , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . C , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . D , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . E , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . F , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . G , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . H , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . I , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . J , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . K , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . L , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . M , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . N , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . O , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . P , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . Q , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . R , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . S , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . T , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . U , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . V , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . W , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . X , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . Y , letters_tex_coords ) ; _next_letter_col ( ) ;
-    _rasterize_letter ( _alphabet_english . Z , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . A , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . B , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . C , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . D , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . E , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . F , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . G , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . H , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . I , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . J , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . K , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . L , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . M , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . N , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . O , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . P , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . Q , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . R , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . S , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . T , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . U , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . V , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . W , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . X , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . Y , letters_tex_coords ) ; _next_letter_col ( ) ;
+    _rasterize_letter ( logic_text_consts . alphabet_english . Z , letters_tex_coords ) ; _next_letter_col ( ) ;
     _next_letter_row ( ) ;
 }
 
@@ -626,32 +626,32 @@ template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords )
 {
     _store_tex_coords ( letter , letters_tex_coords ) ;
-    if      ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . A . _letter_id ) ) _rasterize_font_english_A ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . B . _letter_id ) ) _rasterize_font_english_B ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . C . _letter_id ) ) _rasterize_font_english_C ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . D . _letter_id ) ) _rasterize_font_english_D ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . E . _letter_id ) ) _rasterize_font_english_E ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . F . _letter_id ) ) _rasterize_font_english_F ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . G . _letter_id ) ) _rasterize_font_english_G ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . H . _letter_id ) ) _rasterize_font_english_H ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . I . _letter_id ) ) _rasterize_font_english_I ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . J . _letter_id ) ) _rasterize_font_english_J ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . K . _letter_id ) ) _rasterize_font_english_K ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . L . _letter_id ) ) _rasterize_font_english_L ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . M . _letter_id ) ) _rasterize_font_english_M ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . N . _letter_id ) ) _rasterize_font_english_N ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . O . _letter_id ) ) _rasterize_font_english_O ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . P . _letter_id ) ) _rasterize_font_english_P ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . Q . _letter_id ) ) _rasterize_font_english_Q ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . R . _letter_id ) ) _rasterize_font_english_R ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . S . _letter_id ) ) _rasterize_font_english_S ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . T . _letter_id ) ) _rasterize_font_english_T ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . U . _letter_id ) ) _rasterize_font_english_U ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . V . _letter_id ) ) _rasterize_font_english_V ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . W . _letter_id ) ) _rasterize_font_english_W ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . X . _letter_id ) ) _rasterize_font_english_X ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . Y . _letter_id ) ) _rasterize_font_english_Y ( ) ;
-    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , _alphabet_english . Z . _letter_id ) ) _rasterize_font_english_Z ( ) ;
+    if      ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . A . _letter_id ) ) _rasterize_font_english_A ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . B . _letter_id ) ) _rasterize_font_english_B ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . C . _letter_id ) ) _rasterize_font_english_C ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . D . _letter_id ) ) _rasterize_font_english_D ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . E . _letter_id ) ) _rasterize_font_english_E ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . F . _letter_id ) ) _rasterize_font_english_F ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . G . _letter_id ) ) _rasterize_font_english_G ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . H . _letter_id ) ) _rasterize_font_english_H ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . I . _letter_id ) ) _rasterize_font_english_I ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . J . _letter_id ) ) _rasterize_font_english_J ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . K . _letter_id ) ) _rasterize_font_english_K ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . L . _letter_id ) ) _rasterize_font_english_L ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . M . _letter_id ) ) _rasterize_font_english_M ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . N . _letter_id ) ) _rasterize_font_english_N ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . O . _letter_id ) ) _rasterize_font_english_O ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . P . _letter_id ) ) _rasterize_font_english_P ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . Q . _letter_id ) ) _rasterize_font_english_Q ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . R . _letter_id ) ) _rasterize_font_english_R ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . S . _letter_id ) ) _rasterize_font_english_S ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . T . _letter_id ) ) _rasterize_font_english_T ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . U . _letter_id ) ) _rasterize_font_english_U ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . V . _letter_id ) ) _rasterize_font_english_V ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . W . _letter_id ) ) _rasterize_font_english_W ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . X . _letter_id ) ) _rasterize_font_english_X ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . Y . _letter_id ) ) _rasterize_font_english_Y ( ) ;
+    else if ( platform_conditions :: wholes_are_equal ( letter . _letter_id , logic_text_consts . alphabet_english . Z . _letter_id ) ) _rasterize_font_english_Z ( ) ;
 }
 
 template < typename mediator >

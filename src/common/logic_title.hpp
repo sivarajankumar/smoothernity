@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_logic_title
 {
-    typedef typename mediator :: alphabet_english alphabet_english ;
+    typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: mesh_id mesh_id ;
@@ -193,7 +193,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
 template < typename mediator >
 void shy_logic_title < mediator > :: _title_create ( )
 {
-    const alphabet_english & eng = _mediator . get ( ) . text_alphabet_english ( ) ;
+    const alphabet_english_type & eng = _mediator . get ( ) . logic_text_consts ( ) . alphabet_english ;
     _add_letter ( eng . S ) ;
     _add_letter ( eng . M ) ;
     _add_letter ( eng . O ) ;
