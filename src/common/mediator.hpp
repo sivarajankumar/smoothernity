@@ -65,7 +65,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh engine_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture engine_texture ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_consts_type texture_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: engine_texture_consts_type engine_texture_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
@@ -284,7 +284,7 @@ public :
     void send ( typename messages :: use_text_texture msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
-    const texture_consts_type & texture_consts ( ) ;
+    const engine_texture_consts_type & engine_texture_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
 public :
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
@@ -369,10 +369,10 @@ void shy_mediator < mediator_types > :: register_modules
 }
 
 template < typename mediator_types >
-const typename shy_mediator < mediator_types > :: texture_consts_type &
-shy_mediator < mediator_types > :: texture_consts ( )
+const typename shy_mediator < mediator_types > :: engine_texture_consts_type &
+shy_mediator < mediator_types > :: engine_texture_consts ( )
 {
-    return _engine_texture . get ( ) . texture_consts ;
+    return _engine_texture . get ( ) . engine_texture_consts ;
 }
 
 template < typename mediator_types >

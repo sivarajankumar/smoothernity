@@ -26,10 +26,10 @@ public :
     private :
         num_whole _texture_id ;
     } ;
-    class texture_consts_type
+    class engine_texture_consts_type
     {
     public :
-        texture_consts_type ( ) ;
+        engine_texture_consts_type ( ) ;
     public :
         num_whole texture_width ;
         num_whole texture_height ;
@@ -53,7 +53,7 @@ public :
     void receive ( typename messages :: texture_set_texel msg ) ;
     void receive ( typename messages :: texture_set_texel_rgba msg ) ;
 public :
-    const texture_consts_type texture_consts ;
+    const engine_texture_consts_type engine_texture_consts ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _texture_data , _max_textures > _textures_datas ;
@@ -67,7 +67,7 @@ shy_engine_texture < mediator > :: shy_engine_texture ( )
 }
 
 template < typename mediator >
-shy_engine_texture < mediator > :: texture_consts_type :: texture_consts_type ( )
+shy_engine_texture < mediator > :: engine_texture_consts_type :: engine_texture_consts_type ( )
 {
     platform_math :: make_num_whole ( texture_width , _texture_size ) ;
     platform_math :: make_num_whole ( texture_height , _texture_size ) ;
