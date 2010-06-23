@@ -35,6 +35,7 @@ private :
         render_vertex_buffer_id vertex_buffer_id ;
         render_index_buffer_id triangle_strip_index_buffer_id ;
         render_index_buffer_id triangle_fan_index_buffer_id ;
+        num_whole vertices_count ;
         num_whole triangle_strip_indices_count ;
         num_whole triangle_fan_indices_count ;
         matrix_data transform ;
@@ -124,6 +125,7 @@ template < typename mediator >
 void shy_engine_mesh < mediator > :: mesh_create ( mesh_id & result , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count )
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
+    mesh . vertices_count = vertices_count ;
     mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
     mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
     platform_matrix :: identity ( mesh . transform ) ;
@@ -183,7 +185,7 @@ void shy_engine_mesh < mediator > :: mesh_set_triangle_strip_index_value ( mesh_
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
     index_data & index = platform_static_array :: element ( mesh . triangle_strip_indices , offset ) ;
-    platform_render :: set_index_position ( index , index_value ) ;
+    platform_render :: set_index_value ( index , index_value ) ;
 }
     
 template < typename mediator >
@@ -191,7 +193,7 @@ void shy_engine_mesh < mediator > :: mesh_set_triangle_fan_index_value ( mesh_id
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
     index_data & index = platform_static_array :: element ( mesh . triangle_fan_indices , offset ) ;
-    platform_render :: set_index_position ( index , index_value ) ;
+    platform_render :: set_index_value ( index , index_value ) ;
 }
     
 template < typename mediator >

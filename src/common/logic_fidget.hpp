@@ -161,8 +161,6 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
 {    
-    typename platform_static_array :: template static_array < vertex_data , _fidget_edges > vertices ;
-    typename platform_static_array :: template static_array < index_data , _fidget_edges > indices ;
     num_whole i ;
     num_whole whole_fidget_edges ;
     num_fract fract_fidget_edges ;
@@ -170,6 +168,13 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
     platform_math :: make_num_fract ( fract_fidget_edges , _fidget_edges , 1 ) ;
     platform_math :: make_num_whole ( whole_fidget_edges , _fidget_edges ) ;
     
+    _mediator . get ( ) . mesh_create
+        ( _fidget_mesh_id 
+        , whole_fidget_edges 
+        , platform :: math_consts . whole_0 
+        , whole_fidget_edges 
+        ) ;
+        
     for ( platform_math :: make_num_whole ( i , 0 )
         ; platform_conditions :: whole_less_than_whole ( i , whole_fidget_edges )
         ; platform_math :: inc_whole ( i )
@@ -198,23 +203,9 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         platform_math :: make_num_fract ( vertex_g , _fidget_g , 255 ) ;
         platform_math :: make_num_fract ( vertex_b , _fidget_b , 255 ) ;
         platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
-        {
-            vertex_data & vertex = platform_static_array :: element ( vertices , i ) ;
-            platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        }
-        {
-            index_data & index = platform_static_array :: element ( indices , i ) ;
-            platform_render :: set_index_value ( index , i ) ;
-        }
+        _mediator . get ( ) . mesh_set_vertex_position ( _fidget_mesh_id , i , vertex_x , vertex_y , vertex_z ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( _fidget_mesh_id , i , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _fidget_mesh_id , i , i ) ;
     }
-    _mediator . get ( ) . mesh_create
-        ( _fidget_mesh_id 
-        , vertices 
-        , indices
-        , indices 
-        , whole_fidget_edges 
-        , platform :: math_consts . whole_0 
-        , whole_fidget_edges 
-        ) ;
+    _mediator . get ( ) . mesh_finalize ( _fidget_mesh_id ) ;
 }
