@@ -68,6 +68,8 @@ private :
     num_fract _scene_scale_frames ;
     num_fract _rubber_first ;
     num_fract _rubber_last ;
+    typename platform_static_array :: template static_array < vertex_data , 4 > _letter_vertices ;
+    typename platform_static_array :: template static_array < index_data , 4 > _letter_indices ;    
     typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
 } ;
 
@@ -389,17 +391,14 @@ void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 template < typename mediator >
 void shy_logic_title < mediator > :: _bake_letters ( )
 {
-    typename platform_static_array :: template static_array < vertex_data , 4 > vertices ;
-    typename platform_static_array :: template static_array < index_data , 4 > indices ;
-    
     num_fract title_r = platform :: math_consts . fract_0 ;
     num_fract title_g = platform :: math_consts . fract_1 ;
     num_fract title_b = platform :: math_consts . fract_0 ;
     num_fract title_a = platform :: math_consts . fract_1 ;
     
     {
-        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_0 ) ;
-        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_0 ) ;
+        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_0 ) ;
+        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_0 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_0 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -411,8 +410,8 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     }
     
     {
-        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_1 ) ;
-        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_1 ) ;
+        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_1 ) ;
+        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_1 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_1 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -424,8 +423,8 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     }
     
     {
-        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_2 ) ;
-        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_2 ) ;
+        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_2 ) ;
+        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_2 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_2 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -437,8 +436,8 @@ void shy_logic_title < mediator > :: _bake_letters ( )
     }
     
     {
-        vertex_data & vertex = platform_static_array :: element ( vertices , platform :: math_consts . whole_3 ) ;
-        index_data & index = platform_static_array :: element ( indices , platform :: math_consts . whole_3 ) ;
+        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_3 ) ;
+        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_3 ) ;
         platform_render :: set_index_value ( index , platform :: math_consts . whole_3 ) ;
         platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
         platform_render :: set_vertex_position 
@@ -465,30 +464,30 @@ void shy_logic_title < mediator > :: _bake_letters ( )
         letter . rot_angle = platform :: math_consts . fract_0 ;
         _mediator . get ( ) . get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_0 )
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_0 )
             , tex_left
             , tex_top
             ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_1 )
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_1 )
             , tex_left
             , tex_bottom
             ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_2 )
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_2 )
             , tex_right
             , tex_top
             ) ;
         platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( vertices , platform :: math_consts . whole_3 )
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_3 )
             , tex_right
             , tex_bottom
             ) ;
         _mediator . get ( ) . mesh_create
             ( letter . mesh
-            , vertices 
-            , indices 
-            , indices
+            , _letter_vertices 
+            , _letter_indices 
+            , _letter_indices
             , platform :: math_consts . whole_4 
             , platform :: math_consts . whole_4 
             , platform :: math_consts . whole_0 
