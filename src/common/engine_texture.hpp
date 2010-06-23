@@ -26,6 +26,14 @@ public :
     private :
         num_whole _texture_id ;
     } ;
+    class texture_consts_type
+    {
+    public :
+        texture_consts_type ( ) ;
+    public :
+        num_whole texture_width ;
+        num_whole texture_height ;
+    } ;
 private :
     class _texture_data
     {
@@ -44,8 +52,8 @@ public :
     void receive ( typename messages :: texture_set_texels_rect msg ) ;
     void receive ( typename messages :: texture_set_texel msg ) ;
     void receive ( typename messages :: texture_set_texel_rgba msg ) ;
-    void texture_width ( num_whole & result ) ;
-    void texture_height ( num_whole & result ) ;
+public :
+    const texture_consts_type texture_consts ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _texture_data , _max_textures > _textures_datas ;
@@ -56,6 +64,13 @@ template < typename mediator >
 shy_engine_texture < mediator > :: shy_engine_texture ( )
 {
     platform_math :: make_num_whole ( _next_texture_id , 0 ) ;
+}
+
+template < typename mediator >
+shy_engine_texture < mediator > :: texture_consts_type :: texture_consts_type ( )
+{
+    platform_math :: make_num_whole ( texture_width , _texture_size ) ;
+    platform_math :: make_num_whole ( texture_height , _texture_size ) ;
 }
 
 template < typename mediator >
@@ -153,16 +168,4 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
             platform_static_array :: element ( texture . texels , texel_offset ) = msg . texel ;
         }
     }
-}
-
-template < typename mediator >
-void shy_engine_texture < mediator > :: texture_width ( num_whole & result )
-{
-    platform_math :: make_num_whole ( result , _texture_size ) ;
-}
-
-template < typename mediator >
-void shy_engine_texture < mediator > :: texture_height ( num_whole & result )
-{
-    platform_math :: make_num_whole ( result , _texture_size ) ;
 }

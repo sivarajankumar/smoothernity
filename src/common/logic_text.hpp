@@ -474,8 +474,8 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     num_fract eraser_a ;
     num_whole small_size ;
     num_whole big_size ;
-    _mediator . get ( ) . texture_width ( texture_width ) ;
-    _mediator . get ( ) . texture_height ( texture_height ) ;
+    texture_width = _mediator . get ( ) . texture_consts ( ) . texture_width ;
+    texture_height = _mediator . get ( ) . texture_consts ( ) . texture_height ;
     platform_math :: make_num_whole ( small_size , 16 ) ;
     platform_math :: make_num_whole ( big_size , 32 ) ;
     platform_math :: make_num_fract ( filler_r , 1 , 1 ) ;
@@ -558,7 +558,7 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
     num_whole delta_x ;
     num_whole texture_width ;
     num_whole right_limit ;
-    _mediator . get ( ) . texture_width ( texture_width ) ;
+    texture_width = _mediator . get ( ) . texture_consts ( ) . texture_width ;
     platform_math :: div_wholes ( delta_x , _letter_size_x , platform :: math_consts . whole_8 ) ;
     platform_math :: add_to_whole ( _origin_x , _letter_size_x ) ;
     platform_math :: add_to_whole ( _origin_x , delta_x ) ;
@@ -596,8 +596,8 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
     whole_bottom = _origin_y ;
     platform_math :: add_wholes ( whole_right , _origin_x , _letter_size_x ) ;
     platform_math :: add_wholes ( whole_top , _origin_y , _letter_size_y ) ;
-    _mediator . get ( ) . texture_width ( whole_texture_width ) ;
-    _mediator . get ( ) . texture_height ( whole_texture_height ) ;
+    whole_texture_width = _mediator . get ( ) . texture_consts ( ) . texture_width ;
+    whole_texture_height = _mediator . get ( ) . texture_consts ( ) . texture_height ;
     platform_math :: make_fract_from_whole ( fract_texture_width , whole_texture_width ) ;
     platform_math :: make_fract_from_whole ( fract_texture_height , whole_texture_height ) ;
     platform_math :: make_fract_from_whole ( coords . left , whole_left ) ;

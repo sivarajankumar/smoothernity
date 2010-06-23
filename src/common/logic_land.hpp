@@ -318,8 +318,8 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
     
     platform_math :: make_num_whole ( whole_create_rows_per_frame , _create_rows_per_frame ) ;
     
-    _mediator . get ( ) . texture_width ( texture_width ) ;
-    _mediator . get ( ) . texture_height ( texture_height ) ;
+    texture_width = _mediator . get ( ) . texture_consts ( ) . texture_width ;
+    texture_height = _mediator . get ( ) . texture_consts ( ) . texture_height ;
     for ( ; ; )
     {
         num_whole x ;

@@ -64,6 +64,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh engine_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture engine_texture ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_consts_type texture_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
@@ -274,6 +275,8 @@ public :
     void send ( typename messages :: use_text_texture msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
+    const texture_consts_type & texture_consts ( ) ;
+public :
     void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     template 
@@ -291,8 +294,6 @@ public :
         , num_whole triangle_fan_indices_count
         ) ;
     const alphabet_english & text_alphabet_english ( ) ;
-    void texture_height ( num_whole & result ) ;
-    void texture_width ( num_whole & result ) ;
 private :
     typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
@@ -366,7 +367,14 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_title . get ( ) . set_mediator ( * this ) ;
     _logic_touch . get ( ) . set_mediator ( * this ) ;
 }
-        
+
+template < typename mediator_types >
+const typename shy_mediator < mediator_types > :: texture_consts_type &
+shy_mediator < mediator_types > :: texture_consts ( )
+{
+    return _engine_texture . get ( ) . texture_consts ;
+}
+
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: application_render msg )
 {
@@ -810,18 +818,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: texture_unselect msg )
 {
     _engine_texture . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_height ( num_whole & result )
-{
-    _engine_texture . get ( ) . texture_height ( result ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: texture_width ( num_whole & result )
-{
-    _engine_texture . get ( ) . texture_width ( result ) ;
 }
 
 template < typename mediator_types >
