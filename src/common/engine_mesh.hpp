@@ -6,6 +6,7 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
@@ -52,6 +53,12 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
+    void mesh_create ( mesh_id & mesh ) ;
+    void mesh_finalize ( mesh_id mesh ) ;
+    void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
+    void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void mesh_set_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
     void receive ( typename messages :: mesh_delete msg ) ;
     void receive ( typename messages :: mesh_render msg ) ;
     void receive ( typename messages :: mesh_set_transform msg ) ;
@@ -107,6 +114,36 @@ void shy_engine_mesh < mediator > :: mesh_create
     platform_math :: inc_whole ( _next_mesh_id ) ;
 }
 
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_create ( mesh_id & mesh )
+{
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_finalize ( mesh_id mesh )
+{
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
+{
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
+{
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+{
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: mesh_set_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+{
+}
+    
 template < typename mediator >
 void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_delete msg )
 {

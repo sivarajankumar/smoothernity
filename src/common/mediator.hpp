@@ -301,6 +301,12 @@ public :
         , num_whole triangle_strip_indices_count 
         , num_whole triangle_fan_indices_count
         ) ;
+    void mesh_create ( mesh_id & mesh ) ;
+    void mesh_finalize ( mesh_id mesh ) ;
+    void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
+    void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void mesh_set_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
@@ -509,6 +515,42 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: land_prepared msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
+{
+    _engine_mesh . get ( ) . mesh_set_vertex_position ( mesh , offset , x , y , z ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
+{
+    _engine_mesh . get ( ) . mesh_set_vertex_tex_coord ( mesh , offset , u , v ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+{
+    _engine_mesh . get ( ) . mesh_set_vertex_color ( mesh , offset , r , g , b , a ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_set_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+{
+    _engine_mesh . get ( ) . mesh_set_index_value ( mesh , offset , index ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_create ( mesh_id & mesh )
+{
+    _engine_mesh . get ( ) . mesh_create ( mesh ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: mesh_finalize ( mesh_id mesh )
+{
+    _engine_mesh . get ( ) . mesh_finalize ( mesh ) ;
 }
 
 template < typename mediator_types >
