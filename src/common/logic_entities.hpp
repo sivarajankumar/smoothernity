@@ -56,11 +56,9 @@ private :
     num_whole _strip_indices_count ;
     num_whole _fan_indices_count ;
     num_whole _vertices_count ;
+    num_whole _entity_mesh_id_created ;
     mesh_id _entity_mesh_id ;
     typename platform_static_array :: template static_array < matrix_data , _entity_mesh_grid * _entity_mesh_grid > _entities_grid_matrices ;
-    typename platform_static_array :: template static_array < vertex_data , ( _entity_mesh_spans + 1 ) * 2 + 1 > _vertices ;
-    typename platform_static_array :: template static_array < index_data , ( _entity_mesh_spans + 1 ) * 2 > _strip_indices ;
-    typename platform_static_array :: template static_array < index_data , _entity_mesh_spans + 2 > _fan_indices ;
 } ;
 
 template < typename mediator >
@@ -74,6 +72,7 @@ shy_logic_entities < mediator > :: shy_logic_entities ( )
     platform_math :: make_num_whole ( _strip_indices_count , 0 ) ;
     platform_math :: make_num_whole ( _fan_indices_count , 0 ) ;
     platform_math :: make_num_whole ( _vertices_count , 0 ) ;
+    _entity_mesh_id_created = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -249,6 +248,18 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform_math :: add_wholes ( whole_entity_mesh_spans_plus_1 , whole_entity_mesh_spans , platform :: math_consts . whole_1 ) ;
     platform_math :: make_num_fract ( fract_entity_mesh_height , _entity_mesh_height , 1 ) ;
 
+    if ( platform_conditions :: whole_is_false ( _entity_mesh_id_created ) )
+    {
+        num_whole total_vertices ;
+        num_whole total_strip_indices ;
+        num_whole total_fan_indices ;
+        platform_math :: make_num_whole ( total_vertices , ( _entity_mesh_spans + 1 ) * 2 + 1 ) ;
+        platform_math :: make_num_whole ( total_strip_indices , ( _entity_mesh_spans + 1 ) * 2 ) ;
+        platform_math :: make_num_whole ( total_fan_indices , _entity_mesh_spans + 2 ) ;
+        _entity_mesh_id_created = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . mesh_create ( _entity_mesh_id , total_vertices , total_strip_indices , total_fan_indices ) ;
+    }
+
     if ( platform_conditions :: whole_less_or_equal_to_whole ( _current_strip_mesh_span , whole_entity_mesh_spans ) )
     {
         num_fract angle ;
@@ -271,15 +282,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
 
-        {
-            vertex_data & vertex = platform_static_array :: element ( _vertices , _vertices_count ) ;
-            platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        }
-        {
-            index_data & index = platform_static_array :: element ( _strip_indices , _strip_indices_count ) ;
-            platform_render :: set_index_value ( index , _vertices_count ) ;
-        }
+        _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , _vertices_count , vertex_x , vertex_y , vertex_z ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( _entity_mesh_id , _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _entity_mesh_id , _strip_indices_count , _vertices_count ) ;
 
         platform_math :: inc_whole ( _strip_indices_count ) ;
         platform_math :: inc_whole ( _vertices_count ) ;
@@ -287,16 +292,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform_math :: neg_fract ( vertex_y ) ;
         
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color2 ) ;
-        
-        {
-            vertex_data & vertex = platform_static_array :: element ( _vertices , _vertices_count ) ;
-            platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        }
-        {
-            index_data & index = platform_static_array :: element ( _strip_indices , _strip_indices_count ) ;
-            platform_render :: set_index_value ( index , _vertices_count ) ;
-        }
+
+        _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , _vertices_count , vertex_x , vertex_y , vertex_z ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( _entity_mesh_id , _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _entity_mesh_id , _strip_indices_count , _vertices_count ) ;
 
         platform_math :: inc_whole ( _strip_indices_count ) ;
         platform_math :: inc_whole ( _vertices_count ) ;
@@ -315,15 +314,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform_math :: make_num_fract ( vertex_b , _entity_color_roof_b , 255 ) ;
             platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
 
-            {
-                vertex_data & vertex = platform_static_array :: element ( _vertices , _vertices_count ) ;
-                platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-                platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-            }
-            {
-                index_data & index = platform_static_array :: element ( _fan_indices , _fan_indices_count ) ;
-                platform_render :: set_index_value ( index , _vertices_count ) ;
-            }
+            _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , _vertices_count , vertex_x , vertex_y , vertex_z ) ;
+            _mediator . get ( ) . mesh_set_vertex_color ( _entity_mesh_id , _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _entity_mesh_id , _fan_indices_count , _vertices_count ) ;
             
             platform_math :: inc_whole ( _fan_indices_count ) ;
             platform_math :: inc_whole ( _vertices_count ) ;
@@ -332,24 +325,13 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         {
             num_whole index ;
             platform_math :: mul_wholes ( index , _current_fan_mesh_span , platform :: math_consts . whole_2 ) ;
-            {
-                index_data & index_ptr = platform_static_array :: element ( _fan_indices , _fan_indices_count ) ;
-                platform_render :: set_index_value ( index_ptr , index ) ;
-            }
+            _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _entity_mesh_id , _fan_indices_count , index ) ;
             platform_math :: inc_whole ( _fan_indices_count ) ;
             platform_math :: inc_whole ( _current_fan_mesh_span ) ;
         }
         else
         {
-            _mediator . get ( ) . mesh_create
-                ( _entity_mesh_id
-                , _vertices 
-                , _strip_indices 
-                , _fan_indices 
-                , _vertices_count 
-                , _strip_indices_count 
-                , _fan_indices_count
-                ) ;                
+            _mediator . get ( ) . mesh_finalize ( _entity_mesh_id ) ;
             platform_math :: make_num_whole ( _entity_created , true ) ;
             _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
         }
