@@ -52,7 +52,6 @@ private :
     void _title_render ( ) ;
     void _title_update ( ) ;
     void _add_letter ( letter_id letter ) ;
-    void _bake_letters ( ) ;
     void _prepare_to_appear ( ) ;
     void _prepare_to_disappear ( ) ;
     void _animate_appear ( ) ;
@@ -61,8 +60,6 @@ private :
     void _bake_next_letter ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
-    typename platform_static_array :: template static_array < vertex_data , 4 > _letter_vertices ;
-    typename platform_static_array :: template static_array < index_data , 4 > _letter_indices ;    
     typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
     num_whole _title_launch_permitted ;
     num_whole _title_created ;
@@ -165,35 +162,64 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
     {
         _text_letter_big_tex_coords_requested = platform :: math_consts . whole_false ;
         _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_0 )
-            , msg . left
-            , msg . top
-            ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_1 )
-            , msg . left
-            , msg . bottom
-            ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_2 )
-            , msg . right
-            , msg . top
-            ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_3 )
-            , msg . right
-            , msg . bottom
-            ) ;
+        
+        num_fract title_r = platform :: math_consts . fract_0 ;
+        num_fract title_g = platform :: math_consts . fract_1 ;
+        num_fract title_b = platform :: math_consts . fract_0 ;
+        num_fract title_a = platform :: math_consts . fract_1 ;
+        
         _mediator . get ( ) . mesh_create
             ( letter . mesh
-            , _letter_vertices 
-            , _letter_indices 
-            , _letter_indices
             , platform :: math_consts . whole_4 
             , platform :: math_consts . whole_4 
             , platform :: math_consts . whole_0 
             ) ;
+
+        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_0 , platform :: math_consts . whole_0 ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_0 , title_r , title_g , title_b , title_a ) ;
+        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_0 , msg . left , msg . top ) ;
+        _mediator . get ( ) . mesh_set_vertex_position 
+            ( letter . mesh 
+            , platform :: math_consts . whole_0
+            , platform :: math_consts . fract_minus_1 
+            , platform :: math_consts . fract_1 
+            , platform :: math_consts . fract_0 
+            ) ;
+        
+        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_1 , platform :: math_consts . whole_1 ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_1 , title_r , title_g , title_b , title_a ) ;
+        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_1 , msg . left , msg . bottom ) ;
+        _mediator . get ( ) . mesh_set_vertex_position 
+            ( letter . mesh 
+            , platform :: math_consts . whole_1
+            , platform :: math_consts . fract_minus_1 
+            , platform :: math_consts . fract_minus_1 
+            , platform :: math_consts . fract_0 
+            ) ;
+        
+        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_2 , platform :: math_consts . whole_2 ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_2 , title_r , title_g , title_b , title_a ) ;
+        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_2 , msg . right , msg . top ) ;
+        _mediator . get ( ) . mesh_set_vertex_position 
+            ( letter . mesh 
+            , platform :: math_consts . whole_2
+            , platform :: math_consts . fract_1 
+            , platform :: math_consts . fract_1 
+            , platform :: math_consts . fract_0 
+            ) ;
+        
+        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_3 , title_r , title_g , title_b , title_a ) ;
+        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_3 , msg . right , msg . bottom ) ;
+        _mediator . get ( ) . mesh_set_vertex_position 
+            ( letter . mesh 
+            , platform :: math_consts . whole_3
+            , platform :: math_consts . fract_1
+            , platform :: math_consts . fract_minus_1
+            , platform :: math_consts . fract_0 
+            ) ;
+        
+        _mediator . get ( ) . mesh_finalize ( letter . mesh ) ;
         platform_math :: inc_whole ( _bake_letter_index ) ;
         _bake_next_letter ( ) ;
     }
@@ -281,7 +307,7 @@ void shy_logic_title < mediator > :: _title_create ( )
     _add_letter ( eng . I ) ;
     _add_letter ( eng . T ) ;
     _add_letter ( eng . Y ) ;
-    _bake_letters ( ) ;
+    _bake_next_letter ( ) ;
 }
 
 template < typename mediator >
@@ -459,69 +485,6 @@ void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 {
     platform_static_array :: element ( _letters , _letters_count ) . letter = letter ;
     platform_math :: inc_whole ( _letters_count ) ;
-}
-
-template < typename mediator >
-void shy_logic_title < mediator > :: _bake_letters ( )
-{
-    num_fract title_r = platform :: math_consts . fract_0 ;
-    num_fract title_g = platform :: math_consts . fract_1 ;
-    num_fract title_b = platform :: math_consts . fract_0 ;
-    num_fract title_a = platform :: math_consts . fract_1 ;
-    
-    {
-        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_0 ) ;
-        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_0 ) ;
-        platform_render :: set_index_value ( index , platform :: math_consts . whole_0 ) ;
-        platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform_render :: set_vertex_position 
-            ( vertex 
-            , platform :: math_consts . fract_minus_1 
-            , platform :: math_consts . fract_1 
-            , platform :: math_consts . fract_0 
-            ) ;
-    }
-    
-    {
-        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_1 ) ;
-        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_1 ) ;
-        platform_render :: set_index_value ( index , platform :: math_consts . whole_1 ) ;
-        platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform_render :: set_vertex_position 
-            ( vertex 
-            , platform :: math_consts . fract_minus_1 
-            , platform :: math_consts . fract_minus_1 
-            , platform :: math_consts . fract_0 
-            ) ;
-    }
-    
-    {
-        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_2 ) ;
-        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_2 ) ;
-        platform_render :: set_index_value ( index , platform :: math_consts . whole_2 ) ;
-        platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform_render :: set_vertex_position 
-            ( vertex 
-            , platform :: math_consts . fract_1 
-            , platform :: math_consts . fract_1 
-            , platform :: math_consts . fract_0 
-            ) ;
-    }
-    
-    {
-        vertex_data & vertex = platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_3 ) ;
-        index_data & index = platform_static_array :: element ( _letter_indices , platform :: math_consts . whole_3 ) ;
-        platform_render :: set_index_value ( index , platform :: math_consts . whole_3 ) ;
-        platform_render :: set_vertex_color ( vertex , title_r , title_g , title_b , title_a ) ;
-        platform_render :: set_vertex_position 
-            ( vertex 
-            , platform :: math_consts . fract_1 
-            , platform :: math_consts . fract_minus_1 
-            , platform :: math_consts . fract_0 
-            ) ;
-    }
-    
-    _bake_next_letter ( ) ;
 }
 
 template < typename mediator >
