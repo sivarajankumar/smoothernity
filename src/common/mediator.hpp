@@ -145,6 +145,10 @@ public :
         class sound_prepared { } ;
         class sound_update { } ;
         class text_done { } ;
+        class text_letter_big_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; } ;
+        class text_letter_big_tex_coords_request { public : letter_id letter ; } ;
+        class text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; } ;
+        class text_letter_small_tex_coords_request { public : letter_id letter ; } ;
         class text_prepare_permit { } ;
         class text_prepared { } ;
         class text_render { } ;
@@ -247,6 +251,10 @@ public :
     void send ( typename messages :: sound_prepared msg ) ;
     void send ( typename messages :: sound_update msg ) ;
     void send ( typename messages :: text_done msg ) ;
+    void send ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
+    void send ( typename messages :: text_letter_big_tex_coords_request msg ) ;
+    void send ( typename messages :: text_letter_small_tex_coords_reply msg ) ;
+    void send ( typename messages :: text_letter_small_tex_coords_request msg ) ;
     void send ( typename messages :: text_prepare_permit msg ) ;
     void send ( typename messages :: text_prepared msg ) ;
     void send ( typename messages :: text_render msg ) ;
@@ -890,6 +898,28 @@ void shy_mediator < mediator_types > :: send ( typename messages :: game_launch_
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: use_text_texture msg )
+{
+    _logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: text_letter_big_tex_coords_reply msg )
+{
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: text_letter_big_tex_coords_request msg )
+{
+    _logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: text_letter_small_tex_coords_reply msg )
+{
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: text_letter_small_tex_coords_request msg )
 {
     _logic_text . get ( ) . receive ( msg ) ;
 }

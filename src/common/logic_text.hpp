@@ -96,6 +96,8 @@ public :
     void receive ( typename messages :: text_update msg ) ;
     void receive ( typename messages :: use_text_texture msg ) ;
     void receive ( typename messages :: texture_create_reply msg ) ;
+    void receive ( typename messages :: text_letter_big_tex_coords_request msg ) ;
+    void receive ( typename messages :: text_letter_small_tex_coords_request msg ) ;
     void get_big_letter_tex_coords 
         ( num_fract & left 
         , num_fract & bottom 
@@ -243,6 +245,50 @@ void shy_logic_text < mediator > :: receive ( typename messages :: use_text_text
         texture_select_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_request msg )
+{
+    typename messages :: text_letter_big_tex_coords_reply reply_msg ;
+    if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
+    {
+        _tex_coords & coords = platform_static_array :: element ( _letters_big , msg . letter . _letter_id ) ;
+        reply_msg . left = coords . left ;
+        reply_msg . bottom = coords . bottom ;
+        reply_msg . right = coords . right ;
+        reply_msg . top = coords . top ;
+    }
+    else
+    {
+        reply_msg . left = platform :: math_consts . fract_0 ;
+        reply_msg . bottom = platform :: math_consts . fract_0 ;
+        reply_msg . right = platform :: math_consts . fract_0 ;
+        reply_msg . top = platform :: math_consts . fract_0 ;
+    }
+    _mediator . get ( ) . send ( reply_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_small_tex_coords_request msg )
+{
+    typename messages :: text_letter_small_tex_coords_reply reply_msg ;
+    if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
+    {
+        _tex_coords & coords = platform_static_array :: element ( _letters_small , msg . letter . _letter_id ) ;
+        reply_msg . left = coords . left ;
+        reply_msg . bottom = coords . bottom ;
+        reply_msg . right = coords . right ;
+        reply_msg . top = coords . top ;
+    }
+    else
+    {
+        reply_msg . left = platform :: math_consts . fract_0 ;
+        reply_msg . bottom = platform :: math_consts . fract_0 ;
+        reply_msg . right = platform :: math_consts . fract_0 ;
+        reply_msg . top = platform :: math_consts . fract_0 ;
+    }
+    _mediator . get ( ) . send ( reply_msg ) ;
 }
 
 template < typename mediator >
