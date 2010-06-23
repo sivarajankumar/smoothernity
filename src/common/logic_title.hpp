@@ -58,6 +58,11 @@ private :
     void _animate_disappear ( ) ;
     void _animate_lifecycle ( ) ;
     void _bake_next_letter ( ) ;
+    void _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
+    void _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
+    void _mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
@@ -167,57 +172,34 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
         num_fract title_g = platform :: math_consts . fract_1 ;
         num_fract title_b = platform :: math_consts . fract_0 ;
         num_fract title_a = platform :: math_consts . fract_1 ;
+        num_fract x_left = platform :: math_consts . fract_minus_1 ;
+        num_fract x_right = platform :: math_consts . fract_1 ;
+        num_fract y_bottom = platform :: math_consts . fract_minus_1 ;
+        num_fract y_top = platform :: math_consts . fract_1 ;
+        num_fract z = platform :: math_consts . fract_0 ;
+        num_whole total_vertices = platform :: math_consts . whole_4 ;
         
-        _mediator . get ( ) . mesh_create
-            ( letter . mesh
-            , platform :: math_consts . whole_4 
-            , platform :: math_consts . whole_4 
-            , platform :: math_consts . whole_0 
-            ) ;
+        _mediator . get ( ) . mesh_create ( letter . mesh , total_vertices , total_vertices , platform :: math_consts . whole_0 ) ;
 
-        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_0 , platform :: math_consts . whole_0 ) ;
-        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_0 , title_r , title_g , title_b , title_a ) ;
-        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_0 , msg . left , msg . top ) ;
-        _mediator . get ( ) . mesh_set_vertex_position 
-            ( letter . mesh 
-            , platform :: math_consts . whole_0
-            , platform :: math_consts . fract_minus_1 
-            , platform :: math_consts . fract_1 
-            , platform :: math_consts . fract_0 
-            ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_0 , platform :: math_consts . whole_0 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_0 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_0 , msg . left , msg . top ) ;
+        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_0 , x_left , y_top , z ) ;
         
-        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_1 , platform :: math_consts . whole_1 ) ;
-        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_1 , title_r , title_g , title_b , title_a ) ;
-        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_1 , msg . left , msg . bottom ) ;
-        _mediator . get ( ) . mesh_set_vertex_position 
-            ( letter . mesh 
-            , platform :: math_consts . whole_1
-            , platform :: math_consts . fract_minus_1 
-            , platform :: math_consts . fract_minus_1 
-            , platform :: math_consts . fract_0 
-            ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_1 , platform :: math_consts . whole_1 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_1 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_1 , msg . left , msg . bottom ) ;
+        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_1 , x_left , y_bottom , z ) ;
         
-        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_2 , platform :: math_consts . whole_2 ) ;
-        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_2 , title_r , title_g , title_b , title_a ) ;
-        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_2 , msg . right , msg . top ) ;
-        _mediator . get ( ) . mesh_set_vertex_position 
-            ( letter . mesh 
-            , platform :: math_consts . whole_2
-            , platform :: math_consts . fract_1 
-            , platform :: math_consts . fract_1 
-            , platform :: math_consts . fract_0 
-            ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_2 , platform :: math_consts . whole_2 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_2 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_2 , msg . right , msg . top ) ;
+        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_2 , x_right , y_top , z ) ;
         
-        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
-        _mediator . get ( ) . mesh_set_vertex_color ( letter . mesh , platform :: math_consts . whole_3 , title_r , title_g , title_b , title_a ) ;
-        _mediator . get ( ) . mesh_set_vertex_tex_coord ( letter . mesh , platform :: math_consts . whole_3 , msg . right , msg . bottom ) ;
-        _mediator . get ( ) . mesh_set_vertex_position 
-            ( letter . mesh 
-            , platform :: math_consts . whole_3
-            , platform :: math_consts . fract_1
-            , platform :: math_consts . fract_minus_1
-            , platform :: math_consts . fract_0 
-            ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_3 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_3 , msg . right , msg . bottom ) ;
+        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_3 , x_right , y_bottom , z ) ;
         
         _mediator . get ( ) . mesh_finalize ( letter . mesh ) ;
         platform_math :: inc_whole ( _bake_letter_index ) ;
@@ -509,4 +491,34 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
         _prepare_to_appear ( ) ;
         _animate_lifecycle ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
+{
+    _mediator . get ( ) . mesh_set_vertex_position ( mesh , offset , x , y , z ) ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
+{
+    _mediator . get ( ) . mesh_set_vertex_tex_coord ( mesh , offset , u , v ) ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+{
+    _mediator . get ( ) . mesh_set_vertex_color ( mesh , offset , r , g , b , a ) ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+{
+    _mediator . get ( ) . mesh_set_triangle_strip_index_value ( mesh , offset , index ) ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+{
+    _mediator . get ( ) . mesh_set_triangle_fan_index_value ( mesh , offset , index ) ;
 }

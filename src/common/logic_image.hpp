@@ -41,6 +41,11 @@ private :
     void _update_image_mesh ( ) ;
     void _create_image_mesh ( ) ;
     void _create_image_texture ( ) ;
+    void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
+    void _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
+    void _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _image_mesh_created ;
@@ -236,27 +241,57 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
         , platform :: math_consts . whole_0 
         ) ;
         
-    _mediator . get ( ) . mesh_set_vertex_position  ( _image_mesh_id , platform :: math_consts . whole_0 , x_left , y_top , z ) ;
-    _mediator . get ( ) . mesh_set_vertex_color     ( _image_mesh_id , platform :: math_consts . whole_0 , color_r , color_g , color_b , color_a ) ;
-    _mediator . get ( ) . mesh_set_vertex_tex_coord ( _image_mesh_id , platform :: math_consts . whole_0 , u_left , v_top ) ;
-    _mediator . get ( ) . mesh_set_triangle_strip_index_value      ( _image_mesh_id , platform :: math_consts . whole_0 , platform :: math_consts . whole_0 ) ;
+    _mesh_set_vertex_position            ( platform :: math_consts . whole_0 , x_left , y_top , z ) ;
+    _mesh_set_vertex_color               ( platform :: math_consts . whole_0 , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( platform :: math_consts . whole_0 , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( platform :: math_consts . whole_0 , platform :: math_consts . whole_0 ) ;
 
-    _mediator . get ( ) . mesh_set_vertex_position  ( _image_mesh_id , platform :: math_consts . whole_1 , x_left , y_bottom , z ) ;
-    _mediator . get ( ) . mesh_set_vertex_color     ( _image_mesh_id , platform :: math_consts . whole_1 , color_r , color_g , color_b , color_a ) ;
-    _mediator . get ( ) . mesh_set_vertex_tex_coord ( _image_mesh_id , platform :: math_consts . whole_1 , u_left , v_bottom ) ;
-    _mediator . get ( ) . mesh_set_triangle_strip_index_value      ( _image_mesh_id , platform :: math_consts . whole_1 , platform :: math_consts . whole_1 ) ;
+    _mesh_set_vertex_position            ( platform :: math_consts . whole_1 , x_left , y_bottom , z ) ;
+    _mesh_set_vertex_color               ( platform :: math_consts . whole_1 , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( platform :: math_consts . whole_1 , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( platform :: math_consts . whole_1 , platform :: math_consts . whole_1 ) ;
 
-    _mediator . get ( ) . mesh_set_vertex_position  ( _image_mesh_id , platform :: math_consts . whole_2 , x_right , y_top , z ) ;
-    _mediator . get ( ) . mesh_set_vertex_color     ( _image_mesh_id , platform :: math_consts . whole_2 , color_r , color_g , color_b , color_a ) ;
-    _mediator . get ( ) . mesh_set_vertex_tex_coord ( _image_mesh_id , platform :: math_consts . whole_2 , u_right , v_top ) ;
-    _mediator . get ( ) . mesh_set_triangle_strip_index_value      ( _image_mesh_id , platform :: math_consts . whole_2 , platform :: math_consts . whole_2 ) ;
+    _mesh_set_vertex_position            ( platform :: math_consts . whole_2 , x_right , y_top , z ) ;
+    _mesh_set_vertex_color               ( platform :: math_consts . whole_2 , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( platform :: math_consts . whole_2 , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( platform :: math_consts . whole_2 , platform :: math_consts . whole_2 ) ;
 
-    _mediator . get ( ) . mesh_set_vertex_position  ( _image_mesh_id , platform :: math_consts . whole_3 , x_right , y_bottom , z ) ;
-    _mediator . get ( ) . mesh_set_vertex_color     ( _image_mesh_id , platform :: math_consts . whole_3 , color_r , color_g , color_b , color_a ) ;
-    _mediator . get ( ) . mesh_set_vertex_tex_coord ( _image_mesh_id , platform :: math_consts . whole_3 , u_right , v_bottom ) ;
-    _mediator . get ( ) . mesh_set_triangle_strip_index_value      ( _image_mesh_id , platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
+    _mesh_set_vertex_position            ( platform :: math_consts . whole_3 , x_right , y_bottom , z ) ;
+    _mesh_set_vertex_color               ( platform :: math_consts . whole_3 , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( platform :: math_consts . whole_3 , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
 
     _mediator . get ( ) . mesh_finalize ( _image_mesh_id ) ;
+}
+
+template < typename mediator >
+void shy_logic_image < mediator > :: _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z )
+{
+    _mediator . get ( ) . mesh_set_vertex_position ( _image_mesh_id , offset , x , y , z ) ;
+}
+
+template < typename mediator >
+void shy_logic_image < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v )
+{
+    _mediator . get ( ) . mesh_set_vertex_tex_coord ( _image_mesh_id , offset , u , v ) ;
+}
+
+template < typename mediator >
+void shy_logic_image < mediator > :: _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+{
+    _mediator . get ( ) . mesh_set_vertex_color ( _image_mesh_id , offset , r , g , b , a ) ;
+}
+
+template < typename mediator >
+void shy_logic_image < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
+{
+    _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _image_mesh_id , offset , index ) ;
+}
+
+template < typename mediator >
+void shy_logic_image < mediator > :: _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index )
+{
+    _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _image_mesh_id , offset , index ) ;
 }
 
 template < typename mediator >
