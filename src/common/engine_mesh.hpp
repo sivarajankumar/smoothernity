@@ -45,20 +45,6 @@ private :
     } ;
 public :
     shy_engine_mesh ( ) ;
-    template 
-        < typename vertex_array 
-        , typename strip_index_array
-        , typename fan_index_array
-        > 
-    void mesh_create 
-        ( mesh_id & result
-        , const vertex_array & vertices 
-        , const strip_index_array & triangle_strip_indices 
-        , const fan_index_array & triangle_fan_indices
-        , num_whole vertices_count
-        , num_whole triangle_strip_indices_count 
-        , num_whole triangle_fan_indices_count
-        ) ;
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
     void mesh_finalize ( mesh_id mesh ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
@@ -78,47 +64,6 @@ template < typename mediator >
 shy_engine_mesh < mediator > :: shy_engine_mesh ( )
 {
     platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
-}
-
-template < typename mediator >
-template 
-    < typename vertex_array 
-    , typename strip_index_array 
-    , typename fan_index_array
-    >
-void shy_engine_mesh < mediator > :: mesh_create 
-    ( mesh_id & result
-    , const vertex_array & vertices 
-    , const strip_index_array & triangle_strip_indices 
-    , const fan_index_array & triangle_fan_indices
-    , num_whole vertices_count
-    , num_whole triangle_strip_indices_count
-    , num_whole triangle_fan_indices_count
-    )
-{
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
-    mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
-    mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
-    platform_matrix :: identity ( mesh . transform ) ;
-    platform_render :: create_vertex_buffer ( mesh . vertex_buffer_id , vertices_count , vertices ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( triangle_strip_indices_count ) )
-    {
-        platform_render :: create_index_buffer 
-            ( mesh . triangle_strip_index_buffer_id 
-            , triangle_strip_indices_count 
-            , triangle_strip_indices 
-            ) ;
-    }
-    if ( platform_conditions :: whole_greater_than_zero ( triangle_fan_indices_count ) )
-    {
-        platform_render :: create_index_buffer 
-            ( mesh . triangle_fan_index_buffer_id 
-            , triangle_fan_indices_count 
-            , triangle_fan_indices 
-            ) ;
-    }
-    result . _mesh_id = _next_mesh_id ;
-    platform_math :: inc_whole ( _next_mesh_id ) ;
 }
 
 template < typename mediator >

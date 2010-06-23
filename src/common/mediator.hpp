@@ -287,20 +287,6 @@ public :
     const texture_consts_type & texture_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
 public :
-    template 
-        < typename vertex_array 
-        , typename strip_index_array
-        , typename fan_index_array
-        >
-    void mesh_create 
-        ( mesh_id & result
-        , const vertex_array & vertices 
-        , const strip_index_array & triangle_strip_indices 
-        , const fan_index_array & triangle_fan_indices
-        , num_whole vertices_count
-        , num_whole triangle_strip_indices_count 
-        , num_whole triangle_fan_indices_count
-        ) ;
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
     void mesh_finalize ( mesh_id mesh ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
@@ -558,33 +544,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: mesh_finalize ( mesh_id mesh )
 {
     _engine_mesh . get ( ) . mesh_finalize ( mesh ) ;
-}
-
-template < typename mediator_types >
-template 
-    < typename vertex_array
-    , typename strip_index_array
-    , typename fan_index_array
-    >
-void shy_mediator < mediator_types > :: mesh_create 
-    ( mesh_id & result
-    , const vertex_array & vertices 
-    , const strip_index_array & triangle_strip_indices 
-    , const fan_index_array & triangle_fan_indices
-    , num_whole vertices_count
-    , num_whole triangle_strip_indices_count 
-    , num_whole triangle_fan_indices_count
-    )
-{
-    _engine_mesh . get ( ) . mesh_create
-        ( result
-        , vertices
-        , triangle_strip_indices
-        , triangle_fan_indices
-        , vertices_count
-        , triangle_strip_indices_count
-        , triangle_fan_indices_count
-        ) ;
 }
 
 template < typename mediator_types >
