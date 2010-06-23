@@ -4,6 +4,7 @@ class shy_logic_title
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_text logic_text ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -45,6 +46,7 @@ public :
     void receive ( typename messages :: title_render msg ) ;
     void receive ( typename messages :: title_update msg ) ;
     void receive ( typename messages :: title_launch_permit msg ) ;
+    void receive ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
 private :
     void _title_create ( ) ;
     void _title_render ( ) ;
@@ -56,8 +58,12 @@ private :
     void _animate_appear ( ) ;
     void _animate_disappear ( ) ;
     void _animate_lifecycle ( ) ;
+    void _bake_next_letter ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_static_array :: template static_array < vertex_data , 4 > _letter_vertices ;
+    typename platform_static_array :: template static_array < index_data , 4 > _letter_indices ;    
+    typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
     num_whole _title_launch_permitted ;
     num_whole _title_created ;
     num_whole _title_finished ;
@@ -65,6 +71,9 @@ private :
     num_whole _title_appeared ;
     num_whole _letters_count ;
     num_whole _disappear_at_frames ;
+    num_whole _bake_letter_index ;
+    num_whole _text_letter_big_tex_coords_requested ;
+    letter_id _text_letter_big_tex_coords_letter ;
     num_fract _desired_pos_radius_coeff ;
     num_fract _desired_pos_angle ;
     num_fract _desired_rot_angle ;
@@ -73,9 +82,6 @@ private :
     num_fract _scene_scale_frames ;
     num_fract _rubber_first ;
     num_fract _rubber_last ;
-    typename platform_static_array :: template static_array < vertex_data , 4 > _letter_vertices ;
-    typename platform_static_array :: template static_array < index_data , 4 > _letter_indices ;    
-    typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
 } ;
 
 template < typename mediator >
@@ -90,6 +96,8 @@ shy_logic_title < mediator > :: shy_logic_title ( )
     platform_math :: make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
     _letters_count = platform :: math_consts . whole_0 ;
     _title_frames = platform :: math_consts . whole_0 ;
+    _bake_letter_index = platform :: math_consts . whole_0 ;
+    _text_letter_big_tex_coords_requested = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -140,14 +148,54 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
     if ( platform_conditions :: whole_is_true ( _title_launch_permitted ) )
     {
         if ( platform_conditions :: whole_is_false ( _title_created ) )
-        {
             _title_create ( ) ;
-            platform_math :: make_num_whole ( _title_created , true ) ;
-            _prepare_to_appear ( ) ;
-            _animate_lifecycle ( ) ;
-        }
         else if ( platform_conditions :: whole_is_false ( _title_finished ) )
             _animate_lifecycle ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_reply msg )
+{
+    num_whole letters_are_equal ;
+    logic_text :: are_letters_equal ( letters_are_equal , _text_letter_big_tex_coords_letter , msg . letter ) ;
+    if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_requested ) 
+      && platform_conditions :: whole_is_true ( letters_are_equal )
+       )
+    {
+        _text_letter_big_tex_coords_requested = platform :: math_consts . whole_false ;
+        _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
+        platform_render :: set_vertex_tex_coord 
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_0 )
+            , msg . left
+            , msg . top
+            ) ;
+        platform_render :: set_vertex_tex_coord 
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_1 )
+            , msg . left
+            , msg . bottom
+            ) ;
+        platform_render :: set_vertex_tex_coord 
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_2 )
+            , msg . right
+            , msg . top
+            ) ;
+        platform_render :: set_vertex_tex_coord 
+            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_3 )
+            , msg . right
+            , msg . bottom
+            ) ;
+        _mediator . get ( ) . mesh_create
+            ( letter . mesh
+            , _letter_vertices 
+            , _letter_indices 
+            , _letter_indices
+            , platform :: math_consts . whole_4 
+            , platform :: math_consts . whole_4 
+            , platform :: math_consts . whole_0 
+            ) ;
+        platform_math :: inc_whole ( _bake_letter_index ) ;
+        _bake_next_letter ( ) ;
     }
 }
 
@@ -473,49 +521,29 @@ void shy_logic_title < mediator > :: _bake_letters ( )
             ) ;
     }
     
-    for ( num_whole i = platform :: math_consts . whole_0
-        ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
-        ; platform_math :: inc_whole ( i )
-        )
+    _bake_next_letter ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _bake_next_letter ( )
+{
+    if ( platform_conditions :: whole_less_than_whole ( _bake_letter_index , _letters_count ) )
     {
-        num_fract tex_left ;
-        num_fract tex_bottom ;
-        num_fract tex_right ;
-        num_fract tex_top ;
-        _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
+        _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
         letter . scale = platform :: math_consts . fract_0 ;
         letter . pos_radius = platform :: math_consts . fract_0 ;
         letter . pos_angle = platform :: math_consts . fract_0 ;
         letter . rot_angle = platform :: math_consts . fract_0 ;
-        _mediator . get ( ) . get_big_letter_tex_coords ( tex_left , tex_bottom , tex_right , tex_top , letter . letter ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_0 )
-            , tex_left
-            , tex_top
-            ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_1 )
-            , tex_left
-            , tex_bottom
-            ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_2 )
-            , tex_right
-            , tex_top
-            ) ;
-        platform_render :: set_vertex_tex_coord 
-            ( platform_static_array :: element ( _letter_vertices , platform :: math_consts . whole_3 )
-            , tex_right
-            , tex_bottom
-            ) ;
-        _mediator . get ( ) . mesh_create
-            ( letter . mesh
-            , _letter_vertices 
-            , _letter_indices 
-            , _letter_indices
-            , platform :: math_consts . whole_4 
-            , platform :: math_consts . whole_4 
-            , platform :: math_consts . whole_0 
-            ) ;
+        _text_letter_big_tex_coords_requested = platform :: math_consts . whole_true ;
+        _text_letter_big_tex_coords_letter = letter . letter ;
+        typename messages :: text_letter_big_tex_coords_request text_letter_big_tex_coords_request_msg ;
+        text_letter_big_tex_coords_request_msg . letter = letter . letter ;
+        _mediator . get ( ) . send ( text_letter_big_tex_coords_request_msg  ) ;        
+    }
+    else
+    {
+        _title_created = platform :: math_consts . whole_true ;
+        _prepare_to_appear ( ) ;
+        _animate_lifecycle ( ) ;
     }
 }

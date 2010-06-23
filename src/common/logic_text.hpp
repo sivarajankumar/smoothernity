@@ -98,20 +98,7 @@ public :
     void receive ( typename messages :: texture_create_reply msg ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_request msg ) ;
     void receive ( typename messages :: text_letter_small_tex_coords_request msg ) ;
-    void get_big_letter_tex_coords 
-        ( num_fract & left 
-        , num_fract & bottom 
-        , num_fract & right 
-        , num_fract & top 
-        , letter_id letter 
-        ) ;
-    void get_small_letter_tex_coords 
-        ( num_fract & left 
-        , num_fract & bottom 
-        , num_fract & right 
-        , num_fract & top 
-        , letter_id letter 
-        ) ;
+    static void are_letters_equal ( num_whole & result , letter_id a , letter_id b ) ;
 private :
     void _render_text_mesh ( ) ;
     void _update_text_mesh ( ) ;
@@ -188,23 +175,6 @@ shy_logic_text < mediator > :: shy_logic_text ( )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
-{
-    _mediator = arg_mediator ;
-}
-
-template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_done msg )
-{
-    if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
-    {
-        typename messages :: mesh_delete mesh_delete_msg ;
-        mesh_delete_msg . mesh = _text_mesh_id ;
-        _mediator . get ( ) . send ( mesh_delete_msg ) ;
-    }
-}
-
-template < typename mediator >
 shy_logic_text < mediator > :: alphabet_english_type :: alphabet_english_type ( )
 {
     num_whole index = platform :: math_consts . whole_0 ;
@@ -237,6 +207,29 @@ shy_logic_text < mediator > :: alphabet_english_type :: alphabet_english_type ( 
 }
 
 template < typename mediator >
+void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: are_letters_equal ( num_whole & result , letter_id a , letter_id b )
+{
+    platform_math :: make_num_whole ( result , platform_conditions :: wholes_are_equal ( a . _letter_id , b . _letter_id ) ) ;
+}
+    
+template < typename mediator >
+void shy_logic_text < mediator > :: receive ( typename messages :: text_done msg )
+{
+    if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
+    {
+        typename messages :: mesh_delete mesh_delete_msg ;
+        mesh_delete_msg . mesh = _text_mesh_id ;
+        _mediator . get ( ) . send ( mesh_delete_msg ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: use_text_texture msg )
 {
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
@@ -251,6 +244,7 @@ template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_request msg )
 {
     typename messages :: text_letter_big_tex_coords_reply reply_msg ;
+    reply_msg . letter = msg . letter ;
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
         _tex_coords & coords = platform_static_array :: element ( _letters_big , msg . letter . _letter_id ) ;
@@ -273,6 +267,7 @@ template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_small_tex_coords_request msg )
 {
     typename messages :: text_letter_small_tex_coords_reply reply_msg ;
+    reply_msg . letter = msg . letter ;
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
         _tex_coords & coords = platform_static_array :: element ( _letters_small , msg . letter . _letter_id ) ;
@@ -289,58 +284,6 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_s
         reply_msg . top = platform :: math_consts . fract_0 ;
     }
     _mediator . get ( ) . send ( reply_msg ) ;
-}
-
-template < typename mediator >
-void shy_logic_text < mediator > :: get_big_letter_tex_coords 
-    ( num_fract & left 
-    , num_fract & bottom 
-    , num_fract & right 
-    , num_fract & top 
-    , letter_id letter 
-    )
-{
-    if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
-    {
-        _tex_coords & coords = platform_static_array :: element ( _letters_big , letter . _letter_id ) ;
-        left = coords . left ;
-        bottom = coords . bottom ;
-        right = coords . right ;
-        top = coords . top ;
-    }
-    else
-    {
-        left = platform :: math_consts . fract_0 ;
-        bottom = platform :: math_consts . fract_0 ;
-        right = platform :: math_consts . fract_0 ;
-        top = platform :: math_consts . fract_0 ;
-    }
-}
-
-template < typename mediator >
-void shy_logic_text < mediator > :: get_small_letter_tex_coords 
-    ( num_fract & left 
-    , num_fract & bottom 
-    , num_fract & right 
-    , num_fract & top 
-    , letter_id letter 
-    )
-{
-    if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
-    {
-        _tex_coords & coords = platform_static_array :: element ( _letters_small , letter . _letter_id ) ;
-        left = coords . left ;
-        bottom = coords . bottom ;
-        right = coords . right ;
-        top = coords . top ;
-    }
-    else
-    {
-        left = platform :: math_consts . fract_0 ;
-        bottom = platform :: math_consts . fract_0 ;
-        right = platform :: math_consts . fract_0 ;
-        top = platform :: math_consts . fract_0 ;
-    }
 }
 
 template < typename mediator >

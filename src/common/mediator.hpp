@@ -57,6 +57,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
     
@@ -74,7 +75,6 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image logic_image ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: logic_text_consts_type logic_text_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
@@ -145,9 +145,9 @@ public :
         class sound_prepared { } ;
         class sound_update { } ;
         class text_done { } ;
-        class text_letter_big_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; } ;
+        class text_letter_big_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
         class text_letter_big_tex_coords_request { public : letter_id letter ; } ;
-        class text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; } ;
+        class text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
         class text_letter_small_tex_coords_request { public : letter_id letter ; } ;
         class text_prepare_permit { } ;
         class text_prepared { } ;
@@ -287,8 +287,6 @@ public :
     const texture_consts_type & texture_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
 public :
-    void get_big_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
-    void get_small_letter_tex_coords ( num_fract & left , num_fract & bottom , num_fract & right , num_fract & top , letter_id letter ) ;
     template 
         < typename vertex_array 
         , typename strip_index_array
@@ -905,6 +903,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: use_text_tex
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: text_letter_big_tex_coords_reply msg )
 {
+    _logic_title . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -923,28 +922,3 @@ void shy_mediator < mediator_types > :: send ( typename messages :: text_letter_
 {
     _logic_text . get ( ) . receive ( msg ) ;
 }
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_big_letter_tex_coords 
-    ( num_fract & left 
-    , num_fract & bottom 
-    , num_fract & right 
-    , num_fract & top 
-    , letter_id letter 
-    )
-{
-    _logic_text . get ( ) . get_big_letter_tex_coords ( left , bottom , right , top , letter ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: get_small_letter_tex_coords 
-    ( num_fract & left 
-    , num_fract & bottom 
-    , num_fract & right 
-    , num_fract & top 
-    , letter_id letter 
-    )
-{
-    _logic_text . get ( ) . get_small_letter_tex_coords ( left , bottom , right , top , letter ) ;
-}
-
