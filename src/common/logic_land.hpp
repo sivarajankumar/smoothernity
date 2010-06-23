@@ -168,8 +168,6 @@ void shy_logic_land < mediator > :: _render_land ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: _create_land_mesh ( )
 {    
-    typename platform_static_array :: template static_array < vertex_data , ( _land_grid + 1 ) * ( _land_grid + 1 ) > vertices ;
-    typename platform_static_array :: template static_array < index_data , ( _land_grid + 1 ) * 2 * _land_grid > indices ;
     num_whole vertices_count ;
     num_whole indices_count ;
     num_whole ix ;
@@ -177,11 +175,15 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     num_whole ix_max ;
     num_whole iz_max ;
     num_whole whole_land_grid ;
+    num_whole total_vertices ;
+    num_whole total_indices ;
     num_fract grid_step ;
     num_fract grid_origin_x ;
     num_fract grid_origin_z ;
     num_fract fract_land_grid ;
     
+    platform_math :: make_num_whole ( total_vertices , ( _land_grid + 1 ) * ( _land_grid + 1 ) ) ;
+    platform_math :: make_num_whole ( total_indices , ( _land_grid + 1 ) * 2 * _land_grid ) ;
     platform_math :: make_num_whole ( vertices_count , 0 ) ;
     platform_math :: make_num_whole ( indices_count , 0 ) ;
     platform_math :: make_num_whole ( whole_land_grid , _land_grid ) ;
@@ -190,6 +192,13 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     platform_math :: make_num_fract ( grid_origin_x , - _land_radius , 1 ) ;
     platform_math :: make_num_fract ( grid_origin_z , - _land_radius , 1 ) ;
     
+    _mediator . get ( ) . mesh_create
+        ( _land_mesh_id 
+        , total_vertices
+        , total_indices
+        , platform :: math_consts . whole_0 
+        ) ;
+
     for ( platform_math :: make_num_whole ( iz , 0 )
         , platform_math :: make_num_whole ( iz_max , _land_grid + 1 )
         ; platform_conditions :: whole_less_than_whole ( iz , iz_max )
@@ -231,12 +240,9 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             platform_math :: make_num_fract ( vertex_g , _land_g , 255 ) ;
             platform_math :: make_num_fract ( vertex_b , _land_b , 255 ) ;
             platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
-            {
-                vertex_data & vertex = platform_static_array :: element ( vertices , vertices_count ) ;
-                platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-                platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-                platform_render :: set_vertex_tex_coord ( vertex , vertex_u , vertex_v ) ;
-            }
+            _mediator . get ( ) . mesh_set_vertex_position ( _land_mesh_id , vertices_count , vertex_x , vertex_y , vertex_z ) ;
+            _mediator . get ( ) . mesh_set_vertex_color ( _land_mesh_id , vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            _mediator . get ( ) . mesh_set_vertex_tex_coord ( _land_mesh_id , vertices_count , vertex_u , vertex_v ) ;
             platform_math :: inc_whole ( vertices_count ) ;
         }
     }
@@ -262,17 +268,11 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             {
                 platform_math :: mul_wholes ( index , row_size , iz ) ;
                 platform_math :: add_to_whole ( index , ix ) ;
-                {
-                    index_data & index_ptr = platform_static_array :: element ( indices , indices_count ) ;
-                    platform_render :: set_index_value ( index_ptr , index ) ;
-                }
+                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
                 
                 platform_math :: add_to_whole ( index , row_size ) ;
-                {
-                    index_data & index_ptr = platform_static_array :: element ( indices , indices_count ) ;
-                    platform_render :: set_index_value ( index_ptr , index ) ;
-                }
+                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
             }
             else
@@ -281,30 +281,16 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 platform_math :: add_to_whole ( index , whole_land_grid ) ;
                 platform_math :: sub_from_whole ( index , ix ) ;
                 platform_math :: add_to_whole ( index , row_size ) ;
-                {
-                    index_data & index_ptr = platform_static_array :: element ( indices , indices_count ) ;
-                    platform_render :: set_index_value ( index_ptr , index ) ;
-                }
+                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
                 
                 platform_math :: sub_from_whole ( index , row_size ) ;
-                {
-                    index_data & index_ptr = platform_static_array :: element ( indices , indices_count ) ;
-                    platform_render :: set_index_value ( index_ptr , index ) ;
-                }
+                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
             }
         }
     }
-    _mediator . get ( ) . mesh_create
-        ( _land_mesh_id 
-        , vertices 
-        , indices 
-        , indices
-        , vertices_count 
-        , indices_count 
-        , platform :: math_consts . whole_0 
-        ) ;
+    _mediator . get ( ) . mesh_finalize ( _land_mesh_id ) ;
     platform_math :: make_num_whole ( _land_mesh_created , true ) ;
 }
 
