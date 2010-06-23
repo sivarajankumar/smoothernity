@@ -205,6 +205,13 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
     platform_math :: make_num_whole ( whole_spot_edges , _spot_edges ) ;
     platform_math :: make_num_fract ( fract_spot_edges , _spot_edges , 1 ) ;
     
+    _mediator . get ( ) . mesh_create
+        ( _spot_mesh_id 
+        , whole_spot_edges 
+        , platform :: math_consts . whole_0 
+        , whole_spot_edges 
+        ) ;
+        
     for ( platform_math :: make_num_whole ( i , 0 )
         ; platform_conditions :: whole_less_than_whole ( i , whole_spot_edges ) 
         ; platform_math :: inc_whole ( i )
@@ -233,23 +240,10 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform_math :: make_num_fract ( vertex_g , _spot_g , 255 ) ;
         platform_math :: make_num_fract ( vertex_b , _spot_b , 255 ) ;
         platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
-        {
-            vertex_data & vertex = platform_static_array :: element ( vertices , i ) ;
-            platform_render :: set_vertex_position ( vertex , vertex_x , vertex_y , vertex_z ) ;
-            platform_render :: set_vertex_color ( vertex , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        }
-        {
-            index_data & index = platform_static_array :: element ( indices , i ) ;
-            platform_render :: set_index_value ( index , i ) ;
-        }
+        _mediator . get ( ) . mesh_set_vertex_position ( _spot_mesh_id , i , vertex_x , vertex_y , vertex_z ) ;
+        _mediator . get ( ) . mesh_set_vertex_color ( _spot_mesh_id , i , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _spot_mesh_id , i , i ) ;
     }
-    _mediator . get ( ) . mesh_create
-        ( _spot_mesh_id 
-        , vertices 
-        , indices
-        , indices 
-        , whole_spot_edges 
-        , platform :: math_consts . whole_0 
-        , whole_spot_edges 
-        ) ;
+    
+    _mediator . get ( ) . mesh_finalize ( _spot_mesh_id ) ;
 }
