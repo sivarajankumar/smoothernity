@@ -46,6 +46,11 @@ private :
     void _create_entity_mesh ( ) ;
     void _get_entity_origin ( vector_data & result , num_whole index ) ;
     void _update_entity_grid ( ) ;
+    void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
+    void _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
+    void _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _entity_created ;
@@ -282,9 +287,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
 
-        _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , _vertices_count , vertex_x , vertex_y , vertex_z ) ;
-        _mediator . get ( ) . mesh_set_vertex_color ( _entity_mesh_id , _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _entity_mesh_id , _strip_indices_count , _vertices_count ) ;
+        _mesh_set_vertex_position ( _vertices_count , vertex_x , vertex_y , vertex_z ) ;
+        _mesh_set_vertex_color ( _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        _mesh_set_triangle_strip_index_value ( _strip_indices_count , _vertices_count ) ;
 
         platform_math :: inc_whole ( _strip_indices_count ) ;
         platform_math :: inc_whole ( _vertices_count ) ;
@@ -293,9 +298,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color2 ) ;
 
-        _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , _vertices_count , vertex_x , vertex_y , vertex_z ) ;
-        _mediator . get ( ) . mesh_set_vertex_color ( _entity_mesh_id , _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _entity_mesh_id , _strip_indices_count , _vertices_count ) ;
+        _mesh_set_vertex_position ( _vertices_count , vertex_x , vertex_y , vertex_z ) ;
+        _mesh_set_vertex_color ( _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        _mesh_set_triangle_strip_index_value ( _strip_indices_count , _vertices_count ) ;
 
         platform_math :: inc_whole ( _strip_indices_count ) ;
         platform_math :: inc_whole ( _vertices_count ) ;
@@ -314,9 +319,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform_math :: make_num_fract ( vertex_b , _entity_color_roof_b , 255 ) ;
             platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
 
-            _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , _vertices_count , vertex_x , vertex_y , vertex_z ) ;
-            _mediator . get ( ) . mesh_set_vertex_color ( _entity_mesh_id , _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-            _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _entity_mesh_id , _fan_indices_count , _vertices_count ) ;
+            _mesh_set_vertex_position ( _vertices_count , vertex_x , vertex_y , vertex_z ) ;
+            _mesh_set_vertex_color ( _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            _mesh_set_triangle_fan_index_value ( _fan_indices_count , _vertices_count ) ;
             
             platform_math :: inc_whole ( _fan_indices_count ) ;
             platform_math :: inc_whole ( _vertices_count ) ;
@@ -325,7 +330,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         {
             num_whole index ;
             platform_math :: mul_wholes ( index , _current_fan_mesh_span , platform :: math_consts . whole_2 ) ;
-            _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _entity_mesh_id , _fan_indices_count , index ) ;
+            _mesh_set_triangle_fan_index_value ( _fan_indices_count , index ) ;
             platform_math :: inc_whole ( _fan_indices_count ) ;
             platform_math :: inc_whole ( _current_fan_mesh_span ) ;
         }
@@ -336,6 +341,36 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
         }
     }
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z )
+{
+    _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , offset , x , y , z ) ;
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v )
+{
+    _mediator . get ( ) . mesh_set_vertex_tex_coord ( _entity_mesh_id , offset , u , v ) ;
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+{
+    _mediator . get ( ) . mesh_set_vertex_color ( _entity_mesh_id , offset , r , g , b , a ) ;
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
+{
+    _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _entity_mesh_id , offset , index ) ;
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index )
+{
+    _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _entity_mesh_id , offset , index ) ;
 }
 
 template < typename mediator >
