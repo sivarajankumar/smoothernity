@@ -53,6 +53,7 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: texture_id texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
@@ -61,7 +62,6 @@ public :
     
 private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: engine_render_consts_type engine_render_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;

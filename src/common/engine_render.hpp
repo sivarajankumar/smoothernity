@@ -109,6 +109,8 @@ public :
     void receive ( typename messages :: render_enable_face_culling msg ) ;
     void receive ( typename messages :: render_texture_mode_modulate msg ) ;
 public :
+    static void texture_loader_ready ( num_whole & is_ready ) ;
+public :
     const engine_render_consts_type engine_render_consts ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -136,6 +138,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: texture_loader_ready ( num_whole & is_ready )
+{
+    platform_render :: texture_loader_ready ( is_ready ) ;
 }
 
 template < typename mediator >
