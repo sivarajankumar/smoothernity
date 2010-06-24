@@ -30,6 +30,7 @@ public :
     void receive ( typename messages :: fidget_prepare_permit msg ) ;
     void receive ( typename messages :: fidget_render msg ) ;
     void receive ( typename messages :: fidget_update msg ) ;
+    void receive ( typename messages :: mesh_create_reply msg ) ;
 private :
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
@@ -40,6 +41,7 @@ private :
     num_whole _fidget_prepare_permitted ;
     num_whole _fidget_mesh_created ;
     num_whole _fidget_scale ;
+    num_whole _mesh_create_requested ;
     mesh_id _fidget_mesh_id ;
 } ;
 
@@ -50,6 +52,7 @@ shy_logic_fidget < mediator > :: shy_logic_fidget ( )
     platform_math :: make_num_whole ( _fidget_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _fidget_mesh_created , false ) ;
     platform_math :: make_num_whole ( _fidget_scale , 0 ) ;
+    _mesh_create_requested = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -83,15 +86,35 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prep
 }
 
 template < typename mediator >
+void shy_logic_fidget < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
+    {
+        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _fidget_mesh_id = msg . mesh ;
+        _create_fidget_mesh ( ) ;
+        platform_math :: make_num_whole ( _fidget_mesh_created , true ) ;
+        _mediator . get ( ) . send ( typename messages :: fidget_prepared ( ) ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_update msg )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_prepare_permitted ) )
     {
         if ( platform_conditions :: whole_is_false ( _fidget_mesh_created ) )
         {
-            _create_fidget_mesh ( ) ;
-            platform_math :: make_num_whole ( _fidget_mesh_created , true ) ;
-            _mediator . get ( ) . send ( typename messages :: fidget_prepared ( ) ) ;
+            _mesh_create_requested = platform :: math_consts . whole_true ;
+            
+            num_whole whole_fidget_edges ;
+            platform_math :: make_num_whole ( whole_fidget_edges , _fidget_edges ) ;
+            
+            typename messages :: mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = whole_fidget_edges ;
+            mesh_create_msg . triangle_fan_indices = whole_fidget_edges ;
+            mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_0 ;
+            _mediator . get ( ) . send ( mesh_create_msg ) ;
         }
         else
             _update_fidget ( ) ;
@@ -168,13 +191,6 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
     platform_math :: make_num_fract ( fract_fidget_edges , _fidget_edges , 1 ) ;
     platform_math :: make_num_whole ( whole_fidget_edges , _fidget_edges ) ;
     
-    _mediator . get ( ) . mesh_create
-        ( _fidget_mesh_id 
-        , whole_fidget_edges 
-        , platform :: math_consts . whole_0 
-        , whole_fidget_edges 
-        ) ;
-        
     for ( platform_math :: make_num_whole ( i , 0 )
         ; platform_conditions :: whole_less_than_whole ( i , whole_fidget_edges )
         ; platform_math :: inc_whole ( i )
