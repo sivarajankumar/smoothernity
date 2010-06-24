@@ -240,7 +240,12 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
         _mediator . get ( ) . mesh_set_vertex_position ( _spot_mesh_id , i , vertex_x , vertex_y , vertex_z ) ;
         _mediator . get ( ) . mesh_set_vertex_color ( _spot_mesh_id , i , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-        _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _spot_mesh_id , i , i ) ;
+        
+        typename messages :: mesh_set_triangle_fan_index_value set_index_msg ;
+        set_index_msg . mesh = _spot_mesh_id ;
+        set_index_msg . offset = i ;
+        set_index_msg . index = i ;
+        _mediator . get ( ) . send ( set_index_msg ) ;
     }
     
     typename messages :: mesh_finalize mesh_finalize_msg ;

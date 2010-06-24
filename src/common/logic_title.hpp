@@ -62,7 +62,6 @@ private :
     void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
-    void _mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
@@ -518,10 +517,4 @@ template < typename mediator >
 void shy_logic_title < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
 {
     _mediator . get ( ) . mesh_set_triangle_strip_index_value ( mesh , offset , index ) ;
-}
-
-template < typename mediator >
-void shy_logic_title < mediator > :: _mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index )
-{
-    _mediator . get ( ) . mesh_set_triangle_fan_index_value ( mesh , offset , index ) ;
 }

@@ -110,7 +110,6 @@ private :
     void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
     void _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
-    void _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index ) ;
     void _prepare_rasterizer_for_drawing ( ) ;
     void _store_tex_coords ( letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
     void _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
@@ -468,12 +467,6 @@ template < typename mediator >
 void shy_logic_text < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
 {
     _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _text_mesh_id , offset , index ) ;
-}
-
-template < typename mediator >
-void shy_logic_text < mediator > :: _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index )
-{
-    _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _text_mesh_id , offset , index ) ;
 }
 
 template < typename mediator >

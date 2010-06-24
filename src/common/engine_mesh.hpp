@@ -46,15 +46,15 @@ private :
 public :
     shy_engine_mesh ( ) ;
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
+    void receive ( typename messages :: mesh_finalize msg ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
-    void mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
-    void receive ( typename messages :: mesh_delete msg ) ;
-    void receive ( typename messages :: mesh_render msg ) ;
+    void receive ( typename messages :: mesh_set_triangle_fan_index_value msg ) ;
     void receive ( typename messages :: mesh_set_transform msg ) ;
-    void receive ( typename messages :: mesh_finalize msg ) ;
+    void receive ( typename messages :: mesh_render msg ) ;
+    void receive ( typename messages :: mesh_delete msg ) ;
 private :
     num_whole _next_mesh_id ;
     typename platform_static_array :: template static_array < _mesh_data , _max_meshes > _meshes_data ;
@@ -132,15 +132,15 @@ void shy_engine_mesh < mediator > :: mesh_set_triangle_strip_index_value ( mesh_
     index_data & index = platform_static_array :: element ( mesh . triangle_strip_indices , offset ) ;
     platform_render :: set_index_value ( index , index_value ) ;
 }
-    
+
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_triangle_fan_index_value ( mesh_id arg_mesh , num_whole offset , num_whole index_value )
+void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_set_triangle_fan_index_value msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
-    index_data & index = platform_static_array :: element ( mesh . triangle_fan_indices , offset ) ;
-    platform_render :: set_index_value ( index , index_value ) ;
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    index_data & index = platform_static_array :: element ( mesh . triangle_fan_indices , msg . offset ) ;
+    platform_render :: set_index_value ( index , msg . index ) ;
 }
-    
+
 template < typename mediator >
 void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_delete msg )
 {
