@@ -131,6 +131,7 @@ public :
         class land_render { } ;
         class land_update { } ;
         class mesh_delete { public : mesh_id mesh ; } ;
+        class mesh_finalize { public : mesh_id mesh ; } ;
         class mesh_render { public : mesh_id mesh ; } ;
         class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
         class near_plane_distance_reply { public : num_fract distance ; } ;
@@ -237,6 +238,7 @@ public :
     void send ( typename messages :: land_render msg ) ;
     void send ( typename messages :: land_update msg ) ;
     void send ( typename messages :: mesh_delete msg ) ;
+    void send ( typename messages :: mesh_finalize msg ) ;
     void send ( typename messages :: mesh_render msg ) ;
     void send ( typename messages :: mesh_set_transform msg ) ;
     void send ( typename messages :: near_plane_distance_reply msg ) ;
@@ -289,11 +291,11 @@ public :
 public :
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
     void mesh_finalize ( mesh_id mesh ) ;
+    void mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
+    void mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
-    void mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
@@ -544,6 +546,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: mesh_finalize ( mesh_id mesh )
 {
     _engine_mesh . get ( ) . mesh_finalize ( mesh ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: mesh_finalize msg )
+{
+    _engine_mesh . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

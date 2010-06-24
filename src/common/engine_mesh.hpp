@@ -55,6 +55,7 @@ public :
     void receive ( typename messages :: mesh_delete msg ) ;
     void receive ( typename messages :: mesh_render msg ) ;
     void receive ( typename messages :: mesh_set_transform msg ) ;
+    void receive ( typename messages :: mesh_finalize msg ) ;
 private :
     num_whole _next_mesh_id ;
     typename platform_static_array :: template static_array < _mesh_data , _max_meshes > _meshes_data ;
@@ -76,6 +77,29 @@ void shy_engine_mesh < mediator > :: mesh_create ( mesh_id & result , num_whole 
     platform_matrix :: identity ( mesh . transform ) ;
     result . _mesh_id = _next_mesh_id ;
     platform_math :: inc_whole ( _next_mesh_id ) ;
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_finalize msg )
+{
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    platform_render :: create_vertex_buffer ( mesh . vertex_buffer_id , mesh . vertices_count , mesh . vertices ) ;
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
+    {
+        platform_render :: create_index_buffer 
+            ( mesh . triangle_strip_index_buffer_id 
+            , mesh . triangle_strip_indices_count 
+            , mesh . triangle_strip_indices 
+            ) ;
+    }
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
+    {
+        platform_render :: create_index_buffer 
+            ( mesh . triangle_fan_index_buffer_id 
+            , mesh . triangle_fan_indices_count 
+            , mesh . triangle_fan_indices 
+            ) ;
+    }
 }
 
 template < typename mediator >
