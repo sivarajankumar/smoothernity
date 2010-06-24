@@ -15,10 +15,8 @@ class shy_logic_image
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
-    typedef typename mediator :: platform :: platform_render :: index_data index_data ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
-    typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
     static const_int_32 _logo_resource_index = 1 ;
