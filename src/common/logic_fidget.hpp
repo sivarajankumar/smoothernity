@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_fidget
 {
+    typedef typename mediator :: engine_render engine_render ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -152,7 +153,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform_math :: make_fract_from_whole ( fract_fidget_scale , _fidget_scale ) ;
     platform_math :: div_fracts ( scale , fract_fidget_scale , fract_scale_in_frames ) ;
-    platform_render :: get_aspect_height ( height ) ;
+    engine_render :: get_aspect_height ( height ) ;
     platform_math :: make_num_fract ( num_half , 1 , 2 ) ;
     platform_math :: cos ( angle_cos , _fidget_angle ) ;
     platform_math :: sin ( angle_sin , _fidget_angle ) ;

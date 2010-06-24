@@ -3,6 +3,7 @@ class shy_logic_title
 {
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: engine_render engine_render ;
     typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: logic_text logic_text ;
     typedef typename mediator :: mesh_id mesh_id ;
@@ -384,7 +385,7 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract scale_max ;
     num_whole frames_between_letters ;
     
-    platform_render :: get_aspect_width ( aspect_width ) ;
+    engine_render :: get_aspect_width ( aspect_width ) ;
     platform_math :: make_fract_from_whole ( fract_letters_count , _letters_count ) ;
     platform_math :: div_fracts ( letter_size , aspect_width , fract_letters_count ) ;    
     platform_math :: mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;

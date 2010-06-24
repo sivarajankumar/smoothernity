@@ -112,6 +112,8 @@ public :
     static void texture_loader_ready ( num_whole & is_ready ) ;
     static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
+	static void get_aspect_width ( num_fract & result ) ;
+	static void get_aspect_height ( num_fract & result ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -158,6 +160,18 @@ template < typename mediator >
 void shy_engine_render < mediator > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
     platform_render :: create_texture_resource_id ( resource_id , resource_index ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: get_aspect_width ( num_fract & result )
+{
+    platform_render :: get_aspect_width ( result ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: get_aspect_height ( num_fract & result )
+{
+    platform_render :: get_aspect_height ( result ) ;
 }
 
 template < typename mediator >
