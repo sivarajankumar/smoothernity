@@ -64,9 +64,11 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
         _mediator . get ( ) . send ( typename messages :: title_render ( ) ) ;
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
-        num_fract black ;
-        platform_math :: make_num_fract ( black , 0 , 1 ) ;
-        platform_render :: clear_screen ( black , black , black ) ;
+        typename messages :: render_clear_screen clear_screen_msg ;
+        clear_screen_msg . r = platform :: math_consts . fract_0 ;
+        clear_screen_msg . g = platform :: math_consts . fract_0 ;
+        clear_screen_msg . b = platform :: math_consts . fract_0 ;
+        _mediator . get ( ) . send ( clear_screen_msg ) ;
     }
 }
 

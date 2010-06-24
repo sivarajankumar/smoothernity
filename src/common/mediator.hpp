@@ -136,6 +136,7 @@ public :
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
         class render { } ;
+        class render_clear_screen { public : num_fract r ; num_fract g ; num_fract b ; } ;
         class render_mesh_create_reply { public : mesh_id mesh ; } ;
         class render_mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
         class render_mesh_delete { public : mesh_id mesh ; } ;
@@ -250,6 +251,7 @@ public :
     void send ( typename messages :: rasterize_use_texel msg ) ;
     void send ( typename messages :: rasterize_use_texture msg ) ;
     void send ( typename messages :: render msg ) ;
+    void send ( typename messages :: render_clear_screen msg ) ;
     void send ( typename messages :: render_mesh_create_reply msg ) ;
     void send ( typename messages :: render_mesh_create_request msg ) ;
     void send ( typename messages :: render_mesh_delete msg ) ;
@@ -505,6 +507,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: land_prepared msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_clear_screen msg )
+{
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
