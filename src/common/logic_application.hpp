@@ -8,7 +8,6 @@ class shy_logic_application
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-    typedef typename mediator :: platform :: platform_render platform_render ;
 public :
     shy_logic_application ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;

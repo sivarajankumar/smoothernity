@@ -13,7 +13,6 @@ class shy_logic_touch
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-    typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_touch platform_touch ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;

@@ -10,7 +10,6 @@ class shy_logic_game
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-    typedef typename mediator :: platform :: platform_render platform_render ;
     
     static const_int_32 _fade_in_frames = 90 ;
     static const num_fract _final_r ( ) { num_fract n ; platform_math :: make_num_fract ( n , 0 , 1 ) ; return n ; }
