@@ -510,7 +510,12 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , 
 template < typename mediator >
 void shy_logic_title < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
 {
-    _mediator . get ( ) . mesh_set_vertex_tex_coord ( mesh , offset , u , v ) ;
+    typename messages :: mesh_set_vertex_tex_coord msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . u = u ;
+    msg . v = v ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >

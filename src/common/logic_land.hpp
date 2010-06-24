@@ -251,7 +251,14 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             _mediator . get ( ) . send ( set_pos_msg ) ;
             
             _mediator . get ( ) . mesh_set_vertex_color ( _land_mesh_id , vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
-            _mediator . get ( ) . mesh_set_vertex_tex_coord ( _land_mesh_id , vertices_count , vertex_u , vertex_v ) ;
+            
+            typename messages :: mesh_set_vertex_tex_coord set_tex_msg ;
+            set_tex_msg . mesh = _land_mesh_id ;
+            set_tex_msg . offset = vertices_count ;
+            set_tex_msg . u = vertex_u ;
+            set_tex_msg . v = vertex_v ;
+            _mediator . get ( ) . send ( set_tex_msg ) ;
+            
             platform_math :: inc_whole ( vertices_count ) ;
         }
     }

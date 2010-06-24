@@ -280,7 +280,12 @@ void shy_logic_image < mediator > :: _mesh_set_vertex_position ( num_whole offse
 template < typename mediator >
 void shy_logic_image < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v )
 {
-    _mediator . get ( ) . mesh_set_vertex_tex_coord ( _image_mesh_id , offset , u , v ) ;
+    typename messages :: mesh_set_vertex_tex_coord msg ;
+    msg . mesh = _image_mesh_id ;
+    msg . offset = offset ;
+    msg . u = u ;
+    msg . v = v ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
