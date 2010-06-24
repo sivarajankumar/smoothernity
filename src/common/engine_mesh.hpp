@@ -48,7 +48,6 @@ public :
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
     void receive ( typename messages :: mesh_finalize msg ) ;
     void receive ( typename messages :: mesh_set_vertex_position msg ) ;
-    void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void receive ( typename messages :: mesh_set_triangle_strip_index_value msg ) ;
@@ -108,14 +107,6 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_set_ver
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
     platform_render :: set_vertex_position ( vertex , msg . x , msg . y , msg . z ) ;
-}
-
-template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_vertex_position ( mesh_id arg_mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
-{
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
-    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , offset ) ;
-    platform_render :: set_vertex_position ( vertex , x , y , z ) ;
 }
 
 template < typename mediator >
