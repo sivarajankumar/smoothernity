@@ -420,7 +420,7 @@ void shy_logic_text < mediator > :: _render_text_mesh ( )
         mesh_render_msg . mesh = _text_mesh_id ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
-    platform_render :: blend_disable ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_blend_disable ( ) ) ;
 }
 
 template < typename mediator >

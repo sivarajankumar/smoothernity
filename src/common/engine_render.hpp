@@ -101,6 +101,7 @@ public :
     void receive ( typename messages :: render_matrix_load msg ) ;
     void receive ( typename messages :: render_fog_disable msg ) ;
     void receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha msg ) ;
+    void receive ( typename messages :: render_blend_disable msg ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -165,6 +166,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha msg )
 {
     platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_disable msg )
+{
+    platform_render :: blend_disable ( ) ;
 }
 
 template < typename mediator >

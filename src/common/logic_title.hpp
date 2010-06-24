@@ -368,7 +368,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         mesh_render_msg . mesh = letter . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
-    platform_render :: blend_disable ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_blend_disable ( ) ) ;
 }
 
 template < typename mediator >
