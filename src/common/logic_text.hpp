@@ -96,6 +96,7 @@ public :
     void receive ( typename messages :: text_update msg ) ;
     void receive ( typename messages :: use_text_texture msg ) ;
     void receive ( typename messages :: texture_create_reply msg ) ;
+    void receive ( typename messages :: mesh_create_reply msg ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_request msg ) ;
     void receive ( typename messages :: text_letter_small_tex_coords_request msg ) ;
     static void are_letters_equal ( num_whole & result , letter_id a , letter_id b ) ;
@@ -104,6 +105,7 @@ private :
     void _update_text_mesh ( ) ;
     void _create_text_mesh ( ) ;
     void _create_text_texture ( ) ;
+    void _proceed_with_create_text ( ) ;
     void _next_letter_col ( ) ;
     void _next_letter_row ( ) ;
     void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
@@ -149,7 +151,13 @@ public :
     const logic_text_consts_type logic_text_consts ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    
     num_whole _texture_create_requested ;
+    num_whole _texture_create_replied ;
+    
+    num_whole _mesh_create_requested ;
+    num_whole _mesh_create_replied ;
+    
     num_whole _text_mesh_created ;
     num_whole _text_prepare_permitted ;
     mesh_id _text_mesh_id ;
@@ -169,6 +177,9 @@ template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( )
 {
     _texture_create_requested = platform :: math_consts . whole_false ;
+    _texture_create_replied = platform :: math_consts . whole_false ;
+    _mesh_create_requested = platform :: math_consts . whole_false ;
+    _mesh_create_replied = platform :: math_consts . whole_false ;
     _text_mesh_created = platform :: math_consts . whole_false ;
     _text_prepare_permitted = platform :: math_consts . whole_false ;
     _scale_frames = platform :: math_consts . whole_0 ;
@@ -312,10 +323,29 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_update m
         {
             _texture_create_requested = platform :: math_consts . whole_true ;
             _mediator . get ( ) . send ( typename messages :: texture_create_request ( ) ) ;
+            
+            typename messages :: mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
+            mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
+            mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
+            _mesh_create_requested = platform :: math_consts . whole_true ;
+            _mediator . get ( ) . send ( mesh_create_msg ) ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
         _update_text_mesh ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
+    {
+        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _mesh_create_replied = platform :: math_consts . whole_true ;
+        _text_mesh_id = msg . mesh ;
+        _proceed_with_create_text ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -324,7 +354,19 @@ void shy_logic_text < mediator > :: receive ( typename messages :: texture_creat
     if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
     {
         _texture_create_requested = platform :: math_consts . whole_false ;
+        _texture_create_replied = platform :: math_consts . whole_true ;
         _text_texture_id = msg . texture ;
+        _proceed_with_create_text ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: _proceed_with_create_text ( )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_replied )
+      && platform_conditions :: whole_is_true ( _texture_create_replied )
+       )
+    {
         _create_text_mesh ( ) ;
         _create_text_texture ( ) ;
         _update_text_mesh ( ) ;
@@ -413,13 +455,6 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     platform_math :: make_num_fract ( color_b , _canvas_b , 255 ) ;
     platform_math :: make_num_fract ( color_a , _canvas_a , 255 ) ;
 
-    _mediator . get ( ) . mesh_create
-        ( _text_mesh_id 
-        , platform :: math_consts . whole_4 
-        , platform :: math_consts . whole_4 
-        , platform :: math_consts . whole_0 
-        ) ;
-        
     _mesh_set_vertex_position            ( platform :: math_consts . whole_0 , x_left , y_top , z ) ;
     _mesh_set_vertex_color               ( platform :: math_consts . whole_0 , color_r , color_g , color_b , color_a ) ;
     _mesh_set_vertex_tex_coord           ( platform :: math_consts . whole_0 , u_left , v_top ) ;

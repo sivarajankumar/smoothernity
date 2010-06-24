@@ -86,7 +86,7 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_create_
     platform_matrix :: identity ( mesh . transform ) ;
     
     typename messages :: mesh_create_reply reply_msg ;
-    reply_msg . mesh . _mesi_id = _next_mesh_id ;
+    reply_msg . mesh . _mesh_id = _next_mesh_id ;
     platform_math :: inc_whole ( _next_mesh_id ) ;
     _mediator . get ( ) . send ( reply_msg ) ;    
 }
