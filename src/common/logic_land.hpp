@@ -38,6 +38,7 @@ private :
     void _render_land ( ) ;
     void _create_land_mesh ( ) ;
     void _create_land_texture ( ) ;
+    void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     num_whole _land_mesh_created ;
@@ -268,11 +269,11 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             {
                 platform_math :: mul_wholes ( index , row_size , iz ) ;
                 platform_math :: add_to_whole ( index , ix ) ;
-                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
+                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
                 
                 platform_math :: add_to_whole ( index , row_size ) ;
-                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
+                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
             }
             else
@@ -281,11 +282,11 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
                 platform_math :: add_to_whole ( index , whole_land_grid ) ;
                 platform_math :: sub_from_whole ( index , ix ) ;
                 platform_math :: add_to_whole ( index , row_size ) ;
-                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
+                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
                 
                 platform_math :: sub_from_whole ( index , row_size ) ;
-                _mediator . get ( ) . mesh_set_triangle_strip_index_value ( _land_mesh_id , indices_count , index ) ;
+                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
                 platform_math :: inc_whole ( indices_count ) ;
             }
         }
@@ -388,3 +389,14 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         platform_math :: make_num_whole ( _land_texture_created , true ) ;
     }
 }
+
+template < typename mediator >
+void shy_logic_land < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
+{
+    typename messages :: mesh_set_triangle_strip_index_value msg ;
+    msg . mesh = _land_mesh_id ;
+    msg . offset = offset ;
+    msg . index = index ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+

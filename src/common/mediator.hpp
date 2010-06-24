@@ -135,6 +135,7 @@ public :
         class mesh_render { public : mesh_id mesh ; } ;
         class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
         class mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
         class near_plane_distance_reply { public : num_fract distance ; } ;
         class near_plane_distance_request { } ;
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
@@ -243,6 +244,7 @@ public :
     void send ( typename messages :: mesh_render msg ) ;
     void send ( typename messages :: mesh_set_transform msg ) ;
     void send ( typename messages :: mesh_set_triangle_fan_index_value msg ) ;
+    void send ( typename messages :: mesh_set_triangle_strip_index_value msg ) ;
     void send ( typename messages :: near_plane_distance_reply msg ) ;
     void send ( typename messages :: near_plane_distance_request msg ) ;
     void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -292,7 +294,6 @@ public :
     const logic_text_consts_type & logic_text_consts ( ) ;
 public :
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
-    void mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
@@ -525,9 +526,9 @@ void shy_mediator < mediator_types > :: mesh_set_vertex_color ( mesh_id mesh , n
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_triangle_strip_index_value msg )
 {
-    _engine_mesh . get ( ) . mesh_set_triangle_strip_index_value ( mesh , offset , index ) ;
+    _engine_mesh . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

@@ -516,5 +516,9 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num
 template < typename mediator >
 void shy_logic_title < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
 {
-    _mediator . get ( ) . mesh_set_triangle_strip_index_value ( mesh , offset , index ) ;
+    typename messages :: mesh_set_triangle_strip_index_value msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . index = index ;
+    _mediator . get ( ) . send ( msg ) ;
 }
