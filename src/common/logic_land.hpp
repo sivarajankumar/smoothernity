@@ -290,7 +290,9 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             }
         }
     }
-    _mediator . get ( ) . mesh_finalize ( _land_mesh_id ) ;
+    typename messages :: mesh_finalize mesh_finalize_msg ;
+    mesh_finalize_msg . mesh = _land_mesh_id ;
+    _mediator . get ( ) . send ( mesh_finalize_msg ) ;
     platform_math :: make_num_whole ( _land_mesh_created , true ) ;
 }
 

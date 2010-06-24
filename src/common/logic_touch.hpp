@@ -243,5 +243,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _spot_mesh_id , i , i ) ;
     }
     
-    _mediator . get ( ) . mesh_finalize ( _spot_mesh_id ) ;
+    typename messages :: mesh_finalize mesh_finalize_msg ;
+    mesh_finalize_msg . mesh = _spot_mesh_id ;
+    _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 }

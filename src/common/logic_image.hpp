@@ -261,7 +261,9 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     _mesh_set_vertex_tex_coord           ( platform :: math_consts . whole_3 , u_right , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
 
-    _mediator . get ( ) . mesh_finalize ( _image_mesh_id ) ;
+    typename messages :: mesh_finalize mesh_finalize_msg ;
+    mesh_finalize_msg . mesh = _image_mesh_id ;
+    _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 }
 
 template < typename mediator >

@@ -46,7 +46,6 @@ private :
 public :
     shy_engine_mesh ( ) ;
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
-    void mesh_finalize ( mesh_id mesh ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
@@ -83,29 +82,6 @@ template < typename mediator >
 void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_finalize msg )
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    platform_render :: create_vertex_buffer ( mesh . vertex_buffer_id , mesh . vertices_count , mesh . vertices ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
-    {
-        platform_render :: create_index_buffer 
-            ( mesh . triangle_strip_index_buffer_id 
-            , mesh . triangle_strip_indices_count 
-            , mesh . triangle_strip_indices 
-            ) ;
-    }
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
-    {
-        platform_render :: create_index_buffer 
-            ( mesh . triangle_fan_index_buffer_id 
-            , mesh . triangle_fan_indices_count 
-            , mesh . triangle_fan_indices 
-            ) ;
-    }
-}
-
-template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_finalize ( mesh_id arg_mesh )
-{
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
     platform_render :: create_vertex_buffer ( mesh . vertex_buffer_id , mesh . vertices_count , mesh . vertices ) ;
     if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
     {

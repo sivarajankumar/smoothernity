@@ -207,5 +207,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         _mediator . get ( ) . mesh_set_vertex_color ( _fidget_mesh_id , i , vertex_r , vertex_g , vertex_b , vertex_a ) ;
         _mediator . get ( ) . mesh_set_triangle_fan_index_value ( _fidget_mesh_id , i , i ) ;
     }
-    _mediator . get ( ) . mesh_finalize ( _fidget_mesh_id ) ;
+    typename messages :: mesh_finalize mesh_finalize_msg ;
+    mesh_finalize_msg . mesh = _fidget_mesh_id ;
+    _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 }

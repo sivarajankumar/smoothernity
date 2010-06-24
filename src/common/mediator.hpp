@@ -290,7 +290,6 @@ public :
     const logic_text_consts_type & logic_text_consts ( ) ;
 public :
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
-    void mesh_finalize ( mesh_id mesh ) ;
     void mesh_set_triangle_fan_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
     void mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
     void mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
@@ -540,12 +539,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count )
 {
     _engine_mesh . get ( ) . mesh_create ( mesh , vertices_count , triangle_strip_indices_count , triangle_fan_indices_count ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_finalize ( mesh_id mesh )
-{
-    _engine_mesh . get ( ) . mesh_finalize ( mesh ) ;
 }
 
 template < typename mediator_types >

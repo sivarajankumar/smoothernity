@@ -201,7 +201,10 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
         _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_3 , msg . right , msg . bottom ) ;
         _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_3 , x_right , y_bottom , z ) ;
         
-        _mediator . get ( ) . mesh_finalize ( letter . mesh ) ;
+        typename messages :: mesh_finalize mesh_finalize_msg ;
+        mesh_finalize_msg . mesh = letter . mesh ;
+        _mediator . get ( ) . send ( mesh_finalize_msg ) ;
+        
         platform_math :: inc_whole ( _bake_letter_index ) ;
         _bake_next_letter ( ) ;
     }

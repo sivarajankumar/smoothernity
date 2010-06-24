@@ -336,7 +336,10 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         }
         else
         {
-            _mediator . get ( ) . mesh_finalize ( _entity_mesh_id ) ;
+            typename messages :: mesh_finalize mesh_finalize_msg ;
+            mesh_finalize_msg . mesh = _entity_mesh_id ;
+            _mediator . get ( ) . send ( mesh_finalize_msg ) ;
+
             platform_math :: make_num_whole ( _entity_created , true ) ;
             _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
         }
