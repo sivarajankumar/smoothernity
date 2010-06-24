@@ -112,7 +112,16 @@ void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projecti
     platform_math :: neg_fract ( neg_height , height ) ;
     platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
     platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
-    platform_render :: projection_ortho ( neg_width , width , neg_height , height , z_near , z_far ) ;
+    
+    typename messages :: render_projection_ortho proj_msg ;
+    proj_msg . left = neg_width ;
+    proj_msg . right = width ;
+    proj_msg . bottom = neg_height ;
+    proj_msg . top = height ;
+    proj_msg . near = z_near ;
+    proj_msg . far = z_far ;
+    _mediator . get ( ) . send ( proj_msg ) ;
+    
     _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
 }
 
