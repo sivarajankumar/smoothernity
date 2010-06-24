@@ -99,6 +99,7 @@ public :
     void receive ( typename messages :: render_disable_depth_test msg ) ;
     void receive ( typename messages :: render_enable_depth_test msg ) ;
     void receive ( typename messages :: render_matrix_load msg ) ;
+    void receive ( typename messages :: render_fog_disable msg ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -151,6 +152,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_matrix_load msg )
 {
     platform_render :: matrix_load ( msg . matrix ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_fog_disable msg )
+{
+    platform_render :: fog_disable ( ) ;
 }
 
 template < typename mediator >

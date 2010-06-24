@@ -258,6 +258,7 @@ public :
     void send ( typename messages :: render_clear_screen msg ) ;
     void send ( typename messages :: render_disable_depth_test msg ) ;
     void send ( typename messages :: render_enable_depth_test msg ) ;
+    void send ( typename messages :: render_fog_disable msg ) ;
     void send ( typename messages :: render_matrix_load msg ) ;
     void send ( typename messages :: render_mesh_create_reply msg ) ;
     void send ( typename messages :: render_mesh_create_request msg ) ;
@@ -530,6 +531,12 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render_disab
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: render_enable_depth_test msg )
+{
+    _engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_fog_disable msg )
 {
     _engine_render . get ( ) . receive ( msg ) ;
 }

@@ -148,9 +148,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_render
     clear_screen_msg . b = platform :: math_consts . fract_0 ;
     _mediator . get ( ) . send ( clear_screen_msg ) ;
     _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
-    
-    platform_render :: fog_disable ( ) ;
-    
+    _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
