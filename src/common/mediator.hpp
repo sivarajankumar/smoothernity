@@ -555,6 +555,7 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_reply msg )
 {
     _logic_text . get ( ) . receive ( msg ) ;
+    _logic_touch . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

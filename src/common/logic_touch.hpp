@@ -35,6 +35,7 @@ public :
     void receive ( typename messages :: touch_prepare_permit msg ) ;
     void receive ( typename messages :: touch_render msg ) ;
     void receive ( typename messages :: touch_update msg ) ;
+    void receive ( typename messages :: mesh_create_reply msg ) ;
 private :
     void _update_spot ( ) ;
 	void _decrease_spot_lifetime ( ) ;
@@ -49,6 +50,7 @@ private :
     num_whole _spot_mesh_created ;
     num_whole _spot_prepare_permitted ;
 	num_whole _should_place_new_spot ;
+    num_whole _mesh_create_requested ;
 	num_fract _spot_x ;
 	num_fract _spot_y ;
     mesh_id _spot_mesh_id ;
@@ -62,6 +64,7 @@ shy_logic_touch < mediator > :: shy_logic_touch ( )
     platform_math :: make_num_whole ( _spot_mesh_created , false ) ;
     platform_math :: make_num_whole ( _spot_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _should_place_new_spot , false ) ;
+    _mesh_create_requested = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -101,12 +104,32 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update
     {
         if ( platform_conditions :: whole_is_false ( _spot_mesh_created ) )
         {
-            _create_spot_mesh ( ) ;
-            platform_math :: make_num_whole ( _spot_mesh_created , true ) ;
-            _mediator . get ( ) . send ( typename messages :: touch_prepared ( ) ) ;
+            _mesh_create_requested = platform :: math_consts . whole_true ;
+            
+            num_whole whole_spot_edges ;
+            platform_math :: make_num_whole ( whole_spot_edges , _spot_edges ) ;
+            
+            typename messages :: mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = whole_spot_edges ;
+            mesh_create_msg . triangle_fan_indices = whole_spot_edges ;
+            mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_0 ;
+            _mediator . get ( ) . send ( mesh_create_msg ) ;
         }
         else
             _update_spot ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_touch < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
+    {
+        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _spot_mesh_id = msg . mesh ;
+        _create_spot_mesh ( ) ;
+        platform_math :: make_num_whole ( _spot_mesh_created , true ) ;
+        _mediator . get ( ) . send ( typename messages :: touch_prepared ( ) ) ;
     }
 }
 
@@ -202,14 +225,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
     
     platform_math :: make_num_whole ( whole_spot_edges , _spot_edges ) ;
     platform_math :: make_num_fract ( fract_spot_edges , _spot_edges , 1 ) ;
-    
-    _mediator . get ( ) . mesh_create
-        ( _spot_mesh_id 
-        , whole_spot_edges 
-        , platform :: math_consts . whole_0 
-        , whole_spot_edges 
-        ) ;
-        
+            
     for ( platform_math :: make_num_whole ( i , 0 )
         ; platform_conditions :: whole_less_than_whole ( i , whole_spot_edges ) 
         ; platform_math :: inc_whole ( i )
