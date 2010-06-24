@@ -10,6 +10,7 @@ class shy_engine_mesh
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_render :: index_data index_data ;
     typedef typename mediator :: platform :: platform_render :: render_index_buffer_id render_index_buffer_id ;
@@ -45,7 +46,9 @@ private :
     } ;
 public :
     shy_engine_mesh ( ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
+    void receive ( typename messages :: mesh_create_request msg ) ;
     void receive ( typename messages :: mesh_finalize msg ) ;
     void receive ( typename messages :: mesh_set_vertex_position msg ) ;
     void receive ( typename messages :: mesh_set_vertex_tex_coord msg ) ;
@@ -56,14 +59,36 @@ public :
     void receive ( typename messages :: mesh_render msg ) ;
     void receive ( typename messages :: mesh_delete msg ) ;
 private :
-    num_whole _next_mesh_id ;
+    typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _mesh_data , _max_meshes > _meshes_data ;
+    num_whole _next_mesh_id ;
 } ;
 
 template < typename mediator >
 shy_engine_mesh < mediator > :: shy_engine_mesh ( )
 {
     platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_create_request msg )
+{
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
+    mesh . vertices_count = msg . vertices ;
+    mesh . triangle_strip_indices_count = msg . triangle_strip_indices ;
+    mesh . triangle_fan_indices_count = msg . triangle_fan_indices ;
+    platform_matrix :: identity ( mesh . transform ) ;
+    
+    typename messages :: mesh_create_reply reply_msg ;
+    reply_msg . mesh . _mesi_id = _next_mesh_id ;
+    platform_math :: inc_whole ( _next_mesh_id ) ;
+    _mediator . get ( ) . send ( reply_msg ) ;    
 }
 
 template < typename mediator >

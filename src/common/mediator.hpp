@@ -130,6 +130,8 @@ public :
         class land_prepared { } ;
         class land_render { } ;
         class land_update { } ;
+        class mesh_create_reply { public : mesh_id mesh ; } ;
+        class mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
         class mesh_delete { public : mesh_id mesh ; } ;
         class mesh_finalize { public : mesh_id mesh ; } ;
         class mesh_render { public : mesh_id mesh ; } ;
@@ -242,6 +244,8 @@ public :
     void send ( typename messages :: land_prepared msg ) ;
     void send ( typename messages :: land_render msg ) ;
     void send ( typename messages :: land_update msg ) ;
+    void send ( typename messages :: mesh_create_reply msg ) ;
+    void send ( typename messages :: mesh_create_request msg ) ;
     void send ( typename messages :: mesh_delete msg ) ;
     void send ( typename messages :: mesh_finalize msg ) ;
     void send ( typename messages :: mesh_render msg ) ;
@@ -358,6 +362,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_title = arg_logic_title ;
     _logic_touch = arg_logic_touch ;
 
+    _engine_mesh . get ( ) . set_mediator ( * this ) ;
     _engine_rasterizer . get ( ) . set_mediator ( * this ) ;
     _engine_texture . get ( ) . set_mediator ( * this ) ;
     _logic . get ( ) . set_mediator ( * this ) ;
@@ -538,6 +543,17 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_triangle_fan_index_value msg )
 {
     _engine_mesh . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_request msg )
+{
+    _engine_mesh . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_reply msg )
+{
 }
 
 template < typename mediator_types >
