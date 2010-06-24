@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_text
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: engine_render engine_render ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
@@ -551,8 +552,8 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     platform_math :: make_num_fract ( eraser_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( eraser_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( eraser_a , 0 , 1 ) ;
-    platform_render :: set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
-    platform_render :: set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
+    engine_render :: set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
+    engine_render :: set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
     for ( num_whole x = platform :: math_consts . whole_0
         ; platform_conditions :: whole_less_than_whole ( x , texture_width ) 
         ; platform_math :: inc_whole ( x )
