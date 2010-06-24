@@ -15,6 +15,7 @@ public :
     void receive ( typename messages :: render msg ) ;
     void receive ( typename messages :: update msg ) ;
     void receive ( typename messages :: use_perspective_projection msg ) ;
+    void receive ( typename messages :: use_perspective_projection_request msg ) ;
     void receive ( typename messages :: use_ortho_projection msg ) ;
     void receive ( typename messages :: video_mode_changed msg ) ;
     void receive ( typename messages :: fidget_prepared msg ) ;
@@ -95,6 +96,35 @@ void shy_logic < mediator > :: receive ( typename messages :: use_perspective_pr
     _mediator . get ( ) . send ( proj_msg ) ;
     
     _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic < mediator > :: receive ( typename messages :: use_perspective_projection_request msg )
+{
+    num_fract width ;
+    num_fract height ;
+    num_fract neg_width ;
+    num_fract neg_height ;
+    num_fract z_far ;
+    num_fract z_near ;
+    _get_near_plane_distance ( z_near ) ;
+    platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
+    engine_render :: get_aspect_width ( width ) ;
+    engine_render :: get_aspect_height ( height ) ;
+    platform_math :: neg_fract ( neg_width , width ) ;
+    platform_math :: neg_fract ( neg_height , height ) ;
+    
+    typename messages :: render_projection_frustum proj_msg ;
+    proj_msg . left = neg_width ;
+    proj_msg . right = width ;
+    proj_msg . bottom = neg_height ;
+    proj_msg . top = height ;
+    proj_msg . near = z_near ;
+    proj_msg . far = z_far ;
+    _mediator . get ( ) . send ( proj_msg ) ;
+    
+    _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: use_perspective_projection_reply ( ) ) ;
 }
 
 template < typename mediator >

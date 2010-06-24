@@ -29,6 +29,7 @@ public :
     void receive ( typename messages :: touch_prepared msg ) ;
     void receive ( typename messages :: near_plane_distance_reply msg ) ;
     void receive ( typename messages :: camera_matrix_reply msg ) ;
+    void receive ( typename messages :: use_perspective_projection_reply msg ) ;
 private :
     void _render_scene ( ) ;
     void _render_hud ( ) ;
@@ -51,6 +52,8 @@ private :
     num_whole _camera_matrix_requested ;
     num_whole _camera_matrix_replied ;
     matrix_data _camera_matrix ;
+    
+    num_whole _use_perspective_projection_requested ;
 } ;
 
 template < typename mediator >
@@ -66,6 +69,7 @@ shy_logic_game < mediator > :: shy_logic_game ( )
     _near_plane_distance_replied = platform :: math_consts . whole_false ;
     _camera_matrix_requested = platform :: math_consts . whole_false ;
     _camera_matrix_replied = platform :: math_consts . whole_false ;
+    _use_perspective_projection_requested = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -127,7 +131,6 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _near_plane_distance_replied = platform :: math_consts . whole_false ;
         _clear_screen ( ) ;
         _render_scene ( ) ;
-        _render_hud ( ) ;
     }
 }
 
@@ -191,16 +194,30 @@ void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepare
 }
 
 template < typename mediator >
+void shy_logic_game < mediator > :: receive ( typename messages :: use_perspective_projection_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _use_perspective_projection_requested ) )
+    {
+        _use_perspective_projection_requested = platform :: math_consts . whole_false ;
+        
+        _mediator . get ( ) . send ( typename messages :: render_enable_depth_test ( ) ) ;
+        
+        typename messages :: render_matrix_load matrix_load_msg ;
+        matrix_load_msg . matrix = _camera_matrix ;
+        _mediator . get ( ) . send ( matrix_load_msg ) ;
+        
+        _mediator . get ( ) . send ( typename messages :: land_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: entities_render ( ) ) ;
+        
+        _render_hud ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_game < mediator > :: _render_scene ( )
 {
-    typename messages :: render_matrix_load matrix_load_msg ;
-    matrix_load_msg . matrix = _camera_matrix ;
-
-    _mediator . get ( ) . send ( typename messages :: render_enable_depth_test ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: use_perspective_projection ( ) ) ;
-    _mediator . get ( ) . send ( matrix_load_msg ) ;
-    _mediator . get ( ) . send ( typename messages :: land_render ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: entities_render ( ) ) ;
+    _use_perspective_projection_requested = platform :: math_consts . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: use_perspective_projection_request ( ) ) ;    
 }
 
 template < typename mediator >
