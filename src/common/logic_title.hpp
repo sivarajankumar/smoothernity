@@ -351,7 +351,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     platform_matrix :: set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
     platform_matrix :: set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     
-    platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
     
     typename messages :: render_matrix_load matrix_load_msg ;

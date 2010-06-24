@@ -409,7 +409,7 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
-    platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     {
         typename messages :: render_texture_select texture_select_msg ;
         texture_select_msg . texture = _text_texture_id ;
