@@ -104,6 +104,7 @@ public :
     void receive ( typename messages :: render_blend_disable msg ) ;
     void receive ( typename messages :: render_fog_linear msg ) ;
     void receive ( typename messages :: render_projection_frustum msg ) ;
+    void receive ( typename messages :: render_matrix_identity msg ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -186,6 +187,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_projection_frustum msg )
 {
     platform_render :: projection_frustum ( msg . left , msg . right , msg . bottom , msg . top , msg . near , msg . far ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_matrix_identity msg )
+{
+    platform_render :: matrix_identity ( ) ;
 }
 
 template < typename mediator >

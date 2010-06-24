@@ -94,7 +94,7 @@ void shy_logic < mediator > :: receive ( typename messages :: use_perspective_pr
     proj_msg . far = z_far ;
     _mediator . get ( ) . send ( proj_msg ) ;
     
-    platform_render :: matrix_identity ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
 }
 
 template < typename mediator >
@@ -113,7 +113,7 @@ void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projecti
     platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
     platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
     platform_render :: projection_ortho ( neg_width , width , neg_height , height , z_near , z_far ) ;
-    platform_render :: matrix_identity ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
 }
 
 template < typename mediator >
