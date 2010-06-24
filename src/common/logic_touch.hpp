@@ -247,7 +247,14 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         set_pos_msg . z = vertex_z ;
         _mediator . get ( ) . send ( set_pos_msg ) ;
 
-        _mediator . get ( ) . mesh_set_vertex_color ( _spot_mesh_id , i , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        typename messages :: mesh_set_vertex_color set_col_msg ;
+        set_col_msg . mesh = _spot_mesh_id ;
+        set_col_msg . offset = i ;
+        set_col_msg . r = vertex_r ;
+        set_col_msg . g = vertex_g ;
+        set_col_msg . b = vertex_b ;
+        set_col_msg . a = vertex_a ;
+        _mediator . get ( ) . send ( set_col_msg ) ;
         
         typename messages :: mesh_set_triangle_fan_index_value set_index_msg ;
         set_index_msg . mesh = _spot_mesh_id ;

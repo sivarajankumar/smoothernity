@@ -49,7 +49,7 @@ public :
     void receive ( typename messages :: mesh_finalize msg ) ;
     void receive ( typename messages :: mesh_set_vertex_position msg ) ;
     void receive ( typename messages :: mesh_set_vertex_tex_coord msg ) ;
-    void mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void receive ( typename messages :: mesh_set_vertex_color msg ) ;
     void receive ( typename messages :: mesh_set_triangle_strip_index_value msg ) ;
     void receive ( typename messages :: mesh_set_triangle_fan_index_value msg ) ;
     void receive ( typename messages :: mesh_set_transform msg ) ;
@@ -118,11 +118,11 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_set_ver
 }
 
 template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_set_vertex_color ( mesh_id arg_mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_set_vertex_color msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , arg_mesh . _mesh_id ) ;
-    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , offset ) ;
-    platform_render :: set_vertex_color ( vertex , r , g , b , a ) ;
+    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
+    platform_render :: set_vertex_color ( vertex , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >

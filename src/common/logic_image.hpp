@@ -291,7 +291,14 @@ void shy_logic_image < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offs
 template < typename mediator >
 void shy_logic_image < mediator > :: _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    _mediator . get ( ) . mesh_set_vertex_color ( _image_mesh_id , offset , r , g , b , a ) ;
+    typename messages :: mesh_set_vertex_color msg ;
+    msg . mesh = _image_mesh_id ;
+    msg . offset = offset ;
+    msg . r = r ;
+    msg . g = g ;
+    msg . b = b ;
+    msg . a = a ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >

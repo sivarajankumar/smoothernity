@@ -250,7 +250,14 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             set_pos_msg . z = vertex_z ;
             _mediator . get ( ) . send ( set_pos_msg ) ;
             
-            _mediator . get ( ) . mesh_set_vertex_color ( _land_mesh_id , vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            typename messages :: mesh_set_vertex_color set_col_msg ;
+            set_col_msg . mesh = _land_mesh_id ;
+            set_col_msg . offset = vertices_count ;
+            set_col_msg . r = vertex_r ;
+            set_col_msg . g = vertex_g ;
+            set_col_msg . b = vertex_b ;
+            set_col_msg . a = vertex_a ;
+            _mediator . get ( ) . send ( set_col_msg ) ;
             
             typename messages :: mesh_set_vertex_tex_coord set_tex_msg ;
             set_tex_msg . mesh = _land_mesh_id ;
