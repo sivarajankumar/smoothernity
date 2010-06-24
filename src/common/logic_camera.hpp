@@ -11,6 +11,7 @@ class shy_logic_camera
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
@@ -27,7 +28,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: camera_update msg ) ;
     void receive ( typename messages :: camera_prepare_permit msg ) ;
-    void receive ( typename messages :: camera_matrix_use msg ) ;
+    void receive ( typename messages :: camera_matrix_request msg ) ;
     void receive ( typename messages :: entities_height_reply msg ) ;
     void receive ( typename messages :: entities_mesh_grid_reply msg ) ;
     void receive ( typename messages :: entities_origin_reply msg ) ;
@@ -153,12 +154,14 @@ void shy_logic_camera < mediator > :: set_mediator ( typename platform_pointer :
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_use msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_request msg )
 {
+    typename messages :: camera_matrix_reply reply_msg ;
     if ( platform_conditions :: whole_is_true ( _camera_created ) )
-        platform_render :: matrix_load ( _camera_matrix ) ;
+        reply_msg . matrix = _camera_matrix ;
     else
-        platform_render :: matrix_identity ( ) ;
+        platform_matrix :: identity ( reply_msg . matrix ) ;
+    _mediator . get ( ) . send ( reply_msg ) ;
 }
 
 template < typename mediator >

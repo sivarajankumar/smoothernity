@@ -95,7 +95,8 @@ public :
     public :
         class application_render { } ;
         class application_update { } ;
-        class camera_matrix_use { } ;
+        class camera_matrix_reply { public : matrix_data matrix ; } ;
+        class camera_matrix_request { } ;
         class camera_prepare_permit { } ;
         class camera_prepared { } ;
         class camera_update { } ;
@@ -209,7 +210,8 @@ public :
 public :
     void send ( typename messages :: application_render msg ) ;
     void send ( typename messages :: application_update msg ) ;
-    void send ( typename messages :: camera_matrix_use msg ) ;
+    void send ( typename messages :: camera_matrix_reply msg ) ;
+    void send ( typename messages :: camera_matrix_request msg ) ;
     void send ( typename messages :: camera_prepare_permit msg ) ;
     void send ( typename messages :: camera_prepared msg ) ;
     void send ( typename messages :: camera_update msg ) ;
@@ -802,9 +804,15 @@ void shy_mediator < mediator_types > :: send ( typename messages :: entities_upd
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: camera_matrix_use msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: camera_matrix_request msg )
 {
     _logic_camera . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: camera_matrix_reply msg )
+{
+    _logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

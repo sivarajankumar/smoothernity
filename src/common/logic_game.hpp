@@ -8,6 +8,7 @@ class shy_logic_game
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
     
@@ -28,11 +29,13 @@ public :
     void receive ( typename messages :: sound_prepared msg ) ;
     void receive ( typename messages :: touch_prepared msg ) ;
     void receive ( typename messages :: near_plane_distance_reply msg ) ;
+    void receive ( typename messages :: camera_matrix_reply msg ) ;
 private :
     void _render_scene ( ) ;
     void _render_hud ( ) ;
     void _clear_screen ( ) ;
     void _update_color ( ) ;
+    void _proceed_with_render ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     num_fract _color_r ;
@@ -41,8 +44,14 @@ private :
     num_whole _color_frames ;
     num_whole _game_launched ;
     num_whole _game_launch_permitted ;
-    num_fract _near_plane_distance ;
+    
     num_whole _near_plane_distance_requested ;
+    num_whole _near_plane_distance_replied ;
+    num_fract _near_plane_distance ;
+    
+    num_whole _camera_matrix_requested ;
+    num_whole _camera_matrix_replied ;
+    matrix_data _camera_matrix ;
 } ;
 
 template < typename mediator >
@@ -55,6 +64,9 @@ shy_logic_game < mediator > :: shy_logic_game ( )
     _game_launched = platform :: math_consts . whole_false ;
     _game_launch_permitted = platform :: math_consts . whole_false ;
     _near_plane_distance_requested = platform :: math_consts . whole_false ;
+    _near_plane_distance_replied = platform :: math_consts . whole_false ;
+    _camera_matrix_requested = platform :: math_consts . whole_false ;
+    _camera_matrix_replied = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -75,7 +87,9 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_render m
     if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
         _near_plane_distance_requested = platform :: math_consts . whole_true ;
+        _camera_matrix_requested = platform :: math_consts . whole_true ;
         _mediator . get ( ) . send ( typename messages :: near_plane_distance_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: camera_matrix_request ( ) ) ;
     }
 }
 
@@ -85,7 +99,33 @@ void shy_logic_game < mediator > :: receive ( typename messages :: near_plane_di
     if ( platform_conditions :: whole_is_true ( _near_plane_distance_requested ) )
     {
         _near_plane_distance_requested = platform :: math_consts . whole_false ;
+        _near_plane_distance_replied = platform :: math_consts . whole_true ;
         _near_plane_distance = msg . distance ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_game < mediator > :: receive ( typename messages :: camera_matrix_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _camera_matrix_requested ) )
+    {
+        _camera_matrix_requested = platform :: math_consts . whole_false ;
+        _camera_matrix_replied = platform :: math_consts . whole_true ;
+        _camera_matrix = msg . matrix ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_game < mediator > :: _proceed_with_render ( )
+{
+    if ( platform_conditions :: whole_is_true ( _camera_matrix_replied )
+      && platform_conditions :: whole_is_true ( _near_plane_distance_replied )
+       )
+    {
+        _camera_matrix_replied = platform :: math_consts . whole_false ;
+        _near_plane_distance_replied = platform :: math_consts . whole_false ;
         _clear_screen ( ) ;
         _render_scene ( ) ;
         _render_hud ( ) ;
@@ -156,7 +196,7 @@ void shy_logic_game < mediator > :: _render_scene ( )
 {
     platform_render :: enable_depth_test ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_perspective_projection ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: camera_matrix_use ( ) ) ;
+    platform_render :: matrix_load ( _camera_matrix ) ;
     _mediator . get ( ) . send ( typename messages :: land_render ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: entities_render ( ) ) ;
 }
