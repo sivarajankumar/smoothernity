@@ -324,7 +324,7 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
     num_whole resource_index ;
     texture_resource_id logo_resource_id ;
     platform_math :: make_num_whole ( resource_index , _logo_resource_index ) ;
-    platform_render :: create_texture_resource_id ( logo_resource_id , resource_index ) ;
+    engine_render :: create_texture_resource_id ( logo_resource_id , resource_index ) ;
     {
         typename messages :: render_texture_load_from_resource texture_load_from_resource_msg ;
         texture_load_from_resource_msg . texture = _image_texture_id ;

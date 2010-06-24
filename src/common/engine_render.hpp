@@ -111,6 +111,7 @@ public :
 public :
     static void texture_loader_ready ( num_whole & is_ready ) ;
     static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -151,6 +152,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
     platform_render :: set_texel_color ( texel , r , g , b , a ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
+{
+    platform_render :: create_texture_resource_id ( resource_id , resource_index ) ;
 }
 
 template < typename mediator >
