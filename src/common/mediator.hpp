@@ -163,6 +163,7 @@ public :
         class render_texture_create_request { } ;
         class render_texture_finalize { public : texture_id texture ; } ;
         class render_texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
+        class render_texture_mode_modulate { } ;
         class render_texture_select { public : texture_id texture ; } ;
         class render_texture_set_texel { public : texture_id texture ; num_whole x ; num_whole y ; texel_data texel ; } ;
         class render_texture_set_texel_rgba { public : texture_id texture ; num_whole x ; num_whole y ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
@@ -289,6 +290,7 @@ public :
     void send ( typename messages :: render_texture_create_request msg ) ;
     void send ( typename messages :: render_texture_finalize msg ) ;
     void send ( typename messages :: render_texture_load_from_resource msg ) ;
+    void send ( typename messages :: render_texture_mode_modulate msg ) ;
     void send ( typename messages :: render_texture_select msg ) ;
     void send ( typename messages :: render_texture_set_texel msg ) ;
     void send ( typename messages :: render_texture_set_texel_rgba msg ) ;
@@ -599,6 +601,12 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render_proje
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: render_projection_ortho msg )
+{
+    _engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_mode_modulate msg )
 {
     _engine_render . get ( ) . receive ( msg ) ;
 }

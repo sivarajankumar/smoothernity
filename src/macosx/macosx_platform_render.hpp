@@ -90,7 +90,7 @@ public :
     
 	static void enable_texturing ( ) ;
 	static void disable_texturing ( ) ;
-	static void set_modulate_texture_mode ( ) ;
+	static void texture_mode_modulate ( ) ;
     static void use_texture ( const render_texture_id & arg_texture_id ) ;
 	static void create_texture_id ( render_texture_id & arg_texture_id ) ;
     static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
@@ -234,7 +234,7 @@ inline void shy_macosx_platform_render < platform_insider > :: disable_texturing
 }
 
 template < typename platform_insider >
-inline void shy_macosx_platform_render < platform_insider > :: set_modulate_texture_mode ( )
+inline void shy_macosx_platform_render < platform_insider > :: texture_mode_modulate ( )
 {
     glTexEnvf ( GL_TEXTURE_ENV , GL_TEXTURE_ENV_MODE , GL_MODULATE ) ;
 }

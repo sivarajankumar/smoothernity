@@ -107,6 +107,7 @@ public :
     void receive ( typename messages :: render_projection_ortho msg ) ;
     void receive ( typename messages :: render_matrix_identity msg ) ;
     void receive ( typename messages :: render_enable_face_culling msg ) ;
+    void receive ( typename messages :: render_texture_mode_modulate msg ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -207,6 +208,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_face_culling msg )
 {
     platform_render :: enable_face_culling ( ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_mode_modulate msg )
+{
+    platform_render :: texture_mode_modulate ( ) ;
 }
 
 template < typename mediator >
