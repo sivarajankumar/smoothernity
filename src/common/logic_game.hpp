@@ -229,7 +229,15 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     platform_math :: make_num_fract ( fog_near_shift , 10 , 1 ) ;
     platform_math :: add_fracts ( fog_far , fog_far_shift , _near_plane_distance ) ;
     platform_math :: add_fracts ( fog_near , fog_near_shift , _near_plane_distance ) ;
-    platform_render :: fog_linear ( fog_near , fog_far , _color_r , _color_g , _color_b , fog_a ) ;
+    
+    typename messages :: render_fog_linear fog_msg ;
+    fog_msg . near = fog_near ;
+    fog_msg . far = fog_far ;
+    fog_msg . r = _color_r ;
+    fog_msg . g = _color_g ;
+    fog_msg . b = _color_b ;
+    fog_msg . a = fog_a ;
+    _mediator . get ( ) . send ( fog_msg ) ;
 
     typename messages :: render_clear_screen clear_screen_msg ;
     clear_screen_msg . r = _color_r ;
