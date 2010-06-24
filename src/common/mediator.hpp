@@ -138,6 +138,7 @@ public :
         class render { } ;
         class render_clear_screen { public : num_fract r ; num_fract g ; num_fract b ; } ;
         class render_disable_depth_test { } ;
+        class render_enable_depth_test { } ;
         class render_mesh_create_reply { public : mesh_id mesh ; } ;
         class render_mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
         class render_mesh_delete { public : mesh_id mesh ; } ;
@@ -254,6 +255,7 @@ public :
     void send ( typename messages :: render msg ) ;
     void send ( typename messages :: render_clear_screen msg ) ;
     void send ( typename messages :: render_disable_depth_test msg ) ;
+    void send ( typename messages :: render_enable_depth_test msg ) ;
     void send ( typename messages :: render_mesh_create_reply msg ) ;
     void send ( typename messages :: render_mesh_create_request msg ) ;
     void send ( typename messages :: render_mesh_delete msg ) ;
@@ -519,6 +521,12 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render_clear
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: render_disable_depth_test msg )
+{
+    _engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_enable_depth_test msg )
 {
     _engine_render . get ( ) . receive ( msg ) ;
 }

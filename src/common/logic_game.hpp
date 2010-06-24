@@ -194,7 +194,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepare
 template < typename mediator >
 void shy_logic_game < mediator > :: _render_scene ( )
 {
-    platform_render :: enable_depth_test ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_enable_depth_test ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: use_perspective_projection ( ) ) ;
     platform_render :: matrix_load ( _camera_matrix ) ;
     _mediator . get ( ) . send ( typename messages :: land_render ( ) ) ;

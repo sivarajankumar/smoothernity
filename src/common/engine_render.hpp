@@ -97,6 +97,7 @@ public :
     void receive ( typename messages :: render_mesh_delete msg ) ;
     void receive ( typename messages :: render_clear_screen msg ) ;
     void receive ( typename messages :: render_disable_depth_test msg ) ;
+    void receive ( typename messages :: render_enable_depth_test msg ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -137,6 +138,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_disable_depth_test msg )
 {
     platform_render :: disable_depth_test ( ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_depth_test msg )
+{
+    platform_render :: enable_depth_test ( ) ;
 }
 
 template < typename mediator >
