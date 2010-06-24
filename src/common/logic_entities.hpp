@@ -38,7 +38,7 @@ public :
     void receive ( typename messages :: entities_height_request msg ) ;
     void receive ( typename messages :: entities_mesh_grid_request msg ) ;
     void receive ( typename messages :: entities_origin_request msg ) ;
-    void receive ( typename messages :: mesh_create_reply msg ) ;
+    void receive ( typename messages :: render_mesh_create_reply msg ) ;
 private :
     void _entities_render ( ) ;
     void _entity_color ( num_fract & r , num_fract & g , num_fract & b , num_fract & a , num_whole i ) ;
@@ -99,7 +99,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 {
     if ( platform_conditions :: whole_is_true ( _entity_created ) )
     {
-        typename messages :: mesh_delete mesh_delete_msg ;
+        typename messages :: render_mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _entity_mesh_id ;
         _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
@@ -112,7 +112,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+void shy_logic_entities < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -132,7 +132,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
             if ( platform_conditions :: whole_is_false ( _entity_mesh_id_created ) )
             {
                 _mesh_create_requested = platform :: math_consts . whole_true ;
-                typename messages :: mesh_create_request mesh_create_msg ;
+                typename messages :: render_mesh_create_request mesh_create_msg ;
                 platform_math :: make_num_whole ( mesh_create_msg . vertices , ( _entity_mesh_spans + 1 ) * 2 + 1 ) ;
                 platform_math :: make_num_whole ( mesh_create_msg . triangle_strip_indices , ( _entity_mesh_spans + 1 ) * 2 ) ;
                 platform_math :: make_num_whole ( mesh_create_msg . triangle_fan_indices , _entity_mesh_spans + 2 ) ;
@@ -186,13 +186,13 @@ void shy_logic_entities < mediator > :: _entities_render ( )
     {
         matrix_data & matrix = platform_static_array :: element ( _entities_grid_matrices , i ) ;
         {
-            typename messages :: mesh_set_transform mesh_set_transform_msg ;
+            typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = _entity_mesh_id ;
             mesh_set_transform_msg . transform = matrix ;
             _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
         }
         {
-            typename messages :: mesh_render mesh_render_msg ;
+            typename messages :: render_mesh_render mesh_render_msg ;
             mesh_render_msg . mesh = _entity_mesh_id ;
             _mediator . get ( ) . send ( mesh_render_msg ) ;
         }
@@ -348,7 +348,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         }
         else
         {
-            typename messages :: mesh_finalize mesh_finalize_msg ;
+            typename messages :: render_mesh_finalize mesh_finalize_msg ;
             mesh_finalize_msg . mesh = _entity_mesh_id ;
             _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 
@@ -361,7 +361,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z )
 {
-    typename messages :: mesh_set_vertex_position msg ;
+    typename messages :: render_mesh_set_vertex_position msg ;
     msg . mesh = _entity_mesh_id ;
     msg . offset = offset ;
     msg . x = x ;
@@ -373,7 +373,7 @@ void shy_logic_entities < mediator > :: _mesh_set_vertex_position ( num_whole of
 template < typename mediator >
 void shy_logic_entities < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v )
 {
-    typename messages :: mesh_set_vertex_tex_coord msg ;
+    typename messages :: render_mesh_set_vertex_tex_coord msg ;
     msg . mesh = _entity_mesh_id ;
     msg . offset = offset ;
     msg . u = u ;
@@ -384,7 +384,7 @@ void shy_logic_entities < mediator > :: _mesh_set_vertex_tex_coord ( num_whole o
 template < typename mediator >
 void shy_logic_entities < mediator > :: _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    typename messages :: mesh_set_vertex_color msg ;
+    typename messages :: render_mesh_set_vertex_color msg ;
     msg . mesh = _entity_mesh_id ;
     msg . offset = offset ;
     msg . r = r ;
@@ -397,7 +397,7 @@ void shy_logic_entities < mediator > :: _mesh_set_vertex_color ( num_whole offse
 template < typename mediator >
 void shy_logic_entities < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
 {
-    typename messages :: mesh_set_triangle_strip_index_value msg ;
+    typename messages :: render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = _entity_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;
@@ -407,7 +407,7 @@ void shy_logic_entities < mediator > :: _mesh_set_triangle_strip_index_value ( n
 template < typename mediator >
 void shy_logic_entities < mediator > :: _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index )
 {
-    typename messages :: mesh_set_triangle_fan_index_value msg ;
+    typename messages :: render_mesh_set_triangle_fan_index_value msg ;
     msg . mesh = _entity_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;

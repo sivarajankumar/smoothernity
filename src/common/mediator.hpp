@@ -2,7 +2,6 @@ template
     < typename _platform
     , template < typename mediator > class _engine_camera
     , template < typename mediator > class _engine_math
-    , template < typename mediator > class _engine_mesh
     , template < typename mediator > class _engine_rasterizer
     , template < typename mediator > class _engine_render
     , template < typename mediator > class _logic 
@@ -28,7 +27,6 @@ public :
     public :
         typedef _engine_camera < mediator > engine_camera ;
         typedef _engine_math < mediator > engine_math ;
-        typedef _engine_mesh < mediator > engine_mesh ;
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
         typedef _engine_render < mediator > engine_render ;
         typedef _logic < mediator > logic ;
@@ -55,14 +53,13 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: texture_id texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
     
 private :
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh engine_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: engine_render_consts_type engine_render_consts_type ;
@@ -131,17 +128,6 @@ public :
         class land_prepared { } ;
         class land_render { } ;
         class land_update { } ;
-        class mesh_create_reply { public : mesh_id mesh ; } ;
-        class mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
-        class mesh_delete { public : mesh_id mesh ; } ;
-        class mesh_finalize { public : mesh_id mesh ; } ;
-        class mesh_render { public : mesh_id mesh ; } ;
-        class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
-        class mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
-        class mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
-        class mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
-        class mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
-        class mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
         class near_plane_distance_reply { public : num_fract distance ; } ;
         class near_plane_distance_request { } ;
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
@@ -150,6 +136,17 @@ public :
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
         class render { } ;
+        class render_mesh_create_reply { public : mesh_id mesh ; } ;
+        class render_mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
+        class render_mesh_delete { public : mesh_id mesh ; } ;
+        class render_mesh_finalize { public : mesh_id mesh ; } ;
+        class render_mesh_render { public : mesh_id mesh ; } ;
+        class render_mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
+        class render_mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class render_mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class render_mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class render_mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
+        class render_mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
         class render_texture_create_reply { public : texture_id texture ; } ;
         class render_texture_create_request { } ;
         class render_texture_finalize { public : texture_id texture ; } ;
@@ -191,8 +188,7 @@ public :
 public :
     shy_mediator ( ) ;
     void register_modules 
-        ( typename platform_pointer :: template pointer < engine_mesh > arg_engine_mesh
-        , typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
+        ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
         , typename platform_pointer :: template pointer < engine_render > arg_engine_render
         , typename platform_pointer :: template pointer < logic > arg_logic
         , typename platform_pointer :: template pointer < logic_application > arg_logic_application
@@ -246,17 +242,6 @@ public :
     void send ( typename messages :: land_prepared msg ) ;
     void send ( typename messages :: land_render msg ) ;
     void send ( typename messages :: land_update msg ) ;
-    void send ( typename messages :: mesh_create_reply msg ) ;
-    void send ( typename messages :: mesh_create_request msg ) ;
-    void send ( typename messages :: mesh_delete msg ) ;
-    void send ( typename messages :: mesh_finalize msg ) ;
-    void send ( typename messages :: mesh_render msg ) ;
-    void send ( typename messages :: mesh_set_transform msg ) ;
-    void send ( typename messages :: mesh_set_triangle_fan_index_value msg ) ;
-    void send ( typename messages :: mesh_set_triangle_strip_index_value msg ) ;
-    void send ( typename messages :: mesh_set_vertex_color msg ) ;
-    void send ( typename messages :: mesh_set_vertex_position msg ) ;
-    void send ( typename messages :: mesh_set_vertex_tex_coord msg ) ;
     void send ( typename messages :: near_plane_distance_reply msg ) ;
     void send ( typename messages :: near_plane_distance_request msg ) ;
     void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -265,6 +250,17 @@ public :
     void send ( typename messages :: rasterize_use_texel msg ) ;
     void send ( typename messages :: rasterize_use_texture msg ) ;
     void send ( typename messages :: render msg ) ;
+    void send ( typename messages :: render_mesh_create_reply msg ) ;
+    void send ( typename messages :: render_mesh_create_request msg ) ;
+    void send ( typename messages :: render_mesh_delete msg ) ;
+    void send ( typename messages :: render_mesh_finalize msg ) ;
+    void send ( typename messages :: render_mesh_render msg ) ;
+    void send ( typename messages :: render_mesh_set_transform msg ) ;
+    void send ( typename messages :: render_mesh_set_triangle_fan_index_value msg ) ;
+    void send ( typename messages :: render_mesh_set_triangle_strip_index_value msg ) ;
+    void send ( typename messages :: render_mesh_set_vertex_color msg ) ;
+    void send ( typename messages :: render_mesh_set_vertex_position msg ) ;
+    void send ( typename messages :: render_mesh_set_vertex_tex_coord msg ) ;
     void send ( typename messages :: render_texture_create_reply msg ) ;
     void send ( typename messages :: render_texture_create_request msg ) ;
     void send ( typename messages :: render_texture_finalize msg ) ;
@@ -305,7 +301,6 @@ public :
     const engine_render_consts_type & engine_render_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
 private :
-    typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
     typename platform_pointer :: template pointer < engine_render > _engine_render ;
     typename platform_pointer :: template pointer < logic > _logic ;
@@ -329,8 +324,7 @@ shy_mediator < mediator_types > :: shy_mediator ( )
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: register_modules 
-    ( typename platform_pointer :: template pointer < engine_mesh > arg_engine_mesh
-    , typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
+    ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
     , typename platform_pointer :: template pointer < engine_render > arg_engine_render
     , typename platform_pointer :: template pointer < logic > arg_logic
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
@@ -346,7 +340,6 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
     )
 {
-    _engine_mesh = arg_engine_mesh ;
     _engine_rasterizer = arg_engine_rasterizer ;
     _engine_render = arg_engine_render ;
     _logic = arg_logic ;
@@ -362,7 +355,6 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_title = arg_logic_title ;
     _logic_touch = arg_logic_touch ;
 
-    _engine_mesh . get ( ) . set_mediator ( * this ) ;
     _engine_rasterizer . get ( ) . set_mediator ( * this ) ;
     _engine_render . get ( ) . set_mediator ( * this ) ;
     _logic . get ( ) . set_mediator ( * this ) ;
@@ -516,43 +508,43 @@ void shy_mediator < mediator_types > :: send ( typename messages :: land_prepare
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_vertex_position msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_set_vertex_position msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_vertex_tex_coord msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_set_vertex_tex_coord msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_vertex_color msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_set_vertex_color msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_triangle_strip_index_value msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_set_triangle_strip_index_value msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_triangle_fan_index_value msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_set_triangle_fan_index_value msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_request msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_create_request msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_reply msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_create_reply msg )
 {
     _logic_entities . get ( ) . receive ( msg ) ;
     _logic_fidget . get ( ) . receive ( msg ) ;
@@ -564,27 +556,27 @@ void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_finalize msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_finalize msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_delete msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_delete msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_render msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_render msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_transform msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_mesh_set_transform msg )
 {
-    _engine_mesh . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

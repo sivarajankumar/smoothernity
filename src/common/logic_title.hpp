@@ -45,7 +45,7 @@ public :
     void receive ( typename messages :: title_update msg ) ;
     void receive ( typename messages :: title_launch_permit msg ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
-    void receive ( typename messages :: mesh_create_reply msg ) ;
+    void receive ( typename messages :: render_mesh_create_reply msg ) ;
 private :
     void _title_create ( ) ;
     void _title_render ( ) ;
@@ -132,7 +132,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
             )
         {
             _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
-            typename messages :: mesh_delete mesh_delete_msg ;
+            typename messages :: render_mesh_delete mesh_delete_msg ;
             mesh_delete_msg . mesh = letter . mesh ;
             _mediator . get ( ) . send ( mesh_delete_msg ) ;
         }
@@ -170,7 +170,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -243,7 +243,7 @@ void shy_logic_title < mediator > :: _proceed_with_letter_creation ( )
         _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_3 , _tex_coords_right , _tex_coords_bottom ) ;
         _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_3 , x_right , y_bottom , z ) ;
         
-        typename messages :: mesh_finalize mesh_finalize_msg ;
+        typename messages :: render_mesh_finalize mesh_finalize_msg ;
         mesh_finalize_msg . mesh = letter . mesh ;
         _mediator . get ( ) . send ( mesh_finalize_msg ) ;
         
@@ -357,7 +357,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         )
     {
         _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
-        typename messages :: mesh_render mesh_render_msg ;
+        typename messages :: render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
@@ -499,7 +499,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_matrix :: set_origin ( tm , origin ) ;
         
         {
-            typename messages :: mesh_set_transform mesh_set_transform_msg ;
+            typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = letter . mesh ;
             mesh_set_transform_msg . transform = tm ;
             _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
@@ -534,7 +534,7 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
         text_letter_big_tex_coords_request_msg . letter = letter . letter ;
         _mediator . get ( ) . send ( text_letter_big_tex_coords_request_msg  ) ;        
         
-        typename messages :: mesh_create_request mesh_create_msg ;
+        typename messages :: render_mesh_create_request mesh_create_msg ;
         mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
         mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
         mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
@@ -551,7 +551,7 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
 {
-    typename messages :: mesh_set_vertex_position msg ;
+    typename messages :: render_mesh_set_vertex_position msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . x = x ;
@@ -563,7 +563,7 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , 
 template < typename mediator >
 void shy_logic_title < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
 {
-    typename messages :: mesh_set_vertex_tex_coord msg ;
+    typename messages :: render_mesh_set_vertex_tex_coord msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . u = u ;
@@ -574,7 +574,7 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh ,
 template < typename mediator >
 void shy_logic_title < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    typename messages :: mesh_set_vertex_color msg ;
+    typename messages :: render_mesh_set_vertex_color msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . r = r ;
@@ -587,7 +587,7 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num
 template < typename mediator >
 void shy_logic_title < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
 {
-    typename messages :: mesh_set_triangle_strip_index_value msg ;
+    typename messages :: render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . index = index ;

@@ -9,7 +9,6 @@
 
 #include "engine_camera.hpp"
 #include "engine_math.hpp"
-#include "engine_mesh.hpp"
 #include "engine_rasterizer.hpp"
 #include "engine_render.hpp"
 #include "logic.hpp"
@@ -33,7 +32,6 @@ class shy_facade
         < platform 
         , shy_engine_camera
         , shy_engine_math
-        , shy_engine_mesh 
         , shy_engine_rasterizer
         , shy_engine_render
         , shy_logic
@@ -60,9 +58,6 @@ public :
     void video_mode_changed ( ) ;
 private :
     _mediator_type _mediator ;
-    shy_engine_camera < _mediator_type > _engine_camera ;
-    shy_engine_math < _mediator_type > _engine_math ;
-    shy_engine_mesh < _mediator_type > _engine_mesh ;
     shy_engine_rasterizer < _mediator_type > _engine_rasterizer ;
     shy_engine_render < _mediator_type > _engine_render ;
     shy_logic < _mediator_type > _logic ;
@@ -83,8 +78,7 @@ template < typename platform >
 shy_facade < platform > :: shy_facade ( )
 {
     _mediator . register_modules
-        ( _engine_mesh
-        , _engine_rasterizer
+        ( _engine_rasterizer
         , _engine_render
         , _logic
         , _logic_application

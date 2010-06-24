@@ -32,7 +32,7 @@ public :
     void receive ( typename messages :: land_render msg ) ;
     void receive ( typename messages :: land_update msg ) ;
     void receive ( typename messages :: render_texture_create_reply msg ) ;
-    void receive ( typename messages :: mesh_create_reply msg ) ;
+    void receive ( typename messages :: render_mesh_create_reply msg ) ;
 private :
     void _render_land ( ) ;
     void _create_land_mesh ( ) ;
@@ -76,7 +76,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_done msg
 {
     if ( platform_conditions :: whole_is_true ( _land_mesh_created ) )
     {
-        typename messages :: mesh_delete mesh_delete_msg ;
+        typename messages :: render_mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _land_mesh_id ;
         _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
@@ -130,7 +130,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update m
             platform_math :: make_num_whole ( total_vertices , ( _land_grid + 1 ) * ( _land_grid + 1 ) ) ;
             platform_math :: make_num_whole ( total_indices , ( _land_grid + 1 ) * 2 * _land_grid ) ;
             
-            typename messages :: mesh_create_request mesh_create_msg ;
+            typename messages :: render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = total_vertices ;
             mesh_create_msg . triangle_strip_indices = total_indices ;
             mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
@@ -140,7 +140,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update m
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -177,13 +177,13 @@ void shy_logic_land < mediator > :: _render_land ( )
     platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , _land_scale ) ;
     platform_matrix :: set_origin ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     {
-        typename messages :: mesh_set_transform mesh_set_transform_msg ;
+        typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _land_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
     {
-        typename messages :: mesh_render mesh_render_msg ;
+        typename messages :: render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _land_mesh_id ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
@@ -254,7 +254,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             platform_math :: make_num_fract ( vertex_b , _land_b , 255 ) ;
             platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
             
-            typename messages :: mesh_set_vertex_position set_pos_msg ;
+            typename messages :: render_mesh_set_vertex_position set_pos_msg ;
             set_pos_msg . mesh = _land_mesh_id ;
             set_pos_msg . offset = vertices_count ;
             set_pos_msg . x = vertex_x ;
@@ -262,7 +262,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             set_pos_msg . z = vertex_z ;
             _mediator . get ( ) . send ( set_pos_msg ) ;
             
-            typename messages :: mesh_set_vertex_color set_col_msg ;
+            typename messages :: render_mesh_set_vertex_color set_col_msg ;
             set_col_msg . mesh = _land_mesh_id ;
             set_col_msg . offset = vertices_count ;
             set_col_msg . r = vertex_r ;
@@ -271,7 +271,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             set_col_msg . a = vertex_a ;
             _mediator . get ( ) . send ( set_col_msg ) ;
             
-            typename messages :: mesh_set_vertex_tex_coord set_tex_msg ;
+            typename messages :: render_mesh_set_vertex_tex_coord set_tex_msg ;
             set_tex_msg . mesh = _land_mesh_id ;
             set_tex_msg . offset = vertices_count ;
             set_tex_msg . u = vertex_u ;
@@ -325,7 +325,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             }
         }
     }
-    typename messages :: mesh_finalize mesh_finalize_msg ;
+    typename messages :: render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _land_mesh_id ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
     platform_math :: make_num_whole ( _land_mesh_created , true ) ;
@@ -427,7 +427,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
 {
-    typename messages :: mesh_set_triangle_strip_index_value msg ;
+    typename messages :: render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = _land_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;

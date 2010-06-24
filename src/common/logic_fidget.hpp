@@ -28,7 +28,7 @@ public :
     void receive ( typename messages :: fidget_prepare_permit msg ) ;
     void receive ( typename messages :: fidget_render msg ) ;
     void receive ( typename messages :: fidget_update msg ) ;
-    void receive ( typename messages :: mesh_create_reply msg ) ;
+    void receive ( typename messages :: render_mesh_create_reply msg ) ;
 private :
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
@@ -64,7 +64,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_done
 {
     if ( platform_conditions :: whole_is_true ( _fidget_mesh_created ) )
     {
-        typename messages :: mesh_delete mesh_delete_msg ;
+        typename messages :: render_mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = _fidget_mesh_id ;
         _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
@@ -84,7 +84,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prep
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -108,7 +108,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
             num_whole whole_fidget_edges ;
             platform_math :: make_num_whole ( whole_fidget_edges , _fidget_edges ) ;
             
-            typename messages :: mesh_create_request mesh_create_msg ;
+            typename messages :: render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = whole_fidget_edges ;
             mesh_create_msg . triangle_fan_indices = whole_fidget_edges ;
             mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_0 ;
@@ -130,8 +130,8 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 {    
-    typename messages :: mesh_set_transform mesh_set_transform_msg ;
-    typename messages :: mesh_render mesh_render_msg ;
+    typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
+    typename messages :: render_mesh_render mesh_render_msg ;
     matrix_data matrix ;
     num_whole whole_scale_in_frames ;
     num_fract fract_scale_in_frames ;
@@ -218,7 +218,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         platform_math :: make_num_fract ( vertex_b , _fidget_b , 255 ) ;
         platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
 
-        typename messages :: mesh_set_vertex_position set_pos_msg ;
+        typename messages :: render_mesh_set_vertex_position set_pos_msg ;
         set_pos_msg . mesh = _fidget_mesh_id ;
         set_pos_msg . offset = i ;
         set_pos_msg . x = vertex_x ;
@@ -226,7 +226,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         set_pos_msg . z = vertex_z ;
         _mediator . get ( ) . send ( set_pos_msg ) ;
 
-        typename messages :: mesh_set_vertex_color set_col_msg ;
+        typename messages :: render_mesh_set_vertex_color set_col_msg ;
         set_col_msg . mesh = _fidget_mesh_id ;
         set_col_msg . offset = i ;
         set_col_msg . r = vertex_r ;
@@ -235,13 +235,13 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         set_col_msg . a = vertex_a ;
         _mediator . get ( ) . send ( set_col_msg ) ;
         
-        typename messages :: mesh_set_triangle_fan_index_value set_index_msg ;
+        typename messages :: render_mesh_set_triangle_fan_index_value set_index_msg ;
         set_index_msg . mesh = _fidget_mesh_id ;
         set_index_msg . offset = i ;
         set_index_msg . index = i ;
         _mediator . get ( ) . send ( set_index_msg ) ;
     }
-    typename messages :: mesh_finalize mesh_finalize_msg ;
+    typename messages :: render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _fidget_mesh_id ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 }
