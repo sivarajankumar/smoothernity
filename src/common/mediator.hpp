@@ -155,6 +155,7 @@ public :
         class render_mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class render_mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
         class render_mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
+        class render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract near ; num_fract far ; } ;
         class render_texture_create_reply { public : texture_id texture ; } ;
         class render_texture_create_request { } ;
         class render_texture_finalize { public : texture_id texture ; } ;
@@ -277,6 +278,7 @@ public :
     void send ( typename messages :: render_mesh_set_vertex_color msg ) ;
     void send ( typename messages :: render_mesh_set_vertex_position msg ) ;
     void send ( typename messages :: render_mesh_set_vertex_tex_coord msg ) ;
+    void send ( typename messages :: render_projection_frustum msg ) ;
     void send ( typename messages :: render_texture_create_reply msg ) ;
     void send ( typename messages :: render_texture_create_request msg ) ;
     void send ( typename messages :: render_texture_finalize msg ) ;
@@ -567,6 +569,12 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render_fog_l
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: render_matrix_load msg )
+{
+    _engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_projection_frustum msg )
 {
     _engine_render . get ( ) . receive ( msg ) ;
 }

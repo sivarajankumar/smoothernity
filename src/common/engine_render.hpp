@@ -103,6 +103,7 @@ public :
     void receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha msg ) ;
     void receive ( typename messages :: render_blend_disable msg ) ;
     void receive ( typename messages :: render_fog_linear msg ) ;
+    void receive ( typename messages :: render_projection_frustum msg ) ;
 public :
     const engine_render_consts_type engine_render_consts ;
 private :
@@ -179,6 +180,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_fog_linear msg )
 {
     platform_render :: fog_linear ( msg . near , msg . far , msg . r , msg . g , msg . b , msg . a ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_projection_frustum msg )
+{
+    platform_render :: projection_frustum ( msg . left , msg . right , msg . bottom , msg . top , msg . near , msg . far ) ;
 }
 
 template < typename mediator >
