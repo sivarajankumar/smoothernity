@@ -36,6 +36,7 @@ public :
     void receive ( typename messages :: image_update msg ) ;
     void receive ( typename messages :: image_prepare_permit msg ) ;
     void receive ( typename messages :: texture_create_reply msg ) ;
+    void receive ( typename messages :: mesh_create_reply msg ) ;
 private :
     void _render_image_mesh ( ) ;
     void _update_image_mesh ( ) ;
@@ -52,6 +53,7 @@ private :
     num_whole _image_texture_loaded ;
     num_whole _image_prepare_permitted ;
     num_whole _texture_create_requested ;
+    num_whole _mesh_create_requested ;
     num_whole _scale_frames ;
     mesh_id _image_mesh_id ;
     texture_id _image_texture_id ;
@@ -65,6 +67,7 @@ shy_logic_image < mediator > :: shy_logic_image ( )
     _image_texture_loaded = platform :: math_consts . whole_false ;
     _image_prepare_permitted = platform :: math_consts . whole_false ;
     _texture_create_requested = platform :: math_consts . whole_false ;
+    _mesh_create_requested = platform :: math_consts . whole_false ;
     _scale_frames = platform :: math_consts . whole_0 ;
 }
 
@@ -111,14 +114,31 @@ void shy_logic_image < mediator > :: receive ( typename messages :: texture_crea
 }
 
 template < typename mediator >
+void shy_logic_image < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
+    {
+        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _image_mesh_id = msg . mesh ;
+        _create_image_mesh ( ) ;
+        platform_math :: make_num_whole ( _image_mesh_created , true ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_image < mediator > :: receive ( typename messages :: image_update msg )
 {
     if ( platform_conditions :: whole_is_true ( _image_prepare_permitted ) )
     {
         if ( platform_conditions :: whole_is_false ( _image_mesh_created ) )
         {
-            _create_image_mesh ( ) ;
-            platform_math :: make_num_whole ( _image_mesh_created , true ) ;
+            _mesh_create_requested = platform :: math_consts . whole_true ;
+            
+            typename messages :: mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
+            mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
+            mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
+            _mediator . get ( ) . send ( mesh_create_msg ) ;        
         }
         if ( platform_conditions :: whole_is_false ( _image_texture_created ) )
         {
@@ -199,9 +219,6 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _create_image_mesh ( )
 {
-    typename platform_static_array :: template static_array < vertex_data , 4 > vertices ;
-    typename platform_static_array :: template static_array < index_data , 4 > indices ;
-
     num_fract x_left ;
     num_fract x_right ;
     num_fract y_top ;
@@ -216,7 +233,6 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     num_fract color_b ;
     num_fract color_a ;
     num_whole index ;
-    num_whole vertices_count ;
     
     platform_math :: make_num_fract ( x_left , - 1 , 1 ) ;
     platform_math :: make_num_fract ( x_right , 1 , 1 ) ;
@@ -231,15 +247,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform_math :: make_num_fract ( color_g , _image_g , 255 ) ;
     platform_math :: make_num_fract ( color_b , _image_b , 255 ) ;
     platform_math :: make_num_fract ( color_a , _image_a , 255 ) ;
-    platform_math :: make_num_whole ( vertices_count , 4 ) ;
 
-    _mediator . get ( ) . mesh_create
-        ( _image_mesh_id 
-        , platform :: math_consts . whole_4 
-        , platform :: math_consts . whole_4 
-        , platform :: math_consts . whole_0 
-        ) ;
-        
     _mesh_set_vertex_position            ( platform :: math_consts . whole_0 , x_left , y_top , z ) ;
     _mesh_set_vertex_color               ( platform :: math_consts . whole_0 , color_r , color_g , color_b , color_a ) ;
     _mesh_set_vertex_tex_coord           ( platform :: math_consts . whole_0 , u_left , v_top ) ;
