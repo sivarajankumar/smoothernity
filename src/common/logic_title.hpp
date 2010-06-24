@@ -355,7 +355,10 @@ void shy_logic_title < mediator > :: _title_render ( )
     
     platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
-    platform_render :: matrix_load ( scene_tm ) ;
+    
+    typename messages :: render_matrix_load matrix_load_msg ;
+    matrix_load_msg . matrix = scene_tm ;
+    _mediator . get ( ) . send ( matrix_load_msg ) ;
     
     for ( num_whole i = platform :: math_consts . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
