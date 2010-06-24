@@ -47,6 +47,7 @@ public :
     void receive ( typename messages :: title_update msg ) ;
     void receive ( typename messages :: title_launch_permit msg ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
+    void receive ( typename messages :: mesh_create_reply msg ) ;
 private :
     void _title_create ( ) ;
     void _title_render ( ) ;
@@ -58,6 +59,7 @@ private :
     void _animate_disappear ( ) ;
     void _animate_lifecycle ( ) ;
     void _bake_next_letter ( ) ;
+    void _proceed_with_letter_creation ( ) ;
     void _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
@@ -73,8 +75,19 @@ private :
     num_whole _letters_count ;
     num_whole _disappear_at_frames ;
     num_whole _bake_letter_index ;
+    
+    num_whole _mesh_create_requested ;
+    num_whole _mesh_create_replied ;
+    
     num_whole _text_letter_big_tex_coords_requested ;
+    num_whole _text_letter_big_tex_coords_replied ;
     letter_id _text_letter_big_tex_coords_letter ;
+    
+    num_fract _tex_coords_left ;
+    num_fract _tex_coords_right ;
+    num_fract _tex_coords_bottom ;
+    num_fract _tex_coords_top ;
+    
     num_fract _desired_pos_radius_coeff ;
     num_fract _desired_pos_angle ;
     num_fract _desired_rot_angle ;
@@ -99,6 +112,9 @@ shy_logic_title < mediator > :: shy_logic_title ( )
     _title_frames = platform :: math_consts . whole_0 ;
     _bake_letter_index = platform :: math_consts . whole_0 ;
     _text_letter_big_tex_coords_requested = platform :: math_consts . whole_false ;
+    _text_letter_big_tex_coords_replied = platform :: math_consts . whole_false ;
+    _mesh_create_requested = platform :: math_consts . whole_false ;
+    _mesh_create_replied = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -156,6 +172,19 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
 }
 
 template < typename mediator >
+void shy_logic_title < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
+    {
+        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _mesh_create_replied = platform :: math_consts . whole_true ;
+        _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
+        letter . mesh = msg . mesh ;
+        _proceed_with_letter_creation ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_reply msg )
 {
     num_whole letters_are_equal ;
@@ -165,6 +194,25 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
        )
     {
         _text_letter_big_tex_coords_requested = platform :: math_consts . whole_false ;
+        _text_letter_big_tex_coords_replied = platform :: math_consts . whole_true ;
+        _tex_coords_left = msg . left ;
+        _tex_coords_right = msg . right ;
+        _tex_coords_bottom = msg . bottom ;
+        _tex_coords_top = msg . top ;
+        _proceed_with_letter_creation ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _proceed_with_letter_creation ( )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_replied )
+      && platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_replied )
+       )
+    {
+        _mesh_create_replied = platform :: math_consts . whole_false ;
+        _text_letter_big_tex_coords_replied = platform :: math_consts . whole_false ;
+        
         _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
         
         num_fract title_r = platform :: math_consts . fract_0 ;
@@ -176,28 +224,25 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
         num_fract y_bottom = platform :: math_consts . fract_minus_1 ;
         num_fract y_top = platform :: math_consts . fract_1 ;
         num_fract z = platform :: math_consts . fract_0 ;
-        num_whole total_vertices = platform :: math_consts . whole_4 ;
         
-        _mediator . get ( ) . mesh_create ( letter . mesh , total_vertices , total_vertices , platform :: math_consts . whole_0 ) ;
-
         _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_0 , platform :: math_consts . whole_0 ) ;
         _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_0 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_0 , msg . left , msg . top ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_0 , _tex_coords_left , _tex_coords_top ) ;
         _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_0 , x_left , y_top , z ) ;
         
         _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_1 , platform :: math_consts . whole_1 ) ;
         _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_1 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_1 , msg . left , msg . bottom ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_1 , _tex_coords_left , _tex_coords_bottom ) ;
         _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_1 , x_left , y_bottom , z ) ;
         
         _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_2 , platform :: math_consts . whole_2 ) ;
         _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_2 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_2 , msg . right , msg . top ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_2 , _tex_coords_right , _tex_coords_top ) ;
         _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_2 , x_right , y_top , z ) ;
         
         _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
         _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_3 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_3 , msg . right , msg . bottom ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_3 , _tex_coords_right , _tex_coords_bottom ) ;
         _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_3 , x_right , y_bottom , z ) ;
         
         typename messages :: mesh_finalize mesh_finalize_msg ;
@@ -481,11 +526,21 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
         letter . pos_radius = platform :: math_consts . fract_0 ;
         letter . pos_angle = platform :: math_consts . fract_0 ;
         letter . rot_angle = platform :: math_consts . fract_0 ;
+        
         _text_letter_big_tex_coords_requested = platform :: math_consts . whole_true ;
         _text_letter_big_tex_coords_letter = letter . letter ;
+        
+        _mesh_create_requested = platform :: math_consts . whole_true ;
+        
         typename messages :: text_letter_big_tex_coords_request text_letter_big_tex_coords_request_msg ;
         text_letter_big_tex_coords_request_msg . letter = letter . letter ;
         _mediator . get ( ) . send ( text_letter_big_tex_coords_request_msg  ) ;        
+        
+        typename messages :: mesh_create_request mesh_create_msg ;
+        mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
+        mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
+        mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
+        _mediator . get ( ) . send ( mesh_create_msg ) ;
     }
     else
     {
