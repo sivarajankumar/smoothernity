@@ -40,6 +40,7 @@ public :
     void receive ( typename messages :: entities_height_request msg ) ;
     void receive ( typename messages :: entities_mesh_grid_request msg ) ;
     void receive ( typename messages :: entities_origin_request msg ) ;
+    void receive ( typename messages :: mesh_create_reply msg ) ;
 private :
     void _entities_render ( ) ;
     void _entity_color ( num_fract & r , num_fract & g , num_fract & b , num_fract & a , num_whole i ) ;
@@ -62,6 +63,7 @@ private :
     num_whole _fan_indices_count ;
     num_whole _vertices_count ;
     num_whole _entity_mesh_id_created ;
+    num_whole _mesh_create_requested ;
     mesh_id _entity_mesh_id ;
     typename platform_static_array :: template static_array < matrix_data , _entity_mesh_grid * _entity_mesh_grid > _entities_grid_matrices ;
 } ;
@@ -78,6 +80,7 @@ shy_logic_entities < mediator > :: shy_logic_entities ( )
     platform_math :: make_num_whole ( _fan_indices_count , 0 ) ;
     platform_math :: make_num_whole ( _vertices_count , 0 ) ;
     _entity_mesh_id_created = platform :: math_consts . whole_false ;
+    _mesh_create_requested = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -111,12 +114,35 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 }
 
 template < typename mediator >
+void shy_logic_entities < mediator > :: receive ( typename messages :: mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
+    {
+        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _entity_mesh_id_created = platform :: math_consts . whole_true ;
+        _entity_mesh_id = msg . mesh ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_entities < mediator > :: receive ( typename messages :: entities_update msg )
 {
     if ( platform_conditions :: whole_is_true ( _entities_prepare_permitted ) )
     {
         if ( platform_conditions :: whole_is_false ( _entity_created ) )
-            _create_entity_mesh ( ) ;
+        {
+            if ( platform_conditions :: whole_is_false ( _entity_mesh_id_created ) )
+            {
+                _mesh_create_requested = platform :: math_consts . whole_true ;
+                typename messages :: mesh_create_request mesh_create_msg ;
+                platform_math :: make_num_whole ( mesh_create_msg . vertices , ( _entity_mesh_spans + 1 ) * 2 + 1 ) ;
+                platform_math :: make_num_whole ( mesh_create_msg . triangle_strip_indices , ( _entity_mesh_spans + 1 ) * 2 ) ;
+                platform_math :: make_num_whole ( mesh_create_msg . triangle_fan_indices , _entity_mesh_spans + 2 ) ;
+                _mediator . get ( ) . send ( mesh_create_msg ) ;
+            }
+            if ( platform_conditions :: whole_is_true ( _entity_mesh_id_created ) )
+                _create_entity_mesh ( ) ;
+        }
         if ( platform_conditions :: whole_is_true ( _entity_created ) )
             _update_entity_grid ( ) ;
     }
@@ -252,18 +278,6 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform_math :: make_num_fract ( fract_entity_mesh_spans , _entity_mesh_spans , 1 ) ;
     platform_math :: add_wholes ( whole_entity_mesh_spans_plus_1 , whole_entity_mesh_spans , platform :: math_consts . whole_1 ) ;
     platform_math :: make_num_fract ( fract_entity_mesh_height , _entity_mesh_height , 1 ) ;
-
-    if ( platform_conditions :: whole_is_false ( _entity_mesh_id_created ) )
-    {
-        num_whole total_vertices ;
-        num_whole total_strip_indices ;
-        num_whole total_fan_indices ;
-        platform_math :: make_num_whole ( total_vertices , ( _entity_mesh_spans + 1 ) * 2 + 1 ) ;
-        platform_math :: make_num_whole ( total_strip_indices , ( _entity_mesh_spans + 1 ) * 2 ) ;
-        platform_math :: make_num_whole ( total_fan_indices , _entity_mesh_spans + 2 ) ;
-        _entity_mesh_id_created = platform :: math_consts . whole_true ;
-        _mediator . get ( ) . mesh_create ( _entity_mesh_id , total_vertices , total_strip_indices , total_fan_indices ) ;
-    }
 
     if ( platform_conditions :: whole_less_or_equal_to_whole ( _current_strip_mesh_span , whole_entity_mesh_spans ) )
     {

@@ -302,8 +302,6 @@ public :
 public :
     const engine_texture_consts_type & engine_texture_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
-public :
-    void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
 private :
     typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
@@ -554,18 +552,13 @@ void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: mesh_create_reply msg )
 {
+    _logic_entities . get ( ) . receive ( msg ) ;
     _logic_fidget . get ( ) . receive ( msg ) ;
     _logic_image . get ( ) . receive ( msg ) ;
     _logic_land . get ( ) . receive ( msg ) ;
     _logic_text . get ( ) . receive ( msg ) ;
     _logic_title . get ( ) . receive ( msg ) ;
     _logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count )
-{
-    _engine_mesh . get ( ) . mesh_create ( mesh , vertices_count , triangle_strip_indices_count , triangle_fan_indices_count ) ;
 }
 
 template < typename mediator_types >

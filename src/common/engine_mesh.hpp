@@ -47,7 +47,6 @@ private :
 public :
     shy_engine_mesh ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void mesh_create ( mesh_id & mesh , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count ) ;
     void receive ( typename messages :: mesh_create_request msg ) ;
     void receive ( typename messages :: mesh_finalize msg ) ;
     void receive ( typename messages :: mesh_set_vertex_position msg ) ;
@@ -89,18 +88,6 @@ void shy_engine_mesh < mediator > :: receive ( typename messages :: mesh_create_
     reply_msg . mesh . _mesh_id = _next_mesh_id ;
     platform_math :: inc_whole ( _next_mesh_id ) ;
     _mediator . get ( ) . send ( reply_msg ) ;    
-}
-
-template < typename mediator >
-void shy_engine_mesh < mediator > :: mesh_create ( mesh_id & result , num_whole vertices_count , num_whole triangle_strip_indices_count , num_whole triangle_fan_indices_count )
-{
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
-    mesh . vertices_count = vertices_count ;
-    mesh . triangle_strip_indices_count = triangle_strip_indices_count ;
-    mesh . triangle_fan_indices_count = triangle_fan_indices_count ;
-    platform_matrix :: identity ( mesh . transform ) ;
-    result . _mesh_id = _next_mesh_id ;
-    platform_math :: inc_whole ( _next_mesh_id ) ;
 }
 
 template < typename mediator >
