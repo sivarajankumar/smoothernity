@@ -33,7 +33,7 @@ public :
     void receive ( typename messages :: image_render msg ) ;
     void receive ( typename messages :: image_update msg ) ;
     void receive ( typename messages :: image_prepare_permit msg ) ;
-    void receive ( typename messages :: texture_create_reply msg ) ;
+    void receive ( typename messages :: render_texture_create_reply msg ) ;
     void receive ( typename messages :: mesh_create_reply msg ) ;
 private :
     void _render_image_mesh ( ) ;
@@ -100,7 +100,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_prepar
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: texture_create_reply msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: render_texture_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
     {
@@ -141,7 +141,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
         if ( platform_conditions :: whole_is_false ( _image_texture_created ) )
         {
             _texture_create_requested = platform :: math_consts . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: texture_create_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
         }
         if ( platform_conditions :: whole_is_true ( _image_texture_created ) 
           && platform_conditions :: whole_is_false ( _image_texture_loaded )
@@ -152,7 +152,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
             if ( platform_conditions :: whole_is_true ( loader_ready ) )
             {
                 {
-                    typename messages :: texture_finalize texture_finalize_msg ;
+                    typename messages :: render_texture_finalize texture_finalize_msg ;
                     texture_finalize_msg . texture = _image_texture_id ;
                     _mediator . get ( ) . send ( texture_finalize_msg ) ;
                 }
@@ -202,7 +202,7 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
 {
     platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
     {
-        typename messages :: texture_select texture_select_msg ;
+        typename messages :: render_texture_select texture_select_msg ;
         texture_select_msg . texture = _image_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
@@ -325,7 +325,7 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
     platform_math :: make_num_whole ( resource_index , _logo_resource_index ) ;
     platform_render :: create_texture_resource_id ( logo_resource_id , resource_index ) ;
     {
-        typename messages :: texture_load_from_resource texture_load_from_resource_msg ;
+        typename messages :: render_texture_load_from_resource texture_load_from_resource_msg ;
         texture_load_from_resource_msg . texture = _image_texture_id ;
         texture_load_from_resource_msg . resource = logo_resource_id ;
         _mediator . get ( ) . send ( texture_load_from_resource_msg ) ;

@@ -171,7 +171,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
     mesh_set_transform_msg . transform = matrix ;
     mesh_render_msg . mesh = _fidget_mesh_id ;
     
-    _mediator . get ( ) . send ( typename messages :: texture_unselect ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: render_texture_unselect ( ) ) ;
     _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     _mediator . get ( ) . send ( mesh_render_msg ) ;
 

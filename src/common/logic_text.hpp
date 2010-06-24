@@ -93,7 +93,7 @@ public :
     void receive ( typename messages :: text_render msg ) ;
     void receive ( typename messages :: text_update msg ) ;
     void receive ( typename messages :: use_text_texture msg ) ;
-    void receive ( typename messages :: texture_create_reply msg ) ;
+    void receive ( typename messages :: render_texture_create_reply msg ) ;
     void receive ( typename messages :: mesh_create_reply msg ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_request msg ) ;
     void receive ( typename messages :: text_letter_small_tex_coords_request msg ) ;
@@ -247,7 +247,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: use_text_text
 {
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
-        typename messages :: texture_select texture_select_msg ;
+        typename messages :: render_texture_select texture_select_msg ;
         texture_select_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
@@ -320,7 +320,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_update m
         if ( platform_conditions :: whole_is_false ( _text_mesh_created ) )
         {
             _texture_create_requested = platform :: math_consts . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: texture_create_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
             
             typename messages :: mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
@@ -347,7 +347,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: mesh_create_r
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: texture_create_reply msg )
+void shy_logic_text < mediator > :: receive ( typename messages :: render_texture_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
     {
@@ -411,7 +411,7 @@ void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
     platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
     {
-        typename messages :: texture_select texture_select_msg ;
+        typename messages :: render_texture_select texture_select_msg ;
         texture_select_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
@@ -539,8 +539,8 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     num_fract eraser_a ;
     num_whole small_size ;
     num_whole big_size ;
-    texture_width = _mediator . get ( ) . engine_texture_consts ( ) . texture_width ;
-    texture_height = _mediator . get ( ) . engine_texture_consts ( ) . texture_height ;
+    texture_width = _mediator . get ( ) . engine_render_consts ( ) . texture_width ;
+    texture_height = _mediator . get ( ) . engine_render_consts ( ) . texture_height ;
     platform_math :: make_num_whole ( small_size , 16 ) ;
     platform_math :: make_num_whole ( big_size , 32 ) ;
     platform_math :: make_num_fract ( filler_r , 1 , 1 ) ;
@@ -563,7 +563,7 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
             ; platform_math :: inc_whole ( y )
             )
         {
-            typename messages :: texture_set_texel texture_set_texel_msg ;
+            typename messages :: render_texture_set_texel texture_set_texel_msg ;
             texture_set_texel_msg . texture = _text_texture_id ;
             texture_set_texel_msg . x = x ;
             texture_set_texel_msg . y = y ;
@@ -575,7 +575,7 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _rasterize_english_alphabet ( small_size , small_size , _letters_small ) ;
     _rasterize_english_alphabet ( big_size , big_size , _letters_big ) ;
     {
-        typename messages :: texture_finalize texture_finalize_msg ;
+        typename messages :: render_texture_finalize texture_finalize_msg ;
         texture_finalize_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_finalize_msg ) ;
     }
@@ -623,7 +623,7 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
     num_whole delta_x ;
     num_whole texture_width ;
     num_whole right_limit ;
-    texture_width = _mediator . get ( ) . engine_texture_consts ( ) . texture_width ;
+    texture_width = _mediator . get ( ) . engine_render_consts ( ) . texture_width ;
     platform_math :: div_wholes ( delta_x , _letter_size_x , platform :: math_consts . whole_8 ) ;
     platform_math :: add_to_whole ( _origin_x , _letter_size_x ) ;
     platform_math :: add_to_whole ( _origin_x , delta_x ) ;
@@ -661,8 +661,8 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
     whole_bottom = _origin_y ;
     platform_math :: add_wholes ( whole_right , _origin_x , _letter_size_x ) ;
     platform_math :: add_wholes ( whole_top , _origin_y , _letter_size_y ) ;
-    whole_texture_width = _mediator . get ( ) . engine_texture_consts ( ) . texture_width ;
-    whole_texture_height = _mediator . get ( ) . engine_texture_consts ( ) . texture_height ;
+    whole_texture_width = _mediator . get ( ) . engine_render_consts ( ) . texture_width ;
+    whole_texture_height = _mediator . get ( ) . engine_render_consts ( ) . texture_height ;
     platform_math :: make_fract_from_whole ( fract_texture_width , whole_texture_width ) ;
     platform_math :: make_fract_from_whole ( fract_texture_height , whole_texture_height ) ;
     platform_math :: make_fract_from_whole ( coords . left , whole_left ) ;

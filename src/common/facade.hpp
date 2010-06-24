@@ -11,7 +11,7 @@
 #include "engine_math.hpp"
 #include "engine_mesh.hpp"
 #include "engine_rasterizer.hpp"
-#include "engine_texture.hpp"
+#include "engine_render.hpp"
 #include "logic.hpp"
 #include "logic_application.hpp"
 #include "logic_camera.hpp"
@@ -35,7 +35,7 @@ class shy_facade
         , shy_engine_math
         , shy_engine_mesh 
         , shy_engine_rasterizer
-        , shy_engine_texture
+        , shy_engine_render
         , shy_logic
         , shy_logic_application
         , shy_logic_camera
@@ -64,7 +64,7 @@ private :
     shy_engine_math < _mediator_type > _engine_math ;
     shy_engine_mesh < _mediator_type > _engine_mesh ;
     shy_engine_rasterizer < _mediator_type > _engine_rasterizer ;
-    shy_engine_texture < _mediator_type > _engine_texture ;
+    shy_engine_render < _mediator_type > _engine_render ;
     shy_logic < _mediator_type > _logic ;
     shy_logic_application < _mediator_type > _logic_application ;
     shy_logic_camera < _mediator_type > _logic_camera ;
@@ -85,7 +85,7 @@ shy_facade < platform > :: shy_facade ( )
     _mediator . register_modules
         ( _engine_mesh
         , _engine_rasterizer
-        , _engine_texture
+        , _engine_render
         , _logic
         , _logic_application
         , _logic_camera

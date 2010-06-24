@@ -138,7 +138,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
     platform_math :: add_to_whole ( bottom , _origin_y ) ;
     platform_math :: add_to_whole ( top , _origin_y ) ;
     {
-        typename messages :: texture_set_texels_rect texture_set_texels_rect_msg ;
+        typename messages :: render_texture_set_texels_rect texture_set_texels_rect_msg ;
         texture_set_texels_rect_msg . left = left ;
         texture_set_texels_rect_msg . right = right ;
         texture_set_texels_rect_msg . bottom = bottom ;
@@ -174,7 +174,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( num_whol
     platform_math :: add_to_whole ( right , _origin_x ) ;
     platform_math :: add_to_whole ( y , _origin_y ) ;
     {
-        typename messages :: texture_set_texels_rect texture_set_texels_rect_msg ;
+        typename messages :: render_texture_set_texels_rect texture_set_texels_rect_msg ;
         texture_set_texels_rect_msg . left = left ;
         texture_set_texels_rect_msg . right = right ;
         texture_set_texels_rect_msg . bottom = y ;

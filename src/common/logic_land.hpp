@@ -31,7 +31,7 @@ public :
     void receive ( typename messages :: land_prepare_permit msg ) ;
     void receive ( typename messages :: land_render msg ) ;
     void receive ( typename messages :: land_update msg ) ;
-    void receive ( typename messages :: texture_create_reply msg ) ;
+    void receive ( typename messages :: render_texture_create_reply msg ) ;
     void receive ( typename messages :: mesh_create_reply msg ) ;
 private :
     void _render_land ( ) ;
@@ -96,7 +96,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_render m
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: texture_create_reply msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: render_texture_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
     {
@@ -116,7 +116,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update m
             if ( platform_conditions :: whole_is_false ( _texture_create_replied ) )
             {
                 _texture_create_requested = platform :: math_consts . whole_true ;
-                _mediator . get ( ) . send ( typename messages :: texture_create_request ( ) ) ;
+                _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
             }
             else
                 _create_land_texture ( ) ;
@@ -161,7 +161,7 @@ void shy_logic_land < mediator > :: _render_land ( )
     num_fract fract_scale_in_frames ;
     
     {
-        typename messages :: texture_select texture_select_msg ;
+        typename messages :: render_texture_select texture_select_msg ;
         texture_select_msg . texture = _land_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
@@ -341,8 +341,8 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
     
     platform_math :: make_num_whole ( whole_create_rows_per_frame , _create_rows_per_frame ) ;
     
-    texture_width = _mediator . get ( ) . engine_texture_consts ( ) . texture_width ;
-    texture_height = _mediator . get ( ) . engine_texture_consts ( ) . texture_height ;
+    texture_width = _mediator . get ( ) . engine_render_consts ( ) . texture_width ;
+    texture_height = _mediator . get ( ) . engine_render_consts ( ) . texture_height ;
     for ( ; ; )
     {
         num_whole x ;
@@ -403,7 +403,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             platform_math :: div_fract_by ( fract_b , color_scale ) ;
             platform_math :: div_fract_by ( fract_a , color_scale ) ;
             
-            typename messages :: texture_set_texel_rgba texture_set_texel_rgba_msg ;
+            typename messages :: render_texture_set_texel_rgba texture_set_texel_rgba_msg ;
             texture_set_texel_rgba_msg . texture = _land_texture_id ;
             texture_set_texel_rgba_msg . x = x ;
             texture_set_texel_rgba_msg . y = y ;
@@ -417,7 +417,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
     }
     if ( platform_conditions :: wholes_are_equal ( _land_texture_creation_row , texture_height ) )
     {
-        typename messages :: texture_finalize texture_finalize_msg ;
+        typename messages :: render_texture_finalize texture_finalize_msg ;
         texture_finalize_msg . texture = _land_texture_id ;
         _mediator . get ( ) . send ( texture_finalize_msg ) ;
         platform_math :: make_num_whole ( _land_texture_created , true ) ;

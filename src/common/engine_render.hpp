@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_engine_texture
+class shy_engine_render
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -19,41 +19,41 @@ class shy_engine_texture
     static const_int_32 _texture_size_pow2_base = 8 ;
     static const_int_32 _texture_size = 1 << _texture_size_pow2_base ;
     
-public :
-    class texture_id
-    {
-        friend class shy_engine_texture ;
-    private :
-        num_whole _texture_id ;
-    } ;
-    class engine_texture_consts_type
-    {
-    public :
-        engine_texture_consts_type ( ) ;
-    public :
-        num_whole texture_width ;
-        num_whole texture_height ;
-    } ;
-private :
     class _texture_data
     {
     public :
         typename platform_static_array :: template static_array < texel_data , _texture_size * _texture_size > texels ;
         render_texture_id render_id ;
     } ;
+    
 public :
-    shy_engine_texture ( ) ;
+    class texture_id
+    {
+        friend class shy_engine_render ;
+    private :
+        num_whole _texture_id ;
+    } ;
+    class engine_render_consts_type
+    {
+    public :
+        engine_render_consts_type ( ) ;
+    public :
+        num_whole texture_width ;
+        num_whole texture_height ;
+    } ;
+public :
+    shy_engine_render ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: texture_create_request msg ) ;
-    void receive ( typename messages :: texture_finalize msg ) ;
-    void receive ( typename messages :: texture_load_from_resource msg ) ;
-    void receive ( typename messages :: texture_select msg ) ;
-    void receive ( typename messages :: texture_unselect msg ) ;
-    void receive ( typename messages :: texture_set_texels_rect msg ) ;
-    void receive ( typename messages :: texture_set_texel msg ) ;
-    void receive ( typename messages :: texture_set_texel_rgba msg ) ;
+    void receive ( typename messages :: render_texture_create_request msg ) ;
+    void receive ( typename messages :: render_texture_finalize msg ) ;
+    void receive ( typename messages :: render_texture_load_from_resource msg ) ;
+    void receive ( typename messages :: render_texture_select msg ) ;
+    void receive ( typename messages :: render_texture_unselect msg ) ;
+    void receive ( typename messages :: render_texture_set_texels_rect msg ) ;
+    void receive ( typename messages :: render_texture_set_texel msg ) ;
+    void receive ( typename messages :: render_texture_set_texel_rgba msg ) ;
 public :
-    const engine_texture_consts_type engine_texture_consts ;
+    const engine_render_consts_type engine_render_consts ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _texture_data , _max_textures > _textures_datas ;
@@ -61,35 +61,35 @@ private :
 } ;
 
 template < typename mediator >
-shy_engine_texture < mediator > :: shy_engine_texture ( )
+shy_engine_render < mediator > :: shy_engine_render ( )
 {
     platform_math :: make_num_whole ( _next_texture_id , 0 ) ;
 }
 
 template < typename mediator >
-shy_engine_texture < mediator > :: engine_texture_consts_type :: engine_texture_consts_type ( )
+shy_engine_render < mediator > :: engine_render_consts_type :: engine_render_consts_type ( )
 {
     platform_math :: make_num_whole ( texture_width , _texture_size ) ;
     platform_math :: make_num_whole ( texture_height , _texture_size ) ;
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+void shy_engine_render < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_create_request msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_create_request msg )
 {
-    typename messages :: texture_create_reply texture_create_reply_msg ;
+    typename messages :: render_texture_create_reply texture_create_reply_msg ;
     texture_create_reply_msg . texture . _texture_id = _next_texture_id ;
     platform_math :: inc_whole ( _next_texture_id ) ;
     _mediator . get ( ) . send ( texture_create_reply_msg ) ;
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_finalize msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_finalize msg )
 {
     num_whole size_pow2_base ;
     _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
@@ -99,7 +99,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_f
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_load_from_resource msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_load_from_resource msg )
 {
     num_whole size_pow2_base ;
     _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
@@ -108,7 +108,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_l
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_select msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_select msg )
 {
     _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_render :: enable_texturing ( ) ;
@@ -116,13 +116,13 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_unselect msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_unselect msg )
 {
     platform_render :: disable_texturing ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_set_texel msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_set_texel msg )
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
@@ -134,7 +134,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_set_texel_rgba msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_set_texel_rgba msg )
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
@@ -147,7 +147,7 @@ void shy_engine_texture < mediator > :: receive ( typename messages :: texture_s
 }
 
 template < typename mediator >
-void shy_engine_texture < mediator > :: receive ( typename messages :: texture_set_texels_rect msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_set_texels_rect msg )
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;

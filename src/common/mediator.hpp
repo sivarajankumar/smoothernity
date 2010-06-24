@@ -4,7 +4,7 @@ template
     , template < typename mediator > class _engine_math
     , template < typename mediator > class _engine_mesh
     , template < typename mediator > class _engine_rasterizer
-    , template < typename mediator > class _engine_texture
+    , template < typename mediator > class _engine_render
     , template < typename mediator > class _logic 
     , template < typename mediator > class _logic_application
     , template < typename mediator > class _logic_camera
@@ -30,7 +30,7 @@ public :
         typedef _engine_math < mediator > engine_math ;
         typedef _engine_mesh < mediator > engine_mesh ;
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
-        typedef _engine_texture < mediator > engine_texture ;
+        typedef _engine_render < mediator > engine_render ;
         typedef _logic < mediator > logic ;
         typedef _logic_application < mediator > logic_application ;
         typedef _logic_camera < mediator > logic_camera ;
@@ -56,7 +56,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh :: mesh_id mesh_id ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: texture_id texture_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: texture_id texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
@@ -64,8 +64,8 @@ public :
 private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_mesh engine_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture engine_texture ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_texture :: engine_texture_consts_type engine_texture_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: engine_render_consts_type engine_render_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
@@ -150,6 +150,15 @@ public :
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
         class render { } ;
+        class render_texture_create_reply { public : texture_id texture ; } ;
+        class render_texture_create_request { } ;
+        class render_texture_finalize { public : texture_id texture ; } ;
+        class render_texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
+        class render_texture_select { public : texture_id texture ; } ;
+        class render_texture_set_texel { public : texture_id texture ; num_whole x ; num_whole y ; texel_data texel ; } ;
+        class render_texture_set_texel_rgba { public : texture_id texture ; num_whole x ; num_whole y ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class render_texture_set_texels_rect { public : texture_id texture ; num_whole left ; num_whole bottom ; num_whole right ; num_whole top ; texel_data texel ; } ;
+        class render_texture_unselect { } ;
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
         class sound_update { } ;
@@ -162,15 +171,6 @@ public :
         class text_prepared { } ;
         class text_render { } ;
         class text_update { } ;
-        class texture_create_reply { public : texture_id texture ; } ;
-        class texture_create_request { } ;
-        class texture_finalize { public : texture_id texture ; } ;
-        class texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
-        class texture_select { public : texture_id texture ; } ;
-        class texture_set_texel { public : texture_id texture ; num_whole x ; num_whole y ; texel_data texel ; } ;
-        class texture_set_texel_rgba { public : texture_id texture ; num_whole x ; num_whole y ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
-        class texture_set_texels_rect { public : texture_id texture ; num_whole left ; num_whole bottom ; num_whole right ; num_whole top ; texel_data texel ; } ;
-        class texture_unselect { } ;
         class title_done { } ;
         class title_finished { } ;
         class title_launch_permit { } ;
@@ -193,7 +193,7 @@ public :
     void register_modules 
         ( typename platform_pointer :: template pointer < engine_mesh > arg_engine_mesh
         , typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
-        , typename platform_pointer :: template pointer < engine_texture > arg_engine_texture
+        , typename platform_pointer :: template pointer < engine_render > arg_engine_render
         , typename platform_pointer :: template pointer < logic > arg_logic
         , typename platform_pointer :: template pointer < logic_application > arg_logic_application
         , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
@@ -265,6 +265,15 @@ public :
     void send ( typename messages :: rasterize_use_texel msg ) ;
     void send ( typename messages :: rasterize_use_texture msg ) ;
     void send ( typename messages :: render msg ) ;
+    void send ( typename messages :: render_texture_create_reply msg ) ;
+    void send ( typename messages :: render_texture_create_request msg ) ;
+    void send ( typename messages :: render_texture_finalize msg ) ;
+    void send ( typename messages :: render_texture_load_from_resource msg ) ;
+    void send ( typename messages :: render_texture_select msg ) ;
+    void send ( typename messages :: render_texture_set_texel msg ) ;
+    void send ( typename messages :: render_texture_set_texel_rgba msg ) ;
+    void send ( typename messages :: render_texture_set_texels_rect msg ) ;
+    void send ( typename messages :: render_texture_unselect msg ) ;
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
     void send ( typename messages :: sound_update msg ) ;
@@ -277,15 +286,6 @@ public :
     void send ( typename messages :: text_prepared msg ) ;
     void send ( typename messages :: text_render msg ) ;
     void send ( typename messages :: text_update msg ) ;
-    void send ( typename messages :: texture_create_reply msg ) ;
-    void send ( typename messages :: texture_create_request msg ) ;
-    void send ( typename messages :: texture_finalize msg ) ;
-    void send ( typename messages :: texture_load_from_resource msg ) ;
-    void send ( typename messages :: texture_select msg ) ;
-    void send ( typename messages :: texture_set_texel msg ) ;
-    void send ( typename messages :: texture_set_texel_rgba msg ) ;
-    void send ( typename messages :: texture_set_texels_rect msg ) ;
-    void send ( typename messages :: texture_unselect msg ) ;
     void send ( typename messages :: title_done msg ) ;
     void send ( typename messages :: title_finished msg ) ;
     void send ( typename messages :: title_launch_permit msg ) ;
@@ -302,12 +302,12 @@ public :
     void send ( typename messages :: use_text_texture msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
-    const engine_texture_consts_type & engine_texture_consts ( ) ;
+    const engine_render_consts_type & engine_render_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < engine_mesh > _engine_mesh ;
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
-    typename platform_pointer :: template pointer < engine_texture > _engine_texture ;
+    typename platform_pointer :: template pointer < engine_render > _engine_render ;
     typename platform_pointer :: template pointer < logic > _logic ;
     typename platform_pointer :: template pointer < logic_application > _logic_application ;
     typename platform_pointer :: template pointer < logic_camera > _logic_camera ;
@@ -331,7 +331,7 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: register_modules 
     ( typename platform_pointer :: template pointer < engine_mesh > arg_engine_mesh
     , typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
-    , typename platform_pointer :: template pointer < engine_texture > arg_engine_texture
+    , typename platform_pointer :: template pointer < engine_render > arg_engine_render
     , typename platform_pointer :: template pointer < logic > arg_logic
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
@@ -348,7 +348,7 @@ void shy_mediator < mediator_types > :: register_modules
 {
     _engine_mesh = arg_engine_mesh ;
     _engine_rasterizer = arg_engine_rasterizer ;
-    _engine_texture = arg_engine_texture ;
+    _engine_render = arg_engine_render ;
     _logic = arg_logic ;
     _logic_application = arg_logic_application ;
     _logic_camera = arg_logic_camera ;
@@ -364,7 +364,7 @@ void shy_mediator < mediator_types > :: register_modules
 
     _engine_mesh . get ( ) . set_mediator ( * this ) ;
     _engine_rasterizer . get ( ) . set_mediator ( * this ) ;
-    _engine_texture . get ( ) . set_mediator ( * this ) ;
+    _engine_render . get ( ) . set_mediator ( * this ) ;
     _logic . get ( ) . set_mediator ( * this ) ;
     _logic_application . get ( ) . set_mediator ( * this ) ;
     _logic_camera . get ( ) . set_mediator ( * this ) ;
@@ -380,10 +380,10 @@ void shy_mediator < mediator_types > :: register_modules
 }
 
 template < typename mediator_types >
-const typename shy_mediator < mediator_types > :: engine_texture_consts_type &
-shy_mediator < mediator_types > :: engine_texture_consts ( )
+const typename shy_mediator < mediator_types > :: engine_render_consts_type &
+shy_mediator < mediator_types > :: engine_render_consts ( )
 {
-    return _engine_texture . get ( ) . engine_texture_consts ;
+    return _engine_render . get ( ) . engine_render_consts ;
 }
 
 template < typename mediator_types >
@@ -816,7 +816,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: camera_matri
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_create_reply msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_create_reply msg )
 {
     _logic_text . get ( ) . receive ( msg ) ;
     _logic_image . get ( ) . receive ( msg ) ;
@@ -824,51 +824,51 @@ void shy_mediator < mediator_types > :: send ( typename messages :: texture_crea
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_create_request msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_create_request msg )
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_finalize msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_finalize msg )
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_load_from_resource msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_load_from_resource msg )
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_select msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_select msg )
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_set_texel msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_set_texel msg )
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_set_texel_rgba msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_set_texel_rgba msg )
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_set_texels_rect msg ) 
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_set_texels_rect msg ) 
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: texture_unselect msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_unselect msg )
 {
-    _engine_texture . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
