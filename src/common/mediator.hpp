@@ -136,6 +136,7 @@ public :
         class mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
         class mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
         class mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
         class near_plane_distance_reply { public : num_fract distance ; } ;
         class near_plane_distance_request { } ;
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
@@ -245,6 +246,7 @@ public :
     void send ( typename messages :: mesh_set_transform msg ) ;
     void send ( typename messages :: mesh_set_triangle_fan_index_value msg ) ;
     void send ( typename messages :: mesh_set_triangle_strip_index_value msg ) ;
+    void send ( typename messages :: mesh_set_vertex_position msg ) ;
     void send ( typename messages :: near_plane_distance_reply msg ) ;
     void send ( typename messages :: near_plane_distance_request msg ) ;
     void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -505,6 +507,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: land_prepared msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: mesh_set_vertex_position msg )
+{
+    _engine_mesh . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

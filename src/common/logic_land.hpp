@@ -241,7 +241,15 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             platform_math :: make_num_fract ( vertex_g , _land_g , 255 ) ;
             platform_math :: make_num_fract ( vertex_b , _land_b , 255 ) ;
             platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
-            _mediator . get ( ) . mesh_set_vertex_position ( _land_mesh_id , vertices_count , vertex_x , vertex_y , vertex_z ) ;
+            
+            typename messages :: mesh_set_vertex_position set_pos_msg ;
+            set_pos_msg . mesh = _land_mesh_id ;
+            set_pos_msg . offset = vertices_count ;
+            set_pos_msg . x = vertex_x ;
+            set_pos_msg . y = vertex_y ;
+            set_pos_msg . z = vertex_z ;
+            _mediator . get ( ) . send ( set_pos_msg ) ;
+            
             _mediator . get ( ) . mesh_set_vertex_color ( _land_mesh_id , vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
             _mediator . get ( ) . mesh_set_vertex_tex_coord ( _land_mesh_id , vertices_count , vertex_u , vertex_v ) ;
             platform_math :: inc_whole ( vertices_count ) ;

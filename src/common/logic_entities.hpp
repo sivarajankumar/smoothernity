@@ -349,7 +349,13 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z )
 {
-    _mediator . get ( ) . mesh_set_vertex_position ( _entity_mesh_id , offset , x , y , z ) ;
+    typename messages :: mesh_set_vertex_position msg ;
+    msg . mesh = _entity_mesh_id ;
+    msg . offset = offset ;
+    msg . x = x ;
+    msg . y = y ;
+    msg . z = z ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
