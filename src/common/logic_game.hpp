@@ -204,7 +204,7 @@ void shy_logic_game < mediator > :: _render_scene ( )
 template < typename mediator >
 void shy_logic_game < mediator > :: _render_hud ( )
 {
-    platform_render :: disable_depth_test ( ) ;
+    _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
     platform_render :: fog_disable ( ) ;
     _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
