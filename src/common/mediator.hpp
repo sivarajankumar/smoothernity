@@ -141,6 +141,7 @@ public :
         class render_clear_screen { public : num_fract r ; num_fract g ; num_fract b ; } ;
         class render_disable_depth_test { } ;
         class render_enable_depth_test { } ;
+        class render_enable_face_culling { } ;
         class render_fog_disable { } ;
         class render_fog_linear { public : num_fract near ; num_fract far ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class render_matrix_identity { } ;
@@ -266,6 +267,7 @@ public :
     void send ( typename messages :: render_clear_screen msg ) ;
     void send ( typename messages :: render_disable_depth_test msg ) ;
     void send ( typename messages :: render_enable_depth_test msg ) ;
+    void send ( typename messages :: render_enable_face_culling msg ) ;
     void send ( typename messages :: render_fog_disable msg ) ;
     void send ( typename messages :: render_fog_linear msg ) ;
     void send ( typename messages :: render_matrix_identity msg ) ;
@@ -549,6 +551,12 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render_clear
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: render_disable_depth_test msg )
+{
+    _engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_enable_face_culling msg )
 {
     _engine_render . get ( ) . receive ( msg ) ;
 }
