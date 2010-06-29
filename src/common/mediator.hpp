@@ -81,16 +81,16 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_consts_type logic_text_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
-    typedef typename platform :: platform_math :: const_int_32 const_int_32 ;
-    typedef typename platform :: platform_math :: num_fract num_fract ;
-    typedef typename platform :: platform_math :: num_whole num_whole ;
-    typedef typename platform :: platform_matrix :: matrix_data matrix_data ;
-    typedef typename platform :: platform_pointer platform_pointer ;
-    typedef typename platform :: platform_render :: index_data index_data ;
-    typedef typename platform :: platform_render :: texel_data texel_data ;
-    typedef typename platform :: platform_render :: texture_resource_id texture_resource_id ;
-    typedef typename platform :: platform_render :: vertex_data vertex_data ;
-    typedef typename platform :: platform_vector :: vector_data vector_data ;
+    typedef typename mediator_types :: platform :: platform_math :: const_int_32 const_int_32 ;
+    typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator_types :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator_types :: platform :: platform_matrix :: matrix_data matrix_data ;
+    typedef typename mediator_types :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator_types :: platform :: platform_render :: index_data index_data ;
+    typedef typename mediator_types :: platform :: platform_render :: texel_data texel_data ;
+    typedef typename mediator_types :: platform :: platform_render :: texture_resource_id texture_resource_id ;
+    typedef typename mediator_types :: platform :: platform_render :: vertex_data vertex_data ;
+    typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
     
 public :
     class messages

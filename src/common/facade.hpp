@@ -30,6 +30,7 @@
 template < typename platform >
 class shy_facade
 {
+    typedef typename platform :: platform_scheduler platform_scheduler ;
     typedef shy_mediator < shy_mediator_types
         < platform 
         , shy_engine_camera
@@ -37,7 +38,7 @@ class shy_facade
         , shy_engine_rasterizer
         , shy_engine_render
         , shy_engine_render_stateless
-        , shy_logic
+        , platform_scheduler :: template module_wrapper < shy_logic > :: template scheduled_module
         , shy_logic_application
         , shy_logic_camera
         , shy_logic_entities
@@ -65,7 +66,7 @@ private :
     shy_engine_rasterizer < _mediator_type > _engine_rasterizer ;
     shy_engine_render < _mediator_type > _engine_render ;
     shy_engine_render_stateless < _mediator_type > _engine_render_stateless ;
-    shy_logic < _mediator_type > _logic ;
+    typename platform_scheduler :: template module_wrapper < shy_logic > :: template scheduled_module < _mediator_type > _logic ;
     shy_logic_application < _mediator_type > _logic_application ;
     shy_logic_camera < _mediator_type > _logic_camera ;
     shy_logic_entities < _mediator_type > _logic_entities ;
