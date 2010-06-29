@@ -33,6 +33,7 @@ public :
     void receive ( typename messages :: use_ortho_projection_reply msg ) ;
     void receive ( typename messages :: land_render_reply msg ) ;
     void receive ( typename messages :: entities_render_reply msg ) ;
+    void receive ( typename messages :: fidget_render_reply msg ) ;
 private :
     void _clear_screen ( ) ;
     void _update_color ( ) ;
@@ -65,6 +66,9 @@ private :
     
     num_whole _entities_render_requested ;
     num_whole _entities_render_replied ;
+    
+    num_whole _fidget_render_requested ;
+    num_whole _fidget_render_replied ;
 } ;
 
 template < typename mediator >
@@ -88,6 +92,8 @@ shy_logic_game < mediator > :: shy_logic_game ( )
     _land_render_replied = platform :: math_consts . whole_false ;
     _entities_render_requested = platform :: math_consts . whole_false ;
     _entities_render_replied = platform :: math_consts . whole_false ;
+    _fidget_render_requested = platform :: math_consts . whole_false ;
+    _fidget_render_replied = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -242,6 +248,17 @@ void shy_logic_game < mediator > :: receive ( typename messages :: use_ortho_pro
 }
 
 template < typename mediator >
+void shy_logic_game < mediator > :: receive ( typename messages :: fidget_render_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _fidget_render_requested ) )
+    {
+        _fidget_render_requested = platform :: math_consts . whole_false ;
+        _fidget_render_replied = platform :: math_consts . whole_true ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_game < mediator > :: _proceed_with_render ( )
 {
     if ( platform_conditions :: whole_is_true ( _camera_matrix_replied )
@@ -285,7 +302,13 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _use_ortho_projection_replied = platform :: math_consts . whole_false ;
         _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
+        
+        _fidget_render_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: fidget_render_request ( ) ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _fidget_render_replied ) )
+    {
+        _fidget_render_replied = platform :: math_consts . whole_false ;
         _mediator . get ( ) . send ( typename messages :: text_render ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: image_render ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: touch_render ( ) ) ;

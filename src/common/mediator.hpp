@@ -114,6 +114,8 @@ public :
         class fidget_prepare_permit { } ;
         class fidget_prepared { } ;
         class fidget_render { } ;
+        class fidget_render_reply { } ;
+        class fidget_render_request { } ;
         class fidget_update { } ;
         class game_launch_permit { } ;
         class game_render { } ;
@@ -245,6 +247,8 @@ public :
     void send ( typename messages :: fidget_prepare_permit msg ) ;
     void send ( typename messages :: fidget_prepared msg ) ;
     void send ( typename messages :: fidget_render msg ) ;
+    void send ( typename messages :: fidget_render_reply msg ) ;
+    void send ( typename messages :: fidget_render_request msg ) ;
     void send ( typename messages :: fidget_update msg ) ;
     void send ( typename messages :: game_launch_permit msg ) ;
     void send ( typename messages :: game_render msg ) ;
@@ -801,6 +805,18 @@ void shy_mediator < mediator_types > :: send ( typename messages :: fidget_done 
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: fidget_render msg )
+{
+    _logic_fidget . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: fidget_render_reply msg )
+{
+    _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: fidget_render_request msg )
 {
     _logic_fidget . get ( ) . receive ( msg ) ;
 }
