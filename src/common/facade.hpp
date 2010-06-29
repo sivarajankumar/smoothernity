@@ -35,22 +35,22 @@ class shy_facade
         < platform 
         , shy_engine_camera
         , shy_engine_math
-        , shy_engine_rasterizer
-        , shy_engine_render
+        , platform_scheduler :: template module_wrapper < shy_engine_rasterizer > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_engine_render > :: template scheduled_module
         , shy_engine_render_stateless
         , platform_scheduler :: template module_wrapper < shy_logic > :: template scheduled_module
-        , shy_logic_application
-        , shy_logic_camera
-        , shy_logic_entities
-        , shy_logic_fidget
-        , shy_logic_game
-        , shy_logic_image
-        , shy_logic_land
-        , shy_logic_sound
-        , shy_logic_text
+        , platform_scheduler :: template module_wrapper < shy_logic_application > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_camera > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_entities > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_fidget > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_game > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_image > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_land > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_sound > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_text > :: template scheduled_module
         , shy_logic_text_stateless
-        , shy_logic_title
-        , shy_logic_touch
+        , platform_scheduler :: template module_wrapper < shy_logic_title > :: template scheduled_module
+        , platform_scheduler :: template module_wrapper < shy_logic_touch > :: template scheduled_module
         > >
         _mediator_type ;
     typedef typename _mediator_type :: messages messages ;
@@ -63,22 +63,22 @@ public :
     void video_mode_changed ( ) ;
 private :
     _mediator_type _mediator ;
-    shy_engine_rasterizer < _mediator_type > _engine_rasterizer ;
-    shy_engine_render < _mediator_type > _engine_render ;
+    typename platform_scheduler :: template module_wrapper < shy_engine_rasterizer > :: template scheduled_module < _mediator_type > _engine_rasterizer ;
+    typename platform_scheduler :: template module_wrapper < shy_engine_render > :: template scheduled_module < _mediator_type > _engine_render ;
     shy_engine_render_stateless < _mediator_type > _engine_render_stateless ;
     typename platform_scheduler :: template module_wrapper < shy_logic > :: template scheduled_module < _mediator_type > _logic ;
-    shy_logic_application < _mediator_type > _logic_application ;
-    shy_logic_camera < _mediator_type > _logic_camera ;
-    shy_logic_entities < _mediator_type > _logic_entities ;
-    shy_logic_fidget < _mediator_type > _logic_fidget ;
-    shy_logic_game < _mediator_type > _logic_game ;
-    shy_logic_image < _mediator_type > _logic_image ;
-    shy_logic_land < _mediator_type > _logic_land ;
-    shy_logic_sound < _mediator_type > _logic_sound ;
-    shy_logic_text < _mediator_type > _logic_text ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_application > :: template scheduled_module < _mediator_type > _logic_application ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_camera > :: template scheduled_module < _mediator_type > _logic_camera ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_entities > :: template scheduled_module < _mediator_type > _logic_entities ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_fidget > :: template scheduled_module < _mediator_type > _logic_fidget ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_game > :: template scheduled_module < _mediator_type > _logic_game ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_image > :: template scheduled_module < _mediator_type > _logic_image ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_land > :: template scheduled_module < _mediator_type > _logic_land ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_sound > :: template scheduled_module < _mediator_type > _logic_sound ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_text > :: template scheduled_module < _mediator_type > _logic_text ;
     shy_logic_text_stateless < _mediator_type > _logic_text_stateless ;
-    shy_logic_title < _mediator_type > _logic_title ;
-    shy_logic_touch < _mediator_type > _logic_touch ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_title > :: template scheduled_module < _mediator_type > _logic_title ;
+    typename platform_scheduler :: template module_wrapper < shy_logic_touch > :: template scheduled_module < _mediator_type > _logic_touch ;
 } ;
 
 template < typename platform >
