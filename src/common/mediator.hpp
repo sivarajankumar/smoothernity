@@ -195,6 +195,8 @@ public :
         class touch_update { } ;
         class update { } ;
         class use_ortho_projection { } ;
+        class use_ortho_projection_reply { } ;
+        class use_ortho_projection_request { } ;
         class use_perspective_projection_reply { } ;
         class use_perspective_projection_request { } ;
         class use_text_texture { } ;
@@ -325,6 +327,8 @@ public :
     void send ( typename messages :: touch_update msg ) ;
     void send ( typename messages :: update msg ) ;
     void send ( typename messages :: use_ortho_projection msg ) ;
+    void send ( typename messages :: use_ortho_projection_reply msg ) ;
+    void send ( typename messages :: use_ortho_projection_request msg ) ;
     void send ( typename messages :: use_perspective_projection_reply msg ) ;
     void send ( typename messages :: use_perspective_projection_request msg ) ;
     void send ( typename messages :: use_text_texture msg ) ;
@@ -1043,6 +1047,18 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: use_ortho_projection msg )
 {
     _logic . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: use_ortho_projection_request msg )
+{
+    _logic . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: use_ortho_projection_reply msg )
+{
+    _logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

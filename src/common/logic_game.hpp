@@ -30,11 +30,10 @@ public :
     void receive ( typename messages :: near_plane_distance_reply msg ) ;
     void receive ( typename messages :: camera_matrix_reply msg ) ;
     void receive ( typename messages :: use_perspective_projection_reply msg ) ;
+    void receive ( typename messages :: use_ortho_projection_reply msg ) ;
     void receive ( typename messages :: land_render_reply msg ) ;
     void receive ( typename messages :: entities_render_reply msg ) ;
 private :
-    void _render_scene ( ) ;
-    void _render_hud ( ) ;
     void _clear_screen ( ) ;
     void _update_color ( ) ;
     void _proceed_with_render ( ) ;
@@ -57,6 +56,9 @@ private :
     
     num_whole _use_perspective_projection_requested ;
     num_whole _use_perspective_projection_replied ;
+
+    num_whole _use_ortho_projection_requested ;
+    num_whole _use_ortho_projection_replied ;
     
     num_whole _land_render_requested ;
     num_whole _land_render_replied ;
@@ -80,6 +82,8 @@ shy_logic_game < mediator > :: shy_logic_game ( )
     _camera_matrix_replied = platform :: math_consts . whole_false ;
     _use_perspective_projection_requested = platform :: math_consts . whole_false ;
     _use_perspective_projection_replied = platform :: math_consts . whole_false ;
+    _use_ortho_projection_requested = platform :: math_consts . whole_false ;
+    _use_ortho_projection_replied = platform :: math_consts . whole_false ;
     _land_render_requested = platform :: math_consts . whole_false ;
     _land_render_replied = platform :: math_consts . whole_false ;
     _entities_render_requested = platform :: math_consts . whole_false ;
@@ -227,6 +231,17 @@ void shy_logic_game < mediator > :: receive ( typename messages :: entities_rend
 }
 
 template < typename mediator >
+void shy_logic_game < mediator > :: receive ( typename messages :: use_ortho_projection_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _use_ortho_projection_requested ) )
+    {
+        _use_ortho_projection_requested = platform :: math_consts . whole_false ;
+        _use_ortho_projection_replied = platform :: math_consts . whole_true ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_game < mediator > :: _proceed_with_render ( )
 {
     if ( platform_conditions :: whole_is_true ( _camera_matrix_replied )
@@ -236,15 +251,9 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _camera_matrix_replied = platform :: math_consts . whole_false ;
         _near_plane_distance_replied = platform :: math_consts . whole_false ;
         _clear_screen ( ) ;
-        _render_scene ( ) ;
-    }
-    if ( platform_conditions :: whole_is_true ( _land_render_replied )
-      && platform_conditions :: whole_is_true ( _entities_render_replied )
-       )
-    {
-        _land_render_replied = platform :: math_consts . whole_false ;
-        _entities_render_replied = platform :: math_consts . whole_false ;
-        _render_hud ( ) ;
+        
+        _use_perspective_projection_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: use_perspective_projection_request ( ) ) ;    
     }
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_replied ) )
     {
@@ -261,25 +270,26 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _mediator . get ( ) . send ( typename messages :: land_render_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: entities_render_request ( ) ) ;
     }
-}
-
-template < typename mediator >
-void shy_logic_game < mediator > :: _render_scene ( )
-{
-    _use_perspective_projection_requested = platform :: math_consts . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: use_perspective_projection_request ( ) ) ;    
-}
-
-template < typename mediator >
-void shy_logic_game < mediator > :: _render_hud ( )
-{
-    _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: use_ortho_projection ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: text_render ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: image_render ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: touch_render ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( _land_render_replied )
+      && platform_conditions :: whole_is_true ( _entities_render_replied )
+       )
+    {
+        _land_render_replied = platform :: math_consts . whole_false ;
+        _entities_render_replied = platform :: math_consts . whole_false ;
+        
+        _use_ortho_projection_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: use_ortho_projection_request ( ) ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _use_ortho_projection_replied ) )
+    {
+        _use_ortho_projection_replied = platform :: math_consts . whole_false ;
+        _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: text_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: image_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: touch_render ( ) ) ;
+    }
 }
 
 template < typename mediator >
