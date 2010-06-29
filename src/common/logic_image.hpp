@@ -29,7 +29,7 @@ public :
     shy_logic_image ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: image_done msg ) ;
-    void receive ( typename messages :: image_render msg ) ;
+    void receive ( typename messages :: image_render_request msg ) ;
     void receive ( typename messages :: image_update msg ) ;
     void receive ( typename messages :: image_prepare_permit msg ) ;
     void receive ( typename messages :: render_texture_create_reply msg ) ;
@@ -86,10 +86,11 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_done m
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_render msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: image_render_request msg )
 {
     if ( platform_conditions :: whole_is_true ( _image_mesh_created ) && platform_conditions :: whole_is_true ( _image_texture_loaded ) )
         _render_image_mesh ( ) ;
+    _mediator . get ( ) . send ( typename messages :: image_render_reply ( ) ) ;
 }
 
 template < typename mediator >

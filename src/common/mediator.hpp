@@ -122,7 +122,8 @@ public :
         class image_done { } ;
         class image_prepare_permit { } ;
         class image_prepared { } ;
-        class image_render { } ;
+        class image_render_reply { } ;
+        class image_render_request { } ;
         class image_update { } ;
         class init { } ;
         class land_done { } ;
@@ -255,7 +256,8 @@ public :
     void send ( typename messages :: image_done msg ) ;
     void send ( typename messages :: image_prepare_permit msg ) ;
     void send ( typename messages :: image_prepared msg ) ;
-    void send ( typename messages :: image_render msg ) ;
+    void send ( typename messages :: image_render_reply msg ) ;
+    void send ( typename messages :: image_render_request msg ) ;
     void send ( typename messages :: image_update msg ) ;
     void send ( typename messages :: init msg ) ;
     void send ( typename messages :: land_done msg ) ;
@@ -823,7 +825,13 @@ void shy_mediator < mediator_types > :: send ( typename messages :: image_done m
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: image_render msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: image_render_reply msg )
+{
+    _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: image_render_request msg )
 {
     _logic_image . get ( ) . receive ( msg ) ;
 }
