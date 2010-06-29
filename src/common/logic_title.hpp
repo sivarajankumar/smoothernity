@@ -47,6 +47,7 @@ public :
     void receive ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
     void receive ( typename messages :: use_ortho_projection_reply msg ) ;
+    void receive ( typename messages :: fidget_render_reply msg ) ;
 private :
     void _title_create ( ) ;
     void _title_render ( ) ;
@@ -58,6 +59,7 @@ private :
     void _animate_disappear ( ) ;
     void _animate_lifecycle ( ) ;
     void _bake_next_letter ( ) ;
+    void _proceed_with_render ( ) ;
     void _proceed_with_letter_creation ( ) ;
     void _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
@@ -79,6 +81,10 @@ private :
     num_whole _mesh_create_replied ;
     
     num_whole _use_ortho_projection_requested ;
+    num_whole _use_ortho_projection_replied ;
+    
+    num_whole _fidget_render_requested ;
+    num_whole _fidget_render_replied ;
     
     num_whole _text_letter_big_tex_coords_requested ;
     num_whole _text_letter_big_tex_coords_replied ;
@@ -102,13 +108,13 @@ private :
 template < typename mediator >
 shy_logic_title < mediator > :: shy_logic_title ( )
 {
-    platform_math :: make_num_whole ( _title_launch_permitted , false ) ;
-    platform_math :: make_num_whole ( _title_finished , false ) ;
-    platform_math :: make_num_whole ( _title_created , false ) ;
-    platform_math :: make_num_whole ( _title_appeared , false ) ;
-    platform_math :: make_num_whole ( _disappear_at_frames , 0 ) ;
-    platform_math :: make_num_fract ( _scene_scale , 1 , 1 ) ;
-    platform_math :: make_num_fract ( _scene_scale_frames , 0 , 1 ) ;
+    _title_launch_permitted = platform :: math_consts . whole_false ;
+    _title_finished = platform :: math_consts . whole_false ;
+    _title_created = platform :: math_consts . whole_false ;
+    _title_appeared = platform :: math_consts . whole_false ;
+    _disappear_at_frames = platform :: math_consts . whole_0 ;
+    _scene_scale = platform :: math_consts . fract_1 ;
+    _scene_scale_frames = platform :: math_consts . fract_0 ;
     _letters_count = platform :: math_consts . whole_0 ;
     _title_frames = platform :: math_consts . whole_0 ;
     _bake_letter_index = platform :: math_consts . whole_0 ;
@@ -117,6 +123,9 @@ shy_logic_title < mediator > :: shy_logic_title ( )
     _mesh_create_requested = platform :: math_consts . whole_false ;
     _mesh_create_replied = platform :: math_consts . whole_false ;
     _use_ortho_projection_requested = platform :: math_consts . whole_false ;
+    _use_ortho_projection_replied = platform :: math_consts . whole_false;
+    _fidget_render_requested = platform :: math_consts . whole_false ;
+    _fidget_render_replied = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -156,16 +165,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: use_ortho_pr
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_requested ) )
     {
         _use_ortho_projection_requested = platform :: math_consts . whole_false ;
-        typename messages :: render_clear_screen clear_screen_msg ;
-        clear_screen_msg . r = platform :: math_consts . fract_0 ;
-        clear_screen_msg . g = platform :: math_consts . fract_0 ;
-        clear_screen_msg . b = platform :: math_consts . fract_0 ;
-        _mediator . get ( ) . send ( clear_screen_msg ) ;
-        _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: fidget_render ( ) ) ;
-        if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
-            _title_render ( ) ;
+        _use_ortho_projection_replied = platform :: math_consts . whole_true ;
+        _proceed_with_render ( ) ;
     }
 }
 
@@ -216,6 +217,41 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
         _tex_coords_bottom = msg . bottom ;
         _tex_coords_top = msg . top ;
         _proceed_with_letter_creation ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: receive ( typename messages :: fidget_render_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _fidget_render_requested ) )
+    {
+        _fidget_render_requested = platform :: math_consts . whole_false ;
+        _fidget_render_replied = platform :: math_consts . whole_true ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _proceed_with_render ( )
+{
+    if ( platform_conditions :: whole_is_true ( _use_ortho_projection_replied ) )
+    {
+        _use_ortho_projection_replied = platform :: math_consts . whole_false ;
+        typename messages :: render_clear_screen clear_screen_msg ;
+        clear_screen_msg . r = platform :: math_consts . fract_0 ;
+        clear_screen_msg . g = platform :: math_consts . fract_0 ;
+        clear_screen_msg . b = platform :: math_consts . fract_0 ;
+        _mediator . get ( ) . send ( clear_screen_msg ) ;
+        _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
+
+        _fidget_render_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: fidget_render_request ( ) ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _fidget_render_replied ) )
+    {
+        _fidget_render_replied = platform :: math_consts . whole_false ;
+        if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
+            _title_render ( ) ;
     }
 }
 
