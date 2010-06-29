@@ -92,7 +92,7 @@ public :
     void receive ( typename messages :: text_prepare_permit msg ) ;
     void receive ( typename messages :: text_render_request msg ) ;
     void receive ( typename messages :: text_update msg ) ;
-    void receive ( typename messages :: use_text_texture msg ) ;
+    void receive ( typename messages :: use_text_texture_request msg ) ;
     void receive ( typename messages :: render_texture_create_reply msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_request msg ) ;
@@ -243,7 +243,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_done msg
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: use_text_texture msg )
+void shy_logic_text < mediator > :: receive ( typename messages :: use_text_texture_request msg )
 {
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
@@ -251,6 +251,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: use_text_text
         texture_select_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
+    _mediator . get ( ) . send ( typename messages :: use_text_texture_reply ( ) ) ;
 }
 
 template < typename mediator >

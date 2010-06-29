@@ -201,7 +201,8 @@ public :
         class use_ortho_projection_request { } ;
         class use_perspective_projection_reply { } ;
         class use_perspective_projection_request { } ;
-        class use_text_texture { } ;
+        class use_text_texture_reply { } ;
+        class use_text_texture_request { } ;
         class video_mode_changed { } ;
     } ;
     
@@ -335,7 +336,8 @@ public :
     void send ( typename messages :: use_ortho_projection_request msg ) ;
     void send ( typename messages :: use_perspective_projection_reply msg ) ;
     void send ( typename messages :: use_perspective_projection_request msg ) ;
-    void send ( typename messages :: use_text_texture msg ) ;
+    void send ( typename messages :: use_text_texture_reply msg ) ;
+    void send ( typename messages :: use_text_texture_request msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
 public :
     const engine_render_consts_type & engine_render_consts ( ) ;
@@ -1086,9 +1088,15 @@ void shy_mediator < mediator_types > :: send ( typename messages :: game_launch_
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: use_text_texture msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: use_text_texture_request msg )
 {
     _logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: use_text_texture_reply msg )
+{
+    _logic_title . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

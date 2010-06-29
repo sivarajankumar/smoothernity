@@ -48,6 +48,7 @@ public :
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
     void receive ( typename messages :: use_ortho_projection_reply msg ) ;
     void receive ( typename messages :: fidget_render_reply msg ) ;
+    void receive ( typename messages :: use_text_texture_reply msg ) ;
 private :
     void _title_create ( ) ;
     void _title_render ( ) ;
@@ -85,6 +86,9 @@ private :
     
     num_whole _fidget_render_requested ;
     num_whole _fidget_render_replied ;
+
+    num_whole _use_text_texture_requested ;
+    num_whole _use_text_texture_replied ;
     
     num_whole _text_letter_big_tex_coords_requested ;
     num_whole _text_letter_big_tex_coords_replied ;
@@ -126,6 +130,8 @@ shy_logic_title < mediator > :: shy_logic_title ( )
     _use_ortho_projection_replied = platform :: math_consts . whole_false;
     _fidget_render_requested = platform :: math_consts . whole_false ;
     _fidget_render_replied = platform :: math_consts . whole_false ;
+    _use_text_texture_requested = platform :: math_consts . whole_false ;
+    _use_text_texture_replied = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -227,6 +233,18 @@ void shy_logic_title < mediator > :: receive ( typename messages :: fidget_rende
     {
         _fidget_render_requested = platform :: math_consts . whole_false ;
         _fidget_render_replied = platform :: math_consts . whole_true ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: receive ( typename messages :: use_text_texture_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _use_text_texture_requested ) )
+    {
+        _use_text_texture_requested = platform :: math_consts . whole_false ;
+        _use_text_texture_replied = platform :: math_consts . whole_true ;
+        _proceed_with_render ( ) ;
     }
 }
 
@@ -251,7 +269,15 @@ void shy_logic_title < mediator > :: _proceed_with_render ( )
     {
         _fidget_render_replied = platform :: math_consts . whole_false ;
         if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
-            _title_render ( ) ;
+        {
+            _use_text_texture_requested = platform :: math_consts . whole_true ;
+            _mediator . get ( ) . send ( typename messages :: use_text_texture_request ( ) ) ;
+        }
+    }
+    if ( platform_conditions :: whole_is_true ( _use_text_texture_replied ) )
+    {
+        _use_text_texture_replied = platform :: math_consts . whole_false ;
+        _title_render ( ) ;
     }
 }
 
@@ -402,7 +428,6 @@ void shy_logic_title < mediator > :: _title_render ( )
     platform_matrix :: set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
     
     _mediator . get ( ) . send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: use_text_texture ( ) ) ;
     
     typename messages :: render_matrix_load matrix_load_msg ;
     matrix_load_msg . matrix = scene_tm ;
