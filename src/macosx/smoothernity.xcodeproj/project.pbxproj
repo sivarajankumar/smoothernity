@@ -400,12 +400,12 @@
 				8819C50E11C93512003A552B /* matrix_float.hpp */,
 				8819C51A11C93635003A552B /* matrix_float_insider.hpp */,
 				8819C32511C90AAF003A552B /* pointer.hpp */,
+				88336C4B11DA24CE002B9172 /* scheduler_random.hpp */,
 				8819C24411C8E11D003A552B /* static_array.hpp */,
 				8819C29011C8F262003A552B /* static_array_insider.hpp */,
 				886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */,
 				8819C56B11C939AD003A552B /* vector_float.hpp */,
 				8819C56D11C939EF003A552B /* vector_float_insider.hpp */,
-				88336C4B11DA24CE002B9172 /* scheduler_random.hpp */,
 			);
 			name = platform;
 			path = ../platform;
