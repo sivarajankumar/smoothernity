@@ -56,6 +56,7 @@ private :
     matrix_data _camera_matrix ;
     
     num_whole _use_perspective_projection_requested ;
+    num_whole _use_perspective_projection_replied ;
     
     num_whole _land_render_requested ;
     num_whole _land_render_replied ;
@@ -78,6 +79,7 @@ shy_logic_game < mediator > :: shy_logic_game ( )
     _camera_matrix_requested = platform :: math_consts . whole_false ;
     _camera_matrix_replied = platform :: math_consts . whole_false ;
     _use_perspective_projection_requested = platform :: math_consts . whole_false ;
+    _use_perspective_projection_replied = platform :: math_consts . whole_false ;
     _land_render_requested = platform :: math_consts . whole_false ;
     _land_render_replied = platform :: math_consts . whole_false ;
     _entities_render_requested = platform :: math_consts . whole_false ;
@@ -197,18 +199,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: use_perspecti
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_requested ) )
     {
         _use_perspective_projection_requested = platform :: math_consts . whole_false ;
-        
-        _mediator . get ( ) . send ( typename messages :: render_enable_depth_test ( ) ) ;
-        
-        typename messages :: render_matrix_load matrix_load_msg ;
-        matrix_load_msg . matrix = _camera_matrix ;
-        _mediator . get ( ) . send ( matrix_load_msg ) ;
-        
-        _land_render_requested = platform :: math_consts . whole_true ;
-        _entities_render_requested = platform :: math_consts . whole_true ;
-        
-        _mediator . get ( ) . send ( typename messages :: land_render_request ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: entities_render_request ( ) ) ;        
+        _use_perspective_projection_replied = platform :: math_consts . whole_true ;
+        _proceed_with_render ( ) ;        
     }
 }
 
@@ -253,6 +245,21 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _land_render_replied = platform :: math_consts . whole_false ;
         _entities_render_replied = platform :: math_consts . whole_false ;
         _render_hud ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _use_perspective_projection_replied ) )
+    {
+        _use_perspective_projection_replied = platform :: math_consts . whole_false ;
+        _mediator . get ( ) . send ( typename messages :: render_enable_depth_test ( ) ) ;
+        
+        typename messages :: render_matrix_load matrix_load_msg ;
+        matrix_load_msg . matrix = _camera_matrix ;
+        _mediator . get ( ) . send ( matrix_load_msg ) ;
+        
+        _land_render_requested = platform :: math_consts . whole_true ;
+        _entities_render_requested = platform :: math_consts . whole_true ;
+        
+        _mediator . get ( ) . send ( typename messages :: land_render_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: entities_render_request ( ) ) ;
     }
 }
 
