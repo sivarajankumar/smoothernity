@@ -13,7 +13,22 @@ class shy_engine_render_stateless
 
     static const_int_32 _texture_size_pow2_base = 8 ;
     static const_int_32 _texture_size = 1 << _texture_size_pow2_base ;
+    
 public :    
+    class mesh_id
+    {
+        friend class shy_engine_render < mediator > ;
+    private :
+        num_whole _mesh_id ;
+    } ;
+    
+    class texture_id
+    {
+        friend class shy_engine_render < mediator > ;
+    private :
+        num_whole _texture_id ;
+    } ;
+    
     class engine_render_consts_type
     {
     public :

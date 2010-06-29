@@ -1,8 +1,9 @@
 template < typename mediator >
 class shy_engine_render
 {
-    typedef typename mediator :: messages messages ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
+    typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
@@ -21,6 +22,7 @@ class shy_engine_render
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: texture_id texture_id ;
     
     static const_int_32 _max_meshes = 100 ;
     static const_int_32 _max_vertices = 1000 ;
@@ -49,21 +51,6 @@ class shy_engine_render
         typename platform_static_array :: template static_array < vertex_data , _max_vertices > vertices ;
         typename platform_static_array :: template static_array < index_data , _max_indices > triangle_strip_indices ;
         typename platform_static_array :: template static_array < index_data , _max_indices > triangle_fan_indices ;
-    } ;
-    
-public :
-    class mesh_id
-    {
-        friend class shy_engine_render ;
-    private :
-        num_whole _mesh_id ;
-    } ;
-    
-    class texture_id
-    {
-        friend class shy_engine_render ;
-    private :
-        num_whole _texture_id ;
     } ;
     
 public :
