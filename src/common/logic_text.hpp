@@ -90,7 +90,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: text_done msg ) ;
     void receive ( typename messages :: text_prepare_permit msg ) ;
-    void receive ( typename messages :: text_render msg ) ;
+    void receive ( typename messages :: text_render_request msg ) ;
     void receive ( typename messages :: text_update msg ) ;
     void receive ( typename messages :: use_text_texture msg ) ;
     void receive ( typename messages :: render_texture_create_reply msg ) ;
@@ -306,10 +306,11 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_prepare_
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_render msg )
+void shy_logic_text < mediator > :: receive ( typename messages :: text_render_request msg )
 {
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
         _render_text_mesh ( ) ;
+    _mediator . get ( ) . send ( typename messages :: text_render_reply ( ) ) ;
 }
 
 template < typename mediator >

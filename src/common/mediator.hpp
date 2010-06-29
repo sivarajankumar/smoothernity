@@ -182,7 +182,8 @@ public :
         class text_letter_small_tex_coords_request { public : letter_id letter ; } ;
         class text_prepare_permit { } ;
         class text_prepared { } ;
-        class text_render { } ;
+        class text_render_reply { } ;
+        class text_render_request { } ;
         class text_update { } ;
         class title_done { } ;
         class title_finished { } ;
@@ -314,7 +315,8 @@ public :
     void send ( typename messages :: text_letter_small_tex_coords_request msg ) ;
     void send ( typename messages :: text_prepare_permit msg ) ;
     void send ( typename messages :: text_prepared msg ) ;
-    void send ( typename messages :: text_render msg ) ;
+    void send ( typename messages :: text_render_reply msg ) ;
+    void send ( typename messages :: text_render_request msg ) ;
     void send ( typename messages :: text_update msg ) ;
     void send ( typename messages :: title_done msg ) ;
     void send ( typename messages :: title_finished msg ) ;
@@ -851,7 +853,13 @@ void shy_mediator < mediator_types > :: send ( typename messages :: text_done ms
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: text_render msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: text_render_reply msg )
+{
+    _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: text_render_request msg )
 {
     _logic_text . get ( ) . receive ( msg ) ;
 }
