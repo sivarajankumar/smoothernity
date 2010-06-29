@@ -3,7 +3,7 @@ class shy_logic_camera
 {
     typedef typename mediator :: engine_camera engine_camera ;
     typedef typename mediator :: engine_math engine_math ;
-    typedef typename mediator :: engine_render engine_render ;
+    typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -530,7 +530,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     num_fract aspect_height ;
     num_fract entity_height ;
     
-    engine_render :: get_aspect_height ( aspect_height ) ;
+    engine_render_stateless :: get_aspect_height ( aspect_height ) ;
     platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: make_num_fract ( up_z , 0 , 1 ) ;

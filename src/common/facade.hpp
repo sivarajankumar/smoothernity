@@ -11,6 +11,7 @@
 #include "engine_math.hpp"
 #include "engine_rasterizer.hpp"
 #include "engine_render.hpp"
+#include "engine_render_stateless.hpp"
 #include "logic.hpp"
 #include "logic_application.hpp"
 #include "logic_camera.hpp"
@@ -34,6 +35,7 @@ class shy_facade
         , shy_engine_math
         , shy_engine_rasterizer
         , shy_engine_render
+        , shy_engine_render_stateless
         , shy_logic
         , shy_logic_application
         , shy_logic_camera

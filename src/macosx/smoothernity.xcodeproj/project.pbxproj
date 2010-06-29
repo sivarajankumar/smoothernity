@@ -141,6 +141,7 @@
 		882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DA811A16B0900F05A15 /* logic_title.hpp */; };
 		882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DB911A1714B00F05A15 /* logic_application.hpp */; };
 		882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DD711A1740800F05A15 /* logic_game.hpp */; };
+		88336BA211DA156D002B9172 /* engine_render_stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88336BA111DA156D002B9172 /* engine_render_stateless.hpp */; };
 		883E9406119D55F60040B1D6 /* logic_image.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 883E9405119D55F60040B1D6 /* logic_image.hpp */; };
 		883E9479119D62680040B1D6 /* macosx_texture_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 883E9477119D62680040B1D6 /* macosx_texture_loader.h */; };
 		883E947A119D62680040B1D6 /* macosx_texture_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 883E9478119D62680040B1D6 /* macosx_texture_loader.m */; };
@@ -207,6 +208,7 @@
 		882B9DA811A16B0900F05A15 /* logic_title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_title.hpp; sourceTree = "<group>"; };
 		882B9DB911A1714B00F05A15 /* logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_application.hpp; sourceTree = "<group>"; };
 		882B9DD711A1740800F05A15 /* logic_game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_game.hpp; sourceTree = "<group>"; };
+		88336BA111DA156D002B9172 /* engine_render_stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_render_stateless.hpp; sourceTree = "<group>"; };
 		883E9405119D55F60040B1D6 /* logic_image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_image.hpp; sourceTree = "<group>"; };
 		883E9477119D62680040B1D6 /* macosx_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_texture_loader.h; sourceTree = "<group>"; };
 		883E9478119D62680040B1D6 /* macosx_texture_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = macosx_texture_loader.m; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				88DBFFB211873D4600584A28 /* engine_math.hpp */,
 				88E76FEA1188A90100631276 /* engine_rasterizer.hpp */,
 				88A615F211D3753A0058F52C /* engine_render.hpp */,
+				88336BA111DA156D002B9172 /* engine_render_stateless.hpp */,
 				8812CEC6117DE26A008F67D9 /* facade.hpp */,
 				8812CEC7117DE26A008F67D9 /* logic.hpp */,
 				882B9DB911A1714B00F05A15 /* logic_application.hpp */,
@@ -450,6 +453,7 @@
 				8819C56E11C939EF003A552B /* vector_float_insider.hpp in Headers */,
 				886D5ECA11CA18B500C5EE01 /* touch_dummy.hpp in Headers */,
 				88A615F311D3753A0058F52C /* engine_render.hpp in Headers */,
+				88336BA211DA156D002B9172 /* engine_render_stateless.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

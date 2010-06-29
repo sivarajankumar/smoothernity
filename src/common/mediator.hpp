@@ -4,6 +4,7 @@ template
     , template < typename mediator > class _engine_math
     , template < typename mediator > class _engine_rasterizer
     , template < typename mediator > class _engine_render
+    , template < typename mediator > class _engine_render_stateless
     , template < typename mediator > class _logic 
     , template < typename mediator > class _logic_application
     , template < typename mediator > class _logic_camera
@@ -29,6 +30,7 @@ public :
         typedef _engine_math < mediator > engine_math ;
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
         typedef _engine_render < mediator > engine_render ;
+        typedef _engine_render_stateless < mediator > engine_render_stateless ;
         typedef _logic < mediator > logic ;
         typedef _logic_application < mediator > logic_application ;
         typedef _logic_camera < mediator > logic_camera ;
@@ -53,15 +55,16 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: texture_id texture_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
     
 private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: engine_render_consts_type engine_render_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
