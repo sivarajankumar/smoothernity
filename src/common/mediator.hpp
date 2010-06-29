@@ -15,6 +15,7 @@ template
     , template < typename mediator > class _logic_land
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_text
+    , template < typename mediator > class _logic_text_stateless
     , template < typename mediator > class _logic_title
     , template < typename mediator > class _logic_touch
     >
@@ -41,6 +42,7 @@ public :
         typedef _logic_land < mediator > logic_land ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_text < mediator > logic_text ;
+        typedef _logic_text_stateless < mediator > logic_text_stateless ;
         typedef _logic_title < mediator > logic_title ;
         typedef _logic_touch < mediator > logic_touch ;
     } ;
@@ -58,9 +60,9 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: texture_id texture_id ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english_type alphabet_english_type ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: alphabet_english_type alphabet_english_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: letter_id letter_id ;
     
 private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
@@ -75,7 +77,8 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image logic_image ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: logic_text_consts_type logic_text_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_consts_type logic_text_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
     typedef typename platform :: platform_math :: const_int_32 const_int_32 ;
@@ -225,6 +228,7 @@ public :
         , typename platform_pointer :: template pointer < logic_land > arg_logic_land
         , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
         , typename platform_pointer :: template pointer < logic_text > arg_logic_text
+        , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
         , typename platform_pointer :: template pointer < logic_title > arg_logic_title
         , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
         ) ;
@@ -360,6 +364,7 @@ private :
     typename platform_pointer :: template pointer < logic_land > _logic_land ;
     typename platform_pointer :: template pointer < logic_sound > _logic_sound ;
     typename platform_pointer :: template pointer < logic_text > _logic_text ;
+    typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < logic_title > _logic_title ;
     typename platform_pointer :: template pointer < logic_touch > _logic_touch ;
 } ;
@@ -384,6 +389,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_land > arg_logic_land
     , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
     , typename platform_pointer :: template pointer < logic_text > arg_logic_text
+    , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
     , typename platform_pointer :: template pointer < logic_title > arg_logic_title
     , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
     )
@@ -401,6 +407,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_land = arg_logic_land ;
     _logic_sound = arg_logic_sound ;
     _logic_text = arg_logic_text ;
+    _logic_text_stateless = arg_logic_text_stateless ;
     _logic_title = arg_logic_title ;
     _logic_touch = arg_logic_touch ;
 
@@ -431,7 +438,7 @@ template < typename mediator_types >
 const typename shy_mediator < mediator_types > :: logic_text_consts_type &
 shy_mediator < mediator_types > :: logic_text_consts ( )
 {
-    return _logic_text . get ( ) . logic_text_consts ;
+    return _logic_text_stateless . get ( ) . logic_text_consts ;
 }
 
 template < typename mediator_types >

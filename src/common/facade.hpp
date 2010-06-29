@@ -22,6 +22,7 @@
 #include "logic_land.hpp"
 #include "logic_sound.hpp"
 #include "logic_text.hpp"
+#include "logic_text_stateless.hpp"
 #include "logic_title.hpp"
 #include "logic_touch.hpp"
 #include "mediator.hpp"
@@ -46,6 +47,7 @@ class shy_facade
         , shy_logic_land
         , shy_logic_sound
         , shy_logic_text
+        , shy_logic_text_stateless
         , shy_logic_title
         , shy_logic_touch
         > >
@@ -73,6 +75,7 @@ private :
     shy_logic_land < _mediator_type > _logic_land ;
     shy_logic_sound < _mediator_type > _logic_sound ;
     shy_logic_text < _mediator_type > _logic_text ;
+    shy_logic_text_stateless < _mediator_type > _logic_text_stateless ;
     shy_logic_title < _mediator_type > _logic_title ;
     shy_logic_touch < _mediator_type > _logic_touch ;
 } ;
@@ -94,6 +97,7 @@ shy_facade < platform > :: shy_facade ( )
         , _logic_land
         , _logic_sound
         , _logic_text
+        , _logic_text_stateless
         , _logic_title
         , _logic_touch
         ) ;

@@ -5,7 +5,7 @@ class shy_logic_title
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: letter_id letter_id ;
-    typedef typename mediator :: logic_text logic_text ;
+    typedef typename mediator :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -211,7 +211,7 @@ template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_reply msg )
 {
     num_whole letters_are_equal ;
-    logic_text :: are_letters_equal ( letters_are_equal , _text_letter_big_tex_coords_letter , msg . letter ) ;
+    logic_text_stateless :: are_letters_equal ( letters_are_equal , _text_letter_big_tex_coords_letter , msg . letter ) ;
     if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_requested ) 
       && platform_conditions :: whole_is_true ( letters_are_equal )
        )
