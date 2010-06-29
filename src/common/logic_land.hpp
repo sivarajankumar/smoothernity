@@ -27,7 +27,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: land_done msg ) ;
     void receive ( typename messages :: land_prepare_permit msg ) ;
-    void receive ( typename messages :: land_render msg ) ;
+    void receive ( typename messages :: land_render_request msg ) ;
     void receive ( typename messages :: land_update msg ) ;
     void receive ( typename messages :: render_texture_create_reply msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
@@ -87,10 +87,11 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_prepare_
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: land_render msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_render_request msg )
 {
     if ( platform_conditions :: whole_is_true ( _land_mesh_created ) && platform_conditions :: whole_is_true ( _land_texture_created ) )
         _render_land ( ) ;
+    _mediator . get ( ) . send ( typename messages :: land_render_reply ( ) ) ;
 }
 
 template < typename mediator >

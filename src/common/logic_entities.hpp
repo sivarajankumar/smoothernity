@@ -31,7 +31,7 @@ public :
     shy_logic_entities ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: entities_done msg ) ;
-    void receive ( typename messages :: entities_render msg ) ;
+    void receive ( typename messages :: entities_render_request msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
     void receive ( typename messages :: entities_update msg ) ;
     void receive ( typename messages :: entities_height_request msg ) ;
@@ -87,10 +87,11 @@ void shy_logic_entities < mediator > :: set_mediator ( typename platform_pointer
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_render msg )
+void shy_logic_entities < mediator > :: receive ( typename messages :: entities_render_request msg )
 {
     if ( platform_conditions :: whole_is_true ( _entity_created ) )
         _entities_render ( ) ;
+    _mediator . get ( ) . send ( typename messages :: entities_render_reply ( ) ) ;
 }
 
 template < typename mediator >

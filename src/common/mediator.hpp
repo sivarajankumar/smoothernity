@@ -107,7 +107,8 @@ public :
         class entities_origin_request { public : num_whole index ; } ;
         class entities_prepare_permit { } ;
         class entities_prepared { } ;
-        class entities_render { } ;
+        class entities_render_reply { } ;
+        class entities_render_request { } ;
         class entities_update { } ;
         class fidget_done { } ;
         class fidget_prepare_permit { } ;
@@ -126,7 +127,8 @@ public :
         class land_done { } ;
         class land_prepare_permit { } ;
         class land_prepared { } ;
-        class land_render { } ;
+        class land_render_reply { } ;
+        class land_render_request { } ;
         class land_update { } ;
         class near_plane_distance_reply { public : num_fract distance ; } ;
         class near_plane_distance_request { } ;
@@ -235,7 +237,8 @@ public :
     void send ( typename messages :: entities_origin_request msg ) ;
     void send ( typename messages :: entities_prepare_permit msg ) ;
     void send ( typename messages :: entities_prepared msg ) ;
-    void send ( typename messages :: entities_render msg ) ;
+    void send ( typename messages :: entities_render_reply msg ) ;
+    void send ( typename messages :: entities_render_request msg ) ;
     void send ( typename messages :: entities_update msg ) ;
     void send ( typename messages :: fidget_done msg ) ;
     void send ( typename messages :: fidget_prepare_permit msg ) ;
@@ -254,7 +257,8 @@ public :
     void send ( typename messages :: land_done msg ) ;
     void send ( typename messages :: land_prepare_permit msg ) ;
     void send ( typename messages :: land_prepared msg ) ;
-    void send ( typename messages :: land_render msg ) ;
+    void send ( typename messages :: land_render_reply msg ) ;
+    void send ( typename messages :: land_render_request msg ) ;
     void send ( typename messages :: land_update msg ) ;
     void send ( typename messages :: near_plane_distance_reply msg ) ;
     void send ( typename messages :: near_plane_distance_request msg ) ;
@@ -776,7 +780,13 @@ void shy_mediator < mediator_types > :: send ( typename messages :: entities_don
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: entities_render msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_render_reply msg )
+{
+    _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: entities_render_request msg )
 {
     _logic_entities . get ( ) . receive ( msg ) ;
 }
@@ -812,7 +822,13 @@ void shy_mediator < mediator_types > :: send ( typename messages :: land_done ms
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: land_render msg )
+void shy_mediator < mediator_types > :: send ( typename messages :: land_render_reply msg )
+{
+    _logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: land_render_request msg )
 {
     _logic_land . get ( ) . receive ( msg ) ;
 }
