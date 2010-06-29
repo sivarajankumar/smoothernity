@@ -62,6 +62,7 @@ private :
     _mediator_type _mediator ;
     shy_engine_rasterizer < _mediator_type > _engine_rasterizer ;
     shy_engine_render < _mediator_type > _engine_render ;
+    shy_engine_render_stateless < _mediator_type > _engine_render_stateless ;
     shy_logic < _mediator_type > _logic ;
     shy_logic_application < _mediator_type > _logic_application ;
     shy_logic_camera < _mediator_type > _logic_camera ;
@@ -82,6 +83,7 @@ shy_facade < platform > :: shy_facade ( )
     _mediator . register_modules
         ( _engine_rasterizer
         , _engine_render
+        , _engine_render_stateless
         , _logic
         , _logic_application
         , _logic_camera

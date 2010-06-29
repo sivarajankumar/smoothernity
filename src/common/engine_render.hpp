@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_engine_render
 {
     typedef typename mediator :: messages messages ;
+    typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
@@ -25,8 +26,8 @@ class shy_engine_render
     static const_int_32 _max_vertices = 1000 ;
     static const_int_32 _max_indices = 1000 ;
     static const_int_32 _max_textures = 5 ;
-    static const_int_32 _texture_size_pow2_base = 8 ;
-    static const_int_32 _texture_size = 1 << _texture_size_pow2_base ;
+    static const_int_32 _texture_size_pow2_base = engine_render_stateless :: _texture_size_pow2_base ;
+    static const_int_32 _texture_size = engine_render_stateless :: _texture_size ;
     
     class _texture_data
     {
@@ -65,15 +66,6 @@ public :
         num_whole _texture_id ;
     } ;
     
-    class engine_render_consts_type
-    {
-    public :
-        engine_render_consts_type ( ) ;
-    public :
-        num_whole texture_width ;
-        num_whole texture_height ;
-    } ;
-
 public :
     shy_engine_render ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -108,8 +100,6 @@ public :
     void receive ( typename messages :: render_matrix_identity msg ) ;
     void receive ( typename messages :: render_enable_face_culling msg ) ;
     void receive ( typename messages :: render_texture_mode_modulate msg ) ;
-public :
-    const engine_render_consts_type engine_render_consts ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_static_array :: template static_array < _texture_data , _max_textures > _textures_datas ;
@@ -123,13 +113,6 @@ shy_engine_render < mediator > :: shy_engine_render ( )
 {
     platform_math :: make_num_whole ( _next_texture_id , 0 ) ;
     platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
-}
-
-template < typename mediator >
-shy_engine_render < mediator > :: engine_render_consts_type :: engine_render_consts_type ( )
-{
-    platform_math :: make_num_whole ( texture_width , _texture_size ) ;
-    platform_math :: make_num_whole ( texture_height , _texture_size ) ;
 }
 
 template < typename mediator >

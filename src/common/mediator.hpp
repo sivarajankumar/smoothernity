@@ -55,9 +55,9 @@ public :
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: texture_id texture_id ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text :: letter_id letter_id ;
@@ -65,7 +65,7 @@ public :
 private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render :: engine_render_consts_type engine_render_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_consts_type engine_render_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
@@ -214,6 +214,7 @@ public :
     void register_modules 
         ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
         , typename platform_pointer :: template pointer < engine_render > arg_engine_render
+        , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
         , typename platform_pointer :: template pointer < logic > arg_logic
         , typename platform_pointer :: template pointer < logic_application > arg_logic_application
         , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
@@ -348,6 +349,7 @@ public :
 private :
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
     typename platform_pointer :: template pointer < engine_render > _engine_render ;
+    typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
     typename platform_pointer :: template pointer < logic > _logic ;
     typename platform_pointer :: template pointer < logic_application > _logic_application ;
     typename platform_pointer :: template pointer < logic_camera > _logic_camera ;
@@ -371,6 +373,7 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: register_modules 
     ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
     , typename platform_pointer :: template pointer < engine_render > arg_engine_render
+    , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
     , typename platform_pointer :: template pointer < logic > arg_logic
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
@@ -387,6 +390,7 @@ void shy_mediator < mediator_types > :: register_modules
 {
     _engine_rasterizer = arg_engine_rasterizer ;
     _engine_render = arg_engine_render ;
+    _engine_render_stateless = arg_engine_render_stateless ;
     _logic = arg_logic ;
     _logic_application = arg_logic_application ;
     _logic_camera = arg_logic_camera ;
@@ -420,7 +424,7 @@ template < typename mediator_types >
 const typename shy_mediator < mediator_types > :: engine_render_consts_type &
 shy_mediator < mediator_types > :: engine_render_consts ( )
 {
-    return _engine_render . get ( ) . engine_render_consts ;
+    return _engine_render_stateless . get ( ) . engine_render_consts ;
 }
 
 template < typename mediator_types >
