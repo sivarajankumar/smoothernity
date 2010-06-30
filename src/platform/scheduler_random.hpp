@@ -3,6 +3,8 @@ class shy_platform_scheduler_random
 {
     typedef typename platform_insider :: platform_pointer platform_pointer ;
 
+    static const int _max_scheduled_modules = 100 ;
+    
     class abstract_scheduled_module
     {
     public :
@@ -32,6 +34,12 @@ public :
     
     class scheduler
     {
+        friend class shy_platform_scheduler_random ;
+    public :
+        scheduler ( ) ;
+    private :
+        abstract_scheduled_module * _modules [ _max_scheduled_modules ] ;
+        int _count ;
     } ;
     
 public :
@@ -44,6 +52,14 @@ public :
 template < typename platform_insider >
 shy_platform_scheduler_random < platform_insider > :: abstract_scheduled_module :: ~ abstract_scheduled_module ( )
 {
+}
+
+template < typename platform_insider >
+shy_platform_scheduler_random < platform_insider > :: scheduler :: scheduler ( )
+{
+    _count = 0;
+    for ( int i = 0 ; i < _max_scheduled_modules ; i ++ )
+        _modules [ i ] = 0 ;
 }
 
 template < typename platform_insider >
@@ -75,9 +91,12 @@ template < typename platform_insider >
 template < typename module_type >
 void shy_platform_scheduler_random < platform_insider > :: register_module_in_scheduler ( module_type & module , scheduler & arg_scheduler )
 {
+    arg_scheduler . _modules [ arg_scheduler . _count ++ ] = ( abstract_scheduled_module * ) & module ;
 }
 
 template < typename platform_insider >
 void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg_scheduler )
 {
+    for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
+        arg_scheduler . _modules [ i ] -> run ( ) ;
 }
