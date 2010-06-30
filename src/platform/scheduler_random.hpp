@@ -5,7 +5,7 @@ class shy_platform_scheduler_random
     typedef typename platform_insider :: platform_static_assert platform_static_assert ;
 
     static const int _max_scheduled_modules = 100 ;
-    static const int _default_max_messages_count = 1000 ;
+    static const int _default_max_messages_count = 100 ;
     static const int _default_max_message_size = 32 * 3 ;
     
     class _abstract_scheduled_module

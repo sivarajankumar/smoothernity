@@ -108,6 +108,7 @@ private :
     num_whole _mesh_create_replied ;
     
     num_whole _rasterize_finalize_requested ;
+    num_whole _rasterize_finalize_replied ;
     
     num_whole _text_mesh_created ;
     num_whole _text_prepare_permitted ;
@@ -128,6 +129,7 @@ template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( )
 {
     _rasterize_finalize_requested = platform :: math_consts . whole_false ;
+    _rasterize_finalize_replied = platform :: math_consts . whole_false ;
     _texture_create_requested = platform :: math_consts . whole_false ;
     _texture_create_replied = platform :: math_consts . whole_false ;
     _mesh_create_requested = platform :: math_consts . whole_false ;
@@ -219,7 +221,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_s
 template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: text_prepare_permit msg )
 {
-    platform_math :: make_num_whole ( _text_prepare_permitted , true ) ;
+    _text_prepare_permitted = platform :: math_consts . whole_true ;
 }
 
 template < typename mediator >
@@ -233,21 +235,8 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_render_r
 template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: text_update msg )
 {
-    if ( platform_conditions :: whole_is_true ( _text_prepare_permitted ) )
-    {
-        if ( platform_conditions :: whole_is_false ( _text_mesh_created ) )
-        {
-            _texture_create_requested = platform :: math_consts . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
-            
-            typename messages :: render_mesh_create_request mesh_create_msg ;
-            mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
-            mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
-            mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
-            _mesh_create_requested = platform :: math_consts . whole_true ;
-            _mediator . get ( ) . send ( mesh_create_msg ) ;
-        }
-    }
+    if ( platform_conditions :: whole_is_false ( _text_mesh_created ) )
+        _proceed_with_create_text ( ) ;    
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
         _update_text_mesh ( ) ;
 }
@@ -282,26 +271,46 @@ void shy_logic_text < mediator > :: receive ( typename messages :: rasterize_fin
     if ( platform_conditions :: whole_is_true ( _rasterize_finalize_requested ) )
     {
         _rasterize_finalize_requested = platform :: math_consts . whole_false ;
-        {
-            typename messages :: render_texture_finalize texture_finalize_msg ;
-            texture_finalize_msg . texture = _text_texture_id ;
-            _mediator . get ( ) . send ( texture_finalize_msg ) ;
-        }
-        _update_text_mesh ( ) ;
-        platform_math :: make_num_whole ( _text_mesh_created , true ) ;
-        _mediator . get ( ) . send ( typename messages :: text_prepared ( ) ) ;
+        _rasterize_finalize_replied = platform :: math_consts . whole_true ;
     }
 }
 
 template < typename mediator >
 void shy_logic_text < mediator > :: _proceed_with_create_text ( )
 {
+    if ( platform_conditions :: whole_is_true ( _text_prepare_permitted ) )
+    {
+        _text_prepare_permitted = platform :: math_consts . whole_false ;
+        
+        _texture_create_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
+        
+        typename messages :: render_mesh_create_request mesh_create_msg ;
+        mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
+        mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
+        mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
+        _mesh_create_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( mesh_create_msg ) ;
+    }
     if ( platform_conditions :: whole_is_true ( _mesh_create_replied )
       && platform_conditions :: whole_is_true ( _texture_create_replied )
        )
     {
+        _mesh_create_replied = platform :: math_consts . whole_false ;
+        _texture_create_replied = platform :: math_consts . whole_false ;
         _create_text_mesh ( ) ;
         _create_text_texture ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _rasterize_finalize_replied ) )
+    {
+        _rasterize_finalize_replied = platform :: math_consts . whole_false ;
+        
+        typename messages :: render_texture_finalize texture_finalize_msg ;
+        texture_finalize_msg . texture = _text_texture_id ;
+        _mediator . get ( ) . send ( texture_finalize_msg ) ;
+        
+        _text_mesh_created = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: text_prepared ( ) ) ;
     }
 }
 
