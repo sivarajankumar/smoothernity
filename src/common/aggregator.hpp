@@ -76,7 +76,7 @@ class shy_aggregator_types
 public :
     typedef _platform platform ;
     typedef typename platform_scheduler :: template module_wrapper < _engine_rasterizer , 1000 > scheduled_engine_rasterizer ;
-    typedef typename platform_scheduler :: template module_wrapper < _engine_render , 70000 > scheduled_engine_render ;
+    typedef typename platform_scheduler :: template module_wrapper < _engine_render , 3000 > scheduled_engine_render ;
     typedef typename platform_scheduler :: template module_wrapper < _logic > scheduled_logic ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_camera > scheduled_logic_camera ;

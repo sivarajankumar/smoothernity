@@ -110,6 +110,10 @@ private :
     num_whole _rasterize_finalize_requested ;
     num_whole _rasterize_finalize_replied ;
     
+    num_whole _empty_texture_created ;
+    num_whole _small_letters_rasterized ;
+    num_whole _big_letters_rasterized ;
+        
     num_whole _text_mesh_created ;
     num_whole _text_prepare_permitted ;
     mesh_id _text_mesh_id ;
@@ -128,6 +132,9 @@ private :
 template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( )
 {
+    _empty_texture_created = platform :: math_consts . whole_false ;
+    _small_letters_rasterized = platform :: math_consts . whole_false ;
+    _big_letters_rasterized = platform :: math_consts . whole_false ;
     _rasterize_finalize_requested = platform :: math_consts . whole_false ;
     _rasterize_finalize_replied = platform :: math_consts . whole_false ;
     _texture_create_requested = platform :: math_consts . whole_false ;
@@ -285,14 +292,14 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
         _texture_create_requested = platform :: math_consts . whole_true ;
         _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
         
+        _mesh_create_requested = platform :: math_consts . whole_true ;
         typename messages :: render_mesh_create_request mesh_create_msg ;
         mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
         mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
         mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
-        _mesh_create_requested = platform :: math_consts . whole_true ;
         _mediator . get ( ) . send ( mesh_create_msg ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _mesh_create_replied )
+    else if ( platform_conditions :: whole_is_true ( _mesh_create_replied )
       && platform_conditions :: whole_is_true ( _texture_create_replied )
        )
     {
@@ -300,8 +307,31 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
         _texture_create_replied = platform :: math_consts . whole_false ;
         _create_text_mesh ( ) ;
         _create_text_texture ( ) ;
+        _empty_texture_created = platform :: math_consts . whole_true ;
     }
-    if ( platform_conditions :: whole_is_true ( _rasterize_finalize_replied ) )
+    else if ( platform_conditions :: whole_is_true ( _empty_texture_created ) )
+    {
+        num_whole small_size ;
+        platform_math :: make_num_whole ( small_size , 16 ) ;
+        _empty_texture_created = platform :: math_consts . whole_false ;
+        _small_letters_rasterized = platform :: math_consts . whole_true ;
+        _rasterize_english_alphabet ( small_size , small_size , _letters_small ) ;
+    }
+    else if ( platform_conditions :: whole_is_true ( _small_letters_rasterized ) )
+    {
+        num_whole big_size ;
+        platform_math :: make_num_whole ( big_size , 32 ) ;
+        _small_letters_rasterized = platform :: math_consts . whole_false ;
+        _big_letters_rasterized = platform :: math_consts . whole_true ;
+        _rasterize_english_alphabet ( big_size , big_size , _letters_big ) ;
+    }
+    else if ( platform_conditions :: whole_is_true ( _big_letters_rasterized ) )
+    {
+        _big_letters_rasterized = platform :: math_consts . whole_false ;
+        _rasterize_finalize_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: rasterize_finalize_request ( ) ) ;
+    }
+    else if ( platform_conditions :: whole_is_true ( _rasterize_finalize_replied ) )
     {
         _rasterize_finalize_replied = platform :: math_consts . whole_false ;
         
@@ -478,12 +508,8 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     num_fract eraser_g ;
     num_fract eraser_b ;
     num_fract eraser_a ;
-    num_whole small_size ;
-    num_whole big_size ;
     texture_width = _mediator . get ( ) . engine_render_consts ( ) . texture_width ;
     texture_height = _mediator . get ( ) . engine_render_consts ( ) . texture_height ;
-    platform_math :: make_num_whole ( small_size , 16 ) ;
-    platform_math :: make_num_whole ( big_size , 32 ) ;
     platform_math :: make_num_fract ( filler_r , 1 , 1 ) ;
     platform_math :: make_num_fract ( filler_g , 1 , 1 ) ;
     platform_math :: make_num_fract ( filler_b , 1 , 1 ) ;
@@ -494,30 +520,17 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     platform_math :: make_num_fract ( eraser_a , 0 , 1 ) ;
     engine_render_stateless :: set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
     engine_render_stateless :: set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
-    for ( num_whole x = platform :: math_consts . whole_0
-        ; platform_conditions :: whole_less_than_whole ( x , texture_width ) 
-        ; platform_math :: inc_whole ( x )
-        )
-    {
-        for ( num_whole y = platform :: math_consts . whole_0 
-            ; platform_conditions :: whole_less_than_whole ( y , texture_height ) 
-            ; platform_math :: inc_whole ( y )
-            )
-        {
-            typename messages :: render_texture_set_texel texture_set_texel_msg ;
-            texture_set_texel_msg . texture = _text_texture_id ;
-            texture_set_texel_msg . x = x ;
-            texture_set_texel_msg . y = y ;
-            texture_set_texel_msg . texel = _eraser ;
-            _mediator . get ( ) . send ( texture_set_texel_msg ) ;
-        }
-    }
-    _origin_y = texture_height ;
-    _rasterize_english_alphabet ( small_size , small_size , _letters_small ) ;
-    _rasterize_english_alphabet ( big_size , big_size , _letters_big ) ;
     
-    _rasterize_finalize_requested = platform :: math_consts . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: rasterize_finalize_request ( ) ) ;
+    typename messages :: render_texture_set_texels_rect set_texels_msg ;
+    set_texels_msg . texel = _eraser ;
+    set_texels_msg . texture = _text_texture_id ;
+    set_texels_msg . left = platform :: math_consts . whole_0 ;
+    set_texels_msg . bottom = platform :: math_consts . whole_0 ;
+    platform_math :: sub_wholes ( set_texels_msg . right , texture_width , platform :: math_consts . whole_1 ) ;
+    platform_math :: sub_wholes ( set_texels_msg . top , texture_height , platform :: math_consts . whole_1 ) ;
+    _mediator . get ( ) . send ( set_texels_msg ) ;
+    
+    _origin_y = texture_height ;
 }
 
 template < typename mediator >
