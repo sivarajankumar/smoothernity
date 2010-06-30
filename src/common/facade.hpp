@@ -38,7 +38,7 @@ public :
     void update ( ) ;
     void video_mode_changed ( ) ;
 private :
-    shy_aggregator
+    shy_aggregator < shy_aggregator_types
         < platform
         , shy_mediator
         , shy_engine_camera
@@ -59,7 +59,7 @@ private :
         , shy_logic_text_stateless
         , shy_logic_title
         , shy_logic_touch
-        >
+        > >
         _aggregator ;
 } ;
 
