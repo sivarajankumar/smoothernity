@@ -1,11 +1,8 @@
-#define concat(x, y) concat1 (x, y)
-#define concat1(x, y) x##y
-#define static_assert(expr) typedef char concat(static_assert_failed_at_line_, __LINE__) [(expr) ? 1 : -1]
-
 template < typename platform_insider >
 class shy_platform_scheduler_random
 {
     typedef typename platform_insider :: platform_pointer platform_pointer ;
+    typedef typename platform_insider :: platform_static_assert platform_static_assert ;
 
     static const int _max_scheduled_modules = 100 ;
     static const int _max_messages_count = 100 ;
@@ -119,7 +116,7 @@ template < typename platform_insider >
 template < typename module , typename message >
 shy_platform_scheduler_random < platform_insider > :: _message_invoker < module , message > :: _message_invoker ( message & arg_message )
 {
-    static_assert ( int ( sizeof ( arg_message ) ) < _max_message_size ) ;
+    typename platform_static_assert :: template static_assert < int ( sizeof ( message ) ) < _max_message_size > ( ) ;
     ( * reinterpret_cast < message * > ( & _message ) ) = arg_message ;
 }
 

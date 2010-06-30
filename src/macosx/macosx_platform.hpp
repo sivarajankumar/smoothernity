@@ -21,6 +21,7 @@
 #include "../platform/scheduler_random.hpp"
 #include "../platform/static_array.hpp"
 #include "../platform/static_array_insider.hpp"
+#include "../platform/static_assert.hpp"
 #include "../platform/touch_dummy.hpp"
 #include "../platform/vector_float.hpp"
 #include "../platform/vector_float_insider.hpp"
@@ -47,6 +48,7 @@ public :
     typedef shy_platform_scheduler_random < shy_macosx_platform_insider > platform_scheduler ;
     typedef shy_macosx_platform_sound < shy_macosx_platform_insider > platform_sound ;
     typedef shy_platform_static_array < shy_macosx_platform_insider > platform_static_array ;
+    typedef shy_platform_static_assert < shy_macosx_platform_insider > platform_static_assert ;
     typedef shy_macosx_platform_time < shy_macosx_platform_insider > platform_time ;
     typedef shy_platform_touch_dummy < shy_macosx_platform_insider > platform_touch ;
     typedef shy_platform_vector_float < shy_macosx_platform_insider > platform_vector ;
@@ -81,6 +83,7 @@ public :
     typedef shy_platform_scheduler_random < shy_macosx_platform_insider > platform_scheduler ;
     typedef shy_macosx_platform_sound < shy_macosx_platform_insider > platform_sound ;
     typedef shy_platform_static_array < shy_macosx_platform_insider > platform_static_array ;
+    typedef shy_platform_static_assert < shy_macosx_platform_insider > platform_static_assert ;
     typedef shy_macosx_platform_time < shy_macosx_platform_insider > platform_time ;
     typedef shy_platform_touch_dummy < shy_macosx_platform_insider > platform_touch ;
     typedef shy_platform_vector_float < shy_macosx_platform_insider > platform_vector ;

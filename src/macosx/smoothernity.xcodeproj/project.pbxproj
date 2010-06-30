@@ -155,6 +155,7 @@
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
 		886D5ECA11CA18B500C5EE01 /* touch_dummy.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */; };
 		88812E1111DB4F25003EC5C4 /* aggregator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812E1011DB4F25003EC5C4 /* aggregator.hpp */; };
+		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
 		88A615F311D3753A0058F52C /* engine_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88A615F211D3753A0058F52C /* engine_render.hpp */; };
 		88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 		88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E76FEA1188A90100631276 /* engine_rasterizer.hpp */; };
@@ -225,6 +226,7 @@
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
 		886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch_dummy.hpp; sourceTree = "<group>"; };
 		88812E1011DB4F25003EC5C4 /* aggregator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aggregator.hpp; sourceTree = "<group>"; };
+		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
 		88A615F211D3753A0058F52C /* engine_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_render.hpp; sourceTree = "<group>"; };
 		88DBFFB211873D4600584A28 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 		88E76FEA1188A90100631276 /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				88336C4B11DA24CE002B9172 /* scheduler_random.hpp */,
 				8819C24411C8E11D003A552B /* static_array.hpp */,
 				8819C29011C8F262003A552B /* static_array_insider.hpp */,
+				88812EE511DB7EA8003EC5C4 /* static_assert.hpp */,
 				886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */,
 				8819C56B11C939AD003A552B /* vector_float.hpp */,
 				8819C56D11C939EF003A552B /* vector_float_insider.hpp */,
@@ -466,6 +469,7 @@
 				88336C2011DA1C67002B9172 /* logic_text_stateless.hpp in Headers */,
 				88336C4C11DA24CE002B9172 /* scheduler_random.hpp in Headers */,
 				88812E1111DB4F25003EC5C4 /* aggregator.hpp in Headers */,
+				88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
