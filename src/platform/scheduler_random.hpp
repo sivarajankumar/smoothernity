@@ -1,11 +1,15 @@
+#define concat(x, y) concat1 (x, y)
+#define concat1(x, y) x##y
+#define static_assert(expr) typedef char concat(static_assert_failed_at_line_, __LINE__) [(expr) ? 1 : -1]
+
 template < typename platform_insider >
 class shy_platform_scheduler_random
 {
     typedef typename platform_insider :: platform_pointer platform_pointer ;
 
     static const int _max_scheduled_modules = 100 ;
-    static const int _max_message_size = 100 ;
     static const int _max_messages_count = 100 ;
+    static const int _max_message_size = 32 * 3 ;
     
     class _abstract_scheduled_module
     {
@@ -26,6 +30,7 @@ class shy_platform_scheduler_random
     : public _abstract_message_invoker
     {
     public :
+        _message_invoker ( message & arg_message ) ;
         virtual void invoke ( void * arg_module ) ;
     private :
         char _message [ _max_message_size ] ;
@@ -66,15 +71,20 @@ public :
         : public _abstract_scheduled_module
         {
         public :
+            scheduled_module ( ) ;
+            
             template < typename message_type >
             void receive ( message_type msg ) ;
             
             void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
             virtual void run ( ) ;
         private :
+            void _switch_queues ( ) ;
+        private :
             module < mediator > _module ;
-            _messages_queue _run_queue ;
-            _messages_queue _accumulation_queue ;
+            _messages_queue _queues [ 2 ] ;
+            int _accumulation_queue ;
+            int _run_queue ;
         } ;
     } ;
     
@@ -107,8 +117,17 @@ shy_platform_scheduler_random < platform_insider > :: _abstract_message_invoker 
 
 template < typename platform_insider >
 template < typename module , typename message >
+shy_platform_scheduler_random < platform_insider > :: _message_invoker < module , message > :: _message_invoker ( message & arg_message )
+{
+    static_assert ( int ( sizeof ( arg_message ) ) < _max_message_size ) ;
+    ( * reinterpret_cast < message * > ( & _message ) ) = arg_message ;
+}
+
+template < typename platform_insider >
+template < typename module , typename message >
 void shy_platform_scheduler_random < platform_insider > :: _message_invoker < module , message > :: invoke ( void * arg_module )
 {
+    reinterpret_cast < module * > ( arg_module ) -> receive ( * reinterpret_cast < message * > ( & _message ) ) ;
 }
 
 template < typename platform_insider >
@@ -134,6 +153,15 @@ shy_platform_scheduler_random < platform_insider > :: scheduler :: scheduler ( )
 template < typename platform_insider >
 template < template < typename mediator > class module >
 template < typename mediator >
+shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: scheduled_module ( )
+: _accumulation_queue ( 0 )
+, _run_queue ( 1 )
+{
+}
+
+template < typename platform_insider >
+template < template < typename mediator > class module >
+template < typename mediator >
 void shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: set_mediator
     ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
@@ -146,6 +174,13 @@ template < typename mediator >
 template < typename message_type >
 void shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: receive ( message_type msg )
 {
+    if ( _queues [ _accumulation_queue ] . count < _max_messages_count )
+    {
+        * reinterpret_cast < _message_invoker < module < mediator > , message_type > * >
+            ( & ( _queues [ _accumulation_queue ] . queue [ _queues [ _accumulation_queue ] . count ] ) ) = 
+                _message_invoker < module < mediator > , message_type > ( msg ) ;
+        _queues [ _accumulation_queue ] . count ++ ; 
+    }
     _module . receive ( msg ) ;
 }
 
@@ -154,13 +189,24 @@ template < template < typename mediator > class module >
 template < typename mediator >
 void shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: run ( )
 {
+    _queues [ _accumulation_queue ] . count = 0 ;
+}
+
+template < typename platform_insider >
+template < template < typename mediator > class module >
+template < typename mediator >
+void shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: _switch_queues ( )
+{
+    _accumulation_queue = ( _accumulation_queue + 1 ) % 2 ;
+    _run_queue = ( _run_queue + 1 ) % 2 ;
 }
 
 template < typename platform_insider >
 template < typename module_type >
 void shy_platform_scheduler_random < platform_insider > :: register_module_in_scheduler ( module_type & module , scheduler & arg_scheduler )
 {
-    arg_scheduler . _modules [ arg_scheduler . _count ++ ] = ( _abstract_scheduled_module * ) & module ;
+    if ( arg_scheduler . _count < _max_scheduled_modules )
+        arg_scheduler . _modules [ arg_scheduler . _count ++ ] = ( _abstract_scheduled_module * ) & module ;
 }
 
 template < typename platform_insider >
