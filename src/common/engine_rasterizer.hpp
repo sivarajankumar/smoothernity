@@ -18,6 +18,7 @@ public :
     void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
     void receive ( typename messages :: rasterize_use_texture msg ) ;
     void receive ( typename messages :: rasterize_use_texel msg ) ;
+    void receive ( typename messages :: rasterize_finalize_request msg ) ;
 private :
     void _rasterize_horizontal_line ( num_whole x1 , num_whole x2 , num_whole y ) ;
     void _rasterize_top_triangle_part ( num_whole x_top , num_whole y_top , num_whole x_mid , num_whole y_mid , num_whole x_bottom , num_whole y_bottom ) ;
@@ -42,6 +43,12 @@ template < typename mediator >
 void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_finalize_request msg )
+{
+    _mediator . get ( ) . send ( typename messages :: rasterize_finalize_reply ( ) ) ;
 }
 
 template < typename mediator >

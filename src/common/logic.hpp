@@ -63,8 +63,7 @@ void shy_logic < mediator > :: receive ( typename messages :: done msg )
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: render msg )
 {
-    if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
-        _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
 }
 
 template < typename mediator >

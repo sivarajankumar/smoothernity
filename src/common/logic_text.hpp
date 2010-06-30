@@ -50,6 +50,7 @@ public :
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_request msg ) ;
     void receive ( typename messages :: text_letter_small_tex_coords_request msg ) ;
+    void receive ( typename messages :: rasterize_finalize_reply msg ) ;
 private :
     void _render_text_mesh ( ) ;
     void _update_text_mesh ( ) ;
@@ -106,6 +107,8 @@ private :
     num_whole _mesh_create_requested ;
     num_whole _mesh_create_replied ;
     
+    num_whole _rasterize_finalize_requested ;
+    
     num_whole _text_mesh_created ;
     num_whole _text_prepare_permitted ;
     mesh_id _text_mesh_id ;
@@ -124,6 +127,7 @@ private :
 template < typename mediator >
 shy_logic_text < mediator > :: shy_logic_text ( )
 {
+    _rasterize_finalize_requested = platform :: math_consts . whole_false ;
     _texture_create_requested = platform :: math_consts . whole_false ;
     _texture_create_replied = platform :: math_consts . whole_false ;
     _mesh_create_requested = platform :: math_consts . whole_false ;
@@ -273,6 +277,23 @@ void shy_logic_text < mediator > :: receive ( typename messages :: render_textur
 }
 
 template < typename mediator >
+void shy_logic_text < mediator > :: receive ( typename messages :: rasterize_finalize_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _rasterize_finalize_requested ) )
+    {
+        _rasterize_finalize_requested = platform :: math_consts . whole_false ;
+        {
+            typename messages :: render_texture_finalize texture_finalize_msg ;
+            texture_finalize_msg . texture = _text_texture_id ;
+            _mediator . get ( ) . send ( texture_finalize_msg ) ;
+        }
+        _update_text_mesh ( ) ;
+        platform_math :: make_num_whole ( _text_mesh_created , true ) ;
+        _mediator . get ( ) . send ( typename messages :: text_prepared ( ) ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_text < mediator > :: _proceed_with_create_text ( )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_replied )
@@ -281,9 +302,6 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
     {
         _create_text_mesh ( ) ;
         _create_text_texture ( ) ;
-        _update_text_mesh ( ) ;
-        platform_math :: make_num_whole ( _text_mesh_created , true ) ;
-        _mediator . get ( ) . send ( typename messages :: text_prepared ( ) ) ;
     }
 }
 
@@ -488,11 +506,9 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     _origin_y = texture_height ;
     _rasterize_english_alphabet ( small_size , small_size , _letters_small ) ;
     _rasterize_english_alphabet ( big_size , big_size , _letters_big ) ;
-    {
-        typename messages :: render_texture_finalize texture_finalize_msg ;
-        texture_finalize_msg . texture = _text_texture_id ;
-        _mediator . get ( ) . send ( texture_finalize_msg ) ;
-    }
+    
+    _rasterize_finalize_requested = platform :: math_consts . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: rasterize_finalize_request ( ) ) ;
 }
 
 template < typename mediator >
