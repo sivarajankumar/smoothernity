@@ -4,12 +4,56 @@ class shy_platform_scheduler_random
     typedef typename platform_insider :: platform_pointer platform_pointer ;
 
     static const int _max_scheduled_modules = 100 ;
+    static const int _max_message_size = 100 ;
+    static const int _max_messages_count = 100 ;
     
-    class abstract_scheduled_module
+    class _abstract_scheduled_module
     {
     public :
-        virtual ~ abstract_scheduled_module ( ) ;
+        virtual ~ _abstract_scheduled_module ( ) ;
         virtual void run ( ) = 0 ;
+    } ;
+    
+    class _abstract_message_invoker
+    {
+    public :
+        virtual ~ _abstract_message_invoker ( ) ;
+        virtual void invoke ( void * arg_module ) = 0 ;
+    } ;
+    
+    template < typename module , typename message >
+    class _message_invoker
+    : public _abstract_message_invoker
+    {
+    public :
+        virtual void invoke ( void * arg_module ) ;
+    private :
+        char _message [ _max_message_size ] ;
+    } ;
+    
+    class _message_dummy
+    {
+    } ;
+    
+    class _module_dummy
+    {
+    public :
+        template < typename message >
+        void receive ( message msg ) ;
+    } ;
+    
+    class _message_invoker_dummy
+    {
+        char _data [ sizeof ( _message_invoker < _module_dummy , _message_dummy > ) ] ;
+    } ;
+    
+    class _messages_queue
+    {
+    public :
+        _messages_queue ( ) ;
+    public :
+        _message_invoker_dummy queue [ _max_messages_count ] ;
+        int count ;
     } ;
     
 public :
@@ -19,7 +63,7 @@ public :
     public :
         template < typename mediator >
         class scheduled_module
-        : public abstract_scheduled_module
+        : public _abstract_scheduled_module
         {
         public :
             template < typename message_type >
@@ -29,6 +73,8 @@ public :
             virtual void run ( ) ;
         private :
             module < mediator > _module ;
+            _messages_queue _run_queue ;
+            _messages_queue _accumulation_queue ;
         } ;
     } ;
     
@@ -38,7 +84,7 @@ public :
     public :
         scheduler ( ) ;
     private :
-        abstract_scheduled_module * _modules [ _max_scheduled_modules ] ;
+        _abstract_scheduled_module * _modules [ _max_scheduled_modules ] ;
         int _count ;
     } ;
     
@@ -50,8 +96,31 @@ public :
 } ;
 
 template < typename platform_insider >
-shy_platform_scheduler_random < platform_insider > :: abstract_scheduled_module :: ~ abstract_scheduled_module ( )
+shy_platform_scheduler_random < platform_insider > :: _abstract_scheduled_module :: ~ _abstract_scheduled_module ( )
 {
+}
+
+template < typename platform_insider >
+shy_platform_scheduler_random < platform_insider > :: _abstract_message_invoker :: ~ _abstract_message_invoker ( )
+{
+}
+
+template < typename platform_insider >
+template < typename module , typename message >
+void shy_platform_scheduler_random < platform_insider > :: _message_invoker < module , message > :: invoke ( void * arg_module )
+{
+}
+
+template < typename platform_insider >
+template < typename message >
+void shy_platform_scheduler_random < platform_insider > :: _module_dummy :: receive ( message msg )
+{
+}
+
+template < typename platform_insider >
+shy_platform_scheduler_random < platform_insider > :: _messages_queue :: _messages_queue ( )
+{
+    count = 0 ;
 }
 
 template < typename platform_insider >
@@ -91,7 +160,7 @@ template < typename platform_insider >
 template < typename module_type >
 void shy_platform_scheduler_random < platform_insider > :: register_module_in_scheduler ( module_type & module , scheduler & arg_scheduler )
 {
-    arg_scheduler . _modules [ arg_scheduler . _count ++ ] = ( abstract_scheduled_module * ) & module ;
+    arg_scheduler . _modules [ arg_scheduler . _count ++ ] = ( _abstract_scheduled_module * ) & module ;
 }
 
 template < typename platform_insider >
