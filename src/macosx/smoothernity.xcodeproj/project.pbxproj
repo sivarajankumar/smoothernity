@@ -154,6 +154,7 @@
 		886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
 		886D5ECA11CA18B500C5EE01 /* touch_dummy.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */; };
+		88812E1111DB4F25003EC5C4 /* aggregator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812E1011DB4F25003EC5C4 /* aggregator.hpp */; };
 		88A615F311D3753A0058F52C /* engine_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88A615F211D3753A0058F52C /* engine_render.hpp */; };
 		88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 		88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E76FEA1188A90100631276 /* engine_rasterizer.hpp */; };
@@ -223,6 +224,7 @@
 		886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound.hpp; sourceTree = "<group>"; };
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
 		886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch_dummy.hpp; sourceTree = "<group>"; };
+		88812E1011DB4F25003EC5C4 /* aggregator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aggregator.hpp; sourceTree = "<group>"; };
 		88A615F211D3753A0058F52C /* engine_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_render.hpp; sourceTree = "<group>"; };
 		88DBFFB211873D4600584A28 /* engine_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_math.hpp; sourceTree = "<group>"; };
 		88E76FEA1188A90100631276 /* engine_rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_rasterizer.hpp; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 		8812CEC3117DE26A008F67D9 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				88812E1011DB4F25003EC5C4 /* aggregator.hpp */,
 				8812CEC4117DE26A008F67D9 /* engine_camera.hpp */,
 				88DBFFB211873D4600584A28 /* engine_math.hpp */,
 				88E76FEA1188A90100631276 /* engine_rasterizer.hpp */,
@@ -462,6 +465,7 @@
 				88336BA211DA156D002B9172 /* engine_render_stateless.hpp in Headers */,
 				88336C2011DA1C67002B9172 /* logic_text_stateless.hpp in Headers */,
 				88336C4C11DA24CE002B9172 /* scheduler_random.hpp in Headers */,
+				88812E1111DB4F25003EC5C4 /* aggregator.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
