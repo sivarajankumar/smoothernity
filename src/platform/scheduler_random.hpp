@@ -193,9 +193,9 @@ void shy_platform_scheduler_random < platform_insider >
 {
     if ( _queues [ _accumulation_queue ] . count < max_messages_count )
     {
-        _message_invoker < module < mediator > , message_type , max_message_size > invoker ( msg ) ;
-        _queues [ _accumulation_queue ] . queue [ _queues [ _accumulation_queue ] . count ++ ] = 
-            * reinterpret_cast < _message_invoker_dummy < max_message_size > * > ( & invoker ) ;
+        int index = _queues [ _accumulation_queue ] . count ++ ;
+        void * place = _queues [ _accumulation_queue ] . queue + index ;
+        new ( place ) _message_invoker < module < mediator > , message_type , max_message_size > ( msg ) ;
     }
     _queues [ _accumulation_queue ] . total_count ++ ;
 }

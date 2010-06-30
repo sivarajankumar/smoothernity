@@ -11,6 +11,8 @@
 #import "macosx_sound_loader.h"
 #import "macosx_texture_loader.h"
 
+#include <new>
+
 #include "../platform/matrix_float.hpp"
 #include "../platform/matrix_float_insider.hpp"
 #include "../platform/conditions.hpp"
