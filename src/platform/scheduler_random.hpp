@@ -20,18 +20,11 @@ public :
         : public abstract_scheduled_module
         {
         public :
-            void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
-            {
-                _module . set_mediator ( arg_mediator ) ;
-            }
             template < typename message_type >
-            void receive ( message_type msg )
-            {
-                _module . receive ( msg ) ;
-            }
-            virtual void run ( )
-            {
-            }
+            void receive ( message_type msg ) ;
+            
+            void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+            virtual void run ( ) ;
         private :
             module < mediator > _module ;
         } ;
@@ -50,6 +43,31 @@ public :
 
 template < typename platform_insider >
 shy_platform_scheduler_random < platform_insider > :: abstract_scheduled_module :: ~ abstract_scheduled_module ( )
+{
+}
+
+template < typename platform_insider >
+template < template < typename mediator > class module >
+template < typename mediator >
+void shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: set_mediator
+    ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _module . set_mediator ( arg_mediator ) ;
+}
+
+template < typename platform_insider >
+template < template < typename mediator > class module >
+template < typename mediator >
+template < typename message_type >
+void shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: receive ( message_type msg )
+{
+    _module . receive ( msg ) ;
+}
+
+template < typename platform_insider >
+template < template < typename mediator > class module >
+template < typename mediator >
+void shy_platform_scheduler_random < platform_insider > :: module_wrapper < module > :: scheduled_module < mediator > :: run ( )
 {
 }
 
