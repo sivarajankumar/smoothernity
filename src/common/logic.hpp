@@ -4,8 +4,10 @@ class shy_logic
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     shy_logic ( ) ;
@@ -24,11 +26,13 @@ private :
     void _get_near_plane_distance ( num_fract & result ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    num_whole _fidget_prepared ;
 } ;
 
 template < typename mediator >
 shy_logic < mediator > :: shy_logic ( )
 {
+    _fidget_prepared = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -59,13 +63,15 @@ void shy_logic < mediator > :: receive ( typename messages :: done msg )
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: render msg )
 {
-    _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
+        _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: update msg )
 {
-    _mediator . get ( ) . send ( typename messages :: application_update ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
+        _mediator . get ( ) . send ( typename messages :: application_update ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_update ( ) ) ;
 }
 
@@ -130,6 +136,7 @@ void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projecti
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: fidget_prepared msg )
 {
+    _fidget_prepared = platform :: math_consts . whole_true ;
 }
 
 template < typename mediator >
