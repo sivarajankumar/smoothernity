@@ -274,6 +274,14 @@ void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg
             }
         }
         for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
+        {
+            int first_index = rand ( ) % arg_scheduler . _count ;
+            int second_index = rand ( ) % arg_scheduler . _count ;
+            _abstract_scheduled_module * first_module = arg_scheduler . _modules [ first_index ] ;
+            arg_scheduler . _modules [ first_index ] = arg_scheduler . _modules [ second_index ] ;
+            arg_scheduler . _modules [ second_index ] = first_module ;
+        }
+        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
             arg_scheduler . _modules [ i ] -> run ( ) ;
         calls_performed ++ ;
     } while ( keep_running && calls_performed < _max_calls_per_run ) ;
