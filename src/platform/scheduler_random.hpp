@@ -61,6 +61,7 @@ class shy_platform_scheduler_random
         _message_invoker_dummy < max_message_size > queue [ max_messages_count ] ;
         int count ;
         int total_count ;
+        int next_to_call ;
     } ;
     
 public :
@@ -150,6 +151,7 @@ shy_platform_scheduler_random < platform_insider > :: _messages_queue < max_mess
 {
     count = 0 ;
     total_count = 0 ;
+    next_to_call = 0 ;
 }
 
 template < typename platform_insider >
@@ -210,11 +212,18 @@ void shy_platform_scheduler_random < platform_insider >
     :: run ( )
 {
 //    NSLog ( @"msg count = %i , total count = %i" , _queues [ _accumulation_queue ] . count , _queues [ _accumulation_queue ] . total_count ) ;
-    _switch_queues ( ) ;
-    _queues [ _accumulation_queue ] . count = 0 ;
-    _queues [ _accumulation_queue ] . total_count = 0 ;
-    for ( int i = 0 ; i < _queues [ _run_queue ] . count ; i ++ )
-        reinterpret_cast < _abstract_message_invoker * > ( & _queues [ _run_queue ] . queue [ i ] ) -> invoke ( & _module ) ;
+    if ( _queues [ _run_queue ] . next_to_call >= _queues [ _run_queue ] . count )
+    {
+        _switch_queues ( ) ;
+        _queues [ _accumulation_queue ] . count = 0 ;
+        _queues [ _accumulation_queue ] . total_count = 0 ;
+        _queues [ _accumulation_queue ] . next_to_call = 0 ;
+    }
+    if ( _queues [ _run_queue ] . next_to_call < _queues [ _run_queue ] . count )
+    {
+        int next_to_call = _queues [ _run_queue ] . next_to_call ++ ;
+        reinterpret_cast < _abstract_message_invoker * > ( & _queues [ _run_queue ] . queue [ next_to_call ] ) -> invoke ( & _module ) ;
+    }
 }
 
 template < typename platform_insider >
@@ -225,7 +234,7 @@ int shy_platform_scheduler_random < platform_insider >
     :: scheduled_module < mediator > 
     :: messages_to_run ( )
 {
-    return _queues [ _accumulation_queue ] . count ;
+    return _queues [ _accumulation_queue ] . count + _queues [ _run_queue ] . count - _queues [ _run_queue ] . next_to_call ;
 }
 
 template < typename platform_insider >
@@ -258,12 +267,14 @@ void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg
         keep_running = false ;
         for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
         {
-            int messages_to_run = arg_scheduler . _modules [ i ] -> messages_to_run ( ) ;
-            calls_performed += messages_to_run ;
-            if ( messages_to_run > 0 )
+            if ( arg_scheduler . _modules [ i ] -> messages_to_run ( ) > 0 )
+            {
                 keep_running = true ;
+                break ;
+            }
         }
         for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
             arg_scheduler . _modules [ i ] -> run ( ) ;
+        calls_performed ++ ;
     } while ( keep_running && calls_performed < _max_calls_per_run ) ;
 }
