@@ -14,7 +14,7 @@ class shy_platform_scheduler_random
     public :
         virtual ~ _abstract_scheduled_module ( ) ;
         virtual void run ( ) = 0 ;
-        virtual int messages_to_run ( ) = 0 ;
+        virtual bool have_messages_to_run ( ) = 0 ;
     } ;
     
     class _abstract_message_invoker
@@ -85,7 +85,7 @@ public :
             
             void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
             virtual void run ( ) ;
-            virtual int messages_to_run ( ) ;
+            virtual bool have_messages_to_run ( ) ;
         private :
             void _switch_queues ( ) ;
         private :
@@ -229,12 +229,15 @@ void shy_platform_scheduler_random < platform_insider >
 template < typename platform_insider >
 template < template < typename mediator > class module , int max_messages_count , int max_message_size >
 template < typename mediator >
-int shy_platform_scheduler_random < platform_insider > 
+bool shy_platform_scheduler_random < platform_insider > 
     :: module_wrapper < module , max_messages_count , max_message_size > 
     :: scheduled_module < mediator > 
-    :: messages_to_run ( )
+    :: have_messages_to_run ( )
 {
-    return _queues [ _accumulation_queue ] . count + _queues [ _run_queue ] . count - _queues [ _run_queue ] . next_to_call ;
+    return _queues [ _accumulation_queue ] . count 
+         + _queues [ _run_queue ] . count 
+         - _queues [ _run_queue ] . next_to_call 
+         > 0 ;
 }
 
 template < typename platform_insider >
@@ -264,15 +267,6 @@ void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg
     int calls_performed = 0 ;
     do
     {
-        keep_running = false ;
-        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
-        {
-            if ( arg_scheduler . _modules [ i ] -> messages_to_run ( ) > 0 )
-            {
-                keep_running = true ;
-                break ;
-            }
-        }
         for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
         {
             int first_index = rand ( ) % arg_scheduler . _count ;
@@ -283,6 +277,9 @@ void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg
         }
         for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
             arg_scheduler . _modules [ i ] -> run ( ) ;
+        keep_running = false ;
+        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
+            keep_running |= arg_scheduler . _modules [ i ] -> have_messages_to_run ( ) ;
         calls_performed ++ ;
     } while ( keep_running && calls_performed < _max_calls_per_run ) ;
 }
