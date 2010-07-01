@@ -7,6 +7,7 @@ class shy_platform_scheduler_random
     static const int _max_scheduled_modules = 100 ;
     static const int _default_max_messages_count = 100 ;
     static const int _default_max_message_size = 32 * 3 ;
+    static const int _max_calls_per_run = 10000 ;
     
     class _abstract_scheduled_module
     {
@@ -251,18 +252,18 @@ template < typename platform_insider >
 void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg_scheduler )
 {
     bool keep_running = false ;
+    int calls_performed = 0 ;
     do
     {
-        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
-            arg_scheduler . _modules [ i ] -> run ( ) ;
         keep_running = false ;
         for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
         {
-            if ( arg_scheduler . _modules [ i ] -> messages_to_run ( ) > 0 )
-            {
+            int messages_to_run = arg_scheduler . _modules [ i ] -> messages_to_run ( ) ;
+            calls_performed += messages_to_run ;
+            if ( messages_to_run > 0 )
                 keep_running = true ;
-                break ;
-            }
         }
-    } while ( keep_running ) ;
+        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
+            arg_scheduler . _modules [ i ] -> run ( ) ;
+    } while ( keep_running && calls_performed < _max_calls_per_run ) ;
 }
