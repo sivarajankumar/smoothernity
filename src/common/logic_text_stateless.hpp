@@ -57,10 +57,24 @@ public :
     } ;
     
 public :
+    shy_logic_text_stateless ( ) ;
+    shy_logic_text_stateless & operator= ( const shy_logic_text_stateless & src ) ;
     static void are_letters_equal ( num_whole & result , letter_id a , letter_id b ) ;
 public :
     const logic_text_consts_type logic_text_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_text_stateless < mediator > :: shy_logic_text_stateless ( )
+{
+}
+
+template < typename mediator >
+shy_logic_text_stateless < mediator > &
+shy_logic_text_stateless < mediator > :: operator= ( const shy_logic_text_stateless < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_text_stateless < mediator > :: alphabet_english_type :: alphabet_english_type ( )

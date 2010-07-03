@@ -115,8 +115,8 @@ public :
 	static void get_aspect_width ( num_fract & result ) ;
 	static void get_aspect_height ( num_fract & result ) ;
     
-    static void delete_vertex_buffer ( const render_vertex_buffer_id & arg_buffer_id ) ;
-    static void delete_index_buffer ( const render_index_buffer_id & arg_buffer_id ) ;
+    static void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
+    static void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
     
     template < typename texels_array >
     static void load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
@@ -540,11 +540,11 @@ inline void shy_macosx_platform_render < platform_insider > :: get_aspect_height
 }
 
 template < typename platform_insider >
-inline void shy_macosx_platform_render < platform_insider > :: delete_vertex_buffer ( const render_vertex_buffer_id & arg_buffer_id )
+inline void shy_macosx_platform_render < platform_insider > :: delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id )
 {
 }
 
 template < typename platform_insider >
-inline void shy_macosx_platform_render < platform_insider > :: delete_index_buffer ( const render_index_buffer_id & arg_buffer_id )
+inline void shy_macosx_platform_render < platform_insider > :: delete_index_buffer ( render_index_buffer_id & arg_buffer_id )
 {
 }

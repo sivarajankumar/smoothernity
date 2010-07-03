@@ -32,7 +32,7 @@ inline int shy_platform_conditions < platform_insider > :: wholes_are_equal ( nu
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_is_true ( num_whole num )
 {
-    return platform_math_insider :: num_whole_unsafe_value_get ( num ) == true ;
+    return platform_math_insider :: num_whole_unsafe_value_get ( num ) == int ( true ) ;
 }
 
 template < typename platform_insider >

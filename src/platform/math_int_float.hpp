@@ -81,7 +81,7 @@ shy_platform_math_int_float < platform_insider > :: num_whole :: num_whole ( int
 
 template < typename platform_insider >
 shy_platform_math_int_float < platform_insider > :: num_fract :: num_fract ( )
-: _value ( platform_insider :: uninitialized_value )
+: _value ( ( float ) platform_insider :: uninitialized_value )
 {
 }
 

@@ -153,19 +153,19 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_ble
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_fog_linear msg )
 {
-    platform_render :: fog_linear ( msg . near , msg . far , msg . r , msg . g , msg . b , msg . a ) ;
+    platform_render :: fog_linear ( msg . znear , msg . zfar , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_projection_frustum msg )
 {
-    platform_render :: projection_frustum ( msg . left , msg . right , msg . bottom , msg . top , msg . near , msg . far ) ;
+    platform_render :: projection_frustum ( msg . left , msg . right , msg . bottom , msg . top , msg . znear , msg . zfar ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_projection_ortho msg )
 {
-    platform_render :: projection_ortho ( msg . left , msg . right , msg . bottom , msg . top , msg . near , msg . far ) ;
+    platform_render :: projection_ortho ( msg . left , msg . right , msg . bottom , msg . top , msg . znear , msg . zfar ) ;
 }
 
 template < typename mediator >

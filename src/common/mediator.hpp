@@ -105,7 +105,7 @@ public :
         class render_enable_depth_test { } ;
         class render_enable_face_culling { } ;
         class render_fog_disable { } ;
-        class render_fog_linear { public : num_fract near ; num_fract far ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class render_fog_linear { public : num_fract znear ; num_fract zfar ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class render_matrix_identity { } ;
         class render_matrix_load { public : matrix_data matrix ; } ;
         class render_mesh_create_reply { public : mesh_id mesh ; } ;
@@ -119,8 +119,8 @@ public :
         class render_mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class render_mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
         class render_mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
-        class render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract near ; num_fract far ; } ;
-        class render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract near ; num_fract far ; } ;
+        class render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
+        class render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
         class render_texture_create_reply { public : texture_id texture ; } ;
         class render_texture_create_request { } ;
         class render_texture_finalize { public : texture_id texture ; } ;

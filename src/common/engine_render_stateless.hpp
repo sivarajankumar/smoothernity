@@ -39,6 +39,8 @@ public :
     } ;
     
 public :
+    shy_engine_render_stateless ( ) ;
+    shy_engine_render_stateless & operator= ( const shy_engine_render_stateless & src ) ;
     static void texture_loader_ready ( num_whole & is_ready ) ;
     static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
@@ -48,6 +50,18 @@ public :
 public :
     const engine_render_consts_type engine_render_consts ;
 } ;
+
+template < typename mediator >
+shy_engine_render_stateless < mediator > :: shy_engine_render_stateless ( )
+{
+}
+
+template < typename mediator >
+shy_engine_render_stateless < mediator > & 
+shy_engine_render_stateless < mediator > :: operator= ( const shy_engine_render_stateless < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_engine_render_stateless < mediator > :: engine_render_consts_type :: engine_render_consts_type ( )

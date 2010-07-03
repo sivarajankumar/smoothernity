@@ -17,7 +17,7 @@ public :
     public :
         matrix_data ( ) ;
     private :
-        GLfloat _elements [ 16 ] ;
+        float _elements [ 16 ] ;
     } ;
 public :
     static void set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;

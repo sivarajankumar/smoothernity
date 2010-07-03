@@ -32,9 +32,9 @@ public :
 
 template < typename platform_insider >
 shy_platform_vector_float < platform_insider > :: vector_data :: vector_data ( )
-: _x ( platform_insider :: uninitialized_value )
-, _y ( platform_insider :: uninitialized_value )
-, _z ( platform_insider :: uninitialized_value )
+: _x ( ( float ) platform_insider :: uninitialized_value )
+, _y ( ( float ) platform_insider :: uninitialized_value )
+, _z ( ( float ) platform_insider :: uninitialized_value )
 {
 }
 
