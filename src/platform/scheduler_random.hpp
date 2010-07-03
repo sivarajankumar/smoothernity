@@ -211,7 +211,6 @@ void shy_platform_scheduler_random < platform_insider >
     :: scheduled_module < mediator > 
     :: run ( )
 {
-//    NSLog ( @"msg count = %i , total count = %i" , _queues [ _accumulation_queue ] . count , _queues [ _accumulation_queue ] . total_count ) ;
     if ( _queues [ _run_queue ] . next_to_call >= _queues [ _run_queue ] . count )
     {
         _switch_queues ( ) ;
