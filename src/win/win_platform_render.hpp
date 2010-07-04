@@ -202,21 +202,31 @@ inline void shy_win_platform_render < platform_insider > :: enable_face_culling 
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: enable_depth_test ( )
 {
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_ZENABLE , D3DZB_TRUE ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: disable_depth_test ( )
 {
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_ZENABLE , D3DZB_FALSE ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: blend_disable ( )
 {
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_ALPHABLENDENABLE , FALSE ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: blend_src_alpha_dst_one_minus_alpha ( )
 {
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_ALPHABLENDENABLE , TRUE ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_SRCBLEND , D3DBLEND_SRCCOLOR ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_DESTBLEND , D3DBLEND_INVSRCCOLOR ) ) ;
 }
 
 template < typename platform_insider >
