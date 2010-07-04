@@ -104,13 +104,13 @@ shy_macosx_platform_sound < platform_insider > :: stereo_sound_sample :: stereo_
     
 template < typename platform_insider >
 shy_macosx_platform_sound < platform_insider > :: sound_buffer_id :: sound_buffer_id ( )
-: _buffer_id ( platform_insider :: uninitialized_value )
+: _buffer_id ( ALuint ( platform_insider :: uninitialized_value ) )
 {
 }
     
 template < typename platform_insider >
 shy_macosx_platform_sound < platform_insider > :: sound_source_id :: sound_source_id ( )
-: _source_id ( platform_insider :: uninitialized_value )
+: _source_id ( ALuint ( platform_insider :: uninitialized_value ) )
 {
 }
     
@@ -205,10 +205,15 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_mono_buffer
     , num_whole samples_count 
     )
 {
-    alBufferDataStaticProcPtr al_buffer_data_static_proc = 
-        ( alBufferDataStaticProcPtr ) alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
+    union al_buffer_data_static_proc_type
+    {
+        void * void_ptr ;
+        alBufferDataStaticProcPtr func_ptr ;
+    } ;
+    al_buffer_data_static_proc_type al_buffer_data_static_proc ;
+    al_buffer_data_static_proc . void_ptr = alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
     alGenBuffers ( 1 , & result . _buffer_id ) ;
-    al_buffer_data_static_proc
+    al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
         , ( ALvoid * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
@@ -225,10 +230,15 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_stereo_buff
     , num_whole samples_count 
     )
 {
-    alBufferDataStaticProcPtr al_buffer_data_static_proc = 
-        ( alBufferDataStaticProcPtr ) alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
+    union al_buffer_data_static_proc_type
+    {
+        void * void_ptr ;
+        alBufferDataStaticProcPtr func_ptr ;
+    } ;
+    al_buffer_data_static_proc_type al_buffer_data_static_proc ;
+    al_buffer_data_static_proc . void_ptr = alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
     alGenBuffers ( 1 , & result . _buffer_id ) ;
-    al_buffer_data_static_proc
+    al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
         , ( ALvoid * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )

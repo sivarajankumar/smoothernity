@@ -83,7 +83,7 @@
         CFRelease ( src ) ;
         width = CGImageGetWidth ( image ) ;
         height = CGImageGetHeight ( image ) ;
-        if ( width == _side_size && height == _side_size )
+        if ( width == ( NSUInteger ) _side_size && height == ( NSUInteger ) _side_size )
         {
             color_space = CGColorSpaceCreateDeviceRGB ( ) ;
             context = CGBitmapContextCreate 

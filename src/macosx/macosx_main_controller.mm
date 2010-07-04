@@ -90,12 +90,12 @@
         NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
 
         NSEvent * event ;
-        while ( event = [ NSApp 
+        while ( ( event = [ NSApp 
 			nextEventMatchingMask : NSAnyEventMask 
 			untilDate : [ NSDate distantPast ] 
 			inMode : NSDefaultRunLoopMode 
 			dequeue : YES
-			] )
+			] ) )
 		{
             switch ( [ event type ] )
 			{
@@ -122,7 +122,7 @@
         [ pool release ] ;
     }
     
-    glClearColor ( 0.0 , 0.0 , 0.0 , 0.0 ) ;
+    glClearColor ( 0.0f , 0.0f , 0.0f , 0.0f ) ;
     glClear ( GL_COLOR_BUFFER_BIT ) ;
     [ full_screen_context flushBuffer ] ;
     glClear ( GL_COLOR_BUFFER_BIT ) ;

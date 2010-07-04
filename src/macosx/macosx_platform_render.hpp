@@ -144,19 +144,19 @@ public :
 
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_index_buffer_id :: render_index_buffer_id ( )
-: _buffer_id ( platform_insider :: uninitialized_value )
+: _buffer_id ( GLuint ( platform_insider :: uninitialized_value ) )
 {
 }
     
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_id :: render_vertex_buffer_id ( )
-: _buffer_id ( platform_insider :: uninitialized_value )
+: _buffer_id ( GLuint ( platform_insider :: uninitialized_value ) )
 {
 }
     
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_texture_id :: render_texture_id ( )
-: _texture_id ( platform_insider :: uninitialized_value )
+: _texture_id ( GLuint ( platform_insider :: uninitialized_value ) )
 {
 }
 

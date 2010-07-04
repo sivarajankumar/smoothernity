@@ -34,10 +34,10 @@
 - ( void ) set_viewport_rect : ( NSRect ) bounds
 {
     glViewport 
-		( bounds . origin . x 
-		, bounds . origin . y 
-		, bounds . size . width 
-		, bounds . size . height 
+		( GLint ( bounds . origin . x )
+		, GLint ( bounds . origin . y )
+		, GLsizei ( bounds . size . width )
+		, GLsizei ( bounds . size . height )
 		) ;
 	_bounds = bounds ;
 	if ( bounds . size . width > bounds . size . height )
