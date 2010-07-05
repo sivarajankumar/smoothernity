@@ -10,6 +10,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -51,6 +52,7 @@ private :
     void _mesh_set_triangle_fan_index_value ( num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     num_whole _entity_created ;
     num_whole _entities_prepare_permitted ;
     num_whole _grid_scale ;
@@ -74,6 +76,7 @@ void shy_logic_entities < mediator > :: set_mediator ( typename platform_pointer
 template < typename mediator >
 void shy_logic_entities < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
     platform_math :: make_num_whole ( _entity_created , false ) ;
     platform_math :: make_num_whole ( _entities_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _grid_scale , 0 ) ;
@@ -82,8 +85,8 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: init msg 
     platform_math :: make_num_whole ( _strip_indices_count , 0 ) ;
     platform_math :: make_num_whole ( _fan_indices_count , 0 ) ;
     platform_math :: make_num_whole ( _vertices_count , 0 ) ;
-    _entity_mesh_id_created = platform :: math_consts . whole_false ;
-    _mesh_create_requested = platform :: math_consts . whole_false ;
+    _entity_mesh_id_created = _platform_math_consts . get ( ) . whole_false ;
+    _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -116,8 +119,8 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: render_me
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
-        _mesh_create_requested = platform :: math_consts . whole_false ;
-        _entity_mesh_id_created = platform :: math_consts . whole_true ;
+        _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
+        _entity_mesh_id_created = _platform_math_consts . get ( ) . whole_true ;
         _entity_mesh_id = msg . mesh ;
     }
 }
@@ -131,7 +134,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
         {
             if ( platform_conditions :: whole_is_false ( _entity_mesh_id_created ) )
             {
-                _mesh_create_requested = platform :: math_consts . whole_true ;
+                _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
                 typename messages :: render_mesh_create_request mesh_create_msg ;
                 platform_math :: make_num_whole ( mesh_create_msg . vertices , ( _entity_mesh_spans + 1 ) * 2 + 1 ) ;
                 platform_math :: make_num_whole ( mesh_create_msg . triangle_strip_indices , ( _entity_mesh_spans + 1 ) * 2 ) ;
@@ -179,7 +182,7 @@ void shy_logic_entities < mediator > :: _entities_render ( )
     platform_math :: make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
     platform_math :: mul_wholes ( i_max , whole_entity_mesh_grid , whole_entity_mesh_grid ) ;
     _mediator . get ( ) . send ( typename messages :: render_texture_unselect ( ) ) ;
-    for ( num_whole i = platform :: math_consts . whole_0 
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , i_max )
         ; platform_math :: inc_whole ( i )
         )
@@ -202,49 +205,49 @@ void shy_logic_entities < mediator > :: _entities_render ( )
 template < typename mediator >
 void shy_logic_entities < mediator > :: _entity_color ( num_fract & r , num_fract & g , num_fract & b , num_fract & a , num_whole i )
 {
-    if ( platform_conditions :: wholes_are_equal ( i , platform :: math_consts . whole_0 ) )
+    if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_0 ) )
     {
         platform_math :: make_num_fract ( r , 1 , 1 ) ;
         platform_math :: make_num_fract ( g , 0 , 1 ) ;
         platform_math :: make_num_fract ( b , 0 , 1 ) ;
         platform_math :: make_num_fract ( a , 1 , 1 ) ;
     }
-    else if ( platform_conditions :: wholes_are_equal ( i , platform :: math_consts . whole_1 ) )
+    else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_1 ) )
     {
         platform_math :: make_num_fract ( r , 1 , 1 ) ;
         platform_math :: make_num_fract ( g , 1 , 2 ) ;
         platform_math :: make_num_fract ( b , 0 , 1 ) ;
         platform_math :: make_num_fract ( a , 1 , 1 ) ;
     }
-    else if ( platform_conditions :: wholes_are_equal ( i , platform :: math_consts . whole_2 ) )
+    else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_2 ) )
     {
         platform_math :: make_num_fract ( r , 1 , 1 ) ;
         platform_math :: make_num_fract ( g , 1 , 1 ) ;
         platform_math :: make_num_fract ( b , 0 , 1 ) ;
         platform_math :: make_num_fract ( a , 1 , 1 ) ;
     }
-    else if ( platform_conditions :: wholes_are_equal ( i , platform :: math_consts . whole_3 ) )
+    else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_3 ) )
     {
         platform_math :: make_num_fract ( r , 0 , 1 ) ;
         platform_math :: make_num_fract ( g , 1 , 1 ) ;
         platform_math :: make_num_fract ( b , 0 , 1 ) ;
         platform_math :: make_num_fract ( a , 1 , 1 ) ;
     }
-    else if ( platform_conditions :: wholes_are_equal ( i , platform :: math_consts . whole_4 ) )
+    else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_4 ) )
     {
         platform_math :: make_num_fract ( r , 0 , 1 ) ;
         platform_math :: make_num_fract ( g , 1 , 1 ) ;
         platform_math :: make_num_fract ( b , 1 , 1 ) ;
         platform_math :: make_num_fract ( a , 1 , 1 ) ;
     }
-    else if ( platform_conditions :: wholes_are_equal ( i , platform :: math_consts . whole_5 ) )
+    else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_5 ) )
     {
         platform_math :: make_num_fract ( r , 0 , 1 ) ;
         platform_math :: make_num_fract ( g , 0 , 1 ) ;
         platform_math :: make_num_fract ( b , 1 , 1 ) ;
         platform_math :: make_num_fract ( a , 1 , 1 ) ;
     }
-    else if ( platform_conditions :: wholes_are_equal ( i , platform :: math_consts . whole_6 ) )
+    else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_6 ) )
     {
         platform_math :: make_num_fract ( r , 1 , 1 ) ;
         platform_math :: make_num_fract ( g , 0 , 1 ) ;
@@ -274,7 +277,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     platform_math :: make_num_whole ( colors_max , 7 ) ;
     platform_math :: make_num_whole ( whole_entity_mesh_spans , _entity_mesh_spans ) ;
     platform_math :: make_num_fract ( fract_entity_mesh_spans , _entity_mesh_spans , 1 ) ;
-    platform_math :: add_wholes ( whole_entity_mesh_spans_plus_1 , whole_entity_mesh_spans , platform :: math_consts . whole_1 ) ;
+    platform_math :: add_wholes ( whole_entity_mesh_spans_plus_1 , whole_entity_mesh_spans , _platform_math_consts . get ( ) . whole_1 ) ;
     platform_math :: make_num_fract ( fract_entity_mesh_height , _entity_mesh_height , 1 ) ;
 
     if ( platform_conditions :: whole_less_or_equal_to_whole ( _current_strip_mesh_span , whole_entity_mesh_spans ) )
@@ -284,17 +287,17 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         num_whole color2 ;
                 
         platform_math :: make_fract_from_whole ( angle , _current_strip_mesh_span ) ;
-        platform_math :: mul_fract_by ( angle , platform :: math_consts . fract_2pi ) ;
+        platform_math :: mul_fract_by ( angle , _platform_math_consts . get ( ) . fract_2pi ) ;
         platform_math :: div_fract_by ( angle , fract_entity_mesh_spans ) ;
         
         platform_math :: mul_wholes ( color1 , _current_strip_mesh_span , color_bias ) ;
         platform_math :: div_whole_by ( color1 , whole_entity_mesh_spans_plus_1 ) ;
         platform_math :: mod_whole_by ( color1 , colors_max ) ;
-        platform_math :: add_wholes ( color2 , color1 , platform :: math_consts . whole_1 ) ;
+        platform_math :: add_wholes ( color2 , color1 , _platform_math_consts . get ( ) . whole_1 ) ;
         platform_math :: mod_whole_by ( color2 , colors_max ) ;
         
         platform_math :: sin ( vertex_x , angle ) ;
-        platform_math :: div_fracts ( vertex_y , fract_entity_mesh_height , platform :: math_consts . fract_2 ) ;
+        platform_math :: div_fracts ( vertex_y , fract_entity_mesh_height , _platform_math_consts . get ( ) . fract_2 ) ;
         platform_math :: cos ( vertex_z , angle ) ;
 
         _entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
@@ -322,9 +325,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     {
         if ( platform_conditions :: whole_is_zero ( _current_fan_mesh_span ) )
         {
-            vertex_x = platform :: math_consts . fract_0 ;
-            platform_math :: div_fracts ( vertex_y , fract_entity_mesh_height , platform :: math_consts . fract_2 ) ;
-            vertex_z = platform :: math_consts . fract_0 ;
+            vertex_x = _platform_math_consts . get ( ) . fract_0 ;
+            platform_math :: div_fracts ( vertex_y , fract_entity_mesh_height , _platform_math_consts . get ( ) . fract_2 ) ;
+            vertex_z = _platform_math_consts . get ( ) . fract_0 ;
             
             platform_math :: make_num_fract ( vertex_r , _entity_color_roof_r , 255 ) ;
             platform_math :: make_num_fract ( vertex_g , _entity_color_roof_g , 255 ) ;
@@ -341,7 +344,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         if ( platform_conditions :: whole_less_or_equal_to_whole ( _current_fan_mesh_span , whole_entity_mesh_spans ) )
         {
             num_whole index ;
-            platform_math :: mul_wholes ( index , _current_fan_mesh_span , platform :: math_consts . whole_2 ) ;
+            platform_math :: mul_wholes ( index , _current_fan_mesh_span , _platform_math_consts . get ( ) . whole_2 ) ;
             _mesh_set_triangle_fan_index_value ( _fan_indices_count , index ) ;
             platform_math :: inc_whole ( _fan_indices_count ) ;
             platform_math :: inc_whole ( _current_fan_mesh_span ) ;
@@ -430,7 +433,7 @@ void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & resul
     platform_math :: make_num_fract ( fract_entity_mesh_height , _entity_mesh_height , 1 ) ;
     platform_math :: make_num_whole ( whole_grid_step , _grid_step ) ;
     platform_math :: make_num_whole ( whole_entity_mesh_grid , _entity_mesh_grid ) ;
-    platform_math :: div_wholes ( half_entity_mesh_grid , whole_entity_mesh_grid , platform :: math_consts . whole_2 ) ;
+    platform_math :: div_wholes ( half_entity_mesh_grid , whole_entity_mesh_grid , _platform_math_consts . get ( ) . whole_2 ) ;
     
     platform_math :: mod_wholes ( x , index , whole_entity_mesh_grid ) ;
     platform_math :: sub_from_whole ( x , half_entity_mesh_grid ) ;
@@ -441,7 +444,7 @@ void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & resul
     platform_math :: mul_whole_by ( z , whole_grid_step ) ;
     
     platform_math :: make_fract_from_whole ( entity_x , x ) ;
-    platform_math :: div_fracts ( entity_y , fract_entity_mesh_height , platform :: math_consts . fract_2 ) ;
+    platform_math :: div_fracts ( entity_y , fract_entity_mesh_height , _platform_math_consts . get ( ) . fract_2 ) ;
     platform_math :: make_fract_from_whole ( entity_z , z ) ;
     platform_vector :: xyz ( result , entity_x , entity_y , entity_z ) ;
 }
@@ -465,12 +468,12 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
     
     if ( platform_conditions :: whole_less_or_equal_to_whole ( _grid_scale , whole_scale_in_frames ) )
     {
-        for ( num_whole x = platform :: math_consts . whole_0 
+        for ( num_whole x = _platform_math_consts . get ( ) . whole_0 
             ; platform_conditions :: whole_less_than_whole ( x , whole_entity_mesh_grid ) 
             ; platform_math :: inc_whole ( x )
             )
         {
-            for ( num_whole z = platform :: math_consts . whole_0 
+            for ( num_whole z = _platform_math_consts . get ( ) . whole_0 
                 ; platform_conditions :: whole_less_than_whole ( z , whole_entity_mesh_grid )
                 ; platform_math :: inc_whole ( z )
                 )
@@ -491,23 +494,23 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 platform_math :: add_fracts ( scale_wave_part , fract_x , fract_z ) ;
                 platform_math :: mul_fract_by ( scale_wave_part , fract_scale_wave ) ;
                 platform_math :: div_fract_by ( scale_wave_part , fract_entity_mesh_grid ) ;
-                platform_math :: div_fract_by ( scale_wave_part , platform :: math_consts . fract_2 ) ;
+                platform_math :: div_fract_by ( scale_wave_part , _platform_math_consts . get ( ) . fract_2 ) ;
                 
-                platform_math :: add_fracts ( scale_frame_part , fract_scale_wave , platform :: math_consts . fract_1 ) ;
+                platform_math :: add_fracts ( scale_frame_part , fract_scale_wave , _platform_math_consts . get ( ) . fract_1 ) ;
                 platform_math :: mul_fract_by ( scale_frame_part , fract_grid_scale ) ;
                 platform_math :: div_fract_by ( scale_frame_part , fract_scale_in_frames ) ;
                 platform_math :: sub_from_fract ( scale_frame_part , fract_scale_wave ) ;
                 
                 platform_math :: add_fracts ( scale , scale_wave_part , scale_frame_part ) ;
-                engine_math :: math_clamp_fract ( scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+                engine_math :: math_clamp_fract ( scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
                 
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
                 
                 matrix_data & matrix = platform_static_array :: element ( _entities_grid_matrices , index ) ;
-                platform_matrix :: set_axis_x ( matrix , scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-                platform_matrix :: set_axis_y ( matrix , platform :: math_consts . fract_0 , scale , platform :: math_consts . fract_0 ) ;
-                platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , scale ) ;
+                platform_matrix :: set_axis_x ( matrix , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+                platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;
+                platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , scale ) ;
                 platform_matrix :: set_origin ( matrix , origin ) ;
             }
         }
