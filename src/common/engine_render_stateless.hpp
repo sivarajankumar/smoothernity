@@ -48,7 +48,6 @@ public :
     static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     
     // TODO : MOVE ALL METHODS TO engine_render
-    void texture_loader_ready ( num_whole & is_ready ) ;
 	void get_aspect_width ( num_fract & result ) ;
 	void get_aspect_height ( num_fract & result ) ;
     
@@ -81,12 +80,6 @@ shy_engine_render_stateless < mediator > :: engine_render_consts_type :: engine_
 {
     platform_math :: make_num_whole ( texture_width , _texture_size ) ;
     platform_math :: make_num_whole ( texture_height , _texture_size ) ;
-}
-
-template < typename mediator >
-void shy_engine_render_stateless < mediator > :: texture_loader_ready ( num_whole & is_ready )
-{
-    _platform_render . get ( ) . texture_loader_ready ( is_ready ) ;
 }
 
 template < typename mediator >
