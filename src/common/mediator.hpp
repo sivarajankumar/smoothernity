@@ -31,7 +31,6 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_consts_type logic_text_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
-    typedef typename mediator_types :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator_types :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator_types :: platform :: platform_matrix :: matrix_data matrix_data ;

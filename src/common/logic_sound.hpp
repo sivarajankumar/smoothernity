@@ -177,7 +177,7 @@ void shy_logic_sound < mediator > :: _load_sound ( )
     num_whole music_resource_index ;
     stereo_sound_resource_id music_resource_id ;
     platform_math :: make_num_whole ( music_resource_index , _music_rough_and_heavy_resource_index ) ;
-    _platform_sound . get ( ) . create_stereo_resource_id ( music_resource_id , music_resource_index ) ;
+    platform_sound :: create_stereo_resource_id ( music_resource_id , music_resource_index ) ;
     _platform_sound . get ( ) . load_stereo_sample_data ( _stereo_sound_data , music_resource_id ) ;
 }
 
@@ -280,7 +280,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
         _int_to_sample ( sample , next_sample ) ;
         mono_sound_sample & sample_ptr = platform_static_array :: element ( _mono_sound_data , i ) ;
-        _platform_sound . get ( ) . set_sample_value ( sample_ptr , sample ) ;
+        platform_sound :: set_sample_value ( sample_ptr , sample ) ;
     }
     
     num_fract gain ;

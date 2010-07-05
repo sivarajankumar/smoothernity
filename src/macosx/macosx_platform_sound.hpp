@@ -67,11 +67,13 @@ public :
     
 public :
     shy_macosx_platform_sound ( ) ;
+    
+    static void set_sample_value ( mono_sound_sample & sample , num_fract value ) ;
+    static void create_stereo_resource_id ( stereo_sound_resource_id & result , num_whole resource_index ) ;
+    
     void set_listener_position ( vector_data position ) ;
     void set_listener_velocity ( vector_data velocity ) ;
     void set_listener_orientation ( vector_data look_at , vector_data up ) ;
-    void set_sample_value ( mono_sound_sample & sample , num_fract value ) ;
-    void create_stereo_resource_id ( stereo_sound_resource_id & result , num_whole resource_index ) ;
     void loader_ready ( num_whole & result ) ;
     void loaded_samples_count ( num_whole & result ) ;    
     void create_source ( sound_source_id & result ) ;
