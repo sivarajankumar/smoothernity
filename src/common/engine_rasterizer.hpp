@@ -11,8 +11,8 @@ class shy_engine_rasterizer
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
 public :
-    shy_engine_rasterizer ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: rasterize_triangle msg ) ;
     void receive ( typename messages :: rasterize_rect msg ) ;
     void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -33,16 +33,16 @@ private :
 } ;
 
 template < typename mediator >
-shy_engine_rasterizer < mediator > :: shy_engine_rasterizer ( )
-{
-    platform_math :: make_num_whole ( _origin_x , 0 ) ;
-    platform_math :: make_num_whole ( _origin_y , 0 ) ;
-}
-
-template < typename mediator >
 void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init msg )
+{
+    platform_math :: make_num_whole ( _origin_x , 0 ) ;
+    platform_math :: make_num_whole ( _origin_y , 0 ) ;
 }
 
 template < typename mediator >

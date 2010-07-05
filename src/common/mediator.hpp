@@ -507,6 +507,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: image_prepar
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: init msg )
 {
+    _engine_rasterizer . get ( ) . receive ( msg ) ;
     _logic . get ( ) . receive ( msg ) ;
     _logic_sound . get ( ) . receive ( msg ) ;
 }
