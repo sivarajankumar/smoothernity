@@ -54,8 +54,8 @@ class shy_engine_render
     } ;
     
 public :
-    shy_engine_render ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: render_texture_create_request msg ) ;
     void receive ( typename messages :: render_texture_finalize msg ) ;
     void receive ( typename messages :: render_texture_load_from_resource msg ) ;
@@ -96,16 +96,16 @@ private :
 } ;
 
 template < typename mediator >
-shy_engine_render < mediator > :: shy_engine_render ( )
-{
-    platform_math :: make_num_whole ( _next_texture_id , 0 ) ;
-    platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
-}
-
-template < typename mediator >
 void shy_engine_render < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
+{
+    platform_math :: make_num_whole ( _next_texture_id , 0 ) ;
+    platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
 }
 
 template < typename mediator >

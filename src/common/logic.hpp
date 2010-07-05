@@ -10,7 +10,6 @@ class shy_logic
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
-    shy_logic ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: done msg ) ;
@@ -30,12 +29,6 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic < mediator > :: shy_logic ( )
-{
-    _fidget_prepared = platform :: math_consts . whole_false ;
-}
-
-template < typename mediator >
 void shy_logic < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
@@ -44,6 +37,7 @@ void shy_logic < mediator > :: set_mediator ( typename platform_pointer :: templ
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: init msg )
 {
+    _fidget_prepared = platform :: math_consts . whole_false ;
     _init_render ( ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_prepare_permit ( ) ) ;
 }
