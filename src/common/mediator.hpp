@@ -313,7 +313,6 @@ public :
 public :
     const engine_render_consts_type & engine_render_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
-    engine_render_stateless & engine_render_stateless_obj ( ) ;
     platform & platform_obj ( ) ;
 private :
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
@@ -344,7 +343,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: set_platform ( typename platform_pointer :: template pointer < platform > arg_platform )
 {
     _platform = arg_platform ;
-    _engine_render_stateless . get ( ) . set_platform_render ( _platform . get ( ) . render ) ;
 }
 
 template < typename mediator_types >
@@ -404,12 +402,6 @@ template < typename mediator_types >
 typename shy_mediator < mediator_types > :: platform & shy_mediator < mediator_types > :: platform_obj ( )
 {
     return _platform . get ( ) ;
-}
-
-template < typename mediator_types >
-typename shy_mediator < mediator_types > :: engine_render_stateless & shy_mediator < mediator_types > :: engine_render_stateless_obj ( )
-{
-    return _engine_render_stateless . get ( ) ;
 }
 
 template < typename mediator_types >

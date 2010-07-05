@@ -7,7 +7,6 @@ class shy_engine_render_stateless
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
-    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
@@ -42,19 +41,12 @@ public :
 public :
     shy_engine_render_stateless ( ) ;
     shy_engine_render_stateless & operator= ( const shy_engine_render_stateless & src ) ;
-    void set_platform_render ( typename platform_pointer :: template pointer < platform_render > arg_platform_render ) ;
     
     static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     
-    // TODO : MOVE ALL METHODS TO engine_render
-	void get_aspect_width ( num_fract & result ) ;
-	void get_aspect_height ( num_fract & result ) ;
-    
 public :
     const engine_render_consts_type engine_render_consts ;
-private :
-    typename platform_pointer :: template pointer < platform_render > _platform_render ;
 } ;
 
 template < typename mediator >
@@ -67,12 +59,6 @@ shy_engine_render_stateless < mediator > &
 shy_engine_render_stateless < mediator > :: operator= ( const shy_engine_render_stateless < mediator > & src )
 {
     return * this ;
-}
-
-template < typename mediator >
-void shy_engine_render_stateless < mediator > :: set_platform_render ( typename platform_pointer :: template pointer < platform_render > arg_platform_render )
-{
-    _platform_render = arg_platform_render ;
 }
 
 template < typename mediator >
@@ -92,16 +78,4 @@ template < typename mediator >
 void shy_engine_render_stateless < mediator > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
     platform_render :: create_texture_resource_id ( resource_id , resource_index ) ;
-}
-
-template < typename mediator >
-void shy_engine_render_stateless < mediator > :: get_aspect_width ( num_fract & result )
-{
-    _platform_render . get ( ) . get_aspect_width ( result ) ;
-}
-
-template < typename mediator >
-void shy_engine_render_stateless < mediator > :: get_aspect_height ( num_fract & result )
-{
-    _platform_render . get ( ) . get_aspect_height ( result ) ;
 }
