@@ -141,9 +141,9 @@ template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_listener_position ( vector_data position )
 {
     ALfloat al_position [ ] = 
-        { platform_vector_insider :: x_unsafe_get ( position )
-        , platform_vector_insider :: y_unsafe_get ( position )
-        , platform_vector_insider :: z_unsafe_get ( position ) 
+        { platform_vector_insider :: x_get ( position )
+        , platform_vector_insider :: y_get ( position )
+        , platform_vector_insider :: z_get ( position ) 
         } ;
     alListenerfv ( AL_POSITION , al_position ) ;
 }
@@ -152,9 +152,9 @@ template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_listener_velocity ( vector_data velocity )
 {
     ALfloat al_velocity [ ] =
-        { platform_vector_insider :: x_unsafe_get ( velocity )
-        , platform_vector_insider :: y_unsafe_get ( velocity )
-        , platform_vector_insider :: z_unsafe_get ( velocity ) 
+        { platform_vector_insider :: x_get ( velocity )
+        , platform_vector_insider :: y_get ( velocity )
+        , platform_vector_insider :: z_get ( velocity ) 
         } ;
     alListenerfv ( AL_VELOCITY , al_velocity ) ;
 }
@@ -163,12 +163,12 @@ template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_listener_orientation ( vector_data look_at , vector_data up )
 {
     ALfloat al_orientation [ ] = 
-        { platform_vector_insider :: x_unsafe_get ( look_at )
-        , platform_vector_insider :: y_unsafe_get ( look_at )
-        , platform_vector_insider :: z_unsafe_get ( look_at )
-        , platform_vector_insider :: x_unsafe_get ( up )
-        , platform_vector_insider :: y_unsafe_get ( up )
-        , platform_vector_insider :: z_unsafe_get ( up )
+        { platform_vector_insider :: x_get ( look_at )
+        , platform_vector_insider :: y_get ( look_at )
+        , platform_vector_insider :: z_get ( look_at )
+        , platform_vector_insider :: x_get ( up )
+        , platform_vector_insider :: y_get ( up )
+        , platform_vector_insider :: z_get ( up )
         } ;
     alListenerfv ( AL_ORIENTATION , al_orientation ) ;
 }
@@ -176,7 +176,7 @@ inline void shy_macosx_platform_sound < platform_insider > :: set_listener_orien
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_sample_value ( mono_sound_sample & sample , num_fract value )
 {
-    sample . _value = ( ALubyte ) ( ( platform_math_insider :: num_fract_unsafe_value_get ( value ) * 127.0f ) + 127.0f ) ;
+    sample . _value = ( ALubyte ) ( ( platform_math_insider :: num_fract_value_get ( value ) * 127.0f ) + 127.0f ) ;
 }
 
 template < typename platform_insider >
@@ -185,7 +185,7 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_stereo_reso
     , num_whole resource_index
     )
 {
-    result . _resource_id = platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
+    result . _resource_id = platform_math_insider :: num_whole_value_get ( resource_index ) ;
 }
 
 template < typename platform_insider >
@@ -197,7 +197,7 @@ inline void shy_macosx_platform_sound < platform_insider > :: load_stereo_sample
 {
     [ _sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
+        to_buffer : ( void * ) platform_static_array_insider :: elements_ptr ( samples )
         with_max_samples_count_of : platform_static_array_insider :: template elements_count < samples_array > ( )
     ] ;
 }
@@ -205,13 +205,13 @@ inline void shy_macosx_platform_sound < platform_insider > :: load_stereo_sample
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loader_ready ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , [ _sound_loader loader_ready ] ) ;
+    platform_math_insider :: num_whole_value_set ( result , [ _sound_loader loader_ready ] ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loaded_samples_count ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , [ _sound_loader loaded_samples_count ] ) ;
+    platform_math_insider :: num_whole_value_set ( result , [ _sound_loader loaded_samples_count ] ) ;
 }
 
 template < typename platform_insider >
@@ -233,8 +233,8 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_mono_buffer
     al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
-        , ( ALvoid * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
-        , platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( mono_sound_sample )
+        , ( ALvoid * ) platform_static_array_insider :: elements_ptr ( samples )
+        , platform_math_insider :: num_whole_value_get ( samples_count ) * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
 }
@@ -258,8 +258,8 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_stereo_buff
     al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
-        , ( ALvoid * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
-        , platform_math_insider :: num_whole_unsafe_value_get ( samples_count ) * sizeof ( stereo_sound_sample )
+        , ( ALvoid * ) platform_static_array_insider :: elements_ptr ( samples )
+        , platform_math_insider :: num_whole_value_get ( samples_count ) * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;
 }
@@ -273,22 +273,22 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_source ( so
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_pitch ( const sound_source_id & source_id , num_fract pitch )
 {
-    alSourcef ( source_id . _source_id , AL_PITCH , platform_math_insider :: num_fract_unsafe_value_get ( pitch ) ) ;
+    alSourcef ( source_id . _source_id , AL_PITCH , platform_math_insider :: num_fract_value_get ( pitch ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_gain ( const sound_source_id & source_id , num_fract gain )
 {
-    alSourcef ( source_id . _source_id , AL_GAIN , platform_math_insider :: num_fract_unsafe_value_get ( gain ) ) ;
+    alSourcef ( source_id . _source_id , AL_GAIN , platform_math_insider :: num_fract_value_get ( gain ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_position ( const sound_source_id & source_id , vector_data position )
 {
     ALfloat al_position [ ] = 
-        { platform_vector_insider :: x_unsafe_get ( position )
-        , platform_vector_insider :: y_unsafe_get ( position )
-        , platform_vector_insider :: z_unsafe_get ( position ) 
+        { platform_vector_insider :: x_get ( position )
+        , platform_vector_insider :: y_get ( position )
+        , platform_vector_insider :: z_get ( position ) 
         } ;
     alSourcefv ( source_id . _source_id , AL_POSITION , al_position ) ;
 }
@@ -297,9 +297,9 @@ template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_velocity ( const sound_source_id & source_id , vector_data velocity )
 {
     ALfloat al_velocity [ ] =
-        { platform_vector_insider :: x_unsafe_get ( velocity )
-        , platform_vector_insider :: y_unsafe_get ( velocity )
-        , platform_vector_insider :: z_unsafe_get ( velocity ) 
+        { platform_vector_insider :: x_get ( velocity )
+        , platform_vector_insider :: y_get ( velocity )
+        , platform_vector_insider :: z_get ( velocity ) 
         } ;
     alSourcefv ( source_id . _source_id , AL_VELOCITY , al_velocity ) ;
 }

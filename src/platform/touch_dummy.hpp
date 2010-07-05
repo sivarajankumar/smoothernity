@@ -13,17 +13,17 @@ public :
 template < typename platform_insider >
 inline void shy_platform_touch_dummy < platform_insider > :: occured ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , false ) ;
+    platform_math_insider :: num_whole_value_set ( result , false ) ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_touch_dummy < platform_insider > :: x ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , 0 ) ;
+    platform_math_insider :: num_fract_value_set ( result , 0 ) ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_touch_dummy < platform_insider > :: y ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , 0 ) ;
+    platform_math_insider :: num_fract_value_set ( result , 0 ) ;
 }

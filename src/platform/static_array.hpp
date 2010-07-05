@@ -29,12 +29,12 @@ template < typename platform_insider >
 template < typename array_type >
 inline typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: element ( array_type & array , num_whole index )
 {
-    return array . _elements [ platform_math_insider :: num_whole_unsafe_value_get ( index ) ] ;
+    return array . _elements [ platform_math_insider :: num_whole_value_get ( index ) ] ;
 }
 
 template < typename platform_insider >
 template < typename array_type >
 inline const typename array_type :: _data_type & shy_platform_static_array < platform_insider > :: element ( const array_type & array , num_whole index )
 {
-    return array . _elements [ platform_math_insider :: num_whole_unsafe_value_get ( index ) ] ;
+    return array . _elements [ platform_math_insider :: num_whole_value_get ( index ) ] ;
 }

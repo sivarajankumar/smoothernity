@@ -54,51 +54,51 @@ public :
 template < typename platform_insider >
 shy_platform_math_consts < platform_insider > :: shy_platform_math_consts ( )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_pi , 3.141592f ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_2pi , 6.283184f ) ;
+    platform_math_insider :: num_fract_value_set ( fract_pi , 3.141592f ) ;
+    platform_math_insider :: num_fract_value_set ( fract_2pi , 6.283184f ) ;
     
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_0 , 0 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_1 , 1 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_2 , 2 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_3 , 3 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_4 , 4 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_5 , 5 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_6 , 6 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_7 , 7 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_8 , 8 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_9 , 9 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_0 , 0 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_1 , 1 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_2 , 2 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_3 , 3 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_4 , 4 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_5 , 5 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_6 , 6 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_7 , 7 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_8 , 8 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_9 , 9 ) ;
     
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_true , true ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_false , false ) ;
+    platform_math_insider :: num_whole_value_set ( whole_true , true ) ;
+    platform_math_insider :: num_whole_value_set ( whole_false , false ) ;
     
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_0 , 0 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_1 , 1 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_2 , 2 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_3 , 3 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_4 , 4 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_5 , 5 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_6 , 6 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_7 , 7 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_8 , 8 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_9 , 9 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_0 , 0 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_1 , 1 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_2 , 2 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_3 , 3 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_4 , 4 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_5 , 5 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_6 , 6 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_7 , 7 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_8 , 8 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_9 , 9 ) ;
     
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_1 , - 1 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_2 , - 2 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_3 , - 3 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_4 , - 4 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_5 , - 5 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_6 , - 6 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_7 , - 7 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_8 , - 8 ) ;
-    platform_math_insider :: num_fract_unsafe_value_set ( fract_minus_9 , - 9 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_1 , - 1 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_2 , - 2 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_3 , - 3 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_4 , - 4 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_5 , - 5 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_6 , - 6 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_7 , - 7 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_8 , - 8 ) ;
+    platform_math_insider :: num_fract_value_set ( fract_minus_9 , - 9 ) ;
     
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_1 , - 1 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_2 , - 2 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_3 , - 3 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_4 , - 4 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_5 , - 5 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_6 , - 6 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_7 , - 7 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_8 , - 8 ) ;
-    platform_math_insider :: num_whole_unsafe_value_set ( whole_minus_9 , - 9 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_1 , - 1 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_2 , - 2 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_3 , - 3 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_4 , - 4 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_5 , - 5 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_6 , - 6 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_7 , - 7 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_8 , - 8 ) ;
+    platform_math_insider :: num_whole_value_set ( whole_minus_9 , - 9 ) ;
 }

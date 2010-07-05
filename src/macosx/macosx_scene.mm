@@ -12,8 +12,8 @@
         [ _sound_loader thread_run ] ;
         [ _texture_loader thread_run ] ;
         _platform_insider = new shy_macosx_platform_insider ( ) ;
-        _platform_insider -> render_insider . unsafe_set_texture_loader ( _texture_loader ) ;
-        _platform_insider -> sound_insider . unsafe_set_sound_loader ( _sound_loader ) ;
+        _platform_insider -> render_insider . set_texture_loader ( _texture_loader ) ;
+        _platform_insider -> sound_insider . set_sound_loader ( _sound_loader ) ;
 		_measurer = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( _platform_insider -> platform ) ;
 		_measurer -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
@@ -50,13 +50,13 @@
 	_bounds = bounds ;
 	if ( bounds . size . width > bounds . size . height )
 	{
-		_platform_insider -> render_insider . unsafe_set_aspect_width ( bounds . size . width / bounds . size . height ) ;
-		_platform_insider -> render_insider . unsafe_set_aspect_height ( 1.0f ) ;
+		_platform_insider -> render_insider . set_aspect_width ( bounds . size . width / bounds . size . height ) ;
+		_platform_insider -> render_insider . set_aspect_height ( 1.0f ) ;
 	}
 	else
 	{
-		_platform_insider -> render_insider . unsafe_set_aspect_width ( 1.0f ) ;
-		_platform_insider -> render_insider . unsafe_set_aspect_height ( bounds . size . height / bounds . size . width ) ;
+		_platform_insider -> render_insider . set_aspect_width ( 1.0f ) ;
+		_platform_insider -> render_insider . set_aspect_height ( bounds . size . height / bounds . size . width ) ;
 	}
 }
 
@@ -64,30 +64,30 @@
 {
 	if ( _bounds . size . width > _bounds . size . height )
 	{
-        _platform_insider -> mouse_insider . unsafe_set_x 
+        _platform_insider -> mouse_insider . set_x 
             ( ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . height ) ;
-		_platform_insider -> mouse_insider . unsafe_set_y 
+		_platform_insider -> mouse_insider . set_y 
             ( ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . height ) ;
 	}
 	else
 	{
-        _platform_insider -> mouse_insider . unsafe_set_x
+        _platform_insider -> mouse_insider . set_x
             ( ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . width ) ;
-		_platform_insider -> mouse_insider . unsafe_set_y
+		_platform_insider -> mouse_insider . set_y
             ( ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . width ) ;
 	}
 }
 
 - ( void ) mouse_left_button_down
 {
-    _platform_insider -> mouse_insider . unsafe_set_left_button_down ( true ) ;
+    _platform_insider -> mouse_insider . set_left_button_down ( true ) ;
 }
 
 - ( void ) render
 {
 	_measurer -> render ( ) ;
 	_measurer -> update ( ) ;
-    _platform_insider -> mouse_insider . unsafe_set_left_button_down ( false ) ;
+    _platform_insider -> mouse_insider . set_left_button_down ( false ) ;
     glFinish ( ) ;
 }
 

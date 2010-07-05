@@ -294,15 +294,15 @@ inline void shy_macosx_platform_render < platform_insider > :: fog_linear
     )
 {
     GLfloat color [ ] = 
-        { platform_math_insider :: num_fract_unsafe_value_get ( r )
-        , platform_math_insider :: num_fract_unsafe_value_get ( g )
-        , platform_math_insider :: num_fract_unsafe_value_get ( b )
-        , platform_math_insider :: num_fract_unsafe_value_get ( a )
+        { platform_math_insider :: num_fract_value_get ( r )
+        , platform_math_insider :: num_fract_value_get ( g )
+        , platform_math_insider :: num_fract_value_get ( b )
+        , platform_math_insider :: num_fract_value_get ( a )
         } ;
     glEnable ( GL_FOG ) ;
     glFogf ( GL_FOG_MODE , GL_LINEAR ) ;
-    glFogf ( GL_FOG_START , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( near ) ) ;
-    glFogf ( GL_FOG_END , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( far ) ) ;
+    glFogf ( GL_FOG_START , ( GLfloat ) platform_math_insider :: num_fract_value_get ( near ) ) ;
+    glFogf ( GL_FOG_END , ( GLfloat ) platform_math_insider :: num_fract_value_get ( far ) ) ;
     glFogfv ( GL_FOG_COLOR , color ) ;
 }
 
@@ -322,10 +322,10 @@ template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_texel_color 
     ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    texel . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( b ) * 255.0f ) ;
-    texel . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( g ) * 255.0f ) ;
-    texel . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( r ) * 255.0f ) ;
-    texel . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( a ) * 255.0f ) ;
+    texel . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( b ) * 255.0f ) ;
+    texel . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( g ) * 255.0f ) ;
+    texel . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( r ) * 255.0f ) ;
+    texel . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( a ) * 255.0f ) ;
 }
 
 template < typename platform_insider >
@@ -333,7 +333,7 @@ template < typename texels_array >
 inline void shy_macosx_platform_render < platform_insider > :: load_texture_data 
     ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data )
 {
-    GLsizei size = 1 << platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base ) ;
+    GLsizei size = 1 << platform_math_insider :: num_whole_value_get ( size_pow2_base ) ;
     glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
@@ -341,14 +341,14 @@ inline void shy_macosx_platform_render < platform_insider > :: load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
     glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE 
-        , platform_static_array_insider :: elements_unsafe_ptr ( data ) 
+        , platform_static_array_insider :: elements_ptr ( data ) 
         ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
-    resource_id . _resource_id = platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
+    resource_id . _resource_id = platform_math_insider :: num_whole_value_get ( resource_index ) ;
 }
 
 template < typename platform_insider >
@@ -358,24 +358,24 @@ inline void shy_macosx_platform_render < platform_insider > :: load_texture_reso
 {
     [ _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) platform_static_array_insider :: elements_unsafe_ptr ( data )
-        with_side_size_of : 1 << platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base )
+        to_buffer : ( void * ) platform_static_array_insider :: elements_ptr ( data )
+        with_side_size_of : 1 << platform_math_insider :: num_whole_value_get ( size_pow2_base )
     ] ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: texture_loader_ready ( num_whole & is_ready )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( is_ready , [ _texture_loader loader_ready ] ) ;
+    platform_math_insider :: num_whole_value_set ( is_ready , [ _texture_loader loader_ready ] ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: clear_screen ( num_fract r , num_fract g , num_fract b )
 {
     glClearColor 
-        ( ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( r )
-        , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( g )
-        , ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( b )
+        ( ( GLfloat ) platform_math_insider :: num_fract_value_get ( r )
+        , ( GLfloat ) platform_math_insider :: num_fract_value_get ( g )
+        , ( GLfloat ) platform_math_insider :: num_fract_value_get ( b )
         , ( GLfloat ) 0
         ) ;
     glClearDepth ( 1 ) ;
@@ -395,12 +395,12 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_frustu
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
     glFrustum 
-        ( platform_math_insider :: num_fract_unsafe_value_get ( left )
-        , platform_math_insider :: num_fract_unsafe_value_get ( right )
-        , platform_math_insider :: num_fract_unsafe_value_get ( bottom )
-        , platform_math_insider :: num_fract_unsafe_value_get ( top )
-        , platform_math_insider :: num_fract_unsafe_value_get ( near )
-        , platform_math_insider :: num_fract_unsafe_value_get ( far )
+        ( platform_math_insider :: num_fract_value_get ( left )
+        , platform_math_insider :: num_fract_value_get ( right )
+        , platform_math_insider :: num_fract_value_get ( bottom )
+        , platform_math_insider :: num_fract_value_get ( top )
+        , platform_math_insider :: num_fract_value_get ( near )
+        , platform_math_insider :: num_fract_value_get ( far )
         ) ;
     glMatrixMode ( GL_MODELVIEW ) ;
 }
@@ -418,12 +418,12 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_ortho
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
     glOrtho 
-        ( platform_math_insider :: num_fract_unsafe_value_get ( left )
-        , platform_math_insider :: num_fract_unsafe_value_get ( right )
-        , platform_math_insider :: num_fract_unsafe_value_get ( bottom )
-        , platform_math_insider :: num_fract_unsafe_value_get ( top )
-        , platform_math_insider :: num_fract_unsafe_value_get ( near )
-        , platform_math_insider :: num_fract_unsafe_value_get ( far )
+        ( platform_math_insider :: num_fract_value_get ( left )
+        , platform_math_insider :: num_fract_value_get ( right )
+        , platform_math_insider :: num_fract_value_get ( bottom )
+        , platform_math_insider :: num_fract_value_get ( top )
+        , platform_math_insider :: num_fract_value_get ( near )
+        , platform_math_insider :: num_fract_value_get ( far )
         ) ;
     glMatrixMode ( GL_MODELVIEW ) ;
 }
@@ -437,8 +437,8 @@ inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buf
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
-        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) platform_math_insider :: num_whole_unsafe_value_get ( elements ) ) 
-        , platform_static_array_insider :: elements_unsafe_ptr ( data )
+        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) platform_math_insider :: num_whole_value_get ( elements ) ) 
+        , platform_static_array_insider :: elements_ptr ( data )
         , GL_STATIC_DRAW 
         ) ;
 }
@@ -446,26 +446,26 @@ inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buf
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z )
 {
-    vertex . _position [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
-    vertex . _position [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
-    vertex . _position [ 2 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
+    vertex . _position [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_value_get ( x ) ;
+    vertex . _position [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_value_get ( y ) ;
+    vertex . _position [ 2 ] = ( GLfloat ) platform_math_insider :: num_fract_value_get ( z ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v )
 {
-    vertex . _tex_coord [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( u ) ;
-    vertex . _tex_coord [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_unsafe_value_get ( v ) ;
+    vertex . _tex_coord [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_value_get ( u ) ;
+    vertex . _tex_coord [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_value_get ( v ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_vertex_color 
     ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    vertex . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( r ) * 255.0f ) ;
-    vertex . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( g ) * 255.0f ) ;
-    vertex . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( b ) * 255.0f ) ;
-    vertex . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_unsafe_value_get ( a ) * 255.0f ) ;
+    vertex . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( r ) * 255.0f ) ;
+    vertex . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( g ) * 255.0f ) ;
+    vertex . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( b ) * 255.0f ) ;
+    vertex . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_get ( a ) * 255.0f ) ;
 }
 
 template < typename platform_insider >
@@ -477,8 +477,8 @@ inline void shy_macosx_platform_render < platform_insider > :: create_index_buff
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
-        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) platform_math_insider :: num_whole_unsafe_value_get ( elements ) )
-        , platform_static_array_insider :: elements_unsafe_ptr ( data )
+        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) platform_math_insider :: num_whole_value_get ( elements ) )
+        , platform_static_array_insider :: elements_ptr ( data )
         , GL_STATIC_DRAW
         ) ;
 }
@@ -486,7 +486,7 @@ inline void shy_macosx_platform_render < platform_insider > :: create_index_buff
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_index_value ( index_data & data , num_whole index )
 {
-    data . _index = ( GLushort ) platform_math_insider :: num_whole_unsafe_value_get ( index ) ;
+    data . _index = ( GLushort ) platform_math_insider :: num_whole_value_get ( index ) ;
 }
 
 template < typename platform_insider >
@@ -498,13 +498,13 @@ inline void shy_macosx_platform_render < platform_insider > :: matrix_identity (
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: matrix_load ( const matrix_data & matrix )
 {
-    glLoadMatrixf ( platform_matrix_insider :: elements_unsafe_ptr ( matrix ) ) ;
+    glLoadMatrixf ( platform_matrix_insider :: elements_ptr ( matrix ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: matrix_mult ( const matrix_data & matrix )
 {
-    glMultMatrixf ( platform_matrix_insider :: elements_unsafe_ptr ( matrix ) ) ;
+    glMultMatrixf ( platform_matrix_insider :: elements_ptr ( matrix ) ) ;
 }
 
 template < typename platform_insider >
@@ -536,7 +536,7 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_str
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_STRIP 
-        , ( GLsizei ) platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
+        , ( GLsizei ) platform_math_insider :: num_whole_value_get ( indices_count )
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
@@ -559,7 +559,7 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_FAN 
-        , ( GLsizei ) platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
+        , ( GLsizei ) platform_math_insider :: num_whole_value_get ( indices_count )
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
@@ -568,13 +568,13 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: get_aspect_width ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , _aspect_width ) ;
+    platform_math_insider :: num_fract_value_set ( result , _aspect_width ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: get_aspect_height ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , _aspect_height ) ;
+    platform_math_insider :: num_fract_value_set ( result , _aspect_height ) ;
 }
 
 template < typename platform_insider >

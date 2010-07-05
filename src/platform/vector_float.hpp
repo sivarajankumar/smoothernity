@@ -41,15 +41,15 @@ shy_platform_vector_float < platform_insider > :: vector_data :: vector_data ( )
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: xyz ( vector_data & result , num_fract x , num_fract y , num_fract z )
 {
-    result . _x = platform_math_insider :: num_fract_unsafe_value_get ( x ) ;
-    result . _y = platform_math_insider :: num_fract_unsafe_value_get ( y ) ;
-    result . _z = platform_math_insider :: num_fract_unsafe_value_get ( z ) ;
+    result . _x = platform_math_insider :: num_fract_value_get ( x ) ;
+    result . _y = platform_math_insider :: num_fract_value_get ( y ) ;
+    result . _z = platform_math_insider :: num_fract_value_get ( z ) ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: dot_product ( num_fract & result , vector_data v1 , vector_data v2 )
 {
-    platform_math_insider :: num_fract_unsafe_value_set 
+    platform_math_insider :: num_fract_value_set 
         ( result
         , v1 . _x * v2 . _x
         + v1 . _y * v2 . _y
@@ -84,23 +84,23 @@ inline void shy_platform_vector_float < platform_insider > :: sub ( vector_data 
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: mul ( vector_data & result , vector_data v , num_fract f )
 {
-    result . _x = platform_math_insider :: num_fract_unsafe_value_get ( f ) * v . _x ;
-    result . _y = platform_math_insider :: num_fract_unsafe_value_get ( f ) * v . _y ;
-    result . _z = platform_math_insider :: num_fract_unsafe_value_get ( f ) * v . _z ;
+    result . _x = platform_math_insider :: num_fract_value_get ( f ) * v . _x ;
+    result . _y = platform_math_insider :: num_fract_value_get ( f ) * v . _y ;
+    result . _z = platform_math_insider :: num_fract_value_get ( f ) * v . _z ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: mul_by ( vector_data & v , num_fract f )
 {
-    v . _x *= platform_math_insider :: num_fract_unsafe_value_get ( f ) ;
-    v . _y *= platform_math_insider :: num_fract_unsafe_value_get ( f ) ;
-    v . _z *= platform_math_insider :: num_fract_unsafe_value_get ( f ) ;
+    v . _x *= platform_math_insider :: num_fract_value_get ( f ) ;
+    v . _y *= platform_math_insider :: num_fract_value_get ( f ) ;
+    v . _z *= platform_math_insider :: num_fract_value_get ( f ) ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: length ( num_fract & result , vector_data v )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , float ( sqrt ( v . _x * v . _x + v . _y * v . _y + v . _z * v . _z ) ) ) ;
+    platform_math_insider :: num_fract_value_set ( result , float ( sqrt ( v . _x * v . _x + v . _y * v . _y + v . _z * v . _z ) ) ) ;
 }
 
 template < typename platform_insider >

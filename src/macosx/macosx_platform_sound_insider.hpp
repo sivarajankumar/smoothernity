@@ -4,7 +4,7 @@ class shy_macosx_platform_sound_insider
 public :
     shy_macosx_platform_sound_insider ( ) ;
     void set_platform_insider ( platform_insider * arg_platform_insider ) ;
-    void unsafe_set_sound_loader ( shy_macosx_sound_loader * loader ) ;
+    void set_sound_loader ( shy_macosx_sound_loader * loader ) ;
 private :
     platform_insider * _platform_insider ;
 } ;
@@ -22,7 +22,7 @@ void shy_macosx_platform_sound_insider < platform_insider > :: set_platform_insi
 }
 
 template < typename platform_insider >
-void shy_macosx_platform_sound_insider < platform_insider > :: unsafe_set_sound_loader ( shy_macosx_sound_loader * loader )
+void shy_macosx_platform_sound_insider < platform_insider > :: set_sound_loader ( shy_macosx_sound_loader * loader )
 {
     _platform_insider -> sound . _sound_loader = loader ;
 }

@@ -30,17 +30,17 @@ shy_macosx_platform_mouse < platform_insider > :: shy_macosx_platform_mouse ( )
 template < typename platform_insider >
 inline void shy_macosx_platform_mouse < platform_insider > :: left_button_down ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , int ( _left_button_down ) ) ;
+    platform_math_insider :: num_whole_value_set ( result , int ( _left_button_down ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_mouse < platform_insider > :: x ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , _x ) ;
+    platform_math_insider :: num_fract_value_set ( result , _x ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_mouse < platform_insider > :: y ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , _y ) ;
+    platform_math_insider :: num_fract_value_set ( result , _y ) ;
 }
