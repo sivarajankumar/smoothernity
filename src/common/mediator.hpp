@@ -520,6 +520,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: init msg )
     _logic_sound . get ( ) . receive ( msg ) ;
     _logic_text . get ( ) . receive ( msg ) ;
     _logic_title . get ( ) . receive ( msg ) ;
+    _logic_touch . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
