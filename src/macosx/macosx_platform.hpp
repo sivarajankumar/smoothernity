@@ -32,6 +32,7 @@
 #include "macosx_platform_mouse_insider.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
+#include "macosx_platform_sound_insider.hpp"
 #include "macosx_platform_time.hpp"
 
 class shy_macosx_platform ;
@@ -53,6 +54,7 @@ public :
     typedef shy_macosx_platform_render < shy_macosx_platform_insider > platform_render ;
     typedef shy_platform_scheduler_random < shy_macosx_platform_insider > platform_scheduler ;
     typedef shy_macosx_platform_sound < shy_macosx_platform_insider > platform_sound ;
+    typedef shy_macosx_platform_sound_insider < shy_macosx_platform_insider > platform_sound_insider ;
     typedef shy_platform_static_array < shy_macosx_platform_insider > platform_static_array ;
     typedef shy_platform_static_assert < shy_macosx_platform_insider > platform_static_assert ;
     typedef shy_macosx_platform_time < shy_macosx_platform_insider > platform_time ;
@@ -66,7 +68,6 @@ public :
     void register_platform_modules ( shy_macosx_platform & platform ) ;
     
 public :    
-    static shy_macosx_sound_loader * sound_loader ;
     static shy_macosx_texture_loader * texture_loader ;
 	
 	static float aspect_width ;
@@ -79,6 +80,8 @@ public :
     
     platform_mouse mouse ;
     platform_mouse_insider mouse_insider ;
+    platform_sound sound ;
+    platform_sound_insider sound_insider ;
 } ;
 
 class shy_macosx_platform
@@ -102,5 +105,6 @@ public :
     static const shy_platform_math_consts < shy_macosx_platform_insider > math_consts ;
     
     platform_pointer :: pointer < platform_mouse > mouse ;
+    platform_pointer :: pointer < platform_sound > sound ;
 } ;
 

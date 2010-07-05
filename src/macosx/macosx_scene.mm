@@ -7,13 +7,14 @@
     self = [ super init ] ;
     if ( self )
 	{
-		shy_macosx_platform_insider :: sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
+        _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
+        [ _sound_loader thread_run ] ;
         shy_macosx_platform_insider :: texture_loader = [ [ shy_macosx_texture_loader alloc ] init ] ;
-        [ shy_macosx_platform_insider :: sound_loader thread_run ] ;
         [ shy_macosx_platform_insider :: texture_loader thread_run ] ;
         _platform_insider = new shy_macosx_platform_insider ( ) ;
         _platform = new shy_macosx_platform ( ) ;
 		_measurer = new shy_facade < shy_macosx_platform > ( ) ;
+        _platform_insider -> sound_insider . unsafe_set_sound_loader ( _sound_loader ) ;
         _platform_insider -> register_platform_modules ( * _platform ) ;
         _measurer -> set_platform ( * _platform ) ;
 		_measurer -> init ( ) ;
@@ -25,9 +26,9 @@
 
 - ( void ) dealloc
 {
-    [ shy_macosx_platform_insider :: sound_loader thread_stop ] ;
+    [ _sound_loader thread_stop ] ;
     [ shy_macosx_platform_insider :: texture_loader thread_stop ] ;
-    shy_macosx_platform_insider :: sound_loader = nil ;
+    _sound_loader = nil ;
     shy_macosx_platform_insider :: texture_loader = nil ;
 	_measurer -> done ( ) ;
 	delete _measurer ;

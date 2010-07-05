@@ -38,6 +38,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
+    typename platform_pointer :: template pointer < platform_sound > _platform_sound ;
     num_whole _mono_sound_created ;
     num_whole _stereo_sound_created ;
     num_whole _stereo_sound_loaded ;
@@ -58,6 +59,8 @@ template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 {
     _platform_mouse = _mediator . get ( ) . platform_obj ( ) . mouse ;
+    _platform_sound = _mediator . get ( ) . platform_obj ( ) . sound ;
+    
     platform_math :: make_num_whole ( _mono_sound_created , false ) ;
     platform_math :: make_num_whole ( _stereo_sound_created , false ) ;
     platform_math :: make_num_whole ( _stereo_sound_loaded , false ) ;
@@ -105,9 +108,9 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
     platform_vector :: xyz ( look_at , look_at_x , look_at_y , look_at_z ) ;
     platform_vector :: xyz ( up , up_x , up_y , up_z ) ;
     
-    platform_sound :: set_listener_position ( listener_pos ) ;
-    platform_sound :: set_listener_velocity ( listener_vel ) ;
-    platform_sound :: set_listener_orientation ( look_at , up ) ;
+    _platform_sound . get ( ) . set_listener_position ( listener_pos ) ;
+    _platform_sound . get ( ) . set_listener_velocity ( listener_vel ) ;
+    _platform_sound . get ( ) . set_listener_orientation ( look_at , up ) ;
 }
 
 template < typename mediator >
@@ -124,7 +127,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         if ( platform_conditions :: whole_is_false ( _stereo_sound_loaded ) )
         {
             num_whole ready ;
-            platform_sound :: loader_ready ( ready ) ;
+            _platform_sound . get ( ) . loader_ready ( ready ) ;
             if ( platform_conditions :: whole_is_true ( ready ) )
             {
                 _load_sound ( ) ;
@@ -134,7 +137,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         else
         {
             num_whole ready ;
-            platform_sound :: loader_ready ( ready ) ;
+            _platform_sound . get ( ) . loader_ready ( ready ) ;
             if ( platform_conditions :: whole_is_true ( ready ) )
             {
                 if ( platform_conditions :: whole_is_false ( _stereo_sound_created ) )
@@ -159,8 +162,8 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
         if ( platform_conditions :: whole_is_true ( touch ) || platform_conditions :: whole_is_true ( mouse_button ) )
         {
-            platform_sound :: source_stop ( _mono_sound_source ) ;
-            platform_sound :: source_play ( _mono_sound_source ) ;
+            _platform_sound . get ( ) . source_stop ( _mono_sound_source ) ;
+            _platform_sound . get ( ) . source_play ( _mono_sound_source ) ;
         }
     }
 }
@@ -171,8 +174,8 @@ void shy_logic_sound < mediator > :: _load_sound ( )
     num_whole music_resource_index ;
     stereo_sound_resource_id music_resource_id ;
     platform_math :: make_num_whole ( music_resource_index , _music_rough_and_heavy_resource_index ) ;
-    platform_sound :: create_stereo_resource_id ( music_resource_id , music_resource_index ) ;
-    platform_sound :: load_stereo_sample_data ( _stereo_sound_data , music_resource_id ) ;
+    _platform_sound . get ( ) . create_stereo_resource_id ( music_resource_id , music_resource_index ) ;
+    _platform_sound . get ( ) . load_stereo_sample_data ( _stereo_sound_data , music_resource_id ) ;
 }
 
 template < typename mediator >
@@ -220,24 +223,24 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
     platform_vector :: xyz ( source_vel , vel_x , vel_y , vel_z ) ;
     
-    platform_sound :: loaded_samples_count ( loaded_samples_count ) ;
+    _platform_sound . get ( ) . loaded_samples_count ( loaded_samples_count ) ;
     platform_math :: sub_from_whole ( loaded_samples_count , music_tail_cut ) ;
     
     num_whole max_music_samples ;
     platform_math :: make_num_whole ( max_music_samples , _max_stereo_sound_samples ) ;
-    platform_sound :: create_stereo_buffer 
+    _platform_sound . get ( ) . create_stereo_buffer 
         ( stereo_sound_buffer
         , _stereo_sound_data 
         , loaded_samples_count
         ) ;
-    platform_sound :: create_source ( _stereo_sound_source ) ;
-    platform_sound :: set_source_gain ( _stereo_sound_source , gain ) ;
-    platform_sound :: set_source_pitch ( _stereo_sound_source , pitch ) ;
-    platform_sound :: set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
-    platform_sound :: set_source_playback_looping ( _stereo_sound_source ) ;
-    platform_sound :: set_source_position ( _stereo_sound_source , source_pos ) ;
-    platform_sound :: set_source_velocity ( _stereo_sound_source , source_vel ) ;    
-    platform_sound :: source_play ( _stereo_sound_source ) ;    
+    _platform_sound . get ( ) . create_source ( _stereo_sound_source ) ;
+    _platform_sound . get ( ) . set_source_gain ( _stereo_sound_source , gain ) ;
+    _platform_sound . get ( ) . set_source_pitch ( _stereo_sound_source , pitch ) ;
+    _platform_sound . get ( ) . set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
+    _platform_sound . get ( ) . set_source_playback_looping ( _stereo_sound_source ) ;
+    _platform_sound . get ( ) . set_source_position ( _stereo_sound_source , source_pos ) ;
+    _platform_sound . get ( ) . set_source_velocity ( _stereo_sound_source , source_vel ) ;    
+    _platform_sound . get ( ) . source_play ( _stereo_sound_source ) ;    
 }
 
 template < typename mediator >
@@ -274,7 +277,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
         _int_to_sample ( sample , next_sample ) ;
         mono_sound_sample & sample_ptr = platform_static_array :: element ( _mono_sound_data , i ) ;
-        platform_sound :: set_sample_value ( sample_ptr , sample ) ;
+        _platform_sound . get ( ) . set_sample_value ( sample_ptr , sample ) ;
     }
     
     num_fract gain ;
@@ -302,12 +305,12 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
     platform_vector :: xyz ( source_vel , pos_x , pos_y , pos_z ) ;
     
-    platform_sound :: create_mono_buffer ( mono_sound_buffer , _mono_sound_data , max_sound_samples ) ;
-    platform_sound :: create_source ( _mono_sound_source ) ;
-    platform_sound :: set_source_gain ( _mono_sound_source , gain ) ;
-    platform_sound :: set_source_pitch ( _mono_sound_source , pitch ) ;
-    platform_sound :: set_source_buffer ( _mono_sound_source , mono_sound_buffer ) ;
-    platform_sound :: set_source_playback_once ( _mono_sound_source ) ;
-    platform_sound :: set_source_position ( _mono_sound_source , source_pos ) ;
-    platform_sound :: set_source_velocity ( _mono_sound_source , source_vel ) ;    
+    _platform_sound . get ( ) . create_mono_buffer ( mono_sound_buffer , _mono_sound_data , max_sound_samples ) ;
+    _platform_sound . get ( ) . create_source ( _mono_sound_source ) ;
+    _platform_sound . get ( ) . set_source_gain ( _mono_sound_source , gain ) ;
+    _platform_sound . get ( ) . set_source_pitch ( _mono_sound_source , pitch ) ;
+    _platform_sound . get ( ) . set_source_buffer ( _mono_sound_source , mono_sound_buffer ) ;
+    _platform_sound . get ( ) . set_source_playback_once ( _mono_sound_source ) ;
+    _platform_sound . get ( ) . set_source_position ( _mono_sound_source , source_pos ) ;
+    _platform_sound . get ( ) . set_source_velocity ( _mono_sound_source , source_vel ) ;    
 }

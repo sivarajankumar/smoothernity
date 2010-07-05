@@ -1,6 +1,11 @@
 template < typename platform_insider >
+class shy_macosx_platform_sound_insider ;
+
+template < typename platform_insider >
 class shy_macosx_platform_sound
 {
+    friend class shy_macosx_platform_sound_insider < platform_insider > ;
+
     typedef typename platform_insider :: platform_math :: const_int_32 const_int_32 ;
     typedef typename platform_insider :: platform_math :: num_fract num_fract ;
     typedef typename platform_insider :: platform_math :: num_whole num_whole ;
@@ -61,33 +66,43 @@ public :
     } ;
     
 public :
-    static void set_listener_position ( vector_data position ) ;
-    static void set_listener_velocity ( vector_data velocity ) ;
-    static void set_listener_orientation ( vector_data look_at , vector_data up ) ;
-    static void set_sample_value ( mono_sound_sample & sample , num_fract value ) ;
-    static void create_stereo_resource_id ( stereo_sound_resource_id & result , num_whole resource_index ) ;
-    static void loader_ready ( num_whole & result ) ;
-    static void loaded_samples_count ( num_whole & result ) ;    
-    static void create_source ( sound_source_id & result ) ;
-    static void set_source_pitch ( const sound_source_id & source_id , num_fract pitch ) ;
-    static void set_source_gain ( const sound_source_id & source_id , num_fract gain ) ;
-    static void set_source_position ( const sound_source_id & source_id , vector_data position ) ;
-    static void set_source_velocity ( const sound_source_id & source_id , vector_data velocity ) ;
-    static void set_source_buffer ( const sound_source_id & source_id , sound_buffer_id & buffer_id ) ;
-    static void set_source_playback_looping ( const sound_source_id & source_id ) ;
-    static void set_source_playback_once ( const sound_source_id & source_id ) ;
-    static void source_play ( const sound_source_id & source_id ) ;
-    static void source_stop ( const sound_source_id & source_id ) ;
+    shy_macosx_platform_sound ( ) ;
+    void set_listener_position ( vector_data position ) ;
+    void set_listener_velocity ( vector_data velocity ) ;
+    void set_listener_orientation ( vector_data look_at , vector_data up ) ;
+    void set_sample_value ( mono_sound_sample & sample , num_fract value ) ;
+    void create_stereo_resource_id ( stereo_sound_resource_id & result , num_whole resource_index ) ;
+    void loader_ready ( num_whole & result ) ;
+    void loaded_samples_count ( num_whole & result ) ;    
+    void create_source ( sound_source_id & result ) ;
+    void set_source_pitch ( const sound_source_id & source_id , num_fract pitch ) ;
+    void set_source_gain ( const sound_source_id & source_id , num_fract gain ) ;
+    void set_source_position ( const sound_source_id & source_id , vector_data position ) ;
+    void set_source_velocity ( const sound_source_id & source_id , vector_data velocity ) ;
+    void set_source_buffer ( const sound_source_id & source_id , sound_buffer_id & buffer_id ) ;
+    void set_source_playback_looping ( const sound_source_id & source_id ) ;
+    void set_source_playback_once ( const sound_source_id & source_id ) ;
+    void source_play ( const sound_source_id & source_id ) ;
+    void source_stop ( const sound_source_id & source_id ) ;
     
     template < typename samples_array >
-    static void load_stereo_sample_data ( const samples_array & samples , const stereo_sound_resource_id & resource_id ) ;
+    void load_stereo_sample_data ( const samples_array & samples , const stereo_sound_resource_id & resource_id ) ;
     
     template < typename samples_array >
-    static void create_mono_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
+    void create_mono_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
     
     template < typename samples_array >
-    static void create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
+    void create_stereo_buffer ( sound_buffer_id & result , const samples_array & samples , num_whole samples_count ) ;
+
+private :
+    shy_macosx_sound_loader * _sound_loader ;
 } ;
+
+template < typename platform_insider >
+shy_macosx_platform_sound < platform_insider > :: shy_macosx_platform_sound ( )
+: _sound_loader ( 0 )
+{
+}
 
 template < typename platform_insider >
 shy_macosx_platform_sound < platform_insider > :: mono_sound_sample :: mono_sound_sample ( )
@@ -178,7 +193,7 @@ inline void shy_macosx_platform_sound < platform_insider > :: load_stereo_sample
     , const stereo_sound_resource_id & resource_id 
     )
 {
-    [ platform_insider :: sound_loader 
+    [ _sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
         to_buffer : ( void * ) platform_static_array_insider :: elements_unsafe_ptr ( samples )
         with_max_samples_count_of : platform_static_array_insider :: template elements_count < samples_array > ( )
@@ -188,13 +203,13 @@ inline void shy_macosx_platform_sound < platform_insider > :: load_stereo_sample
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loader_ready ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , [ platform_insider :: sound_loader loader_ready ] ) ;
+    platform_math_insider :: num_whole_unsafe_value_set ( result , [ _sound_loader loader_ready ] ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loaded_samples_count ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , [ platform_insider :: sound_loader loaded_samples_count ] ) ;
+    platform_math_insider :: num_whole_unsafe_value_set ( result , [ _sound_loader loaded_samples_count ] ) ;
 }
 
 template < typename platform_insider >

@@ -15,7 +15,6 @@ void * shy_macosx_platform_insider :: vertex_color_offset = reinterpret_cast < v
     - reinterpret_cast < char * > ( & shy_macosx_platform_insider :: reference_vertex )
     ) ;
     
-shy_macosx_sound_loader * shy_macosx_platform_insider :: sound_loader = 0 ;
 shy_macosx_texture_loader * shy_macosx_platform_insider :: texture_loader = 0 ;
 
 float shy_macosx_platform_insider :: aspect_width = 1.0f ;
@@ -26,9 +25,11 @@ const shy_platform_math_consts < shy_macosx_platform_insider > shy_macosx_platfo
 shy_macosx_platform_insider :: shy_macosx_platform_insider ( )
 {
     mouse_insider . set_platform_insider ( this ) ;
+    sound_insider . set_platform_insider ( this ) ;
 }
 
 void shy_macosx_platform_insider :: register_platform_modules ( shy_macosx_platform & platform )
 {
     platform . mouse . set ( mouse ) ;
+    platform . sound . set ( sound ) ;
 }
