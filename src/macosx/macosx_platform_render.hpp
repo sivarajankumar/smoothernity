@@ -83,6 +83,13 @@ public :
 public :
     shy_macosx_platform_render ( ) ;
 
+    static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    static void set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
+    static void set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
+    static void set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    static void set_index_value ( index_data & data , num_whole index ) ;
+    static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
+
     void enable_face_culling ( ) ;
     
     void enable_depth_test ( ) ;
@@ -99,19 +106,12 @@ public :
 	void texture_mode_modulate ( ) ;
     void use_texture ( const render_texture_id & arg_texture_id ) ;
 	void create_texture_id ( render_texture_id & arg_texture_id ) ;
-    void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     void texture_loader_ready ( num_whole & is_ready ) ;
 
     void clear_screen ( num_fract r , num_fract g , num_fract b ) ;    
     void projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     void projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
-    
-    void set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
-    void set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
-    void set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void set_index_value ( index_data & data , num_whole index ) ;
-    
+        
     void matrix_identity ( ) ;
     void matrix_load ( const matrix_data & matrix ) ;
     void matrix_mult ( const matrix_data & matrix ) ;

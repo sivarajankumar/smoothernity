@@ -252,7 +252,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
     platform_math :: mul_wholes ( texel_offset , num_texture_size , msg . y ) ;
     platform_math :: add_to_whole ( texel_offset , msg . x ) ;
     texel_data & texel = platform_static_array :: element ( texture . texels , texel_offset ) ;
-    _platform_render . get ( ) . set_texel_color ( texel , msg . r , msg . g , msg . b , msg . a ) ;
+    platform_render :: set_texel_color ( texel , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >
@@ -322,7 +322,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
-    _platform_render . get ( ) . set_vertex_position ( vertex , msg . x , msg . y , msg . z ) ;
+    platform_render :: set_vertex_position ( vertex , msg . x , msg . y , msg . z ) ;
 }
 
 template < typename mediator >
@@ -330,7 +330,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
-    _platform_render . get ( ) . set_vertex_tex_coord ( vertex , msg . u , msg . v ) ;
+    platform_render :: set_vertex_tex_coord ( vertex , msg . u , msg . v ) ;
 }
 
 template < typename mediator >
@@ -338,7 +338,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
-    _platform_render . get ( ) . set_vertex_color ( vertex , msg . r , msg . g , msg . b , msg . a ) ;
+    platform_render :: set_vertex_color ( vertex , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >
@@ -346,7 +346,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     index_data & index = platform_static_array :: element ( mesh . triangle_strip_indices , msg . offset ) ;
-    _platform_render . get ( ) . set_index_value ( index , msg . index ) ;
+    platform_render :: set_index_value ( index , msg . index ) ;
 }
 
 template < typename mediator >
@@ -354,7 +354,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 {
     _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
     index_data & index = platform_static_array :: element ( mesh . triangle_fan_indices , msg . offset ) ;
-    _platform_render . get ( ) . set_index_value ( index , msg . index ) ;
+    platform_render :: set_index_value ( index , msg . index ) ;
 }
 
 template < typename mediator >

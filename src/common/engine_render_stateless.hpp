@@ -44,10 +44,11 @@ public :
     shy_engine_render_stateless & operator= ( const shy_engine_render_stateless & src ) ;
     void set_platform_render ( typename platform_pointer :: template pointer < platform_render > arg_platform_render ) ;
     
+    static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
+    
     // TODO : MOVE ALL METHODS TO engine_render
     void texture_loader_ready ( num_whole & is_ready ) ;
-    void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
 	void get_aspect_width ( num_fract & result ) ;
 	void get_aspect_height ( num_fract & result ) ;
     
@@ -91,13 +92,13 @@ void shy_engine_render_stateless < mediator > :: texture_loader_ready ( num_whol
 template < typename mediator >
 void shy_engine_render_stateless < mediator > :: set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    _platform_render . get ( ) . set_texel_color ( texel , r , g , b , a ) ;
+    platform_render :: set_texel_color ( texel , r , g , b , a ) ;
 }
 
 template < typename mediator >
 void shy_engine_render_stateless < mediator > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
-    _platform_render . get ( ) . create_texture_resource_id ( resource_id , resource_index ) ;
+    platform_render :: create_texture_resource_id ( resource_id , resource_index ) ;
 }
 
 template < typename mediator >
