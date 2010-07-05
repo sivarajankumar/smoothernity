@@ -513,6 +513,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: init msg )
     _logic_application . get ( ) . receive ( msg ) ;
     _logic_camera . get ( ) . receive ( msg ) ;
     _logic_entities . get ( ) . receive ( msg ) ;
+    _logic_fidget . get ( ) . receive ( msg ) ;
     _logic_sound . get ( ) . receive ( msg ) ;
 }
 
