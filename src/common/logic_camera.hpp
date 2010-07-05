@@ -33,6 +33,7 @@ public :
     void receive ( typename messages :: entities_mesh_grid_reply msg ) ;
     void receive ( typename messages :: entities_origin_reply msg ) ;
     void receive ( typename messages :: near_plane_distance_reply msg ) ;
+    void receive ( typename messages :: render_aspect_reply msg ) ;
 private :
     void _proceed_with_update ( ) ;
     void _proceed_with_fill_camera_schedules ( ) ;
@@ -103,6 +104,9 @@ private :
     vector_data _current_camera_origin ;
     vector_data _current_camera_target ;
     
+    num_whole _render_aspect_requested ;
+    num_fract _render_aspect_height ;
+    
     typename platform_static_array :: template static_array < num_whole , 4 > _scheduled_camera_origin_indices ;
     typename platform_static_array :: template static_array < num_whole , 4 > _scheduled_camera_target_indices ;
     typename platform_static_array :: template static_array < vector_data , 4 > _scheduled_camera_origins ;
@@ -137,6 +141,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
     _fill_schedules_target_replied = platform :: math_consts . whole_false ;
     _desired_camera_origin_new_requested = platform :: math_consts . whole_false ;
     _desired_camera_target_new_requested = platform :: math_consts . whole_false ;
+    _render_aspect_requested = platform :: math_consts . whole_false ;
     for ( num_whole i = platform :: math_consts . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , platform :: math_consts . whole_4 )
         ; platform_math :: inc_whole ( i )
@@ -260,6 +265,17 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_or
 }
 
 template < typename mediator >
+void shy_logic_camera < mediator > :: receive ( typename messages :: render_aspect_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
+    {
+        _render_aspect_requested = platform :: math_consts . whole_false ;
+        _render_aspect_height = msg . height ;
+        _update_camera_matrix ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_camera < mediator > :: _proceed_with_update ( )
 {
     if ( platform_conditions :: whole_is_true ( _entities_height_replied ) 
@@ -349,7 +365,8 @@ void shy_logic_camera < mediator > :: _proceed_with_camera_update ( )
     {
         _update_current_camera_origin ( ) ;
         _update_current_camera_target ( ) ;
-        _update_camera_matrix ( ) ;
+        _render_aspect_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
     }
 }
 
@@ -527,16 +544,14 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     vector_data up ;
     vector_data shift ;
     vector_data shifted_origin ;
-    num_fract aspect_height ;
     num_fract entity_height ;
     
-    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_height ( aspect_height ) ;
     platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: make_num_fract ( up_z , 0 , 1 ) ;
     platform_math :: make_num_fract ( shift_x , 0 , 1 ) ;
     shift_y = _entities_height ;
-    platform_math :: add_to_fract ( shift_y , aspect_height ) ;
+    platform_math :: add_to_fract ( shift_y , _render_aspect_height ) ;
     platform_math :: add_to_fract ( shift_y , _near_plane_distance ) ;
     platform_math :: make_num_fract ( shift_z , 0 , 1 ) ;
     platform_vector :: xyz ( up , up_x , up_y , up_z ) ;

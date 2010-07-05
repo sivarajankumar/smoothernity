@@ -809,6 +809,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render msg )
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: render_aspect_reply msg )
 {
+    _logic_camera . get ( ) . receive ( msg ) ;
     _logic_fidget . get ( ) . receive ( msg ) ;
     _logic_title . get ( ) . receive ( msg ) ;
 }
