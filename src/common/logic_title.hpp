@@ -14,6 +14,7 @@ class shy_logic_title
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -69,6 +70,7 @@ private :
     void _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
     num_whole _title_launch_permitted ;
     num_whole _title_created ;
@@ -118,28 +120,29 @@ private :
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: init msg ) 
 {
-    _title_launch_permitted = platform :: math_consts . whole_false ;
-    _title_finished = platform :: math_consts . whole_false ;
-    _title_created = platform :: math_consts . whole_false ;
-    _title_appeared = platform :: math_consts . whole_false ;
-    _disappear_at_frames = platform :: math_consts . whole_0 ;
-    _scene_scale = platform :: math_consts . fract_1 ;
-    _scene_scale_frames = platform :: math_consts . fract_0 ;
-    _letters_count = platform :: math_consts . whole_0 ;
-    _title_frames = platform :: math_consts . whole_0 ;
-    _bake_letter_index = platform :: math_consts . whole_0 ;
-    _text_letter_big_tex_coords_requested = platform :: math_consts . whole_false ;
-    _text_letter_big_tex_coords_replied = platform :: math_consts . whole_false ;
-    _mesh_create_requested = platform :: math_consts . whole_false ;
-    _mesh_create_replied = platform :: math_consts . whole_false ;
-    _use_ortho_projection_requested = platform :: math_consts . whole_false ;
-    _use_ortho_projection_replied = platform :: math_consts . whole_false;
-    _fidget_render_requested = platform :: math_consts . whole_false ;
-    _fidget_render_replied = platform :: math_consts . whole_false ;
-    _use_text_texture_requested = platform :: math_consts . whole_false ;
-    _use_text_texture_replied = platform :: math_consts . whole_false ;
-    _render_aspect_requested = platform :: math_consts . whole_false ;
-    _render_started = platform :: math_consts . whole_false ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _title_launch_permitted = _platform_math_consts . get ( ) . whole_false ;
+    _title_finished = _platform_math_consts . get ( ) . whole_false ;
+    _title_created = _platform_math_consts . get ( ) . whole_false ;
+    _title_appeared = _platform_math_consts . get ( ) . whole_false ;
+    _disappear_at_frames = _platform_math_consts . get ( ) . whole_0 ;
+    _scene_scale = _platform_math_consts . get ( ) . fract_1 ;
+    _scene_scale_frames = _platform_math_consts . get ( ) . fract_0 ;
+    _letters_count = _platform_math_consts . get ( ) . whole_0 ;
+    _title_frames = _platform_math_consts . get ( ) . whole_0 ;
+    _bake_letter_index = _platform_math_consts . get ( ) . whole_0 ;
+    _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_false ;
+    _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_false ;
+    _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
+    _mesh_create_replied = _platform_math_consts . get ( ) . whole_false ;
+    _use_ortho_projection_requested = _platform_math_consts . get ( ) . whole_false ;
+    _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_false;
+    _fidget_render_requested = _platform_math_consts . get ( ) . whole_false ;
+    _fidget_render_replied = _platform_math_consts . get ( ) . whole_false ;
+    _use_text_texture_requested = _platform_math_consts . get ( ) . whole_false ;
+    _use_text_texture_replied = _platform_math_consts . get ( ) . whole_false ;
+    _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
+    _render_started = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -153,7 +156,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
 {
     if ( platform_conditions :: whole_is_true ( _title_created ) )
     {
-        for ( num_whole i = platform :: math_consts . whole_0
+        for ( num_whole i = _platform_math_consts . get ( ) . whole_0
             ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
             ; platform_math :: inc_whole ( i )
             )
@@ -169,7 +172,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: title_render msg )
 {
-    _render_started = platform :: math_consts . whole_true ;
+    _render_started = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_render ( ) ;
 }
 
@@ -178,8 +181,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: use_ortho_pr
 {
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_requested ) )
     {
-        _use_ortho_projection_requested = platform :: math_consts . whole_false ;
-        _use_ortho_projection_replied = platform :: math_consts . whole_true ;
+        _use_ortho_projection_requested = _platform_math_consts . get ( ) . whole_false ;
+        _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -195,7 +198,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
 {
     if ( platform_conditions :: whole_is_true ( _title_launch_permitted ) )
     {
-        _render_aspect_requested = platform :: math_consts . whole_true ;
+        _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
     }
 }
@@ -205,7 +208,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: render_aspec
 {
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
-        _render_aspect_requested = platform :: math_consts . whole_false ;
+        _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
         _render_aspect_width = msg . width ;
         if ( platform_conditions :: whole_is_false ( _title_created ) )
             _title_create ( ) ;
@@ -219,8 +222,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: render_mesh_
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
-        _mesh_create_requested = platform :: math_consts . whole_false ;
-        _mesh_create_replied = platform :: math_consts . whole_true ;
+        _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
+        _mesh_create_replied = _platform_math_consts . get ( ) . whole_true ;
         _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
         letter . mesh = msg . mesh ;
         _proceed_with_letter_creation ( ) ;
@@ -236,8 +239,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
       && platform_conditions :: whole_is_true ( letters_are_equal )
        )
     {
-        _text_letter_big_tex_coords_requested = platform :: math_consts . whole_false ;
-        _text_letter_big_tex_coords_replied = platform :: math_consts . whole_true ;
+        _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_false ;
+        _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_true ;
         _tex_coords_left = msg . left ;
         _tex_coords_right = msg . right ;
         _tex_coords_bottom = msg . bottom ;
@@ -251,8 +254,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: fidget_rende
 {
     if ( platform_conditions :: whole_is_true ( _fidget_render_requested ) )
     {
-        _fidget_render_requested = platform :: math_consts . whole_false ;
-        _fidget_render_replied = platform :: math_consts . whole_true ;
+        _fidget_render_requested = _platform_math_consts . get ( ) . whole_false ;
+        _fidget_render_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -262,8 +265,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: use_text_tex
 {
     if ( platform_conditions :: whole_is_true ( _use_text_texture_requested ) )
     {
-        _use_text_texture_requested = platform :: math_consts . whole_false ;
-        _use_text_texture_replied = platform :: math_consts . whole_true ;
+        _use_text_texture_requested = _platform_math_consts . get ( ) . whole_false ;
+        _use_text_texture_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -273,36 +276,36 @@ void shy_logic_title < mediator > :: _proceed_with_render ( )
 {
     if ( platform_conditions :: whole_is_true ( _render_started ) )
     {
-        _render_started = platform :: math_consts . whole_false ;
-        _use_ortho_projection_requested = platform :: math_consts . whole_true ;
+        _render_started = _platform_math_consts . get ( ) . whole_false ;
+        _use_ortho_projection_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: use_ortho_projection_request ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_replied ) )
     {
-        _use_ortho_projection_replied = platform :: math_consts . whole_false ;
+        _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_false ;
         typename messages :: render_clear_screen clear_screen_msg ;
-        clear_screen_msg . r = platform :: math_consts . fract_0 ;
-        clear_screen_msg . g = platform :: math_consts . fract_0 ;
-        clear_screen_msg . b = platform :: math_consts . fract_0 ;
+        clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;
         _mediator . get ( ) . send ( clear_screen_msg ) ;
         _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
 
-        _fidget_render_requested = platform :: math_consts . whole_true ;
+        _fidget_render_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: fidget_render_request ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _fidget_render_replied ) )
     {
-        _fidget_render_replied = platform :: math_consts . whole_false ;
+        _fidget_render_replied = _platform_math_consts . get ( ) . whole_false ;
         if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
         {
-            _use_text_texture_requested = platform :: math_consts . whole_true ;
+            _use_text_texture_requested = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: use_text_texture_request ( ) ) ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _use_text_texture_replied ) )
     {
-        _use_text_texture_replied = platform :: math_consts . whole_false ;
+        _use_text_texture_replied = _platform_math_consts . get ( ) . whole_false ;
         _title_render ( ) ;
     }
 }
@@ -314,40 +317,40 @@ void shy_logic_title < mediator > :: _proceed_with_letter_creation ( )
       && platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_replied )
        )
     {
-        _mesh_create_replied = platform :: math_consts . whole_false ;
-        _text_letter_big_tex_coords_replied = platform :: math_consts . whole_false ;
+        _mesh_create_replied = _platform_math_consts . get ( ) . whole_false ;
+        _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_false ;
         
         _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
         
-        num_fract title_r = platform :: math_consts . fract_0 ;
-        num_fract title_g = platform :: math_consts . fract_1 ;
-        num_fract title_b = platform :: math_consts . fract_0 ;
-        num_fract title_a = platform :: math_consts . fract_1 ;
-        num_fract x_left = platform :: math_consts . fract_minus_1 ;
-        num_fract x_right = platform :: math_consts . fract_1 ;
-        num_fract y_bottom = platform :: math_consts . fract_minus_1 ;
-        num_fract y_top = platform :: math_consts . fract_1 ;
-        num_fract z = platform :: math_consts . fract_0 ;
+        num_fract title_r = _platform_math_consts . get ( ) . fract_0 ;
+        num_fract title_g = _platform_math_consts . get ( ) . fract_1 ;
+        num_fract title_b = _platform_math_consts . get ( ) . fract_0 ;
+        num_fract title_a = _platform_math_consts . get ( ) . fract_1 ;
+        num_fract x_left = _platform_math_consts . get ( ) . fract_minus_1 ;
+        num_fract x_right = _platform_math_consts . get ( ) . fract_1 ;
+        num_fract y_bottom = _platform_math_consts . get ( ) . fract_minus_1 ;
+        num_fract y_top = _platform_math_consts . get ( ) . fract_1 ;
+        num_fract z = _platform_math_consts . get ( ) . fract_0 ;
         
-        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_0 , platform :: math_consts . whole_0 ) ;
-        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_0 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_0 , _tex_coords_left , _tex_coords_top ) ;
-        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_0 , x_left , y_top , z ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , _platform_math_consts . get ( ) . whole_0 , _platform_math_consts . get ( ) . whole_0 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , _platform_math_consts . get ( ) . whole_0 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , _platform_math_consts . get ( ) . whole_0 , _tex_coords_left , _tex_coords_top ) ;
+        _mesh_set_vertex_position            ( letter . mesh , _platform_math_consts . get ( ) . whole_0 , x_left , y_top , z ) ;
         
-        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_1 , platform :: math_consts . whole_1 ) ;
-        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_1 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_1 , _tex_coords_left , _tex_coords_bottom ) ;
-        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_1 , x_left , y_bottom , z ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , _platform_math_consts . get ( ) . whole_1 , _platform_math_consts . get ( ) . whole_1 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , _platform_math_consts . get ( ) . whole_1 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , _platform_math_consts . get ( ) . whole_1 , _tex_coords_left , _tex_coords_bottom ) ;
+        _mesh_set_vertex_position            ( letter . mesh , _platform_math_consts . get ( ) . whole_1 , x_left , y_bottom , z ) ;
         
-        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_2 , platform :: math_consts . whole_2 ) ;
-        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_2 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_2 , _tex_coords_right , _tex_coords_top ) ;
-        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_2 , x_right , y_top , z ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , _platform_math_consts . get ( ) . whole_2 , _platform_math_consts . get ( ) . whole_2 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , _platform_math_consts . get ( ) . whole_2 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , _platform_math_consts . get ( ) . whole_2 , _tex_coords_right , _tex_coords_top ) ;
+        _mesh_set_vertex_position            ( letter . mesh , _platform_math_consts . get ( ) . whole_2 , x_right , y_top , z ) ;
         
-        _mesh_set_triangle_strip_index_value ( letter . mesh , platform :: math_consts . whole_3 , platform :: math_consts . whole_3 ) ;
-        _mesh_set_vertex_color               ( letter . mesh , platform :: math_consts . whole_3 , title_r , title_g , title_b , title_a ) ;
-        _mesh_set_vertex_tex_coord           ( letter . mesh , platform :: math_consts . whole_3 , _tex_coords_right , _tex_coords_bottom ) ;
-        _mesh_set_vertex_position            ( letter . mesh , platform :: math_consts . whole_3 , x_right , y_bottom , z ) ;
+        _mesh_set_triangle_strip_index_value ( letter . mesh , _platform_math_consts . get ( ) . whole_3 , _platform_math_consts . get ( ) . whole_3 ) ;
+        _mesh_set_vertex_color               ( letter . mesh , _platform_math_consts . get ( ) . whole_3 , title_r , title_g , title_b , title_a ) ;
+        _mesh_set_vertex_tex_coord           ( letter . mesh , _platform_math_consts . get ( ) . whole_3 , _tex_coords_right , _tex_coords_bottom ) ;
+        _mesh_set_vertex_position            ( letter . mesh , _platform_math_consts . get ( ) . whole_3 , x_right , y_bottom , z ) ;
         
         typename messages :: render_mesh_finalize mesh_finalize_msg ;
         mesh_finalize_msg . mesh = letter . mesh ;
@@ -375,7 +378,7 @@ void shy_logic_title < mediator > :: _animate_appear ( )
     platform_math :: inc_whole ( _title_frames ) ;
     if ( platform_conditions :: whole_greater_than_whole ( _title_frames , whole_appear_duration_in_frames ) )
     {
-        _title_frames = platform :: math_consts . whole_0 ;
+        _title_frames = _platform_math_consts . get ( ) . whole_0 ;
         _prepare_to_disappear ( ) ;
     }
     else
@@ -402,8 +405,8 @@ void shy_logic_title < mediator > :: _prepare_to_appear ( )
 {
     platform_math :: make_num_fract ( _desired_pos_radius_coeff , _spin_radius_in_letters , 1 ) ;
     platform_math :: make_num_fract ( _desired_pos_angle , 11 , 2 ) ;
-    platform_math :: mul_fract_by ( _desired_pos_angle , platform :: math_consts . fract_pi ) ;
-    platform_math :: mul_fracts ( _desired_rot_angle , platform :: math_consts . fract_2pi , platform :: math_consts . fract_3 ) ;
+    platform_math :: mul_fract_by ( _desired_pos_angle , _platform_math_consts . get ( ) . fract_pi ) ;
+    platform_math :: mul_fracts ( _desired_rot_angle , _platform_math_consts . get ( ) . fract_2pi , _platform_math_consts . get ( ) . fract_3 ) ;
     platform_math :: make_num_fract ( _desired_scale , 1 , 1 ) ;    
     platform_math :: make_num_fract ( _rubber_first , 19 , 20 ) ;
     platform_math :: make_num_fract ( _rubber_last , 19 , 20 ) ;
@@ -415,8 +418,8 @@ void shy_logic_title < mediator > :: _prepare_to_disappear ( )
 {
     platform_math :: make_num_fract ( _desired_pos_radius_coeff , 0 , 1 ) ;
     platform_math :: make_num_fract ( _desired_pos_angle , 22 , 2 ) ;
-    platform_math :: mul_fract_by ( _desired_pos_angle , platform :: math_consts . fract_pi ) ;
-    platform_math :: mul_fracts ( _desired_rot_angle , platform :: math_consts . fract_2pi , platform :: math_consts . fract_6 ) ;
+    platform_math :: mul_fract_by ( _desired_pos_angle , _platform_math_consts . get ( ) . fract_pi ) ;
+    platform_math :: mul_fracts ( _desired_rot_angle , _platform_math_consts . get ( ) . fract_2pi , _platform_math_consts . get ( ) . fract_6 ) ;
     platform_math :: make_num_fract ( _desired_scale , 0 , 1 ) ;    
     platform_math :: make_num_whole ( _title_appeared , true ) ;
     platform_math :: make_num_fract ( _rubber_first , 59 , 60 ) ;
@@ -448,10 +451,10 @@ void shy_logic_title < mediator > :: _title_render ( )
 {
     matrix_data scene_tm ;
 
-    platform_matrix :: set_axis_x ( scene_tm , _scene_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: set_axis_y ( scene_tm , platform :: math_consts . fract_0 , _scene_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: set_axis_z ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
-    platform_matrix :: set_origin ( scene_tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+    platform_matrix :: set_axis_x ( scene_tm , _scene_scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+    platform_matrix :: set_axis_y ( scene_tm , _platform_math_consts . get ( ) . fract_0 , _scene_scale , _platform_math_consts . get ( ) . fract_0 ) ;
+    platform_matrix :: set_axis_z ( scene_tm , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
+    platform_matrix :: set_origin ( scene_tm , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     
     _mediator . get ( ) . send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     
@@ -459,7 +462,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     matrix_load_msg . matrix = scene_tm ;
     _mediator . get ( ) . send ( matrix_load_msg ) ;
     
-    for ( num_whole i = platform :: math_consts . whole_0
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
         ; platform_math :: inc_whole ( i )
         )
@@ -497,14 +500,14 @@ void shy_logic_title < mediator > :: _title_update ( )
     engine_math :: math_lerp 
         ( _scene_scale 
         , scale_min
-        , platform :: math_consts . fract_0 
+        , _platform_math_consts . get ( ) . fract_0 
         , scale_max 
         , fract_appear_duration_in_frames
         , _scene_scale_frames
         ) ;
-    platform_math :: add_to_fract ( _scene_scale_frames , platform :: math_consts . fract_1 ) ;
+    platform_math :: add_to_fract ( _scene_scale_frames , _platform_math_consts . get ( ) . fract_1 ) ;
                     
-    for ( num_whole i = platform :: math_consts . whole_0
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
         ; platform_math :: inc_whole ( i )
         )
@@ -537,36 +540,36 @@ void shy_logic_title < mediator > :: _title_update ( )
         _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
         
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
-        platform_math :: mul_fracts ( offset_x , _render_aspect_width , platform :: math_consts . fract_2 ) ;
+        platform_math :: mul_fracts ( offset_x , _render_aspect_width , _platform_math_consts . get ( ) . fract_2 ) ;
         platform_math :: mul_fract_by ( offset_x , fract_i ) ;
         platform_math :: div_fract_by ( offset_x , fract_letters_count ) ;
         platform_math :: sub_from_fract ( offset_x , _render_aspect_width ) ;
         platform_math :: add_to_fract ( offset_x , letter_size ) ;
-        platform_vector :: xyz ( offset , offset_x , offset_y , platform :: math_consts . fract_minus_3 ) ;        
+        platform_vector :: xyz ( offset , offset_x , offset_y , _platform_math_consts . get ( ) . fract_minus_3 ) ;        
         
         platform_math :: mul_wholes ( starting_frame , frames_between_letters , i ) ;
         platform_math :: sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
         if ( platform_conditions :: whole_greater_than_whole ( _title_frames , starting_frame ) )
         {
-            engine_math :: math_lerp ( rubber , _rubber_first , platform :: math_consts . fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
+            engine_math :: math_lerp ( rubber , _rubber_first , _platform_math_consts . get ( ) . fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
             
             platform_math :: mul_fracts ( pos_angle_old_part , letter . pos_angle , rubber ) ;
-            platform_math :: sub_fracts ( pos_angle_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: sub_fracts ( pos_angle_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
             platform_math :: mul_fract_by ( pos_angle_new_part , _desired_pos_angle ) ;
             platform_math :: add_fracts ( letter . pos_angle , pos_angle_old_part , pos_angle_new_part ) ;
             
             platform_math :: mul_fracts ( pos_radius_old_part , letter . pos_radius , rubber ) ;
-            platform_math :: sub_fracts ( pos_radius_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: sub_fracts ( pos_radius_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
             platform_math :: mul_fract_by ( pos_radius_new_part , desired_pos_radius ) ;
             platform_math :: add_fracts ( letter . pos_radius , pos_radius_old_part , pos_radius_new_part ) ;
             
             platform_math :: mul_fracts ( rot_angle_old_part , letter . rot_angle , rubber ) ;
-            platform_math :: sub_fracts ( rot_angle_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: sub_fracts ( rot_angle_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
             platform_math :: mul_fract_by ( rot_angle_new_part , _desired_rot_angle ) ;
             platform_math :: add_fracts ( letter . rot_angle , rot_angle_old_part , rot_angle_new_part ) ;
             
             platform_math :: mul_fracts ( scale_old_part , letter . scale , rubber ) ;
-            platform_math :: sub_fracts ( scale_new_part , platform :: math_consts . fract_1 , rubber ) ;
+            platform_math :: sub_fracts ( scale_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
             platform_math :: mul_fract_by ( scale_new_part , _desired_scale ) ;
             platform_math :: add_fracts ( letter . scale , scale_old_part , scale_new_part ) ;
         }
@@ -579,13 +582,13 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_math :: cos ( pos_cos , letter . pos_angle ) ;
         platform_math :: neg_fract ( pos_neg_sin , pos_sin ) ;
         
-        platform_vector :: xyz ( pos , pos_cos , pos_sin , platform :: math_consts . fract_0 ) ;
+        platform_vector :: xyz ( pos , pos_cos , pos_sin , _platform_math_consts . get ( ) . fract_0 ) ;
         platform_vector :: mul_by ( pos , letter . pos_radius ) ;
         
         if ( platform_conditions :: whole_less_than_whole ( _title_frames , finishing_frame ) )
         {
-            platform_vector :: xyz ( axis_x , rot_cos , rot_sin , platform :: math_consts . fract_0 ) ;
-            platform_vector :: xyz ( axis_y , rot_neg_sin , rot_cos , platform :: math_consts . fract_0 ) ;
+            platform_vector :: xyz ( axis_x , rot_cos , rot_sin , _platform_math_consts . get ( ) . fract_0 ) ;
+            platform_vector :: xyz ( axis_y , rot_neg_sin , rot_cos , _platform_math_consts . get ( ) . fract_0 ) ;
             platform_vector :: mul_by ( axis_x , letter . scale ) ;
             platform_vector :: mul_by ( axis_y , letter . scale ) ;
             platform_vector :: mul_by ( axis_x , letter_size ) ;
@@ -593,15 +596,15 @@ void shy_logic_title < mediator > :: _title_update ( )
         }
         else
         {
-            platform_vector :: xyz ( axis_x , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-            platform_vector :: xyz ( axis_y , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+            platform_vector :: xyz ( axis_x , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+            platform_vector :: xyz ( axis_y , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
         }
         
         platform_vector :: add ( origin , pos , offset ) ;
         
         platform_matrix :: set_axis_x ( tm , axis_x ) ;
         platform_matrix :: set_axis_y ( tm , axis_y ) ;
-        platform_matrix :: set_axis_z ( tm , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+        platform_matrix :: set_axis_z ( tm , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
         platform_matrix :: set_origin ( tm , origin ) ;
         
         {
@@ -626,29 +629,29 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
     if ( platform_conditions :: whole_less_than_whole ( _bake_letter_index , _letters_count ) )
     {
         _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
-        letter . scale = platform :: math_consts . fract_0 ;
-        letter . pos_radius = platform :: math_consts . fract_0 ;
-        letter . pos_angle = platform :: math_consts . fract_0 ;
-        letter . rot_angle = platform :: math_consts . fract_0 ;
+        letter . scale = _platform_math_consts . get ( ) . fract_0 ;
+        letter . pos_radius = _platform_math_consts . get ( ) . fract_0 ;
+        letter . pos_angle = _platform_math_consts . get ( ) . fract_0 ;
+        letter . rot_angle = _platform_math_consts . get ( ) . fract_0 ;
         
-        _text_letter_big_tex_coords_requested = platform :: math_consts . whole_true ;
+        _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_true ;
         _text_letter_big_tex_coords_letter = letter . letter ;
         
-        _mesh_create_requested = platform :: math_consts . whole_true ;
+        _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
         
         typename messages :: text_letter_big_tex_coords_request text_letter_big_tex_coords_request_msg ;
         text_letter_big_tex_coords_request_msg . letter = letter . letter ;
         _mediator . get ( ) . send ( text_letter_big_tex_coords_request_msg  ) ;        
         
         typename messages :: render_mesh_create_request mesh_create_msg ;
-        mesh_create_msg . vertices = platform :: math_consts . whole_4 ;
-        mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_4 ;
-        mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
+        mesh_create_msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
+        mesh_create_msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_4 ;
+        mesh_create_msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
         _mediator . get ( ) . send ( mesh_create_msg ) ;
     }
     else
     {
-        _title_created = platform :: math_consts . whole_true ;
+        _title_created = _platform_math_consts . get ( ) . whole_true ;
         _prepare_to_appear ( ) ;
         _animate_lifecycle ( ) ;
     }
