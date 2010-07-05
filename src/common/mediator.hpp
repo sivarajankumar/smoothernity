@@ -1006,6 +1006,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render_textu
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: render_texture_loader_ready_reply msg )
 {
+    _logic_image . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

@@ -221,7 +221,7 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_loader_ready_request msg )
 {
     typename messages :: render_texture_loader_ready_reply reply_msg ;
-    _platform_render . get ( ) . loader_ready ( msg . ready ) ;
+    _platform_render . get ( ) . texture_loader_ready ( reply_msg . ready ) ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }
 
