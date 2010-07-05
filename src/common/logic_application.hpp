@@ -7,6 +7,7 @@ class shy_logic_application
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -17,6 +18,7 @@ public :
     void receive ( typename messages :: text_prepared msg ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     num_whole _application_launched ;
     num_whole _title_active ;
     num_whole _text_active ;
@@ -32,6 +34,7 @@ void shy_logic_application < mediator > :: set_mediator ( typename platform_poin
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
     platform_math :: make_num_whole ( _application_launched , false ) ;
     platform_math :: make_num_whole ( _title_active , false ) ;
     platform_math :: make_num_whole ( _game_active , false ) ;
@@ -64,9 +67,9 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
         typename messages :: render_clear_screen clear_screen_msg ;
-        clear_screen_msg . r = platform :: math_consts . fract_0 ;
-        clear_screen_msg . g = platform :: math_consts . fract_0 ;
-        clear_screen_msg . b = platform :: math_consts . fract_0 ;
+        clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;
         _mediator . get ( ) . send ( clear_screen_msg ) ;
     }
 }
