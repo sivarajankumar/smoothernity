@@ -1,6 +1,6 @@
-#import <Cocoa/Cocoa.h>
-#import <OpenAL/al.h>
-#import <OpenAL/alc.h>
+#include <Cocoa/Cocoa.h>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
 
 @class shy_macosx_scene ;
 

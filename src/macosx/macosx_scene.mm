@@ -1,4 +1,4 @@
-#import "macosx_scene.h"
+#include "macosx_scene.h"
 
 @implementation shy_macosx_scene
 

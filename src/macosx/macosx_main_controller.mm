@@ -1,8 +1,8 @@
-#import "macosx_main_controller.h"
-#import "macosx_opengl_view.h"
-#import "macosx_scene.h"
+#include "macosx_main_controller.h"
+#include "macosx_opengl_view.h"
+#include "macosx_scene.h"
 
-#import <OpenGL/OpenGL.h>
+#include <OpenGL/OpenGL.h>
 
 @interface MainController ( AnimationMethods )
 - ( BOOL ) is_animating ;

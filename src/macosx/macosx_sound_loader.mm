@@ -1,4 +1,4 @@
-#import "macosx_sound_loader.h"
+#include "macosx_sound_loader.h"
 
 @implementation shy_macosx_sound_loader
 

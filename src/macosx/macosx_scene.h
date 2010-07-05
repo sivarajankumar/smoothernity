@@ -1,5 +1,5 @@
-#import "macosx_platform.hpp"
-#import "../common/facade.hpp"
+#include "macosx_platform.hpp"
+#include "../common/facade.hpp"
 
 @interface shy_macosx_scene : NSObject
 {

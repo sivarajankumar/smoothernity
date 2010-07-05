@@ -1,6 +1,6 @@
-#import <AudioToolbox/AudioToolbox.h>
-#import <AudioToolbox/ExtendedAudioFile.h>
-#import <Foundation/NSBundle.h>
+#include <AudioToolbox/AudioToolbox.h>
+#include <AudioToolbox/ExtendedAudioFile.h>
+#include <Foundation/NSBundle.h>
 
 @interface shy_macosx_sound_loader : NSObject
 {

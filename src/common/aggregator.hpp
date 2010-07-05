@@ -126,10 +126,12 @@ class shy_aggregator
     typedef typename aggregator_types :: mediator_type mediator_type ;
     typedef typename aggregator_types :: messages messages ;
     typedef typename aggregator_types :: platform platform ;
+    typedef typename aggregator_types :: platform :: platform_pointer platform_pointer ;
     typedef typename aggregator_types :: platform :: platform_scheduler platform_scheduler ;
     typedef typename aggregator_types :: platform :: platform_scheduler :: scheduler scheduler ;
 public :
     shy_aggregator ( ) ;
+    void set_platform ( typename platform_pointer :: template pointer < platform > arg_platform ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
@@ -191,6 +193,11 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( )
         , _logic_title
         , _logic_touch
         ) ;
+}
+
+template < typename aggregator_types >
+void shy_aggregator < aggregator_types > :: set_platform ( typename platform_pointer :: template pointer < platform > arg_platform )
+{
 }
 
 template < typename aggregator_types >

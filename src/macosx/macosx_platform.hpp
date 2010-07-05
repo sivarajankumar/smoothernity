@@ -1,15 +1,15 @@
-#import <AudioToolbox/AudioToolbox.h>
-#import <AudioToolbox/ExtendedAudioFile.h>
-#import <Foundation/NSBundle.h>
-#import <OpenAL/al.h>
-#import <OpenAL/alc.h>
-#import <OpenAL/MacOSX_OALExtensions.h>
-#import <OpenGL/gl.h>
-#import <OpenGL/glext.h>
-#import <QuartzCore/QuartzCore.h>
+#include <AudioToolbox/AudioToolbox.h>
+#include <AudioToolbox/ExtendedAudioFile.h>
+#include <Foundation/NSBundle.h>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <OpenAL/MacOSX_OALExtensions.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glext.h>
+#include <QuartzCore/QuartzCore.h>
 
-#import "macosx_sound_loader.h"
-#import "macosx_texture_loader.h"
+#include "macosx_sound_loader.h"
+#include "macosx_texture_loader.h"
 
 #include <new>
 

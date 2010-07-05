@@ -1,4 +1,4 @@
-#import <Cocoa/Cocoa.h>
+#include <Cocoa/Cocoa.h>
 
 @interface shy_macosx_texture_loader : NSObject
 {
