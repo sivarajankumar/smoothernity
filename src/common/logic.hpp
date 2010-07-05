@@ -8,6 +8,7 @@ class shy_logic
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -26,6 +27,7 @@ private :
     void _get_near_plane_distance ( num_fract & result ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     num_whole _fidget_prepared ;
     
     num_whole _render_aspect_requested ;
@@ -46,11 +48,12 @@ void shy_logic < mediator > :: set_mediator ( typename platform_pointer :: templ
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: init msg )
 {
-    _render_aspect_requested = platform :: math_consts . whole_false ;
-    _handling_near_plane_distance_request = platform :: math_consts . whole_false ;
-    _handling_use_ortho_projection_request = platform :: math_consts . whole_false ;
-    _handling_use_perspective_projection_request = platform :: math_consts . whole_false ;
-    _fidget_prepared = platform :: math_consts . whole_false ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
+    _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_false ;
+    _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_false ;
+    _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_false ;
+    _fidget_prepared = _platform_math_consts . get ( ) . whole_false ;
     _init_render ( ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_prepare_permit ( ) ) ;
 }
@@ -84,23 +87,23 @@ void shy_logic < mediator > :: receive ( typename messages :: update msg )
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: use_perspective_projection_request msg )
 {
-    _render_aspect_requested = platform :: math_consts . whole_true ;
-    _handling_use_perspective_projection_request = platform :: math_consts . whole_true ;
+    _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
+    _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projection_request msg )
 {
-    _render_aspect_requested = platform :: math_consts . whole_true ;
-    _handling_use_ortho_projection_request = platform :: math_consts . whole_true ;
+    _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
+    _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: fidget_prepared msg )
 {
-    _fidget_prepared = platform :: math_consts . whole_true ;
+    _fidget_prepared = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -112,8 +115,8 @@ void shy_logic < mediator > :: receive ( typename messages :: video_mode_changed
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: near_plane_distance_request msg )
 {
-    _render_aspect_requested = platform :: math_consts . whole_true ;
-    _handling_near_plane_distance_request = platform :: math_consts . whole_true ;
+    _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
+    _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
 }
 
@@ -122,19 +125,19 @@ void shy_logic < mediator > :: receive ( typename messages :: render_aspect_repl
 {
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
-        _render_aspect_requested = platform :: math_consts . whole_false ;
+        _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
         _render_aspect_width = msg . width ;
         _render_aspect_height = msg . height ;
         if ( platform_conditions :: whole_is_true ( _handling_near_plane_distance_request ) )
         {
-            _handling_near_plane_distance_request = platform :: math_consts . whole_false ;
+            _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_false ;
             typename messages :: near_plane_distance_reply near_plane_distance_reply_msg ;
             _get_near_plane_distance ( near_plane_distance_reply_msg . distance ) ;
             _mediator . get ( ) . send ( near_plane_distance_reply_msg ) ;
         }
         if ( platform_conditions :: whole_is_true ( _handling_use_ortho_projection_request ) )
         {
-            _handling_use_ortho_projection_request = platform :: math_consts . whole_false ;
+            _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_false ;
             
             num_fract width = _render_aspect_width ;
             num_fract height = _render_aspect_height ;
@@ -161,7 +164,7 @@ void shy_logic < mediator > :: receive ( typename messages :: render_aspect_repl
         }
         if ( platform_conditions :: whole_is_true ( _handling_use_perspective_projection_request ) )
         {
-            _handling_use_perspective_projection_request = platform :: math_consts . whole_false ;
+            _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_false ;
         
             num_fract width = _render_aspect_width ;
             num_fract height = _render_aspect_height ;
