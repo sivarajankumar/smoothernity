@@ -10,6 +10,7 @@ class shy_logic_land
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -38,6 +39,7 @@ private :
     void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     num_whole _land_mesh_created ;
     num_whole _land_texture_created ;
     num_whole _land_prepare_permitted ;
@@ -59,14 +61,15 @@ void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
     platform_math :: make_num_whole ( _land_mesh_created , false ) ;
     platform_math :: make_num_whole ( _land_texture_created , false ) ;
     platform_math :: make_num_whole ( _land_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _land_texture_creation_row , 0 ) ;
     platform_math :: make_num_fract ( _land_scale , 0 , 1 ) ;
-    _texture_create_requested = platform :: math_consts . whole_false ;
-    _texture_create_replied = platform :: math_consts . whole_false ;
-    _mesh_create_requested = platform :: math_consts . whole_false ;
+    _texture_create_requested = _platform_math_consts . get ( ) . whole_false ;
+    _texture_create_replied = _platform_math_consts . get ( ) . whole_false ;
+    _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -99,8 +102,8 @@ void shy_logic_land < mediator > :: receive ( typename messages :: render_textur
 {
     if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
     {
-        _texture_create_requested = platform :: math_consts . whole_false ;
-        _texture_create_replied = platform :: math_consts . whole_true ;
+        _texture_create_requested = _platform_math_consts . get ( ) . whole_false ;
+        _texture_create_replied = _platform_math_consts . get ( ) . whole_true ;
         _land_texture_id = msg . texture ;
     }
 }
@@ -114,7 +117,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update m
         {
             if ( platform_conditions :: whole_is_false ( _texture_create_replied ) )
             {
-                _texture_create_requested = platform :: math_consts . whole_true ;
+                _texture_create_requested = _platform_math_consts . get ( ) . whole_true ;
                 _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
             }
             else
@@ -122,7 +125,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update m
         }
         else if ( platform_conditions :: whole_is_false ( _land_mesh_created ) )
         {
-            _mesh_create_requested = platform :: math_consts . whole_true ;
+            _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
         
             num_whole total_vertices ;
             num_whole total_indices ;
@@ -132,7 +135,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update m
             typename messages :: render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = total_vertices ;
             mesh_create_msg . triangle_strip_indices = total_indices ;
-            mesh_create_msg . triangle_fan_indices = platform :: math_consts . whole_0 ;
+            mesh_create_msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
             _mediator . get ( ) . send ( mesh_create_msg ) ;
         }
     }
@@ -143,7 +146,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: render_mesh_c
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
-        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
         _land_mesh_id = msg . mesh ;
         _create_land_mesh ( ) ;
         if ( platform_conditions :: whole_is_true ( _land_mesh_created ) )
@@ -165,16 +168,16 @@ void shy_logic_land < mediator > :: _render_land ( )
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
     platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
-    platform_math :: div_fracts ( scale_step , platform :: math_consts . fract_1 , fract_scale_in_frames ) ;
+    platform_math :: div_fracts ( scale_step , _platform_math_consts . get ( ) . fract_1 , fract_scale_in_frames ) ;
     platform_math :: add_fracts ( increased_scale , _land_scale , scale_step ) ;
-    if ( platform_conditions :: fract_less_than_fract ( increased_scale , platform :: math_consts . fract_1 ) )
+    if ( platform_conditions :: fract_less_than_fract ( increased_scale , _platform_math_consts . get ( ) . fract_1 ) )
         _land_scale = increased_scale ;
     else
-        _land_scale = platform :: math_consts . fract_1 ;
-    platform_matrix :: set_axis_x ( matrix , _land_scale , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: set_axis_y ( matrix , platform :: math_consts . fract_0 , _land_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , _land_scale ) ;
-    platform_matrix :: set_origin ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 ) ;
+        _land_scale = _platform_math_consts . get ( ) . fract_1 ;
+    platform_matrix :: set_axis_x ( matrix , _land_scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+    platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , _land_scale , _platform_math_consts . get ( ) . fract_0 ) ;
+    platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _land_scale ) ;
+    platform_matrix :: set_origin ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     {
         typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _land_mesh_id ;
@@ -244,7 +247,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             platform_math :: add_to_fract ( x , grid_origin_x ) ;
             platform_math :: add_to_fract ( z , grid_origin_z ) ;
             vertex_x = x ;
-            vertex_y = platform :: math_consts . fract_0 ;
+            vertex_y = _platform_math_consts . get ( ) . fract_0 ;
             vertex_z = z ;
             platform_math :: div_fracts ( vertex_u , fract_iz , fract_land_grid ) ;
             platform_math :: div_fracts ( vertex_v , fract_ix , fract_land_grid ) ;
