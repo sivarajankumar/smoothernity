@@ -39,8 +39,8 @@ class shy_logic_text
     typedef typename platform_static_array :: template static_array < _tex_coords , _max_letters_in_alphabet > _letters_tex_coords ;
 
 public :
-    shy_logic_text ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: text_done msg ) ;
     void receive ( typename messages :: text_prepare_permit msg ) ;
     void receive ( typename messages :: text_render_request msg ) ;
@@ -130,7 +130,13 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_text < mediator > :: shy_logic_text ( )
+void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_logic_text < mediator > :: receive ( typename messages :: init msg )
 {
     _empty_texture_created = platform :: math_consts . whole_false ;
     _small_letters_rasterized = platform :: math_consts . whole_false ;
@@ -148,12 +154,6 @@ shy_logic_text < mediator > :: shy_logic_text ( )
     _letter_size_y = platform :: math_consts . whole_0 ;
     _origin_x = platform :: math_consts . whole_0 ;
     _origin_y = platform :: math_consts . whole_0 ;
-}
-
-template < typename mediator >
-void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
-{
-    _mediator = arg_mediator ;
 }
 
 template < typename mediator >
