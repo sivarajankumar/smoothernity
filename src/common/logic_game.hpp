@@ -8,6 +8,7 @@ class shy_logic_game
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
@@ -42,6 +43,7 @@ private :
     void _proceed_with_render ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     num_fract _color_r ;
     num_fract _color_g ;
     num_fract _color_b ;
@@ -88,30 +90,31 @@ void shy_logic_game < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: init msg )
 {
-    _color_r = platform :: math_consts . fract_0 ;
-    _color_g = platform :: math_consts . fract_0 ;
-    _color_b = platform :: math_consts . fract_0 ;
-    _color_frames = platform :: math_consts . whole_0 ;
-    _game_launched = platform :: math_consts . whole_false ;
-    _game_launch_permitted = platform :: math_consts . whole_false ;
-    _near_plane_distance_requested = platform :: math_consts . whole_false ;
-    _near_plane_distance_replied = platform :: math_consts . whole_false ;
-    _camera_matrix_requested = platform :: math_consts . whole_false ;
-    _camera_matrix_replied = platform :: math_consts . whole_false ;
-    _use_perspective_projection_requested = platform :: math_consts . whole_false ;
-    _use_perspective_projection_replied = platform :: math_consts . whole_false ;
-    _use_ortho_projection_requested = platform :: math_consts . whole_false ;
-    _use_ortho_projection_replied = platform :: math_consts . whole_false ;
-    _land_render_requested = platform :: math_consts . whole_false ;
-    _land_render_replied = platform :: math_consts . whole_false ;
-    _entities_render_requested = platform :: math_consts . whole_false ;
-    _entities_render_replied = platform :: math_consts . whole_false ;
-    _fidget_render_requested = platform :: math_consts . whole_false ;
-    _fidget_render_replied = platform :: math_consts . whole_false ;
-    _text_render_requested = platform :: math_consts . whole_false ;
-    _text_render_replied = platform :: math_consts . whole_false ;
-    _image_render_requested = platform :: math_consts . whole_false ;
-    _image_render_replied = platform :: math_consts . whole_false ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _color_r = _platform_math_consts . get ( ) . fract_0 ;
+    _color_g = _platform_math_consts . get ( ) . fract_0 ;
+    _color_b = _platform_math_consts . get ( ) . fract_0 ;
+    _color_frames = _platform_math_consts . get ( ) . whole_0 ;
+    _game_launched = _platform_math_consts . get ( ) . whole_false ;
+    _game_launch_permitted = _platform_math_consts . get ( ) . whole_false ;
+    _near_plane_distance_requested = _platform_math_consts . get ( ) . whole_false ;
+    _near_plane_distance_replied = _platform_math_consts . get ( ) . whole_false ;
+    _camera_matrix_requested = _platform_math_consts . get ( ) . whole_false ;
+    _camera_matrix_replied = _platform_math_consts . get ( ) . whole_false ;
+    _use_perspective_projection_requested = _platform_math_consts . get ( ) . whole_false ;
+    _use_perspective_projection_replied = _platform_math_consts . get ( ) . whole_false ;
+    _use_ortho_projection_requested = _platform_math_consts . get ( ) . whole_false ;
+    _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_false ;
+    _land_render_requested = _platform_math_consts . get ( ) . whole_false ;
+    _land_render_replied = _platform_math_consts . get ( ) . whole_false ;
+    _entities_render_requested = _platform_math_consts . get ( ) . whole_false ;
+    _entities_render_replied = _platform_math_consts . get ( ) . whole_false ;
+    _fidget_render_requested = _platform_math_consts . get ( ) . whole_false ;
+    _fidget_render_replied = _platform_math_consts . get ( ) . whole_false ;
+    _text_render_requested = _platform_math_consts . get ( ) . whole_false ;
+    _text_render_replied = _platform_math_consts . get ( ) . whole_false ;
+    _image_render_requested = _platform_math_consts . get ( ) . whole_false ;
+    _image_render_replied = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -125,8 +128,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_render m
 {
     if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
-        _near_plane_distance_requested = platform :: math_consts . whole_true ;
-        _camera_matrix_requested = platform :: math_consts . whole_true ;
+        _near_plane_distance_requested = _platform_math_consts . get ( ) . whole_true ;
+        _camera_matrix_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: near_plane_distance_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: camera_matrix_request ( ) ) ;
     }
@@ -137,8 +140,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: near_plane_di
 {
     if ( platform_conditions :: whole_is_true ( _near_plane_distance_requested ) )
     {
-        _near_plane_distance_requested = platform :: math_consts . whole_false ;
-        _near_plane_distance_replied = platform :: math_consts . whole_true ;
+        _near_plane_distance_requested = _platform_math_consts . get ( ) . whole_false ;
+        _near_plane_distance_replied = _platform_math_consts . get ( ) . whole_true ;
         _near_plane_distance = msg . distance ;
         _proceed_with_render ( ) ;
     }
@@ -149,8 +152,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: camera_matrix
 {
     if ( platform_conditions :: whole_is_true ( _camera_matrix_requested ) )
     {
-        _camera_matrix_requested = platform :: math_consts . whole_false ;
-        _camera_matrix_replied = platform :: math_consts . whole_true ;
+        _camera_matrix_requested = _platform_math_consts . get ( ) . whole_false ;
+        _camera_matrix_replied = _platform_math_consts . get ( ) . whole_true ;
         _camera_matrix = msg . matrix ;
         _proceed_with_render ( ) ;
     }
@@ -220,8 +223,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: use_perspecti
 {
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_requested ) )
     {
-        _use_perspective_projection_requested = platform :: math_consts . whole_false ;
-        _use_perspective_projection_replied = platform :: math_consts . whole_true ;
+        _use_perspective_projection_requested = _platform_math_consts . get ( ) . whole_false ;
+        _use_perspective_projection_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;        
     }
 }
@@ -231,8 +234,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: land_render_r
 {
     if ( platform_conditions :: whole_is_true ( _land_render_requested ) )
     {
-        _land_render_requested = platform :: math_consts . whole_false ;
-        _land_render_replied = platform :: math_consts . whole_true ;
+        _land_render_requested = _platform_math_consts . get ( ) . whole_false ;
+        _land_render_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -242,8 +245,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: entities_rend
 {
     if ( platform_conditions :: whole_is_true ( _entities_render_requested ) )
     {
-        _entities_render_requested = platform :: math_consts . whole_false ;
-        _entities_render_replied = platform :: math_consts . whole_true ;
+        _entities_render_requested = _platform_math_consts . get ( ) . whole_false ;
+        _entities_render_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -253,8 +256,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: use_ortho_pro
 {
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_requested ) )
     {
-        _use_ortho_projection_requested = platform :: math_consts . whole_false ;
-        _use_ortho_projection_replied = platform :: math_consts . whole_true ;
+        _use_ortho_projection_requested = _platform_math_consts . get ( ) . whole_false ;
+        _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -264,8 +267,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: fidget_render
 {
     if ( platform_conditions :: whole_is_true ( _fidget_render_requested ) )
     {
-        _fidget_render_requested = platform :: math_consts . whole_false ;
-        _fidget_render_replied = platform :: math_consts . whole_true ;
+        _fidget_render_requested = _platform_math_consts . get ( ) . whole_false ;
+        _fidget_render_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -275,8 +278,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: text_render_r
 {
     if ( platform_conditions :: whole_is_true ( _text_render_requested ) )
     {
-        _text_render_requested = platform :: math_consts . whole_false ;
-        _text_render_replied = platform :: math_consts . whole_true ;
+        _text_render_requested = _platform_math_consts . get ( ) . whole_false ;
+        _text_render_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -286,8 +289,8 @@ void shy_logic_game < mediator > :: receive ( typename messages :: image_render_
 {
     if ( platform_conditions :: whole_is_true ( _image_render_requested ) )
     {
-        _image_render_requested = platform :: math_consts . whole_false ;
-        _image_render_replied = platform :: math_consts . whole_true ;
+        _image_render_requested = _platform_math_consts . get ( ) . whole_false ;
+        _image_render_replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -299,24 +302,24 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
       && platform_conditions :: whole_is_true ( _near_plane_distance_replied )
        )
     {
-        _camera_matrix_replied = platform :: math_consts . whole_false ;
-        _near_plane_distance_replied = platform :: math_consts . whole_false ;
+        _camera_matrix_replied = _platform_math_consts . get ( ) . whole_false ;
+        _near_plane_distance_replied = _platform_math_consts . get ( ) . whole_false ;
         _clear_screen ( ) ;
         
-        _use_perspective_projection_requested = platform :: math_consts . whole_true ;
+        _use_perspective_projection_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: use_perspective_projection_request ( ) ) ;    
     }
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_replied ) )
     {
-        _use_perspective_projection_replied = platform :: math_consts . whole_false ;
+        _use_perspective_projection_replied = _platform_math_consts . get ( ) . whole_false ;
         _mediator . get ( ) . send ( typename messages :: render_enable_depth_test ( ) ) ;
         
         typename messages :: render_matrix_load matrix_load_msg ;
         matrix_load_msg . matrix = _camera_matrix ;
         _mediator . get ( ) . send ( matrix_load_msg ) ;
         
-        _land_render_requested = platform :: math_consts . whole_true ;
-        _entities_render_requested = platform :: math_consts . whole_true ;
+        _land_render_requested = _platform_math_consts . get ( ) . whole_true ;
+        _entities_render_requested = _platform_math_consts . get ( ) . whole_true ;
         
         _mediator . get ( ) . send ( typename messages :: land_render_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: entities_render_request ( ) ) ;
@@ -325,26 +328,26 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
       && platform_conditions :: whole_is_true ( _entities_render_replied )
        )
     {
-        _land_render_replied = platform :: math_consts . whole_false ;
-        _entities_render_replied = platform :: math_consts . whole_false ;
+        _land_render_replied = _platform_math_consts . get ( ) . whole_false ;
+        _entities_render_replied = _platform_math_consts . get ( ) . whole_false ;
         
-        _use_ortho_projection_requested = platform :: math_consts . whole_true ;
+        _use_ortho_projection_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: use_ortho_projection_request ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_replied ) )
     {
-        _use_ortho_projection_replied = platform :: math_consts . whole_false ;
+        _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_false ;
         _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
         
-        _fidget_render_requested = platform :: math_consts . whole_true ;
+        _fidget_render_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: fidget_render_request ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _fidget_render_replied ) )
     {
-        _fidget_render_replied = platform :: math_consts . whole_false ;
-        _text_render_requested = platform :: math_consts . whole_true ;
-        _image_render_requested = platform :: math_consts . whole_true ;
+        _fidget_render_replied = _platform_math_consts . get ( ) . whole_false ;
+        _text_render_requested = _platform_math_consts . get ( ) . whole_true ;
+        _image_render_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: text_render_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: image_render_request ( ) ) ;
     }
@@ -352,8 +355,8 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
       && platform_conditions :: whole_is_true ( _image_render_replied )
        )
     {
-        _text_render_replied = platform :: math_consts . whole_false ;
-        _image_render_replied = platform :: math_consts . whole_false ;
+        _text_render_replied = _platform_math_consts . get ( ) . whole_false ;
+        _image_render_replied = _platform_math_consts . get ( ) . whole_false ;
         _mediator . get ( ) . send ( typename messages :: touch_render ( ) ) ;
     }
 }
