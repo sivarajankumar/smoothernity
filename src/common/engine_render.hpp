@@ -118,7 +118,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_asp
     typename messages :: render_aspect_reply reply_msg ;
     _platform_render . get ( ) . get_aspect_width ( reply_msg . width ) ;
     _platform_render . get ( ) . get_aspect_height ( reply_msg . height ) ;
-    _mediator . send ( reply_msg ) ;
+    _mediator . get ( ) . send ( reply_msg ) ;
 }
 
 template < typename mediator >

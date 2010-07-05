@@ -49,6 +49,7 @@ public :
     void receive ( typename messages :: use_ortho_projection_reply msg ) ;
     void receive ( typename messages :: fidget_render_reply msg ) ;
     void receive ( typename messages :: use_text_texture_reply msg ) ;
+    void receive ( typename messages :: render_aspect_reply msg ) ;
 private :
     void _title_create ( ) ;
     void _title_render ( ) ;
@@ -96,6 +97,9 @@ private :
     num_whole _text_letter_big_tex_coords_replied ;
     letter_id _text_letter_big_tex_coords_letter ;
     
+    num_whole _render_aspect_requested ;
+    num_fract _render_aspect_width ;
+    
     num_fract _tex_coords_left ;
     num_fract _tex_coords_right ;
     num_fract _tex_coords_bottom ;
@@ -134,6 +138,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: init msg )
     _fidget_render_replied = platform :: math_consts . whole_false ;
     _use_text_texture_requested = platform :: math_consts . whole_false ;
     _use_text_texture_replied = platform :: math_consts . whole_false ;
+    _render_aspect_requested = platform :: math_consts . whole_false ;
     _render_started = platform :: math_consts . whole_false ;
 }
 
@@ -190,6 +195,18 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
 {
     if ( platform_conditions :: whole_is_true ( _title_launch_permitted ) )
     {
+        _render_aspect_requested = platform :: math_consts . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: receive ( typename messages :: render_aspect_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
+    {
+        _render_aspect_requested = platform :: math_consts . whole_false ;
+        _render_aspect_width = msg . width ;
         if ( platform_conditions :: whole_is_false ( _title_created ) )
             _title_create ( ) ;
         else if ( platform_conditions :: whole_is_false ( _title_finished ) )
@@ -460,7 +477,6 @@ void shy_logic_title < mediator > :: _title_update ( )
 {
     num_fract fract_letters_count ;
     num_fract letter_size ;
-    num_fract aspect_width ;
     num_fract desired_pos_radius ;
     num_fract offset_y ;
     num_fract fract_appear_duration_in_frames ;
@@ -468,9 +484,8 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract scale_max ;
     num_whole frames_between_letters ;
     
-    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_width ( aspect_width ) ;
     platform_math :: make_fract_from_whole ( fract_letters_count , _letters_count ) ;
-    platform_math :: div_fracts ( letter_size , aspect_width , fract_letters_count ) ;    
+    platform_math :: div_fracts ( letter_size , _render_aspect_width , fract_letters_count ) ;    
     platform_math :: mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;
     platform_math :: make_num_whole ( frames_between_letters , 5 ) ;
     platform_math :: make_num_fract ( offset_y , _spin_radius_in_letters , 1 ) ;
@@ -522,10 +537,10 @@ void shy_logic_title < mediator > :: _title_update ( )
         _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
         
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
-        platform_math :: mul_fracts ( offset_x , aspect_width , platform :: math_consts . fract_2 ) ;
+        platform_math :: mul_fracts ( offset_x , _render_aspect_width , platform :: math_consts . fract_2 ) ;
         platform_math :: mul_fract_by ( offset_x , fract_i ) ;
         platform_math :: div_fract_by ( offset_x , fract_letters_count ) ;
-        platform_math :: sub_from_fract ( offset_x , aspect_width ) ;
+        platform_math :: sub_from_fract ( offset_x , _render_aspect_width ) ;
         platform_math :: add_to_fract ( offset_x , letter_size ) ;
         platform_vector :: xyz ( offset , offset_x , offset_y , platform :: math_consts . fract_minus_3 ) ;        
         
