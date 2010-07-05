@@ -28,8 +28,8 @@ class shy_logic_entities
     static const_int_32 _entity_color_roof_b = 255 ;
 
 public :
-    shy_logic_entities ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: entities_done msg ) ;
     void receive ( typename messages :: entities_render_request msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
@@ -66,7 +66,13 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_entities < mediator > :: shy_logic_entities ( )
+void shy_logic_entities < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_logic_entities < mediator > :: receive ( typename messages :: init msg )
 {
     platform_math :: make_num_whole ( _entity_created , false ) ;
     platform_math :: make_num_whole ( _entities_prepare_permitted , false ) ;
@@ -78,12 +84,6 @@ shy_logic_entities < mediator > :: shy_logic_entities ( )
     platform_math :: make_num_whole ( _vertices_count , 0 ) ;
     _entity_mesh_id_created = platform :: math_consts . whole_false ;
     _mesh_create_requested = platform :: math_consts . whole_false ;
-}
-
-template < typename mediator >
-void shy_logic_entities < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
-{
-    _mediator = arg_mediator ;
 }
 
 template < typename mediator >
