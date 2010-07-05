@@ -9,7 +9,7 @@ public :
         pointer ( ) ;
         pointer ( data_type & arg_data ) ;
     public :
-        data_type & get ( ) ;
+        data_type & get ( ) const ;
         void set ( data_type & arg_data ) ;
     private :
         data_type * _data_ptr ;
@@ -32,7 +32,7 @@ shy_platform_pointer < platform_insider > :: pointer < data_type > :: pointer ( 
 
 template < typename platform_insider >
 template < typename data_type >
-data_type & shy_platform_pointer < platform_insider > :: pointer < data_type > :: get ( )
+data_type & shy_platform_pointer < platform_insider > :: pointer < data_type > :: get ( ) const
 {
     return * _data_ptr ;
 }
