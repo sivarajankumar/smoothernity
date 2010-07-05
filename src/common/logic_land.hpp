@@ -23,8 +23,8 @@ class shy_logic_land
     static const_int_32 _land_radius = 10 ;
     static const_int_32 _create_rows_per_frame = 8 ;
 public :
-    shy_logic_land ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: land_done msg ) ;
     void receive ( typename messages :: land_prepare_permit msg ) ;
     void receive ( typename messages :: land_render_request msg ) ;
@@ -51,7 +51,13 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_land < mediator > :: shy_logic_land ( )
+void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
 {
     platform_math :: make_num_whole ( _land_mesh_created , false ) ;
     platform_math :: make_num_whole ( _land_texture_created , false ) ;
@@ -61,12 +67,6 @@ shy_logic_land < mediator > :: shy_logic_land ( )
     _texture_create_requested = platform :: math_consts . whole_false ;
     _texture_create_replied = platform :: math_consts . whole_false ;
     _mesh_create_requested = platform :: math_consts . whole_false ;
-}
-
-template < typename mediator >
-void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
-{
-    _mediator = arg_mediator ;
 }
 
 template < typename mediator >
