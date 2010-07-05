@@ -530,7 +530,7 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     num_fract aspect_height ;
     num_fract entity_height ;
     
-    engine_render_stateless :: get_aspect_height ( aspect_height ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_height ( aspect_height ) ;
     platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: make_num_fract ( up_z , 0 , 1 ) ;

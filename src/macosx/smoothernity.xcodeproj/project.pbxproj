@@ -111,6 +111,7 @@
 		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
 		8809B37011E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B36F11E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp */; };
 		8809B3BF11E1E7B400869C87 /* macosx_platform_sound_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B3BE11E1E7B400869C87 /* macosx_platform_sound_insider.hpp */; };
+		8809B3DF11E1EC0B00869C87 /* macosx_platform_render_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */; };
 		880A037C1185A15C00363D69 /* macosx_platform_mouse.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */; };
 		8812CECF117DE26A008F67D9 /* engine_camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC4117DE26A008F67D9 /* engine_camera.hpp */; };
 		8812CED1117DE26A008F67D9 /* facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC6117DE26A008F67D9 /* facade.hpp */; };
@@ -184,6 +185,7 @@
 		4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		8809B36F11E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_mouse_insider.hpp; sourceTree = "<group>"; };
 		8809B3BE11E1E7B400869C87 /* macosx_platform_sound_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound_insider.hpp; sourceTree = "<group>"; };
+		8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render_insider.hpp; sourceTree = "<group>"; };
 		880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_mouse.hpp; sourceTree = "<group>"; };
 		8812CEC4117DE26A008F67D9 /* engine_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_camera.hpp; sourceTree = "<group>"; };
 		8812CEC6117DE26A008F67D9 /* facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = facade.hpp; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */,
 				8809B36F11E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp */,
 				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
+				8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */,
 				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
 				8809B3BE11E1E7B400869C87 /* macosx_platform_sound_insider.hpp */,
 				886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */,
@@ -478,6 +481,7 @@
 				88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */,
 				8809B37011E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp in Headers */,
 				8809B3BF11E1E7B400869C87 /* macosx_platform_sound_insider.hpp in Headers */,
+				8809B3DF11E1EC0B00869C87 /* macosx_platform_render_insider.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

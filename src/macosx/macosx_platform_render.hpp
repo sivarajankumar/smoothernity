@@ -1,6 +1,11 @@
 template < typename platform_insider >
+class shy_macosx_platform_render_insider ;
+
+template < typename platform_insider >
 class shy_macosx_platform_render
 {
+    friend class shy_macosx_platform_render_insider < platform_insider > ;
+
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
     typedef typename platform_insider :: platform_matrix_insider platform_matrix_insider ;
     typedef typename platform_insider :: platform_static_array_insider platform_static_array_insider ;
@@ -76,71 +81,104 @@ public :
     } ;
 
 public :
+    shy_macosx_platform_render ( ) ;
 
-    static void enable_face_culling ( ) ;
+    void enable_face_culling ( ) ;
     
-    static void enable_depth_test ( ) ;
-    static void disable_depth_test ( ) ;
+    void enable_depth_test ( ) ;
+    void disable_depth_test ( ) ;
     
-    static void fog_disable ( ) ;
-    static void fog_linear ( num_fract near , num_fract far , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void fog_disable ( ) ;
+    void fog_linear ( num_fract near , num_fract far , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     
-    static void blend_disable ( ) ;
-    static void blend_src_alpha_dst_one_minus_alpha ( ) ;
+    void blend_disable ( ) ;
+    void blend_src_alpha_dst_one_minus_alpha ( ) ;
     
-	static void enable_texturing ( ) ;
-	static void disable_texturing ( ) ;
-	static void texture_mode_modulate ( ) ;
-    static void use_texture ( const render_texture_id & arg_texture_id ) ;
-	static void create_texture_id ( render_texture_id & arg_texture_id ) ;
-    static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
-    static void texture_loader_ready ( num_whole & is_ready ) ;
+	void enable_texturing ( ) ;
+	void disable_texturing ( ) ;
+	void texture_mode_modulate ( ) ;
+    void use_texture ( const render_texture_id & arg_texture_id ) ;
+	void create_texture_id ( render_texture_id & arg_texture_id ) ;
+    void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
+    void texture_loader_ready ( num_whole & is_ready ) ;
 
-    static void clear_screen ( num_fract r , num_fract g , num_fract b ) ;    
-    static void projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
-    static void projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
+    void clear_screen ( num_fract r , num_fract g , num_fract b ) ;    
+    void projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
+    void projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
     
-    static void set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
-    static void set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
-    static void set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    static void set_index_value ( index_data & data , num_whole index ) ;
+    void set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z ) ;
+    void set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v ) ;
+    void set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void set_index_value ( index_data & data , num_whole index ) ;
     
-    static void matrix_identity ( ) ;
-    static void matrix_load ( const matrix_data & matrix ) ;
-    static void matrix_mult ( const matrix_data & matrix ) ;
-    static void matrix_push ( ) ;
-    static void matrix_pop ( ) ;
+    void matrix_identity ( ) ;
+    void matrix_load ( const matrix_data & matrix ) ;
+    void matrix_mult ( const matrix_data & matrix ) ;
+    void matrix_push ( ) ;
+    void matrix_pop ( ) ;
     
-	static void get_aspect_width ( num_fract & result ) ;
-	static void get_aspect_height ( num_fract & result ) ;
+	void get_aspect_width ( num_fract & result ) ;
+	void get_aspect_height ( num_fract & result ) ;
     
-    static void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
-    static void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
+    void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
+    void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
     
     template < typename texels_array >
-    static void load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
+    void load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
     
     template < typename texels_array >
-    static void load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data ) ;
+    void load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data ) ;
     
     template < typename vertices_array >
-    static void create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , const vertices_array & data ) ;
+    void create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , const vertices_array & data ) ;
     
     template < typename indices_array >
-    static void create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data ) ;
+    void create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data ) ;
     
-    static void draw_triangle_strip 
+    void draw_triangle_strip 
         ( const render_vertex_buffer_id & vertices_buffer 
         , const render_index_buffer_id & indices_buffer
         , num_whole indices_count
         ) ;
-    static void draw_triangle_fan
+    void draw_triangle_fan
         ( const render_vertex_buffer_id & vertices_buffer 
         , const render_index_buffer_id & indices_buffer
         , num_whole indices_count
-        ) ;        
+        ) ;
+        
+private :
+    shy_macosx_texture_loader * _texture_loader ;
+	float _aspect_width ;
+	float _aspect_height ;
+    vertex_data _reference_vertex ;
+    void * _vertex_position_offset ;
+    void * _vertex_tex_coord_offset ;
+    void * _vertex_color_offset ;    
 } ;
+
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: shy_macosx_platform_render ( )
+: _texture_loader ( 0 )
+, _aspect_width ( 1 )
+, _aspect_height ( 1 )
+, _vertex_position_offset ( 0 )
+, _vertex_tex_coord_offset ( 0 )
+, _vertex_color_offset ( 0 )
+{
+    _vertex_position_offset = reinterpret_cast < void * >
+        ( reinterpret_cast < char * > ( & _reference_vertex . _position ) 
+        - reinterpret_cast < char * > ( & _reference_vertex )
+        ) ;
+    _vertex_tex_coord_offset = reinterpret_cast < void * >
+        ( reinterpret_cast < char * > ( & _reference_vertex . _tex_coord ) 
+        - reinterpret_cast < char * > ( & _reference_vertex )
+        ) ;
+    _vertex_color_offset = reinterpret_cast < void * >
+        ( reinterpret_cast < char * > ( & _reference_vertex . _color ) 
+        - reinterpret_cast < char * > ( & _reference_vertex )
+        ) ;
+}
 
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_index_buffer_id :: render_index_buffer_id ( )
@@ -318,7 +356,7 @@ template < typename texels_array >
 inline void shy_macosx_platform_render < platform_insider > :: load_texture_resource
     ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data )
 {
-    [ platform_insider :: texture_loader 
+    [ _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
         to_buffer : ( void * ) platform_static_array_insider :: elements_unsafe_ptr ( data )
         with_side_size_of : 1 << platform_math_insider :: num_whole_unsafe_value_get ( size_pow2_base )
@@ -328,7 +366,7 @@ inline void shy_macosx_platform_render < platform_insider > :: load_texture_reso
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: texture_loader_ready ( num_whole & is_ready )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( is_ready , [ platform_insider :: texture_loader loader_ready ] ) ;
+    platform_math_insider :: num_whole_unsafe_value_set ( is_ready , [ _texture_loader loader_ready ] ) ;
 }
 
 template < typename platform_insider >
@@ -491,11 +529,11 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_str
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
-    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_position_offset ) ;
+    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_position_offset ) ;
     glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
-    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_tex_coord_offset ) ;
+    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_tex_coord_offset ) ;
     glEnableClientState ( GL_COLOR_ARRAY ) ;
-    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , platform_insider :: vertex_color_offset ) ;
+    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_STRIP 
         , ( GLsizei ) platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
@@ -514,11 +552,11 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
-    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_position_offset ) ;
+    glVertexPointer ( 3 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_position_offset ) ;
     glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
-    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , platform_insider :: vertex_tex_coord_offset ) ;
+    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( vertex_data ) , _vertex_tex_coord_offset ) ;
     glEnableClientState ( GL_COLOR_ARRAY ) ;
-    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , platform_insider :: vertex_color_offset ) ;
+    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_FAN 
         , ( GLsizei ) platform_math_insider :: num_whole_unsafe_value_get ( indices_count )
@@ -530,13 +568,13 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: get_aspect_width ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , platform_insider :: aspect_width ) ;
+    platform_math_insider :: num_fract_unsafe_value_set ( result , _aspect_width ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: get_aspect_height ( num_fract & result )
 {
-    platform_math_insider :: num_fract_unsafe_value_set ( result , platform_insider :: aspect_height ) ;
+    platform_math_insider :: num_fract_unsafe_value_set ( result , _aspect_height ) ;
 }
 
 template < typename platform_insider >

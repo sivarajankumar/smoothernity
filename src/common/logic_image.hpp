@@ -148,7 +148,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
            )
         {
             num_whole loader_ready ;
-            engine_render_stateless :: texture_loader_ready ( loader_ready ) ;
+            _mediator . get ( ) . engine_render_stateless_obj ( ) . texture_loader_ready ( loader_ready ) ;
             if ( platform_conditions :: whole_is_true ( loader_ready ) )
             {
                 {
@@ -323,7 +323,7 @@ void shy_logic_image < mediator > :: _create_image_texture ( )
     num_whole resource_index ;
     texture_resource_id logo_resource_id ;
     platform_math :: make_num_whole ( resource_index , _logo_resource_index ) ;
-    engine_render_stateless :: create_texture_resource_id ( logo_resource_id , resource_index ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . create_texture_resource_id ( logo_resource_id , resource_index ) ;
     {
         typename messages :: render_texture_load_from_resource texture_load_from_resource_msg ;
         texture_load_from_resource_msg . texture = _image_texture_id ;

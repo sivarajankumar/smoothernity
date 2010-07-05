@@ -8,12 +8,13 @@
     if ( self )
 	{
         _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
+        _texture_loader = [ [ shy_macosx_texture_loader alloc ] init ] ;
         [ _sound_loader thread_run ] ;
-        shy_macosx_platform_insider :: texture_loader = [ [ shy_macosx_texture_loader alloc ] init ] ;
-        [ shy_macosx_platform_insider :: texture_loader thread_run ] ;
+        [ _texture_loader thread_run ] ;
         _platform_insider = new shy_macosx_platform_insider ( ) ;
         _platform = new shy_macosx_platform ( ) ;
 		_measurer = new shy_facade < shy_macosx_platform > ( ) ;
+        _platform_insider -> render_insider . unsafe_set_texture_loader ( _texture_loader ) ;
         _platform_insider -> sound_insider . unsafe_set_sound_loader ( _sound_loader ) ;
         _platform_insider -> register_platform_modules ( * _platform ) ;
         _measurer -> set_platform ( * _platform ) ;
@@ -26,11 +27,13 @@
 
 - ( void ) dealloc
 {
-    [ _sound_loader thread_stop ] ;
-    [ shy_macosx_platform_insider :: texture_loader thread_stop ] ;
-    _sound_loader = nil ;
-    shy_macosx_platform_insider :: texture_loader = nil ;
 	_measurer -> done ( ) ;
+    
+    [ _sound_loader thread_stop ] ;
+    [ _texture_loader thread_stop ] ;
+    _sound_loader = nil ;
+    _texture_loader = nil ;
+    
 	delete _measurer ;
     delete _platform ;
     delete _platform_insider ;
@@ -52,13 +55,13 @@
 	_bounds = bounds ;
 	if ( bounds . size . width > bounds . size . height )
 	{
-		shy_macosx_platform_insider :: aspect_width = bounds . size . width / bounds . size . height ;
-		shy_macosx_platform_insider :: aspect_height = 1.0f ;
+		_platform_insider -> render_insider . unsafe_set_aspect_width ( bounds . size . width / bounds . size . height ) ;
+		_platform_insider -> render_insider . unsafe_set_aspect_height ( 1.0f ) ;
 	}
 	else
 	{
-		shy_macosx_platform_insider :: aspect_width = 1.0f ;
-		shy_macosx_platform_insider :: aspect_height = bounds . size . height / bounds . size . width ;
+		_platform_insider -> render_insider . unsafe_set_aspect_width ( 1.0f ) ;
+		_platform_insider -> render_insider . unsafe_set_aspect_height ( bounds . size . height / bounds . size . width ) ;
 	}
 }
 

@@ -518,8 +518,8 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     platform_math :: make_num_fract ( eraser_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( eraser_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( eraser_a , 0 , 1 ) ;
-    engine_render_stateless :: set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
-    engine_render_stateless :: set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
     
     typename messages :: render_texture_set_texels_rect set_texels_msg ;
     set_texels_msg . texel = _eraser ;

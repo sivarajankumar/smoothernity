@@ -7,6 +7,7 @@ class shy_engine_render_stateless
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
@@ -41,14 +42,19 @@ public :
 public :
     shy_engine_render_stateless ( ) ;
     shy_engine_render_stateless & operator= ( const shy_engine_render_stateless & src ) ;
-    static void texture_loader_ready ( num_whole & is_ready ) ;
-    static void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
-	static void get_aspect_width ( num_fract & result ) ;
-	static void get_aspect_height ( num_fract & result ) ;
+    void set_platform_render ( typename platform_pointer :: template pointer < platform_render > arg_platform_render ) ;
+    
+    // TODO : MOVE ALL METHODS TO engine_render
+    void texture_loader_ready ( num_whole & is_ready ) ;
+    void set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
+	void get_aspect_width ( num_fract & result ) ;
+	void get_aspect_height ( num_fract & result ) ;
     
 public :
     const engine_render_consts_type engine_render_consts ;
+private :
+    typename platform_pointer :: template pointer < platform_render > _platform_render ;
 } ;
 
 template < typename mediator >
@@ -64,6 +70,12 @@ shy_engine_render_stateless < mediator > :: operator= ( const shy_engine_render_
 }
 
 template < typename mediator >
+void shy_engine_render_stateless < mediator > :: set_platform_render ( typename platform_pointer :: template pointer < platform_render > arg_platform_render )
+{
+    _platform_render = arg_platform_render ;
+}
+
+template < typename mediator >
 shy_engine_render_stateless < mediator > :: engine_render_consts_type :: engine_render_consts_type ( )
 {
     platform_math :: make_num_whole ( texture_width , _texture_size ) ;
@@ -73,29 +85,29 @@ shy_engine_render_stateless < mediator > :: engine_render_consts_type :: engine_
 template < typename mediator >
 void shy_engine_render_stateless < mediator > :: texture_loader_ready ( num_whole & is_ready )
 {
-    platform_render :: texture_loader_ready ( is_ready ) ;
+    _platform_render . get ( ) . texture_loader_ready ( is_ready ) ;
 }
 
 template < typename mediator >
 void shy_engine_render_stateless < mediator > :: set_texel_color ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    platform_render :: set_texel_color ( texel , r , g , b , a ) ;
+    _platform_render . get ( ) . set_texel_color ( texel , r , g , b , a ) ;
 }
 
 template < typename mediator >
 void shy_engine_render_stateless < mediator > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
-    platform_render :: create_texture_resource_id ( resource_id , resource_index ) ;
+    _platform_render . get ( ) . create_texture_resource_id ( resource_id , resource_index ) ;
 }
 
 template < typename mediator >
 void shy_engine_render_stateless < mediator > :: get_aspect_width ( num_fract & result )
 {
-    platform_render :: get_aspect_width ( result ) ;
+    _platform_render . get ( ) . get_aspect_width ( result ) ;
 }
 
 template < typename mediator >
 void shy_engine_render_stateless < mediator > :: get_aspect_height ( num_fract & result )
 {
-    platform_render :: get_aspect_height ( result ) ;
+    _platform_render . get ( ) . get_aspect_height ( result ) ;
 }

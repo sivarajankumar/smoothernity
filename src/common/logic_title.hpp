@@ -468,7 +468,7 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract scale_max ;
     num_whole frames_between_letters ;
     
-    engine_render_stateless :: get_aspect_width ( aspect_width ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_width ( aspect_width ) ;
     platform_math :: make_fract_from_whole ( fract_letters_count , _letters_count ) ;
     platform_math :: div_fracts ( letter_size , aspect_width , fract_letters_count ) ;    
     platform_math :: mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;

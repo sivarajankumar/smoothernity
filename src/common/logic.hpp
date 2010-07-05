@@ -79,8 +79,8 @@ void shy_logic < mediator > :: receive ( typename messages :: use_perspective_pr
     num_fract z_near ;
     _get_near_plane_distance ( z_near ) ;
     platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
-    engine_render_stateless :: get_aspect_width ( width ) ;
-    engine_render_stateless :: get_aspect_height ( height ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_width ( width ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_height ( height ) ;
     platform_math :: neg_fract ( neg_width , width ) ;
     platform_math :: neg_fract ( neg_height , height ) ;
     
@@ -106,8 +106,8 @@ void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projecti
     num_fract neg_height ;
     num_fract z_far ;
     num_fract z_near ;
-    engine_render_stateless :: get_aspect_width ( width ) ;
-    engine_render_stateless :: get_aspect_height ( height ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_width ( width ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_height ( height ) ;
     platform_math :: neg_fract ( neg_width , width ) ;
     platform_math :: neg_fract ( neg_height , height ) ;
     platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
@@ -159,7 +159,7 @@ void shy_logic < mediator > :: _get_near_plane_distance ( num_fract & result )
 {
     num_fract width ;
     num_fract height ;
-    engine_render_stateless :: get_aspect_width ( width ) ;
-    engine_render_stateless :: get_aspect_height ( height ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_width ( width ) ;
+    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_height ( height ) ;
     platform_math :: add_fracts ( result , width , height ) ;
 }
