@@ -98,9 +98,8 @@ public :
     typedef shy_platform_vector_float < shy_macosx_platform_insider > platform_vector ;
 
     static platform_math :: const_int_32 frames_per_second = 60 ;    
-    static const shy_platform_math_consts < shy_macosx_platform_insider > math_consts ;
     
-    platform_pointer :: pointer < const platform_math_consts > math_consts_ptr ;
+    platform_pointer :: pointer < const platform_math_consts > math_consts ;
     platform_pointer :: pointer < platform_mouse > mouse ;
     platform_pointer :: pointer < platform_render > render ;
     platform_pointer :: pointer < platform_sound > sound ;

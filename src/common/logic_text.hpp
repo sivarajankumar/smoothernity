@@ -140,7 +140,7 @@ void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_text < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     
     _empty_texture_created = _platform_math_consts . get ( ) . whole_false ;
     _small_letters_rasterized = _platform_math_consts . get ( ) . whole_false ;

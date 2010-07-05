@@ -120,7 +120,7 @@ private :
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: init msg ) 
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     _title_launch_permitted = _platform_math_consts . get ( ) . whole_false ;
     _title_finished = _platform_math_consts . get ( ) . whole_false ;
     _title_created = _platform_math_consts . get ( ) . whole_false ;

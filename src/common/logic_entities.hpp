@@ -76,7 +76,7 @@ void shy_logic_entities < mediator > :: set_mediator ( typename platform_pointer
 template < typename mediator >
 void shy_logic_entities < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     platform_math :: make_num_whole ( _entity_created , false ) ;
     platform_math :: make_num_whole ( _entities_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _grid_scale , 0 ) ;

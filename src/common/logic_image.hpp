@@ -69,7 +69,7 @@ void shy_logic_image < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_image < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     _image_mesh_created = _platform_math_consts . get ( ) . whole_false ;
     _image_texture_created = _platform_math_consts . get ( ) . whole_false ;
     _image_texture_loaded = _platform_math_consts . get ( ) . whole_false ;

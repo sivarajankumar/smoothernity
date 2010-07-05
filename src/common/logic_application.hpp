@@ -34,7 +34,7 @@ void shy_logic_application < mediator > :: set_mediator ( typename platform_poin
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     platform_math :: make_num_whole ( _application_launched , false ) ;
     platform_math :: make_num_whole ( _title_active , false ) ;
     platform_math :: make_num_whole ( _game_active , false ) ;

@@ -60,7 +60,7 @@ void shy_logic_sound < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     _platform_mouse = _mediator . get ( ) . platform_obj ( ) . mouse ;
     _platform_sound = _mediator . get ( ) . platform_obj ( ) . sound ;
     

@@ -61,7 +61,7 @@ void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     platform_math :: make_num_whole ( _land_mesh_created , false ) ;
     platform_math :: make_num_whole ( _land_texture_created , false ) ;
     platform_math :: make_num_whole ( _land_prepare_permitted , false ) ;

@@ -43,7 +43,7 @@ void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform_poin
 template < typename mediator >
 void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     platform_math :: make_num_whole ( _origin_x , 0 ) ;
     platform_math :: make_num_whole ( _origin_y , 0 ) ;
 }

@@ -1,7 +1,5 @@
 #include "macosx_platform.hpp"
 
-const shy_platform_math_consts < shy_macosx_platform_insider > shy_macosx_platform :: math_consts ;
-
 shy_macosx_platform_insider :: shy_macosx_platform_insider ( )
 {
     mouse_insider . set_platform_insider ( this ) ;
@@ -11,7 +9,7 @@ shy_macosx_platform_insider :: shy_macosx_platform_insider ( )
 
 void shy_macosx_platform_insider :: register_platform_modules ( shy_macosx_platform & platform )
 {
-    platform . math_consts_ptr . set ( math_consts ) ;
+    platform . math_consts . set ( math_consts ) ;
     platform . mouse . set ( mouse ) ;
     platform . render . set ( render ) ;
     platform . sound . set ( sound ) ;

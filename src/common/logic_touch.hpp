@@ -67,7 +67,7 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: receive ( typename messages :: init msg )
 {
     _platform_mouse = _mediator . get ( ) . platform_obj ( ) . mouse ;
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
     platform_math :: make_num_whole ( _spot_frames_left , 0 ) ;
     platform_math :: make_num_whole ( _spot_mesh_created , false ) ;
     platform_math :: make_num_whole ( _spot_prepare_permitted , false ) ;
