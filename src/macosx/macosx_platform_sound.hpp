@@ -140,35 +140,51 @@ shy_macosx_platform_sound < platform_insider > :: stereo_sound_resource_id :: st
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_listener_position ( vector_data position )
 {
-    ALfloat al_position [ ] = 
-        { platform_vector_insider :: x_get ( position )
-        , platform_vector_insider :: y_get ( position )
-        , platform_vector_insider :: z_get ( position ) 
-        } ;
+    float x ;
+    float y ;
+    float z ;
+    platform_vector_insider :: x_get ( x , position ) ;
+    platform_vector_insider :: y_get ( y , position ) ;
+    platform_vector_insider :: z_get ( z , position ) ;
+    ALfloat al_position [ ] = { x , y , z } ;
     alListenerfv ( AL_POSITION , al_position ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_listener_velocity ( vector_data velocity )
 {
-    ALfloat al_velocity [ ] =
-        { platform_vector_insider :: x_get ( velocity )
-        , platform_vector_insider :: y_get ( velocity )
-        , platform_vector_insider :: z_get ( velocity ) 
-        } ;
+    float x ;
+    float y ;
+    float z ;
+    platform_vector_insider :: x_get ( x , velocity ) ;
+    platform_vector_insider :: y_get ( y , velocity ) ;
+    platform_vector_insider :: z_get ( z , velocity ) ;
+    ALfloat al_velocity [ ] = { x , y , z } ;
     alListenerfv ( AL_VELOCITY , al_velocity ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_listener_orientation ( vector_data look_at , vector_data up )
 {
+    float look_at_x ;
+    float look_at_y ;
+    float look_at_z ;
+    float up_x ;
+    float up_y ;
+    float up_z ;
+    platform_vector_insider :: x_get ( look_at_x , look_at ) ;
+    platform_vector_insider :: y_get ( look_at_y , look_at ) ;
+    platform_vector_insider :: z_get ( look_at_z , look_at ) ;
+    platform_vector_insider :: x_get ( up_x , up ) ;
+    platform_vector_insider :: y_get ( up_y , up ) ;
+    platform_vector_insider :: z_get ( up_z , up ) ;
     ALfloat al_orientation [ ] = 
-        { platform_vector_insider :: x_get ( look_at )
-        , platform_vector_insider :: y_get ( look_at )
-        , platform_vector_insider :: z_get ( look_at )
-        , platform_vector_insider :: x_get ( up )
-        , platform_vector_insider :: y_get ( up )
-        , platform_vector_insider :: z_get ( up )
+        { look_at_x
+        , look_at_y
+        , look_at_z
+        , up_x
+        , up_y
+        , up_z
         } ;
     alListenerfv ( AL_ORIENTATION , al_orientation ) ;
 }
@@ -285,22 +301,26 @@ inline void shy_macosx_platform_sound < platform_insider > :: set_source_gain ( 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_position ( const sound_source_id & source_id , vector_data position )
 {
-    ALfloat al_position [ ] = 
-        { platform_vector_insider :: x_get ( position )
-        , platform_vector_insider :: y_get ( position )
-        , platform_vector_insider :: z_get ( position ) 
-        } ;
+    float x ;
+    float y ;
+    float z ;
+    platform_vector_insider :: x_get ( x , position ) ;
+    platform_vector_insider :: y_get ( y , position ) ;
+    platform_vector_insider :: z_get ( z , position ) ;
+    ALfloat al_position [ ] = { x , y , z } ;
     alSourcefv ( source_id . _source_id , AL_POSITION , al_position ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_velocity ( const sound_source_id & source_id , vector_data velocity )
 {
-    ALfloat al_velocity [ ] =
-        { platform_vector_insider :: x_get ( velocity )
-        , platform_vector_insider :: y_get ( velocity )
-        , platform_vector_insider :: z_get ( velocity ) 
-        } ;
+    float x ;
+    float y ;
+    float z ;
+    platform_vector_insider :: x_get ( x , velocity ) ;
+    platform_vector_insider :: y_get ( y , velocity ) ;
+    platform_vector_insider :: z_get ( z , velocity ) ;
+    ALfloat al_velocity [ ] = { x , y , z } ;
     alSourcefv ( source_id . _source_id , AL_VELOCITY , al_velocity ) ;
 }
 

@@ -3,30 +3,30 @@ class shy_platform_vector_float_insider
 {
     typedef typename platform :: platform_vector :: vector_data vector_data ;
 public :
-    static float x_get ( vector_data v ) ;
-    static float y_get ( vector_data v ) ;
-    static float z_get ( vector_data v ) ;
+    static void x_get ( float & x , vector_data v ) ;
+    static void y_get ( float & y , vector_data v ) ;
+    static void z_get ( float & z , vector_data v ) ;
     static void x_set ( vector_data & v , float x ) ;
     static void y_set ( vector_data & v , float y ) ;
     static void z_set ( vector_data & v , float z ) ;
 } ;
 
 template < typename platform >
-inline float shy_platform_vector_float_insider < platform > :: x_get ( vector_data v )
+inline void shy_platform_vector_float_insider < platform > :: x_get ( float & x , vector_data v )
 {
-    return v . _x ;
+    x = v . _x ;
 }
 
 template < typename platform >
-inline float shy_platform_vector_float_insider < platform > :: y_get ( vector_data v )
+inline void shy_platform_vector_float_insider < platform > :: y_get ( float & y , vector_data v )
 {
-    return v . _y ;
+    y = v . _y ;
 }
 
 template < typename platform >
-inline float shy_platform_vector_float_insider < platform > :: z_get ( vector_data v )
+inline void shy_platform_vector_float_insider < platform > :: z_get ( float & z , vector_data v )
 {
-    return v . _z ;
+    z = v . _z ;
 }
 
 template < typename platform >

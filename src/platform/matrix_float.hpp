@@ -94,36 +94,36 @@ inline void shy_platform_matrix_float < platform_insider > :: set_origin ( matri
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_axis_x ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [ 0 ] = platform_vector_insider :: x_get ( v ) ;
-    matrix . _elements [ 1 ] = platform_vector_insider :: y_get ( v ) ;
-    matrix . _elements [ 2 ] = platform_vector_insider :: z_get ( v ) ;
+    platform_vector_insider :: x_get ( matrix . _elements [ 0 ] , v ) ;
+    platform_vector_insider :: y_get ( matrix . _elements [ 1 ] , v ) ;
+    platform_vector_insider :: z_get ( matrix . _elements [ 2 ] , v ) ;
     matrix . _elements [ 3 ] = 0 ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_axis_y ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [ 4 ] = platform_vector_insider :: x_get ( v ) ;
-    matrix . _elements [ 5 ] = platform_vector_insider :: y_get ( v ) ;
-    matrix . _elements [ 6 ] = platform_vector_insider :: z_get ( v ) ;
+    platform_vector_insider :: x_get ( matrix . _elements [ 4 ] , v ) ;
+    platform_vector_insider :: y_get ( matrix . _elements [ 5 ] , v ) ;
+    platform_vector_insider :: z_get ( matrix . _elements [ 6 ] , v ) ;
     matrix . _elements [ 7 ] = 0 ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_axis_z ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [  8 ] = platform_vector_insider :: x_get ( v ) ;
-    matrix . _elements [  9 ] = platform_vector_insider :: y_get ( v ) ;
-    matrix . _elements [ 10 ] = platform_vector_insider :: z_get ( v ) ;
+    platform_vector_insider :: x_get ( matrix . _elements [  8 ] , v ) ;
+    platform_vector_insider :: y_get ( matrix . _elements [  9 ] , v ) ;
+    platform_vector_insider :: z_get ( matrix . _elements [ 10 ] , v ) ;
     matrix . _elements [ 11 ] = 0 ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_origin ( matrix_data & matrix , vector_data v )
 {
-    matrix . _elements [ 12 ] = platform_vector_insider :: x_get ( v ) ;
-    matrix . _elements [ 13 ] = platform_vector_insider :: y_get ( v ) ;
-    matrix . _elements [ 14 ] = platform_vector_insider :: z_get ( v ) ;
+    platform_vector_insider :: x_get ( matrix . _elements [ 12 ] , v ) ;
+    platform_vector_insider :: y_get ( matrix . _elements [ 13 ] , v ) ;
+    platform_vector_insider :: z_get ( matrix . _elements [ 14 ] , v ) ;
     matrix . _elements [ 15 ] = 1 ;
 }
 
