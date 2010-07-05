@@ -8,6 +8,7 @@ class shy_engine_rasterizer
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
 public :
@@ -26,6 +27,7 @@ private :
 	void _rasterize_bresenham_ellipse ( num_whole cx , num_whole cy, num_whole x_radius, num_whole y_radius ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     texture_id _texture_id ;
     texel_data _texel ;
     num_whole _origin_x ;
@@ -41,6 +43,7 @@ void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform_poin
 template < typename mediator >
 void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
     platform_math :: make_num_whole ( _origin_x , 0 ) ;
     platform_math :: make_num_whole ( _origin_y , 0 ) ;
 }
@@ -114,9 +117,9 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
     num_whole x_diff ;
     num_whole y_diff ;
     platform_math :: add_wholes ( y_center , msg . y1 , msg . y2 ) ;
-    platform_math :: div_whole_by ( y_center , platform :: math_consts . whole_2 ) ;
+    platform_math :: div_whole_by ( y_center , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_math :: add_wholes ( x_center , msg . x1 , msg . x2 ) ;
-    platform_math :: div_whole_by ( x_center , platform :: math_consts . whole_2 ) ;
+    platform_math :: div_whole_by ( x_center , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_math :: sub_wholes ( x_diff , msg . x1 , msg . x2 ) ;
     platform_math :: sub_wholes ( y_diff , msg . y1 , msg . y2 ) ;
     engine_math :: math_abs_whole ( width , x_diff ) ;
@@ -124,8 +127,8 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
     
     num_whole half_width ;
     num_whole half_height ;
-    platform_math :: div_wholes ( half_width , width , platform :: math_consts . whole_2 ) ;    
-    platform_math :: div_wholes ( half_height , height , platform :: math_consts . whole_2 ) ;
+    platform_math :: div_wholes ( half_width , width , _platform_math_consts . get ( ) . whole_2 ) ;    
+    platform_math :: div_wholes ( half_height , height , _platform_math_consts . get ( ) . whole_2 ) ;
     _rasterize_bresenham_ellipse ( x_center , y_center , half_width , half_height ) ;
 }
 
@@ -294,19 +297,19 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
     
     platform_math :: mul_wholes ( x_radius_sq , x_radius , x_radius ) ;
     platform_math :: mul_wholes ( y_radius_sq , y_radius , y_radius ) ;
-    platform_math :: mul_wholes ( x_radius_mul_2 , x_radius , platform :: math_consts . whole_2 ) ;
-    platform_math :: mul_wholes ( y_radius_mul_2 , y_radius , platform :: math_consts . whole_2 ) ;
-    platform_math :: mul_wholes ( two_a_square , x_radius_sq , platform :: math_consts . whole_2 ) ;
-    platform_math :: mul_wholes ( two_b_square , y_radius_sq , platform :: math_consts . whole_2 ) ;
+    platform_math :: mul_wholes ( x_radius_mul_2 , x_radius , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_math :: mul_wholes ( y_radius_mul_2 , y_radius , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_math :: mul_wholes ( two_a_square , x_radius_sq , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_math :: mul_wholes ( two_b_square , y_radius_sq , _platform_math_consts . get ( ) . whole_2 ) ;
 
     x = x_radius ;
-    y = platform :: math_consts . whole_0 ;
-    platform_math :: sub_wholes ( x_change , platform :: math_consts . whole_1 , x_radius_mul_2 ) ;
+    y = _platform_math_consts . get ( ) . whole_0 ;
+    platform_math :: sub_wholes ( x_change , _platform_math_consts . get ( ) . whole_1 , x_radius_mul_2 ) ;
     platform_math :: mul_whole_by ( x_change , y_radius_sq ) ;
     y_change = x_radius_sq ;
-    ellipse_error = platform :: math_consts . whole_0 ;
+    ellipse_error = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: mul_wholes ( stopping_x , two_b_square , x_radius ) ;    
-    stopping_y = platform :: math_consts . whole_0 ;
+    stopping_y = _platform_math_consts . get ( ) . whole_0 ;
     
     while ( platform_conditions :: whole_greater_or_equal_to_whole ( stopping_x , stopping_y ) )
     {
@@ -327,7 +330,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
         platform_math :: add_to_whole ( stopping_y , two_a_square ) ;
         platform_math :: add_to_whole ( ellipse_error , y_change ) ;
         platform_math :: add_to_whole ( y_change , two_a_square ) ;
-        platform_math :: mul_wholes ( ellipse_error_mul_2_plus_x_change , ellipse_error , platform :: math_consts . whole_2 ) ;
+        platform_math :: mul_wholes ( ellipse_error_mul_2_plus_x_change , ellipse_error , _platform_math_consts . get ( ) . whole_2 ) ;
         platform_math :: add_to_whole ( ellipse_error_mul_2_plus_x_change , x_change ) ;
         if ( platform_conditions :: whole_greater_than_zero ( ellipse_error_mul_2_plus_x_change ) )
         {
@@ -338,13 +341,13 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
         }
     }
     
-    x = platform :: math_consts . whole_0 ;
+    x = _platform_math_consts . get ( ) . whole_0 ;
     y = y_radius ;
     x_change = y_radius_sq ;
-    platform_math :: sub_wholes ( y_change , platform :: math_consts . whole_1 , y_radius_mul_2 ) ;
+    platform_math :: sub_wholes ( y_change , _platform_math_consts . get ( ) . whole_1 , y_radius_mul_2 ) ;
     platform_math :: mul_whole_by ( y_change , x_radius_sq ) ;
-    ellipse_error = platform :: math_consts . whole_0 ;
-    stopping_x = platform :: math_consts . whole_0 ;
+    ellipse_error = _platform_math_consts . get ( ) . whole_0 ;
+    stopping_x = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: mul_wholes ( stopping_y , two_a_square , y_radius ) ;
     
     while ( platform_conditions :: whole_less_or_equal_to_whole ( stopping_x , stopping_y ) )
@@ -366,7 +369,7 @@ void shy_engine_rasterizer < mediator > :: _rasterize_bresenham_ellipse ( num_wh
         platform_math :: add_to_whole ( stopping_x , two_b_square ) ;
         platform_math :: add_to_whole ( ellipse_error , x_change ) ;
         platform_math :: add_to_whole ( x_change , two_b_square ) ;
-        platform_math :: mul_wholes ( ellipse_error_mul_2_plus_y_change , ellipse_error , platform :: math_consts . whole_2 ) ;
+        platform_math :: mul_wholes ( ellipse_error_mul_2_plus_y_change , ellipse_error , _platform_math_consts . get ( ) . whole_2 ) ;
         platform_math :: add_to_whole ( ellipse_error_mul_2_plus_y_change , y_change ) ;
         if ( platform_conditions :: whole_greater_than_zero ( ellipse_error_mul_2_plus_y_change ) )
         {
