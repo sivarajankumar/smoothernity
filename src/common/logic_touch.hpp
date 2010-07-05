@@ -43,6 +43,7 @@ private :
     void _create_spot_mesh ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     num_whole _spot_frames_left ;
     num_whole _spot_mesh_created ;
     num_whole _spot_prepare_permitted ;
@@ -63,6 +64,7 @@ void shy_logic_touch < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_touch < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_mouse = _mediator . get ( ) . platform_obj ( ) . mouse ;
     platform_math :: make_num_whole ( _spot_frames_left , 0 ) ;
     platform_math :: make_num_whole ( _spot_mesh_created , false ) ;
     platform_math :: make_num_whole ( _spot_prepare_permitted , false ) ;
@@ -163,11 +165,11 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_mouse ( )
 {
     num_whole mouse_button ;
-    _mediator . get ( ) . platform_obj ( ) . mouse . get ( ) . left_button_down ( mouse_button ) ;
+    _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
     if ( platform_conditions :: whole_is_true ( mouse_button ) )
     {
-        _mediator . get ( ) . platform_obj ( ) . mouse . get ( ) . x ( _spot_x ) ;
-        _mediator . get ( ) . platform_obj ( ) . mouse . get ( ) . y ( _spot_y ) ;
+        _platform_mouse . get ( ) . x ( _spot_x ) ;
+        _platform_mouse . get ( ) . y ( _spot_y ) ;
         platform_math :: make_num_whole ( _should_place_new_spot , true ) ;
     }
 }

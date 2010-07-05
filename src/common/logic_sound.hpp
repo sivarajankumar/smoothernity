@@ -37,6 +37,7 @@ private :
     void _create_mono_sound ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     num_whole _mono_sound_created ;
     num_whole _stereo_sound_created ;
     num_whole _stereo_sound_loaded ;
@@ -56,6 +57,7 @@ void shy_logic_sound < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_mouse = _mediator . get ( ) . platform_obj ( ) . mouse ;
     platform_math :: make_num_whole ( _mono_sound_created , false ) ;
     platform_math :: make_num_whole ( _stereo_sound_created , false ) ;
     platform_math :: make_num_whole ( _stereo_sound_loaded , false ) ;
@@ -154,7 +156,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         num_whole touch ;
         num_whole mouse_button ;
         platform_touch :: occured ( touch ) ;
-        _mediator . get ( ) . platform_obj ( ) . mouse . get ( ) . left_button_down ( mouse_button ) ;
+        _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
         if ( platform_conditions :: whole_is_true ( touch ) || platform_conditions :: whole_is_true ( mouse_button ) )
         {
             platform_sound :: source_stop ( _mono_sound_source ) ;
