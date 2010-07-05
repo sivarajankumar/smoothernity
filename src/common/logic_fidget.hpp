@@ -10,6 +10,7 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -36,6 +37,7 @@ private :
     void _create_fidget_mesh ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     num_fract _fidget_angle ;
     num_whole _fidget_prepare_permitted ;
     num_whole _fidget_mesh_created ;
@@ -55,12 +57,13 @@ void shy_logic_fidget < mediator > :: set_mediator ( typename platform_pointer :
 template < typename mediator >
 void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
     platform_math :: make_num_fract ( _fidget_angle , 0 , 1 ) ;
     platform_math :: make_num_whole ( _fidget_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _fidget_mesh_created , false ) ;
     platform_math :: make_num_whole ( _fidget_scale , 0 ) ;
-    _mesh_create_requested = platform :: math_consts . whole_false ;
-    _render_aspect_requested = platform :: math_consts . whole_false ;
+    _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
+    _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -93,7 +96,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: render_mesh
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
-        _mesh_create_requested = platform :: math_consts . whole_false ;
+        _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
         _fidget_mesh_id = msg . mesh ;
         _create_fidget_mesh ( ) ;
         platform_math :: make_num_whole ( _fidget_mesh_created , true ) ;
@@ -108,7 +111,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
     {
         if ( platform_conditions :: whole_is_false ( _fidget_mesh_created ) )
         {
-            _mesh_create_requested = platform :: math_consts . whole_true ;
+            _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
             
             num_whole whole_fidget_edges ;
             platform_math :: make_num_whole ( whole_fidget_edges , _fidget_edges ) ;
@@ -116,12 +119,12 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
             typename messages :: render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = whole_fidget_edges ;
             mesh_create_msg . triangle_fan_indices = whole_fidget_edges ;
-            mesh_create_msg . triangle_strip_indices = platform :: math_consts . whole_0 ;
+            mesh_create_msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_0 ;
             _mediator . get ( ) . send ( mesh_create_msg ) ;
         }
         else
         {
-            _render_aspect_requested = platform :: math_consts . whole_true ;
+            _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
         }
     }
@@ -132,7 +135,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: render_aspe
 {
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
-        _render_aspect_requested = platform :: math_consts . whole_false ;
+        _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
         _render_aspect_height = msg . height ;
         _update_fidget ( ) ;
     }
@@ -174,9 +177,9 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
     platform_math :: make_num_fract ( origin_x , 0 , 1 ) ;
     platform_math :: sub_fracts ( origin_y , height , num_half ) ;
     platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
-    platform_matrix :: set_axis_x ( matrix , cos_by_scale , sin_by_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , platform :: math_consts . fract_0 ) ;
-    platform_matrix :: set_axis_z ( matrix , platform :: math_consts . fract_0 , platform :: math_consts . fract_0 , platform :: math_consts . fract_1 ) ;
+    platform_matrix :: set_axis_x ( matrix , cos_by_scale , sin_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
+    platform_matrix :: set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
+    platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
     platform_matrix :: set_origin ( matrix , origin_x , origin_y , origin_z ) ;
     
     typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
@@ -225,7 +228,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         num_fract vertex_b ;
         num_fract vertex_a ;
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
-        platform_math :: mul_fracts ( angle , platform :: math_consts . fract_2pi , fract_i ) ;
+        platform_math :: mul_fracts ( angle , _platform_math_consts . get ( ) . fract_2pi , fract_i ) ;
         platform_math :: div_fract_by ( angle , fract_fidget_edges ) ;
         platform_math :: cos ( angle_cos , angle ) ;
         platform_math :: sin ( angle_sin , angle ) ;
