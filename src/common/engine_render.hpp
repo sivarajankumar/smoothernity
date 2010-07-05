@@ -59,6 +59,7 @@ public :
     void receive ( typename messages :: render_texture_create_request msg ) ;
     void receive ( typename messages :: render_texture_finalize msg ) ;
     void receive ( typename messages :: render_texture_load_from_resource msg ) ;
+    void receive ( typename messages :: render_texture_loader_ready_request msg ) ;
     void receive ( typename messages :: render_texture_select msg ) ;
     void receive ( typename messages :: render_texture_unselect msg ) ;
     void receive ( typename messages :: render_texture_set_texels_rect msg ) ;
@@ -214,6 +215,14 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
     _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
     _platform_render . get ( ) . load_texture_resource ( msg . resource , size_pow2_base , texture . texels ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_loader_ready_request msg )
+{
+    typename messages :: render_texture_loader_ready_reply reply_msg ;
+    _platform_render . get ( ) . loader_ready ( msg . ready ) ;
+    _mediator . get ( ) . send ( reply_msg ) ;
 }
 
 template < typename mediator >
