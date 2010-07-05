@@ -169,9 +169,8 @@ public :
     } ;
     
 public :
-    shy_mediator ( ) ;
-    void set_platform ( typename platform_pointer :: template pointer < platform > arg_platform ) ;
-    void register_modules 
+    shy_mediator ( typename platform_pointer :: template pointer < platform > arg_platform ) ;
+    void register_modules
         ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
         , typename platform_pointer :: template pointer < engine_render > arg_engine_render
         , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
@@ -335,18 +334,13 @@ private :
 } ;
 
 template < typename mediator_types >
-shy_mediator < mediator_types > :: shy_mediator ( )
-{
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: set_platform ( typename platform_pointer :: template pointer < platform > arg_platform )
+shy_mediator < mediator_types > :: shy_mediator ( typename platform_pointer :: template pointer < platform > arg_platform )
 {
     _platform = arg_platform ;
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: register_modules 
+void shy_mediator < mediator_types > :: register_modules
     ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
     , typename platform_pointer :: template pointer < engine_render > arg_engine_render
     , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless

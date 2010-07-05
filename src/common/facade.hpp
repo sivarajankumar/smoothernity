@@ -31,9 +31,8 @@
 template < typename platform >
 class shy_facade
 {
-    typedef typename platform :: platform_pointer platform_pointer ;
 public :
-    void set_platform ( typename platform_pointer :: template pointer < platform > arg_platform ) ;
+    shy_facade ( platform & arg_platform ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
@@ -66,9 +65,9 @@ private :
 } ;
 
 template < typename platform >
-void shy_facade < platform > :: set_platform ( typename platform_pointer :: template pointer < platform > arg_platform )
+shy_facade < platform > :: shy_facade ( platform & arg_platform )
+: _aggregator ( arg_platform )
 {
-    _aggregator . set_platform ( arg_platform ) ;
 }
 
 template < typename platform >
