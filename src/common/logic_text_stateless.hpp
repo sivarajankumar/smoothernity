@@ -79,7 +79,8 @@ shy_logic_text_stateless < mediator > :: operator= ( const shy_logic_text_statel
 template < typename mediator >
 shy_logic_text_stateless < mediator > :: alphabet_english_type :: alphabet_english_type ( )
 {
-    num_whole index = platform :: math_consts . whole_0 ;
+    num_whole index ;
+    platform_math :: make_num_whole ( index , 0 ) ;
     A . _letter_id = index ; platform_math :: inc_whole ( index ) ;
     B . _letter_id = index ; platform_math :: inc_whole ( index ) ;
     C . _letter_id = index ; platform_math :: inc_whole ( index ) ;

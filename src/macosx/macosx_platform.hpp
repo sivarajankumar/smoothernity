@@ -51,6 +51,7 @@ public :
 
     typedef shy_platform_conditions < shy_macosx_platform_insider > platform_conditions ;
     typedef shy_platform_math_int_float < shy_macosx_platform_insider > platform_math ;
+    typedef shy_platform_math_consts < shy_macosx_platform_insider > platform_math_consts ;
     typedef shy_platform_matrix_float < shy_macosx_platform_insider > platform_matrix ;
     typedef shy_macosx_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
     typedef shy_platform_pointer < shy_macosx_platform_insider > platform_pointer ;
@@ -72,6 +73,7 @@ public :
     platform_render_insider render_insider ;
     platform_sound_insider sound_insider ;
 
+    platform_math_consts math_consts ;
     platform_mouse mouse ;
     platform_render render ;
     platform_sound sound ;
@@ -82,6 +84,7 @@ class shy_macosx_platform
 public :
     typedef shy_platform_conditions < shy_macosx_platform_insider > platform_conditions ;
     typedef shy_platform_math_int_float < shy_macosx_platform_insider > platform_math ;
+    typedef shy_platform_math_consts < shy_macosx_platform_insider > platform_math_consts ;
     typedef shy_platform_matrix_float < shy_macosx_platform_insider > platform_matrix ;
     typedef shy_macosx_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
     typedef shy_platform_pointer < shy_macosx_platform_insider > platform_pointer ;
@@ -97,6 +100,7 @@ public :
     static platform_math :: const_int_32 frames_per_second = 60 ;    
     static const shy_platform_math_consts < shy_macosx_platform_insider > math_consts ;
     
+    platform_pointer :: pointer < const platform_math_consts > math_consts_ptr ;
     platform_pointer :: pointer < platform_mouse > mouse ;
     platform_pointer :: pointer < platform_render > render ;
     platform_pointer :: pointer < platform_sound > sound ;

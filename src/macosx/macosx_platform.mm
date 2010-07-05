@@ -11,6 +11,7 @@ shy_macosx_platform_insider :: shy_macosx_platform_insider ( )
 
 void shy_macosx_platform_insider :: register_platform_modules ( shy_macosx_platform & platform )
 {
+    platform . math_consts_ptr . set ( math_consts ) ;
     platform . mouse . set ( mouse ) ;
     platform . render . set ( render ) ;
     platform . sound . set ( sound ) ;
