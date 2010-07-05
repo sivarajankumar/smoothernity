@@ -8,6 +8,7 @@ class shy_logic_sound
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_sound platform_sound ;
@@ -37,6 +38,7 @@ private :
     void _create_mono_sound ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < platform_sound > _platform_sound ;
     num_whole _mono_sound_created ;
@@ -58,6 +60,7 @@ void shy_logic_sound < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 {
+    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts_ptr ;
     _platform_mouse = _mediator . get ( ) . platform_obj ( ) . mouse ;
     _platform_sound = _mediator . get ( ) . platform_obj ( ) . sound ;
     
@@ -252,7 +255,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform_math :: make_num_whole ( whole_max_mono_sound_samples , _max_mono_sound_samples ) ;
     platform_math :: make_num_fract ( fract_mono_sound_samples_per_second , platform_sound :: mono_sound_samples_per_second , 1 ) ;
     platform_math :: make_num_whole ( next_sample , 0 ) ;
-    for ( num_whole i = platform :: math_consts . whole_0 
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
         ; platform_math :: inc_whole ( i )
         )
@@ -266,7 +269,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         num_fract sample ;
         num_whole whole_sample_delta ;
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
-        platform_math :: mul_fracts ( angle , fract_i , platform :: math_consts . fract_2pi ) ;
+        platform_math :: mul_fracts ( angle , fract_i , _platform_math_consts . get ( ) . fract_2pi ) ;
         platform_math :: div_fract_by ( angle , fract_mono_sound_samples_per_second ) ;        
         platform_math :: make_num_fract ( num_1 , 1 , 1 ) ;
         platform_math :: make_num_fract ( magnitude , 128 , 1 ) ;
