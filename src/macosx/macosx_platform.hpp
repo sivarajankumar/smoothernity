@@ -29,9 +29,12 @@
 #include "../platform/vector_float_insider.hpp"
 
 #include "macosx_platform_mouse.hpp"
+#include "macosx_platform_mouse_insider.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_sound.hpp"
 #include "macosx_platform_time.hpp"
+
+class shy_macosx_platform ;
 
 class shy_macosx_platform_insider
 {
@@ -45,6 +48,7 @@ public :
     typedef shy_platform_math_int_float < shy_macosx_platform_insider > platform_math ;
     typedef shy_platform_matrix_float < shy_macosx_platform_insider > platform_matrix ;
     typedef shy_macosx_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
+    typedef shy_macosx_platform_mouse_insider < shy_macosx_platform_insider > platform_mouse_insider ;
     typedef shy_platform_pointer < shy_macosx_platform_insider > platform_pointer ;
     typedef shy_macosx_platform_render < shy_macosx_platform_insider > platform_render ;
     typedef shy_platform_scheduler_random < shy_macosx_platform_insider > platform_scheduler ;
@@ -54,23 +58,27 @@ public :
     typedef shy_macosx_platform_time < shy_macosx_platform_insider > platform_time ;
     typedef shy_platform_touch_dummy < shy_macosx_platform_insider > platform_touch ;
     typedef shy_platform_vector_float < shy_macosx_platform_insider > platform_vector ;
-        
+
     static const int uninitialized_value = 0xC0C0C0C0 ;
+
+public :
+    shy_macosx_platform_insider ( ) ;
+    void register_platform_modules ( shy_macosx_platform & platform ) ;
     
+public :    
     static shy_macosx_sound_loader * sound_loader ;
     static shy_macosx_texture_loader * texture_loader ;
 	
 	static float aspect_width ;
 	static float aspect_height ;
 	
-	static int mouse_left_button_down ;
-	static float mouse_x ;
-	static float mouse_y ;
-
     static platform_render :: vertex_data reference_vertex ;
     static void * vertex_position_offset ;
     static void * vertex_tex_coord_offset ;
     static void * vertex_color_offset ;
+    
+    platform_mouse mouse ;
+    platform_mouse_insider mouse_insider ;
 } ;
 
 class shy_macosx_platform
@@ -92,5 +100,7 @@ public :
         
     static platform_math :: const_int_32 frames_per_second = 60 ;    
     static const shy_platform_math_consts < shy_macosx_platform_insider > math_consts ;
+    
+    platform_pointer :: pointer < platform_mouse > mouse ;
 } ;
 

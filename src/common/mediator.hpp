@@ -166,6 +166,7 @@ public :
     
 public :
     shy_mediator ( ) ;
+    void set_platform ( typename platform_pointer :: template pointer < platform > arg_platform ) ;
     void register_modules 
         ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
         , typename platform_pointer :: template pointer < engine_render > arg_engine_render
@@ -304,6 +305,7 @@ public :
 public :
     const engine_render_consts_type & engine_render_consts ( ) ;
     const logic_text_consts_type & logic_text_consts ( ) ;
+    platform & platform_obj ( ) ;
 private :
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
     typename platform_pointer :: template pointer < engine_render > _engine_render ;
@@ -321,11 +323,18 @@ private :
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < logic_title > _logic_title ;
     typename platform_pointer :: template pointer < logic_touch > _logic_touch ;
+    typename platform_pointer :: template pointer < platform > _platform ;
 } ;
 
 template < typename mediator_types >
 shy_mediator < mediator_types > :: shy_mediator ( )
 {
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: set_platform ( typename platform_pointer :: template pointer < platform > arg_platform )
+{
+    _platform = arg_platform ;
 }
 
 template < typename mediator_types >
@@ -379,6 +388,12 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_text . get ( ) . set_mediator ( * this ) ;
     _logic_title . get ( ) . set_mediator ( * this ) ;
     _logic_touch . get ( ) . set_mediator ( * this ) ;
+}
+
+template < typename mediator_types >
+typename shy_mediator < mediator_types > :: platform & shy_mediator < mediator_types > :: platform_obj ( )
+{
+    return _platform . get ( ) ;
 }
 
 template < typename mediator_types >

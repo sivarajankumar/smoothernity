@@ -154,7 +154,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         num_whole touch ;
         num_whole mouse_button ;
         platform_touch :: occured ( touch ) ;
-        platform_mouse :: left_button_down ( mouse_button ) ;
+        _mediator . get ( ) . platform_obj ( ) . mouse . get ( ) . left_button_down ( mouse_button ) ;
         if ( platform_conditions :: whole_is_true ( touch ) || platform_conditions :: whole_is_true ( mouse_button ) )
         {
             platform_sound :: source_stop ( _mono_sound_source ) ;

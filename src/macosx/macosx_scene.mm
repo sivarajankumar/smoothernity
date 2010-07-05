@@ -11,8 +11,13 @@
         shy_macosx_platform_insider :: texture_loader = [ [ shy_macosx_texture_loader alloc ] init ] ;
         [ shy_macosx_platform_insider :: sound_loader thread_run ] ;
         [ shy_macosx_platform_insider :: texture_loader thread_run ] ;
+        _platform_insider = new shy_macosx_platform_insider ( ) ;
+        _platform = new shy_macosx_platform ( ) ;
 		_measurer = new shy_facade < shy_macosx_platform > ( ) ;
+        _platform_insider -> register_platform_modules ( * _platform ) ;
+        _measurer -> set_platform ( * _platform ) ;
 		_measurer -> init ( ) ;
+        NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform ) + sizeof ( shy_macosx_platform_insider ) ) ;
         NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_macosx_platform > ) ) ;
 	}
     return self ;
@@ -26,7 +31,11 @@
     shy_macosx_platform_insider :: texture_loader = nil ;
 	_measurer -> done ( ) ;
 	delete _measurer ;
+    delete _platform ;
+    delete _platform_insider ;
 	_measurer = 0 ;
+    _platform = 0 ;
+    _platform_insider = 0 ;
 	
     [ super dealloc ] ;
 }
@@ -56,26 +65,30 @@
 {
 	if ( _bounds . size . width > _bounds . size . height )
 	{
-		shy_macosx_platform_insider :: mouse_x = ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . height ;
-		shy_macosx_platform_insider :: mouse_y = ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . height ;
+        _platform_insider -> mouse_insider . unsafe_set_x 
+            ( ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . height ) ;
+		_platform_insider -> mouse_insider . unsafe_set_y 
+            ( ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . height ) ;
 	}
 	else
 	{
-		shy_macosx_platform_insider :: mouse_x = ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . width ;
-		shy_macosx_platform_insider :: mouse_y = ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . width ;
+        _platform_insider -> mouse_insider . unsafe_set_x
+            ( ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . width ) ;
+		_platform_insider -> mouse_insider . unsafe_set_y
+            ( ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . width ) ;
 	}
 }
 
 - ( void ) mouse_left_button_down
 {
-	shy_macosx_platform_insider :: mouse_left_button_down = true ;
+    _platform_insider -> mouse_insider . unsafe_set_left_button_down ( true ) ;
 }
 
 - ( void ) render
 {
 	_measurer -> render ( ) ;
 	_measurer -> update ( ) ;
-	shy_macosx_platform_insider :: mouse_left_button_down = false ;
+    _platform_insider -> mouse_insider . unsafe_set_left_button_down ( false ) ;
     glFinish ( ) ;
 }
 

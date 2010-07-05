@@ -4,6 +4,8 @@
 @interface shy_macosx_scene : NSObject
 {
 @private
+    shy_macosx_platform * _platform ;
+    shy_macosx_platform_insider * _platform_insider ;
 	shy_facade < shy_macosx_platform > * _measurer;
 	NSRect _bounds ;
 }

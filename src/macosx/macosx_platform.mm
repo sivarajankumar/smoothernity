@@ -21,8 +21,14 @@ shy_macosx_texture_loader * shy_macosx_platform_insider :: texture_loader = 0 ;
 float shy_macosx_platform_insider :: aspect_width = 1.0f ;
 float shy_macosx_platform_insider :: aspect_height = 1.0f ;
 
-int shy_macosx_platform_insider :: mouse_left_button_down = false ;
-float shy_macosx_platform_insider :: mouse_x = 0 ;
-float shy_macosx_platform_insider :: mouse_y = 0 ;
-
 const shy_platform_math_consts < shy_macosx_platform_insider > shy_macosx_platform :: math_consts ;
+
+shy_macosx_platform_insider :: shy_macosx_platform_insider ( )
+{
+    mouse_insider . set_platform_insider ( this ) ;
+}
+
+void shy_macosx_platform_insider :: register_platform_modules ( shy_macosx_platform & platform )
+{
+    platform . mouse . set ( mouse ) ;
+}

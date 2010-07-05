@@ -198,6 +198,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( )
 template < typename aggregator_types >
 void shy_aggregator < aggregator_types > :: set_platform ( typename platform_pointer :: template pointer < platform > arg_platform )
 {
+    _mediator . set_platform ( arg_platform ) ;
 }
 
 template < typename aggregator_types >
