@@ -12,11 +12,9 @@
         [ _sound_loader thread_run ] ;
         [ _texture_loader thread_run ] ;
         _platform_insider = new shy_macosx_platform_insider ( ) ;
-        _platform = new shy_platform < shy_macosx_platform_insider > ( ) ;
         _platform_insider -> render_insider . unsafe_set_texture_loader ( _texture_loader ) ;
         _platform_insider -> sound_insider . unsafe_set_sound_loader ( _sound_loader ) ;
-        _platform_insider -> register_platform_modules ( * _platform ) ;
-		_measurer = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( * _platform ) ;
+		_measurer = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( _platform_insider -> platform ) ;
 		_measurer -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
         NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_platform < shy_macosx_platform_insider > > ) ) ;
@@ -35,9 +33,7 @@
     _sound_loader = nil ;
     _texture_loader = nil ;
     
-    delete _platform ;
     delete _platform_insider ;
-    _platform = 0 ;
     _platform_insider = 0 ;
 	
     [ super dealloc ] ;

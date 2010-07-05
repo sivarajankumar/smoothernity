@@ -67,7 +67,6 @@ public :
     static const int uninitialized_value = 0xC0C0C0C0 ;
 
     shy_macosx_platform_insider ( ) ;
-    void register_platform_modules ( shy_platform < shy_macosx_platform_insider > & platform ) ;
     
     platform_mouse_insider mouse_insider ;
     platform_render_insider render_insider ;
@@ -77,4 +76,6 @@ public :
     platform_mouse mouse ;
     platform_render render ;
     platform_sound sound ;
+    
+    shy_platform < shy_macosx_platform_insider > platform ;
 } ;
