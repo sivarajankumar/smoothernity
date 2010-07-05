@@ -9,8 +9,8 @@ class shy_logic_application
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
-    shy_logic_application ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: application_render msg ) ;
     void receive ( typename messages :: application_update msg ) ;
     void receive ( typename messages :: title_finished msg ) ;
@@ -24,18 +24,18 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_application < mediator > :: shy_logic_application ( )
+void shy_logic_application < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_logic_application < mediator > :: receive ( typename messages :: init msg )
 {
     platform_math :: make_num_whole ( _application_launched , false ) ;
     platform_math :: make_num_whole ( _title_active , false ) ;
     platform_math :: make_num_whole ( _game_active , false ) ;
     platform_math :: make_num_whole ( _text_active , false ) ;
-}
-
-template < typename mediator >
-void shy_logic_application < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
-{
-    _mediator = arg_mediator ;
 }
 
 template < typename mediator >
