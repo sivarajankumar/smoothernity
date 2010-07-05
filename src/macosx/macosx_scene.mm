@@ -12,14 +12,14 @@
         [ _sound_loader thread_run ] ;
         [ _texture_loader thread_run ] ;
         _platform_insider = new shy_macosx_platform_insider ( ) ;
-        _platform = new shy_macosx_platform ( ) ;
+        _platform = new shy_platform < shy_macosx_platform_insider > ( ) ;
         _platform_insider -> render_insider . unsafe_set_texture_loader ( _texture_loader ) ;
         _platform_insider -> sound_insider . unsafe_set_sound_loader ( _sound_loader ) ;
         _platform_insider -> register_platform_modules ( * _platform ) ;
-		_measurer = new shy_facade < shy_macosx_platform > ( * _platform ) ;
+		_measurer = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( * _platform ) ;
 		_measurer -> init ( ) ;
-        NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform ) + sizeof ( shy_macosx_platform_insider ) ) ;
-        NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_macosx_platform > ) ) ;
+        NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
+        NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_platform < shy_macosx_platform_insider > > ) ) ;
 	}
     return self ;
 }

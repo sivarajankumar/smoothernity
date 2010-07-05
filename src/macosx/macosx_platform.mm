@@ -7,7 +7,7 @@ shy_macosx_platform_insider :: shy_macosx_platform_insider ( )
     sound_insider . set_platform_insider ( this ) ;
 }
 
-void shy_macosx_platform_insider :: register_platform_modules ( shy_macosx_platform & platform )
+void shy_macosx_platform_insider :: register_platform_modules ( shy_platform < shy_macosx_platform_insider > & platform )
 {
     platform . math_consts . set ( math_consts ) ;
     platform . mouse . set ( mouse ) ;
