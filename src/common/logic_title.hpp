@@ -38,8 +38,8 @@ class shy_logic_title
     } ;
     
 public :
-    shy_logic_title ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+    void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: title_done msg ) ;
     void receive ( typename messages :: title_render msg ) ;
     void receive ( typename messages :: title_update msg ) ;
@@ -112,7 +112,7 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_title < mediator > :: shy_logic_title ( )
+void shy_logic_title < mediator > :: receive ( typename messages :: init msg ) 
 {
     _title_launch_permitted = platform :: math_consts . whole_false ;
     _title_finished = platform :: math_consts . whole_false ;
