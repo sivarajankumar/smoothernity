@@ -29,6 +29,7 @@ public :
     void receive ( typename messages :: fidget_render_request msg ) ;
     void receive ( typename messages :: fidget_update msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
+    void receive ( typename messages :: render_aspect_reply msg ) ;
 private :
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
@@ -40,6 +41,8 @@ private :
     num_whole _fidget_mesh_created ;
     num_whole _fidget_scale ;
     num_whole _mesh_create_requested ;
+    num_whole _render_aspect_requested ;
+    num_fract _render_aspect_height ;
     mesh_id _fidget_mesh_id ;
 } ;
 
@@ -57,6 +60,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
     platform_math :: make_num_whole ( _fidget_mesh_created , false ) ;
     platform_math :: make_num_whole ( _fidget_scale , 0 ) ;
     _mesh_create_requested = platform :: math_consts . whole_false ;
+    _render_aspect_requested = platform :: math_consts . whole_false ;
 }
 
 template < typename mediator >
@@ -116,7 +120,21 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
             _mediator . get ( ) . send ( mesh_create_msg ) ;
         }
         else
-            _update_fidget ( ) ;
+        {
+            _render_aspect_requested = platform :: math_consts . whole_true ;
+            _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+        }
+    }
+}
+
+template < typename mediator >
+void shy_logic_fidget < mediator > :: receive ( typename messages :: render_aspect_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
+    {
+        _render_aspect_requested = platform :: math_consts . whole_false ;
+        _render_aspect_height = msg . height ;
+        _update_fidget ( ) ;
     }
 }
 
@@ -146,7 +164,7 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
     platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform_math :: make_fract_from_whole ( fract_fidget_scale , _fidget_scale ) ;
     platform_math :: div_fracts ( scale , fract_fidget_scale , fract_scale_in_frames ) ;
-    _mediator . get ( ) . engine_render_stateless_obj ( ) . get_aspect_height ( height ) ;
+    height = _render_aspect_height ;
     platform_math :: make_num_fract ( num_half , 1 , 2 ) ;
     platform_math :: cos ( angle_cos , _fidget_angle ) ;
     platform_math :: sin ( angle_sin , _fidget_angle ) ;
