@@ -48,7 +48,9 @@ void shy_logic < mediator > :: set_mediator ( typename platform_pointer :: templ
 template < typename mediator >
 void shy_logic < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
+    typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
     _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_false ;
     _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_false ;

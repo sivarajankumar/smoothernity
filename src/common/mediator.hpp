@@ -8,16 +8,17 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_consts_type engine_render_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: texture_id texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: letter_id letter_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_consts_type logic_text_consts_type ;
     
 private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_consts_type engine_render_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
@@ -28,7 +29,6 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_consts_type logic_text_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
     typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
@@ -169,6 +169,9 @@ public :
     
 public :
     shy_mediator ( typename platform_pointer :: template pointer < const platform > arg_platform ) ;
+    void logic_text_consts ( typename platform_pointer :: template pointer < const logic_text_consts_type > & result ) ;
+    void engine_render_consts ( typename platform_pointer :: template pointer < const engine_render_consts_type > & result ) ;
+    void platform_obj ( typename platform_pointer :: template pointer < const platform > & result ) ;
     void register_modules
         ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
         , typename platform_pointer :: template pointer < engine_render > arg_engine_render
@@ -308,10 +311,6 @@ public :
     void send ( typename messages :: use_text_texture_reply msg ) ;
     void send ( typename messages :: use_text_texture_request msg ) ;
     void send ( typename messages :: video_mode_changed msg ) ;
-public :
-    const engine_render_consts_type & engine_render_consts ( ) ;
-    const logic_text_consts_type & logic_text_consts ( ) ;
-    const platform & platform_obj ( ) ;
 private :
     typename platform_pointer :: template pointer < engine_rasterizer > _engine_rasterizer ;
     typename platform_pointer :: template pointer < engine_render > _engine_render ;
@@ -392,23 +391,21 @@ void shy_mediator < mediator_types > :: register_modules
 }
 
 template < typename mediator_types >
-const typename shy_mediator < mediator_types > :: platform & shy_mediator < mediator_types > :: platform_obj ( )
+void shy_mediator < mediator_types > :: platform_obj ( typename platform_pointer :: template pointer < const platform > & result )
 {
-    return _platform . get ( ) ;
+    result = _platform ;
 }
 
 template < typename mediator_types >
-const typename shy_mediator < mediator_types > :: engine_render_consts_type &
-shy_mediator < mediator_types > :: engine_render_consts ( )
+void shy_mediator < mediator_types > :: engine_render_consts ( typename platform_pointer :: template pointer < const engine_render_consts_type > & result )
 {
-    return _engine_render_stateless . get ( ) . engine_render_consts ;
+    result . set ( _engine_render_stateless . get ( ) . engine_render_consts ) ;
 }
 
 template < typename mediator_types >
-const typename shy_mediator < mediator_types > :: logic_text_consts_type &
-shy_mediator < mediator_types > :: logic_text_consts ( )
+void shy_mediator < mediator_types > :: logic_text_consts ( typename platform_pointer :: template pointer < const logic_text_consts_type > & result )
 {
-    return _logic_text_stateless . get ( ) . logic_text_consts ;
+    result . set ( _logic_text_stateless . get ( ) . logic_text_consts ) ;
 }
 
 template < typename mediator_types >

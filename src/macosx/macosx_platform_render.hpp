@@ -485,26 +485,34 @@ inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buf
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z )
 {
-    vertex . _position [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( x ) ;
-    vertex . _position [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( y ) ;
-    vertex . _position [ 2 ] = ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( z ) ;
+    platform_math_insider :: num_fract_value_get ( vertex . _position [ 0 ] , x ) ;
+    platform_math_insider :: num_fract_value_get ( vertex . _position [ 1 ] , y ) ;
+    platform_math_insider :: num_fract_value_get ( vertex . _position [ 2 ] , z ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v )
 {
-    vertex . _tex_coord [ 0 ] = ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( u ) ;
-    vertex . _tex_coord [ 1 ] = ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( v ) ;
+    platform_math_insider :: num_fract_value_get ( vertex . _tex_coord [ 0 ] , u ) ;
+    platform_math_insider :: num_fract_value_get ( vertex . _tex_coord [ 1 ] , v ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_vertex_color 
     ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    vertex . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( r ) * 255.0f ) ;
-    vertex . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( g ) * 255.0f ) ;
-    vertex . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( b ) * 255.0f ) ;
-    vertex . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( a ) * 255.0f ) ;
+    float r_float ;
+    float g_float ;
+    float b_float ;
+    float a_float ;
+    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
+    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+    vertex . _color [ 0 ] = ( GLubyte ) ( r_float * 255.0f ) ;
+    vertex . _color [ 1 ] = ( GLubyte ) ( g_float * 255.0f ) ;
+    vertex . _color [ 2 ] = ( GLubyte ) ( b_float * 255.0f ) ;
+    vertex . _color [ 3 ] = ( GLubyte ) ( a_float * 255.0f ) ;
 }
 
 template < typename platform_insider >

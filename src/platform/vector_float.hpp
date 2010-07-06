@@ -41,9 +41,9 @@ shy_platform_vector_float < platform_insider > :: vector_data :: vector_data ( )
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: xyz ( vector_data & result , num_fract x , num_fract y , num_fract z )
 {
-    result . _x = platform_math_insider :: num_fract_value_old_get ( x ) ;
-    result . _y = platform_math_insider :: num_fract_value_old_get ( y ) ;
-    result . _z = platform_math_insider :: num_fract_value_old_get ( z ) ;
+    platform_math_insider :: num_fract_value_get ( result . _x , x ) ;
+    platform_math_insider :: num_fract_value_get ( result . _y , y ) ;
+    platform_math_insider :: num_fract_value_get ( result . _z , z ) ;
 }
 
 template < typename platform_insider >
@@ -84,17 +84,21 @@ inline void shy_platform_vector_float < platform_insider > :: sub ( vector_data 
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: mul ( vector_data & result , vector_data v , num_fract f )
 {
-    result . _x = platform_math_insider :: num_fract_value_old_get ( f ) * v . _x ;
-    result . _y = platform_math_insider :: num_fract_value_old_get ( f ) * v . _y ;
-    result . _z = platform_math_insider :: num_fract_value_old_get ( f ) * v . _z ;
+    float f_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( f_float , f ) ;
+    result . _x = f_float * v . _x ;
+    result . _y = f_float * v . _y ;
+    result . _z = f_float * v . _z ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_vector_float < platform_insider > :: mul_by ( vector_data & v , num_fract f )
 {
-    v . _x *= platform_math_insider :: num_fract_value_old_get ( f ) ;
-    v . _y *= platform_math_insider :: num_fract_value_old_get ( f ) ;
-    v . _z *= platform_math_insider :: num_fract_value_old_get ( f ) ;
+    float f_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( f_float , f ) ;
+    v . _x *= f_float ;
+    v . _y *= f_float ;
+    v . _z *= f_float ;
 }
 
 template < typename platform_insider >

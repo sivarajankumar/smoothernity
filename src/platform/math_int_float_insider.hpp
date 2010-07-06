@@ -7,7 +7,6 @@ public :
     static void num_whole_value_get ( int & value , num_whole num ) ;
     static void num_whole_value_set ( num_whole & num , int value ) ;
     static void num_fract_value_get ( float & value , num_fract num ) ;
-    static float num_fract_value_old_get ( num_fract num ) ;
     static void num_fract_value_set ( num_fract & num , float value ) ;
 } ;
 
@@ -27,12 +26,6 @@ template < typename platform >
 inline void shy_platform_math_int_float_insider < platform > :: num_fract_value_get ( float & value , num_fract num )
 {
     value = num . _value ;
-}
-
-template < typename platform >
-inline float shy_platform_math_int_float_insider < platform > :: num_fract_value_old_get ( num_fract num )
-{
-    return num . _value ;
 }
 
 template < typename platform >

@@ -107,7 +107,9 @@ void shy_engine_render < mediator > :: set_mediator ( typename platform_pointer 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_render = _mediator . get ( ) . platform_obj ( ) . render ;
+    typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _platform_render = platform_obj . get ( ) . render ;
     platform_math :: make_num_whole ( _next_texture_id , 0 ) ;
     platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
 }

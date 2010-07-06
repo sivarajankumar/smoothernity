@@ -90,7 +90,9 @@ void shy_logic_game < mediator > :: set_mediator ( typename platform_pointer :: 
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
+    typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _color_r = _platform_math_consts . get ( ) . fract_0 ;
     _color_g = _platform_math_consts . get ( ) . fract_0 ;
     _color_b = _platform_math_consts . get ( ) . fract_0 ;

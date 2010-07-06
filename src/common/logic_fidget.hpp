@@ -57,7 +57,9 @@ void shy_logic_fidget < mediator > :: set_mediator ( typename platform_pointer :
 template < typename mediator >
 void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
+    typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _platform_math_consts = platform_obj . get ( ) . math_consts ;
     platform_math :: make_num_fract ( _fidget_angle , 0 , 1 ) ;
     platform_math :: make_num_whole ( _fidget_prepare_permitted , false ) ;
     platform_math :: make_num_whole ( _fidget_mesh_created , false ) ;

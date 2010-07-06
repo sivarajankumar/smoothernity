@@ -60,9 +60,11 @@ void shy_logic_sound < mediator > :: set_mediator ( typename platform_pointer ::
 template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
-    _platform_mouse = _mediator . get ( ) . platform_obj ( ) . mouse ;
-    _platform_sound = _mediator . get ( ) . platform_obj ( ) . sound ;
+    typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _platform_math_consts = platform_obj . get ( ) . math_consts ;
+    _platform_mouse = platform_obj . get ( ) . mouse ;
+    _platform_sound = platform_obj . get ( ) . sound ;
     
     platform_math :: make_num_whole ( _mono_sound_created , false ) ;
     platform_math :: make_num_whole ( _stereo_sound_created , false ) ;

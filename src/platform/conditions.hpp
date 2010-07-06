@@ -131,13 +131,19 @@ inline int shy_platform_conditions < platform_insider > :: whole_greater_than_wh
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: fract_less_than_fract ( num_fract a , num_fract b )
 {
-    return platform_math_insider :: num_fract_value_old_get ( a )
-         < platform_math_insider :: num_fract_value_old_get ( b ) ;
+    float a_float = 0 ;
+    float b_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    return a_float < b_float ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: fract_greater_than_fract ( num_fract a , num_fract b )
 {
-    return platform_math_insider :: num_fract_value_old_get ( a ) 
-         > platform_math_insider :: num_fract_value_old_get ( b ) ;
+    float a_float = 0 ;
+    float b_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    return a_float > b_float ;
 }

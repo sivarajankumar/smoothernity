@@ -125,7 +125,9 @@ void shy_logic_camera < mediator > :: set_mediator ( typename platform_pointer :
 template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
 {
-    _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
+    typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
     _origin_rubber = _platform_math_consts . get ( ) . fract_0 ;
     _target_rubber = _platform_math_consts . get ( ) . fract_0 ;

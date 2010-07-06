@@ -190,10 +190,17 @@ inline void shy_platform_matrix_float < platform_insider > :: inverse_rotation_t
     platform_vector :: dot_product ( dot_y , origin , axis_y ) ;
     platform_vector :: dot_product ( dot_z , origin , axis_z ) ;
     
+    float dot_x_float = 0 ;
+    float dot_y_float = 0 ;
+    float dot_z_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( dot_x_float , dot_x ) ;
+    platform_math_insider :: num_fract_value_get ( dot_y_float , dot_y ) ;
+    platform_math_insider :: num_fract_value_get ( dot_z_float , dot_z ) ;
+    
     vector_data new_origin ;
-    platform_vector_insider :: x_set ( new_origin , - platform_math_insider :: num_fract_value_old_get ( dot_x ) ) ;
-    platform_vector_insider :: y_set ( new_origin , - platform_math_insider :: num_fract_value_old_get ( dot_y ) ) ;
-    platform_vector_insider :: z_set ( new_origin , - platform_math_insider :: num_fract_value_old_get ( dot_z ) ) ;
+    platform_vector_insider :: x_set ( new_origin , - dot_x_float ) ;
+    platform_vector_insider :: y_set ( new_origin , - dot_y_float ) ;
+    platform_vector_insider :: z_set ( new_origin , - dot_z_float ) ;
     
     set_origin ( matrix , new_origin ) ;
     _swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
