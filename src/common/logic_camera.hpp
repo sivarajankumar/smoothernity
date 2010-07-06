@@ -155,14 +155,16 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
         ; platform_math :: inc_whole ( i )
         )
     {
-        num_whole & origin_index = platform_static_array :: element ( _scheduled_camera_origin_indices , i ) ;
-        num_whole & target_index = platform_static_array :: element ( _scheduled_camera_target_indices , i ) ;
-        vector_data & origin_pos = platform_static_array :: element ( _scheduled_camera_origins , i ) ;
-        vector_data & target_pos = platform_static_array :: element ( _scheduled_camera_targets , i ) ;
-        origin_index = _platform_math_consts . get ( ) . whole_0 ;
-        target_index = _platform_math_consts . get ( ) . whole_0 ;
+        vector_data origin_pos ;
+        vector_data target_pos ;
+        
         platform_vector :: xyz ( origin_pos , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
         platform_vector :: xyz ( target_pos , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+        
+        platform_static_array :: set_element ( _platform_math_consts . get ( ) . whole_0 , _scheduled_camera_origin_indices , i ) ;
+        platform_static_array :: set_element ( _platform_math_consts . get ( ) . whole_0 , _scheduled_camera_target_indices , i ) ;        
+        platform_static_array :: set_element ( origin_pos , _scheduled_camera_origins , i ) ;
+        platform_static_array :: set_element ( target_pos , _scheduled_camera_targets , i ) ;
     }
 }
 

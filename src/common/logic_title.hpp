@@ -161,7 +161,8 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
             ; platform_math :: inc_whole ( i )
             )
         {
-            _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
+            _letter_state letter ;
+            platform_static_array :: get_element ( letter , _letters , i ) ;
             typename messages :: render_mesh_delete mesh_delete_msg ;
             mesh_delete_msg . mesh = letter . mesh ;
             _mediator . get ( ) . send ( mesh_delete_msg ) ;
@@ -224,8 +225,10 @@ void shy_logic_title < mediator > :: receive ( typename messages :: render_mesh_
     {
         _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
         _mesh_create_replied = _platform_math_consts . get ( ) . whole_true ;
-        _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
+        _letter_state letter ;
+        platform_static_array :: get_element ( letter , _letters , _bake_letter_index ) ;
         letter . mesh = msg . mesh ;
+        platform_static_array :: set_element ( letter , _letters , _bake_letter_index ) ;
         _proceed_with_letter_creation ( ) ;
     }
 }
@@ -319,9 +322,7 @@ void shy_logic_title < mediator > :: _proceed_with_letter_creation ( )
     {
         _mesh_create_replied = _platform_math_consts . get ( ) . whole_false ;
         _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_false ;
-        
-        _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
-        
+                
         num_fract title_r = _platform_math_consts . get ( ) . fract_0 ;
         num_fract title_g = _platform_math_consts . get ( ) . fract_1 ;
         num_fract title_b = _platform_math_consts . get ( ) . fract_0 ;
@@ -331,6 +332,9 @@ void shy_logic_title < mediator > :: _proceed_with_letter_creation ( )
         num_fract y_bottom = _platform_math_consts . get ( ) . fract_minus_1 ;
         num_fract y_top = _platform_math_consts . get ( ) . fract_1 ;
         num_fract z = _platform_math_consts . get ( ) . fract_0 ;
+        
+        _letter_state letter ;
+        platform_static_array :: get_element ( letter , _letters , _bake_letter_index ) ;
         
         _mesh_set_triangle_strip_index_value ( letter . mesh , _platform_math_consts . get ( ) . whole_0 , _platform_math_consts . get ( ) . whole_0 ) ;
         _mesh_set_vertex_color               ( letter . mesh , _platform_math_consts . get ( ) . whole_0 , title_r , title_g , title_b , title_a ) ;

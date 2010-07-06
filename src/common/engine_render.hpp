@@ -301,11 +301,13 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_create_request msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , _next_mesh_id ) ;
+    _mesh_data mesh ;
     mesh . vertices_count = msg . vertices ;
     mesh . triangle_strip_indices_count = msg . triangle_strip_indices ;
     mesh . triangle_fan_indices_count = msg . triangle_fan_indices ;
     platform_matrix :: identity ( mesh . transform ) ;
+    
+    platform_static_array :: set_element ( mesh , _meshes_data , _next_mesh_id ) ;
     
     typename messages :: render_mesh_create_reply reply_msg ;
     reply_msg . mesh . _mesh_id = _next_mesh_id ;

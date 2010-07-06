@@ -20,10 +20,30 @@ public :
     } ;
 public :
     template < typename array_type >
+    static void get_element ( typename array_type :: _data_type & element , const array_type & array , num_whole index ) ;
+    template < typename array_type >
+    static void set_element ( typename array_type :: _data_type element , array_type & array , num_whole index ) ;
+    template < typename array_type >
     static typename array_type :: _data_type & element ( array_type & array , num_whole index ) ;
     template < typename array_type >
     static const typename array_type :: _data_type & element ( const array_type & array , num_whole index ) ;
 } ;
+
+template < typename platform_insider >
+template < typename array_type >
+inline void shy_platform_static_array < platform_insider > :: get_element 
+    ( typename array_type :: _data_type & element , const array_type & array , num_whole index )
+{
+    element = array . _elements [ platform_math_insider :: num_whole_value_get ( index ) ] ;
+}
+
+template < typename platform_insider >
+template < typename array_type >
+inline void shy_platform_static_array < platform_insider > :: set_element 
+    ( typename array_type :: _data_type element , array_type & array , num_whole index )
+{
+    array . _elements [ platform_math_insider :: num_whole_value_get ( index ) ] = element ;
+}
 
 template < typename platform_insider >
 template < typename array_type >
