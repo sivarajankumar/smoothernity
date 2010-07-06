@@ -356,74 +356,86 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_vertex_position msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
-    platform_render :: set_vertex_position ( vertex , msg . x , msg . y , msg . z ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    typename platform_pointer :: template pointer < vertex_data > vertex ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    platform_static_array :: get_element_ptr ( vertex , mesh . get ( ) . vertices , msg . offset ) ;
+    platform_render :: set_vertex_position ( vertex . get ( ) , msg . x , msg . y , msg . z ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_vertex_tex_coord msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
-    platform_render :: set_vertex_tex_coord ( vertex , msg . u , msg . v ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    typename platform_pointer :: template pointer < vertex_data > vertex ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    platform_static_array :: get_element_ptr ( vertex , mesh . get ( ) . vertices , msg . offset ) ;
+    platform_render :: set_vertex_tex_coord ( vertex . get ( ) , msg . u , msg . v ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_vertex_color msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    vertex_data & vertex = platform_static_array :: element ( mesh . vertices , msg . offset ) ;
-    platform_render :: set_vertex_color ( vertex , msg . r , msg . g , msg . b , msg . a ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    typename platform_pointer :: template pointer < vertex_data > vertex ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    platform_static_array :: get_element_ptr ( vertex , mesh . get ( ) . vertices , msg . offset ) ;
+    platform_render :: set_vertex_color ( vertex . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_triangle_strip_index_value msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    index_data & index = platform_static_array :: element ( mesh . triangle_strip_indices , msg . offset ) ;
-    platform_render :: set_index_value ( index , msg . index ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    typename platform_pointer :: template pointer < index_data > index ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    platform_static_array :: get_element_ptr ( index , mesh . get ( ) . triangle_strip_indices , msg . offset ) ;
+    platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_triangle_fan_index_value msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    index_data & index = platform_static_array :: element ( mesh . triangle_fan_indices , msg . offset ) ;
-    platform_render :: set_index_value ( index , msg . index ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    typename platform_pointer :: template pointer < index_data > index ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    platform_static_array :: get_element_ptr ( index , mesh . get ( ) . triangle_fan_indices , msg . offset ) ;
+    platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_delete msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    _platform_render . get ( ) . delete_vertex_buffer ( mesh . vertex_buffer_id ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
-        _platform_render . get ( ) . delete_index_buffer ( mesh . triangle_strip_index_buffer_id ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
-        _platform_render . get ( ) . delete_index_buffer ( mesh . triangle_fan_index_buffer_id ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    _platform_render . get ( ) . delete_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
+        _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
+        _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_render msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
     _platform_render . get ( ) . matrix_push ( ) ;
-    _platform_render . get ( ) . matrix_mult ( mesh . transform ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
+    _platform_render . get ( ) . matrix_mult ( mesh . get ( ) . transform ) ;
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
     {
         _platform_render . get ( ) . draw_triangle_strip 
-            ( mesh . vertex_buffer_id 
-            , mesh . triangle_strip_index_buffer_id 
-            , mesh . triangle_strip_indices_count
+            ( mesh . get ( ) . vertex_buffer_id 
+            , mesh . get ( ) . triangle_strip_index_buffer_id 
+            , mesh . get ( ) . triangle_strip_indices_count
             ) ;
     }
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
     {
         _platform_render . get ( ) . draw_triangle_fan 
-            ( mesh . vertex_buffer_id 
-            , mesh . triangle_fan_index_buffer_id 
-            , mesh . triangle_fan_indices_count
+            ( mesh . get ( ) . vertex_buffer_id 
+            , mesh . get ( ) . triangle_fan_index_buffer_id 
+            , mesh . get ( ) . triangle_fan_indices_count
             ) ;
     }
     _platform_render . get ( ) . matrix_pop ( ) ;
@@ -432,6 +444,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_transform msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    mesh . transform = msg . transform ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    mesh . get ( ) . transform = msg . transform ;
 }
