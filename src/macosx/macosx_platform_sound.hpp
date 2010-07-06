@@ -192,7 +192,9 @@ inline void shy_macosx_platform_sound < platform_insider > :: set_listener_orien
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_sample_value ( mono_sound_sample & sample , num_fract value )
 {
-    sample . _value = ( ALubyte ) ( ( platform_math_insider :: num_fract_value_old_get ( value ) * 127.0f ) + 127.0f ) ;
+    float value_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( value_float , value ) ;
+    sample . _value = ( ALubyte ) ( ( value_float * 127.0f ) + 127.0f ) ;
 }
 
 template < typename platform_insider >
@@ -311,13 +313,17 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_source ( so
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_pitch ( const sound_source_id & source_id , num_fract pitch )
 {
-    alSourcef ( source_id . _source_id , AL_PITCH , platform_math_insider :: num_fract_value_old_get ( pitch ) ) ;
+    float pitch_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( pitch_float , pitch ) ;
+    alSourcef ( source_id . _source_id , AL_PITCH , pitch_float ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: set_source_gain ( const sound_source_id & source_id , num_fract gain )
 {
-    alSourcef ( source_id . _source_id , AL_GAIN , platform_math_insider :: num_fract_value_old_get ( gain ) ) ;
+    float gain_float = 0 ;
+    platform_math_insider :: num_fract_value_get ( gain_float , gain ) ;
+    alSourcef ( source_id . _source_id , AL_GAIN , gain_float ) ;
 }
 
 template < typename platform_insider >

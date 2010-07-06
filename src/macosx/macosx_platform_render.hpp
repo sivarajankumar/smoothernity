@@ -293,16 +293,24 @@ inline void shy_macosx_platform_render < platform_insider > :: fog_linear
     , num_fract a 
     )
 {
-    GLfloat color [ ] = 
-        { platform_math_insider :: num_fract_value_old_get ( r )
-        , platform_math_insider :: num_fract_value_old_get ( g )
-        , platform_math_insider :: num_fract_value_old_get ( b )
-        , platform_math_insider :: num_fract_value_old_get ( a )
-        } ;
+    float r_float ;
+    float g_float ;
+    float b_float ;
+    float a_float ;
+    float near_float ;
+    float far_float ;
+    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
+    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+    platform_math_insider :: num_fract_value_get ( near_float , near ) ;
+    platform_math_insider :: num_fract_value_get ( far_float , far ) ;
+
+    GLfloat color [ ] = { r_float , g_float , b_float , a_float } ;
     glEnable ( GL_FOG ) ;
     glFogf ( GL_FOG_MODE , GL_LINEAR ) ;
-    glFogf ( GL_FOG_START , ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( near ) ) ;
-    glFogf ( GL_FOG_END , ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( far ) ) ;
+    glFogf ( GL_FOG_START , ( GLfloat ) near_float ) ;
+    glFogf ( GL_FOG_END , ( GLfloat ) far_float ) ;
     glFogfv ( GL_FOG_COLOR , color ) ;
 }
 
@@ -322,10 +330,18 @@ template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_texel_color 
     ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    texel . _color [ 0 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( b ) * 255.0f ) ;
-    texel . _color [ 1 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( g ) * 255.0f ) ;
-    texel . _color [ 2 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( r ) * 255.0f ) ;
-    texel . _color [ 3 ] = ( GLubyte ) ( platform_math_insider :: num_fract_value_old_get ( a ) * 255.0f ) ;
+    float r_float ;
+    float g_float ;
+    float b_float ;
+    float a_float ;
+    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
+    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+    texel . _color [ 0 ] = ( GLubyte ) ( b_float * 255.0f ) ;
+    texel . _color [ 1 ] = ( GLubyte ) ( g_float * 255.0f ) ;
+    texel . _color [ 2 ] = ( GLubyte ) ( r_float * 255.0f ) ;
+    texel . _color [ 3 ] = ( GLubyte ) ( a_float * 255.0f ) ;
 }
 
 template < typename platform_insider >
@@ -378,12 +394,13 @@ inline void shy_macosx_platform_render < platform_insider > :: texture_loader_re
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: clear_screen ( num_fract r , num_fract g , num_fract b )
 {
-    glClearColor 
-        ( ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( r )
-        , ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( g )
-        , ( GLfloat ) platform_math_insider :: num_fract_value_old_get ( b )
-        , ( GLfloat ) 0
-        ) ;
+    float r_float ;
+    float g_float ;
+    float b_float ;
+    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
+    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    glClearColor ( r_float , g_float , b_float , 0 ) ;
     glClearDepth ( 1 ) ;
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) ;
 }
@@ -398,16 +415,22 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_frustu
     , num_fract far 
     )
 {
+    float left_float ;
+    float right_float ;
+    float bottom_float ;
+    float top_float ;
+    float near_float ;
+    float far_float ;
+    platform_math_insider :: num_fract_value_get ( left_float , left ) ;
+    platform_math_insider :: num_fract_value_get ( right_float , right ) ;
+    platform_math_insider :: num_fract_value_get ( bottom_float , bottom ) ;
+    platform_math_insider :: num_fract_value_get ( top_float , top ) ;
+    platform_math_insider :: num_fract_value_get ( near_float , near ) ;
+    platform_math_insider :: num_fract_value_get ( far_float , far ) ;
+    
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
-    glFrustum 
-        ( platform_math_insider :: num_fract_value_old_get ( left )
-        , platform_math_insider :: num_fract_value_old_get ( right )
-        , platform_math_insider :: num_fract_value_old_get ( bottom )
-        , platform_math_insider :: num_fract_value_old_get ( top )
-        , platform_math_insider :: num_fract_value_old_get ( near )
-        , platform_math_insider :: num_fract_value_old_get ( far )
-        ) ;
+    glFrustum ( left_float , right_float , bottom_float , top_float , near_float , far_float ) ;
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
@@ -421,16 +444,22 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_ortho
     , num_fract far 
     )
 {
+    float left_float ;
+    float right_float ;
+    float bottom_float ;
+    float top_float ;
+    float near_float ;
+    float far_float ;
+    platform_math_insider :: num_fract_value_get ( left_float , left ) ;
+    platform_math_insider :: num_fract_value_get ( right_float , right ) ;
+    platform_math_insider :: num_fract_value_get ( bottom_float , bottom ) ;
+    platform_math_insider :: num_fract_value_get ( top_float , top ) ;
+    platform_math_insider :: num_fract_value_get ( near_float , near ) ;
+    platform_math_insider :: num_fract_value_get ( far_float , far ) ;
+    
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
-    glOrtho 
-        ( platform_math_insider :: num_fract_value_old_get ( left )
-        , platform_math_insider :: num_fract_value_old_get ( right )
-        , platform_math_insider :: num_fract_value_old_get ( bottom )
-        , platform_math_insider :: num_fract_value_old_get ( top )
-        , platform_math_insider :: num_fract_value_old_get ( near )
-        , platform_math_insider :: num_fract_value_old_get ( far )
-        ) ;
+    glOrtho ( left_float , right_float , bottom_float , top_float , near_float , far_float ) ;
     glMatrixMode ( GL_MODELVIEW ) ;
 }
 
