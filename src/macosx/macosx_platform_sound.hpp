@@ -201,9 +201,9 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_stereo_reso
     , num_whole resource_index
     )
 {
-    int * resource_index_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( resource_index_int , resource_index ) ;
-    result . _resource_id = * resource_index_int ;
+    int resource_index_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( resource_index_int , resource_index ) ;
+    result . _resource_id = resource_index_int ;
 }
 
 template < typename platform_insider >
@@ -227,17 +227,13 @@ inline void shy_macosx_platform_sound < platform_insider > :: load_stereo_sample
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loader_ready ( num_whole & result )
 {
-    int * result_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( result_int , result ) ;
-    * result_int = [ _sound_loader loader_ready ] ;
+    platform_math_insider :: num_whole_value_set ( result , [ _sound_loader loader_ready ] ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loaded_samples_count ( num_whole & result )
 {
-    int * result_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( result_int , result ) ;
-    * result_int = [ _sound_loader loaded_samples_count ] ;
+    platform_math_insider :: num_whole_value_set ( result , [ _sound_loader loaded_samples_count ] ) ;
 }
 
 template < typename platform_insider >
@@ -261,14 +257,14 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_mono_buffer
     const mono_sound_sample * samples_ptr = 0 ;
     platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
     
-    int * samples_count_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( samples_count_int , samples_count ) ;
+    int samples_count_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( samples_count_int , samples_count ) ;
     
     al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
         , ( ALvoid * ) samples_ptr
-        , ( * samples_count_int ) * sizeof ( mono_sound_sample )
+        , samples_count_int * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
 }
@@ -294,14 +290,14 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_stereo_buff
     const stereo_sound_sample * samples_ptr = 0 ;
     platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
     
-    int * samples_count_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( samples_count_int , samples_count ) ;
+    int samples_count_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( samples_count_int , samples_count ) ;
     
     al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
         , ( ALvoid * ) samples_ptr
-        , ( * samples_count_int ) * sizeof ( stereo_sound_sample )
+        , samples_count_int * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;
 }

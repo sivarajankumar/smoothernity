@@ -25,107 +25,107 @@ public :
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: wholes_are_equal ( num_whole a , num_whole b )
 {
-    int * a_int = 0 ;
-    int * b_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( a_int , a ) ;
-    platform_math_insider :: num_whole_value_ptr ( b_int , b ) ;
-    return ( * a_int ) == ( * b_int ) ;
+    int a_int = 0 ;
+    int b_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( a_int , a ) ;
+    platform_math_insider :: num_whole_value_get ( b_int , b ) ;
+    return a_int == b_int ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_is_true ( num_whole num )
 {
-    int * num_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( num_int , num ) ;
-    return ( * num_int ) == int ( true ) ;
+    int num_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    return num_int == int ( true ) ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_is_false ( num_whole num )
 {
-    int * num_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( num_int , num ) ;
-    return ( * num_int ) == false ;
+    int num_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    return num_int == false ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_greater_than_zero ( num_whole num )
 {
-    int * num_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( num_int , num ) ;
-    return ( * num_int ) > 0 ;
+    int num_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    return num_int > 0 ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_less_than_whole ( num_whole a , num_whole b )
 {
-    int * a_int = 0 ;
-    int * b_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( a_int , a ) ;
-    platform_math_insider :: num_whole_value_ptr ( b_int , b ) ;
-    return ( * a_int ) < ( * b_int ) ;
+    int a_int = 0 ;
+    int b_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( a_int , a ) ;
+    platform_math_insider :: num_whole_value_get ( b_int , b ) ;
+    return a_int < b_int ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_less_or_equal_to_whole ( num_whole a , num_whole b )
 {
-    int * a_int = 0 ;
-    int * b_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( a_int , a ) ;
-    platform_math_insider :: num_whole_value_ptr ( b_int , b ) ;
-    return ( * a_int ) <= ( * b_int ) ;
+    int a_int = 0 ;
+    int b_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( a_int , a ) ;
+    platform_math_insider :: num_whole_value_get ( b_int , b ) ;
+    return a_int <= b_int ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_is_zero ( num_whole num )
 {
-    int * num_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( num_int , num ) ;
-    return ( * num_int ) == 0 ;
+    int num_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    return num_int == 0 ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_is_even ( num_whole num )
 {
-    int * num_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( num_int , num ) ;
-    return ( * num_int ) % 2 == 0 ;
+    int num_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    return num_int % 2 == 0 ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_less_or_equal_to_zero ( num_whole num )
 {
-    int * num_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( num_int , num ) ;
-    return ( * num_int ) <= 0 ;
+    int num_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    return num_int <= 0 ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_greater_or_equal_to_whole ( num_whole a , num_whole b )
 {
-    int * a_int = 0 ;
-    int * b_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( a_int , a ) ;
-    platform_math_insider :: num_whole_value_ptr ( b_int , b ) ;
-    return ( * a_int ) >= ( * b_int ) ;
+    int a_int = 0 ;
+    int b_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( a_int , a ) ;
+    platform_math_insider :: num_whole_value_get ( b_int , b ) ;
+    return a_int >= b_int ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_less_than_zero ( num_whole num )
 {
-    int * num_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( num_int , num ) ;
-    return ( * num_int ) < 0 ;
+    int num_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    return num_int < 0 ;
 }
 
 template < typename platform_insider >
 inline int shy_platform_conditions < platform_insider > :: whole_greater_than_whole ( num_whole a , num_whole b )
 {
-    int * a_int = 0 ;
-    int * b_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( a_int , a ) ;
-    platform_math_insider :: num_whole_value_ptr ( b_int , b ) ;
-    return ( * a_int ) > ( * b_int ) ;
+    int a_int = 0 ;
+    int b_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( a_int , a ) ;
+    platform_math_insider :: num_whole_value_get ( b_int , b ) ;
+    return a_int > b_int ;
 }
 
 template < typename platform_insider >

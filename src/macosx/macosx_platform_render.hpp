@@ -333,9 +333,9 @@ template < typename texels_array >
 inline void shy_macosx_platform_render < platform_insider > :: load_texture_data 
     ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data )
 {
-    int * size_pow2_base_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( size_pow2_base_int , size_pow2_base ) ;
-    GLsizei size = 1 << ( * size_pow2_base_int ) ;
+    int size_pow2_base_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
+    GLsizei size = 1 << size_pow2_base_int ;
     glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
@@ -350,9 +350,7 @@ inline void shy_macosx_platform_render < platform_insider > :: load_texture_data
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
-    int * resource_index_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( resource_index_int , resource_index ) ;
-    resource_id . _resource_id = * resource_index_int ;
+    platform_math_insider :: num_whole_value_get ( resource_id . _resource_id , resource_index ) ;
 }
 
 template < typename platform_insider >
@@ -360,14 +358,14 @@ template < typename texels_array >
 inline void shy_macosx_platform_render < platform_insider > :: load_texture_resource
     ( const texture_resource_id & resource_id , num_whole size_pow2_base , texels_array & data )
 {
-    int * size_pow2_base_int = 0 ;
+    int size_pow2_base_int = 0 ;
     texel_data * texels = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( size_pow2_base_int , size_pow2_base ) ;
+    platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
     platform_static_array_insider :: elements_ptr ( texels , data ) ;
     [ _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
         to_buffer : ( void * ) texels
-        with_side_size_of : 1 << ( * size_pow2_base_int )
+        with_side_size_of : 1 << size_pow2_base_int
     ] ;
 }
 
@@ -443,13 +441,13 @@ inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buf
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    int * elements_int = 0 ;
+    int elements_int = 0 ;
     const vertex_data * vertices = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( elements_int , elements ) ;
+    platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
     platform_static_array_insider :: elements_ptr ( vertices , data ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
-        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) ( * elements_int ) ) 
+        , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) elements_int ) 
         , vertices
         , GL_STATIC_DRAW 
         ) ;
@@ -487,13 +485,13 @@ inline void shy_macosx_platform_render < platform_insider > :: create_index_buff
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    int * elements_int = 0 ;
+    int elements_int = 0 ;
     const index_data * indices = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( elements_int , elements ) ;
+    platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
     platform_static_array_insider :: elements_ptr ( indices , data ) ;
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
-        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) ( * elements_int ) )
+        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) elements_int )
         , indices
         , GL_STATIC_DRAW
         ) ;
@@ -502,9 +500,9 @@ inline void shy_macosx_platform_render < platform_insider > :: create_index_buff
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_index_value ( index_data & data , num_whole index )
 {
-    int * index_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( index_int , index ) ;
-    data . _index = ( GLushort ) ( * index_int ) ;
+    int index_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( index_int , index ) ;
+    data . _index = ( GLushort ) index_int ;
 }
 
 template < typename platform_insider >
@@ -548,8 +546,8 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_str
     , num_whole indices_count
     )
 {
-    int * indices_count_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( indices_count_int , indices_count ) ;
+    int indices_count_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
@@ -560,7 +558,7 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_str
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_STRIP 
-        , ( GLsizei ) ( * indices_count_int )
+        , ( GLsizei ) indices_count_int
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
@@ -573,8 +571,8 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
     , num_whole indices_count
     )
 {
-    int * indices_count_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( indices_count_int , indices_count ) ;
+    int indices_count_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
@@ -585,7 +583,7 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_FAN 
-        , ( GLsizei ) ( * indices_count_int )
+        , ( GLsizei ) indices_count_int
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;

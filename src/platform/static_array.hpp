@@ -27,7 +27,7 @@ template < typename platform_insider >
 template < typename array_type , typename pointer_type >
 inline void shy_platform_static_array < platform_insider > :: element_ptr ( pointer_type & element_ptr , array_type & array , num_whole index )
 {
-    int * index_int = 0 ;
-    platform_math_insider :: num_whole_value_ptr ( index_int , index ) ;
-    element_ptr . set ( array . _elements [ * index_int ] ) ;
+    int index_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( index_int , index ) ;
+    element_ptr . set ( array . _elements [ index_int ] ) ;
 }
