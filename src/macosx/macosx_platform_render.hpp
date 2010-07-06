@@ -128,7 +128,7 @@ public :
     void load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
     
     template < typename texels_array >
-    void load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data ) ;
+    void load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , texels_array & data ) ;
     
     template < typename vertices_array >
     void create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , const vertices_array & data ) ;
@@ -340,9 +340,9 @@ inline void shy_macosx_platform_render < platform_insider > :: load_texture_data
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
-    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE 
-        , platform_static_array_insider :: elements_ptr ( data ) 
-        ) ;
+    const texel_data * texels = 0 ;
+    platform_static_array_insider :: elements_ptr ( texels , data ) ;
+    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE , texels ) ;
 }
 
 template < typename platform_insider >
@@ -354,11 +354,13 @@ inline void shy_macosx_platform_render < platform_insider > :: create_texture_re
 template < typename platform_insider >
 template < typename texels_array >
 inline void shy_macosx_platform_render < platform_insider > :: load_texture_resource
-    ( const texture_resource_id & resource_id , num_whole size_pow2_base , const texels_array & data )
+    ( const texture_resource_id & resource_id , num_whole size_pow2_base , texels_array & data )
 {
+    texel_data * texels = 0 ;
+    platform_static_array_insider :: elements_ptr ( texels , data ) ;
     [ _texture_loader 
         load_texture_from_png_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) platform_static_array_insider :: elements_ptr ( data )
+        to_buffer : ( void * ) texels
         with_side_size_of : 1 << platform_math_insider :: num_whole_value_get ( size_pow2_base )
     ] ;
 }
@@ -435,10 +437,12 @@ inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buf
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    const vertex_data * vertices = 0 ;
+    platform_static_array_insider :: elements_ptr ( vertices , data ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
         , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) platform_math_insider :: num_whole_value_get ( elements ) ) 
-        , platform_static_array_insider :: elements_ptr ( data )
+        , vertices
         , GL_STATIC_DRAW 
         ) ;
 }
@@ -475,10 +479,12 @@ inline void shy_macosx_platform_render < platform_insider > :: create_index_buff
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    const index_data * indices = 0 ;
+    platform_static_array_insider :: elements_ptr ( indices , data ) ;
     glBufferData
         ( GL_ELEMENT_ARRAY_BUFFER
         , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) platform_math_insider :: num_whole_value_get ( elements ) )
-        , platform_static_array_insider :: elements_ptr ( data )
+        , indices
         , GL_STATIC_DRAW
         ) ;
 }

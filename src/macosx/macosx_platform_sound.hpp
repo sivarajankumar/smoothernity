@@ -211,10 +211,14 @@ inline void shy_macosx_platform_sound < platform_insider > :: load_stereo_sample
     , const stereo_sound_resource_id & resource_id 
     )
 {
+    const stereo_sound_sample * samples_ptr = 0 ;
+    int samples_count = 0 ;
+    platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
+    platform_static_array_insider :: template elements_count < samples_array > ( samples_count ) ;
     [ _sound_loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
-        to_buffer : ( void * ) platform_static_array_insider :: elements_ptr ( samples )
-        with_max_samples_count_of : platform_static_array_insider :: template elements_count < samples_array > ( )
+        to_buffer : ( void * ) samples_ptr
+        with_max_samples_count_of : samples_count
     ] ;
 }
 
@@ -245,11 +249,16 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_mono_buffer
     } ;
     al_buffer_data_static_proc_type al_buffer_data_static_proc ;
     al_buffer_data_static_proc . void_ptr = alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
+    
     alGenBuffers ( 1 , & result . _buffer_id ) ;
+    
+    const mono_sound_sample * samples_ptr = 0 ;
+    platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
+    
     al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_MONO8 
-        , ( ALvoid * ) platform_static_array_insider :: elements_ptr ( samples )
+        , ( ALvoid * ) samples_ptr
         , platform_math_insider :: num_whole_value_get ( samples_count ) * sizeof ( mono_sound_sample )
         , mono_sound_samples_per_second
         ) ;
@@ -270,11 +279,16 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_stereo_buff
     } ;
     al_buffer_data_static_proc_type al_buffer_data_static_proc ;
     al_buffer_data_static_proc . void_ptr = alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
+    
     alGenBuffers ( 1 , & result . _buffer_id ) ;
+    
+    const stereo_sound_sample * samples_ptr = 0 ;
+    platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
+    
     al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
         , AL_FORMAT_STEREO16 
-        , ( ALvoid * ) platform_static_array_insider :: elements_ptr ( samples )
+        , ( ALvoid * ) samples_ptr
         , platform_math_insider :: num_whole_value_get ( samples_count ) * sizeof ( stereo_sound_sample )
         , stereo_sound_samples_per_second
         ) ;
