@@ -190,7 +190,8 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_b
     reply_msg . letter = msg . letter ;
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
-        _tex_coords & coords = platform_static_array :: element ( _letters_big , msg . letter . _letter_id ) ;
+        _tex_coords coords ;
+        platform_static_array :: get_element ( coords , _letters_big , msg . letter . _letter_id ) ;
         reply_msg . left = coords . left ;
         reply_msg . bottom = coords . bottom ;
         reply_msg . right = coords . right ;
@@ -213,7 +214,8 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_s
     reply_msg . letter = msg . letter ;
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
-        _tex_coords & coords = platform_static_array :: element ( _letters_small , msg . letter . _letter_id ) ;
+        _tex_coords coords ;
+        platform_static_array :: get_element ( coords , _letters_small , msg . letter . _letter_id ) ;
         reply_msg . left = coords . left ;
         reply_msg . bottom = coords . bottom ;
         reply_msg . right = coords . right ;
@@ -630,7 +632,7 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
     platform_math :: div_fract_by ( coords . right , fract_texture_width ) ;
     platform_math :: div_fract_by ( coords . top , fract_texture_height ) ;
     
-    platform_static_array :: element ( letters_tex_coords , letter . _letter_id ) = coords ;
+    platform_static_array :: set_element ( coords , letters_tex_coords , letter . _letter_id ) ;
 }
 
 template < typename mediator >

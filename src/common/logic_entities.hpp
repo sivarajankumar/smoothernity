@@ -187,7 +187,8 @@ void shy_logic_entities < mediator > :: _entities_render ( )
         ; platform_math :: inc_whole ( i )
         )
     {
-        matrix_data & matrix = platform_static_array :: element ( _entities_grid_matrices , i ) ;
+        matrix_data matrix ;
+        platform_static_array :: get_element ( matrix , _entities_grid_matrices , i ) ;
         {
             typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = _entity_mesh_id ;
@@ -507,11 +508,12 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
                 
-                matrix_data & matrix = platform_static_array :: element ( _entities_grid_matrices , index ) ;
+                matrix_data matrix ;
                 platform_matrix :: set_axis_x ( matrix , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
                 platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;
                 platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , scale ) ;
                 platform_matrix :: set_origin ( matrix , origin ) ;
+                platform_static_array :: set_element ( matrix , _entities_grid_matrices , index ) ;
             }
         }
         platform_math :: inc_whole ( _grid_scale ) ;

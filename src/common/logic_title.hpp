@@ -471,7 +471,8 @@ void shy_logic_title < mediator > :: _title_render ( )
         ; platform_math :: inc_whole ( i )
         )
     {
-        _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
+        _letter_state letter ;
+        platform_static_array :: get_element ( letter , _letters , i ) ;
         typename messages :: render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
@@ -541,7 +542,9 @@ void shy_logic_title < mediator > :: _title_update ( )
         vector_data offset ;
         vector_data pos ;
         matrix_data tm ;
-        _letter_state & letter = platform_static_array :: element ( _letters , i ) ;
+        _letter_state letter ;
+        
+        platform_static_array :: get_element ( letter , _letters , i ) ;
         
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
         platform_math :: mul_fracts ( offset_x , _render_aspect_width , _platform_math_consts . get ( ) . fract_2 ) ;
@@ -611,6 +614,8 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_matrix :: set_axis_z ( tm , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
         platform_matrix :: set_origin ( tm , origin ) ;
         
+        platform_static_array :: set_element ( letter , _letters , i ) ;
+        
         {
             typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = letter . mesh ;
@@ -623,7 +628,10 @@ void shy_logic_title < mediator > :: _title_update ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 {
-    platform_static_array :: element ( _letters , _letters_count ) . letter = letter ;
+    _letter_state letter_state ;
+    platform_static_array :: get_element ( letter_state , _letters , _letters_count ) ;
+    letter_state . letter = letter ;
+    platform_static_array :: set_element ( letter_state , _letters , _letters_count ) ;
     platform_math :: inc_whole ( _letters_count ) ;
 }
 
@@ -632,11 +640,14 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
 {
     if ( platform_conditions :: whole_less_than_whole ( _bake_letter_index , _letters_count ) )
     {
-        _letter_state & letter = platform_static_array :: element ( _letters , _bake_letter_index ) ;
+        _letter_state letter ;
+        
+        platform_static_array :: get_element ( letter , _letters , _bake_letter_index ) ;
         letter . scale = _platform_math_consts . get ( ) . fract_0 ;
         letter . pos_radius = _platform_math_consts . get ( ) . fract_0 ;
         letter . pos_angle = _platform_math_consts . get ( ) . fract_0 ;
         letter . rot_angle = _platform_math_consts . get ( ) . fract_0 ;
+        platform_static_array :: set_element ( letter , _letters , _bake_letter_index ) ;
         
         _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_true ;
         _text_letter_big_tex_coords_letter = letter . letter ;
