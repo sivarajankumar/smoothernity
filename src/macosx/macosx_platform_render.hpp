@@ -502,7 +502,9 @@ inline void shy_macosx_platform_render < platform_insider > :: create_index_buff
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: set_index_value ( index_data & data , num_whole index )
 {
-    data . _index = ( GLushort ) platform_math_insider :: num_whole_value_get ( index ) ;
+    int * index_int = 0 ;
+    platform_math_insider :: num_whole_value_ptr ( index_int , index ) ;
+    data . _index = ( GLushort ) ( * index_int ) ;
 }
 
 template < typename platform_insider >
@@ -546,6 +548,8 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_str
     , num_whole indices_count
     )
 {
+    int * indices_count_int = 0 ;
+    platform_math_insider :: num_whole_value_ptr ( indices_count_int , indices_count ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
@@ -556,7 +560,7 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_str
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_STRIP 
-        , ( GLsizei ) platform_math_insider :: num_whole_value_get ( indices_count )
+        , ( GLsizei ) ( * indices_count_int )
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
@@ -569,6 +573,8 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
     , num_whole indices_count
     )
 {
+    int * indices_count_int = 0 ;
+    platform_math_insider :: num_whole_value_ptr ( indices_count_int , indices_count ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
     glEnableClientState ( GL_VERTEX_ARRAY ) ;
@@ -579,7 +585,7 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
     glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( vertex_data ) , _vertex_color_offset ) ;
     glDrawElements 
         ( GL_TRIANGLE_FAN 
-        , ( GLsizei ) platform_math_insider :: num_whole_value_get ( indices_count )
+        , ( GLsizei ) ( * indices_count_int )
         , GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
