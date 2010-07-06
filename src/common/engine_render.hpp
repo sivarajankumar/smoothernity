@@ -212,12 +212,11 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_finalize msg )
 {
     num_whole size_pow2_base ;
-    _texture_data texture ;
-    platform_static_array :: get_element ( texture , _textures_datas , msg . texture . _texture_id ) ;
+    typename platform_pointer :: template pointer < _texture_data > texture ;
+    platform_static_array :: get_element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
-    _platform_render . get ( ) . create_texture_id ( texture . render_id ) ;
-    _platform_render . get ( ) . load_texture_data ( texture . render_id , size_pow2_base , texture . texels ) ;
-    platform_static_array :: set_element ( texture , _textures_datas , msg . texture . _texture_id ) ;
+    _platform_render . get ( ) . create_texture_id ( texture . get ( ) . render_id ) ;
+    _platform_render . get ( ) . load_texture_data ( texture . get ( ) . render_id , size_pow2_base , texture . get ( ) . texels ) ;
 }
 
 template < typename mediator >

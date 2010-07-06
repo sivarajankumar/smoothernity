@@ -613,7 +613,9 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
     num_whole whole_texture_height ;
     num_fract fract_texture_width ;
     num_fract fract_texture_height ;
-    _tex_coords coords ;
+    typename platform_pointer :: template pointer < _tex_coords > coords ;
+
+    platform_static_array :: get_element_ptr ( coords , letters_tex_coords , letter . _letter_id ) ;    
     
     whole_left = _origin_x ;
     whole_bottom = _origin_y ;
@@ -623,16 +625,14 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
     whole_texture_height = _mediator . get ( ) . engine_render_consts ( ) . texture_height ;
     platform_math :: make_fract_from_whole ( fract_texture_width , whole_texture_width ) ;
     platform_math :: make_fract_from_whole ( fract_texture_height , whole_texture_height ) ;
-    platform_math :: make_fract_from_whole ( coords . left , whole_left ) ;
-    platform_math :: make_fract_from_whole ( coords . bottom , whole_bottom ) ;
-    platform_math :: make_fract_from_whole ( coords . right , whole_right ) ;
-    platform_math :: make_fract_from_whole ( coords . top , whole_top ) ;
-    platform_math :: div_fract_by ( coords . left , fract_texture_width ) ;
-    platform_math :: div_fract_by ( coords . bottom , fract_texture_height ) ;
-    platform_math :: div_fract_by ( coords . right , fract_texture_width ) ;
-    platform_math :: div_fract_by ( coords . top , fract_texture_height ) ;
-    
-    platform_static_array :: set_element ( coords , letters_tex_coords , letter . _letter_id ) ;
+    platform_math :: make_fract_from_whole ( coords . get ( ) . left , whole_left ) ;
+    platform_math :: make_fract_from_whole ( coords . get ( ) . bottom , whole_bottom ) ;
+    platform_math :: make_fract_from_whole ( coords . get ( ) . right , whole_right ) ;
+    platform_math :: make_fract_from_whole ( coords . get ( ) . top , whole_top ) ;
+    platform_math :: div_fract_by ( coords . get ( ) . left , fract_texture_width ) ;
+    platform_math :: div_fract_by ( coords . get ( ) . bottom , fract_texture_height ) ;
+    platform_math :: div_fract_by ( coords . get ( ) . right , fract_texture_width ) ;
+    platform_math :: div_fract_by ( coords . get ( ) . top , fract_texture_height ) ;
 }
 
 template < typename mediator >
