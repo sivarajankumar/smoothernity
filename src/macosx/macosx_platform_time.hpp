@@ -37,5 +37,7 @@ inline void shy_macosx_platform_time < platform_insider > :: diff_in_microsecond
         diff = time1 . _time - time2 . _time ;
     else
         diff = time2 . _time - time1 . _time ;
-    platform_math_insider :: num_whole_value_set ( result , ( int ) ( diff * ( CFAbsoluteTime ) 1000000 ) ) ;
+    int * result_int = 0 ;
+    platform_math_insider :: num_whole_value ( result_int , result ) ;
+    * result_int = int ( diff * ( CFAbsoluteTime ) 1000000 ) ;
 }

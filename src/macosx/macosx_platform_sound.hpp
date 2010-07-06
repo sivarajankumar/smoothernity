@@ -201,7 +201,9 @@ inline void shy_macosx_platform_sound < platform_insider > :: create_stereo_reso
     , num_whole resource_index
     )
 {
-    result . _resource_id = platform_math_insider :: num_whole_value_get ( resource_index ) ;
+    int * resource_index_int = 0 ;
+    platform_math_insider :: num_whole_value ( resource_index_int , resource_index ) ;
+    result . _resource_id = * resource_index_int ;
 }
 
 template < typename platform_insider >
@@ -225,13 +227,17 @@ inline void shy_macosx_platform_sound < platform_insider > :: load_stereo_sample
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loader_ready ( num_whole & result )
 {
-    platform_math_insider :: num_whole_value_set ( result , [ _sound_loader loader_ready ] ) ;
+    int * result_int = 0 ;
+    platform_math_insider :: num_whole_value ( result_int , result ) ;
+    * result_int = [ _sound_loader loader_ready ] ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_sound < platform_insider > :: loaded_samples_count ( num_whole & result )
 {
-    platform_math_insider :: num_whole_value_set ( result , [ _sound_loader loaded_samples_count ] ) ;
+    int * result_int = 0 ;
+    platform_math_insider :: num_whole_value ( result_int , result ) ;
+    * result_int = [ _sound_loader loaded_samples_count ] ;
 }
 
 template < typename platform_insider >
