@@ -280,7 +280,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
         _int_to_sample ( sample , next_sample ) ;
         typename platform_pointer :: template pointer < mono_sound_sample > sample_ptr ;
-        platform_static_array :: get_element_ptr ( sample_ptr , _mono_sound_data , i ) ;
+        platform_static_array :: element_ptr ( sample_ptr , _mono_sound_data , i ) ;
         platform_sound :: set_sample_value ( sample_ptr . get ( ) , sample ) ;
     }
     

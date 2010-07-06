@@ -504,13 +504,17 @@ inline void shy_macosx_platform_render < platform_insider > :: matrix_identity (
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: matrix_load ( const matrix_data & matrix )
 {
-    glLoadMatrixf ( platform_matrix_insider :: elements_ptr ( matrix ) ) ;
+    const float * elements = 0 ;
+    platform_matrix_insider :: elements_ptr ( elements , matrix ) ;
+    glLoadMatrixf ( elements ) ;
 }
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: matrix_mult ( const matrix_data & matrix )
 {
-    glMultMatrixf ( platform_matrix_insider :: elements_ptr ( matrix ) ) ;
+    const float * elements = 0 ;
+    platform_matrix_insider :: elements_ptr ( elements , matrix ) ;
+    glMultMatrixf ( elements ) ;
 }
 
 template < typename platform_insider >

@@ -188,7 +188,7 @@ void shy_logic_entities < mediator > :: _entities_render ( )
         )
     {
         typename platform_pointer :: template pointer < matrix_data > matrix ;
-        platform_static_array :: get_element_ptr ( matrix , _entities_grid_matrices , i ) ;
+        platform_static_array :: element_ptr ( matrix , _entities_grid_matrices , i ) ;
         {
             typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = _entity_mesh_id ;
@@ -509,7 +509,7 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 _get_entity_origin ( origin , index ) ;
                 
                 typename platform_pointer :: template pointer < matrix_data > matrix ;
-                platform_static_array :: get_element_ptr ( matrix , _entities_grid_matrices , index ) ;
+                platform_static_array :: element_ptr ( matrix , _entities_grid_matrices , index ) ;
                 
                 platform_matrix :: set_axis_x ( matrix . get ( ) , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
                 platform_matrix :: set_axis_y ( matrix . get ( ) , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;

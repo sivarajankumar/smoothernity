@@ -162,7 +162,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_done m
             )
         {
             typename platform_pointer :: template pointer < _letter_state > letter ;
-            platform_static_array :: get_element_ptr ( letter , _letters , i ) ;
+            platform_static_array :: element_ptr ( letter , _letters , i ) ;
             typename messages :: render_mesh_delete mesh_delete_msg ;
             mesh_delete_msg . mesh = letter . get ( ) . mesh ;
             _mediator . get ( ) . send ( mesh_delete_msg ) ;
@@ -226,7 +226,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: render_mesh_
         _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
         _mesh_create_replied = _platform_math_consts . get ( ) . whole_true ;
         typename platform_pointer :: template pointer < _letter_state > letter ;
-        platform_static_array :: get_element_ptr ( letter , _letters , _bake_letter_index ) ;
+        platform_static_array :: element_ptr ( letter , _letters , _bake_letter_index ) ;
         letter . get ( ) . mesh = msg . mesh ;
         _proceed_with_letter_creation ( ) ;
     }
@@ -333,7 +333,7 @@ void shy_logic_title < mediator > :: _proceed_with_letter_creation ( )
         num_fract z = _platform_math_consts . get ( ) . fract_0 ;
         
         typename platform_pointer :: template pointer < _letter_state > letter ;
-        platform_static_array :: get_element_ptr ( letter , _letters , _bake_letter_index ) ;
+        platform_static_array :: element_ptr ( letter , _letters , _bake_letter_index ) ;
         
         _mesh_set_triangle_strip_index_value ( letter . get ( ) . mesh , _platform_math_consts . get ( ) . whole_0 , _platform_math_consts . get ( ) . whole_0 ) ;
         _mesh_set_vertex_color               ( letter . get ( ) . mesh , _platform_math_consts . get ( ) . whole_0 , title_r , title_g , title_b , title_a ) ;
@@ -471,7 +471,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         )
     {
         typename platform_pointer :: template pointer < _letter_state > letter ;
-        platform_static_array :: get_element_ptr ( letter , _letters , i ) ;
+        platform_static_array :: element_ptr ( letter , _letters , i ) ;
         typename messages :: render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . get ( ) . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
@@ -543,7 +543,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         matrix_data tm ;
         typename platform_pointer :: template pointer < _letter_state > letter ;
         
-        platform_static_array :: get_element_ptr ( letter , _letters , i ) ;
+        platform_static_array :: element_ptr ( letter , _letters , i ) ;
         
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
         platform_math :: mul_fracts ( offset_x , _render_aspect_width , _platform_math_consts . get ( ) . fract_2 ) ;
@@ -626,7 +626,7 @@ template < typename mediator >
 void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
 {
     typename platform_pointer :: template pointer < _letter_state > letter_state ;
-    platform_static_array :: get_element_ptr ( letter_state , _letters , _letters_count ) ;
+    platform_static_array :: element_ptr ( letter_state , _letters , _letters_count ) ;
     letter_state . get ( ) . letter = letter ;
     platform_math :: inc_whole ( _letters_count ) ;
 }
@@ -637,7 +637,7 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
     if ( platform_conditions :: whole_less_than_whole ( _bake_letter_index , _letters_count ) )
     {
         typename platform_pointer :: template pointer < _letter_state > letter ;
-        platform_static_array :: get_element_ptr ( letter , _letters , _bake_letter_index ) ;
+        platform_static_array :: element_ptr ( letter , _letters , _bake_letter_index ) ;
         
         letter . get ( ) . scale = _platform_math_consts . get ( ) . fract_0 ;
         letter . get ( ) . pos_radius = _platform_math_consts . get ( ) . fract_0 ;

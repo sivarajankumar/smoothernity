@@ -20,12 +20,12 @@ public :
     } ;
 public :
     template < typename array_type , typename pointer_type >
-    static void get_element_ptr ( pointer_type & element_ptr , array_type & array , num_whole index ) ;
+    static void element_ptr ( pointer_type & element_ptr , array_type & array , num_whole index ) ;
 } ;
 
 template < typename platform_insider >
 template < typename array_type , typename pointer_type >
-inline void shy_platform_static_array < platform_insider > :: get_element_ptr ( pointer_type & element_ptr , array_type & array , num_whole index )
+inline void shy_platform_static_array < platform_insider > :: element_ptr ( pointer_type & element_ptr , array_type & array , num_whole index )
 {
     element_ptr . set ( array . _elements [ platform_math_insider :: num_whole_value_get ( index ) ] ) ;
 }

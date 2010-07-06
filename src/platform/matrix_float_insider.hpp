@@ -3,18 +3,18 @@ class shy_platform_matrix_float_insider
 {
     typedef typename platform :: platform_matrix :: matrix_data matrix_data ;
 public :
-    static float * elements_ptr ( matrix_data & matrix ) ;
-    static const float * elements_ptr ( const matrix_data & matrix ) ;
+    static void elements_ptr ( float * & result , matrix_data & matrix ) ;
+    static void elements_ptr ( const float * & result , const matrix_data & matrix ) ;
 } ;
 
 template < typename platform >
-inline float * shy_platform_matrix_float_insider < platform > :: elements_ptr ( matrix_data & matrix )
+inline void shy_platform_matrix_float_insider < platform > :: elements_ptr ( float * & result , matrix_data & matrix )
 {
-    return matrix . _elements ;
+    result = matrix . _elements ;
 }
 
 template < typename platform >
-inline const float * shy_platform_matrix_float_insider < platform > :: elements_ptr ( const matrix_data & matrix )
+inline void shy_platform_matrix_float_insider < platform > :: elements_ptr ( const float * & result , const matrix_data & matrix )
 {
-    return matrix . _elements ;
+    result = matrix . _elements ;
 }

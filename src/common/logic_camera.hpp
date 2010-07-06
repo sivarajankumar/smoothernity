@@ -162,10 +162,10 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
         typename platform_pointer :: template pointer < vector_data > scheduled_origin_pos ;
         typename platform_pointer :: template pointer < vector_data > scheduled_target_pos ;
     
-        platform_static_array :: get_element_ptr ( scheduled_origin_index , _scheduled_camera_origin_indices , i ) ;
-        platform_static_array :: get_element_ptr ( scheduled_target_index , _scheduled_camera_target_indices , i ) ;
-        platform_static_array :: get_element_ptr ( scheduled_origin_pos , _scheduled_camera_origins , i ) ;
-        platform_static_array :: get_element_ptr ( scheduled_target_pos , _scheduled_camera_targets , i ) ;
+        platform_static_array :: element_ptr ( scheduled_origin_index , _scheduled_camera_origin_indices , i ) ;
+        platform_static_array :: element_ptr ( scheduled_target_index , _scheduled_camera_target_indices , i ) ;
+        platform_static_array :: element_ptr ( scheduled_origin_pos , _scheduled_camera_origins , i ) ;
+        platform_static_array :: element_ptr ( scheduled_target_pos , _scheduled_camera_targets , i ) ;
 
         platform_vector :: xyz ( scheduled_origin_pos . get ( ) , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
         platform_vector :: xyz ( scheduled_target_pos . get ( ) , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
@@ -320,8 +320,8 @@ void shy_logic_camera < mediator > :: _reset_camera_rubber ( )
 {
     typename platform_pointer :: template pointer < vector_data > origin_ptr ;
     typename platform_pointer :: template pointer < vector_data > target_ptr ;
-    platform_static_array :: get_element_ptr ( origin_ptr , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_static_array :: get_element_ptr ( target_ptr , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( origin_ptr , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( target_ptr , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_2 ) ;
     _current_camera_origin = origin_ptr . get ( ) ;
     _current_camera_target = target_ptr . get ( ) ;
 }
@@ -341,10 +341,10 @@ void shy_logic_camera < mediator > :: _proceed_with_fill_camera_schedules ( )
         typename platform_pointer :: template pointer < vector_data > scheduled_origin_pos ;
         typename platform_pointer :: template pointer < vector_data > scheduled_target_pos ;
         
-        platform_static_array :: get_element_ptr ( scheduled_origin_index , _scheduled_camera_origin_indices , _fill_camera_schedules_index ) ;
-        platform_static_array :: get_element_ptr ( scheduled_target_index , _scheduled_camera_target_indices , _fill_camera_schedules_index ) ;
-        platform_static_array :: get_element_ptr ( scheduled_origin_pos , _scheduled_camera_origins , _fill_camera_schedules_index ) ;
-        platform_static_array :: get_element_ptr ( scheduled_target_pos , _scheduled_camera_targets , _fill_camera_schedules_index ) ;
+        platform_static_array :: element_ptr ( scheduled_origin_index , _scheduled_camera_origin_indices , _fill_camera_schedules_index ) ;
+        platform_static_array :: element_ptr ( scheduled_target_index , _scheduled_camera_target_indices , _fill_camera_schedules_index ) ;
+        platform_static_array :: element_ptr ( scheduled_origin_pos , _scheduled_camera_origins , _fill_camera_schedules_index ) ;
+        platform_static_array :: element_ptr ( scheduled_target_pos , _scheduled_camera_targets , _fill_camera_schedules_index ) ;
 
         scheduled_origin_index . get ( ) = _fill_schedules_origin_index ;
         scheduled_target_index . get ( ) = _fill_schedules_target_index ;
@@ -416,15 +416,15 @@ void shy_logic_camera < mediator > :: _proceed_with_update_desired_camera_origin
     typename platform_pointer :: template pointer < vector_data > scheduled_pos_2 ;
     typename platform_pointer :: template pointer < vector_data > scheduled_pos_3 ;
 
-    platform_static_array :: get_element_ptr ( scheduled_index_0 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_0 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_index_1 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_index_2 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_index_3 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_3 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_0 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_0 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_1 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_2 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_3 , _scheduled_camera_origin_indices , _platform_math_consts . get ( ) . whole_3 ) ;
 
-    platform_static_array :: get_element_ptr ( scheduled_pos_0 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_0 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_pos_1 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_pos_2 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_pos_3 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_3 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_0 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_0 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_1 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_2 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_3 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_3 ) ;
 
     scheduled_index_0 . get ( ) = scheduled_index_1 . get ( ) ;
     scheduled_index_1 . get ( ) = scheduled_index_2 . get ( ) ;
@@ -480,10 +480,10 @@ void shy_logic_camera < mediator > :: _calc_desired_camera_origin_pos ( )
     typename platform_pointer :: template pointer < vector_data > pos_2 ;
     typename platform_pointer :: template pointer < vector_data > pos_3 ;
     
-    platform_static_array :: get_element_ptr ( pos_0 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_0 ) ;
-    platform_static_array :: get_element_ptr ( pos_1 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_static_array :: get_element_ptr ( pos_2 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_static_array :: get_element_ptr ( pos_3 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_3 ) ;
+    platform_static_array :: element_ptr ( pos_0 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_0 ) ;
+    platform_static_array :: element_ptr ( pos_1 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_static_array :: element_ptr ( pos_2 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( pos_3 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_3 ) ;
     
     engine_math :: math_catmull_rom_spline ( _desired_camera_origin , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
 }
@@ -501,15 +501,15 @@ void shy_logic_camera < mediator > :: _proceed_with_update_desired_camera_target
     typename platform_pointer :: template pointer < vector_data > scheduled_pos_2 ;
     typename platform_pointer :: template pointer < vector_data > scheduled_pos_3 ;
 
-    platform_static_array :: get_element_ptr ( scheduled_index_0 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_0 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_index_1 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_index_2 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_index_3 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_3 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_0 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_0 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_1 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_2 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( scheduled_index_3 , _scheduled_camera_target_indices , _platform_math_consts . get ( ) . whole_3 ) ;
 
-    platform_static_array :: get_element_ptr ( scheduled_pos_0 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_0 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_pos_1 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_pos_2 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_static_array :: get_element_ptr ( scheduled_pos_3 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_3 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_0 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_0 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_1 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_2 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( scheduled_pos_3 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_3 ) ;
 
     scheduled_index_0 . get ( ) = scheduled_index_1 . get ( ) ;
     scheduled_index_1 . get ( ) = scheduled_index_2 . get ( ) ;
@@ -565,10 +565,10 @@ void shy_logic_camera < mediator > :: _calc_desired_camera_target_pos ( )
     typename platform_pointer :: template pointer < vector_data > pos_2 ;
     typename platform_pointer :: template pointer < vector_data > pos_3 ;
     
-    platform_static_array :: get_element_ptr ( pos_0 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_0 ) ;
-    platform_static_array :: get_element_ptr ( pos_1 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_static_array :: get_element_ptr ( pos_2 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_static_array :: get_element_ptr ( pos_3 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_3 ) ;
+    platform_static_array :: element_ptr ( pos_0 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_0 ) ;
+    platform_static_array :: element_ptr ( pos_1 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_static_array :: element_ptr ( pos_2 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_static_array :: element_ptr ( pos_3 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_3 ) ;
     
     engine_math :: math_catmull_rom_spline ( _desired_camera_target , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
 }
@@ -688,7 +688,7 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_wh
         )
     {
         typename platform_pointer :: template pointer < num_whole > scheduled_index ;
-        platform_static_array :: get_element_ptr ( scheduled_index , _scheduled_camera_origin_indices , i ) ;
+        platform_static_array :: element_ptr ( scheduled_index , _scheduled_camera_origin_indices , i ) ;
         if ( platform_conditions :: wholes_are_equal ( scheduled_index . get ( ) , index ) )
         {
             platform_math :: make_num_whole ( result , true ) ;
@@ -707,7 +707,7 @@ void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( num_wh
         )
     {
         typename platform_pointer :: template pointer < num_whole > scheduled_index ;
-        platform_static_array :: get_element_ptr ( scheduled_index , _scheduled_camera_target_indices , i ) ;
+        platform_static_array :: element_ptr ( scheduled_index , _scheduled_camera_target_indices , i ) ;
         if ( platform_conditions :: wholes_are_equal ( scheduled_index . get ( ) , index ) )
         {
             platform_math :: make_num_whole ( result , true ) ;
