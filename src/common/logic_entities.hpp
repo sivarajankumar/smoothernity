@@ -508,12 +508,13 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
                 
-                matrix_data matrix ;
-                platform_matrix :: set_axis_x ( matrix , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
-                platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;
-                platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , scale ) ;
-                platform_matrix :: set_origin ( matrix , origin ) ;
-                platform_static_array :: set_element ( matrix , _entities_grid_matrices , index ) ;
+                typename platform_pointer :: template pointer < matrix_data > matrix ;
+                platform_static_array :: get_element_ptr ( matrix , _entities_grid_matrices , index ) ;
+                
+                platform_matrix :: set_axis_x ( matrix . get ( ) , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+                platform_matrix :: set_axis_y ( matrix . get ( ) , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;
+                platform_matrix :: set_axis_z ( matrix . get ( ) , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , scale ) ;
+                platform_matrix :: set_origin ( matrix . get ( ) , origin ) ;
             }
         }
         platform_math :: inc_whole ( _grid_scale ) ;

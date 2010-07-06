@@ -279,9 +279,9 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform_math :: make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
         platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
         _int_to_sample ( sample , next_sample ) ;
-        mono_sound_sample sound_sample ;
-        platform_sound :: set_sample_value ( sound_sample , sample ) ;
-        platform_static_array :: set_element ( sound_sample , _mono_sound_data , i ) ;
+        typename platform_pointer :: template pointer < mono_sound_sample > sample_ptr ;
+        platform_static_array :: get_element_ptr ( sample_ptr , _mono_sound_data , i ) ;
+        platform_sound :: set_sample_value ( sample_ptr . get ( ) , sample ) ;
     }
     
     num_fract gain ;
