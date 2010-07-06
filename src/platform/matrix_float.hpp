@@ -58,60 +58,36 @@ inline void shy_platform_matrix_float < platform_insider > :: _swap_values ( typ
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    float * x_float = 0 ;
-    float * y_float = 0 ;
-    float * z_float = 0 ;
-    platform_math_insider :: num_fract_value_ptr ( x_float , x ) ;
-    platform_math_insider :: num_fract_value_ptr ( y_float , y ) ;
-    platform_math_insider :: num_fract_value_ptr ( z_float , z ) ;
-    matrix . _elements [ 0 ] = ( * x_float ) ;
-    matrix . _elements [ 1 ] = ( * y_float ) ;
-    matrix . _elements [ 2 ] = ( * z_float ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 0 ] , x ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 1 ] , y ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 2 ] , z ) ;
     matrix . _elements [ 3 ] = 0 ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    float * x_float = 0 ;
-    float * y_float = 0 ;
-    float * z_float = 0 ;
-    platform_math_insider :: num_fract_value_ptr ( x_float , x ) ;
-    platform_math_insider :: num_fract_value_ptr ( y_float , y ) ;
-    platform_math_insider :: num_fract_value_ptr ( z_float , z ) ;
-    matrix . _elements [ 4 ] = ( * x_float ) ;
-    matrix . _elements [ 5 ] = ( * y_float ) ;
-    matrix . _elements [ 6 ] = ( * z_float ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 4 ] , x ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 5 ] , y ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 6 ] , z ) ;
     matrix . _elements [ 7 ] = 0 ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    float * x_float = 0 ;
-    float * y_float = 0 ;
-    float * z_float = 0 ;
-    platform_math_insider :: num_fract_value_ptr ( x_float , x ) ;
-    platform_math_insider :: num_fract_value_ptr ( y_float , y ) ;
-    platform_math_insider :: num_fract_value_ptr ( z_float , z ) ;
-    matrix . _elements [  8 ] = ( * x_float ) ;
-    matrix . _elements [  9 ] = ( * y_float ) ;
-    matrix . _elements [ 10 ] = ( * z_float ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 8 ] , x ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 9 ] , y ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 10 ] , z ) ;
     matrix . _elements [ 11 ] = 0 ;
 }
 
 template < typename platform_insider >
 inline void shy_platform_matrix_float < platform_insider > :: set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z )
 {
-    float * x_float = 0 ;
-    float * y_float = 0 ;
-    float * z_float = 0 ;
-    platform_math_insider :: num_fract_value_ptr ( x_float , x ) ;
-    platform_math_insider :: num_fract_value_ptr ( y_float , y ) ;
-    platform_math_insider :: num_fract_value_ptr ( z_float , z ) ;
-    matrix . _elements [ 12 ] = ( * x_float ) ;
-    matrix . _elements [ 13 ] = ( * y_float ) ;
-    matrix . _elements [ 14 ] = ( * z_float ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 12 ] , x ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 13 ] , y ) ;
+    platform_math_insider :: num_fract_value_get ( matrix . _elements [ 14 ] , z ) ;
     matrix . _elements [ 15 ] = 1 ;
 }
 
@@ -215,9 +191,9 @@ inline void shy_platform_matrix_float < platform_insider > :: inverse_rotation_t
     platform_vector :: dot_product ( dot_z , origin , axis_z ) ;
     
     vector_data new_origin ;
-    platform_vector_insider :: x_set ( new_origin , - platform_math_insider :: num_fract_value_get ( dot_x ) ) ;
-    platform_vector_insider :: y_set ( new_origin , - platform_math_insider :: num_fract_value_get ( dot_y ) ) ;
-    platform_vector_insider :: z_set ( new_origin , - platform_math_insider :: num_fract_value_get ( dot_z ) ) ;
+    platform_vector_insider :: x_set ( new_origin , - platform_math_insider :: num_fract_value_old_get ( dot_x ) ) ;
+    platform_vector_insider :: y_set ( new_origin , - platform_math_insider :: num_fract_value_old_get ( dot_y ) ) ;
+    platform_vector_insider :: z_set ( new_origin , - platform_math_insider :: num_fract_value_old_get ( dot_z ) ) ;
     
     set_origin ( matrix , new_origin ) ;
     _swap_values ( matrix . _elements [ 1 ] , matrix . _elements [ 4 ] ) ;
