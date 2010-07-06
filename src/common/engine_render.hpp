@@ -212,19 +212,22 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_finalize msg )
 {
     num_whole size_pow2_base ;
-    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
+    _texture_data texture ;
+    platform_static_array :: get_element ( texture , _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
     _platform_render . get ( ) . create_texture_id ( texture . render_id ) ;
     _platform_render . get ( ) . load_texture_data ( texture . render_id , size_pow2_base , texture . texels ) ;
+    platform_static_array :: set_element ( texture , _textures_datas , msg . texture . _texture_id ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_load_from_resource msg )
 {
     num_whole size_pow2_base ;
-    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
+    typename platform_pointer :: template pointer < _texture_data > texture ;
+    platform_static_array :: get_element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: make_num_whole ( size_pow2_base , _texture_size_pow2_base ) ;
-    _platform_render . get ( ) . load_texture_resource ( msg . resource , size_pow2_base , texture . texels ) ;
+    _platform_render . get ( ) . load_texture_resource ( msg . resource , size_pow2_base , texture . get ( ) . texels ) ;
 }
 
 template < typename mediator >
@@ -238,9 +241,10 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_select msg )
 {
-    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
+    typename platform_pointer :: template pointer < _texture_data > texture ;
+    platform_static_array :: get_element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
     _platform_render . get ( ) . enable_texturing ( ) ;
-    _platform_render . get ( ) . use_texture ( texture . render_id ) ;
+    _platform_render . get ( ) . use_texture ( texture . get ( ) . render_id ) ;
 }
 
 template < typename mediator >
@@ -254,11 +258,15 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
+    typename platform_pointer :: template pointer < _texture_data > texture ;
+    typename platform_pointer :: template pointer < texel_data > texel ;
+    
+    platform_static_array :: get_element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: make_num_whole ( num_texture_size , _texture_size ) ;
     platform_math :: mul_wholes ( texel_offset , num_texture_size , msg . y ) ;
     platform_math :: add_to_whole ( texel_offset , msg . x ) ;
-    platform_static_array :: element ( texture . texels , texel_offset ) = msg . texel ;
+    platform_static_array :: get_element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+    texel . get ( ) = msg . texel ;
 }
 
 template < typename mediator >
@@ -266,12 +274,15 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
+    typename platform_pointer :: template pointer < _texture_data > texture ;
+    typename platform_pointer :: template pointer < texel_data > texel ;
+
+    platform_static_array :: get_element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: make_num_whole ( num_texture_size , _texture_size ) ;
     platform_math :: mul_wholes ( texel_offset , num_texture_size , msg . y ) ;
     platform_math :: add_to_whole ( texel_offset , msg . x ) ;
-    texel_data & texel = platform_static_array :: element ( texture . texels , texel_offset ) ;
-    platform_render :: set_texel_color ( texel , msg . r , msg . g , msg . b , msg . a ) ;
+    platform_static_array :: get_element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+    platform_render :: set_texel_color ( texel . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >
@@ -279,7 +290,8 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 {
     num_whole texel_offset ;
     num_whole num_texture_size ;
-    _texture_data & texture = platform_static_array :: element ( _textures_datas , msg . texture . _texture_id ) ;
+    typename platform_pointer :: template pointer < _texture_data > texture ;
+    platform_static_array :: get_element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
     platform_math :: make_num_whole ( num_texture_size , _texture_size ) ;
     for ( num_whole y = msg . bottom
         ; platform_conditions :: whole_less_or_equal_to_whole ( y , msg . top )
@@ -291,9 +303,11 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
             ; platform_math :: inc_whole ( x )
             )
         {
+            typename platform_pointer :: template pointer < texel_data > texel ;
             platform_math :: mul_wholes ( texel_offset , num_texture_size , y ) ;
             platform_math :: add_to_whole ( texel_offset , x ) ;
-            platform_static_array :: element ( texture . texels , texel_offset ) = msg . texel ;
+            platform_static_array :: get_element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+            texel . get ( ) = msg . texel ;
         }
     }
 }
@@ -318,22 +332,23 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_finalize msg )
 {
-    _mesh_data & mesh = platform_static_array :: element ( _meshes_data , msg . mesh . _mesh_id ) ;
-    _platform_render . get ( ) . create_vertex_buffer ( mesh . vertex_buffer_id , mesh . vertices_count , mesh . vertices ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_strip_indices_count ) )
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
+    _platform_render . get ( ) . create_vertex_buffer ( mesh . get ( ) . vertex_buffer_id , mesh . get ( ) . vertices_count , mesh . get ( ) . vertices ) ;
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
     {
         _platform_render . get ( ) . create_index_buffer 
-            ( mesh . triangle_strip_index_buffer_id 
-            , mesh . triangle_strip_indices_count 
-            , mesh . triangle_strip_indices 
+            ( mesh . get ( ) . triangle_strip_index_buffer_id 
+            , mesh . get ( ) . triangle_strip_indices_count 
+            , mesh . get ( ) . triangle_strip_indices 
             ) ;
     }
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . triangle_fan_indices_count ) )
+    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
     {
         _platform_render . get ( ) . create_index_buffer 
-            ( mesh . triangle_fan_index_buffer_id 
-            , mesh . triangle_fan_indices_count 
-            , mesh . triangle_fan_indices 
+            ( mesh . get ( ) . triangle_fan_index_buffer_id 
+            , mesh . get ( ) . triangle_fan_indices_count 
+            , mesh . get ( ) . triangle_fan_indices 
             ) ;
     }
 }
