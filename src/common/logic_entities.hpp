@@ -187,12 +187,12 @@ void shy_logic_entities < mediator > :: _entities_render ( )
         ; platform_math :: inc_whole ( i )
         )
     {
-        matrix_data matrix ;
-        platform_static_array :: get_element ( matrix , _entities_grid_matrices , i ) ;
+        typename platform_pointer :: template pointer < matrix_data > matrix ;
+        platform_static_array :: get_element_ptr ( matrix , _entities_grid_matrices , i ) ;
         {
             typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = _entity_mesh_id ;
-            mesh_set_transform_msg . transform = matrix ;
+            mesh_set_transform_msg . transform = matrix . get ( ) ;
             _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
         }
         {
