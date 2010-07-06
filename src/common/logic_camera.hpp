@@ -22,8 +22,7 @@ class shy_logic_camera
 
     static const_int_32 _change_origin_in_frames = 139 ;
     static const_int_32 _change_target_in_frames = 181 ;
-    const num_fract _origin_rubber ( ) { return _platform_math_consts . get ( ) . fract_0 ; } // 0.99f ;
-    const num_fract _target_rubber ( ) { return _platform_math_consts . get ( ) . fract_0 ; } // 0.9f ;
+    
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
@@ -65,6 +64,8 @@ private :
     num_whole _frames_to_change_camera_origin ;
     num_whole _random_seed ;
     num_whole _camera_created ;
+    num_fract _origin_rubber ;
+    num_fract _target_rubber ;
     
     num_whole _entities_height_requested ;
     num_whole _entities_height_replied ;
@@ -125,6 +126,9 @@ template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
 {
     _platform_math_consts = _mediator . get ( ) . platform_obj ( ) . math_consts ;
+    
+    _origin_rubber = _platform_math_consts . get ( ) . fract_0 ;
+    _target_rubber = _platform_math_consts . get ( ) . fract_0 ;
     
     _camera_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
     _camera_created = _platform_math_consts . get ( ) . whole_false ;
@@ -517,8 +521,8 @@ void shy_logic_camera < mediator > :: _update_current_camera_origin ( )
     num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform_math :: sub_fracts ( inv_rubber , _platform_math_consts . get ( ) . fract_1 , _origin_rubber ( ) ) ;
-    platform_vector :: mul ( old_part , _current_camera_origin , _origin_rubber ( ) ) ;
+    platform_math :: sub_fracts ( inv_rubber , _platform_math_consts . get ( ) . fract_1 , _origin_rubber ) ;
+    platform_vector :: mul ( old_part , _current_camera_origin , _origin_rubber ) ;
     platform_vector :: mul ( new_part , _desired_camera_origin , inv_rubber ) ;
     platform_vector :: add ( _current_camera_origin , old_part , new_part ) ;
 }
@@ -530,8 +534,8 @@ void shy_logic_camera < mediator > :: _update_current_camera_target ( )
     num_fract inv_rubber ;
     vector_data old_part ;
     vector_data new_part ;
-    platform_math :: sub_fracts ( inv_rubber , _platform_math_consts . get ( ) . fract_1 , _target_rubber ( ) ) ;
-    platform_vector :: mul ( old_part , _current_camera_target , _target_rubber ( ) ) ;
+    platform_math :: sub_fracts ( inv_rubber , _platform_math_consts . get ( ) . fract_1 , _target_rubber ) ;
+    platform_vector :: mul ( old_part , _current_camera_target , _target_rubber ) ;
     platform_vector :: mul ( new_part , _desired_camera_target , inv_rubber ) ;
     platform_vector :: add ( _current_camera_target , old_part , new_part ) ;
 }
