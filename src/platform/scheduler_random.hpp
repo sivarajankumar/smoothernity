@@ -14,7 +14,7 @@ class shy_platform_scheduler_random
     public :
         virtual ~ _abstract_scheduled_module ( ) ;
         virtual void run ( ) = 0 ;
-        virtual bool have_messages_to_run ( ) = 0 ;
+        virtual void have_messages_to_run ( bool & result ) = 0 ;
     } ;
     
     class _abstract_message_invoker
@@ -85,7 +85,7 @@ public :
             
             void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
             virtual void run ( ) ;
-            virtual bool have_messages_to_run ( ) ;
+            virtual void have_messages_to_run ( bool & result ) ;
         private :
             void _switch_queues ( ) ;
         private :
@@ -228,15 +228,15 @@ void shy_platform_scheduler_random < platform_insider >
 template < typename platform_insider >
 template < template < typename mediator > class module , int max_messages_count , int max_message_size >
 template < typename mediator >
-bool shy_platform_scheduler_random < platform_insider > 
+void shy_platform_scheduler_random < platform_insider > 
     :: module_wrapper < module , max_messages_count , max_message_size > 
     :: scheduled_module < mediator > 
-    :: have_messages_to_run ( )
+    :: have_messages_to_run ( bool & result )
 {
-    return _queues [ _accumulation_queue ] . count 
-         + _queues [ _run_queue ] . count 
-         - _queues [ _run_queue ] . next_to_call 
-         > 0 ;
+    result = _queues [ _accumulation_queue ] . count 
+           + _queues [ _run_queue ] . count 
+           - _queues [ _run_queue ] . next_to_call 
+           > 0 ;
 }
 
 template < typename platform_insider >
@@ -278,7 +278,11 @@ void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg
             arg_scheduler . _modules [ i ] -> run ( ) ;
         keep_running = false ;
         for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
-            keep_running |= arg_scheduler . _modules [ i ] -> have_messages_to_run ( ) ;
+        {
+            bool have_messages_to_run = false ;
+            arg_scheduler . _modules [ i ] -> have_messages_to_run ( have_messages_to_run ) ;
+            keep_running |= have_messages_to_run ;
+        }
         calls_performed ++ ;
     } while ( keep_running && calls_performed < _max_calls_per_run ) ;
 }
