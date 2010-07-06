@@ -157,14 +157,21 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
     {
         vector_data origin_pos ;
         vector_data target_pos ;
-        
-        platform_vector :: xyz ( origin_pos , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
-        platform_vector :: xyz ( target_pos , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
-        
-        platform_static_array :: set_element ( _platform_math_consts . get ( ) . whole_0 , _scheduled_camera_origin_indices , i ) ;
-        platform_static_array :: set_element ( _platform_math_consts . get ( ) . whole_0 , _scheduled_camera_target_indices , i ) ;        
-        platform_static_array :: set_element ( origin_pos , _scheduled_camera_origins , i ) ;
-        platform_static_array :: set_element ( target_pos , _scheduled_camera_targets , i ) ;
+        typename platform_pointer :: template pointer < num_whole > scheduled_origin_index ;
+        typename platform_pointer :: template pointer < num_whole > scheduled_target_index ;
+        typename platform_pointer :: template pointer < vector_data > scheduled_origin_pos ;
+        typename platform_pointer :: template pointer < vector_data > scheduled_target_pos ;
+    
+        platform_static_array :: get_element_ptr ( scheduled_origin_index , _scheduled_camera_origin_indices , i ) ;
+        platform_static_array :: get_element_ptr ( scheduled_target_index , _scheduled_camera_target_indices , i ) ;
+        platform_static_array :: get_element_ptr ( scheduled_origin_pos , _scheduled_camera_origins , i ) ;
+        platform_static_array :: get_element_ptr ( scheduled_target_pos , _scheduled_camera_targets , i ) ;
+
+        platform_vector :: xyz ( scheduled_origin_pos . get ( ) , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+        platform_vector :: xyz ( scheduled_target_pos . get ( ) , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+
+        scheduled_origin_index . get ( ) = _platform_math_consts . get ( ) . whole_0 ;
+        scheduled_target_index . get ( ) = _platform_math_consts . get ( ) . whole_0 ;
     }
 }
 
