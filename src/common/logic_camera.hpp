@@ -335,10 +335,22 @@ void shy_logic_camera < mediator > :: _proceed_with_fill_camera_schedules ( )
     {
         _fill_schedules_origin_replied = _platform_math_consts . get ( ) . whole_false ;
         _fill_schedules_target_replied = _platform_math_consts . get ( ) . whole_false ;
-        platform_static_array :: set_element ( _fill_schedules_origin_index , _scheduled_camera_origin_indices , _fill_camera_schedules_index ) ;
-        platform_static_array :: set_element ( _fill_schedules_target_index , _scheduled_camera_target_indices , _fill_camera_schedules_index ) ;
-        platform_static_array :: set_element ( _fill_schedules_origin , _scheduled_camera_origins , _fill_camera_schedules_index ) ;
-        platform_static_array :: set_element ( _fill_schedules_target , _scheduled_camera_targets , _fill_camera_schedules_index ) ;
+        
+        typename platform_pointer :: template pointer < num_whole > scheduled_origin_index ;
+        typename platform_pointer :: template pointer < num_whole > scheduled_target_index ;
+        typename platform_pointer :: template pointer < vector_data > scheduled_origin_pos ;
+        typename platform_pointer :: template pointer < vector_data > scheduled_target_pos ;
+        
+        platform_static_array :: get_element_ptr ( scheduled_origin_index , _scheduled_camera_origin_indices , _fill_camera_schedules_index ) ;
+        platform_static_array :: get_element_ptr ( scheduled_target_index , _scheduled_camera_target_indices , _fill_camera_schedules_index ) ;
+        platform_static_array :: get_element_ptr ( scheduled_origin_pos , _scheduled_camera_origins , _fill_camera_schedules_index ) ;
+        platform_static_array :: get_element_ptr ( scheduled_target_pos , _scheduled_camera_targets , _fill_camera_schedules_index ) ;
+
+        scheduled_origin_index . get ( ) = _fill_schedules_origin_index ;
+        scheduled_target_index . get ( ) = _fill_schedules_target_index ;
+        scheduled_origin_pos . get ( ) = _fill_schedules_origin ;
+        scheduled_target_pos . get ( ) = _fill_schedules_target ;
+        
         platform_math :: inc_whole ( _fill_camera_schedules_index ) ;
         _fill_next_camera_schedule ( ) ;
     }

@@ -314,14 +314,14 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_create_request msg )
 {
-    _mesh_data mesh ;
-    mesh . vertices_count = msg . vertices ;
-    mesh . triangle_strip_indices_count = msg . triangle_strip_indices ;
-    mesh . triangle_fan_indices_count = msg . triangle_fan_indices ;
-    platform_matrix :: identity ( mesh . transform ) ;
+    typename platform_pointer :: template pointer < _mesh_data > mesh ;
+    platform_static_array :: get_element_ptr ( mesh , _meshes_data , _next_mesh_id ) ;
     
-    platform_static_array :: set_element ( mesh , _meshes_data , _next_mesh_id ) ;
-    
+    mesh . get ( ) . vertices_count = msg . vertices ;
+    mesh . get ( ) . triangle_strip_indices_count = msg . triangle_strip_indices ;
+    mesh . get ( ) . triangle_fan_indices_count = msg . triangle_fan_indices ;
+    platform_matrix :: identity ( mesh . get ( ) . transform ) ;
+        
     typename messages :: render_mesh_create_reply reply_msg ;
     reply_msg . mesh . _mesh_id = _next_mesh_id ;
     platform_math :: inc_whole ( _next_mesh_id ) ;
