@@ -18,18 +18,17 @@ class shy_logic_touch
     typedef typename mediator :: platform :: platform_touch platform_touch ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
-    
-    static const_int_32 _spot_lifetime_in_frames = 60 ;
-    static const_int_32 _spot_r = 255 ;
-    static const_int_32 _spot_g = 255 ;
-    static const_int_32 _spot_b = 255 ;
-    static const_int_32 _spot_edges = 32 ;    
- 
+     
     class _logic_touch_consts_type
     {
     public :
         _logic_touch_consts_type ( ) ;
+        num_fract spot_r ;
+        num_fract spot_g ;
+        num_fract spot_b ;
         num_fract spot_size ;
+        num_whole spot_edges ;
+        num_whole spot_lifetime_in_frames ;
    } ;
 
 public :
@@ -67,7 +66,12 @@ private :
 template < typename mediator >
 shy_logic_touch < mediator > :: _logic_touch_consts_type :: _logic_touch_consts_type ( )
 {
+    platform_math :: make_num_fract ( spot_r , 255 , 255 ) ;
+    platform_math :: make_num_fract ( spot_g , 255 , 255 ) ;
+    platform_math :: make_num_fract ( spot_b , 255 , 255 ) ;
     platform_math :: make_num_fract ( spot_size , 3 , 10 ) ;
+    platform_math :: make_num_whole ( spot_edges , 32 ) ;
+    platform_math :: make_num_whole ( spot_lifetime_in_frames , 60 ) ;
 }
 
 template < typename mediator >
@@ -123,12 +127,9 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update
         {
             _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
             
-            num_whole whole_spot_edges ;
-            platform_math :: make_num_whole ( whole_spot_edges , _spot_edges ) ;
-            
             typename messages :: render_mesh_create_request mesh_create_msg ;
-            mesh_create_msg . vertices = whole_spot_edges ;
-            mesh_create_msg . triangle_fan_indices = whole_spot_edges ;
+            mesh_create_msg . vertices = _logic_touch_consts . spot_edges ;
+            mesh_create_msg . triangle_fan_indices = _logic_touch_consts . spot_edges ;
             mesh_create_msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_0 ;
             _mediator . get ( ) . send ( mesh_create_msg ) ;
         }
@@ -200,7 +201,7 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
         num_fract pos_z ;
         platform_math :: make_num_fract ( pos_z , - 3 , 1 ) ;
         platform_vector :: xyz ( _spot_position , _spot_x , _spot_y , pos_z ) ;
-        platform_math :: make_num_whole ( _spot_frames_left , _spot_lifetime_in_frames ) ;
+        _spot_frames_left = _logic_touch_consts . spot_lifetime_in_frames ;
         platform_math :: make_num_whole ( _should_place_new_spot , false ) ;
     }
 }
@@ -213,7 +214,7 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     num_fract fract_spot_lifetime_in_frames ;
     num_fract scale ;
     platform_math :: make_fract_from_whole ( fract_spot_frames_left , _spot_frames_left ) ;
-    platform_math :: make_num_fract ( fract_spot_lifetime_in_frames , _spot_lifetime_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_spot_lifetime_in_frames , _logic_touch_consts . spot_lifetime_in_frames ) ;
     platform_math :: div_fracts ( scale , fract_spot_frames_left , fract_spot_lifetime_in_frames ) ;
     platform_matrix :: set_axis_x ( matrix , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;
@@ -237,14 +238,12 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: _create_spot_mesh ( )
 {
     num_whole i ;
-    num_whole whole_spot_edges ;
     num_fract fract_spot_edges ;
     
-    platform_math :: make_num_whole ( whole_spot_edges , _spot_edges ) ;
-    platform_math :: make_num_fract ( fract_spot_edges , _spot_edges , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_spot_edges , _logic_touch_consts . spot_edges ) ;
             
     for ( platform_math :: make_num_whole ( i , 0 )
-        ; platform_conditions :: whole_less_than_whole ( i , whole_spot_edges ) 
+        ; platform_conditions :: whole_less_than_whole ( i , _logic_touch_consts . spot_edges ) 
         ; platform_math :: inc_whole ( i )
         )
     {
@@ -267,9 +266,9 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform_math :: mul_fracts ( vertex_x , _logic_touch_consts . spot_size , angle_cos ) ;
         platform_math :: mul_fracts ( vertex_y , _logic_touch_consts . spot_size , angle_sin ) ;
         platform_math :: make_num_fract ( vertex_z , 0 , 1 ) ;
-        platform_math :: make_num_fract ( vertex_r , _spot_r , 255 ) ;
-        platform_math :: make_num_fract ( vertex_g , _spot_g , 255 ) ;
-        platform_math :: make_num_fract ( vertex_b , _spot_b , 255 ) ;
+        vertex_r = _logic_touch_consts . spot_r ;
+        vertex_g = _logic_touch_consts . spot_g ;
+        vertex_b = _logic_touch_consts . spot_b ;
         platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
 
         typename messages :: render_mesh_set_vertex_position set_pos_msg ;
