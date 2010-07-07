@@ -11,11 +11,17 @@ class shy_logic_game
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+     
+    class logic_game_consts_type
+    {
+    public :
+        logic_game_consts_type ( ) ;
+        num_fract final_r ;
+        num_fract final_g ;
+        num_fract final_b ;
+        num_whole fade_in_frames ;
+    } ;
     
-    static const_int_32 _fade_in_frames = 90 ;
-    static const num_fract _final_r ( ) { num_fract n ; platform_math :: make_num_fract ( n , 0 , 1 ) ; return n ; }
-    static const num_fract _final_g ( ) { num_fract n ; platform_math :: make_num_fract ( n , 1 , 10 ) ; return n ; }
-    static const num_fract _final_b ( ) { num_fract n ; platform_math :: make_num_fract ( n , 4 , 10 ) ; return n ; }
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
@@ -44,6 +50,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const logic_game_consts_type _logic_game_consts ;
     num_fract _color_r ;
     num_fract _color_g ;
     num_fract _color_b ;
@@ -80,6 +87,15 @@ private :
     num_whole _image_render_requested ;
     num_whole _image_render_replied ;
 } ;
+
+template < typename mediator >
+shy_logic_game < mediator > :: logic_game_consts_type :: logic_game_consts_type ( )
+{
+    platform_math :: make_num_fract ( final_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( final_g , 1 , 10 ) ;
+    platform_math :: make_num_fract ( final_b , 4 , 10 ) ;
+    platform_math :: make_num_whole ( fade_in_frames , 90 ) ;
+}
 
 template < typename mediator >
 void shy_logic_game < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -399,14 +415,12 @@ void shy_logic_game < mediator > :: _update_color ( )
     num_fract scale ;
     num_fract fract_color_frames ;
     num_fract fract_fade_in_frames ;
-    num_whole whole_fade_in_frames ;
-    platform_math :: make_num_whole ( whole_fade_in_frames , _fade_in_frames ) ;
-    platform_math :: make_num_fract ( fract_fade_in_frames , _fade_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_fade_in_frames , _logic_game_consts . fade_in_frames ) ;
     platform_math :: make_fract_from_whole ( fract_color_frames , _color_frames ) ;
     platform_math :: div_fracts ( scale , fract_color_frames , fract_fade_in_frames ) ;
-    platform_math :: mul_fracts ( _color_r , scale , _final_r ( ) ) ;
-    platform_math :: mul_fracts ( _color_g , scale , _final_g ( ) ) ;
-    platform_math :: mul_fracts ( _color_b , scale , _final_b ( ) ) ;
-    if ( platform_conditions :: whole_less_than_whole ( _color_frames , whole_fade_in_frames ) )
+    platform_math :: mul_fracts ( _color_r , scale , _logic_game_consts . final_r ) ;
+    platform_math :: mul_fracts ( _color_g , scale , _logic_game_consts . final_g ) ;
+    platform_math :: mul_fracts ( _color_b , scale , _logic_game_consts . final_b ) ;
+    if ( platform_conditions :: whole_less_than_whole ( _color_frames , _logic_game_consts . fade_in_frames ) )
         platform_math :: inc_whole ( _color_frames ) ;
 }
