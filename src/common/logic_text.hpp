@@ -6,7 +6,7 @@ class shy_logic_text
     typedef typename mediator :: engine_render_consts_type engine_render_consts_type ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: letter_id letter_id ;
-    typedef typename mediator :: logic_text_consts_type logic_text_consts_type ;
+    typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
@@ -22,14 +22,21 @@ class shy_logic_text
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
-    
-    static const_int_32 _max_letters_in_alphabet = 32 ;
-    static const_int_32 _scale_in_frames = 60 ;
-    static const_int_32 _canvas_r = 255 ;
-    static const_int_32 _canvas_g = 255 ;
-    static const_int_32 _canvas_b = 255 ;
-    static const_int_32 _canvas_a = 255 ;
-    static const num_fract _final_scale ( ) { num_fract n ; platform_math :: make_num_fract ( n , 1 , 2 ) ; return n ; }
+
+    class logic_text_consts_type
+    {
+    public :
+        logic_text_consts_type ( ) ;
+
+        static const_int_32 max_letters_in_alphabet = 32 ;
+
+        num_fract final_scale ;
+        num_fract canvas_r ;
+        num_fract canvas_g ;
+        num_fract canvas_b ;
+        num_fract canvas_a ;
+        num_whole scale_in_frames ;
+    } ;
     
     class _tex_coords
     {
@@ -40,7 +47,7 @@ class shy_logic_text
         num_fract top ;
     } ;
 
-    typedef typename platform_static_array :: template static_array < _tex_coords , _max_letters_in_alphabet > _letters_tex_coords ;
+    typedef typename platform_static_array :: template static_array < _tex_coords , logic_text_consts_type :: max_letters_in_alphabet > _letters_tex_coords ;
 
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -105,6 +112,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const logic_text_consts_type _logic_text_consts ;
     
     num_whole _texture_create_requested ;
     num_whole _texture_create_replied ;
@@ -133,6 +141,17 @@ private :
     _letters_tex_coords _letters_big ;
     _letters_tex_coords _letters_small ;
 } ;
+
+template < typename mediator >
+shy_logic_text < mediator > :: logic_text_consts_type :: logic_text_consts_type ( )
+{
+    platform_math :: make_num_fract ( final_scale , 1 , 2 ) ;
+    platform_math :: make_num_fract ( canvas_r , 255 , 255 ) ;
+    platform_math :: make_num_fract ( canvas_g , 255 , 255 ) ;
+    platform_math :: make_num_fract ( canvas_b , 255 , 255 ) ;
+    platform_math :: make_num_fract ( canvas_a , 255 , 255 ) ;
+    platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
+}
 
 template < typename mediator >
 void shy_logic_text < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -360,7 +379,6 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
 {
     matrix_data matrix ;
     num_fract fract_scale_frames ;    
-    num_whole whole_scale_in_frames ;
     num_fract fract_scale_in_frames ;
     num_fract scale ;
     num_fract origin_x ;
@@ -368,9 +386,15 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
     num_fract origin_z ;
     
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
-    platform_math :: make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
-    platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
-    engine_math :: math_lerp ( scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _final_scale ( ) , fract_scale_in_frames , fract_scale_frames ) ;
+    platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_text_consts . scale_in_frames ) ;
+    engine_math :: math_lerp 
+        ( scale 
+        , _platform_math_consts . get ( ) . fract_0 
+        , _platform_math_consts . get ( ) . fract_0 
+        , _logic_text_consts . final_scale 
+        , fract_scale_in_frames 
+        , fract_scale_frames 
+        ) ;
     platform_math :: make_num_fract ( origin_x , - 1 , 2 ) ;
     platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
@@ -384,7 +408,7 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
-    if ( platform_conditions :: whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
+    if ( platform_conditions :: whole_less_than_whole ( _scale_frames , _logic_text_consts . scale_in_frames ) )
         platform_math :: inc_whole ( _scale_frames ) ;
 }
 
@@ -430,10 +454,10 @@ void shy_logic_text < mediator > :: _create_text_mesh ( )
     platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
     platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
     platform_math :: make_num_fract ( z , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_r , _canvas_r , 255 ) ;
-    platform_math :: make_num_fract ( color_g , _canvas_g , 255 ) ;
-    platform_math :: make_num_fract ( color_b , _canvas_b , 255 ) ;
-    platform_math :: make_num_fract ( color_a , _canvas_a , 255 ) ;
+    color_r = _logic_text_consts . canvas_r ;
+    color_g = _logic_text_consts . canvas_g ;
+    color_b = _logic_text_consts . canvas_b ;
+    color_a = _logic_text_consts . canvas_a ;
 
     _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_0 , x_left , y_top , z ) ;
     _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_0 , color_r , color_g , color_b , color_a ) ;
@@ -550,9 +574,9 @@ template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_english_alphabet 
     ( num_whole letter_size_x , num_whole letter_size_y , _letters_tex_coords & letters_tex_coords )
 {
-    typename platform_pointer :: template pointer < const logic_text_consts_type > logic_text_consts ;
-    _mediator . get ( ) . logic_text_consts ( logic_text_consts ) ;
-    const alphabet_english_type & eng = logic_text_consts . get ( ) . alphabet_english ;
+    typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
+    _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
+    const alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
     _letter_size_x = letter_size_x ;
     _letter_size_y = letter_size_y ;
     _next_letter_row ( ) ;
@@ -662,9 +686,9 @@ void shy_logic_text < mediator > :: _prepare_rasterizer_for_drawing ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords )
 {
-    typename platform_pointer :: template pointer < const logic_text_consts_type > logic_text_consts ;
-    _mediator . get ( ) . logic_text_consts ( logic_text_consts ) ;
-    const alphabet_english_type & eng = logic_text_consts . get ( ) . alphabet_english ;
+    typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
+    _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
+    const alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
     
     _store_tex_coords ( letter , letters_tex_coords ) ;
     if      ( platform_conditions :: wholes_are_equal ( letter . _letter_id , eng . A . _letter_id ) ) _rasterize_font_english_A ( ) ;

@@ -5,7 +5,7 @@ class shy_logic_title
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: letter_id letter_id ;
-    typedef typename mediator :: logic_text_consts_type logic_text_consts_type ;
+    typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
@@ -437,9 +437,9 @@ void shy_logic_title < mediator > :: _prepare_to_disappear ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _title_create ( )
 {
-    typename platform_pointer :: template pointer < const logic_text_consts_type > logic_text_consts ;
-    _mediator . get ( ) . logic_text_consts ( logic_text_consts ) ;
-    const alphabet_english_type & eng = logic_text_consts . get ( ) . alphabet_english ;
+    typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
+    _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
+    const alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
     _add_letter ( eng . S ) ;
     _add_letter ( eng . M ) ;
     _add_letter ( eng . O ) ;

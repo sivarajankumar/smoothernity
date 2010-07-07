@@ -50,7 +50,7 @@ public :
         letter_id Z ;
     } ;
     
-    class logic_text_consts_type
+    class logic_text_stateless_consts_type
     {
     public :
         alphabet_english_type alphabet_english ;
@@ -61,7 +61,7 @@ public :
     shy_logic_text_stateless & operator= ( const shy_logic_text_stateless & src ) ;
     static void are_letters_equal ( num_whole & result , letter_id a , letter_id b ) ;
 public :
-    const logic_text_consts_type logic_text_consts ;
+    const logic_text_stateless_consts_type logic_text_stateless_consts ;
 } ;
 
 template < typename mediator >

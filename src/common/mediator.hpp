@@ -14,7 +14,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: letter_id letter_id ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_consts_type logic_text_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     
 private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
@@ -169,7 +169,7 @@ public :
     
 public :
     shy_mediator ( typename platform_pointer :: template pointer < const platform > arg_platform ) ;
-    void logic_text_consts ( typename platform_pointer :: template pointer < const logic_text_consts_type > & result ) ;
+    void logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & result ) ;
     void engine_render_consts ( typename platform_pointer :: template pointer < const engine_render_consts_type > & result ) ;
     void platform_obj ( typename platform_pointer :: template pointer < const platform > & result ) ;
     void register_modules
@@ -403,9 +403,9 @@ void shy_mediator < mediator_types > :: engine_render_consts ( typename platform
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: logic_text_consts ( typename platform_pointer :: template pointer < const logic_text_consts_type > & result )
+void shy_mediator < mediator_types > :: logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & result )
 {
-    result . set ( _logic_text_stateless . get ( ) . logic_text_consts ) ;
+    result . set ( _logic_text_stateless . get ( ) . logic_text_stateless_consts ) ;
 }
 
 template < typename mediator_types >
