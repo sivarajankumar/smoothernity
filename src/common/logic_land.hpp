@@ -21,9 +21,16 @@ class shy_logic_land
     static const_int_32 _land_r = 255 ;
     static const_int_32 _land_g = 255 ;
     static const_int_32 _land_b = 255 ;
-    static const_int_32 _land_grid = 10 ;
-    static const_int_32 _land_radius = 10 ;
-    static const_int_32 _create_rows_per_frame = 8 ;
+    
+    class _logic_land_consts_type
+    {
+    public :
+        _logic_land_consts_type ( ) ;
+        num_whole create_rows_per_frame ;
+        num_whole land_grid ;
+        num_fract land_radius ;
+    } ;
+    
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
@@ -41,6 +48,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_land_consts_type _logic_land_consts ;
     num_whole _land_mesh_created ;
     num_whole _land_texture_created ;
     num_whole _land_prepare_permitted ;
@@ -52,6 +60,14 @@ private :
     mesh_id _land_mesh_id ;
     texture_id _land_texture_id ;
 } ;
+
+template < typename mediator >
+shy_logic_land < mediator > :: _logic_land_consts_type :: _logic_land_consts_type ( )
+{
+    platform_math :: make_num_whole ( create_rows_per_frame , 8 ) ;
+    platform_math :: make_num_whole ( land_grid , 10 ) ;
+    platform_math :: make_num_fract ( land_radius , 10 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -132,8 +148,13 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update m
         
             num_whole total_vertices ;
             num_whole total_indices ;
-            platform_math :: make_num_whole ( total_vertices , ( _land_grid + 1 ) * ( _land_grid + 1 ) ) ;
-            platform_math :: make_num_whole ( total_indices , ( _land_grid + 1 ) * 2 * _land_grid ) ;
+            
+            platform_math :: add_wholes ( total_vertices , _logic_land_consts . land_grid , _platform_math_consts . get ( ) . whole_1 ) ;
+            platform_math :: mul_whole_by ( total_vertices , total_vertices ) ;
+            
+            platform_math :: add_wholes ( total_indices , _logic_land_consts . land_grid , _platform_math_consts . get ( ) . whole_1 ) ;
+            platform_math :: mul_whole_by ( total_indices , _logic_land_consts . land_grid ) ;
+            platform_math :: mul_whole_by ( total_indices , _platform_math_consts . get ( ) . whole_2 ) ;
             
             typename messages :: render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = total_vertices ;
@@ -203,28 +224,29 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     num_whole iz ;
     num_whole ix_max ;
     num_whole iz_max ;
-    num_whole whole_land_grid ;
     num_fract grid_step ;
     num_fract grid_origin_x ;
     num_fract grid_origin_z ;
     num_fract fract_land_grid ;
+    num_whole land_grid_plus_1 ;
     
     platform_math :: make_num_whole ( vertices_count , 0 ) ;
     platform_math :: make_num_whole ( indices_count , 0 ) ;
-    platform_math :: make_num_whole ( whole_land_grid , _land_grid ) ;
-    platform_math :: make_num_fract ( fract_land_grid , _land_grid , 1 ) ;
-    platform_math :: make_num_fract ( grid_step , _land_radius * 2 , _land_grid ) ;
-    platform_math :: make_num_fract ( grid_origin_x , - _land_radius , 1 ) ;
-    platform_math :: make_num_fract ( grid_origin_z , - _land_radius , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_land_grid , _logic_land_consts . land_grid ) ;
+    platform_math :: mul_fracts ( grid_step , _logic_land_consts . land_radius , _platform_math_consts . get ( ) . fract_2 ) ;
+    platform_math :: div_fract_by ( grid_step , fract_land_grid ) ;
+    platform_math :: neg_fract ( grid_origin_x , _logic_land_consts . land_radius ) ;
+    platform_math :: neg_fract ( grid_origin_z , _logic_land_consts . land_radius ) ;
+    platform_math :: add_wholes ( land_grid_plus_1 , _logic_land_consts . land_grid , _platform_math_consts . get ( ) . whole_1 ) ;
     
-    for ( platform_math :: make_num_whole ( iz , 0 )
-        , platform_math :: make_num_whole ( iz_max , _land_grid + 1 )
+    for ( iz = _platform_math_consts . get ( ) . whole_0
+        , iz_max = land_grid_plus_1
         ; platform_conditions :: whole_less_than_whole ( iz , iz_max )
         ; platform_math :: inc_whole ( iz )
         )
     {
-        for ( platform_math :: make_num_whole ( ix , 0 )
-            , platform_math :: make_num_whole ( ix_max , _land_grid + 1 )
+        for ( ix = _platform_math_consts . get ( ) . whole_0
+            , ix_max = land_grid_plus_1
             ; platform_conditions :: whole_less_than_whole ( ix , ix_max )
             ; platform_math :: inc_whole ( ix )
             )
@@ -287,14 +309,14 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
         }
     }
     
-    for ( platform_math :: make_num_whole ( iz , 0 ) 
-        , platform_math :: make_num_whole ( iz_max , _land_grid )
+    for ( iz = _platform_math_consts . get ( ) . whole_0
+        , iz_max = land_grid_plus_1
         ; platform_conditions :: whole_less_than_whole ( iz , iz_max )
         ; platform_math :: inc_whole ( iz )
         )
     {
-        for ( platform_math :: make_num_whole ( ix , 0 ) 
-            , platform_math :: make_num_whole ( ix_max , _land_grid + 1 )
+        for ( ix = _platform_math_consts . get ( ) . whole_0
+            , ix_max = land_grid_plus_1
             ; platform_conditions :: whole_less_than_whole ( ix , ix_max )
             ; platform_math :: inc_whole ( ix )
             )
@@ -302,7 +324,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             num_whole index ;
             num_whole row_size ;
             
-            platform_math :: make_num_whole ( row_size , _land_grid + 1 ) ;
+            row_size = land_grid_plus_1 ;
             
             if ( platform_conditions :: whole_is_even ( iz ) )
             {
@@ -318,7 +340,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             else
             {
                 platform_math :: mul_wholes ( index , row_size , iz ) ;
-                platform_math :: add_to_whole ( index , whole_land_grid ) ;
+                platform_math :: add_to_whole ( index , _logic_land_consts . land_grid ) ;
                 platform_math :: sub_from_whole ( index , ix ) ;
                 platform_math :: add_to_whole ( index , row_size ) ;
                 _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
@@ -341,11 +363,8 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
 {
     num_whole texture_width ;
     num_whole texture_height ;
-    num_whole whole_create_rows_per_frame ;
     num_whole prev_creation_row = _land_texture_creation_row ;
 
-    platform_math :: make_num_whole ( whole_create_rows_per_frame , _create_rows_per_frame ) ;
-    
     typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > engine_render_stateless_consts ;
     _mediator . get ( ) . engine_render_stateless_consts ( engine_render_stateless_consts ) ;
     texture_width = engine_render_stateless_consts . get ( ) . texture_width ;
@@ -358,7 +377,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         
         platform_math :: sub_wholes ( rows_delta , _land_texture_creation_row , prev_creation_row ) ;
         if ( ! platform_conditions :: whole_less_than_whole ( _land_texture_creation_row , texture_height )
-          || ! platform_conditions :: whole_less_or_equal_to_whole ( rows_delta , whole_create_rows_per_frame )
+          || ! platform_conditions :: whole_less_or_equal_to_whole ( rows_delta , _logic_land_consts . create_rows_per_frame )
            )
         {
             break ;

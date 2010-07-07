@@ -17,11 +17,7 @@ class shy_logic_entities
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
-    
-    static const_int_32 _grid_step = 5 ;
-    static const_int_32 _scale_in_frames = 120 ;
-    static const_int_32 _scale_wave = 2 ;
-    
+        
     class _logic_entities_consts_type
     {
     public :
@@ -30,7 +26,10 @@ class shy_logic_entities
         num_fract entity_color_roof_g ;
         num_fract entity_color_roof_b ;
         num_fract entity_mesh_height ;
+        num_fract scale_wave ;
         num_whole entity_mesh_spans ;
+        num_whole scale_in_frames ;
+        num_whole grid_step ;
         static const_int_32 entity_mesh_grid = 5 ;
     } ;
 
@@ -85,7 +84,10 @@ shy_logic_entities < mediator > :: _logic_entities_consts_type :: _logic_entitie
     platform_math :: make_num_fract ( entity_color_roof_g , 255 , 255 ) ;
     platform_math :: make_num_fract ( entity_color_roof_b , 255 , 255 ) ;
     platform_math :: make_num_fract ( entity_mesh_height , 2 , 1 ) ;
+    platform_math :: make_num_fract ( scale_wave , 2 , 1 ) ;
     platform_math :: make_num_whole ( entity_mesh_spans , 50 ) ;
+    platform_math :: make_num_whole ( scale_in_frames , 120 ) ;
+    platform_math :: make_num_whole ( grid_step , 5 ) ;
 }
 
 template < typename mediator >
@@ -458,22 +460,20 @@ void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & resul
     num_whole z ;
     num_whole whole_entity_mesh_grid ;
     num_whole half_entity_mesh_grid ;
-    num_whole whole_grid_step ;
     num_fract entity_x ;
     num_fract entity_y ;
     num_fract entity_z ;
     
-    platform_math :: make_num_whole ( whole_grid_step , _grid_step ) ;
     platform_math :: make_num_whole ( whole_entity_mesh_grid , _logic_entities_consts_type :: entity_mesh_grid ) ;
     platform_math :: div_wholes ( half_entity_mesh_grid , whole_entity_mesh_grid , _platform_math_consts . get ( ) . whole_2 ) ;
     
     platform_math :: mod_wholes ( x , index , whole_entity_mesh_grid ) ;
     platform_math :: sub_from_whole ( x , half_entity_mesh_grid ) ;
-    platform_math :: mul_whole_by ( x , whole_grid_step ) ;
+    platform_math :: mul_whole_by ( x , _logic_entities_consts . grid_step ) ;
     
     platform_math :: div_wholes ( z , index , whole_entity_mesh_grid ) ;
     platform_math :: sub_from_whole ( z , half_entity_mesh_grid ) ;
-    platform_math :: mul_whole_by ( z , whole_grid_step ) ;
+    platform_math :: mul_whole_by ( z , _logic_entities_consts . grid_step ) ;
     
     platform_math :: make_fract_from_whole ( entity_x , x ) ;
     platform_math :: div_fracts ( entity_y , _logic_entities_consts . entity_mesh_height , _platform_math_consts . get ( ) . fract_2 ) ;
@@ -484,21 +484,17 @@ void shy_logic_entities < mediator > :: _get_entity_origin ( vector_data & resul
 template < typename mediator >
 void shy_logic_entities < mediator > :: _update_entity_grid ( )
 {
-    num_whole whole_scale_in_frames ;
     num_whole whole_entity_mesh_grid ;
     num_fract fract_entity_mesh_grid ;
-    num_fract fract_scale_wave ;
     num_fract fract_scale_in_frames ;
     num_fract fract_grid_scale ;
     
-    platform_math :: make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
     platform_math :: make_num_whole ( whole_entity_mesh_grid , _logic_entities_consts_type :: entity_mesh_grid ) ;
     platform_math :: make_num_fract ( fract_entity_mesh_grid , _logic_entities_consts_type :: entity_mesh_grid , 1 ) ;
-    platform_math :: make_num_fract ( fract_scale_wave , _scale_wave , 1 ) ;
-    platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_entities_consts . scale_in_frames ) ;
     platform_math :: make_fract_from_whole ( fract_grid_scale , _grid_scale ) ;
     
-    if ( platform_conditions :: whole_less_or_equal_to_whole ( _grid_scale , whole_scale_in_frames ) )
+    if ( platform_conditions :: whole_less_or_equal_to_whole ( _grid_scale , _logic_entities_consts . scale_in_frames ) )
     {
         for ( num_whole x = _platform_math_consts . get ( ) . whole_0 
             ; platform_conditions :: whole_less_than_whole ( x , whole_entity_mesh_grid ) 
@@ -524,14 +520,14 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 platform_math :: make_fract_from_whole ( fract_z , z ) ;
                 
                 platform_math :: add_fracts ( scale_wave_part , fract_x , fract_z ) ;
-                platform_math :: mul_fract_by ( scale_wave_part , fract_scale_wave ) ;
+                platform_math :: mul_fract_by ( scale_wave_part , _logic_entities_consts . scale_wave ) ;
                 platform_math :: div_fract_by ( scale_wave_part , fract_entity_mesh_grid ) ;
                 platform_math :: div_fract_by ( scale_wave_part , _platform_math_consts . get ( ) . fract_2 ) ;
                 
-                platform_math :: add_fracts ( scale_frame_part , fract_scale_wave , _platform_math_consts . get ( ) . fract_1 ) ;
+                platform_math :: add_fracts ( scale_frame_part , _logic_entities_consts . scale_wave , _platform_math_consts . get ( ) . fract_1 ) ;
                 platform_math :: mul_fract_by ( scale_frame_part , fract_grid_scale ) ;
                 platform_math :: div_fract_by ( scale_frame_part , fract_scale_in_frames ) ;
-                platform_math :: sub_from_fract ( scale_frame_part , fract_scale_wave ) ;
+                platform_math :: sub_from_fract ( scale_frame_part , _logic_entities_consts . scale_wave ) ;
                 
                 platform_math :: add_fracts ( scale , scale_wave_part , scale_frame_part ) ;
                 engine_math :: math_clamp_fract ( scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;

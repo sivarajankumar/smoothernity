@@ -16,10 +16,10 @@ class shy_logic_fidget
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
-    class logic_fidget_consts_type
+    class _logic_fidget_consts_type
     {
     public :
-        logic_fidget_consts_type ( ) ;
+        _logic_fidget_consts_type ( ) ;
         num_fract fidget_size ;
         num_fract fidget_r ;
         num_fract fidget_g ;
@@ -44,7 +44,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const logic_fidget_consts_type _logic_fidget_consts ;
+    const _logic_fidget_consts_type _logic_fidget_consts ;
     num_fract _fidget_angle ;
     num_whole _fidget_prepare_permitted ;
     num_whole _fidget_mesh_created ;
@@ -56,7 +56,7 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_fidget < mediator > :: logic_fidget_consts_type :: logic_fidget_consts_type ( )
+shy_logic_fidget < mediator > :: _logic_fidget_consts_type :: _logic_fidget_consts_type ( )
 {
     platform_math :: make_num_fract ( fidget_size , 3 , 10 ) ;
     platform_math :: make_num_fract ( fidget_r , 255 , 255 ) ;

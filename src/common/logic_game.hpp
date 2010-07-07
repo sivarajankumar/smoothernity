@@ -12,10 +12,10 @@ class shy_logic_game
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
      
-    class logic_game_consts_type
+    class _logic_game_consts_type
     {
     public :
-        logic_game_consts_type ( ) ;
+        _logic_game_consts_type ( ) ;
         num_fract final_r ;
         num_fract final_g ;
         num_fract final_b ;
@@ -50,7 +50,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const logic_game_consts_type _logic_game_consts ;
+    const _logic_game_consts_type _logic_game_consts ;
     num_fract _color_r ;
     num_fract _color_g ;
     num_fract _color_b ;
@@ -89,7 +89,7 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_game < mediator > :: logic_game_consts_type :: logic_game_consts_type ( )
+shy_logic_game < mediator > :: _logic_game_consts_type :: _logic_game_consts_type ( )
 {
     platform_math :: make_num_fract ( final_r , 0 , 1 ) ;
     platform_math :: make_num_fract ( final_g , 1 , 10 ) ;
