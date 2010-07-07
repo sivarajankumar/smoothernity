@@ -8,7 +8,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_consts_type engine_render_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: mesh_id mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: texture_id texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
@@ -170,7 +170,7 @@ public :
 public :
     shy_mediator ( typename platform_pointer :: template pointer < const platform > arg_platform ) ;
     void logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & result ) ;
-    void engine_render_consts ( typename platform_pointer :: template pointer < const engine_render_consts_type > & result ) ;
+    void engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & result ) ;
     void platform_obj ( typename platform_pointer :: template pointer < const platform > & result ) ;
     void register_modules
         ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
@@ -397,9 +397,9 @@ void shy_mediator < mediator_types > :: platform_obj ( typename platform_pointer
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: engine_render_consts ( typename platform_pointer :: template pointer < const engine_render_consts_type > & result )
+void shy_mediator < mediator_types > :: engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & result )
 {
-    result . set ( _engine_render_stateless . get ( ) . engine_render_consts ) ;
+    result . set ( _engine_render_stateless . get ( ) . engine_render_stateless_consts ) ;
 }
 
 template < typename mediator_types >

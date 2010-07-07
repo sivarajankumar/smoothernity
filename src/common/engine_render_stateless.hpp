@@ -29,10 +29,10 @@ public :
         num_whole _texture_id ;
     } ;
     
-    class engine_render_consts_type
+    class engine_render_stateless_consts_type
     {
     public :
-        engine_render_consts_type ( ) ;
+        engine_render_stateless_consts_type ( ) ;
     public :
         num_whole texture_width ;
         num_whole texture_height ;
@@ -46,7 +46,7 @@ public :
     static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
     
 public :
-    const engine_render_consts_type engine_render_consts ;
+    const engine_render_stateless_consts_type engine_render_stateless_consts ;
 } ;
 
 template < typename mediator >
@@ -62,7 +62,7 @@ shy_engine_render_stateless < mediator > :: operator= ( const shy_engine_render_
 }
 
 template < typename mediator >
-shy_engine_render_stateless < mediator > :: engine_render_consts_type :: engine_render_consts_type ( )
+shy_engine_render_stateless < mediator > :: engine_render_stateless_consts_type :: engine_render_stateless_consts_type ( )
 {
     platform_math :: make_num_whole ( texture_width , _texture_size ) ;
     platform_math :: make_num_whole ( texture_height , _texture_size ) ;

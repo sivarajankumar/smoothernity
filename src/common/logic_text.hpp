@@ -3,7 +3,7 @@ class shy_logic_text
 {
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: engine_math engine_math ;
-    typedef typename mediator :: engine_render_consts_type engine_render_consts_type ;
+    typedef typename mediator :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
@@ -543,10 +543,10 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     num_fract eraser_g ;
     num_fract eraser_b ;
     num_fract eraser_a ;
-    typename platform_pointer :: template pointer < const engine_render_consts_type > engine_render_consts ;
-    _mediator . get ( ) . engine_render_consts ( engine_render_consts ) ;
-    texture_width = engine_render_consts . get ( ) . texture_width ;
-    texture_height = engine_render_consts . get ( ) . texture_height ;
+    typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > engine_render_stateless_consts ;
+    _mediator . get ( ) . engine_render_stateless_consts ( engine_render_stateless_consts ) ;
+    texture_width = engine_render_stateless_consts . get ( ) . texture_width ;
+    texture_height = engine_render_stateless_consts . get ( ) . texture_height ;
     platform_math :: make_num_fract ( filler_r , 1 , 1 ) ;
     platform_math :: make_num_fract ( filler_g , 1 , 1 ) ;
     platform_math :: make_num_fract ( filler_b , 1 , 1 ) ;
@@ -615,9 +615,9 @@ void shy_logic_text < mediator > :: _next_letter_col ( )
     num_whole delta_x ;
     num_whole texture_width ;
     num_whole right_limit ;
-    typename platform_pointer :: template pointer < const engine_render_consts_type > engine_render_consts ;
-    _mediator . get ( ) . engine_render_consts ( engine_render_consts ) ;
-    texture_width = engine_render_consts . get ( ) . texture_width ;
+    typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > engine_render_stateless_consts ;
+    _mediator . get ( ) . engine_render_stateless_consts ( engine_render_stateless_consts ) ;
+    texture_width = engine_render_stateless_consts . get ( ) . texture_width ;
     platform_math :: div_wholes ( delta_x , _letter_size_x , _platform_math_consts . get ( ) . whole_8 ) ;
     platform_math :: add_to_whole ( _origin_x , _letter_size_x ) ;
     platform_math :: add_to_whole ( _origin_x , delta_x ) ;
@@ -649,18 +649,18 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
     num_whole whole_texture_height ;
     num_fract fract_texture_width ;
     num_fract fract_texture_height ;
-    typename platform_pointer :: template pointer < const engine_render_consts_type > engine_render_consts ;
+    typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > engine_render_stateless_consts ;
     typename platform_pointer :: template pointer < _tex_coords > coords ;
 
-    _mediator . get ( ) . engine_render_consts ( engine_render_consts ) ;
+    _mediator . get ( ) . engine_render_stateless_consts ( engine_render_stateless_consts ) ;
     platform_static_array :: element_ptr ( coords , letters_tex_coords , letter . _letter_id ) ;    
     
     whole_left = _origin_x ;
     whole_bottom = _origin_y ;
     platform_math :: add_wholes ( whole_right , _origin_x , _letter_size_x ) ;
     platform_math :: add_wholes ( whole_top , _origin_y , _letter_size_y ) ;
-    whole_texture_width = engine_render_consts . get ( ) . texture_width ;
-    whole_texture_height = engine_render_consts . get ( ) . texture_height ;
+    whole_texture_width = engine_render_stateless_consts . get ( ) . texture_width ;
+    whole_texture_height = engine_render_stateless_consts . get ( ) . texture_height ;
     platform_math :: make_fract_from_whole ( fract_texture_width , whole_texture_width ) ;
     platform_math :: make_fract_from_whole ( fract_texture_height , whole_texture_height ) ;
     platform_math :: make_fract_from_whole ( coords . get ( ) . left , whole_left ) ;

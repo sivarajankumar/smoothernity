@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_logic_land
 {
-    typedef typename mediator :: engine_render_consts_type engine_render_consts_type ;
+    typedef typename mediator :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
@@ -346,10 +346,10 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
 
     platform_math :: make_num_whole ( whole_create_rows_per_frame , _create_rows_per_frame ) ;
     
-    typename platform_pointer :: template pointer < const engine_render_consts_type > engine_render_consts ;
-    _mediator . get ( ) . engine_render_consts ( engine_render_consts ) ;
-    texture_width = engine_render_consts . get ( ) . texture_width ;
-    texture_height = engine_render_consts . get ( ) . texture_height ;
+    typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > engine_render_stateless_consts ;
+    _mediator . get ( ) . engine_render_stateless_consts ( engine_render_stateless_consts ) ;
+    texture_width = engine_render_stateless_consts . get ( ) . texture_width ;
+    texture_height = engine_render_stateless_consts . get ( ) . texture_height ;
     for ( ; ; )
     {
         num_whole x ;
