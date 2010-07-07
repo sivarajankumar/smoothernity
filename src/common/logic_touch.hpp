@@ -24,7 +24,13 @@ class shy_logic_touch
     static const_int_32 _spot_g = 255 ;
     static const_int_32 _spot_b = 255 ;
     static const_int_32 _spot_edges = 32 ;    
-    static const num_fract _spot_size ( ) { num_fract n ; platform_math :: make_num_fract ( n , 3 , 10 ) ; return n ; }
+ 
+    class _logic_touch_consts_type
+    {
+    public :
+        _logic_touch_consts_type ( ) ;
+        num_fract spot_size ;
+   } ;
 
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -46,6 +52,7 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_touch_consts_type _logic_touch_consts ;
     num_whole _spot_frames_left ;
     num_whole _spot_mesh_created ;
     num_whole _spot_prepare_permitted ;
@@ -56,6 +63,12 @@ private :
     mesh_id _spot_mesh_id ;
     vector_data _spot_position ;
 } ;
+
+template < typename mediator >
+shy_logic_touch < mediator > :: _logic_touch_consts_type :: _logic_touch_consts_type ( )
+{
+    platform_math :: make_num_fract ( spot_size , 3 , 10 ) ;
+}
 
 template < typename mediator >
 void shy_logic_touch < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -251,8 +264,8 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform_math :: div_fract_by ( angle , fract_spot_edges ) ;
         platform_math :: cos ( angle_cos , angle ) ;
         platform_math :: sin ( angle_sin , angle ) ;
-        platform_math :: mul_fracts ( vertex_x , _spot_size ( ) , angle_cos ) ;
-        platform_math :: mul_fracts ( vertex_y , _spot_size ( ) , angle_sin ) ;
+        platform_math :: mul_fracts ( vertex_x , _logic_touch_consts . spot_size , angle_cos ) ;
+        platform_math :: mul_fracts ( vertex_y , _logic_touch_consts . spot_size , angle_sin ) ;
         platform_math :: make_num_fract ( vertex_z , 0 , 1 ) ;
         platform_math :: make_num_fract ( vertex_r , _spot_r , 255 ) ;
         platform_math :: make_num_fract ( vertex_g , _spot_g , 255 ) ;
