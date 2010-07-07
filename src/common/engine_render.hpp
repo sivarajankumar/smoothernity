@@ -11,6 +11,7 @@ class shy_engine_render
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -101,6 +102,7 @@ public :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_render > _platform_render ;
+    typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > _engine_render_stateless_consts ;
     typename platform_static_array :: template static_array < _texture_data , _engine_render_consts_type :: max_textures > _textures_datas ;
     typename platform_static_array :: template static_array < _mesh_data , _engine_render_consts_type :: max_meshes > _meshes_data ;
@@ -128,8 +130,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _mediator . get ( ) . engine_render_stateless_consts ( _engine_render_stateless_consts ) ;
     _platform_render = platform_obj . get ( ) . render ;
-    platform_math :: make_num_whole ( _next_texture_id , 0 ) ;
-    platform_math :: make_num_whole ( _next_mesh_id , 0 ) ;
+    _platform_math_consts = platform_obj . get ( ) . math_consts ;
+    _next_texture_id = _platform_math_consts . get ( ) . whole_0 ;
+    _next_mesh_id = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
