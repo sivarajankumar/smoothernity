@@ -25,7 +25,14 @@ class shy_logic_image
     static const_int_32 _image_g = 255 ;
     static const_int_32 _image_b = 255 ;
     static const_int_32 _image_a = 255 ;
-    static const num_fract _final_scale ( ) { num_fract n ; platform_math :: make_num_fract ( n , 1 , 2 ) ; return n ; }
+    
+    class _logic_image_consts_type
+    {
+    public :
+        _logic_image_consts_type ( ) ;
+        num_fract final_scale ;
+    } ;
+    
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
@@ -48,6 +55,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_image_consts_type _logic_image_consts ;
     num_whole _image_mesh_created ;
     num_whole _image_texture_created ;
     num_whole _image_texture_loaded ;
@@ -59,6 +67,12 @@ private :
     mesh_id _image_mesh_id ;
     texture_id _image_texture_id ;
 } ;
+
+template < typename mediator >
+shy_logic_image < mediator > :: _logic_image_consts_type :: _logic_image_consts_type ( )
+{
+    platform_math :: make_num_fract ( final_scale , 1 , 2 ) ;
+}
 
 template < typename mediator >
 void shy_logic_image < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -198,7 +212,14 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     platform_math :: make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
     platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
-    engine_math :: math_lerp ( scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _final_scale ( ) , fract_scale_in_frames , fract_scale_frames ) ;
+    engine_math :: math_lerp 
+        ( scale 
+        , _platform_math_consts . get ( ) . fract_0 
+        , _platform_math_consts . get ( ) . fract_0 
+        , _logic_image_consts . final_scale
+        , fract_scale_in_frames 
+        , fract_scale_frames 
+        ) ;
     platform_math :: make_num_fract ( origin_x , 1 , 2 ) ;
     platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
