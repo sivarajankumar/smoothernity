@@ -10,9 +10,6 @@ class shy_engine_render_stateless
     typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
-
-    static const_int_32 _texture_size_pow2_base = 8 ;
-    static const_int_32 _texture_size = 1 << _texture_size_pow2_base ;
     
 public :    
     class mesh_id
@@ -36,6 +33,8 @@ public :
     public :
         num_whole texture_width ;
         num_whole texture_height ;
+        static const_int_32 texture_size_pow2_base_int = 8 ;
+        static const_int_32 texture_size_int = 1 << texture_size_pow2_base_int ;
     } ;
     
 public :
@@ -64,8 +63,8 @@ shy_engine_render_stateless < mediator > :: operator= ( const shy_engine_render_
 template < typename mediator >
 shy_engine_render_stateless < mediator > :: engine_render_stateless_consts_type :: engine_render_stateless_consts_type ( )
 {
-    platform_math :: make_num_whole ( texture_width , _texture_size ) ;
-    platform_math :: make_num_whole ( texture_height , _texture_size ) ;
+    platform_math :: make_num_whole ( texture_width , texture_size_int ) ;
+    platform_math :: make_num_whole ( texture_height , texture_size_int ) ;
 }
 
 template < typename mediator >
