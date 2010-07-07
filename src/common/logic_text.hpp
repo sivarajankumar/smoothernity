@@ -23,10 +23,10 @@ class shy_logic_text
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
 
-    class logic_text_consts_type
+    class _logic_text_consts_type
     {
     public :
-        logic_text_consts_type ( ) ;
+        _logic_text_consts_type ( ) ;
 
         static const_int_32 max_letters_in_alphabet = 32 ;
 
@@ -47,7 +47,7 @@ class shy_logic_text
         num_fract top ;
     } ;
 
-    typedef typename platform_static_array :: template static_array < _tex_coords , logic_text_consts_type :: max_letters_in_alphabet > _letters_tex_coords ;
+    typedef typename platform_static_array :: template static_array < _tex_coords , _logic_text_consts_type :: max_letters_in_alphabet > _letters_tex_coords ;
 
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -112,7 +112,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const logic_text_consts_type _logic_text_consts ;
+    const _logic_text_consts_type _logic_text_consts ;
     
     num_whole _texture_create_requested ;
     num_whole _texture_create_replied ;
@@ -143,7 +143,7 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_text < mediator > :: logic_text_consts_type :: logic_text_consts_type ( )
+shy_logic_text < mediator > :: _logic_text_consts_type :: _logic_text_consts_type ( )
 {
     platform_math :: make_num_fract ( final_scale , 1 , 2 ) ;
     platform_math :: make_num_fract ( canvas_r , 255 , 255 ) ;

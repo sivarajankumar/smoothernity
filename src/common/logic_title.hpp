@@ -23,10 +23,15 @@ class shy_logic_title
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
     
-    static const_int_32 _max_letters = 32 ;
-    static const_int_32 _spin_radius_in_letters = 2 ;
-    static const_int_32 _appear_duration_in_frames = 250 ;
-    static const_int_32 _disappear_duration_in_frames = 150 ;
+    class _logic_title_consts_type
+    {
+    public :
+        _logic_title_consts_type ( ) ;
+        num_fract spin_radius_in_letters ;
+        num_whole appear_duration_in_frames ;
+        num_whole disappear_duration_in_frames ;
+        static const_int_32 max_letters = 32 ;
+    } ;
     
     class _letter_state
     {
@@ -72,7 +77,8 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    typename platform_static_array :: template static_array < _letter_state , _max_letters > _letters ;
+    typename platform_static_array :: template static_array < _letter_state , _logic_title_consts_type :: max_letters > _letters ;
+    const _logic_title_consts_type _logic_title_consts ;
     num_whole _title_launch_permitted ;
     num_whole _title_created ;
     num_whole _title_finished ;
@@ -117,6 +123,14 @@ private :
     num_fract _rubber_first ;
     num_fract _rubber_last ;
 } ;
+
+template < typename mediator >
+shy_logic_title < mediator > :: _logic_title_consts_type :: _logic_title_consts_type ( )
+{
+    platform_math :: make_num_fract ( spin_radius_in_letters , 2 , 1 ) ;
+    platform_math :: make_num_whole ( appear_duration_in_frames , 250 ) ;
+    platform_math :: make_num_whole ( disappear_duration_in_frames , 150 ) ;
+}
 
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: init msg ) 
@@ -380,10 +394,8 @@ void shy_logic_title < mediator > :: _animate_lifecycle ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _animate_appear ( )
 {
-    num_whole whole_appear_duration_in_frames ;
-    platform_math :: make_num_whole ( whole_appear_duration_in_frames , _appear_duration_in_frames ) ;
     platform_math :: inc_whole ( _title_frames ) ;
-    if ( platform_conditions :: whole_greater_than_whole ( _title_frames , whole_appear_duration_in_frames ) )
+    if ( platform_conditions :: whole_greater_than_whole ( _title_frames , _logic_title_consts . appear_duration_in_frames ) )
     {
         _title_frames = _platform_math_consts . get ( ) . whole_0 ;
         _prepare_to_disappear ( ) ;
@@ -395,10 +407,8 @@ void shy_logic_title < mediator > :: _animate_appear ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _animate_disappear ( )
 {
-    num_whole whole_disappear_duration_in_frames ;
-    platform_math :: make_num_whole ( whole_disappear_duration_in_frames , _disappear_duration_in_frames ) ;
     platform_math :: inc_whole ( _title_frames ) ;
-    if ( platform_conditions :: whole_greater_than_whole ( _title_frames , whole_disappear_duration_in_frames ) )
+    if ( platform_conditions :: whole_greater_than_whole ( _title_frames , _logic_title_consts . disappear_duration_in_frames ) )
     {
         platform_math :: make_num_whole ( _title_finished , true ) ;
         _mediator . get ( ) . send ( typename messages :: title_finished ( ) ) ;
@@ -410,7 +420,7 @@ void shy_logic_title < mediator > :: _animate_disappear ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _prepare_to_appear ( )
 {
-    platform_math :: make_num_fract ( _desired_pos_radius_coeff , _spin_radius_in_letters , 1 ) ;
+    _desired_pos_radius_coeff = _logic_title_consts . spin_radius_in_letters ;
     platform_math :: make_num_fract ( _desired_pos_angle , 11 , 2 ) ;
     platform_math :: mul_fract_by ( _desired_pos_angle , _platform_math_consts . get ( ) . fract_pi ) ;
     platform_math :: mul_fracts ( _desired_rot_angle , _platform_math_consts . get ( ) . fract_2pi , _platform_math_consts . get ( ) . fract_3 ) ;
@@ -431,7 +441,7 @@ void shy_logic_title < mediator > :: _prepare_to_disappear ( )
     platform_math :: make_num_whole ( _title_appeared , true ) ;
     platform_math :: make_num_fract ( _rubber_first , 59 , 60 ) ;
     platform_math :: make_num_fract ( _rubber_last , 29 , 30 ) ;
-    platform_math :: make_num_whole ( _disappear_at_frames , _disappear_duration_in_frames ) ;
+    _disappear_at_frames = _logic_title_consts . disappear_duration_in_frames ;
 }
 
 template < typename mediator >
@@ -501,9 +511,9 @@ void shy_logic_title < mediator > :: _title_update ( )
     platform_math :: div_fracts ( letter_size , _render_aspect_width , fract_letters_count ) ;    
     platform_math :: mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;
     platform_math :: make_num_whole ( frames_between_letters , 5 ) ;
-    platform_math :: make_num_fract ( offset_y , _spin_radius_in_letters , 1 ) ;
+    offset_y = _logic_title_consts . spin_radius_in_letters ;
     platform_math :: mul_fract_by ( offset_y , letter_size ) ;
-    platform_math :: make_num_fract ( fract_appear_duration_in_frames , _appear_duration_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_appear_duration_in_frames , _logic_title_consts . appear_duration_in_frames ) ;
     platform_math :: make_num_fract ( scale_min , 7 , 10 ) ;
     platform_math :: make_num_fract ( scale_max , 9 , 10 ) ;
     
