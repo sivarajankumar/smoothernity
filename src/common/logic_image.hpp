@@ -18,19 +18,18 @@ class shy_logic_image
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
-    
-    static const_int_32 _logo_resource_index = 1 ;
-    static const_int_32 _scale_in_frames = 60 ;
-    static const_int_32 _image_r = 255 ;
-    static const_int_32 _image_g = 255 ;
-    static const_int_32 _image_b = 255 ;
-    static const_int_32 _image_a = 255 ;
-    
+
     class _logic_image_consts_type
     {
     public :
         _logic_image_consts_type ( ) ;
+        num_whole scale_in_frames ;
+        num_whole logo_resource_index ;
         num_fract final_scale ;
+        num_fract image_r ;
+        num_fract image_g ;
+        num_fract image_b ;
+        num_fract image_a ;
     } ;
     
 public :
@@ -71,7 +70,13 @@ private :
 template < typename mediator >
 shy_logic_image < mediator > :: _logic_image_consts_type :: _logic_image_consts_type ( )
 {
+    platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
+    platform_math :: make_num_whole ( logo_resource_index , 1 ) ;
     platform_math :: make_num_fract ( final_scale , 1 , 2 ) ;
+    platform_math :: make_num_fract ( image_r , 255 , 255 ) ;
+    platform_math :: make_num_fract ( image_g , 255 , 255 ) ;
+    platform_math :: make_num_fract ( image_b , 255 , 255 ) ;
+    platform_math :: make_num_fract ( image_a , 255 , 255 ) ;
 }
 
 template < typename mediator >
@@ -208,9 +213,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     num_fract origin_z ;
     num_fract fract_scale_frames ;
     num_fract fract_scale_in_frames ;
-    num_whole whole_scale_in_frames ;
-    platform_math :: make_num_whole ( whole_scale_in_frames , _scale_in_frames ) ;
-    platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_image_consts . scale_in_frames ) ;
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
     engine_math :: math_lerp 
         ( scale 
@@ -233,7 +236,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
-    if ( platform_conditions :: whole_less_than_whole ( _scale_frames , whole_scale_in_frames ) )
+    if ( platform_conditions :: whole_less_than_whole ( _scale_frames , _logic_image_consts . scale_in_frames ) )
         platform_math :: inc_whole ( _scale_frames ) ;
 }
 
@@ -281,10 +284,10 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
     platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
     platform_math :: make_num_fract ( z , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_r , _image_r , 255 ) ;
-    platform_math :: make_num_fract ( color_g , _image_g , 255 ) ;
-    platform_math :: make_num_fract ( color_b , _image_b , 255 ) ;
-    platform_math :: make_num_fract ( color_a , _image_a , 255 ) ;
+    color_r = _logic_image_consts . image_r ;
+    color_g = _logic_image_consts . image_g ;
+    color_b = _logic_image_consts . image_b ;
+    color_a = _logic_image_consts . image_a ;
 
     _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_0 , x_left , y_top , z ) ;
     _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_0 , color_r , color_g , color_b , color_a ) ;
@@ -360,10 +363,8 @@ void shy_logic_image < mediator > :: _mesh_set_triangle_strip_index_value ( num_
 template < typename mediator >
 void shy_logic_image < mediator > :: _create_image_texture ( )
 {
-    num_whole resource_index ;
     texture_resource_id logo_resource_id ;
-    platform_math :: make_num_whole ( resource_index , _logo_resource_index ) ;
-    engine_render_stateless :: create_texture_resource_id ( logo_resource_id , resource_index ) ;
+    engine_render_stateless :: create_texture_resource_id ( logo_resource_id , _logic_image_consts . logo_resource_index ) ;
     {
         typename messages :: render_texture_load_from_resource texture_load_from_resource_msg ;
         texture_load_from_resource_msg . texture = _image_texture_id ;
