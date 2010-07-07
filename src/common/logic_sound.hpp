@@ -22,9 +22,14 @@ class shy_logic_sound
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
     
-    static const_int_32 _music_rough_and_heavy_resource_index = 1 ;
-    static const_int_32 _max_stereo_sound_samples = platform_sound :: stereo_sound_samples_per_second * 60 ;
-    static const_int_32 _max_mono_sound_samples = platform_sound :: mono_sound_samples_per_second / 2 ;
+    class _logic_sound_consts_type
+    {
+    public :
+        _logic_sound_consts_type ( ) ;
+        num_whole music_rough_and_heavy_resource_index ;
+        static const_int_32 max_stereo_sound_samples = platform_sound :: stereo_sound_samples_per_second * 60 ;
+        static const_int_32 max_mono_sound_samples = platform_sound :: mono_sound_samples_per_second / 2 ;
+    } ;
     
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -41,15 +46,28 @@ private :
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < platform_sound > _platform_sound ;
+    const _logic_sound_consts_type _logic_sound_consts ;
     num_whole _mono_sound_created ;
     num_whole _stereo_sound_created ;
     num_whole _stereo_sound_loaded ;
     num_whole _sound_prepare_permitted ;
     sound_source_id _stereo_sound_source ;
     sound_source_id _mono_sound_source ;
-    typename platform_static_array :: template static_array < stereo_sound_sample , _max_stereo_sound_samples > _stereo_sound_data ;
-    typename platform_static_array :: template static_array < mono_sound_sample , _max_mono_sound_samples > _mono_sound_data ;
+    typename platform_static_array :: template static_array 
+        < stereo_sound_sample 
+        , _logic_sound_consts_type :: max_stereo_sound_samples 
+        > _stereo_sound_data ;
+    typename platform_static_array :: template static_array 
+        < mono_sound_sample 
+        , _logic_sound_consts_type :: max_mono_sound_samples 
+        > _mono_sound_data ;
 } ;
+
+template < typename mediator >
+shy_logic_sound < mediator > :: _logic_sound_consts_type :: _logic_sound_consts_type ( )
+{
+    platform_math :: make_num_whole ( music_rough_and_heavy_resource_index , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_sound < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -176,10 +194,8 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
 template < typename mediator >
 void shy_logic_sound < mediator > :: _load_sound ( )
 {
-    num_whole music_resource_index ;
     stereo_sound_resource_id music_resource_id ;
-    platform_math :: make_num_whole ( music_resource_index , _music_rough_and_heavy_resource_index ) ;
-    platform_sound :: create_stereo_resource_id ( music_resource_id , music_resource_index ) ;
+    platform_sound :: create_stereo_resource_id ( music_resource_id , _logic_sound_consts . music_rough_and_heavy_resource_index ) ;
     _platform_sound . get ( ) . load_stereo_sample_data ( _stereo_sound_data , music_resource_id ) ;
 }
 
@@ -232,7 +248,7 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     platform_math :: sub_from_whole ( loaded_samples_count , music_tail_cut ) ;
     
     num_whole max_music_samples ;
-    platform_math :: make_num_whole ( max_music_samples , _max_stereo_sound_samples ) ;
+    platform_math :: make_num_whole ( max_music_samples , _logic_sound_consts_type :: max_stereo_sound_samples ) ;
     _platform_sound . get ( ) . create_stereo_buffer 
         ( stereo_sound_buffer
         , _stereo_sound_data 
@@ -254,7 +270,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     num_whole next_sample ;
     num_whole whole_max_mono_sound_samples ;
     num_fract fract_mono_sound_samples_per_second ;
-    platform_math :: make_num_whole ( whole_max_mono_sound_samples , _max_mono_sound_samples ) ;
+    platform_math :: make_num_whole ( whole_max_mono_sound_samples , _logic_sound_consts_type :: max_mono_sound_samples ) ;
     platform_math :: make_num_fract ( fract_mono_sound_samples_per_second , platform_sound :: mono_sound_samples_per_second , 1 ) ;
     platform_math :: make_num_whole ( next_sample , 0 ) ;
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
@@ -307,7 +323,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     platform_math :: make_num_fract ( vel_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( vel_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( vel_z , 0 , 1 ) ;
-    platform_math :: make_num_whole ( max_sound_samples , _max_mono_sound_samples ) ;
+    platform_math :: make_num_whole ( max_sound_samples , _logic_sound_consts_type :: max_mono_sound_samples ) ;
     platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
     platform_vector :: xyz ( source_vel , pos_x , pos_y , pos_z ) ;
     
