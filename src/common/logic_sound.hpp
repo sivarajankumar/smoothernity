@@ -84,10 +84,10 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
     _platform_mouse = platform_obj . get ( ) . mouse ;
     _platform_sound = platform_obj . get ( ) . sound ;
     
-    platform_math :: make_num_whole ( _mono_sound_created , false ) ;
-    platform_math :: make_num_whole ( _stereo_sound_created , false ) ;
-    platform_math :: make_num_whole ( _stereo_sound_loaded , false ) ;
-    platform_math :: make_num_whole ( _sound_prepare_permitted , false ) ;
+    _mono_sound_created = _platform_math_consts . get ( ) . whole_false ;
+    _stereo_sound_created = _platform_math_consts . get ( ) . whole_false ;
+    _stereo_sound_loaded = _platform_math_consts . get ( ) . whole_false ;
+    _sound_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
     
     num_fract pos_x ;
     num_fract pos_y ;
@@ -139,7 +139,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 template < typename mediator >
 void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepare_permit msg )
 {
-    platform_math :: make_num_whole ( _sound_prepare_permitted , true ) ;
+    _sound_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -154,7 +154,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
             if ( platform_conditions :: whole_is_true ( ready ) )
             {
                 _load_sound ( ) ;
-                platform_math :: make_num_whole ( _stereo_sound_loaded , true ) ;
+                _stereo_sound_loaded = _platform_math_consts . get ( ) . whole_true ;
             }
         }
         else
@@ -166,7 +166,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
                 if ( platform_conditions :: whole_is_false ( _stereo_sound_created ) )
                 {
                     _create_stereo_sound ( ) ;
-                    platform_math :: make_num_whole ( _stereo_sound_created , true ) ;
+                    _stereo_sound_created = _platform_math_consts . get ( ) . whole_true ;
                     _mediator . get ( ) . send ( typename messages :: sound_prepared ( ) ) ;
                 }
             }
@@ -174,7 +174,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
         if ( platform_conditions :: whole_is_false ( _mono_sound_created ) )
         {
             _create_mono_sound ( ) ;
-            platform_math :: make_num_whole ( _mono_sound_created , true ) ;
+            _mono_sound_created = _platform_math_consts . get ( ) . whole_true ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _mono_sound_created ) )

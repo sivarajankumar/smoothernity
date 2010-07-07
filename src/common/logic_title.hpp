@@ -209,7 +209,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: use_ortho_pr
 template < typename mediator >
 void shy_logic_title < mediator > :: receive ( typename messages :: title_launch_permit msg )
 {
-    platform_math :: make_num_whole ( _title_launch_permitted , true ) ;
+    _title_launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -410,7 +410,7 @@ void shy_logic_title < mediator > :: _animate_disappear ( )
     platform_math :: inc_whole ( _title_frames ) ;
     if ( platform_conditions :: whole_greater_than_whole ( _title_frames , _logic_title_consts . disappear_duration_in_frames ) )
     {
-        platform_math :: make_num_whole ( _title_finished , true ) ;
+        _title_finished = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: title_finished ( ) ) ;
     }
     else
@@ -438,9 +438,9 @@ void shy_logic_title < mediator > :: _prepare_to_disappear ( )
     platform_math :: mul_fract_by ( _desired_pos_angle , _platform_math_consts . get ( ) . fract_pi ) ;
     platform_math :: mul_fracts ( _desired_rot_angle , _platform_math_consts . get ( ) . fract_2pi , _platform_math_consts . get ( ) . fract_6 ) ;
     platform_math :: make_num_fract ( _desired_scale , 0 , 1 ) ;    
-    platform_math :: make_num_whole ( _title_appeared , true ) ;
     platform_math :: make_num_fract ( _rubber_first , 59 , 60 ) ;
     platform_math :: make_num_fract ( _rubber_last , 29 , 30 ) ;
+    _title_appeared = _platform_math_consts . get ( ) . whole_true ;
     _disappear_at_frames = _logic_title_consts . disappear_duration_in_frames ;
 }
 

@@ -46,8 +46,8 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init m
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    platform_math :: make_num_whole ( _origin_x , 0 ) ;
-    platform_math :: make_num_whole ( _origin_y , 0 ) ;
+    _origin_x = _platform_math_consts . get ( ) . whole_0 ;
+    _origin_y = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >

@@ -87,10 +87,10 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: init msg )
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_mouse = platform_obj . get ( ) . mouse ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    platform_math :: make_num_whole ( _spot_frames_left , 0 ) ;
-    platform_math :: make_num_whole ( _spot_mesh_created , false ) ;
-    platform_math :: make_num_whole ( _spot_prepare_permitted , false ) ;
-    platform_math :: make_num_whole ( _should_place_new_spot , false ) ;
+    _spot_frames_left = _platform_math_consts . get ( ) . whole_0 ;
+    _spot_mesh_created = _platform_math_consts . get ( ) . whole_false ;
+    _spot_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
+    _should_place_new_spot = _platform_math_consts . get ( ) . whole_false ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
 }
 
@@ -108,7 +108,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_done m
 template < typename mediator >
 void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepare_permit msg )
 {
-    platform_math :: make_num_whole ( _spot_prepare_permitted , true ) ;
+    _spot_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -146,7 +146,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: render_mesh_
         _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
         _spot_mesh_id = msg . mesh ;
         _create_spot_mesh ( ) ;
-        platform_math :: make_num_whole ( _spot_mesh_created , true ) ;
+        _spot_mesh_created = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: touch_prepared ( ) ) ;
     }
 }
@@ -176,7 +176,7 @@ void shy_logic_touch < mediator > :: _poll_touchscreen ( )
     {
         platform_touch :: x ( _spot_x ) ;
         platform_touch :: y ( _spot_y ) ;
-        platform_math :: make_num_whole ( _should_place_new_spot , true ) ;
+        _should_place_new_spot = _platform_math_consts . get ( ) . whole_true ;
     }
 }
 
@@ -189,7 +189,7 @@ void shy_logic_touch < mediator > :: _poll_mouse ( )
     {
         _platform_mouse . get ( ) . x ( _spot_x ) ;
         _platform_mouse . get ( ) . y ( _spot_y ) ;
-        platform_math :: make_num_whole ( _should_place_new_spot , true ) ;
+        _should_place_new_spot = _platform_math_consts . get ( ) . whole_true ;
     }
 }
 
@@ -202,7 +202,7 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
         platform_math :: make_num_fract ( pos_z , - 3 , 1 ) ;
         platform_vector :: xyz ( _spot_position , _spot_x , _spot_y , pos_z ) ;
         _spot_frames_left = _logic_touch_consts . spot_lifetime_in_frames ;
-        platform_math :: make_num_whole ( _should_place_new_spot , false ) ;
+        _should_place_new_spot = _platform_math_consts . get ( ) . whole_false ;
     }
 }
 
@@ -237,12 +237,10 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
 template < typename mediator >
 void shy_logic_touch < mediator > :: _create_spot_mesh ( )
 {
-    num_whole i ;
     num_fract fract_spot_edges ;
-    
     platform_math :: make_fract_from_whole ( fract_spot_edges , _logic_touch_consts . spot_edges ) ;
             
-    for ( platform_math :: make_num_whole ( i , 0 )
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _logic_touch_consts . spot_edges ) 
         ; platform_math :: inc_whole ( i )
         )
