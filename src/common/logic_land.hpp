@@ -16,19 +16,18 @@ class shy_logic_land
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
-    
-    static const_int_32 _scale_in_frames = 60 ;
-    static const_int_32 _land_r = 255 ;
-    static const_int_32 _land_g = 255 ;
-    static const_int_32 _land_b = 255 ;
-    
+        
     class _logic_land_consts_type
     {
     public :
         _logic_land_consts_type ( ) ;
         num_whole create_rows_per_frame ;
         num_whole land_grid ;
+        num_whole scale_in_frames ;
         num_fract land_radius ;
+        num_fract land_r ;
+        num_fract land_g ;
+        num_fract land_b ;
     } ;
     
 public :
@@ -66,7 +65,11 @@ shy_logic_land < mediator > :: _logic_land_consts_type :: _logic_land_consts_typ
 {
     platform_math :: make_num_whole ( create_rows_per_frame , 8 ) ;
     platform_math :: make_num_whole ( land_grid , 10 ) ;
+    platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
     platform_math :: make_num_fract ( land_radius , 10 , 1 ) ;
+    platform_math :: make_num_fract ( land_r , 255 , 255 ) ;
+    platform_math :: make_num_fract ( land_g , 255 , 255 ) ;
+    platform_math :: make_num_fract ( land_b , 255 , 255 ) ;
 }
 
 template < typename mediator >
@@ -191,7 +194,7 @@ void shy_logic_land < mediator > :: _render_land ( )
         texture_select_msg . texture = _land_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
-    platform_math :: make_num_fract ( fract_scale_in_frames , _scale_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_land_consts . scale_in_frames ) ;
     platform_math :: div_fracts ( scale_step , _platform_math_consts . get ( ) . fract_1 , fract_scale_in_frames ) ;
     platform_math :: add_fracts ( increased_scale , _land_scale , scale_step ) ;
     if ( platform_conditions :: fract_less_than_fract ( increased_scale , _platform_math_consts . get ( ) . fract_1 ) )
@@ -276,9 +279,9 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             vertex_z = z ;
             platform_math :: div_fracts ( vertex_u , fract_iz , fract_land_grid ) ;
             platform_math :: div_fracts ( vertex_v , fract_ix , fract_land_grid ) ;
-            platform_math :: make_num_fract ( vertex_r , _land_r , 255 ) ;
-            platform_math :: make_num_fract ( vertex_g , _land_g , 255 ) ;
-            platform_math :: make_num_fract ( vertex_b , _land_b , 255 ) ;
+            vertex_r = _logic_land_consts . land_r ;
+            vertex_g = _logic_land_consts . land_g ;
+            vertex_b = _logic_land_consts . land_b ;
             platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
             
             typename messages :: render_mesh_set_vertex_position set_pos_msg ;
