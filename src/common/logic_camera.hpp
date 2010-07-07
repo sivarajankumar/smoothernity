@@ -20,8 +20,13 @@ class shy_logic_camera
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
-    static const_int_32 _change_origin_in_frames = 139 ;
-    static const_int_32 _change_target_in_frames = 181 ;
+    class _logic_camera_consts_type
+    {
+    public :
+        _logic_camera_consts_type ( ) ;
+        num_whole change_origin_in_frames ;
+        num_whole change_target_in_frames ;
+    } ;
     
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
@@ -58,6 +63,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_camera_consts_type _logic_camera_consts ;
     matrix_data _camera_matrix ;
     num_whole _camera_prepare_permitted ;
     num_whole _frames_to_change_camera_target ;
@@ -115,6 +121,13 @@ private :
     typename platform_static_array :: template static_array < vector_data , 4 > _scheduled_camera_origins ;
     typename platform_static_array :: template static_array < vector_data , 4 > _scheduled_camera_targets ;
 } ;
+
+template < typename mediator >
+shy_logic_camera < mediator > :: _logic_camera_consts_type :: _logic_camera_consts_type ( )
+{
+    platform_math :: make_num_whole ( change_origin_in_frames , 139 ) ;
+    platform_math :: make_num_whole ( change_target_in_frames , 181 ) ;
+}
 
 template < typename mediator >
 void shy_logic_camera < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -451,7 +464,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
     platform_math :: dec_whole ( _frames_to_change_camera_origin ) ;
     if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_origin ) )
     {
-        platform_math :: make_num_whole ( _frames_to_change_camera_origin , _change_origin_in_frames ) ;
+        _frames_to_change_camera_origin = _logic_camera_consts . change_origin_in_frames ;
         _random_camera_origin_index ( _desired_camera_origin_new_index ) ;
         _desired_camera_origin_new_requested = _platform_math_consts . get ( ) . whole_true ;
         typename messages :: entities_origin_request entities_origin_request_msg ;
@@ -472,7 +485,7 @@ void shy_logic_camera < mediator > :: _calc_desired_camera_origin_pos ( )
     num_fract fract_change_origin_in_frames ;
     num_fract spline_pos ;
     platform_math :: make_fract_from_whole ( fract_frames_to_change_camera_origin , _frames_to_change_camera_origin ) ;
-    platform_math :: make_num_fract ( fract_change_origin_in_frames , _change_origin_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_change_origin_in_frames , _logic_camera_consts . change_origin_in_frames ) ;
     platform_math :: div_fracts ( spline_pos , fract_frames_to_change_camera_origin , fract_change_origin_in_frames ) ;
     platform_math :: neg_fract ( spline_pos ) ;
     platform_math :: add_to_fract ( spline_pos , _platform_math_consts . get ( ) . fract_1 ) ;
@@ -536,7 +549,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
     platform_math :: dec_whole ( _frames_to_change_camera_target ) ;
     if ( platform_conditions :: whole_less_or_equal_to_zero ( _frames_to_change_camera_target ) )
     {
-        platform_math :: make_num_whole ( _frames_to_change_camera_target , _change_target_in_frames ) ;
+        _frames_to_change_camera_target = _logic_camera_consts . change_target_in_frames ;
         _random_camera_target_index ( _desired_camera_target_new_index ) ;
         _desired_camera_target_new_requested = _platform_math_consts . get ( ) . whole_true ;
         typename messages :: entities_origin_request entities_origin_request_msg ;
@@ -557,7 +570,7 @@ void shy_logic_camera < mediator > :: _calc_desired_camera_target_pos ( )
     num_fract fract_change_target_in_frames ;
     num_fract spline_pos ;
     platform_math :: make_fract_from_whole ( fract_frames_to_change_camera_target , _frames_to_change_camera_target ) ;
-    platform_math :: make_num_fract ( fract_change_target_in_frames , _change_target_in_frames , 1 ) ;
+    platform_math :: make_fract_from_whole ( fract_change_target_in_frames , _logic_camera_consts . change_target_in_frames ) ;
     platform_math :: div_fracts ( spline_pos , fract_frames_to_change_camera_target , fract_change_target_in_frames ) ;
     platform_math :: neg_fract ( spline_pos ) ;
     platform_math :: add_to_fract ( spline_pos , _platform_math_consts . get ( ) . fract_1 ) ;
