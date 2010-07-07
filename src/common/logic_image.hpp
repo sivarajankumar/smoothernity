@@ -275,15 +275,15 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     num_fract color_a ;
     num_whole index ;
     
-    platform_math :: make_num_fract ( x_left , - 1 , 1 ) ;
-    platform_math :: make_num_fract ( x_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( y_top , 1 , 1 ) ;
-    platform_math :: make_num_fract ( y_bottom , - 1 , 1 ) ;
-    platform_math :: make_num_fract ( u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
-    platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
-    platform_math :: make_num_fract ( z , 0 , 1 ) ;
+    x_left = _platform_math_consts . get ( ) . fract_minus_1 ;
+    x_right = _platform_math_consts . get ( ) . fract_1 ;
+    y_top = _platform_math_consts . get ( ) . fract_1 ;
+    y_bottom = _platform_math_consts . get ( ) . fract_minus_1 ;
+    u_left = _platform_math_consts . get ( ) . fract_0 ;
+    u_right = _platform_math_consts . get ( ) . fract_1 ;
+    v_top = _platform_math_consts . get ( ) . fract_1 ;
+    v_bottom = _platform_math_consts . get ( ) . fract_0 ;
+    z = _platform_math_consts . get ( ) . fract_0 ;
     color_r = _logic_image_consts . image_r ;
     color_g = _logic_image_consts . image_g ;
     color_b = _logic_image_consts . image_b ;

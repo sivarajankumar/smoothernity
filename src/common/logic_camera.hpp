@@ -628,14 +628,14 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     vector_data shifted_origin ;
     num_fract entity_height ;
     
-    platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
-    platform_math :: make_num_fract ( up_z , 0 , 1 ) ;
-    platform_math :: make_num_fract ( shift_x , 0 , 1 ) ;
+    up_x = _platform_math_consts . get ( ) . fract_0 ;
+    up_y = _platform_math_consts . get ( ) . fract_1 ;
+    up_z = _platform_math_consts . get ( ) . fract_0 ;
+    shift_x = _platform_math_consts . get ( ) . fract_0 ;
     shift_y = _entities_height ;
     platform_math :: add_to_fract ( shift_y , _render_aspect_height ) ;
     platform_math :: add_to_fract ( shift_y , _near_plane_distance ) ;
-    platform_math :: make_num_fract ( shift_z , 0 , 1 ) ;
+    shift_z = _platform_math_consts . get ( ) . fract_0 ;
     platform_vector :: xyz ( up , up_x , up_y , up_z ) ;
     platform_vector :: xyz ( shift , shift_x , shift_y , shift_z ) ;
     platform_vector :: add ( shifted_origin , _current_camera_origin , shift ) ;

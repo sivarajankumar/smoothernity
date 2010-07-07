@@ -420,14 +420,14 @@ void shy_logic_title < mediator > :: _animate_disappear ( )
 template < typename mediator >
 void shy_logic_title < mediator > :: _prepare_to_appear ( )
 {
-    _desired_pos_radius_coeff = _logic_title_consts . spin_radius_in_letters ;
     platform_math :: make_num_fract ( _desired_pos_angle , 11 , 2 ) ;
     platform_math :: mul_fract_by ( _desired_pos_angle , _platform_math_consts . get ( ) . fract_pi ) ;
     platform_math :: mul_fracts ( _desired_rot_angle , _platform_math_consts . get ( ) . fract_2pi , _platform_math_consts . get ( ) . fract_3 ) ;
-    platform_math :: make_num_fract ( _desired_scale , 1 , 1 ) ;    
     platform_math :: make_num_fract ( _rubber_first , 19 , 20 ) ;
     platform_math :: make_num_fract ( _rubber_last , 19 , 20 ) ;
     platform_math :: make_num_whole ( _disappear_at_frames , 9999 ) ;
+    _desired_scale = _platform_math_consts . get ( ) . fract_1 ;    
+    _desired_pos_radius_coeff = _logic_title_consts . spin_radius_in_letters ;
 }
 
 template < typename mediator >
@@ -437,9 +437,9 @@ void shy_logic_title < mediator > :: _prepare_to_disappear ( )
     platform_math :: make_num_fract ( _desired_pos_angle , 22 , 2 ) ;
     platform_math :: mul_fract_by ( _desired_pos_angle , _platform_math_consts . get ( ) . fract_pi ) ;
     platform_math :: mul_fracts ( _desired_rot_angle , _platform_math_consts . get ( ) . fract_2pi , _platform_math_consts . get ( ) . fract_6 ) ;
-    platform_math :: make_num_fract ( _desired_scale , 0 , 1 ) ;    
     platform_math :: make_num_fract ( _rubber_first , 59 , 60 ) ;
     platform_math :: make_num_fract ( _rubber_last , 29 , 30 ) ;
+    _desired_scale = _platform_math_consts . get ( ) . fract_0 ;    
     _title_appeared = _platform_math_consts . get ( ) . whole_true ;
     _disappear_at_frames = _logic_title_consts . disappear_duration_in_frames ;
 }

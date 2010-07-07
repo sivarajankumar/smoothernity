@@ -263,11 +263,11 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         platform_math :: sin ( angle_sin , angle ) ;
         platform_math :: mul_fracts ( vertex_x , _logic_touch_consts . spot_size , angle_cos ) ;
         platform_math :: mul_fracts ( vertex_y , _logic_touch_consts . spot_size , angle_sin ) ;
-        platform_math :: make_num_fract ( vertex_z , 0 , 1 ) ;
+        vertex_z = _platform_math_consts . get ( ) . fract_0 ;
         vertex_r = _logic_touch_consts . spot_r ;
         vertex_g = _logic_touch_consts . spot_g ;
         vertex_b = _logic_touch_consts . spot_b ;
-        platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
+        vertex_a = _platform_math_consts . get ( ) . fract_1 ;
 
         typename messages :: render_mesh_set_vertex_position set_pos_msg ;
         set_pos_msg . mesh = _spot_mesh_id ;

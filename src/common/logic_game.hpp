@@ -387,7 +387,7 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     num_fract fog_near ;
     num_fract fog_far_shift ;
     num_fract fog_near_shift ;
-    platform_math :: make_num_fract ( fog_a , 0 , 1 ) ;
+    fog_a = _platform_math_consts . get ( ) . fract_0 ;
     platform_math :: make_num_fract ( fog_far_shift , 20 , 1 ) ;
     platform_math :: make_num_fract ( fog_near_shift , 10 , 1 ) ;
     platform_math :: add_fracts ( fog_far , fog_far_shift , _near_plane_distance ) ;

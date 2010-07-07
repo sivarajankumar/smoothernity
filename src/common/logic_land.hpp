@@ -88,7 +88,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
     _land_texture_created = _platform_math_consts . get ( ) . whole_false ;
     _land_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
     _land_texture_creation_row = _platform_math_consts . get ( ) . whole_0 ;
-    platform_math :: make_num_fract ( _land_scale , 0 , 1 ) ;
+    _land_scale = _platform_math_consts . get ( ) . fract_0 ;
     _texture_create_requested = _platform_math_consts . get ( ) . whole_false ;
     _texture_create_replied = _platform_math_consts . get ( ) . whole_false ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
@@ -282,7 +282,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             vertex_r = _logic_land_consts . land_r ;
             vertex_g = _logic_land_consts . land_g ;
             vertex_b = _logic_land_consts . land_b ;
-            platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
+            vertex_a = _platform_math_consts . get ( ) . fract_1 ;
             
             typename messages :: render_mesh_set_vertex_position set_pos_msg ;
             set_pos_msg . mesh = _land_mesh_id ;

@@ -78,7 +78,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    platform_math :: make_num_fract ( _fidget_angle , 0 , 1 ) ;
+    _fidget_angle = _platform_math_consts . get ( ) . fract_0 ;
     _fidget_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
     _fidget_mesh_created = _platform_math_consts . get ( ) . whole_false ;
     _fidget_scale = _platform_math_consts . get ( ) . whole_0 ;
@@ -246,11 +246,11 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         platform_math :: sin ( angle_sin , angle ) ;
         platform_math :: mul_fracts ( vertex_x , _logic_fidget_consts . fidget_size , angle_cos ) ;
         platform_math :: mul_fracts ( vertex_y , _logic_fidget_consts . fidget_size , angle_sin ) ;
-        platform_math :: make_num_fract ( vertex_z , 0 , 1 ) ;
+        vertex_z = _platform_math_consts . get ( ) . fract_0 ;
         vertex_r = _logic_fidget_consts . fidget_r ;
         vertex_g = _logic_fidget_consts . fidget_g ;
         vertex_b = _logic_fidget_consts . fidget_b ;
-        platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
+        vertex_a = _platform_math_consts . get ( ) . fract_1 ;
 
         typename messages :: render_mesh_set_vertex_position set_pos_msg ;
         set_pos_msg . mesh = _fidget_mesh_id ;

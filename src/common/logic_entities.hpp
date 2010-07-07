@@ -247,52 +247,52 @@ void shy_logic_entities < mediator > :: _entity_color ( num_fract & r , num_frac
 {
     if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_0 ) )
     {
-        platform_math :: make_num_fract ( r , 1 , 1 ) ;
-        platform_math :: make_num_fract ( g , 0 , 1 ) ;
-        platform_math :: make_num_fract ( b , 0 , 1 ) ;
-        platform_math :: make_num_fract ( a , 1 , 1 ) ;
+        r = _platform_math_consts . get ( ) . fract_1 ;
+        g = _platform_math_consts . get ( ) . fract_0 ;
+        b = _platform_math_consts . get ( ) . fract_0 ;
+        a = _platform_math_consts . get ( ) . fract_1 ;
     }
     else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_1 ) )
     {
-        platform_math :: make_num_fract ( r , 1 , 1 ) ;
-        platform_math :: make_num_fract ( g , 1 , 2 ) ;
-        platform_math :: make_num_fract ( b , 0 , 1 ) ;
-        platform_math :: make_num_fract ( a , 1 , 1 ) ;
+        r = _platform_math_consts . get ( ) . fract_1 ;
+        platform_math :: div_fracts ( g , _platform_math_consts . get ( ) . fract_1 , _platform_math_consts . get ( ) . fract_2 ) ;
+        b = _platform_math_consts . get ( ) . fract_0 ;
+        a = _platform_math_consts . get ( ) . fract_1 ;
     }
     else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_2 ) )
     {
-        platform_math :: make_num_fract ( r , 1 , 1 ) ;
-        platform_math :: make_num_fract ( g , 1 , 1 ) ;
-        platform_math :: make_num_fract ( b , 0 , 1 ) ;
-        platform_math :: make_num_fract ( a , 1 , 1 ) ;
+        r = _platform_math_consts . get ( ) . fract_1 ;
+        g = _platform_math_consts . get ( ) . fract_1 ;
+        b = _platform_math_consts . get ( ) . fract_0 ;
+        a = _platform_math_consts . get ( ) . fract_1 ;
     }
     else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_3 ) )
     {
-        platform_math :: make_num_fract ( r , 0 , 1 ) ;
-        platform_math :: make_num_fract ( g , 1 , 1 ) ;
-        platform_math :: make_num_fract ( b , 0 , 1 ) ;
-        platform_math :: make_num_fract ( a , 1 , 1 ) ;
+        r = _platform_math_consts . get ( ) . fract_0 ;
+        g = _platform_math_consts . get ( ) . fract_1 ;
+        b = _platform_math_consts . get ( ) . fract_0 ;
+        a = _platform_math_consts . get ( ) . fract_1 ;
     }
     else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_4 ) )
     {
-        platform_math :: make_num_fract ( r , 0 , 1 ) ;
-        platform_math :: make_num_fract ( g , 1 , 1 ) ;
-        platform_math :: make_num_fract ( b , 1 , 1 ) ;
-        platform_math :: make_num_fract ( a , 1 , 1 ) ;
+        r = _platform_math_consts . get ( ) . fract_0 ;
+        g = _platform_math_consts . get ( ) . fract_1 ;
+        b = _platform_math_consts . get ( ) . fract_1 ;
+        a = _platform_math_consts . get ( ) . fract_1 ;
     }
     else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_5 ) )
     {
-        platform_math :: make_num_fract ( r , 0 , 1 ) ;
-        platform_math :: make_num_fract ( g , 0 , 1 ) ;
-        platform_math :: make_num_fract ( b , 1 , 1 ) ;
-        platform_math :: make_num_fract ( a , 1 , 1 ) ;
+        r = _platform_math_consts . get ( ) . fract_0 ;
+        g = _platform_math_consts . get ( ) . fract_0 ;
+        b = _platform_math_consts . get ( ) . fract_1 ;
+        a = _platform_math_consts . get ( ) . fract_1 ;
     }
     else if ( platform_conditions :: wholes_are_equal ( i , _platform_math_consts . get ( ) . whole_6 ) )
     {
-        platform_math :: make_num_fract ( r , 1 , 1 ) ;
-        platform_math :: make_num_fract ( g , 0 , 1 ) ;
-        platform_math :: make_num_fract ( b , 1 , 1 ) ;
-        platform_math :: make_num_fract ( a , 1 , 1 ) ;
+        r = _platform_math_consts . get ( ) . fract_1 ;
+        g = _platform_math_consts . get ( ) . fract_0 ;
+        b = _platform_math_consts . get ( ) . fract_1 ;
+        a = _platform_math_consts . get ( ) . fract_1 ;
     }
 }
 
@@ -368,7 +368,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             vertex_r = _logic_entities_consts . entity_color_roof_r ;
             vertex_g = _logic_entities_consts . entity_color_roof_g ;
             vertex_b = _logic_entities_consts . entity_color_roof_b ;
-            platform_math :: make_num_fract ( vertex_a , 1 , 1 ) ;
+            vertex_a = _platform_math_consts . get ( ) . fract_1 ;
 
             _mesh_set_vertex_position ( _vertices_count , vertex_x , vertex_y , vertex_z ) ;
             _mesh_set_vertex_color ( _vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;

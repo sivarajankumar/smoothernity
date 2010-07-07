@@ -110,21 +110,21 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
     vector_data look_at ;
     vector_data up ;
     
-    platform_math :: make_num_fract ( pos_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( pos_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( pos_z , 4 , 1 ) ;
+    pos_x = _platform_math_consts . get ( ) . fract_0 ;
+    pos_y = _platform_math_consts . get ( ) . fract_0 ;
+    pos_z = _platform_math_consts . get ( ) . fract_4 ;
     
-    platform_math :: make_num_fract ( vel_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vel_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vel_z , 0 , 1 ) ;
+    vel_x = _platform_math_consts . get ( ) . fract_0 ;
+    vel_y = _platform_math_consts . get ( ) . fract_0 ;
+    vel_z = _platform_math_consts . get ( ) . fract_0 ;
     
-    platform_math :: make_num_fract ( look_at_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( look_at_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( look_at_z , 1 , 1 ) ;
+    look_at_x = _platform_math_consts . get ( ) . fract_0 ;
+    look_at_y = _platform_math_consts . get ( ) . fract_0 ;
+    look_at_z = _platform_math_consts . get ( ) . fract_1 ;
     
-    platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
-    platform_math :: make_num_fract ( up_z , 0 , 1 ) ;
+    up_x = _platform_math_consts . get ( ) . fract_0 ;
+    up_y = _platform_math_consts . get ( ) . fract_1 ;
+    up_z = _platform_math_consts . get ( ) . fract_0 ;
     
     platform_vector :: xyz ( listener_pos , pos_x , pos_y , pos_z ) ;
     platform_vector :: xyz ( listener_vel , vel_x , vel_y , vel_z ) ;
@@ -234,13 +234,13 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
         
     platform_math :: make_num_whole ( music_tail_cut , 2293 ) ;
     platform_math :: make_num_fract ( gain , 7 , 10 ) ;
-    platform_math :: make_num_fract ( pitch , 1 , 1 ) ;
-    platform_math :: make_num_fract ( pos_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( pos_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( pos_z , - 2 , 1 ) ;
-    platform_math :: make_num_fract ( vel_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vel_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vel_z , 0 , 1 ) ;
+    pitch = _platform_math_consts . get ( ) . fract_1 ;
+    pos_x = _platform_math_consts . get ( ) . fract_0 ;
+    pos_y = _platform_math_consts . get ( ) . fract_0 ;
+    pos_z = _platform_math_consts . get ( ) . fract_minus_2 ;
+    vel_x = _platform_math_consts . get ( ) . fract_0 ;
+    vel_y = _platform_math_consts . get ( ) . fract_0 ;
+    vel_z = _platform_math_consts . get ( ) . fract_0 ;
     platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
     platform_vector :: xyz ( source_vel , vel_x , vel_y , vel_z ) ;
     
@@ -280,7 +280,6 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     {
         num_fract fract_i ;
         num_fract angle ;
-        num_fract num_1 ;
         num_fract magnitude ;
         num_fract angle_sin ;
         num_fract fract_sample_delta ;
@@ -289,10 +288,9 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
         platform_math :: mul_fracts ( angle , fract_i , _platform_math_consts . get ( ) . fract_2pi ) ;
         platform_math :: div_fract_by ( angle , fract_mono_sound_samples_per_second ) ;        
-        platform_math :: make_num_fract ( num_1 , 1 , 1 ) ;
         platform_math :: make_num_fract ( magnitude , 128 , 1 ) ;
         platform_math :: sin ( angle_sin , angle ) ;
-        platform_math :: add_fracts ( fract_sample_delta , num_1 , angle_sin ) ;
+        platform_math :: add_fracts ( fract_sample_delta , _platform_math_consts . get ( ) . fract_1 , angle_sin ) ;
         platform_math :: mul_fract_by ( fract_sample_delta , magnitude ) ;
         platform_math :: make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
         platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
@@ -315,14 +313,14 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     num_whole max_sound_samples ;
     sound_buffer_id mono_sound_buffer ;
     
-    platform_math :: make_num_fract ( gain , 1 , 1 ) ;
-    platform_math :: make_num_fract ( pitch , 1 , 1 ) ;
-    platform_math :: make_num_fract ( pos_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( pos_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( pos_z , - 2 , 1 ) ;
-    platform_math :: make_num_fract ( vel_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vel_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vel_z , 0 , 1 ) ;
+    gain = _platform_math_consts . get ( ) . fract_1 ;
+    pitch = _platform_math_consts . get ( ) . fract_1 ;
+    pos_x = _platform_math_consts . get ( ) . fract_0 ;
+    pos_y = _platform_math_consts . get ( ) . fract_0 ;
+    pos_z = _platform_math_consts . get ( ) . fract_minus_2 ;
+    vel_x = _platform_math_consts . get ( ) . fract_0 ;
+    vel_y = _platform_math_consts . get ( ) . fract_0 ;
+    vel_z = _platform_math_consts . get ( ) . fract_0 ;
     platform_math :: make_num_whole ( max_sound_samples , _logic_sound_consts_type :: max_mono_sound_samples ) ;
     platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
     platform_vector :: xyz ( source_vel , pos_x , pos_y , pos_z ) ;
