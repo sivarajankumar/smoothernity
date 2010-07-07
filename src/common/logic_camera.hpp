@@ -204,7 +204,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matr
 template < typename mediator >
 void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prepare_permit msg )
 {
-    platform_math :: make_num_whole ( _camera_prepare_permitted , true ) ;
+    _camera_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -391,7 +391,7 @@ void shy_logic_camera < mediator > :: _fill_next_camera_schedule ( )
     {
         _reset_camera_rubber ( ) ;
         _update_camera ( ) ;
-        platform_math :: make_num_whole ( _camera_created , true ) ;
+        _camera_created = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: camera_prepared ( ) ) ;
     }
 }
@@ -648,7 +648,7 @@ void shy_logic_camera < mediator > :: _random_camera_origin_index ( num_whole & 
     num_whole index ;
     num_whole index_max ;
     num_whole is_duplicate ;
-    platform_math :: make_num_whole ( index , 0 ) ;
+    index = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( index_max , _entities_mesh_grid , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_math :: mul_whole_by ( index_max , _entities_mesh_grid ) ;
     do
@@ -666,7 +666,7 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( num_whole & 
     num_whole index_min ;
     num_whole index_max ;
     num_whole is_duplicate ;
-    platform_math :: make_num_whole ( index , 0 ) ;
+    index = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( index_min , _entities_mesh_grid , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_math :: mul_whole_by ( index_min , _entities_mesh_grid ) ;
     platform_math :: mul_wholes ( index_max , _entities_mesh_grid , _entities_mesh_grid ) ;
@@ -696,7 +696,7 @@ void shy_logic_camera < mediator > :: _get_random_index ( num_whole & result , n
 template < typename mediator >
 void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_whole & result , num_whole index )
 {
-    platform_math :: make_num_whole ( result , false ) ;
+    result = _platform_math_consts . get ( ) . whole_false ;
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , _platform_math_consts . get ( ) . whole_4 ) 
         ; platform_math :: inc_whole ( i )
@@ -706,7 +706,7 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_wh
         platform_static_array :: element_ptr ( scheduled_index , _scheduled_camera_origin_indices , i ) ;
         if ( platform_conditions :: wholes_are_equal ( scheduled_index . get ( ) , index ) )
         {
-            platform_math :: make_num_whole ( result , true ) ;
+            result = _platform_math_consts . get ( ) . whole_true ;
             break ;
         }
     }
@@ -715,7 +715,7 @@ void shy_logic_camera < mediator > :: _camera_origin_index_is_duplicate ( num_wh
 template < typename mediator >
 void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( num_whole & result , num_whole index )
 {
-    platform_math :: make_num_whole ( result , false ) ;
+    result = _platform_math_consts . get ( ) . whole_false ;
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , _platform_math_consts . get ( ) . whole_4 ) 
         ; platform_math :: inc_whole ( i )
@@ -725,7 +725,7 @@ void shy_logic_camera < mediator > :: _camera_target_index_is_duplicate ( num_wh
         platform_static_array :: element_ptr ( scheduled_index , _scheduled_camera_target_indices , i ) ;
         if ( platform_conditions :: wholes_are_equal ( scheduled_index . get ( ) , index ) )
         {
-            platform_math :: make_num_whole ( result , true ) ;
+            result = _platform_math_consts . get ( ) . whole_true ;
             break ;
         }
     }

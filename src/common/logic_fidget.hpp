@@ -79,9 +79,9 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     platform_math :: make_num_fract ( _fidget_angle , 0 , 1 ) ;
-    platform_math :: make_num_whole ( _fidget_prepare_permitted , false ) ;
-    platform_math :: make_num_whole ( _fidget_mesh_created , false ) ;
-    platform_math :: make_num_whole ( _fidget_scale , 0 ) ;
+    _fidget_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
+    _fidget_mesh_created = _platform_math_consts . get ( ) . whole_false ;
+    _fidget_scale = _platform_math_consts . get ( ) . whole_0 ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
 }
@@ -108,7 +108,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_rend
 template < typename mediator >
 void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prepare_permit msg )
 {
-    platform_math :: make_num_whole ( _fidget_prepare_permitted , true ) ;
+    _fidget_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -119,7 +119,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: render_mesh
         _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
         _fidget_mesh_id = msg . mesh ;
         _create_fidget_mesh ( ) ;
-        platform_math :: make_num_whole ( _fidget_mesh_created , true ) ;
+        _fidget_mesh_created = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: fidget_prepared ( ) ) ;
     }
 }
@@ -219,12 +219,11 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
 {    
-    num_whole i ;
     num_fract fract_fidget_edges ;
     
     platform_math :: make_fract_from_whole ( fract_fidget_edges , _logic_fidget_consts . fidget_edges ) ;
     
-    for ( platform_math :: make_num_whole ( i , 0 )
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _logic_fidget_consts . fidget_edges )
         ; platform_math :: inc_whole ( i )
         )

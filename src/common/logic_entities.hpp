@@ -102,14 +102,14 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: init msg 
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    platform_math :: make_num_whole ( _entity_created , false ) ;
-    platform_math :: make_num_whole ( _entities_prepare_permitted , false ) ;
-    platform_math :: make_num_whole ( _grid_scale , 0 ) ;
-    platform_math :: make_num_whole ( _current_strip_mesh_span , 0 ) ;
-    platform_math :: make_num_whole ( _current_fan_mesh_span , 0 ) ;
-    platform_math :: make_num_whole ( _strip_indices_count , 0 ) ;
-    platform_math :: make_num_whole ( _fan_indices_count , 0 ) ;
-    platform_math :: make_num_whole ( _vertices_count , 0 ) ;
+    _entity_created = _platform_math_consts . get ( ) . whole_false ;
+    _entities_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
+    _grid_scale = _platform_math_consts . get ( ) . whole_0 ;
+    _current_strip_mesh_span = _platform_math_consts . get ( ) . whole_0 ;
+    _current_fan_mesh_span = _platform_math_consts . get ( ) . whole_0 ;
+    _strip_indices_count = _platform_math_consts . get ( ) . whole_0 ;
+    _fan_indices_count = _platform_math_consts . get ( ) . whole_0 ;
+    _vertices_count = _platform_math_consts . get ( ) . whole_0 ;
     _entity_mesh_id_created = _platform_math_consts . get ( ) . whole_false ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
 }
@@ -136,7 +136,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 template < typename mediator >
 void shy_logic_entities < mediator > :: receive ( typename messages :: entities_prepare_permit msg )
 {
-    platform_math :: make_num_whole ( _entities_prepare_permitted , true ) ;
+    _entities_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -391,7 +391,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             mesh_finalize_msg . mesh = _entity_mesh_id ;
             _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 
-            platform_math :: make_num_whole ( _entity_created , true ) ;
+            _entity_created = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
         }
     }

@@ -635,7 +635,7 @@ template < typename mediator >
 void shy_logic_text < mediator > :: _next_letter_row ( )
 {
     platform_math :: sub_from_whole ( _origin_y , _letter_size_y ) ;
-    platform_math :: make_num_whole ( _origin_x , 0 ) ;
+    _origin_x = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
@@ -1481,7 +1481,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
     num_whole circle_high_right ;
     num_whole circle_high_top ;
     num_whole circle_high_bottom ;
-    platform_math :: make_num_whole ( circle_high_left , 0 ) ;    
+    circle_high_left = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( circle_high_right , _letter_size_x , _platform_math_consts . get ( ) . whole_2 ) ;    
     platform_math :: sub_wholes ( circle_high_top , _letter_size_y , _platform_math_consts . get ( ) . whole_1 ) ;    
     platform_math :: mul_wholes ( circle_high_bottom , _letter_size_y , _platform_math_consts . get ( ) . whole_2 ) ;
@@ -1497,7 +1497,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
     platform_math :: sub_wholes ( circle_low_right , _letter_size_x , _platform_math_consts . get ( ) . whole_1 ) ;    
     platform_math :: mul_wholes ( circle_low_top , _letter_size_y , _platform_math_consts . get ( ) . whole_3 ) ;
     platform_math :: div_whole_by ( circle_low_top , _platform_math_consts . get ( ) . whole_5 ) ;    
-    platform_math :: make_num_whole ( circle_low_bottom , 0 ) ;
+    circle_low_bottom = _platform_math_consts . get ( ) . whole_0 ;
     _rasterize_ellipse_in_rect ( circle_low_left , circle_low_top , circle_low_right , circle_low_bottom ) ;
 
     num_whole board_mid_left ;
@@ -1532,7 +1532,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_S ( )
     platform_math :: div_wholes ( board_low_left , _letter_size_x , _platform_math_consts . get ( ) . whole_9 ) ;    
     board_low_right = board_mid_right ;
     platform_math :: div_wholes ( board_low_top , _letter_size_y , _platform_math_consts . get ( ) . whole_5 ) ;    
-    platform_math :: make_num_whole ( board_low_bottom , 0 ) ;    
+    board_low_bottom = _platform_math_consts . get ( ) . whole_0 ;    
     _rasterize_use_texel ( _filler ) ;
     _rasterize_rect ( board_low_left , board_low_top , board_low_right , board_low_bottom ) ;
         
@@ -1592,7 +1592,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_T ( )
     num_whole hole_mid_right ;
     num_whole hole_top ;
     num_whole hole_bottom ;
-    platform_math :: make_num_whole ( hole_left , 0 ) ;
+    hole_left = _platform_math_consts . get ( ) . whole_0 ;
     hole_right = right ;    
     platform_math :: mul_wholes ( hole_mid_left , _letter_size_x , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_math :: div_whole_by ( hole_mid_left , _platform_math_consts . get ( ) . whole_7 ) ;    
@@ -1600,7 +1600,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_T ( )
     platform_math :: div_whole_by ( hole_mid_right , _platform_math_consts . get ( ) . whole_7 ) ;    
     platform_math :: mul_wholes ( hole_top , _letter_size_y , _platform_math_consts . get ( ) . whole_4 ) ;
     platform_math :: div_whole_by ( hole_top , _platform_math_consts . get ( ) . whole_5 ) ;    
-    platform_math :: make_num_whole ( hole_bottom , 0 ) ;
+    hole_bottom = _platform_math_consts . get ( ) . whole_0 ;
     _rasterize_use_texel ( _eraser ) ;
     _rasterize_rect ( hole_left , hole_top , hole_mid_left , hole_bottom ) ;
     _rasterize_rect ( hole_mid_right , hole_top , hole_right , hole_bottom ) ;
@@ -1617,11 +1617,11 @@ void shy_logic_text < mediator > :: _rasterize_font_english_U ( )
     num_whole ellipse_top ;
     num_whole ellipse_bottom ;
     platform_math :: sub_wholes ( top_limit , _letter_size_y , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_math :: make_num_whole ( ellipse_left , 0 ) ;    
+    ellipse_left = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: mul_wholes ( ellipse_right , _letter_size_x , _platform_math_consts . get ( ) . whole_4 ) ;
     platform_math :: div_whole_by ( ellipse_right , _platform_math_consts . get ( ) . whole_5 ) ;    
     platform_math :: div_wholes ( ellipse_top , _letter_size_y , _platform_math_consts . get ( ) . whole_2 ) ;    
-    platform_math :: make_num_whole ( ellipse_bottom , 0 ) ;
+    ellipse_bottom = _platform_math_consts . get ( ) . whole_0 ;
     _rasterize_use_texel ( _filler ) ;
     _rasterize_ellipse_in_rect ( ellipse_left , ellipse_top , ellipse_right , ellipse_bottom ) ;    
     
@@ -1661,7 +1661,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_V ( )
     num_whole low_left ;
     num_whole low_right ;
     platform_math :: sub_wholes ( top_limit , _letter_size_y , _platform_math_consts . get ( ) . whole_1 ) ;
-    platform_math :: make_num_whole ( high_1_left , 0 ) ;    
+    high_1_left = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( high_1_right , _letter_size_x , _platform_math_consts . get ( ) . whole_5 ) ;    
     platform_math :: mul_wholes ( high_2_left , _letter_size_x , _platform_math_consts . get ( ) . whole_4 ) ;
     platform_math :: div_whole_by ( high_2_left , _platform_math_consts . get ( ) . whole_5 ) ;    
@@ -1694,7 +1694,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
     num_whole low_2_right ;
     num_whole high_top ;
     num_whole low_bottom ;
-    platform_math :: make_num_whole ( high_1_left , 0 ) ;    
+    high_1_left = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( high_1_right , _letter_size_x , _platform_math_consts . get ( ) . whole_5 ) ;    
     platform_math :: mul_wholes ( high_2_left , _letter_size_x , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_math :: div_whole_by ( high_2_left , _platform_math_consts . get ( ) . whole_5 ) ;    
@@ -1711,7 +1711,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_W ( )
     platform_math :: mul_wholes ( low_2_right , _letter_size_x , _platform_math_consts . get ( ) . whole_4 ) ;
     platform_math :: div_whole_by ( low_2_right , _platform_math_consts . get ( ) . whole_5 ) ;    
     platform_math :: sub_wholes ( high_top , _letter_size_y , _platform_math_consts . get ( ) . whole_1 ) ;    
-    platform_math :: make_num_whole ( low_bottom , 0 ) ;
+    low_bottom = _platform_math_consts . get ( ) . whole_0 ;
     _rasterize_use_texel ( _filler ) ;
     _rasterize_triangle ( high_1_left , high_top , high_1_right , high_top , low_1_right , low_bottom ) ;
     _rasterize_triangle ( high_1_left , high_top , low_1_left , low_bottom , low_1_right , low_bottom ) ;
@@ -1734,13 +1734,13 @@ void shy_logic_text < mediator > :: _rasterize_font_english_X ( )
     num_whole right_2 ;
     num_whole top_y ;
     num_whole bottom_y ;
-    platform_math :: make_num_whole ( left_1 , 0 ) ;    
+    left_1 = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( right_1 , _letter_size_x , _platform_math_consts . get ( ) . whole_4 ) ;    
     platform_math :: mul_wholes ( left_2 , _letter_size_x , _platform_math_consts . get ( ) . whole_3 ) ;
     platform_math :: div_whole_by ( left_2 , _platform_math_consts . get ( ) . whole_4 ) ;    
     platform_math :: sub_wholes ( right_2 , _letter_size_x , _platform_math_consts . get ( ) . whole_1 ) ;    
     platform_math :: sub_wholes ( top_y , _letter_size_y , _platform_math_consts . get ( ) . whole_1 ) ;    
-    platform_math :: make_num_whole ( bottom_y , 0 ) ;    
+    bottom_y = _platform_math_consts . get ( ) . whole_0 ;
     _rasterize_use_texel ( _filler ) ;
     _rasterize_triangle ( left_1 , top_y , right_1 , top_y , right_2 , bottom_y ) ;
     _rasterize_triangle ( left_1 , top_y , left_2 , bottom_y , right_2 , bottom_y ) ;
@@ -1762,7 +1762,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
     num_whole low_right ;
     num_whole low_bottom ;
     num_whole mid_y ;
-    platform_math :: make_num_whole ( high_1_left , 0 ) ;    
+    high_1_left = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( high_1_right , _letter_size_x , _platform_math_consts . get ( ) . whole_4 ) ;    
     platform_math :: mul_wholes ( high_2_left , _letter_size_x , _platform_math_consts . get ( ) . whole_3 ) ;
     platform_math :: div_whole_by ( high_2_left , _platform_math_consts . get ( ) . whole_4 ) ;    
@@ -1772,7 +1772,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Y ( )
     platform_math :: div_whole_by ( low_left , _platform_math_consts . get ( ) . whole_5 ) ;    
     platform_math :: mul_wholes ( low_right , _letter_size_x , _platform_math_consts . get ( ) . whole_3 ) ;
     platform_math :: div_whole_by ( low_right , _platform_math_consts . get ( ) . whole_5 ) ;    
-    platform_math :: make_num_whole ( low_bottom , 0 ) ;    
+    low_bottom = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: div_wholes ( mid_y , _letter_size_y , _platform_math_consts . get ( ) . whole_2 ) ;    
     _rasterize_use_texel ( _filler ) ;
     _rasterize_triangle ( high_1_left , high_top , high_1_right , high_top , low_right , mid_y ) ;
@@ -1791,7 +1791,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Z ( )
     num_whole hor_right ;
     num_whole high_top ;
     num_whole high_bottom ;
-    platform_math :: make_num_whole ( hor_left , 0 ) ;    
+    hor_left = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: mul_wholes ( hor_right , _letter_size_x , _platform_math_consts . get ( ) . whole_4 ) ;
     platform_math :: div_whole_by ( hor_right , _platform_math_consts . get ( ) . whole_5 ) ;    
     platform_math :: sub_wholes ( high_top , _letter_size_y , _platform_math_consts . get ( ) . whole_1 ) ;    
@@ -1803,7 +1803,7 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Z ( )
     num_whole low_top ;
     num_whole low_bottom ;
     platform_math :: div_wholes ( low_top , _letter_size_y , _platform_math_consts . get ( ) . whole_5 ) ;    
-    platform_math :: make_num_whole ( low_bottom , 0 ) ;
+    low_bottom = _platform_math_consts . get ( ) . whole_0 ;
     _rasterize_use_texel ( _filler ) ;
     _rasterize_rect ( hor_left , low_top , hor_right , low_bottom ) ;
     

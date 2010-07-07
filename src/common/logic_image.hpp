@@ -146,7 +146,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: render_mesh_
         _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
         _image_mesh_id = msg . mesh ;
         _create_image_mesh ( ) ;
-        platform_math :: make_num_whole ( _image_mesh_created , true ) ;
+        _image_mesh_created = _platform_math_consts . get ( ) . whole_true ;
     }
 }
 
@@ -195,7 +195,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: render_textu
                 texture_finalize_msg . texture = _image_texture_id ;
                 _mediator . get ( ) . send ( texture_finalize_msg ) ;
             }
-            platform_math :: make_num_whole ( _image_texture_loaded , true ) ;
+            _image_texture_loaded = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: image_prepared ( ) ) ;
         }
         if ( platform_conditions :: whole_is_true ( _image_mesh_created ) && platform_conditions :: whole_is_true ( _image_texture_loaded ) )

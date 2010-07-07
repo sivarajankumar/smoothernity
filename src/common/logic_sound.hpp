@@ -272,7 +272,7 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     num_fract fract_mono_sound_samples_per_second ;
     platform_math :: make_num_whole ( whole_max_mono_sound_samples , _logic_sound_consts_type :: max_mono_sound_samples ) ;
     platform_math :: make_num_fract ( fract_mono_sound_samples_per_second , platform_sound :: mono_sound_samples_per_second , 1 ) ;
-    platform_math :: make_num_whole ( next_sample , 0 ) ;
+    next_sample = _platform_math_consts . get ( ) . whole_0 ;
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
         ; platform_math :: inc_whole ( i )

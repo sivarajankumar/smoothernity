@@ -138,7 +138,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: init msg )
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_permit msg )
 {
-    platform_math :: make_num_whole ( _game_launch_permitted , true ) ;
+    _game_launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -185,7 +185,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update m
         if ( platform_conditions :: whole_is_false ( _game_launched ) )
         {
             _mediator . get ( ) . send ( typename messages :: camera_prepare_permit ( ) ) ;
-            platform_math :: make_num_whole ( _game_launched , true ) ;
+            _game_launched = _platform_math_consts . get ( ) . whole_true ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _game_launched ) )

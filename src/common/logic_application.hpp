@@ -37,25 +37,25 @@ void shy_logic_application < mediator > :: receive ( typename messages :: init m
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    platform_math :: make_num_whole ( _application_launched , false ) ;
-    platform_math :: make_num_whole ( _title_active , false ) ;
-    platform_math :: make_num_whole ( _game_active , false ) ;
-    platform_math :: make_num_whole ( _text_active , false ) ;
+    _application_launched = _platform_math_consts . get ( ) . whole_false ;
+    _title_active = _platform_math_consts . get ( ) . whole_false ;
+    _game_active = _platform_math_consts . get ( ) . whole_false ;
+    _text_active = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: text_prepared msg )
 {
-    platform_math :: make_num_whole ( _text_active , false ) ;
-    platform_math :: make_num_whole ( _title_active , true ) ;
+    _text_active = _platform_math_consts . get ( ) . whole_false ;
+    _title_active = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: title_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: title_finished msg )
 {
-    platform_math :: make_num_whole ( _title_active , false ) ;
-    platform_math :: make_num_whole ( _game_active , true ) ;
+    _title_active = _platform_math_consts . get ( ) . whole_false ;
+    _game_active = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: game_launch_permit ( ) ) ;
 }
 
@@ -81,8 +81,8 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
 {
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
-        platform_math :: make_num_whole ( _application_launched , true ) ;
-        platform_math :: make_num_whole ( _text_active , true ) ;
+        _application_launched = _platform_math_consts . get ( ) . whole_true ;
+        _text_active = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: text_prepare_permit ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _text_active ) )

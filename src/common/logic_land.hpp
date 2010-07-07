@@ -84,10 +84,10 @@ void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    platform_math :: make_num_whole ( _land_mesh_created , false ) ;
-    platform_math :: make_num_whole ( _land_texture_created , false ) ;
-    platform_math :: make_num_whole ( _land_prepare_permitted , false ) ;
-    platform_math :: make_num_whole ( _land_texture_creation_row , 0 ) ;
+    _land_mesh_created = _platform_math_consts . get ( ) . whole_false ;
+    _land_texture_created = _platform_math_consts . get ( ) . whole_false ;
+    _land_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
+    _land_texture_creation_row = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: make_num_fract ( _land_scale , 0 , 1 ) ;
     _texture_create_requested = _platform_math_consts . get ( ) . whole_false ;
     _texture_create_replied = _platform_math_consts . get ( ) . whole_false ;
@@ -108,7 +108,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_done msg
 template < typename mediator >
 void shy_logic_land < mediator > :: receive ( typename messages :: land_prepare_permit msg )
 {
-    platform_math :: make_num_whole ( _land_prepare_permitted , true ) ;
+    _land_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -233,8 +233,8 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     num_fract fract_land_grid ;
     num_whole land_grid_plus_1 ;
     
-    platform_math :: make_num_whole ( vertices_count , 0 ) ;
-    platform_math :: make_num_whole ( indices_count , 0 ) ;
+    vertices_count = _platform_math_consts . get ( ) . whole_0 ;
+    indices_count = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: make_fract_from_whole ( fract_land_grid , _logic_land_consts . land_grid ) ;
     platform_math :: mul_fracts ( grid_step , _logic_land_consts . land_radius , _platform_math_consts . get ( ) . fract_2 ) ;
     platform_math :: div_fract_by ( grid_step , fract_land_grid ) ;
@@ -358,7 +358,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
     typename messages :: render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _land_mesh_id ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
-    platform_math :: make_num_whole ( _land_mesh_created , true ) ;
+    _land_mesh_created = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
@@ -374,7 +374,6 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
     texture_height = engine_render_stateless_consts . get ( ) . texture_height ;
     for ( ; ; )
     {
-        num_whole x ;
         num_whole rows_delta ;
         num_whole y = _land_texture_creation_row ;
         
@@ -385,7 +384,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         {
             break ;
         }
-        for ( platform_math :: make_num_whole ( x , 0 )
+        for ( num_whole x = _platform_math_consts . get ( ) . whole_0
             ; platform_conditions :: whole_less_than_whole ( x , texture_width )
             ; platform_math :: inc_whole ( x )
             )
@@ -449,7 +448,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
         typename messages :: render_texture_finalize texture_finalize_msg ;
         texture_finalize_msg . texture = _land_texture_id ;
         _mediator . get ( ) . send ( texture_finalize_msg ) ;
-        platform_math :: make_num_whole ( _land_texture_created , true ) ;
+        _land_texture_created = _platform_math_consts . get ( ) . whole_true ;
     }
 }
 
