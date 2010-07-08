@@ -24,7 +24,7 @@ public :
     private :
         GLuint _buffer_id ;
     } ;
-    
+
     class render_vertex_buffer_id
     {
         friend class shy_macosx_platform_render ;
@@ -34,15 +34,6 @@ public :
         GLuint _buffer_id ;
     } ;
 
-    class render_vertex_buffer_mapped_data
-    {
-        friend class shy_macosx_platform_render ;
-    public :
-        render_vertex_buffer_mapped_data ( ) ;
-    private :
-        void * _data ;
-    } ;
-    
 	class render_texture_id
 	{
 		friend class shy_macosx_platform_render ;
@@ -61,6 +52,24 @@ public :
         int _resource_id ;
     } ;
 	
+    class render_index_buffer_mapped_data
+    {
+        friend class shy_macosx_platform_render ;
+    public :
+        render_index_buffer_mapped_data ( ) ;
+    private :
+        void * _data ;
+    } ;
+    
+    class render_vertex_buffer_mapped_data
+    {
+        friend class shy_macosx_platform_render ;
+    public :
+        render_vertex_buffer_mapped_data ( ) ;
+    private :
+        void * _data ;
+    } ;
+    
     class texel_data
     {
         friend class shy_macosx_platform_render ;
@@ -103,6 +112,11 @@ public :
     static void mapped_vertex_buffer_element 
         ( typename platform_pointer :: template pointer < vertex_data > & ptr 
         , render_vertex_buffer_mapped_data data 
+        , num_whole index 
+        ) ;
+    static void mapped_index_buffer_element 
+        ( typename platform_pointer :: template pointer < index_data > & ptr 
+        , render_index_buffer_mapped_data data 
         , num_whole index 
         ) ;
 
@@ -150,8 +164,9 @@ public :
     void map_vertex_buffer ( render_vertex_buffer_mapped_data & data , render_vertex_buffer_id arg_buffer_id ) ;
     void unmap_vertex_buffer ( render_vertex_buffer_id arg_buffer_id ) ;
     
-    template < typename indices_array >
-    void create_old_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data ) ;
+    void create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements ) ;
+    void map_index_buffer ( render_index_buffer_mapped_data & data , render_index_buffer_id arg_buffer_id ) ;
+    void unmap_index_buffer ( render_index_buffer_id arg_buffer_id ) ;
     
     void draw_triangle_strip 
         ( const render_vertex_buffer_id & vertices_buffer 
@@ -210,12 +225,6 @@ shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_id :: re
 }
 
 template < typename platform_insider >
-shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_mapped_data :: render_vertex_buffer_mapped_data ( )
-: _data ( ( void * ) platform_insider :: uninitialized_value )
-{
-}
-    
-template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_texture_id :: render_texture_id ( )
 : _texture_id ( GLuint ( platform_insider :: uninitialized_value ) )
 {
@@ -227,6 +236,18 @@ shy_macosx_platform_render < platform_insider > :: texture_resource_id :: textur
 {
 }
 	
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_mapped_data :: render_vertex_buffer_mapped_data ( )
+: _data ( ( void * ) platform_insider :: uninitialized_value )
+{
+}
+
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: render_index_buffer_mapped_data :: render_index_buffer_mapped_data ( )
+: _data ( ( void * ) platform_insider :: uninitialized_value )
+{
+}
+
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: texel_data :: texel_data ( )
 {
@@ -563,22 +584,46 @@ inline void shy_macosx_platform_render < platform_insider > :: set_vertex_color
 }
 
 template < typename platform_insider >
-template < typename indices_array >
-inline void shy_macosx_platform_render < platform_insider > :: create_old_index_buffer 
-    ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data )
+inline void shy_macosx_platform_render < platform_insider > :: create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     int elements_int = 0 ;
-    const index_data * indices = 0 ;
     platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
-    platform_static_array_insider :: elements_ptr ( indices , data ) ;
     glBufferData
-        ( GL_ELEMENT_ARRAY_BUFFER
-        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) elements_int )
-        , indices
-        , GL_STATIC_DRAW
+        ( GL_ELEMENT_ARRAY_BUFFER 
+        , ( GLsizeiptr ) ( sizeof ( index_data ) * ( unsigned int ) elements_int ) 
+        , 0
+        , GL_STATIC_DRAW 
         ) ;
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: map_index_buffer
+    ( render_index_buffer_mapped_data & data , render_index_buffer_id arg_buffer_id )
+{
+    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    data . _data = glMapBuffer ( GL_ELEMENT_ARRAY_BUFFER , GL_READ_WRITE ) ;
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: unmap_index_buffer ( render_index_buffer_id arg_buffer_id )
+{
+    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    glUnmapBuffer ( GL_ELEMENT_ARRAY_BUFFER ) ;
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: mapped_index_buffer_element
+    ( typename platform_pointer :: template pointer < index_data > & ptr 
+    , render_index_buffer_mapped_data data
+    , num_whole index
+    )
+{
+    index_data * mapped_indices = ( index_data * ) data . _data ;
+    int index_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( index_int , index ) ;
+    ptr . set ( mapped_indices [ index_int ] ) ;
 }
 
 template < typename platform_insider >
