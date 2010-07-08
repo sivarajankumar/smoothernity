@@ -19,6 +19,8 @@ class shy_logic_game
         num_fract final_r ;
         num_fract final_g ;
         num_fract final_b ;
+        num_fract fog_far_shift ;
+        num_fract fog_near_shift ;
         num_whole fade_in_frames ;
     } ;
     
@@ -94,6 +96,8 @@ shy_logic_game < mediator > :: _logic_game_consts_type :: _logic_game_consts_typ
     platform_math :: make_num_fract ( final_r , 0 , 1 ) ;
     platform_math :: make_num_fract ( final_g , 1 , 10 ) ;
     platform_math :: make_num_fract ( final_b , 4 , 10 ) ;
+    platform_math :: make_num_fract ( fog_far_shift , 20 , 1 ) ;
+    platform_math :: make_num_fract ( fog_near_shift , 10 , 1 ) ;
     platform_math :: make_num_whole ( fade_in_frames , 90 ) ;
 }
 
@@ -385,13 +389,9 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     num_fract fog_a ;
     num_fract fog_far ;
     num_fract fog_near ;
-    num_fract fog_far_shift ;
-    num_fract fog_near_shift ;
     fog_a = _platform_math_consts . get ( ) . fract_0 ;
-    platform_math :: make_num_fract ( fog_far_shift , 20 , 1 ) ;
-    platform_math :: make_num_fract ( fog_near_shift , 10 , 1 ) ;
-    platform_math :: add_fracts ( fog_far , fog_far_shift , _near_plane_distance ) ;
-    platform_math :: add_fracts ( fog_near , fog_near_shift , _near_plane_distance ) ;
+    platform_math :: add_fracts ( fog_far , _logic_game_consts . fog_far_shift , _near_plane_distance ) ;
+    platform_math :: add_fracts ( fog_near , _logic_game_consts . fog_near_shift , _near_plane_distance ) ;
     
     typename messages :: render_fog_linear fog_msg ;
     fog_msg . znear = fog_near ;

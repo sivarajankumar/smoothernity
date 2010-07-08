@@ -35,6 +35,9 @@ class shy_logic_text
         num_fract canvas_g ;
         num_fract canvas_b ;
         num_fract canvas_a ;
+        num_fract mesh_x ;
+        num_fract mesh_y ;
+        num_fract mesh_z ;
         num_whole scale_in_frames ;
         num_whole small_size ;
         num_whole big_size ;
@@ -152,6 +155,9 @@ shy_logic_text < mediator > :: _logic_text_consts_type :: _logic_text_consts_typ
     platform_math :: make_num_fract ( canvas_g , 255 , 255 ) ;
     platform_math :: make_num_fract ( canvas_b , 255 , 255 ) ;
     platform_math :: make_num_fract ( canvas_a , 255 , 255 ) ;
+    platform_math :: make_num_fract ( mesh_x , - 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_y , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_z , - 3 , 1 ) ;
     platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
     platform_math :: make_num_whole ( small_size , 16 ) ;
     platform_math :: make_num_whole ( big_size , 32 ) ;
@@ -381,9 +387,6 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
     num_fract fract_scale_frames ;    
     num_fract fract_scale_in_frames ;
     num_fract scale ;
-    num_fract origin_x ;
-    num_fract origin_y ;
-    num_fract origin_z ;
     
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
     platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_text_consts . scale_in_frames ) ;
@@ -395,13 +398,10 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
         , fract_scale_in_frames 
         , fract_scale_frames 
         ) ;
-    platform_math :: make_num_fract ( origin_x , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
     platform_matrix :: set_axis_x ( matrix , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;
     platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , scale ) ;
-    platform_matrix :: set_origin ( matrix , origin_x , origin_y , origin_z ) ;
+    platform_matrix :: set_origin ( matrix , _logic_text_consts . mesh_x , _logic_text_consts . mesh_y , _logic_text_consts . mesh_z ) ;
     {
         typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _text_mesh_id ;

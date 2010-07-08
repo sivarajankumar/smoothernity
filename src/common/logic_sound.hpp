@@ -26,6 +26,8 @@ class shy_logic_sound
     {
     public :
         _logic_sound_consts_type ( ) ;
+        num_fract gain ;
+        num_fract magnitude ;
         num_whole music_rough_and_heavy_resource_index ;
         num_whole modulator ;
         num_whole half_modulator ;
@@ -69,6 +71,8 @@ private :
 template < typename mediator >
 shy_logic_sound < mediator > :: _logic_sound_consts_type :: _logic_sound_consts_type ( )
 {
+    platform_math :: make_num_fract ( gain , 7 , 10 ) ;
+    platform_math :: make_num_fract ( magnitude , 128 , 1 ) ;
     platform_math :: make_num_whole ( music_rough_and_heavy_resource_index , 1 ) ;
     platform_math :: make_num_whole ( modulator , 256 ) ;
     platform_math :: make_num_whole ( half_modulator , 128 ) ;
@@ -220,7 +224,6 @@ void shy_logic_sound < mediator > :: _int_to_sample ( num_fract & result , num_w
 template < typename mediator >
 void shy_logic_sound < mediator > :: _create_stereo_sound ( )
 {
-    num_fract gain ;
     num_fract pitch ;
     num_fract pos_x ;
     num_fract pos_y ;
@@ -233,7 +236,6 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
     vector_data source_vel ;
     sound_buffer_id stereo_sound_buffer ;
         
-    platform_math :: make_num_fract ( gain , 7 , 10 ) ;
     pitch = _platform_math_consts . get ( ) . fract_1 ;
     pos_x = _platform_math_consts . get ( ) . fract_0 ;
     pos_y = _platform_math_consts . get ( ) . fract_0 ;
@@ -255,7 +257,7 @@ void shy_logic_sound < mediator > :: _create_stereo_sound ( )
         , loaded_samples_count
         ) ;
     _platform_sound . get ( ) . create_source ( _stereo_sound_source ) ;
-    _platform_sound . get ( ) . set_source_gain ( _stereo_sound_source , gain ) ;
+    _platform_sound . get ( ) . set_source_gain ( _stereo_sound_source , _logic_sound_consts . gain ) ;
     _platform_sound . get ( ) . set_source_pitch ( _stereo_sound_source , pitch ) ;
     _platform_sound . get ( ) . set_source_buffer ( _stereo_sound_source , stereo_sound_buffer ) ;
     _platform_sound . get ( ) . set_source_playback_looping ( _stereo_sound_source ) ;
@@ -280,7 +282,6 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
     {
         num_fract fract_i ;
         num_fract angle ;
-        num_fract magnitude ;
         num_fract angle_sin ;
         num_fract fract_sample_delta ;
         num_fract sample ;
@@ -288,10 +289,9 @@ void shy_logic_sound < mediator > :: _create_mono_sound ( )
         platform_math :: make_fract_from_whole ( fract_i , i ) ;
         platform_math :: mul_fracts ( angle , fract_i , _platform_math_consts . get ( ) . fract_2pi ) ;
         platform_math :: div_fract_by ( angle , fract_mono_sound_samples_per_second ) ;        
-        platform_math :: make_num_fract ( magnitude , 128 , 1 ) ;
         platform_math :: sin ( angle_sin , angle ) ;
         platform_math :: add_fracts ( fract_sample_delta , _platform_math_consts . get ( ) . fract_1 , angle_sin ) ;
-        platform_math :: mul_fract_by ( fract_sample_delta , magnitude ) ;
+        platform_math :: mul_fract_by ( fract_sample_delta , _logic_sound_consts . magnitude ) ;
         platform_math :: make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
         platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
         _int_to_sample ( sample , next_sample ) ;

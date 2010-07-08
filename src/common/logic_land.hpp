@@ -30,6 +30,7 @@ class shy_logic_land
         num_whole multiplier_1 ;
         num_whole multiplier_2 ;
         num_whole multiplier_3 ;
+        num_fract color_scale ;
         num_fract land_radius ;
         num_fract land_r ;
         num_fract land_g ;
@@ -82,6 +83,7 @@ shy_logic_land < mediator > :: _logic_land_consts_type :: _logic_land_consts_typ
     platform_math :: make_num_fract ( land_r , 255 , 255 ) ;
     platform_math :: make_num_fract ( land_g , 255 , 255 ) ;
     platform_math :: make_num_fract ( land_b , 255 , 255 ) ;
+    platform_math :: make_num_fract ( color_scale , 255 , 1 ) ;
 }
 
 template < typename mediator >
@@ -408,7 +410,6 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             num_fract fract_r ;
             num_fract fract_g ;
             num_fract fract_b ;
-            num_fract color_scale ;
             
             platform_math :: xor_wholes ( c , x , y ) ;
             platform_math :: mod_wholes ( texel_r , c , _logic_land_consts . modulator_1 ) ;
@@ -418,13 +419,12 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             platform_math :: mul_whole_by ( texel_g , _logic_land_consts . multiplier_2 ) ;
             platform_math :: mul_whole_by ( texel_b , _logic_land_consts . multiplier_3 ) ;
 
-            platform_math :: make_num_fract ( color_scale , 255 , 1 ) ;
             platform_math :: make_fract_from_whole ( fract_r , texel_r ) ;
             platform_math :: make_fract_from_whole ( fract_g , texel_g ) ;
             platform_math :: make_fract_from_whole ( fract_b , texel_b ) ;
-            platform_math :: div_fract_by ( fract_r , color_scale ) ;
-            platform_math :: div_fract_by ( fract_g , color_scale ) ;
-            platform_math :: div_fract_by ( fract_b , color_scale ) ;
+            platform_math :: div_fract_by ( fract_r , _logic_land_consts . color_scale ) ;
+            platform_math :: div_fract_by ( fract_g , _logic_land_consts . color_scale ) ;
+            platform_math :: div_fract_by ( fract_b , _logic_land_consts . color_scale ) ;
             
             typename messages :: render_texture_set_texel_rgba texture_set_texel_rgba_msg ;
             texture_set_texel_rgba_msg . texture = _land_texture_id ;

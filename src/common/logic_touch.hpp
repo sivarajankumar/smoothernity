@@ -26,6 +26,7 @@ class shy_logic_touch
         num_fract spot_r ;
         num_fract spot_g ;
         num_fract spot_b ;
+        num_fract spot_pos_z ;
         num_fract spot_size ;
         num_whole spot_edges ;
         num_whole spot_lifetime_in_frames ;
@@ -70,6 +71,7 @@ shy_logic_touch < mediator > :: _logic_touch_consts_type :: _logic_touch_consts_
     platform_math :: make_num_fract ( spot_g , 255 , 255 ) ;
     platform_math :: make_num_fract ( spot_b , 255 , 255 ) ;
     platform_math :: make_num_fract ( spot_size , 3 , 10 ) ;
+    platform_math :: make_num_fract ( spot_pos_z , - 3 , 1 ) ;
     platform_math :: make_num_whole ( spot_edges , 32 ) ;
     platform_math :: make_num_whole ( spot_lifetime_in_frames , 60 ) ;
 }
@@ -198,9 +200,7 @@ void shy_logic_touch < mediator > :: _place_new_spot ( )
 {
     if ( platform_conditions :: whole_is_true ( _should_place_new_spot ) )
     {
-        num_fract pos_z ;
-        platform_math :: make_num_fract ( pos_z , - 3 , 1 ) ;
-        platform_vector :: xyz ( _spot_position , _spot_x , _spot_y , pos_z ) ;
+        platform_vector :: xyz ( _spot_position , _spot_x , _spot_y , _logic_touch_consts . spot_pos_z ) ;
         _spot_frames_left = _logic_touch_consts . spot_lifetime_in_frames ;
         _should_place_new_spot = _platform_math_consts . get ( ) . whole_false ;
     }
