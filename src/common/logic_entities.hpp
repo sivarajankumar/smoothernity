@@ -30,6 +30,8 @@ class shy_logic_entities
         num_whole entity_mesh_spans ;
         num_whole scale_in_frames ;
         num_whole grid_step ;
+        num_whole color_bias ;
+        num_whole colors_max ;
         static const_int_32 entity_mesh_grid = 5 ;
     } ;
 
@@ -88,6 +90,8 @@ shy_logic_entities < mediator > :: _logic_entities_consts_type :: _logic_entitie
     platform_math :: make_num_whole ( entity_mesh_spans , 50 ) ;
     platform_math :: make_num_whole ( scale_in_frames , 120 ) ;
     platform_math :: make_num_whole ( grid_step , 5 ) ;
+    platform_math :: make_num_whole ( color_bias , 21 ) ;
+    platform_math :: make_num_whole ( colors_max , 7 ) ;
 }
 
 template < typename mediator >
@@ -306,13 +310,9 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
     num_fract vertex_g ;
     num_fract vertex_b ;
     num_fract vertex_a ;
-    num_whole color_bias ;
-    num_whole colors_max ;
     num_fract fract_entity_mesh_spans ;
     num_whole whole_entity_mesh_spans_plus_1 ;
     
-    platform_math :: make_num_whole ( color_bias , 21 ) ;
-    platform_math :: make_num_whole ( colors_max , 7 ) ;
     platform_math :: make_fract_from_whole ( fract_entity_mesh_spans , _logic_entities_consts . entity_mesh_spans ) ;
     platform_math :: add_wholes ( whole_entity_mesh_spans_plus_1 , _logic_entities_consts . entity_mesh_spans , _platform_math_consts . get ( ) . whole_1 ) ;
 
@@ -326,11 +326,11 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         platform_math :: mul_fract_by ( angle , _platform_math_consts . get ( ) . fract_2pi ) ;
         platform_math :: div_fract_by ( angle , fract_entity_mesh_spans ) ;
         
-        platform_math :: mul_wholes ( color1 , _current_strip_mesh_span , color_bias ) ;
+        platform_math :: mul_wholes ( color1 , _current_strip_mesh_span , _logic_entities_consts . color_bias ) ;
         platform_math :: div_whole_by ( color1 , whole_entity_mesh_spans_plus_1 ) ;
-        platform_math :: mod_whole_by ( color1 , colors_max ) ;
+        platform_math :: mod_whole_by ( color1 , _logic_entities_consts . colors_max ) ;
         platform_math :: add_wholes ( color2 , color1 , _platform_math_consts . get ( ) . whole_1 ) ;
-        platform_math :: mod_whole_by ( color2 , colors_max ) ;
+        platform_math :: mod_whole_by ( color2 , _logic_entities_consts . colors_max ) ;
         
         platform_math :: sin ( vertex_x , angle ) ;
         platform_math :: div_fracts ( vertex_y , _logic_entities_consts . entity_mesh_height , _platform_math_consts . get ( ) . fract_2 ) ;
