@@ -134,7 +134,7 @@ public :
 	void enable_texturing ( ) ;
 	void disable_texturing ( ) ;
 	void texture_mode_modulate ( ) ;
-    void use_texture ( const render_texture_id & arg_texture_id ) ;
+    void use_texture ( render_texture_id arg_texture_id ) ;
 	void create_texture_id ( render_texture_id & arg_texture_id ) ;
     void texture_loader_ready ( num_whole & is_ready ) ;
 
@@ -155,10 +155,10 @@ public :
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
     
     template < typename texels_array >
-    void load_texture_data ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
+    void load_texture_data ( render_texture_id arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
     
     template < typename texels_array >
-    void load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , texels_array & data ) ;
+    void load_texture_resource ( texture_resource_id resource_id , num_whole size_pow2_base , texels_array & data ) ;
     
     void create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements ) ;
     void map_vertex_buffer ( render_vertex_buffer_mapped_data & data , render_vertex_buffer_id arg_buffer_id ) ;
@@ -168,16 +168,8 @@ public :
     void map_index_buffer ( render_index_buffer_mapped_data & data , render_index_buffer_id arg_buffer_id ) ;
     void unmap_index_buffer ( render_index_buffer_id arg_buffer_id ) ;
     
-    void draw_triangle_strip 
-        ( const render_vertex_buffer_id & vertices_buffer 
-        , const render_index_buffer_id & indices_buffer
-        , num_whole indices_count
-        ) ;
-    void draw_triangle_fan
-        ( const render_vertex_buffer_id & vertices_buffer 
-        , const render_index_buffer_id & indices_buffer
-        , num_whole indices_count
-        ) ;
+    void draw_triangle_strip ( render_vertex_buffer_id vertices_buffer , render_index_buffer_id indices_buffer , num_whole indices_count ) ;
+    void draw_triangle_fan ( render_vertex_buffer_id vertices_buffer , render_index_buffer_id indices_buffer , num_whole indices_count ) ;
         
 private :
     shy_macosx_texture_loader * _texture_loader ;
@@ -365,7 +357,7 @@ inline void shy_macosx_platform_render < platform_insider > :: create_texture_id
 }
 
 template < typename platform_insider >
-inline void shy_macosx_platform_render < platform_insider > :: use_texture ( const render_texture_id & arg_texture_id )
+inline void shy_macosx_platform_render < platform_insider > :: use_texture ( render_texture_id arg_texture_id )
 {
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
 }
@@ -391,7 +383,7 @@ inline void shy_macosx_platform_render < platform_insider > :: set_texel_color
 template < typename platform_insider >
 template < typename texels_array >
 inline void shy_macosx_platform_render < platform_insider > :: load_texture_data 
-    ( const render_texture_id & arg_texture_id , num_whole size_pow2_base , const texels_array & data )
+    ( render_texture_id arg_texture_id , num_whole size_pow2_base , const texels_array & data )
 {
     int size_pow2_base_int = 0 ;
     platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
@@ -416,7 +408,7 @@ inline void shy_macosx_platform_render < platform_insider > :: create_texture_re
 template < typename platform_insider >
 template < typename texels_array >
 inline void shy_macosx_platform_render < platform_insider > :: load_texture_resource
-    ( const texture_resource_id & resource_id , num_whole size_pow2_base , texels_array & data )
+    ( texture_resource_id resource_id , num_whole size_pow2_base , texels_array & data )
 {
     int size_pow2_base_int = 0 ;
     texel_data * texels = 0 ;
@@ -670,10 +662,7 @@ inline void shy_macosx_platform_render < platform_insider > :: matrix_pop ( )
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_strip 
-    ( const render_vertex_buffer_id & vertices_buffer 
-    , const render_index_buffer_id & indices_buffer
-    , num_whole indices_count
-    )
+    ( render_vertex_buffer_id vertices_buffer , render_index_buffer_id indices_buffer , num_whole indices_count )
 {
     int indices_count_int = 0 ;
     platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
@@ -695,10 +684,7 @@ inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_str
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: draw_triangle_fan
-    ( const render_vertex_buffer_id & vertices_buffer 
-    , const render_index_buffer_id & indices_buffer
-    , num_whole indices_count
-    )
+    ( render_vertex_buffer_id vertices_buffer , render_index_buffer_id indices_buffer , num_whole indices_count )
 {
     int indices_count_int = 0 ;
     platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
