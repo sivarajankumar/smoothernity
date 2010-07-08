@@ -9,9 +9,11 @@ class shy_macosx_platform_render
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
     typedef typename platform_insider :: platform_matrix_insider platform_matrix_insider ;
     typedef typename platform_insider :: platform_static_array_insider platform_static_array_insider ;
+    
     typedef typename platform_insider :: platform_math :: num_fract num_fract ;
     typedef typename platform_insider :: platform_math :: num_whole num_whole ;
     typedef typename platform_insider :: platform_matrix :: matrix_data matrix_data ;
+    typedef typename platform_insider :: platform_pointer platform_pointer ;
     
 public :
     class render_index_buffer_id
@@ -30,6 +32,15 @@ public :
         render_vertex_buffer_id ( ) ;
     private :
         GLuint _buffer_id ;
+    } ;
+
+    class render_vertex_buffer_mapped_data
+    {
+        friend class shy_macosx_platform_render ;
+    public :
+        render_vertex_buffer_mapped_data ( ) ;
+    private :
+        void * _data ;
     } ;
     
 	class render_texture_id
@@ -70,7 +81,7 @@ public :
         GLfloat _tex_coord [ 2 ] ;
         GLubyte _color [ 4 ] ;
     } ;
-    
+
     class index_data
     {
         friend class shy_macosx_platform_render ;
@@ -89,6 +100,11 @@ public :
     static void set_vertex_color ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     static void set_index_value ( index_data & data , num_whole index ) ;
     static void create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index ) ;
+    static void mapped_vertex_buffer_element 
+        ( typename platform_pointer :: template pointer < vertex_data > & ptr 
+        , render_vertex_buffer_mapped_data data 
+        , num_whole index 
+        ) ;
 
     void enable_face_culling ( ) ;
     
@@ -130,11 +146,12 @@ public :
     template < typename texels_array >
     void load_texture_resource ( const texture_resource_id & resource_id , num_whole size_pow2_base , texels_array & data ) ;
     
-    template < typename vertices_array >
-    void create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , const vertices_array & data ) ;
+    void create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements ) ;
+    void map_vertex_buffer ( render_vertex_buffer_mapped_data & data , render_vertex_buffer_id arg_buffer_id ) ;
+    void unmap_vertex_buffer ( render_vertex_buffer_id arg_buffer_id ) ;
     
     template < typename indices_array >
-    void create_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data ) ;
+    void create_old_index_buffer ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data ) ;
     
     void draw_triangle_strip 
         ( const render_vertex_buffer_id & vertices_buffer 
@@ -189,6 +206,12 @@ shy_macosx_platform_render < platform_insider > :: render_index_buffer_id :: ren
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_id :: render_vertex_buffer_id ( )
 : _buffer_id ( GLuint ( platform_insider :: uninitialized_value ) )
+{
+}
+
+template < typename platform_insider >
+shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_mapped_data :: render_vertex_buffer_mapped_data ( )
+: _data ( ( void * ) platform_insider :: uninitialized_value )
 {
 }
     
@@ -464,22 +487,46 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_ortho
 }
 
 template < typename platform_insider >
-template < typename vertices_array >
-inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buffer 
-    ( render_vertex_buffer_id & arg_buffer_id , num_whole elements , const vertices_array & data )
+inline void shy_macosx_platform_render < platform_insider > :: create_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id , num_whole elements )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     int elements_int = 0 ;
-    const vertex_data * vertices = 0 ;
     platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
-    platform_static_array_insider :: elements_ptr ( vertices , data ) ;
     glBufferData
         ( GL_ARRAY_BUFFER 
         , ( GLsizeiptr ) ( sizeof ( vertex_data ) * ( unsigned int ) elements_int ) 
-        , vertices
+        , 0
         , GL_STATIC_DRAW 
         ) ;
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: map_vertex_buffer
+    ( render_vertex_buffer_mapped_data & data , render_vertex_buffer_id arg_buffer_id )
+{
+    glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    data . _data = glMapBuffer ( GL_ARRAY_BUFFER , GL_READ_WRITE ) ;
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: unmap_vertex_buffer ( render_vertex_buffer_id arg_buffer_id )
+{
+    glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    glUnmapBuffer ( GL_ARRAY_BUFFER ) ;
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: mapped_vertex_buffer_element
+    ( typename platform_pointer :: template pointer < vertex_data > & ptr 
+    , render_vertex_buffer_mapped_data data
+    , num_whole index
+    )
+{
+    vertex_data * mapped_vertices = ( vertex_data * ) data . _data ;
+    int index_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( index_int , index ) ;
+    ptr . set ( mapped_vertices [ index_int ] ) ;
 }
 
 template < typename platform_insider >
@@ -517,7 +564,7 @@ inline void shy_macosx_platform_render < platform_insider > :: set_vertex_color
 
 template < typename platform_insider >
 template < typename indices_array >
-inline void shy_macosx_platform_render < platform_insider > :: create_index_buffer 
+inline void shy_macosx_platform_render < platform_insider > :: create_old_index_buffer 
     ( render_index_buffer_id & arg_buffer_id , num_whole elements , const indices_array & data )
 {
     glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
