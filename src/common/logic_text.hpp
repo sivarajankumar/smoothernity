@@ -36,6 +36,8 @@ class shy_logic_text
         num_fract canvas_b ;
         num_fract canvas_a ;
         num_whole scale_in_frames ;
+        num_whole small_size ;
+        num_whole big_size ;
     } ;
     
     class _tex_coords
@@ -151,6 +153,8 @@ shy_logic_text < mediator > :: _logic_text_consts_type :: _logic_text_consts_typ
     platform_math :: make_num_fract ( canvas_b , 255 , 255 ) ;
     platform_math :: make_num_fract ( canvas_a , 255 , 255 ) ;
     platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
+    platform_math :: make_num_whole ( small_size , 16 ) ;
+    platform_math :: make_num_whole ( big_size , 32 ) ;
 }
 
 template < typename mediator >
@@ -341,19 +345,15 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
     }
     else if ( platform_conditions :: whole_is_true ( _empty_texture_created ) )
     {
-        num_whole small_size ;
-        platform_math :: make_num_whole ( small_size , 16 ) ;
         _empty_texture_created = _platform_math_consts . get ( ) . whole_false ;
         _small_letters_rasterized = _platform_math_consts . get ( ) . whole_true ;
-        _rasterize_english_alphabet ( small_size , small_size , _letters_small ) ;
+        _rasterize_english_alphabet ( _logic_text_consts . small_size , _logic_text_consts . small_size , _letters_small ) ;
     }
     else if ( platform_conditions :: whole_is_true ( _small_letters_rasterized ) )
     {
-        num_whole big_size ;
-        platform_math :: make_num_whole ( big_size , 32 ) ;
         _small_letters_rasterized = _platform_math_consts . get ( ) . whole_false ;
         _big_letters_rasterized = _platform_math_consts . get ( ) . whole_true ;
-        _rasterize_english_alphabet ( big_size , big_size , _letters_big ) ;
+        _rasterize_english_alphabet ( _logic_text_consts . big_size , _logic_text_consts . big_size , _letters_big ) ;
     }
     else if ( platform_conditions :: whole_is_true ( _big_letters_rasterized ) )
     {

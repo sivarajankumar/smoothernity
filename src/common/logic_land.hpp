@@ -24,6 +24,12 @@ class shy_logic_land
         num_whole create_rows_per_frame ;
         num_whole land_grid ;
         num_whole scale_in_frames ;
+        num_whole modulator_1 ;
+        num_whole modulator_2 ;
+        num_whole modulator_3 ;
+        num_whole multiplier_1 ;
+        num_whole multiplier_2 ;
+        num_whole multiplier_3 ;
         num_fract land_radius ;
         num_fract land_r ;
         num_fract land_g ;
@@ -66,6 +72,12 @@ shy_logic_land < mediator > :: _logic_land_consts_type :: _logic_land_consts_typ
     platform_math :: make_num_whole ( create_rows_per_frame , 8 ) ;
     platform_math :: make_num_whole ( land_grid , 10 ) ;
     platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
+    platform_math :: make_num_whole ( modulator_1 , 32 ) ;
+    platform_math :: make_num_whole ( modulator_2 , 64 ) ;
+    platform_math :: make_num_whole ( modulator_3 , 128 ) ;
+    platform_math :: make_num_whole ( multiplier_1 , 8 ) ;
+    platform_math :: make_num_whole ( multiplier_2 , 4 ) ;
+    platform_math :: make_num_whole ( multiplier_3 , 2 ) ;
     platform_math :: make_num_fract ( land_radius , 10 , 1 ) ;
     platform_math :: make_num_fract ( land_r , 255 , 255 ) ;
     platform_math :: make_num_fract ( land_g , 255 , 255 ) ;
@@ -390,46 +402,29 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             )
         {
             num_whole c ;
-            num_whole modulator_1 ;
-            num_whole modulator_2 ;
-            num_whole modulator_3 ;
-            num_whole multiplier_1 ;
-            num_whole multiplier_2 ;
-            num_whole multiplier_3 ;
             num_whole texel_r ;
             num_whole texel_g ;
             num_whole texel_b ;
-            num_whole texel_a ;
             num_fract fract_r ;
             num_fract fract_g ;
             num_fract fract_b ;
-            num_fract fract_a ;
             num_fract color_scale ;
             
-            platform_math :: make_num_whole ( modulator_1 , 32 ) ;
-            platform_math :: make_num_whole ( modulator_2 , 64 ) ;
-            platform_math :: make_num_whole ( modulator_3 , 128 ) ;
-            platform_math :: make_num_whole ( multiplier_1 , 8 ) ;
-            platform_math :: make_num_whole ( multiplier_2 , 4 ) ;
-            platform_math :: make_num_whole ( multiplier_3 , 2 ) ;
-            platform_math :: make_num_whole ( texel_a , 255 ) ;
             platform_math :: xor_wholes ( c , x , y ) ;
-            platform_math :: mod_wholes ( texel_r , c , modulator_1 ) ;
-            platform_math :: mod_wholes ( texel_g , c , modulator_2 ) ;
-            platform_math :: mod_wholes ( texel_b , c , modulator_3 ) ;
-            platform_math :: mul_whole_by ( texel_r , multiplier_1 ) ;
-            platform_math :: mul_whole_by ( texel_g , multiplier_2 ) ;
-            platform_math :: mul_whole_by ( texel_b , multiplier_3 ) ;
+            platform_math :: mod_wholes ( texel_r , c , _logic_land_consts . modulator_1 ) ;
+            platform_math :: mod_wholes ( texel_g , c , _logic_land_consts . modulator_2 ) ;
+            platform_math :: mod_wholes ( texel_b , c , _logic_land_consts . modulator_3 ) ;
+            platform_math :: mul_whole_by ( texel_r , _logic_land_consts . multiplier_1 ) ;
+            platform_math :: mul_whole_by ( texel_g , _logic_land_consts . multiplier_2 ) ;
+            platform_math :: mul_whole_by ( texel_b , _logic_land_consts . multiplier_3 ) ;
 
             platform_math :: make_num_fract ( color_scale , 255 , 1 ) ;
             platform_math :: make_fract_from_whole ( fract_r , texel_r ) ;
             platform_math :: make_fract_from_whole ( fract_g , texel_g ) ;
             platform_math :: make_fract_from_whole ( fract_b , texel_b ) ;
-            platform_math :: make_fract_from_whole ( fract_a , texel_a ) ;
             platform_math :: div_fract_by ( fract_r , color_scale ) ;
             platform_math :: div_fract_by ( fract_g , color_scale ) ;
             platform_math :: div_fract_by ( fract_b , color_scale ) ;
-            platform_math :: div_fract_by ( fract_a , color_scale ) ;
             
             typename messages :: render_texture_set_texel_rgba texture_set_texel_rgba_msg ;
             texture_set_texel_rgba_msg . texture = _land_texture_id ;
@@ -438,7 +433,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             texture_set_texel_rgba_msg . r = fract_r ;
             texture_set_texel_rgba_msg . g = fract_g ;
             texture_set_texel_rgba_msg . b = fract_b ;
-            texture_set_texel_rgba_msg . a = fract_a ;
+            texture_set_texel_rgba_msg . a = _platform_math_consts . get ( ) . fract_1 ;
             _mediator . get ( ) . send ( texture_set_texel_rgba_msg ) ;
         }
         platform_math :: inc_whole ( _land_texture_creation_row ) ;
