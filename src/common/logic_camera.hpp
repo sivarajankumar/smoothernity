@@ -26,6 +26,8 @@ class shy_logic_camera
         _logic_camera_consts_type ( ) ;
         num_whole change_origin_in_frames ;
         num_whole change_target_in_frames ;
+        num_whole random_const_1 ;
+        num_whole random_const_2 ;
     } ;
     
 public :
@@ -127,6 +129,8 @@ shy_logic_camera < mediator > :: _logic_camera_consts_type :: _logic_camera_cons
 {
     platform_math :: make_num_whole ( change_origin_in_frames , 139 ) ;
     platform_math :: make_num_whole ( change_target_in_frames , 181 ) ;
+    platform_math :: make_num_whole ( random_const_1 , 181 ) ;
+    platform_math :: make_num_whole ( random_const_2 , 139 ) ;
 }
 
 template < typename mediator >
@@ -681,13 +685,9 @@ void shy_logic_camera < mediator > :: _random_camera_target_index ( num_whole & 
 template < typename mediator >
 void shy_logic_camera < mediator > :: _get_random_index ( num_whole & result , num_whole index_min , num_whole index_max )
 {
-    num_whole random_const_1 ;
-    num_whole random_const_2 ;
     num_whole index_diff ;
-    platform_math :: make_num_whole ( random_const_1 , 181 ) ;
-    platform_math :: make_num_whole ( random_const_2 , 139 ) ;
-    platform_math :: add_to_whole ( _random_seed , random_const_1 ) ;
-    platform_math :: mod_whole_by ( _random_seed , random_const_2 ) ;
+    platform_math :: add_to_whole ( _random_seed , _logic_camera_consts . random_const_1 ) ;
+    platform_math :: mod_whole_by ( _random_seed , _logic_camera_consts . random_const_2 ) ;
     platform_math :: sub_wholes ( index_diff , index_max , index_min ) ;
     platform_math :: mod_wholes ( result , _random_seed , index_diff ) ;
     platform_math :: add_to_whole ( result , index_min ) ;
