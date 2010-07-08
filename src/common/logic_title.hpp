@@ -30,6 +30,8 @@ class shy_logic_title
         num_fract spin_radius_in_letters ;
         num_whole appear_duration_in_frames ;
         num_whole disappear_duration_in_frames ;
+        num_whole frames_between_letters ;
+        num_whole never ;
         static const_int_32 max_letters = 32 ;
     } ;
     
@@ -130,6 +132,8 @@ shy_logic_title < mediator > :: _logic_title_consts_type :: _logic_title_consts_
     platform_math :: make_num_fract ( spin_radius_in_letters , 2 , 1 ) ;
     platform_math :: make_num_whole ( appear_duration_in_frames , 250 ) ;
     platform_math :: make_num_whole ( disappear_duration_in_frames , 150 ) ;
+    platform_math :: make_num_whole ( frames_between_letters , 5 ) ;
+    platform_math :: make_num_whole ( never , 9999 ) ;
 }
 
 template < typename mediator >
@@ -425,7 +429,7 @@ void shy_logic_title < mediator > :: _prepare_to_appear ( )
     platform_math :: mul_fracts ( _desired_rot_angle , _platform_math_consts . get ( ) . fract_2pi , _platform_math_consts . get ( ) . fract_3 ) ;
     platform_math :: make_num_fract ( _rubber_first , 19 , 20 ) ;
     platform_math :: make_num_fract ( _rubber_last , 19 , 20 ) ;
-    platform_math :: make_num_whole ( _disappear_at_frames , 9999 ) ;
+    _disappear_at_frames = _logic_title_consts . never ;
     _desired_scale = _platform_math_consts . get ( ) . fract_1 ;    
     _desired_pos_radius_coeff = _logic_title_consts . spin_radius_in_letters ;
 }
@@ -505,12 +509,10 @@ void shy_logic_title < mediator > :: _title_update ( )
     num_fract fract_appear_duration_in_frames ;
     num_fract scale_min ;
     num_fract scale_max ;
-    num_whole frames_between_letters ;
     
     platform_math :: make_fract_from_whole ( fract_letters_count , _letters_count ) ;
     platform_math :: div_fracts ( letter_size , _render_aspect_width , fract_letters_count ) ;    
     platform_math :: mul_fracts ( desired_pos_radius , letter_size , _desired_pos_radius_coeff ) ;
-    platform_math :: make_num_whole ( frames_between_letters , 5 ) ;
     offset_y = _logic_title_consts . spin_radius_in_letters ;
     platform_math :: mul_fract_by ( offset_y , letter_size ) ;
     platform_math :: make_fract_from_whole ( fract_appear_duration_in_frames , _logic_title_consts . appear_duration_in_frames ) ;
@@ -569,7 +571,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_math :: add_to_fract ( offset_x , letter_size ) ;
         platform_vector :: xyz ( offset , offset_x , offset_y , _platform_math_consts . get ( ) . fract_minus_3 ) ;        
         
-        platform_math :: mul_wholes ( starting_frame , frames_between_letters , i ) ;
+        platform_math :: mul_wholes ( starting_frame , _logic_title_consts . frames_between_letters , i ) ;
         platform_math :: sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
         if ( platform_conditions :: whole_greater_than_whole ( _title_frames , starting_frame ) )
         {
