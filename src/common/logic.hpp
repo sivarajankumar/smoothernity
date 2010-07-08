@@ -10,6 +10,15 @@ class shy_logic
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    
+    class _logic_consts_type
+    {
+    public :
+        _logic_consts_type ( ) ;
+        num_fract z_far ;
+        num_fract z_near ;
+    } ;
+    
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
@@ -28,6 +37,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_consts_type _logic_consts ;
     num_whole _fidget_prepared ;
     
     num_whole _render_aspect_requested ;
@@ -38,6 +48,13 @@ private :
     num_whole _handling_use_ortho_projection_request ;
     num_whole _handling_use_perspective_projection_request ;
 } ;
+
+template < typename mediator >
+shy_logic < mediator > :: _logic_consts_type :: _logic_consts_type ( )
+{
+    platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
+    platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -145,20 +162,16 @@ void shy_logic < mediator > :: receive ( typename messages :: render_aspect_repl
             num_fract height = _render_aspect_height ;
             num_fract neg_width ;
             num_fract neg_height ;
-            num_fract z_far ;
-            num_fract z_near ;
             platform_math :: neg_fract ( neg_width , width ) ;
             platform_math :: neg_fract ( neg_height , height ) ;
-            platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
-            platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
             
             typename messages :: render_projection_ortho proj_msg ;
             proj_msg . left = neg_width ;
             proj_msg . right = width ;
             proj_msg . bottom = neg_height ;
             proj_msg . top = height ;
-            proj_msg . znear = z_near ;
-            proj_msg . zfar = z_far ;
+            proj_msg . znear = _logic_consts . z_near ;
+            proj_msg . zfar = _logic_consts . z_far ;
             _mediator . get ( ) . send ( proj_msg ) ;
             
             _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
@@ -172,10 +185,8 @@ void shy_logic < mediator > :: receive ( typename messages :: render_aspect_repl
             num_fract height = _render_aspect_height ;
             num_fract neg_width ;
             num_fract neg_height ;
-            num_fract z_far ;
             num_fract z_near ;
             _get_near_plane_distance ( z_near ) ;
-            platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
             platform_math :: neg_fract ( neg_width , width ) ;
             platform_math :: neg_fract ( neg_height , height ) ;
             
@@ -185,7 +196,7 @@ void shy_logic < mediator > :: receive ( typename messages :: render_aspect_repl
             proj_msg . bottom = neg_height ;
             proj_msg . top = height ;
             proj_msg . znear = z_near ;
-            proj_msg . zfar = z_far ;
+            proj_msg . zfar = _logic_consts . z_far ;
             _mediator . get ( ) . send ( proj_msg ) ;
             
             _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;

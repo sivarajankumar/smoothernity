@@ -24,6 +24,10 @@ class shy_logic_fidget
         num_fract fidget_r ;
         num_fract fidget_g ;
         num_fract fidget_b ;
+        num_fract mesh_x ;
+        num_fract mesh_y_from_top ;
+        num_fract mesh_z ;
+        num_fract angle_delta ;
         num_whole fidget_edges ;
         num_whole scale_in_frames ;
     } ;
@@ -62,6 +66,10 @@ shy_logic_fidget < mediator > :: _logic_fidget_consts_type :: _logic_fidget_cons
     platform_math :: make_num_fract ( fidget_r , 255 , 255 ) ;
     platform_math :: make_num_fract ( fidget_g , 128 , 255 ) ;
     platform_math :: make_num_fract ( fidget_b , 0 , 255 ) ;
+    platform_math :: make_num_fract ( angle_delta , 125 , 1000 ) ;
+    platform_math :: make_num_fract ( mesh_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_y_from_top , 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_z , - 3 , 1 ) ;
     platform_math :: make_num_whole ( fidget_edges , 3 ) ;
     platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
 }
@@ -165,37 +173,27 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
     num_fract fract_scale_in_frames ;
     num_fract fract_fidget_scale ;
     num_fract scale ;
-    num_fract height ;
     num_fract angle_cos ;
     num_fract angle_sin ;
     num_fract cos_by_scale ;
     num_fract sin_by_scale ;
     num_fract neg_sin_by_scale ;
-    num_fract origin_x ;
-    num_fract origin_y ;
-    num_fract origin_z ;
-    num_fract num_half ;
-    num_fract angle_delta ;
+    num_fract mesh_y ;
     
-    platform_math :: make_num_fract ( angle_delta , 125 , 1000 ) ;
-    platform_math :: add_to_fract ( _fidget_angle , angle_delta ) ;
+    platform_math :: add_to_fract ( _fidget_angle , _logic_fidget_consts . angle_delta ) ;
     platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_fidget_consts . scale_in_frames ) ;
     platform_math :: make_fract_from_whole ( fract_fidget_scale , _fidget_scale ) ;
     platform_math :: div_fracts ( scale , fract_fidget_scale , fract_scale_in_frames ) ;
-    height = _render_aspect_height ;
-    platform_math :: make_num_fract ( num_half , 1 , 2 ) ;
     platform_math :: cos ( angle_cos , _fidget_angle ) ;
     platform_math :: sin ( angle_sin , _fidget_angle ) ;
     platform_math :: mul_fracts ( cos_by_scale , angle_cos , scale ) ;
     platform_math :: mul_fracts ( sin_by_scale , angle_sin , scale ) ;
     platform_math :: neg_fract ( neg_sin_by_scale , sin_by_scale ) ;
-    platform_math :: make_num_fract ( origin_x , 0 , 1 ) ;
-    platform_math :: sub_fracts ( origin_y , height , num_half ) ;
-    platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
+    platform_math :: sub_fracts ( mesh_y , _render_aspect_height , _logic_fidget_consts . mesh_y_from_top ) ;
     platform_matrix :: set_axis_x ( matrix , cos_by_scale , sin_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
     platform_matrix :: set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
     platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
-    platform_matrix :: set_origin ( matrix , origin_x , origin_y , origin_z ) ;
+    platform_matrix :: set_origin ( matrix , _logic_fidget_consts . mesh_x , mesh_y , _logic_fidget_consts . mesh_z ) ;
     
     typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
     mesh_set_transform_msg . mesh = _fidget_mesh_id ;
