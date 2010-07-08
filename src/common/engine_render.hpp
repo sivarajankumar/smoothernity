@@ -391,7 +391,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < vertex_data > vertex ;
     platform_static_array :: element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
-    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) )
+    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+       )
     {
         platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
         platform_render :: set_vertex_position ( vertex . get ( ) , msg . x , msg . y , msg . z ) ;
@@ -404,7 +406,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < vertex_data > vertex ;
     platform_static_array :: element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
-    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) )
+    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+       )
     {
         platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
         platform_render :: set_vertex_tex_coord ( vertex . get ( ) , msg . u , msg . v ) ;
@@ -417,7 +421,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < vertex_data > vertex ;
     platform_static_array :: element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
-    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) )
+    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+       )
     {
         platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
         platform_render :: set_vertex_color ( vertex . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
@@ -430,7 +436,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < index_data > index ;
     platform_static_array :: element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
-    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) )
+    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_strip_indices_count )
+       )
     {
         platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_strip_index_buffer_mapped_data , msg . offset ) ;
         platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
@@ -443,7 +451,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < index_data > index ;
     platform_static_array :: element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
-    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) )
+    if ( platform_conditions :: whole_is_false ( mesh . get ( ) . finalized )
+      && platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_fan_indices_count )
+       )
     {
         platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_fan_index_buffer_mapped_data , msg . offset ) ;
         platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
