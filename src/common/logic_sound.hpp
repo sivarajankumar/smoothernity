@@ -51,6 +51,7 @@ private :
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < platform_sound > _platform_sound ;
+    typename platform_pointer :: template pointer < platform_touch > _platform_touch ;
     const _logic_sound_consts_type _logic_sound_consts ;
     num_whole _mono_sound_created ;
     num_whole _stereo_sound_created ;
@@ -93,6 +94,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _platform_mouse = platform_obj . get ( ) . mouse ;
     _platform_sound = platform_obj . get ( ) . sound ;
+    _platform_touch = platform_obj . get ( ) . touch ;
     
     _mono_sound_created = _platform_math_consts . get ( ) . whole_false ;
     _stereo_sound_created = _platform_math_consts . get ( ) . whole_false ;
@@ -191,7 +193,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
     {
         num_whole touch ;
         num_whole mouse_button ;
-        platform_touch :: occured ( touch ) ;
+        _platform_touch . get ( ) . occured ( touch ) ;
         _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
         if ( platform_conditions :: whole_is_true ( touch ) || platform_conditions :: whole_is_true ( mouse_button ) )
         {

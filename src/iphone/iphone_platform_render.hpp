@@ -519,14 +519,12 @@ inline void shy_iphone_platform_render < platform_insider > :: map_vertex_buffer
     ( render_vertex_buffer_mapped_data & data , render_vertex_buffer_id arg_buffer_id )
 {
     glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    data . _data = glMapBuffer ( GL_ARRAY_BUFFER , GL_READ_WRITE ) ;
+    glGetPointerv ( GL_VERTEX_ARRAY_POINTER , & data . _data ) ;
 }
 
 template < typename platform_insider >
 inline void shy_iphone_platform_render < platform_insider > :: unmap_vertex_buffer ( render_vertex_buffer_id arg_buffer_id )
 {
-    glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    glUnmapBuffer ( GL_ARRAY_BUFFER ) ;
 }
 
 template < typename platform_insider >
@@ -594,15 +592,16 @@ template < typename platform_insider >
 inline void shy_iphone_platform_render < platform_insider > :: map_index_buffer
     ( render_index_buffer_mapped_data & data , render_index_buffer_id arg_buffer_id )
 {
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    data . _data = glMapBuffer ( GL_ELEMENT_ARRAY_BUFFER , GL_READ_WRITE ) ;
+//    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+//    glGetPointerv ( GL_INDEX_ARRAY_POINTER , & data . _data ) ;
+//    data . _data = glMapBuffer ( GL_ELEMENT_ARRAY_BUFFER , GL_READ_WRITE ) ;
 }
 
 template < typename platform_insider >
 inline void shy_iphone_platform_render < platform_insider > :: unmap_index_buffer ( render_index_buffer_id arg_buffer_id )
 {
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    glUnmapBuffer ( GL_ELEMENT_ARRAY_BUFFER ) ;
+//    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+//    glUnmapBuffer ( GL_ELEMENT_ARRAY_BUFFER ) ;
 }
 
 template < typename platform_insider >

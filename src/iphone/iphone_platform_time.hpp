@@ -1,12 +1,12 @@
 template < typename platform_insider >
-class shy_macosx_platform_time
+class shy_iphone_platform_time
 {
     typedef typename platform_insider :: platform_math :: num_whole num_whole ;
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
 public :
     class time_data
     {
-        friend class shy_macosx_platform_time ;
+        friend class shy_iphone_platform_time ;
     public :
         time_data ( ) ;
     private :
@@ -18,19 +18,19 @@ public :
 } ;
 
 template < typename platform_insider >
-shy_macosx_platform_time < platform_insider > :: time_data :: time_data ( )
+shy_iphone_platform_time < platform_insider > :: time_data :: time_data ( )
 : _time ( platform_insider :: uninitialized_value )
 {
 }
     
 template < typename platform_insider >
-inline void shy_macosx_platform_time < platform_insider > :: get_current ( time_data & time )
+inline void shy_iphone_platform_time < platform_insider > :: get_current ( time_data & time )
 {
     time . _time = CFAbsoluteTimeGetCurrent ( ) ;
 }
 
 template < typename platform_insider >
-inline void shy_macosx_platform_time < platform_insider > :: diff_in_microseconds ( num_whole & result , const time_data & time1 , const time_data & time2 )
+inline void shy_iphone_platform_time < platform_insider > :: diff_in_microseconds ( num_whole & result , const time_data & time1 , const time_data & time2 )
 {
     CFAbsoluteTime diff = 0 ;
     if ( time1 . _time > time2 . _time )

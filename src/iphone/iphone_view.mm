@@ -117,8 +117,8 @@
     UITouch * touch = [ touches anyObject ] ;
     CGPoint point = [ touch locationInView : [ touch view ] ] ;
     _platform_insider -> touch_insider . set_occured ( true ) ;
-    _platform_insider -> mouse_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
-    _platform_insider -> mouse_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
+    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
+    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
 }
 
 - ( void ) draw_view : ( id ) sender
@@ -129,7 +129,7 @@
 	_facade -> update ( ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
-    _platform_insider -> mouse_insider . set_occured ( false ) ;
+    _platform_insider -> touch_insider . set_occured ( false ) ;
     [ self _schedule_draw ] ;
 }
 

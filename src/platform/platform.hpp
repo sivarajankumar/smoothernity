@@ -23,4 +23,5 @@ public :
     typename platform_pointer :: template pointer < platform_mouse > mouse ;
     typename platform_pointer :: template pointer < platform_render > render ;
     typename platform_pointer :: template pointer < platform_sound > sound ;
+    typename platform_pointer :: template pointer < platform_touch > touch ;
 } ;

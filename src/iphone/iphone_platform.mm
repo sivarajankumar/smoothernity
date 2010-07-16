@@ -9,4 +9,5 @@ shy_iphone_platform_insider :: shy_iphone_platform_insider ( )
     platform . mouse . set ( mouse ) ;
     platform . render . set ( render ) ;
     platform . sound . set ( sound ) ;
+    platform . touch . set ( touch ) ;
 }

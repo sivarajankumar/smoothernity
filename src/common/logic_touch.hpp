@@ -51,6 +51,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
+    typename platform_pointer :: template pointer < platform_touch > _platform_touch ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     const _logic_touch_consts_type _logic_touch_consts ;
     num_whole _spot_frames_left ;
@@ -88,6 +89,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: init msg )
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_mouse = platform_obj . get ( ) . mouse ;
+    _platform_touch = platform_obj . get ( ) . touch ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _spot_frames_left = _platform_math_consts . get ( ) . whole_0 ;
     _spot_mesh_created = _platform_math_consts . get ( ) . whole_false ;
@@ -173,11 +175,11 @@ template < typename mediator >
 void shy_logic_touch < mediator > :: _poll_touchscreen ( )
 {
     num_whole touch ;
-    platform_touch :: occured ( touch ) ;
+    _platform_touch . get ( ) . occured ( touch ) ;
     if ( platform_conditions :: whole_is_true ( touch ) )
     {
-        platform_touch :: x ( _spot_x ) ;
-        platform_touch :: y ( _spot_y ) ;
+        _platform_touch . get ( ) . x ( _spot_x ) ;
+        _platform_touch . get ( ) . y ( _spot_y ) ;
         _should_place_new_spot = _platform_math_consts . get ( ) . whole_true ;
     }
 }
