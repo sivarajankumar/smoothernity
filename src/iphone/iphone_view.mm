@@ -42,18 +42,27 @@
     _al_context = alcCreateContext ( _al_device , NULL ) ;
     alcMakeContextCurrent ( _al_context ) ;
     
-    shy_iphone_platform_utility :: _sound_loader = [ [ shy_iphone_sound_loader alloc ] init ] ;
-    shy_iphone_platform_utility :: _texture_loader = [ [ shy_iphone_texture_loader alloc ] init ] ;
-    [ shy_iphone_platform_utility :: _sound_loader thread_run ] ;
-    [ shy_iphone_platform_utility :: _texture_loader thread_run ] ;
+    _sound_loader = [ [ shy_iphone_sound_loader alloc ] init ] ;
+    _texture_loader = [ [ shy_iphone_texture_loader alloc ] init ] ;
+    [ _sound_loader thread_run ] ;
+    [ _texture_loader thread_run ] ;
+    _platform_insider = new shy_iphone_platform_insider ( ) ;
+    _platform_insider -> render_insider . set_texture_loader ( _texture_loader ) ;
+    _platform_insider -> sound_insider . set_sound_loader ( _sound_loader ) ;
+
+	_platform_insider -> render_insider . set_aspect_width ( 1.0f ) ;
+	_platform_insider -> render_insider . set_aspect_height ( 1.5f ) ;
 }
 
 - ( void ) _done_platform
 {
-    [ shy_iphone_platform_utility :: _sound_loader thread_stop ] ;
-    [ shy_iphone_platform_utility :: _texture_loader thread_stop ] ;
-    shy_iphone_platform_utility :: _sound_loader = nil ;
-    shy_iphone_platform_utility :: _texture_loader = nil ;
+    [ _sound_loader thread_stop ] ;
+    [ _texture_loader thread_stop ] ;
+    _sound_loader = nil ;
+    _texture_loader = nil ;
+    
+    delete _platform_insider ;
+    _platform_insider = 0 ;	
 	
 	if ( _gl_default_framebuffer )
 	{
@@ -87,12 +96,15 @@
 
 - ( void ) _init_game
 {
-	_facade . init ( ) ;
+    _facade = new shy_facade < shy_platform < shy_iphone_platform_insider > > ( _platform_insider -> platform ) ;
+    _facade -> init ( ) ;
 }
 
 - ( void ) _done_game
 {
-	_facade . done ( ) ;
+	_facade -> done ( ) ;
+	delete _facade ;
+	_facade = 0 ;
 }
 
 + ( Class ) layerClass
@@ -104,20 +116,20 @@
 {
     UITouch * touch = [ touches anyObject ] ;
     CGPoint point = [ touch locationInView : [ touch view ] ] ;
-    shy_iphone_platform_utility :: _touch_occured = true ;
-    shy_iphone_platform_utility :: _touch_x =   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ;
-    shy_iphone_platform_utility :: _touch_y = - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ;
+    _platform_insider -> touch_insider . set_occured ( true ) ;
+    _platform_insider -> mouse_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
+    _platform_insider -> mouse_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
 }
 
 - ( void ) draw_view : ( id ) sender
 {
     [ EAGLContext setCurrentContext : _gl_context ] ;
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
-	_facade . render ( ) ;
-	_facade . update ( ) ;
+	_facade -> render ( ) ;
+	_facade -> update ( ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
-    shy_iphone_platform_utility :: _touch_occured = false ;
+    _platform_insider -> mouse_insider . set_occured ( false ) ;
     [ self _schedule_draw ] ;
 }
 

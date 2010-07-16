@@ -14,8 +14,8 @@
         _platform_insider = new shy_macosx_platform_insider ( ) ;
         _platform_insider -> render_insider . set_texture_loader ( _texture_loader ) ;
         _platform_insider -> sound_insider . set_sound_loader ( _sound_loader ) ;
-		_measurer = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( _platform_insider -> platform ) ;
-		_measurer -> init ( ) ;
+		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( _platform_insider -> platform ) ;
+		_facade -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
         NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_platform < shy_macosx_platform_insider > > ) ) ;
 	}
@@ -24,9 +24,9 @@
 
 - ( void ) dealloc
 {
-	_measurer -> done ( ) ;
-	delete _measurer ;
-	_measurer = 0 ;
+	_facade -> done ( ) ;
+	delete _facade ;
+	_facade = 0 ;
     
     [ _sound_loader thread_stop ] ;
     [ _texture_loader thread_stop ] ;
@@ -85,15 +85,15 @@
 
 - ( void ) render
 {
-	_measurer -> render ( ) ;
-	_measurer -> update ( ) ;
+	_facade -> render ( ) ;
+	_facade -> update ( ) ;
     _platform_insider -> mouse_insider . set_left_button_down ( false ) ;
     glFinish ( ) ;
 }
 
 - ( void ) video_mode_changed
 {
-    _measurer -> video_mode_changed ( ) ;
+    _facade -> video_mode_changed ( ) ;
 }
 
 @end

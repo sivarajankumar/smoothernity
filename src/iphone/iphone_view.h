@@ -6,12 +6,15 @@
 #import <UIKit/UIKit.h>
 
 #include "iphone_platform.hpp"
-#include "../../common/facade.hpp"
+#include "../common/facade.hpp"
 
 @interface EAGLView : UIView
 {    
 @private	
-	shy_facade < shy_iphone_platform > _facade ;
+    shy_iphone_sound_loader * _sound_loader ;
+    shy_iphone_texture_loader * _texture_loader ;
+    shy_iphone_platform_insider * _platform_insider ;
+	shy_facade < shy_platform < shy_iphone_platform_insider > > * _facade ;
 	
 	EAGLContext * _gl_context ;
 	GLint _gl_backing_width;

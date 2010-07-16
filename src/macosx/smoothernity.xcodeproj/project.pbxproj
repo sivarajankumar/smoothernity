@@ -292,6 +292,8 @@
 				8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */,
 				883E9477119D62680040B1D6 /* macosx_texture_loader.h */,
 				883E9478119D62680040B1D6 /* macosx_texture_loader.mm */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -331,22 +333,12 @@
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
 				4CB60DB40471567900090FEF /* Categories */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				19AE102811B269A300A5B332 /* Info-smoothernity__Upgraded_.plist */,
 			);
 			name = NSOpenGLFullScreen;
-			sourceTree = "<group>";
-		};
-		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
-			);
-			name = "Other Sources";
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -726,6 +718,7 @@
 		88CE0EDF117C860E00A1BF42 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -760,6 +753,7 @@
 		88CE0EE0117C860E00A1BF42 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
@@ -794,6 +788,7 @@
 		88CE0EE1117C860E00A1BF42 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;

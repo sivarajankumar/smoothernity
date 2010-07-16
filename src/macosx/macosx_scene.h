@@ -7,7 +7,7 @@
     shy_macosx_sound_loader * _sound_loader ;
     shy_macosx_texture_loader * _texture_loader ;
     shy_macosx_platform_insider * _platform_insider ;
-	shy_facade < shy_platform < shy_macosx_platform_insider > > * _measurer;
+	shy_facade < shy_platform < shy_macosx_platform_insider > > * _facade ;
 	NSRect _bounds ;
 }
 
