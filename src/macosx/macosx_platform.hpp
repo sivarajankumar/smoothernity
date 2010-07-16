@@ -56,7 +56,7 @@ public :
     typedef shy_macosx_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
     typedef shy_platform_pointer < shy_macosx_platform_insider > platform_pointer ;
     typedef shy_macosx_platform_render < shy_macosx_platform_insider > platform_render ;
-    typedef shy_platform_scheduler_direct_call < shy_macosx_platform_insider > platform_scheduler ;
+    typedef shy_platform_scheduler_random < shy_macosx_platform_insider > platform_scheduler ;
     typedef shy_macosx_platform_sound < shy_macosx_platform_insider > platform_sound ;
     typedef shy_platform_static_array < shy_macosx_platform_insider > platform_static_array ;
     typedef shy_platform_static_assert < shy_macosx_platform_insider > platform_static_assert ;
