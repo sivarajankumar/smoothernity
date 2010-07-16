@@ -22,7 +22,7 @@
 #include "../platform/mouse_dummy.hpp"
 #include "../platform/platform.hpp"
 #include "../platform/pointer.hpp"
-#include "../platform/scheduler_random.hpp"
+#include "../platform/scheduler_direct_call.hpp"
 #include "../platform/static_array.hpp"
 #include "../platform/static_array_insider.hpp"
 #include "../platform/static_assert.hpp"
@@ -55,7 +55,7 @@ public :
     typedef shy_platform_mouse_dummy < shy_iphone_platform_insider > platform_mouse ;
     typedef shy_platform_pointer < shy_iphone_platform_insider > platform_pointer ;
     typedef shy_iphone_platform_render < shy_iphone_platform_insider > platform_render ;
-    typedef shy_platform_scheduler_random < shy_iphone_platform_insider > platform_scheduler ;
+    typedef shy_platform_scheduler_direct_call < shy_iphone_platform_insider > platform_scheduler ;
     typedef shy_iphone_platform_sound < shy_iphone_platform_insider > platform_sound ;
     typedef shy_platform_static_array < shy_iphone_platform_insider > platform_static_array ;
     typedef shy_platform_static_assert < shy_iphone_platform_insider > platform_static_assert ;

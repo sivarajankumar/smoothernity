@@ -74,7 +74,6 @@ void shy_logic < mediator > :: receive ( typename messages :: init msg )
     _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_false ;
     _fidget_prepared = _platform_math_consts . get ( ) . whole_false ;
     _init_render ( ) ;
-    _mediator . get ( ) . send ( typename messages :: fidget_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
@@ -100,6 +99,8 @@ void shy_logic < mediator > :: receive ( typename messages :: update msg )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
         _mediator . get ( ) . send ( typename messages :: application_update ( ) ) ;
+    else
+        _mediator . get ( ) . send ( typename messages :: fidget_prepare_permit ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_update ( ) ) ;
 }
 
