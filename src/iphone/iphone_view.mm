@@ -127,9 +127,9 @@
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
 	_facade -> render ( ) ;
 	_facade -> update ( ) ;
+    _platform_insider -> touch_insider . set_occured ( false ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
-    _platform_insider -> touch_insider . set_occured ( false ) ;
     [ self _schedule_draw ] ;
 }
 

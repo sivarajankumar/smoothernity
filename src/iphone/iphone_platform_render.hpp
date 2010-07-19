@@ -87,8 +87,8 @@ public :
         vertex_data ( ) ;
     private :
         GLfloat _position [ 3 ] ;
-        GLfloat _tex_coord [ 2 ] ;
         GLubyte _color [ 4 ] ;
+        GLfloat _tex_coord [ 2 ] ;
     } ;
 
     class index_data

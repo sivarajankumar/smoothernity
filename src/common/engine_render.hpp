@@ -33,7 +33,9 @@ class shy_engine_render
     public :
         _engine_render_consts_type ( ) ;
         num_whole texture_size_pow2_base ;
-        static const_int_32 max_meshes = 100 ;
+        num_whole max_vertices ;
+        num_whole max_indices ;
+        static const_int_32 max_meshes = 20 ;
         static const_int_32 max_textures = 5 ;
     } ;
     
@@ -120,6 +122,8 @@ template < typename mediator >
 shy_engine_render < mediator > :: _engine_render_consts_type :: _engine_render_consts_type ( )
 {
     platform_math :: make_num_whole ( texture_size_pow2_base , engine_render_stateless_consts_type :: texture_size_pow2_base_int ) ;
+    platform_math :: make_num_whole ( max_vertices , 300 ) ;
+    platform_math :: make_num_whole ( max_indices , 300 ) ;
 }
 
 template < typename mediator >
@@ -138,6 +142,25 @@ void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _next_texture_id = _platform_math_consts . get ( ) . whole_0 ;
     _next_mesh_id = _platform_math_consts . get ( ) . whole_0 ;
+    
+    num_whole whole_max_meshes ;
+    platform_math :: make_num_whole ( whole_max_meshes , _engine_render_consts_type :: max_meshes ) ;
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , whole_max_meshes )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        typename platform_pointer :: template pointer < _mesh_data > mesh ;
+        platform_static_array :: element_ptr ( mesh , _meshes_data , i ) ;
+        
+        _platform_render . get ( ) . create_vertex_buffer ( mesh . get ( ) . vertex_buffer_id , _engine_render_consts . max_vertices ) ;
+        _platform_render . get ( ) . create_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id , _engine_render_consts . max_indices ) ;
+        _platform_render . get ( ) . create_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id , _engine_render_consts . max_indices ) ;
+        
+        _platform_render . get ( ) . map_vertex_buffer ( mesh . get ( ) . vertex_buffer_mapped_data , mesh . get ( ) . vertex_buffer_id ) ;
+        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+    }
 }
 
 template < typename mediator >
@@ -350,22 +373,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     mesh . get ( ) . triangle_strip_indices_count = msg . triangle_strip_indices ;
     mesh . get ( ) . triangle_fan_indices_count = msg . triangle_fan_indices ;
     platform_matrix :: identity ( mesh . get ( ) . transform ) ;
-    
-    _platform_render . get ( ) . create_vertex_buffer ( mesh . get ( ) . vertex_buffer_id , mesh . get ( ) . vertices_count ) ;
-    _platform_render . get ( ) . map_vertex_buffer ( mesh . get ( ) . vertex_buffer_mapped_data , mesh . get ( ) . vertex_buffer_id ) ;
-    
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
-    {
-        _platform_render . get ( ) . create_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id , mesh . get ( ) . triangle_strip_indices_count ) ;
-        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
-    }
-    
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
-    {
-        _platform_render . get ( ) . create_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id , mesh . get ( ) . triangle_fan_indices_count ) ;
-        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
-    }
-    
+        
     typename messages :: render_mesh_create_reply reply_msg ;
     reply_msg . mesh . _mesh_id = _next_mesh_id ;
     platform_math :: inc_whole ( _next_mesh_id ) ;
@@ -379,10 +387,8 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     platform_static_array :: element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
     mesh . get ( ) . finalized = _platform_math_consts . get ( ) . whole_true ;
     _platform_render . get ( ) . unmap_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
-        _platform_render . get ( ) . unmap_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
-        _platform_render . get ( ) . unmap_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+    _platform_render . get ( ) . unmap_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+    _platform_render . get ( ) . unmap_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
 }
 
 template < typename mediator >

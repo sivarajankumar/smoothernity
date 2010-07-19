@@ -56,6 +56,7 @@
 - ( void ) _thread_main_method
 {
     NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
+    [ NSThread setThreadPriority : 0.0 ] ;
     while ( ! _should_quit )
     {
         [ NSThread sleepForTimeInterval : 0.1 ] ;

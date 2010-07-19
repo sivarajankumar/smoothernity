@@ -32,6 +32,8 @@ class shy_logic_entities
         num_whole grid_step ;
         num_whole color_bias ;
         num_whole colors_max ;
+        num_whole frames_wait_before_render ;
+        num_whole frames_between_render_count_increases ;
         static const_int_32 entity_mesh_grid = 5 ;
     } ;
 
@@ -71,6 +73,9 @@ private :
     num_whole _vertices_count ;
     num_whole _entity_mesh_id_created ;
     num_whole _mesh_create_requested ;
+    num_whole _frames_to_render ;
+    num_whole _entities_to_render ;
+    num_whole _frames_to_increase_render_count ;
     mesh_id _entity_mesh_id ;
     typename platform_static_array :: template static_array 
         < matrix_data 
@@ -92,6 +97,8 @@ shy_logic_entities < mediator > :: _logic_entities_consts_type :: _logic_entitie
     platform_math :: make_num_whole ( grid_step , 5 ) ;
     platform_math :: make_num_whole ( color_bias , 21 ) ;
     platform_math :: make_num_whole ( colors_max , 7 ) ;
+    platform_math :: make_num_whole ( frames_wait_before_render , 1 ) ;
+    platform_math :: make_num_whole ( frames_between_render_count_increases , 10 ) ;
 }
 
 template < typename mediator >
@@ -116,6 +123,32 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: init msg 
     _vertices_count = _platform_math_consts . get ( ) . whole_0 ;
     _entity_mesh_id_created = _platform_math_consts . get ( ) . whole_false ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
+    _frames_to_render = _platform_math_consts . get ( ) . whole_0 ;
+    _entities_to_render = _platform_math_consts . get ( ) . whole_0 ;
+    _frames_to_increase_render_count = _platform_math_consts . get ( ) . whole_0 ;
+    
+    num_whole matrices_count ;
+    platform_math :: make_num_whole ( matrices_count , _logic_entities_consts_type :: entity_mesh_grid ) ;
+    platform_math :: mul_whole_by ( matrices_count , matrices_count ) ;
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , matrices_count )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        vector_data zero ;
+        typename platform_pointer :: template pointer < matrix_data > matrix ;
+        platform_static_array :: element_ptr ( matrix , _entities_grid_matrices , i ) ;
+        platform_vector :: xyz 
+            ( zero 
+            , _platform_math_consts . get ( ) . fract_0 
+            , _platform_math_consts . get ( ) . fract_0 
+            , _platform_math_consts . get ( ) . fract_0 
+            ) ;
+        platform_matrix :: identity ( matrix . get ( ) ) ;
+        platform_matrix :: set_axis_x ( matrix . get ( ) , zero ) ;
+        platform_matrix :: set_axis_y ( matrix . get ( ) , zero ) ;
+        platform_matrix :: set_axis_z ( matrix . get ( ) , zero ) ;
+    }
 }
 
 template < typename mediator >
@@ -184,10 +217,10 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
                 mesh_create_msg . triangle_fan_indices = fan_indices_count ;
                 _mediator . get ( ) . send ( mesh_create_msg ) ;
             }
-            if ( platform_conditions :: whole_is_true ( _entity_mesh_id_created ) )
+            else if ( platform_conditions :: whole_is_true ( _entity_mesh_id_created ) )
                 _create_entity_mesh ( ) ;
         }
-        if ( platform_conditions :: whole_is_true ( _entity_created ) )
+        else if ( platform_conditions :: whole_is_true ( _entity_created ) )
             _update_entity_grid ( ) ;
     }
 }
@@ -220,13 +253,10 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 template < typename mediator >
 void shy_logic_entities < mediator > :: _entities_render ( )
 {
-    num_whole i_max ;
-    num_whole whole_entity_mesh_grid ;
-    platform_math :: make_num_whole ( whole_entity_mesh_grid , _logic_entities_consts_type :: entity_mesh_grid ) ;
-    platform_math :: mul_wholes ( i_max , whole_entity_mesh_grid , whole_entity_mesh_grid ) ;
     _mediator . get ( ) . send ( typename messages :: render_texture_unselect ( ) ) ;
+    
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
-        ; platform_conditions :: whole_less_than_whole ( i , i_max )
+        ; platform_conditions :: whole_less_than_whole ( i , _entities_to_render )
         ; platform_math :: inc_whole ( i )
         )
     {
@@ -385,15 +415,19 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
             platform_math :: inc_whole ( _fan_indices_count ) ;
             platform_math :: inc_whole ( _current_fan_mesh_span ) ;
         }
-        else
+        else if ( platform_conditions :: whole_is_zero ( _frames_to_render ) )
         {
             typename messages :: render_mesh_finalize mesh_finalize_msg ;
             mesh_finalize_msg . mesh = _entity_mesh_id ;
             _mediator . get ( ) . send ( mesh_finalize_msg ) ;
-
-            _entity_created = _platform_math_consts . get ( ) . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
+            platform_math :: inc_whole ( _frames_to_render ) ;
         }
+        else if ( platform_conditions :: whole_less_than_whole ( _frames_to_render , _logic_entities_consts . frames_wait_before_render ) )
+        {
+            platform_math :: inc_whole ( _frames_to_render ) ;
+        }
+        else
+            _entity_created = _platform_math_consts . get ( ) . whole_true ;
     }
 }
 
@@ -485,6 +519,7 @@ template < typename mediator >
 void shy_logic_entities < mediator > :: _update_entity_grid ( )
 {
     num_whole whole_entity_mesh_grid ;
+    num_whole i_max ;
     num_fract fract_entity_mesh_grid ;
     num_fract fract_scale_in_frames ;
     num_fract fract_grid_scale ;
@@ -493,8 +528,24 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
     platform_math :: make_num_fract ( fract_entity_mesh_grid , _logic_entities_consts_type :: entity_mesh_grid , 1 ) ;
     platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_entities_consts . scale_in_frames ) ;
     platform_math :: make_fract_from_whole ( fract_grid_scale , _grid_scale ) ;
-    
-    if ( platform_conditions :: whole_less_or_equal_to_whole ( _grid_scale , _logic_entities_consts . scale_in_frames ) )
+    platform_math :: mul_wholes ( i_max , whole_entity_mesh_grid , whole_entity_mesh_grid ) ;
+
+    if ( platform_conditions :: whole_less_than_whole ( _frames_to_increase_render_count , _logic_entities_consts . frames_between_render_count_increases ) )
+        platform_math :: inc_whole ( _frames_to_increase_render_count ) ;
+    else
+    {
+        _frames_to_increase_render_count = _platform_math_consts . get ( ) . whole_0 ;
+        if ( platform_conditions :: whole_less_than_whole ( _entities_to_render , i_max ) )
+        {
+            platform_math :: inc_whole ( _entities_to_render ) ;
+            if ( platform_conditions :: wholes_are_equal ( _entities_to_render , i_max ) )
+                _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
+        }
+    }
+
+    if ( platform_conditions :: wholes_are_equal ( _entities_to_render , i_max ) 
+      && platform_conditions :: whole_less_or_equal_to_whole ( _grid_scale , _logic_entities_consts . scale_in_frames )
+       )
     {
         for ( num_whole x = _platform_math_consts . get ( ) . whole_0 
             ; platform_conditions :: whole_less_than_whole ( x , whole_entity_mesh_grid ) 
@@ -531,7 +582,7 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 
                 platform_math :: add_fracts ( scale , scale_wave_part , scale_frame_part ) ;
                 engine_math :: math_clamp_fract ( scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
-                
+
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;
                 
