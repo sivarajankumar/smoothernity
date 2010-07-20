@@ -106,6 +106,7 @@ public :
     void receive ( typename messages :: render_matrix_identity msg ) ;
     void receive ( typename messages :: render_enable_face_culling msg ) ;
     void receive ( typename messages :: render_texture_mode_modulate msg ) ;
+    void receive ( typename messages :: render_frame_loss_request msg ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_render > _platform_render ;
@@ -510,4 +511,12 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     platform_static_array :: element_ptr ( mesh , _meshes_data , msg . mesh . _mesh_id ) ;
     mesh . get ( ) . transform = msg . transform ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: render_frame_loss_request msg )
+{
+    typename messages :: render_frame_loss_reply reply_msg ;
+    _platform_render . get ( ) . get_frame_loss ( reply_msg . frame_loss ) ;
+    _mediator . get ( ) . send ( reply_msg ) ;
 }

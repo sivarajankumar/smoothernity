@@ -41,6 +41,7 @@ public :
     void receive ( typename messages :: fidget_update msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
     void receive ( typename messages :: render_aspect_reply msg ) ;
+    void receive ( typename messages :: render_frame_loss_reply msg ) ;
 private :
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
@@ -55,7 +56,11 @@ private :
     num_whole _fidget_scale ;
     num_whole _mesh_create_requested ;
     num_whole _render_aspect_requested ;
+    num_whole _render_aspect_replied ;
     num_fract _render_aspect_height ;
+    num_whole _render_frame_loss_requested ;
+    num_whole _render_frame_loss_replied ;
+    num_whole _render_frame_loss ;
     mesh_id _fidget_mesh_id ;
 } ;
 
@@ -92,6 +97,9 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
     _fidget_scale = _platform_math_consts . get ( ) . whole_0 ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
+    _render_aspect_replied = _platform_math_consts . get ( ) . whole_false ;
+    _render_frame_loss_requested = _platform_math_consts . get ( ) . whole_false ;
+    _render_frame_loss_replied = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -150,7 +158,9 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
         else
         {
             _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
+            _render_frame_loss_requested = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: render_frame_loss_request ( ) ) ;
         }
     }
 }
@@ -161,7 +171,20 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: render_aspe
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
         _render_aspect_requested = _platform_math_consts . get ( ) . whole_false ;
+        _render_aspect_replied = _platform_math_consts . get ( ) . whole_true ;
         _render_aspect_height = msg . height ;
+        _update_fidget ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_fidget < mediator > :: receive ( typename messages :: render_frame_loss_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _render_frame_loss_requested ) )
+    {
+        _render_frame_loss_requested = _platform_math_consts . get ( ) . whole_false ;
+        _render_frame_loss_replied = _platform_math_consts . get ( ) . whole_true ;
+        _render_frame_loss = msg . frame_loss ;
         _update_fidget ( ) ;
     }
 }
@@ -169,39 +192,50 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: render_aspe
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _update_fidget ( )
 {
-    matrix_data matrix ;
-    num_fract fract_scale_in_frames ;
-    num_fract fract_fidget_scale ;
-    num_fract scale ;
-    num_fract angle_cos ;
-    num_fract angle_sin ;
-    num_fract cos_by_scale ;
-    num_fract sin_by_scale ;
-    num_fract neg_sin_by_scale ;
-    num_fract mesh_y ;
+    if ( platform_conditions :: whole_is_true ( _render_aspect_replied )
+      && platform_conditions :: whole_is_true ( _render_frame_loss_replied )
+       )
+    {
+        _render_aspect_replied = _platform_math_consts . get ( ) . whole_false ;
+        _render_frame_loss_replied = _platform_math_consts . get ( ) . whole_false ;
     
-    platform_math :: add_to_fract ( _fidget_angle , _logic_fidget_consts . angle_delta ) ;
-    platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_fidget_consts . scale_in_frames ) ;
-    platform_math :: make_fract_from_whole ( fract_fidget_scale , _fidget_scale ) ;
-    platform_math :: div_fracts ( scale , fract_fidget_scale , fract_scale_in_frames ) ;
-    platform_math :: cos ( angle_cos , _fidget_angle ) ;
-    platform_math :: sin ( angle_sin , _fidget_angle ) ;
-    platform_math :: mul_fracts ( cos_by_scale , angle_cos , scale ) ;
-    platform_math :: mul_fracts ( sin_by_scale , angle_sin , scale ) ;
-    platform_math :: neg_fract ( neg_sin_by_scale , sin_by_scale ) ;
-    platform_math :: sub_fracts ( mesh_y , _render_aspect_height , _logic_fidget_consts . mesh_y_from_top ) ;
-    platform_matrix :: set_axis_x ( matrix , cos_by_scale , sin_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
-    platform_matrix :: set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
-    platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
-    platform_matrix :: set_origin ( matrix , _logic_fidget_consts . mesh_x , mesh_y , _logic_fidget_consts . mesh_z ) ;
-    
-    typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
-    mesh_set_transform_msg . mesh = _fidget_mesh_id ;
-    mesh_set_transform_msg . transform = matrix ;
-    _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
+        matrix_data matrix ;
+        num_fract fract_scale_in_frames ;
+        num_fract fract_fidget_scale ;
+        num_fract scale ;
+        num_fract angle_cos ;
+        num_fract angle_sin ;
+        num_fract cos_by_scale ;
+        num_fract sin_by_scale ;
+        num_fract neg_sin_by_scale ;
+        num_fract mesh_y ;
+        
+        platform_math :: add_to_fract ( _fidget_angle , _logic_fidget_consts . angle_delta ) ;
+        platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_fidget_consts . scale_in_frames ) ;
+        platform_math :: make_fract_from_whole ( fract_fidget_scale , _fidget_scale ) ;
+        platform_math :: div_fracts ( scale , fract_fidget_scale , fract_scale_in_frames ) ;
+        platform_math :: cos ( angle_cos , _fidget_angle ) ;
+        platform_math :: sin ( angle_sin , _fidget_angle ) ;
+        platform_math :: mul_fracts ( cos_by_scale , angle_cos , scale ) ;
+        platform_math :: mul_fracts ( sin_by_scale , angle_sin , scale ) ;
+        platform_math :: neg_fract ( neg_sin_by_scale , sin_by_scale ) ;
+        platform_math :: sub_fracts ( mesh_y , _render_aspect_height , _logic_fidget_consts . mesh_y_from_top ) ;
+        platform_matrix :: set_axis_x ( matrix , cos_by_scale , sin_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
+        platform_matrix :: set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , _platform_math_consts . get ( ) . fract_0 ) ;
+        platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
+        platform_matrix :: set_origin ( matrix , _logic_fidget_consts . mesh_x , mesh_y , _logic_fidget_consts . mesh_z ) ;
+        
+        typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = _fidget_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
 
-    if ( platform_conditions :: whole_less_than_whole ( _fidget_scale , _logic_fidget_consts . scale_in_frames ) )
-        platform_math :: inc_whole ( _fidget_scale ) ;
+        if ( platform_conditions :: whole_less_than_whole ( _fidget_scale , _logic_fidget_consts . scale_in_frames ) )
+            platform_math :: inc_whole ( _fidget_scale ) ;
+
+        if ( platform_conditions :: whole_is_true ( _render_frame_loss ) )
+            _fidget_scale = _platform_math_consts . get ( ) . whole_0 ;
+    }
 }
 
 template < typename mediator >

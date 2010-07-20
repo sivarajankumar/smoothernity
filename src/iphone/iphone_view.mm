@@ -52,6 +52,8 @@
 
 	_platform_insider -> render_insider . set_aspect_width ( 1.0f ) ;
 	_platform_insider -> render_insider . set_aspect_height ( 1.5f ) ;
+    
+    _frame_time = 0 ;
 }
 
 - ( void ) _done_platform
@@ -130,6 +132,9 @@
     _platform_insider -> touch_insider . set_occured ( false ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
+    CFAbsoluteTime finish_time = CFAbsoluteTimeGetCurrent ( ) ;
+    _platform_insider -> render_insider . set_frame_loss ( finish_time - _frame_time > 1.4 / 60.0 ) ;
+    _frame_time = finish_time ;
     [ self _schedule_draw ] ;
 }
 

@@ -107,6 +107,8 @@ public :
         class render_enable_face_culling { } ;
         class render_fog_disable { } ;
         class render_fog_linear { public : num_fract znear ; num_fract zfar ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class render_frame_loss_reply { public : num_whole frame_loss ; } ;
+        class render_frame_loss_request { } ;
         class render_matrix_identity { } ;
         class render_matrix_load { public : matrix_data matrix ; } ;
         class render_mesh_create_reply { public : mesh_id mesh ; } ;
@@ -253,6 +255,8 @@ public :
     void send ( typename messages :: render_enable_face_culling msg ) ;
     void send ( typename messages :: render_fog_disable msg ) ;
     void send ( typename messages :: render_fog_linear msg ) ;
+    void send ( typename messages :: render_frame_loss_reply msg ) ;
+    void send ( typename messages :: render_frame_loss_request msg ) ;
     void send ( typename messages :: render_matrix_identity msg ) ;
     void send ( typename messages :: render_matrix_load msg ) ;
     void send ( typename messages :: render_mesh_create_reply msg ) ;
@@ -1152,4 +1156,16 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: text_letter_small_tex_coords_request msg )
 {
     _logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_frame_loss_request msg )
+{
+    _engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: render_frame_loss_reply msg )
+{
+    _logic_fidget . get ( ) . receive ( msg ) ;
 }

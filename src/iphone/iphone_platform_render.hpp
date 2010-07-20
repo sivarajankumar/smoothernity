@@ -151,6 +151,8 @@ public :
 	void get_aspect_width ( num_fract & result ) ;
 	void get_aspect_height ( num_fract & result ) ;
     
+    void get_frame_loss ( num_whole & result ) ;
+    
     void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
     
@@ -175,10 +177,11 @@ private :
     shy_iphone_texture_loader * _texture_loader ;
 	float _aspect_width ;
 	float _aspect_height ;
+    bool _frame_loss ;
     vertex_data _reference_vertex ;
     void * _vertex_position_offset ;
     void * _vertex_tex_coord_offset ;
-    void * _vertex_color_offset ;    
+    void * _vertex_color_offset ; 
 } ;
 
 template < typename platform_insider >
@@ -186,6 +189,7 @@ shy_iphone_platform_render < platform_insider > :: shy_iphone_platform_render ( 
 : _texture_loader ( 0 )
 , _aspect_width ( 1 )
 , _aspect_height ( 1 )
+, _frame_loss ( false )
 , _vertex_position_offset ( 0 )
 , _vertex_tex_coord_offset ( 0 )
 , _vertex_color_offset ( 0 )
@@ -714,6 +718,12 @@ template < typename platform_insider >
 inline void shy_iphone_platform_render < platform_insider > :: get_aspect_height ( num_fract & result )
 {
     platform_math_insider :: num_fract_value_set ( result , _aspect_height ) ;
+}
+
+template < typename platform_insider >
+inline void shy_iphone_platform_render < platform_insider > :: get_frame_loss ( num_whole & result )
+{
+    platform_math_insider :: num_whole_value_set ( result , ( int ) _frame_loss ) ;
 }
 
 template < typename platform_insider >

@@ -22,7 +22,9 @@
 	GLuint _gl_default_framebuffer;
     GLuint _gl_color_renderbuffer;
     GLuint _gl_depth_renderbuffer;
-    
+ 
+    CFAbsoluteTime _frame_time ;
+          
 	ALCcontext * _al_context;
 	ALCdevice * _al_device;
     

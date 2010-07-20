@@ -7,6 +7,7 @@ public :
     void set_texture_loader ( shy_iphone_texture_loader * texture_loader ) ;
     void set_aspect_width ( float width ) ;
     void set_aspect_height ( float height ) ;
+    void set_frame_loss ( bool frame_loss ) ;
 private :
     platform_insider * _platform_insider ;
 } ;
@@ -39,4 +40,10 @@ template < typename platform_insider >
 void shy_iphone_platform_render_insider < platform_insider > :: set_aspect_height ( float height )
 {
     _platform_insider -> render . _aspect_height = height ;
+}
+
+template < typename platform_insider >
+void shy_iphone_platform_render_insider < platform_insider > :: set_frame_loss ( bool frame_loss )
+{
+    _platform_insider -> render . _frame_loss = frame_loss ;
 }
