@@ -150,6 +150,7 @@ public :
     
 	void get_aspect_width ( num_fract & result ) ;
 	void get_aspect_height ( num_fract & result ) ;
+    void get_frame_loss ( num_whole & result ) ;
     
     void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
@@ -714,6 +715,12 @@ template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: get_aspect_height ( num_fract & result )
 {
     platform_math_insider :: num_fract_value_set ( result , _aspect_height ) ;
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: get_frame_loss ( num_whole & result )
+{
+    platform_math_insider :: num_whole_value_set ( result , ( int ) false ) ;
 }
 
 template < typename platform_insider >
