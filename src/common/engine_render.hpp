@@ -277,7 +277,14 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 {
     typename platform_pointer :: template pointer < _texture_data > texture ;
     platform_static_array :: element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
-    _platform_render . get ( ) . load_texture_data ( texture . get ( ) . render_id , texture . get ( ) . texels ) ;
+    _platform_render . get ( ) . load_texture_subdata 
+        ( texture . get ( ) . render_id 
+        , _platform_math_consts . get ( ) . whole_0
+        , _platform_math_consts . get ( ) . whole_0
+        , _engine_render_stateless_consts . get ( ) . texture_width
+        , _engine_render_stateless_consts . get ( ) . texture_height
+        , texture . get ( ) . texels 
+        ) ;
 }
 
 template < typename mediator >

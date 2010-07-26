@@ -41,7 +41,6 @@ public :
         render_texture_id ( ) ;
 	private :
 		GLuint _texture_id ;
-        GLsizei _texture_size ;
 	} ;
 
     class texture_resource_id
@@ -157,7 +156,14 @@ public :
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
     
     template < typename texels_array >
-    void load_texture_data ( render_texture_id arg_texture_id , const texels_array & data ) ;
+    void load_texture_subdata 
+        ( render_texture_id arg_texture_id 
+        , num_whole x_offset 
+        , num_whole y_offset 
+        , num_whole width
+        , num_whole height
+        , const texels_array & data 
+        ) ;
     
     template < typename texels_array >
     void load_texture_resource ( texture_resource_id resource_id , num_whole size_pow2_base , texels_array & data ) ;
@@ -221,7 +227,6 @@ shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_id :: re
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_texture_id :: render_texture_id ( )
 : _texture_id ( GLuint ( platform_insider :: uninitialized_value ) )
-, _texture_size ( GLsizei ( platform_insider :: uninitialized_value ) )
 {
 }
 
@@ -360,7 +365,7 @@ inline void shy_macosx_platform_render < platform_insider > :: create_texture_id
     glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
     int size_pow2_base_int = 0 ;
     platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
-    arg_texture_id . _texture_size = 1 << size_pow2_base_int ;
+    GLsizei size = 1 << size_pow2_base_int ;
     glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
@@ -371,8 +376,8 @@ inline void shy_macosx_platform_render < platform_insider > :: create_texture_id
         ( GL_TEXTURE_2D                     // target
         , 0                                 // level
         , GL_RGBA                           // internal format
-        , arg_texture_id . _texture_size    // width
-        , arg_texture_id . _texture_size    // height
+        , size                              // width
+        , size                              // height
         , 0                                 // border
         , GL_BGRA                           // format
         , GL_UNSIGNED_BYTE                  // type
@@ -406,18 +411,34 @@ inline void shy_macosx_platform_render < platform_insider > :: set_texel_color
 
 template < typename platform_insider >
 template < typename texels_array >
-inline void shy_macosx_platform_render < platform_insider > :: load_texture_data ( render_texture_id arg_texture_id , const texels_array & data )
+inline void shy_macosx_platform_render < platform_insider > :: load_texture_subdata 
+    ( render_texture_id arg_texture_id 
+    , num_whole x_offset 
+    , num_whole y_offset 
+    , num_whole width
+    , num_whole height
+    , const texels_array & data 
+    )
 {
+    int x_offset_int = 0 ;
+    int y_offset_int = 0 ;
+    int width_int = 0 ;
+    int height_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( x_offset_int , x_offset ) ;
+    platform_math_insider :: num_whole_value_get ( y_offset_int , y_offset ) ;
+    platform_math_insider :: num_whole_value_get ( width_int , width ) ;
+    platform_math_insider :: num_whole_value_get ( height_int , height ) ;
+    
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
     const texel_data * texels = 0 ;
     platform_static_array_insider :: elements_ptr ( texels , data ) ;
     glTexSubImage2D 
         ( GL_TEXTURE_2D                         // target
         , 0                                     // level
-        , 0                                     // x offset
-        , 0                                     // y offset
-        , arg_texture_id . _texture_size        // width
-        , arg_texture_id . _texture_size        // height
+        , x_offset_int                          // x offset
+        , y_offset_int                          // y offset
+        , width_int                             // width
+        , height_int                            // height
         , GL_BGRA                               // format
         , GL_UNSIGNED_BYTE                      // type
         , texels                                // data
