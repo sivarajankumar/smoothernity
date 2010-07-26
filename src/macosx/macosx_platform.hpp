@@ -19,6 +19,8 @@
 #include "../platform/math_consts.hpp"
 #include "../platform/math_int_float.hpp"
 #include "../platform/math_int_float_insider.hpp"
+#include "../platform/mouse.hpp"
+#include "../platform/mouse_insider.hpp"
 #include "../platform/platform.hpp"
 #include "../platform/pointer.hpp"
 #include "../platform/scheduler_direct_call.hpp"
@@ -26,12 +28,10 @@
 #include "../platform/static_array.hpp"
 #include "../platform/static_array_insider.hpp"
 #include "../platform/static_assert.hpp"
-#include "../platform/touch_dummy.hpp"
+#include "../platform/touch.hpp"
 #include "../platform/vector_float.hpp"
 #include "../platform/vector_float_insider.hpp"
 
-#include "macosx_platform_mouse.hpp"
-#include "macosx_platform_mouse_insider.hpp"
 #include "macosx_platform_render.hpp"
 #include "macosx_platform_render_insider.hpp"
 #include "macosx_platform_sound.hpp"
@@ -43,7 +43,7 @@ class shy_macosx_platform_insider
 public :
     typedef shy_platform_math_int_float_insider < shy_macosx_platform_insider > platform_math_insider ;
     typedef shy_platform_matrix_float_insider < shy_macosx_platform_insider > platform_matrix_insider ;
-    typedef shy_macosx_platform_mouse_insider < shy_macosx_platform_insider > platform_mouse_insider ;
+    typedef shy_platform_mouse_insider < shy_macosx_platform_insider > platform_mouse_insider ;
     typedef shy_macosx_platform_render_insider < shy_macosx_platform_insider > platform_render_insider ;
     typedef shy_macosx_platform_sound_insider < shy_macosx_platform_insider > platform_sound_insider ;
     typedef shy_platform_static_array_insider < shy_macosx_platform_insider > platform_static_array_insider ;
@@ -53,7 +53,7 @@ public :
     typedef shy_platform_math_int_float < shy_macosx_platform_insider > platform_math ;
     typedef shy_platform_math_consts < shy_macosx_platform_insider > platform_math_consts ;
     typedef shy_platform_matrix_float < shy_macosx_platform_insider > platform_matrix ;
-    typedef shy_macosx_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
+    typedef shy_platform_mouse < shy_macosx_platform_insider > platform_mouse ;
     typedef shy_platform_pointer < shy_macosx_platform_insider > platform_pointer ;
     typedef shy_macosx_platform_render < shy_macosx_platform_insider > platform_render ;
     typedef shy_platform_scheduler_random < shy_macosx_platform_insider > platform_scheduler ;
@@ -61,7 +61,7 @@ public :
     typedef shy_platform_static_array < shy_macosx_platform_insider > platform_static_array ;
     typedef shy_platform_static_assert < shy_macosx_platform_insider > platform_static_assert ;
     typedef shy_macosx_platform_time < shy_macosx_platform_insider > platform_time ;
-    typedef shy_platform_touch_dummy < shy_macosx_platform_insider > platform_touch ;
+    typedef shy_platform_touch < shy_macosx_platform_insider > platform_touch ;
     typedef shy_platform_vector_float < shy_macosx_platform_insider > platform_vector ;
 
     static const int frames_per_second = 60 ;

@@ -81,7 +81,6 @@
 		19AE100111B269A300A5B332 /* logic_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECD117DE26A008F67D9 /* logic_touch.hpp */; };
 		19AE100211B269A300A5B332 /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CECE117DE26A008F67D9 /* mediator.hpp */; };
 		19AE100311B269A300A5B332 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
-		19AE100411B269A300A5B332 /* macosx_platform_mouse.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */; };
 		19AE100511B269A300A5B332 /* engine_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88DBFFB211873D4600584A28 /* engine_math.hpp */; };
 		19AE100611B269A300A5B332 /* logic_text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881B850311886A6D00E31AA1 /* logic_text.hpp */; };
 		19AE100711B269A300A5B332 /* engine_rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E76FEA1188A90100631276 /* engine_rasterizer.hpp */; };
@@ -110,11 +109,9 @@
 		29B9732CFDCFA39411CA2CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
 		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
-		8809B37011E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B36F11E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp */; };
 		8809B3BF11E1E7B400869C87 /* macosx_platform_sound_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B3BE11E1E7B400869C87 /* macosx_platform_sound_insider.hpp */; };
 		8809B3DF11E1EC0B00869C87 /* macosx_platform_render_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */; };
 		8809B5A511E219E400869C87 /* platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B5A411E219E400869C87 /* platform.hpp */; };
-		880A037C1185A15C00363D69 /* macosx_platform_mouse.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */; };
 		8812CECF117DE26A008F67D9 /* engine_camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC4117DE26A008F67D9 /* engine_camera.hpp */; };
 		8812CED1117DE26A008F67D9 /* facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC6117DE26A008F67D9 /* facade.hpp */; };
 		8812CED2117DE26A008F67D9 /* logic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812CEC7117DE26A008F67D9 /* logic.hpp */; };
@@ -143,6 +140,10 @@
 		8819C56C11C939AD003A552B /* vector_float.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C56B11C939AD003A552B /* vector_float.hpp */; };
 		8819C56E11C939EF003A552B /* vector_float_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C56D11C939EF003A552B /* vector_float_insider.hpp */; };
 		881B850411886A6D00E31AA1 /* logic_text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881B850311886A6D00E31AA1 /* logic_text.hpp */; };
+		8826FBB411FDEE08004CCF6A /* mouse.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8826FBB311FDEE08004CCF6A /* mouse.hpp */; };
+		8826FBB611FDEE1F004CCF6A /* mouse_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8826FBB511FDEE1F004CCF6A /* mouse_insider.hpp */; };
+		8826FBD011FDEF43004CCF6A /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8826FBCF11FDEF43004CCF6A /* touch.hpp */; };
+		8826FBD211FDEF57004CCF6A /* touch_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8826FBD111FDEF57004CCF6A /* touch_insider.hpp */; };
 		882B9DA911A16B0900F05A15 /* logic_title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DA811A16B0900F05A15 /* logic_title.hpp */; };
 		882B9DBA11A1714B00F05A15 /* logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DB911A1714B00F05A15 /* logic_application.hpp */; };
 		882B9DD811A1740800F05A15 /* logic_game.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882B9DD711A1740800F05A15 /* logic_game.hpp */; };
@@ -158,7 +159,6 @@
 		886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
 		886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
-		886D5ECA11CA18B500C5EE01 /* touch_dummy.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */; };
 		88812E1111DB4F25003EC5C4 /* aggregator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812E1011DB4F25003EC5C4 /* aggregator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
 		88A615F311D3753A0058F52C /* engine_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88A615F211D3753A0058F52C /* engine_render.hpp */; };
@@ -186,11 +186,9 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOpenGLFullScreen_Prefix.h; sourceTree = "<group>"; };
 		4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
-		8809B36F11E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_mouse_insider.hpp; sourceTree = "<group>"; };
 		8809B3BE11E1E7B400869C87 /* macosx_platform_sound_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound_insider.hpp; sourceTree = "<group>"; };
 		8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render_insider.hpp; sourceTree = "<group>"; };
 		8809B5A411E219E400869C87 /* platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = platform.hpp; sourceTree = "<group>"; };
-		880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_mouse.hpp; sourceTree = "<group>"; };
 		8812CEC4117DE26A008F67D9 /* engine_camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_camera.hpp; sourceTree = "<group>"; };
 		8812CEC6117DE26A008F67D9 /* facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = facade.hpp; sourceTree = "<group>"; };
 		8812CEC7117DE26A008F67D9 /* logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic.hpp; sourceTree = "<group>"; };
@@ -219,6 +217,10 @@
 		8819C56B11C939AD003A552B /* vector_float.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector_float.hpp; sourceTree = "<group>"; };
 		8819C56D11C939EF003A552B /* vector_float_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector_float_insider.hpp; sourceTree = "<group>"; };
 		881B850311886A6D00E31AA1 /* logic_text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_text.hpp; sourceTree = "<group>"; };
+		8826FBB311FDEE08004CCF6A /* mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mouse.hpp; sourceTree = "<group>"; };
+		8826FBB511FDEE1F004CCF6A /* mouse_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mouse_insider.hpp; sourceTree = "<group>"; };
+		8826FBCF11FDEF43004CCF6A /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
+		8826FBD111FDEF57004CCF6A /* touch_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch_insider.hpp; sourceTree = "<group>"; };
 		882B9DA811A16B0900F05A15 /* logic_title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_title.hpp; sourceTree = "<group>"; };
 		882B9DB911A1714B00F05A15 /* logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_application.hpp; sourceTree = "<group>"; };
 		882B9DD711A1740800F05A15 /* logic_game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic_game.hpp; sourceTree = "<group>"; };
@@ -234,7 +236,6 @@
 		886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render.hpp; sourceTree = "<group>"; };
 		886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound.hpp; sourceTree = "<group>"; };
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
-		886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch_dummy.hpp; sourceTree = "<group>"; };
 		88812E1011DB4F25003EC5C4 /* aggregator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aggregator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
 		88A615F211D3753A0058F52C /* engine_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = engine_render.hpp; sourceTree = "<group>"; };
@@ -281,8 +282,6 @@
 				05689226046B13F600000102 /* macosx_opengl_view.mm */,
 				886AE9F4117C8B36009CBB6F /* macosx_platform.hpp */,
 				886AE9F5117C8B36009CBB6F /* macosx_platform.mm */,
-				880A037B1185A15C00363D69 /* macosx_platform_mouse.hpp */,
-				8809B36F11E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp */,
 				886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */,
 				8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */,
 				886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */,
@@ -409,6 +408,8 @@
 				8819C38F11C9192D003A552B /* math_int_float_insider.hpp */,
 				8819C50E11C93512003A552B /* matrix_float.hpp */,
 				8819C51A11C93635003A552B /* matrix_float_insider.hpp */,
+				8826FBB311FDEE08004CCF6A /* mouse.hpp */,
+				8826FBB511FDEE1F004CCF6A /* mouse_insider.hpp */,
 				8809B5A411E219E400869C87 /* platform.hpp */,
 				8819C32511C90AAF003A552B /* pointer.hpp */,
 				1929682511F0E91500A989F4 /* scheduler_direct_call.hpp */,
@@ -416,7 +417,8 @@
 				8819C24411C8E11D003A552B /* static_array.hpp */,
 				8819C29011C8F262003A552B /* static_array_insider.hpp */,
 				88812EE511DB7EA8003EC5C4 /* static_assert.hpp */,
-				886D5EC911CA18B500C5EE01 /* touch_dummy.hpp */,
+				8826FBCF11FDEF43004CCF6A /* touch.hpp */,
+				8826FBD111FDEF57004CCF6A /* touch_insider.hpp */,
 				8819C56B11C939AD003A552B /* vector_float.hpp */,
 				8819C56D11C939EF003A552B /* vector_float_insider.hpp */,
 			);
@@ -450,7 +452,6 @@
 				19AE100111B269A300A5B332 /* logic_touch.hpp in Headers */,
 				19AE100211B269A300A5B332 /* mediator.hpp in Headers */,
 				19AE100311B269A300A5B332 /* macosx_sound_loader.h in Headers */,
-				19AE100411B269A300A5B332 /* macosx_platform_mouse.hpp in Headers */,
 				19AE100511B269A300A5B332 /* engine_math.hpp in Headers */,
 				19AE100611B269A300A5B332 /* logic_text.hpp in Headers */,
 				19AE100711B269A300A5B332 /* engine_rasterizer.hpp in Headers */,
@@ -470,18 +471,20 @@
 				8819C51B11C93635003A552B /* matrix_float_insider.hpp in Headers */,
 				8819C56C11C939AD003A552B /* vector_float.hpp in Headers */,
 				8819C56E11C939EF003A552B /* vector_float_insider.hpp in Headers */,
-				886D5ECA11CA18B500C5EE01 /* touch_dummy.hpp in Headers */,
 				88A615F311D3753A0058F52C /* engine_render.hpp in Headers */,
 				88336BA211DA156D002B9172 /* engine_render_stateless.hpp in Headers */,
 				88336C2011DA1C67002B9172 /* logic_text_stateless.hpp in Headers */,
 				88336C4C11DA24CE002B9172 /* scheduler_random.hpp in Headers */,
 				88812E1111DB4F25003EC5C4 /* aggregator.hpp in Headers */,
 				88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */,
-				8809B37011E1DEBA00869C87 /* macosx_platform_mouse_insider.hpp in Headers */,
 				8809B3BF11E1E7B400869C87 /* macosx_platform_sound_insider.hpp in Headers */,
 				8809B3DF11E1EC0B00869C87 /* macosx_platform_render_insider.hpp in Headers */,
 				8809B5A511E219E400869C87 /* platform.hpp in Headers */,
 				1929682611F0E91500A989F4 /* scheduler_direct_call.hpp in Headers */,
+				8826FBB411FDEE08004CCF6A /* mouse.hpp in Headers */,
+				8826FBB611FDEE1F004CCF6A /* mouse_insider.hpp in Headers */,
+				8826FBD011FDEF43004CCF6A /* touch.hpp in Headers */,
+				8826FBD211FDEF57004CCF6A /* touch_insider.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +511,6 @@
 				8812CED8117DE26A008F67D9 /* logic_touch.hpp in Headers */,
 				8812CED9117DE26A008F67D9 /* mediator.hpp in Headers */,
 				8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */,
-				880A037C1185A15C00363D69 /* macosx_platform_mouse.hpp in Headers */,
 				88DBFFB311873D4600584A28 /* engine_math.hpp in Headers */,
 				881B850411886A6D00E31AA1 /* logic_text.hpp in Headers */,
 				88E76FEB1188A90100631276 /* engine_rasterizer.hpp in Headers */,
