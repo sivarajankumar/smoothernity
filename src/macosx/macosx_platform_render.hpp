@@ -41,6 +41,7 @@ public :
         render_texture_id ( ) ;
 	private :
 		GLuint _texture_id ;
+        GLsizei _texture_size ;
 	} ;
 
     class texture_resource_id
@@ -135,7 +136,7 @@ public :
 	void disable_texturing ( ) ;
 	void texture_mode_modulate ( ) ;
     void use_texture ( render_texture_id arg_texture_id ) ;
-	void create_texture_id ( render_texture_id & arg_texture_id ) ;
+	void create_texture_id ( render_texture_id & arg_texture_id , num_whole size_pow2_base ) ;
     void texture_loader_ready ( num_whole & is_ready ) ;
 
     void clear_screen ( num_fract r , num_fract g , num_fract b ) ;    
@@ -156,7 +157,7 @@ public :
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
     
     template < typename texels_array >
-    void load_texture_data ( render_texture_id arg_texture_id , num_whole size_pow2_base , const texels_array & data ) ;
+    void load_texture_data ( render_texture_id arg_texture_id , const texels_array & data ) ;
     
     template < typename texels_array >
     void load_texture_resource ( texture_resource_id resource_id , num_whole size_pow2_base , texels_array & data ) ;
@@ -220,6 +221,7 @@ shy_macosx_platform_render < platform_insider > :: render_vertex_buffer_id :: re
 template < typename platform_insider >
 shy_macosx_platform_render < platform_insider > :: render_texture_id :: render_texture_id ( )
 : _texture_id ( GLuint ( platform_insider :: uninitialized_value ) )
+, _texture_size ( GLsizei ( platform_insider :: uninitialized_value ) )
 {
 }
 
@@ -352,9 +354,30 @@ inline void shy_macosx_platform_render < platform_insider > :: fog_linear
 }
 
 template < typename platform_insider >
-inline void shy_macosx_platform_render < platform_insider > :: create_texture_id ( render_texture_id & arg_texture_id )
+inline void shy_macosx_platform_render < platform_insider > :: create_texture_id 
+    ( render_texture_id & arg_texture_id , num_whole size_pow2_base )
 {
     glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
+    int size_pow2_base_int = 0 ;
+    platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
+    arg_texture_id . _texture_size = 1 << size_pow2_base_int ;
+    glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
+    glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
+    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
+    glTexImage2D
+        ( GL_TEXTURE_2D                     // target
+        , 0                                 // level
+        , GL_RGBA                           // internal format
+        , arg_texture_id . _texture_size    // width
+        , arg_texture_id . _texture_size    // height
+        , 0                                 // border
+        , GL_BGRA                           // format
+        , GL_UNSIGNED_BYTE                  // type
+        , 0                                 // data
+        ) ;
 }
 
 template < typename platform_insider >
@@ -383,21 +406,22 @@ inline void shy_macosx_platform_render < platform_insider > :: set_texel_color
 
 template < typename platform_insider >
 template < typename texels_array >
-inline void shy_macosx_platform_render < platform_insider > :: load_texture_data 
-    ( render_texture_id arg_texture_id , num_whole size_pow2_base , const texels_array & data )
+inline void shy_macosx_platform_render < platform_insider > :: load_texture_data ( render_texture_id arg_texture_id , const texels_array & data )
 {
-    int size_pow2_base_int = 0 ;
-    platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
-    GLsizei size = 1 << size_pow2_base_int ;
-    glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
     glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
     const texel_data * texels = 0 ;
     platform_static_array_insider :: elements_ptr ( texels , data ) ;
-    glTexImage2D ( GL_TEXTURE_2D , 0 , GL_RGBA , size , size , 0 , GL_BGRA , GL_UNSIGNED_BYTE , texels ) ;
+    glTexSubImage2D 
+        ( GL_TEXTURE_2D                         // target
+        , 0                                     // level
+        , 0                                     // x offset
+        , 0                                     // y offset
+        , arg_texture_id . _texture_size        // width
+        , arg_texture_id . _texture_size        // height
+        , GL_BGRA                               // format
+        , GL_UNSIGNED_BYTE                      // type
+        , texels                                // data
+        ) ;
 }
 
 template < typename platform_insider >

@@ -162,6 +162,18 @@ void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
         _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
         _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
     }
+    
+    num_whole whole_max_textures ;
+    platform_math :: make_num_whole ( whole_max_textures , _engine_render_consts_type :: max_textures ) ;
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , whole_max_textures )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        typename platform_pointer :: template pointer < _texture_data > texture ;
+        platform_static_array :: element_ptr ( texture , _textures_datas , i ) ;
+        _platform_render . get ( ) . create_texture_id ( texture . get ( ) . render_id , _engine_render_consts . texture_size_pow2_base ) ;
+    }
 }
 
 template < typename mediator >
@@ -263,15 +275,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_finalize msg )
 {
-    num_whole size_pow2_base ;
     typename platform_pointer :: template pointer < _texture_data > texture ;
     platform_static_array :: element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
-    _platform_render . get ( ) . create_texture_id ( texture . get ( ) . render_id ) ;
-    _platform_render . get ( ) . load_texture_data 
-        ( texture . get ( ) . render_id 
-        , _engine_render_consts . texture_size_pow2_base 
-        , texture . get ( ) . texels 
-        ) ;
+    _platform_render . get ( ) . load_texture_data ( texture . get ( ) . render_id , texture . get ( ) . texels ) ;
 }
 
 template < typename mediator >
