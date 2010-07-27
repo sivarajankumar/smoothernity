@@ -59,9 +59,9 @@ class shy_logic_title
     } ;
     
 public :
+    shy_logic_title ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: title_done msg ) ;
     void receive ( typename messages :: title_render msg ) ;
     void receive ( typename messages :: title_update msg ) ;
     void receive ( typename messages :: title_launch_permit msg ) ;
@@ -72,6 +72,7 @@ public :
     void receive ( typename messages :: use_text_texture_reply msg ) ;
     void receive ( typename messages :: render_aspect_reply msg ) ;
 private :
+    shy_logic_title < mediator > & operator= ( const shy_logic_title < mediator > & src ) ;
     void _title_create ( ) ;
     void _title_render ( ) ;
     void _title_update ( ) ;
@@ -139,6 +140,17 @@ private :
 } ;
 
 template < typename mediator >
+shy_logic_title < mediator > :: shy_logic_title ( )
+{
+}
+
+template < typename mediator >
+shy_logic_title < mediator > & shy_logic_title < mediator > :: operator= ( const shy_logic_title < mediator > & src )
+{
+    return * this ;
+}
+
+template < typename mediator >
 shy_logic_title < mediator > :: _logic_title_consts_type :: _logic_title_consts_type ( )
 {
     platform_math :: make_num_fract ( appear_pos_angle_periods , 11 , 2 ) ;
@@ -194,25 +206,6 @@ template < typename mediator >
 void shy_logic_title < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
-}
-
-template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: title_done msg ) 
-{
-    if ( platform_conditions :: whole_is_true ( _title_created ) )
-    {
-        for ( num_whole i = _platform_math_consts . get ( ) . whole_0
-            ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
-            ; platform_math :: inc_whole ( i )
-            )
-        {
-            typename platform_pointer :: template pointer < _letter_state > letter ;
-            platform_static_array :: element_ptr ( letter , _letters , i ) ;
-            typename messages :: render_mesh_delete mesh_delete_msg ;
-            mesh_delete_msg . mesh = letter . get ( ) . mesh ;
-            _mediator . get ( ) . send ( mesh_delete_msg ) ;
-        }
-    }
 }
 
 template < typename mediator >

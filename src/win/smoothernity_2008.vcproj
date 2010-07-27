@@ -720,7 +720,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\mouse.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\mouse_insider.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\platform.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\pointer.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\scheduler_direct_call.hpp"
 				>
 			</File>
 			<File
@@ -740,7 +756,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\touch_dummy.hpp"
+				RelativePath="..\platform\touch.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\touch_insider.hpp"
 				>
 			</File>
 			<File
@@ -765,11 +785,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\win_platform_mouse.hpp"
+			RelativePath=".\win_platform_render.hpp"
 			>
 		</File>
 		<File
-			RelativePath=".\win_platform_render.hpp"
+			RelativePath=".\win_platform_render_insider.hpp"
 			>
 		</File>
 		<File

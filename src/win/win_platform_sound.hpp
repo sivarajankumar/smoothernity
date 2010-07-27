@@ -144,7 +144,7 @@ inline void shy_win_platform_sound < platform_insider > :: create_stereo_resourc
     , num_whole resource_index
     )
 {
-    result . _resource_id = platform_math_insider :: num_whole_unsafe_value_get ( resource_index ) ;
+    platform_math_insider :: num_whole_value_get ( result . _resource_id , resource_index ) ;
 }
 
 template < typename platform_insider >
@@ -159,13 +159,13 @@ inline void shy_win_platform_sound < platform_insider > :: load_stereo_sample_da
 template < typename platform_insider >
 inline void shy_win_platform_sound < platform_insider > :: loader_ready ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , true ) ;
+    platform_math_insider :: num_whole_value_set ( result , true ) ;
 }
 
 template < typename platform_insider >
 inline void shy_win_platform_sound < platform_insider > :: loaded_samples_count ( num_whole & result )
 {
-    platform_math_insider :: num_whole_unsafe_value_set ( result , 0 ) ;
+    platform_math_insider :: num_whole_value_set ( result , 0 ) ;
 }
 
 template < typename platform_insider >

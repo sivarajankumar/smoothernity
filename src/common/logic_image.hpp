@@ -36,9 +36,9 @@ class shy_logic_image
     } ;
     
 public :
+    shy_logic_image ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: image_done msg ) ;
     void receive ( typename messages :: image_render_request msg ) ;
     void receive ( typename messages :: image_update msg ) ;
     void receive ( typename messages :: image_prepare_permit msg ) ;
@@ -46,6 +46,7 @@ public :
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
     void receive ( typename messages :: render_texture_loader_ready_reply msg ) ;
 private :
+    shy_logic_image < mediator > & operator= ( const shy_logic_image < mediator > & src ) ;
     void _render_image_mesh ( ) ;
     void _update_image_mesh ( ) ;
     void _create_image_mesh ( ) ;
@@ -69,6 +70,17 @@ private :
     mesh_id _image_mesh_id ;
     texture_id _image_texture_id ;
 } ;
+
+template < typename mediator >
+shy_logic_image < mediator > :: shy_logic_image ( )
+{
+}
+
+template < typename mediator >
+shy_logic_image < mediator > & shy_logic_image < mediator > :: operator= ( const shy_logic_image < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_image < mediator > :: _logic_image_consts_type :: _logic_image_consts_type ( )
@@ -105,17 +117,6 @@ void shy_logic_image < mediator > :: receive ( typename messages :: init msg )
     _texture_loader_ready_requested = _platform_math_consts . get ( ) . whole_false ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
     _scale_frames = _platform_math_consts . get ( ) . whole_0 ;
-}
-
-template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_done msg )
-{
-    if ( platform_conditions :: whole_is_true ( _image_mesh_created ) )
-    {
-        typename messages :: render_mesh_delete mesh_delete_msg ;
-        mesh_delete_msg . mesh = _image_mesh_id ;
-        _mediator . get ( ) . send ( mesh_delete_msg ) ;
-    }
 }
 
 template < typename mediator >

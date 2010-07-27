@@ -53,7 +53,6 @@ public :
         class camera_prepared { } ;
         class camera_update { } ;
         class done { } ;
-        class entities_done { } ;
         class entities_height_reply { public : num_fract height ; } ;
         class entities_height_request { } ;
         class entities_mesh_grid_reply { public : num_whole grid ; } ;
@@ -65,7 +64,6 @@ public :
         class entities_render_reply { } ;
         class entities_render_request { } ;
         class entities_update { } ;
-        class fidget_done { } ;
         class fidget_prepare_permit { } ;
         class fidget_prepared { } ;
         class fidget_render_reply { } ;
@@ -74,14 +72,12 @@ public :
         class game_launch_permit { } ;
         class game_render { } ;
         class game_update { } ;
-        class image_done { } ;
         class image_prepare_permit { } ;
         class image_prepared { } ;
         class image_render_reply { } ;
         class image_render_request { } ;
         class image_update { } ;
         class init { } ;
-        class land_done { } ;
         class land_prepare_permit { } ;
         class land_prepared { } ;
         class land_render_reply { } ;
@@ -139,7 +135,6 @@ public :
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
         class sound_update { } ;
-        class text_done { } ;
         class text_letter_big_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
         class text_letter_big_tex_coords_request { public : letter_id letter ; } ;
         class text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
@@ -149,12 +144,10 @@ public :
         class text_render_reply { } ;
         class text_render_request { } ;
         class text_update { } ;
-        class title_done { } ;
         class title_finished { } ;
         class title_launch_permit { } ;
         class title_render { } ;
         class title_update { } ;
-        class touch_done { } ;
         class touch_prepare_permit { } ;
         class touch_prepared { } ;
         class touch_render { } ;
@@ -201,7 +194,6 @@ public :
     void send ( typename messages :: camera_prepared msg ) ;
     void send ( typename messages :: camera_update msg ) ;
     void send ( typename messages :: done msg ) ;
-    void send ( typename messages :: entities_done msg ) ;
     void send ( typename messages :: entities_height_reply msg ) ;
     void send ( typename messages :: entities_height_request msg ) ;
     void send ( typename messages :: entities_mesh_grid_reply msg ) ;
@@ -213,7 +205,6 @@ public :
     void send ( typename messages :: entities_render_reply msg ) ;
     void send ( typename messages :: entities_render_request msg ) ;
     void send ( typename messages :: entities_update msg ) ;
-    void send ( typename messages :: fidget_done msg ) ;
     void send ( typename messages :: fidget_prepare_permit msg ) ;
     void send ( typename messages :: fidget_prepared msg ) ;
     void send ( typename messages :: fidget_render_reply msg ) ;
@@ -222,14 +213,12 @@ public :
     void send ( typename messages :: game_launch_permit msg ) ;
     void send ( typename messages :: game_render msg ) ;
     void send ( typename messages :: game_update msg ) ;
-    void send ( typename messages :: image_done msg ) ;
     void send ( typename messages :: image_prepare_permit msg ) ;
     void send ( typename messages :: image_prepared msg ) ;
     void send ( typename messages :: image_render_reply msg ) ;
     void send ( typename messages :: image_render_request msg ) ;
     void send ( typename messages :: image_update msg ) ;
     void send ( typename messages :: init msg ) ;
-    void send ( typename messages :: land_done msg ) ;
     void send ( typename messages :: land_prepare_permit msg ) ;
     void send ( typename messages :: land_prepared msg ) ;
     void send ( typename messages :: land_render_reply msg ) ;
@@ -287,7 +276,6 @@ public :
     void send ( typename messages :: sound_prepare_permit msg ) ;
     void send ( typename messages :: sound_prepared msg ) ;
     void send ( typename messages :: sound_update msg ) ;
-    void send ( typename messages :: text_done msg ) ;
     void send ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
     void send ( typename messages :: text_letter_big_tex_coords_request msg ) ;
     void send ( typename messages :: text_letter_small_tex_coords_reply msg ) ;
@@ -297,12 +285,10 @@ public :
     void send ( typename messages :: text_render_reply msg ) ;
     void send ( typename messages :: text_render_request msg ) ;
     void send ( typename messages :: text_update msg ) ;
-    void send ( typename messages :: title_done msg ) ;
     void send ( typename messages :: title_finished msg ) ;
     void send ( typename messages :: title_launch_permit msg ) ;
     void send ( typename messages :: title_render msg ) ;
     void send ( typename messages :: title_update msg ) ;
-    void send ( typename messages :: touch_done msg ) ;
     void send ( typename messages :: touch_prepare_permit msg ) ;
     void send ( typename messages :: touch_prepared msg ) ;
     void send ( typename messages :: touch_render msg ) ;
@@ -439,7 +425,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: camera_updat
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: done msg )
 {
-    _logic . get ( ) . receive ( msg ) ;
+    _engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -808,12 +794,6 @@ void shy_mediator < mediator_types > :: send ( typename messages :: render_aspec
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: entities_done msg )
-{
-    _logic_entities . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_render_reply msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
@@ -823,12 +803,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: entities_render_request msg )
 {
     _logic_entities . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: fidget_done msg )
-{
-    _logic_fidget . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -845,12 +819,6 @@ void shy_mediator < mediator_types > :: send ( typename messages :: fidget_rende
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: image_done msg )
-{
-    _logic_image . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: image_render_reply msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
@@ -860,12 +828,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: image_render_request msg )
 {
     _logic_image . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: land_done msg )
-{
-    _logic_land . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -881,12 +843,6 @@ void shy_mediator < mediator_types > :: send ( typename messages :: land_render_
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: text_done msg )
-{
-    _logic_text . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: text_render_reply msg )
 {
     _logic_game . get ( ) . receive ( msg ) ;
@@ -896,12 +852,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: text_render_request msg )
 {
     _logic_text . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: touch_done msg )
-{
-    _logic_touch . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -1058,12 +1008,6 @@ void shy_mediator < mediator_types > :: send ( typename messages :: title_finish
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: title_launch_permit msg )
-{
-    _logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: send ( typename messages :: title_done msg )
 {
     _logic_title . get ( ) . receive ( msg ) ;
 }

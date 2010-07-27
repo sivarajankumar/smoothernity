@@ -55,9 +55,9 @@ class shy_logic_text
     typedef typename platform_static_array :: template static_array < _tex_coords , _logic_text_consts_type :: max_letters_in_alphabet > _letters_tex_coords ;
 
 public :
+    shy_logic_text ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: text_done msg ) ;
     void receive ( typename messages :: text_prepare_permit msg ) ;
     void receive ( typename messages :: text_render_request msg ) ;
     void receive ( typename messages :: text_update msg ) ;
@@ -68,6 +68,7 @@ public :
     void receive ( typename messages :: text_letter_small_tex_coords_request msg ) ;
     void receive ( typename messages :: rasterize_finalize_reply msg ) ;
 private :
+    shy_logic_text < mediator > & operator= ( const shy_logic_text < mediator > & src ) ;
     void _render_text_mesh ( ) ;
     void _update_text_mesh ( ) ;
     void _create_text_mesh ( ) ;
@@ -148,6 +149,17 @@ private :
 } ;
 
 template < typename mediator >
+shy_logic_text < mediator > :: shy_logic_text ( )
+{
+}
+
+template < typename mediator >
+shy_logic_text < mediator > & shy_logic_text < mediator > :: operator= ( const shy_logic_text < mediator > & src )
+{
+    return * this ;
+}
+
+template < typename mediator >
 shy_logic_text < mediator > :: _logic_text_consts_type :: _logic_text_consts_type ( )
 {
     platform_math :: make_num_fract ( final_scale , 1 , 2 ) ;
@@ -192,17 +204,6 @@ void shy_logic_text < mediator > :: receive ( typename messages :: init msg )
     _letter_size_y = _platform_math_consts . get ( ) . whole_0 ;
     _origin_x = _platform_math_consts . get ( ) . whole_0 ;
     _origin_y = _platform_math_consts . get ( ) . whole_0 ;
-}
-
-template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_done msg )
-{
-    if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
-    {
-        typename messages :: render_mesh_delete mesh_delete_msg ;
-        mesh_delete_msg . mesh = _text_mesh_id ;
-        _mediator . get ( ) . send ( mesh_delete_msg ) ;
-    }
 }
 
 template < typename mediator >

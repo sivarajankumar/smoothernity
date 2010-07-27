@@ -20,9 +20,9 @@ class shy_logic
     } ;
     
 public :
+    shy_logic ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: done msg ) ;
     void receive ( typename messages :: render msg ) ;
     void receive ( typename messages :: update msg ) ;
     void receive ( typename messages :: use_perspective_projection_request msg ) ;
@@ -32,6 +32,7 @@ public :
     void receive ( typename messages :: near_plane_distance_request msg ) ;
     void receive ( typename messages :: render_aspect_reply msg ) ;
 private :
+    shy_logic < mediator > & operator= ( const shy_logic < mediator > & src ) ;
     void _init_render ( ) ;
     void _get_near_plane_distance ( num_fract & result ) ;
 private :
@@ -48,6 +49,17 @@ private :
     num_whole _handling_use_ortho_projection_request ;
     num_whole _handling_use_perspective_projection_request ;
 } ;
+
+template < typename mediator >
+shy_logic < mediator > :: shy_logic ( )
+{
+}
+
+template < typename mediator >
+shy_logic < mediator > & shy_logic < mediator > :: operator= ( const shy_logic < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic < mediator > :: _logic_consts_type :: _logic_consts_type ( )
@@ -74,18 +86,6 @@ void shy_logic < mediator > :: receive ( typename messages :: init msg )
     _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_false ;
     _fidget_prepared = _platform_math_consts . get ( ) . whole_false ;
     _init_render ( ) ;
-}
-
-template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: done msg )
-{
-    _mediator . get ( ) . send ( typename messages :: entities_done ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: fidget_done ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: image_done ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: land_done ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: text_done ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: title_done ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: touch_done ( ) ) ;
 }
 
 template < typename mediator >

@@ -38,15 +38,16 @@ class shy_logic_land
     } ;
     
 public :
+    shy_logic_land ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: land_done msg ) ;
     void receive ( typename messages :: land_prepare_permit msg ) ;
     void receive ( typename messages :: land_render_request msg ) ;
     void receive ( typename messages :: land_update msg ) ;
     void receive ( typename messages :: render_texture_create_reply msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
 private :
+    shy_logic_land < mediator > & operator= ( const shy_logic_land < mediator > & src ) ;
     void _render_land ( ) ;
     void _create_land_mesh ( ) ;
     void _create_land_texture ( ) ;
@@ -66,6 +67,17 @@ private :
     mesh_id _land_mesh_id ;
     texture_id _land_texture_id ;
 } ;
+
+template < typename mediator >
+shy_logic_land < mediator > :: shy_logic_land ( )
+{
+}
+
+template < typename mediator >
+shy_logic_land < mediator > & shy_logic_land < mediator > :: operator= ( const shy_logic_land < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_land < mediator > :: _logic_land_consts_type :: _logic_land_consts_type ( )
@@ -106,17 +118,6 @@ void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
     _texture_create_requested = _platform_math_consts . get ( ) . whole_false ;
     _texture_create_replied = _platform_math_consts . get ( ) . whole_false ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
-}
-
-template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: land_done msg )
-{
-    if ( platform_conditions :: whole_is_true ( _land_mesh_created ) )
-    {
-        typename messages :: render_mesh_delete mesh_delete_msg ;
-        mesh_delete_msg . mesh = _land_mesh_id ;
-        _mediator . get ( ) . send ( mesh_delete_msg ) ;
-    }
 }
 
 template < typename mediator >

@@ -2,7 +2,8 @@
 #include "../common/facade.hpp"
 #include "win_platform.hpp"
 
-static shy_facade < shy_win_platform > facade ;
+static shy_win_platform_insider * g_platform = 0 ;
+static shy_facade < shy_platform < shy_win_platform_insider > > * g_facade = 0 ;
 
 //--------------------------------------------------------------------------------------
 // Called right before creating a D3D9 or D3D11 device, allowing the app to modify the device settings as needed
@@ -109,8 +110,8 @@ void CALLBACK OnD3D9FrameRender ( IDirect3DDevice9 * pd3dDevice , double fTime ,
     // Render the scene
     if ( SUCCEEDED ( pd3dDevice -> BeginScene ( ) ) )
     {
-		facade . render ( ) ;
-		facade . update ( ) ;
+		g_facade -> render ( ) ;
+		g_facade -> update ( ) ;
         V ( pd3dDevice -> EndScene ( ) ) ;
     }
 }
@@ -168,11 +169,15 @@ int WINAPI wWinMain ( HINSTANCE hInstance , HINSTANCE hPrevInstance , LPWSTR lpC
     // Only require 10-level hardware
     DXUTCreateDevice ( D3D_FEATURE_LEVEL_10_0 , true , 640 , 480 ) ;
 
-	shy_win_platform_insider :: init ( ) ;
-	facade . init ( ) ;
+    g_platform = new shy_win_platform_insider ( ) ;
+    g_facade = new shy_facade < shy_platform < shy_win_platform_insider > > ( g_platform -> platform ) ;
+    g_facade -> init ( ) ;
     DXUTMainLoop ( ) ; // Enter into the DXUT render loop
-	facade . done ( ) ;
-	shy_win_platform_insider :: done ( ) ;
+    g_facade -> done ( ) ;
+    delete g_facade ;
+    delete g_platform ;
+    g_facade = 0 ;
+    g_platform = 0 ;
 
     return DXUTGetExitCode ( ) ;
 }

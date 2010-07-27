@@ -37,11 +37,13 @@ class shy_logic_sound
     } ;
     
 public :
+    shy_logic_sound ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: sound_prepare_permit msg ) ;
     void receive ( typename messages :: sound_update msg ) ;
 private :
+    shy_logic_sound < mediator > & operator= ( const shy_logic_sound < mediator > & src ) ;
     void _load_sound ( ) ;
     void _int_to_sample ( num_fract & result , num_whole i ) ;
     void _create_stereo_sound ( ) ;
@@ -68,6 +70,17 @@ private :
         , _logic_sound_consts_type :: max_mono_sound_samples 
         > _mono_sound_data ;
 } ;
+
+template < typename mediator >
+shy_logic_sound < mediator > :: shy_logic_sound ( )
+{
+}
+
+template < typename mediator >
+shy_logic_sound < mediator > & shy_logic_sound < mediator > :: operator= ( const shy_logic_sound < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_sound < mediator > :: _logic_sound_consts_type :: _logic_sound_consts_type ( )

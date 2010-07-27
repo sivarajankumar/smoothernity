@@ -33,14 +33,15 @@ class shy_logic_touch
    } ;
 
 public :
+    shy_logic_touch ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: touch_done msg ) ;
     void receive ( typename messages :: touch_prepare_permit msg ) ;
     void receive ( typename messages :: touch_render msg ) ;
     void receive ( typename messages :: touch_update msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
 private :
+    shy_logic_touch < mediator > & operator= ( const shy_logic_touch < mediator > & src ) ;
     void _update_spot ( ) ;
 	void _decrease_spot_lifetime ( ) ;
 	void _poll_touchscreen ( ) ;
@@ -64,6 +65,17 @@ private :
     mesh_id _spot_mesh_id ;
     vector_data _spot_position ;
 } ;
+
+template < typename mediator >
+shy_logic_touch < mediator > :: shy_logic_touch ( )
+{
+}
+
+template < typename mediator >
+shy_logic_touch < mediator > & shy_logic_touch < mediator > :: operator= ( const shy_logic_touch < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_touch < mediator > :: _logic_touch_consts_type :: _logic_touch_consts_type ( )
@@ -96,17 +108,6 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: init msg )
     _spot_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
     _should_place_new_spot = _platform_math_consts . get ( ) . whole_false ;
     _mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
-}
-
-template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: touch_done msg )
-{
-    if ( platform_conditions :: whole_is_true ( _spot_mesh_created ) )
-    {
-        typename messages :: render_mesh_delete mesh_delete_msg ;
-        mesh_delete_msg . mesh = _spot_mesh_id ;
-        _mediator . get ( ) . send ( mesh_delete_msg ) ;
-    }
 }
 
 template < typename mediator >

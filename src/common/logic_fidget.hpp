@@ -33,9 +33,9 @@ class shy_logic_fidget
     } ;
     
 public :
+    shy_logic_fidget ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: fidget_done msg ) ;
     void receive ( typename messages :: fidget_prepare_permit msg ) ;
     void receive ( typename messages :: fidget_render_request msg ) ;
     void receive ( typename messages :: fidget_update msg ) ;
@@ -43,6 +43,7 @@ public :
     void receive ( typename messages :: render_aspect_reply msg ) ;
     void receive ( typename messages :: render_frame_loss_reply msg ) ;
 private :
+    shy_logic_fidget < mediator > & operator= ( const shy_logic_fidget < mediator > & src ) ;
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
     void _create_fidget_mesh ( ) ;
@@ -63,6 +64,17 @@ private :
     num_whole _render_frame_loss ;
     mesh_id _fidget_mesh_id ;
 } ;
+
+template < typename mediator >
+shy_logic_fidget < mediator > :: shy_logic_fidget ( )
+{
+}
+
+template < typename mediator >
+shy_logic_fidget < mediator > & shy_logic_fidget < mediator > :: operator= ( const shy_logic_fidget < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_fidget < mediator > :: _logic_fidget_consts_type :: _logic_fidget_consts_type ( )
@@ -100,17 +112,6 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
     _render_aspect_replied = _platform_math_consts . get ( ) . whole_false ;
     _render_frame_loss_requested = _platform_math_consts . get ( ) . whole_false ;
     _render_frame_loss_replied = _platform_math_consts . get ( ) . whole_false ;
-}
-
-template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_done msg )
-{
-    if ( platform_conditions :: whole_is_true ( _fidget_mesh_created ) )
-    {
-        typename messages :: render_mesh_delete mesh_delete_msg ;
-        mesh_delete_msg . mesh = _fidget_mesh_id ;
-        _mediator . get ( ) . send ( mesh_delete_msg ) ;
-    }
 }
 
 template < typename mediator >

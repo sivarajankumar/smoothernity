@@ -126,7 +126,7 @@ public :
     void disable_depth_test ( ) ;
     
     void fog_disable ( ) ;
-    void fog_linear ( num_fract near , num_fract far , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void fog_linear ( num_fract znear , num_fract zfar , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     
     void blend_disable ( ) ;
     void blend_src_alpha_dst_one_minus_alpha ( ) ;
@@ -139,8 +139,8 @@ public :
     void texture_loader_ready ( num_whole & is_ready ) ;
 
     void clear_screen ( num_fract r , num_fract g , num_fract b ) ;    
-    void projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
-    void projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract near , num_fract far ) ;
+    void projection_frustum ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract znear , num_fract zfar ) ;
+    void projection_ortho ( num_fract left , num_fract right , num_fract bottom , num_fract top , num_fract znear , num_fract zfar ) ;
         
     void matrix_identity ( ) ;
     void matrix_load ( const matrix_data & matrix ) ;
@@ -329,8 +329,8 @@ inline void shy_macosx_platform_render < platform_insider > :: fog_disable ( )
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: fog_linear 
-    ( num_fract near 
-    , num_fract far 
+    ( num_fract znear 
+    , num_fract zfar 
     , num_fract r 
     , num_fract g 
     , num_fract b 
@@ -347,8 +347,8 @@ inline void shy_macosx_platform_render < platform_insider > :: fog_linear
     platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     platform_math_insider :: num_fract_value_get ( b_float , b ) ;
     platform_math_insider :: num_fract_value_get ( a_float , a ) ;
-    platform_math_insider :: num_fract_value_get ( near_float , near ) ;
-    platform_math_insider :: num_fract_value_get ( far_float , far ) ;
+    platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
+    platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
 
     GLfloat color [ ] = { r_float , g_float , b_float , a_float } ;
     glEnable ( GL_FOG ) ;
@@ -493,8 +493,8 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_frustu
     , num_fract right 
     , num_fract bottom 
     , num_fract top 
-    , num_fract near 
-    , num_fract far 
+    , num_fract znear 
+    , num_fract zfar 
     )
 {
     float left_float ;
@@ -507,8 +507,8 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_frustu
     platform_math_insider :: num_fract_value_get ( right_float , right ) ;
     platform_math_insider :: num_fract_value_get ( bottom_float , bottom ) ;
     platform_math_insider :: num_fract_value_get ( top_float , top ) ;
-    platform_math_insider :: num_fract_value_get ( near_float , near ) ;
-    platform_math_insider :: num_fract_value_get ( far_float , far ) ;
+    platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
+    platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
     
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;
@@ -522,8 +522,8 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_ortho
     , num_fract right 
     , num_fract bottom 
     , num_fract top 
-    , num_fract near 
-    , num_fract far 
+    , num_fract znear 
+    , num_fract zfar 
     )
 {
     float left_float ;
@@ -536,8 +536,8 @@ inline void shy_macosx_platform_render < platform_insider > :: projection_ortho
     platform_math_insider :: num_fract_value_get ( right_float , right ) ;
     platform_math_insider :: num_fract_value_get ( bottom_float , bottom ) ;
     platform_math_insider :: num_fract_value_get ( top_float , top ) ;
-    platform_math_insider :: num_fract_value_get ( near_float , near ) ;
-    platform_math_insider :: num_fract_value_get ( far_float , far ) ;
+    platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
+    platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
     
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity ( ) ;

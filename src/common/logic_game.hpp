@@ -25,6 +25,7 @@ class shy_logic_game
     } ;
     
 public :
+    shy_logic_game ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: game_launch_permit msg ) ;
@@ -46,6 +47,7 @@ public :
     void receive ( typename messages :: text_render_reply msg ) ;
     void receive ( typename messages :: image_render_reply msg ) ;
 private :
+    shy_logic_game < mediator > & operator= ( const shy_logic_game < mediator > & src ) ;
     void _clear_screen ( ) ;
     void _update_color ( ) ;
     void _proceed_with_render ( ) ;
@@ -89,6 +91,17 @@ private :
     num_whole _image_render_requested ;
     num_whole _image_render_replied ;
 } ;
+
+template < typename mediator >
+shy_logic_game < mediator > :: shy_logic_game ( )
+{
+}
+
+template < typename mediator >
+shy_logic_game < mediator > & shy_logic_game < mediator > :: operator= ( const shy_logic_game < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_game < mediator > :: _logic_game_consts_type :: _logic_game_consts_type ( )

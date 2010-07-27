@@ -38,9 +38,9 @@ class shy_logic_entities
     } ;
 
 public :
+    shy_logic_entities ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: entities_done msg ) ;
     void receive ( typename messages :: entities_render_request msg ) ;
     void receive ( typename messages :: entities_prepare_permit msg ) ;
     void receive ( typename messages :: entities_update msg ) ;
@@ -49,6 +49,7 @@ public :
     void receive ( typename messages :: entities_origin_request msg ) ;
     void receive ( typename messages :: render_mesh_create_reply msg ) ;
 private :
+    shy_logic_entities < mediator > & operator= ( const shy_logic_entities < mediator > & src ) ;
     void _entities_render ( ) ;
     void _entity_color ( num_fract & r , num_fract & g , num_fract & b , num_fract & a , num_whole i ) ;
     void _create_entity_mesh ( ) ;
@@ -83,6 +84,18 @@ private :
         * _logic_entities_consts_type :: entity_mesh_grid
         > _entities_grid_matrices ;
 } ;
+
+template < typename mediator >
+shy_logic_entities < mediator > :: shy_logic_entities ( )
+{
+}
+
+template < typename mediator >
+shy_logic_entities < mediator > & shy_logic_entities < mediator > :: operator= ( const shy_logic_entities < mediator > & src )
+{
+    return * this ;
+}
+
 
 template < typename mediator >
 shy_logic_entities < mediator > :: _logic_entities_consts_type :: _logic_entities_consts_type ( )
@@ -157,17 +170,6 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
     if ( platform_conditions :: whole_is_true ( _entity_created ) )
         _entities_render ( ) ;
     _mediator . get ( ) . send ( typename messages :: entities_render_reply ( ) ) ;
-}
-
-template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_done msg )
-{
-    if ( platform_conditions :: whole_is_true ( _entity_created ) )
-    {
-        typename messages :: render_mesh_delete mesh_delete_msg ;
-        mesh_delete_msg . mesh = _entity_mesh_id ;
-        _mediator . get ( ) . send ( mesh_delete_msg ) ;
-    }
 }
 
 template < typename mediator >

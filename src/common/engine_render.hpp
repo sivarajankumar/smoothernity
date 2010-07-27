@@ -71,8 +71,10 @@ class shy_engine_render
     } ;
     
 public :
+    shy_engine_render ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
+    void receive ( typename messages :: done msg ) ;
     void receive ( typename messages :: render_aspect_request msg ) ;
     void receive ( typename messages :: render_texture_create_request msg ) ;
     void receive ( typename messages :: render_texture_finalize msg ) ;
@@ -108,6 +110,8 @@ public :
     void receive ( typename messages :: render_texture_mode_modulate msg ) ;
     void receive ( typename messages :: render_frame_loss_request msg ) ;
 private :
+    shy_engine_render < mediator > & operator= ( const shy_engine_render < mediator > & src ) ;
+private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_render > _platform_render ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -118,6 +122,17 @@ private :
     num_whole _next_texture_id ;
     num_whole _next_mesh_id ;
 } ;
+
+template < typename mediator >
+shy_engine_render < mediator > :: shy_engine_render ( )
+{
+}
+
+template < typename mediator >
+shy_engine_render < mediator > & shy_engine_render < mediator > :: operator= ( const shy_engine_render < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_engine_render < mediator > :: _engine_render_consts_type :: _engine_render_consts_type ( )
@@ -173,6 +188,25 @@ void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
         typename platform_pointer :: template pointer < _texture_data > texture ;
         platform_static_array :: element_ptr ( texture , _textures_datas , i ) ;
         _platform_render . get ( ) . create_texture_id ( texture . get ( ) . render_id , _engine_render_consts . texture_size_pow2_base ) ;
+    }
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: done msg )
+{
+    num_whole whole_max_meshes ;
+    platform_math :: make_num_whole ( whole_max_meshes , _engine_render_consts_type :: max_meshes ) ;
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , whole_max_meshes )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        typename platform_pointer :: template pointer < _mesh_data > mesh ;
+        platform_static_array :: element_ptr ( mesh , _meshes_datas , i ) ;
+        
+        _platform_render . get ( ) . delete_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
+        _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+        _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
     }
 }
 
@@ -483,13 +517,6 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_delete msg )
 {
-    typename platform_pointer :: template pointer < _mesh_data > mesh ;
-    platform_static_array :: element_ptr ( mesh , _meshes_datas , msg . mesh . _mesh_id ) ;
-    _platform_render . get ( ) . delete_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
-        _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
-        _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
 }
 
 template < typename mediator >

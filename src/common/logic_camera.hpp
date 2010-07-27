@@ -31,6 +31,7 @@ class shy_logic_camera
     } ;
     
 public :
+    shy_logic_camera ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: camera_update msg ) ;
@@ -42,6 +43,7 @@ public :
     void receive ( typename messages :: near_plane_distance_reply msg ) ;
     void receive ( typename messages :: render_aspect_reply msg ) ;
 private :
+    shy_logic_camera < mediator > & operator= ( const shy_logic_camera < mediator > & src ) ;
     void _proceed_with_update ( ) ;
     void _proceed_with_fill_camera_schedules ( ) ;
     void _proceed_with_camera_update ( ) ;
@@ -123,6 +125,17 @@ private :
     typename platform_static_array :: template static_array < vector_data , 4 > _scheduled_camera_origins ;
     typename platform_static_array :: template static_array < vector_data , 4 > _scheduled_camera_targets ;
 } ;
+
+template < typename mediator >
+shy_logic_camera < mediator > :: shy_logic_camera ( )
+{
+}
+
+template < typename mediator >
+shy_logic_camera < mediator > & shy_logic_camera < mediator > :: operator= ( const shy_logic_camera < mediator > & src )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_camera < mediator > :: _logic_camera_consts_type :: _logic_camera_consts_type ( )
