@@ -16,6 +16,7 @@ public :
     void receive ( typename messages :: application_update msg ) ;
     void receive ( typename messages :: title_finished msg ) ;
     void receive ( typename messages :: text_prepared msg ) ;
+    void receive ( typename messages :: main_menu_finished msg ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -23,6 +24,7 @@ private :
     num_whole _title_active ;
     num_whole _text_active ;
     num_whole _game_active ;
+    num_whole _main_menu_active ;
 } ;
 
 template < typename mediator >
@@ -41,6 +43,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: init m
     _title_active = _platform_math_consts . get ( ) . whole_false ;
     _game_active = _platform_math_consts . get ( ) . whole_false ;
     _text_active = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_active = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -55,6 +58,14 @@ template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: title_finished msg )
 {
     _title_active = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_active = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: main_menu_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application < mediator > :: receive ( typename messages :: main_menu_finished msg )
+{
+    _main_menu_active = _platform_math_consts . get ( ) . whole_false ;
     _game_active = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: game_launch_permit ( ) ) ;
 }
@@ -66,6 +77,8 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
         _mediator . get ( ) . send ( typename messages :: game_render ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _title_active ) )
         _mediator . get ( ) . send ( typename messages :: title_render ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( _main_menu_active ) )
+        _mediator . get ( ) . send ( typename messages :: main_menu_render ( ) ) ;
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
         typename messages :: render_clear_screen clear_screen_msg ;
@@ -91,4 +104,6 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
         _mediator . get ( ) . send ( typename messages :: game_update ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _title_active ) )
         _mediator . get ( ) . send ( typename messages :: title_update ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( _main_menu_active ) )
+        _mediator . get ( ) . send ( typename messages :: main_menu_update ( ) ) ;
 }

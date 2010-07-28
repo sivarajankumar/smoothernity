@@ -21,6 +21,7 @@
 #include "logic_game.hpp"
 #include "logic_image.hpp"
 #include "logic_land.hpp"
+#include "logic_main_menu.hpp"
 #include "logic_sound.hpp"
 #include "logic_text.hpp"
 #include "logic_text_stateless.hpp"
@@ -55,6 +56,7 @@ private :
         , shy_logic_game
         , shy_logic_image
         , shy_logic_land
+        , shy_logic_main_menu
         , shy_logic_sound
         , shy_logic_text
         , shy_logic_text_stateless
