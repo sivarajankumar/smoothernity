@@ -96,7 +96,6 @@ shy_logic_entities < mediator > & shy_logic_entities < mediator > :: operator= (
     return * this ;
 }
 
-
 template < typename mediator >
 shy_logic_entities < mediator > :: _logic_entities_consts_type :: _logic_entities_consts_type ( )
 {

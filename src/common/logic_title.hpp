@@ -76,6 +76,7 @@ private :
     void _title_create ( ) ;
     void _title_render ( ) ;
     void _title_update ( ) ;
+    void _delete_all_meshes ( ) ;
     void _add_letter ( letter_id letter ) ;
     void _prepare_to_appear ( ) ;
     void _prepare_to_disappear ( ) ;
@@ -431,6 +432,7 @@ void shy_logic_title < mediator > :: _animate_disappear ( )
     if ( platform_conditions :: whole_greater_than_whole ( _title_frames , _logic_title_consts . disappear_duration_in_frames ) )
     {
         _title_finished = _platform_math_consts . get ( ) . whole_true ;
+        _delete_all_meshes ( ) ;
         _mediator . get ( ) . send ( typename messages :: title_finished ( ) ) ;
     }
     else
@@ -649,6 +651,22 @@ void shy_logic_title < mediator > :: _title_update ( )
             mesh_set_transform_msg . transform = tm ;
             _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
         }
+    }
+}
+
+template < typename mediator >
+void shy_logic_title < mediator > :: _delete_all_meshes ( )
+{
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        typename platform_pointer :: template pointer < _letter_state > letter ;
+        platform_static_array :: element_ptr ( letter , _letters , i ) ;
+        typename messages :: render_mesh_delete mesh_delete_msg ;
+        mesh_delete_msg . mesh = letter . get ( ) . mesh ;
+        _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
 }
 

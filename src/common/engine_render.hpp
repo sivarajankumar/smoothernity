@@ -35,7 +35,7 @@ class shy_engine_render
         num_whole texture_size_pow2_base ;
         num_whole max_vertices ;
         num_whole max_indices ;
-        static const_int_32 max_meshes = 20 ;
+        static const_int_32 max_meshes = 14 ;
         static const_int_32 max_textures = 5 ;
     } ;
     
@@ -118,9 +118,10 @@ private :
     typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > _engine_render_stateless_consts ;
     typename platform_static_array :: template static_array < _texture_data , _engine_render_consts_type :: max_textures > _textures_datas ;
     typename platform_static_array :: template static_array < _mesh_data , _engine_render_consts_type :: max_meshes > _meshes_datas ;
+    typename platform_static_array :: template static_array < num_whole , _engine_render_consts_type :: max_meshes > _vacant_mesh_ids ;
     const _engine_render_consts_type _engine_render_consts ;
     num_whole _next_texture_id ;
-    num_whole _next_mesh_id ;
+    num_whole _next_vacant_mesh_id_index ;
 } ;
 
 template < typename mediator >
@@ -157,7 +158,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
     _platform_render = platform_obj . get ( ) . render ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _next_texture_id = _platform_math_consts . get ( ) . whole_0 ;
-    _next_mesh_id = _platform_math_consts . get ( ) . whole_0 ;
+    _next_vacant_mesh_id_index = _platform_math_consts . get ( ) . whole_0 ;
     
     num_whole whole_max_meshes ;
     platform_math :: make_num_whole ( whole_max_meshes , _engine_render_consts_type :: max_meshes ) ;
@@ -172,10 +173,10 @@ void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
         _platform_render . get ( ) . create_vertex_buffer ( mesh . get ( ) . vertex_buffer_id , _engine_render_consts . max_vertices ) ;
         _platform_render . get ( ) . create_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id , _engine_render_consts . max_indices ) ;
         _platform_render . get ( ) . create_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id , _engine_render_consts . max_indices ) ;
-        
-        _platform_render . get ( ) . map_vertex_buffer ( mesh . get ( ) . vertex_buffer_mapped_data , mesh . get ( ) . vertex_buffer_id ) ;
-        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
-        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+
+        typename platform_pointer :: template pointer < num_whole > vacant_id ;
+        platform_static_array :: element_ptr ( vacant_id , _vacant_mesh_ids , i ) ;
+        vacant_id . get ( ) = i ;
     }
     
     num_whole whole_max_textures ;
@@ -413,19 +414,31 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_create_request msg )
 {
-    typename platform_pointer :: template pointer < _mesh_data > mesh ;
-    platform_static_array :: element_ptr ( mesh , _meshes_datas , _next_mesh_id ) ;
-
-    mesh . get ( ) . finalized = _platform_math_consts . get ( ) . whole_false ;
-    mesh . get ( ) . vertices_count = msg . vertices ;
-    mesh . get ( ) . triangle_strip_indices_count = msg . triangle_strip_indices ;
-    mesh . get ( ) . triangle_fan_indices_count = msg . triangle_fan_indices ;
-    platform_matrix :: identity ( mesh . get ( ) . transform ) ;
+    num_whole whole_max_meshes ;
+    platform_math :: make_num_whole ( whole_max_meshes , _engine_render_consts_type :: max_meshes ) ;
+    if ( platform_conditions :: whole_less_than_whole ( _next_vacant_mesh_id_index , whole_max_meshes ) )
+    {
+        typename platform_pointer :: template pointer < num_whole > vacant_mesh_id ;
+        platform_static_array :: element_ptr ( vacant_mesh_id , _vacant_mesh_ids , _next_vacant_mesh_id_index ) ;
         
-    typename messages :: render_mesh_create_reply reply_msg ;
-    reply_msg . mesh . _mesh_id = _next_mesh_id ;
-    platform_math :: inc_whole ( _next_mesh_id ) ;
-    _mediator . get ( ) . send ( reply_msg ) ;    
+        typename platform_pointer :: template pointer < _mesh_data > mesh ;
+        platform_static_array :: element_ptr ( mesh , _meshes_datas , vacant_mesh_id . get ( ) ) ;
+
+        mesh . get ( ) . finalized = _platform_math_consts . get ( ) . whole_false ;
+        mesh . get ( ) . vertices_count = msg . vertices ;
+        mesh . get ( ) . triangle_strip_indices_count = msg . triangle_strip_indices ;
+        mesh . get ( ) . triangle_fan_indices_count = msg . triangle_fan_indices ;
+        platform_matrix :: identity ( mesh . get ( ) . transform ) ;
+            
+        _platform_render . get ( ) . map_vertex_buffer ( mesh . get ( ) . vertex_buffer_mapped_data , mesh . get ( ) . vertex_buffer_id ) ;
+        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+        _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+        
+        typename messages :: render_mesh_create_reply reply_msg ;
+        reply_msg . mesh . _mesh_id = vacant_mesh_id . get ( ) ;
+        platform_math :: inc_whole ( _next_vacant_mesh_id_index ) ;
+        _mediator . get ( ) . send ( reply_msg ) ;    
+    }    
 }
 
 template < typename mediator >
@@ -517,6 +530,13 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_delete msg )
 {
+    if ( platform_conditions :: whole_greater_than_zero ( _next_vacant_mesh_id_index ) )
+    {
+        platform_math :: dec_whole ( _next_vacant_mesh_id_index ) ;
+        typename platform_pointer :: template pointer < num_whole > vacant_mesh_id ;
+        platform_static_array :: element_ptr ( vacant_mesh_id , _vacant_mesh_ids , _next_vacant_mesh_id_index ) ;
+        vacant_mesh_id = msg . mesh . _mesh_id ;
+    }
 }
 
 template < typename mediator >
