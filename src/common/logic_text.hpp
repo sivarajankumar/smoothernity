@@ -114,7 +114,6 @@ private :
     void _rasterize_font_english_X ( ) ;
     void _rasterize_font_english_Y ( ) ;
     void _rasterize_font_english_Z ( ) ;
-    void _rasterize_font_whitespace ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -1815,9 +1814,4 @@ void shy_logic_text < mediator > :: _rasterize_font_english_Z ( )
     _rasterize_use_texel ( _filler ) ;
     _rasterize_triangle ( right_minus_board_width , high_bottom , hor_right , high_bottom , board_width , low_top ) ;
     _rasterize_triangle ( right_minus_board_width , high_bottom , hor_left , low_top , board_width , low_top ) ;
-}
-
-template < typename mediator >
-void shy_logic_text < mediator > :: _rasterize_font_whitespace ( )
-{
 }
