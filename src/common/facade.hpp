@@ -21,6 +21,7 @@
 #include "logic/game.hpp"
 #include "logic/image.hpp"
 #include "logic/land.hpp"
+#include "logic/main_menu/letters_storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/text_creator.hpp"
 #include "logic/sound.hpp"
@@ -58,6 +59,7 @@ private :
         , shy_logic_image
         , shy_logic_land
         , shy_logic_main_menu
+        , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_text_creator
         , shy_logic_sound
         , shy_logic_text

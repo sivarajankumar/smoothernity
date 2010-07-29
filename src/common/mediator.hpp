@@ -28,6 +28,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image logic_image ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu logic_main_menu ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_text_creator logic_main_menu_text_creator ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
@@ -85,10 +86,14 @@ public :
         class land_render_reply { } ;
         class land_render_request { } ;
         class land_update { } ;
+        class main_menu_add_letter { public : letter_id letter ; } ;
+        class main_menu_add_whitespace { } ;
         class main_menu_finished { } ;
         class main_menu_launch_permit { } ;
+        class main_menu_next_row { } ;
         class main_menu_render { } ;
         class main_menu_text_create { } ;
+        class main_menu_text_create_finished { } ;
         class main_menu_update { } ;
         class near_plane_distance_reply { public : num_fract distance ; } ;
         class near_plane_distance_request { } ;
@@ -187,6 +192,7 @@ public :
         , typename platform_pointer :: template pointer < logic_image > arg_logic_image
         , typename platform_pointer :: template pointer < logic_land > arg_logic_land
         , typename platform_pointer :: template pointer < logic_main_menu > arg_logic_main_menu
+        , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
         , typename platform_pointer :: template pointer < logic_main_menu_text_creator > arg_logic_main_menu_text_creator
         , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
         , typename platform_pointer :: template pointer < logic_text > arg_logic_text
@@ -233,10 +239,14 @@ public :
     void send ( typename messages :: land_render_reply msg ) ;
     void send ( typename messages :: land_render_request msg ) ;
     void send ( typename messages :: land_update msg ) ;
+    void send ( typename messages :: main_menu_add_letter msg ) ;
+    void send ( typename messages :: main_menu_add_whitespace msg ) ;
     void send ( typename messages :: main_menu_finished msg ) ;
     void send ( typename messages :: main_menu_launch_permit msg ) ;
+    void send ( typename messages :: main_menu_next_row msg ) ;
     void send ( typename messages :: main_menu_render msg ) ;
     void send ( typename messages :: main_menu_text_create msg ) ;
+    void send ( typename messages :: main_menu_text_create_finished msg ) ;
     void send ( typename messages :: main_menu_update msg ) ;
     void send ( typename messages :: near_plane_distance_reply msg ) ;
     void send ( typename messages :: near_plane_distance_request msg ) ;
@@ -328,6 +338,7 @@ private :
     typename platform_pointer :: template pointer < logic_image > _logic_image ;
     typename platform_pointer :: template pointer < logic_land > _logic_land ;
     typename platform_pointer :: template pointer < logic_main_menu > _logic_main_menu ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_storage > _logic_main_menu_letters_storage ;
     typename platform_pointer :: template pointer < logic_main_menu_text_creator > _logic_main_menu_text_creator ;
     typename platform_pointer :: template pointer < logic_sound > _logic_sound ;
     typename platform_pointer :: template pointer < logic_text > _logic_text ;
@@ -357,6 +368,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_image > arg_logic_image
     , typename platform_pointer :: template pointer < logic_land > arg_logic_land
     , typename platform_pointer :: template pointer < logic_main_menu > arg_logic_main_menu
+    , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
     , typename platform_pointer :: template pointer < logic_main_menu_text_creator > arg_logic_main_menu_text_creator
     , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
     , typename platform_pointer :: template pointer < logic_text > arg_logic_text
@@ -377,6 +389,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_image = arg_logic_image ;
     _logic_land = arg_logic_land ;
     _logic_main_menu = arg_logic_main_menu ;
+    _logic_main_menu_letters_storage = arg_logic_main_menu_letters_storage ;
     _logic_main_menu_text_creator = arg_logic_main_menu_text_creator ;
     _logic_sound = arg_logic_sound ;
     _logic_text = arg_logic_text ;
@@ -395,6 +408,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_image . get ( ) . set_mediator ( * this ) ;
     _logic_land . get ( ) . set_mediator ( * this ) ;
     _logic_main_menu . get ( ) . set_mediator ( * this ) ;
+    _logic_main_menu_letters_storage . get ( ) . set_mediator ( * this ) ;
     _logic_main_menu_text_creator . get ( ) . set_mediator ( * this ) ;
     _logic_sound . get ( ) . set_mediator ( * this ) ;
     _logic_text . get ( ) . set_mediator ( * this ) ;
@@ -543,6 +557,7 @@ void shy_mediator < mediator_types > :: send ( typename messages :: init msg )
     _logic_image . get ( ) . receive ( msg ) ;
     _logic_land . get ( ) . receive ( msg ) ;
     _logic_main_menu . get ( ) . receive ( msg ) ;
+    _logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
     _logic_sound . get ( ) . receive ( msg ) ;
     _logic_text . get ( ) . receive ( msg ) ;
     _logic_title . get ( ) . receive ( msg ) ;
@@ -1165,4 +1180,28 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: send ( typename messages :: main_menu_text_create msg )
 {
     _logic_main_menu_text_creator . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: main_menu_text_create_finished msg )
+{
+    _logic_main_menu . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: main_menu_add_letter msg )
+{
+    _logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: main_menu_add_whitespace msg )
+{
+    _logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: send ( typename messages :: main_menu_next_row msg ) 
+{
+    _logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
 }

@@ -14,6 +14,7 @@ template
     , template < typename mediator > class _logic_image
     , template < typename mediator > class _logic_land
     , template < typename mediator > class _logic_main_menu
+    , template < typename mediator > class _logic_main_menu_letters_storage
     , template < typename mediator > class _logic_main_menu_text_creator
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_text
@@ -43,6 +44,7 @@ public :
         typedef _logic_image < mediator > logic_image ;
         typedef _logic_land < mediator > logic_land ;
         typedef _logic_main_menu < mediator > logic_main_menu ;
+        typedef _logic_main_menu_letters_storage < mediator > logic_main_menu_letters_storage ;
         typedef _logic_main_menu_text_creator < mediator > logic_main_menu_text_creator ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_text < mediator > logic_text ;
@@ -69,6 +71,7 @@ template
     , template < typename _mediator > class _logic_image
     , template < typename _mediator > class _logic_land
     , template < typename _mediator > class _logic_main_menu
+    , template < typename _mediator > class _logic_main_menu_letters_storage
     , template < typename _mediator > class _logic_main_menu_text_creator
     , template < typename _mediator > class _logic_sound
     , template < typename _mediator > class _logic_text
@@ -92,6 +95,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_image > scheduled_logic_image ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_land > scheduled_logic_land ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu > scheduled_logic_main_menu ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_storage > scheduled_logic_main_menu_letters_storage ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_text_creator > scheduled_logic_main_menu_text_creator ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_sound > scheduled_logic_sound ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_text > scheduled_logic_text ;
@@ -114,6 +118,7 @@ public :
         , scheduled_logic_image :: template scheduled_module
         , scheduled_logic_land :: template scheduled_module
         , scheduled_logic_main_menu :: template scheduled_module
+        , scheduled_logic_main_menu_letters_storage :: template scheduled_module
         , scheduled_logic_main_menu_text_creator :: template scheduled_module
         , scheduled_logic_sound :: template scheduled_module
         , scheduled_logic_text :: template scheduled_module
@@ -161,6 +166,7 @@ private :
     typename aggregator_types :: scheduled_logic_image :: template scheduled_module < mediator_type > _logic_image ;
     typename aggregator_types :: scheduled_logic_land :: template scheduled_module < mediator_type > _logic_land ;
     typename aggregator_types :: scheduled_logic_main_menu :: template scheduled_module < mediator_type > _logic_main_menu ;
+    typename aggregator_types :: scheduled_logic_main_menu_letters_storage :: template scheduled_module < mediator_type > _logic_main_menu_letters_storage ;
     typename aggregator_types :: scheduled_logic_main_menu_text_creator :: template scheduled_module < mediator_type > _logic_main_menu_text_creator ;
     typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > _logic_sound ;
     typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > _logic_text ;
@@ -184,6 +190,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( _logic_image , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_land , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_main_menu , _scheduler ) ;
+    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_letters_storage , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_text_creator , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_sound , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_text , _scheduler ) ;
@@ -202,6 +209,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_image
         , _logic_land
         , _logic_main_menu
+        , _logic_main_menu_letters_storage
         , _logic_main_menu_text_creator
         , _logic_sound
         , _logic_text

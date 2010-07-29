@@ -74,24 +74,32 @@ void shy_logic_main_menu_text_creator < mediator > :: receive ( typename message
     _add_letter ( eng . X ) ;
     _add_letter ( eng . I ) ;
     _add_letter ( eng . T ) ;
+    
+    _text_create_finished ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_text_creator < mediator > :: _add_letter ( letter_id letter )
 {
+    typename messages :: main_menu_add_letter msg ;
+    msg . letter = letter ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_text_creator < mediator > :: _add_whitespace ( )
 {
+    _mediator . get ( ) . send ( typename messages :: main_menu_add_whitespace ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_text_creator < mediator > :: _next_row ( )
 {
+    _mediator . get ( ) . send ( typename messages :: main_menu_next_row ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_text_creator < mediator > :: _text_create_finished ( )
 {
+    _mediator . get ( ) . send ( typename messages :: main_menu_text_create_finished ( ) ) ;
 }
