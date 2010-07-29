@@ -21,10 +21,11 @@
 #include "logic/game.hpp"
 #include "logic/image.hpp"
 #include "logic/land.hpp"
-#include "logic/main_menu.hpp"
+#include "logic/main_menu/main_menu.hpp"
+#include "logic/main_menu/text_creator.hpp"
 #include "logic/sound.hpp"
-#include "logic/text/text.hpp"
 #include "logic/text/stateless.hpp"
+#include "logic/text/text.hpp"
 #include "logic/title.hpp"
 #include "logic/touch.hpp"
 #include "mediator.hpp"
@@ -57,6 +58,7 @@ private :
         , shy_logic_image
         , shy_logic_land
         , shy_logic_main_menu
+        , shy_logic_main_menu_text_creator
         , shy_logic_sound
         , shy_logic_text
         , shy_logic_text_stateless

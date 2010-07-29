@@ -1,4 +1,7 @@
 template < typename mediator >
+class shy_logic_text ;
+
+template < typename mediator >
 class shy_logic_text_stateless
 {
     typedef typename mediator :: engine_math engine_math ;
