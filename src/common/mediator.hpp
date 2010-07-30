@@ -75,17 +75,6 @@ public :
     {
     public :
         class done { } ;
-        class entities_height_reply { public : num_fract height ; } ;
-        class entities_height_request { } ;
-        class entities_mesh_grid_reply { public : num_whole grid ; } ;
-        class entities_mesh_grid_request { } ;
-        class entities_origin_reply { public : vector_data origin ; num_whole index ; } ;
-        class entities_origin_request { public : num_whole index ; } ;
-        class entities_prepare_permit { } ;
-        class entities_prepared { } ;
-        class entities_render_reply { } ;
-        class entities_render_request { } ;
-        class entities_update { } ;
         class fidget_prepare_permit { } ;
         class fidget_prepared { } ;
         class fidget_render_reply { } ;
@@ -156,17 +145,6 @@ private :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
         void send ( typename messages :: done msg ) ;
-        void send ( typename messages :: entities_height_reply msg ) ;
-        void send ( typename messages :: entities_height_request msg ) ;
-        void send ( typename messages :: entities_mesh_grid_reply msg ) ;
-        void send ( typename messages :: entities_mesh_grid_request msg ) ;
-        void send ( typename messages :: entities_origin_reply msg ) ;
-        void send ( typename messages :: entities_origin_request msg ) ;
-        void send ( typename messages :: entities_prepare_permit msg ) ;
-        void send ( typename messages :: entities_prepared msg ) ;
-        void send ( typename messages :: entities_render_reply msg ) ;
-        void send ( typename messages :: entities_render_request msg ) ;
-        void send ( typename messages :: entities_update msg ) ;
         void send ( typename messages :: fidget_prepare_permit msg ) ;
         void send ( typename messages :: fidget_prepared msg ) ;
         void send ( typename messages :: fidget_render_reply msg ) ;
@@ -408,12 +386,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: do
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_prepared msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: fidget_prepared msg )
 {
     _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
@@ -429,42 +401,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: game_update msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_height_reply msg )
-{
-    _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_height_request msg )
-{
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_mesh_grid_reply msg )
-{
-    _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_mesh_grid_request msg )
-{
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_origin_reply msg )
-{
-    _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_origin_request msg )
-{
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -511,12 +447,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_prepared msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_prepare_permit msg )
-{
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -595,18 +525,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render msg )
 {
     _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_render_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_render_request msg )
-{
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -692,12 +610,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: fidget_update msg )
 {
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: entities_update msg )
-{
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
