@@ -35,6 +35,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image logic_image ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless logic_image_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless logic_land_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu logic_main_menu ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
@@ -60,6 +61,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: logic_fidget_messages logic_fidget_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: logic_game_messages logic_game_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: logic_image_messages logic_image_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: logic_land_messages logic_land_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
 
@@ -70,6 +72,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: template logic_fidget_sender < receivers > logic_fidget_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: template logic_game_sender < receivers > logic_game_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: template logic_image_sender < receivers > logic_image_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: template logic_land_sender < receivers > logic_land_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     
@@ -82,6 +85,7 @@ public :
     , public logic_fidget_messages
     , public logic_game_messages
     , public logic_image_messages
+    , public logic_land_messages
     , public logic_main_menu_messages
     , public logic_text_messages
     {
@@ -133,6 +137,7 @@ private :
     , public logic_fidget_sender
     , public logic_game_sender
     , public logic_image_sender
+    , public logic_land_sender
     , public logic_main_menu_sender
     , public logic_text_sender
     {
@@ -144,6 +149,7 @@ private :
         using logic_fidget_sender :: send ;
         using logic_game_sender :: send ;
         using logic_image_sender :: send ;
+        using logic_land_sender :: send ;
         using logic_main_menu_sender :: send ;
         using logic_text_sender :: send ;
         
@@ -234,6 +240,7 @@ public :
         , typename platform_pointer :: template pointer < logic_image > arg_logic_image
         , typename platform_pointer :: template pointer < logic_image_stateless > arg_logic_image_stateless
         , typename platform_pointer :: template pointer < logic_land > arg_logic_land
+        , typename platform_pointer :: template pointer < logic_land_stateless > arg_logic_land_stateless
         , typename platform_pointer :: template pointer < logic_main_menu > arg_logic_main_menu
         , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
         , typename platform_pointer :: template pointer < logic_main_menu_stateless > arg_logic_main_menu_stateless
@@ -254,6 +261,7 @@ private :
     typename platform_pointer :: template pointer < logic_fidget_stateless > _logic_fidget_stateless ;
     typename platform_pointer :: template pointer < logic_game_stateless > _logic_game_stateless ;
     typename platform_pointer :: template pointer < logic_image_stateless > _logic_image_stateless ;
+    typename platform_pointer :: template pointer < logic_land_stateless > _logic_land_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > _logic_main_menu_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < const platform > _platform ;
@@ -286,6 +294,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_image > arg_logic_image
     , typename platform_pointer :: template pointer < logic_image_stateless > arg_logic_image_stateless
     , typename platform_pointer :: template pointer < logic_land > arg_logic_land
+    , typename platform_pointer :: template pointer < logic_land_stateless > arg_logic_land_stateless
     , typename platform_pointer :: template pointer < logic_main_menu > arg_logic_main_menu
     , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
     , typename platform_pointer :: template pointer < logic_main_menu_stateless > arg_logic_main_menu_stateless
@@ -304,6 +313,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_fidget_stateless = arg_logic_fidget_stateless ;
     _logic_game_stateless = arg_logic_game_stateless ;
     _logic_image_stateless = arg_logic_image_stateless ;
+    _logic_land_stateless = arg_logic_land_stateless ;
     _logic_main_menu_stateless = arg_logic_main_menu_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
     
@@ -382,6 +392,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_fidget_sender :: set_receivers ( arg_receivers ) ;
     logic_game_sender :: set_receivers ( arg_receivers ) ;
     logic_image_sender :: set_receivers ( arg_receivers ) ;
+    logic_land_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;
 }

@@ -27,6 +27,7 @@
 #include "logic/image/image.hpp"
 #include "logic/image/stateless.hpp"
 #include "logic/land/land.hpp"
+#include "logic/land/stateless.hpp"
 #include "logic/main_menu/letters_storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/stateless.hpp"
@@ -71,6 +72,7 @@ private :
         , shy_logic_image
         , shy_logic_image_stateless
         , shy_logic_land
+        , shy_logic_land_stateless
         , shy_logic_main_menu
         , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_stateless

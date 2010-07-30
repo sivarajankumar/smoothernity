@@ -19,6 +19,7 @@ template
     , template < typename mediator > class _logic_image
     , template < typename mediator > class _logic_image_stateless
     , template < typename mediator > class _logic_land
+    , template < typename mediator > class _logic_land_stateless
     , template < typename mediator > class _logic_main_menu
     , template < typename mediator > class _logic_main_menu_letters_storage
     , template < typename mediator > class _logic_main_menu_stateless
@@ -56,6 +57,7 @@ public :
         typedef _logic_image < mediator > logic_image ;
         typedef _logic_image_stateless < mediator > logic_image_stateless ;
         typedef _logic_land < mediator > logic_land ;
+        typedef _logic_land_stateless < mediator > logic_land_stateless ;
         typedef _logic_main_menu < mediator > logic_main_menu ;
         typedef _logic_main_menu_letters_storage < mediator > logic_main_menu_letters_storage ;
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
@@ -90,6 +92,7 @@ template
     , template < typename _mediator > class _logic_image
     , template < typename _mediator > class _logic_image_stateless
     , template < typename _mediator > class _logic_land
+    , template < typename _mediator > class _logic_land_stateless
     , template < typename _mediator > class _logic_main_menu
     , template < typename _mediator > class _logic_main_menu_letters_storage
     , template < typename _mediator > class _logic_main_menu_stateless
@@ -144,6 +147,7 @@ public :
         , scheduled_logic_image :: template scheduled_module
         , _logic_image_stateless
         , scheduled_logic_land :: template scheduled_module
+        , _logic_land_stateless
         , scheduled_logic_main_menu :: template scheduled_module
         , scheduled_logic_main_menu_letters_storage :: template scheduled_module
         , _logic_main_menu_stateless
@@ -166,6 +170,7 @@ public :
     typedef _logic_fidget_stateless < mediator_type > logic_fidget_stateless ;
     typedef _logic_game_stateless < mediator_type > logic_game_stateless ;
     typedef _logic_image_stateless < mediator_type > logic_image_stateless ;
+    typedef _logic_land_stateless < mediator_type > logic_land_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
 } ;
@@ -206,6 +211,7 @@ private :
     typename aggregator_types :: scheduled_logic_image :: template scheduled_module < mediator_type > _logic_image ;
     typename aggregator_types :: logic_image_stateless _logic_image_stateless ;
     typename aggregator_types :: scheduled_logic_land :: template scheduled_module < mediator_type > _logic_land ;
+    typename aggregator_types :: logic_land_stateless _logic_land_stateless ;
     typename aggregator_types :: scheduled_logic_main_menu :: template scheduled_module < mediator_type > _logic_main_menu ;
     typename aggregator_types :: scheduled_logic_main_menu_letters_storage :: template scheduled_module < mediator_type > _logic_main_menu_letters_storage ;
     typename aggregator_types :: logic_main_menu_stateless _logic_main_menu_stateless ;
@@ -256,6 +262,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_image
         , _logic_image_stateless
         , _logic_land
+        , _logic_land_stateless
         , _logic_main_menu
         , _logic_main_menu_letters_storage
         , _logic_main_menu_stateless
