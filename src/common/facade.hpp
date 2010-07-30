@@ -16,7 +16,8 @@
 #include "logic/logic.hpp"
 #include "logic/application/application.hpp"
 #include "logic/application/stateless.hpp"
-#include "logic/camera.hpp"
+#include "logic/camera/camera.hpp"
+#include "logic/camera/stateless.hpp"
 #include "logic/entities.hpp"
 #include "logic/fidget.hpp"
 #include "logic/game.hpp"
@@ -56,6 +57,7 @@ private :
         , shy_logic_application
         , shy_logic_application_stateless
         , shy_logic_camera
+        , shy_logic_camera_stateless
         , shy_logic_entities
         , shy_logic_fidget
         , shy_logic_game
