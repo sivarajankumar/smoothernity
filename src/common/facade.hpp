@@ -22,7 +22,8 @@
 #include "logic/entities/stateless.hpp"
 #include "logic/fidget/fidget.hpp"
 #include "logic/fidget/stateless.hpp"
-#include "logic/game.hpp"
+#include "logic/game/game.hpp"
+#include "logic/game/stateless.hpp"
 #include "logic/image.hpp"
 #include "logic/land.hpp"
 #include "logic/main_menu/letters_storage.hpp"
@@ -65,6 +66,7 @@ private :
         , shy_logic_fidget
         , shy_logic_fidget_stateless
         , shy_logic_game
+        , shy_logic_game_stateless
         , shy_logic_image
         , shy_logic_land
         , shy_logic_main_menu
