@@ -26,7 +26,7 @@
 #include "logic/game/stateless.hpp"
 #include "logic/image/image.hpp"
 #include "logic/image/stateless.hpp"
-#include "logic/land.hpp"
+#include "logic/land/land.hpp"
 #include "logic/main_menu/letters_storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/stateless.hpp"
