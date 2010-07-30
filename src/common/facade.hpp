@@ -14,7 +14,8 @@
 #include "engine/render/render.hpp"
 #include "engine/render/stateless.hpp"
 #include "logic/logic.hpp"
-#include "logic/application.hpp"
+#include "logic/application/application.hpp"
+#include "logic/application/stateless.hpp"
 #include "logic/camera.hpp"
 #include "logic/entities.hpp"
 #include "logic/fidget.hpp"
@@ -53,6 +54,7 @@ private :
         , shy_engine_render_stateless
         , shy_logic 
         , shy_logic_application
+        , shy_logic_application_stateless
         , shy_logic_camera
         , shy_logic_entities
         , shy_logic_fidget

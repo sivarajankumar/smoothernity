@@ -23,6 +23,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless logic_application_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget logic_fidget ;
@@ -48,22 +49,23 @@ private :
     typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_messages logic_application_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: template engine_render_sender < receivers > engine_render_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: template logic_application_sender < receivers > logic_application_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     
 public :
     class messages
     : public engine_render_messages
+    , public logic_application_messages
     , public logic_main_menu_messages
     , public logic_text_messages
     {
     public :
-        class application_render { } ;
-        class application_update { } ;
         class camera_matrix_reply { public : matrix_data matrix ; } ;
         class camera_matrix_request { } ;
         class camera_prepare_permit { } ;
@@ -134,18 +136,18 @@ public :
 private :
     class sender
     : public engine_render_sender
+    , public logic_application_sender
     , public logic_main_menu_sender
     , public logic_text_sender
     {
     public :    
         using engine_render_sender :: send ;
+        using logic_application_sender :: send ;
         using logic_main_menu_sender :: send ;
         using logic_text_sender :: send ;
         
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
-        void send ( typename messages :: application_render msg ) ;
-        void send ( typename messages :: application_update msg ) ;
         void send ( typename messages :: camera_matrix_reply msg ) ;
         void send ( typename messages :: camera_matrix_request msg ) ;
         void send ( typename messages :: camera_prepare_permit msg ) ;
@@ -248,6 +250,7 @@ public :
         , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
         , typename platform_pointer :: template pointer < logic > arg_logic
         , typename platform_pointer :: template pointer < logic_application > arg_logic_application
+        , typename platform_pointer :: template pointer < logic_application_stateless > arg_logic_application_stateless
         , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
         , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
         , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
@@ -268,6 +271,7 @@ public :
     void send ( message_type msg ) ;
 private :
     typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
+    typename platform_pointer :: template pointer < logic_application_stateless > _logic_application_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > _logic_main_menu_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < const platform > _platform ;
@@ -288,6 +292,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
     , typename platform_pointer :: template pointer < logic > arg_logic
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
+    , typename platform_pointer :: template pointer < logic_application_stateless > arg_logic_application_stateless
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
     , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
@@ -306,6 +311,7 @@ void shy_mediator < mediator_types > :: register_modules
     )
 {
     _engine_render_stateless = arg_engine_render_stateless ;
+    _logic_application_stateless = arg_logic_application_stateless ;
     _logic_main_menu_stateless = arg_logic_main_menu_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
     
@@ -378,20 +384,9 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
 {
     _receivers = arg_receivers ;
     engine_render_sender :: set_receivers ( arg_receivers ) ;
+    logic_application_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: application_render msg )
-{
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: application_update msg )
-{
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
