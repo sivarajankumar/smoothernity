@@ -29,6 +29,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless logic_entities_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget logic_fidget ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless logic_fidget_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game logic_game ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image logic_image ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
@@ -54,6 +55,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_messages logic_application_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: logic_camera_messages logic_camera_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless :: logic_entities_messages logic_entities_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: logic_fidget_messages logic_fidget_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
 
@@ -61,6 +63,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: template logic_application_sender < receivers > logic_application_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: template logic_camera_sender < receivers > logic_camera_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless :: template logic_entities_sender < receivers > logic_entities_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: template logic_fidget_sender < receivers > logic_fidget_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     
@@ -70,16 +73,12 @@ public :
     , public logic_application_messages
     , public logic_camera_messages
     , public logic_entities_messages
+    , public logic_fidget_messages
     , public logic_main_menu_messages
     , public logic_text_messages
     {
     public :
         class done { } ;
-        class fidget_prepare_permit { } ;
-        class fidget_prepared { } ;
-        class fidget_render_reply { } ;
-        class fidget_render_request { } ;
-        class fidget_update { } ;
         class game_launch_permit { } ;
         class game_render { } ;
         class game_update { } ;
@@ -131,6 +130,7 @@ private :
     , public logic_application_sender
     , public logic_camera_sender
     , public logic_entities_sender
+    , public logic_fidget_sender
     , public logic_main_menu_sender
     , public logic_text_sender
     {
@@ -139,17 +139,13 @@ private :
         using logic_application_sender :: send ;
         using logic_camera_sender :: send ;
         using logic_entities_sender :: send ;
+        using logic_fidget_sender :: send ;
         using logic_main_menu_sender :: send ;
         using logic_text_sender :: send ;
         
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
         void send ( typename messages :: done msg ) ;
-        void send ( typename messages :: fidget_prepare_permit msg ) ;
-        void send ( typename messages :: fidget_prepared msg ) ;
-        void send ( typename messages :: fidget_render_reply msg ) ;
-        void send ( typename messages :: fidget_render_request msg ) ;
-        void send ( typename messages :: fidget_update msg ) ;
         void send ( typename messages :: game_launch_permit msg ) ;
         void send ( typename messages :: game_render msg ) ;
         void send ( typename messages :: game_update msg ) ;
@@ -236,6 +232,7 @@ public :
         , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
         , typename platform_pointer :: template pointer < logic_entities_stateless > arg_logic_entities_stateless
         , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
+        , typename platform_pointer :: template pointer < logic_fidget_stateless > arg_logic_fidget_stateless
         , typename platform_pointer :: template pointer < logic_game > arg_logic_game
         , typename platform_pointer :: template pointer < logic_image > arg_logic_image
         , typename platform_pointer :: template pointer < logic_land > arg_logic_land
@@ -256,6 +253,7 @@ private :
     typename platform_pointer :: template pointer < logic_application_stateless > _logic_application_stateless ;
     typename platform_pointer :: template pointer < logic_camera_stateless > _logic_camera_stateless ;
     typename platform_pointer :: template pointer < logic_entities_stateless > _logic_entities_stateless ;
+    typename platform_pointer :: template pointer < logic_fidget_stateless > _logic_fidget_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > _logic_main_menu_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < const platform > _platform ;
@@ -282,6 +280,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
     , typename platform_pointer :: template pointer < logic_entities_stateless > arg_logic_entities_stateless
     , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
+    , typename platform_pointer :: template pointer < logic_fidget_stateless > arg_logic_fidget_stateless
     , typename platform_pointer :: template pointer < logic_game > arg_logic_game
     , typename platform_pointer :: template pointer < logic_image > arg_logic_image
     , typename platform_pointer :: template pointer < logic_land > arg_logic_land
@@ -300,6 +299,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_application_stateless = arg_logic_application_stateless ;
     _logic_camera_stateless = arg_logic_camera_stateless ;
     _logic_entities_stateless = arg_logic_entities_stateless ;
+    _logic_fidget_stateless = arg_logic_fidget_stateless ;
     _logic_main_menu_stateless = arg_logic_main_menu_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
     
@@ -375,6 +375,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_application_sender :: set_receivers ( arg_receivers ) ;
     logic_camera_sender :: set_receivers ( arg_receivers ) ;
     logic_entities_sender :: set_receivers ( arg_receivers ) ;
+    logic_fidget_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;
 }
@@ -383,12 +384,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: done msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: fidget_prepared msg )
-{
-    _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -447,12 +442,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_prepared msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: fidget_prepare_permit msg )
-{
-    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -528,19 +517,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: re
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: fidget_render_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: fidget_render_request msg )
-{
-    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: image_render_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
@@ -604,12 +580,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: image_update msg )
 {
     _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: fidget_update msg )
-{
-    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

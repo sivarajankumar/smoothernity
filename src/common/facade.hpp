@@ -20,7 +20,8 @@
 #include "logic/camera/stateless.hpp"
 #include "logic/entities/entities.hpp"
 #include "logic/entities/stateless.hpp"
-#include "logic/fidget.hpp"
+#include "logic/fidget/fidget.hpp"
+#include "logic/fidget/stateless.hpp"
 #include "logic/game.hpp"
 #include "logic/image.hpp"
 #include "logic/land.hpp"
@@ -62,6 +63,7 @@ private :
         , shy_logic_entities
         , shy_logic_entities_stateless
         , shy_logic_fidget
+        , shy_logic_fidget_stateless
         , shy_logic_game
         , shy_logic_image
         , shy_logic_land
