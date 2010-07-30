@@ -8,6 +8,7 @@ class shy_engine_render_stateless
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render platform_render ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
@@ -82,6 +83,54 @@ public :
         class render_texture_unselect { } ;
     } ;
     
+    template < typename receivers >
+    class engine_render_sender
+    {
+    public :
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
+        void send ( typename engine_render_messages :: render_aspect_reply msg ) ;
+        void send ( typename engine_render_messages :: render_aspect_request msg ) ;
+        void send ( typename engine_render_messages :: render_blend_disable msg ) ;
+        void send ( typename engine_render_messages :: render_blend_src_alpha_dst_one_minus_alpha msg ) ;
+        void send ( typename engine_render_messages :: render_clear_screen msg ) ;
+        void send ( typename engine_render_messages :: render_disable_depth_test msg ) ;
+        void send ( typename engine_render_messages :: render_enable_depth_test msg ) ;
+        void send ( typename engine_render_messages :: render_enable_face_culling msg ) ;
+        void send ( typename engine_render_messages :: render_fog_disable msg ) ;
+        void send ( typename engine_render_messages :: render_fog_linear msg ) ;
+        void send ( typename engine_render_messages :: render_frame_loss_reply msg ) ;
+        void send ( typename engine_render_messages :: render_frame_loss_request msg ) ;
+        void send ( typename engine_render_messages :: render_matrix_identity msg ) ;
+        void send ( typename engine_render_messages :: render_matrix_load msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_create_reply msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_create_request msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_delete msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_finalize msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_render msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_set_transform msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_set_triangle_fan_index_value msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_set_triangle_strip_index_value msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_set_vertex_color msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_set_vertex_position msg ) ;
+        void send ( typename engine_render_messages :: render_mesh_set_vertex_tex_coord msg ) ;
+        void send ( typename engine_render_messages :: render_projection_frustum msg ) ;
+        void send ( typename engine_render_messages :: render_projection_ortho msg ) ;
+        void send ( typename engine_render_messages :: render_texture_create_reply msg ) ;
+        void send ( typename engine_render_messages :: render_texture_create_request msg ) ;
+        void send ( typename engine_render_messages :: render_texture_finalize msg ) ;
+        void send ( typename engine_render_messages :: render_texture_load_from_resource msg ) ;
+        void send ( typename engine_render_messages :: render_texture_loader_ready_reply msg ) ;
+        void send ( typename engine_render_messages :: render_texture_loader_ready_request msg ) ;
+        void send ( typename engine_render_messages :: render_texture_mode_modulate msg ) ;
+        void send ( typename engine_render_messages :: render_texture_select msg ) ;
+        void send ( typename engine_render_messages :: render_texture_set_texel msg ) ;
+        void send ( typename engine_render_messages :: render_texture_set_texel_rgba msg ) ;
+        void send ( typename engine_render_messages :: render_texture_set_texels_rect msg ) ;
+        void send ( typename engine_render_messages :: render_texture_unselect msg ) ;
+    private :
+        typename platform_pointer :: template pointer < const receivers > _receivers ;
+    } ;
+    
 public :
     shy_engine_render_stateless ( ) ;
     shy_engine_render_stateless & operator= ( const shy_engine_render_stateless & src ) ;
@@ -122,4 +171,375 @@ template < typename mediator >
 void shy_engine_render_stateless < mediator > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
 {
     platform_render :: create_texture_resource_id ( resource_id , resource_index ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
+{
+    _receivers = arg_receivers ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_blend_disable msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_blend_src_alpha_dst_one_minus_alpha msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_clear_screen msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_disable_depth_test msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_enable_face_culling msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_enable_depth_test msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_fog_disable msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_fog_linear msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_matrix_load msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_matrix_identity msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_projection_frustum msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_projection_ortho msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_mode_modulate msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_set_vertex_position msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_set_vertex_tex_coord msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_set_vertex_color msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_set_triangle_strip_index_value msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_set_triangle_fan_index_value msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_create_request msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_create_reply msg )
+{
+    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_finalize msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_delete msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_render msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_mesh_set_transform msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_aspect_reply msg )
+{
+    _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_aspect_request msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_create_reply msg )
+{
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_create_request msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_finalize msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_load_from_resource msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_loader_ready_reply msg )
+{
+    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_loader_ready_request msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_select msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_set_texel msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_set_texel_rgba msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_set_texels_rect msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_texture_unselect msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_frame_loss_request msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: render_frame_loss_reply msg )
+{
+    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
 }

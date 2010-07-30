@@ -21,7 +21,6 @@ private :
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic logic ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
@@ -33,13 +32,9 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu logic_main_menu ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_text_creator logic_main_menu_text_creator ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
     typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
@@ -51,6 +46,14 @@ private :
     typedef typename mediator_types :: platform :: platform_render :: texture_resource_id texture_resource_id ;
     typedef typename mediator_types :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
+
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
+
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: template engine_render_sender < receivers > engine_render_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     
 public :
     class messages
@@ -130,10 +133,12 @@ public :
 
 private :
     class sender
-    : public logic_main_menu_sender
+    : public engine_render_sender
+    , public logic_main_menu_sender
     , public logic_text_sender
     {
     public :    
+        using engine_render_sender :: send ;
         using logic_main_menu_sender :: send ;
         using logic_text_sender :: send ;
         
@@ -187,45 +192,6 @@ private :
         void send ( typename messages :: rasterize_use_texel msg ) ;
         void send ( typename messages :: rasterize_use_texture msg ) ;
         void send ( typename messages :: render msg ) ;
-        void send ( typename messages :: render_aspect_reply msg ) ;
-        void send ( typename messages :: render_aspect_request msg ) ;
-        void send ( typename messages :: render_blend_disable msg ) ;
-        void send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha msg ) ;
-        void send ( typename messages :: render_clear_screen msg ) ;
-        void send ( typename messages :: render_disable_depth_test msg ) ;
-        void send ( typename messages :: render_enable_depth_test msg ) ;
-        void send ( typename messages :: render_enable_face_culling msg ) ;
-        void send ( typename messages :: render_fog_disable msg ) ;
-        void send ( typename messages :: render_fog_linear msg ) ;
-        void send ( typename messages :: render_frame_loss_reply msg ) ;
-        void send ( typename messages :: render_frame_loss_request msg ) ;
-        void send ( typename messages :: render_matrix_identity msg ) ;
-        void send ( typename messages :: render_matrix_load msg ) ;
-        void send ( typename messages :: render_mesh_create_reply msg ) ;
-        void send ( typename messages :: render_mesh_create_request msg ) ;
-        void send ( typename messages :: render_mesh_delete msg ) ;
-        void send ( typename messages :: render_mesh_finalize msg ) ;
-        void send ( typename messages :: render_mesh_render msg ) ;
-        void send ( typename messages :: render_mesh_set_transform msg ) ;
-        void send ( typename messages :: render_mesh_set_triangle_fan_index_value msg ) ;
-        void send ( typename messages :: render_mesh_set_triangle_strip_index_value msg ) ;
-        void send ( typename messages :: render_mesh_set_vertex_color msg ) ;
-        void send ( typename messages :: render_mesh_set_vertex_position msg ) ;
-        void send ( typename messages :: render_mesh_set_vertex_tex_coord msg ) ;
-        void send ( typename messages :: render_projection_frustum msg ) ;
-        void send ( typename messages :: render_projection_ortho msg ) ;
-        void send ( typename messages :: render_texture_create_reply msg ) ;
-        void send ( typename messages :: render_texture_create_request msg ) ;
-        void send ( typename messages :: render_texture_finalize msg ) ;
-        void send ( typename messages :: render_texture_load_from_resource msg ) ;
-        void send ( typename messages :: render_texture_loader_ready_reply msg ) ;
-        void send ( typename messages :: render_texture_loader_ready_request msg ) ;
-        void send ( typename messages :: render_texture_mode_modulate msg ) ;
-        void send ( typename messages :: render_texture_select msg ) ;
-        void send ( typename messages :: render_texture_set_texel msg ) ;
-        void send ( typename messages :: render_texture_set_texel_rgba msg ) ;
-        void send ( typename messages :: render_texture_set_texels_rect msg ) ;
-        void send ( typename messages :: render_texture_unselect msg ) ;
         void send ( typename messages :: sound_prepare_permit msg ) ;
         void send ( typename messages :: sound_prepared msg ) ;
         void send ( typename messages :: sound_update msg ) ;
@@ -411,6 +377,7 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
 {
     _receivers = arg_receivers ;
+    engine_render_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;
 }
@@ -552,156 +519,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: la
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_blend_disable msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_clear_screen msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_disable_depth_test msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_enable_face_culling msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_enable_depth_test msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_fog_disable msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_fog_linear msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_matrix_load msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_matrix_identity msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_projection_frustum msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_projection_ortho msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_mode_modulate msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_set_vertex_position msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_set_vertex_tex_coord msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_set_vertex_color msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_set_triangle_strip_index_value msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_set_triangle_fan_index_value msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_create_request msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_create_reply msg )
-{
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_finalize msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_delete msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_render msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_mesh_set_transform msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: camera_prepare_permit msg )
 {
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
@@ -789,21 +606,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render msg )
 {
     _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_aspect_reply msg )
-{
-    _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_aspect_request msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -922,74 +724,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: ca
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_create_reply msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_create_request msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_finalize msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_load_from_resource msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_loader_ready_reply msg )
-{
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_loader_ready_request msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_select msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_set_texel msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_set_texel_rgba msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_set_texels_rect msg ) 
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_texture_unselect msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: title_finished msg )
 {
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
@@ -1066,16 +800,4 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_text_texture_reply msg )
 {
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_frame_loss_request msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_frame_loss_reply msg )
-{
-    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
 }
