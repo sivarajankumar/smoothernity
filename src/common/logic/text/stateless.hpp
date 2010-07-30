@@ -9,6 +9,7 @@ class shy_logic_text_stateless
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     
 public :
     class letter_id
@@ -57,6 +58,20 @@ public :
     {
     public :
         alphabet_english_type alphabet_english ;
+    } ;
+    
+    class logic_text_messages
+    {
+    public :
+        class text_letter_big_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
+        class text_letter_big_tex_coords_request { public : letter_id letter ; } ;
+        class text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
+        class text_letter_small_tex_coords_request { public : letter_id letter ; } ;
+        class text_prepare_permit { } ;
+        class text_prepared { } ;
+        class text_render_reply { } ;
+        class text_render_request { } ;
+        class text_update { } ;
     } ;
     
 public :
