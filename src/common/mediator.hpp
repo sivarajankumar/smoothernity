@@ -34,6 +34,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_text_creator logic_main_menu_text_creator ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
@@ -128,10 +129,13 @@ public :
 
 private :
     class sender
+    : public logic_main_menu_sender
     {
-    public :
-        void set_receivers ( typename platform_pointer :: template pointer < receivers > arg_receivers ) ;
+    public :    
+        using logic_main_menu_sender :: send ;
         
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
+  
         void send ( typename messages :: application_render msg ) ;
         void send ( typename messages :: application_update msg ) ;
         void send ( typename messages :: camera_matrix_reply msg ) ;
@@ -170,15 +174,6 @@ private :
         void send ( typename messages :: land_render_reply msg ) ;
         void send ( typename messages :: land_render_request msg ) ;
         void send ( typename messages :: land_update msg ) ;
-        void send ( typename messages :: main_menu_add_letter msg ) ;
-        void send ( typename messages :: main_menu_add_whitespace msg ) ;
-        void send ( typename messages :: main_menu_finished msg ) ;
-        void send ( typename messages :: main_menu_launch_permit msg ) ;
-        void send ( typename messages :: main_menu_next_row msg ) ;
-        void send ( typename messages :: main_menu_render msg ) ;
-        void send ( typename messages :: main_menu_text_create msg ) ;
-        void send ( typename messages :: main_menu_text_create_finished msg ) ;
-        void send ( typename messages :: main_menu_update msg ) ;
         void send ( typename messages :: near_plane_distance_reply msg ) ;
         void send ( typename messages :: near_plane_distance_request msg ) ;
         void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -257,7 +252,7 @@ private :
         void send ( typename messages :: use_text_texture_request msg ) ;
         void send ( typename messages :: video_mode_changed msg ) ;
     private :
-        typename platform_pointer :: template pointer < receivers > _receivers ;
+        typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
 
     class receivers
@@ -419,9 +414,10 @@ void shy_mediator < mediator_types > :: send ( message_type msg )
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platform_pointer :: template pointer < receivers > arg_receivers )
+void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
 {
     _receivers = arg_receivers ;
+    logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
 }
 
 template < typename mediator_types >
@@ -1140,58 +1136,4 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render_frame_loss_reply msg )
 {
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_finished msg )
-{
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_launch_permit msg )
-{
-    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_render msg )
-{
-    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_update msg )
-{
-    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_text_create msg )
-{
-    _receivers . get ( ) . logic_main_menu_text_creator . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_text_create_finished msg )
-{
-    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_add_letter msg )
-{
-    _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_add_whitespace msg )
-{
-    _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: main_menu_next_row msg ) 
-{
-    _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
 }
