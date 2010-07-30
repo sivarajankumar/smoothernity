@@ -83,9 +83,6 @@ public :
     {
     public :
         class done { } ;
-        class game_launch_permit { } ;
-        class game_render { } ;
-        class game_update { } ;
         class image_prepare_permit { } ;
         class image_prepared { } ;
         class image_render_reply { } ;
@@ -152,9 +149,6 @@ private :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
         void send ( typename messages :: done msg ) ;
-        void send ( typename messages :: game_launch_permit msg ) ;
-        void send ( typename messages :: game_render msg ) ;
-        void send ( typename messages :: game_update msg ) ;
         void send ( typename messages :: image_prepare_permit msg ) ;
         void send ( typename messages :: image_prepared msg ) ;
         void send ( typename messages :: image_render_reply msg ) ;
@@ -395,18 +389,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: done msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: game_render msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: game_update msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -652,12 +634,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: us
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: game_launch_permit msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
