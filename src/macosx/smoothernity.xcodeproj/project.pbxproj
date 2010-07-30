@@ -125,6 +125,7 @@
 		886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
 		886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
+		887ACE5A1202AECF006B5FFB /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 887ACE591202AECF006B5FFB /* stateless.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
 		88B3C9381201BD3A00B291B8 /* aggregator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C91E1201BD3A00B291B8 /* aggregator.hpp */; };
 		88B3C9391201BD3A00B291B8 /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9201201BD3A00B291B8 /* camera.hpp */; };
@@ -205,6 +206,7 @@
 		886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render.hpp; sourceTree = "<group>"; };
 		886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound.hpp; sourceTree = "<group>"; };
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
+		887ACE591202AECF006B5FFB /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
 		88B3C91E1201BD3A00B291B8 /* aggregator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aggregator.hpp; sourceTree = "<group>"; };
 		88B3C9201201BD3A00B291B8 /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 			children = (
 				88B3C96F1201C32E00B291B8 /* letters_storage.hpp */,
 				88B3C9521201BE3500B291B8 /* main_menu.hpp */,
+				887ACE591202AECF006B5FFB /* stateless.hpp */,
 				88B3C9561201BED700B291B8 /* text_creator.hpp */,
 			);
 			path = main_menu;
@@ -520,6 +523,7 @@
 				88B3C9531201BE3500B291B8 /* main_menu.hpp in Headers */,
 				88B3C9571201BED700B291B8 /* text_creator.hpp in Headers */,
 				88B3C9701201C32E00B291B8 /* letters_storage.hpp in Headers */,
+				887ACE5A1202AECF006B5FFB /* stateless.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

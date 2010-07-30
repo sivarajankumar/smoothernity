@@ -15,6 +15,7 @@ template
     , template < typename mediator > class _logic_land
     , template < typename mediator > class _logic_main_menu
     , template < typename mediator > class _logic_main_menu_letters_storage
+    , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_main_menu_text_creator
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_text
@@ -45,6 +46,7 @@ public :
         typedef _logic_land < mediator > logic_land ;
         typedef _logic_main_menu < mediator > logic_main_menu ;
         typedef _logic_main_menu_letters_storage < mediator > logic_main_menu_letters_storage ;
+        typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_main_menu_text_creator < mediator > logic_main_menu_text_creator ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_text < mediator > logic_text ;
@@ -72,6 +74,7 @@ template
     , template < typename _mediator > class _logic_land
     , template < typename _mediator > class _logic_main_menu
     , template < typename _mediator > class _logic_main_menu_letters_storage
+    , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_main_menu_text_creator
     , template < typename _mediator > class _logic_sound
     , template < typename _mediator > class _logic_text
@@ -119,6 +122,7 @@ public :
         , scheduled_logic_land :: template scheduled_module
         , scheduled_logic_main_menu :: template scheduled_module
         , scheduled_logic_main_menu_letters_storage :: template scheduled_module
+        , _logic_main_menu_stateless
         , scheduled_logic_main_menu_text_creator :: template scheduled_module
         , scheduled_logic_sound :: template scheduled_module
         , scheduled_logic_text :: template scheduled_module
@@ -132,6 +136,7 @@ public :
     typedef _engine_camera < mediator_type > engine_camera ;
     typedef _engine_math < mediator_type > engine_math ;
     typedef _engine_render_stateless < mediator_type > engine_render_stateless ;
+    typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
 } ;
 
@@ -167,6 +172,7 @@ private :
     typename aggregator_types :: scheduled_logic_land :: template scheduled_module < mediator_type > _logic_land ;
     typename aggregator_types :: scheduled_logic_main_menu :: template scheduled_module < mediator_type > _logic_main_menu ;
     typename aggregator_types :: scheduled_logic_main_menu_letters_storage :: template scheduled_module < mediator_type > _logic_main_menu_letters_storage ;
+    typename aggregator_types :: logic_main_menu_stateless _logic_main_menu_stateless ;
     typename aggregator_types :: scheduled_logic_main_menu_text_creator :: template scheduled_module < mediator_type > _logic_main_menu_text_creator ;
     typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > _logic_sound ;
     typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > _logic_text ;
@@ -210,6 +216,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_land
         , _logic_main_menu
         , _logic_main_menu_letters_storage
+        , _logic_main_menu_stateless
         , _logic_main_menu_text_creator
         , _logic_sound
         , _logic_text
