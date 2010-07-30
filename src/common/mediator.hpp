@@ -39,6 +39,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
     typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
@@ -130,9 +131,11 @@ public :
 private :
     class sender
     : public logic_main_menu_sender
+    , public logic_text_sender
     {
     public :    
         using logic_main_menu_sender :: send ;
+        using logic_text_sender :: send ;
         
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
@@ -226,15 +229,6 @@ private :
         void send ( typename messages :: sound_prepare_permit msg ) ;
         void send ( typename messages :: sound_prepared msg ) ;
         void send ( typename messages :: sound_update msg ) ;
-        void send ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
-        void send ( typename messages :: text_letter_big_tex_coords_request msg ) ;
-        void send ( typename messages :: text_letter_small_tex_coords_reply msg ) ;
-        void send ( typename messages :: text_letter_small_tex_coords_request msg ) ;
-        void send ( typename messages :: text_prepare_permit msg ) ;
-        void send ( typename messages :: text_prepared msg ) ;
-        void send ( typename messages :: text_render_reply msg ) ;
-        void send ( typename messages :: text_render_request msg ) ;
-        void send ( typename messages :: text_update msg ) ;
         void send ( typename messages :: title_finished msg ) ;
         void send ( typename messages :: title_launch_permit msg ) ;
         void send ( typename messages :: title_render msg ) ;
@@ -418,6 +412,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
 {
     _receivers = arg_receivers ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
+    logic_text_sender :: set_receivers ( arg_receivers ) ;
 }
 
 template < typename mediator_types >
@@ -743,12 +738,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: so
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_prepare_permit msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_prepare_permit msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
@@ -867,18 +856,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: la
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_render_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_render_request msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_render msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
@@ -891,12 +868,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: so
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_prepared msg )
-{
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: update msg )
 {
     _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
@@ -906,12 +877,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_update msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_update msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -1101,29 +1066,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_text_texture_reply msg )
 {
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_letter_big_tex_coords_reply msg )
-{
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_letter_big_tex_coords_request msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_letter_small_tex_coords_reply msg )
-{
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: text_letter_small_tex_coords_request msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >

@@ -10,6 +10,7 @@ class shy_logic_text_stateless
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
 public :
     class letter_id
@@ -74,6 +75,24 @@ public :
         class text_update { } ;
     } ;
     
+    template < typename receivers >
+    class logic_text_sender
+    {
+    public :
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
+        void send ( typename logic_text_messages :: text_letter_big_tex_coords_reply msg ) ;
+        void send ( typename logic_text_messages :: text_letter_big_tex_coords_request msg ) ;
+        void send ( typename logic_text_messages :: text_letter_small_tex_coords_reply msg ) ;
+        void send ( typename logic_text_messages :: text_letter_small_tex_coords_request msg ) ;
+        void send ( typename logic_text_messages :: text_prepare_permit msg ) ;
+        void send ( typename logic_text_messages :: text_prepared msg ) ;
+        void send ( typename logic_text_messages :: text_render_reply msg ) ;
+        void send ( typename logic_text_messages :: text_render_request msg ) ;
+        void send ( typename logic_text_messages :: text_update msg ) ;
+    private :
+        typename platform_pointer :: template pointer < const receivers > _receivers ;
+    } ;
+    
 public :
     shy_logic_text_stateless ( ) ;
     shy_logic_text_stateless & operator= ( const shy_logic_text_stateless & src ) ;
@@ -131,4 +150,93 @@ template < typename mediator >
 void shy_logic_text_stateless < mediator > :: are_letters_equal ( num_whole & result , letter_id a , letter_id b )
 {
     platform_math :: make_num_whole ( result , platform_conditions :: wholes_are_equal ( a . _letter_id , b . _letter_id ) ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
+{
+    _receivers = arg_receivers ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_prepare_permit msg )
+{
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_render_reply msg )
+{
+    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_render_request msg )
+{
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_prepared msg )
+{
+    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_update msg )
+{
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_letter_big_tex_coords_reply msg )
+{
+    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_letter_big_tex_coords_request msg )
+{
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_letter_small_tex_coords_reply msg )
+{
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_text_stateless < mediator > 
+:: logic_text_sender < receivers > 
+:: send ( typename logic_text_messages :: text_letter_small_tex_coords_request msg )
+{
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
