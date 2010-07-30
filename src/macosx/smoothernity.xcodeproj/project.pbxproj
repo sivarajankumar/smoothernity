@@ -157,6 +157,7 @@
 		88B6B66A120313F80030F65B /* image.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B669120313F80030F65B /* image.hpp */; };
 		88B6B671120314550030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B670120314550030F65B /* stateless.hpp */; };
 		88B6B689120317720030F65B /* land.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B688120317720030F65B /* land.hpp */; };
+		88B6B690120317C00030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B68F120317C00030F65B /* stateless.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -244,6 +245,7 @@
 		88B6B669120313F80030F65B /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
 		88B6B670120314550030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88B6B688120317720030F65B /* land.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = land.hpp; sourceTree = "<group>"; };
+		88B6B68F120317C00030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -531,6 +533,7 @@
 			isa = PBXGroup;
 			children = (
 				88B6B688120317720030F65B /* land.hpp */,
+				88B6B68F120317C00030F65B /* stateless.hpp */,
 			);
 			path = land;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				88B6B66A120313F80030F65B /* image.hpp in Headers */,
 				88B6B671120314550030F65B /* stateless.hpp in Headers */,
 				88B6B689120317720030F65B /* land.hpp in Headers */,
+				88B6B690120317C00030F65B /* stateless.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
