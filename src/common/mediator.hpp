@@ -92,11 +92,6 @@ public :
     public :
         class done { } ;
         class init { } ;
-        class land_prepare_permit { } ;
-        class land_prepared { } ;
-        class land_render_reply { } ;
-        class land_render_request { } ;
-        class land_update { } ;
         class near_plane_distance_reply { public : num_fract distance ; } ;
         class near_plane_distance_request { } ;
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
@@ -157,11 +152,6 @@ private :
   
         void send ( typename messages :: done msg ) ;
         void send ( typename messages :: init msg ) ;
-        void send ( typename messages :: land_prepare_permit msg ) ;
-        void send ( typename messages :: land_prepared msg ) ;
-        void send ( typename messages :: land_render_reply msg ) ;
-        void send ( typename messages :: land_render_request msg ) ;
-        void send ( typename messages :: land_update msg ) ;
         void send ( typename messages :: near_plane_distance_reply msg ) ;
         void send ( typename messages :: near_plane_distance_request msg ) ;
         void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
@@ -438,18 +428,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: in
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_prepared msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_prepare_permit msg )
-{
-    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: sound_prepare_permit msg )
 {
     _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
@@ -510,18 +488,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: re
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_render_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_render_request msg )
-{
-    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_render msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
@@ -549,12 +515,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: sound_update msg )
 {
     _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_update msg )
-{
-    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
