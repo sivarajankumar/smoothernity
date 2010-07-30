@@ -87,11 +87,6 @@ public :
     {
     public :
         class done { } ;
-        class image_prepare_permit { } ;
-        class image_prepared { } ;
-        class image_render_reply { } ;
-        class image_render_request { } ;
-        class image_update { } ;
         class init { } ;
         class land_prepare_permit { } ;
         class land_prepared { } ;
@@ -155,11 +150,6 @@ private :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
         void send ( typename messages :: done msg ) ;
-        void send ( typename messages :: image_prepare_permit msg ) ;
-        void send ( typename messages :: image_prepared msg ) ;
-        void send ( typename messages :: image_render_reply msg ) ;
-        void send ( typename messages :: image_render_request msg ) ;
-        void send ( typename messages :: image_update msg ) ;
         void send ( typename messages :: init msg ) ;
         void send ( typename messages :: land_prepare_permit msg ) ;
         void send ( typename messages :: land_prepared msg ) ;
@@ -416,12 +406,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: ne
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: image_prepared msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: init msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
@@ -446,12 +430,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_prepared msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: image_prepare_permit msg )
-{
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -521,18 +499,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: re
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: image_render_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: image_render_request msg )
-{
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_render_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
@@ -578,12 +544,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: land_update msg )
 {
     _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: image_update msg )
-{
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
