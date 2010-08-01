@@ -30,6 +30,7 @@ template
     , template < typename mediator > class _logic_text
     , template < typename mediator > class _logic_text_stateless
     , template < typename mediator > class _logic_title
+    , template < typename mediator > class _logic_title_stateless
     , template < typename mediator > class _logic_touch
     >
 class mediator_types
@@ -70,6 +71,7 @@ public :
         typedef _logic_text < mediator > logic_text ;
         typedef _logic_text_stateless < mediator > logic_text_stateless ;
         typedef _logic_title < mediator > logic_title ;
+        typedef _logic_title_stateless < mediator > logic_title_stateless ;
         typedef _logic_touch < mediator > logic_touch ;
     } ;
 } ;
@@ -107,6 +109,7 @@ template
     , template < typename _mediator > class _logic_text
     , template < typename _mediator > class _logic_text_stateless
     , template < typename _mediator > class _logic_title
+    , template < typename _mediator > class _logic_title_stateless
     , template < typename _mediator > class _logic_touch
     >
 class shy_aggregator_types
@@ -164,6 +167,7 @@ public :
         , scheduled_logic_text :: template scheduled_module
         , _logic_text_stateless
         , scheduled_logic_title :: template scheduled_module
+        , _logic_title_stateless
         , scheduled_logic_touch :: template scheduled_module
         > >
         mediator_type ;
@@ -183,6 +187,7 @@ public :
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
+    typedef _logic_title_stateless < mediator_type > logic_title_stateless ;
 } ;
 
 template < typename aggregator_types >
@@ -232,6 +237,7 @@ private :
     typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > _logic_text ;
     typename aggregator_types :: logic_text_stateless _logic_text_stateless ;
     typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > _logic_title ;
+    typename aggregator_types :: logic_title_stateless _logic_title_stateless ;
     typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > _logic_touch ;
 } ;
 
@@ -285,6 +291,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_text
         , _logic_text_stateless
         , _logic_title
+        , _logic_title_stateless
         , _logic_touch
         ) ;
 }

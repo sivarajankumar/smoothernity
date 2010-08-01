@@ -37,6 +37,7 @@
 #include "logic/sound/stateless.hpp"
 #include "logic/text/stateless.hpp"
 #include "logic/text/text.hpp"
+#include "logic/title/stateless.hpp"
 #include "logic/title/title.hpp"
 #include "logic/touch.hpp"
 #include "mediator.hpp"
@@ -85,6 +86,7 @@ private :
         , shy_logic_text
         , shy_logic_text_stateless
         , shy_logic_title
+        , shy_logic_title_stateless
         , shy_logic_touch
         > >
         _aggregator ;
