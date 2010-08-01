@@ -105,9 +105,6 @@ public :
         class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
-        class sound_prepare_permit { } ;
-        class sound_prepared { } ;
-        class sound_update { } ;
         class title_finished { } ;
         class title_launch_permit { } ;
         class title_render { } ;
@@ -146,6 +143,7 @@ private :
         using logic_image_sender :: send ;
         using logic_land_sender :: send ;
         using logic_main_menu_sender :: send ;
+        using logic_sound_sender :: send ;
         using logic_text_sender :: send ;
         
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
@@ -157,9 +155,6 @@ private :
         void send ( typename messages :: rasterize_triangle msg ) ;
         void send ( typename messages :: rasterize_use_texel msg ) ;
         void send ( typename messages :: rasterize_use_texture msg ) ;
-        void send ( typename messages :: sound_prepare_permit msg ) ;
-        void send ( typename messages :: sound_prepared msg ) ;
-        void send ( typename messages :: sound_update msg ) ;
         void send ( typename messages :: title_finished msg ) ;
         void send ( typename messages :: title_launch_permit msg ) ;
         void send ( typename messages :: title_render msg ) ;
@@ -387,12 +382,6 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: sound_prepare_permit msg )
-{
-    _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_prepare_permit msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
@@ -447,21 +436,9 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: to
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: sound_prepared msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_update msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: sound_update msg )
-{
-    _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
