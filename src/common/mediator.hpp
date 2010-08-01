@@ -109,10 +109,6 @@ public :
         class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
-        class title_finished { } ;
-        class title_launch_permit { } ;
-        class title_render { } ;
-        class title_update { } ;
         class touch_prepare_permit { } ;
         class touch_prepared { } ;
         class touch_render { } ;
@@ -159,10 +155,6 @@ private :
         void send ( typename messages :: rasterize_triangle msg ) ;
         void send ( typename messages :: rasterize_use_texel msg ) ;
         void send ( typename messages :: rasterize_use_texture msg ) ;
-        void send ( typename messages :: title_finished msg ) ;
-        void send ( typename messages :: title_launch_permit msg ) ;
-        void send ( typename messages :: title_render msg ) ;
-        void send ( typename messages :: title_update msg ) ;
         void send ( typename messages :: touch_prepare_permit msg ) ;
         void send ( typename messages :: touch_prepared msg ) ;
         void send ( typename messages :: touch_render msg ) ;
@@ -446,30 +438,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_update msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: title_finished msg )
-{
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: title_launch_permit msg )
-{
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: title_render msg )
-{
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: title_update msg )
-{
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
