@@ -37,7 +37,7 @@
 #include "logic/sound/stateless.hpp"
 #include "logic/text/stateless.hpp"
 #include "logic/text/text.hpp"
-#include "logic/title.hpp"
+#include "logic/title/title.hpp"
 #include "logic/touch.hpp"
 #include "mediator.hpp"
 
