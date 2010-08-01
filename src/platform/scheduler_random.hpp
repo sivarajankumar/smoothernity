@@ -128,7 +128,7 @@ template < typename module , typename message , int max_message_size >
 shy_platform_scheduler_random < platform_insider > :: _message_invoker < module , message , max_message_size > :: _message_invoker
     ( message & arg_message )
 {
-    typename platform_static_assert :: template static_assert < int ( sizeof ( message ) ) < max_message_size > ( ) ;
+    typename platform_static_assert :: template shy_static_assert < int ( sizeof ( message ) ) < max_message_size > ( ) ;
     ( * reinterpret_cast < message * > ( & _message ) ) = arg_message ;
 }
 
@@ -157,6 +157,11 @@ shy_platform_scheduler_random < platform_insider > :: _messages_queue < max_mess
 template < typename platform_insider >
 shy_platform_scheduler_random < platform_insider > :: scheduler :: scheduler ( )
 {
+	_message_dummy my_message ;
+	_module_dummy my_module ;
+	_message_invoker < _module_dummy , _message_dummy , _default_max_message_size > my_invoker ( my_message ) ;
+	my_invoker . invoke ( & my_module ) ;
+
     _count = 0;
     for ( int i = 0 ; i < _max_scheduled_modules ; i ++ )
         _modules [ i ] = 0 ;
