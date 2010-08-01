@@ -94,10 +94,6 @@ public :
     , public logic_text_messages
     {
     public :
-        class done { } ;
-        class init { } ;
-        class near_plane_distance_reply { public : num_fract distance ; } ;
-        class near_plane_distance_request { } ;
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
         class rasterize_finalize_reply { } ;
         class rasterize_finalize_request { } ;
@@ -105,7 +101,6 @@ public :
         class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
-        class render { } ;
         class sound_prepare_permit { } ;
         class sound_prepared { } ;
         class sound_update { } ;
@@ -117,14 +112,8 @@ public :
         class touch_prepared { } ;
         class touch_render { } ;
         class touch_update { } ;
-        class update { } ;
-        class use_ortho_projection_reply { } ;
-        class use_ortho_projection_request { } ;
-        class use_perspective_projection_reply { } ;
-        class use_perspective_projection_request { } ;
         class use_text_texture_reply { } ;
         class use_text_texture_request { } ;
-        class video_mode_changed { } ;
     } ;
 
 private :
@@ -156,10 +145,6 @@ private :
         
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
-        void send ( typename messages :: done msg ) ;
-        void send ( typename messages :: init msg ) ;
-        void send ( typename messages :: near_plane_distance_reply msg ) ;
-        void send ( typename messages :: near_plane_distance_request msg ) ;
         void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
         void send ( typename messages :: rasterize_finalize_reply msg ) ;
         void send ( typename messages :: rasterize_finalize_request msg ) ;
@@ -167,7 +152,6 @@ private :
         void send ( typename messages :: rasterize_triangle msg ) ;
         void send ( typename messages :: rasterize_use_texel msg ) ;
         void send ( typename messages :: rasterize_use_texture msg ) ;
-        void send ( typename messages :: render msg ) ;
         void send ( typename messages :: sound_prepare_permit msg ) ;
         void send ( typename messages :: sound_prepared msg ) ;
         void send ( typename messages :: sound_update msg ) ;
@@ -179,14 +163,8 @@ private :
         void send ( typename messages :: touch_prepared msg ) ;
         void send ( typename messages :: touch_render msg ) ;
         void send ( typename messages :: touch_update msg ) ;
-        void send ( typename messages :: update msg ) ;
-        void send ( typename messages :: use_ortho_projection_reply msg ) ;
-        void send ( typename messages :: use_ortho_projection_request msg ) ;
-        void send ( typename messages :: use_perspective_projection_reply msg ) ;
-        void send ( typename messages :: use_perspective_projection_request msg ) ;
         void send ( typename messages :: use_text_texture_reply msg ) ;
         void send ( typename messages :: use_text_texture_request msg ) ;
-        void send ( typename messages :: video_mode_changed msg ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -399,46 +377,6 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: done msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: near_plane_distance_request msg )
-{
-    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: near_plane_distance_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: init msg )
-{
-    _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: sound_prepare_permit msg )
 {
     _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
@@ -493,12 +431,6 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: ra
 }
 
 template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: render msg )
-{
-    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_render msg )
 {
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
@@ -508,12 +440,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: sound_prepared msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: update msg )
-{
-    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
@@ -556,37 +482,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_prepared msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: video_mode_changed msg )
-{
-    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_perspective_projection_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_perspective_projection_request msg )
-{
-    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_ortho_projection_request msg )
-{
-    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_ortho_projection_reply msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator_types >
