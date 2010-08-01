@@ -47,20 +47,6 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
 
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless engine_rasterizer_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless logic_application_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless logic_camera_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless logic_core_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless logic_entities_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless logic_fidget_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless logic_game_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless logic_image_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless logic_land_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless logic_sound_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless logic_title_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch_stateless logic_touch_stateless ;
-
 	typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless :: engine_rasterizer_messages engine_rasterizer_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_messages logic_application_messages ;
@@ -180,56 +166,30 @@ public :
     void platform_obj ( typename platform_pointer :: template pointer < const platform > & result ) ;
     void register_modules
         ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
-        , typename platform_pointer :: template pointer < engine_rasterizer_stateless > arg_engine_rasterizer_stateless
         , typename platform_pointer :: template pointer < engine_render > arg_engine_render
         , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
         , typename platform_pointer :: template pointer < logic_application > arg_logic_application
-        , typename platform_pointer :: template pointer < logic_application_stateless > arg_logic_application_stateless
         , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
-        , typename platform_pointer :: template pointer < logic_camera_stateless > arg_logic_camera_stateless
         , typename platform_pointer :: template pointer < logic_core > arg_logic_core
-        , typename platform_pointer :: template pointer < logic_core_stateless > arg_logic_core_stateless
         , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
-        , typename platform_pointer :: template pointer < logic_entities_stateless > arg_logic_entities_stateless
         , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
-        , typename platform_pointer :: template pointer < logic_fidget_stateless > arg_logic_fidget_stateless
         , typename platform_pointer :: template pointer < logic_game > arg_logic_game
-        , typename platform_pointer :: template pointer < logic_game_stateless > arg_logic_game_stateless
         , typename platform_pointer :: template pointer < logic_image > arg_logic_image
-        , typename platform_pointer :: template pointer < logic_image_stateless > arg_logic_image_stateless
         , typename platform_pointer :: template pointer < logic_land > arg_logic_land
-        , typename platform_pointer :: template pointer < logic_land_stateless > arg_logic_land_stateless
         , typename platform_pointer :: template pointer < logic_main_menu > arg_logic_main_menu
         , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
-        , typename platform_pointer :: template pointer < logic_main_menu_stateless > arg_logic_main_menu_stateless
         , typename platform_pointer :: template pointer < logic_main_menu_text_creator > arg_logic_main_menu_text_creator
         , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
-        , typename platform_pointer :: template pointer < logic_sound_stateless > arg_logic_sound_stateless
         , typename platform_pointer :: template pointer < logic_text > arg_logic_text
         , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
         , typename platform_pointer :: template pointer < logic_title > arg_logic_title
-        , typename platform_pointer :: template pointer < logic_title_stateless > arg_logic_title_stateless
         , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
-        , typename platform_pointer :: template pointer < logic_touch_stateless > arg_logic_touch_stateless
         ) ;
     template < typename message_type >
     void send ( message_type msg ) ;
 private :
-    typename platform_pointer :: template pointer < engine_rasterizer_stateless > _engine_rasterizer_stateless ;
     typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
-    typename platform_pointer :: template pointer < logic_application_stateless > _logic_application_stateless ;
-    typename platform_pointer :: template pointer < logic_camera_stateless > _logic_camera_stateless ;
-    typename platform_pointer :: template pointer < logic_core_stateless > _logic_core_stateless ;
-    typename platform_pointer :: template pointer < logic_entities_stateless > _logic_entities_stateless ;
-    typename platform_pointer :: template pointer < logic_fidget_stateless > _logic_fidget_stateless ;
-    typename platform_pointer :: template pointer < logic_game_stateless > _logic_game_stateless ;
-    typename platform_pointer :: template pointer < logic_image_stateless > _logic_image_stateless ;
-    typename platform_pointer :: template pointer < logic_land_stateless > _logic_land_stateless ;
-    typename platform_pointer :: template pointer < logic_main_menu_stateless > _logic_main_menu_stateless ;
-    typename platform_pointer :: template pointer < logic_sound_stateless > _logic_sound_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
-    typename platform_pointer :: template pointer < logic_title_stateless > _logic_title_stateless ;
-    typename platform_pointer :: template pointer < logic_touch_stateless > _logic_touch_stateless ;
     typename platform_pointer :: template pointer < const platform > _platform ;
     receivers _receivers ;
     sender _sender ;
@@ -264,54 +224,28 @@ shy_mediator < mediator_types > :: shy_mediator ( typename platform_pointer :: t
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: register_modules
     ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
-    , typename platform_pointer :: template pointer < engine_rasterizer_stateless > arg_engine_rasterizer_stateless
     , typename platform_pointer :: template pointer < engine_render > arg_engine_render
     , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
-    , typename platform_pointer :: template pointer < logic_application_stateless > arg_logic_application_stateless
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
-    , typename platform_pointer :: template pointer < logic_camera_stateless > arg_logic_camera_stateless
     , typename platform_pointer :: template pointer < logic_core > arg_logic_core
-    , typename platform_pointer :: template pointer < logic_core_stateless > arg_logic_core_stateless
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
-    , typename platform_pointer :: template pointer < logic_entities_stateless > arg_logic_entities_stateless
     , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
-    , typename platform_pointer :: template pointer < logic_fidget_stateless > arg_logic_fidget_stateless
     , typename platform_pointer :: template pointer < logic_game > arg_logic_game
-    , typename platform_pointer :: template pointer < logic_game_stateless > arg_logic_game_stateless
     , typename platform_pointer :: template pointer < logic_image > arg_logic_image
-    , typename platform_pointer :: template pointer < logic_image_stateless > arg_logic_image_stateless
     , typename platform_pointer :: template pointer < logic_land > arg_logic_land
-    , typename platform_pointer :: template pointer < logic_land_stateless > arg_logic_land_stateless
     , typename platform_pointer :: template pointer < logic_main_menu > arg_logic_main_menu
     , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
-    , typename platform_pointer :: template pointer < logic_main_menu_stateless > arg_logic_main_menu_stateless
     , typename platform_pointer :: template pointer < logic_main_menu_text_creator > arg_logic_main_menu_text_creator
     , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
-    , typename platform_pointer :: template pointer < logic_sound_stateless > arg_logic_sound_stateless
     , typename platform_pointer :: template pointer < logic_text > arg_logic_text
     , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
     , typename platform_pointer :: template pointer < logic_title > arg_logic_title
-    , typename platform_pointer :: template pointer < logic_title_stateless > arg_logic_title_stateless
     , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
-    , typename platform_pointer :: template pointer < logic_touch_stateless > arg_logic_touch_stateless
     )
 {
-    _engine_rasterizer_stateless = arg_engine_rasterizer_stateless ;
     _engine_render_stateless = arg_engine_render_stateless ;
-    _logic_application_stateless = arg_logic_application_stateless ;
-    _logic_camera_stateless = arg_logic_camera_stateless ;
-    _logic_core_stateless = arg_logic_core_stateless ;
-    _logic_entities_stateless = arg_logic_entities_stateless ;
-    _logic_fidget_stateless = arg_logic_fidget_stateless ;
-    _logic_game_stateless = arg_logic_game_stateless ;
-    _logic_image_stateless = arg_logic_image_stateless ;
-    _logic_land_stateless = arg_logic_land_stateless ;
-    _logic_main_menu_stateless = arg_logic_main_menu_stateless ;
-    _logic_sound_stateless = arg_logic_sound_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
-    _logic_title_stateless = arg_logic_title_stateless ;
-    _logic_touch_stateless = arg_logic_touch_stateless ;
     
     _receivers . engine_rasterizer = arg_engine_rasterizer ;
     _receivers . engine_render = arg_engine_render ;

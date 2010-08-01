@@ -219,38 +219,27 @@ public :
 private :
     mediator_type _mediator ;
     scheduler _scheduler ;
-    typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > _engine_rasterizer ;
-    typename aggregator_types :: engine_rasterizer_stateless _engine_rasterizer_stateless ;
-    typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > _engine_render ;
+
     typename aggregator_types :: engine_render_stateless _engine_render_stateless ;
+    typename aggregator_types :: logic_text_stateless _logic_text_stateless ;
+
+    typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > _engine_rasterizer ;
+    typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > _engine_render ;
     typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > _logic_application ;
-    typename aggregator_types :: logic_application_stateless _logic_application_stateless ;
     typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > _logic_camera ;
-    typename aggregator_types :: logic_camera_stateless _logic_camera_stateless ;
     typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > _logic_core ;
-    typename aggregator_types :: logic_core_stateless _logic_core_stateless ;
     typename aggregator_types :: scheduled_logic_entities :: template scheduled_module < mediator_type > _logic_entities ;
-    typename aggregator_types :: logic_entities_stateless _logic_entities_stateless ;
     typename aggregator_types :: scheduled_logic_fidget :: template scheduled_module < mediator_type > _logic_fidget ;
-    typename aggregator_types :: logic_fidget_stateless _logic_fidget_stateless ;
     typename aggregator_types :: scheduled_logic_game :: template scheduled_module < mediator_type > _logic_game ;
-    typename aggregator_types :: logic_game_stateless _logic_game_stateless ;
     typename aggregator_types :: scheduled_logic_image :: template scheduled_module < mediator_type > _logic_image ;
-    typename aggregator_types :: logic_image_stateless _logic_image_stateless ;
     typename aggregator_types :: scheduled_logic_land :: template scheduled_module < mediator_type > _logic_land ;
-    typename aggregator_types :: logic_land_stateless _logic_land_stateless ;
     typename aggregator_types :: scheduled_logic_main_menu :: template scheduled_module < mediator_type > _logic_main_menu ;
     typename aggregator_types :: scheduled_logic_main_menu_letters_storage :: template scheduled_module < mediator_type > _logic_main_menu_letters_storage ;
-    typename aggregator_types :: logic_main_menu_stateless _logic_main_menu_stateless ;
     typename aggregator_types :: scheduled_logic_main_menu_text_creator :: template scheduled_module < mediator_type > _logic_main_menu_text_creator ;
     typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > _logic_sound ;
-    typename aggregator_types :: logic_sound_stateless _logic_sound_stateless ;
     typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > _logic_text ;
-    typename aggregator_types :: logic_text_stateless _logic_text_stateless ;
     typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > _logic_title ;
-    typename aggregator_types :: logic_title_stateless _logic_title_stateless ;
     typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > _logic_touch ;
-    typename aggregator_types :: logic_touch_stateless _logic_touch_stateless ;
 } ;
 
 template < typename aggregator_types >
@@ -276,37 +265,24 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( _logic_touch , _scheduler ) ;
     _mediator . register_modules
         ( _engine_rasterizer
-        , _engine_rasterizer_stateless
         , _engine_render
         , _engine_render_stateless
         , _logic_application
-        , _logic_application_stateless
         , _logic_camera
-        , _logic_camera_stateless
         , _logic_core
-        , _logic_core_stateless
         , _logic_entities
-        , _logic_entities_stateless
         , _logic_fidget
-        , _logic_fidget_stateless
         , _logic_game
-        , _logic_game_stateless
         , _logic_image
-        , _logic_image_stateless
         , _logic_land
-        , _logic_land_stateless
         , _logic_main_menu
         , _logic_main_menu_letters_storage
-        , _logic_main_menu_stateless
         , _logic_main_menu_text_creator
         , _logic_sound
-        , _logic_sound_stateless
         , _logic_text
         , _logic_text_stateless
         , _logic_title
-        , _logic_title_stateless
         , _logic_touch
-        , _logic_touch_stateless
         ) ;
 }
 
