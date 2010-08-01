@@ -17,7 +17,7 @@
 #include "logic/application/stateless.hpp"
 #include "logic/camera/camera.hpp"
 #include "logic/camera/stateless.hpp"
-#include "logic/core.hpp"
+#include "logic/core/core.hpp"
 #include "logic/entities/entities.hpp"
 #include "logic/entities/stateless.hpp"
 #include "logic/fidget/fidget.hpp"
