@@ -39,7 +39,7 @@
 #include "logic/text/text.hpp"
 #include "logic/title/stateless.hpp"
 #include "logic/title/title.hpp"
-#include "logic/touch.hpp"
+#include "logic/touch/touch.hpp"
 #include "mediator.hpp"
 
 template < typename platform >
