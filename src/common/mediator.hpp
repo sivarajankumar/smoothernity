@@ -19,36 +19,6 @@ public :
 private :
     class receivers ;
 
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless engine_rasterizer_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless logic_application_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless logic_camera_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core logic_core ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless logic_core_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless logic_entities_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget logic_fidget ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless logic_fidget_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_game logic_game ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless logic_game_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_image logic_image ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless logic_image_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless logic_land_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu logic_main_menu ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_text_creator logic_main_menu_text_creator ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless logic_sound_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless logic_title_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch_stateless logic_touch_stateless ;
     typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator_types :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator_types :: platform :: platform_matrix :: matrix_data matrix_data ;
@@ -59,7 +29,39 @@ private :
     typedef typename mediator_types :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
 
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless :: engine_rasterizer_messages engine_rasterizer_messages ;
+	typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core logic_core ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget logic_fidget ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_game logic_game ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_image logic_image ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land logic_land ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu logic_main_menu ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_text_creator logic_main_menu_text_creator ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
+
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless engine_rasterizer_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless logic_application_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless logic_camera_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless logic_core_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless logic_entities_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless logic_fidget_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless logic_game_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless logic_image_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless logic_land_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless logic_sound_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless logic_title_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch_stateless logic_touch_stateless ;
+
+	typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless :: engine_rasterizer_messages engine_rasterizer_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_messages logic_application_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: logic_camera_messages logic_camera_messages ;
@@ -109,14 +111,6 @@ public :
 	, public logic_title_messages
 	, public logic_touch_messages
     {
-    public :
-        class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
-        class rasterize_finalize_reply { } ;
-        class rasterize_finalize_request { } ;
-        class rasterize_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
-        class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
-        class rasterize_use_texel { public : texel_data texel ; } ;
-        class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
     } ;
 
 private :
@@ -154,17 +148,7 @@ private :
 		using logic_title_sender :: send ;
 		using logic_touch_sender :: send ;
         
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-  
-        void send ( typename messages :: rasterize_ellipse_in_rect msg ) ;
-        void send ( typename messages :: rasterize_finalize_reply msg ) ;
-        void send ( typename messages :: rasterize_finalize_request msg ) ;
-        void send ( typename messages :: rasterize_rect msg ) ;
-        void send ( typename messages :: rasterize_triangle msg ) ;
-        void send ( typename messages :: rasterize_use_texel msg ) ;
-        void send ( typename messages :: rasterize_use_texture msg ) ;
-    private :
-        typename platform_pointer :: template pointer < const receivers > _receivers ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;  
     } ;
 
     class receivers
@@ -250,6 +234,26 @@ private :
     receivers _receivers ;
     sender _sender ;
 } ;
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
+{
+    engine_rasterizer_sender :: set_receivers ( arg_receivers ) ;
+    engine_render_sender :: set_receivers ( arg_receivers ) ;
+    logic_application_sender :: set_receivers ( arg_receivers ) ;
+    logic_camera_sender :: set_receivers ( arg_receivers ) ;
+    logic_core_sender :: set_receivers ( arg_receivers ) ;
+    logic_entities_sender :: set_receivers ( arg_receivers ) ;
+    logic_fidget_sender :: set_receivers ( arg_receivers ) ;
+    logic_game_sender :: set_receivers ( arg_receivers ) ;
+    logic_image_sender :: set_receivers ( arg_receivers ) ;
+    logic_land_sender :: set_receivers ( arg_receivers ) ;
+    logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
+    logic_sound_sender :: set_receivers ( arg_receivers ) ;
+    logic_text_sender :: set_receivers ( arg_receivers ) ;
+    logic_title_sender :: set_receivers ( arg_receivers ) ;
+    logic_touch_sender :: set_receivers ( arg_receivers ) ;
+}
 
 template < typename mediator_types >
 shy_mediator < mediator_types > :: shy_mediator ( typename platform_pointer :: template pointer < const platform > arg_platform )
@@ -372,67 +376,3 @@ void shy_mediator < mediator_types > :: send ( message_type msg )
 {
     _sender . send ( msg ) ;
 }
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
-{
-    _receivers = arg_receivers ;
-    engine_rasterizer_sender :: set_receivers ( arg_receivers ) ;
-    engine_render_sender :: set_receivers ( arg_receivers ) ;
-    logic_application_sender :: set_receivers ( arg_receivers ) ;
-    logic_camera_sender :: set_receivers ( arg_receivers ) ;
-    logic_core_sender :: set_receivers ( arg_receivers ) ;
-    logic_entities_sender :: set_receivers ( arg_receivers ) ;
-    logic_fidget_sender :: set_receivers ( arg_receivers ) ;
-    logic_game_sender :: set_receivers ( arg_receivers ) ;
-    logic_image_sender :: set_receivers ( arg_receivers ) ;
-    logic_land_sender :: set_receivers ( arg_receivers ) ;
-    logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
-    logic_sound_sender :: set_receivers ( arg_receivers ) ;
-    logic_text_sender :: set_receivers ( arg_receivers ) ;
-    logic_title_sender :: set_receivers ( arg_receivers ) ;
-    logic_touch_sender :: set_receivers ( arg_receivers ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: rasterize_use_texel msg )
-{
-    _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: rasterize_ellipse_in_rect msg )
-{
-    _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: rasterize_finalize_reply msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: rasterize_finalize_request msg )
-{
-    _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: rasterize_rect msg )
-{
-    _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: rasterize_use_texture msg )
-{
-    _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: rasterize_triangle msg )
-{
-    _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
-}
-
