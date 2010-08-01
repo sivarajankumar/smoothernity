@@ -10,7 +10,7 @@
 #include "aggregator.hpp"
 #include "engine/camera.hpp"
 #include "engine/math.hpp"
-#include "engine/rasterizer.hpp"
+#include "engine/rasterizer/rasterizer.hpp"
 #include "engine/render/render.hpp"
 #include "engine/render/stateless.hpp"
 #include "logic/application/application.hpp"
