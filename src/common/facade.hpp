@@ -11,6 +11,7 @@
 #include "engine/camera.hpp"
 #include "engine/math.hpp"
 #include "engine/rasterizer/rasterizer.hpp"
+#include "engine/rasterizer/stateless.hpp"
 #include "engine/render/render.hpp"
 #include "engine/render/stateless.hpp"
 #include "logic/application/application.hpp"
@@ -60,6 +61,7 @@ private :
         , shy_engine_camera
         , shy_engine_math
         , shy_engine_rasterizer
+        , shy_engine_rasterizer_stateless
         , shy_engine_render
         , shy_engine_render_stateless
         , shy_logic_application

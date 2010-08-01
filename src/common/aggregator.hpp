@@ -3,6 +3,7 @@ template
     , template < typename mediator > class _engine_camera
     , template < typename mediator > class _engine_math
     , template < typename mediator > class _engine_rasterizer
+    , template < typename mediator > class _engine_rasterizer_stateless
     , template < typename mediator > class _engine_render
     , template < typename mediator > class _engine_render_stateless
     , template < typename mediator > class _logic_application
@@ -45,6 +46,7 @@ public :
         typedef _engine_camera < mediator > engine_camera ;
         typedef _engine_math < mediator > engine_math ;
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
+        typedef _engine_rasterizer_stateless < mediator > engine_rasterizer_stateless ;
         typedef _engine_render < mediator > engine_render ;
         typedef _engine_render_stateless < mediator > engine_render_stateless ;
         typedef _logic_application < mediator > logic_application ;
@@ -84,6 +86,7 @@ template
     , template < typename _mediator > class _engine_camera
     , template < typename _mediator > class _engine_math
     , template < typename _mediator > class _engine_rasterizer
+    , template < typename _mediator > class _engine_rasterizer_stateless
     , template < typename _mediator > class _engine_render
     , template < typename _mediator > class _engine_render_stateless
     , template < typename _mediator > class _logic_application
@@ -143,6 +146,7 @@ public :
         , _engine_camera
         , _engine_math
         , scheduled_engine_rasterizer :: template scheduled_module
+        , _engine_rasterizer_stateless
         , scheduled_engine_render :: template scheduled_module
         , _engine_render_stateless
         , scheduled_logic_application :: template scheduled_module
@@ -179,6 +183,7 @@ public :
     
     typedef _engine_camera < mediator_type > engine_camera ;
     typedef _engine_math < mediator_type > engine_math ;
+    typedef _engine_rasterizer_stateless < mediator_type > engine_rasterizer_stateless ;
     typedef _engine_render_stateless < mediator_type > engine_render_stateless ;
     typedef _logic_application_stateless < mediator_type > logic_application_stateless ;
     typedef _logic_camera_stateless < mediator_type > logic_camera_stateless ;
@@ -215,6 +220,7 @@ private :
     mediator_type _mediator ;
     scheduler _scheduler ;
     typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > _engine_rasterizer ;
+    typename aggregator_types :: engine_rasterizer_stateless _engine_rasterizer_stateless ;
     typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > _engine_render ;
     typename aggregator_types :: engine_render_stateless _engine_render_stateless ;
     typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > _logic_application ;
@@ -270,6 +276,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( _logic_touch , _scheduler ) ;
     _mediator . register_modules
         ( _engine_rasterizer
+        , _engine_rasterizer_stateless
         , _engine_render
         , _engine_render_stateless
         , _logic_application

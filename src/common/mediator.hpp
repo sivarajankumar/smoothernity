@@ -20,6 +20,7 @@ private :
     class receivers ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless engine_rasterizer_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless logic_application_stateless ;
@@ -58,6 +59,7 @@ private :
     typedef typename mediator_types :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
 
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless :: engine_rasterizer_messages engine_rasterizer_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_messages logic_application_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: logic_camera_messages logic_camera_messages ;
@@ -73,6 +75,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless :: logic_title_messages logic_title_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch_stateless :: logic_touch_messages logic_touch_messages ;
 
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer_stateless :: template engine_rasterizer_sender < receivers > engine_rasterizer_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: template engine_render_sender < receivers > engine_render_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: template logic_application_sender < receivers > logic_application_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: template logic_camera_sender < receivers > logic_camera_sender ;
@@ -90,7 +93,8 @@ private :
     
 public :
     class messages
-    : public engine_render_messages
+    : public engine_rasterizer_messages
+    , public engine_render_messages
     , public logic_application_messages
     , public logic_camera_messages
     , public logic_core_messages
@@ -117,7 +121,8 @@ public :
 
 private :
     class sender
-    : public engine_render_sender
+    : public engine_rasterizer_sender
+    , public engine_render_sender
     , public logic_application_sender
     , public logic_camera_sender
     , public logic_core_sender
@@ -133,6 +138,7 @@ private :
 	, public logic_touch_sender
     {
     public :    
+        using engine_rasterizer_sender :: send ;
         using engine_render_sender :: send ;
         using logic_application_sender :: send ;
         using logic_camera_sender :: send ;
@@ -190,6 +196,7 @@ public :
     void platform_obj ( typename platform_pointer :: template pointer < const platform > & result ) ;
     void register_modules
         ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
+        , typename platform_pointer :: template pointer < engine_rasterizer_stateless > arg_engine_rasterizer_stateless
         , typename platform_pointer :: template pointer < engine_render > arg_engine_render
         , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
         , typename platform_pointer :: template pointer < logic_application > arg_logic_application
@@ -224,6 +231,7 @@ public :
     template < typename message_type >
     void send ( message_type msg ) ;
 private :
+    typename platform_pointer :: template pointer < engine_rasterizer_stateless > _engine_rasterizer_stateless ;
     typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
     typename platform_pointer :: template pointer < logic_application_stateless > _logic_application_stateless ;
     typename platform_pointer :: template pointer < logic_camera_stateless > _logic_camera_stateless ;
@@ -252,6 +260,7 @@ shy_mediator < mediator_types > :: shy_mediator ( typename platform_pointer :: t
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: register_modules
     ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
+    , typename platform_pointer :: template pointer < engine_rasterizer_stateless > arg_engine_rasterizer_stateless
     , typename platform_pointer :: template pointer < engine_render > arg_engine_render
     , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
@@ -284,6 +293,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_touch_stateless > arg_logic_touch_stateless
     )
 {
+    _engine_rasterizer_stateless = arg_engine_rasterizer_stateless ;
     _engine_render_stateless = arg_engine_render_stateless ;
     _logic_application_stateless = arg_logic_application_stateless ;
     _logic_camera_stateless = arg_logic_camera_stateless ;
@@ -367,6 +377,7 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
 {
     _receivers = arg_receivers ;
+    engine_rasterizer_sender :: set_receivers ( arg_receivers ) ;
     engine_render_sender :: set_receivers ( arg_receivers ) ;
     logic_application_sender :: set_receivers ( arg_receivers ) ;
     logic_camera_sender :: set_receivers ( arg_receivers ) ;
