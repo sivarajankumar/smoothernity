@@ -26,6 +26,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless logic_camera_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_core logic_core ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless logic_core_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless logic_entities_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget logic_fidget ;
@@ -57,6 +58,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_messages logic_application_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: logic_camera_messages logic_camera_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless :: logic_core_messages logic_core_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless :: logic_entities_messages logic_entities_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: logic_fidget_messages logic_fidget_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: logic_game_messages logic_game_messages ;
@@ -68,6 +70,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: template engine_render_sender < receivers > engine_render_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: template logic_application_sender < receivers > logic_application_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: template logic_camera_sender < receivers > logic_camera_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless :: template logic_core_sender < receivers > logic_core_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless :: template logic_entities_sender < receivers > logic_entities_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: template logic_fidget_sender < receivers > logic_fidget_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: template logic_game_sender < receivers > logic_game_sender ;
@@ -81,6 +84,7 @@ public :
     : public engine_render_messages
     , public logic_application_messages
     , public logic_camera_messages
+    , public logic_core_messages
     , public logic_entities_messages
     , public logic_fidget_messages
     , public logic_game_messages
@@ -128,6 +132,7 @@ private :
     : public engine_render_sender
     , public logic_application_sender
     , public logic_camera_sender
+    , public logic_core_sender
     , public logic_entities_sender
     , public logic_fidget_sender
     , public logic_game_sender
@@ -140,6 +145,7 @@ private :
         using engine_render_sender :: send ;
         using logic_application_sender :: send ;
         using logic_camera_sender :: send ;
+        using logic_core_sender :: send ;
         using logic_entities_sender :: send ;
         using logic_fidget_sender :: send ;
         using logic_game_sender :: send ;
@@ -221,6 +227,7 @@ public :
         , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
         , typename platform_pointer :: template pointer < logic_camera_stateless > arg_logic_camera_stateless
         , typename platform_pointer :: template pointer < logic_core > arg_logic_core
+        , typename platform_pointer :: template pointer < logic_core_stateless > arg_logic_core_stateless
         , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
         , typename platform_pointer :: template pointer < logic_entities_stateless > arg_logic_entities_stateless
         , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
@@ -247,6 +254,7 @@ private :
     typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
     typename platform_pointer :: template pointer < logic_application_stateless > _logic_application_stateless ;
     typename platform_pointer :: template pointer < logic_camera_stateless > _logic_camera_stateless ;
+    typename platform_pointer :: template pointer < logic_core_stateless > _logic_core_stateless ;
     typename platform_pointer :: template pointer < logic_entities_stateless > _logic_entities_stateless ;
     typename platform_pointer :: template pointer < logic_fidget_stateless > _logic_fidget_stateless ;
     typename platform_pointer :: template pointer < logic_game_stateless > _logic_game_stateless ;
@@ -275,6 +283,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
     , typename platform_pointer :: template pointer < logic_camera_stateless > arg_logic_camera_stateless
     , typename platform_pointer :: template pointer < logic_core > arg_logic_core
+    , typename platform_pointer :: template pointer < logic_core_stateless > arg_logic_core_stateless
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
     , typename platform_pointer :: template pointer < logic_entities_stateless > arg_logic_entities_stateless
     , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
@@ -299,6 +308,7 @@ void shy_mediator < mediator_types > :: register_modules
     _engine_render_stateless = arg_engine_render_stateless ;
     _logic_application_stateless = arg_logic_application_stateless ;
     _logic_camera_stateless = arg_logic_camera_stateless ;
+    _logic_core_stateless = arg_logic_core_stateless ;
     _logic_entities_stateless = arg_logic_entities_stateless ;
     _logic_fidget_stateless = arg_logic_fidget_stateless ;
     _logic_game_stateless = arg_logic_game_stateless ;
@@ -378,6 +388,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     engine_render_sender :: set_receivers ( arg_receivers ) ;
     logic_application_sender :: set_receivers ( arg_receivers ) ;
     logic_camera_sender :: set_receivers ( arg_receivers ) ;
+    logic_core_sender :: set_receivers ( arg_receivers ) ;
     logic_entities_sender :: set_receivers ( arg_receivers ) ;
     logic_fidget_sender :: set_receivers ( arg_receivers ) ;
     logic_game_sender :: set_receivers ( arg_receivers ) ;

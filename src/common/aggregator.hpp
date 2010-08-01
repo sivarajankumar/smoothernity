@@ -10,6 +10,7 @@ template
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_camera_stateless
     , template < typename mediator > class _logic_core
+    , template < typename mediator > class _logic_core_stateless
     , template < typename mediator > class _logic_entities
     , template < typename mediator > class _logic_entities_stateless
     , template < typename mediator > class _logic_fidget
@@ -48,6 +49,7 @@ public :
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_camera_stateless < mediator > logic_camera_stateless ;
         typedef _logic_core < mediator > logic_core ;
+        typedef _logic_core_stateless < mediator > logic_core_stateless ;
         typedef _logic_entities < mediator > logic_entities ;
         typedef _logic_entities_stateless < mediator > logic_entities_stateless ;
         typedef _logic_fidget < mediator > logic_fidget ;
@@ -83,6 +85,7 @@ template
     , template < typename _mediator > class _logic_camera
     , template < typename _mediator > class _logic_camera_stateless
     , template < typename _mediator > class _logic_core
+    , template < typename _mediator > class _logic_core_stateless
     , template < typename _mediator > class _logic_entities
     , template < typename _mediator > class _logic_entities_stateless
     , template < typename _mediator > class _logic_fidget
@@ -138,6 +141,7 @@ public :
         , scheduled_logic_camera :: template scheduled_module
         , _logic_camera_stateless
         , scheduled_logic_core :: template scheduled_module
+        , _logic_core_stateless
         , scheduled_logic_entities :: template scheduled_module
         , _logic_entities_stateless
         , scheduled_logic_fidget :: template scheduled_module
@@ -166,6 +170,7 @@ public :
     typedef _engine_render_stateless < mediator_type > engine_render_stateless ;
     typedef _logic_application_stateless < mediator_type > logic_application_stateless ;
     typedef _logic_camera_stateless < mediator_type > logic_camera_stateless ;
+    typedef _logic_core_stateless < mediator_type > logic_core_stateless ;
     typedef _logic_entities_stateless < mediator_type > logic_entities_stateless ;
     typedef _logic_fidget_stateless < mediator_type > logic_fidget_stateless ;
     typedef _logic_game_stateless < mediator_type > logic_game_stateless ;
@@ -202,6 +207,7 @@ private :
     typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > _logic_camera ;
     typename aggregator_types :: logic_camera_stateless _logic_camera_stateless ;
     typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > _logic_core ;
+    typename aggregator_types :: logic_core_stateless _logic_core_stateless ;
     typename aggregator_types :: scheduled_logic_entities :: template scheduled_module < mediator_type > _logic_entities ;
     typename aggregator_types :: logic_entities_stateless _logic_entities_stateless ;
     typename aggregator_types :: scheduled_logic_fidget :: template scheduled_module < mediator_type > _logic_fidget ;
@@ -253,6 +259,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_camera
         , _logic_camera_stateless
         , _logic_core
+        , _logic_core_stateless
         , _logic_entities
         , _logic_entities_stateless
         , _logic_fidget
