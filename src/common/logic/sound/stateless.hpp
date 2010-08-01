@@ -6,6 +6,9 @@ public :
     class logic_sound_messages
     {
     public :
+        class sound_prepare_permit { } ;
+        class sound_prepared { } ;
+        class sound_update { } ;
     } ;
 
     template < typename receivers >

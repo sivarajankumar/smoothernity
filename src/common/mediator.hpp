@@ -105,9 +105,6 @@ public :
         class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
-        class sound_prepare_permit { } ;
-        class sound_prepared { } ;
-        class sound_update { } ;
         class title_finished { } ;
         class title_launch_permit { } ;
         class title_render { } ;
