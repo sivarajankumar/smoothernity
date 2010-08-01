@@ -32,6 +32,7 @@ template
     , template < typename mediator > class _logic_title
     , template < typename mediator > class _logic_title_stateless
     , template < typename mediator > class _logic_touch
+    , template < typename mediator > class _logic_touch_stateless
     >
 class mediator_types
 {
@@ -73,6 +74,7 @@ public :
         typedef _logic_title < mediator > logic_title ;
         typedef _logic_title_stateless < mediator > logic_title_stateless ;
         typedef _logic_touch < mediator > logic_touch ;
+        typedef _logic_touch_stateless < mediator > logic_touch_stateless ;
     } ;
 } ;
 
@@ -111,6 +113,7 @@ template
     , template < typename _mediator > class _logic_title
     , template < typename _mediator > class _logic_title_stateless
     , template < typename _mediator > class _logic_touch
+    , template < typename _mediator > class _logic_touch_stateless
     >
 class shy_aggregator_types
 {
@@ -169,6 +172,7 @@ public :
         , scheduled_logic_title :: template scheduled_module
         , _logic_title_stateless
         , scheduled_logic_touch :: template scheduled_module
+        , _logic_touch_stateless
         > >
         mediator_type ;
     typedef typename mediator_type :: messages messages ;
@@ -188,6 +192,7 @@ public :
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
     typedef _logic_title_stateless < mediator_type > logic_title_stateless ;
+    typedef _logic_touch_stateless < mediator_type > logic_touch_stateless ;
 } ;
 
 template < typename aggregator_types >
@@ -239,6 +244,7 @@ private :
     typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > _logic_title ;
     typename aggregator_types :: logic_title_stateless _logic_title_stateless ;
     typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > _logic_touch ;
+    typename aggregator_types :: logic_touch_stateless _logic_touch_stateless ;
 } ;
 
 template < typename aggregator_types >
@@ -293,6 +299,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_title
         , _logic_title_stateless
         , _logic_touch
+        , _logic_touch_stateless
         ) ;
 }
 

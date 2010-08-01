@@ -47,6 +47,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless logic_title_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch_stateless logic_touch_stateless ;
     typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator_types :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator_types :: platform :: platform_matrix :: matrix_data matrix_data ;
@@ -70,6 +71,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: logic_sound_messages logic_sound_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless :: logic_title_messages logic_title_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch_stateless :: logic_touch_messages logic_touch_messages ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: template engine_render_sender < receivers > engine_render_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: template logic_application_sender < receivers > logic_application_sender ;
@@ -84,6 +86,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: template logic_sound_sender < receivers > logic_sound_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless :: template logic_title_sender < receivers > logic_title_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch_stateless :: template logic_touch_sender < receivers > logic_touch_sender ;
     
 public :
     class messages
@@ -100,6 +103,7 @@ public :
     , public logic_sound_messages
     , public logic_text_messages
 	, public logic_title_messages
+	, public logic_touch_messages
     {
     public :
         class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
@@ -109,10 +113,6 @@ public :
         class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
         class rasterize_use_texel { public : texel_data texel ; } ;
         class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
-        class touch_prepare_permit { } ;
-        class touch_prepared { } ;
-        class touch_render { } ;
-        class touch_update { } ;
     } ;
 
 private :
@@ -130,6 +130,7 @@ private :
     , public logic_sound_sender
     , public logic_text_sender
 	, public logic_title_sender
+	, public logic_touch_sender
     {
     public :    
         using engine_render_sender :: send ;
@@ -145,6 +146,7 @@ private :
         using logic_sound_sender :: send ;
         using logic_text_sender :: send ;
 		using logic_title_sender :: send ;
+		using logic_touch_sender :: send ;
         
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
   
@@ -155,10 +157,6 @@ private :
         void send ( typename messages :: rasterize_triangle msg ) ;
         void send ( typename messages :: rasterize_use_texel msg ) ;
         void send ( typename messages :: rasterize_use_texture msg ) ;
-        void send ( typename messages :: touch_prepare_permit msg ) ;
-        void send ( typename messages :: touch_prepared msg ) ;
-        void send ( typename messages :: touch_render msg ) ;
-        void send ( typename messages :: touch_update msg ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -221,6 +219,7 @@ public :
         , typename platform_pointer :: template pointer < logic_title > arg_logic_title
         , typename platform_pointer :: template pointer < logic_title_stateless > arg_logic_title_stateless
         , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
+        , typename platform_pointer :: template pointer < logic_touch_stateless > arg_logic_touch_stateless
         ) ;
     template < typename message_type >
     void send ( message_type msg ) ;
@@ -238,6 +237,7 @@ private :
     typename platform_pointer :: template pointer < logic_sound_stateless > _logic_sound_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < logic_title_stateless > _logic_title_stateless ;
+    typename platform_pointer :: template pointer < logic_touch_stateless > _logic_touch_stateless ;
     typename platform_pointer :: template pointer < const platform > _platform ;
     receivers _receivers ;
     sender _sender ;
@@ -281,6 +281,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_title > arg_logic_title
     , typename platform_pointer :: template pointer < logic_title_stateless > arg_logic_title_stateless
     , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
+    , typename platform_pointer :: template pointer < logic_touch_stateless > arg_logic_touch_stateless
     )
 {
     _engine_render_stateless = arg_engine_render_stateless ;
@@ -296,6 +297,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_sound_stateless = arg_logic_sound_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
     _logic_title_stateless = arg_logic_title_stateless ;
+    _logic_touch_stateless = arg_logic_touch_stateless ;
     
     _receivers . engine_rasterizer = arg_engine_rasterizer ;
     _receivers . engine_render = arg_engine_render ;
@@ -378,12 +380,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_sound_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;
     logic_title_sender :: set_receivers ( arg_receivers ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_prepare_permit msg )
-{
-    _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
+    logic_touch_sender :: set_receivers ( arg_receivers ) ;
 }
 
 template < typename mediator_types >
@@ -428,20 +425,3 @@ void shy_mediator < mediator_types > :: sender :: send ( typename messages :: ra
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
 }
 
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_render msg )
-{
-    _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_update msg )
-{
-    _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_prepared msg )
-{
-    _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
