@@ -13,11 +13,11 @@
 #include "engine/rasterizer.hpp"
 #include "engine/render/render.hpp"
 #include "engine/render/stateless.hpp"
-#include "logic/logic.hpp"
 #include "logic/application/application.hpp"
 #include "logic/application/stateless.hpp"
 #include "logic/camera/camera.hpp"
 #include "logic/camera/stateless.hpp"
+#include "logic/core.hpp"
 #include "logic/entities/entities.hpp"
 #include "logic/entities/stateless.hpp"
 #include "logic/fidget/fidget.hpp"
@@ -58,11 +58,11 @@ private :
         , shy_engine_rasterizer
         , shy_engine_render
         , shy_engine_render_stateless
-        , shy_logic 
         , shy_logic_application
         , shy_logic_application_stateless
         , shy_logic_camera
         , shy_logic_camera_stateless
+        , shy_logic_core
         , shy_logic_entities
         , shy_logic_entities_stateless
         , shy_logic_fidget

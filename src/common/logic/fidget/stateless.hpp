@@ -43,7 +43,7 @@ void shy_logic_fidget_stateless < mediator >
 :: logic_fidget_sender < receivers >
 :: send ( typename logic_fidget_messages :: fidget_prepared msg )
 {
-    _receivers . get ( ) . logic . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

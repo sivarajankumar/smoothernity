@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_logic
+class shy_logic_core
 {
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: messages messages ;
@@ -20,7 +20,7 @@ class shy_logic
     } ;
     
 public :
-    shy_logic ( ) ;
+    shy_logic_core ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
     void receive ( typename messages :: render msg ) ;
@@ -32,7 +32,7 @@ public :
     void receive ( typename messages :: near_plane_distance_request msg ) ;
     void receive ( typename messages :: render_aspect_reply msg ) ;
 private :
-    shy_logic < mediator > & operator= ( const shy_logic < mediator > & src ) ;
+    shy_logic_core < mediator > & operator= ( const shy_logic_core < mediator > & src ) ;
     void _init_render ( ) ;
     void _get_near_plane_distance ( num_fract & result ) ;
 private :
@@ -51,31 +51,31 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic < mediator > :: shy_logic ( )
+shy_logic_core < mediator > :: shy_logic_core ( )
 {
 }
 
 template < typename mediator >
-shy_logic < mediator > & shy_logic < mediator > :: operator= ( const shy_logic < mediator > & src )
+shy_logic_core < mediator > & shy_logic_core < mediator > :: operator= ( const shy_logic_core < mediator > & src )
 {
     return * this ;
 }
 
 template < typename mediator >
-shy_logic < mediator > :: _logic_consts_type :: _logic_consts_type ( )
+shy_logic_core < mediator > :: _logic_consts_type :: _logic_consts_type ( )
 {
     platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
     platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+void shy_logic_core < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: init msg )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -89,13 +89,13 @@ void shy_logic < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: render msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: render msg )
 {
     _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: update msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: update msg )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
         _mediator . get ( ) . send ( typename messages :: application_update ( ) ) ;
@@ -105,7 +105,7 @@ void shy_logic < mediator > :: receive ( typename messages :: update msg )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: use_perspective_projection_request msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: use_perspective_projection_request msg )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_true ;
@@ -113,7 +113,7 @@ void shy_logic < mediator > :: receive ( typename messages :: use_perspective_pr
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projection_request msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: use_ortho_projection_request msg )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_true ;
@@ -121,19 +121,19 @@ void shy_logic < mediator > :: receive ( typename messages :: use_ortho_projecti
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: fidget_prepared msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: fidget_prepared msg )
 {
     _fidget_prepared = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: video_mode_changed msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: video_mode_changed msg )
 {
     _init_render ( ) ;
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: near_plane_distance_request msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: near_plane_distance_request msg )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_true ;
@@ -141,7 +141,7 @@ void shy_logic < mediator > :: receive ( typename messages :: near_plane_distanc
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: receive ( typename messages :: render_aspect_reply msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: render_aspect_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
@@ -207,7 +207,7 @@ void shy_logic < mediator > :: receive ( typename messages :: render_aspect_repl
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: _init_render ( )
+void shy_logic_core < mediator > :: _init_render ( )
 {
     _mediator . get ( ) . send ( typename messages :: render_blend_disable ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: render_enable_face_culling ( ) ) ;
@@ -215,7 +215,7 @@ void shy_logic < mediator > :: _init_render ( )
 }
 
 template < typename mediator >
-void shy_logic < mediator > :: _get_near_plane_distance ( num_fract & result )
+void shy_logic_core < mediator > :: _get_near_plane_distance ( num_fract & result )
 {
     platform_math :: add_fracts ( result , _render_aspect_width , _render_aspect_height ) ;
 }

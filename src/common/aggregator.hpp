@@ -5,11 +5,11 @@ template
     , template < typename mediator > class _engine_rasterizer
     , template < typename mediator > class _engine_render
     , template < typename mediator > class _engine_render_stateless
-    , template < typename mediator > class _logic 
     , template < typename mediator > class _logic_application
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_camera_stateless
+    , template < typename mediator > class _logic_core
     , template < typename mediator > class _logic_entities
     , template < typename mediator > class _logic_entities_stateless
     , template < typename mediator > class _logic_fidget
@@ -43,11 +43,11 @@ public :
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
         typedef _engine_render < mediator > engine_render ;
         typedef _engine_render_stateless < mediator > engine_render_stateless ;
-        typedef _logic < mediator > logic ;
         typedef _logic_application < mediator > logic_application ;
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_camera_stateless < mediator > logic_camera_stateless ;
+        typedef _logic_core < mediator > logic_core ;
         typedef _logic_entities < mediator > logic_entities ;
         typedef _logic_entities_stateless < mediator > logic_entities_stateless ;
         typedef _logic_fidget < mediator > logic_fidget ;
@@ -78,11 +78,11 @@ template
     , template < typename _mediator > class _engine_rasterizer
     , template < typename _mediator > class _engine_render
     , template < typename _mediator > class _engine_render_stateless
-    , template < typename _mediator > class _logic 
     , template < typename _mediator > class _logic_application
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_camera
     , template < typename _mediator > class _logic_camera_stateless
+    , template < typename _mediator > class _logic_core
     , template < typename _mediator > class _logic_entities
     , template < typename _mediator > class _logic_entities_stateless
     , template < typename _mediator > class _logic_fidget
@@ -110,9 +110,9 @@ public :
     typedef _platform platform ;
     typedef typename platform_scheduler :: template module_wrapper < _engine_rasterizer , 1000 > scheduled_engine_rasterizer ;
     typedef typename platform_scheduler :: template module_wrapper < _engine_render , 3000 > scheduled_engine_render ;
-    typedef typename platform_scheduler :: template module_wrapper < _logic > scheduled_logic ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_camera > scheduled_logic_camera ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_core > scheduled_logic_core ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_entities > scheduled_logic_entities ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_fidget > scheduled_logic_fidget ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_game > scheduled_logic_game ;
@@ -133,11 +133,11 @@ public :
         , scheduled_engine_rasterizer :: template scheduled_module
         , scheduled_engine_render :: template scheduled_module
         , _engine_render_stateless
-        , scheduled_logic :: template scheduled_module
         , scheduled_logic_application :: template scheduled_module
         , _logic_application_stateless
         , scheduled_logic_camera :: template scheduled_module
         , _logic_camera_stateless
+        , scheduled_logic_core :: template scheduled_module
         , scheduled_logic_entities :: template scheduled_module
         , _logic_entities_stateless
         , scheduled_logic_fidget :: template scheduled_module
@@ -197,11 +197,11 @@ private :
     typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > _engine_rasterizer ;
     typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > _engine_render ;
     typename aggregator_types :: engine_render_stateless _engine_render_stateless ;
-    typename aggregator_types :: scheduled_logic :: template scheduled_module < mediator_type > _logic ;
     typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > _logic_application ;
     typename aggregator_types :: logic_application_stateless _logic_application_stateless ;
     typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > _logic_camera ;
     typename aggregator_types :: logic_camera_stateless _logic_camera_stateless ;
+    typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > _logic_core ;
     typename aggregator_types :: scheduled_logic_entities :: template scheduled_module < mediator_type > _logic_entities ;
     typename aggregator_types :: logic_entities_stateless _logic_entities_stateless ;
     typename aggregator_types :: scheduled_logic_fidget :: template scheduled_module < mediator_type > _logic_fidget ;
@@ -229,9 +229,9 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
 {
     platform_scheduler :: register_module_in_scheduler ( _engine_rasterizer , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _engine_render , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_application , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_camera , _scheduler ) ;
+    platform_scheduler :: register_module_in_scheduler ( _logic_core , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_entities , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_fidget , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_game , _scheduler ) ;
@@ -248,11 +248,11 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         ( _engine_rasterizer
         , _engine_render
         , _engine_render_stateless
-        , _logic
         , _logic_application
         , _logic_application_stateless
         , _logic_camera
         , _logic_camera_stateless
+        , _logic_core
         , _logic_entities
         , _logic_entities_stateless
         , _logic_fidget
