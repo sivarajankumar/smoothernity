@@ -113,8 +113,6 @@ public :
         class touch_prepared { } ;
         class touch_render { } ;
         class touch_update { } ;
-        class use_text_texture_reply { } ;
-        class use_text_texture_request { } ;
     } ;
 
 private :
@@ -163,8 +161,6 @@ private :
         void send ( typename messages :: touch_prepared msg ) ;
         void send ( typename messages :: touch_render msg ) ;
         void send ( typename messages :: touch_update msg ) ;
-        void send ( typename messages :: use_text_texture_reply msg ) ;
-        void send ( typename messages :: use_text_texture_request msg ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -469,16 +465,4 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: sender :: send ( typename messages :: touch_prepared msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_text_texture_request msg )
-{
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: sender :: send ( typename messages :: use_text_texture_reply msg )
-{
-    _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
 }
