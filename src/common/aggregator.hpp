@@ -26,6 +26,7 @@ template
     , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_main_menu_text_creator
     , template < typename mediator > class _logic_sound
+    , template < typename mediator > class _logic_sound_stateless
     , template < typename mediator > class _logic_text
     , template < typename mediator > class _logic_text_stateless
     , template < typename mediator > class _logic_title
@@ -65,6 +66,7 @@ public :
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_main_menu_text_creator < mediator > logic_main_menu_text_creator ;
         typedef _logic_sound < mediator > logic_sound ;
+        typedef _logic_sound_stateless < mediator > logic_sound_stateless ;
         typedef _logic_text < mediator > logic_text ;
         typedef _logic_text_stateless < mediator > logic_text_stateless ;
         typedef _logic_title < mediator > logic_title ;
@@ -101,6 +103,7 @@ template
     , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_main_menu_text_creator
     , template < typename _mediator > class _logic_sound
+    , template < typename _mediator > class _logic_sound_stateless
     , template < typename _mediator > class _logic_text
     , template < typename _mediator > class _logic_text_stateless
     , template < typename _mediator > class _logic_title
@@ -157,6 +160,7 @@ public :
         , _logic_main_menu_stateless
         , scheduled_logic_main_menu_text_creator :: template scheduled_module
         , scheduled_logic_sound :: template scheduled_module
+        , _logic_sound_stateless
         , scheduled_logic_text :: template scheduled_module
         , _logic_text_stateless
         , scheduled_logic_title :: template scheduled_module
@@ -177,6 +181,7 @@ public :
     typedef _logic_image_stateless < mediator_type > logic_image_stateless ;
     typedef _logic_land_stateless < mediator_type > logic_land_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
+    typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
 } ;
 
@@ -223,6 +228,7 @@ private :
     typename aggregator_types :: logic_main_menu_stateless _logic_main_menu_stateless ;
     typename aggregator_types :: scheduled_logic_main_menu_text_creator :: template scheduled_module < mediator_type > _logic_main_menu_text_creator ;
     typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > _logic_sound ;
+    typename aggregator_types :: logic_sound_stateless _logic_sound_stateless ;
     typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > _logic_text ;
     typename aggregator_types :: logic_text_stateless _logic_text_stateless ;
     typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > _logic_title ;
@@ -275,6 +281,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_main_menu_stateless
         , _logic_main_menu_text_creator
         , _logic_sound
+        , _logic_sound_stateless
         , _logic_text
         , _logic_text_stateless
         , _logic_title

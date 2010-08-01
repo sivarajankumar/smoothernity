@@ -34,6 +34,7 @@
 #include "logic/main_menu/stateless.hpp"
 #include "logic/main_menu/text_creator.hpp"
 #include "logic/sound/sound.hpp"
+#include "logic/sound/stateless.hpp"
 #include "logic/text/stateless.hpp"
 #include "logic/text/text.hpp"
 #include "logic/title.hpp"
@@ -80,6 +81,7 @@ private :
         , shy_logic_main_menu_stateless
         , shy_logic_main_menu_text_creator
         , shy_logic_sound
+        , shy_logic_sound_stateless
         , shy_logic_text
         , shy_logic_text_stateless
         , shy_logic_title

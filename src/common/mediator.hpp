@@ -42,6 +42,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_text_creator logic_main_menu_text_creator ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless logic_sound_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_touch logic_touch ;
@@ -65,6 +66,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: logic_image_messages logic_image_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: logic_land_messages logic_land_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: logic_sound_messages logic_sound_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: template engine_render_sender < receivers > engine_render_sender ;
@@ -77,6 +79,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: template logic_image_sender < receivers > logic_image_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: template logic_land_sender < receivers > logic_land_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: template logic_sound_sender < receivers > logic_sound_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
     
 public :
@@ -91,6 +94,7 @@ public :
     , public logic_image_messages
     , public logic_land_messages
     , public logic_main_menu_messages
+    , public logic_sound_messages
     , public logic_text_messages
     {
     public :
@@ -128,6 +132,7 @@ private :
     , public logic_image_sender
     , public logic_land_sender
     , public logic_main_menu_sender
+    , public logic_sound_sender
     , public logic_text_sender
     {
     public :    
@@ -221,6 +226,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_stateless > arg_logic_main_menu_stateless
         , typename platform_pointer :: template pointer < logic_main_menu_text_creator > arg_logic_main_menu_text_creator
         , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
+        , typename platform_pointer :: template pointer < logic_sound_stateless > arg_logic_sound_stateless
         , typename platform_pointer :: template pointer < logic_text > arg_logic_text
         , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
         , typename platform_pointer :: template pointer < logic_title > arg_logic_title
@@ -239,6 +245,7 @@ private :
     typename platform_pointer :: template pointer < logic_image_stateless > _logic_image_stateless ;
     typename platform_pointer :: template pointer < logic_land_stateless > _logic_land_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > _logic_main_menu_stateless ;
+    typename platform_pointer :: template pointer < logic_sound_stateless > _logic_sound_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < const platform > _platform ;
     receivers _receivers ;
@@ -277,6 +284,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_stateless > arg_logic_main_menu_stateless
     , typename platform_pointer :: template pointer < logic_main_menu_text_creator > arg_logic_main_menu_text_creator
     , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
+    , typename platform_pointer :: template pointer < logic_sound_stateless > arg_logic_sound_stateless
     , typename platform_pointer :: template pointer < logic_text > arg_logic_text
     , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
     , typename platform_pointer :: template pointer < logic_title > arg_logic_title
@@ -293,6 +301,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_image_stateless = arg_logic_image_stateless ;
     _logic_land_stateless = arg_logic_land_stateless ;
     _logic_main_menu_stateless = arg_logic_main_menu_stateless ;
+    _logic_sound_stateless = arg_logic_sound_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
     
     _receivers . engine_rasterizer = arg_engine_rasterizer ;
@@ -373,6 +382,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_image_sender :: set_receivers ( arg_receivers ) ;
     logic_land_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
+    logic_sound_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;
 }
 
