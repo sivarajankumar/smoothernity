@@ -38,12 +38,12 @@ class shy_logic_sound
     
 public :
     shy_logic_sound ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: sound_prepare_permit msg ) ;
-    void receive ( typename messages :: sound_update msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: sound_prepare_permit ) ;
+    void receive ( typename messages :: sound_update ) ;
 private :
-    shy_logic_sound < mediator > & operator= ( const shy_logic_sound < mediator > & src ) ;
+    shy_logic_sound < mediator > & operator= ( const shy_logic_sound < mediator > & ) ;
     void _load_sound ( ) ;
     void _int_to_sample ( num_fract & result , num_whole i ) ;
     void _create_stereo_sound ( ) ;
@@ -77,7 +77,7 @@ shy_logic_sound < mediator > :: shy_logic_sound ( )
 }
 
 template < typename mediator >
-shy_logic_sound < mediator > & shy_logic_sound < mediator > :: operator= ( const shy_logic_sound < mediator > & src )
+shy_logic_sound < mediator > & shy_logic_sound < mediator > :: operator= ( const shy_logic_sound < mediator > & )
 {
     return * this ;
 }
@@ -100,7 +100,7 @@ void shy_logic_sound < mediator > :: set_mediator ( typename platform_pointer ::
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_sound < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -162,13 +162,13 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepare_permit msg )
+void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepare_permit )
 {
     _sound_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update msg )
+void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update )
 {
     if ( platform_conditions :: whole_is_true ( _sound_prepare_permitted ) )
     {

@@ -15,10 +15,10 @@ public :
     class logic_sound_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_sound_messages :: sound_prepare_permit msg ) ;
-        void send ( typename logic_sound_messages :: sound_prepared msg ) ;
-        void send ( typename logic_sound_messages :: sound_update msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_sound_messages :: sound_prepare_permit ) ;
+        void send ( typename logic_sound_messages :: sound_prepared ) ;
+        void send ( typename logic_sound_messages :: sound_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
