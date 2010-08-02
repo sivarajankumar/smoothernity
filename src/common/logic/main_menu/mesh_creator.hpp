@@ -2,10 +2,13 @@ template < typename mediator >
 class shy_logic_main_menu_mesh_creator
 {
     typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_text_stateless logic_text_stateless ;
+    typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -25,6 +28,8 @@ public :
     void receive ( typename messages :: main_menu_cols_reply ) ;
     void receive ( typename messages :: main_menu_rows_reply ) ;
     void receive ( typename messages :: main_menu_letter_reply ) ;
+    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: text_letter_big_tex_coords_reply ) ;
 private :
     void _proceed_with_creation ( ) ;
     void _move_to_next_row ( ) ;
@@ -50,6 +55,18 @@ private :
     num_whole _main_menu_letter_requested_col ;
     num_whole _main_menu_letter_replied ;
     letter_id _main_menu_letter ;
+    
+    num_whole _render_mesh_create_requested ;
+    num_whole _render_mesh_create_replied ;
+    mesh_id _render_mesh_create ;
+    
+    num_whole _text_letter_big_tex_coords_requested ;
+    letter_id _text_letter_big_tex_coords_requested_letter ;
+    num_whole _text_letter_big_tex_coords_replied ;
+    num_fract _text_letter_big_tex_coords_bottom ;
+    num_fract _text_letter_big_tex_coords_left ;
+    num_fract _text_letter_big_tex_coords_top ;
+    num_fract _text_letter_big_tex_coords_right ;
     
     num_whole _current_row ;
     num_whole _current_col ;
@@ -82,6 +99,10 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
     _main_menu_cols_replied = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_letter_requested = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_letter_replied = _platform_math_consts . get ( ) . whole_false ;
+    _render_mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
+    _render_mesh_create_replied = _platform_math_consts . get ( ) . whole_false ;
+    _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_false ;
+    _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_false ;
     _current_row = _platform_math_consts . get ( ) . whole_0 ;
     _current_col = _platform_math_consts . get ( ) . whole_0 ;
 }
@@ -140,6 +161,37 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _render_mesh_create_requested ) )
+    {
+        _render_mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
+        _render_mesh_create_replied = _platform_math_consts . get ( ) . whole_true ;
+        _render_mesh_create = msg . mesh ;
+        _proceed_with_creation ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_reply msg )
+{
+    num_whole letters_are_equal ;
+    logic_text_stateless :: are_letters_equal ( letters_are_equal , _text_letter_big_tex_coords_requested_letter , msg . letter ) ;
+    if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_requested )
+      && platform_conditions :: whole_is_true ( letters_are_equal )
+       )
+    {
+        _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_false ;
+        _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_true ;
+        _text_letter_big_tex_coords_bottom = msg . bottom ;
+        _text_letter_big_tex_coords_left = msg . left ;
+        _text_letter_big_tex_coords_top = msg . top ;
+        _text_letter_big_tex_coords_right = msg . right ;
+        _proceed_with_creation ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_creation_permitted ) )
@@ -162,6 +214,26 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
     }
     if ( platform_conditions :: whole_is_true ( _main_menu_letter_replied ) )
     {
+        _main_menu_letter_replied = _platform_math_consts . get ( ) . whole_false ;
+        _render_mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
+        typename messages :: render_mesh_create_request msg ;
+        msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
+        msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_4 ;
+        msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
+        _mediator . get ( ) . send ( msg ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _render_mesh_create_replied ) )
+    {
+        _render_mesh_create_replied = _platform_math_consts . get ( ) . whole_false ;
+        _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_true ;
+        _text_letter_big_tex_coords_requested_letter = _main_menu_letter ;
+        typename messages :: text_letter_big_tex_coords_request msg ;
+        msg . letter = _main_menu_letter ;
+        _mediator . get ( ) . send ( msg ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_replied ) )
+    {
+        _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_false ;
         _move_to_next_col ( ) ;
     }
 }

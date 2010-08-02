@@ -220,6 +220,7 @@ void shy_logic_text_stateless < mediator >
 :: send ( typename logic_text_messages :: text_letter_big_tex_coords_reply msg )
 {
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
