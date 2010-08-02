@@ -17,15 +17,13 @@ public :
     {
         friend class shy_logic_text < mediator > ;
         friend class shy_logic_text_stateless ;
-        friend class shy_logic_text_stateless :: alphabet_english_type ;
+        friend class shy_logic_text_stateless :: logic_text_stateless_consts_type ;
     private :
         num_whole _letter_id ;
     } ;
 
     class alphabet_english_type
     {
-    public :
-        alphabet_english_type ( ) ;
     public :
         letter_id A ;
         letter_id B ;
@@ -58,6 +56,9 @@ public :
     class logic_text_stateless_consts_type
     {
     public :
+        logic_text_stateless_consts_type ( ) ;
+    public :
+        letter_id whitespace ;
         alphabet_english_type alphabet_english ;
     } ;
     
@@ -118,36 +119,38 @@ shy_logic_text_stateless < mediator > :: operator= ( const shy_logic_text_statel
 }
 
 template < typename mediator >
-shy_logic_text_stateless < mediator > :: alphabet_english_type :: alphabet_english_type ( )
+shy_logic_text_stateless < mediator > :: logic_text_stateless_consts_type :: logic_text_stateless_consts_type ( )
 {
     num_whole index ;
+    typename platform_pointer :: template pointer < alphabet_english_type > eng = alphabet_english ;
     platform_math :: make_num_whole ( index , 0 ) ;
-    A . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    B . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    C . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    D . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    E . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    F . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    G . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    H . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    I . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    J . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    K . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    L . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    M . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    N . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    O . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    P . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    Q . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    R . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    S . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    T . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    U . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    V . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    W . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    X . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    Y . _letter_id = index ; platform_math :: inc_whole ( index ) ;
-    Z . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    whitespace . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . A . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . B . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . C . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . D . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . E . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . F . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . G . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . H . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . I . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . J . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . K . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . L . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . M . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . N . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . O . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . P . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . Q . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . R . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . S . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . T . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . U . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . V . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . W . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . X . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . Y . _letter_id = index ; platform_math :: inc_whole ( index ) ;
+    eng . get ( ) . Z . _letter_id = index ; platform_math :: inc_whole ( index ) ;
 }
 
 template < typename mediator >

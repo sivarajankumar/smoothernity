@@ -3,7 +3,7 @@ class shy_logic_main_menu_letters_storage
 {
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: letter_id letter_id ;
-    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_consts_type logic_main_menu_consts_type ;
+    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
@@ -20,20 +20,19 @@ class shy_logic_main_menu_letters_storage
     {
     public :
         letter_id letter ;
-        num_whole is_whitespace ;
     } ;
     
     class _row_state_type
     {
     public :
-        typename platform_static_array :: template static_array < _letter_state_type , logic_main_menu_consts_type :: max_letters > letters ;
+        typename platform_static_array :: template static_array < _letter_state_type , logic_main_menu_stateless_consts_type :: max_letters > letters ;
         num_whole letters_count ;
     } ;
     
     class _rows_state_type
     {
     public :
-        typename platform_static_array :: template static_array < _row_state_type , logic_main_menu_consts_type :: max_rows > rows ;
+        typename platform_static_array :: template static_array < _row_state_type , logic_main_menu_stateless_consts_type :: max_rows > rows ;
         num_whole rows_count ;
     } ;
     
@@ -41,8 +40,10 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: main_menu_add_letter ) ;
-    void receive ( typename messages :: main_menu_add_whitespace ) ;
     void receive ( typename messages :: main_menu_next_row ) ;
+    void receive ( typename messages :: main_menu_cols_request ) ;
+    void receive ( typename messages :: main_menu_rows_request ) ;
+    void receive ( typename messages :: main_menu_letter_request ) ;
 public :
     void _next_row ( ) ;
 private :
@@ -76,18 +77,6 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
     platform_static_array :: element_ptr ( row_state , _rows_state . rows , _rows_state . rows_count ) ;
     platform_static_array :: element_ptr ( letter_state , row_state . get ( ) . letters , row_state . get ( ) . letters_count ) ;
     letter_state . get ( ) . letter = msg . letter ;
-    letter_state . get ( ) . is_whitespace = _platform_math_consts . get ( ) . whole_false ;
-    platform_math :: inc_whole ( row_state . get ( ) . letters_count ) ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_add_whitespace )
-{
-    typename platform_pointer :: template pointer < _row_state_type > row_state ;
-    typename platform_pointer :: template pointer < _letter_state_type > letter_state ;
-    platform_static_array :: element_ptr ( row_state , _rows_state . rows , _rows_state . rows_count ) ;
-    platform_static_array :: element_ptr ( letter_state , row_state . get ( ) . letters , row_state . get ( ) . letters_count ) ;
-    letter_state . get ( ) . is_whitespace = _platform_math_consts . get ( ) . whole_true ;
     platform_math :: inc_whole ( row_state . get ( ) . letters_count ) ;
 }
 
@@ -95,6 +84,41 @@ template < typename mediator >
 void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_next_row )
 {
     _next_row ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_cols_request msg )
+{
+    typename platform_pointer :: template pointer < _row_state_type > row_state ;
+    platform_static_array :: element_ptr ( row_state , _rows_state . rows , msg . row ) ;
+    
+    typename messages :: main_menu_cols_reply reply_msg ;
+    reply_msg . row = msg . row ;
+    reply_msg . cols = row_state . get ( ) . letters_count ;
+    _mediator . get ( ) . send ( reply_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_rows_request )
+{
+    typename messages :: main_menu_rows_reply reply_msg ;
+    reply_msg . rows = _rows_state . rows_count ;
+    _mediator . get ( ) . send ( reply_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_letter_request msg )
+{
+    typename platform_pointer :: template pointer < _row_state_type > row_state ;
+    typename platform_pointer :: template pointer < _letter_state_type > letter_state ;
+    platform_static_array :: element_ptr ( row_state , _rows_state . rows , msg . row ) ;
+    platform_static_array :: element_ptr ( letter_state , row_state . get ( ) . letters , msg . col ) ;
+
+    typename messages :: main_menu_rows_reply reply_msg ;
+    reply_msg . row = msg . row ;
+    reply_msg . col = msg . col ;
+    reply_msg . letter = letter_state . get ( ) . letter ;
+    _mediator . get ( ) . send ( reply_msg ) ;
 }
 
 template < typename mediator >

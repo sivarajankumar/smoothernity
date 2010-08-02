@@ -20,7 +20,6 @@ public :
     void receive ( typename messages :: main_menu_text_create ) ;
 public :
     void _add_letter ( letter_id ) ;
-    void _add_whitespace ( ) ;
     void _next_row ( ) ;
     void _text_create_finished ( ) ;
 private :
@@ -39,11 +38,12 @@ void shy_logic_main_menu_text_creator < mediator > :: receive ( typename message
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
     const alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
+    letter_id whitespace = logic_text_stateless_consts . get ( ) . whitespace ;
 
     _add_letter ( eng . N ) ;
     _add_letter ( eng . E ) ;
     _add_letter ( eng . W ) ;
-    _add_whitespace ( ) ;
+    _add_letter ( whitespace ) ;
     _add_letter ( eng . G ) ;
     _add_letter ( eng . A ) ;
     _add_letter ( eng . M ) ;
@@ -54,7 +54,7 @@ void shy_logic_main_menu_text_creator < mediator > :: receive ( typename message
     _add_letter ( eng . O ) ;
     _add_letter ( eng . A ) ;
     _add_letter ( eng . D ) ;
-    _add_whitespace ( ) ;
+    _add_letter ( whitespace ) ;
     _add_letter ( eng . G ) ;
     _add_letter ( eng . A ) ;
     _add_letter ( eng . M ) ;
@@ -84,12 +84,6 @@ void shy_logic_main_menu_text_creator < mediator > :: _add_letter ( letter_id le
     typename messages :: main_menu_add_letter msg ;
     msg . letter = letter ;
     _mediator . get ( ) . send ( msg ) ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: _add_whitespace ( )
-{
-    _mediator . get ( ) . send ( typename messages :: main_menu_add_whitespace ( ) ) ;
 }
 
 template < typename mediator >
