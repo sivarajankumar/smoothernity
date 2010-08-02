@@ -15,10 +15,10 @@ public :
     class logic_game_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_game_messages :: game_launch_permit msg ) ;
-        void send ( typename logic_game_messages :: game_render msg ) ;
-        void send ( typename logic_game_messages :: game_update msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_game_messages :: game_launch_permit ) ;
+        void send ( typename logic_game_messages :: game_render ) ;
+        void send ( typename logic_game_messages :: game_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;

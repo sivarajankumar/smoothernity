@@ -37,16 +37,16 @@ class shy_logic_image
     
 public :
     shy_logic_image ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: image_render_request msg ) ;
-    void receive ( typename messages :: image_update msg ) ;
-    void receive ( typename messages :: image_prepare_permit msg ) ;
-    void receive ( typename messages :: render_texture_create_reply msg ) ;
-    void receive ( typename messages :: render_mesh_create_reply msg ) ;
-    void receive ( typename messages :: render_texture_loader_ready_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: image_render_request ) ;
+    void receive ( typename messages :: image_update ) ;
+    void receive ( typename messages :: image_prepare_permit ) ;
+    void receive ( typename messages :: render_texture_create_reply ) ;
+    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: render_texture_loader_ready_reply ) ;
 private :
-    shy_logic_image < mediator > & operator= ( const shy_logic_image < mediator > & src ) ;
+    shy_logic_image < mediator > & operator= ( const shy_logic_image < mediator > & ) ;
     void _render_image_mesh ( ) ;
     void _update_image_mesh ( ) ;
     void _create_image_mesh ( ) ;
@@ -77,7 +77,7 @@ shy_logic_image < mediator > :: shy_logic_image ( )
 }
 
 template < typename mediator >
-shy_logic_image < mediator > & shy_logic_image < mediator > :: operator= ( const shy_logic_image < mediator > & src )
+shy_logic_image < mediator > & shy_logic_image < mediator > :: operator= ( const shy_logic_image < mediator > & )
 {
     return * this ;
 }
@@ -104,7 +104,7 @@ void shy_logic_image < mediator > :: set_mediator ( typename platform_pointer ::
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -120,7 +120,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_render_request msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: image_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _image_mesh_created ) && platform_conditions :: whole_is_true ( _image_texture_loaded ) )
         _render_image_mesh ( ) ;
@@ -128,7 +128,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_render
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_prepare_permit msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: image_prepare_permit )
 {
     _image_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
@@ -158,7 +158,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: render_mesh_
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_update msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: image_update )
 {
     if ( platform_conditions :: whole_is_true ( _image_prepare_permitted ) )
     {

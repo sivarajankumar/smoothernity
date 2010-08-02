@@ -26,28 +26,28 @@ class shy_logic_game
     
 public :
     shy_logic_game ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: game_launch_permit msg ) ;
-    void receive ( typename messages :: game_render msg ) ;
-    void receive ( typename messages :: game_update msg ) ;
-    void receive ( typename messages :: camera_prepared msg ) ;
-    void receive ( typename messages :: entities_prepared msg ) ;
-    void receive ( typename messages :: image_prepared msg ) ;
-    void receive ( typename messages :: land_prepared msg ) ;
-    void receive ( typename messages :: sound_prepared msg ) ;
-    void receive ( typename messages :: touch_prepared msg ) ;
-    void receive ( typename messages :: near_plane_distance_reply msg ) ;
-    void receive ( typename messages :: camera_matrix_reply msg ) ;
-    void receive ( typename messages :: use_perspective_projection_reply msg ) ;
-    void receive ( typename messages :: use_ortho_projection_reply msg ) ;
-    void receive ( typename messages :: land_render_reply msg ) ;
-    void receive ( typename messages :: entities_render_reply msg ) ;
-    void receive ( typename messages :: fidget_render_reply msg ) ;
-    void receive ( typename messages :: text_render_reply msg ) ;
-    void receive ( typename messages :: image_render_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: game_launch_permit ) ;
+    void receive ( typename messages :: game_render ) ;
+    void receive ( typename messages :: game_update ) ;
+    void receive ( typename messages :: camera_prepared ) ;
+    void receive ( typename messages :: entities_prepared ) ;
+    void receive ( typename messages :: image_prepared ) ;
+    void receive ( typename messages :: land_prepared ) ;
+    void receive ( typename messages :: sound_prepared ) ;
+    void receive ( typename messages :: touch_prepared ) ;
+    void receive ( typename messages :: near_plane_distance_reply ) ;
+    void receive ( typename messages :: camera_matrix_reply ) ;
+    void receive ( typename messages :: use_perspective_projection_reply ) ;
+    void receive ( typename messages :: use_ortho_projection_reply ) ;
+    void receive ( typename messages :: land_render_reply ) ;
+    void receive ( typename messages :: entities_render_reply ) ;
+    void receive ( typename messages :: fidget_render_reply ) ;
+    void receive ( typename messages :: text_render_reply ) ;
+    void receive ( typename messages :: image_render_reply ) ;
 private :
-    shy_logic_game < mediator > & operator= ( const shy_logic_game < mediator > & src ) ;
+    shy_logic_game < mediator > & operator= ( const shy_logic_game < mediator > & ) ;
     void _clear_screen ( ) ;
     void _update_color ( ) ;
     void _proceed_with_render ( ) ;
@@ -98,7 +98,7 @@ shy_logic_game < mediator > :: shy_logic_game ( )
 }
 
 template < typename mediator >
-shy_logic_game < mediator > & shy_logic_game < mediator > :: operator= ( const shy_logic_game < mediator > & src )
+shy_logic_game < mediator > & shy_logic_game < mediator > :: operator= ( const shy_logic_game < mediator > & )
 {
     return * this ;
 }
@@ -121,7 +121,7 @@ void shy_logic_game < mediator > :: set_mediator ( typename platform_pointer :: 
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -153,13 +153,13 @@ void shy_logic_game < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_permit msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_permit )
 {
     _game_launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: game_render msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: game_render )
 {
     if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
@@ -195,7 +195,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: camera_matrix
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: game_update msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: game_update )
 {
     if ( platform_conditions :: whole_is_true ( _game_launch_permitted ) )
     {
@@ -219,42 +219,42 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update m
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: camera_prepared msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: camera_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: land_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: land_prepared msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: land_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: entities_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: entities_prepared msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: entities_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: image_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: image_prepared msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: image_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: touch_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: touch_prepared msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: touch_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: sound_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepared msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepared )
 {
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: use_perspective_projection_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: use_perspective_projection_reply )
 {
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_requested ) )
     {
@@ -265,7 +265,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: use_perspecti
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: land_render_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: land_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _land_render_requested ) )
     {
@@ -276,7 +276,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: land_render_r
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: entities_render_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: entities_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _entities_render_requested ) )
     {
@@ -287,7 +287,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: entities_rend
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: use_ortho_projection_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: use_ortho_projection_reply )
 {
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_requested ) )
     {
@@ -298,7 +298,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: use_ortho_pro
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: fidget_render_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: fidget_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_render_requested ) )
     {
@@ -309,7 +309,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: fidget_render
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: text_render_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: text_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _text_render_requested ) )
     {
@@ -320,7 +320,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: text_render_r
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: image_render_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: image_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _image_render_requested ) )
     {
