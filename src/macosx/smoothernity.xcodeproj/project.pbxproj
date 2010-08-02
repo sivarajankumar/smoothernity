@@ -125,39 +125,44 @@
 		886AEA01117C8B36009CBB6F /* macosx_platform_render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */; };
 		886AEA02117C8B36009CBB6F /* macosx_platform_sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */; };
 		886AEA03117C8B36009CBB6F /* macosx_platform_time.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */; };
-		887ACE5A1202AECF006B5FFB /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 887ACE591202AECF006B5FFB /* stateless.hpp */; };
+		8876303412068D0100CAD8EF /* aggregator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88762FFE12068D0100CAD8EF /* aggregator.hpp */; };
+		8876303512068D0100CAD8EF /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300012068D0100CAD8EF /* camera.hpp */; };
+		8876303612068D0100CAD8EF /* math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300112068D0100CAD8EF /* math.hpp */; };
+		8876303712068D0100CAD8EF /* rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300312068D0100CAD8EF /* rasterizer.hpp */; };
+		8876303812068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300412068D0100CAD8EF /* stateless.hpp */; };
+		8876303912068D0100CAD8EF /* render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300612068D0100CAD8EF /* render.hpp */; };
+		8876303A12068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300712068D0100CAD8EF /* stateless.hpp */; };
+		8876303B12068D0100CAD8EF /* facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300812068D0100CAD8EF /* facade.hpp */; };
+		8876303C12068D0100CAD8EF /* application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300B12068D0100CAD8EF /* application.hpp */; };
+		8876303D12068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300C12068D0100CAD8EF /* stateless.hpp */; };
+		8876303E12068D0100CAD8EF /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300E12068D0100CAD8EF /* camera.hpp */; };
+		8876303F12068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876300F12068D0100CAD8EF /* stateless.hpp */; };
+		8876304012068D0100CAD8EF /* core.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301112068D0100CAD8EF /* core.hpp */; };
+		8876304112068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301212068D0100CAD8EF /* stateless.hpp */; };
+		8876304212068D0100CAD8EF /* entities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301412068D0100CAD8EF /* entities.hpp */; };
+		8876304312068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301512068D0100CAD8EF /* stateless.hpp */; };
+		8876304412068D0100CAD8EF /* fidget.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301712068D0100CAD8EF /* fidget.hpp */; };
+		8876304512068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301812068D0100CAD8EF /* stateless.hpp */; };
+		8876304612068D0100CAD8EF /* game.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301A12068D0100CAD8EF /* game.hpp */; };
+		8876304712068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301B12068D0100CAD8EF /* stateless.hpp */; };
+		8876304812068D0100CAD8EF /* image.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301D12068D0100CAD8EF /* image.hpp */; };
+		8876304912068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876301E12068D0100CAD8EF /* stateless.hpp */; };
+		8876304A12068D0100CAD8EF /* land.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302012068D0100CAD8EF /* land.hpp */; };
+		8876304B12068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302112068D0100CAD8EF /* stateless.hpp */; };
+		8876304C12068D0100CAD8EF /* letters_storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302312068D0100CAD8EF /* letters_storage.hpp */; };
+		8876304D12068D0100CAD8EF /* main_menu.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302412068D0100CAD8EF /* main_menu.hpp */; };
+		8876304E12068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302512068D0100CAD8EF /* stateless.hpp */; };
+		8876304F12068D0100CAD8EF /* text_creator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302612068D0100CAD8EF /* text_creator.hpp */; };
+		8876305012068D0100CAD8EF /* sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302812068D0100CAD8EF /* sound.hpp */; };
+		8876305112068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302912068D0100CAD8EF /* stateless.hpp */; };
+		8876305212068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302B12068D0100CAD8EF /* stateless.hpp */; };
+		8876305312068D0100CAD8EF /* text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302C12068D0100CAD8EF /* text.hpp */; };
+		8876305412068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302E12068D0100CAD8EF /* stateless.hpp */; };
+		8876305512068D0100CAD8EF /* title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302F12068D0100CAD8EF /* title.hpp */; };
+		8876305612068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303112068D0100CAD8EF /* stateless.hpp */; };
+		8876305712068D0100CAD8EF /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303212068D0100CAD8EF /* touch.hpp */; };
+		8876305812068D0100CAD8EF /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303312068D0100CAD8EF /* mediator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
-		88B3C9381201BD3A00B291B8 /* aggregator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C91E1201BD3A00B291B8 /* aggregator.hpp */; };
-		88B3C9391201BD3A00B291B8 /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9201201BD3A00B291B8 /* camera.hpp */; };
-		88B3C93A1201BD3A00B291B8 /* math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9211201BD3A00B291B8 /* math.hpp */; };
-		88B3C93B1201BD3A00B291B8 /* rasterizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9221201BD3A00B291B8 /* rasterizer.hpp */; };
-		88B3C93C1201BD3A00B291B8 /* render.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9241201BD3A00B291B8 /* render.hpp */; };
-		88B3C93D1201BD3A00B291B8 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9251201BD3A00B291B8 /* stateless.hpp */; };
-		88B3C93E1201BD3A00B291B8 /* facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9261201BD3A00B291B8 /* facade.hpp */; };
-		88B3C9461201BD3A00B291B8 /* logic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C92F1201BD3A00B291B8 /* logic.hpp */; };
-		88B3C9481201BD3A00B291B8 /* sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9311201BD3A00B291B8 /* sound.hpp */; };
-		88B3C9491201BD3A00B291B8 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9331201BD3A00B291B8 /* stateless.hpp */; };
-		88B3C94A1201BD3A00B291B8 /* text.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9341201BD3A00B291B8 /* text.hpp */; };
-		88B3C94B1201BD3A00B291B8 /* title.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9351201BD3A00B291B8 /* title.hpp */; };
-		88B3C94C1201BD3A00B291B8 /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9361201BD3A00B291B8 /* touch.hpp */; };
-		88B3C94D1201BD3A00B291B8 /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9371201BD3A00B291B8 /* mediator.hpp */; };
-		88B3C9531201BE3500B291B8 /* main_menu.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9521201BE3500B291B8 /* main_menu.hpp */; };
-		88B3C9571201BED700B291B8 /* text_creator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C9561201BED700B291B8 /* text_creator.hpp */; };
-		88B3C9701201C32E00B291B8 /* letters_storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B3C96F1201C32E00B291B8 /* letters_storage.hpp */; };
-		88B6B5CE1202EA420030F65B /* application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B5CD1202EA420030F65B /* application.hpp */; };
-		88B6B5D31202EA860030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B5D21202EA860030F65B /* stateless.hpp */; };
-		88B6B5F51202EE600030F65B /* camera.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B5F41202EE600030F65B /* camera.hpp */; };
-		88B6B5F91202EEAB0030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B5F81202EEAB0030F65B /* stateless.hpp */; };
-		88B6B60E1202F7160030F65B /* entities.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B60D1202F7160030F65B /* entities.hpp */; };
-		88B6B6151202F8CA0030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B6141202F8CA0030F65B /* stateless.hpp */; };
-		88B6B62A1202FDA70030F65B /* fidget.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B6291202FDA70030F65B /* fidget.hpp */; };
-		88B6B62F1202FDFA0030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B62E1202FDFA0030F65B /* stateless.hpp */; };
-		88B6B64B1203101A0030F65B /* game.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B64A1203101A0030F65B /* game.hpp */; };
-		88B6B6531203108E0030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B6521203108E0030F65B /* stateless.hpp */; };
-		88B6B66A120313F80030F65B /* image.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B669120313F80030F65B /* image.hpp */; };
-		88B6B671120314550030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B670120314550030F65B /* stateless.hpp */; };
-		88B6B689120317720030F65B /* land.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B688120317720030F65B /* land.hpp */; };
-		88B6B690120317C00030F65B /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B6B68F120317C00030F65B /* stateless.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -213,39 +218,44 @@
 		886AE9F8117C8B36009CBB6F /* macosx_platform_render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render.hpp; sourceTree = "<group>"; };
 		886AE9F9117C8B36009CBB6F /* macosx_platform_sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound.hpp; sourceTree = "<group>"; };
 		886AE9FA117C8B36009CBB6F /* macosx_platform_time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_time.hpp; sourceTree = "<group>"; };
-		887ACE591202AECF006B5FFB /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		88762FFE12068D0100CAD8EF /* aggregator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aggregator.hpp; sourceTree = "<group>"; };
+		8876300012068D0100CAD8EF /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
+		8876300112068D0100CAD8EF /* math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math.hpp; sourceTree = "<group>"; };
+		8876300312068D0100CAD8EF /* rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rasterizer.hpp; sourceTree = "<group>"; };
+		8876300412068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876300612068D0100CAD8EF /* render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = render.hpp; sourceTree = "<group>"; };
+		8876300712068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876300812068D0100CAD8EF /* facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = facade.hpp; sourceTree = "<group>"; };
+		8876300B12068D0100CAD8EF /* application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
+		8876300C12068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876300E12068D0100CAD8EF /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
+		8876300F12068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876301112068D0100CAD8EF /* core.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = core.hpp; sourceTree = "<group>"; };
+		8876301212068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876301412068D0100CAD8EF /* entities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = entities.hpp; sourceTree = "<group>"; };
+		8876301512068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876301712068D0100CAD8EF /* fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fidget.hpp; sourceTree = "<group>"; };
+		8876301812068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876301A12068D0100CAD8EF /* game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = game.hpp; sourceTree = "<group>"; };
+		8876301B12068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876301D12068D0100CAD8EF /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
+		8876301E12068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876302012068D0100CAD8EF /* land.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = land.hpp; sourceTree = "<group>"; };
+		8876302112068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876302312068D0100CAD8EF /* letters_storage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = letters_storage.hpp; sourceTree = "<group>"; };
+		8876302412068D0100CAD8EF /* main_menu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = main_menu.hpp; sourceTree = "<group>"; };
+		8876302512068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876302612068D0100CAD8EF /* text_creator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = text_creator.hpp; sourceTree = "<group>"; };
+		8876302812068D0100CAD8EF /* sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sound.hpp; sourceTree = "<group>"; };
+		8876302912068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876302B12068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876302C12068D0100CAD8EF /* text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = text.hpp; sourceTree = "<group>"; };
+		8876302E12068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876302F12068D0100CAD8EF /* title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = title.hpp; sourceTree = "<group>"; };
+		8876303112068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8876303212068D0100CAD8EF /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
+		8876303312068D0100CAD8EF /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
-		88B3C91E1201BD3A00B291B8 /* aggregator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = aggregator.hpp; sourceTree = "<group>"; };
-		88B3C9201201BD3A00B291B8 /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
-		88B3C9211201BD3A00B291B8 /* math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = math.hpp; sourceTree = "<group>"; };
-		88B3C9221201BD3A00B291B8 /* rasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rasterizer.hpp; sourceTree = "<group>"; };
-		88B3C9241201BD3A00B291B8 /* render.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = render.hpp; sourceTree = "<group>"; };
-		88B3C9251201BD3A00B291B8 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B3C9261201BD3A00B291B8 /* facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = facade.hpp; sourceTree = "<group>"; };
-		88B3C92F1201BD3A00B291B8 /* logic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logic.hpp; sourceTree = "<group>"; };
-		88B3C9311201BD3A00B291B8 /* sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sound.hpp; sourceTree = "<group>"; };
-		88B3C9331201BD3A00B291B8 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B3C9341201BD3A00B291B8 /* text.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = text.hpp; sourceTree = "<group>"; };
-		88B3C9351201BD3A00B291B8 /* title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = title.hpp; sourceTree = "<group>"; };
-		88B3C9361201BD3A00B291B8 /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
-		88B3C9371201BD3A00B291B8 /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
-		88B3C9521201BE3500B291B8 /* main_menu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = main_menu.hpp; sourceTree = "<group>"; };
-		88B3C9561201BED700B291B8 /* text_creator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = text_creator.hpp; sourceTree = "<group>"; };
-		88B3C96F1201C32E00B291B8 /* letters_storage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = letters_storage.hpp; sourceTree = "<group>"; };
-		88B6B5CD1202EA420030F65B /* application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
-		88B6B5D21202EA860030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B6B5F41202EE600030F65B /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = camera.hpp; sourceTree = "<group>"; };
-		88B6B5F81202EEAB0030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B6B60D1202F7160030F65B /* entities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = entities.hpp; sourceTree = "<group>"; };
-		88B6B6141202F8CA0030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B6B6291202FDA70030F65B /* fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fidget.hpp; sourceTree = "<group>"; };
-		88B6B62E1202FDFA0030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B6B64A1203101A0030F65B /* game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = game.hpp; sourceTree = "<group>"; };
-		88B6B6521203108E0030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B6B669120313F80030F65B /* image.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
-		88B6B670120314550030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		88B6B688120317720030F65B /* land.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = land.hpp; sourceTree = "<group>"; };
-		88B6B68F120317C00030F65B /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,7 +289,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8812CEC3117DE26A008F67D9 /* common */,
+				88762FFD12068D0100CAD8EF /* common */,
 				8819C24311C8E0E8003A552B /* platform */,
 				0568922F046B14B900000102 /* macosx_main_controller.h */,
 				05689230046B14B900000102 /* macosx_main_controller.mm */,
@@ -375,19 +385,6 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		8812CEC3117DE26A008F67D9 /* common */ = {
-			isa = PBXGroup;
-			children = (
-				88B3C91F1201BD3A00B291B8 /* engine */,
-				88B3C9271201BD3A00B291B8 /* logic */,
-				88B3C91E1201BD3A00B291B8 /* aggregator.hpp */,
-				88B3C9261201BD3A00B291B8 /* facade.hpp */,
-				88B3C9371201BD3A00B291B8 /* mediator.hpp */,
-			);
-			name = common;
-			path = ../common;
-			sourceTree = SOURCE_ROOT;
-		};
 		8819C24311C8E0E8003A552B /* platform */ = {
 			isa = PBXGroup;
 			children = (
@@ -415,127 +412,185 @@
 			path = ../platform;
 			sourceTree = SOURCE_ROOT;
 		};
-		88B3C91F1201BD3A00B291B8 /* engine */ = {
+		88762FFD12068D0100CAD8EF /* common */ = {
 			isa = PBXGroup;
 			children = (
-				88B3C9231201BD3A00B291B8 /* render */,
-				88B3C9201201BD3A00B291B8 /* camera.hpp */,
-				88B3C9211201BD3A00B291B8 /* math.hpp */,
-				88B3C9221201BD3A00B291B8 /* rasterizer.hpp */,
+				88762FFF12068D0100CAD8EF /* engine */,
+				8876300912068D0100CAD8EF /* logic */,
+				88762FFE12068D0100CAD8EF /* aggregator.hpp */,
+				8876300812068D0100CAD8EF /* facade.hpp */,
+				8876303312068D0100CAD8EF /* mediator.hpp */,
+			);
+			name = common;
+			path = ../common;
+			sourceTree = SOURCE_ROOT;
+		};
+		88762FFF12068D0100CAD8EF /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				8876300212068D0100CAD8EF /* rasterizer */,
+				8876300512068D0100CAD8EF /* render */,
+				8876300012068D0100CAD8EF /* camera.hpp */,
+				8876300112068D0100CAD8EF /* math.hpp */,
 			);
 			path = engine;
 			sourceTree = "<group>";
 		};
-		88B3C9231201BD3A00B291B8 /* render */ = {
+		8876300212068D0100CAD8EF /* rasterizer */ = {
 			isa = PBXGroup;
 			children = (
-				88B3C9241201BD3A00B291B8 /* render.hpp */,
-				88B3C9251201BD3A00B291B8 /* stateless.hpp */,
+				8876300312068D0100CAD8EF /* rasterizer.hpp */,
+				8876300412068D0100CAD8EF /* stateless.hpp */,
+			);
+			path = rasterizer;
+			sourceTree = "<group>";
+		};
+		8876300512068D0100CAD8EF /* render */ = {
+			isa = PBXGroup;
+			children = (
+				8876300612068D0100CAD8EF /* render.hpp */,
+				8876300712068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = render;
 			sourceTree = "<group>";
 		};
-		88B3C9271201BD3A00B291B8 /* logic */ = {
+		8876300912068D0100CAD8EF /* logic */ = {
 			isa = PBXGroup;
 			children = (
-				88B6B5CC1202EA420030F65B /* application */,
-				88B6B5F31202EE600030F65B /* camera */,
-				88B6B60C1202F7160030F65B /* entities */,
-				88B6B6281202FDA70030F65B /* fidget */,
-				88B6B6491203101A0030F65B /* game */,
-				88B6B668120313F80030F65B /* image */,
-				88B6B687120317720030F65B /* land */,
-				88B3C9511201BE3500B291B8 /* main_menu */,
-				88B3C9321201BD3A00B291B8 /* text */,
-				88B3C92F1201BD3A00B291B8 /* logic.hpp */,
-				88B3C9311201BD3A00B291B8 /* sound.hpp */,
-				88B3C9351201BD3A00B291B8 /* title.hpp */,
-				88B3C9361201BD3A00B291B8 /* touch.hpp */,
+				8876300A12068D0100CAD8EF /* application */,
+				8876300D12068D0100CAD8EF /* camera */,
+				8876301012068D0100CAD8EF /* core */,
+				8876301312068D0100CAD8EF /* entities */,
+				8876301612068D0100CAD8EF /* fidget */,
+				8876301912068D0100CAD8EF /* game */,
+				8876301C12068D0100CAD8EF /* image */,
+				8876301F12068D0100CAD8EF /* land */,
+				8876302212068D0100CAD8EF /* main_menu */,
+				8876302712068D0100CAD8EF /* sound */,
+				8876302A12068D0100CAD8EF /* text */,
+				8876302D12068D0100CAD8EF /* title */,
+				8876303012068D0100CAD8EF /* touch */,
 			);
 			path = logic;
 			sourceTree = "<group>";
 		};
-		88B3C9321201BD3A00B291B8 /* text */ = {
+		8876300A12068D0100CAD8EF /* application */ = {
 			isa = PBXGroup;
 			children = (
-				88B3C9331201BD3A00B291B8 /* stateless.hpp */,
-				88B3C9341201BD3A00B291B8 /* text.hpp */,
-			);
-			path = text;
-			sourceTree = "<group>";
-		};
-		88B3C9511201BE3500B291B8 /* main_menu */ = {
-			isa = PBXGroup;
-			children = (
-				88B3C96F1201C32E00B291B8 /* letters_storage.hpp */,
-				88B3C9521201BE3500B291B8 /* main_menu.hpp */,
-				887ACE591202AECF006B5FFB /* stateless.hpp */,
-				88B3C9561201BED700B291B8 /* text_creator.hpp */,
-			);
-			path = main_menu;
-			sourceTree = "<group>";
-		};
-		88B6B5CC1202EA420030F65B /* application */ = {
-			isa = PBXGroup;
-			children = (
-				88B6B5CD1202EA420030F65B /* application.hpp */,
-				88B6B5D21202EA860030F65B /* stateless.hpp */,
+				8876300B12068D0100CAD8EF /* application.hpp */,
+				8876300C12068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = application;
 			sourceTree = "<group>";
 		};
-		88B6B5F31202EE600030F65B /* camera */ = {
+		8876300D12068D0100CAD8EF /* camera */ = {
 			isa = PBXGroup;
 			children = (
-				88B6B5F41202EE600030F65B /* camera.hpp */,
-				88B6B5F81202EEAB0030F65B /* stateless.hpp */,
+				8876300E12068D0100CAD8EF /* camera.hpp */,
+				8876300F12068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = camera;
 			sourceTree = "<group>";
 		};
-		88B6B60C1202F7160030F65B /* entities */ = {
+		8876301012068D0100CAD8EF /* core */ = {
 			isa = PBXGroup;
 			children = (
-				88B6B60D1202F7160030F65B /* entities.hpp */,
-				88B6B6141202F8CA0030F65B /* stateless.hpp */,
+				8876301112068D0100CAD8EF /* core.hpp */,
+				8876301212068D0100CAD8EF /* stateless.hpp */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		8876301312068D0100CAD8EF /* entities */ = {
+			isa = PBXGroup;
+			children = (
+				8876301412068D0100CAD8EF /* entities.hpp */,
+				8876301512068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = entities;
 			sourceTree = "<group>";
 		};
-		88B6B6281202FDA70030F65B /* fidget */ = {
+		8876301612068D0100CAD8EF /* fidget */ = {
 			isa = PBXGroup;
 			children = (
-				88B6B6291202FDA70030F65B /* fidget.hpp */,
-				88B6B62E1202FDFA0030F65B /* stateless.hpp */,
+				8876301712068D0100CAD8EF /* fidget.hpp */,
+				8876301812068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = fidget;
 			sourceTree = "<group>";
 		};
-		88B6B6491203101A0030F65B /* game */ = {
+		8876301912068D0100CAD8EF /* game */ = {
 			isa = PBXGroup;
 			children = (
-				88B6B64A1203101A0030F65B /* game.hpp */,
-				88B6B6521203108E0030F65B /* stateless.hpp */,
+				8876301A12068D0100CAD8EF /* game.hpp */,
+				8876301B12068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = game;
 			sourceTree = "<group>";
 		};
-		88B6B668120313F80030F65B /* image */ = {
+		8876301C12068D0100CAD8EF /* image */ = {
 			isa = PBXGroup;
 			children = (
-				88B6B669120313F80030F65B /* image.hpp */,
-				88B6B670120314550030F65B /* stateless.hpp */,
+				8876301D12068D0100CAD8EF /* image.hpp */,
+				8876301E12068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = image;
 			sourceTree = "<group>";
 		};
-		88B6B687120317720030F65B /* land */ = {
+		8876301F12068D0100CAD8EF /* land */ = {
 			isa = PBXGroup;
 			children = (
-				88B6B688120317720030F65B /* land.hpp */,
-				88B6B68F120317C00030F65B /* stateless.hpp */,
+				8876302012068D0100CAD8EF /* land.hpp */,
+				8876302112068D0100CAD8EF /* stateless.hpp */,
 			);
 			path = land;
+			sourceTree = "<group>";
+		};
+		8876302212068D0100CAD8EF /* main_menu */ = {
+			isa = PBXGroup;
+			children = (
+				8876302312068D0100CAD8EF /* letters_storage.hpp */,
+				8876302412068D0100CAD8EF /* main_menu.hpp */,
+				8876302512068D0100CAD8EF /* stateless.hpp */,
+				8876302612068D0100CAD8EF /* text_creator.hpp */,
+			);
+			path = main_menu;
+			sourceTree = "<group>";
+		};
+		8876302712068D0100CAD8EF /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				8876302812068D0100CAD8EF /* sound.hpp */,
+				8876302912068D0100CAD8EF /* stateless.hpp */,
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
+		8876302A12068D0100CAD8EF /* text */ = {
+			isa = PBXGroup;
+			children = (
+				8876302B12068D0100CAD8EF /* stateless.hpp */,
+				8876302C12068D0100CAD8EF /* text.hpp */,
+			);
+			path = text;
+			sourceTree = "<group>";
+		};
+		8876302D12068D0100CAD8EF /* title */ = {
+			isa = PBXGroup;
+			children = (
+				8876302E12068D0100CAD8EF /* stateless.hpp */,
+				8876302F12068D0100CAD8EF /* title.hpp */,
+			);
+			path = title;
+			sourceTree = "<group>";
+		};
+		8876303012068D0100CAD8EF /* touch */ = {
+			isa = PBXGroup;
+			children = (
+				8876303112068D0100CAD8EF /* stateless.hpp */,
+				8876303212068D0100CAD8EF /* touch.hpp */,
+			);
+			path = touch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -576,38 +631,43 @@
 				8826FBB611FDEE1F004CCF6A /* mouse_insider.hpp in Headers */,
 				8826FBD011FDEF43004CCF6A /* touch.hpp in Headers */,
 				8826FBD211FDEF57004CCF6A /* touch_insider.hpp in Headers */,
-				88B3C9381201BD3A00B291B8 /* aggregator.hpp in Headers */,
-				88B3C9391201BD3A00B291B8 /* camera.hpp in Headers */,
-				88B3C93A1201BD3A00B291B8 /* math.hpp in Headers */,
-				88B3C93B1201BD3A00B291B8 /* rasterizer.hpp in Headers */,
-				88B3C93C1201BD3A00B291B8 /* render.hpp in Headers */,
-				88B3C93D1201BD3A00B291B8 /* stateless.hpp in Headers */,
-				88B3C93E1201BD3A00B291B8 /* facade.hpp in Headers */,
-				88B3C9461201BD3A00B291B8 /* logic.hpp in Headers */,
-				88B3C9481201BD3A00B291B8 /* sound.hpp in Headers */,
-				88B3C9491201BD3A00B291B8 /* stateless.hpp in Headers */,
-				88B3C94A1201BD3A00B291B8 /* text.hpp in Headers */,
-				88B3C94B1201BD3A00B291B8 /* title.hpp in Headers */,
-				88B3C94C1201BD3A00B291B8 /* touch.hpp in Headers */,
-				88B3C94D1201BD3A00B291B8 /* mediator.hpp in Headers */,
-				88B3C9531201BE3500B291B8 /* main_menu.hpp in Headers */,
-				88B3C9571201BED700B291B8 /* text_creator.hpp in Headers */,
-				88B3C9701201C32E00B291B8 /* letters_storage.hpp in Headers */,
-				887ACE5A1202AECF006B5FFB /* stateless.hpp in Headers */,
-				88B6B5CE1202EA420030F65B /* application.hpp in Headers */,
-				88B6B5D31202EA860030F65B /* stateless.hpp in Headers */,
-				88B6B5F51202EE600030F65B /* camera.hpp in Headers */,
-				88B6B5F91202EEAB0030F65B /* stateless.hpp in Headers */,
-				88B6B60E1202F7160030F65B /* entities.hpp in Headers */,
-				88B6B6151202F8CA0030F65B /* stateless.hpp in Headers */,
-				88B6B62A1202FDA70030F65B /* fidget.hpp in Headers */,
-				88B6B62F1202FDFA0030F65B /* stateless.hpp in Headers */,
-				88B6B64B1203101A0030F65B /* game.hpp in Headers */,
-				88B6B6531203108E0030F65B /* stateless.hpp in Headers */,
-				88B6B66A120313F80030F65B /* image.hpp in Headers */,
-				88B6B671120314550030F65B /* stateless.hpp in Headers */,
-				88B6B689120317720030F65B /* land.hpp in Headers */,
-				88B6B690120317C00030F65B /* stateless.hpp in Headers */,
+				8876303412068D0100CAD8EF /* aggregator.hpp in Headers */,
+				8876303512068D0100CAD8EF /* camera.hpp in Headers */,
+				8876303612068D0100CAD8EF /* math.hpp in Headers */,
+				8876303712068D0100CAD8EF /* rasterizer.hpp in Headers */,
+				8876303812068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876303912068D0100CAD8EF /* render.hpp in Headers */,
+				8876303A12068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876303B12068D0100CAD8EF /* facade.hpp in Headers */,
+				8876303C12068D0100CAD8EF /* application.hpp in Headers */,
+				8876303D12068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876303E12068D0100CAD8EF /* camera.hpp in Headers */,
+				8876303F12068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304012068D0100CAD8EF /* core.hpp in Headers */,
+				8876304112068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304212068D0100CAD8EF /* entities.hpp in Headers */,
+				8876304312068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304412068D0100CAD8EF /* fidget.hpp in Headers */,
+				8876304512068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304612068D0100CAD8EF /* game.hpp in Headers */,
+				8876304712068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304812068D0100CAD8EF /* image.hpp in Headers */,
+				8876304912068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304A12068D0100CAD8EF /* land.hpp in Headers */,
+				8876304B12068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304C12068D0100CAD8EF /* letters_storage.hpp in Headers */,
+				8876304D12068D0100CAD8EF /* main_menu.hpp in Headers */,
+				8876304E12068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876304F12068D0100CAD8EF /* text_creator.hpp in Headers */,
+				8876305012068D0100CAD8EF /* sound.hpp in Headers */,
+				8876305112068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876305212068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876305312068D0100CAD8EF /* text.hpp in Headers */,
+				8876305412068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876305512068D0100CAD8EF /* title.hpp in Headers */,
+				8876305612068D0100CAD8EF /* stateless.hpp in Headers */,
+				8876305712068D0100CAD8EF /* touch.hpp in Headers */,
+				8876305812068D0100CAD8EF /* mediator.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
