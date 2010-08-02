@@ -25,10 +25,17 @@ public :
     void receive ( typename messages :: main_menu_rows_reply ) ;
     void receive ( typename messages :: main_menu_letter_reply ) ;
 private :
+    void _proceed_with_creation ( ) ;
+private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     const _logic_main_menu_mesh_creator_consts_type _logic_main_menu_mesh_creator_consts ;
+    
     num_whole _mesh_creation_permitted ;
+    
+    num_whole _main_menu_rows_requested ;
+    num_whole _main_menu_rows_replied ;
+    num_whole _main_menu_rows ;
 } ;
 
 template < typename mediator >
@@ -52,6 +59,8 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
     _mesh_creation_permitted = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_rows_requested = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_rows_replied = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -66,8 +75,10 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
     if ( platform_conditions :: whole_is_true ( _mesh_creation_permitted ) )
     {
         _mesh_creation_permitted = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create_finished ( ) ) ;
+        _main_menu_rows_requested = _platform_math_consts . get ( ) . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: main_menu_rows_request ( ) ) ;
     }
+    _proceed_with_creation ( ) ;
 }
 
 template < typename mediator >
@@ -76,11 +87,28 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_rows_reply )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_rows_reply msg )
 {
+    if ( platform_conditions :: whole_is_true ( _main_menu_rows_requested ) )
+    {
+        _main_menu_rows_requested = _platform_math_consts . get ( ) . whole_false ;
+        _main_menu_rows_replied = _platform_math_consts . get ( ) . whole_true ;
+        _main_menu_rows = msg . rows ;
+        _proceed_with_creation ( ) ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_letter_reply )
 {
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
+{
+    if ( platform_conditions :: whole_is_true ( _main_menu_rows_replied ) )
+    {
+        _main_menu_rows_replied = _platform_math_consts . get ( ) . whole_false ;
+        _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create_finished ( ) ) ;
+    }
 }
