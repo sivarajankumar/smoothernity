@@ -21,7 +21,6 @@ class shy_logic_main_menu_letters_storage
     public :
         letter_id letter ;
         num_whole is_whitespace ;
-        num_whole index ;
     } ;
     
     class _row_state_type
@@ -50,7 +49,6 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     _rows_state_type _rows_state ;
-    num_whole _total_letters_count ;
 } ;
 
 template < typename mediator >
@@ -66,7 +64,6 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
-    _total_letters_count = _platform_math_consts . get ( ) . whole_0 ;
     _rows_state . rows_count = _platform_math_consts . get ( ) . whole_minus_1 ;
     _next_row ( ) ;
 }
@@ -80,14 +77,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
     platform_static_array :: element_ptr ( letter_state , row_state . get ( ) . letters , row_state . get ( ) . letters_count ) ;
     letter_state . get ( ) . letter = msg . letter ;
     letter_state . get ( ) . is_whitespace = _platform_math_consts . get ( ) . whole_false ;
-    letter_state . get ( ) . index = _total_letters_count ;
     platform_math :: inc_whole ( row_state . get ( ) . letters_count ) ;
-    platform_math :: inc_whole ( _total_letters_count ) ;
-    
-    typename messages :: main_menu_letter_added added_msg ;
-    added_msg . letter = letter_state . get ( ) . letter ;
-    added_msg . index = letter_state . get ( ) . index ;
-    _mediator . get ( ) . send ( added_msg ) ;
 }
 
 template < typename mediator >

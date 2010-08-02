@@ -6,7 +6,8 @@ class shy_logic_main_menu_mesh_creator
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
     void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: main_menu_letter_added msg ) ;
+    void receive ( typename messages :: main_menu_mesh_create msg ) ;
+    void receive ( typename messages :: main_menu_update msg ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
 } ;
@@ -23,6 +24,12 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_letter_added msg )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_mesh_create msg )
+{
+    _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create_finished ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_update msg )
 {
 }

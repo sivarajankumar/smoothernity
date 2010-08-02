@@ -21,7 +21,8 @@ public :
         class main_menu_add_whitespace { } ;
         class main_menu_finished { } ;
         class main_menu_launch_permit { } ;
-        class main_menu_letter_added { public : letter_id letter ; num_whole index ; } ;
+        class main_menu_mesh_create { } ;
+        class main_menu_mesh_create_finished { } ;
         class main_menu_next_row { } ;
         class main_menu_render { } ;
         class main_menu_text_create { } ;
@@ -38,7 +39,8 @@ public :
         void send ( typename logic_main_menu_messages :: main_menu_add_whitespace msg ) ;
         void send ( typename logic_main_menu_messages :: main_menu_finished msg ) ;
         void send ( typename logic_main_menu_messages :: main_menu_launch_permit msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_letter_added msg ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_mesh_create msg ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_mesh_create_finished msg ) ;
         void send ( typename logic_main_menu_messages :: main_menu_next_row msg ) ;
         void send ( typename logic_main_menu_messages :: main_menu_render msg ) ;
         void send ( typename logic_main_menu_messages :: main_menu_text_create msg ) ;
@@ -101,6 +103,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: main_menu_update msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -143,7 +146,16 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: main_menu_letter_added msg ) 
+:: send ( typename logic_main_menu_messages :: main_menu_mesh_create msg ) 
 {
     _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: main_menu_mesh_create_finished msg ) 
+{
+    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
 }
