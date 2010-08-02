@@ -215,7 +215,7 @@ class shy_aggregator
     typedef typename aggregator_types :: platform :: platform_scheduler platform_scheduler ;
     typedef typename aggregator_types :: platform :: platform_scheduler :: scheduler scheduler ;
 public :
-    shy_aggregator ( typename platform_pointer :: template pointer < const platform > arg_platform ) ;
+    shy_aggregator ( typename platform_pointer :: template pointer < const platform > ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;

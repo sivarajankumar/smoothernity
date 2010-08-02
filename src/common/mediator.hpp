@@ -136,7 +136,7 @@ private :
 		using logic_title_sender :: send ;
 		using logic_touch_sender :: send ;
         
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;  
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
     } ;
 
     class receivers
@@ -163,34 +163,34 @@ private :
     } ;
 
 public :
-    shy_mediator ( typename platform_pointer :: template pointer < const platform > arg_platform ) ;
-    void logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & result ) ;
-    void engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & result ) ;
-    void platform_obj ( typename platform_pointer :: template pointer < const platform > & result ) ;
+    shy_mediator ( typename platform_pointer :: template pointer < const platform > ) ;
+    void logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & ) ;
+    void engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & ) ;
+    void platform_obj ( typename platform_pointer :: template pointer < const platform > & ) ;
     void register_modules
-        ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
-        , typename platform_pointer :: template pointer < engine_render > arg_engine_render
-        , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
-        , typename platform_pointer :: template pointer < logic_application > arg_logic_application
-        , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
-        , typename platform_pointer :: template pointer < logic_core > arg_logic_core
-        , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
-        , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
-        , typename platform_pointer :: template pointer < logic_game > arg_logic_game
-        , typename platform_pointer :: template pointer < logic_image > arg_logic_image
-        , typename platform_pointer :: template pointer < logic_land > arg_logic_land
-        , typename platform_pointer :: template pointer < logic_main_menu > arg_logic_main_menu
-        , typename platform_pointer :: template pointer < logic_main_menu_mesh_creator > arg_logic_main_menu_mesh_creator
-        , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
-        , typename platform_pointer :: template pointer < logic_main_menu_text_creator > arg_logic_main_menu_text_creator
-        , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
-        , typename platform_pointer :: template pointer < logic_text > arg_logic_text
-        , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
-        , typename platform_pointer :: template pointer < logic_title > arg_logic_title
-        , typename platform_pointer :: template pointer < logic_touch > arg_logic_touch
+        ( typename platform_pointer :: template pointer < engine_rasterizer >
+        , typename platform_pointer :: template pointer < engine_render >
+        , typename platform_pointer :: template pointer < engine_render_stateless >
+        , typename platform_pointer :: template pointer < logic_application >
+        , typename platform_pointer :: template pointer < logic_camera >
+        , typename platform_pointer :: template pointer < logic_core >
+        , typename platform_pointer :: template pointer < logic_entities >
+        , typename platform_pointer :: template pointer < logic_fidget >
+        , typename platform_pointer :: template pointer < logic_game >
+        , typename platform_pointer :: template pointer < logic_image >
+        , typename platform_pointer :: template pointer < logic_land >
+        , typename platform_pointer :: template pointer < logic_main_menu >
+        , typename platform_pointer :: template pointer < logic_main_menu_mesh_creator >
+        , typename platform_pointer :: template pointer < logic_main_menu_letters_storage >
+        , typename platform_pointer :: template pointer < logic_main_menu_text_creator >
+        , typename platform_pointer :: template pointer < logic_sound >
+        , typename platform_pointer :: template pointer < logic_text >
+        , typename platform_pointer :: template pointer < logic_text_stateless >
+        , typename platform_pointer :: template pointer < logic_title >
+        , typename platform_pointer :: template pointer < logic_touch >
         ) ;
     template < typename message_type >
-    void send ( message_type msg ) ;
+    void send ( message_type ) ;
 private :
     typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;

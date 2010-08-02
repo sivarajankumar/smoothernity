@@ -49,7 +49,7 @@ template < typename platform >
 class shy_facade
 {
 public :
-    shy_facade ( const platform & arg_platform ) ;
+    shy_facade ( const platform & ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
