@@ -54,15 +54,6 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
-:: send ( typename logic_core_messages :: done msg )
-{
-    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator >
-template < typename receivers >
-void shy_logic_core_stateless < mediator >
-:: logic_core_sender < receivers >
 :: send ( typename logic_core_messages :: init msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
@@ -77,10 +68,20 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_core_stateless < mediator >
+:: logic_core_sender < receivers >
+:: send ( typename logic_core_messages :: done msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

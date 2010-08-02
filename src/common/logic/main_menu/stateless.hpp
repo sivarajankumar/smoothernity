@@ -145,4 +145,5 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: main_menu_letter_added msg ) 
 {
+    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
 }

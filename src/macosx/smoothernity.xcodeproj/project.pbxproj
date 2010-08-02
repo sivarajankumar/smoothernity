@@ -162,6 +162,7 @@
 		8876305612068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303112068D0100CAD8EF /* stateless.hpp */; };
 		8876305712068D0100CAD8EF /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303212068D0100CAD8EF /* touch.hpp */; };
 		8876305812068D0100CAD8EF /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303312068D0100CAD8EF /* mediator.hpp */; };
+		887630811206A64C00CAD8EF /* mesh_creator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 887630801206A64C00CAD8EF /* mesh_creator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
 /* End PBXBuildFile section */
 
@@ -255,6 +256,7 @@
 		8876303112068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		8876303212068D0100CAD8EF /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
 		8876303312068D0100CAD8EF /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
+		887630801206A64C00CAD8EF /* mesh_creator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh_creator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -551,6 +553,7 @@
 			children = (
 				8876302312068D0100CAD8EF /* letters_storage.hpp */,
 				8876302412068D0100CAD8EF /* main_menu.hpp */,
+				887630801206A64C00CAD8EF /* mesh_creator.hpp */,
 				8876302512068D0100CAD8EF /* stateless.hpp */,
 				8876302612068D0100CAD8EF /* text_creator.hpp */,
 			);
@@ -668,6 +671,7 @@
 				8876305612068D0100CAD8EF /* stateless.hpp in Headers */,
 				8876305712068D0100CAD8EF /* touch.hpp in Headers */,
 				8876305812068D0100CAD8EF /* mediator.hpp in Headers */,
+				887630811206A64C00CAD8EF /* mesh_creator.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
