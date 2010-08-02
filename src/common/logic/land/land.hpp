@@ -39,15 +39,15 @@ class shy_logic_land
     
 public :
     shy_logic_land ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: land_prepare_permit msg ) ;
-    void receive ( typename messages :: land_render_request msg ) ;
-    void receive ( typename messages :: land_update msg ) ;
-    void receive ( typename messages :: render_texture_create_reply msg ) ;
-    void receive ( typename messages :: render_mesh_create_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: land_prepare_permit ) ;
+    void receive ( typename messages :: land_render_request ) ;
+    void receive ( typename messages :: land_update ) ;
+    void receive ( typename messages :: render_texture_create_reply ) ;
+    void receive ( typename messages :: render_mesh_create_reply ) ;
 private :
-    shy_logic_land < mediator > & operator= ( const shy_logic_land < mediator > & src ) ;
+    shy_logic_land < mediator > & operator= ( const shy_logic_land < mediator > & ) ;
     void _render_land ( ) ;
     void _create_land_mesh ( ) ;
     void _create_land_texture ( ) ;
@@ -74,7 +74,7 @@ shy_logic_land < mediator > :: shy_logic_land ( )
 }
 
 template < typename mediator >
-shy_logic_land < mediator > & shy_logic_land < mediator > :: operator= ( const shy_logic_land < mediator > & src )
+shy_logic_land < mediator > & shy_logic_land < mediator > :: operator= ( const shy_logic_land < mediator > & )
 {
     return * this ;
 }
@@ -105,7 +105,7 @@ void shy_logic_land < mediator > :: set_mediator ( typename platform_pointer :: 
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -121,13 +121,13 @@ void shy_logic_land < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: land_prepare_permit msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_prepare_permit )
 {
     _land_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: land_render_request msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _land_mesh_created ) && platform_conditions :: whole_is_true ( _land_texture_created ) )
         _render_land ( ) ;
@@ -146,7 +146,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: render_textur
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: land_update msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: land_update )
 {
     if ( platform_conditions :: whole_is_true ( _land_prepare_permitted ) )
     {

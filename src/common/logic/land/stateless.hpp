@@ -17,12 +17,12 @@ public :
     class logic_land_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_land_messages :: land_prepare_permit msg ) ;
-        void send ( typename logic_land_messages :: land_prepared msg ) ;
-        void send ( typename logic_land_messages :: land_render_reply msg ) ;
-        void send ( typename logic_land_messages :: land_render_request msg ) ;
-        void send ( typename logic_land_messages :: land_update msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_land_messages :: land_prepare_permit ) ;
+        void send ( typename logic_land_messages :: land_prepared ) ;
+        void send ( typename logic_land_messages :: land_render_reply ) ;
+        void send ( typename logic_land_messages :: land_render_request ) ;
+        void send ( typename logic_land_messages :: land_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
