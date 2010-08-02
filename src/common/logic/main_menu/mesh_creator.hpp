@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_mesh_creator
 {
+    typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -44,6 +45,12 @@ private :
     num_whole _main_menu_cols_replied ;
     num_whole _main_menu_cols ;
     
+    num_whole _main_menu_letter_requested ;
+    num_whole _main_menu_letter_requested_row ;
+    num_whole _main_menu_letter_requested_col ;
+    num_whole _main_menu_letter_replied ;
+    letter_id _main_menu_letter ;
+    
     num_whole _current_row ;
     num_whole _current_col ;
 } ;
@@ -73,6 +80,8 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
     _main_menu_rows_replied = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_cols_requested = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_cols_replied = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_letter_requested = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_letter_replied = _platform_math_consts . get ( ) . whole_false ;
     _current_row = _platform_math_consts . get ( ) . whole_0 ;
     _current_col = _platform_math_consts . get ( ) . whole_0 ;
 }
@@ -86,12 +95,6 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_update )
 {
-    if ( platform_conditions :: whole_is_true ( _mesh_creation_permitted ) )
-    {
-        _mesh_creation_permitted = _platform_math_consts . get ( ) . whole_false ;
-        _main_menu_rows_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: main_menu_rows_request ( ) ) ;
-    }
     _proceed_with_creation ( ) ;
 }
 
@@ -122,13 +125,29 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_letter_reply )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_letter_reply msg )
 {
+    if ( platform_conditions :: whole_is_true ( _main_menu_letter_requested )
+      && platform_conditions :: wholes_are_equal ( _main_menu_letter_requested_row , msg . row )
+      && platform_conditions :: wholes_are_equal ( _main_menu_letter_requested_col , msg . col )
+       )
+    {
+        _main_menu_letter_requested = _platform_math_consts . get ( ) . whole_false ;
+        _main_menu_letter_replied = _platform_math_consts . get ( ) . whole_true ;
+        _main_menu_letter = msg . letter ;
+        _proceed_with_creation ( ) ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
 {
+    if ( platform_conditions :: whole_is_true ( _mesh_creation_permitted ) )
+    {
+        _mesh_creation_permitted = _platform_math_consts . get ( ) . whole_false ;
+        _main_menu_rows_requested = _platform_math_consts . get ( ) . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: main_menu_rows_request ( ) ) ;
+    }
     if ( platform_conditions :: whole_is_true ( _main_menu_rows_replied ) )
     {
         _main_menu_rows_replied = _platform_math_consts . get ( ) . whole_false ;
@@ -139,6 +158,10 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
     {
         _main_menu_cols_replied = _platform_math_consts . get ( ) . whole_false ;
         _current_col = _platform_math_consts . get ( ) . whole_minus_1 ;
+        _move_to_next_col ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _main_menu_letter_replied ) )
+    {
         _move_to_next_col ( ) ;
     }
 }
@@ -165,7 +188,13 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _move_to_next_col ( )
     platform_math :: inc_whole ( _current_col ) ;
     if ( platform_conditions :: whole_less_than_whole ( _current_col , _main_menu_cols ) )
     {
-        _move_to_next_col ( ) ;
+        _main_menu_letter_requested = _platform_math_consts . get ( ) . whole_true ;
+        _main_menu_letter_requested_row = _current_row ;
+        _main_menu_letter_requested_col = _current_col ;
+        typename messages :: main_menu_letter_request msg ;
+        msg . row = _current_row ;
+        msg . col = _current_col ;
+        _mediator . get ( ) . send ( msg ) ;
     }
     else
         _move_to_next_row ( ) ;
