@@ -32,18 +32,18 @@ class shy_logic_camera
     
 public :
     shy_logic_camera ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: camera_update msg ) ;
-    void receive ( typename messages :: camera_prepare_permit msg ) ;
-    void receive ( typename messages :: camera_matrix_request msg ) ;
-    void receive ( typename messages :: entities_height_reply msg ) ;
-    void receive ( typename messages :: entities_mesh_grid_reply msg ) ;
-    void receive ( typename messages :: entities_origin_reply msg ) ;
-    void receive ( typename messages :: near_plane_distance_reply msg ) ;
-    void receive ( typename messages :: render_aspect_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: camera_update ) ;
+    void receive ( typename messages :: camera_prepare_permit ) ;
+    void receive ( typename messages :: camera_matrix_request ) ;
+    void receive ( typename messages :: entities_height_reply ) ;
+    void receive ( typename messages :: entities_mesh_grid_reply ) ;
+    void receive ( typename messages :: entities_origin_reply ) ;
+    void receive ( typename messages :: near_plane_distance_reply ) ;
+    void receive ( typename messages :: render_aspect_reply ) ;
 private :
-    shy_logic_camera < mediator > & operator= ( const shy_logic_camera < mediator > & src ) ;
+    shy_logic_camera < mediator > & operator= ( const shy_logic_camera < mediator > & ) ;
     void _proceed_with_update ( ) ;
     void _proceed_with_fill_camera_schedules ( ) ;
     void _proceed_with_camera_update ( ) ;
@@ -59,8 +59,8 @@ private :
     void _update_camera_matrix ( ) ;
     void _calc_desired_camera_target_pos ( ) ;
     void _calc_desired_camera_origin_pos ( ) ;
-    void _random_camera_origin_index ( num_whole & result ) ;
-    void _random_camera_target_index ( num_whole & result ) ;
+    void _random_camera_origin_index ( num_whole & ) ;
+    void _random_camera_target_index ( num_whole & ) ;
     void _get_random_index ( num_whole & result , num_whole index_min , num_whole index_max ) ;
     void _camera_origin_index_is_duplicate ( num_whole & result , num_whole index ) ;
     void _camera_target_index_is_duplicate ( num_whole & result , num_whole index ) ;
@@ -132,7 +132,7 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
 }
 
 template < typename mediator >
-shy_logic_camera < mediator > & shy_logic_camera < mediator > :: operator= ( const shy_logic_camera < mediator > & src )
+shy_logic_camera < mediator > & shy_logic_camera < mediator > :: operator= ( const shy_logic_camera < mediator > & )
 {
     return * this ;
 }
@@ -153,7 +153,7 @@ void shy_logic_camera < mediator > :: set_mediator ( typename platform_pointer :
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -208,7 +208,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_request msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_request )
 {
     typename messages :: camera_matrix_reply reply_msg ;
     if ( platform_conditions :: whole_is_true ( _camera_created ) )
@@ -219,13 +219,13 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matr
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prepare_permit msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prepare_permit )
 {
     _camera_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: camera_update msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: camera_update )
 {
     if ( platform_conditions :: whole_is_true ( _camera_prepare_permitted ) )
     {
