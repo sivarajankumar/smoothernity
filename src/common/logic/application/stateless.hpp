@@ -14,9 +14,9 @@ public :
     class logic_application_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_application_messages :: application_render msg ) ;
-        void send ( typename logic_application_messages :: application_update msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_application_messages :: application_render ) ;
+        void send ( typename logic_application_messages :: application_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;

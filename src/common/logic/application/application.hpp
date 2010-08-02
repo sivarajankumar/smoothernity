@@ -10,13 +10,13 @@ class shy_logic_application
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: application_render msg ) ;
-    void receive ( typename messages :: application_update msg ) ;
-    void receive ( typename messages :: title_finished msg ) ;
-    void receive ( typename messages :: text_prepared msg ) ;
-    void receive ( typename messages :: main_menu_finished msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: application_render ) ;
+    void receive ( typename messages :: application_update ) ;
+    void receive ( typename messages :: title_finished ) ;
+    void receive ( typename messages :: text_prepared ) ;
+    void receive ( typename messages :: main_menu_finished ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -34,7 +34,7 @@ void shy_logic_application < mediator > :: set_mediator ( typename platform_poin
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_application < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -47,7 +47,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: init m
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: text_prepared msg )
+void shy_logic_application < mediator > :: receive ( typename messages :: text_prepared )
 {
     _text_active = _platform_math_consts . get ( ) . whole_false ;
     _title_active = _platform_math_consts . get ( ) . whole_true ;
@@ -55,7 +55,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: text_p
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: title_finished msg )
+void shy_logic_application < mediator > :: receive ( typename messages :: title_finished )
 {
     _title_active = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_active = _platform_math_consts . get ( ) . whole_true ;
@@ -63,7 +63,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: title_
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: main_menu_finished msg )
+void shy_logic_application < mediator > :: receive ( typename messages :: main_menu_finished )
 {
     _main_menu_active = _platform_math_consts . get ( ) . whole_false ;
     _game_active = _platform_math_consts . get ( ) . whole_true ;
@@ -71,7 +71,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: main_m
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: application_render msg )
+void shy_logic_application < mediator > :: receive ( typename messages :: application_render )
 {
     if ( platform_conditions :: whole_is_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: game_render ( ) ) ;
@@ -90,7 +90,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: application_update msg )
+void shy_logic_application < mediator > :: receive ( typename messages :: application_update )
 {
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
