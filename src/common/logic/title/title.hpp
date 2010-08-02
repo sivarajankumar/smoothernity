@@ -60,24 +60,24 @@ class shy_logic_title
     
 public :
     shy_logic_title ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: title_render msg ) ;
-    void receive ( typename messages :: title_update msg ) ;
-    void receive ( typename messages :: title_launch_permit msg ) ;
-    void receive ( typename messages :: text_letter_big_tex_coords_reply msg ) ;
-    void receive ( typename messages :: render_mesh_create_reply msg ) ;
-    void receive ( typename messages :: use_ortho_projection_reply msg ) ;
-    void receive ( typename messages :: fidget_render_reply msg ) ;
-    void receive ( typename messages :: use_text_texture_reply msg ) ;
-    void receive ( typename messages :: render_aspect_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: title_render ) ;
+    void receive ( typename messages :: title_update ) ;
+    void receive ( typename messages :: title_launch_permit ) ;
+    void receive ( typename messages :: text_letter_big_tex_coords_reply ) ;
+    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: use_ortho_projection_reply ) ;
+    void receive ( typename messages :: fidget_render_reply ) ;
+    void receive ( typename messages :: use_text_texture_reply ) ;
+    void receive ( typename messages :: render_aspect_reply ) ;
 private :
-    shy_logic_title < mediator > & operator= ( const shy_logic_title < mediator > & src ) ;
+    shy_logic_title < mediator > & operator= ( const shy_logic_title < mediator > & ) ;
     void _title_create ( ) ;
     void _title_render ( ) ;
     void _title_update ( ) ;
     void _delete_all_meshes ( ) ;
-    void _add_letter ( letter_id letter ) ;
+    void _add_letter ( letter_id ) ;
     void _prepare_to_appear ( ) ;
     void _prepare_to_disappear ( ) ;
     void _animate_appear ( ) ;
@@ -146,7 +146,7 @@ shy_logic_title < mediator > :: shy_logic_title ( )
 }
 
 template < typename mediator >
-shy_logic_title < mediator > & shy_logic_title < mediator > :: operator= ( const shy_logic_title < mediator > & src )
+shy_logic_title < mediator > & shy_logic_title < mediator > :: operator= ( const shy_logic_title < mediator > & )
 {
     return * this ;
 }
@@ -173,7 +173,7 @@ shy_logic_title < mediator > :: _logic_title_consts_type :: _logic_title_consts_
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: init msg ) 
+void shy_logic_title < mediator > :: receive ( typename messages :: init ) 
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -210,14 +210,14 @@ void shy_logic_title < mediator > :: set_mediator ( typename platform_pointer ::
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: title_render msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: title_render )
 {
     _render_started = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_render ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: use_ortho_projection_reply msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: use_ortho_projection_reply )
 {
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_requested ) )
     {
@@ -228,13 +228,13 @@ void shy_logic_title < mediator > :: receive ( typename messages :: use_ortho_pr
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: title_launch_permit msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: title_launch_permit )
 {
     _title_launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: title_update msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: title_update )
 {
     if ( platform_conditions :: whole_is_true ( _title_launch_permitted ) )
     {
@@ -291,7 +291,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: fidget_render_reply msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: fidget_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_render_requested ) )
     {
@@ -302,7 +302,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: fidget_rende
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: use_text_texture_reply msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: use_text_texture_reply )
 {
     if ( platform_conditions :: whole_is_true ( _use_text_texture_requested ) )
     {

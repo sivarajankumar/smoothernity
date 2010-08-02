@@ -16,11 +16,11 @@ public :
 	class logic_title_sender
 	{
 	public :
-		void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_title_messages :: title_finished msg ) ;
-        void send ( typename logic_title_messages :: title_launch_permit msg ) ;
-        void send ( typename logic_title_messages :: title_render msg ) ;
-        void send ( typename logic_title_messages :: title_update msg ) ;
+		void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_title_messages :: title_finished ) ;
+        void send ( typename logic_title_messages :: title_launch_permit ) ;
+        void send ( typename logic_title_messages :: title_render ) ;
+        void send ( typename logic_title_messages :: title_update ) ;
 	private :
 		typename platform_pointer :: template pointer < const receivers > _receivers ;
 	} ;

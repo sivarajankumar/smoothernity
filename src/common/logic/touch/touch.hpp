@@ -34,14 +34,14 @@ class shy_logic_touch
 
 public :
     shy_logic_touch ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: touch_prepare_permit msg ) ;
-    void receive ( typename messages :: touch_render msg ) ;
-    void receive ( typename messages :: touch_update msg ) ;
-    void receive ( typename messages :: render_mesh_create_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: touch_prepare_permit ) ;
+    void receive ( typename messages :: touch_render ) ;
+    void receive ( typename messages :: touch_update ) ;
+    void receive ( typename messages :: render_mesh_create_reply ) ;
 private :
-    shy_logic_touch < mediator > & operator= ( const shy_logic_touch < mediator > & src ) ;
+    shy_logic_touch < mediator > & operator= ( const shy_logic_touch < mediator > & ) ;
     void _update_spot ( ) ;
 	void _decrease_spot_lifetime ( ) ;
 	void _poll_touchscreen ( ) ;
@@ -72,7 +72,7 @@ shy_logic_touch < mediator > :: shy_logic_touch ( )
 }
 
 template < typename mediator >
-shy_logic_touch < mediator > & shy_logic_touch < mediator > :: operator= ( const shy_logic_touch < mediator > & src )
+shy_logic_touch < mediator > & shy_logic_touch < mediator > :: operator= ( const shy_logic_touch < mediator > & )
 {
     return * this ;
 }
@@ -96,7 +96,7 @@ void shy_logic_touch < mediator > :: set_mediator ( typename platform_pointer ::
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_touch < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -111,20 +111,20 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepare_permit msg )
+void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepare_permit )
 {
     _spot_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: touch_render msg )
+void shy_logic_touch < mediator > :: receive ( typename messages :: touch_render )
 {
     if ( platform_conditions :: whole_is_true ( _spot_mesh_created ) && platform_conditions :: whole_greater_than_zero ( _spot_frames_left ) )
         _render_spot_mesh ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update msg )
+void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update )
 {
     if ( platform_conditions :: whole_is_true ( _spot_prepare_permitted ) )
     {

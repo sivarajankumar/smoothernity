@@ -16,11 +16,11 @@ public :
 	class logic_touch_sender
 	{
 	public :
-		void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_touch_messages :: touch_prepare_permit msg ) ;
-        void send ( typename logic_touch_messages :: touch_prepared msg ) ;
-        void send ( typename logic_touch_messages :: touch_render msg ) ;
-        void send ( typename logic_touch_messages :: touch_update msg ) ;
+		void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_touch_messages :: touch_prepare_permit ) ;
+        void send ( typename logic_touch_messages :: touch_prepared ) ;
+        void send ( typename logic_touch_messages :: touch_render ) ;
+        void send ( typename logic_touch_messages :: touch_update ) ;
 	private :
 		typename platform_pointer :: template pointer < const receivers > _receivers ;
 	} ;
