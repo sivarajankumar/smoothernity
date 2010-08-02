@@ -16,13 +16,13 @@ class shy_logic_main_menu
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
 public :
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: main_menu_launch_permit msg ) ;
-    void receive ( typename messages :: main_menu_render msg ) ;
-    void receive ( typename messages :: main_menu_update msg ) ;
-    void receive ( typename messages :: main_menu_text_create_finished msg ) ;
-    void receive ( typename messages :: main_menu_mesh_create_finished msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: main_menu_launch_permit ) ;
+    void receive ( typename messages :: main_menu_render ) ;
+    void receive ( typename messages :: main_menu_update ) ;
+    void receive ( typename messages :: main_menu_text_create_finished ) ;
+    void receive ( typename messages :: main_menu_mesh_create_finished ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -37,7 +37,7 @@ void shy_logic_main_menu < mediator > :: set_mediator ( typename platform_pointe
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -48,18 +48,18 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: init msg
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_launch_permit msg )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_launch_permit )
 {
     _launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_render msg )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_render )
 {
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_update msg )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_update )
 {
     if ( platform_conditions :: whole_is_true ( _launch_permitted ) )
     {
@@ -72,13 +72,13 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_men
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_text_create_finished msg )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_text_create_finished )
 {
     _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_mesh_create_finished msg )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_mesh_create_finished )
 {
     _mediator . get ( ) . send ( typename messages :: main_menu_finished ( ) ) ;
 }

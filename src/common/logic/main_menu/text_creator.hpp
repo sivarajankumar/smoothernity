@@ -16,10 +16,10 @@ class shy_logic_main_menu_text_creator
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
 public :
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: main_menu_text_create msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: main_menu_text_create ) ;
 public :
-    void _add_letter ( letter_id letter ) ;
+    void _add_letter ( letter_id ) ;
     void _add_whitespace ( ) ;
     void _next_row ( ) ;
     void _text_create_finished ( ) ;
@@ -34,7 +34,7 @@ void shy_logic_main_menu_text_creator < mediator > :: set_mediator ( typename pl
 }
 
 template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: receive ( typename messages :: main_menu_text_create msg )
+void shy_logic_main_menu_text_creator < mediator > :: receive ( typename messages :: main_menu_text_create )
 {
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;

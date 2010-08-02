@@ -34,18 +34,18 @@ public :
     class logic_main_menu_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_add_letter msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_add_whitespace msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_finished msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_launch_permit msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_mesh_create msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_mesh_create_finished msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_next_row msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_render msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_text_create msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_text_create_finished msg ) ;
-        void send ( typename logic_main_menu_messages :: main_menu_update msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_add_letter ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_add_whitespace ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_finished ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_launch_permit ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_mesh_create ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_mesh_create_finished ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_next_row ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_render ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_text_create ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_text_create_finished ) ;
+        void send ( typename logic_main_menu_messages :: main_menu_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;

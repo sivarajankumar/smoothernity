@@ -38,11 +38,11 @@ class shy_logic_main_menu_letters_storage
     } ;
     
 public :
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: main_menu_add_letter msg ) ;
-    void receive ( typename messages :: main_menu_add_whitespace msg ) ;
-    void receive ( typename messages :: main_menu_next_row msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: main_menu_add_letter ) ;
+    void receive ( typename messages :: main_menu_add_whitespace ) ;
+    void receive ( typename messages :: main_menu_next_row ) ;
 public :
     void _next_row ( ) ;
 private :
@@ -58,7 +58,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: set_mediator ( typename
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -81,7 +81,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_add_whitespace msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_add_whitespace )
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     typename platform_pointer :: template pointer < _letter_state_type > letter_state ;
@@ -92,7 +92,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_next_row msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_next_row )
 {
     _next_row ( ) ;
 }
