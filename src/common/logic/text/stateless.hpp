@@ -81,25 +81,25 @@ public :
     class logic_text_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_text_messages :: text_letter_big_tex_coords_reply msg ) ;
-        void send ( typename logic_text_messages :: text_letter_big_tex_coords_request msg ) ;
-        void send ( typename logic_text_messages :: text_letter_small_tex_coords_reply msg ) ;
-        void send ( typename logic_text_messages :: text_letter_small_tex_coords_request msg ) ;
-        void send ( typename logic_text_messages :: text_prepare_permit msg ) ;
-        void send ( typename logic_text_messages :: text_prepared msg ) ;
-        void send ( typename logic_text_messages :: text_render_reply msg ) ;
-        void send ( typename logic_text_messages :: text_render_request msg ) ;
-        void send ( typename logic_text_messages :: text_update msg ) ;
-        void send ( typename logic_text_messages :: use_text_texture_reply msg ) ;
-        void send ( typename logic_text_messages :: use_text_texture_request msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_text_messages :: text_letter_big_tex_coords_reply ) ;
+        void send ( typename logic_text_messages :: text_letter_big_tex_coords_request ) ;
+        void send ( typename logic_text_messages :: text_letter_small_tex_coords_reply ) ;
+        void send ( typename logic_text_messages :: text_letter_small_tex_coords_request ) ;
+        void send ( typename logic_text_messages :: text_prepare_permit ) ;
+        void send ( typename logic_text_messages :: text_prepared ) ;
+        void send ( typename logic_text_messages :: text_render_reply ) ;
+        void send ( typename logic_text_messages :: text_render_request ) ;
+        void send ( typename logic_text_messages :: text_update ) ;
+        void send ( typename logic_text_messages :: use_text_texture_reply ) ;
+        void send ( typename logic_text_messages :: use_text_texture_request ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
     
 public :
     shy_logic_text_stateless ( ) ;
-    shy_logic_text_stateless & operator= ( const shy_logic_text_stateless & src ) ;
+    shy_logic_text_stateless & operator= ( const shy_logic_text_stateless & ) ;
     static void are_letters_equal ( num_whole & result , letter_id a , letter_id b ) ;
 public :
     const logic_text_stateless_consts_type logic_text_stateless_consts ;
@@ -112,7 +112,7 @@ shy_logic_text_stateless < mediator > :: shy_logic_text_stateless ( )
 
 template < typename mediator >
 shy_logic_text_stateless < mediator > &
-shy_logic_text_stateless < mediator > :: operator= ( const shy_logic_text_stateless < mediator > & src )
+shy_logic_text_stateless < mediator > :: operator= ( const shy_logic_text_stateless < mediator > & )
 {
     return * this ;
 }
