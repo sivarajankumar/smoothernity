@@ -72,45 +72,45 @@ class shy_engine_render
     
 public :
     shy_engine_render ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: done msg ) ;
-    void receive ( typename messages :: render_aspect_request msg ) ;
-    void receive ( typename messages :: render_texture_create_request msg ) ;
-    void receive ( typename messages :: render_texture_finalize msg ) ;
-    void receive ( typename messages :: render_texture_load_from_resource msg ) ;
-    void receive ( typename messages :: render_texture_loader_ready_request msg ) ;
-    void receive ( typename messages :: render_texture_select msg ) ;
-    void receive ( typename messages :: render_texture_unselect msg ) ;
-    void receive ( typename messages :: render_texture_set_texels_rect msg ) ;
-    void receive ( typename messages :: render_texture_set_texel msg ) ;
-    void receive ( typename messages :: render_texture_set_texel_rgba msg ) ;
-    void receive ( typename messages :: render_mesh_create_request msg ) ;
-    void receive ( typename messages :: render_mesh_finalize msg ) ;
-    void receive ( typename messages :: render_mesh_set_vertex_position msg ) ;
-    void receive ( typename messages :: render_mesh_set_vertex_tex_coord msg ) ;
-    void receive ( typename messages :: render_mesh_set_vertex_color msg ) ;
-    void receive ( typename messages :: render_mesh_set_triangle_strip_index_value msg ) ;
-    void receive ( typename messages :: render_mesh_set_triangle_fan_index_value msg ) ;
-    void receive ( typename messages :: render_mesh_set_transform msg ) ;
-    void receive ( typename messages :: render_mesh_render msg ) ;
-    void receive ( typename messages :: render_mesh_delete msg ) ;
-    void receive ( typename messages :: render_clear_screen msg ) ;
-    void receive ( typename messages :: render_disable_depth_test msg ) ;
-    void receive ( typename messages :: render_enable_depth_test msg ) ;
-    void receive ( typename messages :: render_matrix_load msg ) ;
-    void receive ( typename messages :: render_fog_disable msg ) ;
-    void receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha msg ) ;
-    void receive ( typename messages :: render_blend_disable msg ) ;
-    void receive ( typename messages :: render_fog_linear msg ) ;
-    void receive ( typename messages :: render_projection_frustum msg ) ;
-    void receive ( typename messages :: render_projection_ortho msg ) ;
-    void receive ( typename messages :: render_matrix_identity msg ) ;
-    void receive ( typename messages :: render_enable_face_culling msg ) ;
-    void receive ( typename messages :: render_texture_mode_modulate msg ) ;
-    void receive ( typename messages :: render_frame_loss_request msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: done ) ;
+    void receive ( typename messages :: render_aspect_request ) ;
+    void receive ( typename messages :: render_texture_create_request ) ;
+    void receive ( typename messages :: render_texture_finalize ) ;
+    void receive ( typename messages :: render_texture_load_from_resource ) ;
+    void receive ( typename messages :: render_texture_loader_ready_request ) ;
+    void receive ( typename messages :: render_texture_select ) ;
+    void receive ( typename messages :: render_texture_unselect ) ;
+    void receive ( typename messages :: render_texture_set_texels_rect ) ;
+    void receive ( typename messages :: render_texture_set_texel ) ;
+    void receive ( typename messages :: render_texture_set_texel_rgba ) ;
+    void receive ( typename messages :: render_mesh_create_request ) ;
+    void receive ( typename messages :: render_mesh_finalize ) ;
+    void receive ( typename messages :: render_mesh_set_vertex_position ) ;
+    void receive ( typename messages :: render_mesh_set_vertex_tex_coord ) ;
+    void receive ( typename messages :: render_mesh_set_vertex_color ) ;
+    void receive ( typename messages :: render_mesh_set_triangle_strip_index_value ) ;
+    void receive ( typename messages :: render_mesh_set_triangle_fan_index_value ) ;
+    void receive ( typename messages :: render_mesh_set_transform ) ;
+    void receive ( typename messages :: render_mesh_render ) ;
+    void receive ( typename messages :: render_mesh_delete ) ;
+    void receive ( typename messages :: render_clear_screen ) ;
+    void receive ( typename messages :: render_disable_depth_test ) ;
+    void receive ( typename messages :: render_enable_depth_test ) ;
+    void receive ( typename messages :: render_matrix_load ) ;
+    void receive ( typename messages :: render_fog_disable ) ;
+    void receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ) ;
+    void receive ( typename messages :: render_blend_disable ) ;
+    void receive ( typename messages :: render_fog_linear ) ;
+    void receive ( typename messages :: render_projection_frustum ) ;
+    void receive ( typename messages :: render_projection_ortho ) ;
+    void receive ( typename messages :: render_matrix_identity ) ;
+    void receive ( typename messages :: render_enable_face_culling ) ;
+    void receive ( typename messages :: render_texture_mode_modulate ) ;
+    void receive ( typename messages :: render_frame_loss_request ) ;
 private :
-    shy_engine_render < mediator > & operator= ( const shy_engine_render < mediator > & src ) ;
+    shy_engine_render < mediator > & operator= ( const shy_engine_render < mediator > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_render > _platform_render ;
@@ -130,7 +130,7 @@ shy_engine_render < mediator > :: shy_engine_render ( )
 }
 
 template < typename mediator >
-shy_engine_render < mediator > & shy_engine_render < mediator > :: operator= ( const shy_engine_render < mediator > & src )
+shy_engine_render < mediator > & shy_engine_render < mediator > :: operator= ( const shy_engine_render < mediator > & )
 {
     return * this ;
 }
@@ -150,7 +150,7 @@ void shy_engine_render < mediator > :: set_mediator ( typename platform_pointer 
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -193,7 +193,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: done msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: done )
 {
     num_whole whole_max_meshes ;
     platform_math :: make_num_whole ( whole_max_meshes , _engine_render_consts_type :: max_meshes ) ;
@@ -212,7 +212,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: done msg )
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_aspect_request msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_aspect_request )
 {
     typename messages :: render_aspect_reply reply_msg ;
     _platform_render . get ( ) . get_aspect_width ( reply_msg . width ) ;
@@ -227,13 +227,13 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_cle
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_disable_depth_test msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_disable_depth_test )
 {
     _platform_render . get ( ) . disable_depth_test ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_depth_test msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_depth_test )
 {
     _platform_render . get ( ) . enable_depth_test ( ) ;
 }
@@ -245,19 +245,19 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mat
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_fog_disable msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_fog_disable )
 {
     _platform_render . get ( ) . fog_disable ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha )
 {
     _platform_render . get ( ) . blend_src_alpha_dst_one_minus_alpha ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_disable msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_disable )
 {
     _platform_render . get ( ) . blend_disable ( ) ;
 }
@@ -281,25 +281,25 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_pro
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_matrix_identity msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_matrix_identity )
 {
     _platform_render . get ( ) . matrix_identity ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_face_culling msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_face_culling )
 {
     _platform_render . get ( ) . enable_face_culling ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_mode_modulate msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_mode_modulate )
 {
     _platform_render . get ( ) . texture_mode_modulate ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_create_request msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_create_request )
 {
     typename messages :: render_texture_create_reply texture_create_reply_msg ;
     texture_create_reply_msg . texture . _texture_id = _next_texture_id ;
@@ -336,7 +336,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_loader_ready_request msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_loader_ready_request )
 {
     typename messages :: render_texture_loader_ready_reply reply_msg ;
     _platform_render . get ( ) . texture_loader_ready ( reply_msg . ready ) ;
@@ -353,7 +353,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_unselect msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_unselect )
 {
     _platform_render . get ( ) . disable_texturing ( ) ;
 }
@@ -574,7 +574,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_frame_loss_request msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: render_frame_loss_request )
 {
     typename messages :: render_frame_loss_reply reply_msg ;
     _platform_render . get ( ) . get_frame_loss ( reply_msg . frame_loss ) ;

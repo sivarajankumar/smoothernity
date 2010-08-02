@@ -22,14 +22,14 @@ public :
 	class engine_rasterizer_sender
 	{
 	public :
-		void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_ellipse_in_rect msg ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_finalize_reply msg ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_finalize_request msg ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_rect msg ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_triangle msg ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_use_texel msg ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_use_texture msg ) ;
+		void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename engine_rasterizer_messages :: rasterize_ellipse_in_rect ) ;
+        void send ( typename engine_rasterizer_messages :: rasterize_finalize_reply ) ;
+        void send ( typename engine_rasterizer_messages :: rasterize_finalize_request ) ;
+        void send ( typename engine_rasterizer_messages :: rasterize_rect ) ;
+        void send ( typename engine_rasterizer_messages :: rasterize_triangle ) ;
+        void send ( typename engine_rasterizer_messages :: rasterize_use_texel ) ;
+        void send ( typename engine_rasterizer_messages :: rasterize_use_texture ) ;
 	private :
 		typename platform_pointer :: template pointer < const receivers > _receivers ;
 	} ;

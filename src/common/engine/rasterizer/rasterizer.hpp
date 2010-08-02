@@ -12,14 +12,14 @@ class shy_engine_rasterizer
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
 public :
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: rasterize_triangle msg ) ;
-    void receive ( typename messages :: rasterize_rect msg ) ;
-    void receive ( typename messages :: rasterize_ellipse_in_rect msg ) ;
-    void receive ( typename messages :: rasterize_use_texture msg ) ;
-    void receive ( typename messages :: rasterize_use_texel msg ) ;
-    void receive ( typename messages :: rasterize_finalize_request msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: rasterize_triangle ) ;
+    void receive ( typename messages :: rasterize_rect ) ;
+    void receive ( typename messages :: rasterize_ellipse_in_rect ) ;
+    void receive ( typename messages :: rasterize_use_texture ) ;
+    void receive ( typename messages :: rasterize_use_texel ) ;
+    void receive ( typename messages :: rasterize_finalize_request ) ;
 private :
     void _rasterize_horizontal_line ( num_whole x1 , num_whole x2 , num_whole y ) ;
     void _rasterize_top_triangle_part ( num_whole x_top , num_whole y_top , num_whole x_mid , num_whole y_mid , num_whole x_bottom , num_whole y_bottom ) ;
@@ -41,7 +41,7 @@ void shy_engine_rasterizer < mediator > :: set_mediator ( typename platform_poin
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init msg )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -51,7 +51,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init m
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_finalize_request msg )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_finalize_request )
 {
     _mediator . get ( ) . send ( typename messages :: rasterize_finalize_reply ( ) ) ;
 }
