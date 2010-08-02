@@ -26,18 +26,18 @@ public :
     class logic_entities_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_entities_messages :: entities_height_reply msg ) ;
-        void send ( typename logic_entities_messages :: entities_height_request msg ) ;
-        void send ( typename logic_entities_messages :: entities_mesh_grid_reply msg ) ;
-        void send ( typename logic_entities_messages :: entities_mesh_grid_request msg ) ;
-        void send ( typename logic_entities_messages :: entities_origin_reply msg ) ;
-        void send ( typename logic_entities_messages :: entities_origin_request msg ) ;
-        void send ( typename logic_entities_messages :: entities_prepare_permit msg ) ;
-        void send ( typename logic_entities_messages :: entities_prepared msg ) ;
-        void send ( typename logic_entities_messages :: entities_render_reply msg ) ;
-        void send ( typename logic_entities_messages :: entities_render_request msg ) ;
-        void send ( typename logic_entities_messages :: entities_update msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_entities_messages :: entities_height_reply ) ;
+        void send ( typename logic_entities_messages :: entities_height_request ) ;
+        void send ( typename logic_entities_messages :: entities_mesh_grid_reply ) ;
+        void send ( typename logic_entities_messages :: entities_mesh_grid_request ) ;
+        void send ( typename logic_entities_messages :: entities_origin_reply ) ;
+        void send ( typename logic_entities_messages :: entities_origin_request ) ;
+        void send ( typename logic_entities_messages :: entities_prepare_permit ) ;
+        void send ( typename logic_entities_messages :: entities_prepared ) ;
+        void send ( typename logic_entities_messages :: entities_render_reply ) ;
+        void send ( typename logic_entities_messages :: entities_render_request ) ;
+        void send ( typename logic_entities_messages :: entities_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
