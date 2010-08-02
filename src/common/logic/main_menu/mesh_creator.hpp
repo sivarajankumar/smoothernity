@@ -48,6 +48,26 @@ class shy_logic_main_menu_mesh_creator
         num_whole replied ;
         letter_id letter ;
     } ;
+
+    class _render_mesh_create_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        mesh_id mesh ;
+    } ;
+    
+    class _text_letter_big_tex_coords_state_type
+    {
+    public :
+        num_whole requested ;
+        letter_id requested_letter ;
+        num_whole replied ;
+        num_fract bottom ;
+        num_fract left ;
+        num_fract top ;
+        num_fract right ;
+    } ;
     
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
@@ -73,18 +93,8 @@ private :
     _main_menu_rows_state_type _main_menu_rows_state ;
     _main_menu_cols_state_type _main_menu_cols_state ;
     _main_menu_letter_state_type _main_menu_letter_state ;
-    
-    num_whole _render_mesh_create_requested ;
-    num_whole _render_mesh_create_replied ;
-    mesh_id _render_mesh_create ;
-    
-    num_whole _text_letter_big_tex_coords_requested ;
-    letter_id _text_letter_big_tex_coords_requested_letter ;
-    num_whole _text_letter_big_tex_coords_replied ;
-    num_fract _text_letter_big_tex_coords_bottom ;
-    num_fract _text_letter_big_tex_coords_left ;
-    num_fract _text_letter_big_tex_coords_top ;
-    num_fract _text_letter_big_tex_coords_right ;
+    _render_mesh_create_state_type _render_mesh_create_state ;
+    _text_letter_big_tex_coords_state_type _text_letter_big_tex_coords_state ;
     
     num_whole _current_row ;
     num_whole _current_col ;
@@ -170,11 +180,11 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
 {
-    if ( platform_conditions :: whole_is_true ( _render_mesh_create_requested ) )
+    if ( platform_conditions :: whole_is_true ( _render_mesh_create_state . requested ) )
     {
-        _render_mesh_create_requested = _platform_math_consts . get ( ) . whole_false ;
-        _render_mesh_create_replied = _platform_math_consts . get ( ) . whole_true ;
-        _render_mesh_create = msg . mesh ;
+        _render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _render_mesh_create_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _render_mesh_create_state . mesh = msg . mesh ;
         _proceed_with_creation ( ) ;
     }
 }
@@ -183,17 +193,17 @@ template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_reply msg )
 {
     num_whole letters_are_equal ;
-    logic_text_stateless :: are_letters_equal ( letters_are_equal , _text_letter_big_tex_coords_requested_letter , msg . letter ) ;
-    if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_requested )
+    logic_text_stateless :: are_letters_equal ( letters_are_equal , _text_letter_big_tex_coords_state . requested_letter , msg . letter ) ;
+    if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_state . requested )
       && platform_conditions :: whole_is_true ( letters_are_equal )
        )
     {
-        _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_false ;
-        _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_true ;
-        _text_letter_big_tex_coords_bottom = msg . bottom ;
-        _text_letter_big_tex_coords_left = msg . left ;
-        _text_letter_big_tex_coords_top = msg . top ;
-        _text_letter_big_tex_coords_right = msg . right ;
+        _text_letter_big_tex_coords_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _text_letter_big_tex_coords_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _text_letter_big_tex_coords_state . bottom = msg . bottom ;
+        _text_letter_big_tex_coords_state . left = msg . left ;
+        _text_letter_big_tex_coords_state . top = msg . top ;
+        _text_letter_big_tex_coords_state . right = msg . right ;
         _proceed_with_creation ( ) ;
     }
 }
@@ -222,25 +232,25 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
     if ( platform_conditions :: whole_is_true ( _main_menu_letter_state . replied ) )
     {
         _main_menu_letter_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _render_mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
+        _render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
         typename messages :: render_mesh_create_request msg ;
         msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
         msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_4 ;
         msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
         _mediator . get ( ) . send ( msg ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _render_mesh_create_replied ) )
+    if ( platform_conditions :: whole_is_true ( _render_mesh_create_state . replied ) )
     {
-        _render_mesh_create_replied = _platform_math_consts . get ( ) . whole_false ;
-        _text_letter_big_tex_coords_requested = _platform_math_consts . get ( ) . whole_true ;
-        _text_letter_big_tex_coords_requested_letter = _main_menu_letter_state . letter ;
+        _render_mesh_create_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _text_letter_big_tex_coords_state . requested = _platform_math_consts . get ( ) . whole_true ;
+        _text_letter_big_tex_coords_state . requested_letter = _main_menu_letter_state . letter ;
         typename messages :: text_letter_big_tex_coords_request msg ;
         msg . letter = _main_menu_letter_state . letter ;
         _mediator . get ( ) . send ( msg ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_replied ) )
+    if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_state . replied ) )
     {
-        _text_letter_big_tex_coords_replied = _platform_math_consts . get ( ) . whole_false ;
+        _text_letter_big_tex_coords_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _move_to_next_col ( ) ;
     }
 }
