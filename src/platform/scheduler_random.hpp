@@ -14,14 +14,14 @@ class shy_platform_scheduler_random
     public :
         virtual ~ _abstract_scheduled_module ( ) ;
         virtual void run ( ) = 0 ;
-        virtual void have_messages_to_run ( bool & result ) = 0 ;
+        virtual void have_messages_to_run ( bool & ) = 0 ;
     } ;
     
     class _abstract_message_invoker
     {
     public :
         virtual ~ _abstract_message_invoker ( ) ;
-        virtual void invoke ( void * arg_module ) = 0 ;
+        virtual void invoke ( void * ) = 0 ;
     } ;
     
     template < typename module , typename message , int max_message_size >
@@ -29,8 +29,8 @@ class shy_platform_scheduler_random
     : public _abstract_message_invoker
     {
     public :
-        _message_invoker ( message & arg_message ) ;
-        virtual void invoke ( void * arg_module ) ;
+        _message_invoker ( message & ) ;
+        virtual void invoke ( void * ) ;
     private :
         char _message [ max_message_size ] ;
     } ;
@@ -43,7 +43,7 @@ class shy_platform_scheduler_random
     {
     public :
         template < typename message >
-        void receive ( message msg ) ;
+        void receive ( message ) ;
     } ;
     
     template < int max_message_size >
@@ -81,11 +81,11 @@ public :
             scheduled_module ( ) ;
             
             template < typename message_type >
-            void receive ( message_type msg ) ;
+            void receive ( message_type ) ;
             
-            void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+            void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
             virtual void run ( ) ;
-            virtual void have_messages_to_run ( bool & result ) ;
+            virtual void have_messages_to_run ( bool & ) ;
         private :
             void _switch_queues ( ) ;
         private :
@@ -108,9 +108,9 @@ public :
     
 public :
     template < typename module_type >
-    static void register_module_in_scheduler ( module_type & module , scheduler & arg_scheduler ) ;
+    static void register_module_in_scheduler ( module_type & , scheduler & ) ;
     
-    static void run ( scheduler & arg_scheduler ) ;
+    static void run ( scheduler & ) ;
 } ;
 
 template < typename platform_insider >

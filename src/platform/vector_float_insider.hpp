@@ -3,12 +3,12 @@ class shy_platform_vector_float_insider
 {
     typedef typename platform :: platform_vector :: vector_data vector_data ;
 public :
-    static void x_get ( float & x , vector_data v ) ;
-    static void y_get ( float & y , vector_data v ) ;
-    static void z_get ( float & z , vector_data v ) ;
-    static void x_set ( vector_data & v , float x ) ;
-    static void y_set ( vector_data & v , float y ) ;
-    static void z_set ( vector_data & v , float z ) ;
+    static void x_get ( float & , vector_data ) ;
+    static void y_get ( float & , vector_data ) ;
+    static void z_get ( float & , vector_data ) ;
+    static void x_set ( vector_data & , float ) ;
+    static void y_set ( vector_data & , float ) ;
+    static void z_set ( vector_data & , float ) ;
 } ;
 
 template < typename platform >

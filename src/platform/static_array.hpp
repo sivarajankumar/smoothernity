@@ -20,7 +20,7 @@ public :
     } ;
 public :
     template < typename array_type , typename pointer_type >
-    static void element_ptr ( pointer_type & element_ptr , array_type & array , num_whole index ) ;
+    static void element_ptr ( pointer_type & , array_type & , num_whole ) ;
 } ;
 
 template < typename platform_insider >
@@ -29,5 +29,5 @@ inline void shy_platform_static_array < platform_insider > :: element_ptr ( poin
 {
     int index_int = 0 ;
     platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    element_ptr . set ( array . _elements [ index_int ] ) ;
+    element_ptr = array . _elements [ index_int ] ;
 }

@@ -302,13 +302,13 @@ void shy_mediator < mediator_types > :: platform_obj ( typename platform_pointer
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & result )
 {
-    result . set ( _engine_render_stateless . get ( ) . engine_render_stateless_consts ) ;
+    result = _engine_render_stateless . get ( ) . engine_render_stateless_consts ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & result )
 {
-    result . set ( _logic_text_stateless . get ( ) . logic_text_stateless_consts ) ;
+    result = _logic_text_stateless . get ( ) . logic_text_stateless_consts ;
 }
 
 template < typename mediator_types >

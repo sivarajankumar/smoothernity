@@ -10,9 +10,9 @@ class shy_platform_mouse
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
 public :
     shy_platform_mouse ( ) ;
-	void left_button_down ( num_whole & result ) ;
-	void x ( num_fract & result ) ;
-	void y ( num_fract & result ) ;
+	void left_button_down ( num_whole & ) ;
+	void x ( num_fract & ) ;
+	void y ( num_fract & ) ;
 private :
 	bool _left_button_down ;
 	float _x ;

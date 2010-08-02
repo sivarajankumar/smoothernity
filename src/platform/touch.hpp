@@ -10,9 +10,9 @@ class shy_platform_touch
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
 public :
     shy_platform_touch ( ) ;
-	void occured ( num_whole & result ) ;
-	void x ( num_fract & result ) ;
-	void y ( num_fract & result ) ;
+	void occured ( num_whole & ) ;
+	void x ( num_fract & ) ;
+	void y ( num_fract & ) ;
 private :
 	bool _occured ;
 	float _x ;

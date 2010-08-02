@@ -19,15 +19,15 @@ public :
         float _z ;
     } ;
 public :
-    static void xyz ( vector_data & result , num_fract x , num_fract y , num_fract z ) ;
-    static void dot_product ( num_fract & result , vector_data v1 , vector_data v2 ) ;
-    static void cross_product ( vector_data & result , vector_data v1 , vector_data v2 ) ;
-    static void add ( vector_data & result , vector_data v1 , vector_data v2 ) ;
-    static void sub ( vector_data & result , vector_data v1 , vector_data v2 ) ;
-    static void mul ( vector_data & result , vector_data v , num_fract f ) ;
-    static void mul_by ( vector_data & v , num_fract f ) ;
-    static void length ( num_fract & result , vector_data v ) ;
-    static void normalize ( vector_data & result , vector_data v ) ;
+    static void xyz ( vector_data & , num_fract , num_fract , num_fract ) ;
+    static void dot_product ( num_fract & , vector_data , vector_data ) ;
+    static void cross_product ( vector_data & , vector_data , vector_data ) ;
+    static void add ( vector_data & , vector_data , vector_data ) ;
+    static void sub ( vector_data & , vector_data , vector_data ) ;
+    static void mul ( vector_data & , vector_data , num_fract ) ;
+    static void mul_by ( vector_data & , num_fract ) ;
+    static void length ( num_fract & , vector_data ) ;
+    static void normalize ( vector_data & , vector_data ) ;
 } ;
 
 template < typename platform_insider >

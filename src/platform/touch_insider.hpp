@@ -3,10 +3,10 @@ class shy_platform_touch_insider
 {
 public :
     shy_platform_touch_insider ( ) ;
-    void set_platform_insider ( platform_insider * arg_platform_insider ) ;
-	void set_occured ( bool button ) ;
-	void set_x ( float x ) ;
-	void set_y ( float y ) ;
+    void set_platform_insider ( platform_insider * ) ;
+	void set_occured ( bool ) ;
+	void set_x ( float ) ;
+	void set_y ( float ) ;
 private :
     platform_insider * _platform_insider ;
 } ;

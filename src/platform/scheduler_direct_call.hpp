@@ -18,9 +18,9 @@ public :
         {
         public :
             template < typename message_type >
-            void receive ( message_type msg ) ;
+            void receive ( message_type ) ;
             
-            void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
+            void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
         private :
             module < mediator > _module ;
         } ;
@@ -32,9 +32,9 @@ public :
     
 public :
     template < typename module_type >
-    static void register_module_in_scheduler ( module_type & module , scheduler & arg_scheduler ) ;
+    static void register_module_in_scheduler ( module_type & , scheduler & ) ;
     
-    static void run ( scheduler & arg_scheduler ) ;
+    static void run ( scheduler & ) ;
 } ;
 
 template < typename platform_insider >

@@ -20,23 +20,23 @@ public :
         float _elements [ 16 ] ;
     } ;
 public :
-    static void set_axis_x ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void set_axis_y ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void set_axis_z ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void set_origin ( matrix_data & matrix , num_fract x , num_fract y , num_fract z ) ;
-    static void set_axis_x ( matrix_data & matrix , vector_data v ) ;
-    static void set_axis_y ( matrix_data & matrix , vector_data v ) ;
-    static void set_axis_z ( matrix_data & matrix , vector_data v ) ;
-    static void set_origin ( matrix_data & matrix , vector_data v ) ;
-    static void get_axis_x ( vector_data & result , const matrix_data & matrix ) ;
-    static void get_axis_y ( vector_data & result , const matrix_data & matrix ) ;
-    static void get_axis_z ( vector_data & result , const matrix_data & matrix ) ;
-    static void get_origin ( vector_data & result , const matrix_data & matrix ) ;
-    static void identity ( matrix_data & matrix ) ;
-    static void inverse_rotation_translation ( matrix_data & matrix ) ;
+    static void set_axis_x ( matrix_data & , num_fract , num_fract , num_fract ) ;
+    static void set_axis_y ( matrix_data & , num_fract , num_fract , num_fract ) ;
+    static void set_axis_z ( matrix_data & , num_fract , num_fract , num_fract ) ;
+    static void set_origin ( matrix_data & , num_fract , num_fract , num_fract ) ;
+    static void set_axis_x ( matrix_data & , vector_data ) ;
+    static void set_axis_y ( matrix_data & , vector_data ) ;
+    static void set_axis_z ( matrix_data & , vector_data ) ;
+    static void set_origin ( matrix_data & , vector_data ) ;
+    static void get_axis_x ( vector_data & , const matrix_data & ) ;
+    static void get_axis_y ( vector_data & , const matrix_data & ) ;
+    static void get_axis_z ( vector_data & , const matrix_data & ) ;
+    static void get_origin ( vector_data & , const matrix_data & ) ;
+    static void identity ( matrix_data & ) ;
+    static void inverse_rotation_translation ( matrix_data & ) ;
 private :
     template < typename type >
-    static void _swap_values ( type & a , type & b ) ;
+    static void _swap_values ( type & , type & ) ;
 } ;
 
 template < typename platform_insider >
