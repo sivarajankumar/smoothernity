@@ -34,16 +34,16 @@ class shy_logic_fidget
     
 public :
     shy_logic_fidget ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: fidget_prepare_permit msg ) ;
-    void receive ( typename messages :: fidget_render_request msg ) ;
-    void receive ( typename messages :: fidget_update msg ) ;
-    void receive ( typename messages :: render_mesh_create_reply msg ) ;
-    void receive ( typename messages :: render_aspect_reply msg ) ;
-    void receive ( typename messages :: render_frame_loss_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: fidget_prepare_permit ) ;
+    void receive ( typename messages :: fidget_render_request ) ;
+    void receive ( typename messages :: fidget_update ) ;
+    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: render_aspect_reply ) ;
+    void receive ( typename messages :: render_frame_loss_reply ) ;
 private :
-    shy_logic_fidget < mediator > & operator= ( const shy_logic_fidget < mediator > & src ) ;
+    shy_logic_fidget < mediator > & operator= ( const shy_logic_fidget < mediator > & ) ;
     void _update_fidget ( ) ;
     void _render_fidget_mesh ( ) ;
     void _create_fidget_mesh ( ) ;
@@ -71,7 +71,7 @@ shy_logic_fidget < mediator > :: shy_logic_fidget ( )
 }
 
 template < typename mediator >
-shy_logic_fidget < mediator > & shy_logic_fidget < mediator > :: operator= ( const shy_logic_fidget < mediator > & src )
+shy_logic_fidget < mediator > & shy_logic_fidget < mediator > :: operator= ( const shy_logic_fidget < mediator > & )
 {
     return * this ;
 }
@@ -98,7 +98,7 @@ void shy_logic_fidget < mediator > :: set_mediator ( typename platform_pointer :
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -115,7 +115,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_render_request msg )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_mesh_created ) )
         _render_fidget_mesh ( ) ;
@@ -123,7 +123,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_rend
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prepare_permit msg )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prepare_permit )
 {
     _fidget_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
@@ -142,7 +142,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: render_mesh
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_update msg )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_update )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_prepare_permitted ) )
     {
