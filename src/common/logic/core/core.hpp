@@ -21,20 +21,20 @@ class shy_logic_core
     
 public :
     shy_logic_core ( ) ;
-    void set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator ) ;
-    void receive ( typename messages :: init msg ) ;
-    void receive ( typename messages :: render msg ) ;
-    void receive ( typename messages :: update msg ) ;
-    void receive ( typename messages :: use_perspective_projection_request msg ) ;
-    void receive ( typename messages :: use_ortho_projection_request msg ) ;
-    void receive ( typename messages :: video_mode_changed msg ) ;
-    void receive ( typename messages :: fidget_prepared msg ) ;
-    void receive ( typename messages :: near_plane_distance_request msg ) ;
-    void receive ( typename messages :: render_aspect_reply msg ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+    void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: render ) ;
+    void receive ( typename messages :: update ) ;
+    void receive ( typename messages :: use_perspective_projection_request ) ;
+    void receive ( typename messages :: use_ortho_projection_request ) ;
+    void receive ( typename messages :: video_mode_changed ) ;
+    void receive ( typename messages :: fidget_prepared ) ;
+    void receive ( typename messages :: near_plane_distance_request ) ;
+    void receive ( typename messages :: render_aspect_reply ) ;
 private :
-    shy_logic_core < mediator > & operator= ( const shy_logic_core < mediator > & src ) ;
+    shy_logic_core < mediator > & operator= ( const shy_logic_core < mediator > & ) ;
     void _init_render ( ) ;
-    void _get_near_plane_distance ( num_fract & result ) ;
+    void _get_near_plane_distance ( num_fract & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -56,7 +56,7 @@ shy_logic_core < mediator > :: shy_logic_core ( )
 }
 
 template < typename mediator >
-shy_logic_core < mediator > & shy_logic_core < mediator > :: operator= ( const shy_logic_core < mediator > & src )
+shy_logic_core < mediator > & shy_logic_core < mediator > :: operator= ( const shy_logic_core < mediator > & )
 {
     return * this ;
 }
@@ -75,7 +75,7 @@ void shy_logic_core < mediator > :: set_mediator ( typename platform_pointer :: 
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: init msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -89,13 +89,13 @@ void shy_logic_core < mediator > :: receive ( typename messages :: init msg )
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: render msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: render )
 {
     _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: update msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: update )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
         _mediator . get ( ) . send ( typename messages :: application_update ( ) ) ;
@@ -105,7 +105,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: update msg )
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: use_perspective_projection_request msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: use_perspective_projection_request )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_true ;
@@ -113,7 +113,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: use_perspecti
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: use_ortho_projection_request msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: use_ortho_projection_request )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_true ;
@@ -121,19 +121,19 @@ void shy_logic_core < mediator > :: receive ( typename messages :: use_ortho_pro
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: fidget_prepared msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: fidget_prepared )
 {
     _fidget_prepared = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: video_mode_changed msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: video_mode_changed )
 {
     _init_render ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: near_plane_distance_request msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: near_plane_distance_request )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_true ;

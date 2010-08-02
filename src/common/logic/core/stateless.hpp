@@ -24,18 +24,18 @@ public :
     class logic_core_sender
     {
     public :
-        void set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers ) ;
-        void send ( typename logic_core_messages :: done msg ) ;
-        void send ( typename logic_core_messages :: init msg ) ;
-        void send ( typename logic_core_messages :: near_plane_distance_reply msg ) ;
-        void send ( typename logic_core_messages :: near_plane_distance_request msg ) ;
-        void send ( typename logic_core_messages :: render msg ) ;
-        void send ( typename logic_core_messages :: update msg ) ;
-        void send ( typename logic_core_messages :: use_ortho_projection_reply msg ) ;
-        void send ( typename logic_core_messages :: use_ortho_projection_request msg ) ;
-        void send ( typename logic_core_messages :: use_perspective_projection_reply msg ) ;
-        void send ( typename logic_core_messages :: use_perspective_projection_request msg ) ;
-        void send ( typename logic_core_messages :: video_mode_changed msg ) ;
+        void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_core_messages :: done ) ;
+        void send ( typename logic_core_messages :: init ) ;
+        void send ( typename logic_core_messages :: near_plane_distance_reply ) ;
+        void send ( typename logic_core_messages :: near_plane_distance_request ) ;
+        void send ( typename logic_core_messages :: render ) ;
+        void send ( typename logic_core_messages :: update ) ;
+        void send ( typename logic_core_messages :: use_ortho_projection_reply ) ;
+        void send ( typename logic_core_messages :: use_ortho_projection_request ) ;
+        void send ( typename logic_core_messages :: use_perspective_projection_reply ) ;
+        void send ( typename logic_core_messages :: use_perspective_projection_request ) ;
+        void send ( typename logic_core_messages :: video_mode_changed ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
