@@ -26,6 +26,8 @@ public :
     void receive ( typename messages :: main_menu_letter_reply ) ;
 private :
     void _proceed_with_creation ( ) ;
+    void _move_to_next_row ( ) ;
+    void _move_to_next_col ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -36,6 +38,14 @@ private :
     num_whole _main_menu_rows_requested ;
     num_whole _main_menu_rows_replied ;
     num_whole _main_menu_rows ;
+    
+    num_whole _main_menu_cols_requested ;
+    num_whole _main_menu_cols_requested_row ;
+    num_whole _main_menu_cols_replied ;
+    num_whole _main_menu_cols ;
+    
+    num_whole _current_row ;
+    num_whole _current_col ;
 } ;
 
 template < typename mediator >
@@ -61,6 +71,10 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
     _mesh_creation_permitted = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_rows_requested = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_rows_replied = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_cols_requested = _platform_math_consts . get ( ) . whole_false ;
+    _main_menu_cols_replied = _platform_math_consts . get ( ) . whole_false ;
+    _current_row = _platform_math_consts . get ( ) . whole_0 ;
+    _current_col = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
@@ -82,8 +96,17 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_cols_reply )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_cols_reply msg )
 {
+    if ( platform_conditions :: whole_is_true ( _main_menu_cols_requested )
+      && platform_conditions :: wholes_are_equal ( _main_menu_cols_requested_row , msg . row )
+       )
+    {
+        _main_menu_cols_requested = _platform_math_consts . get ( ) . whole_false ;
+        _main_menu_cols_replied = _platform_math_consts . get ( ) . whole_true ;
+        _main_menu_cols = msg . cols ;
+        _proceed_with_creation ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -109,6 +132,41 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
     if ( platform_conditions :: whole_is_true ( _main_menu_rows_replied ) )
     {
         _main_menu_rows_replied = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create_finished ( ) ) ;
+        _current_row = _platform_math_consts . get ( ) . whole_minus_1 ;
+        _move_to_next_row ( ) ;
     }
+    if ( platform_conditions :: whole_is_true ( _main_menu_cols_replied ) )
+    {
+        _main_menu_cols_replied = _platform_math_consts . get ( ) . whole_false ;
+        _current_col = _platform_math_consts . get ( ) . whole_minus_1 ;
+        _move_to_next_col ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _move_to_next_row ( )
+{
+    platform_math :: inc_whole ( _current_row ) ;
+    if ( platform_conditions :: whole_less_than_whole ( _current_row , _main_menu_rows ) )
+    {
+        _main_menu_cols_requested = _platform_math_consts . get ( ) . whole_true ;
+        _main_menu_cols_requested_row = _current_row ;
+        typename messages :: main_menu_cols_request msg ;
+        msg . row = _current_row ;
+        _mediator . get ( ) . send ( msg ) ;
+    }
+    else
+        _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create_finished ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _move_to_next_col ( )
+{
+    platform_math :: inc_whole ( _current_col ) ;
+    if ( platform_conditions :: whole_less_than_whole ( _current_col , _main_menu_cols ) )
+    {
+        _move_to_next_col ( ) ;
+    }
+    else
+        _move_to_next_row ( ) ;
 }
