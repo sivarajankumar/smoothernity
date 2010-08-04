@@ -395,6 +395,11 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _store_mesh ( )
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _send_mesh_created_notification ( )
 {
+    typename messages :: main_menu_mesh_has_been_created msg ;
+    msg . row = _current_row ;
+    msg . col = _current_col ;
+    msg . mesh . _mesh_id = _current_mesh_id ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >

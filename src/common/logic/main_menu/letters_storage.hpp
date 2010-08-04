@@ -3,6 +3,7 @@ class shy_logic_main_menu_letters_storage
 {
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_mesh_id logic_main_menu_mesh_id ;
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: mesh_id mesh_id ;
@@ -20,6 +21,7 @@ class shy_logic_main_menu_letters_storage
     {
     public :
         letter_id letter ;
+        logic_main_menu_mesh_id mesh ;
     } ;
     
     class _row_state_type
@@ -44,6 +46,7 @@ public :
     void receive ( typename messages :: main_menu_cols_request ) ;
     void receive ( typename messages :: main_menu_rows_request ) ;
     void receive ( typename messages :: main_menu_letter_request ) ;
+    void receive ( typename messages :: main_menu_mesh_has_been_created ) ;
 public :
     void _next_row ( ) ;
 private :
@@ -78,6 +81,16 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
     platform_static_array :: element_ptr ( col_state , row_state . get ( ) . cols , row_state . get ( ) . cols_count ) ;
     col_state . get ( ) . letter = msg . letter ;
     platform_math :: inc_whole ( row_state . get ( ) . cols_count ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_mesh_has_been_created msg )
+{
+    typename platform_pointer :: template pointer < _row_state_type > row_state ;
+    typename platform_pointer :: template pointer < _col_state_type > col_state ;
+    platform_static_array :: element_ptr ( row_state , _rows_state . rows , msg . row ) ;
+    platform_static_array :: element_ptr ( col_state , row_state . get ( ) . cols , msg . col ) ;
+    col_state . get ( ) . mesh = msg . mesh ;
 }
 
 template < typename mediator >
