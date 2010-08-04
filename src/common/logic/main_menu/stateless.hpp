@@ -1,4 +1,7 @@
 template < typename mediator >
+class shy_logic_main_menu_mesh_creator ;
+
+template < typename mediator >
 class shy_logic_main_menu_stateless
 {
     typedef typename mediator :: letter_id letter_id ;
@@ -7,11 +10,18 @@ class shy_logic_main_menu_stateless
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
 public :
+    class logic_main_menu_mesh_id
+    {
+        friend class shy_logic_main_menu_mesh_creator < mediator > ;
+    private :
+        num_whole _mesh_id ;
+    } ;
+
     class logic_main_menu_stateless_consts_type
     {
     public :
         static const_int_32 max_rows = 5 ;
-        static const_int_32 max_letters = 16 ;
+        static const_int_32 max_cols = 16 ;
     } ;
     
     class logic_main_menu_messages

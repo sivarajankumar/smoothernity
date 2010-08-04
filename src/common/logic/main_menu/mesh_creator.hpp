@@ -1,17 +1,23 @@
 template < typename mediator >
 class shy_logic_main_menu_mesh_creator
 {
+    typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_mesh_id logic_main_menu_mesh_id ;
+    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless logic_text_stateless ;
+    typedef typename mediator :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: mesh_id mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
     class _logic_main_menu_mesh_creator_consts_type
     {
@@ -25,6 +31,10 @@ class shy_logic_main_menu_mesh_creator
         num_fract color_g ;
         num_fract color_b ;
         num_fract color_a ;
+        static const_int_32 max_meshes 
+            = logic_main_menu_stateless_consts_type :: max_rows 
+            * logic_main_menu_stateless_consts_type :: max_cols
+            ;
     } ;
     
     class _main_menu_rows_state_type
@@ -91,9 +101,13 @@ private :
     void _start_first_col ( ) ;
     void _move_to_next_row ( ) ;
     void _move_to_next_col ( ) ;
+    void _letter_state_received ( ) ;
     void _create_mesh ( ) ;
     void _obtain_tex_coords ( ) ;
+    void _letter_tex_coords_received ( ) ;
     void _fill_mesh_content ( ) ;
+    void _store_mesh ( ) ;
+    void _send_mesh_created_notification ( ) ;
     void _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
     void _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
@@ -113,6 +127,9 @@ private :
     
     num_whole _current_row ;
     num_whole _current_col ;
+    num_whole _current_mesh_id ;
+    
+    typename platform_static_array :: template static_array < mesh_id , _logic_main_menu_mesh_creator_consts_type :: max_meshes > _meshes ;
 } ;
 
 template < typename mediator >
@@ -142,6 +159,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
     
     _current_row = _platform_math_consts . get ( ) . whole_0 ;
     _current_col = _platform_math_consts . get ( ) . whole_0 ;
+    _current_mesh_id = _platform_math_consts . get ( ) . whole_minus_1 ;
 }
 
 template < typename mediator >
@@ -249,7 +267,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
     if ( platform_conditions :: whole_is_true ( _main_menu_letter_state . replied ) )
     {
         _main_menu_letter_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _create_mesh ( ) ;
+        _letter_state_received ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _render_mesh_create_state . replied ) )
     {
@@ -259,7 +277,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
     if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_state . replied ) )
     {
         _text_letter_big_tex_coords_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _fill_mesh_content ( ) ;
+        _letter_tex_coords_received ( ) ;
     }
 }
 
@@ -319,6 +337,23 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _move_to_next_col ( )
 }
 
 template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _letter_state_received ( )
+{
+    num_whole letter_is_whitespace ;
+    letter_id whitespace ;
+    typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
+    
+    _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
+    whitespace = logic_text_stateless_consts . get ( ) . whitespace ;
+    
+    logic_text_stateless :: are_letters_equal ( letter_is_whitespace , _main_menu_letter_state . letter , whitespace ) ;
+    if ( platform_conditions :: whole_is_false ( letter_is_whitespace ) )
+        _create_mesh ( ) ;
+    else
+        _move_to_next_col ( ) ;
+}
+
+template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _create_mesh ( )
 {
     _render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
@@ -337,6 +372,29 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _obtain_tex_coords ( )
     typename messages :: text_letter_big_tex_coords_request msg ;
     msg . letter = _main_menu_letter_state . letter ;
     _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _letter_tex_coords_received ( )
+{
+    _fill_mesh_content ( ) ;
+    _store_mesh ( ) ;
+    _send_mesh_created_notification ( ) ;
+    _move_to_next_col ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _store_mesh ( )
+{
+    typename platform_pointer :: template pointer < mesh_id > mesh_id_ptr ;
+    platform_math :: inc_whole ( _current_mesh_id ) ;
+    platform_static_array :: element_ptr ( mesh_id_ptr , _meshes , _current_mesh_id ) ;
+    mesh_id_ptr . get ( ) = _render_mesh_create_state . mesh ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _send_mesh_created_notification ( )
+{
 }
 
 template < typename mediator >
@@ -405,8 +463,6 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _fill_mesh_content ( )
     _mesh_set_vertex_color               ( mesh , index_right_bottom , color_r , color_g , color_b , color_a ) ;
     _mesh_set_vertex_tex_coord           ( mesh , index_right_bottom , u_right , v_bottom ) ;
     _mesh_set_vertex_position            ( mesh , index_right_bottom , x_right , y_bottom , z ) ;
-    
-    _move_to_next_col ( ) ;
 }
 
 template < typename mediator >
