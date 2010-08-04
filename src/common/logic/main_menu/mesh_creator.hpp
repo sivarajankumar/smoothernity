@@ -20,6 +20,11 @@ class shy_logic_main_menu_mesh_creator
     public :
         num_whole frames_between_creation ;
         num_whole meshes_per_frame ;
+        num_fract mesh_size ;
+        num_fract color_r ;
+        num_fract color_g ;
+        num_fract color_b ;
+        num_fract color_a ;
     } ;
     
     class _main_menu_rows_state_type
@@ -88,6 +93,11 @@ private :
     void _move_to_next_col ( ) ;
     void _create_mesh ( ) ;
     void _obtain_tex_coords ( ) ;
+    void _fill_mesh_content ( ) ;
+    void _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
+    void _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -110,6 +120,11 @@ shy_logic_main_menu_mesh_creator < mediator > :: _logic_main_menu_mesh_creator_c
 {
     platform_math :: make_num_whole ( frames_between_creation , 5 ) ;
     platform_math :: make_num_whole ( meshes_per_frame , 10 ) ;
+    platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_r , 0 , 255 ) ;
+    platform_math :: make_num_fract ( color_g , 255 , 255 ) ;
+    platform_math :: make_num_fract ( color_b , 0 , 255 ) ;
+    platform_math :: make_num_fract ( color_a , 255 , 255 ) ;
 }
 
 template < typename mediator >
@@ -244,7 +259,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _proceed_with_creation ( )
     if ( platform_conditions :: whole_is_true ( _text_letter_big_tex_coords_state . replied ) )
     {
         _text_letter_big_tex_coords_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _move_to_next_col ( ) ;
+        _fill_mesh_content ( ) ;
     }
 }
 
@@ -321,5 +336,121 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _obtain_tex_coords ( )
     _text_letter_big_tex_coords_state . requested_letter = _main_menu_letter_state . letter ;
     typename messages :: text_letter_big_tex_coords_request msg ;
     msg . letter = _main_menu_letter_state . letter ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _fill_mesh_content ( )
+{
+    mesh_id mesh ;
+    num_fract half_size ;
+    num_fract x_left ;
+    num_fract x_right ;
+    num_fract y_bottom ;
+    num_fract y_top ;
+    num_fract u_left ;
+    num_fract u_right ;
+    num_fract v_bottom ;
+    num_fract v_top ;
+    num_fract z ;
+    num_fract color_r ;
+    num_fract color_g ;
+    num_fract color_b ;
+    num_fract color_a ;
+    num_whole index_left_top ;
+    num_whole index_left_bottom ;
+    num_whole index_right_top ;
+    num_whole index_right_bottom ;
+    
+    mesh = _render_mesh_create_state . mesh ;
+    
+    platform_math :: div_fracts ( half_size , _logic_main_menu_mesh_creator_consts . mesh_size , _platform_math_consts . get ( ) . fract_2 ) ;
+    platform_math :: mul_fracts ( x_left , half_size , _platform_math_consts . get ( ) . fract_minus_1 ) ;
+    platform_math :: mul_fracts ( y_bottom , half_size , _platform_math_consts . get ( ) . fract_minus_1 ) ;
+    platform_math :: mul_fracts ( x_right , half_size , _platform_math_consts . get ( ) . fract_1 ) ;
+    platform_math :: mul_fracts ( y_top , half_size , _platform_math_consts . get ( ) . fract_1 ) ;
+    z = _platform_math_consts . get ( ) . fract_0 ;
+    
+    u_left = _text_letter_big_tex_coords_state . left ;
+    u_right = _text_letter_big_tex_coords_state . right ;
+    v_bottom = _text_letter_big_tex_coords_state . bottom ;
+    v_top = _text_letter_big_tex_coords_state . top ;
+    
+    color_r = _logic_main_menu_mesh_creator_consts . color_r ;
+    color_g = _logic_main_menu_mesh_creator_consts . color_g ;
+    color_b = _logic_main_menu_mesh_creator_consts . color_b ;
+    color_a = _logic_main_menu_mesh_creator_consts . color_a ;
+
+    index_left_top = _platform_math_consts . get ( ) . whole_0 ;
+    index_left_bottom = _platform_math_consts . get ( ) . whole_1 ;
+    index_right_top = _platform_math_consts . get ( ) . whole_2 ;
+    index_right_bottom = _platform_math_consts . get ( ) . whole_3 ;
+    
+    _mesh_set_triangle_strip_index_value ( mesh , index_left_top , index_left_top ) ;
+    _mesh_set_vertex_color               ( mesh , index_left_top , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( mesh , index_left_top , u_left , v_top ) ;
+    _mesh_set_vertex_position            ( mesh , index_left_top , x_left , y_top , z ) ;
+
+    _mesh_set_triangle_strip_index_value ( mesh , index_left_bottom , index_left_bottom ) ;
+    _mesh_set_vertex_color               ( mesh , index_left_bottom , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( mesh , index_left_bottom , u_left , v_bottom ) ;
+    _mesh_set_vertex_position            ( mesh , index_left_bottom , x_left , y_bottom , z ) ;
+
+    _mesh_set_triangle_strip_index_value ( mesh , index_right_top , index_right_top ) ;
+    _mesh_set_vertex_color               ( mesh , index_right_top , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( mesh , index_right_top , u_right , v_top ) ;
+    _mesh_set_vertex_position            ( mesh , index_right_top , x_right , y_top , z ) ;
+
+    _mesh_set_triangle_strip_index_value ( mesh , index_right_bottom , index_right_bottom ) ;
+    _mesh_set_vertex_color               ( mesh , index_right_bottom , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( mesh , index_right_bottom , u_right , v_bottom ) ;
+    _mesh_set_vertex_position            ( mesh , index_right_bottom , x_right , y_bottom , z ) ;
+    
+    _move_to_next_col ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
+{
+    typename messages :: render_mesh_set_vertex_position msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . x = x ;
+    msg . y = y ;
+    msg . z = z ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
+{
+    typename messages :: render_mesh_set_vertex_tex_coord msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . u = u ;
+    msg . v = v ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+{
+    typename messages :: render_mesh_set_vertex_color msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . r = r ;
+    msg . g = g ;
+    msg . b = b ;
+    msg . a = a ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+{
+    typename messages :: render_mesh_set_triangle_strip_index_value msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . index = index ;
     _mediator . get ( ) . send ( msg ) ;
 }
