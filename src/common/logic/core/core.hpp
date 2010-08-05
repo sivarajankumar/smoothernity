@@ -91,14 +91,14 @@ void shy_logic_core < mediator > :: receive ( typename messages :: init )
 template < typename mediator >
 void shy_logic_core < mediator > :: receive ( typename messages :: render )
 {
-    _mediator . get ( ) . send ( typename messages :: application_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_application_render ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_core < mediator > :: receive ( typename messages :: update )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
-        _mediator . get ( ) . send ( typename messages :: application_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_application_update ( ) ) ;
     else
         _mediator . get ( ) . send ( typename messages :: fidget_prepare_permit ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: fidget_update ( ) ) ;

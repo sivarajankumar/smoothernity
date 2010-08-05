@@ -12,8 +12,8 @@ class shy_logic_application
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: application_render ) ;
-    void receive ( typename messages :: application_update ) ;
+    void receive ( typename messages :: logic_application_render ) ;
+    void receive ( typename messages :: logic_application_update ) ;
     void receive ( typename messages :: title_finished ) ;
     void receive ( typename messages :: text_prepared ) ;
     void receive ( typename messages :: main_menu_finished ) ;
@@ -71,7 +71,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: main_m
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: application_render )
+void shy_logic_application < mediator > :: receive ( typename messages :: logic_application_render )
 {
     if ( platform_conditions :: whole_is_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: game_render ( ) ) ;
@@ -90,7 +90,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
 }
 
 template < typename mediator >
-void shy_logic_application < mediator > :: receive ( typename messages :: application_update )
+void shy_logic_application < mediator > :: receive ( typename messages :: logic_application_update )
 {
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {

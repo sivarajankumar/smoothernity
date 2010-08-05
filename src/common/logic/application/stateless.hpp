@@ -6,8 +6,8 @@ public :
     class logic_application_messages
     {
     public :
-        class application_render { } ;
-        class application_update { } ;
+        class logic_application_render { } ;
+        class logic_application_update { } ;
     } ;
     
     template < typename receivers >
@@ -15,8 +15,8 @@ public :
     {
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
-        void send ( typename logic_application_messages :: application_render ) ;
-        void send ( typename logic_application_messages :: application_update ) ;
+        void send ( typename logic_application_messages :: logic_application_render ) ;
+        void send ( typename logic_application_messages :: logic_application_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -35,7 +35,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_application_stateless < mediator > 
 :: logic_application_sender < receivers >
-:: send ( typename logic_application_messages :: application_render msg )
+:: send ( typename logic_application_messages :: logic_application_render msg )
 {
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
 }
@@ -44,7 +44,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_application_stateless < mediator > 
 :: logic_application_sender < receivers >
-:: send ( typename logic_application_messages :: application_update msg )
+:: send ( typename logic_application_messages :: logic_application_update msg )
 {
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
 }
