@@ -371,7 +371,7 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
     {
         _rasterize_finalize_replied = _platform_math_consts . get ( ) . whole_false ;
         
-        typename messages :: render_texture_finalize texture_finalize_msg ;
+        typename messages :: engine_render_texture_finalize texture_finalize_msg ;
         texture_finalize_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_finalize_msg ) ;
         

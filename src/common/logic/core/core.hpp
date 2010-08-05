@@ -211,7 +211,7 @@ void shy_logic_core < mediator > :: _init_render ( )
 {
     _mediator . get ( ) . send ( typename messages :: engine_render_blend_disable ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: engine_render_enable_face_culling ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: render_texture_mode_modulate ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_texture_mode_modulate ( ) ) ;
 }
 
 template < typename mediator >

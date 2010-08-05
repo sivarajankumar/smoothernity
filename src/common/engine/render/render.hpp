@@ -77,9 +77,9 @@ public :
     void receive ( typename messages :: done ) ;
     void receive ( typename messages :: engine_render_aspect_request ) ;
     void receive ( typename messages :: engine_render_texture_create_request ) ;
-    void receive ( typename messages :: render_texture_finalize ) ;
-    void receive ( typename messages :: render_texture_load_from_resource ) ;
-    void receive ( typename messages :: render_texture_loader_ready_request ) ;
+    void receive ( typename messages :: engine_render_texture_finalize ) ;
+    void receive ( typename messages :: engine_render_texture_load_from_resource ) ;
+    void receive ( typename messages :: engine_render_texture_loader_ready_request ) ;
     void receive ( typename messages :: render_texture_select ) ;
     void receive ( typename messages :: render_texture_unselect ) ;
     void receive ( typename messages :: render_texture_set_texels_rect ) ;
@@ -107,7 +107,7 @@ public :
     void receive ( typename messages :: engine_render_projection_ortho ) ;
     void receive ( typename messages :: engine_render_matrix_identity ) ;
     void receive ( typename messages :: engine_render_enable_face_culling ) ;
-    void receive ( typename messages :: render_texture_mode_modulate ) ;
+    void receive ( typename messages :: engine_render_texture_mode_modulate ) ;
     void receive ( typename messages :: engine_render_frame_loss_request ) ;
 private :
     shy_engine_render < mediator > & operator= ( const shy_engine_render < mediator > & ) ;
@@ -293,7 +293,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_mode_modulate )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_texture_mode_modulate )
 {
     _platform_render . get ( ) . texture_mode_modulate ( ) ;
 }
@@ -308,7 +308,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_finalize msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_texture_finalize msg )
 {
     typename platform_pointer :: template pointer < _texture_data > texture ;
     platform_static_array :: element_ptr ( texture , _textures_datas , msg . texture . _texture_id ) ;
@@ -323,7 +323,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_load_from_resource msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_texture_load_from_resource msg )
 {
     num_whole size_pow2_base ;
     typename platform_pointer :: template pointer < _texture_data > texture ;
@@ -336,9 +336,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_loader_ready_request )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_texture_loader_ready_request )
 {
-    typename messages :: render_texture_loader_ready_reply reply_msg ;
+    typename messages :: engine_render_texture_loader_ready_reply reply_msg ;
     _platform_render . get ( ) . texture_loader_ready ( reply_msg . ready ) ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }

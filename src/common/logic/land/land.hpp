@@ -441,7 +441,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
     }
     if ( platform_conditions :: wholes_are_equal ( _land_texture_creation_row , texture_height ) )
     {
-        typename messages :: render_texture_finalize texture_finalize_msg ;
+        typename messages :: engine_render_texture_finalize texture_finalize_msg ;
         texture_finalize_msg . texture = _land_texture_id ;
         _mediator . get ( ) . send ( texture_finalize_msg ) ;
         _land_texture_created = _platform_math_consts . get ( ) . whole_true ;

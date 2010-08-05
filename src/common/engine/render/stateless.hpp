@@ -71,11 +71,11 @@ public :
         class engine_render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
         class engine_render_texture_create_reply { public : texture_id texture ; } ;
         class engine_render_texture_create_request { } ;
-        class render_texture_finalize { public : texture_id texture ; } ;
-        class render_texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
-        class render_texture_loader_ready_reply { public : num_whole ready ; } ;
-        class render_texture_loader_ready_request { } ;
-        class render_texture_mode_modulate { } ;
+        class engine_render_texture_finalize { public : texture_id texture ; } ;
+        class engine_render_texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
+        class engine_render_texture_loader_ready_reply { public : num_whole ready ; } ;
+        class engine_render_texture_loader_ready_request { } ;
+        class engine_render_texture_mode_modulate { } ;
         class render_texture_select { public : texture_id texture ; } ;
         class render_texture_set_texel { public : texture_id texture ; num_whole x ; num_whole y ; texel_data texel ; } ;
         class render_texture_set_texel_rgba { public : texture_id texture ; num_whole x ; num_whole y ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
@@ -117,11 +117,11 @@ public :
         void send ( typename engine_render_messages :: engine_render_projection_ortho ) ;
         void send ( typename engine_render_messages :: engine_render_texture_create_reply ) ;
         void send ( typename engine_render_messages :: engine_render_texture_create_request ) ;
-        void send ( typename engine_render_messages :: render_texture_finalize ) ;
-        void send ( typename engine_render_messages :: render_texture_load_from_resource ) ;
-        void send ( typename engine_render_messages :: render_texture_loader_ready_reply ) ;
-        void send ( typename engine_render_messages :: render_texture_loader_ready_request ) ;
-        void send ( typename engine_render_messages :: render_texture_mode_modulate ) ;
+        void send ( typename engine_render_messages :: engine_render_texture_finalize ) ;
+        void send ( typename engine_render_messages :: engine_render_texture_load_from_resource ) ;
+        void send ( typename engine_render_messages :: engine_render_texture_loader_ready_reply ) ;
+        void send ( typename engine_render_messages :: engine_render_texture_loader_ready_request ) ;
+        void send ( typename engine_render_messages :: engine_render_texture_mode_modulate ) ;
         void send ( typename engine_render_messages :: render_texture_select ) ;
         void send ( typename engine_render_messages :: render_texture_set_texel ) ;
         void send ( typename engine_render_messages :: render_texture_set_texel_rgba ) ;
@@ -294,7 +294,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_texture_mode_modulate msg )
+:: send ( typename engine_render_messages :: engine_render_texture_mode_modulate msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -450,7 +450,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_texture_finalize msg )
+:: send ( typename engine_render_messages :: engine_render_texture_finalize msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -459,7 +459,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_texture_load_from_resource msg )
+:: send ( typename engine_render_messages :: engine_render_texture_load_from_resource msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -468,7 +468,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_texture_loader_ready_reply msg )
+:: send ( typename engine_render_messages :: engine_render_texture_loader_ready_reply msg )
 {
     _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
 }
@@ -477,7 +477,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_texture_loader_ready_request msg )
+:: send ( typename engine_render_messages :: engine_render_texture_loader_ready_request msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
