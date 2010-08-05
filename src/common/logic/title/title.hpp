@@ -70,7 +70,7 @@ public :
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: fidget_render_reply ) ;
     void receive ( typename messages :: use_text_texture_reply ) ;
-    void receive ( typename messages :: render_aspect_reply ) ;
+    void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     shy_logic_title < mediator > & operator= ( const shy_logic_title < mediator > & ) ;
     void _title_create ( ) ;
@@ -239,12 +239,12 @@ void shy_logic_title < mediator > :: receive ( typename messages :: title_update
     if ( platform_conditions :: whole_is_true ( _title_launch_permitted ) )
     {
         _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
     }
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: render_aspect_reply msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
@@ -324,12 +324,12 @@ void shy_logic_title < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_replied ) )
     {
         _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_false ;
-        typename messages :: render_clear_screen clear_screen_msg ;
+        typename messages :: engine_render_clear_screen clear_screen_msg ;
         clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
         clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
         clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;
         _mediator . get ( ) . send ( clear_screen_msg ) ;
-        _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_disable_depth_test ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
 
         _fidget_render_requested = _platform_math_consts . get ( ) . whole_true ;
@@ -497,7 +497,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     platform_matrix :: set_axis_z ( scene_tm , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
     platform_matrix :: set_origin ( scene_tm , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     
-    _mediator . get ( ) . send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     
     typename messages :: render_matrix_load matrix_load_msg ;
     matrix_load_msg . matrix = scene_tm ;
@@ -514,7 +514,7 @@ void shy_logic_title < mediator > :: _title_render ( )
         mesh_render_msg . mesh = letter . get ( ) . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
-    _mediator . get ( ) . send ( typename messages :: render_blend_disable ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_blend_disable ( ) ) ;
 }
 
 template < typename mediator >

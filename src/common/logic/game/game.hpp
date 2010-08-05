@@ -347,7 +347,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_replied ) )
     {
         _use_perspective_projection_replied = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: render_enable_depth_test ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_enable_depth_test ( ) ) ;
         
         typename messages :: render_matrix_load matrix_load_msg ;
         matrix_load_msg . matrix = _camera_matrix ;
@@ -372,7 +372,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_replied ) )
     {
         _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: render_disable_depth_test ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_disable_depth_test ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
         
         _fidget_render_requested = _platform_math_consts . get ( ) . whole_true ;
@@ -415,7 +415,7 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     fog_msg . a = fog_a ;
     _mediator . get ( ) . send ( fog_msg ) ;
 
-    typename messages :: render_clear_screen clear_screen_msg ;
+    typename messages :: engine_render_clear_screen clear_screen_msg ;
     clear_screen_msg . r = _color_r ;
     clear_screen_msg . g = _color_g ;
     clear_screen_msg . b = _color_b ;

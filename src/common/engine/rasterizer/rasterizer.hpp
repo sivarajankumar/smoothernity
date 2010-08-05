@@ -14,12 +14,12 @@ class shy_engine_rasterizer
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: rasterize_triangle ) ;
-    void receive ( typename messages :: rasterize_rect ) ;
+    void receive ( typename messages :: engine_rasterizer_draw_triangle ) ;
+    void receive ( typename messages :: engine_rasterizer_draw_rect ) ;
     void receive ( typename messages :: engine_rasterizer_draw_ellipse_in_rect ) ;
-    void receive ( typename messages :: rasterize_use_texture ) ;
-    void receive ( typename messages :: rasterize_use_texel ) ;
-    void receive ( typename messages :: rasterize_finalize_request ) ;
+    void receive ( typename messages :: engine_rasterizer_use_texture ) ;
+    void receive ( typename messages :: engine_rasterizer_use_texel ) ;
+    void receive ( typename messages :: engine_rasterizer_finalize_request ) ;
 private :
     void _rasterize_horizontal_line ( num_whole x1 , num_whole x2 , num_whole y ) ;
     void _rasterize_top_triangle_part ( num_whole x_top , num_whole y_top , num_whole x_mid , num_whole y_mid , num_whole x_bottom , num_whole y_bottom ) ;
@@ -51,13 +51,13 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_finalize_request )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine_rasterizer_finalize_request )
 {
     _mediator . get ( ) . send ( typename messages :: engine_rasterizer_finalize_reply ( ) ) ;
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_triangle msg )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine_rasterizer_draw_triangle msg )
 {
     num_whole x1 = msg . x1 ;
     num_whole y1 = msg . y1 ;
@@ -135,7 +135,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_rect msg )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine_rasterizer_draw_rect msg )
 {
     num_whole left ;
     num_whole right ;
@@ -162,7 +162,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_use_texture msg )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine_rasterizer_use_texture msg )
 {
     _texture_id = msg . texture ;
     _origin_x = msg . origin_x ;
@@ -170,7 +170,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_use_texel msg )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine_rasterizer_use_texel msg )
 {
     _texel = msg . texel ;
 }

@@ -81,7 +81,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: applic
         _mediator . get ( ) . send ( typename messages :: main_menu_render ( ) ) ;
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
-        typename messages :: render_clear_screen clear_screen_msg ;
+        typename messages :: engine_render_clear_screen clear_screen_msg ;
         clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
         clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
         clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;

@@ -30,7 +30,7 @@ public :
     void receive ( typename messages :: video_mode_changed ) ;
     void receive ( typename messages :: fidget_prepared ) ;
     void receive ( typename messages :: logic_core_near_plane_distance_request ) ;
-    void receive ( typename messages :: render_aspect_reply ) ;
+    void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     shy_logic_core < mediator > & operator= ( const shy_logic_core < mediator > & ) ;
     void _init_render ( ) ;
@@ -109,7 +109,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: logic_core_us
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
@@ -117,7 +117,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: logic_core_us
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
@@ -137,11 +137,11 @@ void shy_logic_core < mediator > :: receive ( typename messages :: logic_core_ne
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: render_aspect_reply msg )
+void shy_logic_core < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
@@ -209,7 +209,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: render_aspect
 template < typename mediator >
 void shy_logic_core < mediator > :: _init_render ( )
 {
-    _mediator . get ( ) . send ( typename messages :: render_blend_disable ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_blend_disable ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: render_enable_face_culling ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: render_texture_mode_modulate ( ) ) ;
 }

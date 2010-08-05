@@ -41,7 +41,7 @@ public :
     void receive ( typename messages :: entities_mesh_grid_reply ) ;
     void receive ( typename messages :: entities_origin_reply ) ;
     void receive ( typename messages :: logic_core_near_plane_distance_reply ) ;
-    void receive ( typename messages :: render_aspect_reply ) ;
+    void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     shy_logic_camera < mediator > & operator= ( const shy_logic_camera < mediator > & ) ;
     void _proceed_with_update ( ) ;
@@ -314,7 +314,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_or
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: render_aspect_reply msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _render_aspect_requested ) )
     {
@@ -431,7 +431,7 @@ void shy_logic_camera < mediator > :: _proceed_with_camera_update ( )
         _update_current_camera_origin ( ) ;
         _update_current_camera_target ( ) ;
         _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: render_aspect_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
     }
 }
 

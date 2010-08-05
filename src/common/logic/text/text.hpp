@@ -365,7 +365,7 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
     {
         _big_letters_rasterized = _platform_math_consts . get ( ) . whole_false ;
         _rasterize_finalize_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: rasterize_finalize_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_rasterizer_finalize_request ( ) ) ;
     }
     else if ( platform_conditions :: whole_is_true ( _rasterize_finalize_replied ) )
     {
@@ -415,7 +415,7 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
 template < typename mediator >
 void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
-    _mediator . get ( ) . send ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     {
         typename messages :: render_texture_select texture_select_msg ;
         texture_select_msg . texture = _text_texture_id ;
@@ -426,7 +426,7 @@ void shy_logic_text < mediator > :: _render_text_mesh ( )
         mesh_render_msg . mesh = _text_mesh_id ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
-    _mediator . get ( ) . send ( typename messages :: render_blend_disable ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_blend_disable ( ) ) ;
 }
 
 template < typename mediator >
@@ -676,7 +676,7 @@ void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _lett
 template < typename mediator >
 void shy_logic_text < mediator > :: _prepare_rasterizer_for_drawing ( )
 {
-    typename messages :: rasterize_use_texture rasterize_use_texture_msg ;
+    typename messages :: engine_rasterizer_use_texture rasterize_use_texture_msg ;
     rasterize_use_texture_msg . texture = _text_texture_id ;
     rasterize_use_texture_msg . origin_x = _origin_x ;
     rasterize_use_texture_msg . origin_y = _origin_y ;
@@ -722,7 +722,7 @@ void shy_logic_text < mediator > :: _rasterize_letter ( letter_id letter , _lett
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_use_texel ( texel_data texel )
 {
-    typename messages :: rasterize_use_texel rasterize_use_texel_msg ;
+    typename messages :: engine_rasterizer_use_texel rasterize_use_texel_msg ;
     rasterize_use_texel_msg . texel = texel ;
     _mediator . get ( ) . send ( rasterize_use_texel_msg ) ;
 }
@@ -730,7 +730,7 @@ void shy_logic_text < mediator > :: _rasterize_use_texel ( texel_data texel )
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 )
 {
-    typename messages :: rasterize_triangle rasterize_triangle_msg ;
+    typename messages :: engine_rasterizer_draw_triangle rasterize_triangle_msg ;
     rasterize_triangle_msg . x1 = x1 ;
     rasterize_triangle_msg . y1 = y1 ;
     rasterize_triangle_msg . x2 = x2 ;
@@ -754,7 +754,7 @@ void shy_logic_text < mediator > :: _rasterize_ellipse_in_rect ( num_whole x1 , 
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
-    typename messages :: rasterize_rect rasterize_rect_msg ;
+    typename messages :: engine_rasterizer_draw_rect rasterize_rect_msg ;
     rasterize_rect_msg . x1 = x1 ;
     rasterize_rect_msg . y1 = y1 ;
     rasterize_rect_msg . x2 = x2 ;

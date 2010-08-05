@@ -10,12 +10,12 @@ public :
 	{
 	public :
         class engine_rasterizer_draw_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
+        class engine_rasterizer_draw_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
+        class engine_rasterizer_draw_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
         class engine_rasterizer_finalize_reply { } ;
-        class rasterize_finalize_request { } ;
-        class rasterize_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
-        class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
-        class rasterize_use_texel { public : texel_data texel ; } ;
-        class rasterize_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
+        class engine_rasterizer_finalize_request { } ;
+        class engine_rasterizer_use_texel { public : texel_data texel ; } ;
+        class engine_rasterizer_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
 	} ;
 
 	template < typename receivers >
@@ -24,12 +24,12 @@ public :
 	public :
 		void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename engine_rasterizer_messages :: engine_rasterizer_draw_ellipse_in_rect ) ;
+        void send ( typename engine_rasterizer_messages :: engine_rasterizer_draw_rect ) ;
+        void send ( typename engine_rasterizer_messages :: engine_rasterizer_draw_triangle ) ;
         void send ( typename engine_rasterizer_messages :: engine_rasterizer_finalize_reply ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_finalize_request ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_rect ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_triangle ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_use_texel ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_use_texture ) ;
+        void send ( typename engine_rasterizer_messages :: engine_rasterizer_finalize_request ) ;
+        void send ( typename engine_rasterizer_messages :: engine_rasterizer_use_texel ) ;
+        void send ( typename engine_rasterizer_messages :: engine_rasterizer_use_texture ) ;
 	private :
 		typename platform_pointer :: template pointer < const receivers > _receivers ;
 	} ;
@@ -66,7 +66,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_rasterizer_stateless < mediator >
 :: engine_rasterizer_sender < receivers >
-:: send ( typename engine_rasterizer_messages :: rasterize_finalize_request msg )
+:: send ( typename engine_rasterizer_messages :: engine_rasterizer_finalize_request msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
 }
@@ -75,7 +75,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_rasterizer_stateless < mediator >
 :: engine_rasterizer_sender < receivers >
-:: send ( typename engine_rasterizer_messages :: rasterize_rect msg )
+:: send ( typename engine_rasterizer_messages :: engine_rasterizer_draw_rect msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
 }
@@ -84,7 +84,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_rasterizer_stateless < mediator >
 :: engine_rasterizer_sender < receivers >
-:: send ( typename engine_rasterizer_messages :: rasterize_triangle msg )
+:: send ( typename engine_rasterizer_messages :: engine_rasterizer_draw_triangle msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
 }
@@ -93,7 +93,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_rasterizer_stateless < mediator >
 :: engine_rasterizer_sender < receivers >
-:: send ( typename engine_rasterizer_messages :: rasterize_use_texture msg )
+:: send ( typename engine_rasterizer_messages :: engine_rasterizer_use_texture msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
 }
@@ -102,7 +102,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_rasterizer_stateless < mediator >
 :: engine_rasterizer_sender < receivers >
-:: send ( typename engine_rasterizer_messages :: rasterize_use_texel msg )
+:: send ( typename engine_rasterizer_messages :: engine_rasterizer_use_texel msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
 }

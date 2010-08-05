@@ -75,7 +75,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: done ) ;
-    void receive ( typename messages :: render_aspect_request ) ;
+    void receive ( typename messages :: engine_render_aspect_request ) ;
     void receive ( typename messages :: render_texture_create_request ) ;
     void receive ( typename messages :: render_texture_finalize ) ;
     void receive ( typename messages :: render_texture_load_from_resource ) ;
@@ -95,13 +95,13 @@ public :
     void receive ( typename messages :: render_mesh_set_transform ) ;
     void receive ( typename messages :: render_mesh_render ) ;
     void receive ( typename messages :: render_mesh_delete ) ;
-    void receive ( typename messages :: render_clear_screen ) ;
-    void receive ( typename messages :: render_disable_depth_test ) ;
-    void receive ( typename messages :: render_enable_depth_test ) ;
+    void receive ( typename messages :: engine_render_clear_screen ) ;
+    void receive ( typename messages :: engine_render_disable_depth_test ) ;
+    void receive ( typename messages :: engine_render_enable_depth_test ) ;
     void receive ( typename messages :: render_matrix_load ) ;
     void receive ( typename messages :: render_fog_disable ) ;
-    void receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha ) ;
-    void receive ( typename messages :: render_blend_disable ) ;
+    void receive ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ) ;
+    void receive ( typename messages :: engine_render_blend_disable ) ;
     void receive ( typename messages :: render_fog_linear ) ;
     void receive ( typename messages :: render_projection_frustum ) ;
     void receive ( typename messages :: render_projection_ortho ) ;
@@ -212,28 +212,28 @@ void shy_engine_render < mediator > :: receive ( typename messages :: done )
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_aspect_request )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_aspect_request )
 {
-    typename messages :: render_aspect_reply reply_msg ;
+    typename messages :: engine_render_aspect_reply reply_msg ;
     _platform_render . get ( ) . get_aspect_width ( reply_msg . width ) ;
     _platform_render . get ( ) . get_aspect_height ( reply_msg . height ) ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_clear_screen msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_clear_screen msg )
 {
     _platform_render . get ( ) . clear_screen ( msg . r , msg . g , msg . b ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_disable_depth_test )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_disable_depth_test )
 {
     _platform_render . get ( ) . disable_depth_test ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_depth_test )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_enable_depth_test )
 {
     _platform_render . get ( ) . enable_depth_test ( ) ;
 }
@@ -251,13 +251,13 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_fog
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_src_alpha_dst_one_minus_alpha )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha )
 {
     _platform_render . get ( ) . blend_src_alpha_dst_one_minus_alpha ( ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_blend_disable )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_blend_disable )
 {
     _platform_render . get ( ) . blend_disable ( ) ;
 }

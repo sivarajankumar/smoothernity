@@ -42,13 +42,13 @@ public :
     class engine_render_messages
     {
     public :
-        class render_aspect_reply { public : num_fract width ; num_fract height ; } ;
-        class render_aspect_request { } ;
-        class render_blend_disable { } ;
-        class render_blend_src_alpha_dst_one_minus_alpha { } ;
-        class render_clear_screen { public : num_fract r ; num_fract g ; num_fract b ; } ;
-        class render_disable_depth_test { } ;
-        class render_enable_depth_test { } ;
+        class engine_render_aspect_reply { public : num_fract width ; num_fract height ; } ;
+        class engine_render_aspect_request { } ;
+        class engine_render_blend_disable { } ;
+        class engine_render_blend_src_alpha_dst_one_minus_alpha { } ;
+        class engine_render_clear_screen { public : num_fract r ; num_fract g ; num_fract b ; } ;
+        class engine_render_disable_depth_test { } ;
+        class engine_render_enable_depth_test { } ;
         class render_enable_face_culling { } ;
         class render_fog_disable { } ;
         class render_fog_linear { public : num_fract znear ; num_fract zfar ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
@@ -88,13 +88,13 @@ public :
     {
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
-        void send ( typename engine_render_messages :: render_aspect_reply ) ;
-        void send ( typename engine_render_messages :: render_aspect_request ) ;
-        void send ( typename engine_render_messages :: render_blend_disable ) ;
-        void send ( typename engine_render_messages :: render_blend_src_alpha_dst_one_minus_alpha ) ;
-        void send ( typename engine_render_messages :: render_clear_screen ) ;
-        void send ( typename engine_render_messages :: render_disable_depth_test ) ;
-        void send ( typename engine_render_messages :: render_enable_depth_test ) ;
+        void send ( typename engine_render_messages :: engine_render_aspect_reply ) ;
+        void send ( typename engine_render_messages :: engine_render_aspect_request ) ;
+        void send ( typename engine_render_messages :: engine_render_blend_disable ) ;
+        void send ( typename engine_render_messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ) ;
+        void send ( typename engine_render_messages :: engine_render_clear_screen ) ;
+        void send ( typename engine_render_messages :: engine_render_disable_depth_test ) ;
+        void send ( typename engine_render_messages :: engine_render_enable_depth_test ) ;
         void send ( typename engine_render_messages :: render_enable_face_culling ) ;
         void send ( typename engine_render_messages :: render_fog_disable ) ;
         void send ( typename engine_render_messages :: render_fog_linear ) ;
@@ -186,7 +186,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_blend_disable msg )
+:: send ( typename engine_render_messages :: engine_render_blend_disable msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -195,7 +195,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_blend_src_alpha_dst_one_minus_alpha msg )
+:: send ( typename engine_render_messages :: engine_render_blend_src_alpha_dst_one_minus_alpha msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -204,7 +204,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_clear_screen msg )
+:: send ( typename engine_render_messages :: engine_render_clear_screen msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -213,7 +213,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_disable_depth_test msg )
+:: send ( typename engine_render_messages :: engine_render_disable_depth_test msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -231,7 +231,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_enable_depth_test msg )
+:: send ( typename engine_render_messages :: engine_render_enable_depth_test msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -409,7 +409,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_aspect_reply msg )
+:: send ( typename engine_render_messages :: engine_render_aspect_reply msg )
 {
     _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
@@ -421,7 +421,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_aspect_request msg )
+:: send ( typename engine_render_messages :: engine_render_aspect_request msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
