@@ -246,7 +246,7 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
 {
     _mediator . get ( ) . send ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     {
-        typename messages :: render_texture_select texture_select_msg ;
+        typename messages :: engine_render_texture_select texture_select_msg ;
         texture_select_msg . texture = _image_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }

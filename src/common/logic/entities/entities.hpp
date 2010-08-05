@@ -254,7 +254,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 template < typename mediator >
 void shy_logic_entities < mediator > :: _entities_render ( )
 {
-    _mediator . get ( ) . send ( typename messages :: render_texture_unselect ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_texture_unselect ( ) ) ;
     
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0 
         ; platform_conditions :: whole_less_than_whole ( i , _entities_to_render )

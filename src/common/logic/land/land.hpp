@@ -205,7 +205,7 @@ void shy_logic_land < mediator > :: _render_land ( )
     num_fract fract_scale_in_frames ;
     
     {
-        typename messages :: render_texture_select texture_select_msg ;
+        typename messages :: engine_render_texture_select texture_select_msg ;
         texture_select_msg . texture = _land_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
@@ -427,7 +427,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
             platform_math :: div_fract_by ( fract_g , _logic_land_consts . color_scale ) ;
             platform_math :: div_fract_by ( fract_b , _logic_land_consts . color_scale ) ;
             
-            typename messages :: render_texture_set_texel_rgba texture_set_texel_rgba_msg ;
+            typename messages :: engine_render_texture_set_texel_rgba texture_set_texel_rgba_msg ;
             texture_set_texel_rgba_msg . texture = _land_texture_id ;
             texture_set_texel_rgba_msg . x = x ;
             texture_set_texel_rgba_msg . y = y ;

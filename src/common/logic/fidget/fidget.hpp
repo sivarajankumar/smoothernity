@@ -242,7 +242,7 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 {        
-    _mediator . get ( ) . send ( typename messages :: render_texture_unselect ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_texture_unselect ( ) ) ;
     
     typename messages :: engine_render_mesh_render mesh_render_msg ;
     mesh_render_msg . mesh = _fidget_mesh_id ;

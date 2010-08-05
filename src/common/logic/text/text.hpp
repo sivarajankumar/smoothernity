@@ -210,7 +210,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: use_text_text
 {
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
-        typename messages :: render_texture_select texture_select_msg ;
+        typename messages :: engine_render_texture_select texture_select_msg ;
         texture_select_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
@@ -417,7 +417,7 @@ void shy_logic_text < mediator > :: _render_text_mesh ( )
 {
     _mediator . get ( ) . send ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     {
-        typename messages :: render_texture_select texture_select_msg ;
+        typename messages :: engine_render_texture_select texture_select_msg ;
         texture_select_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
@@ -558,7 +558,7 @@ void shy_logic_text < mediator > :: _create_text_texture ( )
     engine_render_stateless :: set_texel_color ( _filler , filler_r , filler_g , filler_b , filler_a ) ;
     engine_render_stateless :: set_texel_color ( _eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
     
-    typename messages :: render_texture_set_texels_rect set_texels_msg ;
+    typename messages :: engine_render_texture_set_texels_rect set_texels_msg ;
     set_texels_msg . texel = _eraser ;
     set_texels_msg . texture = _text_texture_id ;
     set_texels_msg . left = _platform_math_consts . get ( ) . whole_0 ;
