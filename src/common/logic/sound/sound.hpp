@@ -40,8 +40,8 @@ public :
     shy_logic_sound ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: sound_prepare_permit ) ;
-    void receive ( typename messages :: sound_update ) ;
+    void receive ( typename messages :: logic_sound_prepare_permit ) ;
+    void receive ( typename messages :: logic_sound_update ) ;
 private :
     shy_logic_sound < mediator > & operator= ( const shy_logic_sound < mediator > & ) ;
     void _load_sound ( ) ;
@@ -162,13 +162,13 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: receive ( typename messages :: sound_prepare_permit )
+void shy_logic_sound < mediator > :: receive ( typename messages :: logic_sound_prepare_permit )
 {
     _sound_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update )
+void shy_logic_sound < mediator > :: receive ( typename messages :: logic_sound_update )
 {
     if ( platform_conditions :: whole_is_true ( _sound_prepare_permitted ) )
     {
@@ -192,7 +192,7 @@ void shy_logic_sound < mediator > :: receive ( typename messages :: sound_update
                 {
                     _create_stereo_sound ( ) ;
                     _stereo_sound_created = _platform_math_consts . get ( ) . whole_true ;
-                    _mediator . get ( ) . send ( typename messages :: sound_prepared ( ) ) ;
+                    _mediator . get ( ) . send ( typename messages :: logic_sound_prepared ( ) ) ;
                 }
             }
         }

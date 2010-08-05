@@ -35,7 +35,7 @@ public :
     void receive ( typename messages :: logic_entities_prepared ) ;
     void receive ( typename messages :: logic_image_prepared ) ;
     void receive ( typename messages :: logic_land_prepared ) ;
-    void receive ( typename messages :: sound_prepared ) ;
+    void receive ( typename messages :: logic_sound_prepared ) ;
     void receive ( typename messages :: touch_prepared ) ;
     void receive ( typename messages :: logic_core_near_plane_distance_reply ) ;
     void receive ( typename messages :: logic_camera_matrix_reply ) ;
@@ -212,7 +212,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: logic_game_up
         _mediator . get ( ) . send ( typename messages :: logic_entities_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: logic_land_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: logic_image_update ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: sound_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_sound_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: text_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: touch_update ( ) ) ;
     }
@@ -245,11 +245,11 @@ void shy_logic_game < mediator > :: receive ( typename messages :: logic_image_p
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: touch_prepared )
 {
-    _mediator . get ( ) . send ( typename messages :: sound_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_sound_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepared )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_sound_prepared )
 {
 }
 
