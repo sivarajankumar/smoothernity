@@ -225,7 +225,7 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
     platform_matrix :: set_origin ( matrix , _spot_position ) ;
     _mediator . get ( ) . send ( typename messages :: render_texture_unselect ( ) ) ;
     {
-        typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
+        typename messages :: engine_render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _spot_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
@@ -272,7 +272,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         vertex_b = _logic_touch_consts . spot_b ;
         vertex_a = _platform_math_consts . get ( ) . fract_1 ;
 
-        typename messages :: render_mesh_set_vertex_position set_pos_msg ;
+        typename messages :: engine_render_mesh_set_vertex_position set_pos_msg ;
         set_pos_msg . mesh = _spot_mesh_id ;
         set_pos_msg . offset = i ;
         set_pos_msg . x = vertex_x ;
@@ -280,7 +280,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         set_pos_msg . z = vertex_z ;
         _mediator . get ( ) . send ( set_pos_msg ) ;
 
-        typename messages :: render_mesh_set_vertex_color set_col_msg ;
+        typename messages :: engine_render_mesh_set_vertex_color set_col_msg ;
         set_col_msg . mesh = _spot_mesh_id ;
         set_col_msg . offset = i ;
         set_col_msg . r = vertex_r ;
@@ -289,7 +289,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         set_col_msg . a = vertex_a ;
         _mediator . get ( ) . send ( set_col_msg ) ;
         
-        typename messages :: render_mesh_set_triangle_fan_index_value set_index_msg ;
+        typename messages :: engine_render_mesh_set_triangle_fan_index_value set_index_msg ;
         set_index_msg . mesh = _spot_mesh_id ;
         set_index_msg . offset = i ;
         set_index_msg . index = i ;

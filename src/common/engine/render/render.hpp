@@ -87,12 +87,12 @@ public :
     void receive ( typename messages :: render_texture_set_texel_rgba ) ;
     void receive ( typename messages :: engine_render_mesh_create_request ) ;
     void receive ( typename messages :: engine_render_mesh_finalize ) ;
-    void receive ( typename messages :: render_mesh_set_vertex_position ) ;
-    void receive ( typename messages :: render_mesh_set_vertex_tex_coord ) ;
-    void receive ( typename messages :: render_mesh_set_vertex_color ) ;
-    void receive ( typename messages :: render_mesh_set_triangle_strip_index_value ) ;
-    void receive ( typename messages :: render_mesh_set_triangle_fan_index_value ) ;
-    void receive ( typename messages :: render_mesh_set_transform ) ;
+    void receive ( typename messages :: engine_render_mesh_set_vertex_position ) ;
+    void receive ( typename messages :: engine_render_mesh_set_vertex_tex_coord ) ;
+    void receive ( typename messages :: engine_render_mesh_set_vertex_color ) ;
+    void receive ( typename messages :: engine_render_mesh_set_triangle_strip_index_value ) ;
+    void receive ( typename messages :: engine_render_mesh_set_triangle_fan_index_value ) ;
+    void receive ( typename messages :: engine_render_mesh_set_transform ) ;
     void receive ( typename messages :: engine_render_mesh_render ) ;
     void receive ( typename messages :: engine_render_mesh_delete ) ;
     void receive ( typename messages :: engine_render_clear_screen ) ;
@@ -453,7 +453,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_vertex_position msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_set_vertex_position msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < vertex_data > vertex ;
@@ -468,7 +468,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_vertex_tex_coord msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_set_vertex_tex_coord msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < vertex_data > vertex ;
@@ -483,7 +483,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_vertex_color msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_set_vertex_color msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < vertex_data > vertex ;
@@ -498,7 +498,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_triangle_strip_index_value msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_set_triangle_strip_index_value msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < index_data > index ;
@@ -513,7 +513,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_triangle_fan_index_value msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_set_triangle_fan_index_value msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     typename platform_pointer :: template pointer < index_data > index ;
@@ -566,7 +566,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_set_transform msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_set_transform msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     platform_static_array :: element_ptr ( mesh , _meshes_datas , msg . mesh . _mesh_id ) ;

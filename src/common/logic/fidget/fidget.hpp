@@ -226,7 +226,7 @@ void shy_logic_fidget < mediator > :: _update_fidget ( )
         platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
         platform_matrix :: set_origin ( matrix , _logic_fidget_consts . mesh_x , mesh_y , _logic_fidget_consts . mesh_z ) ;
         
-        typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
+        typename messages :: engine_render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _fidget_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
@@ -285,7 +285,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         vertex_b = _logic_fidget_consts . fidget_b ;
         vertex_a = _platform_math_consts . get ( ) . fract_1 ;
 
-        typename messages :: render_mesh_set_vertex_position set_pos_msg ;
+        typename messages :: engine_render_mesh_set_vertex_position set_pos_msg ;
         set_pos_msg . mesh = _fidget_mesh_id ;
         set_pos_msg . offset = i ;
         set_pos_msg . x = vertex_x ;
@@ -293,7 +293,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         set_pos_msg . z = vertex_z ;
         _mediator . get ( ) . send ( set_pos_msg ) ;
 
-        typename messages :: render_mesh_set_vertex_color set_col_msg ;
+        typename messages :: engine_render_mesh_set_vertex_color set_col_msg ;
         set_col_msg . mesh = _fidget_mesh_id ;
         set_col_msg . offset = i ;
         set_col_msg . r = vertex_r ;
@@ -302,7 +302,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         set_col_msg . a = vertex_a ;
         _mediator . get ( ) . send ( set_col_msg ) ;
         
-        typename messages :: render_mesh_set_triangle_fan_index_value set_index_msg ;
+        typename messages :: engine_render_mesh_set_triangle_fan_index_value set_index_msg ;
         set_index_msg . mesh = _fidget_mesh_id ;
         set_index_msg . offset = i ;
         set_index_msg . index = i ;

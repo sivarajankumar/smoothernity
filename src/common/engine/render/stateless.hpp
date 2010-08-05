@@ -61,12 +61,12 @@ public :
         class engine_render_mesh_delete { public : mesh_id mesh ; } ;
         class engine_render_mesh_finalize { public : mesh_id mesh ; } ;
         class engine_render_mesh_render { public : mesh_id mesh ; } ;
-        class render_mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
-        class render_mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
-        class render_mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
-        class render_mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
-        class render_mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
-        class render_mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
+        class engine_render_mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
+        class engine_render_mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class engine_render_mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class engine_render_mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class engine_render_mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
+        class engine_render_mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
         class render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
         class render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
         class render_texture_create_reply { public : texture_id texture ; } ;
@@ -107,12 +107,12 @@ public :
         void send ( typename engine_render_messages :: engine_render_mesh_delete ) ;
         void send ( typename engine_render_messages :: engine_render_mesh_finalize ) ;
         void send ( typename engine_render_messages :: engine_render_mesh_render ) ;
-        void send ( typename engine_render_messages :: render_mesh_set_transform ) ;
-        void send ( typename engine_render_messages :: render_mesh_set_triangle_fan_index_value ) ;
-        void send ( typename engine_render_messages :: render_mesh_set_triangle_strip_index_value ) ;
-        void send ( typename engine_render_messages :: render_mesh_set_vertex_color ) ;
-        void send ( typename engine_render_messages :: render_mesh_set_vertex_position ) ;
-        void send ( typename engine_render_messages :: render_mesh_set_vertex_tex_coord ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_set_transform ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_set_triangle_fan_index_value ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_set_triangle_strip_index_value ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_set_vertex_color ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_set_vertex_position ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_set_vertex_tex_coord ) ;
         void send ( typename engine_render_messages :: render_projection_frustum ) ;
         void send ( typename engine_render_messages :: render_projection_ortho ) ;
         void send ( typename engine_render_messages :: render_texture_create_reply ) ;
@@ -303,7 +303,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_set_vertex_position msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_set_vertex_position msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -312,7 +312,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_set_vertex_tex_coord msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_set_vertex_tex_coord msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -321,7 +321,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_set_vertex_color msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_set_vertex_color msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -330,7 +330,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_set_triangle_strip_index_value msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_set_triangle_strip_index_value msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -339,7 +339,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_set_triangle_fan_index_value msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_set_triangle_fan_index_value msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -400,7 +400,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_set_transform msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_set_transform msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }

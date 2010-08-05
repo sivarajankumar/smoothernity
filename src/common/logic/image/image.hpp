@@ -232,7 +232,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , scale ) ;
     platform_matrix :: set_origin ( matrix , _logic_image_consts . mesh_x , _logic_image_consts . mesh_y , _logic_image_consts . mesh_z ) ;
     {
-        typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
+        typename messages :: engine_render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _image_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
@@ -318,7 +318,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
 template < typename mediator >
 void shy_logic_image < mediator > :: _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z )
 {
-    typename messages :: render_mesh_set_vertex_position msg ;
+    typename messages :: engine_render_mesh_set_vertex_position msg ;
     msg . mesh = _image_mesh_id ;
     msg . offset = offset ;
     msg . x = x ;
@@ -330,7 +330,7 @@ void shy_logic_image < mediator > :: _mesh_set_vertex_position ( num_whole offse
 template < typename mediator >
 void shy_logic_image < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v )
 {
-    typename messages :: render_mesh_set_vertex_tex_coord msg ;
+    typename messages :: engine_render_mesh_set_vertex_tex_coord msg ;
     msg . mesh = _image_mesh_id ;
     msg . offset = offset ;
     msg . u = u ;
@@ -341,7 +341,7 @@ void shy_logic_image < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offs
 template < typename mediator >
 void shy_logic_image < mediator > :: _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    typename messages :: render_mesh_set_vertex_color msg ;
+    typename messages :: engine_render_mesh_set_vertex_color msg ;
     msg . mesh = _image_mesh_id ;
     msg . offset = offset ;
     msg . r = r ;
@@ -354,7 +354,7 @@ void shy_logic_image < mediator > :: _mesh_set_vertex_color ( num_whole offset ,
 template < typename mediator >
 void shy_logic_image < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
 {
-    typename messages :: render_mesh_set_triangle_strip_index_value msg ;
+    typename messages :: engine_render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = _image_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;

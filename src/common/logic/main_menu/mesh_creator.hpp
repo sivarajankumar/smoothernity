@@ -473,7 +473,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _fill_mesh_content ( )
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
 {
-    typename messages :: render_mesh_set_vertex_position msg ;
+    typename messages :: engine_render_mesh_set_vertex_position msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . x = x ;
@@ -485,7 +485,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_position 
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
 {
-    typename messages :: render_mesh_set_vertex_tex_coord msg ;
+    typename messages :: engine_render_mesh_set_vertex_tex_coord msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . u = u ;
@@ -496,7 +496,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_tex_coord
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
-    typename messages :: render_mesh_set_vertex_color msg ;
+    typename messages :: engine_render_mesh_set_vertex_color msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . r = r ;
@@ -509,7 +509,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_color ( m
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
 {
-    typename messages :: render_mesh_set_triangle_strip_index_value msg ;
+    typename messages :: engine_render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . index = index ;

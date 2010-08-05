@@ -221,7 +221,7 @@ void shy_logic_land < mediator > :: _render_land ( )
     platform_matrix :: set_axis_z ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _land_scale ) ;
     platform_matrix :: set_origin ( matrix , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     {
-        typename messages :: render_mesh_set_transform mesh_set_transform_msg ;
+        typename messages :: engine_render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = _land_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
@@ -299,7 +299,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             vertex_b = _logic_land_consts . land_b ;
             vertex_a = _platform_math_consts . get ( ) . fract_1 ;
             
-            typename messages :: render_mesh_set_vertex_position set_pos_msg ;
+            typename messages :: engine_render_mesh_set_vertex_position set_pos_msg ;
             set_pos_msg . mesh = _land_mesh_id ;
             set_pos_msg . offset = vertices_count ;
             set_pos_msg . x = vertex_x ;
@@ -307,7 +307,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             set_pos_msg . z = vertex_z ;
             _mediator . get ( ) . send ( set_pos_msg ) ;
             
-            typename messages :: render_mesh_set_vertex_color set_col_msg ;
+            typename messages :: engine_render_mesh_set_vertex_color set_col_msg ;
             set_col_msg . mesh = _land_mesh_id ;
             set_col_msg . offset = vertices_count ;
             set_col_msg . r = vertex_r ;
@@ -316,7 +316,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             set_col_msg . a = vertex_a ;
             _mediator . get ( ) . send ( set_col_msg ) ;
             
-            typename messages :: render_mesh_set_vertex_tex_coord set_tex_msg ;
+            typename messages :: engine_render_mesh_set_vertex_tex_coord set_tex_msg ;
             set_tex_msg . mesh = _land_mesh_id ;
             set_tex_msg . offset = vertices_count ;
             set_tex_msg . u = vertex_u ;
@@ -451,7 +451,7 @@ void shy_logic_land < mediator > :: _create_land_texture ( )
 template < typename mediator >
 void shy_logic_land < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
 {
-    typename messages :: render_mesh_set_triangle_strip_index_value msg ;
+    typename messages :: engine_render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = _land_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;
