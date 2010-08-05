@@ -4,6 +4,7 @@ class shy_engine_render
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
+    typedef typename mediator :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -26,7 +27,6 @@ class shy_engine_render
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
     typedef typename mediator :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
-    typedef typename mediator :: engine_render_texture_id engine_render_texture_id ;
     
     class _engine_render_consts_type
     {
