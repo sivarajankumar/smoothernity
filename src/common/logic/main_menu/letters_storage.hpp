@@ -41,9 +41,9 @@ class shy_logic_main_menu_letters_storage
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: main_menu_add_letter ) ;
+    void receive ( typename messages :: logic_main_menu_add_letter ) ;
     void receive ( typename messages :: main_menu_next_row ) ;
-    void receive ( typename messages :: main_menu_cols_request ) ;
+    void receive ( typename messages :: logic_main_menu_cols_request ) ;
     void receive ( typename messages :: main_menu_rows_request ) ;
     void receive ( typename messages :: main_menu_letter_request ) ;
     void receive ( typename messages :: main_menu_mesh_has_been_created ) ;
@@ -73,7 +73,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_add_letter msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_add_letter msg )
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     typename platform_pointer :: template pointer < _col_state_type > col_state ;
@@ -100,12 +100,12 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_cols_request msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_cols_request msg )
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     platform_static_array :: element_ptr ( row_state , _rows_state . rows , msg . row ) ;
     
-    typename messages :: main_menu_cols_reply reply_msg ;
+    typename messages :: logic_main_menu_cols_reply reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . cols = row_state . get ( ) . cols_count ;
     _mediator . get ( ) . send ( reply_msg ) ;

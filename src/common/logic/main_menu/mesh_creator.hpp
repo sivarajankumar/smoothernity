@@ -87,7 +87,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: main_menu_mesh_create ) ;
     void receive ( typename messages :: main_menu_update ) ;
-    void receive ( typename messages :: main_menu_cols_reply ) ;
+    void receive ( typename messages :: logic_main_menu_cols_reply ) ;
     void receive ( typename messages :: main_menu_rows_reply ) ;
     void receive ( typename messages :: main_menu_letter_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
@@ -172,7 +172,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_cols_reply msg )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: logic_main_menu_cols_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _main_menu_cols_state . requested )
       && platform_conditions :: wholes_are_equal ( _main_menu_cols_state . requested_row , msg . row )
@@ -307,7 +307,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _move_to_next_row ( )
     {
         _main_menu_cols_state . requested = _platform_math_consts . get ( ) . whole_true ;
         _main_menu_cols_state . requested_row = _current_row ;
-        typename messages :: main_menu_cols_request msg ;
+        typename messages :: logic_main_menu_cols_request msg ;
         msg . row = _current_row ;
         _mediator . get ( ) . send ( msg ) ;
     }

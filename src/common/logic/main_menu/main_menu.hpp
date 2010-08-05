@@ -80,5 +80,5 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_men
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_mesh_create_finished )
 {
-    _mediator . get ( ) . send ( typename messages :: main_menu_finished ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_finished ( ) ) ;
 }
