@@ -24,8 +24,6 @@ class shy_logic_main_menu_mesh_creator
     public :
         _logic_main_menu_mesh_creator_consts_type ( ) ;
     public :
-        num_whole frames_between_creation ;
-        num_whole meshes_per_frame ;
         num_fract mesh_size ;
         num_fract color_r ;
         num_fract color_g ;
@@ -128,6 +126,7 @@ private :
     num_whole _current_row ;
     num_whole _current_col ;
     num_whole _current_mesh_id ;
+    num_fract _time_passed ;
     
     typename platform_static_array :: template static_array < mesh_id , _logic_main_menu_mesh_creator_consts_type :: max_meshes > _meshes ;
 } ;
@@ -135,8 +134,6 @@ private :
 template < typename mediator >
 shy_logic_main_menu_mesh_creator < mediator > :: _logic_main_menu_mesh_creator_consts_type :: _logic_main_menu_mesh_creator_consts_type ( )
 {
-    platform_math :: make_num_whole ( frames_between_creation , 5 ) ;
-    platform_math :: make_num_whole ( meshes_per_frame , 10 ) ;
     platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
     platform_math :: make_num_fract ( color_r , 0 , 255 ) ;
     platform_math :: make_num_fract ( color_g , 255 , 255 ) ;
@@ -315,7 +312,10 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _move_to_next_row ( )
         _mediator . get ( ) . send ( msg ) ;
     }
     else
+    {
+        _main_menu_cols_state . cols = _platform_math_consts . get ( ) . whole_0 ;
         _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create_finished ( ) ) ;
+    }
 }
 
 template < typename mediator >
