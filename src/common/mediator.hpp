@@ -14,15 +14,7 @@ public :
 private :
     class receivers ;
 
-    typedef typename mediator_types :: platform :: platform_math :: num_fract num_fract ;
-    typedef typename mediator_types :: platform :: platform_math :: num_whole num_whole ;
-    typedef typename mediator_types :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator_types :: platform :: platform_pointer platform_pointer ;
-    typedef typename mediator_types :: platform :: platform_render :: index_data index_data ;
-    typedef typename mediator_types :: platform :: platform_render :: texel_data texel_data ;
-    typedef typename mediator_types :: platform :: platform_render :: texture_resource_id texture_resource_id ;
-    typedef typename mediator_types :: platform :: platform_render :: vertex_data vertex_data ;
-    typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;

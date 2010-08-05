@@ -56,6 +56,11 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_render )
 {
+    typename messages :: engine_render_clear_screen clear_screen_msg ;
+    clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
+    clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
+    clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;
+    _mediator . get ( ) . send ( clear_screen_msg ) ;
 }
 
 template < typename mediator >
