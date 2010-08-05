@@ -88,7 +88,7 @@ public :
     void receive ( typename messages :: logic_main_menu_mesh_create ) ;
     void receive ( typename messages :: main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_cols_reply ) ;
-    void receive ( typename messages :: main_menu_rows_reply ) ;
+    void receive ( typename messages :: logic_main_menu_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_letter_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_reply ) ;
@@ -186,7 +186,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_rows_reply msg )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: logic_main_menu_rows_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _main_menu_rows_state . requested ) )
     {
@@ -395,7 +395,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _store_mesh ( )
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _send_mesh_created_notification ( )
 {
-    typename messages :: main_menu_mesh_has_been_created msg ;
+    typename messages :: logic_main_menu_mesh_has_been_created msg ;
     msg . row = _current_row ;
     msg . col = _current_col ;
     msg . mesh . _mesh_id = _current_mesh_id ;
