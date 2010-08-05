@@ -62,7 +62,7 @@ public :
     void receive ( typename messages :: text_render_request ) ;
     void receive ( typename messages :: text_update ) ;
     void receive ( typename messages :: use_text_texture_request ) ;
-    void receive ( typename messages :: render_texture_create_reply ) ;
+    void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_request ) ;
     void receive ( typename messages :: text_letter_small_tex_coords_request ) ;
@@ -301,7 +301,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: engine_render
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: render_texture_create_reply msg )
+void shy_logic_text < mediator > :: receive ( typename messages :: engine_render_texture_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
     {
@@ -330,7 +330,7 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
         _text_prepare_permitted = _platform_math_consts . get ( ) . whole_false ;
         
         _texture_create_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_texture_create_request ( ) ) ;
         
         _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
         typename messages :: engine_render_mesh_create_request mesh_create_msg ;

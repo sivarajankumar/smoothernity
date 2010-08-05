@@ -67,10 +67,10 @@ public :
         class engine_render_mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class engine_render_mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
         class engine_render_mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
-        class render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
-        class render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
-        class render_texture_create_reply { public : texture_id texture ; } ;
-        class render_texture_create_request { } ;
+        class engine_render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
+        class engine_render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
+        class engine_render_texture_create_reply { public : texture_id texture ; } ;
+        class engine_render_texture_create_request { } ;
         class render_texture_finalize { public : texture_id texture ; } ;
         class render_texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
         class render_texture_loader_ready_reply { public : num_whole ready ; } ;
@@ -113,10 +113,10 @@ public :
         void send ( typename engine_render_messages :: engine_render_mesh_set_vertex_color ) ;
         void send ( typename engine_render_messages :: engine_render_mesh_set_vertex_position ) ;
         void send ( typename engine_render_messages :: engine_render_mesh_set_vertex_tex_coord ) ;
-        void send ( typename engine_render_messages :: render_projection_frustum ) ;
-        void send ( typename engine_render_messages :: render_projection_ortho ) ;
-        void send ( typename engine_render_messages :: render_texture_create_reply ) ;
-        void send ( typename engine_render_messages :: render_texture_create_request ) ;
+        void send ( typename engine_render_messages :: engine_render_projection_frustum ) ;
+        void send ( typename engine_render_messages :: engine_render_projection_ortho ) ;
+        void send ( typename engine_render_messages :: engine_render_texture_create_reply ) ;
+        void send ( typename engine_render_messages :: engine_render_texture_create_request ) ;
         void send ( typename engine_render_messages :: render_texture_finalize ) ;
         void send ( typename engine_render_messages :: render_texture_load_from_resource ) ;
         void send ( typename engine_render_messages :: render_texture_loader_ready_reply ) ;
@@ -276,7 +276,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_projection_frustum msg )
+:: send ( typename engine_render_messages :: engine_render_projection_frustum msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -285,7 +285,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_projection_ortho msg )
+:: send ( typename engine_render_messages :: engine_render_projection_ortho msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -430,7 +430,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_texture_create_reply msg )
+:: send ( typename engine_render_messages :: engine_render_texture_create_reply msg )
 {
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
@@ -441,7 +441,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_texture_create_request msg )
+:: send ( typename engine_render_messages :: engine_render_texture_create_request msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }

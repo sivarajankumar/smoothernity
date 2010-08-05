@@ -166,7 +166,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: engine_render
             platform_math :: neg_fract ( neg_width , width ) ;
             platform_math :: neg_fract ( neg_height , height ) ;
             
-            typename messages :: render_projection_ortho proj_msg ;
+            typename messages :: engine_render_projection_ortho proj_msg ;
             proj_msg . left = neg_width ;
             proj_msg . right = width ;
             proj_msg . bottom = neg_height ;
@@ -191,7 +191,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: engine_render
             platform_math :: neg_fract ( neg_width , width ) ;
             platform_math :: neg_fract ( neg_height , height ) ;
             
-            typename messages :: render_projection_frustum proj_msg ;
+            typename messages :: engine_render_projection_frustum proj_msg ;
             proj_msg . left = neg_width ;
             proj_msg . right = width ;
             proj_msg . bottom = neg_height ;

@@ -76,7 +76,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: done ) ;
     void receive ( typename messages :: engine_render_aspect_request ) ;
-    void receive ( typename messages :: render_texture_create_request ) ;
+    void receive ( typename messages :: engine_render_texture_create_request ) ;
     void receive ( typename messages :: render_texture_finalize ) ;
     void receive ( typename messages :: render_texture_load_from_resource ) ;
     void receive ( typename messages :: render_texture_loader_ready_request ) ;
@@ -103,8 +103,8 @@ public :
     void receive ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ) ;
     void receive ( typename messages :: engine_render_blend_disable ) ;
     void receive ( typename messages :: engine_render_fog_linear ) ;
-    void receive ( typename messages :: render_projection_frustum ) ;
-    void receive ( typename messages :: render_projection_ortho ) ;
+    void receive ( typename messages :: engine_render_projection_frustum ) ;
+    void receive ( typename messages :: engine_render_projection_ortho ) ;
     void receive ( typename messages :: engine_render_matrix_identity ) ;
     void receive ( typename messages :: engine_render_enable_face_culling ) ;
     void receive ( typename messages :: render_texture_mode_modulate ) ;
@@ -269,13 +269,13 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_projection_frustum msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_projection_frustum msg )
 {
     _platform_render . get ( ) . projection_frustum ( msg . left , msg . right , msg . bottom , msg . top , msg . znear , msg . zfar ) ;
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_projection_ortho msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_projection_ortho msg )
 {
     _platform_render . get ( ) . projection_ortho ( msg . left , msg . right , msg . bottom , msg . top , msg . znear , msg . zfar ) ;
 }
@@ -299,9 +299,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_texture_create_request )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_texture_create_request )
 {
-    typename messages :: render_texture_create_reply texture_create_reply_msg ;
+    typename messages :: engine_render_texture_create_reply texture_create_reply_msg ;
     texture_create_reply_msg . texture . _texture_id = _next_texture_id ;
     platform_math :: inc_whole ( _next_texture_id ) ;
     _mediator . get ( ) . send ( texture_create_reply_msg ) ;

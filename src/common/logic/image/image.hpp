@@ -42,7 +42,7 @@ public :
     void receive ( typename messages :: image_render_request ) ;
     void receive ( typename messages :: image_update ) ;
     void receive ( typename messages :: image_prepare_permit ) ;
-    void receive ( typename messages :: render_texture_create_reply ) ;
+    void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: render_texture_loader_ready_reply ) ;
 private :
@@ -134,7 +134,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_prepar
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: render_texture_create_reply msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: engine_render_texture_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _texture_create_requested ) )
     {
@@ -175,7 +175,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
         if ( platform_conditions :: whole_is_false ( _image_texture_created ) )
         {
             _texture_create_requested = _platform_math_consts . get ( ) . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: render_texture_create_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: engine_render_texture_create_request ( ) ) ;
         }
         if ( platform_conditions :: whole_is_true ( _image_texture_created ) 
           && platform_conditions :: whole_is_false ( _image_texture_loaded )
