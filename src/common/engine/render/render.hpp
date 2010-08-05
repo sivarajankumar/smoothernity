@@ -99,16 +99,16 @@ public :
     void receive ( typename messages :: engine_render_disable_depth_test ) ;
     void receive ( typename messages :: engine_render_enable_depth_test ) ;
     void receive ( typename messages :: render_matrix_load ) ;
-    void receive ( typename messages :: render_fog_disable ) ;
+    void receive ( typename messages :: engine_render_fog_disable ) ;
     void receive ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ) ;
     void receive ( typename messages :: engine_render_blend_disable ) ;
-    void receive ( typename messages :: render_fog_linear ) ;
+    void receive ( typename messages :: engine_render_fog_linear ) ;
     void receive ( typename messages :: render_projection_frustum ) ;
     void receive ( typename messages :: render_projection_ortho ) ;
     void receive ( typename messages :: render_matrix_identity ) ;
-    void receive ( typename messages :: render_enable_face_culling ) ;
+    void receive ( typename messages :: engine_render_enable_face_culling ) ;
     void receive ( typename messages :: render_texture_mode_modulate ) ;
-    void receive ( typename messages :: render_frame_loss_request ) ;
+    void receive ( typename messages :: engine_render_frame_loss_request ) ;
 private :
     shy_engine_render < mediator > & operator= ( const shy_engine_render < mediator > & ) ;
 private :
@@ -245,7 +245,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mat
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_fog_disable )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_fog_disable )
 {
     _platform_render . get ( ) . fog_disable ( ) ;
 }
@@ -263,7 +263,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_fog_linear msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_fog_linear msg )
 {
     _platform_render . get ( ) . fog_linear ( msg . znear , msg . zfar , msg . r , msg . g , msg . b , msg . a ) ;
 }
@@ -287,7 +287,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mat
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_enable_face_culling )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_enable_face_culling )
 {
     _platform_render . get ( ) . enable_face_culling ( ) ;
 }
@@ -574,9 +574,9 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_frame_loss_request )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_frame_loss_request )
 {
-    typename messages :: render_frame_loss_reply reply_msg ;
+    typename messages :: engine_render_frame_loss_reply reply_msg ;
     _platform_render . get ( ) . get_frame_loss ( reply_msg . frame_loss ) ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }

@@ -330,7 +330,7 @@ void shy_logic_title < mediator > :: _proceed_with_render ( )
         clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;
         _mediator . get ( ) . send ( clear_screen_msg ) ;
         _mediator . get ( ) . send ( typename messages :: engine_render_disable_depth_test ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_fog_disable ( ) ) ;
 
         _fidget_render_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: fidget_render_request ( ) ) ;

@@ -49,11 +49,11 @@ public :
         class engine_render_clear_screen { public : num_fract r ; num_fract g ; num_fract b ; } ;
         class engine_render_disable_depth_test { } ;
         class engine_render_enable_depth_test { } ;
-        class render_enable_face_culling { } ;
-        class render_fog_disable { } ;
-        class render_fog_linear { public : num_fract znear ; num_fract zfar ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
-        class render_frame_loss_reply { public : num_whole frame_loss ; } ;
-        class render_frame_loss_request { } ;
+        class engine_render_enable_face_culling { } ;
+        class engine_render_fog_disable { } ;
+        class engine_render_fog_linear { public : num_fract znear ; num_fract zfar ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class engine_render_frame_loss_reply { public : num_whole frame_loss ; } ;
+        class engine_render_frame_loss_request { } ;
         class render_matrix_identity { } ;
         class render_matrix_load { public : matrix_data matrix ; } ;
         class render_mesh_create_reply { public : mesh_id mesh ; } ;
@@ -95,11 +95,11 @@ public :
         void send ( typename engine_render_messages :: engine_render_clear_screen ) ;
         void send ( typename engine_render_messages :: engine_render_disable_depth_test ) ;
         void send ( typename engine_render_messages :: engine_render_enable_depth_test ) ;
-        void send ( typename engine_render_messages :: render_enable_face_culling ) ;
-        void send ( typename engine_render_messages :: render_fog_disable ) ;
-        void send ( typename engine_render_messages :: render_fog_linear ) ;
-        void send ( typename engine_render_messages :: render_frame_loss_reply ) ;
-        void send ( typename engine_render_messages :: render_frame_loss_request ) ;
+        void send ( typename engine_render_messages :: engine_render_enable_face_culling ) ;
+        void send ( typename engine_render_messages :: engine_render_fog_disable ) ;
+        void send ( typename engine_render_messages :: engine_render_fog_linear ) ;
+        void send ( typename engine_render_messages :: engine_render_frame_loss_reply ) ;
+        void send ( typename engine_render_messages :: engine_render_frame_loss_request ) ;
         void send ( typename engine_render_messages :: render_matrix_identity ) ;
         void send ( typename engine_render_messages :: render_matrix_load ) ;
         void send ( typename engine_render_messages :: render_mesh_create_reply ) ;
@@ -222,7 +222,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_enable_face_culling msg )
+:: send ( typename engine_render_messages :: engine_render_enable_face_culling msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -240,7 +240,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_fog_disable msg )
+:: send ( typename engine_render_messages :: engine_render_fog_disable msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -249,7 +249,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_fog_linear msg )
+:: send ( typename engine_render_messages :: engine_render_fog_linear msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -531,7 +531,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_frame_loss_request msg )
+:: send ( typename engine_render_messages :: engine_render_frame_loss_request msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -540,7 +540,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_frame_loss_reply msg )
+:: send ( typename engine_render_messages :: engine_render_frame_loss_reply msg )
 {
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
 }

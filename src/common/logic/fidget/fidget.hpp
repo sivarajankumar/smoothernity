@@ -41,7 +41,7 @@ public :
     void receive ( typename messages :: fidget_update ) ;
     void receive ( typename messages :: render_mesh_create_reply ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
-    void receive ( typename messages :: render_frame_loss_reply ) ;
+    void receive ( typename messages :: engine_render_frame_loss_reply ) ;
 private :
     shy_logic_fidget < mediator > & operator= ( const shy_logic_fidget < mediator > & ) ;
     void _update_fidget ( ) ;
@@ -161,7 +161,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
             _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
             _render_frame_loss_requested = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: render_frame_loss_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: engine_render_frame_loss_request ( ) ) ;
         }
     }
 }
@@ -179,7 +179,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: engine_rend
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: render_frame_loss_reply msg )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: engine_render_frame_loss_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _render_frame_loss_requested ) )
     {

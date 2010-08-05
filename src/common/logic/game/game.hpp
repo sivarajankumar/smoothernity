@@ -373,7 +373,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
     {
         _use_ortho_projection_replied = _platform_math_consts . get ( ) . whole_false ;
         _mediator . get ( ) . send ( typename messages :: engine_render_disable_depth_test ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: render_fog_disable ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: engine_render_fog_disable ( ) ) ;
         
         _fidget_render_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: fidget_render_request ( ) ) ;
@@ -406,7 +406,7 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     platform_math :: add_fracts ( fog_far , _logic_game_consts . fog_far_shift , _near_plane_distance ) ;
     platform_math :: add_fracts ( fog_near , _logic_game_consts . fog_near_shift , _near_plane_distance ) ;
     
-    typename messages :: render_fog_linear fog_msg ;
+    typename messages :: engine_render_fog_linear fog_msg ;
     fog_msg . znear = fog_near ;
     fog_msg . zfar = fog_far ;
     fog_msg . r = _color_r ;
