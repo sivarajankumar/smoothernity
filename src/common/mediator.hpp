@@ -8,7 +8,6 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
@@ -29,6 +28,8 @@ private :
     typedef typename mediator_types :: platform :: platform_render :: texture_resource_id texture_resource_id ;
     typedef typename mediator_types :: platform :: platform_render :: vertex_data vertex_data ;
     typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
+
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
 
 	typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
