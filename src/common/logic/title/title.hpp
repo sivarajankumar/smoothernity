@@ -68,7 +68,7 @@ public :
     void receive ( typename messages :: text_letter_big_tex_coords_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
-    void receive ( typename messages :: fidget_render_reply ) ;
+    void receive ( typename messages :: logic_fidget_render_reply ) ;
     void receive ( typename messages :: use_text_texture_reply ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
@@ -291,7 +291,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: text_letter_
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: fidget_render_reply )
+void shy_logic_title < mediator > :: receive ( typename messages :: logic_fidget_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_render_requested ) )
     {
@@ -333,7 +333,7 @@ void shy_logic_title < mediator > :: _proceed_with_render ( )
         _mediator . get ( ) . send ( typename messages :: engine_render_fog_disable ( ) ) ;
 
         _fidget_render_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: fidget_render_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_fidget_render_request ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _fidget_render_replied ) )
     {

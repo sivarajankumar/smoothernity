@@ -36,9 +36,9 @@ public :
     shy_logic_fidget ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: fidget_prepare_permit ) ;
-    void receive ( typename messages :: fidget_render_request ) ;
-    void receive ( typename messages :: fidget_update ) ;
+    void receive ( typename messages :: logic_fidget_prepare_permit ) ;
+    void receive ( typename messages :: logic_fidget_render_request ) ;
+    void receive ( typename messages :: logic_fidget_update ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
     void receive ( typename messages :: engine_render_frame_loss_reply ) ;
@@ -115,15 +115,15 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_render_request )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: logic_fidget_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_mesh_created ) )
         _render_fidget_mesh ( ) ;
-    _mediator . get ( ) . send ( typename messages :: fidget_render_reply ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_fidget_render_reply ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prepare_permit )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: logic_fidget_prepare_permit )
 {
     _fidget_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
@@ -137,12 +137,12 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: engine_rend
         _fidget_mesh_id = msg . mesh ;
         _create_fidget_mesh ( ) ;
         _fidget_mesh_created = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: fidget_prepared ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_fidget_prepared ( ) ) ;
     }
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_update )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: logic_fidget_update )
 {
     if ( platform_conditions :: whole_is_true ( _fidget_prepare_permitted ) )
     {

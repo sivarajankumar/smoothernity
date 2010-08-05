@@ -28,7 +28,7 @@ public :
     void receive ( typename messages :: logic_core_use_perspective_projection_request ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_request ) ;
     void receive ( typename messages :: video_mode_changed ) ;
-    void receive ( typename messages :: fidget_prepared ) ;
+    void receive ( typename messages :: logic_fidget_prepared ) ;
     void receive ( typename messages :: logic_core_near_plane_distance_request ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
@@ -100,8 +100,8 @@ void shy_logic_core < mediator > :: receive ( typename messages :: update )
     if ( platform_conditions :: whole_is_true ( _fidget_prepared ) )
         _mediator . get ( ) . send ( typename messages :: logic_application_update ( ) ) ;
     else
-        _mediator . get ( ) . send ( typename messages :: fidget_prepare_permit ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: fidget_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_fidget_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_fidget_update ( ) ) ;
 }
 
 template < typename mediator >
@@ -121,7 +121,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: logic_core_us
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: fidget_prepared )
+void shy_logic_core < mediator > :: receive ( typename messages :: logic_fidget_prepared )
 {
     _fidget_prepared = _platform_math_consts . get ( ) . whole_true ;
 }
