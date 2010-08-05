@@ -175,7 +175,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: engine_render
             proj_msg . zfar = _logic_consts . z_far ;
             _mediator . get ( ) . send ( proj_msg ) ;
             
-            _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: engine_render_matrix_identity ( ) ) ;
             _mediator . get ( ) . send ( typename messages :: logic_core_use_ortho_projection_reply ( ) ) ;
         }
         if ( platform_conditions :: whole_is_true ( _handling_use_perspective_projection_request ) )
@@ -200,7 +200,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: engine_render
             proj_msg . zfar = _logic_consts . z_far ;
             _mediator . get ( ) . send ( proj_msg ) ;
             
-            _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: engine_render_matrix_identity ( ) ) ;
             _mediator . get ( ) . send ( typename messages :: logic_core_use_perspective_projection_reply ( ) ) ;
         }
     }

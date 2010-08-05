@@ -39,7 +39,7 @@ public :
     void receive ( typename messages :: touch_prepare_permit ) ;
     void receive ( typename messages :: touch_render ) ;
     void receive ( typename messages :: touch_update ) ;
-    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_touch < mediator > & operator= ( const shy_logic_touch < mediator > & ) ;
     void _update_spot ( ) ;
@@ -132,7 +132,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update
         {
             _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
             
-            typename messages :: render_mesh_create_request mesh_create_msg ;
+            typename messages :: engine_render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = _logic_touch_consts . spot_edges ;
             mesh_create_msg . triangle_fan_indices = _logic_touch_consts . spot_edges ;
             mesh_create_msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_0 ;
@@ -144,7 +144,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+void shy_logic_touch < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -231,7 +231,7 @@ void shy_logic_touch < mediator > :: _render_spot_mesh ( )
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
     {
-        typename messages :: render_mesh_render mesh_render_msg ;
+        typename messages :: engine_render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _spot_mesh_id ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
@@ -296,7 +296,7 @@ void shy_logic_touch < mediator > :: _create_spot_mesh ( )
         _mediator . get ( ) . send ( set_index_msg ) ;
     }
     
-    typename messages :: render_mesh_finalize mesh_finalize_msg ;
+    typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _spot_mesh_id ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 }

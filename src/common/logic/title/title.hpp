@@ -66,7 +66,7 @@ public :
     void receive ( typename messages :: title_update ) ;
     void receive ( typename messages :: title_launch_permit ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_reply ) ;
-    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: fidget_render_reply ) ;
     void receive ( typename messages :: use_text_texture_reply ) ;
@@ -258,7 +258,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: engine_rende
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+void shy_logic_title < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -394,7 +394,7 @@ void shy_logic_title < mediator > :: _proceed_with_letter_creation ( )
         _mesh_set_vertex_tex_coord           ( letter . get ( ) . mesh , _platform_math_consts . get ( ) . whole_3 , _tex_coords_right , _tex_coords_bottom ) ;
         _mesh_set_vertex_position            ( letter . get ( ) . mesh , _platform_math_consts . get ( ) . whole_3 , x_right , y_bottom , z ) ;
         
-        typename messages :: render_mesh_finalize mesh_finalize_msg ;
+        typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
         mesh_finalize_msg . mesh = letter . get ( ) . mesh ;
         _mediator . get ( ) . send ( mesh_finalize_msg ) ;
         
@@ -499,7 +499,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     
     _mediator . get ( ) . send ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     
-    typename messages :: render_matrix_load matrix_load_msg ;
+    typename messages :: engine_render_matrix_load matrix_load_msg ;
     matrix_load_msg . matrix = scene_tm ;
     _mediator . get ( ) . send ( matrix_load_msg ) ;
     
@@ -510,7 +510,7 @@ void shy_logic_title < mediator > :: _title_render ( )
     {
         typename platform_pointer :: template pointer < _letter_state > letter ;
         platform_static_array :: element_ptr ( letter , _letters , i ) ;
-        typename messages :: render_mesh_render mesh_render_msg ;
+        typename messages :: engine_render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . get ( ) . mesh ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
@@ -664,7 +664,7 @@ void shy_logic_title < mediator > :: _delete_all_meshes ( )
     {
         typename platform_pointer :: template pointer < _letter_state > letter ;
         platform_static_array :: element_ptr ( letter , _letters , i ) ;
-        typename messages :: render_mesh_delete mesh_delete_msg ;
+        typename messages :: engine_render_mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = letter . get ( ) . mesh ;
         _mediator . get ( ) . send ( mesh_delete_msg ) ;
     }
@@ -701,7 +701,7 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
         text_letter_big_tex_coords_request_msg . letter = letter . get ( ) . letter ;
         _mediator . get ( ) . send ( text_letter_big_tex_coords_request_msg  ) ;        
         
-        typename messages :: render_mesh_create_request mesh_create_msg ;
+        typename messages :: engine_render_mesh_create_request mesh_create_msg ;
         mesh_create_msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
         mesh_create_msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_4 ;
         mesh_create_msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;

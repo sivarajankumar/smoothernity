@@ -85,27 +85,27 @@ public :
     void receive ( typename messages :: render_texture_set_texels_rect ) ;
     void receive ( typename messages :: render_texture_set_texel ) ;
     void receive ( typename messages :: render_texture_set_texel_rgba ) ;
-    void receive ( typename messages :: render_mesh_create_request ) ;
-    void receive ( typename messages :: render_mesh_finalize ) ;
+    void receive ( typename messages :: engine_render_mesh_create_request ) ;
+    void receive ( typename messages :: engine_render_mesh_finalize ) ;
     void receive ( typename messages :: render_mesh_set_vertex_position ) ;
     void receive ( typename messages :: render_mesh_set_vertex_tex_coord ) ;
     void receive ( typename messages :: render_mesh_set_vertex_color ) ;
     void receive ( typename messages :: render_mesh_set_triangle_strip_index_value ) ;
     void receive ( typename messages :: render_mesh_set_triangle_fan_index_value ) ;
     void receive ( typename messages :: render_mesh_set_transform ) ;
-    void receive ( typename messages :: render_mesh_render ) ;
-    void receive ( typename messages :: render_mesh_delete ) ;
+    void receive ( typename messages :: engine_render_mesh_render ) ;
+    void receive ( typename messages :: engine_render_mesh_delete ) ;
     void receive ( typename messages :: engine_render_clear_screen ) ;
     void receive ( typename messages :: engine_render_disable_depth_test ) ;
     void receive ( typename messages :: engine_render_enable_depth_test ) ;
-    void receive ( typename messages :: render_matrix_load ) ;
+    void receive ( typename messages :: engine_render_matrix_load ) ;
     void receive ( typename messages :: engine_render_fog_disable ) ;
     void receive ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ) ;
     void receive ( typename messages :: engine_render_blend_disable ) ;
     void receive ( typename messages :: engine_render_fog_linear ) ;
     void receive ( typename messages :: render_projection_frustum ) ;
     void receive ( typename messages :: render_projection_ortho ) ;
-    void receive ( typename messages :: render_matrix_identity ) ;
+    void receive ( typename messages :: engine_render_matrix_identity ) ;
     void receive ( typename messages :: engine_render_enable_face_culling ) ;
     void receive ( typename messages :: render_texture_mode_modulate ) ;
     void receive ( typename messages :: engine_render_frame_loss_request ) ;
@@ -239,7 +239,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_matrix_load msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_matrix_load msg )
 {
     _platform_render . get ( ) . matrix_load ( msg . matrix ) ;
 }
@@ -281,7 +281,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_pro
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_matrix_identity )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_matrix_identity )
 {
     _platform_render . get ( ) . matrix_identity ( ) ;
 }
@@ -412,7 +412,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_tex
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_create_request msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_create_request msg )
 {
     num_whole whole_max_meshes ;
     platform_math :: make_num_whole ( whole_max_meshes , _engine_render_consts_type :: max_meshes ) ;
@@ -434,7 +434,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
         _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
         _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
         
-        typename messages :: render_mesh_create_reply reply_msg ;
+        typename messages :: engine_render_mesh_create_reply reply_msg ;
         reply_msg . mesh . _mesh_id = vacant_mesh_id . get ( ) ;
         platform_math :: inc_whole ( _next_vacant_mesh_id_index ) ;
         _mediator . get ( ) . send ( reply_msg ) ;    
@@ -442,7 +442,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_finalize msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_finalize msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     platform_static_array :: element_ptr ( mesh , _meshes_datas , msg . mesh . _mesh_id ) ;
@@ -528,7 +528,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_delete msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_delete msg )
 {
     if ( platform_conditions :: whole_greater_than_zero ( _next_vacant_mesh_id_index ) )
     {
@@ -540,7 +540,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: render_mes
 }
 
 template < typename mediator >
-void shy_engine_render < mediator > :: receive ( typename messages :: render_mesh_render msg )
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_mesh_render msg )
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     platform_static_array :: element_ptr ( mesh , _meshes_datas , msg . mesh . _mesh_id ) ;

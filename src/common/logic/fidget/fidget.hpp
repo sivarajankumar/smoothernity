@@ -39,7 +39,7 @@ public :
     void receive ( typename messages :: fidget_prepare_permit ) ;
     void receive ( typename messages :: fidget_render_request ) ;
     void receive ( typename messages :: fidget_update ) ;
-    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
     void receive ( typename messages :: engine_render_frame_loss_reply ) ;
 private :
@@ -129,7 +129,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_prep
 }
 
 template < typename mediator >
-void shy_logic_fidget < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+void shy_logic_fidget < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -150,7 +150,7 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: fidget_upda
         {
             _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
             
-            typename messages :: render_mesh_create_request mesh_create_msg ;
+            typename messages :: engine_render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = _logic_fidget_consts . fidget_edges ;
             mesh_create_msg . triangle_fan_indices = _logic_fidget_consts . fidget_edges ;
             mesh_create_msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_0 ;
@@ -244,7 +244,7 @@ void shy_logic_fidget < mediator > :: _render_fidget_mesh ( )
 {        
     _mediator . get ( ) . send ( typename messages :: render_texture_unselect ( ) ) ;
     
-    typename messages :: render_mesh_render mesh_render_msg ;
+    typename messages :: engine_render_mesh_render mesh_render_msg ;
     mesh_render_msg . mesh = _fidget_mesh_id ;
     _mediator . get ( ) . send ( mesh_render_msg ) ;
 }
@@ -308,7 +308,7 @@ void shy_logic_fidget < mediator > :: _create_fidget_mesh ( )
         set_index_msg . index = i ;
         _mediator . get ( ) . send ( set_index_msg ) ;
     }
-    typename messages :: render_mesh_finalize mesh_finalize_msg ;
+    typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _fidget_mesh_id ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 }

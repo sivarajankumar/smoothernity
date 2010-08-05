@@ -45,7 +45,7 @@ public :
     void receive ( typename messages :: land_render_request ) ;
     void receive ( typename messages :: land_update ) ;
     void receive ( typename messages :: render_texture_create_reply ) ;
-    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_land < mediator > & operator= ( const shy_logic_land < mediator > & ) ;
     void _render_land ( ) ;
@@ -174,7 +174,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update )
             platform_math :: mul_whole_by ( total_indices , _logic_land_consts . land_grid ) ;
             platform_math :: mul_whole_by ( total_indices , _platform_math_consts . get ( ) . whole_2 ) ;
             
-            typename messages :: render_mesh_create_request mesh_create_msg ;
+            typename messages :: engine_render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = total_vertices ;
             mesh_create_msg . triangle_strip_indices = total_indices ;
             mesh_create_msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
@@ -184,7 +184,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: land_update )
 }
 
 template < typename mediator >
-void shy_logic_land < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+void shy_logic_land < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -227,7 +227,7 @@ void shy_logic_land < mediator > :: _render_land ( )
         _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
     }
     {
-        typename messages :: render_mesh_render mesh_render_msg ;
+        typename messages :: engine_render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _land_mesh_id ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
@@ -370,7 +370,7 @@ void shy_logic_land < mediator > :: _create_land_mesh ( )
             }
         }
     }
-    typename messages :: render_mesh_finalize mesh_finalize_msg ;
+    typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _land_mesh_id ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
     _land_mesh_created = _platform_math_consts . get ( ) . whole_true ;

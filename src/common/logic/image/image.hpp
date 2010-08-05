@@ -43,7 +43,7 @@ public :
     void receive ( typename messages :: image_update ) ;
     void receive ( typename messages :: image_prepare_permit ) ;
     void receive ( typename messages :: render_texture_create_reply ) ;
-    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: render_texture_loader_ready_reply ) ;
 private :
     shy_logic_image < mediator > & operator= ( const shy_logic_image < mediator > & ) ;
@@ -146,7 +146,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: render_textu
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+void shy_logic_image < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -166,7 +166,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: image_update
         {
             _mesh_create_requested = _platform_math_consts . get ( ) . whole_true ;
             
-            typename messages :: render_mesh_create_request mesh_create_msg ;
+            typename messages :: engine_render_mesh_create_request mesh_create_msg ;
             mesh_create_msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
             mesh_create_msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_4 ;
             mesh_create_msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
@@ -251,7 +251,7 @@ void shy_logic_image < mediator > :: _render_image_mesh ( )
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
     {
-        typename messages :: render_mesh_render mesh_render_msg ;
+        typename messages :: engine_render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = _image_mesh_id ;
         _mediator . get ( ) . send ( mesh_render_msg ) ;
     }
@@ -310,7 +310,7 @@ void shy_logic_image < mediator > :: _create_image_mesh ( )
     _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_3 , u_right , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_3 , _platform_math_consts . get ( ) . whole_3 ) ;
 
-    typename messages :: render_mesh_finalize mesh_finalize_msg ;
+    typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _image_mesh_id ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
 }

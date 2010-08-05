@@ -54,13 +54,13 @@ public :
         class engine_render_fog_linear { public : num_fract znear ; num_fract zfar ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class engine_render_frame_loss_reply { public : num_whole frame_loss ; } ;
         class engine_render_frame_loss_request { } ;
-        class render_matrix_identity { } ;
-        class render_matrix_load { public : matrix_data matrix ; } ;
-        class render_mesh_create_reply { public : mesh_id mesh ; } ;
-        class render_mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
-        class render_mesh_delete { public : mesh_id mesh ; } ;
-        class render_mesh_finalize { public : mesh_id mesh ; } ;
-        class render_mesh_render { public : mesh_id mesh ; } ;
+        class engine_render_matrix_identity { } ;
+        class engine_render_matrix_load { public : matrix_data matrix ; } ;
+        class engine_render_mesh_create_reply { public : mesh_id mesh ; } ;
+        class engine_render_mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
+        class engine_render_mesh_delete { public : mesh_id mesh ; } ;
+        class engine_render_mesh_finalize { public : mesh_id mesh ; } ;
+        class engine_render_mesh_render { public : mesh_id mesh ; } ;
         class render_mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
         class render_mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
         class render_mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
@@ -100,13 +100,13 @@ public :
         void send ( typename engine_render_messages :: engine_render_fog_linear ) ;
         void send ( typename engine_render_messages :: engine_render_frame_loss_reply ) ;
         void send ( typename engine_render_messages :: engine_render_frame_loss_request ) ;
-        void send ( typename engine_render_messages :: render_matrix_identity ) ;
-        void send ( typename engine_render_messages :: render_matrix_load ) ;
-        void send ( typename engine_render_messages :: render_mesh_create_reply ) ;
-        void send ( typename engine_render_messages :: render_mesh_create_request ) ;
-        void send ( typename engine_render_messages :: render_mesh_delete ) ;
-        void send ( typename engine_render_messages :: render_mesh_finalize ) ;
-        void send ( typename engine_render_messages :: render_mesh_render ) ;
+        void send ( typename engine_render_messages :: engine_render_matrix_identity ) ;
+        void send ( typename engine_render_messages :: engine_render_matrix_load ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_create_reply ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_create_request ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_delete ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_finalize ) ;
+        void send ( typename engine_render_messages :: engine_render_mesh_render ) ;
         void send ( typename engine_render_messages :: render_mesh_set_transform ) ;
         void send ( typename engine_render_messages :: render_mesh_set_triangle_fan_index_value ) ;
         void send ( typename engine_render_messages :: render_mesh_set_triangle_strip_index_value ) ;
@@ -258,7 +258,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_matrix_load msg )
+:: send ( typename engine_render_messages :: engine_render_matrix_load msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -267,7 +267,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_matrix_identity msg )
+:: send ( typename engine_render_messages :: engine_render_matrix_identity msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -348,7 +348,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_create_request msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_create_request msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -357,7 +357,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_create_reply msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_create_reply msg )
 {
     _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
@@ -373,7 +373,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_finalize msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_finalize msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -382,7 +382,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_delete msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_delete msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
@@ -391,7 +391,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
-:: send ( typename engine_render_messages :: render_mesh_render msg )
+:: send ( typename engine_render_messages :: engine_render_mesh_render msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }

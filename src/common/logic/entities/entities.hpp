@@ -47,7 +47,7 @@ public :
     void receive ( typename messages :: entities_height_request ) ;
     void receive ( typename messages :: entities_mesh_grid_request ) ;
     void receive ( typename messages :: entities_origin_request ) ;
-    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_entities < mediator > & operator= ( const shy_logic_entities < mediator > & ) ;
     void _entities_render ( ) ;
@@ -178,7 +178,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+void shy_logic_entities < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _mesh_create_requested ) )
     {
@@ -212,7 +212,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
                 
                 platform_math :: add_wholes ( fan_indices_count , _logic_entities_consts . entity_mesh_spans , _platform_math_consts . get ( ) . whole_2 ) ;
                 
-                typename messages :: render_mesh_create_request mesh_create_msg ;
+                typename messages :: engine_render_mesh_create_request mesh_create_msg ;
                 mesh_create_msg . vertices = vertices_count ;
                 mesh_create_msg . triangle_strip_indices = strip_indices_count ;
                 mesh_create_msg . triangle_fan_indices = fan_indices_count ;
@@ -270,7 +270,7 @@ void shy_logic_entities < mediator > :: _entities_render ( )
             _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
         }
         {
-            typename messages :: render_mesh_render mesh_render_msg ;
+            typename messages :: engine_render_mesh_render mesh_render_msg ;
             mesh_render_msg . mesh = _entity_mesh_id ;
             _mediator . get ( ) . send ( mesh_render_msg ) ;
         }
@@ -418,7 +418,7 @@ void shy_logic_entities < mediator > :: _create_entity_mesh ( )
         }
         else if ( platform_conditions :: whole_is_zero ( _frames_to_render ) )
         {
-            typename messages :: render_mesh_finalize mesh_finalize_msg ;
+            typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
             mesh_finalize_msg . mesh = _entity_mesh_id ;
             _mediator . get ( ) . send ( mesh_finalize_msg ) ;
             platform_math :: inc_whole ( _frames_to_render ) ;

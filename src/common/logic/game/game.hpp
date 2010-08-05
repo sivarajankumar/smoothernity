@@ -349,7 +349,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _use_perspective_projection_replied = _platform_math_consts . get ( ) . whole_false ;
         _mediator . get ( ) . send ( typename messages :: engine_render_enable_depth_test ( ) ) ;
         
-        typename messages :: render_matrix_load matrix_load_msg ;
+        typename messages :: engine_render_matrix_load matrix_load_msg ;
         matrix_load_msg . matrix = _camera_matrix ;
         _mediator . get ( ) . send ( matrix_load_msg ) ;
         

@@ -90,7 +90,7 @@ public :
     void receive ( typename messages :: main_menu_cols_reply ) ;
     void receive ( typename messages :: main_menu_rows_reply ) ;
     void receive ( typename messages :: main_menu_letter_reply ) ;
-    void receive ( typename messages :: render_mesh_create_reply ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_reply ) ;
 private :
     void _proceed_with_creation ( ) ;
@@ -213,7 +213,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: render_mesh_create_reply msg )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _render_mesh_create_state . requested ) )
     {
@@ -357,7 +357,7 @@ template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _create_mesh ( )
 {
     _render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    typename messages :: render_mesh_create_request msg ;
+    typename messages :: engine_render_mesh_create_request msg ;
     msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
     msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_4 ;
     msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
