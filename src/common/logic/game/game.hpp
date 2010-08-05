@@ -28,9 +28,9 @@ public :
     shy_logic_game ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: game_launch_permit ) ;
-    void receive ( typename messages :: game_render ) ;
-    void receive ( typename messages :: game_update ) ;
+    void receive ( typename messages :: logic_game_launch_permit ) ;
+    void receive ( typename messages :: logic_game_render ) ;
+    void receive ( typename messages :: logic_game_update ) ;
     void receive ( typename messages :: logic_camera_prepared ) ;
     void receive ( typename messages :: logic_entities_prepared ) ;
     void receive ( typename messages :: image_prepared ) ;
@@ -153,13 +153,13 @@ void shy_logic_game < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: game_launch_permit )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_game_launch_permit )
 {
     _game_launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: game_render )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_game_render )
 {
     if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
@@ -195,7 +195,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: logic_camera_
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: game_update )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_game_update )
 {
     if ( platform_conditions :: whole_is_true ( _game_launch_permitted ) )
     {

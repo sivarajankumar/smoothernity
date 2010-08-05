@@ -67,14 +67,14 @@ void shy_logic_application < mediator > :: receive ( typename messages :: main_m
 {
     _main_menu_active = _platform_math_consts . get ( ) . whole_false ;
     _game_active = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: game_launch_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_game_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: logic_application_render )
 {
     if ( platform_conditions :: whole_is_true ( _game_active ) )
-        _mediator . get ( ) . send ( typename messages :: game_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_game_render ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _title_active ) )
         _mediator . get ( ) . send ( typename messages :: title_render ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _main_menu_active ) )
@@ -101,7 +101,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
     if ( platform_conditions :: whole_is_true ( _text_active ) )
         _mediator . get ( ) . send ( typename messages :: text_update ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _game_active ) )
-        _mediator . get ( ) . send ( typename messages :: game_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_game_update ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _title_active ) )
         _mediator . get ( ) . send ( typename messages :: title_update ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _main_menu_active ) )
