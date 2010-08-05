@@ -192,7 +192,7 @@ void shy_logic_land < mediator > :: receive ( typename messages :: engine_render
         _land_mesh_id = msg . mesh ;
         _create_land_mesh ( ) ;
         if ( platform_conditions :: whole_is_true ( _land_mesh_created ) )
-            _mediator . get ( ) . send ( typename messages :: logic_land_render_reply ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_land_prepared ( ) ) ;
     }
 }
 
