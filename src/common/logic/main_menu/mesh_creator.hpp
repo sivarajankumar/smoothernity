@@ -91,7 +91,7 @@ public :
     void receive ( typename messages :: logic_main_menu_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_letter_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
-    void receive ( typename messages :: text_letter_big_tex_coords_reply ) ;
+    void receive ( typename messages :: logic_text_letter_big_tex_coords_reply ) ;
 private :
     void _proceed_with_creation ( ) ;
     void _obtain_rows_count ( ) ;
@@ -225,7 +225,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_reply msg )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: logic_text_letter_big_tex_coords_reply msg )
 {
     num_whole letters_are_equal ;
     logic_text_stateless :: are_letters_equal ( letters_are_equal , _text_letter_big_tex_coords_state . requested_letter , msg . letter ) ;
@@ -369,7 +369,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _obtain_tex_coords ( )
 {
     _text_letter_big_tex_coords_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _text_letter_big_tex_coords_state . requested_letter = _main_menu_letter_state . letter ;
-    typename messages :: text_letter_big_tex_coords_request msg ;
+    typename messages :: logic_text_letter_big_tex_coords_request msg ;
     msg . letter = _main_menu_letter_state . letter ;
     _mediator . get ( ) . send ( msg ) ;
 }

@@ -64,8 +64,8 @@ public :
     void receive ( typename messages :: use_text_texture_request ) ;
     void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
-    void receive ( typename messages :: text_letter_big_tex_coords_request ) ;
-    void receive ( typename messages :: text_letter_small_tex_coords_request ) ;
+    void receive ( typename messages :: logic_text_letter_big_tex_coords_request ) ;
+    void receive ( typename messages :: logic_text_letter_small_tex_coords_request ) ;
     void receive ( typename messages :: engine_rasterizer_finalize_reply ) ;
 private :
     shy_logic_text < mediator > & operator= ( const shy_logic_text < mediator > & ) ;
@@ -218,9 +218,9 @@ void shy_logic_text < mediator > :: receive ( typename messages :: use_text_text
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_big_tex_coords_request msg )
+void shy_logic_text < mediator > :: receive ( typename messages :: logic_text_letter_big_tex_coords_request msg )
 {
-    typename messages :: text_letter_big_tex_coords_reply reply_msg ;
+    typename messages :: logic_text_letter_big_tex_coords_reply reply_msg ;
     reply_msg . letter = msg . letter ;
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
@@ -242,9 +242,9 @@ void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_b
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_letter_small_tex_coords_request msg )
+void shy_logic_text < mediator > :: receive ( typename messages :: logic_text_letter_small_tex_coords_request msg )
 {
-    typename messages :: text_letter_small_tex_coords_reply reply_msg ;
+    typename messages :: logic_text_letter_small_tex_coords_reply reply_msg ;
     reply_msg . letter = msg . letter ;
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
