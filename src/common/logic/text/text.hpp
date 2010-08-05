@@ -7,7 +7,7 @@ class shy_logic_text
     typedef typename mediator :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: logic_text_stateless :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;
-    typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
+    typedef typename mediator :: logic_text_stateless :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;

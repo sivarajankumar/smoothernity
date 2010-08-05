@@ -4,7 +4,7 @@ class shy_logic_main_menu_mesh_creator ;
 template < typename mediator >
 class shy_logic_main_menu_stateless
 {
-    typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
+    typedef typename mediator :: logic_text_stateless :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
