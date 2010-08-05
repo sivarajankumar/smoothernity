@@ -105,5 +105,5 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
     if ( platform_conditions :: whole_is_true ( _title_active ) )
         _mediator . get ( ) . send ( typename messages :: title_update ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _main_menu_active ) )
-        _mediator . get ( ) . send ( typename messages :: main_menu_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_update ( ) ) ;
 }

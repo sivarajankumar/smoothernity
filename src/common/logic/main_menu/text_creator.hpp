@@ -17,7 +17,7 @@ class shy_logic_main_menu_text_creator
     
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
-    void receive ( typename messages :: main_menu_text_create ) ;
+    void receive ( typename messages :: logic_main_menu_text_create ) ;
 public :
     void _add_letter ( letter_id ) ;
     void _next_row ( ) ;
@@ -33,7 +33,7 @@ void shy_logic_main_menu_text_creator < mediator > :: set_mediator ( typename pl
 }
 
 template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: receive ( typename messages :: main_menu_text_create )
+void shy_logic_main_menu_text_creator < mediator > :: receive ( typename messages :: logic_main_menu_text_create )
 {
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
@@ -95,5 +95,5 @@ void shy_logic_main_menu_text_creator < mediator > :: _next_row ( )
 template < typename mediator >
 void shy_logic_main_menu_text_creator < mediator > :: _text_create_finished ( )
 {
-    _mediator . get ( ) . send ( typename messages :: main_menu_text_create_finished ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_text_create_finished ( ) ) ;
 }

@@ -86,7 +86,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_mesh_create ) ;
-    void receive ( typename messages :: main_menu_update ) ;
+    void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_cols_reply ) ;
     void receive ( typename messages :: logic_main_menu_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_letter_reply ) ;
@@ -166,7 +166,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: main_menu_update )
+void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename messages :: logic_main_menu_update )
 {
     _proceed_with_creation ( ) ;
 }
@@ -282,7 +282,7 @@ template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _obtain_rows_count ( )
 {
     _main_menu_rows_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: main_menu_rows_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_rows_request ( ) ) ;
 }
 
 template < typename mediator >
