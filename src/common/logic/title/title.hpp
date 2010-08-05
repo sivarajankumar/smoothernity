@@ -62,9 +62,9 @@ public :
     shy_logic_title ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: title_render ) ;
-    void receive ( typename messages :: title_update ) ;
-    void receive ( typename messages :: title_launch_permit ) ;
+    void receive ( typename messages :: logic_title_render ) ;
+    void receive ( typename messages :: logic_title_update ) ;
+    void receive ( typename messages :: logic_title_launch_permit ) ;
     void receive ( typename messages :: logic_text_letter_big_tex_coords_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
@@ -210,7 +210,7 @@ void shy_logic_title < mediator > :: set_mediator ( typename platform_pointer ::
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: title_render )
+void shy_logic_title < mediator > :: receive ( typename messages :: logic_title_render )
 {
     _render_started = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_render ( ) ;
@@ -228,13 +228,13 @@ void shy_logic_title < mediator > :: receive ( typename messages :: logic_core_u
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: title_launch_permit )
+void shy_logic_title < mediator > :: receive ( typename messages :: logic_title_launch_permit )
 {
     _title_launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: title_update )
+void shy_logic_title < mediator > :: receive ( typename messages :: logic_title_update )
 {
     if ( platform_conditions :: whole_is_true ( _title_launch_permitted ) )
     {
@@ -433,7 +433,7 @@ void shy_logic_title < mediator > :: _animate_disappear ( )
     {
         _title_finished = _platform_math_consts . get ( ) . whole_true ;
         _delete_all_meshes ( ) ;
-        _mediator . get ( ) . send ( typename messages :: title_finished ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_title_finished ( ) ) ;
     }
     else
         _title_update ( ) ;
