@@ -34,9 +34,9 @@ public :
     shy_logic_camera ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: camera_update ) ;
-    void receive ( typename messages :: camera_prepare_permit ) ;
-    void receive ( typename messages :: camera_matrix_request ) ;
+    void receive ( typename messages :: logic_camera_update ) ;
+    void receive ( typename messages :: logic_camera_prepare_permit ) ;
+    void receive ( typename messages :: logic_camera_matrix_request ) ;
     void receive ( typename messages :: entities_height_reply ) ;
     void receive ( typename messages :: entities_mesh_grid_reply ) ;
     void receive ( typename messages :: entities_origin_reply ) ;
@@ -208,9 +208,9 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matrix_request )
+void shy_logic_camera < mediator > :: receive ( typename messages :: logic_camera_matrix_request )
 {
-    typename messages :: camera_matrix_reply reply_msg ;
+    typename messages :: logic_camera_matrix_reply reply_msg ;
     if ( platform_conditions :: whole_is_true ( _camera_created ) )
         reply_msg . matrix = _camera_matrix ;
     else
@@ -219,13 +219,13 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_matr
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: camera_prepare_permit )
+void shy_logic_camera < mediator > :: receive ( typename messages :: logic_camera_prepare_permit )
 {
     _camera_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: camera_update )
+void shy_logic_camera < mediator > :: receive ( typename messages :: logic_camera_update )
 {
     if ( platform_conditions :: whole_is_true ( _camera_prepare_permitted ) )
     {
@@ -409,7 +409,7 @@ void shy_logic_camera < mediator > :: _fill_next_camera_schedule ( )
         _reset_camera_rubber ( ) ;
         _update_camera ( ) ;
         _camera_created = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: camera_prepared ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_camera_prepared ( ) ) ;
     }
 }
 

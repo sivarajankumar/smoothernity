@@ -7,11 +7,11 @@ public :
     class logic_camera_messages
     {
     public :
-        class camera_matrix_reply { public : matrix_data matrix ; } ;
-        class camera_matrix_request { } ;
-        class camera_prepare_permit { } ;
-        class camera_prepared { } ;
-        class camera_update { } ;
+        class logic_camera_matrix_reply { public : matrix_data matrix ; } ;
+        class logic_camera_matrix_request { } ;
+        class logic_camera_prepare_permit { } ;
+        class logic_camera_prepared { } ;
+        class logic_camera_update { } ;
     } ;
     
     template < typename receivers >
@@ -19,11 +19,11 @@ public :
     {
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
-        void send ( typename logic_camera_messages :: camera_matrix_reply ) ;
-        void send ( typename logic_camera_messages :: camera_matrix_request ) ;
-        void send ( typename logic_camera_messages :: camera_prepare_permit ) ;
-        void send ( typename logic_camera_messages :: camera_prepared ) ;
-        void send ( typename logic_camera_messages :: camera_update ) ;
+        void send ( typename logic_camera_messages :: logic_camera_matrix_reply ) ;
+        void send ( typename logic_camera_messages :: logic_camera_matrix_request ) ;
+        void send ( typename logic_camera_messages :: logic_camera_prepare_permit ) ;
+        void send ( typename logic_camera_messages :: logic_camera_prepared ) ;
+        void send ( typename logic_camera_messages :: logic_camera_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -42,7 +42,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_camera_stateless < mediator >
 :: logic_camera_sender < receivers >
-:: send ( typename logic_camera_messages :: camera_prepared msg )
+:: send ( typename logic_camera_messages :: logic_camera_prepared msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
 }
@@ -51,7 +51,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_camera_stateless < mediator >
 :: logic_camera_sender < receivers >
-:: send ( typename logic_camera_messages :: camera_update msg )
+:: send ( typename logic_camera_messages :: logic_camera_update msg )
 {
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
 }
@@ -60,7 +60,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_camera_stateless < mediator >
 :: logic_camera_sender < receivers >
-:: send ( typename logic_camera_messages :: camera_prepare_permit msg )
+:: send ( typename logic_camera_messages :: logic_camera_prepare_permit msg )
 {
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
 }
@@ -69,7 +69,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_camera_stateless < mediator >
 :: logic_camera_sender < receivers >
-:: send ( typename logic_camera_messages :: camera_matrix_request msg )
+:: send ( typename logic_camera_messages :: logic_camera_matrix_request msg )
 {
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
 }
@@ -78,7 +78,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_camera_stateless < mediator >
 :: logic_camera_sender < receivers >
-:: send ( typename logic_camera_messages :: camera_matrix_reply msg )
+:: send ( typename logic_camera_messages :: logic_camera_matrix_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
 }

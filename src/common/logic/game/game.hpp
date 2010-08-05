@@ -31,14 +31,14 @@ public :
     void receive ( typename messages :: game_launch_permit ) ;
     void receive ( typename messages :: game_render ) ;
     void receive ( typename messages :: game_update ) ;
-    void receive ( typename messages :: camera_prepared ) ;
+    void receive ( typename messages :: logic_camera_prepared ) ;
     void receive ( typename messages :: entities_prepared ) ;
     void receive ( typename messages :: image_prepared ) ;
     void receive ( typename messages :: land_prepared ) ;
     void receive ( typename messages :: sound_prepared ) ;
     void receive ( typename messages :: touch_prepared ) ;
     void receive ( typename messages :: logic_core_near_plane_distance_reply ) ;
-    void receive ( typename messages :: camera_matrix_reply ) ;
+    void receive ( typename messages :: logic_camera_matrix_reply ) ;
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: land_render_reply ) ;
@@ -166,7 +166,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_render )
         _near_plane_distance_requested = _platform_math_consts . get ( ) . whole_true ;
         _camera_matrix_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: logic_core_near_plane_distance_request ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: camera_matrix_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_camera_matrix_request ( ) ) ;
     }
 }
 
@@ -183,7 +183,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: logic_core_ne
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: camera_matrix_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_camera_matrix_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _camera_matrix_requested ) )
     {
@@ -201,14 +201,14 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update )
     {
         if ( platform_conditions :: whole_is_false ( _game_launched ) )
         {
-            _mediator . get ( ) . send ( typename messages :: camera_prepare_permit ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_camera_prepare_permit ( ) ) ;
             _game_launched = _platform_math_consts . get ( ) . whole_true ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _game_launched ) )
     {
         _update_color ( ) ;
-        _mediator . get ( ) . send ( typename messages :: camera_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_camera_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: entities_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: land_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: image_update ( ) ) ;
@@ -219,7 +219,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update )
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: camera_prepared )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_camera_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: land_prepare_permit ( ) ) ;
 }
