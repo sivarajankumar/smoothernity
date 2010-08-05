@@ -36,7 +36,7 @@ public :
     void receive ( typename messages :: logic_image_prepared ) ;
     void receive ( typename messages :: logic_land_prepared ) ;
     void receive ( typename messages :: logic_sound_prepared ) ;
-    void receive ( typename messages :: touch_prepared ) ;
+    void receive ( typename messages :: logic_touch_prepared ) ;
     void receive ( typename messages :: logic_core_near_plane_distance_reply ) ;
     void receive ( typename messages :: logic_camera_matrix_reply ) ;
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
@@ -214,7 +214,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: logic_game_up
         _mediator . get ( ) . send ( typename messages :: logic_image_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: logic_sound_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: logic_text_update ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: touch_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_touch_update ( ) ) ;
     }
 }
 
@@ -239,11 +239,11 @@ void shy_logic_game < mediator > :: receive ( typename messages :: logic_entitie
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: logic_image_prepared )
 {
-    _mediator . get ( ) . send ( typename messages :: touch_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_touch_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: touch_prepared )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_touch_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: logic_sound_prepare_permit ( ) ) ;
 }
@@ -392,7 +392,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
     {
         _text_render_replied = _platform_math_consts . get ( ) . whole_false ;
         _image_render_replied = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: touch_render ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_touch_render ( ) ) ;
     }
 }
 

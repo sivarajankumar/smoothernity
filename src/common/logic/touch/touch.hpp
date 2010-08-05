@@ -36,9 +36,9 @@ public :
     shy_logic_touch ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: touch_prepare_permit ) ;
-    void receive ( typename messages :: touch_render ) ;
-    void receive ( typename messages :: touch_update ) ;
+    void receive ( typename messages :: logic_touch_prepare_permit ) ;
+    void receive ( typename messages :: logic_touch_render ) ;
+    void receive ( typename messages :: logic_touch_update ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_touch < mediator > & operator= ( const shy_logic_touch < mediator > & ) ;
@@ -111,20 +111,20 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: touch_prepare_permit )
+void shy_logic_touch < mediator > :: receive ( typename messages :: logic_touch_prepare_permit )
 {
     _spot_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: touch_render )
+void shy_logic_touch < mediator > :: receive ( typename messages :: logic_touch_render )
 {
     if ( platform_conditions :: whole_is_true ( _spot_mesh_created ) && platform_conditions :: whole_greater_than_zero ( _spot_frames_left ) )
         _render_spot_mesh ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_touch < mediator > :: receive ( typename messages :: touch_update )
+void shy_logic_touch < mediator > :: receive ( typename messages :: logic_touch_update )
 {
     if ( platform_conditions :: whole_is_true ( _spot_prepare_permitted ) )
     {
@@ -152,7 +152,7 @@ void shy_logic_touch < mediator > :: receive ( typename messages :: engine_rende
         _spot_mesh_id = msg . mesh ;
         _create_spot_mesh ( ) ;
         _spot_mesh_created = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: touch_prepared ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_touch_prepared ( ) ) ;
     }
 }
 
