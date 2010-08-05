@@ -2,7 +2,7 @@ template < typename mediator >
 class shy_logic_land
 {
     typedef typename mediator :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
-    typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: texture_id texture_id ;
     typedef typename mediator :: platform platform ;
@@ -64,7 +64,7 @@ private :
     num_whole _texture_create_requested ;
     num_whole _texture_create_replied ;
     num_whole _mesh_create_requested ;
-    mesh_id _land_mesh_id ;
+    engine_render_mesh_id _land_mesh_id ;
     texture_id _land_texture_id ;
 } ;
 

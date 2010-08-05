@@ -7,7 +7,7 @@ class shy_logic_title
     typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless logic_text_stateless ;
-    typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -54,7 +54,7 @@ class shy_logic_title
         num_fract pos_angle ;
         num_fract rot_angle ;
         num_fract scale ;
-        mesh_id mesh ;
+        engine_render_mesh_id mesh ;
         letter_id letter ;
     } ;
     
@@ -86,10 +86,10 @@ private :
     void _bake_next_letter ( ) ;
     void _proceed_with_render ( ) ;
     void _proceed_with_letter_creation ( ) ;
-    void _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
-    void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
-    void _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
+    void _mesh_set_vertex_position ( engine_render_mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void _mesh_set_vertex_tex_coord ( engine_render_mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
+    void _mesh_set_vertex_color ( engine_render_mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void _mesh_set_triangle_strip_index_value ( engine_render_mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -716,7 +716,7 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
+void shy_logic_title < mediator > :: _mesh_set_vertex_position ( engine_render_mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
 {
     typename messages :: engine_render_mesh_set_vertex_position msg ;
     msg . mesh = mesh ;
@@ -728,7 +728,7 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , 
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
+void shy_logic_title < mediator > :: _mesh_set_vertex_tex_coord ( engine_render_mesh_id mesh , num_whole offset , num_fract u , num_fract v )
 {
     typename messages :: engine_render_mesh_set_vertex_tex_coord msg ;
     msg . mesh = mesh ;
@@ -739,7 +739,7 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh ,
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+void shy_logic_title < mediator > :: _mesh_set_vertex_color ( engine_render_mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
     typename messages :: engine_render_mesh_set_vertex_color msg ;
     msg . mesh = mesh ;
@@ -752,7 +752,7 @@ void shy_logic_title < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+void shy_logic_title < mediator > :: _mesh_set_triangle_strip_index_value ( engine_render_mesh_id mesh , num_whole offset , num_whole index )
 {
     typename messages :: engine_render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = mesh ;

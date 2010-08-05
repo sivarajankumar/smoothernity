@@ -4,7 +4,7 @@ class shy_logic_main_menu_text_creator
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: letter_id letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
-    typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;

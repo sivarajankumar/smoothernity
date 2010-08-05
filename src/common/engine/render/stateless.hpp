@@ -14,7 +14,7 @@ class shy_engine_render_stateless
     typedef typename mediator :: platform :: platform_render :: texture_resource_id texture_resource_id ;
     
 public :    
-    class mesh_id
+    class engine_render_mesh_id 
     {
         friend class shy_engine_render < mediator > ;
     private :
@@ -56,17 +56,17 @@ public :
         class engine_render_frame_loss_request { } ;
         class engine_render_matrix_identity { } ;
         class engine_render_matrix_load { public : matrix_data matrix ; } ;
-        class engine_render_mesh_create_reply { public : mesh_id mesh ; } ;
+        class engine_render_mesh_create_reply { public : engine_render_mesh_id mesh ; } ;
         class engine_render_mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
-        class engine_render_mesh_delete { public : mesh_id mesh ; } ;
-        class engine_render_mesh_finalize { public : mesh_id mesh ; } ;
-        class engine_render_mesh_render { public : mesh_id mesh ; } ;
-        class engine_render_mesh_set_transform { public : mesh_id mesh ; matrix_data transform ; } ;
-        class engine_render_mesh_set_triangle_fan_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
-        class engine_render_mesh_set_triangle_strip_index_value { public : mesh_id mesh ; num_whole offset ; num_whole index ; } ;
-        class engine_render_mesh_set_vertex_color { public : mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
-        class engine_render_mesh_set_vertex_position { public : mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
-        class engine_render_mesh_set_vertex_tex_coord { public : mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
+        class engine_render_mesh_delete { public : engine_render_mesh_id mesh ; } ;
+        class engine_render_mesh_finalize { public : engine_render_mesh_id mesh ; } ;
+        class engine_render_mesh_render { public : engine_render_mesh_id mesh ; } ;
+        class engine_render_mesh_set_transform { public : engine_render_mesh_id mesh ; matrix_data transform ; } ;
+        class engine_render_mesh_set_triangle_fan_index_value { public : engine_render_mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class engine_render_mesh_set_triangle_strip_index_value { public : engine_render_mesh_id mesh ; num_whole offset ; num_whole index ; } ;
+        class engine_render_mesh_set_vertex_color { public : engine_render_mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class engine_render_mesh_set_vertex_position { public : engine_render_mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
+        class engine_render_mesh_set_vertex_tex_coord { public : engine_render_mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
         class engine_render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
         class engine_render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
         class engine_render_texture_create_reply { public : texture_id texture ; } ;

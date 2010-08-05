@@ -2,7 +2,7 @@ template < typename mediator >
 class shy_logic_entities
 {
     typedef typename mediator :: engine_math engine_math ;
-    typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -77,7 +77,7 @@ private :
     num_whole _frames_to_render ;
     num_whole _entities_to_render ;
     num_whole _frames_to_increase_render_count ;
-    mesh_id _entity_mesh_id ;
+    engine_render_mesh_id _entity_mesh_id ;
     typename platform_static_array :: template static_array 
         < matrix_data 
         , _logic_entities_consts_type :: entity_mesh_grid

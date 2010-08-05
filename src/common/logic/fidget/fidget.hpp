@@ -2,7 +2,7 @@ template < typename mediator >
 class shy_logic_fidget
 {
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
-    typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -62,7 +62,7 @@ private :
     num_whole _render_frame_loss_requested ;
     num_whole _render_frame_loss_replied ;
     num_whole _render_frame_loss ;
-    mesh_id _fidget_mesh_id ;
+    engine_render_mesh_id _fidget_mesh_id ;
 } ;
 
 template < typename mediator >

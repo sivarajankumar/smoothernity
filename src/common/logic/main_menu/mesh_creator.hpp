@@ -7,7 +7,7 @@ class shy_logic_main_menu_mesh_creator
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
-    typedef typename mediator :: mesh_id mesh_id ;
+    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -67,7 +67,7 @@ class shy_logic_main_menu_mesh_creator
     public :
         num_whole requested ;
         num_whole replied ;
-        mesh_id mesh ;
+        engine_render_mesh_id mesh ;
     } ;
     
     class _text_letter_big_tex_coords_state_type
@@ -106,10 +106,10 @@ private :
     void _fill_mesh_content ( ) ;
     void _store_mesh ( ) ;
     void _send_mesh_created_notification ( ) ;
-    void _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
-    void _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
-    void _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
-    void _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index ) ;
+    void _mesh_set_vertex_position ( engine_render_mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void _mesh_set_vertex_tex_coord ( engine_render_mesh_id mesh , num_whole offset , num_fract u , num_fract v ) ;
+    void _mesh_set_vertex_color ( engine_render_mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void _mesh_set_triangle_strip_index_value ( engine_render_mesh_id mesh , num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -128,7 +128,7 @@ private :
     num_whole _current_mesh_id ;
     num_fract _time_passed ;
     
-    typename platform_static_array :: template static_array < mesh_id , _logic_main_menu_mesh_creator_consts_type :: max_meshes > _meshes ;
+    typename platform_static_array :: template static_array < engine_render_mesh_id , _logic_main_menu_mesh_creator_consts_type :: max_meshes > _meshes ;
 } ;
 
 template < typename mediator >
@@ -386,7 +386,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _letter_tex_coords_receive
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _store_mesh ( )
 {
-    typename platform_pointer :: template pointer < mesh_id > mesh_id_ptr ;
+    typename platform_pointer :: template pointer < engine_render_mesh_id > mesh_id_ptr ;
     platform_math :: inc_whole ( _current_mesh_id ) ;
     platform_static_array :: element_ptr ( mesh_id_ptr , _meshes , _current_mesh_id ) ;
     mesh_id_ptr . get ( ) = _render_mesh_create_state . mesh ;
@@ -405,7 +405,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _send_mesh_created_notific
 template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _fill_mesh_content ( )
 {
-    mesh_id mesh ;
+    engine_render_mesh_id mesh ;
     num_fract half_size ;
     num_fract x_left ;
     num_fract x_right ;
@@ -471,7 +471,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _fill_mesh_content ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_position ( mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_position ( engine_render_mesh_id mesh , num_whole offset , num_fract x , num_fract y , num_fract z )
 {
     typename messages :: engine_render_mesh_set_vertex_position msg ;
     msg . mesh = mesh ;
@@ -483,7 +483,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_position 
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_tex_coord ( mesh_id mesh , num_whole offset , num_fract u , num_fract v )
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_tex_coord ( engine_render_mesh_id mesh , num_whole offset , num_fract u , num_fract v )
 {
     typename messages :: engine_render_mesh_set_vertex_tex_coord msg ;
     msg . mesh = mesh ;
@@ -494,7 +494,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_tex_coord
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_color ( mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_color ( engine_render_mesh_id mesh , num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
 {
     typename messages :: engine_render_mesh_set_vertex_color msg ;
     msg . mesh = mesh ;
@@ -507,7 +507,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_vertex_color ( m
 }
 
 template < typename mediator >
-void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_triangle_strip_index_value ( mesh_id mesh , num_whole offset , num_whole index )
+void shy_logic_main_menu_mesh_creator < mediator > :: _mesh_set_triangle_strip_index_value ( engine_render_mesh_id mesh , num_whole offset , num_whole index )
 {
     typename messages :: engine_render_mesh_set_triangle_strip_index_value msg ;
     msg . mesh = mesh ;
