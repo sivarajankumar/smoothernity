@@ -16,7 +16,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: rasterize_triangle ) ;
     void receive ( typename messages :: rasterize_rect ) ;
-    void receive ( typename messages :: rasterize_ellipse_in_rect ) ;
+    void receive ( typename messages :: engine_rasterizer_draw_ellipse_in_rect ) ;
     void receive ( typename messages :: rasterize_use_texture ) ;
     void receive ( typename messages :: rasterize_use_texel ) ;
     void receive ( typename messages :: rasterize_finalize_request ) ;
@@ -53,7 +53,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: init )
 template < typename mediator >
 void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_finalize_request )
 {
-    _mediator . get ( ) . send ( typename messages :: rasterize_finalize_reply ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_rasterizer_finalize_reply ( ) ) ;
 }
 
 template < typename mediator >
@@ -110,7 +110,7 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: raster
 }
 
 template < typename mediator >
-void shy_engine_rasterizer < mediator > :: receive ( typename messages :: rasterize_ellipse_in_rect msg )
+void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine_rasterizer_draw_ellipse_in_rect msg )
 {
     num_whole width ;
     num_whole height ;

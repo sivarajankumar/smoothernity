@@ -9,8 +9,8 @@ public :
 	class engine_rasterizer_messages
 	{
 	public :
-        class rasterize_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
-        class rasterize_finalize_reply { } ;
+        class engine_rasterizer_draw_ellipse_in_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
+        class engine_rasterizer_finalize_reply { } ;
         class rasterize_finalize_request { } ;
         class rasterize_rect { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; } ;
         class rasterize_triangle { public : num_whole x1 ; num_whole y1 ; num_whole x2 ; num_whole y2 ; num_whole x3 ; num_whole y3 ; } ;
@@ -23,8 +23,8 @@ public :
 	{
 	public :
 		void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_ellipse_in_rect ) ;
-        void send ( typename engine_rasterizer_messages :: rasterize_finalize_reply ) ;
+        void send ( typename engine_rasterizer_messages :: engine_rasterizer_draw_ellipse_in_rect ) ;
+        void send ( typename engine_rasterizer_messages :: engine_rasterizer_finalize_reply ) ;
         void send ( typename engine_rasterizer_messages :: rasterize_finalize_request ) ;
         void send ( typename engine_rasterizer_messages :: rasterize_rect ) ;
         void send ( typename engine_rasterizer_messages :: rasterize_triangle ) ;
@@ -48,7 +48,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_rasterizer_stateless < mediator >
 :: engine_rasterizer_sender < receivers >
-:: send ( typename engine_rasterizer_messages :: rasterize_ellipse_in_rect msg )
+:: send ( typename engine_rasterizer_messages :: engine_rasterizer_draw_ellipse_in_rect msg )
 {
     _receivers . get ( ) . engine_rasterizer . get ( ) . receive ( msg ) ;
 }
@@ -57,7 +57,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_engine_rasterizer_stateless < mediator >
 :: engine_rasterizer_sender < receivers >
-:: send ( typename engine_rasterizer_messages :: rasterize_finalize_reply msg )
+:: send ( typename engine_rasterizer_messages :: engine_rasterizer_finalize_reply msg )
 {
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }

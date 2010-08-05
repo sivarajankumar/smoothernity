@@ -66,7 +66,7 @@ public :
     void receive ( typename messages :: render_mesh_create_reply ) ;
     void receive ( typename messages :: text_letter_big_tex_coords_request ) ;
     void receive ( typename messages :: text_letter_small_tex_coords_request ) ;
-    void receive ( typename messages :: rasterize_finalize_reply ) ;
+    void receive ( typename messages :: engine_rasterizer_finalize_reply ) ;
 private :
     shy_logic_text < mediator > & operator= ( const shy_logic_text < mediator > & ) ;
     void _render_text_mesh ( ) ;
@@ -313,7 +313,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: render_textur
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: rasterize_finalize_reply )
+void shy_logic_text < mediator > :: receive ( typename messages :: engine_rasterizer_finalize_reply )
 {
     if ( platform_conditions :: whole_is_true ( _rasterize_finalize_requested ) )
     {
@@ -743,7 +743,7 @@ void shy_logic_text < mediator > :: _rasterize_triangle ( num_whole x1 , num_who
 template < typename mediator >
 void shy_logic_text < mediator > :: _rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
 {
-    typename messages :: rasterize_ellipse_in_rect rasterize_ellipse_in_rect_msg ;
+    typename messages :: engine_rasterizer_draw_ellipse_in_rect rasterize_ellipse_in_rect_msg ;
     rasterize_ellipse_in_rect_msg . x1 = x1 ;
     rasterize_ellipse_in_rect_msg . y1 = y1 ;
     rasterize_ellipse_in_rect_msg . x2 = x2 ;
