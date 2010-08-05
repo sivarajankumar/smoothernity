@@ -25,11 +25,11 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: render ) ;
     void receive ( typename messages :: update ) ;
-    void receive ( typename messages :: use_perspective_projection_request ) ;
-    void receive ( typename messages :: use_ortho_projection_request ) ;
+    void receive ( typename messages :: logic_core_use_perspective_projection_request ) ;
+    void receive ( typename messages :: logic_core_use_ortho_projection_request ) ;
     void receive ( typename messages :: video_mode_changed ) ;
     void receive ( typename messages :: fidget_prepared ) ;
-    void receive ( typename messages :: near_plane_distance_request ) ;
+    void receive ( typename messages :: logic_core_near_plane_distance_request ) ;
     void receive ( typename messages :: render_aspect_reply ) ;
 private :
     shy_logic_core < mediator > & operator= ( const shy_logic_core < mediator > & ) ;
@@ -105,7 +105,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: update )
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: use_perspective_projection_request )
+void shy_logic_core < mediator > :: receive ( typename messages :: logic_core_use_perspective_projection_request )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_perspective_projection_request = _platform_math_consts . get ( ) . whole_true ;
@@ -113,7 +113,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: use_perspecti
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: use_ortho_projection_request )
+void shy_logic_core < mediator > :: receive ( typename messages :: logic_core_use_ortho_projection_request )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_use_ortho_projection_request = _platform_math_consts . get ( ) . whole_true ;
@@ -133,7 +133,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: video_mode_ch
 }
 
 template < typename mediator >
-void shy_logic_core < mediator > :: receive ( typename messages :: near_plane_distance_request )
+void shy_logic_core < mediator > :: receive ( typename messages :: logic_core_near_plane_distance_request )
 {
     _render_aspect_requested = _platform_math_consts . get ( ) . whole_true ;
     _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_true ;
@@ -151,7 +151,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: render_aspect
         if ( platform_conditions :: whole_is_true ( _handling_near_plane_distance_request ) )
         {
             _handling_near_plane_distance_request = _platform_math_consts . get ( ) . whole_false ;
-            typename messages :: near_plane_distance_reply near_plane_distance_reply_msg ;
+            typename messages :: logic_core_near_plane_distance_reply near_plane_distance_reply_msg ;
             _get_near_plane_distance ( near_plane_distance_reply_msg . distance ) ;
             _mediator . get ( ) . send ( near_plane_distance_reply_msg ) ;
         }
@@ -176,7 +176,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: render_aspect
             _mediator . get ( ) . send ( proj_msg ) ;
             
             _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: use_ortho_projection_reply ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_core_use_ortho_projection_reply ( ) ) ;
         }
         if ( platform_conditions :: whole_is_true ( _handling_use_perspective_projection_request ) )
         {
@@ -201,7 +201,7 @@ void shy_logic_core < mediator > :: receive ( typename messages :: render_aspect
             _mediator . get ( ) . send ( proj_msg ) ;
             
             _mediator . get ( ) . send ( typename messages :: render_matrix_identity ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: use_perspective_projection_reply ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_core_use_perspective_projection_reply ( ) ) ;
         }
     }
 }

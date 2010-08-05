@@ -9,14 +9,14 @@ public :
     public :
         class done { } ;
         class init { } ;
-        class near_plane_distance_reply { public : num_fract distance ; } ;
-        class near_plane_distance_request { } ;
+        class logic_core_near_plane_distance_reply { public : num_fract distance ; } ;
+        class logic_core_near_plane_distance_request { } ;
+        class logic_core_use_ortho_projection_reply { } ;
+        class logic_core_use_ortho_projection_request { } ;
+        class logic_core_use_perspective_projection_reply { } ;
+        class logic_core_use_perspective_projection_request { } ;
         class render { } ;
         class update { } ;
-        class use_ortho_projection_reply { } ;
-        class use_ortho_projection_request { } ;
-        class use_perspective_projection_reply { } ;
-        class use_perspective_projection_request { } ;
         class video_mode_changed { } ;
     } ;
 
@@ -27,14 +27,14 @@ public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename logic_core_messages :: done ) ;
         void send ( typename logic_core_messages :: init ) ;
-        void send ( typename logic_core_messages :: near_plane_distance_reply ) ;
-        void send ( typename logic_core_messages :: near_plane_distance_request ) ;
+        void send ( typename logic_core_messages :: logic_core_near_plane_distance_reply ) ;
+        void send ( typename logic_core_messages :: logic_core_near_plane_distance_request ) ;
+        void send ( typename logic_core_messages :: logic_core_use_ortho_projection_reply ) ;
+        void send ( typename logic_core_messages :: logic_core_use_ortho_projection_request ) ;
+        void send ( typename logic_core_messages :: logic_core_use_perspective_projection_reply ) ;
+        void send ( typename logic_core_messages :: logic_core_use_perspective_projection_request ) ;
         void send ( typename logic_core_messages :: render ) ;
         void send ( typename logic_core_messages :: update ) ;
-        void send ( typename logic_core_messages :: use_ortho_projection_reply ) ;
-        void send ( typename logic_core_messages :: use_ortho_projection_request ) ;
-        void send ( typename logic_core_messages :: use_perspective_projection_reply ) ;
-        void send ( typename logic_core_messages :: use_perspective_projection_request ) ;
         void send ( typename logic_core_messages :: video_mode_changed ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
@@ -89,7 +89,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
-:: send ( typename logic_core_messages :: near_plane_distance_reply msg )
+:: send ( typename logic_core_messages :: logic_core_near_plane_distance_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
@@ -99,7 +99,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
-:: send ( typename logic_core_messages :: near_plane_distance_request msg )
+:: send ( typename logic_core_messages :: logic_core_near_plane_distance_request msg )
 {
     _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
 }
@@ -126,7 +126,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
-:: send ( typename logic_core_messages :: use_ortho_projection_reply msg )
+:: send ( typename logic_core_messages :: logic_core_use_ortho_projection_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
@@ -136,7 +136,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
-:: send ( typename logic_core_messages :: use_ortho_projection_request msg )
+:: send ( typename logic_core_messages :: logic_core_use_ortho_projection_request msg )
 {
     _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
 }
@@ -145,7 +145,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
-:: send ( typename logic_core_messages :: use_perspective_projection_reply msg )
+:: send ( typename logic_core_messages :: logic_core_use_perspective_projection_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
 }
@@ -154,7 +154,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
-:: send ( typename logic_core_messages :: use_perspective_projection_request msg )
+:: send ( typename logic_core_messages :: logic_core_use_perspective_projection_request msg )
 {
     _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
 }

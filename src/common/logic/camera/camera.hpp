@@ -40,7 +40,7 @@ public :
     void receive ( typename messages :: entities_height_reply ) ;
     void receive ( typename messages :: entities_mesh_grid_reply ) ;
     void receive ( typename messages :: entities_origin_reply ) ;
-    void receive ( typename messages :: near_plane_distance_reply ) ;
+    void receive ( typename messages :: logic_core_near_plane_distance_reply ) ;
     void receive ( typename messages :: render_aspect_reply ) ;
 private :
     shy_logic_camera < mediator > & operator= ( const shy_logic_camera < mediator > & ) ;
@@ -234,7 +234,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: camera_upda
         _near_plane_distance_requested = _platform_math_consts . get ( ) . whole_true ;
         _mediator . get ( ) . send ( typename messages :: entities_height_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: entities_mesh_grid_request ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: near_plane_distance_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_core_near_plane_distance_request ( ) ) ;
     }
 }
 
@@ -263,7 +263,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_me
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: near_plane_distance_reply msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: logic_core_near_plane_distance_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _near_plane_distance_requested ) )
     {

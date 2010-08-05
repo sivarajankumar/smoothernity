@@ -37,10 +37,10 @@ public :
     void receive ( typename messages :: land_prepared ) ;
     void receive ( typename messages :: sound_prepared ) ;
     void receive ( typename messages :: touch_prepared ) ;
-    void receive ( typename messages :: near_plane_distance_reply ) ;
+    void receive ( typename messages :: logic_core_near_plane_distance_reply ) ;
     void receive ( typename messages :: camera_matrix_reply ) ;
-    void receive ( typename messages :: use_perspective_projection_reply ) ;
-    void receive ( typename messages :: use_ortho_projection_reply ) ;
+    void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
+    void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: land_render_reply ) ;
     void receive ( typename messages :: entities_render_reply ) ;
     void receive ( typename messages :: fidget_render_reply ) ;
@@ -165,13 +165,13 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_render )
     {
         _near_plane_distance_requested = _platform_math_consts . get ( ) . whole_true ;
         _camera_matrix_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: near_plane_distance_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_core_near_plane_distance_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: camera_matrix_request ( ) ) ;
     }
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: near_plane_distance_reply msg )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_core_near_plane_distance_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _near_plane_distance_requested ) )
     {
@@ -254,7 +254,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: sound_prepare
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: use_perspective_projection_reply )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_core_use_perspective_projection_reply )
 {
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_requested ) )
     {
@@ -287,7 +287,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: entities_rend
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: use_ortho_projection_reply )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_core_use_ortho_projection_reply )
 {
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_requested ) )
     {
@@ -342,7 +342,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _clear_screen ( ) ;
         
         _use_perspective_projection_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: use_perspective_projection_request ( ) ) ;    
+        _mediator . get ( ) . send ( typename messages :: logic_core_use_perspective_projection_request ( ) ) ;    
     }
     if ( platform_conditions :: whole_is_true ( _use_perspective_projection_replied ) )
     {
@@ -367,7 +367,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _entities_render_replied = _platform_math_consts . get ( ) . whole_false ;
         
         _use_ortho_projection_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: use_ortho_projection_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_core_use_ortho_projection_request ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _use_ortho_projection_replied ) )
     {
