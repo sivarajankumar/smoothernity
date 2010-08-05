@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_engine_rasterizer_stateless
 {
-	typedef typename mediator :: engine_render_stateless :: texture_id texture_id ;
+	typedef typename mediator :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
 	typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
 	typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 	typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
@@ -15,7 +15,7 @@ public :
         class engine_rasterizer_finalize_reply { } ;
         class engine_rasterizer_finalize_request { } ;
         class engine_rasterizer_use_texel { public : texel_data texel ; } ;
-        class engine_rasterizer_use_texture { public : texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
+        class engine_rasterizer_use_texture { public : engine_render_texture_id texture ; num_whole origin_x ; num_whole origin_y ; } ;
 	} ;
 
 	template < typename receivers >

@@ -21,7 +21,7 @@ public :
         num_whole _mesh_id ;
     } ;
     
-    class texture_id
+    class engine_render_texture_id 
     {
         friend class shy_engine_render < mediator > ;
     private :
@@ -69,17 +69,17 @@ public :
         class engine_render_mesh_set_vertex_tex_coord { public : engine_render_mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
         class engine_render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
         class engine_render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
-        class engine_render_texture_create_reply { public : texture_id texture ; } ;
+        class engine_render_texture_create_reply { public : engine_render_texture_id texture ; } ;
         class engine_render_texture_create_request { } ;
-        class engine_render_texture_finalize { public : texture_id texture ; } ;
-        class engine_render_texture_load_from_resource { public : texture_id texture ; texture_resource_id resource ; } ;
+        class engine_render_texture_finalize { public : engine_render_texture_id texture ; } ;
+        class engine_render_texture_load_from_resource { public : engine_render_texture_id texture ; texture_resource_id resource ; } ;
         class engine_render_texture_loader_ready_reply { public : num_whole ready ; } ;
         class engine_render_texture_loader_ready_request { } ;
         class engine_render_texture_mode_modulate { } ;
-        class engine_render_texture_select { public : texture_id texture ; } ;
-        class engine_render_texture_set_texel { public : texture_id texture ; num_whole x ; num_whole y ; texel_data texel ; } ;
-        class engine_render_texture_set_texel_rgba { public : texture_id texture ; num_whole x ; num_whole y ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
-        class engine_render_texture_set_texels_rect { public : texture_id texture ; num_whole left ; num_whole bottom ; num_whole right ; num_whole top ; texel_data texel ; } ;
+        class engine_render_texture_select { public : engine_render_texture_id texture ; } ;
+        class engine_render_texture_set_texel { public : engine_render_texture_id texture ; num_whole x ; num_whole y ; texel_data texel ; } ;
+        class engine_render_texture_set_texel_rgba { public : engine_render_texture_id texture ; num_whole x ; num_whole y ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class engine_render_texture_set_texels_rect { public : engine_render_texture_id texture ; num_whole left ; num_whole bottom ; num_whole right ; num_whole top ; texel_data texel ; } ;
         class engine_render_texture_unselect { } ;
     } ;
     

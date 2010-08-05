@@ -3,7 +3,7 @@ class shy_engine_rasterizer
 {
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: messages messages ;
-    typedef typename mediator :: texture_id texture_id ;
+    typedef typename mediator :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
@@ -28,7 +28,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    texture_id _texture_id ;
+    engine_render_texture_id _texture_id ;
     texel_data _texel ;
     num_whole _origin_x ;
     num_whole _origin_y ;

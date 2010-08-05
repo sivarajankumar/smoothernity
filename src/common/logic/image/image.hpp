@@ -5,7 +5,7 @@ class shy_logic_image
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
-    typedef typename mediator :: texture_id texture_id ;
+    typedef typename mediator :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
@@ -68,7 +68,7 @@ private :
     num_whole _mesh_create_requested ;
     num_whole _scale_frames ;
     engine_render_mesh_id _image_mesh_id ;
-    texture_id _image_texture_id ;
+    engine_render_texture_id _image_texture_id ;
 } ;
 
 template < typename mediator >

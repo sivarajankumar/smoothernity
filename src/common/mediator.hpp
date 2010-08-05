@@ -10,7 +10,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: texture_id texture_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: alphabet_english_type alphabet_english_type ;

@@ -9,7 +9,7 @@ class shy_logic_text
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
-    typedef typename mediator :: texture_id texture_id ;
+    typedef typename mediator :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
@@ -135,7 +135,7 @@ private :
     num_whole _text_mesh_created ;
     num_whole _text_prepare_permitted ;
     engine_render_mesh_id _text_mesh_id ;
-    texture_id _text_texture_id ;
+    engine_render_texture_id _text_texture_id ;
     texel_data _filler ;
     texel_data _eraser ;
     num_whole _origin_x ;
