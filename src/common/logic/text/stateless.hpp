@@ -69,13 +69,13 @@ public :
         class logic_text_letter_big_tex_coords_request { public : letter_id letter ; } ;
         class logic_text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
         class logic_text_letter_small_tex_coords_request { public : letter_id letter ; } ;
-        class text_prepare_permit { } ;
-        class text_prepared { } ;
-        class text_render_reply { } ;
-        class text_render_request { } ;
-        class text_update { } ;
-        class use_text_texture_reply { } ;
-        class use_text_texture_request { } ;
+        class logic_text_prepare_permit { } ;
+        class logic_text_prepared { } ;
+        class logic_text_render_reply { } ;
+        class logic_text_render_request { } ;
+        class logic_text_update { } ;
+        class logic_text_use_text_texture_reply { } ;
+        class logic_text_use_text_texture_request { } ;
     } ;
     
     template < typename receivers >
@@ -87,13 +87,13 @@ public :
         void send ( typename logic_text_messages :: logic_text_letter_big_tex_coords_request ) ;
         void send ( typename logic_text_messages :: logic_text_letter_small_tex_coords_reply ) ;
         void send ( typename logic_text_messages :: logic_text_letter_small_tex_coords_request ) ;
-        void send ( typename logic_text_messages :: text_prepare_permit ) ;
-        void send ( typename logic_text_messages :: text_prepared ) ;
-        void send ( typename logic_text_messages :: text_render_reply ) ;
-        void send ( typename logic_text_messages :: text_render_request ) ;
-        void send ( typename logic_text_messages :: text_update ) ;
-        void send ( typename logic_text_messages :: use_text_texture_reply ) ;
-        void send ( typename logic_text_messages :: use_text_texture_request ) ;
+        void send ( typename logic_text_messages :: logic_text_prepare_permit ) ;
+        void send ( typename logic_text_messages :: logic_text_prepared ) ;
+        void send ( typename logic_text_messages :: logic_text_render_reply ) ;
+        void send ( typename logic_text_messages :: logic_text_render_request ) ;
+        void send ( typename logic_text_messages :: logic_text_update ) ;
+        void send ( typename logic_text_messages :: logic_text_use_text_texture_reply ) ;
+        void send ( typename logic_text_messages :: logic_text_use_text_texture_request ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -172,7 +172,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_text_stateless < mediator > 
 :: logic_text_sender < receivers > 
-:: send ( typename logic_text_messages :: text_prepare_permit msg )
+:: send ( typename logic_text_messages :: logic_text_prepare_permit msg )
 {
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
@@ -181,7 +181,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_text_stateless < mediator > 
 :: logic_text_sender < receivers > 
-:: send ( typename logic_text_messages :: text_render_reply msg )
+:: send ( typename logic_text_messages :: logic_text_render_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
 }
@@ -190,7 +190,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_text_stateless < mediator > 
 :: logic_text_sender < receivers > 
-:: send ( typename logic_text_messages :: text_render_request msg )
+:: send ( typename logic_text_messages :: logic_text_render_request msg )
 {
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
@@ -199,7 +199,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_text_stateless < mediator > 
 :: logic_text_sender < receivers > 
-:: send ( typename logic_text_messages :: text_prepared msg )
+:: send ( typename logic_text_messages :: logic_text_prepared msg )
 {
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
 }
@@ -208,7 +208,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_text_stateless < mediator > 
 :: logic_text_sender < receivers > 
-:: send ( typename logic_text_messages :: text_update msg )
+:: send ( typename logic_text_messages :: logic_text_update msg )
 {
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
@@ -253,7 +253,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_text_stateless < mediator > 
 :: logic_text_sender < receivers > 
-:: send ( typename logic_text_messages :: use_text_texture_request msg )
+:: send ( typename logic_text_messages :: logic_text_use_text_texture_request msg )
 {
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
@@ -262,7 +262,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_text_stateless < mediator > 
 :: logic_text_sender < receivers > 
-:: send ( typename logic_text_messages :: use_text_texture_reply msg )
+:: send ( typename logic_text_messages :: logic_text_use_text_texture_reply msg )
 {
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
 }

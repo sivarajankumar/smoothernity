@@ -58,10 +58,10 @@ public :
     shy_logic_text ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: text_prepare_permit ) ;
-    void receive ( typename messages :: text_render_request ) ;
-    void receive ( typename messages :: text_update ) ;
-    void receive ( typename messages :: use_text_texture_request ) ;
+    void receive ( typename messages :: logic_text_prepare_permit ) ;
+    void receive ( typename messages :: logic_text_render_request ) ;
+    void receive ( typename messages :: logic_text_update ) ;
+    void receive ( typename messages :: logic_text_use_text_texture_request ) ;
     void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_text_letter_big_tex_coords_request ) ;
@@ -206,7 +206,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: use_text_texture_request )
+void shy_logic_text < mediator > :: receive ( typename messages :: logic_text_use_text_texture_request )
 {
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
     {
@@ -214,7 +214,7 @@ void shy_logic_text < mediator > :: receive ( typename messages :: use_text_text
         texture_select_msg . texture = _text_texture_id ;
         _mediator . get ( ) . send ( texture_select_msg ) ;
     }
-    _mediator . get ( ) . send ( typename messages :: use_text_texture_reply ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_text_use_text_texture_reply ( ) ) ;
 }
 
 template < typename mediator >
@@ -266,21 +266,21 @@ void shy_logic_text < mediator > :: receive ( typename messages :: logic_text_le
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_prepare_permit )
+void shy_logic_text < mediator > :: receive ( typename messages :: logic_text_prepare_permit )
 {
     _text_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_render_request )
+void shy_logic_text < mediator > :: receive ( typename messages :: logic_text_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _text_mesh_created ) )
         _render_text_mesh ( ) ;
-    _mediator . get ( ) . send ( typename messages :: text_render_reply ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_text_render_reply ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: receive ( typename messages :: text_update )
+void shy_logic_text < mediator > :: receive ( typename messages :: logic_text_update )
 {
     if ( platform_conditions :: whole_is_false ( _text_mesh_created ) )
         _proceed_with_create_text ( ) ;    
@@ -376,7 +376,7 @@ void shy_logic_text < mediator > :: _proceed_with_create_text ( )
         _mediator . get ( ) . send ( texture_finalize_msg ) ;
         
         _text_mesh_created = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: text_prepared ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_text_prepared ( ) ) ;
     }
 }
 

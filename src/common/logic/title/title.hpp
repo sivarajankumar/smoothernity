@@ -69,7 +69,7 @@ public :
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: logic_fidget_render_reply ) ;
-    void receive ( typename messages :: use_text_texture_reply ) ;
+    void receive ( typename messages :: logic_text_use_text_texture_reply ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     shy_logic_title < mediator > & operator= ( const shy_logic_title < mediator > & ) ;
@@ -302,7 +302,7 @@ void shy_logic_title < mediator > :: receive ( typename messages :: logic_fidget
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: receive ( typename messages :: use_text_texture_reply )
+void shy_logic_title < mediator > :: receive ( typename messages :: logic_text_use_text_texture_reply )
 {
     if ( platform_conditions :: whole_is_true ( _use_text_texture_requested ) )
     {
@@ -341,7 +341,7 @@ void shy_logic_title < mediator > :: _proceed_with_render ( )
         if ( platform_conditions :: whole_is_true ( _title_created ) && platform_conditions :: whole_is_false ( _title_finished ) )
         {
             _use_text_texture_requested = _platform_math_consts . get ( ) . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: use_text_texture_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_text_use_text_texture_request ( ) ) ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _use_text_texture_replied ) )
