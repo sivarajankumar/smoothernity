@@ -59,7 +59,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: title_
 {
     _title_active = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_active = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: main_menu_launch_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_launch_permit ( ) ) ;
 }
 
 template < typename mediator >

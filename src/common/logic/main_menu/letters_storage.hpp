@@ -45,7 +45,7 @@ public :
     void receive ( typename messages :: main_menu_next_row ) ;
     void receive ( typename messages :: logic_main_menu_cols_request ) ;
     void receive ( typename messages :: main_menu_rows_request ) ;
-    void receive ( typename messages :: main_menu_letter_request ) ;
+    void receive ( typename messages :: logic_main_menu_letter_request ) ;
     void receive ( typename messages :: main_menu_mesh_has_been_created ) ;
 public :
     void _next_row ( ) ;
@@ -120,14 +120,14 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: main_menu_letter_request msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_letter_request msg )
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     typename platform_pointer :: template pointer < _col_state_type > col_state ;
     platform_static_array :: element_ptr ( row_state , _rows_state . rows , msg . row ) ;
     platform_static_array :: element_ptr ( col_state , row_state . get ( ) . cols , msg . col ) ;
 
-    typename messages :: main_menu_letter_reply reply_msg ;
+    typename messages :: logic_main_menu_letter_reply reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . col = msg . col ;
     reply_msg . letter = col_state . get ( ) . letter ;

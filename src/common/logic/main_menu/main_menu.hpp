@@ -18,11 +18,11 @@ class shy_logic_main_menu
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: main_menu_launch_permit ) ;
+    void receive ( typename messages :: logic_main_menu_launch_permit ) ;
     void receive ( typename messages :: main_menu_render ) ;
     void receive ( typename messages :: main_menu_update ) ;
     void receive ( typename messages :: main_menu_text_create_finished ) ;
-    void receive ( typename messages :: main_menu_mesh_create_finished ) ;
+    void receive ( typename messages :: logic_main_menu_mesh_create_finished ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -48,7 +48,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_launch_permit )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_launch_permit )
 {
     _launch_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
@@ -74,11 +74,11 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_men
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_text_create_finished )
 {
-    _mediator . get ( ) . send ( typename messages :: main_menu_mesh_create ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_mesh_create ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: main_menu_mesh_create_finished )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_mesh_create_finished )
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_finished ( ) ) ;
 }
