@@ -10,7 +10,6 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     
 private :
     class receivers ;
@@ -26,6 +25,7 @@ private :
     typedef typename mediator_types :: platform :: platform_vector :: vector_data vector_data ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
 
 	typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;

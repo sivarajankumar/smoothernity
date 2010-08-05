@@ -6,7 +6,7 @@ class shy_logic_main_menu_letters_storage
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;
     typedef typename mediator :: logic_text_stateless :: logic_text_letter_id logic_text_letter_id ;
-    typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
+    typedef typename mediator :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
