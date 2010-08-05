@@ -4,7 +4,7 @@ class shy_logic_camera
     typedef typename mediator :: engine_camera engine_camera ;
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
-    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
+    typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;

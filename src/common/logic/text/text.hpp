@@ -2,8 +2,8 @@ template < typename mediator >
 class shy_logic_text
 {
     typedef typename mediator :: engine_math engine_math ;
-    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
+    typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;

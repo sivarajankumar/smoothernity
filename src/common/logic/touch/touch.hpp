@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_logic_touch
 {
-    typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
+    typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -18,7 +18,7 @@ class shy_logic_touch
     typedef typename mediator :: platform :: platform_touch platform_touch ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
-     
+
     class _logic_touch_consts_type
     {
     public :
