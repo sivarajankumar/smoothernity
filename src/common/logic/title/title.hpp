@@ -4,7 +4,7 @@ class shy_logic_title
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
-    typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
@@ -55,7 +55,7 @@ class shy_logic_title
         num_fract rot_angle ;
         num_fract scale ;
         engine_render_mesh_id mesh ;
-        letter_id letter ;
+        logic_text_letter_id letter ;
     } ;
     
 public :
@@ -77,7 +77,7 @@ private :
     void _title_render ( ) ;
     void _title_update ( ) ;
     void _delete_all_meshes ( ) ;
-    void _add_letter ( letter_id ) ;
+    void _add_letter ( logic_text_letter_id ) ;
     void _prepare_to_appear ( ) ;
     void _prepare_to_disappear ( ) ;
     void _animate_appear ( ) ;
@@ -120,7 +120,7 @@ private :
     
     num_whole _text_letter_big_tex_coords_requested ;
     num_whole _text_letter_big_tex_coords_replied ;
-    letter_id _text_letter_big_tex_coords_letter ;
+    logic_text_letter_id _text_letter_big_tex_coords_letter ;
     
     num_whole _render_aspect_requested ;
     num_fract _render_aspect_width ;
@@ -671,7 +671,7 @@ void shy_logic_title < mediator > :: _delete_all_meshes ( )
 }
 
 template < typename mediator >
-void shy_logic_title < mediator > :: _add_letter ( letter_id letter )
+void shy_logic_title < mediator > :: _add_letter ( logic_text_letter_id letter )
 {
     typename platform_pointer :: template pointer < _letter_state > letter_state ;
     platform_static_array :: element_ptr ( letter_state , _letters , _letters_count ) ;

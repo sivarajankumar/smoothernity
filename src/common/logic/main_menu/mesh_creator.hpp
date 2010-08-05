@@ -2,7 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_mesh_creator
 {
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
-    typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_mesh_id logic_main_menu_mesh_id ;
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless logic_text_stateless ;
@@ -59,7 +59,7 @@ class shy_logic_main_menu_mesh_creator
         num_whole requested_row ;
         num_whole requested_col ;
         num_whole replied ;
-        letter_id letter ;
+        logic_text_letter_id letter ;
     } ;
 
     class _render_mesh_create_state_type
@@ -74,7 +74,7 @@ class shy_logic_main_menu_mesh_creator
     {
     public :
         num_whole requested ;
-        letter_id requested_letter ;
+        logic_text_letter_id requested_letter ;
         num_whole replied ;
         num_fract bottom ;
         num_fract left ;
@@ -340,7 +340,7 @@ template < typename mediator >
 void shy_logic_main_menu_mesh_creator < mediator > :: _letter_state_received ( )
 {
     num_whole letter_is_whitespace ;
-    letter_id whitespace ;
+    logic_text_letter_id whitespace ;
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;

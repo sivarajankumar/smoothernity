@@ -13,7 +13,7 @@ class shy_logic_text_stateless
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
 public :
-    class letter_id
+    class logic_text_letter_id 
     {
         friend class shy_logic_text < mediator > ;
         friend class shy_logic_text_stateless ;
@@ -25,32 +25,32 @@ public :
     class alphabet_english_type
     {
     public :
-        letter_id A ;
-        letter_id B ;
-        letter_id C ;
-        letter_id D ;
-        letter_id E ;
-        letter_id F ;
-        letter_id G ;
-        letter_id H ;
-        letter_id I ;
-        letter_id J ;
-        letter_id K ;
-        letter_id L ;
-        letter_id M ;
-        letter_id N ;
-        letter_id O ;
-        letter_id P ;
-        letter_id Q ;
-        letter_id R ;
-        letter_id S ;
-        letter_id T ;
-        letter_id U ;
-        letter_id V ;
-        letter_id W ;
-        letter_id X ;
-        letter_id Y ;
-        letter_id Z ;
+        logic_text_letter_id A ;
+        logic_text_letter_id B ;
+        logic_text_letter_id C ;
+        logic_text_letter_id D ;
+        logic_text_letter_id E ;
+        logic_text_letter_id F ;
+        logic_text_letter_id G ;
+        logic_text_letter_id H ;
+        logic_text_letter_id I ;
+        logic_text_letter_id J ;
+        logic_text_letter_id K ;
+        logic_text_letter_id L ;
+        logic_text_letter_id M ;
+        logic_text_letter_id N ;
+        logic_text_letter_id O ;
+        logic_text_letter_id P ;
+        logic_text_letter_id Q ;
+        logic_text_letter_id R ;
+        logic_text_letter_id S ;
+        logic_text_letter_id T ;
+        logic_text_letter_id U ;
+        logic_text_letter_id V ;
+        logic_text_letter_id W ;
+        logic_text_letter_id X ;
+        logic_text_letter_id Y ;
+        logic_text_letter_id Z ;
     } ;
     
     class logic_text_stateless_consts_type
@@ -58,17 +58,17 @@ public :
     public :
         logic_text_stateless_consts_type ( ) ;
     public :
-        letter_id whitespace ;
+        logic_text_letter_id whitespace ;
         alphabet_english_type alphabet_english ;
     } ;
     
     class logic_text_messages
     {
     public :
-        class logic_text_letter_big_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
-        class logic_text_letter_big_tex_coords_request { public : letter_id letter ; } ;
-        class logic_text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; letter_id letter ; } ;
-        class logic_text_letter_small_tex_coords_request { public : letter_id letter ; } ;
+        class logic_text_letter_big_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; logic_text_letter_id letter ; } ;
+        class logic_text_letter_big_tex_coords_request { public : logic_text_letter_id letter ; } ;
+        class logic_text_letter_small_tex_coords_reply { public : num_fract left ; num_fract bottom ; num_fract right ; num_fract top ; logic_text_letter_id letter ; } ;
+        class logic_text_letter_small_tex_coords_request { public : logic_text_letter_id letter ; } ;
         class logic_text_prepare_permit { } ;
         class logic_text_prepared { } ;
         class logic_text_render_reply { } ;
@@ -101,7 +101,7 @@ public :
 public :
     shy_logic_text_stateless ( ) ;
     shy_logic_text_stateless & operator= ( const shy_logic_text_stateless & ) ;
-    static void are_letters_equal ( num_whole & result , letter_id a , letter_id b ) ;
+    static void are_letters_equal ( num_whole & result , logic_text_letter_id a , logic_text_letter_id b ) ;
 public :
     const logic_text_stateless_consts_type logic_text_stateless_consts ;
 } ;
@@ -154,7 +154,7 @@ shy_logic_text_stateless < mediator > :: logic_text_stateless_consts_type :: log
 }
 
 template < typename mediator >
-void shy_logic_text_stateless < mediator > :: are_letters_equal ( num_whole & result , letter_id a , letter_id b )
+void shy_logic_text_stateless < mediator > :: are_letters_equal ( num_whole & result , logic_text_letter_id a , logic_text_letter_id b )
 {
     platform_math :: make_num_whole ( result , platform_conditions :: wholes_are_equal ( a . _letter_id , b . _letter_id ) ) ;
 }

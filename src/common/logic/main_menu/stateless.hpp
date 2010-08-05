@@ -4,7 +4,7 @@ class shy_logic_main_menu_mesh_creator ;
 template < typename mediator >
 class shy_logic_main_menu_stateless
 {
-    typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -27,12 +27,12 @@ public :
     class logic_main_menu_messages
     {
     public :
-        class logic_main_menu_add_letter { public : letter_id letter ; } ;
+        class logic_main_menu_add_letter { public : logic_text_letter_id letter ; } ;
         class logic_main_menu_cols_reply { public : num_whole row ; num_whole cols ; } ;
         class logic_main_menu_cols_request { public : num_whole row ; } ;
         class logic_main_menu_finished { } ;
         class logic_main_menu_launch_permit { } ;
-        class logic_main_menu_letter_reply { public : num_whole row ; num_whole col ; letter_id letter ; } ;
+        class logic_main_menu_letter_reply { public : num_whole row ; num_whole col ; logic_text_letter_id letter ; } ;
         class logic_main_menu_letter_request { public : num_whole row ; num_whole col ; } ;
         class logic_main_menu_mesh_create { } ;
         class logic_main_menu_mesh_create_finished { } ;

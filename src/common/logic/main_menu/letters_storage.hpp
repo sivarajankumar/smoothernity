@@ -2,7 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_letters_storage
 {
     typedef typename mediator :: alphabet_english_type alphabet_english_type ;
-    typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_mesh_id logic_main_menu_mesh_id ;
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
@@ -20,7 +20,7 @@ class shy_logic_main_menu_letters_storage
     class _col_state_type
     {
     public :
-        letter_id letter ;
+        logic_text_letter_id letter ;
         logic_main_menu_mesh_id mesh ;
     } ;
     

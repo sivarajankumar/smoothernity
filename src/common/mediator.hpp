@@ -14,7 +14,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: alphabet_english_type alphabet_english_type ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: letter_id letter_id ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     
 private :

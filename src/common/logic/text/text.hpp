@@ -5,7 +5,7 @@ class shy_logic_text
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
-    typedef typename mediator :: letter_id letter_id ;
+    typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
@@ -81,8 +81,8 @@ private :
     void _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
     void _prepare_rasterizer_for_drawing ( ) ;
-    void _store_tex_coords ( letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
-    void _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
+    void _store_tex_coords ( logic_text_letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
+    void _rasterize_letter ( logic_text_letter_id letter , _letters_tex_coords & letters_tex_coords ) ;
     void _rasterize_use_texel ( texel_data texel ) ;
     void _rasterize_triangle ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 , num_whole x3 , num_whole y3 ) ;
     void _rasterize_ellipse_in_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
@@ -639,7 +639,7 @@ void shy_logic_text < mediator > :: _next_letter_row ( )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: _store_tex_coords ( letter_id letter , _letters_tex_coords & letters_tex_coords )
+void shy_logic_text < mediator > :: _store_tex_coords ( logic_text_letter_id letter , _letters_tex_coords & letters_tex_coords )
 {
     num_whole whole_left ;
     num_whole whole_bottom ;
@@ -684,7 +684,7 @@ void shy_logic_text < mediator > :: _prepare_rasterizer_for_drawing ( )
 }
 
 template < typename mediator >
-void shy_logic_text < mediator > :: _rasterize_letter ( letter_id letter , _letters_tex_coords & letters_tex_coords )
+void shy_logic_text < mediator > :: _rasterize_letter ( logic_text_letter_id letter , _letters_tex_coords & letters_tex_coords )
 {
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
