@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_text_creator
 {
-    typedef typename mediator :: alphabet_english_type alphabet_english_type ;
+    typedef typename mediator :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;
     typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
@@ -37,7 +37,7 @@ void shy_logic_main_menu_text_creator < mediator > :: receive ( typename message
 {
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
-    const alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
+    const logic_text_alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
     logic_text_letter_id whitespace = logic_text_stateless_consts . get ( ) . whitespace ;
 
     _add_letter ( eng . N ) ;

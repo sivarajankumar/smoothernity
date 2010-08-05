@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_logic_text
 {
-    typedef typename mediator :: alphabet_english_type alphabet_english_type ;
+    typedef typename mediator :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
@@ -576,7 +576,7 @@ void shy_logic_text < mediator > :: _rasterize_english_alphabet
 {
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
-    const alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
+    const logic_text_alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
     _letter_size_x = letter_size_x ;
     _letter_size_y = letter_size_y ;
     _next_letter_row ( ) ;
@@ -688,7 +688,7 @@ void shy_logic_text < mediator > :: _rasterize_letter ( logic_text_letter_id let
 {
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
-    const alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
+    const logic_text_alphabet_english_type & eng = logic_text_stateless_consts . get ( ) . alphabet_english ;
     
     _store_tex_coords ( letter , letters_tex_coords ) ;
     if      ( platform_conditions :: wholes_are_equal ( letter . _letter_id , eng . A . _letter_id ) ) _rasterize_font_english_A ( ) ;

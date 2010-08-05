@@ -22,7 +22,7 @@ public :
         num_whole _letter_id ;
     } ;
 
-    class alphabet_english_type
+    class logic_text_alphabet_english_type 
     {
     public :
         logic_text_letter_id A ;
@@ -59,7 +59,7 @@ public :
         logic_text_stateless_consts_type ( ) ;
     public :
         logic_text_letter_id whitespace ;
-        alphabet_english_type alphabet_english ;
+        logic_text_alphabet_english_type alphabet_english ;
     } ;
     
     class logic_text_messages
@@ -122,7 +122,7 @@ template < typename mediator >
 shy_logic_text_stateless < mediator > :: logic_text_stateless_consts_type :: logic_text_stateless_consts_type ( )
 {
     num_whole index ;
-    typename platform_pointer :: template pointer < alphabet_english_type > eng = alphabet_english ;
+    typename platform_pointer :: template pointer < logic_text_alphabet_english_type > eng = alphabet_english ;
     platform_math :: make_num_whole ( index , 0 ) ;
     whitespace . _letter_id = index ; platform_math :: inc_whole ( index ) ;
     eng . get ( ) . A . _letter_id = index ; platform_math :: inc_whole ( index ) ;

@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu
 {
-    typedef typename mediator :: alphabet_english_type alphabet_english_type ;
+    typedef typename mediator :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;
     typedef typename mediator :: logic_text_letter_id logic_text_letter_id ;
     typedef typename mediator :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
     typedef typename mediator :: engine_render_mesh_id engine_render_mesh_id ;
