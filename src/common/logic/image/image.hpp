@@ -39,9 +39,9 @@ public :
     shy_logic_image ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: image_render_request ) ;
-    void receive ( typename messages :: image_update ) ;
-    void receive ( typename messages :: image_prepare_permit ) ;
+    void receive ( typename messages :: logic_image_render_request ) ;
+    void receive ( typename messages :: logic_image_update ) ;
+    void receive ( typename messages :: logic_image_prepare_permit ) ;
     void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: engine_render_texture_loader_ready_reply ) ;
@@ -120,15 +120,15 @@ void shy_logic_image < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_render_request )
+void shy_logic_image < mediator > :: receive ( typename messages :: logic_image_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _image_mesh_created ) && platform_conditions :: whole_is_true ( _image_texture_loaded ) )
         _render_image_mesh ( ) ;
-    _mediator . get ( ) . send ( typename messages :: image_render_reply ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_image_render_reply ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_prepare_permit )
+void shy_logic_image < mediator > :: receive ( typename messages :: logic_image_prepare_permit )
 {
     _image_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
@@ -158,7 +158,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: engine_rende
 }
 
 template < typename mediator >
-void shy_logic_image < mediator > :: receive ( typename messages :: image_update )
+void shy_logic_image < mediator > :: receive ( typename messages :: logic_image_update )
 {
     if ( platform_conditions :: whole_is_true ( _image_prepare_permitted ) )
     {
@@ -203,7 +203,7 @@ void shy_logic_image < mediator > :: receive ( typename messages :: engine_rende
                 _mediator . get ( ) . send ( texture_finalize_msg ) ;
             }
             _image_texture_loaded = _platform_math_consts . get ( ) . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: image_prepared ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_image_prepared ( ) ) ;
         }
         if ( platform_conditions :: whole_is_true ( _image_mesh_created ) && platform_conditions :: whole_is_true ( _image_texture_loaded ) )
             _update_image_mesh ( ) ;
