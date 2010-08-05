@@ -37,9 +37,9 @@ public :
     void receive ( typename messages :: logic_camera_update ) ;
     void receive ( typename messages :: logic_camera_prepare_permit ) ;
     void receive ( typename messages :: logic_camera_matrix_request ) ;
-    void receive ( typename messages :: entities_height_reply ) ;
-    void receive ( typename messages :: entities_mesh_grid_reply ) ;
-    void receive ( typename messages :: entities_origin_reply ) ;
+    void receive ( typename messages :: logic_entities_height_reply ) ;
+    void receive ( typename messages :: logic_entities_mesh_grid_reply ) ;
+    void receive ( typename messages :: logic_entities_origin_reply ) ;
     void receive ( typename messages :: logic_core_near_plane_distance_reply ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
@@ -232,14 +232,14 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: logic_camer
         _entities_height_requested = _platform_math_consts . get ( ) . whole_true ;
         _entities_mesh_grid_requested = _platform_math_consts . get ( ) . whole_true ;
         _near_plane_distance_requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: entities_height_request ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: entities_mesh_grid_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_entities_height_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_entities_mesh_grid_request ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: logic_core_near_plane_distance_request ( ) ) ;
     }
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: entities_height_reply msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: logic_entities_height_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _entities_height_requested ) )
     {
@@ -251,7 +251,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: entities_he
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: entities_mesh_grid_reply msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: logic_entities_mesh_grid_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _entities_mesh_grid_requested ) )
     {
@@ -275,7 +275,7 @@ void shy_logic_camera < mediator > :: receive ( typename messages :: logic_core_
 }
 
 template < typename mediator >
-void shy_logic_camera < mediator > :: receive ( typename messages :: entities_origin_reply msg )
+void shy_logic_camera < mediator > :: receive ( typename messages :: logic_entities_origin_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _fill_schedules_origin_requested )
       && platform_conditions :: wholes_are_equal ( _fill_schedules_origin_index , msg . index )
@@ -397,8 +397,8 @@ void shy_logic_camera < mediator > :: _fill_next_camera_schedule ( )
         _random_camera_target_index ( _fill_schedules_target_index ) ;
         _fill_schedules_origin_requested = _platform_math_consts . get ( ) . whole_true ;
         _fill_schedules_target_requested = _platform_math_consts . get ( ) . whole_true ;
-        typename messages :: entities_origin_request origin_request_msg ;
-        typename messages :: entities_origin_request target_request_msg ;
+        typename messages :: logic_entities_origin_request origin_request_msg ;
+        typename messages :: logic_entities_origin_request target_request_msg ;
         origin_request_msg . index = _fill_schedules_origin_index ;
         target_request_msg . index = _fill_schedules_target_index ;
         _mediator . get ( ) . send ( origin_request_msg ) ;
@@ -484,7 +484,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_origin ( )
         _frames_to_change_camera_origin = _logic_camera_consts . change_origin_in_frames ;
         _random_camera_origin_index ( _desired_camera_origin_new_index ) ;
         _desired_camera_origin_new_requested = _platform_math_consts . get ( ) . whole_true ;
-        typename messages :: entities_origin_request entities_origin_request_msg ;
+        typename messages :: logic_entities_origin_request entities_origin_request_msg ;
         entities_origin_request_msg . index = _desired_camera_origin_new_index ;
         _mediator . get ( ) . send ( entities_origin_request_msg ) ;
     }
@@ -569,7 +569,7 @@ void shy_logic_camera < mediator > :: _update_desired_camera_target ( )
         _frames_to_change_camera_target = _logic_camera_consts . change_target_in_frames ;
         _random_camera_target_index ( _desired_camera_target_new_index ) ;
         _desired_camera_target_new_requested = _platform_math_consts . get ( ) . whole_true ;
-        typename messages :: entities_origin_request entities_origin_request_msg ;
+        typename messages :: logic_entities_origin_request entities_origin_request_msg ;
         entities_origin_request_msg . index = _desired_camera_target_new_index ;
         _mediator . get ( ) . send ( entities_origin_request_msg ) ;
     }

@@ -41,12 +41,12 @@ public :
     shy_logic_entities ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: entities_render_request ) ;
-    void receive ( typename messages :: entities_prepare_permit ) ;
-    void receive ( typename messages :: entities_update ) ;
-    void receive ( typename messages :: entities_height_request ) ;
-    void receive ( typename messages :: entities_mesh_grid_request ) ;
-    void receive ( typename messages :: entities_origin_request ) ;
+    void receive ( typename messages :: logic_entities_render_request ) ;
+    void receive ( typename messages :: logic_entities_prepare_permit ) ;
+    void receive ( typename messages :: logic_entities_update ) ;
+    void receive ( typename messages :: logic_entities_height_request ) ;
+    void receive ( typename messages :: logic_entities_mesh_grid_request ) ;
+    void receive ( typename messages :: logic_entities_origin_request ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_entities < mediator > & operator= ( const shy_logic_entities < mediator > & ) ;
@@ -164,15 +164,15 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: init )
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_render_request )
+void shy_logic_entities < mediator > :: receive ( typename messages :: logic_entities_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _entity_created ) )
         _entities_render ( ) ;
-    _mediator . get ( ) . send ( typename messages :: entities_render_reply ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_entities_render_reply ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_prepare_permit )
+void shy_logic_entities < mediator > :: receive ( typename messages :: logic_entities_prepare_permit )
 {
     _entities_prepare_permitted = _platform_math_consts . get ( ) . whole_true ;
 }
@@ -189,7 +189,7 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: engine_re
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_update )
+void shy_logic_entities < mediator > :: receive ( typename messages :: logic_entities_update )
 {
     if ( platform_conditions :: whole_is_true ( _entities_prepare_permitted ) )
     {
@@ -227,26 +227,26 @@ void shy_logic_entities < mediator > :: receive ( typename messages :: entities_
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_height_request )
+void shy_logic_entities < mediator > :: receive ( typename messages :: logic_entities_height_request )
 {
-    typename messages :: entities_height_reply entities_height_reply_msg ;
+    typename messages :: logic_entities_height_reply entities_height_reply_msg ;
     entities_height_reply_msg . height = _logic_entities_consts . entity_mesh_height ;
     _mediator . get ( ) . send ( entities_height_reply_msg ) ;
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_origin_request msg )
+void shy_logic_entities < mediator > :: receive ( typename messages :: logic_entities_origin_request msg )
 {
-    typename messages :: entities_origin_reply entities_origin_reply_msg ;
+    typename messages :: logic_entities_origin_reply entities_origin_reply_msg ;
     _get_entity_origin ( entities_origin_reply_msg . origin , msg . index ) ;
     entities_origin_reply_msg . index = msg . index ;
     _mediator . get ( ) . send ( entities_origin_reply_msg ) ;
 }
 
 template < typename mediator >
-void shy_logic_entities < mediator > :: receive ( typename messages :: entities_mesh_grid_request )
+void shy_logic_entities < mediator > :: receive ( typename messages :: logic_entities_mesh_grid_request )
 {
-    typename messages :: entities_mesh_grid_reply entities_mesh_grid_reply_msg ;
+    typename messages :: logic_entities_mesh_grid_reply entities_mesh_grid_reply_msg ;
     platform_math :: make_num_whole ( entities_mesh_grid_reply_msg . grid , _logic_entities_consts_type :: entity_mesh_grid ) ;
     _mediator . get ( ) . send ( entities_mesh_grid_reply_msg ) ;
 }
@@ -540,7 +540,7 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
         {
             platform_math :: inc_whole ( _entities_to_render ) ;
             if ( platform_conditions :: wholes_are_equal ( _entities_to_render , i_max ) )
-                _mediator . get ( ) . send ( typename messages :: entities_prepared ( ) ) ;
+                _mediator . get ( ) . send ( typename messages :: logic_entities_prepared ( ) ) ;
         }
     }
 

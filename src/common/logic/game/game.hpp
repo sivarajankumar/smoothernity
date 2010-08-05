@@ -32,7 +32,7 @@ public :
     void receive ( typename messages :: game_render ) ;
     void receive ( typename messages :: game_update ) ;
     void receive ( typename messages :: logic_camera_prepared ) ;
-    void receive ( typename messages :: entities_prepared ) ;
+    void receive ( typename messages :: logic_entities_prepared ) ;
     void receive ( typename messages :: image_prepared ) ;
     void receive ( typename messages :: land_prepared ) ;
     void receive ( typename messages :: sound_prepared ) ;
@@ -42,7 +42,7 @@ public :
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: land_render_reply ) ;
-    void receive ( typename messages :: entities_render_reply ) ;
+    void receive ( typename messages :: logic_entities_render_reply ) ;
     void receive ( typename messages :: fidget_render_reply ) ;
     void receive ( typename messages :: text_render_reply ) ;
     void receive ( typename messages :: image_render_reply ) ;
@@ -209,7 +209,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: game_update )
     {
         _update_color ( ) ;
         _mediator . get ( ) . send ( typename messages :: logic_camera_update ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: entities_update ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_entities_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: land_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: image_update ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: sound_update ( ) ) ;
@@ -227,11 +227,11 @@ void shy_logic_game < mediator > :: receive ( typename messages :: logic_camera_
 template < typename mediator >
 void shy_logic_game < mediator > :: receive ( typename messages :: land_prepared )
 {
-    _mediator . get ( ) . send ( typename messages :: entities_prepare_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_entities_prepare_permit ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: entities_prepared )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_entities_prepared )
 {
     _mediator . get ( ) . send ( typename messages :: image_prepare_permit ( ) ) ;
 }
@@ -276,7 +276,7 @@ void shy_logic_game < mediator > :: receive ( typename messages :: land_render_r
 }
 
 template < typename mediator >
-void shy_logic_game < mediator > :: receive ( typename messages :: entities_render_reply )
+void shy_logic_game < mediator > :: receive ( typename messages :: logic_entities_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _entities_render_requested ) )
     {
@@ -357,7 +357,7 @@ void shy_logic_game < mediator > :: _proceed_with_render ( )
         _entities_render_requested = _platform_math_consts . get ( ) . whole_true ;
         
         _mediator . get ( ) . send ( typename messages :: land_render_request ( ) ) ;
-        _mediator . get ( ) . send ( typename messages :: entities_render_request ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_entities_render_request ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _land_render_replied )
       && platform_conditions :: whole_is_true ( _entities_render_replied )
