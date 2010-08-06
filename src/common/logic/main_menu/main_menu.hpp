@@ -22,7 +22,7 @@ public :
     void receive ( typename messages :: logic_main_menu_render ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_text_create_finished ) ;
-    void receive ( typename messages :: logic_main_menu_mesh_create_finished ) ;
+    void receive ( typename messages :: logic_main_menu_meshes_creation_finished ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -79,11 +79,11 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_text_create_finished )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_mesh_create ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_create ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_mesh_create_finished )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_meshes_creation_finished )
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_finished ( ) ) ;
 }

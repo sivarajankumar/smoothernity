@@ -34,9 +34,10 @@ public :
         class logic_main_menu_launch_permit { } ;
         class logic_main_menu_letter_reply { public : num_whole row ; num_whole col ; logic_text_letter_id letter ; } ;
         class logic_main_menu_letter_request { public : num_whole row ; num_whole col ; } ;
-        class logic_main_menu_mesh_create { } ;
-        class logic_main_menu_mesh_create_finished { } ;
+        class logic_main_menu_mesh_create_next { } ;
         class logic_main_menu_mesh_has_been_created { public : num_whole row ; num_whole col ; logic_main_menu_mesh_id mesh ; } ;
+        class logic_main_menu_meshes_create { } ;
+        class logic_main_menu_meshes_creation_finished { } ;
         class logic_main_menu_next_row { } ;
         class logic_main_menu_render { } ;
         class logic_main_menu_rows_reply { public : num_whole rows ; } ;
@@ -58,9 +59,10 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letter_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letter_request ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create_finished ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create_next ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_mesh_has_been_created ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_create ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_creation_finished ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_next_row ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_render ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_rows_reply ) ;
@@ -125,7 +127,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_update msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_mesh_creation_director . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -159,7 +161,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create msg ) 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create_next msg ) 
 {
     _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
 }
@@ -168,9 +170,19 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create_finished msg ) 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_meshes_create msg ) 
+{
+    _receivers . get ( ) . logic_main_menu_mesh_creation_director . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_meshes_creation_finished msg ) 
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_mesh_creation_director . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
