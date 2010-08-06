@@ -67,6 +67,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_layout . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_mesh_creation_director . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;

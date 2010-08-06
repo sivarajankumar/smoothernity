@@ -101,6 +101,7 @@
 		8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
 		8812CF45117DE8B4008F67D9 /* macosx_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */; };
 		8812CF52117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
+		8812D9B7120C516C0036FC3C /* layout.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8812D9B6120C516C0036FC3C /* layout.hpp */; };
 		8819C24511C8E11D003A552B /* static_array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C24411C8E11D003A552B /* static_array.hpp */; };
 		8819C29111C8F262003A552B /* static_array_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C29011C8F262003A552B /* static_array_insider.hpp */; };
 		8819C32611C90AAF003A552B /* pointer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C32511C90AAF003A552B /* pointer.hpp */; };
@@ -196,6 +197,7 @@
 		8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_sound_loader.h; sourceTree = "<group>"; };
 		8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_sound_loader.mm; sourceTree = "<group>"; };
 		8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
+		8812D9B6120C516C0036FC3C /* layout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = layout.hpp; sourceTree = "<group>"; };
 		8819C24411C8E11D003A552B /* static_array.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_array.hpp; sourceTree = "<group>"; };
 		8819C29011C8F262003A552B /* static_array_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_array_insider.hpp; sourceTree = "<group>"; };
 		8819C32511C90AAF003A552B /* pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointer.hpp; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 		8876302212068D0100CAD8EF /* main_menu */ = {
 			isa = PBXGroup;
 			children = (
+				8812D9B6120C516C0036FC3C /* layout.hpp */,
 				8876302312068D0100CAD8EF /* letters_storage.hpp */,
 				8876302412068D0100CAD8EF /* main_menu.hpp */,
 				883AD2A9120A8DB0001AC722 /* mesh_creation_director.hpp */,
@@ -676,6 +679,7 @@
 				8876305812068D0100CAD8EF /* mediator.hpp in Headers */,
 				887630811206A64C00CAD8EF /* mesh_creator.hpp in Headers */,
 				883AD2AA120A8DB0001AC722 /* mesh_creation_director.hpp in Headers */,
+				8812D9B7120C516C0036FC3C /* layout.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
