@@ -8,6 +8,7 @@ class shy_logic_main_menu_stateless
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
 public :
     class logic_main_menu_mesh_id
@@ -32,6 +33,8 @@ public :
         class logic_main_menu_cols_request { public : num_whole row ; } ;
         class logic_main_menu_finished { } ;
         class logic_main_menu_launch_permit { } ;
+        class logic_main_menu_layout_position_reply { public : num_whole row ; num_whole col ; vector_data position ; } ;
+        class logic_main_menu_layout_position_request { public : num_whole row ; num_whole col ; } ;
         class logic_main_menu_letter_reply { public : num_whole row ; num_whole col ; logic_text_letter_id letter ; } ;
         class logic_main_menu_letter_request { public : num_whole row ; num_whole col ; } ;
         class logic_main_menu_mesh_create_next { } ;
@@ -57,6 +60,8 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_cols_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_finished ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_layout_position_reply ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_layout_position_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letter_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letter_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create_next ) ;
@@ -109,6 +114,23 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_layout_position_reply msg )
+{
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_layout_position_request msg )
+{
+    _receivers . get ( ) . logic_main_menu_layout . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
