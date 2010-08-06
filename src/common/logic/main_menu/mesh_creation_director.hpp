@@ -4,9 +4,19 @@ class shy_logic_main_menu_mesh_creation_director
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    
+    class logic_main_menu_mesh_creation_director_consts_type
+    {
+    public :
+        logic_main_menu_mesh_creation_director_consts_type ( ) ;
+    public :
+        num_fract time_between_creation ;
+    } ;
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
@@ -16,8 +26,18 @@ public :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    logic_main_menu_mesh_creation_director_consts_type _logic_main_menu_mesh_creation_director_consts ;
     num_whole _creation_in_progress ;
+    num_fract _time_passed ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_mesh_creation_director < mediator >
+:: logic_main_menu_mesh_creation_director_consts_type
+:: logic_main_menu_mesh_creation_director_consts_type ( )
+{
+    platform_math :: make_num_fract ( time_between_creation , 50 , 1000 ) ;
+}
 
 template < typename mediator >
 void shy_logic_main_menu_mesh_creation_director < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -33,6 +53,7 @@ void shy_logic_main_menu_mesh_creation_director < mediator > :: receive ( typena
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
     _creation_in_progress = _platform_math_consts . get ( ) . whole_false ;
+    _time_passed = _platform_math_consts . get ( ) . fract_0 ;
 }
 
 template < typename mediator >
@@ -51,5 +72,16 @@ template < typename mediator >
 void shy_logic_main_menu_mesh_creation_director < mediator > :: receive ( typename messages :: logic_main_menu_update )
 {
     if ( platform_conditions :: whole_is_true ( _creation_in_progress ) )
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_mesh_create_next ( ) ) ;
+    {
+        num_fract frame_time ;
+        platform_math :: make_num_fract ( frame_time , 1 , platform :: frames_per_second ) ;
+        platform_math :: add_to_fract ( _time_passed , frame_time ) ;
+        while ( platform_conditions :: fract_greater_than_fract ( _time_passed , _logic_main_menu_mesh_creation_director_consts . time_between_creation ) )
+        {
+            platform_math :: sub_from_fract ( _time_passed , _logic_main_menu_mesh_creation_director_consts . time_between_creation ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_mesh_create_next ( ) ) ;
+            if ( platform_conditions :: whole_is_true ( _creation_in_progress ) )
+                break ;
+        }
+    }
 }
