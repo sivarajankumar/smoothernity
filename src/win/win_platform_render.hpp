@@ -59,6 +59,7 @@ public :
         render_texture_id ( ) ;
 	private :
         IDirect3DTexture9 * _texture ; 
+        int _size ;
 	} ;
 
     class texture_resource_id
@@ -76,7 +77,10 @@ public :
     public :
         texel_data ( ) ;
     private :
-        int _dummy ;
+        BYTE _b ;
+        BYTE _g ;
+        BYTE _r ;
+        BYTE _a ;
     } ;
     
     class vertex_data
@@ -230,6 +234,7 @@ shy_win_platform_render < platform_insider > :: render_vertex_buffer_id :: rende
 template < typename platform_insider >
 shy_win_platform_render < platform_insider > :: render_texture_id :: render_texture_id ( )
 : _texture ( reinterpret_cast < IDirect3DTexture9 * > ( platform_insider :: uninitialized_value ) )
+, _size ( platform_insider :: uninitialized_value )
 {
 }
 
@@ -241,7 +246,10 @@ shy_win_platform_render < platform_insider > :: texture_resource_id :: texture_r
 	
 template < typename platform_insider >
 shy_win_platform_render < platform_insider > :: texel_data :: texel_data ( )
-: _dummy ( platform_insider :: uninitialized_value )
+: _a ( BYTE ( platform_insider :: uninitialized_value & 0xFF ) )
+, _r ( BYTE ( platform_insider :: uninitialized_value & 0xFF ) )
+, _g ( BYTE ( platform_insider :: uninitialized_value & 0xFF ) )
+, _b ( BYTE ( platform_insider :: uninitialized_value & 0xFF ) )
 {
 }
     
@@ -307,6 +315,8 @@ inline void shy_win_platform_render < platform_insider > :: enable_texturing ( )
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: disable_texturing ( )
 {
+    HRESULT hr ;
+    V ( DXUTGetD3D9Device ( ) ->SetTexture ( 0 , 0 ) ) ;
 }
 
 template < typename platform_insider >
@@ -368,15 +378,16 @@ inline void shy_win_platform_render < platform_insider > :: create_texture_id ( 
     DWORD size = 0 ;
 
     platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
-    size = 1 << size_pow2_base_int ;
+    arg_texture_id . _size = 1 << size_pow2_base_int ;
+    size = ( DWORD ) arg_texture_id . _size ;
 
     V ( DXUTGetD3D9Device ( ) -> CreateTexture
         ( size
         , size
         , 0
-        , 0
+        , D3DUSAGE_DYNAMIC
         , D3DFMT_A8R8G8B8
-        , D3DPOOL_MANAGED
+        , D3DPOOL_DEFAULT
         , & arg_texture_id . _texture
         , 0
         ) ) ;
@@ -385,12 +396,28 @@ inline void shy_win_platform_render < platform_insider > :: create_texture_id ( 
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: use_texture ( render_texture_id arg_texture_id )
 {
+    HRESULT hr ;
+    V ( DXUTGetD3D9Device ( ) ->SetTexture ( 0 , arg_texture_id . _texture ) ) ;
 }
 
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: set_texel_color 
     ( texel_data & texel , num_fract r , num_fract g , num_fract b , num_fract a )
 {
+    float r_float = 0.0f ;
+    float g_float = 0.0f ;
+    float b_float = 0.0f ;
+    float a_float = 0.0f ;
+    
+    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
+    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+
+    texel . _r = BYTE ( r_float * 255.0f ) ;
+    texel . _g = BYTE ( g_float * 255.0f ) ;
+    texel . _b = BYTE ( b_float * 255.0f ) ;
+    texel . _a = BYTE ( a_float * 255.0f ) ;
 }
 
 template < typename platform_insider >
@@ -404,6 +431,49 @@ inline void shy_win_platform_render < platform_insider > :: load_texture_subdata
     , const texels_array & data 
     )
 {
+    HRESULT hr ;
+    D3DLOCKED_RECT locked_rect ;
+    RECT d3d_rect ;
+    int x_offset_int = 0 ;
+    int y_offset_int = 0 ;
+    int width_int = 0 ;
+    int height_int = 0 ;
+    int ogl_left = 0 ;
+    int ogl_right = 0 ;
+    int ogl_bottom = 0 ;
+    int ogl_top = 0 ;
+    const texel_data * data_ptr = 0 ;
+
+    platform_math_insider :: num_whole_value_get ( x_offset_int , x_offset ) ;
+    platform_math_insider :: num_whole_value_get ( y_offset_int , y_offset ) ;
+    platform_math_insider :: num_whole_value_get ( width_int , width ) ;
+    platform_math_insider :: num_whole_value_get ( height_int , height ) ;
+    platform_static_array_insider :: elements_ptr ( data_ptr , data ) ;
+
+    ogl_left = x_offset_int ;
+    ogl_bottom = y_offset_int ;
+    ogl_right = x_offset_int + width_int - 1 ;
+    ogl_top = y_offset_int + height_int - 1 ;
+
+    d3d_rect . left = x_offset_int ;
+    d3d_rect . right = x_offset_int + width_int - 1 ;
+    d3d_rect . top = y_offset_int ;
+    d3d_rect . bottom = y_offset_int + height_int - 1 ;
+
+    V ( arg_texture_id . _texture -> LockRect ( 0 , & locked_rect , & d3d_rect , 0 ) ) ;
+    for ( int y = 0 ; y < height_int ; y ++ )
+    {
+        int d3d_y = y + y_offset_int ;
+        char * dst_data_ptr = 0 ;
+        const texel_data * src_data_ptr = 0 ;
+        dst_data_ptr = ( char * ) locked_rect . pBits ;
+        dst_data_ptr += locked_rect . Pitch * d3d_y ;
+        dst_data_ptr += x_offset_int * sizeof ( texel_data ) ;
+        src_data_ptr = data_ptr ;
+        src_data_ptr += width_int * y ;
+        memcpy ( dst_data_ptr , src_data_ptr , width_int * sizeof ( texel_data ) ) ;
+    }
+    V ( arg_texture_id . _texture -> UnlockRect ( 0 ) ) ;
 }
 
 template < typename platform_insider >

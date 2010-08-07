@@ -23,6 +23,9 @@ shy_win_platform_render_insider < platform_insider > :: shy_win_platform_render_
 	HRESULT hr ;
 	V ( D3DXCreateMatrixStack ( 0 , & matrix_stack ) ) ;
 	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_LIGHTING , FALSE ) ) ;
+    V ( DXUTGetD3D9Device ( ) -> SetSamplerState ( 0 , D3DSAMP_MINFILTER , D3DTEXF_POINT ) ) ;
+    V ( DXUTGetD3D9Device ( ) -> SetSamplerState ( 0 , D3DSAMP_MAGFILTER , D3DTEXF_LINEAR ) ) ;
+    V ( DXUTGetD3D9Device ( ) -> SetSamplerState ( 0 , D3DSAMP_MIPFILTER , D3DTEXF_NONE ) ) ;
 }
 
 template < typename platform_insider >
