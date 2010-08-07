@@ -26,6 +26,19 @@ shy_win_platform_render_insider < platform_insider > :: shy_win_platform_render_
     V ( DXUTGetD3D9Device ( ) -> SetSamplerState ( 0 , D3DSAMP_MINFILTER , D3DTEXF_POINT ) ) ;
     V ( DXUTGetD3D9Device ( ) -> SetSamplerState ( 0 , D3DSAMP_MAGFILTER , D3DTEXF_LINEAR ) ) ;
     V ( DXUTGetD3D9Device ( ) -> SetSamplerState ( 0 , D3DSAMP_MIPFILTER , D3DTEXF_NONE ) ) ;
+
+    D3DVIEWPORT9 viewport ;
+    V ( DXUTGetD3D9Device ( ) -> GetViewport ( & viewport ) ) ;
+    if ( viewport . Width > viewport . Height )
+    {
+        aspect_height = 1.0f ;
+        aspect_width = float ( viewport . Width ) / float ( viewport . Height ) ;
+    }
+    else
+    {
+        aspect_height = float ( viewport . Height ) / float ( viewport . Width ) ;
+        aspect_width = 1.0f ;
+    }
 }
 
 template < typename platform_insider >

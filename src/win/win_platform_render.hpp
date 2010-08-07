@@ -385,9 +385,9 @@ inline void shy_win_platform_render < platform_insider > :: create_texture_id ( 
         ( size
         , size
         , 0
-        , D3DUSAGE_DYNAMIC
+        , 0
         , D3DFMT_A8R8G8B8
-        , D3DPOOL_DEFAULT
+        , D3DPOOL_MANAGED
         , & arg_texture_id . _texture
         , 0
         ) ) ;
@@ -598,7 +598,7 @@ inline void shy_win_platform_render < platform_insider > :: create_vertex_buffer
 		( sizeof ( vertex_data ) * int_elements
 		, D3DUSAGE_WRITEONLY
 		, D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1
-		, D3DPOOL_DEFAULT
+		, D3DPOOL_MANAGED
 		, & arg_buffer_id . _buffer
 		, 0
 		) ) ;
@@ -677,7 +677,7 @@ inline void shy_win_platform_render < platform_insider > :: create_index_buffer
 		( sizeof ( index_data ) * int_elements
 		, D3DUSAGE_WRITEONLY
 		, D3DFMT_INDEX32
-		, D3DPOOL_DEFAULT
+		, D3DPOOL_MANAGED
 		, & arg_buffer_id . _buffer 
 		, 0
 		) ) ;
