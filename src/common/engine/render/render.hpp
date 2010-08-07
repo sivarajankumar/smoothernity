@@ -209,6 +209,18 @@ void shy_engine_render < mediator > :: receive ( typename messages :: done )
         _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
         _platform_render . get ( ) . delete_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
     }
+
+    num_whole whole_max_textures ;
+    platform_math :: make_num_whole ( whole_max_textures , _engine_render_consts_type :: max_textures ) ;
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , whole_max_textures )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        typename platform_pointer :: template pointer < _texture_data > texture ;
+        platform_static_array :: element_ptr ( texture , _textures_datas , i ) ;
+        _platform_render . get ( ) . delete_texture_id ( texture . get ( ) . render_id ) ;
+    }
 }
 
 template < typename mediator >

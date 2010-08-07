@@ -58,7 +58,7 @@ public :
     public :
         render_texture_id ( ) ;
 	private :
-		int _dummy ;
+        IDirect3DTexture9 * _texture ; 
 	} ;
 
     class texture_resource_id
@@ -157,6 +157,7 @@ public :
     
     void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
+    void delete_texture_id ( render_texture_id & arg_texture_id ) ;
     
     template < typename texels_array >
     void load_texture_subdata 
@@ -228,7 +229,7 @@ shy_win_platform_render < platform_insider > :: render_vertex_buffer_id :: rende
     
 template < typename platform_insider >
 shy_win_platform_render < platform_insider > :: render_texture_id :: render_texture_id ( )
-: _dummy ( platform_insider :: uninitialized_value )
+: _texture ( reinterpret_cast < IDirect3DTexture9 * > ( platform_insider :: uninitialized_value ) )
 {
 }
 
@@ -331,13 +332,14 @@ inline void shy_win_platform_render < platform_insider > :: fog_linear
     )
 {
 	HRESULT hr ;
+    D3DCOLOR color ;
     float r_float = 0.0f ;
     float g_float = 0.0f ;
     float b_float = 0.0f ;
     float a_float = 0.0f ;
     float znear_float = 0.0f ;
     float zfar_float = 0.0f ;
-    D3DCOLOR color ;
+
     platform_math_insider :: num_fract_value_get ( r_float , r ) ;
     platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     platform_math_insider :: num_fract_value_get ( b_float , b ) ;
@@ -361,6 +363,23 @@ inline void shy_win_platform_render < platform_insider > :: fog_linear
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: create_texture_id ( render_texture_id & arg_texture_id , num_whole size_pow2_base )
 {
+    HRESULT hr ;
+    int size_pow2_base_int = 0 ;
+    DWORD size = 0 ;
+
+    platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
+    size = 1 << size_pow2_base_int ;
+
+    V ( DXUTGetD3D9Device ( ) -> CreateTexture
+        ( size
+        , size
+        , 0
+        , 0
+        , D3DFMT_A8R8G8B8
+        , D3DPOOL_MANAGED
+        , & arg_texture_id . _texture
+        , 0
+        ) ) ;
 }
 
 template < typename platform_insider >
@@ -736,6 +755,13 @@ inline void shy_win_platform_render < platform_insider > :: delete_index_buffer 
 {
     arg_buffer_id . _buffer -> Release ( ) ;
     arg_buffer_id . _buffer = 0 ;
+}
+
+template < typename platform_insider >
+inline void shy_win_platform_render < platform_insider > :: delete_texture_id ( render_texture_id & arg_texture_id )
+{
+    arg_texture_id . _texture -> Release ( ) ;
+    arg_texture_id . _texture = 0 ;
 }
 
 template < typename platform_insider >
