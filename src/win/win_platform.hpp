@@ -11,6 +11,7 @@
 #include "../platform/math_int_float.hpp"
 #include "../platform/math_int_float_insider.hpp"
 #include "../platform/mouse.hpp"
+#include "../platform/mouse_insider.hpp"
 #include "../platform/platform.hpp"
 #include "../platform/pointer.hpp"
 #include "../platform/scheduler_random.hpp"
@@ -31,6 +32,7 @@ class shy_win_platform_insider
 public :
     typedef shy_platform_math_int_float_insider < shy_win_platform_insider > platform_math_insider ;
     typedef shy_platform_matrix_float_insider < shy_win_platform_insider > platform_matrix_insider ;
+    typedef shy_platform_mouse_insider < shy_win_platform_insider > platform_mouse_insider ;
     typedef shy_win_platform_render_insider < shy_win_platform_insider > platform_render_insider ;
     typedef shy_platform_static_array_insider < shy_win_platform_insider > platform_static_array_insider ;
     typedef shy_platform_vector_float_insider < shy_win_platform_insider > platform_vector_insider ;
@@ -56,6 +58,7 @@ public :
     shy_win_platform_insider ( ) ;
     
     platform_render_insider render_insider ;
+    platform_mouse_insider mouse_insider ;
 
     platform_math_consts math_consts ;
     platform_mouse mouse ;

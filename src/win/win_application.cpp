@@ -67,6 +67,18 @@ void CALLBACK OnMouse ( bool bLeftButtonDown , bool bRightButtonDown , bool bMid
                         bool bSideButton1Down , bool bSideButton2Down , int nMouseWheelDelta ,
                         int xPos , int yPos , void * pUserContext )
 {
+    HRESULT hr ;
+    D3DVIEWPORT9 viewport ;
+    V ( DXUTGetD3D9Device ( ) -> GetViewport ( & viewport ) ) ;
+    float x = 2.0f * ( - 0.5f + float ( xPos ) / float ( viewport . Width ) ) ;
+    float y = 2.0f * ( - 0.5f + float ( yPos ) / float ( viewport . Height ) ) ;
+    if ( viewport . Width > viewport . Height )
+        x *= float ( viewport . Width ) / float ( viewport . Height ) ;
+    else
+        y *= float ( viewport . Height ) / float ( viewport . Width ) ;
+    g_platform -> mouse_insider . set_x ( x ) ;
+    g_platform -> mouse_insider . set_y ( - y ) ;
+    g_platform -> mouse_insider . set_left_button_down ( bLeftButtonDown ) ;
 }
 
 
@@ -131,6 +143,7 @@ void CALLBACK OnD3D9FrameRender ( IDirect3DDevice9 * pd3dDevice , double fTime ,
     {
 		g_facade -> render ( ) ;
 		g_facade -> update ( ) ;
+        g_platform -> mouse_insider . set_left_button_down ( false ) ;
         V ( pd3dDevice -> EndScene ( ) ) ;
     }
 }
@@ -183,7 +196,7 @@ int WINAPI wWinMain ( HINSTANCE hInstance , HINSTANCE hPrevInstance , LPWSTR lpC
 
     DXUTInit ( true , true , NULL ) ; // Parse the command line, show msgboxes on error, no extra command line params
     DXUTSetCursorSettings ( true , true ) ; // Show the cursor and clip it when in full screen
-    DXUTCreateWindow ( L"Smoothernity" ) ;
+    DXUTCreateWindow ( L"Smoothernity version 0.1097" ) ;
 
     // Only require 10-level hardware
     DXUTCreateDevice ( D3D_FEATURE_LEVEL_10_0 , true , 640 , 480 ) ;
