@@ -83,6 +83,7 @@ class shy_logic_main_menu_mesh_creator
     } ;
     
 public :
+	shy_logic_main_menu_mesh_creator ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_mesh_create_next ) ;
@@ -92,6 +93,7 @@ public :
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_text_letter_big_tex_coords_reply ) ;
 private :
+	shy_logic_main_menu_mesh_creator < mediator > & operator= ( const shy_logic_main_menu_mesh_creator < mediator > & ) ;
     void _proceed_with_creation ( ) ;
     void _obtain_rows_count ( ) ;
     void _start_first_row ( ) ;
@@ -137,6 +139,18 @@ shy_logic_main_menu_mesh_creator < mediator > :: _logic_main_menu_mesh_creator_c
     platform_math :: make_num_fract ( color_g , 255 , 255 ) ;
     platform_math :: make_num_fract ( color_b , 0 , 255 ) ;
     platform_math :: make_num_fract ( color_a , 255 , 255 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_mesh_creator < mediator > :: shy_logic_main_menu_mesh_creator ( )
+{
+}
+
+template < typename mediator >
+shy_logic_main_menu_mesh_creator < mediator > & 
+shy_logic_main_menu_mesh_creator < mediator > :: operator= ( const shy_logic_main_menu_mesh_creator < mediator > & )
+{
+	return * this ;
 }
 
 template < typename mediator >
