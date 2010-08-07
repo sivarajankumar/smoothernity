@@ -316,6 +316,8 @@ inline void shy_win_platform_render < platform_insider > :: texture_mode_modulat
 template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: fog_disable ( )
 {
+	HRESULT hr ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGENABLE , FALSE ) ) ;
 }
 
 template < typename platform_insider >
@@ -328,6 +330,32 @@ inline void shy_win_platform_render < platform_insider > :: fog_linear
     , num_fract a 
     )
 {
+	HRESULT hr ;
+    float r_float = 0.0f ;
+    float g_float = 0.0f ;
+    float b_float = 0.0f ;
+    float a_float = 0.0f ;
+    float znear_float = 0.0f ;
+    float zfar_float = 0.0f ;
+    D3DCOLOR color ;
+    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
+    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
+    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+    platform_math_insider :: num_fract_value_get ( znear_float , znear ) ;
+    platform_math_insider :: num_fract_value_get ( zfar_float , zfar ) ;
+	color = D3DCOLOR_ARGB \
+        ( int ( a_float * 255.0f )
+        , int ( r_float * 255.0f ) 
+        , int ( g_float * 255.0f ) 
+        , int ( b_float * 255.0f ) 
+        ) ;
+
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGENABLE , TRUE ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGCOLOR , color ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGVERTEXMODE , D3DFOG_LINEAR ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGSTART , * ( DWORD * ) ( & znear_float ) ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGEND , * ( DWORD * ) ( & zfar_float ) ) ) ;
 }
 
 template < typename platform_insider >
