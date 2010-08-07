@@ -7,6 +7,22 @@
 static shy_win_platform_insider * g_platform = 0 ;
 static shy_facade < shy_platform < shy_win_platform_insider > > * g_facade = 0 ;
 
+void smoothernity_init ( )
+{
+    g_platform = new shy_win_platform_insider ( ) ;
+    g_facade = new shy_facade < shy_platform < shy_win_platform_insider > > ( g_platform -> platform ) ;
+    g_facade -> init ( ) ;
+}
+
+void smoothernity_done ( )
+{
+    g_facade -> done ( ) ;
+    delete g_facade ;
+    delete g_platform ;
+    g_facade = 0 ;
+    g_platform = 0 ;
+}
+
 //--------------------------------------------------------------------------------------
 // Called right before creating a D3D9 or D3D11 device, allowing the app to modify the device settings as needed
 //--------------------------------------------------------------------------------------
@@ -98,6 +114,7 @@ HRESULT CALLBACK OnD3D9CreateDevice ( IDirect3DDevice9 * pd3dDevice , const D3DS
 HRESULT CALLBACK OnD3D9ResetDevice ( IDirect3DDevice9 * pd3dDevice , const D3DSURFACE_DESC * pBackBufferSurfaceDesc ,
                                      void * pUserContext )
 {
+    smoothernity_init ( ) ;
     return S_OK ;
 }
 
@@ -124,6 +141,7 @@ void CALLBACK OnD3D9FrameRender ( IDirect3DDevice9 * pd3dDevice , double fTime ,
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9LostDevice ( void * pUserContext )
 {
+    smoothernity_done ( ) ;
 }
 
 
@@ -133,7 +151,6 @@ void CALLBACK OnD3D9LostDevice ( void * pUserContext )
 void CALLBACK OnD3D9DestroyDevice ( void * pUserContext )
 {
 }
-
 
 //--------------------------------------------------------------------------------------
 // Initialize everything and go into a render loop
@@ -171,15 +188,7 @@ int WINAPI wWinMain ( HINSTANCE hInstance , HINSTANCE hPrevInstance , LPWSTR lpC
     // Only require 10-level hardware
     DXUTCreateDevice ( D3D_FEATURE_LEVEL_10_0 , true , 640 , 480 ) ;
 
-    g_platform = new shy_win_platform_insider ( ) ;
-    g_facade = new shy_facade < shy_platform < shy_win_platform_insider > > ( g_platform -> platform ) ;
-    g_facade -> init ( ) ;
     DXUTMainLoop ( ) ; // Enter into the DXUT render loop
-    g_facade -> done ( ) ;
-    delete g_facade ;
-    delete g_platform ;
-    g_facade = 0 ;
-    g_platform = 0 ;
 
     return DXUTGetExitCode ( ) ;
 }
