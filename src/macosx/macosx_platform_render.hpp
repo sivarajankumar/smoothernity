@@ -154,6 +154,7 @@ public :
     
     void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
+    void delete_texture_id ( render_texture_id & arg_texture_id ) ;
     
     template < typename texels_array >
     void load_texture_subdata 
@@ -775,5 +776,10 @@ inline void shy_macosx_platform_render < platform_insider > :: delete_vertex_buf
 
 template < typename platform_insider >
 inline void shy_macosx_platform_render < platform_insider > :: delete_index_buffer ( render_index_buffer_id & arg_buffer_id )
+{
+}
+
+template < typename platform_insider >
+inline void shy_macosx_platform_render < platform_insider > :: delete_texture_id ( render_texture_id & arg_texture_id )
 {
 }

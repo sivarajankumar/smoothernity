@@ -223,6 +223,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_cols_reply msg ) 
 {
     _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_layout . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -259,6 +260,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_rows_reply msg ) 
 {
     _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_layout . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
