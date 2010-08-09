@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_layout
 {
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -18,6 +19,7 @@ class shy_logic_main_menu_layout
         num_whole requested_row ;
         num_whole requested_col ;
         vector_data position ;
+        num_fract scale ;
     } ;
     
     class _logic_main_menu_rows_state_type
@@ -52,6 +54,8 @@ public :
     void receive ( typename messages :: logic_main_menu_layout_position_request ) ;
     void receive ( typename messages :: logic_main_menu_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_cols_reply ) ;
+    void receive ( typename messages :: logic_main_menu_add_letter ) ;
+    void receive ( typename messages :: logic_main_menu_next_row ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     void _proceed_with_layout ( ) ;
@@ -62,10 +66,15 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    
     _logic_main_menu_layout_state_type _logic_main_menu_layout_state ;
     _logic_main_menu_rows_state_type _logic_main_menu_rows_state ;
     _logic_main_menu_cols_state_type _logic_main_menu_cols_state ;
     _engine_render_aspect_state_type _engine_render_aspect_state ;
+    
+    num_whole _max_cols ;
+    num_whole _max_rows ;
+    num_whole _current_cols ;
 } ;
 
 template < typename mediator >
@@ -80,6 +89,10 @@ void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: i
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+    
+    _max_cols = _platform_math_consts . get ( ) . whole_0 ;
+    _max_rows = _platform_math_consts . get ( ) . whole_0 ;
+    _current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
@@ -128,6 +141,20 @@ void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: e
         _engine_render_aspect_state . height = msg . height ;
         _proceed_with_layout ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_add_letter )
+{
+    platform_math :: inc_whole ( _current_cols ) ;
+    engine_math :: math_max_whole ( _max_cols , _max_cols , _current_cols ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_next_row )
+{
+    platform_math :: inc_whole ( _max_rows ) ;
+    _current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
