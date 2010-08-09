@@ -24,7 +24,6 @@ class shy_logic_main_menu_mesh_creator
     public :
         _logic_main_menu_mesh_creator_consts_type ( ) ;
     public :
-        num_fract mesh_size ;
         num_fract color_r ;
         num_fract color_g ;
         num_fract color_b ;
@@ -114,6 +113,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > _logic_main_menu_stateless_consts ;
     const _logic_main_menu_mesh_creator_consts_type _logic_main_menu_mesh_creator_consts ;
     
     _logic_main_menu_rows_state_type _logic_main_menu_rows_state ;
@@ -134,7 +134,6 @@ private :
 template < typename mediator >
 shy_logic_main_menu_mesh_creator < mediator > :: _logic_main_menu_mesh_creator_consts_type :: _logic_main_menu_mesh_creator_consts_type ( )
 {
-    platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
     platform_math :: make_num_fract ( color_r , 0 , 255 ) ;
     platform_math :: make_num_fract ( color_g , 255 , 255 ) ;
     platform_math :: make_num_fract ( color_b , 0 , 255 ) ;
@@ -164,6 +163,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: receive ( typename message
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_stateless_consts ( _logic_main_menu_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
     _current_row = _platform_math_consts . get ( ) . whole_0 ;
@@ -434,7 +434,7 @@ void shy_logic_main_menu_mesh_creator < mediator > :: _fill_mesh_content ( )
     
     mesh = _engine_render_mesh_create_state . mesh ;
     
-    platform_math :: div_fracts ( half_size , _logic_main_menu_mesh_creator_consts . mesh_size , _platform_math_consts . get ( ) . fract_2 ) ;
+    platform_math :: div_fracts ( half_size , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size , _platform_math_consts . get ( ) . fract_2 ) ;
     platform_math :: mul_fracts ( x_left , half_size , _platform_math_consts . get ( ) . fract_minus_1 ) ;
     platform_math :: mul_fracts ( y_bottom , half_size , _platform_math_consts . get ( ) . fract_minus_1 ) ;
     platform_math :: mul_fracts ( x_right , half_size , _platform_math_consts . get ( ) . fract_1 ) ;

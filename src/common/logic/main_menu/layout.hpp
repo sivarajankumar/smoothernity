@@ -58,6 +58,7 @@ private :
     void _obtain_rows_count ( ) ;
     void _obtain_cols_count ( ) ;
     void _obtain_aspect_ratio ( ) ;
+    void _reply_layout ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -150,6 +151,7 @@ void shy_logic_main_menu_layout < mediator > :: _proceed_with_layout ( )
     if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . replied ) )
     {
         _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _reply_layout ( ) ;
     }
 }
 
@@ -175,4 +177,9 @@ void shy_logic_main_menu_layout < mediator > :: _obtain_aspect_ratio ( )
 {
     _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_layout < mediator > :: _reply_layout ( )
+{
 }

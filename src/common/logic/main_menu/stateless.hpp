@@ -5,7 +5,9 @@ template < typename mediator >
 class shy_logic_main_menu_stateless
 {
     typedef typename mediator :: logic_text_stateless :: logic_text_letter_id logic_text_letter_id ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
@@ -21,6 +23,9 @@ public :
     class logic_main_menu_stateless_consts_type
     {
     public :
+        logic_main_menu_stateless_consts_type ( ) ;
+    public :
+        num_fract letter_mesh_size ;
         static const_int_32 max_rows = 5 ;
         static const_int_32 max_cols = 16 ;
     } ;
@@ -78,7 +83,15 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+public :
+    const logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_stateless < mediator > :: logic_main_menu_stateless_consts_type :: logic_main_menu_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( letter_mesh_size , 1 , 1 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >

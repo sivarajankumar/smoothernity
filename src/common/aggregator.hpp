@@ -236,6 +236,7 @@ private :
     scheduler _scheduler ;
 
     typename aggregator_types :: engine_render_stateless _engine_render_stateless ;
+    typename aggregator_types :: logic_main_menu_stateless _logic_main_menu_stateless ;
     typename aggregator_types :: logic_text_stateless _logic_text_stateless ;
 
     typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > _engine_rasterizer ;
@@ -301,6 +302,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_main_menu_letters_storage
         , _logic_main_menu_mesh_creation_director
         , _logic_main_menu_mesh_creator
+        , _logic_main_menu_stateless
         , _logic_main_menu_text_creator
         , _logic_sound
         , _logic_text
