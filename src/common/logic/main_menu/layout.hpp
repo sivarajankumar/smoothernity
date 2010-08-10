@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_layout
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -12,6 +13,26 @@ class shy_logic_main_menu_layout
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
+    class _logic_main_menu_layout_consts_type
+    {
+    public :
+        _logic_main_menu_layout_consts_type ( ) ;
+    public :
+        num_fract letter_size_fract_horizontal_spacing ;
+        num_fract letter_size_fract_vertical_spacing ;
+        num_fract letter_size_fract_horizontal_border ;
+        num_fract letter_size_fract_vertical_border ;
+    } ;
+
+    class _rect
+    {
+    public :
+        num_fract left ;
+        num_fract right ;
+        num_fract bottom ;
+        num_fract top ;
+    } ;
+
     class _logic_main_menu_layout_state_type
     {
     public :
@@ -20,6 +41,11 @@ class shy_logic_main_menu_layout
         num_whole requested_col ;
         vector_data position ;
         num_fract scale ;
+        num_fract unscaled_menu_width ;
+        num_fract unscaled_menu_height ;
+        num_whole max_cols ;
+        num_whole max_rows ;
+        num_whole current_cols ;
     } ;
     
     class _logic_main_menu_rows_state_type
@@ -63,19 +89,28 @@ private :
     void _obtain_cols_count ( ) ;
     void _obtain_aspect_ratio ( ) ;
     void _reply_layout ( ) ;
+    void _compute_unscaled_menu_size ( ) ;
+    void _compute_menu_scale ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > _logic_main_menu_stateless_consts ;
+    const _logic_main_menu_layout_consts_type _logic_main_menu_layout_consts ;
     
     _logic_main_menu_layout_state_type _logic_main_menu_layout_state ;
     _logic_main_menu_rows_state_type _logic_main_menu_rows_state ;
     _logic_main_menu_cols_state_type _logic_main_menu_cols_state ;
-    _engine_render_aspect_state_type _engine_render_aspect_state ;
-    
-    num_whole _max_cols ;
-    num_whole _max_rows ;
-    num_whole _current_cols ;
+    _engine_render_aspect_state_type _engine_render_aspect_state ;    
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_layout < mediator > :: _logic_main_menu_layout_consts_type :: _logic_main_menu_layout_consts_type ( )
+{
+    platform_math :: make_num_fract ( letter_size_fract_horizontal_spacing , 1 , 10 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_vertical_spacing , 2 , 10 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_horizontal_border , 1 , 1 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_vertical_border , 1 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_main_menu_layout < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -88,11 +123,12 @@ void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: i
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_stateless_consts ( _logic_main_menu_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
-    _max_cols = _platform_math_consts . get ( ) . whole_0 ;
-    _max_rows = _platform_math_consts . get ( ) . whole_0 ;
-    _current_cols = _platform_math_consts . get ( ) . whole_0 ;
+    _logic_main_menu_layout_state . max_cols = _platform_math_consts . get ( ) . whole_0 ;
+    _logic_main_menu_layout_state . max_rows = _platform_math_consts . get ( ) . whole_0 ;
+    _logic_main_menu_layout_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
@@ -146,15 +182,19 @@ void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: e
 template < typename mediator >
 void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_add_letter )
 {
-    platform_math :: inc_whole ( _current_cols ) ;
-    engine_math :: math_max_whole ( _max_cols , _max_cols , _current_cols ) ;
+    platform_math :: inc_whole ( _logic_main_menu_layout_state . current_cols ) ;
+    engine_math :: math_max_whole 
+        ( _logic_main_menu_layout_state . max_cols 
+        , _logic_main_menu_layout_state . max_cols 
+        , _logic_main_menu_layout_state . current_cols 
+        ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_next_row )
 {
-    platform_math :: inc_whole ( _max_rows ) ;
-    _current_cols = _platform_math_consts . get ( ) . whole_0 ;
+    platform_math :: inc_whole ( _logic_main_menu_layout_state . max_rows ) ;
+    _logic_main_menu_layout_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
@@ -209,4 +249,62 @@ void shy_logic_main_menu_layout < mediator > :: _obtain_aspect_ratio ( )
 template < typename mediator >
 void shy_logic_main_menu_layout < mediator > :: _reply_layout ( )
 {
+    _compute_unscaled_menu_size ( ) ;
+    _compute_menu_scale ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_layout < mediator > :: _compute_unscaled_menu_size ( )
+{
+    num_fract letters_width ;
+    num_fract letters_height ;
+    num_fract letters_in_row ;
+    num_fract letters_in_col ;
+    num_fract spacings_width ;
+    num_fract spacings_height ;
+    num_fract spacings_in_row ;
+    num_fract spacings_in_col ;
+    num_fract borders_width ;
+    num_fract borders_height ;
+    num_fract menu_width ;
+    num_fract menu_height ;
+    
+    platform_math :: make_fract_from_whole ( letters_in_row , _logic_main_menu_layout_state . max_cols ) ;
+    platform_math :: make_fract_from_whole ( letters_in_col , _logic_main_menu_layout_state . max_rows ) ;
+    
+    platform_math :: sub_fracts ( spacings_in_row , letters_in_row , _platform_math_consts . get ( ) . fract_1 ) ;
+    platform_math :: sub_fracts ( spacings_in_col , letters_in_col , _platform_math_consts . get ( ) . fract_1 ) ;
+    
+    letters_width = letters_in_row ;
+    letters_height = letters_in_col ;
+
+    platform_math :: mul_fracts ( spacings_width , _logic_main_menu_layout_consts . letter_size_fract_horizontal_spacing , spacings_in_row ) ;
+    platform_math :: mul_fracts ( spacings_height , _logic_main_menu_layout_consts . letter_size_fract_vertical_spacing , spacings_in_col ) ;
+    
+    platform_math :: mul_fracts ( borders_width , _logic_main_menu_layout_consts . letter_size_fract_horizontal_border , _platform_math_consts . get ( ) . fract_2 ) ;
+    platform_math :: mul_fracts ( borders_height , _logic_main_menu_layout_consts . letter_size_fract_vertical_border , _platform_math_consts . get ( ) . fract_2 ) ;
+    
+    platform_math :: add_fracts ( menu_width , letters_width , spacings_width ) ;
+    platform_math :: add_fracts ( menu_height , letters_height , spacings_height ) ;
+    
+    platform_math :: add_to_fract ( menu_width , borders_width ) ;
+    platform_math :: add_to_fract ( menu_height , borders_height ) ;
+
+    platform_math :: mul_fracts ( _logic_main_menu_layout_state . unscaled_menu_width , menu_width , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;
+    platform_math :: mul_fracts ( _logic_main_menu_layout_state . unscaled_menu_height , menu_height , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_layout < mediator > :: _compute_menu_scale ( )
+{
+    num_fract screen_ratio ;
+    num_fract menu_ratio ;
+    
+    platform_math :: div_fracts ( screen_ratio , _engine_render_aspect_state . width , _engine_render_aspect_state . height ) ;
+    platform_math :: div_fracts ( menu_ratio , _logic_main_menu_layout_state . unscaled_menu_width , _logic_main_menu_layout_state . unscaled_menu_height ) ;
+    
+    if ( platform_conditions :: fract_greater_than_fract ( menu_ratio , screen_ratio ) )
+        platform_math :: div_fracts ( _logic_main_menu_layout_state . scale , _engine_render_aspect_state . width , _logic_main_menu_layout_state . unscaled_menu_width ) ;
+    else
+        platform_math :: div_fracts ( _logic_main_menu_layout_state . scale , _engine_render_aspect_state . height , _logic_main_menu_layout_state . unscaled_menu_height ) ;
 }
