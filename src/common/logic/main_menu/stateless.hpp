@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_logic_main_menu_mesh_creator ;
+class shy_logic_main_menu_meshes_storage ;
 
 template < typename mediator >
 class shy_logic_main_menu_stateless
@@ -15,7 +15,7 @@ class shy_logic_main_menu_stateless
 public :
     class logic_main_menu_mesh_id
     {
-        friend class shy_logic_main_menu_mesh_creator < mediator > ;
+        friend class shy_logic_main_menu_meshes_storage < mediator > ;
     private :
         num_whole _mesh_id ;
     } ;
@@ -200,7 +200,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_mesh_create_next msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -237,7 +237,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_cols_reply msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_layout . get ( ) . receive ( msg ) ;
 }
 
@@ -256,7 +256,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letter_reply msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -274,7 +274,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_rows_reply msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_mesh_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_layout . get ( ) . receive ( msg ) ;
 }
 
