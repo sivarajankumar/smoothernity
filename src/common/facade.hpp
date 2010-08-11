@@ -34,7 +34,7 @@
 #include "logic/main_menu/letters_creation_director.hpp"
 #include "logic/main_menu/letters_storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
-#include "logic/main_menu/mesh_creation_director.hpp"
+#include "logic/main_menu/meshes_creation_director.hpp"
 #include "logic/main_menu/meshes_storage.hpp"
 #include "logic/main_menu/stateless.hpp"
 #include "logic/sound/sound.hpp"
@@ -87,7 +87,7 @@ private :
         , shy_logic_main_menu_layout
         , shy_logic_main_menu_letters_creation_director
         , shy_logic_main_menu_letters_storage
-        , shy_logic_main_menu_mesh_creation_director
+        , shy_logic_main_menu_meshes_creation_director
         , shy_logic_main_menu_meshes_storage
         , shy_logic_main_menu_stateless
         , shy_logic_sound
