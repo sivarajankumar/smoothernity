@@ -12,8 +12,10 @@ class shy_logic_main_menu
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
+    typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
+    typedef typename mediator :: platform :: platform_touch platform_touch ;
     
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
@@ -26,8 +28,10 @@ public :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
+    typename platform_pointer :: template pointer < platform_touch > _platform_touch ;
     num_whole _launch_permitted ;
-    num_whole _main_menu_finished ;
+    num_whole _created ;
 } ;
 
 template < typename mediator >
@@ -42,9 +46,11 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: init )
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+    _platform_mouse = platform_obj . get ( ) . mouse ;
+    _platform_touch = platform_obj . get ( ) . touch ;
     
     _launch_permitted = _platform_math_consts . get ( ) . whole_false ;
-    _main_menu_finished = _platform_math_consts . get ( ) . whole_false ;
+    _created = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -57,9 +63,18 @@ template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_render )
 {
     typename messages :: engine_render_clear_screen clear_screen_msg ;
-    clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
-    clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
-    clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;
+    if ( platform_conditions :: whole_is_true ( _created ) )
+    {
+        clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . b = _platform_math_consts . get ( ) . fract_0 ;
+    }
+    else
+    {
+        clear_screen_msg . r = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . g = _platform_math_consts . get ( ) . fract_0 ;
+        clear_screen_msg . b = _platform_math_consts . get ( ) . fract_1 ;
+    }
     _mediator . get ( ) . send ( clear_screen_msg ) ;
 }
 
@@ -68,10 +83,21 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 {
     if ( platform_conditions :: whole_is_true ( _launch_permitted ) )
     {
-        if ( platform_conditions :: whole_is_false ( _main_menu_finished ) )
+        _launch_permitted = _platform_math_consts . get ( ) . whole_false ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_text_create ( ) ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _created ) )
+    {
+        num_whole touch_occured ;
+        num_whole mouse_button ;
+        _platform_touch . get ( ) . occured ( touch_occured ) ;
+        _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
+        if ( platform_conditions :: whole_is_true ( touch_occured )
+          || platform_conditions :: whole_is_true ( mouse_button )
+           )
         {
-            _main_menu_finished = _platform_math_consts . get ( ) . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_text_create ( ) ) ;
+            _created = _platform_math_consts . get ( ) . whole_false ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_finished ( ) ) ;
         }
     }
 }
@@ -85,5 +111,5 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_meshes_creation_finished )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_finished ( ) ) ;
+    _created = _platform_math_consts . get ( ) . whole_true ;
 }
