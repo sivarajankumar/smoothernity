@@ -89,6 +89,7 @@ public :
     void receive ( typename messages :: logic_main_menu_cols_reply ) ;
     void receive ( typename messages :: logic_main_menu_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_letter_reply ) ;
+    void receive ( typename messages :: logic_main_menu_meshes_render ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_text_letter_big_tex_coords_reply ) ;
 private :
@@ -170,6 +171,23 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
     _current_col = _platform_math_consts . get ( ) . whole_0 ;
     _current_mesh_id = _platform_math_consts . get ( ) . whole_minus_1 ;
     _first_mesh = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_meshes_render )
+{
+    for ( num_whole i = _platform_math_consts . whole_0
+        ; platform_conditions :: whole_less_or_equal_to_whole ( i , _current_mesh_id )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        typename platform_pointer :: template pointer < engine_render_mesh_id > mesh ;
+        platform_static_array :: element_ptr ( mesh , _meshes , i ) ;
+        
+        typename messages :: engine_render_mesh_render render_msg ;
+        render_msg . mesh = mesh ;
+        _mediator . get ( ) . send ( render_msg ) ;
+    }
 }
 
 template < typename mediator >
