@@ -155,6 +155,7 @@ public :
     
     void delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id ) ;
     void delete_index_buffer ( render_index_buffer_id & arg_buffer_id ) ;
+    void delete_texture_id ( render_texture_id & arg_texture_id ) ;
     
     template < typename texels_array >
     void load_texture_subdata 
@@ -588,7 +589,7 @@ inline void shy_iphone_platform_render < platform_insider > :: mapped_vertex_buf
     vertex_data * mapped_vertices = ( vertex_data * ) data . _data ;
     int index_int = 0 ;
     platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    ptr . set ( mapped_vertices [ index_int ] ) ;
+    ptr = mapped_vertices [ index_int ] ;
 }
 
 template < typename platform_insider >
@@ -664,7 +665,7 @@ inline void shy_iphone_platform_render < platform_insider > :: mapped_index_buff
     index_data * mapped_indices = ( index_data * ) data . _data ;
     int index_int = 0 ;
     platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    ptr . set ( mapped_indices [ index_int ] ) ;
+    ptr = mapped_indices [ index_int ] ;
 }
 
 template < typename platform_insider >
@@ -772,11 +773,17 @@ inline void shy_iphone_platform_render < platform_insider > :: get_frame_loss ( 
 }
 
 template < typename platform_insider >
-inline void shy_iphone_platform_render < platform_insider > :: delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id )
+inline void shy_iphone_platform_render < platform_insider > :: delete_vertex_buffer ( render_vertex_buffer_id & )
 {
 }
 
 template < typename platform_insider >
-inline void shy_iphone_platform_render < platform_insider > :: delete_index_buffer ( render_index_buffer_id & arg_buffer_id )
+inline void shy_iphone_platform_render < platform_insider > :: delete_index_buffer ( render_index_buffer_id & )
 {
 }
+
+template < typename platform_insider >
+inline void shy_iphone_platform_render < platform_insider > :: delete_texture_id ( render_texture_id & )
+{
+}
+
