@@ -31,12 +31,12 @@
 #include "logic/land/land.hpp"
 #include "logic/land/stateless.hpp"
 #include "logic/main_menu/layout.hpp"
+#include "logic/main_menu/letters_creation_director.hpp"
 #include "logic/main_menu/letters_storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/mesh_creation_director.hpp"
 #include "logic/main_menu/meshes_storage.hpp"
 #include "logic/main_menu/stateless.hpp"
-#include "logic/main_menu/text_creator.hpp"
 #include "logic/sound/sound.hpp"
 #include "logic/sound/stateless.hpp"
 #include "logic/text/stateless.hpp"
@@ -85,11 +85,11 @@ private :
         , shy_logic_land_stateless
         , shy_logic_main_menu
         , shy_logic_main_menu_layout
+        , shy_logic_main_menu_letters_creation_director
         , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_mesh_creation_director
         , shy_logic_main_menu_meshes_storage
         , shy_logic_main_menu_stateless
-        , shy_logic_main_menu_text_creator
         , shy_logic_sound
         , shy_logic_sound_stateless
         , shy_logic_text

@@ -172,7 +172,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_text_create msg )
 {
-    _receivers . get ( ) . logic_main_menu_text_creator . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_creation_director . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

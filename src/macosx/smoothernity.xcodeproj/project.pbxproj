@@ -154,7 +154,6 @@
 		8876304C12068D0100CAD8EF /* letters_storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302312068D0100CAD8EF /* letters_storage.hpp */; };
 		8876304D12068D0100CAD8EF /* main_menu.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302412068D0100CAD8EF /* main_menu.hpp */; };
 		8876304E12068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302512068D0100CAD8EF /* stateless.hpp */; };
-		8876304F12068D0100CAD8EF /* text_creator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302612068D0100CAD8EF /* text_creator.hpp */; };
 		8876305012068D0100CAD8EF /* sound.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302812068D0100CAD8EF /* sound.hpp */; };
 		8876305112068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302912068D0100CAD8EF /* stateless.hpp */; };
 		8876305212068D0100CAD8EF /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876302B12068D0100CAD8EF /* stateless.hpp */; };
@@ -166,6 +165,7 @@
 		8876305812068D0100CAD8EF /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303312068D0100CAD8EF /* mediator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
 		88B4625B1212D83C00E4D490 /* meshes_storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B4625A1212D83C00E4D490 /* meshes_storage.hpp */; };
+		88B462671212D94400E4D490 /* letters_creation_director.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B462661212D94400E4D490 /* letters_creation_director.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -250,7 +250,6 @@
 		8876302312068D0100CAD8EF /* letters_storage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = letters_storage.hpp; sourceTree = "<group>"; };
 		8876302412068D0100CAD8EF /* main_menu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = main_menu.hpp; sourceTree = "<group>"; };
 		8876302512068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
-		8876302612068D0100CAD8EF /* text_creator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = text_creator.hpp; sourceTree = "<group>"; };
 		8876302812068D0100CAD8EF /* sound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sound.hpp; sourceTree = "<group>"; };
 		8876302912068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		8876302B12068D0100CAD8EF /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
@@ -262,6 +261,7 @@
 		8876303312068D0100CAD8EF /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
 		88B4625A1212D83C00E4D490 /* meshes_storage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_storage.hpp; sourceTree = "<group>"; };
+		88B462661212D94400E4D490 /* letters_creation_director.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = letters_creation_director.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -556,12 +556,12 @@
 			isa = PBXGroup;
 			children = (
 				8812D9B6120C516C0036FC3C /* layout.hpp */,
+				88B462661212D94400E4D490 /* letters_creation_director.hpp */,
 				8876302312068D0100CAD8EF /* letters_storage.hpp */,
 				8876302412068D0100CAD8EF /* main_menu.hpp */,
 				883AD2A9120A8DB0001AC722 /* mesh_creation_director.hpp */,
 				88B4625A1212D83C00E4D490 /* meshes_storage.hpp */,
 				8876302512068D0100CAD8EF /* stateless.hpp */,
-				8876302612068D0100CAD8EF /* text_creator.hpp */,
 			);
 			path = main_menu;
 			sourceTree = "<group>";
@@ -667,7 +667,6 @@
 				8876304C12068D0100CAD8EF /* letters_storage.hpp in Headers */,
 				8876304D12068D0100CAD8EF /* main_menu.hpp in Headers */,
 				8876304E12068D0100CAD8EF /* stateless.hpp in Headers */,
-				8876304F12068D0100CAD8EF /* text_creator.hpp in Headers */,
 				8876305012068D0100CAD8EF /* sound.hpp in Headers */,
 				8876305112068D0100CAD8EF /* stateless.hpp in Headers */,
 				8876305212068D0100CAD8EF /* stateless.hpp in Headers */,
@@ -680,6 +679,7 @@
 				883AD2AA120A8DB0001AC722 /* mesh_creation_director.hpp in Headers */,
 				8812D9B7120C516C0036FC3C /* layout.hpp in Headers */,
 				88B4625B1212D83C00E4D490 /* meshes_storage.hpp in Headers */,
+				88B462671212D94400E4D490 /* letters_creation_director.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_logic_main_menu_text_creator
+class shy_logic_main_menu_letters_creation_director
 {
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: logic_text_stateless :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;
@@ -27,13 +27,13 @@ private :
 } ;
 
 template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+void shy_logic_main_menu_letters_creation_director < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: receive ( typename messages :: logic_main_menu_text_create )
+void shy_logic_main_menu_letters_creation_director < mediator > :: receive ( typename messages :: logic_main_menu_text_create )
 {
     typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > logic_text_stateless_consts ;
     _mediator . get ( ) . logic_text_stateless_consts ( logic_text_stateless_consts ) ;
@@ -79,7 +79,7 @@ void shy_logic_main_menu_text_creator < mediator > :: receive ( typename message
 }
 
 template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: _add_letter ( logic_text_letter_id letter )
+void shy_logic_main_menu_letters_creation_director < mediator > :: _add_letter ( logic_text_letter_id letter )
 {
     typename messages :: logic_main_menu_add_letter msg ;
     msg . letter = letter ;
@@ -87,13 +87,13 @@ void shy_logic_main_menu_text_creator < mediator > :: _add_letter ( logic_text_l
 }
 
 template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: _next_row ( )
+void shy_logic_main_menu_letters_creation_director < mediator > :: _next_row ( )
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_next_row ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_text_creator < mediator > :: _text_create_finished ( )
+void shy_logic_main_menu_letters_creation_director < mediator > :: _text_create_finished ( )
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_text_create_finished ( ) ) ;
 }
