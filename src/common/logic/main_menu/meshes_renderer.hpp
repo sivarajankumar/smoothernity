@@ -37,7 +37,7 @@ class shy_logic_main_menu_meshes_renderer
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_render ) ;
+    void receive ( typename messages :: logic_main_menu_meshes_render_request ) ;
     void receive ( typename messages :: logic_main_menu_meshes_count_reply ) ;
     void receive ( typename messages :: logic_main_menu_mesh_id_reply ) ;
 private :
@@ -72,7 +72,7 @@ void shy_logic_main_menu_meshes_renderer < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_renderer < mediator > :: receive ( typename messages :: logic_main_menu_meshes_render )
+void shy_logic_main_menu_meshes_renderer < mediator > :: receive ( typename messages :: logic_main_menu_meshes_render_request )
 {
     _logic_main_menu_meshes_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_render ( ) ;
@@ -170,5 +170,5 @@ void shy_logic_main_menu_meshes_renderer < mediator > :: _move_to_next_mesh ( )
     if ( platform_conditions :: whole_less_than_whole ( _logic_main_menu_meshes_render_state . current_mesh_index , _logic_main_menu_meshes_count_state . meshes ) )
         _obtain_current_mesh_id ( ) ;
     else
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_render_finished ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_render_reply ( ) ) ;
 }

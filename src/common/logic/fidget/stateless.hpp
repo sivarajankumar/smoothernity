@@ -62,6 +62,7 @@ void shy_logic_fidget_stateless < mediator >
 :: send ( typename logic_fidget_messages :: logic_fidget_render_reply msg )
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
 }
 
