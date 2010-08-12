@@ -81,16 +81,16 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_meshes_render )
 {
-    for ( num_whole i = _platform_math_consts . whole_0
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _meshes_count )
         ; platform_math :: inc_whole ( i )
         )
     {
-        typename platform_pointer :: template pointer < engine_render_mesh_id > mesh ;
-        platform_static_array :: element_ptr ( mesh , _meshes , i ) ;
+        typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
+        platform_static_array :: element_ptr ( mesh_state , _meshes , i ) ;
         
         typename messages :: engine_render_mesh_render render_msg ;
-        render_msg . mesh = mesh ;
+        render_msg . mesh = mesh_state . get ( ) . mesh ;
         _mediator . get ( ) . send ( render_msg ) ;
     }
 }
