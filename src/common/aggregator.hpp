@@ -30,6 +30,7 @@ template
     , template < typename mediator > class _logic_main_menu_meshes_creator
     , template < typename mediator > class _logic_main_menu_meshes_renderer
     , template < typename mediator > class _logic_main_menu_meshes_storage
+    , template < typename mediator > class _logic_main_menu_renderer
     , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_sound_stateless
@@ -78,6 +79,7 @@ public :
         typedef _logic_main_menu_meshes_creator < mediator > logic_main_menu_meshes_creator ;
         typedef _logic_main_menu_meshes_renderer < mediator > logic_main_menu_meshes_renderer ;
         typedef _logic_main_menu_meshes_storage < mediator > logic_main_menu_meshes_storage ;
+        typedef _logic_main_menu_renderer < mediator > logic_main_menu_renderer ;
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_sound_stateless < mediator > logic_sound_stateless ;
@@ -123,6 +125,7 @@ template
     , template < typename _mediator > class _logic_main_menu_meshes_creator
     , template < typename _mediator > class _logic_main_menu_meshes_renderer
     , template < typename _mediator > class _logic_main_menu_meshes_storage
+    , template < typename _mediator > class _logic_main_menu_renderer
     , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_sound
     , template < typename _mediator > class _logic_sound_stateless
@@ -156,6 +159,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_meshes_creator > scheduled_logic_main_menu_meshes_creator ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_meshes_renderer > scheduled_logic_main_menu_meshes_renderer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_meshes_storage > scheduled_logic_main_menu_meshes_storage ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_renderer > scheduled_logic_main_menu_renderer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_sound > scheduled_logic_sound ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_text > scheduled_logic_text ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_title > scheduled_logic_title ;
@@ -193,6 +197,7 @@ public :
         , scheduled_logic_main_menu_meshes_creator :: template scheduled_module
         , scheduled_logic_main_menu_meshes_renderer :: template scheduled_module
         , scheduled_logic_main_menu_meshes_storage :: template scheduled_module
+        , scheduled_logic_main_menu_renderer :: template scheduled_module
         , _logic_main_menu_stateless
         , scheduled_logic_sound :: template scheduled_module
         , _logic_sound_stateless
@@ -267,6 +272,7 @@ private :
     typename aggregator_types :: scheduled_logic_main_menu_meshes_creator :: template scheduled_module < mediator_type > _logic_main_menu_meshes_creator ;
     typename aggregator_types :: scheduled_logic_main_menu_meshes_renderer :: template scheduled_module < mediator_type > _logic_main_menu_meshes_renderer ;
     typename aggregator_types :: scheduled_logic_main_menu_meshes_storage :: template scheduled_module < mediator_type > _logic_main_menu_meshes_storage ;
+    typename aggregator_types :: scheduled_logic_main_menu_renderer :: template scheduled_module < mediator_type > _logic_main_menu_renderer ;
     typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > _logic_sound ;
     typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > _logic_text ;
     typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > _logic_title ;
@@ -295,6 +301,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_creator , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_renderer , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_storage , _scheduler ) ;
+    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_renderer , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_sound , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_text , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_title , _scheduler ) ;
@@ -319,6 +326,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , _logic_main_menu_meshes_creator
         , _logic_main_menu_meshes_renderer
         , _logic_main_menu_meshes_storage
+        , _logic_main_menu_renderer
         , _logic_main_menu_stateless
         , _logic_sound
         , _logic_text
