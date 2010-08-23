@@ -37,6 +37,7 @@
 #include "logic/main_menu/meshes_creation_director.hpp"
 #include "logic/main_menu/meshes_creator.hpp"
 #include "logic/main_menu/meshes_renderer.hpp"
+#include "logic/main_menu/meshes_placement.hpp"
 #include "logic/main_menu/meshes_storage.hpp"
 #include "logic/main_menu/renderer.hpp"
 #include "logic/main_menu/stateless.hpp"
@@ -92,6 +93,7 @@ private :
         , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_meshes_creation_director
         , shy_logic_main_menu_meshes_creator
+        , shy_logic_main_menu_meshes_placement
         , shy_logic_main_menu_meshes_renderer
         , shy_logic_main_menu_meshes_storage
         , shy_logic_main_menu_renderer

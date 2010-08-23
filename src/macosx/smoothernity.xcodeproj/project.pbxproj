@@ -169,6 +169,7 @@
 		88B4625B1212D83C00E4D490 /* meshes_storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B4625A1212D83C00E4D490 /* meshes_storage.hpp */; };
 		88B462671212D94400E4D490 /* letters_creation_director.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B462661212D94400E4D490 /* letters_creation_director.hpp */; };
 		88B462771212DA8400E4D490 /* meshes_creation_director.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B462761212DA8400E4D490 /* meshes_creation_director.hpp */; };
+		88BC81DF1222C06F0085F6DF /* meshes_placement.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88BC81DE1222C06F0085F6DF /* meshes_placement.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -268,6 +269,7 @@
 		88B4625A1212D83C00E4D490 /* meshes_storage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_storage.hpp; sourceTree = "<group>"; };
 		88B462661212D94400E4D490 /* letters_creation_director.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = letters_creation_director.hpp; sourceTree = "<group>"; };
 		88B462761212DA8400E4D490 /* meshes_creation_director.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_creation_director.hpp; sourceTree = "<group>"; };
+		88BC81DE1222C06F0085F6DF /* meshes_placement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_placement.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -567,6 +569,7 @@
 				8876302412068D0100CAD8EF /* main_menu.hpp */,
 				88B462761212DA8400E4D490 /* meshes_creation_director.hpp */,
 				8847D3CF12140B2F0071BA80 /* meshes_creator.hpp */,
+				88BC81DE1222C06F0085F6DF /* meshes_placement.hpp */,
 				8847D425121416A70071BA80 /* meshes_renderer.hpp */,
 				88B4625A1212D83C00E4D490 /* meshes_storage.hpp */,
 				8847D464121436800071BA80 /* renderer.hpp */,
@@ -692,6 +695,7 @@
 				8847D3D012140B2F0071BA80 /* meshes_creator.hpp in Headers */,
 				8847D426121416A70071BA80 /* meshes_renderer.hpp in Headers */,
 				8847D465121436800071BA80 /* renderer.hpp in Headers */,
+				88BC81DF1222C06F0085F6DF /* meshes_placement.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
