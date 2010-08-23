@@ -92,6 +92,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_meshes_creation_finished )
 {
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_place ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_render_permit ( ) ) ;
     _created = _platform_math_consts . get ( ) . whole_true ;
 }
