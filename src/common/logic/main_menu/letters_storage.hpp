@@ -65,7 +65,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
-    _rows_state . rows_count = _platform_math_consts . get ( ) . whole_minus_1 ;
+    _rows_state . rows_count = _platform_math_consts . get ( ) . whole_0 ;
     _next_row ( ) ;
 }
 
@@ -74,7 +74,9 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     typename platform_pointer :: template pointer < _col_state_type > col_state ;
-    platform_static_array :: element_ptr ( row_state , _rows_state . rows , _rows_state . rows_count ) ;
+    num_whole last_row ;
+    platform_math :: sub_wholes ( last_row , _rows_state . rows_count , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_static_array :: element_ptr ( row_state , _rows_state . rows , last_row ) ;
     platform_static_array :: element_ptr ( col_state , row_state . get ( ) . cols , row_state . get ( ) . cols_count ) ;
     col_state . get ( ) . letter = msg . letter ;
     platform_math :: inc_whole ( row_state . get ( ) . cols_count ) ;
@@ -125,7 +127,7 @@ template < typename mediator >
 void shy_logic_main_menu_letters_storage < mediator > :: _next_row ( )
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
-    platform_math :: inc_whole ( _rows_state . rows_count ) ;
     platform_static_array :: element_ptr ( row_state , _rows_state . rows , _rows_state . rows_count ) ;
     row_state . get ( ) . cols_count = _platform_math_consts . get ( ) . whole_0 ;
+    platform_math :: inc_whole ( _rows_state . rows_count ) ;
 }
