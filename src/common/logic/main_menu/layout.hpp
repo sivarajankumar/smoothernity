@@ -121,8 +121,8 @@ private :
 template < typename mediator >
 shy_logic_main_menu_layout < mediator > :: _logic_main_menu_layout_consts_type :: _logic_main_menu_layout_consts_type ( )
 {
-    platform_math :: make_num_fract ( letter_size_fract_horizontal_spacing , 1 , 10 ) ;
-    platform_math :: make_num_fract ( letter_size_fract_vertical_spacing , 5 , 10 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_horizontal_spacing , 0 , 10 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_vertical_spacing , 10 , 10 ) ;
     platform_math :: make_num_fract ( letter_size_fract_horizontal_border , 1 , 1 ) ;
     platform_math :: make_num_fract ( letter_size_fract_vertical_border , 1 , 1 ) ;
     platform_math :: make_num_fract ( menu_position_z , - 3 , 1 ) ;

@@ -16,7 +16,7 @@ class shy_logic_main_menu_meshes_renderer
         num_whole requested ;
         num_whole current_mesh_index ;
     } ;
-       
+
     class _logic_main_menu_meshes_count_state_type
     {
     public :
@@ -33,7 +33,7 @@ class shy_logic_main_menu_meshes_renderer
         num_whole replied ;
         engine_render_mesh_id mesh ;
     } ;
-    
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
