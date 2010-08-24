@@ -143,7 +143,7 @@ void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: i
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
     _logic_main_menu_layout_state . max_cols = _platform_math_consts . get ( ) . whole_0 ;
-    _logic_main_menu_layout_state . max_rows = _platform_math_consts . get ( ) . whole_0 ;
+    _logic_main_menu_layout_state . max_rows = _platform_math_consts . get ( ) . whole_1 ;
     _logic_main_menu_layout_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
@@ -352,7 +352,9 @@ void shy_logic_main_menu_layout < mediator > :: _compute_menu_scale ( )
         platform_math :: div_fracts ( menu_scale , _engine_render_aspect_state . width , _logic_main_menu_layout_state . unscaled_menu_width ) ;
     else
         platform_math :: div_fracts ( menu_scale , _engine_render_aspect_state . height , _logic_main_menu_layout_state . unscaled_menu_height ) ;
-        
+    
+    platform_math :: mul_fract_by ( menu_scale , _platform_math_consts . get ( ) . fract_2 ) ;
+    
     _logic_main_menu_layout_state . menu_scale = menu_scale ;
 }
 
@@ -379,6 +381,7 @@ void shy_logic_main_menu_layout < mediator > :: _compute_row_rect ( )
 {
     num_fract letters_width ;
     num_fract spacings_width ;
+    num_fract border_height ;
     num_fract letters_in_row ;
     num_fract spacings_in_row ;
     num_fract row_width ;
@@ -391,6 +394,7 @@ void shy_logic_main_menu_layout < mediator > :: _compute_row_rect ( )
     platform_math :: sub_fracts ( spacings_in_row , letters_in_row , _platform_math_consts . get ( ) . fract_1 ) ;
 
     letters_width = letters_in_row ;
+    border_height = _logic_main_menu_layout_consts . letter_size_fract_vertical_border ;
     platform_math :: mul_fracts ( spacings_width , spacings_in_row , _logic_main_menu_layout_consts . letter_size_fract_horizontal_spacing ) ;
     
     platform_math :: add_fracts ( row_width , letters_width , spacings_width ) ;
@@ -400,10 +404,12 @@ void shy_logic_main_menu_layout < mediator > :: _compute_row_rect ( )
     
     platform_math :: mul_fract_by ( row_width , letter_size ) ;
     platform_math :: mul_fract_by ( row_height , letter_size ) ;
+    platform_math :: mul_fract_by ( border_height , letter_size ) ;
     
     platform_math :: make_fract_from_whole ( row_number , _logic_main_menu_layout_state . requested_row ) ;
 
     platform_math :: mul_fracts ( row_rect . top , row_number , row_height ) ;
+    platform_math :: add_to_fract ( row_rect . top , border_height ) ;
     platform_math :: neg_fract ( row_rect . top ) ;
     platform_math :: add_to_fract ( row_rect . top , _logic_main_menu_layout_state . menu_rect . top ) ;
     platform_math :: sub_fracts ( row_rect . bottom , row_rect . top , row_height ) ;
