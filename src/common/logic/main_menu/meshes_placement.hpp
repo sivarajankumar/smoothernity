@@ -5,9 +5,12 @@ class shy_logic_main_menu_meshes_placement
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
     
@@ -72,6 +75,8 @@ private :
     void _obtain_current_mesh_id ( ) ;
     void _obtain_layout_position ( ) ;
     void _layout_position_received ( ) ;
+    void _place_current_mesh ( ) ;
+    void _move_to_next_mesh ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -240,4 +245,37 @@ void shy_logic_main_menu_meshes_placement < mediator > :: _obtain_layout_positio
 template < typename mediator >
 void shy_logic_main_menu_meshes_placement < mediator > :: _layout_position_received ( )
 {
+    _place_current_mesh ( ) ;
+    _move_to_next_mesh ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_placement < mediator > :: _place_current_mesh ( )
+{
+    matrix_data transform ;
+    vector_data position ;
+    num_fract scale ;
+    num_fract zero ;
+    
+    position = _logic_main_menu_layout_position_state . position ;
+    scale = _logic_main_menu_layout_position_state . scale ;
+    zero = _platform_math_consts . get ( ) . fract_0 ;
+    
+    platform_matrix :: set_origin ( transform , position ) ;
+    platform_matrix :: set_axis_x ( transform , scale , zero , zero ) ;
+    platform_matrix :: set_axis_y ( transform , zero , scale , zero ) ;
+    platform_matrix :: set_axis_z ( transform , zero , zero , scale ) ;
+    
+    typename messages :: engine_render_mesh_set_transform msg ;
+    msg . transform = transform ;
+    msg . mesh = _logic_main_menu_mesh_id_state . mesh ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_placement < mediator > :: _move_to_next_mesh ( )
+{
+    platform_math :: inc_whole ( _logic_main_menu_meshes_place_state . current_mesh_index ) ;
+    if ( platform_conditions :: whole_less_than_whole ( _logic_main_menu_meshes_place_state . current_mesh_index , _logic_main_menu_meshes_count_state . meshes ) )
+        _obtain_current_mesh_row_col ( ) ;
 }
