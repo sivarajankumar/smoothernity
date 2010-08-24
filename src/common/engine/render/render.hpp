@@ -35,7 +35,7 @@ class shy_engine_render
         num_whole texture_size_pow2_base ;
         num_whole max_vertices ;
         num_whole max_indices ;
-        static const_int_32 max_meshes = 30 ;
+        static const_int_32 max_meshes = 50 ;
         static const_int_32 max_textures = 5 ;
     } ;
     
