@@ -14,7 +14,11 @@
         _platform_insider = new shy_macosx_platform_insider ( ) ;
         _platform_insider -> render_insider . set_texture_loader ( _texture_loader ) ;
         _platform_insider -> sound_insider . set_sound_loader ( _sound_loader ) ;
-		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( _platform_insider -> platform ) ;
+        
+        shy_macosx_platform_insider :: platform_pointer :: pointer < const shy_platform < shy_macosx_platform_insider > > platform_obj ;
+        shy_macosx_platform_insider :: platform_pointer :: bind ( platform_obj , _platform_insider -> platform ) ;
+        
+		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
 		_facade -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
         NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_platform < shy_macosx_platform_insider > > ) ) ;

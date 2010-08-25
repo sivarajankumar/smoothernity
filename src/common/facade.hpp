@@ -56,7 +56,7 @@ template < typename platform >
 class shy_facade
 {
 public :
-    shy_facade ( const platform & ) ;
+    shy_facade ( typename platform :: platform_pointer :: template pointer < const platform > ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
@@ -113,7 +113,7 @@ private :
 } ;
 
 template < typename platform >
-shy_facade < platform > :: shy_facade ( const platform & arg_platform )
+shy_facade < platform > :: shy_facade ( typename platform :: platform_pointer :: template pointer < const platform > arg_platform )
 : _aggregator ( arg_platform )
 {
 }

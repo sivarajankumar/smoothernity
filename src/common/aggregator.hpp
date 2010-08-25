@@ -249,6 +249,36 @@ class shy_aggregator
     typedef typename aggregator_types :: platform :: platform_pointer platform_pointer ;
     typedef typename aggregator_types :: platform :: platform_scheduler platform_scheduler ;
     typedef typename aggregator_types :: platform :: platform_scheduler :: scheduler scheduler ;
+    
+    typedef typename aggregator_types :: engine_render_stateless engine_render_stateless ;
+    typedef typename aggregator_types :: logic_main_menu_stateless logic_main_menu_stateless ;
+    typedef typename aggregator_types :: logic_text_stateless logic_text_stateless ;
+    
+    typedef typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > engine_rasterizer ;
+    typedef typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > engine_render ;
+    typedef typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > logic_application ;
+    typedef typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > logic_camera ;
+    typedef typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > logic_core ;
+    typedef typename aggregator_types :: scheduled_logic_entities :: template scheduled_module < mediator_type > logic_entities ;
+    typedef typename aggregator_types :: scheduled_logic_fidget :: template scheduled_module < mediator_type > logic_fidget ;
+    typedef typename aggregator_types :: scheduled_logic_game :: template scheduled_module < mediator_type > logic_game ;
+    typedef typename aggregator_types :: scheduled_logic_image :: template scheduled_module < mediator_type > logic_image ;
+    typedef typename aggregator_types :: scheduled_logic_land :: template scheduled_module < mediator_type > logic_land ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu :: template scheduled_module < mediator_type > logic_main_menu ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_layout :: template scheduled_module < mediator_type > logic_main_menu_layout ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_letters_creation_director :: template scheduled_module < mediator_type > logic_main_menu_letters_creation_director ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_letters_storage :: template scheduled_module < mediator_type > logic_main_menu_letters_storage ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_creation_director :: template scheduled_module < mediator_type > logic_main_menu_meshes_creation_director ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_creator :: template scheduled_module < mediator_type > logic_main_menu_meshes_creator ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_destroyer :: template scheduled_module < mediator_type > logic_main_menu_meshes_destroyer ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_placement :: template scheduled_module < mediator_type > logic_main_menu_meshes_placement ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_renderer :: template scheduled_module < mediator_type > logic_main_menu_meshes_renderer ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_storage :: template scheduled_module < mediator_type > logic_main_menu_meshes_storage ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_renderer :: template scheduled_module < mediator_type > logic_main_menu_renderer ;
+    typedef typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > logic_sound ;
+    typedef typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > logic_text ;
+    typedef typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > logic_title ;
+    typedef typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > logic_touch ;
 public :
     shy_aggregator ( typename platform_pointer :: template pointer < const platform > ) ;
     void init ( ) ;
@@ -260,41 +290,98 @@ private :
     mediator_type _mediator ;
     scheduler _scheduler ;
 
-    typename aggregator_types :: engine_render_stateless _engine_render_stateless ;
-    typename aggregator_types :: logic_main_menu_stateless _logic_main_menu_stateless ;
-    typename aggregator_types :: logic_text_stateless _logic_text_stateless ;
-
-    typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > _engine_rasterizer ;
-    typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > _engine_render ;
-    typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > _logic_application ;
-    typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > _logic_camera ;
-    typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > _logic_core ;
-    typename aggregator_types :: scheduled_logic_entities :: template scheduled_module < mediator_type > _logic_entities ;
-    typename aggregator_types :: scheduled_logic_fidget :: template scheduled_module < mediator_type > _logic_fidget ;
-    typename aggregator_types :: scheduled_logic_game :: template scheduled_module < mediator_type > _logic_game ;
-    typename aggregator_types :: scheduled_logic_image :: template scheduled_module < mediator_type > _logic_image ;
-    typename aggregator_types :: scheduled_logic_land :: template scheduled_module < mediator_type > _logic_land ;
-    typename aggregator_types :: scheduled_logic_main_menu :: template scheduled_module < mediator_type > _logic_main_menu ;
-    typename aggregator_types :: scheduled_logic_main_menu_layout :: template scheduled_module < mediator_type > _logic_main_menu_layout ;
-    typename aggregator_types :: scheduled_logic_main_menu_letters_creation_director :: template scheduled_module < mediator_type > _logic_main_menu_letters_creation_director ;
-    typename aggregator_types :: scheduled_logic_main_menu_letters_storage :: template scheduled_module < mediator_type > _logic_main_menu_letters_storage ;
-    typename aggregator_types :: scheduled_logic_main_menu_meshes_creation_director :: template scheduled_module < mediator_type > _logic_main_menu_meshes_creation_director ;
-    typename aggregator_types :: scheduled_logic_main_menu_meshes_creator :: template scheduled_module < mediator_type > _logic_main_menu_meshes_creator ;
-    typename aggregator_types :: scheduled_logic_main_menu_meshes_destroyer :: template scheduled_module < mediator_type > _logic_main_menu_meshes_destroyer ;
-    typename aggregator_types :: scheduled_logic_main_menu_meshes_placement :: template scheduled_module < mediator_type > _logic_main_menu_meshes_placement ;
-    typename aggregator_types :: scheduled_logic_main_menu_meshes_renderer :: template scheduled_module < mediator_type > _logic_main_menu_meshes_renderer ;
-    typename aggregator_types :: scheduled_logic_main_menu_meshes_storage :: template scheduled_module < mediator_type > _logic_main_menu_meshes_storage ;
-    typename aggregator_types :: scheduled_logic_main_menu_renderer :: template scheduled_module < mediator_type > _logic_main_menu_renderer ;
-    typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > _logic_sound ;
-    typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > _logic_text ;
-    typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > _logic_title ;
-    typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > _logic_touch ;
+    engine_rasterizer _engine_rasterizer ;
+    engine_render _engine_render ;
+    engine_render_stateless _engine_render_stateless ;
+    logic_application _logic_application ;
+    logic_camera _logic_camera ;
+    logic_core _logic_core ;
+    logic_entities _logic_entities ;
+    logic_fidget _logic_fidget ;
+    logic_game _logic_game ;
+    logic_image _logic_image ;
+    logic_land _logic_land ;
+    logic_main_menu _logic_main_menu ;
+    logic_main_menu_layout _logic_main_menu_layout ;
+    logic_main_menu_letters_creation_director _logic_main_menu_letters_creation_director ;
+    logic_main_menu_letters_storage _logic_main_menu_letters_storage ;
+    logic_main_menu_meshes_creation_director _logic_main_menu_meshes_creation_director ;
+    logic_main_menu_meshes_creator _logic_main_menu_meshes_creator ;
+    logic_main_menu_meshes_destroyer _logic_main_menu_meshes_destroyer ;
+    logic_main_menu_meshes_placement _logic_main_menu_meshes_placement ;
+    logic_main_menu_meshes_renderer _logic_main_menu_meshes_renderer ;
+    logic_main_menu_meshes_storage _logic_main_menu_meshes_storage ;
+    logic_main_menu_renderer _logic_main_menu_renderer ;
+    logic_main_menu_stateless _logic_main_menu_stateless ;
+    logic_sound _logic_sound ;
+    logic_text _logic_text ;
+    logic_text_stateless _logic_text_stateless ;
+    logic_title _logic_title ;
+    logic_touch _logic_touch ;
 } ;
 
 template < typename aggregator_types >
 shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointer :: template pointer < const platform > arg_platform )
 : _mediator ( arg_platform )
 {
+    typename platform_pointer :: template pointer < engine_rasterizer > engine_rasterizer_ptr ;
+    typename platform_pointer :: template pointer < engine_render > engine_render_ptr ;
+    typename platform_pointer :: template pointer < engine_render_stateless > engine_render_stateless_ptr ;
+    typename platform_pointer :: template pointer < logic_application > logic_application_ptr ;
+    typename platform_pointer :: template pointer < logic_camera > logic_camera_ptr ;
+    typename platform_pointer :: template pointer < logic_core > logic_core_ptr ;
+    typename platform_pointer :: template pointer < logic_entities > logic_entities_ptr ;
+    typename platform_pointer :: template pointer < logic_fidget > logic_fidget_ptr ;
+    typename platform_pointer :: template pointer < logic_game > logic_game_ptr ;
+    typename platform_pointer :: template pointer < logic_image > logic_image_ptr ;
+    typename platform_pointer :: template pointer < logic_land > logic_land_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu > logic_main_menu_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_layout > logic_main_menu_layout_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director > logic_main_menu_letters_creation_director_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_storage > logic_main_menu_letters_storage_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_meshes_creation_director > logic_main_menu_meshes_creation_director_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_meshes_creator > logic_main_menu_meshes_creator_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_meshes_destroyer > logic_main_menu_meshes_destroyer_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_meshes_placement > logic_main_menu_meshes_placement_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_meshes_renderer > logic_main_menu_meshes_renderer_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_meshes_storage > logic_main_menu_meshes_storage_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_renderer > logic_main_menu_renderer_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_stateless > logic_main_menu_stateless_ptr ;
+    typename platform_pointer :: template pointer < logic_sound > logic_sound_ptr ;
+    typename platform_pointer :: template pointer < logic_text > logic_text_ptr ;
+    typename platform_pointer :: template pointer < logic_text_stateless > logic_text_stateless_ptr ;
+    typename platform_pointer :: template pointer < logic_title > logic_title_ptr ;
+    typename platform_pointer :: template pointer < logic_touch > logic_touch_ptr ;
+    
+    platform_pointer :: bind ( engine_rasterizer_ptr , _engine_rasterizer ) ;
+    platform_pointer :: bind ( engine_render_ptr , _engine_render );
+    platform_pointer :: bind ( engine_render_stateless_ptr , _engine_render_stateless );
+    platform_pointer :: bind ( logic_application_ptr , _logic_application ) ;
+    platform_pointer :: bind ( logic_camera_ptr , _logic_camera ) ;
+    platform_pointer :: bind ( logic_core_ptr , _logic_core ) ;
+    platform_pointer :: bind ( logic_entities_ptr , _logic_entities ) ;
+    platform_pointer :: bind ( logic_fidget_ptr , _logic_fidget ) ;
+    platform_pointer :: bind ( logic_game_ptr , _logic_game ) ;
+    platform_pointer :: bind ( logic_image_ptr , _logic_image ) ;
+    platform_pointer :: bind ( logic_land_ptr , _logic_land ) ;
+    platform_pointer :: bind ( logic_main_menu_ptr , _logic_main_menu ) ;
+    platform_pointer :: bind ( logic_main_menu_layout_ptr , _logic_main_menu_layout ) ;
+    platform_pointer :: bind ( logic_main_menu_letters_creation_director_ptr , _logic_main_menu_letters_creation_director ) ;
+    platform_pointer :: bind ( logic_main_menu_letters_storage_ptr , _logic_main_menu_letters_storage ) ;
+    platform_pointer :: bind ( logic_main_menu_meshes_creation_director_ptr , _logic_main_menu_meshes_creation_director ) ;
+    platform_pointer :: bind ( logic_main_menu_meshes_creator_ptr , _logic_main_menu_meshes_creator ) ;
+    platform_pointer :: bind ( logic_main_menu_meshes_destroyer_ptr , _logic_main_menu_meshes_destroyer ) ;
+    platform_pointer :: bind ( logic_main_menu_meshes_placement_ptr , _logic_main_menu_meshes_placement ) ;
+    platform_pointer :: bind ( logic_main_menu_meshes_renderer_ptr , _logic_main_menu_meshes_renderer ) ;
+    platform_pointer :: bind ( logic_main_menu_meshes_storage_ptr , _logic_main_menu_meshes_storage ) ;
+    platform_pointer :: bind ( logic_main_menu_renderer_ptr , _logic_main_menu_renderer ) ;
+    platform_pointer :: bind ( logic_main_menu_stateless_ptr , _logic_main_menu_stateless ) ;
+    platform_pointer :: bind ( logic_sound_ptr , _logic_sound ) ;
+    platform_pointer :: bind ( logic_text_ptr , _logic_text ) ;
+    platform_pointer :: bind ( logic_text_stateless_ptr , _logic_text_stateless ) ;
+    platform_pointer :: bind ( logic_title_ptr , _logic_title ) ;
+    platform_pointer :: bind ( logic_touch_ptr , _logic_touch ) ;
+
     platform_scheduler :: register_module_in_scheduler ( _engine_rasterizer , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _engine_render , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_application , _scheduler ) ;
@@ -321,34 +408,34 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( _logic_title , _scheduler ) ;
     platform_scheduler :: register_module_in_scheduler ( _logic_touch , _scheduler ) ;
     _mediator . register_modules
-        ( _engine_rasterizer
-        , _engine_render
-        , _engine_render_stateless
-        , _logic_application
-        , _logic_camera
-        , _logic_core
-        , _logic_entities
-        , _logic_fidget
-        , _logic_game
-        , _logic_image
-        , _logic_land
-        , _logic_main_menu
-        , _logic_main_menu_layout
-        , _logic_main_menu_letters_creation_director
-        , _logic_main_menu_letters_storage
-        , _logic_main_menu_meshes_creation_director
-        , _logic_main_menu_meshes_creator
-        , _logic_main_menu_meshes_destroyer
-        , _logic_main_menu_meshes_placement
-        , _logic_main_menu_meshes_renderer
-        , _logic_main_menu_meshes_storage
-        , _logic_main_menu_renderer
-        , _logic_main_menu_stateless
-        , _logic_sound
-        , _logic_text
-        , _logic_text_stateless
-        , _logic_title
-        , _logic_touch
+        ( engine_rasterizer_ptr
+        , engine_render_ptr
+        , engine_render_stateless_ptr
+        , logic_application_ptr
+        , logic_camera_ptr
+        , logic_core_ptr
+        , logic_entities_ptr
+        , logic_fidget_ptr
+        , logic_game_ptr
+        , logic_image_ptr
+        , logic_land_ptr
+        , logic_main_menu_ptr
+        , logic_main_menu_layout_ptr
+        , logic_main_menu_letters_creation_director_ptr
+        , logic_main_menu_letters_storage_ptr
+        , logic_main_menu_meshes_creation_director_ptr
+        , logic_main_menu_meshes_creator_ptr
+        , logic_main_menu_meshes_destroyer_ptr
+        , logic_main_menu_meshes_placement_ptr
+        , logic_main_menu_meshes_renderer_ptr
+        , logic_main_menu_meshes_storage_ptr
+        , logic_main_menu_renderer_ptr
+        , logic_main_menu_stateless_ptr
+        , logic_sound_ptr
+        , logic_text_ptr
+        , logic_text_stateless_ptr
+        , logic_title_ptr
+        , logic_touch_ptr
         ) ;
 }
 

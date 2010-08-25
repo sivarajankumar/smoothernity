@@ -301,33 +301,38 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_title = arg_logic_title ;
     _receivers . logic_touch = arg_logic_touch ;
 
-    _sender . set_receivers ( _receivers ) ;
+    typename platform_pointer :: template pointer < const receivers > receivers_ptr ;
+    platform_pointer :: bind ( receivers_ptr , _receivers ) ;
+    _sender . set_receivers ( receivers_ptr ) ;
 
-    _receivers . engine_rasterizer . get ( ) . set_mediator ( * this ) ;
-    _receivers . engine_render . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_application . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_camera . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_core . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_entities . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_fidget . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_game . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_image . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_land . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_layout . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_letters_creation_director . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_letters_storage . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_meshes_creation_director . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_meshes_creator . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_meshes_destroyer . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_meshes_placement . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_meshes_renderer . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_meshes_storage . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_main_menu_renderer . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_sound . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_text . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_title . get ( ) . set_mediator ( * this ) ;
-    _receivers . logic_touch . get ( ) . set_mediator ( * this ) ;
+    typename platform_pointer :: template pointer < shy_mediator < mediator_types > > mediator_ptr ;
+    platform_pointer :: bind ( mediator_ptr , * this ) ;
+
+    _receivers . engine_rasterizer . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . engine_render . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_application . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_camera . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_core . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_entities . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_fidget . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_game . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_image . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_land . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_layout . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_letters_creation_director . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_letters_storage . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_meshes_creation_director . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_meshes_creator . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_meshes_destroyer . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_meshes_placement . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_meshes_renderer . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_meshes_storage . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_renderer . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_sound . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_text . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_title . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_touch . get ( ) . set_mediator ( mediator_ptr ) ;
 }
 
 template < typename mediator_types >
@@ -339,19 +344,19 @@ void shy_mediator < mediator_types > :: platform_obj ( typename platform_pointer
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & result )
 {
-    result = _engine_render_stateless . get ( ) . engine_render_stateless_consts ;
+    platform_pointer :: bind ( result , _engine_render_stateless . get ( ) . engine_render_stateless_consts ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: logic_main_menu_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > & result )
 {
-    result = _logic_main_menu_stateless . get ( ) . logic_main_menu_stateless_consts ;
+    platform_pointer :: bind ( result , _logic_main_menu_stateless . get ( ) . logic_main_menu_stateless_consts ) ;
 }
 
 template < typename mediator_types >
 void shy_mediator < mediator_types > :: logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & result )
 {
-    result = _logic_text_stateless . get ( ) . logic_text_stateless_consts ;
+    platform_pointer :: bind ( result , _logic_text_stateless . get ( ) . logic_text_stateless_consts ) ;
 }
 
 template < typename mediator_types >

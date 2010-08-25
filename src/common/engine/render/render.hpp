@@ -450,7 +450,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
         reply_msg . mesh . _mesh_id = vacant_mesh_id . get ( ) ;
         platform_math :: inc_whole ( _next_vacant_mesh_id_index ) ;
         _mediator . get ( ) . send ( reply_msg ) ;    
-    }    
+    }
 }
 
 template < typename mediator >
@@ -547,7 +547,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
         platform_math :: dec_whole ( _next_vacant_mesh_id_index ) ;
         typename platform_pointer :: template pointer < num_whole > vacant_mesh_id ;
         platform_static_array :: element_ptr ( vacant_mesh_id , _vacant_mesh_ids , _next_vacant_mesh_id_index ) ;
-        vacant_mesh_id = msg . mesh . _mesh_id ;
+        vacant_mesh_id . get ( ) = msg . mesh . _mesh_id ;
     }
 }
 

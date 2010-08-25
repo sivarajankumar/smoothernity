@@ -5,14 +5,18 @@ public :
     template < typename data_type >
     class pointer
     {
+        friend class shy_platform_pointer ;
+        typedef data_type _data_type ;
     public :
         pointer ( ) ;
-        pointer ( data_type & ) ;
     public :
         data_type & get ( ) const ;
     private :
         data_type * _data_ptr ;
     } ;
+    
+    template < typename pointer_type >
+    static void bind ( pointer_type & ptr , typename pointer_type :: _data_type & data ) ;
 } ;
 
 template < typename platform_insider >
@@ -24,14 +28,14 @@ shy_platform_pointer < platform_insider > :: pointer < data_type > :: pointer ( 
 
 template < typename platform_insider >
 template < typename data_type >
-shy_platform_pointer < platform_insider > :: pointer < data_type > :: pointer ( data_type & arg_data )
-: _data_ptr ( & arg_data )
-{
-}
-
-template < typename platform_insider >
-template < typename data_type >
 data_type & shy_platform_pointer < platform_insider > :: pointer < data_type > :: get ( ) const
 {
     return * _data_ptr ;
+}
+
+template < typename platform_insider >
+template < typename pointer_type >
+void shy_platform_pointer < platform_insider > :: bind ( pointer_type & ptr , typename pointer_type :: _data_type & data )
+{
+    ptr . _data_ptr = & data ;
 }

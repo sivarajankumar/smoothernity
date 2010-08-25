@@ -7,6 +7,7 @@ class shy_platform_static_array
     typedef typename platform_insider :: platform_math :: const_int_32 const_int_32 ;
     typedef typename platform_insider :: platform_math :: num_whole num_whole ;
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
+    typedef typename platform_insider :: platform_pointer platform_pointer ;
 public :
     template < typename data_type , const_int_32 size >
     class static_array
@@ -29,5 +30,5 @@ inline void shy_platform_static_array < platform_insider > :: element_ptr ( poin
 {
     int index_int = 0 ;
     platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    element_ptr = array . _elements [ index_int ] ;
+    platform_pointer :: bind ( element_ptr , array . _elements [ index_int ] ) ;
 }

@@ -59,5 +59,8 @@ template < typename mediator >
 void shy_logic_main_menu_meshes_renderer < mediator > :: receive ( typename messages :: logic_main_menu_meshes_iterate_finished )
 {
     if ( platform_conditions :: whole_is_true ( _iteration_in_progress ) )
+    {
         _iteration_in_progress = _platform_math_consts . get ( ) . whole_false ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_render_reply ( ) ) ;
+    }
 }

@@ -586,7 +586,7 @@ inline void shy_macosx_platform_render < platform_insider > :: mapped_vertex_buf
     vertex_data * mapped_vertices = ( vertex_data * ) data . _data ;
     int index_int = 0 ;
     platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    ptr = mapped_vertices [ index_int ] ;
+    platform_pointer :: bind ( ptr , mapped_vertices [ index_int ] ) ;
 }
 
 template < typename platform_insider >
@@ -662,7 +662,7 @@ inline void shy_macosx_platform_render < platform_insider > :: mapped_index_buff
     index_data * mapped_indices = ( index_data * ) data . _data ;
     int index_int = 0 ;
     platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    ptr = mapped_indices [ index_int ] ;
+    platform_pointer :: bind ( ptr , mapped_indices [ index_int ] ) ;
 }
 
 template < typename platform_insider >
