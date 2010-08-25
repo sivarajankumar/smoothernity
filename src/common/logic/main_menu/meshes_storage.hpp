@@ -5,6 +5,7 @@ class shy_logic_main_menu_meshes_storage
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
@@ -37,6 +38,7 @@ public :
     void receive ( typename messages :: logic_main_menu_mesh_id_request ) ;
     void receive ( typename messages :: logic_main_menu_meshes_count_request ) ;
     void receive ( typename messages :: logic_main_menu_mesh_row_col_request ) ;
+    void receive ( typename messages :: logic_main_menu_meshes_iterate_start ) ;
 private :
 	shy_logic_main_menu_meshes_storage < mediator > & operator= ( const shy_logic_main_menu_meshes_storage < mediator > & ) ;
 private :
@@ -116,4 +118,24 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
     typename messages :: logic_main_menu_meshes_count_reply reply_msg ;
     reply_msg . meshes = _meshes_count ;
     _mediator . get ( ) . send ( reply_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_meshes_iterate_start )
+{
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , _meshes_count )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
+        platform_static_array :: element_ptr ( mesh_state , _meshes , i ) ;
+        
+        typename messages :: logic_main_menu_meshes_iteration iteration_msg ;
+        iteration_msg . row = mesh_state . get ( ) . row ;
+        iteration_msg . col = mesh_state . get ( ) . col ;
+        iteration_msg . mesh = mesh_state . get ( ) . mesh ;
+        _mediator . get ( ) . send ( iteration_msg ) ;
+    }
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_iterate_finished ( ) ) ;
 }
