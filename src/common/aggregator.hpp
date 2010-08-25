@@ -287,6 +287,8 @@ public :
     void update ( ) ;
     void video_mode_changed ( ) ;
 private :
+    void _run_scheduler ( ) ;
+private :
     mediator_type _mediator ;
     scheduler _scheduler ;
 
@@ -352,6 +354,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_text_stateless > logic_text_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_title > logic_title_ptr ;
     typename platform_pointer :: template pointer < logic_touch > logic_touch_ptr ;
+    typename platform_pointer :: template pointer < scheduler > scheduler_ptr ;
     
     platform_pointer :: bind ( engine_rasterizer_ptr , _engine_rasterizer ) ;
     platform_pointer :: bind ( engine_render_ptr , _engine_render );
@@ -381,32 +384,33 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_text_stateless_ptr , _logic_text_stateless ) ;
     platform_pointer :: bind ( logic_title_ptr , _logic_title ) ;
     platform_pointer :: bind ( logic_touch_ptr , _logic_touch ) ;
+    platform_pointer :: bind ( scheduler_ptr , _scheduler ) ;
 
-    platform_scheduler :: register_module_in_scheduler ( _engine_rasterizer , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _engine_render , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_application , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_camera , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_core , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_entities , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_fidget , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_game , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_image , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_land , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_layout , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_letters_creation_director , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_letters_storage , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_creation_director , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_creator , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_destroyer , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_placement , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_renderer , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_meshes_storage , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_main_menu_renderer , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_sound , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_text , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_title , _scheduler ) ;
-    platform_scheduler :: register_module_in_scheduler ( _logic_touch , _scheduler ) ;
+    platform_scheduler :: register_module_in_scheduler ( engine_rasterizer_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( engine_render_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_application_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_camera_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_core_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_entities_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_fidget_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_game_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_image_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_land_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_layout_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_creation_director_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_storage_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_creation_director_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_creator_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_destroyer_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_placement_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_renderer_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_storage_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_renderer_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_sound_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_text_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_title_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_touch_ptr , scheduler_ptr ) ;
     _mediator . register_modules
         ( engine_rasterizer_ptr
         , engine_render_ptr
@@ -440,36 +444,44 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
 }
 
 template < typename aggregator_types >
+void shy_aggregator < aggregator_types > :: _run_scheduler ( )
+{
+    typename platform_pointer :: template pointer < scheduler > scheduler_ptr ;
+    platform_pointer :: bind ( scheduler_ptr , _scheduler ) ;
+    platform_scheduler :: run ( scheduler_ptr ) ;
+}
+
+template < typename aggregator_types >
 void shy_aggregator < aggregator_types > :: init ( )
 {
     _mediator . send ( typename messages :: init ( ) ) ;
-    platform_scheduler :: run ( _scheduler ) ;
+    _run_scheduler ( ) ;
 }
 
 template < typename aggregator_types >
 void shy_aggregator < aggregator_types > :: done ( )
 {
     _mediator . send ( typename messages :: done ( ) ) ;
-    platform_scheduler :: run ( _scheduler ) ;
+    _run_scheduler ( ) ;
 }
 
 template < typename aggregator_types >
 void shy_aggregator < aggregator_types > :: render ( )
 {
     _mediator . send ( typename messages :: render ( ) ) ;
-    platform_scheduler :: run ( _scheduler ) ;
+    _run_scheduler ( ) ;
 }
 
 template < typename aggregator_types >
 void shy_aggregator < aggregator_types > :: update ( )
 {
     _mediator . send ( typename messages :: update ( ) ) ;
-    platform_scheduler :: run ( _scheduler ) ;
+    _run_scheduler ( ) ;
 }
 
 template < typename aggregator_types >
 void shy_aggregator < aggregator_types > :: video_mode_changed ( )
 {
     _mediator . send ( typename messages :: video_mode_changed ( ) ) ;
-    platform_scheduler :: run ( _scheduler ) ;
+    _run_scheduler ( ) ;
 }

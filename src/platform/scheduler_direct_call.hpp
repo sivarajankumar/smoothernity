@@ -32,9 +32,12 @@ public :
     
 public :
     template < typename module_type >
-    static void register_module_in_scheduler ( module_type & , scheduler & ) ;
+    static void register_module_in_scheduler 
+        ( typename platform_pointer :: template pointer < module_type > 
+        , typename platform_pointer :: template pointer < scheduler > 
+        ) ;
     
-    static void run ( scheduler & ) ;
+    static void run ( typename platform_pointer :: template pointer < scheduler > ) ;
 } ;
 
 template < typename platform_insider >
@@ -62,11 +65,14 @@ void shy_platform_scheduler_direct_call < platform_insider >
 
 template < typename platform_insider >
 template < typename module_type >
-void shy_platform_scheduler_direct_call < platform_insider > :: register_module_in_scheduler ( module_type & module , scheduler & arg_scheduler )
+void shy_platform_scheduler_direct_call < platform_insider > :: register_module_in_scheduler
+    ( typename platform_pointer :: template pointer < module_type > 
+    , typename platform_pointer :: template pointer < scheduler > 
+    )
 {
 }
 
 template < typename platform_insider >
-void shy_platform_scheduler_direct_call < platform_insider > :: run ( scheduler & arg_scheduler )
+void shy_platform_scheduler_direct_call < platform_insider > :: run ( typename platform_pointer :: template pointer < scheduler > )
 {
 }

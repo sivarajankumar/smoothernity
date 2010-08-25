@@ -108,9 +108,12 @@ public :
     
 public :
     template < typename module_type >
-    static void register_module_in_scheduler ( module_type & , scheduler & ) ;
+    static void register_module_in_scheduler 
+        ( typename platform_pointer :: template pointer < module_type > 
+        , typename platform_pointer :: template pointer < scheduler > 
+        ) ;
     
-    static void run ( scheduler & ) ;
+    static void run ( typename platform_pointer :: template pointer < scheduler > ) ;
 } ;
 
 template < typename platform_insider >
@@ -258,34 +261,37 @@ void shy_platform_scheduler_random < platform_insider >
 
 template < typename platform_insider >
 template < typename module_type >
-void shy_platform_scheduler_random < platform_insider > :: register_module_in_scheduler ( module_type & module , scheduler & arg_scheduler )
+void shy_platform_scheduler_random < platform_insider > :: register_module_in_scheduler 
+    ( typename platform_pointer :: template pointer < module_type > arg_module 
+    , typename platform_pointer :: template pointer < scheduler > arg_scheduler 
+    )
 {
-    if ( arg_scheduler . _count < _max_scheduled_modules )
-        arg_scheduler . _modules [ arg_scheduler . _count ++ ] = ( _abstract_scheduled_module * ) & module ;
+    if ( arg_scheduler . get ( ) . _count < _max_scheduled_modules )
+        arg_scheduler . get ( ) . _modules [ arg_scheduler . get ( ) . _count ++ ] = ( _abstract_scheduled_module * ) & arg_module . get ( ) ;
 }
 
 template < typename platform_insider >
-void shy_platform_scheduler_random < platform_insider > :: run ( scheduler & arg_scheduler )
+void shy_platform_scheduler_random < platform_insider > :: run ( typename platform_pointer :: template pointer < scheduler > arg_scheduler )
 {
     bool keep_running = false ;
     int calls_performed = 0 ;
     do
     {
-        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
+        for ( int i = 0 ; i < arg_scheduler . get ( ) . _count ; i ++ )
         {
-            int first_index = rand ( ) % arg_scheduler . _count ;
-            int second_index = rand ( ) % arg_scheduler . _count ;
-            _abstract_scheduled_module * first_module = arg_scheduler . _modules [ first_index ] ;
-            arg_scheduler . _modules [ first_index ] = arg_scheduler . _modules [ second_index ] ;
-            arg_scheduler . _modules [ second_index ] = first_module ;
+            int first_index = rand ( ) % arg_scheduler . get ( ) . _count ;
+            int second_index = rand ( ) % arg_scheduler . get ( ) . _count ;
+            _abstract_scheduled_module * first_module = arg_scheduler . get ( ) . _modules [ first_index ] ;
+            arg_scheduler . get ( ) . _modules [ first_index ] = arg_scheduler . get ( ) . _modules [ second_index ] ;
+            arg_scheduler . get ( ) . _modules [ second_index ] = first_module ;
         }
-        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
-            arg_scheduler . _modules [ i ] -> run ( ) ;
+        for ( int i = 0 ; i < arg_scheduler . get ( ) . _count ; i ++ )
+            arg_scheduler . get ( ) . _modules [ i ] -> run ( ) ;
         keep_running = false ;
-        for ( int i = 0 ; i < arg_scheduler . _count ; i ++ )
+        for ( int i = 0 ; i < arg_scheduler . get ( ) . _count ; i ++ )
         {
             bool have_messages_to_run = false ;
-            arg_scheduler . _modules [ i ] -> have_messages_to_run ( have_messages_to_run ) ;
+            arg_scheduler . get ( ) . _modules [ i ] -> have_messages_to_run ( have_messages_to_run ) ;
             keep_running |= have_messages_to_run ;
         }
         calls_performed ++ ;
