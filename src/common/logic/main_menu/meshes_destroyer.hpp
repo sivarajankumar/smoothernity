@@ -51,7 +51,7 @@ void shy_logic_main_menu_meshes_destroyer < mediator > :: receive ( typename mes
     {
         typename messages :: engine_render_mesh_delete delete_msg ;
         delete_msg . mesh = msg . mesh ;
-//        _mediator . get ( ) . send ( delete_msg ) ;
+        _mediator . get ( ) . send ( delete_msg ) ;
     }
 }
 

@@ -454,6 +454,10 @@ void shy_logic_main_menu_meshes_creator < mediator > :: _fill_mesh_content ( )
     _mesh_set_vertex_color               ( mesh , index_right_bottom , color_r , color_g , color_b , color_a ) ;
     _mesh_set_vertex_tex_coord           ( mesh , index_right_bottom , u_right , v_bottom ) ;
     _mesh_set_vertex_position            ( mesh , index_right_bottom , x_right , y_bottom , z ) ;
+    
+    typename messages :: engine_render_mesh_finalize finalize_msg ;
+    finalize_msg . mesh = mesh ;
+    _mediator . get ( ) . send ( finalize_msg ) ;
 }
 
 template < typename mediator >

@@ -441,7 +441,7 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
         mesh . get ( ) . triangle_strip_indices_count = msg . triangle_strip_indices ;
         mesh . get ( ) . triangle_fan_indices_count = msg . triangle_fan_indices ;
         platform_matrix :: identity ( mesh . get ( ) . transform ) ;
-            
+          
         _platform_render . get ( ) . map_vertex_buffer ( mesh . get ( ) . vertex_buffer_mapped_data , mesh . get ( ) . vertex_buffer_id ) ;
         _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
         _platform_render . get ( ) . map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
@@ -556,25 +556,28 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 {
     typename platform_pointer :: template pointer < _mesh_data > mesh ;
     platform_static_array :: element_ptr ( mesh , _meshes_datas , msg . mesh . _mesh_id ) ;
-    _platform_render . get ( ) . matrix_push ( ) ;
-    _platform_render . get ( ) . matrix_mult ( mesh . get ( ) . transform ) ;
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
+    if ( platform_conditions :: whole_is_true ( mesh . get ( ) . finalized ) )
     {
-        _platform_render . get ( ) . draw_triangle_strip 
-            ( mesh . get ( ) . vertex_buffer_id 
-            , mesh . get ( ) . triangle_strip_index_buffer_id 
-            , mesh . get ( ) . triangle_strip_indices_count
-            ) ;
+        _platform_render . get ( ) . matrix_push ( ) ;
+        _platform_render . get ( ) . matrix_mult ( mesh . get ( ) . transform ) ;
+        if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
+        {
+            _platform_render . get ( ) . draw_triangle_strip 
+                ( mesh . get ( ) . vertex_buffer_id 
+                , mesh . get ( ) . triangle_strip_index_buffer_id 
+                , mesh . get ( ) . triangle_strip_indices_count
+                ) ;
+        }
+        if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
+        {
+            _platform_render . get ( ) . draw_triangle_fan 
+                ( mesh . get ( ) . vertex_buffer_id 
+                , mesh . get ( ) . triangle_fan_index_buffer_id 
+                , mesh . get ( ) . triangle_fan_indices_count
+                ) ;
+        }
+        _platform_render . get ( ) . matrix_pop ( ) ;
     }
-    if ( platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
-    {
-        _platform_render . get ( ) . draw_triangle_fan 
-            ( mesh . get ( ) . vertex_buffer_id 
-            , mesh . get ( ) . triangle_fan_index_buffer_id 
-            , mesh . get ( ) . triangle_fan_indices_count
-            ) ;
-    }
-    _platform_render . get ( ) . matrix_pop ( ) ;
 }
 
 template < typename mediator >
