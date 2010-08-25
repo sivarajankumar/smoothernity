@@ -2,8 +2,6 @@
 #include "../common/facade.hpp"
 #include "win_platform.hpp"
 
-#pragma warning ( disable : 4503 )
-
 static shy_win_platform_insider * g_platform = 0 ;
 static shy_facade < shy_platform < shy_win_platform_insider > > * g_facade = 0 ;
 

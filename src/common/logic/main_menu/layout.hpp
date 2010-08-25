@@ -83,6 +83,7 @@ class shy_logic_main_menu_layout
     } ;
     
 public :
+    shy_logic_main_menu_layout ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_layout_position_request ) ;
@@ -92,6 +93,7 @@ public :
     void receive ( typename messages :: logic_main_menu_next_row ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
+    shy_logic_main_menu_layout < mediator > & operator= ( const shy_logic_main_menu_layout < mediator > & ) ;
     void _proceed_with_layout ( ) ;
     void _obtain_rows_count ( ) ;
     void _obtain_cols_count ( ) ;
@@ -117,6 +119,18 @@ private :
     _logic_main_menu_cols_state_type _logic_main_menu_cols_state ;
     _engine_render_aspect_state_type _engine_render_aspect_state ;    
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_layout < mediator > :: shy_logic_main_menu_layout ( )
+{
+}
+
+template < typename mediator >
+shy_logic_main_menu_layout < mediator > &
+shy_logic_main_menu_layout < mediator > :: operator= ( const shy_logic_main_menu_layout < mediator > & )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_main_menu_layout < mediator > :: _logic_main_menu_layout_consts_type :: _logic_main_menu_layout_consts_type ( )

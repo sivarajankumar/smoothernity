@@ -94,9 +94,26 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+
+public :
+    shy_logic_main_menu_stateless ( ) ;
+private :
+    shy_logic_main_menu_stateless < mediator > & operator= ( const shy_logic_main_menu_stateless < mediator > & ) ;
 public :
     const logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_stateless < mediator > :: shy_logic_main_menu_stateless ( )
+{
+}
+
+template < typename mediator >
+shy_logic_main_menu_stateless < mediator > &
+shy_logic_main_menu_stateless < mediator > :: operator= ( const shy_logic_main_menu_stateless < mediator > & )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_main_menu_stateless < mediator > :: logic_main_menu_stateless_consts_type :: logic_main_menu_stateless_consts_type ( )
