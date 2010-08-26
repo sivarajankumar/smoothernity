@@ -84,7 +84,6 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
     {
         _launch_permitted = _platform_math_consts . get ( ) . whole_false ;
         _launched = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_render_permit ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _created ) 
       && platform_conditions :: whole_is_true ( _launched )
@@ -123,4 +122,5 @@ template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_meshes_creation_finished )
 {
     _created = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_render_permit ( ) ) ;
 }
