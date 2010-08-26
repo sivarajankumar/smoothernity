@@ -712,6 +712,7 @@ void shy_logic_title < mediator > :: _bake_next_letter ( )
         _title_created = _platform_math_consts . get ( ) . whole_true ;
         _prepare_to_appear ( ) ;
         _animate_lifecycle ( ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_title_created ( ) ) ;
     }
 }
 

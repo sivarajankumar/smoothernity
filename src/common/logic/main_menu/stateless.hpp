@@ -27,6 +27,7 @@ public :
         class logic_main_menu_add_letter { public : logic_text_letter_id letter ; } ;
         class logic_main_menu_cols_reply { public : num_whole row ; num_whole cols ; } ;
         class logic_main_menu_cols_request { public : num_whole row ; } ;
+        class logic_main_menu_creation_permit { } ;
         class logic_main_menu_finished { } ;
         class logic_main_menu_launch_permit { } ;
         class logic_main_menu_layout_position_reply { public : num_whole row ; num_whole col ; vector_data position ; num_fract scale ; } ;
@@ -69,6 +70,7 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_add_letter ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_cols_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_cols_request ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_creation_permit ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_finished ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_layout_position_reply ) ;
@@ -424,6 +426,15 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_cols_request msg ) 
 {
     _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_creation_permit msg ) 
+{
+    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
