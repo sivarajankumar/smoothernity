@@ -86,6 +86,7 @@ class shy_logic_main_menu_meshes_placement
     } ;
     
 public :
+    shy_logic_main_menu_meshes_placement ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
@@ -96,6 +97,7 @@ public :
     void receive ( typename messages :: logic_main_menu_mesh_id_reply ) ;
     void receive ( typename messages :: logic_main_menu_layout_position_reply ) ;
 private :
+    shy_logic_main_menu_meshes_placement < mediator > & operator= ( const shy_logic_main_menu_meshes_placement < mediator > & ) ;
     void _proceed_with_placement ( ) ;
     void _obtain_meshes_count ( ) ;
     void _obtain_first_mesh_row_col ( ) ;
@@ -121,6 +123,18 @@ private :
     _logic_main_menu_mesh_id_state_type _logic_main_menu_mesh_id_state ;
     _logic_main_menu_layout_position_state_type _logic_main_menu_layout_position_state ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_meshes_placement < mediator > :: shy_logic_main_menu_meshes_placement ( )
+{
+}
+
+template < typename mediator >
+shy_logic_main_menu_meshes_placement < mediator > &
+shy_logic_main_menu_meshes_placement < mediator > :: operator= ( const shy_logic_main_menu_meshes_placement < mediator > & )
+{
+    return * this ;
+}
 
 template < typename mediator >
 shy_logic_main_menu_meshes_placement < mediator > :: _logic_main_menu_meshes_placement_consts_type :: _logic_main_menu_meshes_placement_consts_type ( )

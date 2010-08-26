@@ -8,7 +8,9 @@ static shy_facade < shy_platform < shy_win_platform_insider > > * g_facade = 0 ;
 void smoothernity_init ( )
 {
     g_platform = new shy_win_platform_insider ( ) ;
-    g_facade = new shy_facade < shy_platform < shy_win_platform_insider > > ( g_platform -> platform ) ;
+    shy_win_platform_insider :: platform_pointer :: pointer < const shy_platform < shy_win_platform_insider > > platform_ptr ;
+    shy_win_platform_insider :: platform_pointer :: bind ( platform_ptr , g_platform -> platform ) ;
+    g_facade = new shy_facade < shy_platform < shy_win_platform_insider > > ( platform_ptr ) ;
     g_facade -> init ( ) ;
 }
 
