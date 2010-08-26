@@ -23,6 +23,7 @@ class shy_logic_main_menu_meshes_placement
     public :
         num_fract vertical_shift_period_in_seconds ;
         num_fract vertical_shift_phase_per_col ;
+        num_fract vertical_shift_phase_per_row ;
         num_fract vertical_shift_amplitude ;
         num_fract horizontal_shift_period_in_seconds ;
         num_fract horizontal_shift_phase_per_row ;
@@ -126,6 +127,7 @@ shy_logic_main_menu_meshes_placement < mediator > :: _logic_main_menu_meshes_pla
 {
     platform_math :: make_num_fract ( vertical_shift_period_in_seconds , 2 , 1 ) ;
     platform_math :: make_num_fract ( vertical_shift_phase_per_col , 1 , 10 ) ;
+    platform_math :: make_num_fract ( vertical_shift_phase_per_row , 1 , 10 ) ;
     platform_math :: make_num_fract ( vertical_shift_amplitude , 1 , 3 ) ;
     platform_math :: make_num_fract ( horizontal_shift_period_in_seconds , 4 , 1 ) ;
     platform_math :: make_num_fract ( horizontal_shift_phase_per_row , 1 , 5 ) ;
@@ -366,8 +368,32 @@ void shy_logic_main_menu_meshes_placement < mediator > :: _compute_vertical_posi
 {
     vector_data vertical_position_delta ;
     num_fract zero ;
+    num_fract col ;
+    num_fract row ;
+    num_fract phase_shift_col ;
+    num_fract phase_shift_row ;
+    num_fract phase ;
+    num_fract delta ;
+    
     zero = _platform_math_consts . get ( ) . fract_0 ;
-    platform_vector :: xyz ( vertical_position_delta , zero , zero , zero ) ;
+    platform_math :: make_fract_from_whole ( col , _logic_main_menu_mesh_row_col_state . col ) ;
+    platform_math :: make_fract_from_whole ( row , _logic_main_menu_mesh_row_col_state . row ) ;
+    
+    platform_math :: mul_fracts ( phase_shift_col , col , _logic_main_menu_meshes_placement_consts . vertical_shift_phase_per_col ) ;
+    platform_math :: mul_fracts ( phase_shift_row , row , _logic_main_menu_meshes_placement_consts . vertical_shift_phase_per_row ) ;
+    
+    platform_math :: div_fracts ( phase , _logic_main_menu_update_state . time , _logic_main_menu_meshes_placement_consts . vertical_shift_period_in_seconds ) ;
+    platform_math :: add_to_fract ( phase , phase_shift_col ) ;
+    platform_math :: add_to_fract ( phase , phase_shift_row ) ;
+    platform_math :: mul_fract_by ( phase , _platform_math_consts . get ( ) . fract_2pi ) ;
+    
+    platform_math :: sin ( delta , phase ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_meshes_placement_consts . vertical_shift_amplitude ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_layout_position_state . scale ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;
+    
+    platform_vector :: xyz ( vertical_position_delta , zero , delta , zero ) ;
+    
     _logic_main_menu_meshes_place_state . vertical_position_delta = vertical_position_delta ;
 }
 
