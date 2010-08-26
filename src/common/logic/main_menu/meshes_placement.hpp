@@ -125,13 +125,13 @@ private :
 template < typename mediator >
 shy_logic_main_menu_meshes_placement < mediator > :: _logic_main_menu_meshes_placement_consts_type :: _logic_main_menu_meshes_placement_consts_type ( )
 {
-    platform_math :: make_num_fract ( vertical_shift_period_in_seconds , 2 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_shift_phase_per_col , 1 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_shift_phase_per_row , 1 , 10 ) ;
+    platform_math :: make_num_fract ( vertical_shift_period_in_seconds , 1 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_shift_phase_per_col , 1 , 3 ) ;
+    platform_math :: make_num_fract ( vertical_shift_phase_per_row , 1 , 5 ) ;
     platform_math :: make_num_fract ( vertical_shift_amplitude , 1 , 30 ) ;
-    platform_math :: make_num_fract ( horizontal_shift_period_in_seconds , 4 , 1 ) ;
+    platform_math :: make_num_fract ( horizontal_shift_period_in_seconds , 2 , 1 ) ;
     platform_math :: make_num_fract ( horizontal_shift_phase_per_row , 1 , 2 ) ;
-    platform_math :: make_num_fract ( horizontal_shift_amplitude , 1 , 10 ) ;
+    platform_math :: make_num_fract ( horizontal_shift_amplitude , 1 , 20 ) ;
 }
 
 template < typename mediator >
