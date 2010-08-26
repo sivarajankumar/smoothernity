@@ -98,7 +98,9 @@
 
 - ( void ) _init_game
 {
-    _facade = new shy_facade < shy_platform < shy_iphone_platform_insider > > ( _platform_insider -> platform ) ;
+    shy_iphone_platform_insider :: platform_pointer :: pointer < const shy_platform < shy_iphone_platform_insider > > platform_ptr ;
+    shy_iphone_platform_insider :: platform_pointer :: bind ( platform_ptr , _platform_insider -> platform ) ;
+    _facade = new shy_facade < shy_platform < shy_iphone_platform_insider > > ( platform_ptr ) ;
     _facade -> init ( ) ;
 }
 
