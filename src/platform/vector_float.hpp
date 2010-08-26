@@ -23,6 +23,7 @@ public :
     static void dot_product ( num_fract & , vector_data , vector_data ) ;
     static void cross_product ( vector_data & , vector_data , vector_data ) ;
     static void add ( vector_data & , vector_data , vector_data ) ;
+    static void add_to ( vector_data & , vector_data ) ;
     static void sub ( vector_data & , vector_data , vector_data ) ;
     static void mul ( vector_data & , vector_data , num_fract ) ;
     static void mul_by ( vector_data & , num_fract ) ;
@@ -71,6 +72,14 @@ inline void shy_platform_vector_float < platform_insider > :: add ( vector_data 
     result . _x = v1 . _x + v2 . _x ;
     result . _y = v1 . _y + v2 . _y ;
     result . _z = v1 . _z + v2 . _z ;
+}
+
+template < typename platform_insider >
+inline void shy_platform_vector_float < platform_insider > :: add_to ( vector_data & result , vector_data v )
+{
+    result . _x += v . _x ;
+    result . _y += v . _y ;
+    result . _z += v . _z ;
 }
 
 template < typename platform_insider >

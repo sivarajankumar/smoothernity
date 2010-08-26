@@ -12,13 +12,24 @@ class shy_logic_main_menu_meshes_placement
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
+    
+    class _logic_main_menu_update_state_type
+    {
+    public :
+        num_whole launch_permitted ;
+        num_fract time ;
+    } ;
     
     class _logic_main_menu_meshes_place_state_type
     {
     public :
         num_whole requested ;
         num_whole current_mesh_index ;
+        vector_data position ;
+        vector_data vertical_position_delta ;
+        vector_data horizontal_position_delta ;
     } ;
     
     class _logic_main_menu_meshes_count_state_type
@@ -62,6 +73,8 @@ class shy_logic_main_menu_meshes_placement
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_main_menu_launch_permit ) ;
+    void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_meshes_place ) ;
     void receive ( typename messages :: logic_main_menu_meshes_count_reply ) ;
     void receive ( typename messages :: logic_main_menu_mesh_row_col_reply ) ;
@@ -75,12 +88,16 @@ private :
     void _obtain_current_mesh_id ( ) ;
     void _obtain_layout_position ( ) ;
     void _layout_position_received ( ) ;
+    void _compute_horizontal_position_delta ( ) ;
+    void _compute_vertical_position_delta ( ) ;
+    void _compute_position ( ) ;
     void _place_current_mesh ( ) ;
     void _move_to_next_mesh ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    
+
+    _logic_main_menu_update_state_type _logic_main_menu_update_state ;
     _logic_main_menu_meshes_place_state_type _logic_main_menu_meshes_place_state ;
     _logic_main_menu_meshes_count_state_type _logic_main_menu_meshes_count_state ;
     _logic_main_menu_mesh_row_col_state_type _logic_main_menu_mesh_row_col_state ;
@@ -100,6 +117,24 @@ void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename mes
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_launch_permit )
+{
+    _logic_main_menu_update_state . launch_permitted = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_update )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . launch_permitted ) )
+    {
+        num_fract time_step ;
+        platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
+        platform_math :: add_to_fract ( _logic_main_menu_update_state . time , time_step ) ;
+    }
 }
 
 template < typename mediator >
@@ -245,8 +280,49 @@ void shy_logic_main_menu_meshes_placement < mediator > :: _obtain_layout_positio
 template < typename mediator >
 void shy_logic_main_menu_meshes_placement < mediator > :: _layout_position_received ( )
 {
+    _compute_horizontal_position_delta ( ) ;
+    _compute_vertical_position_delta ( ) ;
+    _compute_position ( ) ;
     _place_current_mesh ( ) ;
     _move_to_next_mesh ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_placement < mediator > :: _compute_position ( )
+{
+    vector_data vertical_position_delta ;
+    vector_data horizontal_position_delta ;
+    vector_data layout_position ;
+    vector_data position ;
+    
+    vertical_position_delta = _logic_main_menu_meshes_place_state . vertical_position_delta ;
+    horizontal_position_delta = _logic_main_menu_meshes_place_state . horizontal_position_delta ;
+    layout_position = _logic_main_menu_layout_position_state . position ;
+    
+    platform_vector :: add ( position , vertical_position_delta , horizontal_position_delta ) ;
+    platform_vector :: add_to ( position , layout_position ) ;
+    
+    _logic_main_menu_meshes_place_state . position = position ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_placement < mediator > :: _compute_horizontal_position_delta ( )
+{
+    vector_data horizontal_position_delta ;
+    num_fract zero ;
+    zero = _platform_math_consts . get ( ) . fract_0 ;
+    platform_vector :: xyz ( horizontal_position_delta , zero , zero , zero ) ;
+    _logic_main_menu_meshes_place_state . horizontal_position_delta = horizontal_position_delta ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_meshes_placement < mediator > :: _compute_vertical_position_delta ( )
+{
+    vector_data vertical_position_delta ;
+    num_fract zero ;
+    zero = _platform_math_consts . get ( ) . fract_0 ;
+    platform_vector :: xyz ( vertical_position_delta , zero , zero , zero ) ;
+    _logic_main_menu_meshes_place_state . vertical_position_delta = vertical_position_delta ;
 }
 
 template < typename mediator >
@@ -257,7 +333,7 @@ void shy_logic_main_menu_meshes_placement < mediator > :: _place_current_mesh ( 
     num_fract scale ;
     num_fract zero ;
     
-    position = _logic_main_menu_layout_position_state . position ;
+    position = _logic_main_menu_meshes_place_state . position ;
     scale = _logic_main_menu_layout_position_state . scale ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
     
