@@ -166,6 +166,7 @@
 		8876305712068D0100CAD8EF /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303212068D0100CAD8EF /* touch.hpp */; };
 		8876305812068D0100CAD8EF /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303312068D0100CAD8EF /* mediator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
+		888FDD961226BFEF007CB5CC /* animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 888FDD951226BFEF007CB5CC /* animation.hpp */; };
 		88A5136D122418C200812E75 /* meshes_destroyer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88A5136C122418C200812E75 /* meshes_destroyer.hpp */; };
 		88B4625B1212D83C00E4D490 /* meshes_storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B4625A1212D83C00E4D490 /* meshes_storage.hpp */; };
 		88B462671212D94400E4D490 /* letters_creation_director.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B462661212D94400E4D490 /* letters_creation_director.hpp */; };
@@ -267,6 +268,7 @@
 		8876303212068D0100CAD8EF /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
 		8876303312068D0100CAD8EF /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
+		888FDD951226BFEF007CB5CC /* animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = animation.hpp; sourceTree = "<group>"; };
 		88A5136C122418C200812E75 /* meshes_destroyer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_destroyer.hpp; sourceTree = "<group>"; };
 		88B4625A1212D83C00E4D490 /* meshes_storage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_storage.hpp; sourceTree = "<group>"; };
 		88B462661212D94400E4D490 /* letters_creation_director.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = letters_creation_director.hpp; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 		8876302212068D0100CAD8EF /* main_menu */ = {
 			isa = PBXGroup;
 			children = (
+				888FDD951226BFEF007CB5CC /* animation.hpp */,
 				8812D9B6120C516C0036FC3C /* layout.hpp */,
 				88B462661212D94400E4D490 /* letters_creation_director.hpp */,
 				8876302312068D0100CAD8EF /* letters_storage.hpp */,
@@ -700,6 +703,7 @@
 				8847D465121436800071BA80 /* renderer.hpp in Headers */,
 				88BC81DF1222C06F0085F6DF /* meshes_placement.hpp in Headers */,
 				88A5136D122418C200812E75 /* meshes_destroyer.hpp in Headers */,
+				888FDD961226BFEF007CB5CC /* animation.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
