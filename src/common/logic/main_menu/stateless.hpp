@@ -168,6 +168,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -214,6 +215,7 @@ void shy_logic_main_menu_stateless < mediator >
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_meshes_creation_director . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

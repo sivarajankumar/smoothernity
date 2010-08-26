@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_meshes_placement
 {
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
+    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -14,6 +15,19 @@ class shy_logic_main_menu_meshes_placement
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
+
+    class _logic_main_menu_meshes_placement_consts_type
+    {
+    public :
+        _logic_main_menu_meshes_placement_consts_type ( ) ;
+    public :
+        num_fract vertical_shift_period_in_seconds ;
+        num_fract vertical_shift_phase_per_col ;
+        num_fract vertical_shift_amplitude ;
+        num_fract horizontal_shift_period_in_seconds ;
+        num_fract horizontal_shift_phase_per_row ;
+        num_fract horizontal_shift_amplitude ;
+    } ;
     
     class _logic_main_menu_update_state_type
     {
@@ -96,6 +110,8 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > _logic_main_menu_stateless_consts ;
+    const _logic_main_menu_meshes_placement_consts_type _logic_main_menu_meshes_placement_consts ;
 
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
     _logic_main_menu_meshes_place_state_type _logic_main_menu_meshes_place_state ;
@@ -104,6 +120,17 @@ private :
     _logic_main_menu_mesh_id_state_type _logic_main_menu_mesh_id_state ;
     _logic_main_menu_layout_position_state_type _logic_main_menu_layout_position_state ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_meshes_placement < mediator > :: _logic_main_menu_meshes_placement_consts_type :: _logic_main_menu_meshes_placement_consts_type ( )
+{
+    platform_math :: make_num_fract ( vertical_shift_period_in_seconds , 2 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_shift_phase_per_col , 1 , 10 ) ;
+    platform_math :: make_num_fract ( vertical_shift_amplitude , 1 , 3 ) ;
+    platform_math :: make_num_fract ( horizontal_shift_period_in_seconds , 4 , 1 ) ;
+    platform_math :: make_num_fract ( horizontal_shift_phase_per_row , 1 , 5 ) ;
+    platform_math :: make_num_fract ( horizontal_shift_amplitude , 1 , 2 ) ;
+}
 
 template < typename mediator >
 void shy_logic_main_menu_meshes_placement < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -116,6 +143,7 @@ void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename mes
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_stateless_consts ( _logic_main_menu_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -310,8 +338,26 @@ void shy_logic_main_menu_meshes_placement < mediator > :: _compute_horizontal_po
 {
     vector_data horizontal_position_delta ;
     num_fract zero ;
+    num_fract row ;
+    num_fract phase_shift ;
+    num_fract phase ;
+    num_fract delta ;
+    
     zero = _platform_math_consts . get ( ) . fract_0 ;
-    platform_vector :: xyz ( horizontal_position_delta , zero , zero , zero ) ;
+    platform_math :: make_fract_from_whole ( row , _logic_main_menu_mesh_row_col_state . row ) ;
+    platform_math :: mul_fracts ( phase_shift , row , _logic_main_menu_meshes_placement_consts . horizontal_shift_phase_per_row ) ;
+    
+    platform_math :: div_fracts ( phase , _logic_main_menu_update_state . time , _logic_main_menu_meshes_placement_consts . horizontal_shift_period_in_seconds ) ;
+    platform_math :: add_to_fract ( phase , phase_shift ) ;
+    platform_math :: mul_fract_by ( phase , _platform_math_consts . get ( ) . fract_2pi ) ;
+    
+    platform_math :: sin ( delta , phase ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_meshes_placement_consts . horizontal_shift_amplitude ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_layout_position_state . scale ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;
+    
+    platform_vector :: xyz ( horizontal_position_delta , delta , zero , zero ) ;
+    
     _logic_main_menu_meshes_place_state . horizontal_position_delta = horizontal_position_delta ;
 }
 
