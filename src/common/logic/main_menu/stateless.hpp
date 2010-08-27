@@ -26,8 +26,8 @@ public :
     {
     public :
         class logic_main_menu_add_letter { public : logic_text_letter_id letter ; } ;
-        class logic_main_menu_animated_transform_reply { public : num_whole row ; num_whole col ; matrix_data transform ; } ;
-        class logic_main_menu_animated_transform_request { public : num_whole row ; num_whole col ; } ;
+        class logic_main_menu_animation_transform_reply { public : num_whole row ; num_whole col ; matrix_data transform ; } ;
+        class logic_main_menu_animation_transform_request { public : num_whole row ; num_whole col ; } ;
         class logic_main_menu_cols_reply { public : num_whole row ; num_whole cols ; } ;
         class logic_main_menu_cols_request { public : num_whole row ; } ;
         class logic_main_menu_creation_permit { } ;
@@ -71,8 +71,8 @@ public :
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_add_letter ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_animated_transform_reply ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_animated_transform_request ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_animation_transform_reply ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_animation_transform_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_cols_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_cols_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_creation_permit ) ;
@@ -161,7 +161,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_animated_transform_reply msg )
+:: send ( typename logic_main_menu_messages :: logic_main_menu_animation_transform_reply msg )
 {
     _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
 }
@@ -170,7 +170,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_animated_transform_request msg )
+:: send ( typename logic_main_menu_messages :: logic_main_menu_animation_transform_request msg )
 {
     _receivers . get ( ) . logic_main_menu_animation . get ( ) . receive ( msg ) ;
 }
