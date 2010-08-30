@@ -58,8 +58,6 @@ private :
     void _compute_time ( ) ;
     void _compute_transform ( ) ;
     void _reply_transform ( ) ;
-    void _interpolation_hard_in_ease_out ( num_fract & result , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
-    void _interpolation_ease_in_ease_out ( num_fract & result , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -208,47 +206,13 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_transform ( )
     if ( platform_conditions :: fract_less_than_fract ( time , time_begin ) )
         scale = scale_begin ;
     else if ( platform_conditions :: fract_less_than_fract ( time , time_middle ) )
-        _interpolation_hard_in_ease_out ( scale , time , scale_begin , time_begin , scale_middle , time_middle ) ;
+        engine_math :: hard_in_ease_out ( scale , time , scale_begin , time_begin , scale_middle , time_middle ) ;
     else if ( platform_conditions :: fract_less_than_fract ( time , time_end ) )
-        _interpolation_ease_in_ease_out ( scale , time , scale_middle , time_middle , scale_end , time_end ) ;
+        engine_math :: ease_in_ease_out ( scale , time , scale_middle , time_middle , scale_end , time_end ) ;
     else
         scale = scale_end ;
         
     _logic_main_menu_animation_appear_transform_state . scale = scale ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _interpolation_hard_in_ease_out 
-    ( num_fract & result , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight )
-{
-    num_fract p0 ;
-    num_fract p1 ;
-    num_fract p2 ;
-    num_fract p3 ;
-    num_fract t ;
-    engine_math :: lerp ( t , _platform_math_consts . get ( ) . fract_0 , from_weight , _platform_math_consts . get ( ) . fract_1 , to_weight , weight ) ;
-    p1 = from_value ;
-    p2 = to_value ;
-    platform_math :: neg_fract ( p0 , p2 ) ;
-    p3 = p1 ;
-    engine_math :: catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _interpolation_ease_in_ease_out 
-    ( num_fract & result , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight )
-{
-    num_fract p0 ;
-    num_fract p1 ;
-    num_fract p2 ;
-    num_fract p3 ;
-    num_fract t ;
-    engine_math :: lerp ( t , _platform_math_consts . get ( ) . fract_0 , from_weight , _platform_math_consts . get ( ) . fract_1 , to_weight , weight ) ;
-    p1 = from_value ;
-    p2 = to_value ;
-    p0 = p2 ;
-    p3 = p1 ;
-    engine_math :: catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
 }
 
 template < typename mediator >
