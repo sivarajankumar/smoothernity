@@ -582,7 +582,7 @@ void shy_logic_entities < mediator > :: _update_entity_grid ( )
                 platform_math :: sub_from_fract ( scale_frame_part , _logic_entities_consts . scale_wave ) ;
                 
                 platform_math :: add_fracts ( scale , scale_wave_part , scale_frame_part ) ;
-                engine_math :: math_clamp_fract ( scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
+                engine_math :: clamp_fract ( scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
 
                 vector_data origin ;
                 _get_entity_origin ( origin , index ) ;

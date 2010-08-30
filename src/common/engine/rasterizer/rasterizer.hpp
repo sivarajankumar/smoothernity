@@ -124,8 +124,8 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine
     platform_math :: div_whole_by ( x_center , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_math :: sub_wholes ( x_diff , msg . x1 , msg . x2 ) ;
     platform_math :: sub_wholes ( y_diff , msg . y1 , msg . y2 ) ;
-    engine_math :: math_abs_whole ( width , x_diff ) ;
-    engine_math :: math_abs_whole ( height , y_diff ) ;
+    engine_math :: abs_whole ( width , x_diff ) ;
+    engine_math :: abs_whole ( height , y_diff ) ;
     
     num_whole half_width ;
     num_whole half_height ;
@@ -141,10 +141,10 @@ void shy_engine_rasterizer < mediator > :: receive ( typename messages :: engine
     num_whole right ;
     num_whole bottom ;
     num_whole top ;
-    engine_math :: math_min_whole ( left , msg . x1 , msg . x2 ) ;
-    engine_math :: math_max_whole ( right , msg . x1 , msg . x2 ) ;
-    engine_math :: math_min_whole ( bottom , msg . y1 , msg . y2 ) ;
-    engine_math :: math_max_whole ( top , msg . y1 , msg . y2 ) ;
+    engine_math :: min_whole ( left , msg . x1 , msg . x2 ) ;
+    engine_math :: max_whole ( right , msg . x1 , msg . x2 ) ;
+    engine_math :: min_whole ( bottom , msg . y1 , msg . y2 ) ;
+    engine_math :: max_whole ( top , msg . y1 , msg . y2 ) ;
     platform_math :: add_to_whole ( left , _origin_x ) ;
     platform_math :: add_to_whole ( right , _origin_x ) ;
     platform_math :: add_to_whole ( bottom , _origin_y ) ;
@@ -180,8 +180,8 @@ void shy_engine_rasterizer < mediator > :: _rasterize_horizontal_line ( num_whol
 {
     num_whole left ;
     num_whole right ;
-    engine_math :: math_min_whole ( left , x1 , x2 ) ;
-    engine_math :: math_max_whole ( right , x1 , x2 ) ;
+    engine_math :: min_whole ( left , x1 , x2 ) ;
+    engine_math :: max_whole ( right , x1 , x2 ) ;
     platform_math :: add_to_whole ( left , _origin_x ) ;
     platform_math :: add_to_whole ( right , _origin_x ) ;
     platform_math :: add_to_whole ( y , _origin_y ) ;

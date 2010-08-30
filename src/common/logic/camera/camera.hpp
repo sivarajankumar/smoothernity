@@ -517,7 +517,7 @@ void shy_logic_camera < mediator > :: _calc_desired_camera_origin_pos ( )
     platform_static_array :: element_ptr ( pos_2 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_static_array :: element_ptr ( pos_3 , _scheduled_camera_origins , _platform_math_consts . get ( ) . whole_3 ) ;
     
-    engine_math :: math_catmull_rom_spline ( _desired_camera_origin , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
+    engine_math :: catmull_rom_spline ( _desired_camera_origin , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
 }
 
 template < typename mediator >
@@ -602,7 +602,7 @@ void shy_logic_camera < mediator > :: _calc_desired_camera_target_pos ( )
     platform_static_array :: element_ptr ( pos_2 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_2 ) ;
     platform_static_array :: element_ptr ( pos_3 , _scheduled_camera_targets , _platform_math_consts . get ( ) . whole_3 ) ;
     
-    engine_math :: math_catmull_rom_spline ( _desired_camera_target , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
+    engine_math :: catmull_rom_spline ( _desired_camera_target , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
 }
 
 template < typename mediator >

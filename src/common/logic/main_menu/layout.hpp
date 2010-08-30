@@ -213,7 +213,7 @@ template < typename mediator >
 void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_add_letter )
 {
     platform_math :: inc_whole ( _logic_main_menu_layout_state . current_cols ) ;
-    engine_math :: math_max_whole 
+    engine_math :: max_whole 
         ( _logic_main_menu_layout_state . max_cols 
         , _logic_main_menu_layout_state . max_cols 
         , _logic_main_menu_layout_state . current_cols 

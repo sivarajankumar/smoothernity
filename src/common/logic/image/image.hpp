@@ -219,7 +219,7 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     num_fract fract_scale_in_frames ;
     platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_image_consts . scale_in_frames ) ;
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
-    engine_math :: math_lerp 
+    engine_math :: lerp 
         ( scale 
         , _platform_math_consts . get ( ) . fract_0 
         , _platform_math_consts . get ( ) . fract_0 

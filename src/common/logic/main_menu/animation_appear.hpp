@@ -226,12 +226,12 @@ void shy_logic_main_menu_animation_appear < mediator > :: _interpolation_hard_in
     num_fract p2 ;
     num_fract p3 ;
     num_fract t ;
-    engine_math :: math_lerp ( t , _platform_math_consts . get ( ) . fract_0 , from_weight , _platform_math_consts . get ( ) . fract_1 , to_weight , weight ) ;
+    engine_math :: lerp ( t , _platform_math_consts . get ( ) . fract_0 , from_weight , _platform_math_consts . get ( ) . fract_1 , to_weight , weight ) ;
     p1 = from_value ;
     p2 = to_value ;
     platform_math :: neg_fract ( p0 , p2 ) ;
     p3 = p1 ;
-    engine_math :: math_catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
+    engine_math :: catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
 }
 
 template < typename mediator >
@@ -243,12 +243,12 @@ void shy_logic_main_menu_animation_appear < mediator > :: _interpolation_ease_in
     num_fract p2 ;
     num_fract p3 ;
     num_fract t ;
-    engine_math :: math_lerp ( t , _platform_math_consts . get ( ) . fract_0 , from_weight , _platform_math_consts . get ( ) . fract_1 , to_weight , weight ) ;
+    engine_math :: lerp ( t , _platform_math_consts . get ( ) . fract_0 , from_weight , _platform_math_consts . get ( ) . fract_1 , to_weight , weight ) ;
     p1 = from_value ;
     p2 = to_value ;
     p0 = p2 ;
     p3 = p1 ;
-    engine_math :: math_catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
+    engine_math :: catmull_rom_spline ( result , t , p0 , p1 , p2 , p3 ) ;
 }
 
 template < typename mediator >
