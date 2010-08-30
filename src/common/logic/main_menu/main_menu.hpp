@@ -36,6 +36,7 @@ private :
     num_whole _launch_permitted ;
     num_whole _created ;
     num_whole _launched ;
+    num_whole _disappearing ;
 } ;
 
 template < typename mediator >
@@ -57,6 +58,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: init )
     _creation_permitted = _platform_math_consts . get ( ) . whole_false ;
     _launched = _platform_math_consts . get ( ) . whole_false ;
     _created = _platform_math_consts . get ( ) . whole_false ;
+    _disappearing = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -99,16 +101,24 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
            )
         {
             _launched = _platform_math_consts . get ( ) . whole_false ;
+            _disappearing = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_animation_disappear_start ( ) ) ;
         }
         else
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_place ( ) ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _created )
+      && platform_conditions :: whole_is_true ( _disappearing )
+       )
+    {
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_place ( ) ) ;
     }
 }
 
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_animation_disappear_finished )
 {
+    _disappearing = _platform_math_consts . get ( ) . whole_false ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_destroy_request ( ) ) ;
 }
 

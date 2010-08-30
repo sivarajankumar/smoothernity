@@ -280,6 +280,7 @@ void shy_logic_main_menu_stateless < mediator >
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_animation_appear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_animation_disappear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_animation_idle . get ( ) . receive ( msg ) ;
 }
 
