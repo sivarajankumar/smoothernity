@@ -22,7 +22,9 @@ class shy_logic_main_menu_animation_disappear
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_main_menu_animation_disappear_start ) ;
     void receive ( typename messages :: logic_main_menu_animation_disappear_transform_request ) ;
+    void receive ( typename messages :: logic_main_menu_update ) ;
 private :
     void _proceed_with_transform ( ) ;
     void _transform_request_received ( ) ;
@@ -47,6 +49,17 @@ void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename 
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename messages :: logic_main_menu_animation_disappear_start )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_animation_disappear_finished ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename messages :: logic_main_menu_update )
+{
 }
 
 template < typename mediator >

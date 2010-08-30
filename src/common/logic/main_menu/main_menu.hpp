@@ -19,6 +19,7 @@ class shy_logic_main_menu
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_main_menu_animation_disappear_finished ) ;
     void receive ( typename messages :: logic_main_menu_creation_permit ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
     void receive ( typename messages :: logic_main_menu_render ) ;
@@ -98,11 +99,17 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
            )
         {
             _launched = _platform_math_consts . get ( ) . whole_false ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_destroy_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_animation_disappear_start ( ) ) ;
         }
         else
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_place ( ) ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_animation_disappear_finished )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_destroy_request ( ) ) ;
 }
 
 template < typename mediator >
