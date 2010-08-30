@@ -25,6 +25,7 @@ template
     , template < typename mediator > class _logic_main_menu
     , template < typename mediator > class _logic_main_menu_animation
     , template < typename mediator > class _logic_main_menu_animation_appear
+    , template < typename mediator > class _logic_main_menu_animation_disappear
     , template < typename mediator > class _logic_main_menu_animation_idle
     , template < typename mediator > class _logic_main_menu_layout
     , template < typename mediator > class _logic_main_menu_letters_creation_director
@@ -79,6 +80,7 @@ public :
         typedef _logic_main_menu < mediator > logic_main_menu ;
         typedef _logic_main_menu_animation < mediator > logic_main_menu_animation ;
         typedef _logic_main_menu_animation_appear < mediator > logic_main_menu_animation_appear ;
+        typedef _logic_main_menu_animation_disappear < mediator > logic_main_menu_animation_disappear ;
         typedef _logic_main_menu_animation_idle < mediator > logic_main_menu_animation_idle ;
         typedef _logic_main_menu_layout < mediator > logic_main_menu_layout ;
         typedef _logic_main_menu_letters_creation_director < mediator > logic_main_menu_letters_creation_director ;
@@ -130,6 +132,7 @@ template
     , template < typename _mediator > class _logic_main_menu
     , template < typename _mediator > class _logic_main_menu_animation
     , template < typename _mediator > class _logic_main_menu_animation_appear
+    , template < typename _mediator > class _logic_main_menu_animation_disappear
     , template < typename _mediator > class _logic_main_menu_animation_idle
     , template < typename _mediator > class _logic_main_menu_layout
     , template < typename _mediator > class _logic_main_menu_letters_creation_director
@@ -169,6 +172,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu > scheduled_logic_main_menu ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_animation > scheduled_logic_main_menu_animation ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_animation_appear > scheduled_logic_main_menu_animation_appear ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_animation_disappear > scheduled_logic_main_menu_animation_disappear ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_animation_idle > scheduled_logic_main_menu_animation_idle ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_layout > scheduled_logic_main_menu_layout ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_creation_director > scheduled_logic_main_menu_letters_creation_director ;
@@ -212,6 +216,7 @@ public :
         , scheduled_logic_main_menu :: template scheduled_module
         , scheduled_logic_main_menu_animation :: template scheduled_module
         , scheduled_logic_main_menu_animation_appear :: template scheduled_module
+        , scheduled_logic_main_menu_animation_disappear :: template scheduled_module
         , scheduled_logic_main_menu_animation_idle :: template scheduled_module
         , scheduled_logic_main_menu_layout :: template scheduled_module
         , scheduled_logic_main_menu_letters_creation_director :: template scheduled_module
@@ -282,6 +287,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_main_menu :: template scheduled_module < mediator_type > logic_main_menu ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_animation :: template scheduled_module < mediator_type > logic_main_menu_animation ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_animation_appear :: template scheduled_module < mediator_type > logic_main_menu_animation_appear ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_animation_disappear :: template scheduled_module < mediator_type > logic_main_menu_animation_disappear ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_animation_idle :: template scheduled_module < mediator_type > logic_main_menu_animation_idle ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_layout :: template scheduled_module < mediator_type > logic_main_menu_layout ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_creation_director :: template scheduled_module < mediator_type > logic_main_menu_letters_creation_director ;
@@ -324,6 +330,7 @@ private :
     logic_main_menu _logic_main_menu ;
     logic_main_menu_animation _logic_main_menu_animation ;
     logic_main_menu_animation_appear _logic_main_menu_animation_appear ;
+    logic_main_menu_animation_disappear _logic_main_menu_animation_disappear ;
     logic_main_menu_animation_idle _logic_main_menu_animation_idle ;
     logic_main_menu_layout _logic_main_menu_layout ;
     logic_main_menu_letters_creation_director _logic_main_menu_letters_creation_director ;
@@ -361,6 +368,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu > logic_main_menu_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_animation > logic_main_menu_animation_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_animation_appear > logic_main_menu_animation_appear_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_animation_disappear > logic_main_menu_animation_disappear_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_animation_idle > logic_main_menu_animation_idle_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_layout > logic_main_menu_layout_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director > logic_main_menu_letters_creation_director_ptr ;
@@ -394,6 +402,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_ptr , _logic_main_menu ) ;
     platform_pointer :: bind ( logic_main_menu_animation_ptr , _logic_main_menu_animation ) ;
     platform_pointer :: bind ( logic_main_menu_animation_appear_ptr , _logic_main_menu_animation_appear ) ;
+    platform_pointer :: bind ( logic_main_menu_animation_disappear_ptr , _logic_main_menu_animation_disappear ) ;
     platform_pointer :: bind ( logic_main_menu_animation_idle_ptr , _logic_main_menu_animation_idle ) ;
     platform_pointer :: bind ( logic_main_menu_layout_ptr , _logic_main_menu_layout ) ;
     platform_pointer :: bind ( logic_main_menu_letters_creation_director_ptr , _logic_main_menu_letters_creation_director ) ;
@@ -426,6 +435,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_animation_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_animation_appear_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_animation_disappear_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_animation_idle_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_layout_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_creation_director_ptr , scheduler_ptr ) ;
@@ -456,6 +466,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_ptr
         , logic_main_menu_animation_ptr
         , logic_main_menu_animation_appear_ptr
+        , logic_main_menu_animation_disappear_ptr
         , logic_main_menu_animation_idle_ptr
         , logic_main_menu_layout_ptr
         , logic_main_menu_letters_creation_director_ptr
