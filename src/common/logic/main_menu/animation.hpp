@@ -34,6 +34,16 @@ class shy_logic_main_menu_animation
         num_fract scale ;
     } ;
     
+    class _logic_main_menu_animation_disappear_transform_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole requested_row ;
+        num_whole requested_col ;
+        num_whole replied ;
+        num_fract scale ;
+    } ;
+    
     class _logic_main_menu_animation_idle_transform_state_type
     {
     public :
@@ -50,10 +60,12 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_animation_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_animation_appear_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_animation_disappear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_animation_idle_transform_reply ) ;
 private :
     void _proceed_with_transform ( ) ;
     void _obtain_appear_transform ( ) ;
+    void _obtain_disappear_transform ( ) ;
     void _obtain_idle_transform ( ) ;
     void _all_transforms_received ( ) ;
     void _compute_transform ( ) ;
@@ -65,6 +77,7 @@ private :
     
     _logic_main_menu_animation_transform_state_type _logic_main_menu_animation_transform_state ;
     _logic_main_menu_animation_appear_transform_state_type _logic_main_menu_animation_appear_transform_state ;
+    _logic_main_menu_animation_disappear_transform_state_type _logic_main_menu_animation_disappear_transform_state ;
     _logic_main_menu_animation_idle_transform_state_type _logic_main_menu_animation_idle_transform_state ;
 } ;
 
@@ -124,6 +137,21 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
+void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_animation_disappear_transform_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_disappear_transform_state . requested )
+      && platform_conditions :: wholes_are_equal ( _logic_main_menu_animation_disappear_transform_state . requested_row , msg . row )
+      && platform_conditions :: wholes_are_equal ( _logic_main_menu_animation_disappear_transform_state . requested_col , msg . col )
+       )
+    {
+        _logic_main_menu_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_animation_disappear_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_animation_disappear_transform_state . scale = msg . scale ;
+        _proceed_with_transform ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_animation < mediator > :: _proceed_with_transform ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_transform_state . requested ) )
@@ -134,6 +162,11 @@ void shy_logic_main_menu_animation < mediator > :: _proceed_with_transform ( )
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_appear_transform_state . replied ) )
     {
         _logic_main_menu_animation_appear_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_disappear_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_disappear_transform_state . replied ) )
+    {
+        _logic_main_menu_animation_disappear_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_idle_transform ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_idle_transform_state . replied ) )
@@ -150,6 +183,18 @@ void shy_logic_main_menu_animation < mediator > :: _obtain_appear_transform ( )
     _logic_main_menu_animation_appear_transform_state . requested_row = _logic_main_menu_animation_transform_state . row ;
     _logic_main_menu_animation_appear_transform_state . requested_col = _logic_main_menu_animation_transform_state . col ;
     typename messages :: logic_main_menu_animation_appear_transform_request msg ;
+    msg . row = _logic_main_menu_animation_transform_state . row ;
+    msg . col = _logic_main_menu_animation_transform_state . col ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_animation < mediator > :: _obtain_disappear_transform ( )
+{
+    _logic_main_menu_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_animation_disappear_transform_state . requested_row = _logic_main_menu_animation_transform_state . row ;
+    _logic_main_menu_animation_disappear_transform_state . requested_col = _logic_main_menu_animation_transform_state . col ;
+    typename messages :: logic_main_menu_animation_disappear_transform_request msg ;
     msg . row = _logic_main_menu_animation_transform_state . row ;
     msg . col = _logic_main_menu_animation_transform_state . col ;
     _mediator . get ( ) . send ( msg ) ;
@@ -180,16 +225,19 @@ void shy_logic_main_menu_animation < mediator > :: _compute_transform ( )
     matrix_data transform ;
     vector_data position ;
     num_fract scale_appear ;
+    num_fract scale_disappear ;
     num_fract scale_idle ;
     num_fract scale ;
     num_fract zero ;
     
     position = _logic_main_menu_animation_idle_transform_state . position ;
     scale_appear = _logic_main_menu_animation_appear_transform_state . scale ;
+    scale_disappear = _logic_main_menu_animation_disappear_transform_state . scale ;
     scale_idle = _logic_main_menu_animation_idle_transform_state . scale ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
     
     platform_math :: mul_fracts ( scale , scale_idle , scale_appear ) ;
+    platform_math :: mul_fract_by ( scale , scale_disappear ) ;
     
     platform_matrix :: set_origin ( transform , position ) ;
     platform_matrix :: set_axis_x ( transform , scale , zero , zero ) ;
