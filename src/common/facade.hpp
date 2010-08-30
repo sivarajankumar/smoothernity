@@ -31,6 +31,7 @@
 #include "logic/land/land.hpp"
 #include "logic/land/stateless.hpp"
 #include "logic/main_menu/animation.hpp"
+#include "logic/main_menu/animation_appear.hpp"
 #include "logic/main_menu/animation_idle.hpp"
 #include "logic/main_menu/layout.hpp"
 #include "logic/main_menu/letters_creation_director.hpp"
@@ -92,6 +93,7 @@ private :
         , shy_logic_land_stateless
         , shy_logic_main_menu
         , shy_logic_main_menu_animation
+        , shy_logic_main_menu_animation_appear
         , shy_logic_main_menu_animation_idle
         , shy_logic_main_menu_layout
         , shy_logic_main_menu_letters_creation_director

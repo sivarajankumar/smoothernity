@@ -173,6 +173,7 @@
 		88B462771212DA8400E4D490 /* meshes_creation_director.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B462761212DA8400E4D490 /* meshes_creation_director.hpp */; };
 		88BC81DF1222C06F0085F6DF /* meshes_placement.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88BC81DE1222C06F0085F6DF /* meshes_placement.hpp */; };
 		88D98E7C1227C65300ADB067 /* animation_idle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88D98E7B1227C65300ADB067 /* animation_idle.hpp */; };
+		88E5ABB5122BB44100CE5E6D /* animation_appear.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E5ABB4122BB44100CE5E6D /* animation_appear.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -276,6 +277,7 @@
 		88B462761212DA8400E4D490 /* meshes_creation_director.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_creation_director.hpp; sourceTree = "<group>"; };
 		88BC81DE1222C06F0085F6DF /* meshes_placement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = meshes_placement.hpp; sourceTree = "<group>"; };
 		88D98E7B1227C65300ADB067 /* animation_idle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = animation_idle.hpp; sourceTree = "<group>"; };
+		88E5ABB4122BB44100CE5E6D /* animation_appear.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = animation_appear.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -570,6 +572,7 @@
 			isa = PBXGroup;
 			children = (
 				888FDD951226BFEF007CB5CC /* animation.hpp */,
+				88E5ABB4122BB44100CE5E6D /* animation_appear.hpp */,
 				88D98E7B1227C65300ADB067 /* animation_idle.hpp */,
 				8812D9B6120C516C0036FC3C /* layout.hpp */,
 				88B462661212D94400E4D490 /* letters_creation_director.hpp */,
@@ -708,6 +711,7 @@
 				88A5136D122418C200812E75 /* meshes_destroyer.hpp in Headers */,
 				888FDD961226BFEF007CB5CC /* animation.hpp in Headers */,
 				88D98E7C1227C65300ADB067 /* animation_idle.hpp in Headers */,
+				88E5ABB5122BB44100CE5E6D /* animation_appear.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
