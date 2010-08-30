@@ -73,9 +73,9 @@ template < typename mediator >
 shy_logic_main_menu_animation_appear < mediator > :: _logic_main_menu_animation_appear_consts_type :: _logic_main_menu_animation_appear_consts_type ( )
 {
     platform_math :: make_num_fract ( time_from_begin_to_middle_in_seconds , 1 , 10 ) ;
-    platform_math :: make_num_fract ( time_from_middle_to_end_in_seconds , 2 , 10 ) ;
+    platform_math :: make_num_fract ( time_from_middle_to_end_in_seconds , 7 , 10 ) ;
     platform_math :: make_num_fract ( delay_per_col_in_seconds , 2 , 100 ) ;
-    platform_math :: make_num_fract ( delay_per_row_in_seconds , 7 , 100 ) ;
+    platform_math :: make_num_fract ( delay_per_row_in_seconds , 5 , 100 ) ;
     platform_math :: make_num_fract ( scale_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( scale_middle , 3 , 2 ) ;
     platform_math :: make_num_fract ( scale_end , 1 , 1 ) ;
