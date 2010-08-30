@@ -10,6 +10,7 @@ class shy_engine_math
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 public :
     static void math_catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
+    static void math_catmull_rom_spline ( num_fract & result , num_fract t , num_fract p0 , num_fract p1 , num_fract p2 , num_fract p3 ) ;
     static void math_lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     static void math_clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
     static void math_clamp_fract ( num_fract & num , num_fract from , num_fract to ) ;
@@ -70,6 +71,60 @@ void shy_engine_math < mediator > :: math_catmull_rom_spline
     platform_vector :: add ( result_p2_p3 , p2_scaled , p3_scaled ) ;
     platform_vector :: add ( result_p0_p1_p2_p3 , result_p0_p1 , result_p2_p3 ) ;
     platform_vector :: mul ( result , result_p0_p1_p2_p3 , half ) ;
+}
+
+template < typename mediator >
+void shy_engine_math < mediator > :: math_catmull_rom_spline
+    ( num_fract & result , num_fract t , num_fract p0 , num_fract p1 , num_fract p2 , num_fract p3 )
+{
+    num_fract t2 ;
+    num_fract t3 ;
+    num_fract t2_mul_2 ;
+    num_fract t2_mul_4 ;
+    num_fract t2_mul_5 ;
+    num_fract t3_mul_3 ;
+    num_fract p0_coeff ;
+    num_fract p1_coeff ;
+    num_fract p2_coeff ;
+    num_fract p3_coeff ;
+    num_fract half ;
+    num_fract fract_2 ;
+    num_fract fract_3 ;
+    num_fract fract_4 ;
+    num_fract fract_5 ;
+    num_fract p0_scaled ;
+    num_fract p1_scaled ;
+    num_fract p2_scaled ;
+    num_fract p3_scaled ;
+    num_fract result_p0_p1 ;
+    num_fract result_p2_p3 ;
+    num_fract result_p0_p1_p2_p3 ;
+    platform_math :: make_num_fract ( half , 1 , 2 ) ;    
+    platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
+    platform_math :: make_num_fract ( fract_3 , 3 , 1 ) ;
+    platform_math :: make_num_fract ( fract_4 , 4 , 1 ) ;
+    platform_math :: make_num_fract ( fract_5 , 5 , 1 ) ;
+    platform_math :: mul_fracts ( t2 , t , t ) ;
+    platform_math :: mul_fracts ( t3 , t2 , t ) ;
+    platform_math :: mul_fracts ( t2_mul_2 , t2 , fract_2 ) ;
+    platform_math :: mul_fracts ( t2_mul_4 , t2 , fract_4 ) ;
+    platform_math :: mul_fracts ( t2_mul_5 , t2 , fract_5 ) ;
+    platform_math :: mul_fracts ( t3_mul_3 , t3 , fract_3 ) ;
+    platform_math :: sub_fracts ( p0_coeff , t2_mul_2 , t ) ;
+    platform_math :: sub_from_fract ( p0_coeff , t3 ) ;
+    platform_math :: sub_fracts ( p1_coeff , t3_mul_3 , t2_mul_5 ) ;
+    platform_math :: add_to_fract ( p1_coeff , fract_2 ) ;
+    platform_math :: sub_fracts ( p2_coeff , t2_mul_4 , t3_mul_3 ) ;
+    platform_math :: add_to_fract ( p2_coeff , t ) ;
+    platform_math :: sub_fracts ( p3_coeff , t3 , t2 ) ;
+    platform_math :: mul_fracts ( p0_scaled , p0 , p0_coeff ) ;
+    platform_math :: mul_fracts ( p1_scaled , p1 , p1_coeff ) ;
+    platform_math :: mul_fracts ( p2_scaled , p2 , p2_coeff ) ;
+    platform_math :: mul_fracts ( p3_scaled , p3 , p3_coeff ) ;
+    platform_math :: add_fracts ( result_p0_p1 , p0_scaled , p1_scaled ) ;
+    platform_math :: add_fracts ( result_p2_p3 , p2_scaled , p3_scaled ) ;
+    platform_math :: add_fracts ( result_p0_p1_p2_p3 , result_p0_p1 , result_p2_p3 ) ;
+    platform_math :: mul_fracts ( result , result_p0_p1_p2_p3 , half ) ;
 }
 
 template < typename mediator >

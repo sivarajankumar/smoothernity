@@ -8,6 +8,7 @@ public :
     shy_platform_math_consts ( ) ;
 public :
     num_fract fract_pi ;
+    num_fract fract_pi2 ;
     num_fract fract_2pi ;
     num_fract fract_0 ;
     num_fract fract_1 ;
@@ -55,6 +56,7 @@ template < typename platform_insider >
 shy_platform_math_consts < platform_insider > :: shy_platform_math_consts ( )
 {
     platform_math_insider :: num_fract_value_set ( fract_pi , 3.141592f ) ;
+    platform_math_insider :: num_fract_value_set ( fract_pi2 , 1.570796f ) ;
     platform_math_insider :: num_fract_value_set ( fract_2pi , 6.283184f ) ;
     platform_math_insider :: num_fract_value_set ( fract_0 , 0 ) ;
     platform_math_insider :: num_fract_value_set ( fract_1 , 1 ) ;
