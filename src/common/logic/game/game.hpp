@@ -98,12 +98,6 @@ shy_logic_game < mediator > :: shy_logic_game ( )
 }
 
 template < typename mediator >
-shy_logic_game < mediator > & shy_logic_game < mediator > :: operator= ( const shy_logic_game < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_game < mediator > :: _logic_game_consts_type :: _logic_game_consts_type ( )
 {
     platform_math :: make_num_fract ( final_r , 0 , 1 ) ;

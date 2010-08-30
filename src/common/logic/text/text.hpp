@@ -153,12 +153,6 @@ shy_logic_text < mediator > :: shy_logic_text ( )
 }
 
 template < typename mediator >
-shy_logic_text < mediator > & shy_logic_text < mediator > :: operator= ( const shy_logic_text < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_text < mediator > :: _logic_text_consts_type :: _logic_text_consts_type ( )
 {
     platform_math :: make_num_fract ( final_scale , 1 , 2 ) ;

@@ -201,13 +201,6 @@ shy_win_platform_render < platform_insider > :: shy_win_platform_render ( )
 }
 
 template < typename platform_insider >
-shy_win_platform_render < platform_insider > & 
-shy_win_platform_render < platform_insider > :: operator= ( const shy_win_platform_render < platform_insider > & src )
-{
-    return * this ;
-}
-
-template < typename platform_insider >
 shy_win_platform_render < platform_insider > :: render_vertex_buffer_mapped_data :: render_vertex_buffer_mapped_data ( )
 : _data ( reinterpret_cast < void * > ( platform_insider :: uninitialized_value ) )
 {

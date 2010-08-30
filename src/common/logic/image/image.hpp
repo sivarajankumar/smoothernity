@@ -77,12 +77,6 @@ shy_logic_image < mediator > :: shy_logic_image ( )
 }
 
 template < typename mediator >
-shy_logic_image < mediator > & shy_logic_image < mediator > :: operator= ( const shy_logic_image < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_image < mediator > :: _logic_image_consts_type :: _logic_image_consts_type ( )
 {
     platform_math :: make_num_whole ( scale_in_frames , 60 ) ;

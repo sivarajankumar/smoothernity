@@ -58,6 +58,7 @@ class shy_logic_main_menu_animation_idle
     } ;
     
 public :
+    shy_logic_main_menu_animation_idle ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
@@ -65,6 +66,7 @@ public :
     void receive ( typename messages :: logic_main_menu_animation_idle_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_layout_position_reply ) ;
 private :
+    shy_logic_main_menu_animation_idle < mediator > operator= ( const shy_logic_main_menu_animation_idle < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _obtain_layout_position ( ) ;
     void _layout_position_received ( ) ;
@@ -93,6 +95,11 @@ shy_logic_main_menu_animation_idle < mediator > :: _logic_main_menu_animation_id
     platform_math :: make_num_fract ( horizontal_shift_period_in_seconds , 2 , 1 ) ;
     platform_math :: make_num_fract ( horizontal_shift_phase_per_row , 1 , 2 ) ;
     platform_math :: make_num_fract ( horizontal_shift_amplitude , 1 , 20 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_animation_idle < mediator > :: shy_logic_main_menu_animation_idle ( )
+{
 }
 
 template < typename mediator >

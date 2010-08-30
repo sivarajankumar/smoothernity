@@ -91,12 +91,6 @@ shy_logic_entities < mediator > :: shy_logic_entities ( )
 }
 
 template < typename mediator >
-shy_logic_entities < mediator > & shy_logic_entities < mediator > :: operator= ( const shy_logic_entities < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_entities < mediator > :: _logic_entities_consts_type :: _logic_entities_consts_type ( )
 {
     platform_math :: make_num_fract ( entity_color_roof_r , 255 , 255 ) ;

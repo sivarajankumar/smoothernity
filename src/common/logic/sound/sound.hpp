@@ -77,12 +77,6 @@ shy_logic_sound < mediator > :: shy_logic_sound ( )
 }
 
 template < typename mediator >
-shy_logic_sound < mediator > & shy_logic_sound < mediator > :: operator= ( const shy_logic_sound < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_sound < mediator > :: _logic_sound_consts_type :: _logic_sound_consts_type ( )
 {
     platform_math :: make_num_fract ( gain , 7 , 10 ) ;

@@ -130,12 +130,6 @@ shy_engine_render < mediator > :: shy_engine_render ( )
 }
 
 template < typename mediator >
-shy_engine_render < mediator > & shy_engine_render < mediator > :: operator= ( const shy_engine_render < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_engine_render < mediator > :: _engine_render_consts_type :: _engine_render_consts_type ( )
 {
     platform_math :: make_num_whole ( texture_size_pow2_base , engine_render_stateless_consts_type :: texture_size_pow2_base_int ) ;

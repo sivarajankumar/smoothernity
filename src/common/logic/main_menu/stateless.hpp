@@ -142,13 +142,6 @@ shy_logic_main_menu_stateless < mediator > :: shy_logic_main_menu_stateless ( )
 }
 
 template < typename mediator >
-shy_logic_main_menu_stateless < mediator > &
-shy_logic_main_menu_stateless < mediator > :: operator= ( const shy_logic_main_menu_stateless < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_main_menu_stateless < mediator > :: logic_main_menu_stateless_consts_type :: logic_main_menu_stateless_consts_type ( )
 {
     platform_math :: make_num_fract ( letter_mesh_size , 1 , 1 ) ;

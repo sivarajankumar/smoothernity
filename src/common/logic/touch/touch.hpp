@@ -72,12 +72,6 @@ shy_logic_touch < mediator > :: shy_logic_touch ( )
 }
 
 template < typename mediator >
-shy_logic_touch < mediator > & shy_logic_touch < mediator > :: operator= ( const shy_logic_touch < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_touch < mediator > :: _logic_touch_consts_type :: _logic_touch_consts_type ( )
 {
     platform_math :: make_num_fract ( spot_r , 255 , 255 ) ;

@@ -56,12 +56,6 @@ shy_logic_core < mediator > :: shy_logic_core ( )
 }
 
 template < typename mediator >
-shy_logic_core < mediator > & shy_logic_core < mediator > :: operator= ( const shy_logic_core < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_core < mediator > :: _logic_consts_type :: _logic_consts_type ( )
 {
     platform_math :: make_num_fract ( z_near , 1 , 1 ) ;

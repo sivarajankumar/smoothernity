@@ -132,12 +132,6 @@ shy_logic_camera < mediator > :: shy_logic_camera ( )
 }
 
 template < typename mediator >
-shy_logic_camera < mediator > & shy_logic_camera < mediator > :: operator= ( const shy_logic_camera < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_camera < mediator > :: _logic_camera_consts_type :: _logic_camera_consts_type ( )
 {
     platform_math :: make_num_whole ( change_origin_in_frames , 139 ) ;

@@ -112,13 +112,6 @@ shy_logic_text_stateless < mediator > :: shy_logic_text_stateless ( )
 }
 
 template < typename mediator >
-shy_logic_text_stateless < mediator > &
-shy_logic_text_stateless < mediator > :: operator= ( const shy_logic_text_stateless < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_text_stateless < mediator > :: logic_text_stateless_consts_type :: logic_text_stateless_consts_type ( )
 {
     num_whole index ;

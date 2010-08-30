@@ -148,13 +148,6 @@ shy_engine_render_stateless < mediator > :: shy_engine_render_stateless ( )
 }
 
 template < typename mediator >
-shy_engine_render_stateless < mediator > & 
-shy_engine_render_stateless < mediator > :: operator= ( const shy_engine_render_stateless < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_engine_render_stateless < mediator > :: engine_render_stateless_consts_type :: engine_render_stateless_consts_type ( )
 {
     platform_math :: make_num_whole ( texture_width , texture_size_int ) ;

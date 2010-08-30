@@ -74,12 +74,6 @@ shy_logic_land < mediator > :: shy_logic_land ( )
 }
 
 template < typename mediator >
-shy_logic_land < mediator > & shy_logic_land < mediator > :: operator= ( const shy_logic_land < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_land < mediator > :: _logic_land_consts_type :: _logic_land_consts_type ( )
 {
     platform_math :: make_num_whole ( create_rows_per_frame , 8 ) ;

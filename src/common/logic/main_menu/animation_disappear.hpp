@@ -44,6 +44,7 @@ class shy_logic_main_menu_animation_disappear
     } ;
     
 public :
+    shy_logic_main_menu_animation_disappear ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
@@ -51,6 +52,7 @@ public :
     void receive ( typename messages :: logic_main_menu_animation_disappear_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
 private :
+    shy_logic_main_menu_animation_disappear < mediator > operator= ( const shy_logic_main_menu_animation_disappear < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _transform_request_received ( ) ;
     void _compute_delay ( ) ;
@@ -76,6 +78,11 @@ shy_logic_main_menu_animation_disappear < mediator > :: _logic_main_menu_animati
     platform_math :: make_num_fract ( delay_per_row_in_seconds , 5 , 100 ) ;
     platform_math :: make_num_fract ( scale_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( scale_end , 1 , 10 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_animation_disappear < mediator > :: shy_logic_main_menu_animation_disappear ( )
+{
 }
 
 template < typename mediator >

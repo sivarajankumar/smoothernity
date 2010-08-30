@@ -126,13 +126,6 @@ shy_logic_main_menu_layout < mediator > :: shy_logic_main_menu_layout ( )
 }
 
 template < typename mediator >
-shy_logic_main_menu_layout < mediator > &
-shy_logic_main_menu_layout < mediator > :: operator= ( const shy_logic_main_menu_layout < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_main_menu_layout < mediator > :: _logic_main_menu_layout_consts_type :: _logic_main_menu_layout_consts_type ( )
 {
     platform_math :: make_num_fract ( letter_size_fract_horizontal_spacing , 0 , 10 ) ;

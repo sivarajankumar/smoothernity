@@ -71,12 +71,6 @@ shy_logic_fidget < mediator > :: shy_logic_fidget ( )
 }
 
 template < typename mediator >
-shy_logic_fidget < mediator > & shy_logic_fidget < mediator > :: operator= ( const shy_logic_fidget < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_fidget < mediator > :: _logic_fidget_consts_type :: _logic_fidget_consts_type ( )
 {
     platform_math :: make_num_fract ( fidget_size , 3 , 10 ) ;

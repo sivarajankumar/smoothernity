@@ -136,13 +136,6 @@ shy_logic_main_menu_meshes_creator < mediator > :: shy_logic_main_menu_meshes_cr
 }
 
 template < typename mediator >
-shy_logic_main_menu_meshes_creator < mediator > & 
-shy_logic_main_menu_meshes_creator < mediator > :: operator= ( const shy_logic_main_menu_meshes_creator < mediator > & )
-{
-	return * this ;
-}
-
-template < typename mediator >
 void shy_logic_main_menu_meshes_creator < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;

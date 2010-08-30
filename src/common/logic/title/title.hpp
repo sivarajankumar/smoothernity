@@ -146,12 +146,6 @@ shy_logic_title < mediator > :: shy_logic_title ( )
 }
 
 template < typename mediator >
-shy_logic_title < mediator > & shy_logic_title < mediator > :: operator= ( const shy_logic_title < mediator > & )
-{
-    return * this ;
-}
-
-template < typename mediator >
 shy_logic_title < mediator > :: _logic_title_consts_type :: _logic_title_consts_type ( )
 {
     platform_math :: make_num_fract ( appear_pos_angle_periods , 11 , 2 ) ;

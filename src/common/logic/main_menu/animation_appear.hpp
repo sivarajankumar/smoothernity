@@ -46,12 +46,14 @@ class shy_logic_main_menu_animation_appear
     } ;
     
 public :
+    shy_logic_main_menu_animation_appear ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_animation_appear_transform_request ) ;
 private :
+    shy_logic_main_menu_animation_appear < mediator > & operator= ( const shy_logic_main_menu_animation_appear & ) ;
     void _proceed_with_transform ( ) ;
     void _transform_request_received ( ) ;
     void _compute_delay ( ) ;
@@ -77,6 +79,11 @@ shy_logic_main_menu_animation_appear < mediator > :: _logic_main_menu_animation_
     platform_math :: make_num_fract ( scale_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( scale_middle , 3 , 2 ) ;
     platform_math :: make_num_fract ( scale_end , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_animation_appear < mediator > :: shy_logic_main_menu_animation_appear ( )
+{
 }
 
 template < typename mediator >
