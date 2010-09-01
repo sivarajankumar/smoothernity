@@ -225,7 +225,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_transform ( )
 template < typename mediator >
 void shy_logic_main_menu_animation_appear < mediator > :: _reply_transform ( )
 {
-    typename messages :: logic_main_menu_animation_appear_transform_reply msg ;
+    typename messages :: logic_main_menu_letters_animation_appear_transform_reply msg ;
     msg . row = _logic_main_menu_animation_appear_transform_state . row ;
     msg . col = _logic_main_menu_animation_appear_transform_state . col ;
     msg . scale = _logic_main_menu_animation_appear_transform_state . scale ;
