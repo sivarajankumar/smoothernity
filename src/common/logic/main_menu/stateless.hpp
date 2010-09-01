@@ -172,7 +172,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_appear_transform_reply msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -181,7 +181,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_appear_transform_request msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation_appear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_appear . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -190,7 +190,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_disappear_start msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation_disappear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -208,7 +208,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_disappear_transform_reply msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -217,7 +217,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_disappear_transform_request msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation_disappear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -226,7 +226,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_idle_transform_reply msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -235,7 +235,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_idle_transform_request msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation_idle . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -253,7 +253,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_transform_request msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -272,9 +272,9 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_animation_appear . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_animation_disappear . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_animation_idle . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_appear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -283,7 +283,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_layout_position_reply msg )
 {
-    _receivers . get ( ) . logic_main_menu_animation_idle . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -320,9 +320,9 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_update msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_animation_appear . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_animation_disappear . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_animation_idle . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_appear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_meshes_creation_director . get ( ) . receive ( msg ) ;
 }
 

@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_logic_main_menu_animation
+class shy_logic_main_menu_letters_animation
 {
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
@@ -82,13 +82,13 @@ private :
 } ;
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+void shy_logic_main_menu_letters_animation < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: init )
+void shy_logic_main_menu_letters_animation < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -97,7 +97,7 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_transform_request msg )
+void shy_logic_main_menu_letters_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_transform_request msg )
 {
     _logic_main_menu_letters_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_letters_animation_transform_state . row = msg . row ;
@@ -106,7 +106,7 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_idle_transform_reply msg )
+void shy_logic_main_menu_letters_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_idle_transform_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_idle_transform_state . requested )
       && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_animation_idle_transform_state . requested_row , msg . row )
@@ -122,7 +122,7 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_reply msg )
+void shy_logic_main_menu_letters_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_appear_transform_state . requested )
       && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_animation_appear_transform_state . requested_row , msg . row )
@@ -137,7 +137,7 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_disappear_transform_reply msg )
+void shy_logic_main_menu_letters_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_disappear_transform_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_disappear_transform_state . requested )
       && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_animation_disappear_transform_state . requested_row , msg . row )
@@ -152,7 +152,7 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: _proceed_with_transform ( )
+void shy_logic_main_menu_letters_animation < mediator > :: _proceed_with_transform ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_transform_state . requested ) )
     {
@@ -177,7 +177,7 @@ void shy_logic_main_menu_animation < mediator > :: _proceed_with_transform ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: _obtain_appear_transform ( )
+void shy_logic_main_menu_letters_animation < mediator > :: _obtain_appear_transform ( )
 {
     _logic_main_menu_letters_animation_appear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_letters_animation_appear_transform_state . requested_row = _logic_main_menu_letters_animation_transform_state . row ;
@@ -189,7 +189,7 @@ void shy_logic_main_menu_animation < mediator > :: _obtain_appear_transform ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: _obtain_disappear_transform ( )
+void shy_logic_main_menu_letters_animation < mediator > :: _obtain_disappear_transform ( )
 {
     _logic_main_menu_letters_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_letters_animation_disappear_transform_state . requested_row = _logic_main_menu_letters_animation_transform_state . row ;
@@ -201,7 +201,7 @@ void shy_logic_main_menu_animation < mediator > :: _obtain_disappear_transform (
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: _obtain_idle_transform ( )
+void shy_logic_main_menu_letters_animation < mediator > :: _obtain_idle_transform ( )
 {
     _logic_main_menu_letters_animation_idle_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_letters_animation_idle_transform_state . requested_row = _logic_main_menu_letters_animation_transform_state . row ;
@@ -213,14 +213,14 @@ void shy_logic_main_menu_animation < mediator > :: _obtain_idle_transform ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: _all_transforms_received ( )
+void shy_logic_main_menu_letters_animation < mediator > :: _all_transforms_received ( )
 {
     _compute_transform ( ) ;
     _reply_animated_transform ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: _compute_transform ( )
+void shy_logic_main_menu_letters_animation < mediator > :: _compute_transform ( )
 {
     matrix_data transform ;
     vector_data position ;
@@ -248,7 +248,7 @@ void shy_logic_main_menu_animation < mediator > :: _compute_transform ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: _reply_animated_transform ( )
+void shy_logic_main_menu_letters_animation < mediator > :: _reply_animated_transform ( )
 {
     typename messages :: logic_main_menu_letters_animation_transform_reply msg ;
     msg . row = _logic_main_menu_letters_animation_transform_state . row ;

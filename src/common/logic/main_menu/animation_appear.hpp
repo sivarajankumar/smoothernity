@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_logic_main_menu_animation_appear
+class shy_logic_main_menu_letters_animation_appear
 {
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: messages messages ;
@@ -11,10 +11,10 @@ class shy_logic_main_menu_animation_appear
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
-    class _logic_main_menu_animation_appear_consts_type
+    class _logic_main_menu_letters_animation_appear_consts_type
     {
     public :
-        _logic_main_menu_animation_appear_consts_type ( ) ;
+        _logic_main_menu_letters_animation_appear_consts_type ( ) ;
     public :
         num_fract time_from_begin_to_middle_in_seconds ;
         num_fract time_from_middle_to_end_in_seconds ;
@@ -46,14 +46,14 @@ class shy_logic_main_menu_animation_appear
     } ;
     
 public :
-    shy_logic_main_menu_animation_appear ( ) ;
+    shy_logic_main_menu_letters_animation_appear ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_request ) ;
 private :
-    shy_logic_main_menu_animation_appear < mediator > & operator= ( const shy_logic_main_menu_animation_appear & ) ;
+    shy_logic_main_menu_letters_animation_appear < mediator > & operator= ( const shy_logic_main_menu_letters_animation_appear & ) ;
     void _proceed_with_transform ( ) ;
     void _transform_request_received ( ) ;
     void _compute_delay ( ) ;
@@ -63,14 +63,14 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_animation_appear_consts_type _logic_main_menu_animation_appear_consts ;
+    const _logic_main_menu_letters_animation_appear_consts_type _logic_main_menu_letters_animation_appear_consts ;
     
     _logic_main_menu_letters_animation_appear_transform_state_type _logic_main_menu_letters_animation_appear_transform_state ;
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
 } ;
 
 template < typename mediator >
-shy_logic_main_menu_animation_appear < mediator > :: _logic_main_menu_animation_appear_consts_type :: _logic_main_menu_animation_appear_consts_type ( )
+shy_logic_main_menu_letters_animation_appear < mediator > :: _logic_main_menu_letters_animation_appear_consts_type :: _logic_main_menu_letters_animation_appear_consts_type ( )
 {
     platform_math :: make_num_fract ( time_from_begin_to_middle_in_seconds , 1 , 10 ) ;
     platform_math :: make_num_fract ( time_from_middle_to_end_in_seconds , 7 , 10 ) ;
@@ -82,18 +82,18 @@ shy_logic_main_menu_animation_appear < mediator > :: _logic_main_menu_animation_
 }
 
 template < typename mediator >
-shy_logic_main_menu_animation_appear < mediator > :: shy_logic_main_menu_animation_appear ( )
+shy_logic_main_menu_letters_animation_appear < mediator > :: shy_logic_main_menu_letters_animation_appear ( )
 {
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename messages :: init )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -101,14 +101,14 @@ void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_launch_permit )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_launch_permit )
 {
     _logic_main_menu_update_state . launch_permitted = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_update )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_update )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . launch_permitted ) )
     {
@@ -119,7 +119,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_request msg )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_request msg )
 {
     _logic_main_menu_letters_animation_appear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_letters_animation_appear_transform_state . row = msg . row ;
@@ -128,7 +128,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _proceed_with_transform ( )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: _proceed_with_transform ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_appear_transform_state . requested ) )
     {
@@ -138,7 +138,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: _proceed_with_transfor
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _transform_request_received ( )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: _transform_request_received ( )
 {
     _compute_delay ( ) ;
     _compute_time ( ) ;
@@ -147,7 +147,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: _transform_request_rec
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _compute_delay ( )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: _compute_delay ( )
 {
     num_fract delay_for_row ;
     num_fract delay_for_col ;
@@ -159,8 +159,8 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_delay ( )
     
     platform_math :: make_fract_from_whole ( row , _logic_main_menu_letters_animation_appear_transform_state . row ) ;
     platform_math :: make_fract_from_whole ( col , _logic_main_menu_letters_animation_appear_transform_state . col ) ;
-    delay_per_row = _logic_main_menu_animation_appear_consts . delay_per_row_in_seconds ;
-    delay_per_col = _logic_main_menu_animation_appear_consts . delay_per_col_in_seconds ;
+    delay_per_row = _logic_main_menu_letters_animation_appear_consts . delay_per_row_in_seconds ;
+    delay_per_col = _logic_main_menu_letters_animation_appear_consts . delay_per_col_in_seconds ;
     platform_math :: mul_fracts ( delay_for_row , delay_per_row , row ) ;
     platform_math :: mul_fracts ( delay_for_col , delay_per_col , col ) ;
     platform_math :: add_fracts ( delay , delay_for_row , delay_for_col ) ;
@@ -169,7 +169,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_delay ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _compute_time ( )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: _compute_time ( )
 {
     num_fract time_begin ;
     num_fract time_middle ;
@@ -179,8 +179,8 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_time ( )
     num_fract time_from_middle_to_end ;
     
     delay = _logic_main_menu_letters_animation_appear_transform_state . delay ;
-    time_from_begin_to_middle = _logic_main_menu_animation_appear_consts . time_from_begin_to_middle_in_seconds ;
-    time_from_middle_to_end = _logic_main_menu_animation_appear_consts . time_from_middle_to_end_in_seconds ;
+    time_from_begin_to_middle = _logic_main_menu_letters_animation_appear_consts . time_from_begin_to_middle_in_seconds ;
+    time_from_middle_to_end = _logic_main_menu_letters_animation_appear_consts . time_from_middle_to_end_in_seconds ;
     time_begin = delay ;
     platform_math :: add_fracts ( time_middle , time_begin , time_from_begin_to_middle ) ;
     platform_math :: add_fracts ( time_end , time_middle , time_from_middle_to_end ) ;
@@ -191,7 +191,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_time ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _compute_transform ( )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: _compute_transform ( )
 {
     num_fract time_begin ;
     num_fract time_middle ;
@@ -206,9 +206,9 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_transform ( )
     time_middle = _logic_main_menu_letters_animation_appear_transform_state . time_middle ;
     time_end = _logic_main_menu_letters_animation_appear_transform_state . time_end ;
     time = _logic_main_menu_update_state . time ;
-    scale_begin = _logic_main_menu_animation_appear_consts . scale_begin ;
-    scale_middle = _logic_main_menu_animation_appear_consts . scale_middle ;
-    scale_end = _logic_main_menu_animation_appear_consts . scale_end ;
+    scale_begin = _logic_main_menu_letters_animation_appear_consts . scale_begin ;
+    scale_middle = _logic_main_menu_letters_animation_appear_consts . scale_middle ;
+    scale_end = _logic_main_menu_letters_animation_appear_consts . scale_end ;
     
     if ( platform_conditions :: fract_less_than_fract ( time , time_begin ) )
         scale = scale_begin ;
@@ -223,7 +223,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: _compute_transform ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: _reply_transform ( )
+void shy_logic_main_menu_letters_animation_appear < mediator > :: _reply_transform ( )
 {
     typename messages :: logic_main_menu_letters_animation_appear_transform_reply msg ;
     msg . row = _logic_main_menu_letters_animation_appear_transform_state . row ;

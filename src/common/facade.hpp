@@ -93,10 +93,10 @@ private :
         , shy_logic_land
         , shy_logic_land_stateless
         , shy_logic_main_menu
-        , shy_logic_main_menu_animation
-        , shy_logic_main_menu_animation_appear
-        , shy_logic_main_menu_animation_disappear
-        , shy_logic_main_menu_animation_idle
+        , shy_logic_main_menu_letters_animation
+        , shy_logic_main_menu_letters_animation_appear
+        , shy_logic_main_menu_letters_animation_disappear
+        , shy_logic_main_menu_letters_animation_idle
         , shy_logic_main_menu_layout
         , shy_logic_main_menu_letters_creation_director
         , shy_logic_main_menu_letters_storage
