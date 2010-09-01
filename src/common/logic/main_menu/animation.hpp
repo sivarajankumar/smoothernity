@@ -194,7 +194,7 @@ void shy_logic_main_menu_animation < mediator > :: _obtain_disappear_transform (
     _logic_main_menu_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_animation_disappear_transform_state . requested_row = _logic_main_menu_animation_transform_state . row ;
     _logic_main_menu_animation_disappear_transform_state . requested_col = _logic_main_menu_animation_transform_state . col ;
-    typename messages :: logic_main_menu_animation_disappear_transform_request msg ;
+    typename messages :: logic_main_menu_letters_animation_disappear_transform_request msg ;
     msg . row = _logic_main_menu_animation_transform_state . row ;
     msg . col = _logic_main_menu_animation_transform_state . col ;
     _mediator . get ( ) . send ( msg ) ;
