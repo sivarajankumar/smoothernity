@@ -98,7 +98,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
     typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
     platform_static_array :: element_ptr ( mesh_state , _meshes , msg . index ) ;
 
-    typename messages :: logic_main_menu_mesh_row_col_reply reply_msg ;
+    typename messages :: logic_main_menu_letters_mesh_row_col_reply reply_msg ;
     reply_msg . index = msg . index ;
     reply_msg . row = mesh_state . get ( ) . row ;
     reply_msg . col = mesh_state . get ( ) . col ;
