@@ -94,7 +94,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     platform_static_array :: element_ptr ( row_state , _rows_state . rows , msg . row ) ;
     
-    typename messages :: logic_main_menu_cols_reply reply_msg ;
+    typename messages :: logic_main_menu_letters_cols_reply reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . cols = row_state . get ( ) . cols_count ;
     _mediator . get ( ) . send ( reply_msg ) ;
