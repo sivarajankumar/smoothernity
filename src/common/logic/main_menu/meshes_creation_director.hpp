@@ -21,7 +21,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_meshes_create ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_creation_finished ) ;
+    void receive ( typename messages :: logic_main_menu_letters_meshes_creation_finished ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -63,7 +63,7 @@ void shy_logic_main_menu_meshes_creation_director < mediator > :: receive ( type
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_creation_director < mediator > :: receive ( typename messages :: logic_main_menu_meshes_creation_finished )
+void shy_logic_main_menu_meshes_creation_director < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_creation_finished )
 {
     _creation_in_progress = _platform_math_consts . get ( ) . whole_false ;
 }

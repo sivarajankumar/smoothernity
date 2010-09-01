@@ -54,7 +54,7 @@ public :
         class logic_main_menu_letters_meshes_count_reply { public : num_whole meshes ; } ;
         class logic_main_menu_letters_meshes_count_request { } ;
         class logic_main_menu_letters_meshes_create { } ;
-        class logic_main_menu_meshes_creation_finished { } ;
+        class logic_main_menu_letters_meshes_creation_finished { } ;
         class logic_main_menu_meshes_destroy_reply { } ;
         class logic_main_menu_meshes_destroy_request { } ;
         class logic_main_menu_meshes_iterate_finished { } ;
@@ -107,7 +107,7 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_count_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_count_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_create ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_creation_finished ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_creation_finished ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_destroy_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_destroy_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_iterate_finished ) ;
@@ -430,7 +430,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_meshes_creation_finished msg ) 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_creation_finished msg ) 
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_meshes_creation_director . get ( ) . receive ( msg ) ;

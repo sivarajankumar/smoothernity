@@ -25,7 +25,7 @@ public :
     void receive ( typename messages :: logic_main_menu_render ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_text_create_finished ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_creation_finished ) ;
+    void receive ( typename messages :: logic_main_menu_letters_meshes_creation_finished ) ;
     void receive ( typename messages :: logic_main_menu_meshes_destroy_reply ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -136,7 +136,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 }
 
 template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_meshes_creation_finished )
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_creation_finished )
 {
     _created = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_render_permit ( ) ) ;

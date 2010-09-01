@@ -304,7 +304,7 @@ void shy_logic_main_menu_meshes_creator < mediator > :: _move_to_next_row ( )
     else
     {
         _logic_main_menu_cols_state . cols = _platform_math_consts . get ( ) . whole_0 ;
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_creation_finished ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_creation_finished ( ) ) ;
     }
 }
 
