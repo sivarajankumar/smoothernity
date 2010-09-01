@@ -56,8 +56,8 @@ template < typename mediator >
 shy_logic_main_menu_selection_mesh < mediator > :: _logic_main_menu_selection_mesh_consts_type :: _logic_main_menu_selection_mesh_consts_type ( )
 {
     platform_math :: make_num_fract ( color_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_g , 1 , 4 ) ;
+    platform_math :: make_num_fract ( color_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
     platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
