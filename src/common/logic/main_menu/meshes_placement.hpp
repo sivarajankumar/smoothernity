@@ -60,7 +60,7 @@ public :
     shy_logic_main_menu_meshes_placement ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_place ) ;
+    void receive ( typename messages :: logic_main_menu_letters_meshes_place ) ;
     void receive ( typename messages :: logic_main_menu_letters_meshes_count_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_mesh_row_col_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_mesh_id_reply ) ;
@@ -107,7 +107,7 @@ void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_meshes_place )
+void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_place )
 {
     _logic_main_menu_meshes_place_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_placement ( ) ;
