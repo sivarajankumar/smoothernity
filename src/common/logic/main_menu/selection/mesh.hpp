@@ -38,6 +38,7 @@ private :
     void _fill_mesh_content ( ) ;
     void _place_mesh ( ) ;
     void _finalize_mesh ( ) ;
+    void _render_mesh ( ) ;
     void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
     void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
@@ -107,6 +108,7 @@ void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_mesh_render_request )
 {
+    _render_mesh ( ) ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_render_reply ( ) ) ;
 }
 
@@ -198,6 +200,14 @@ template < typename mediator >
 void shy_logic_main_menu_selection_mesh < mediator > :: _finalize_mesh ( )
 {
     typename messages :: engine_render_mesh_finalize msg ;
+    msg . mesh = _mesh ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_mesh < mediator > :: _render_mesh ( )
+{
+    typename messages :: engine_render_mesh_render msg ;
     msg . mesh = _mesh ;
     _mediator . get ( ) . send ( msg ) ;
 }
