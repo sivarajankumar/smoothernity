@@ -56,7 +56,7 @@ class shy_logic_main_menu_letters_layout
         vector_data letter_position ;
     } ;
     
-    class _logic_main_menu_rows_state_type
+    class _logic_main_menu_letters_rows_state_type
     {
     public :
         num_whole requested ;
@@ -115,7 +115,7 @@ private :
     const _logic_main_menu_letters_layout_consts_type _logic_main_menu_letters_layout_consts ;
     
     _logic_main_menu_letters_layout_state_type _logic_main_menu_letters_layout_state ;
-    _logic_main_menu_rows_state_type _logic_main_menu_rows_state ;
+    _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
     _logic_main_menu_cols_state_type _logic_main_menu_cols_state ;
     _engine_render_aspect_state_type _engine_render_aspect_state ;    
 } ;
@@ -166,11 +166,11 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: logic_main_menu_letters_rows_reply msg )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_rows_state . requested ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_rows_state . requested ) )
     {
-        _logic_main_menu_rows_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _logic_main_menu_rows_state . replied = _platform_math_consts . get ( ) . whole_true ;
-        _logic_main_menu_rows_state . rows = msg . rows ;
+        _logic_main_menu_letters_rows_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_rows_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_letters_rows_state . rows = msg . rows ;
         _proceed_with_layout ( ) ;
     }
 }
@@ -228,9 +228,9 @@ void shy_logic_main_menu_letters_layout < mediator > :: _proceed_with_layout ( )
         _logic_main_menu_letters_layout_state . requested = _platform_math_consts . get ( ) . whole_false ;
         _obtain_rows_count ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_rows_state . replied ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_rows_state . replied ) )
     {
-        _logic_main_menu_rows_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_rows_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_cols_count ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_cols_state . replied ) )
@@ -258,7 +258,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _obtain_cols_count ( )
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _obtain_rows_count ( )
 {
-    _logic_main_menu_rows_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_rows_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_rows_request ( ) ) ;
 }
 
