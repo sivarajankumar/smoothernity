@@ -13,7 +13,7 @@ class shy_logic_main_menu_meshes_destroyer
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_destroy_request ) ;
+    void receive ( typename messages :: logic_main_menu_letters_meshes_destroy_request ) ;
     void receive ( typename messages :: logic_main_menu_meshes_iteration ) ;
     void receive ( typename messages :: logic_main_menu_meshes_iterate_finished ) ;
 private :
@@ -38,7 +38,7 @@ void shy_logic_main_menu_meshes_destroyer < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_destroyer < mediator > :: receive ( typename messages :: logic_main_menu_meshes_destroy_request )
+void shy_logic_main_menu_meshes_destroyer < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_destroy_request )
 {
     _iteration_in_progress = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_iterate_start ( ) ) ;

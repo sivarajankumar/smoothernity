@@ -119,7 +119,7 @@ template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_disappear_finished )
 {
     _disappearing = _platform_math_consts . get ( ) . whole_false ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_destroy_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_destroy_request ( ) ) ;
 }
 
 template < typename mediator >
