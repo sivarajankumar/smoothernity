@@ -374,7 +374,7 @@ void shy_logic_main_menu_meshes_creator < mediator > :: _letter_tex_coords_recei
 template < typename mediator >
 void shy_logic_main_menu_meshes_creator < mediator > :: _send_mesh_created_notification ( )
 {
-    typename messages :: logic_main_menu_mesh_has_been_created msg ;
+    typename messages :: logic_main_menu_letters_mesh_has_been_created msg ;
     msg . row = _current_row ;
     msg . col = _current_col ;
     msg . mesh = _engine_render_mesh_create_state . mesh ;

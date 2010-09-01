@@ -34,7 +34,7 @@ public :
 	shy_logic_main_menu_meshes_storage ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_main_menu_mesh_has_been_created ) ;
+    void receive ( typename messages :: logic_main_menu_letters_mesh_has_been_created ) ;
     void receive ( typename messages :: logic_main_menu_mesh_id_request ) ;
     void receive ( typename messages :: logic_main_menu_meshes_count_request ) ;
     void receive ( typename messages :: logic_main_menu_mesh_row_col_request ) ;
@@ -70,7 +70,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_mesh_has_been_created msg )
+void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_has_been_created msg )
 {
     typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
     platform_static_array :: element_ptr ( mesh_state , _meshes , _meshes_count ) ;
