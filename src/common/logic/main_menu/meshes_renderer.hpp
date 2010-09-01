@@ -61,6 +61,6 @@ void shy_logic_main_menu_meshes_renderer < mediator > :: receive ( typename mess
     if ( platform_conditions :: whole_is_true ( _iteration_in_progress ) )
     {
         _iteration_in_progress = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_render_reply ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_render_reply ( ) ) ;
     }
 }

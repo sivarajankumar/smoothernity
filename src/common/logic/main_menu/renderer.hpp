@@ -50,7 +50,7 @@ public :
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: logic_fidget_render_reply ) ;
     void receive ( typename messages :: logic_text_use_text_texture_reply ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_render_reply ) ;
+    void receive ( typename messages :: logic_main_menu_letters_meshes_render_reply ) ;
 private :
     void _proceed_with_render ( ) ;
     void _render_started ( ) ;
@@ -131,7 +131,7 @@ void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages ::
 }
 
 template < typename mediator >
-void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_main_menu_meshes_render_reply )
+void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_meshes_render_state . requested ) )
     {
