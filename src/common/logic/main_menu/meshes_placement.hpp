@@ -64,7 +64,7 @@ public :
     void receive ( typename messages :: logic_main_menu_meshes_count_reply ) ;
     void receive ( typename messages :: logic_main_menu_mesh_row_col_reply ) ;
     void receive ( typename messages :: logic_main_menu_mesh_id_reply ) ;
-    void receive ( typename messages :: logic_main_menu_animation_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_transform_reply ) ;
 private :
     shy_logic_main_menu_meshes_placement < mediator > & operator= ( const shy_logic_main_menu_meshes_placement < mediator > & ) ;
     void _proceed_with_placement ( ) ;
@@ -155,7 +155,7 @@ void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_animation_transform_reply msg )
+void shy_logic_main_menu_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_transform_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_transform_state . requested )
       && platform_conditions :: wholes_are_equal ( _logic_main_menu_animation_transform_state . requested_row , msg . row )
