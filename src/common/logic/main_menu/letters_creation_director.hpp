@@ -95,5 +95,5 @@ void shy_logic_main_menu_letters_creation_director < mediator > :: _next_row ( )
 template < typename mediator >
 void shy_logic_main_menu_letters_creation_director < mediator > :: _text_create_finished ( )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_text_create_finished ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_create_finished ( ) ) ;
 }
