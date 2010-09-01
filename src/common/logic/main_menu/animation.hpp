@@ -60,7 +60,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_animation_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_reply ) ;
-    void receive ( typename messages :: logic_main_menu_animation_disappear_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_disappear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_animation_idle_transform_reply ) ;
 private :
     void _proceed_with_transform ( ) ;
@@ -137,7 +137,7 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_animation_disappear_transform_reply msg )
+void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_disappear_transform_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_disappear_transform_state . requested )
       && platform_conditions :: wholes_are_equal ( _logic_main_menu_animation_disappear_transform_state . requested_row , msg . row )
