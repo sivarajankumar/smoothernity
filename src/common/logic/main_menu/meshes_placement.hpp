@@ -203,7 +203,7 @@ template < typename mediator >
 void shy_logic_main_menu_meshes_placement < mediator > :: _obtain_meshes_count ( )
 {
     _logic_main_menu_meshes_count_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_count_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_count_request ( ) ) ;
 }
 
 template < typename mediator >
