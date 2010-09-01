@@ -282,7 +282,7 @@ void shy_logic_main_menu_animation_idle < mediator > :: _compute_transform ( )
 template < typename mediator >
 void shy_logic_main_menu_animation_idle < mediator > :: _reply_animated_transform ( )
 {
-    typename messages :: logic_main_menu_animation_idle_transform_reply msg ;
+    typename messages :: logic_main_menu_letters_animation_idle_transform_reply msg ;
     msg . row = _logic_main_menu_animation_idle_transform_state . row ;
     msg . col = _logic_main_menu_animation_idle_transform_state . col ;
     msg . position = _logic_main_menu_animation_idle_transform_state . position ;
