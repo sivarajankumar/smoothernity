@@ -41,7 +41,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letter_add ) ;
     void receive ( typename messages :: logic_main_menu_next_row ) ;
-    void receive ( typename messages :: logic_main_menu_cols_request ) ;
+    void receive ( typename messages :: logic_main_menu_letters_cols_request ) ;
     void receive ( typename messages :: logic_main_menu_rows_request ) ;
     void receive ( typename messages :: logic_main_menu_letter_request ) ;
 public :
@@ -89,7 +89,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_cols_request msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_cols_request msg )
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     platform_static_array :: element_ptr ( row_state , _rows_state . rows , msg . row ) ;

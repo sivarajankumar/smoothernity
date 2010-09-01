@@ -297,7 +297,7 @@ void shy_logic_main_menu_meshes_creator < mediator > :: _move_to_next_row ( )
     {
         _logic_main_menu_cols_state . requested = _platform_math_consts . get ( ) . whole_true ;
         _logic_main_menu_cols_state . requested_row = _current_row ;
-        typename messages :: logic_main_menu_cols_request msg ;
+        typename messages :: logic_main_menu_letters_cols_request msg ;
         msg . row = _current_row ;
         _mediator . get ( ) . send ( msg ) ;
     }

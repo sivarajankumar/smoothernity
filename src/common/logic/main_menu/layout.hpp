@@ -250,7 +250,7 @@ void shy_logic_main_menu_layout < mediator > :: _obtain_cols_count ( )
 {
     _logic_main_menu_cols_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_cols_state . requested_row = _logic_main_menu_layout_state . requested_row ;
-    typename messages :: logic_main_menu_cols_request msg ;
+    typename messages :: logic_main_menu_letters_cols_request msg ;
     msg . row = _logic_main_menu_layout_state . requested_row ;
     _mediator . get ( ) . send ( msg ) ;
 }
