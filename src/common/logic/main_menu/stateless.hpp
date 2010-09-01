@@ -244,7 +244,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_transform_reply msg )
 {
-    _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -369,7 +369,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_mesh_id_reply msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -387,7 +387,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_mesh_row_col_reply msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -405,7 +405,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_count_reply msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -489,7 +489,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_place msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_placement . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

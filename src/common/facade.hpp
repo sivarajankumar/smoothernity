@@ -103,7 +103,7 @@ private :
         , shy_logic_main_menu_letters_meshes_creation_director
         , shy_logic_main_menu_letters_meshes_creator
         , shy_logic_main_menu_letters_meshes_destroyer
-        , shy_logic_main_menu_meshes_placement
+        , shy_logic_main_menu_letters_meshes_placement
         , shy_logic_main_menu_meshes_renderer
         , shy_logic_main_menu_meshes_storage
         , shy_logic_main_menu_renderer
