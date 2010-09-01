@@ -19,7 +19,7 @@ class shy_logic_main_menu_letters_meshes_placement
         num_whole current_mesh_index ;
     } ;
     
-    class _logic_main_menu_meshes_count_state_type
+    class _logic_main_menu_letters_meshes_count_state_type
     {
     public :
         num_whole requested ;
@@ -81,7 +81,7 @@ private :
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
 
     _logic_main_menu_letters_meshes_place_state_type _logic_main_menu_letters_meshes_place_state ;
-    _logic_main_menu_meshes_count_state_type _logic_main_menu_meshes_count_state ;
+    _logic_main_menu_letters_meshes_count_state_type _logic_main_menu_letters_meshes_count_state ;
     _logic_main_menu_mesh_row_col_state_type _logic_main_menu_mesh_row_col_state ;
     _logic_main_menu_mesh_id_state_type _logic_main_menu_mesh_id_state ;
     _logic_main_menu_letters_animation_transform_state_type _logic_main_menu_letters_animation_transform_state ;
@@ -116,11 +116,11 @@ void shy_logic_main_menu_letters_meshes_placement < mediator > :: receive ( type
 template < typename mediator >
 void shy_logic_main_menu_letters_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_count_reply msg )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_meshes_count_state . requested ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_meshes_count_state . requested ) )
     {
-        _logic_main_menu_meshes_count_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _logic_main_menu_meshes_count_state . replied = _platform_math_consts . get ( ) . whole_true ;
-        _logic_main_menu_meshes_count_state . meshes = msg . meshes ;
+        _logic_main_menu_letters_meshes_count_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_meshes_count_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_letters_meshes_count_state . meshes = msg . meshes ;
         _proceed_with_placement ( ) ;
     }
 }
@@ -177,9 +177,9 @@ void shy_logic_main_menu_letters_meshes_placement < mediator > :: _proceed_with_
         _logic_main_menu_letters_meshes_place_state . requested = _platform_math_consts . get ( ) . whole_false ;
         _obtain_meshes_count ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_meshes_count_state . replied ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_meshes_count_state . replied ) )
     {
-        _logic_main_menu_meshes_count_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_meshes_count_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_first_mesh_row_col ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_mesh_row_col_state . replied ) )
@@ -202,7 +202,7 @@ void shy_logic_main_menu_letters_meshes_placement < mediator > :: _proceed_with_
 template < typename mediator >
 void shy_logic_main_menu_letters_meshes_placement < mediator > :: _obtain_meshes_count ( )
 {
-    _logic_main_menu_meshes_count_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_meshes_count_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_count_request ( ) ) ;
 }
 
@@ -265,6 +265,6 @@ template < typename mediator >
 void shy_logic_main_menu_letters_meshes_placement < mediator > :: _move_to_next_mesh ( )
 {
     platform_math :: inc_whole ( _logic_main_menu_letters_meshes_place_state . current_mesh_index ) ;
-    if ( platform_conditions :: whole_less_than_whole ( _logic_main_menu_letters_meshes_place_state . current_mesh_index , _logic_main_menu_meshes_count_state . meshes ) )
+    if ( platform_conditions :: whole_less_than_whole ( _logic_main_menu_letters_meshes_place_state . current_mesh_index , _logic_main_menu_letters_meshes_count_state . meshes ) )
         _obtain_current_mesh_row_col ( ) ;
 }
