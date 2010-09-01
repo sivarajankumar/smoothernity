@@ -97,15 +97,15 @@ private :
         , shy_logic_main_menu_letters_animation_appear
         , shy_logic_main_menu_letters_animation_disappear
         , shy_logic_main_menu_letters_animation_idle
-        , shy_logic_main_menu_letters_layout
         , shy_logic_main_menu_letters_creation_director
-        , shy_logic_main_menu_letters_storage
+        , shy_logic_main_menu_letters_layout
         , shy_logic_main_menu_letters_meshes_creation_director
         , shy_logic_main_menu_letters_meshes_creator
         , shy_logic_main_menu_letters_meshes_destroyer
         , shy_logic_main_menu_letters_meshes_placement
         , shy_logic_main_menu_letters_meshes_renderer
         , shy_logic_main_menu_letters_meshes_storage
+        , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_renderer
         , shy_logic_main_menu_stateless
         , shy_logic_sound
