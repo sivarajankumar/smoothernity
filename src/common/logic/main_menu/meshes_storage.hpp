@@ -108,7 +108,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_meshes_count_request )
 {
-    typename messages :: logic_main_menu_meshes_count_reply reply_msg ;
+    typename messages :: logic_main_menu_letters_meshes_count_reply reply_msg ;
     reply_msg . meshes = _meshes_count ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }
