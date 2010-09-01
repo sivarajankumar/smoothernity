@@ -39,7 +39,7 @@ class shy_logic_main_menu_letters_storage
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_main_menu_add_letter ) ;
+    void receive ( typename messages :: logic_main_menu_letter_add ) ;
     void receive ( typename messages :: logic_main_menu_next_row ) ;
     void receive ( typename messages :: logic_main_menu_cols_request ) ;
     void receive ( typename messages :: logic_main_menu_rows_request ) ;
@@ -70,7 +70,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_add_letter msg )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_letter_add msg )
 {
     typename platform_pointer :: template pointer < _row_state_type > row_state ;
     typename platform_pointer :: template pointer < _col_state_type > col_state ;

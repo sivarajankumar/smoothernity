@@ -81,7 +81,7 @@ void shy_logic_main_menu_letters_creation_director < mediator > :: receive ( typ
 template < typename mediator >
 void shy_logic_main_menu_letters_creation_director < mediator > :: _add_letter ( logic_text_letter_id letter )
 {
-    typename messages :: logic_main_menu_add_letter msg ;
+    typename messages :: logic_main_menu_letter_add msg ;
     msg . letter = letter ;
     _mediator . get ( ) . send ( msg ) ;
 }

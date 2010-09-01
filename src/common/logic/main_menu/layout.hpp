@@ -89,7 +89,7 @@ public :
     void receive ( typename messages :: logic_main_menu_layout_position_request ) ;
     void receive ( typename messages :: logic_main_menu_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_cols_reply ) ;
-    void receive ( typename messages :: logic_main_menu_add_letter ) ;
+    void receive ( typename messages :: logic_main_menu_letter_add ) ;
     void receive ( typename messages :: logic_main_menu_next_row ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
@@ -203,7 +203,7 @@ void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: e
 }
 
 template < typename mediator >
-void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_add_letter )
+void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_letter_add )
 {
     platform_math :: inc_whole ( _logic_main_menu_layout_state . current_cols ) ;
     engine_math :: max_whole 
