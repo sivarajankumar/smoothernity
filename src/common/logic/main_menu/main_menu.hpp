@@ -132,7 +132,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 template < typename mediator >
 void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_text_create_finished )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_create ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_create ( ) ) ;
 }
 
 template < typename mediator >
