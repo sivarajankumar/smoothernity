@@ -24,7 +24,7 @@ class shy_logic_main_menu_animation_disappear
         num_fract scale_end ;
     } ;
     
-    class _logic_main_menu_animation_disappear_transform_state_type
+    class _logic_main_menu_letters_animation_disappear_transform_state_type
     {
     public :
         num_whole requested ;
@@ -65,7 +65,7 @@ private :
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     const _logic_main_menu_animation_disappear_consts_type _logic_main_menu_animation_disappear_consts ;
     
-    _logic_main_menu_animation_disappear_transform_state_type _logic_main_menu_animation_disappear_transform_state ;
+    _logic_main_menu_letters_animation_disappear_transform_state_type _logic_main_menu_letters_animation_disappear_transform_state ;
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
 } ;
 
@@ -121,18 +121,18 @@ void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename 
 template < typename mediator >
 void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_disappear_transform_request msg )
 {
-    _logic_main_menu_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_animation_disappear_transform_state . row = msg . row ;
-    _logic_main_menu_animation_disappear_transform_state . col = msg . col ;
+    _logic_main_menu_letters_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_animation_disappear_transform_state . row = msg . row ;
+    _logic_main_menu_letters_animation_disappear_transform_state . col = msg . col ;
     _proceed_with_transform ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_animation_disappear < mediator > :: _proceed_with_transform ( )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_disappear_transform_state . requested ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_disappear_transform_state . requested ) )
     {
-        _logic_main_menu_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
         _transform_request_received ( ) ;
     }
 }
@@ -157,15 +157,15 @@ void shy_logic_main_menu_animation_disappear < mediator > :: _compute_delay ( )
     num_fract row ;
     num_fract col ;
     
-    platform_math :: make_fract_from_whole ( row , _logic_main_menu_animation_disappear_transform_state . row ) ;
-    platform_math :: make_fract_from_whole ( col , _logic_main_menu_animation_disappear_transform_state . col ) ;
+    platform_math :: make_fract_from_whole ( row , _logic_main_menu_letters_animation_disappear_transform_state . row ) ;
+    platform_math :: make_fract_from_whole ( col , _logic_main_menu_letters_animation_disappear_transform_state . col ) ;
     delay_per_row = _logic_main_menu_animation_disappear_consts . delay_per_row_in_seconds ;
     delay_per_col = _logic_main_menu_animation_disappear_consts . delay_per_col_in_seconds ;
     platform_math :: mul_fracts ( delay_for_row , delay_per_row , row ) ;
     platform_math :: mul_fracts ( delay_for_col , delay_per_col , col ) ;
     platform_math :: add_fracts ( delay , delay_for_row , delay_for_col ) ;
     
-    _logic_main_menu_animation_disappear_transform_state . delay = delay ;
+    _logic_main_menu_letters_animation_disappear_transform_state . delay = delay ;
 }
 
 template < typename mediator >
@@ -176,13 +176,13 @@ void shy_logic_main_menu_animation_disappear < mediator > :: _compute_time ( )
     num_fract delay ;
     num_fract time_from_begin_to_end_in_seconds ;
     
-    delay = _logic_main_menu_animation_disappear_transform_state . delay ;
+    delay = _logic_main_menu_letters_animation_disappear_transform_state . delay ;
     time_from_begin_to_end_in_seconds = _logic_main_menu_animation_disappear_consts . time_from_begin_to_end_in_seconds ;
     time_begin = delay ;
     platform_math :: add_fracts ( time_end , time_begin , time_from_begin_to_end_in_seconds ) ;
     
-    _logic_main_menu_animation_disappear_transform_state . time_begin = time_begin ;
-    _logic_main_menu_animation_disappear_transform_state . time_end = time_end ;
+    _logic_main_menu_letters_animation_disappear_transform_state . time_begin = time_begin ;
+    _logic_main_menu_letters_animation_disappear_transform_state . time_end = time_end ;
 }
 
 template < typename mediator >
@@ -195,8 +195,8 @@ void shy_logic_main_menu_animation_disappear < mediator > :: _compute_transform 
     num_fract scale_end ;
     num_fract scale ;
     
-    time_begin = _logic_main_menu_animation_disappear_transform_state . time_begin ;
-    time_end = _logic_main_menu_animation_disappear_transform_state . time_end ;
+    time_begin = _logic_main_menu_letters_animation_disappear_transform_state . time_begin ;
+    time_end = _logic_main_menu_letters_animation_disappear_transform_state . time_end ;
     time = _logic_main_menu_update_state . time ;
     scale_begin = _logic_main_menu_animation_disappear_consts . scale_begin ;
     scale_end = _logic_main_menu_animation_disappear_consts . scale_end ;
@@ -208,16 +208,16 @@ void shy_logic_main_menu_animation_disappear < mediator > :: _compute_transform 
     else
         scale = _platform_math_consts . get ( ) . fract_0 ;
 
-    _logic_main_menu_animation_disappear_transform_state . scale = scale ;
+    _logic_main_menu_letters_animation_disappear_transform_state . scale = scale ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_animation_disappear < mediator > :: _reply_transform ( )
 {
     typename messages :: logic_main_menu_letters_animation_disappear_transform_reply msg ;
-    msg . row = _logic_main_menu_animation_disappear_transform_state . row ;
-    msg . col = _logic_main_menu_animation_disappear_transform_state . col ;
-    msg . scale = _logic_main_menu_animation_disappear_transform_state . scale ;
+    msg . row = _logic_main_menu_letters_animation_disappear_transform_state . row ;
+    msg . col = _logic_main_menu_letters_animation_disappear_transform_state . col ;
+    msg . scale = _logic_main_menu_letters_animation_disappear_transform_state . scale ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
