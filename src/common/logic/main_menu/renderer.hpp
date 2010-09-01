@@ -256,5 +256,5 @@ template < typename mediator >
 void shy_logic_main_menu_renderer < mediator > :: _render_menu_meshes ( )
 {
     _logic_main_menu_meshes_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_render_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_render_request ( ) ) ;
 }
