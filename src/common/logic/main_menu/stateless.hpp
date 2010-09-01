@@ -59,7 +59,7 @@ public :
         class logic_main_menu_letters_meshes_destroy_request { } ;
         class logic_main_menu_letters_meshes_iterate_finished { } ;
         class logic_main_menu_letters_meshes_iterate_start { } ;
-        class logic_main_menu_meshes_iteration { public : num_whole row ; num_whole col ; engine_render_mesh_id mesh ; } ;
+        class logic_main_menu_letters_meshes_iteration { public : num_whole row ; num_whole col ; engine_render_mesh_id mesh ; } ;
         class logic_main_menu_meshes_place { } ;
         class logic_main_menu_meshes_render_reply { } ;
         class logic_main_menu_meshes_render_request { } ;
@@ -112,7 +112,7 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_destroy_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_iterate_finished ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_iterate_start ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_iteration ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_iteration ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_place ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_render_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_meshes_render_request ) ;
@@ -477,7 +477,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_meshes_iteration msg ) 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_iteration msg ) 
 {
     _receivers . get ( ) . logic_main_menu_meshes_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_meshes_destroyer . get ( ) . receive ( msg ) ;

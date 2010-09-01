@@ -124,7 +124,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
         typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
         platform_static_array :: element_ptr ( mesh_state , _meshes , i ) ;
         
-        typename messages :: logic_main_menu_meshes_iteration iteration_msg ;
+        typename messages :: logic_main_menu_letters_meshes_iteration iteration_msg ;
         iteration_msg . row = mesh_state . get ( ) . row ;
         iteration_msg . col = mesh_state . get ( ) . col ;
         iteration_msg . mesh = mesh_state . get ( ) . mesh ;

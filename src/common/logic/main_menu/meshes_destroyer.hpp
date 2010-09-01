@@ -14,7 +14,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_meshes_destroy_request ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_iteration ) ;
+    void receive ( typename messages :: logic_main_menu_letters_meshes_iteration ) ;
     void receive ( typename messages :: logic_main_menu_letters_meshes_iterate_finished ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -45,7 +45,7 @@ void shy_logic_main_menu_meshes_destroyer < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_destroyer < mediator > :: receive ( typename messages :: logic_main_menu_meshes_iteration msg )
+void shy_logic_main_menu_meshes_destroyer < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_iteration msg )
 {
     if ( platform_conditions :: whole_is_true ( _iteration_in_progress ) )
     {
