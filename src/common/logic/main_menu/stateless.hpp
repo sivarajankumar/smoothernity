@@ -43,6 +43,7 @@ public :
         class logic_main_menu_letters_animation_transform_request { public : num_whole row ; num_whole col ; } ;
         class logic_main_menu_letters_cols_reply { public : num_whole row ; num_whole cols ; } ;
         class logic_main_menu_letters_cols_request { public : num_whole row ; } ;
+        class logic_main_menu_letters_create { } ;
         class logic_main_menu_letters_layout_position_reply { public : num_whole row ; num_whole col ; vector_data position ; num_fract scale ; } ;
         class logic_main_menu_letters_layout_position_request { public : num_whole row ; num_whole col ; } ;
         class logic_main_menu_letters_mesh_create_next { } ;
@@ -68,7 +69,6 @@ public :
         class logic_main_menu_letters_rows_request { } ;
         class logic_main_menu_render { } ;
         class logic_main_menu_render_permit { } ;
-        class logic_main_menu_text_create { } ;
         class logic_main_menu_text_create_finished { } ;
         class logic_main_menu_update { } ;
     } ;
@@ -96,6 +96,7 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_animation_transform_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_cols_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_cols_request ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_letters_create ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_layout_position_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_layout_position_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_mesh_create_next ) ;
@@ -121,7 +122,6 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_rows_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_render ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_render_permit ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_text_create ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_text_create_finished ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_update ) ;
     private :
@@ -330,7 +330,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_text_create msg )
+:: send ( typename logic_main_menu_messages :: logic_main_menu_letters_create msg )
 {
     _receivers . get ( ) . logic_main_menu_letters_creation_director . get ( ) . receive ( msg ) ;
 }

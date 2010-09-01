@@ -79,7 +79,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
     if ( platform_conditions :: whole_is_true ( _creation_permitted ) )
     {
         _creation_permitted = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_text_create ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_create ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _created ) 
       && platform_conditions :: whole_is_true ( _launch_permitted )
