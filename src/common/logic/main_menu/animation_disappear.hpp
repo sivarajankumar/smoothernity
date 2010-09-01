@@ -48,7 +48,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
-    void receive ( typename messages :: logic_main_menu_animation_disappear_start ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_disappear_start ) ;
     void receive ( typename messages :: logic_main_menu_animation_disappear_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
 private :
@@ -106,7 +106,7 @@ void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename 
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename messages :: logic_main_menu_animation_disappear_start )
+void shy_logic_main_menu_animation_disappear < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_disappear_start )
 {
     _logic_main_menu_update_state . started = _platform_math_consts . get ( ) . whole_true ;
 }
