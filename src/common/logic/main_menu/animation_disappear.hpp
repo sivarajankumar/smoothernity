@@ -232,6 +232,6 @@ void shy_logic_main_menu_animation_disappear < mediator > :: _update_request_rec
     if ( platform_conditions :: fract_greater_than_fract ( _logic_main_menu_update_state . time , animation_time ) )
     {
         _logic_main_menu_update_state . started = _platform_math_consts . get ( ) . whole_false ;
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_animation_disappear_finished ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_animation_disappear_finished ( ) ) ;
     }
 }
