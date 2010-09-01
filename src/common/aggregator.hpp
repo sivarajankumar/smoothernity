@@ -34,7 +34,7 @@ template
     , template < typename mediator > class _logic_main_menu_letters_meshes_creator
     , template < typename mediator > class _logic_main_menu_letters_meshes_destroyer
     , template < typename mediator > class _logic_main_menu_letters_meshes_placement
-    , template < typename mediator > class _logic_main_menu_meshes_renderer
+    , template < typename mediator > class _logic_main_menu_letters_meshes_renderer
     , template < typename mediator > class _logic_main_menu_meshes_storage
     , template < typename mediator > class _logic_main_menu_renderer
     , template < typename mediator > class _logic_main_menu_stateless
@@ -89,7 +89,7 @@ public :
         typedef _logic_main_menu_letters_meshes_creator < mediator > logic_main_menu_letters_meshes_creator ;
         typedef _logic_main_menu_letters_meshes_destroyer < mediator > logic_main_menu_letters_meshes_destroyer ;
         typedef _logic_main_menu_letters_meshes_placement < mediator > logic_main_menu_letters_meshes_placement ;
-        typedef _logic_main_menu_meshes_renderer < mediator > logic_main_menu_meshes_renderer ;
+        typedef _logic_main_menu_letters_meshes_renderer < mediator > logic_main_menu_letters_meshes_renderer ;
         typedef _logic_main_menu_meshes_storage < mediator > logic_main_menu_meshes_storage ;
         typedef _logic_main_menu_renderer < mediator > logic_main_menu_renderer ;
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
@@ -141,7 +141,7 @@ template
     , template < typename _mediator > class _logic_main_menu_letters_meshes_creator
     , template < typename _mediator > class _logic_main_menu_letters_meshes_destroyer
     , template < typename _mediator > class _logic_main_menu_letters_meshes_placement
-    , template < typename _mediator > class _logic_main_menu_meshes_renderer
+    , template < typename _mediator > class _logic_main_menu_letters_meshes_renderer
     , template < typename _mediator > class _logic_main_menu_meshes_storage
     , template < typename _mediator > class _logic_main_menu_renderer
     , template < typename _mediator > class _logic_main_menu_stateless
@@ -181,7 +181,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_meshes_creator > scheduled_logic_main_menu_letters_meshes_creator ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_meshes_destroyer > scheduled_logic_main_menu_letters_meshes_destroyer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_meshes_placement > scheduled_logic_main_menu_letters_meshes_placement ;
-    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_meshes_renderer > scheduled_logic_main_menu_meshes_renderer ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_meshes_renderer > scheduled_logic_main_menu_letters_meshes_renderer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_meshes_storage > scheduled_logic_main_menu_meshes_storage ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_renderer > scheduled_logic_main_menu_renderer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_sound > scheduled_logic_sound ;
@@ -225,7 +225,7 @@ public :
         , scheduled_logic_main_menu_letters_meshes_creator :: template scheduled_module
         , scheduled_logic_main_menu_letters_meshes_destroyer :: template scheduled_module
         , scheduled_logic_main_menu_letters_meshes_placement :: template scheduled_module
-        , scheduled_logic_main_menu_meshes_renderer :: template scheduled_module
+        , scheduled_logic_main_menu_letters_meshes_renderer :: template scheduled_module
         , scheduled_logic_main_menu_meshes_storage :: template scheduled_module
         , scheduled_logic_main_menu_renderer :: template scheduled_module
         , _logic_main_menu_stateless
@@ -296,7 +296,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_meshes_creator :: template scheduled_module < mediator_type > logic_main_menu_letters_meshes_creator ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_meshes_destroyer :: template scheduled_module < mediator_type > logic_main_menu_letters_meshes_destroyer ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_meshes_placement :: template scheduled_module < mediator_type > logic_main_menu_letters_meshes_placement ;
-    typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_renderer :: template scheduled_module < mediator_type > logic_main_menu_meshes_renderer ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_letters_meshes_renderer :: template scheduled_module < mediator_type > logic_main_menu_letters_meshes_renderer ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_meshes_storage :: template scheduled_module < mediator_type > logic_main_menu_meshes_storage ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_renderer :: template scheduled_module < mediator_type > logic_main_menu_renderer ;
     typedef typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > logic_sound ;
@@ -339,7 +339,7 @@ private :
     logic_main_menu_letters_meshes_creator _logic_main_menu_letters_meshes_creator ;
     logic_main_menu_letters_meshes_destroyer _logic_main_menu_letters_meshes_destroyer ;
     logic_main_menu_letters_meshes_placement _logic_main_menu_letters_meshes_placement ;
-    logic_main_menu_meshes_renderer _logic_main_menu_meshes_renderer ;
+    logic_main_menu_letters_meshes_renderer _logic_main_menu_letters_meshes_renderer ;
     logic_main_menu_meshes_storage _logic_main_menu_meshes_storage ;
     logic_main_menu_renderer _logic_main_menu_renderer ;
     logic_main_menu_stateless _logic_main_menu_stateless ;
@@ -377,7 +377,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_creator > logic_main_menu_letters_meshes_creator_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_destroyer > logic_main_menu_letters_meshes_destroyer_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_placement > logic_main_menu_letters_meshes_placement_ptr ;
-    typename platform_pointer :: template pointer < logic_main_menu_meshes_renderer > logic_main_menu_meshes_renderer_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_renderer > logic_main_menu_letters_meshes_renderer_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_meshes_storage > logic_main_menu_meshes_storage_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_renderer > logic_main_menu_renderer_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > logic_main_menu_stateless_ptr ;
@@ -411,7 +411,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_letters_meshes_creator_ptr , _logic_main_menu_letters_meshes_creator ) ;
     platform_pointer :: bind ( logic_main_menu_letters_meshes_destroyer_ptr , _logic_main_menu_letters_meshes_destroyer ) ;
     platform_pointer :: bind ( logic_main_menu_letters_meshes_placement_ptr , _logic_main_menu_letters_meshes_placement ) ;
-    platform_pointer :: bind ( logic_main_menu_meshes_renderer_ptr , _logic_main_menu_meshes_renderer ) ;
+    platform_pointer :: bind ( logic_main_menu_letters_meshes_renderer_ptr , _logic_main_menu_letters_meshes_renderer ) ;
     platform_pointer :: bind ( logic_main_menu_meshes_storage_ptr , _logic_main_menu_meshes_storage ) ;
     platform_pointer :: bind ( logic_main_menu_renderer_ptr , _logic_main_menu_renderer ) ;
     platform_pointer :: bind ( logic_main_menu_stateless_ptr , _logic_main_menu_stateless ) ;
@@ -444,7 +444,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_meshes_creator_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_meshes_destroyer_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_meshes_placement_ptr , scheduler_ptr ) ;
-    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_renderer_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_meshes_renderer_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_meshes_storage_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_renderer_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_sound_ptr , scheduler_ptr ) ;
@@ -475,7 +475,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_letters_meshes_creator_ptr
         , logic_main_menu_letters_meshes_destroyer_ptr
         , logic_main_menu_letters_meshes_placement_ptr
-        , logic_main_menu_meshes_renderer_ptr
+        , logic_main_menu_letters_meshes_renderer_ptr
         , logic_main_menu_meshes_storage_ptr
         , logic_main_menu_renderer_ptr
         , logic_main_menu_stateless_ptr
