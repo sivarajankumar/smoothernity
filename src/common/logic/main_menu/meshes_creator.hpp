@@ -272,7 +272,7 @@ template < typename mediator >
 void shy_logic_main_menu_meshes_creator < mediator > :: _obtain_rows_count ( )
 {
     _logic_main_menu_rows_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_rows_request ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_rows_request ( ) ) ;
 }
 
 template < typename mediator >

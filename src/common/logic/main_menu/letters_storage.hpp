@@ -42,7 +42,7 @@ public :
     void receive ( typename messages :: logic_main_menu_letter_add ) ;
     void receive ( typename messages :: logic_main_menu_letters_next_row ) ;
     void receive ( typename messages :: logic_main_menu_letters_cols_request ) ;
-    void receive ( typename messages :: logic_main_menu_rows_request ) ;
+    void receive ( typename messages :: logic_main_menu_letters_rows_request ) ;
     void receive ( typename messages :: logic_main_menu_letter_request ) ;
 public :
     void _next_row ( ) ;
@@ -101,7 +101,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_rows_request )
+void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_rows_request )
 {
     typename messages :: logic_main_menu_letters_rows_reply reply_msg ;
     reply_msg . rows = _rows_state . rows_count ;
