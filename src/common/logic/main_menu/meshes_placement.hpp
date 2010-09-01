@@ -37,7 +37,7 @@ class shy_logic_main_menu_letters_meshes_placement
         num_whole col ;
     } ;
 
-    class _logic_main_menu_mesh_id_state_type
+    class _logic_main_menu_letters_mesh_id_state_type
     {
     public :
         num_whole requested ;
@@ -83,7 +83,7 @@ private :
     _logic_main_menu_letters_meshes_place_state_type _logic_main_menu_letters_meshes_place_state ;
     _logic_main_menu_letters_meshes_count_state_type _logic_main_menu_letters_meshes_count_state ;
     _logic_main_menu_letters_mesh_row_col_state_type _logic_main_menu_letters_mesh_row_col_state ;
-    _logic_main_menu_mesh_id_state_type _logic_main_menu_mesh_id_state ;
+    _logic_main_menu_letters_mesh_id_state_type _logic_main_menu_letters_mesh_id_state ;
     _logic_main_menu_letters_animation_transform_state_type _logic_main_menu_letters_animation_transform_state ;
 } ;
 
@@ -143,13 +143,13 @@ void shy_logic_main_menu_letters_meshes_placement < mediator > :: receive ( type
 template < typename mediator >
 void shy_logic_main_menu_letters_meshes_placement < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_id_reply msg )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_mesh_id_state . requested )
-      && platform_conditions :: wholes_are_equal ( _logic_main_menu_mesh_id_state . requested_index , msg . index )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_mesh_id_state . requested )
+      && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_mesh_id_state . requested_index , msg . index )
        )
     {
-        _logic_main_menu_mesh_id_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _logic_main_menu_mesh_id_state . replied = _platform_math_consts . get ( ) . whole_true ;
-        _logic_main_menu_mesh_id_state . mesh = msg . mesh ;
+        _logic_main_menu_letters_mesh_id_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_mesh_id_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_letters_mesh_id_state . mesh = msg . mesh ;
         _proceed_with_placement ( ) ;
     }
 }
@@ -187,9 +187,9 @@ void shy_logic_main_menu_letters_meshes_placement < mediator > :: _proceed_with_
         _logic_main_menu_letters_mesh_row_col_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_current_mesh_id ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_mesh_id_state . replied ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_mesh_id_state . replied ) )
     {
-        _logic_main_menu_mesh_id_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_mesh_id_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_animated_transform ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_transform_state . replied ) )
@@ -226,8 +226,8 @@ void shy_logic_main_menu_letters_meshes_placement < mediator > :: _obtain_curren
 template < typename mediator >
 void shy_logic_main_menu_letters_meshes_placement < mediator > :: _obtain_current_mesh_id ( )
 {
-    _logic_main_menu_mesh_id_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_mesh_id_state . requested_index = _logic_main_menu_letters_meshes_place_state . current_mesh_index ;
+    _logic_main_menu_letters_mesh_id_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_mesh_id_state . requested_index = _logic_main_menu_letters_meshes_place_state . current_mesh_index ;
     typename messages :: logic_main_menu_letters_mesh_id_request msg ;
     msg . index = _logic_main_menu_letters_meshes_place_state . current_mesh_index ;
     _mediator . get ( ) . send ( msg ) ;
@@ -257,7 +257,7 @@ void shy_logic_main_menu_letters_meshes_placement < mediator > :: _place_current
 {
     typename messages :: engine_render_mesh_set_transform msg ;
     msg . transform = _logic_main_menu_letters_animation_transform_state . transform ;
-    msg . mesh = _logic_main_menu_mesh_id_state . mesh ;
+    msg . mesh = _logic_main_menu_letters_mesh_id_state . mesh ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
