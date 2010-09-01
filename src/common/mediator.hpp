@@ -38,7 +38,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout logic_main_menu_letters_layout ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_creation_director logic_main_menu_letters_creation_director ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_creation_director logic_main_menu_meshes_creation_director ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_creation_director logic_main_menu_letters_meshes_creation_director ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_creator logic_main_menu_meshes_creator ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_destroyer logic_main_menu_meshes_destroyer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_placement logic_main_menu_meshes_placement ;
@@ -161,7 +161,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout > logic_main_menu_letters_layout ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_creation_director > logic_main_menu_letters_creation_director ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage > logic_main_menu_letters_storage ;
-        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_creation_director > logic_main_menu_meshes_creation_director ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_creation_director > logic_main_menu_letters_meshes_creation_director ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_creator > logic_main_menu_meshes_creator ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_destroyer > logic_main_menu_meshes_destroyer ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_meshes_placement > logic_main_menu_meshes_placement ;
@@ -200,7 +200,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_letters_layout >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_storage >
-        , typename platform_pointer :: template pointer < logic_main_menu_meshes_creation_director >
+        , typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_creation_director >
         , typename platform_pointer :: template pointer < logic_main_menu_meshes_creator >
         , typename platform_pointer :: template pointer < logic_main_menu_meshes_destroyer >
         , typename platform_pointer :: template pointer < logic_main_menu_meshes_placement >
@@ -272,7 +272,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_letters_layout > arg_logic_main_menu_letters_layout
     , typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director > arg_logic_main_menu_letters_creation_director
     , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
-    , typename platform_pointer :: template pointer < logic_main_menu_meshes_creation_director > arg_logic_main_menu_meshes_creation_director
+    , typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_creation_director > arg_logic_main_menu_letters_meshes_creation_director
     , typename platform_pointer :: template pointer < logic_main_menu_meshes_creator > arg_logic_main_menu_meshes_creator
     , typename platform_pointer :: template pointer < logic_main_menu_meshes_destroyer > arg_logic_main_menu_meshes_destroyer
     , typename platform_pointer :: template pointer < logic_main_menu_meshes_placement > arg_logic_main_menu_meshes_placement
@@ -309,7 +309,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_letters_layout = arg_logic_main_menu_letters_layout ;
     _receivers . logic_main_menu_letters_creation_director = arg_logic_main_menu_letters_creation_director ;
     _receivers . logic_main_menu_letters_storage = arg_logic_main_menu_letters_storage ;
-    _receivers . logic_main_menu_meshes_creation_director = arg_logic_main_menu_meshes_creation_director ;
+    _receivers . logic_main_menu_letters_meshes_creation_director = arg_logic_main_menu_letters_meshes_creation_director ;
     _receivers . logic_main_menu_meshes_creator = arg_logic_main_menu_meshes_creator ;
     _receivers . logic_main_menu_meshes_destroyer = arg_logic_main_menu_meshes_destroyer ;
     _receivers . logic_main_menu_meshes_placement = arg_logic_main_menu_meshes_placement ;
@@ -346,7 +346,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_letters_layout . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_creation_director . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_storage . get ( ) . set_mediator ( mediator_ptr ) ;
-    _receivers . logic_main_menu_meshes_creation_director . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_letters_meshes_creation_director . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_meshes_creator . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_meshes_destroyer . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_meshes_placement . get ( ) . set_mediator ( mediator_ptr ) ;
