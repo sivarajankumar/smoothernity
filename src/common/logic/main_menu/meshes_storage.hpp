@@ -35,7 +35,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_mesh_has_been_created ) ;
-    void receive ( typename messages :: logic_main_menu_mesh_id_request ) ;
+    void receive ( typename messages :: logic_main_menu_letters_mesh_id_request ) ;
     void receive ( typename messages :: logic_main_menu_meshes_count_request ) ;
     void receive ( typename messages :: logic_main_menu_mesh_row_col_request ) ;
     void receive ( typename messages :: logic_main_menu_meshes_iterate_start ) ;
@@ -81,12 +81,12 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_mesh_id_request msg )
+void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_id_request msg )
 {
     typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
     platform_static_array :: element_ptr ( mesh_state , _meshes , msg . index ) ;
     
-    typename messages :: logic_main_menu_mesh_id_reply reply_msg ;
+    typename messages :: logic_main_menu_letters_mesh_id_reply reply_msg ;
     reply_msg . index = msg . index ;
     reply_msg . mesh = mesh_state . get ( ) . mesh ;
     _mediator . get ( ) . send ( reply_msg ) ;
