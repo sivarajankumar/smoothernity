@@ -35,7 +35,7 @@ class shy_logic_main_menu_renderer
         num_whole replied ;
     } ;
     
-    class _logic_main_menu_meshes_render_state_type
+    class _logic_main_menu_letters_meshes_render_state_type
     {
     public :
         num_whole requested ;
@@ -71,7 +71,7 @@ private :
     _logic_core_use_ortho_projection_state_type _logic_core_use_ortho_projection_state ;
     _logic_fidget_render_state_type _logic_fidget_render_state ;
     _logic_text_use_text_texture_state_type _logic_text_use_text_texture_state ;
-    _logic_main_menu_meshes_render_state_type _logic_main_menu_meshes_render_state ;
+    _logic_main_menu_letters_meshes_render_state_type _logic_main_menu_letters_meshes_render_state ;
     
     num_whole _permitted ;
 } ;
@@ -133,10 +133,10 @@ void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages ::
 template < typename mediator >
 void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_render_reply )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_meshes_render_state . requested ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_meshes_render_state . requested ) )
     {
-        _logic_main_menu_meshes_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _logic_main_menu_meshes_render_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_letters_meshes_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_meshes_render_state . replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -175,9 +175,9 @@ void shy_logic_main_menu_renderer < mediator > :: _proceed_with_render ( )
         _logic_text_use_text_texture_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _render_menu_meshes ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_meshes_render_state . replied ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_meshes_render_state . replied ) )
     {
-        _logic_main_menu_meshes_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_meshes_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _render_finished ( ) ;
     }
 }
@@ -255,6 +255,6 @@ void shy_logic_main_menu_renderer < mediator > :: _select_text_texture ( )
 template < typename mediator >
 void shy_logic_main_menu_renderer < mediator > :: _render_menu_meshes ( )
 {
-    _logic_main_menu_meshes_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_meshes_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_render_request ( ) ) ;
 }
