@@ -51,7 +51,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
-    void receive ( typename messages :: logic_main_menu_animation_appear_transform_request ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_request ) ;
 private :
     shy_logic_main_menu_animation_appear < mediator > & operator= ( const shy_logic_main_menu_animation_appear & ) ;
     void _proceed_with_transform ( ) ;
@@ -119,7 +119,7 @@ void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename mes
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_animation_appear_transform_request msg )
+void shy_logic_main_menu_animation_appear < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_request msg )
 {
     _logic_main_menu_animation_appear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_animation_appear_transform_state . row = msg . row ;
