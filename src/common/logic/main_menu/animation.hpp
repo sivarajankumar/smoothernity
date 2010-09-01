@@ -58,7 +58,7 @@ class shy_logic_main_menu_animation
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_main_menu_animation_transform_request ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_appear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_disappear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_idle_transform_reply ) ;
@@ -97,7 +97,7 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_animation_transform_request msg )
+void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_transform_request msg )
 {
     _logic_main_menu_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_animation_transform_state . row = msg . row ;
