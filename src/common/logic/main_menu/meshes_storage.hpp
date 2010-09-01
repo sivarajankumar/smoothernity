@@ -130,5 +130,5 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
         iteration_msg . mesh = mesh_state . get ( ) . mesh ;
         _mediator . get ( ) . send ( iteration_msg ) ;
     }
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_iterate_finished ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_iterate_finished ( ) ) ;
 }
