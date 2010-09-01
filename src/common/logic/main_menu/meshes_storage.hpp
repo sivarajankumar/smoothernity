@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_logic_main_menu_meshes_storage
+class shy_logic_main_menu_letters_meshes_storage
 {
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
@@ -13,7 +13,7 @@ class shy_logic_main_menu_meshes_storage
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
-    class _logic_main_menu_meshes_storage_consts_type
+    class _logic_main_menu_letters_meshes_storage_consts_type
     {
     public :
         static const_int_32 max_meshes 
@@ -31,7 +31,7 @@ class shy_logic_main_menu_meshes_storage
     } ;
     
 public :
-	shy_logic_main_menu_meshes_storage ( ) ;
+	shy_logic_main_menu_letters_meshes_storage ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_mesh_has_been_created ) ;
@@ -40,27 +40,27 @@ public :
     void receive ( typename messages :: logic_main_menu_letters_mesh_row_col_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_meshes_iterate_start ) ;
 private :
-	shy_logic_main_menu_meshes_storage < mediator > & operator= ( const shy_logic_main_menu_meshes_storage < mediator > & ) ;
+	shy_logic_main_menu_letters_meshes_storage < mediator > & operator= ( const shy_logic_main_menu_letters_meshes_storage < mediator > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;    
-    typename platform_static_array :: template static_array < _mesh_state , _logic_main_menu_meshes_storage_consts_type :: max_meshes > _meshes ;
+    typename platform_static_array :: template static_array < _mesh_state , _logic_main_menu_letters_meshes_storage_consts_type :: max_meshes > _meshes ;
     num_whole _meshes_count ;
 } ;
 
 template < typename mediator >
-shy_logic_main_menu_meshes_storage < mediator > :: shy_logic_main_menu_meshes_storage ( )
+shy_logic_main_menu_letters_meshes_storage < mediator > :: shy_logic_main_menu_letters_meshes_storage ( )
 {
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+void shy_logic_main_menu_letters_meshes_storage < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: init )
+void shy_logic_main_menu_letters_meshes_storage < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -70,7 +70,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_has_been_created msg )
+void shy_logic_main_menu_letters_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_has_been_created msg )
 {
     typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
     platform_static_array :: element_ptr ( mesh_state , _meshes , _meshes_count ) ;
@@ -81,7 +81,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_id_request msg )
+void shy_logic_main_menu_letters_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_id_request msg )
 {
     typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
     platform_static_array :: element_ptr ( mesh_state , _meshes , msg . index ) ;
@@ -93,7 +93,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_row_col_request msg )
+void shy_logic_main_menu_letters_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_mesh_row_col_request msg )
 {
     typename platform_pointer :: template pointer < _mesh_state > mesh_state ;
     platform_static_array :: element_ptr ( mesh_state , _meshes , msg . index ) ;
@@ -106,7 +106,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_count_request )
+void shy_logic_main_menu_letters_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_count_request )
 {
     typename messages :: logic_main_menu_letters_meshes_count_reply reply_msg ;
     reply_msg . meshes = _meshes_count ;
@@ -114,7 +114,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_iterate_start )
+void shy_logic_main_menu_letters_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_iterate_start )
 {
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _meshes_count )

@@ -378,7 +378,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_mesh_id_request msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -396,7 +396,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_mesh_row_col_request msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -414,7 +414,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_count_request msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -470,7 +470,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_iterate_start msg ) 
 {
-    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -516,7 +516,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_letters_mesh_has_been_created msg )
 {
-    _receivers . get ( ) . logic_main_menu_meshes_storage . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_meshes_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
