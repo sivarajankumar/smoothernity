@@ -64,7 +64,7 @@ class shy_logic_main_menu_letters_layout
         num_whole rows ;
     } ;
     
-    class _logic_main_menu_cols_state_type
+    class _logic_main_menu_letters_cols_state_type
     {
     public :
         num_whole requested ;
@@ -116,7 +116,7 @@ private :
     
     _logic_main_menu_letters_layout_state_type _logic_main_menu_letters_layout_state ;
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
-    _logic_main_menu_cols_state_type _logic_main_menu_cols_state ;
+    _logic_main_menu_letters_cols_state_type _logic_main_menu_letters_cols_state ;
     _engine_render_aspect_state_type _engine_render_aspect_state ;    
 } ;
 
@@ -178,13 +178,13 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: logic_main_menu_letters_cols_reply msg )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_cols_state . requested )
-      && platform_conditions :: wholes_are_equal ( _logic_main_menu_cols_state . requested_row , msg . row )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_cols_state . requested )
+      && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_cols_state . requested_row , msg . row )
        )
     {
-        _logic_main_menu_cols_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _logic_main_menu_cols_state . replied = _platform_math_consts . get ( ) . whole_true ;
-        _logic_main_menu_cols_state . cols = msg . cols ;
+        _logic_main_menu_letters_cols_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_cols_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_letters_cols_state . cols = msg . cols ;
         _proceed_with_layout ( ) ;
     }
 }
@@ -233,9 +233,9 @@ void shy_logic_main_menu_letters_layout < mediator > :: _proceed_with_layout ( )
         _logic_main_menu_letters_rows_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_cols_count ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_cols_state . replied ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_cols_state . replied ) )
     {
-        _logic_main_menu_cols_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_cols_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_aspect_ratio ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . replied ) )
@@ -248,8 +248,8 @@ void shy_logic_main_menu_letters_layout < mediator > :: _proceed_with_layout ( )
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _obtain_cols_count ( )
 {
-    _logic_main_menu_cols_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_cols_state . requested_row = _logic_main_menu_letters_layout_state . requested_row ;
+    _logic_main_menu_letters_cols_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_cols_state . requested_row = _logic_main_menu_letters_layout_state . requested_row ;
     typename messages :: logic_main_menu_letters_cols_request msg ;
     msg . row = _logic_main_menu_letters_layout_state . requested_row ;
     _mediator . get ( ) . send ( msg ) ;
@@ -397,7 +397,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_row_rect ( )
     _rect row_rect ;
     num_fract letter_size ;
     
-    platform_math :: make_fract_from_whole ( letters_in_row , _logic_main_menu_cols_state . cols ) ;
+    platform_math :: make_fract_from_whole ( letters_in_row , _logic_main_menu_letters_cols_state . cols ) ;
     platform_math :: sub_fracts ( spacings_in_row , letters_in_row , _platform_math_consts . get ( ) . fract_1 ) ;
 
     letters_width = letters_in_row ;
