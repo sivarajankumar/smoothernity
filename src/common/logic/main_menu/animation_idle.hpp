@@ -64,7 +64,7 @@ public :
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_idle_transform_request ) ;
-    void receive ( typename messages :: logic_main_menu_layout_position_reply ) ;
+    void receive ( typename messages :: logic_main_menu_letters_layout_position_reply ) ;
 private :
     shy_logic_main_menu_animation_idle < mediator > operator= ( const shy_logic_main_menu_animation_idle < mediator > & ) ;
     void _proceed_with_transform ( ) ;
@@ -145,7 +145,7 @@ void shy_logic_main_menu_animation_idle < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_animation_idle < mediator > :: receive ( typename messages :: logic_main_menu_layout_position_reply msg )
+void shy_logic_main_menu_animation_idle < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_position_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_layout_position_state . requested )
       && platform_conditions :: wholes_are_equal ( _logic_main_menu_layout_position_state . requested_row , msg . row )

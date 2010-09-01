@@ -279,7 +279,7 @@ void shy_logic_main_menu_layout < mediator > :: _reply_layout ( )
 template < typename mediator >
 void shy_logic_main_menu_layout < mediator > :: _reply_computed_layout ( )
 {
-    typename messages :: logic_main_menu_layout_position_reply msg ;
+    typename messages :: logic_main_menu_letters_layout_position_reply msg ;
     msg . row = _logic_main_menu_layout_state . requested_row ;
     msg . col = _logic_main_menu_layout_state . requested_col ;
     msg . position = _logic_main_menu_layout_state . letter_position ;
