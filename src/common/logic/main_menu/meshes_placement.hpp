@@ -218,7 +218,7 @@ void shy_logic_main_menu_meshes_placement < mediator > :: _obtain_current_mesh_r
 {
     _logic_main_menu_mesh_row_col_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_mesh_row_col_state . requested_index = _logic_main_menu_meshes_place_state . current_mesh_index ;
-    typename messages :: logic_main_menu_mesh_row_col_request msg ;
+    typename messages :: logic_main_menu_letters_mesh_row_col_request msg ;
     msg . index = _logic_main_menu_meshes_place_state . current_mesh_index ;
     _mediator . get ( ) . send ( msg ) ;
 }
