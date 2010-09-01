@@ -175,6 +175,7 @@
 		8876305712068D0100CAD8EF /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303212068D0100CAD8EF /* touch.hpp */; };
 		8876305812068D0100CAD8EF /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303312068D0100CAD8EF /* mediator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
+		88FE04E1122E72F400E9C226 /* mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88FE04E0122E72F400E9C226 /* mesh.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -280,6 +281,7 @@
 		8876303212068D0100CAD8EF /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
 		8876303312068D0100CAD8EF /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
+		88FE04E0122E72F400E9C226 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -610,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				8852F72D122E5E2800243127 /* letters */,
+				88FE04DF122E72C400E9C226 /* selection */,
 				8876302412068D0100CAD8EF /* main_menu.hpp */,
 				8847D464121436800071BA80 /* renderer.hpp */,
 				8876302512068D0100CAD8EF /* stateless.hpp */,
@@ -651,6 +654,14 @@
 				8876303212068D0100CAD8EF /* touch.hpp */,
 			);
 			path = touch;
+			sourceTree = "<group>";
+		};
+		88FE04DF122E72C400E9C226 /* selection */ = {
+			isa = PBXGroup;
+			children = (
+				88FE04E0122E72F400E9C226 /* mesh.hpp */,
+			);
+			path = selection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -740,6 +751,7 @@
 				8852F747122E5E2800243127 /* renderer.hpp in Headers */,
 				8852F748122E5E2800243127 /* storage.hpp in Headers */,
 				8852F749122E5E2800243127 /* storage.hpp in Headers */,
+				88FE04E1122E72F400E9C226 /* mesh.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

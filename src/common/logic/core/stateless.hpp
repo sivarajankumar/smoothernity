@@ -80,6 +80,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_main_menu_letters_meshes_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_meshes_storage . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_renderer . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
