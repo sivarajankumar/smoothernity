@@ -72,6 +72,8 @@ public :
         class logic_main_menu_render_permit { } ;
         class logic_main_menu_selection_mesh_create { } ;
         class logic_main_menu_selection_mesh_create_finished { } ;
+        class logic_main_menu_selection_mesh_destroy_reply { } ;
+        class logic_main_menu_selection_mesh_destroy_request { } ;
         class logic_main_menu_update { } ;
     } ;
 
@@ -127,6 +129,8 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_render_permit ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_selection_mesh_create ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_selection_mesh_create_finished ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_selection_mesh_destroy_reply ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_selection_mesh_destroy_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
@@ -331,6 +335,24 @@ template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_selection_mesh_create_finished msg )
+{
+    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_selection_mesh_destroy_request msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_mesh . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_selection_mesh_destroy_reply msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
 }
