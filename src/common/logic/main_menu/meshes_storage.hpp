@@ -38,7 +38,7 @@ public :
     void receive ( typename messages :: logic_main_menu_letters_mesh_id_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_meshes_count_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_mesh_row_col_request ) ;
-    void receive ( typename messages :: logic_main_menu_meshes_iterate_start ) ;
+    void receive ( typename messages :: logic_main_menu_letters_meshes_iterate_start ) ;
 private :
 	shy_logic_main_menu_meshes_storage < mediator > & operator= ( const shy_logic_main_menu_meshes_storage < mediator > & ) ;
 private :
@@ -114,7 +114,7 @@ void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_meshes_iterate_start )
+void shy_logic_main_menu_meshes_storage < mediator > :: receive ( typename messages :: logic_main_menu_letters_meshes_iterate_start )
 {
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , _meshes_count )

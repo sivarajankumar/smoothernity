@@ -41,7 +41,7 @@ template < typename mediator >
 void shy_logic_main_menu_meshes_renderer < mediator > :: receive ( typename messages :: logic_main_menu_meshes_render_request )
 {
     _iteration_in_progress = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_meshes_iterate_start ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_iterate_start ( ) ) ;
 }
 
 template < typename mediator >
