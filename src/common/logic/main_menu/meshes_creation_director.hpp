@@ -79,7 +79,7 @@ void shy_logic_main_menu_meshes_creation_director < mediator > :: receive ( type
         while ( platform_conditions :: fract_greater_than_fract ( _time_passed , _logic_main_menu_meshes_creation_director_consts . time_between_creation ) )
         {
             platform_math :: sub_from_fract ( _time_passed , _logic_main_menu_meshes_creation_director_consts . time_between_creation ) ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_mesh_create_next ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_mesh_create_next ( ) ) ;
             if ( platform_conditions :: whole_is_true ( _creation_in_progress ) )
                 break ;
         }
