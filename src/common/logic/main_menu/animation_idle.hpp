@@ -27,7 +27,7 @@ class shy_logic_main_menu_animation_idle
         num_fract horizontal_shift_amplitude ;
     } ;
     
-    class _logic_main_menu_animation_idle_transform_state_type
+    class _logic_main_menu_letters_animation_idle_transform_state_type
     {
     public :
         num_whole requested ;
@@ -80,7 +80,7 @@ private :
     typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > _logic_main_menu_stateless_consts ;
     const _logic_main_menu_animation_idle_consts_type _logic_main_menu_animation_idle_consts ;
     
-    _logic_main_menu_animation_idle_transform_state_type _logic_main_menu_animation_idle_transform_state ;
+    _logic_main_menu_letters_animation_idle_transform_state_type _logic_main_menu_letters_animation_idle_transform_state ;
     _logic_main_menu_layout_position_state_type _logic_main_menu_layout_position_state ;
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
 } ;
@@ -138,9 +138,9 @@ void shy_logic_main_menu_animation_idle < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_animation_idle < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_idle_transform_request msg )
 {
-    _logic_main_menu_animation_idle_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_animation_idle_transform_state . row = msg . row ;
-    _logic_main_menu_animation_idle_transform_state . col = msg . col ;
+    _logic_main_menu_letters_animation_idle_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_animation_idle_transform_state . row = msg . row ;
+    _logic_main_menu_letters_animation_idle_transform_state . col = msg . col ;
     _proceed_with_transform ( ) ;
 }
 
@@ -163,9 +163,9 @@ void shy_logic_main_menu_animation_idle < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_animation_idle < mediator > :: _proceed_with_transform ( )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_idle_transform_state . requested ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_idle_transform_state . requested ) )
     {
-        _logic_main_menu_animation_idle_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_animation_idle_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
         _obtain_layout_position ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_layout_position_state . replied ) )
@@ -179,11 +179,11 @@ template < typename mediator >
 void shy_logic_main_menu_animation_idle < mediator > :: _obtain_layout_position ( )
 {
     _logic_main_menu_layout_position_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_layout_position_state . requested_row = _logic_main_menu_animation_idle_transform_state . row ;
-    _logic_main_menu_layout_position_state . requested_col = _logic_main_menu_animation_idle_transform_state . col ;
+    _logic_main_menu_layout_position_state . requested_row = _logic_main_menu_letters_animation_idle_transform_state . row ;
+    _logic_main_menu_layout_position_state . requested_col = _logic_main_menu_letters_animation_idle_transform_state . col ;
     typename messages :: logic_main_menu_letters_layout_position_request msg ;
-    msg . row = _logic_main_menu_animation_idle_transform_state . row ;
-    msg . col = _logic_main_menu_animation_idle_transform_state . col ;
+    msg . row = _logic_main_menu_letters_animation_idle_transform_state . row ;
+    msg . col = _logic_main_menu_letters_animation_idle_transform_state . col ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
@@ -207,7 +207,7 @@ void shy_logic_main_menu_animation_idle < mediator > :: _compute_horizontal_posi
     num_fract delta ;
     
     zero = _platform_math_consts . get ( ) . fract_0 ;
-    platform_math :: make_fract_from_whole ( row , _logic_main_menu_animation_idle_transform_state . row ) ;
+    platform_math :: make_fract_from_whole ( row , _logic_main_menu_letters_animation_idle_transform_state . row ) ;
     platform_math :: mul_fracts ( phase_shift , row , _logic_main_menu_animation_idle_consts . horizontal_shift_phase_per_row ) ;
     
     platform_math :: div_fracts ( phase , _logic_main_menu_update_state . time , _logic_main_menu_animation_idle_consts . horizontal_shift_period_in_seconds ) ;
@@ -221,7 +221,7 @@ void shy_logic_main_menu_animation_idle < mediator > :: _compute_horizontal_posi
     
     platform_vector :: xyz ( horizontal_position_delta , delta , zero , zero ) ;
     
-    _logic_main_menu_animation_idle_transform_state . horizontal_position_delta = horizontal_position_delta ;
+    _logic_main_menu_letters_animation_idle_transform_state . horizontal_position_delta = horizontal_position_delta ;
 }
 
 template < typename mediator >
@@ -237,8 +237,8 @@ void shy_logic_main_menu_animation_idle < mediator > :: _compute_vertical_positi
     num_fract delta ;
     
     zero = _platform_math_consts . get ( ) . fract_0 ;
-    platform_math :: make_fract_from_whole ( col , _logic_main_menu_animation_idle_transform_state . col ) ;
-    platform_math :: make_fract_from_whole ( row , _logic_main_menu_animation_idle_transform_state . row ) ;
+    platform_math :: make_fract_from_whole ( col , _logic_main_menu_letters_animation_idle_transform_state . col ) ;
+    platform_math :: make_fract_from_whole ( row , _logic_main_menu_letters_animation_idle_transform_state . row ) ;
     
     platform_math :: mul_fracts ( phase_shift_col , col , _logic_main_menu_animation_idle_consts . vertical_shift_phase_per_col ) ;
     platform_math :: mul_fracts ( phase_shift_row , row , _logic_main_menu_animation_idle_consts . vertical_shift_phase_per_row ) ;
@@ -255,7 +255,7 @@ void shy_logic_main_menu_animation_idle < mediator > :: _compute_vertical_positi
     
     platform_vector :: xyz ( vertical_position_delta , zero , delta , zero ) ;
     
-    _logic_main_menu_animation_idle_transform_state . vertical_position_delta = vertical_position_delta ;
+    _logic_main_menu_letters_animation_idle_transform_state . vertical_position_delta = vertical_position_delta ;
 }
 
 template < typename mediator >
@@ -267,25 +267,25 @@ void shy_logic_main_menu_animation_idle < mediator > :: _compute_transform ( )
     vector_data position ;
     num_fract scale ;
     
-    vertical_position_delta = _logic_main_menu_animation_idle_transform_state . vertical_position_delta ;
-    horizontal_position_delta = _logic_main_menu_animation_idle_transform_state . horizontal_position_delta ;
+    vertical_position_delta = _logic_main_menu_letters_animation_idle_transform_state . vertical_position_delta ;
+    horizontal_position_delta = _logic_main_menu_letters_animation_idle_transform_state . horizontal_position_delta ;
     layout_position = _logic_main_menu_layout_position_state . position ;
     scale = _logic_main_menu_layout_position_state . scale ;
     
     platform_vector :: add ( position , vertical_position_delta , horizontal_position_delta ) ;
     platform_vector :: add_to ( position , layout_position ) ;
         
-    _logic_main_menu_animation_idle_transform_state . position = position ;
-    _logic_main_menu_animation_idle_transform_state . scale = scale ;
+    _logic_main_menu_letters_animation_idle_transform_state . position = position ;
+    _logic_main_menu_letters_animation_idle_transform_state . scale = scale ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_animation_idle < mediator > :: _reply_animated_transform ( )
 {
     typename messages :: logic_main_menu_letters_animation_idle_transform_reply msg ;
-    msg . row = _logic_main_menu_animation_idle_transform_state . row ;
-    msg . col = _logic_main_menu_animation_idle_transform_state . col ;
-    msg . position = _logic_main_menu_animation_idle_transform_state . position ;
-    msg . scale = _logic_main_menu_animation_idle_transform_state . scale ;
+    msg . row = _logic_main_menu_letters_animation_idle_transform_state . row ;
+    msg . col = _logic_main_menu_letters_animation_idle_transform_state . col ;
+    msg . position = _logic_main_menu_letters_animation_idle_transform_state . position ;
+    msg . scale = _logic_main_menu_letters_animation_idle_transform_state . scale ;
     _mediator . get ( ) . send ( msg ) ;
 }
