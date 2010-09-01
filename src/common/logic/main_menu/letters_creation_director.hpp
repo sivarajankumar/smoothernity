@@ -89,7 +89,7 @@ void shy_logic_main_menu_letters_creation_director < mediator > :: _add_letter (
 template < typename mediator >
 void shy_logic_main_menu_letters_creation_director < mediator > :: _next_row ( )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_next_row ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_next_row ( ) ) ;
 }
 
 template < typename mediator >
