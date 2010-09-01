@@ -64,9 +64,9 @@ public :
         class logic_main_menu_letters_meshes_render_reply { } ;
         class logic_main_menu_letters_meshes_render_request { } ;
         class logic_main_menu_letters_next_row { } ;
+        class logic_main_menu_letters_rows_reply { public : num_whole rows ; } ;
         class logic_main_menu_render { } ;
         class logic_main_menu_render_permit { } ;
-        class logic_main_menu_rows_reply { public : num_whole rows ; } ;
         class logic_main_menu_rows_request { } ;
         class logic_main_menu_text_create { } ;
         class logic_main_menu_text_create_finished { } ;
@@ -117,9 +117,9 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_render_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_meshes_render_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_letters_next_row ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_letters_rows_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_render ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_render_permit ) ;
-        void send ( typename logic_main_menu_messages :: logic_main_menu_rows_reply ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_rows_request ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_text_create ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_text_create_finished ) ;
@@ -569,7 +569,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_stateless < mediator > 
 :: logic_main_menu_sender < receivers > 
-:: send ( typename logic_main_menu_messages :: logic_main_menu_rows_reply msg ) 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_letters_rows_reply msg ) 
 {
     _receivers . get ( ) . logic_main_menu_meshes_creator . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_layout . get ( ) . receive ( msg ) ;

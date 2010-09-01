@@ -103,7 +103,7 @@ void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename mess
 template < typename mediator >
 void shy_logic_main_menu_letters_storage < mediator > :: receive ( typename messages :: logic_main_menu_rows_request )
 {
-    typename messages :: logic_main_menu_rows_reply reply_msg ;
+    typename messages :: logic_main_menu_letters_rows_reply reply_msg ;
     reply_msg . rows = _rows_state . rows_count ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }

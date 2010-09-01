@@ -82,7 +82,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_mesh_create_next ) ;
     void receive ( typename messages :: logic_main_menu_letters_cols_reply ) ;
-    void receive ( typename messages :: logic_main_menu_rows_reply ) ;
+    void receive ( typename messages :: logic_main_menu_letters_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_letter_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_text_letter_big_tex_coords_reply ) ;
@@ -181,7 +181,7 @@ void shy_logic_main_menu_meshes_creator < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_meshes_creator < mediator > :: receive ( typename messages :: logic_main_menu_rows_reply msg )
+void shy_logic_main_menu_meshes_creator < mediator > :: receive ( typename messages :: logic_main_menu_letters_rows_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_rows_state . requested ) )
     {

@@ -87,7 +87,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_position_request ) ;
-    void receive ( typename messages :: logic_main_menu_rows_reply ) ;
+    void receive ( typename messages :: logic_main_menu_letters_rows_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_cols_reply ) ;
     void receive ( typename messages :: logic_main_menu_letter_add ) ;
     void receive ( typename messages :: logic_main_menu_letters_next_row ) ;
@@ -164,7 +164,7 @@ void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: l
 }
 
 template < typename mediator >
-void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_rows_reply msg )
+void shy_logic_main_menu_layout < mediator > :: receive ( typename messages :: logic_main_menu_letters_rows_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_rows_state . requested ) )
     {
