@@ -42,6 +42,13 @@ class shy_logic_main_menu_renderer
         num_whole replied ;
     } ;
     
+    class _logic_main_menu_selection_mesh_render_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+    } ;
+    
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
@@ -51,6 +58,7 @@ public :
     void receive ( typename messages :: logic_fidget_render_reply ) ;
     void receive ( typename messages :: logic_text_use_text_texture_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_meshes_render_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_mesh_render_reply ) ;
 private :
     void _proceed_with_render ( ) ;
     void _render_started ( ) ;
@@ -61,7 +69,8 @@ private :
     void _request_ortho_projection ( ) ;
     void _request_fidget_render ( ) ;
     void _select_text_texture ( ) ;
-    void _render_menu_meshes ( ) ;
+    void _render_selection_mesh ( ) ;
+    void _render_letters_meshes ( ) ;
     void _render_finished ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -72,6 +81,7 @@ private :
     _logic_fidget_render_state_type _logic_fidget_render_state ;
     _logic_text_use_text_texture_state_type _logic_text_use_text_texture_state ;
     _logic_main_menu_letters_meshes_render_state_type _logic_main_menu_letters_meshes_render_state ;
+    _logic_main_menu_selection_mesh_render_state_type _logic_main_menu_selection_mesh_render_state ;
     
     num_whole _permitted ;
 } ;
@@ -142,6 +152,17 @@ void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages ::
 }
 
 template < typename mediator >
+void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_main_menu_selection_mesh_render_reply )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_mesh_render_state . requested ) )
+    {
+        _logic_main_menu_selection_mesh_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_selection_mesh_render_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_text_use_text_texture_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_text_use_text_texture_state . requested ) )
@@ -168,12 +189,17 @@ void shy_logic_main_menu_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_fidget_render_state . replied ) )
     {
         _logic_fidget_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _render_selection_mesh ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_mesh_render_state . replied ) )
+    {
+        _logic_main_menu_selection_mesh_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _select_text_texture ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_text_use_text_texture_state . replied ) )
     {
         _logic_text_use_text_texture_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _render_menu_meshes ( ) ;
+        _render_letters_meshes ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_meshes_render_state . replied ) )
     {
@@ -253,8 +279,15 @@ void shy_logic_main_menu_renderer < mediator > :: _select_text_texture ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_renderer < mediator > :: _render_menu_meshes ( )
+void shy_logic_main_menu_renderer < mediator > :: _render_letters_meshes ( )
 {
     _logic_main_menu_letters_meshes_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_render_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_renderer < mediator > :: _render_selection_mesh ( )
+{
+    _logic_main_menu_selection_mesh_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_render_request ( ) ) ;
 }

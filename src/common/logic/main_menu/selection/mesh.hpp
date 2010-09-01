@@ -10,6 +10,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_create ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_destroy_request ) ;
+    void receive ( typename messages :: logic_main_menu_selection_mesh_render_request ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -39,4 +40,10 @@ template < typename mediator >
 void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_mesh_destroy_request )
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_destroy_reply ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_mesh_render_request )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_render_reply ( ) ) ;
 }
