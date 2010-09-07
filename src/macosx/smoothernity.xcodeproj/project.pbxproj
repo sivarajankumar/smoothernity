@@ -174,8 +174,8 @@
 		8876305712068D0100CAD8EF /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303212068D0100CAD8EF /* touch.hpp */; };
 		8876305812068D0100CAD8EF /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303312068D0100CAD8EF /* mediator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
-		8891230612368B99002574A3 /* layout.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8891230512368B99002574A3 /* layout.hpp */; };
 		8891230B12368BEB002574A3 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8891230A12368BEB002574A3 /* stateless.hpp */; };
+		8891232112369111002574A3 /* position.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8891232012369111002574A3 /* position.hpp */; };
 		88B5F438123647A50044BEB2 /* tracker.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F437123647A50044BEB2 /* tracker.hpp */; };
 		88B5F46F123659520044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F46E123659520044BEB2 /* stateless.hpp */; };
 		88B5F49012365D760044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F48F12365D760044BEB2 /* stateless.hpp */; };
@@ -286,8 +286,8 @@
 		8876303212068D0100CAD8EF /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
 		8876303312068D0100CAD8EF /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
-		8891230512368B99002574A3 /* layout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = layout.hpp; sourceTree = "<group>"; };
 		8891230A12368BEB002574A3 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		8891232012369111002574A3 /* position.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = position.hpp; sourceTree = "<group>"; };
 		88B5F437123647A50044BEB2 /* tracker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tracker.hpp; sourceTree = "<group>"; };
 		88B5F46E123659520044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88B5F48F12365D760044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
@@ -674,7 +674,7 @@
 		8891230412368B99002574A3 /* layout */ = {
 			isa = PBXGroup;
 			children = (
-				8891230512368B99002574A3 /* layout.hpp */,
+				8891232012369111002574A3 /* position.hpp */,
 				8891230A12368BEB002574A3 /* stateless.hpp */,
 			);
 			path = layout;
@@ -782,8 +782,8 @@
 				88B5F49012365D760044BEB2 /* stateless.hpp in Headers */,
 				88B5F4CB123665840044BEB2 /* stateless.hpp in Headers */,
 				88B5F4D81236682E0044BEB2 /* stateless.hpp in Headers */,
-				8891230612368B99002574A3 /* layout.hpp in Headers */,
 				8891230B12368BEB002574A3 /* stateless.hpp in Headers */,
+				8891232112369111002574A3 /* position.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

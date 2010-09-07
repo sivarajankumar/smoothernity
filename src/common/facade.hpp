@@ -36,7 +36,7 @@
 #include "logic/main_menu/letters/animation/idle.hpp"
 #include "logic/main_menu/letters/animation/stateless.hpp"
 #include "logic/main_menu/letters/creation_director.hpp"
-#include "logic/main_menu/letters/layout/layout.hpp"
+#include "logic/main_menu/letters/layout/position.hpp"
 #include "logic/main_menu/letters/layout/stateless.hpp"
 #include "logic/main_menu/letters/meshes/creation_director.hpp"
 #include "logic/main_menu/letters/meshes/creator.hpp"
