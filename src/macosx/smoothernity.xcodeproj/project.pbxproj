@@ -126,7 +126,6 @@
 		8852F73F122E5E2800243127 /* disappear.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8852F731122E5E2800243127 /* disappear.hpp */; };
 		8852F740122E5E2800243127 /* idle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8852F732122E5E2800243127 /* idle.hpp */; };
 		8852F741122E5E2800243127 /* creation_director.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8852F733122E5E2800243127 /* creation_director.hpp */; };
-		8852F742122E5E2800243127 /* layout.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8852F734122E5E2800243127 /* layout.hpp */; };
 		8852F743122E5E2800243127 /* creation_director.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8852F736122E5E2800243127 /* creation_director.hpp */; };
 		8852F744122E5E2800243127 /* creator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8852F737122E5E2800243127 /* creator.hpp */; };
 		8852F745122E5E2800243127 /* destroyer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8852F738122E5E2800243127 /* destroyer.hpp */; };
@@ -175,6 +174,8 @@
 		8876305712068D0100CAD8EF /* touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303212068D0100CAD8EF /* touch.hpp */; };
 		8876305812068D0100CAD8EF /* mediator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8876303312068D0100CAD8EF /* mediator.hpp */; };
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
+		8891230612368B99002574A3 /* layout.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8891230512368B99002574A3 /* layout.hpp */; };
+		8891230B12368BEB002574A3 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8891230A12368BEB002574A3 /* stateless.hpp */; };
 		88B5F438123647A50044BEB2 /* tracker.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F437123647A50044BEB2 /* tracker.hpp */; };
 		88B5F46F123659520044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F46E123659520044BEB2 /* stateless.hpp */; };
 		88B5F49012365D760044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F48F12365D760044BEB2 /* stateless.hpp */; };
@@ -237,7 +238,6 @@
 		8852F731122E5E2800243127 /* disappear.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = disappear.hpp; sourceTree = "<group>"; };
 		8852F732122E5E2800243127 /* idle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idle.hpp; sourceTree = "<group>"; };
 		8852F733122E5E2800243127 /* creation_director.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = creation_director.hpp; sourceTree = "<group>"; };
-		8852F734122E5E2800243127 /* layout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = layout.hpp; sourceTree = "<group>"; };
 		8852F736122E5E2800243127 /* creation_director.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = creation_director.hpp; sourceTree = "<group>"; };
 		8852F737122E5E2800243127 /* creator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = creator.hpp; sourceTree = "<group>"; };
 		8852F738122E5E2800243127 /* destroyer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = destroyer.hpp; sourceTree = "<group>"; };
@@ -286,6 +286,8 @@
 		8876303212068D0100CAD8EF /* touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touch.hpp; sourceTree = "<group>"; };
 		8876303312068D0100CAD8EF /* mediator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mediator.hpp; sourceTree = "<group>"; };
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
+		8891230512368B99002574A3 /* layout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = layout.hpp; sourceTree = "<group>"; };
+		8891230A12368BEB002574A3 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88B5F437123647A50044BEB2 /* tracker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tracker.hpp; sourceTree = "<group>"; };
 		88B5F46E123659520044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88B5F48F12365D760044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
@@ -452,9 +454,9 @@
 			isa = PBXGroup;
 			children = (
 				8852F72E122E5E2800243127 /* animation */,
+				8891230412368B99002574A3 /* layout */,
 				8852F735122E5E2800243127 /* meshes */,
 				8852F733122E5E2800243127 /* creation_director.hpp */,
-				8852F734122E5E2800243127 /* layout.hpp */,
 				88B5F4CA123665840044BEB2 /* stateless.hpp */,
 				8852F73C122E5E2800243127 /* storage.hpp */,
 			);
@@ -669,6 +671,15 @@
 			path = touch;
 			sourceTree = "<group>";
 		};
+		8891230412368B99002574A3 /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				8891230512368B99002574A3 /* layout.hpp */,
+				8891230A12368BEB002574A3 /* stateless.hpp */,
+			);
+			path = layout;
+			sourceTree = "<group>";
+		};
 		88FE04DF122E72C400E9C226 /* selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -758,7 +769,6 @@
 				8852F73F122E5E2800243127 /* disappear.hpp in Headers */,
 				8852F740122E5E2800243127 /* idle.hpp in Headers */,
 				8852F741122E5E2800243127 /* creation_director.hpp in Headers */,
-				8852F742122E5E2800243127 /* layout.hpp in Headers */,
 				8852F743122E5E2800243127 /* creation_director.hpp in Headers */,
 				8852F744122E5E2800243127 /* creator.hpp in Headers */,
 				8852F745122E5E2800243127 /* destroyer.hpp in Headers */,
@@ -772,6 +782,8 @@
 				88B5F49012365D760044BEB2 /* stateless.hpp in Headers */,
 				88B5F4CB123665840044BEB2 /* stateless.hpp in Headers */,
 				88B5F4D81236682E0044BEB2 /* stateless.hpp in Headers */,
+				8891230612368B99002574A3 /* layout.hpp in Headers */,
+				8891230B12368BEB002574A3 /* stateless.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
