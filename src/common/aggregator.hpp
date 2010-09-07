@@ -29,7 +29,7 @@ template
     , template < typename mediator > class _logic_main_menu_letters_animation_idle
     , template < typename mediator > class _logic_main_menu_letters_animation_stateless
     , template < typename mediator > class _logic_main_menu_letters_creation_director
-    , template < typename mediator > class _logic_main_menu_letters_layout
+    , template < typename mediator > class _logic_main_menu_letters_layout_position
     , template < typename mediator > class _logic_main_menu_letters_layout_stateless
     , template < typename mediator > class _logic_main_menu_letters_meshes_creation_director
     , template < typename mediator > class _logic_main_menu_letters_meshes_creator
@@ -91,7 +91,7 @@ public :
         typedef _logic_main_menu_letters_animation_idle < mediator > logic_main_menu_letters_animation_idle ;
         typedef _logic_main_menu_letters_animation_stateless < mediator > logic_main_menu_letters_animation_stateless ;
         typedef _logic_main_menu_letters_creation_director < mediator > logic_main_menu_letters_creation_director ;
-        typedef _logic_main_menu_letters_layout < mediator > logic_main_menu_letters_layout ;
+        typedef _logic_main_menu_letters_layout_position < mediator > logic_main_menu_letters_layout_position ;
         typedef _logic_main_menu_letters_layout_stateless < mediator > logic_main_menu_letters_layout_stateless ;
         typedef _logic_main_menu_letters_meshes_creation_director < mediator > logic_main_menu_letters_meshes_creation_director ;
         typedef _logic_main_menu_letters_meshes_creator < mediator > logic_main_menu_letters_meshes_creator ;
@@ -150,7 +150,7 @@ template
     , template < typename _mediator > class _logic_main_menu_letters_animation_idle
     , template < typename _mediator > class _logic_main_menu_letters_animation_stateless
     , template < typename _mediator > class _logic_main_menu_letters_creation_director
-    , template < typename _mediator > class _logic_main_menu_letters_layout
+    , template < typename _mediator > class _logic_main_menu_letters_layout_position
     , template < typename _mediator > class _logic_main_menu_letters_layout_stateless
     , template < typename _mediator > class _logic_main_menu_letters_meshes_creation_director
     , template < typename _mediator > class _logic_main_menu_letters_meshes_creator
@@ -196,7 +196,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_disappear > scheduled_logic_main_menu_letters_animation_disappear ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_idle > scheduled_logic_main_menu_letters_animation_idle ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_creation_director > scheduled_logic_main_menu_letters_creation_director ;
-    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_layout > scheduled_logic_main_menu_letters_layout ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_layout_position > scheduled_logic_main_menu_letters_layout_position ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_meshes_creation_director > scheduled_logic_main_menu_letters_meshes_creation_director ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_meshes_creator > scheduled_logic_main_menu_letters_meshes_creator ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_meshes_destroyer > scheduled_logic_main_menu_letters_meshes_destroyer ;
@@ -243,7 +243,7 @@ public :
         , scheduled_logic_main_menu_letters_animation_idle :: template scheduled_module
         , _logic_main_menu_letters_animation_stateless
         , scheduled_logic_main_menu_letters_creation_director :: template scheduled_module
-        , scheduled_logic_main_menu_letters_layout :: template scheduled_module
+        , scheduled_logic_main_menu_letters_layout_position :: template scheduled_module
         , _logic_main_menu_letters_layout_stateless
         , scheduled_logic_main_menu_letters_meshes_creation_director :: template scheduled_module
         , scheduled_logic_main_menu_letters_meshes_creator :: template scheduled_module
@@ -327,7 +327,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_disappear :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_disappear ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_idle :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_idle ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_creation_director :: template scheduled_module < mediator_type > logic_main_menu_letters_creation_director ;
-    typedef typename aggregator_types :: scheduled_logic_main_menu_letters_layout :: template scheduled_module < mediator_type > logic_main_menu_letters_layout ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_letters_layout_position :: template scheduled_module < mediator_type > logic_main_menu_letters_layout_position ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_meshes_creation_director :: template scheduled_module < mediator_type > logic_main_menu_letters_meshes_creation_director ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_meshes_creator :: template scheduled_module < mediator_type > logic_main_menu_letters_meshes_creator ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_meshes_destroyer :: template scheduled_module < mediator_type > logic_main_menu_letters_meshes_destroyer ;
@@ -372,7 +372,7 @@ private :
     logic_main_menu_letters_animation_disappear _logic_main_menu_letters_animation_disappear ;
     logic_main_menu_letters_animation_idle _logic_main_menu_letters_animation_idle ;
     logic_main_menu_letters_creation_director _logic_main_menu_letters_creation_director ;
-    logic_main_menu_letters_layout _logic_main_menu_letters_layout ;
+    logic_main_menu_letters_layout_position _logic_main_menu_letters_layout_position ;
     logic_main_menu_letters_layout_stateless _logic_main_menu_letters_layout_stateless ;
     logic_main_menu_letters_meshes_creation_director _logic_main_menu_letters_meshes_creation_director ;
     logic_main_menu_letters_meshes_creator _logic_main_menu_letters_meshes_creator ;
@@ -414,7 +414,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_disappear > logic_main_menu_letters_animation_disappear_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_idle > logic_main_menu_letters_animation_idle_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director > logic_main_menu_letters_creation_director_ptr ;
-    typename platform_pointer :: template pointer < logic_main_menu_letters_layout > logic_main_menu_letters_layout_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_layout_position > logic_main_menu_letters_layout_position_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_layout_stateless > logic_main_menu_letters_layout_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_creation_director > logic_main_menu_letters_meshes_creation_director_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_creator > logic_main_menu_letters_meshes_creator_ptr ;
@@ -452,7 +452,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_letters_animation_disappear_ptr , _logic_main_menu_letters_animation_disappear ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_idle_ptr , _logic_main_menu_letters_animation_idle ) ;
     platform_pointer :: bind ( logic_main_menu_letters_creation_director_ptr , _logic_main_menu_letters_creation_director ) ;
-    platform_pointer :: bind ( logic_main_menu_letters_layout_ptr , _logic_main_menu_letters_layout ) ;
+    platform_pointer :: bind ( logic_main_menu_letters_layout_position_ptr , _logic_main_menu_letters_layout_position ) ;
     platform_pointer :: bind ( logic_main_menu_letters_layout_stateless_ptr , _logic_main_menu_letters_layout_stateless ) ;
     platform_pointer :: bind ( logic_main_menu_letters_meshes_creation_director_ptr , _logic_main_menu_letters_meshes_creation_director ) ;
     platform_pointer :: bind ( logic_main_menu_letters_meshes_creator_ptr , _logic_main_menu_letters_meshes_creator ) ;
@@ -489,7 +489,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_disappear_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_idle_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_creation_director_ptr , scheduler_ptr ) ;
-    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_layout_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_layout_position_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_meshes_creation_director_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_meshes_creator_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_meshes_destroyer_ptr , scheduler_ptr ) ;
@@ -522,7 +522,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_letters_animation_disappear_ptr
         , logic_main_menu_letters_animation_idle_ptr
         , logic_main_menu_letters_creation_director_ptr
-        , logic_main_menu_letters_layout_ptr
+        , logic_main_menu_letters_layout_position_ptr
         , logic_main_menu_letters_layout_stateless_ptr
         , logic_main_menu_letters_meshes_creation_director_ptr
         , logic_main_menu_letters_meshes_creator_ptr

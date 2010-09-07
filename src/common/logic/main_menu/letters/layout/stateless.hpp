@@ -138,7 +138,7 @@ void shy_logic_main_menu_letters_layout_stateless < mediator >
 :: logic_main_menu_letters_layout_sender < receivers > 
 :: send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_position_request msg )
 {
-    _receivers . get ( ) . logic_main_menu_letters_layout . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
