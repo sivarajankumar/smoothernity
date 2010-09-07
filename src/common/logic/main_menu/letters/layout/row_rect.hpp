@@ -8,6 +8,7 @@ class shy_logic_main_menu_letters_layout_row_rect
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_request ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -25,4 +26,10 @@ void shy_logic_main_menu_letters_layout_row_rect < mediator > :: receive ( typen
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_layout_row_rect < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_row_rect_request )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ( ) ) ;
 }

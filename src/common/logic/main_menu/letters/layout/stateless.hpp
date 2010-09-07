@@ -41,6 +41,8 @@ public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_position_reply ) ;
         void send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_position_request ) ;
+        void send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_row_rect_reply ) ;
+        void send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_row_rect_request ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -141,6 +143,23 @@ void shy_logic_main_menu_letters_layout_stateless < mediator >
 :: send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_position_request msg )
 {
     _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_letters_layout_stateless < mediator > 
+:: logic_main_menu_letters_layout_sender < receivers > 
+:: send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_row_rect_reply msg )
+{
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_letters_layout_stateless < mediator > 
+:: logic_main_menu_letters_layout_sender < receivers > 
+:: send ( typename logic_main_menu_letters_layout_messages :: logic_main_menu_letters_layout_row_rect_request msg )
+{
+    _receivers . get ( ) . logic_main_menu_letters_layout_row_rect . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
