@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_letters_layout
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: engine_math :: rect rect ;
     typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -26,15 +27,6 @@ class shy_logic_main_menu_letters_layout
         num_fract menu_position_z ;
     } ;
 
-    class _rect
-    {
-    public :
-        num_fract left ;
-        num_fract right ;
-        num_fract bottom ;
-        num_fract top ;
-    } ;
-
     class _logic_main_menu_letters_layout_state_type
     {
     public :
@@ -49,10 +41,10 @@ class shy_logic_main_menu_letters_layout
         num_fract unscaled_menu_width ;
         num_fract unscaled_menu_height ;
         num_fract menu_scale ;
-        _rect menu_rect ;
-        _rect row_rect ;
-        _rect decorated_row_rect ;
-        _rect letter_rect ;
+        rect menu_rect ;
+        rect row_rect ;
+        rect decorated_row_rect ;
+        rect letter_rect ;
         vector_data letter_position ;
     } ;
     
@@ -115,32 +107,32 @@ private :
         , num_fract unscaled_menu_height
         ) ;
     void _compute_menu_rect 
-        ( _rect & menu_rect
+        ( rect & menu_rect
         , num_fract menu_scale
         , num_fract unscaled_menu_width
         , num_fract unscaled_menu_height
         ) ;
     void _compute_row_rect
-        ( _rect & row_rect
+        ( rect & row_rect
         , num_whole row
         , num_whole cols
         , num_fract menu_scale
-        , _rect menu_rect
+        , rect menu_rect
         ) ;
     void _compute_decorated_row_rect 
-        ( _rect & decorated_row_rect
+        ( rect & decorated_row_rect
         , num_whole max_rows
         , num_whole row
         ) ;
     void _compute_letter_rect 
-        ( _rect & letter_rect
+        ( rect & letter_rect
         , num_whole col
         , num_fract menu_scale
-        , _rect row_rect
+        , rect row_rect
         ) ;
     void _compute_letter_position 
         ( vector_data & letter_position
-        , _rect letter_rect
+        , rect letter_rect
         ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -443,7 +435,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_menu_scale
 
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _compute_menu_rect 
-    ( _rect & menu_rect
+    ( rect & menu_rect
     , num_fract menu_scale
     , num_fract unscaled_menu_width
     , num_fract unscaled_menu_height
@@ -468,11 +460,11 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_menu_rect
 
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _compute_row_rect 
-    ( _rect & row_rect
+    ( rect & row_rect
     , num_whole row
     , num_whole cols
     , num_fract menu_scale
-    , _rect menu_rect
+    , rect menu_rect
     )
 {
     num_fract letters_width ;
@@ -521,7 +513,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_row_rect
 
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _compute_decorated_row_rect 
-    ( _rect & decorated_row_rect
+    ( rect & decorated_row_rect
     , num_whole max_rows
     , num_whole row
     )
@@ -548,10 +540,10 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_decorated_row_r
 
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect 
-    ( _rect & letter_rect
+    ( rect & letter_rect
     , num_whole col
     , num_fract menu_scale
-    , _rect row_rect
+    , rect row_rect
     )
 {
     num_fract col_number ;
@@ -574,7 +566,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect
 template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_position 
     ( vector_data & letter_position
-    , _rect letter_rect
+    , rect letter_rect
     )
 {
     num_fract letter_position_x ;

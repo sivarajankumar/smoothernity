@@ -9,6 +9,15 @@ class shy_engine_math
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 public :
+    class rect
+    {
+    public :
+        num_fract left ;
+        num_fract right ;
+        num_fract bottom ;
+        num_fract top ;
+    } ;
+public :
     static void catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     static void catmull_rom_spline ( num_fract & result , num_fract t , num_fract p0 , num_fract p1 , num_fract p2 , num_fract p3 ) ;
     static void ease_in_ease_out ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
