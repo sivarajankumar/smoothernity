@@ -17,7 +17,7 @@ class shy_logic_main_menu_letters_layout_position
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
-    class _logic_main_menu_letters_layout_state_type
+    class _logic_main_menu_letters_layout_position_state_type
     {
     public :
         num_whole requested ;
@@ -89,7 +89,7 @@ private :
     typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > _logic_main_menu_letters_meshes_stateless_consts ;
     typename platform_pointer :: template pointer < const logic_main_menu_letters_layout_stateless_consts_type > _logic_main_menu_letters_layout_stateless_consts ;
     
-    _logic_main_menu_letters_layout_state_type _logic_main_menu_letters_layout_state ;
+    _logic_main_menu_letters_layout_position_state_type _logic_main_menu_letters_layout_position_state ;
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
     _logic_main_menu_letters_cols_state_type _logic_main_menu_letters_cols_state ;
     _engine_render_aspect_state_type _engine_render_aspect_state ;    
@@ -115,17 +115,17 @@ void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typen
     _mediator . get ( ) . logic_main_menu_letters_layout_stateless_consts ( _logic_main_menu_letters_layout_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
-    _logic_main_menu_letters_layout_state . max_cols = _platform_math_consts . get ( ) . whole_0 ;
-    _logic_main_menu_letters_layout_state . max_rows = _platform_math_consts . get ( ) . whole_1 ;
-    _logic_main_menu_letters_layout_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
+    _logic_main_menu_letters_layout_position_state . max_cols = _platform_math_consts . get ( ) . whole_0 ;
+    _logic_main_menu_letters_layout_position_state . max_rows = _platform_math_consts . get ( ) . whole_1 ;
+    _logic_main_menu_letters_layout_position_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_position_request msg )
 {
-    _logic_main_menu_letters_layout_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_letters_layout_state . requested_col = msg . col ;
-    _logic_main_menu_letters_layout_state . requested_row = msg . row ;
+    _logic_main_menu_letters_layout_position_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_layout_position_state . requested_col = msg . col ;
+    _logic_main_menu_letters_layout_position_state . requested_row = msg . row ;
     _proceed_with_layout ( ) ;
 }
 
@@ -171,27 +171,27 @@ void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typen
 template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letter_add )
 {
-    platform_math :: inc_whole ( _logic_main_menu_letters_layout_state . current_cols ) ;
+    platform_math :: inc_whole ( _logic_main_menu_letters_layout_position_state . current_cols ) ;
     engine_math :: max_whole 
-        ( _logic_main_menu_letters_layout_state . max_cols 
-        , _logic_main_menu_letters_layout_state . max_cols 
-        , _logic_main_menu_letters_layout_state . current_cols 
+        ( _logic_main_menu_letters_layout_position_state . max_cols 
+        , _logic_main_menu_letters_layout_position_state . max_cols 
+        , _logic_main_menu_letters_layout_position_state . current_cols 
         ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letters_next_row )
 {
-    platform_math :: inc_whole ( _logic_main_menu_letters_layout_state . max_rows ) ;
-    _logic_main_menu_letters_layout_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
+    platform_math :: inc_whole ( _logic_main_menu_letters_layout_position_state . max_rows ) ;
+    _logic_main_menu_letters_layout_position_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: _proceed_with_layout ( )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_layout_state . requested ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_layout_position_state . requested ) )
     {
-        _logic_main_menu_letters_layout_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_layout_position_state . requested = _platform_math_consts . get ( ) . whole_false ;
         _obtain_rows_count ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_rows_state . replied ) )
@@ -215,9 +215,9 @@ template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: _obtain_cols_count ( )
 {
     _logic_main_menu_letters_cols_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_letters_cols_state . requested_row = _logic_main_menu_letters_layout_state . requested_row ;
+    _logic_main_menu_letters_cols_state . requested_row = _logic_main_menu_letters_layout_position_state . requested_row ;
     typename messages :: logic_main_menu_letters_cols_request msg ;
-    msg . row = _logic_main_menu_letters_layout_state . requested_row ;
+    msg . row = _logic_main_menu_letters_layout_position_state . requested_row ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
@@ -246,10 +246,10 @@ template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: _reply_computed_layout ( )
 {
     typename messages :: logic_main_menu_letters_layout_position_reply msg ;
-    msg . row = _logic_main_menu_letters_layout_state . requested_row ;
-    msg . col = _logic_main_menu_letters_layout_state . requested_col ;
-    msg . position = _logic_main_menu_letters_layout_state . letter_position ;
-    msg . scale = _logic_main_menu_letters_layout_state . menu_scale ;
+    msg . row = _logic_main_menu_letters_layout_position_state . requested_row ;
+    msg . col = _logic_main_menu_letters_layout_position_state . requested_col ;
+    msg . position = _logic_main_menu_letters_layout_position_state . letter_position ;
+    msg . scale = _logic_main_menu_letters_layout_position_state . menu_scale ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
@@ -257,10 +257,10 @@ template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: _compute_layout ( )
 {
     logic_main_menu_letters_layout_stateless :: compute_unscaled_menu_size 
-        ( _logic_main_menu_letters_layout_state . unscaled_menu_width
-        , _logic_main_menu_letters_layout_state . unscaled_menu_height
-        , _logic_main_menu_letters_layout_state . max_cols
-        , _logic_main_menu_letters_layout_state . max_rows
+        ( _logic_main_menu_letters_layout_position_state . unscaled_menu_width
+        , _logic_main_menu_letters_layout_position_state . unscaled_menu_height
+        , _logic_main_menu_letters_layout_position_state . max_cols
+        , _logic_main_menu_letters_layout_position_state . max_rows
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . letter_size_fract_horizontal_spacing
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . letter_size_fract_vertical_spacing
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . letter_size_fract_horizontal_border
@@ -268,40 +268,40 @@ void shy_logic_main_menu_letters_layout_position < mediator > :: _compute_layout
         , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size
         ) ;
     logic_main_menu_letters_layout_stateless :: compute_menu_scale 
-        ( _logic_main_menu_letters_layout_state . menu_scale
+        ( _logic_main_menu_letters_layout_position_state . menu_scale
         , _engine_render_aspect_state . width
         , _engine_render_aspect_state . height
-        , _logic_main_menu_letters_layout_state . unscaled_menu_width
-        , _logic_main_menu_letters_layout_state . unscaled_menu_height
+        , _logic_main_menu_letters_layout_position_state . unscaled_menu_width
+        , _logic_main_menu_letters_layout_position_state . unscaled_menu_height
         ) ;
     logic_main_menu_letters_layout_stateless :: compute_menu_rect 
-        ( _logic_main_menu_letters_layout_state . menu_rect
-        , _logic_main_menu_letters_layout_state . menu_scale
-        , _logic_main_menu_letters_layout_state . unscaled_menu_width
-        , _logic_main_menu_letters_layout_state . unscaled_menu_height
+        ( _logic_main_menu_letters_layout_position_state . menu_rect
+        , _logic_main_menu_letters_layout_position_state . menu_scale
+        , _logic_main_menu_letters_layout_position_state . unscaled_menu_width
+        , _logic_main_menu_letters_layout_position_state . unscaled_menu_height
         ) ;
     logic_main_menu_letters_layout_stateless :: compute_row_rect 
-        ( _logic_main_menu_letters_layout_state . row_rect
-        , _logic_main_menu_letters_layout_state . requested_row
+        ( _logic_main_menu_letters_layout_position_state . row_rect
+        , _logic_main_menu_letters_layout_position_state . requested_row
         , _logic_main_menu_letters_cols_state . cols
-        , _logic_main_menu_letters_layout_state . menu_scale
-        , _logic_main_menu_letters_layout_state . menu_rect
+        , _logic_main_menu_letters_layout_position_state . menu_scale
+        , _logic_main_menu_letters_layout_position_state . menu_rect
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . letter_size_fract_vertical_border
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . letter_size_fract_horizontal_spacing
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . letter_size_fract_vertical_spacing
         , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size
         ) ;
     logic_main_menu_letters_layout_stateless :: compute_letter_rect 
-        ( _logic_main_menu_letters_layout_state . letter_rect
-        , _logic_main_menu_letters_layout_state . requested_col
-        , _logic_main_menu_letters_layout_state . menu_scale
-        , _logic_main_menu_letters_layout_state . row_rect
+        ( _logic_main_menu_letters_layout_position_state . letter_rect
+        , _logic_main_menu_letters_layout_position_state . requested_col
+        , _logic_main_menu_letters_layout_position_state . menu_scale
+        , _logic_main_menu_letters_layout_position_state . row_rect
         , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . letter_size_fract_horizontal_spacing
         ) ;
     logic_main_menu_letters_layout_stateless :: compute_letter_position 
-        ( _logic_main_menu_letters_layout_state . letter_position
-        , _logic_main_menu_letters_layout_state . letter_rect
+        ( _logic_main_menu_letters_layout_position_state . letter_position
+        , _logic_main_menu_letters_layout_position_state . letter_rect
         , _logic_main_menu_letters_layout_stateless_consts . get ( ) . menu_position_z
         ) ;
 }
