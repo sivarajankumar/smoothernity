@@ -177,6 +177,7 @@
 		88812EE611DB7EA8003EC5C4 /* static_assert.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88812EE511DB7EA8003EC5C4 /* static_assert.hpp */; };
 		88B5F438123647A50044BEB2 /* tracker.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F437123647A50044BEB2 /* tracker.hpp */; };
 		88B5F46F123659520044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F46E123659520044BEB2 /* stateless.hpp */; };
+		88B5F49012365D760044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F48F12365D760044BEB2 /* stateless.hpp */; };
 		88FE04E1122E72F400E9C226 /* mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88FE04E0122E72F400E9C226 /* mesh.hpp */; };
 /* End PBXBuildFile section */
 
@@ -285,6 +286,7 @@
 		88812EE511DB7EA8003EC5C4 /* static_assert.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_assert.hpp; sourceTree = "<group>"; };
 		88B5F437123647A50044BEB2 /* tracker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tracker.hpp; sourceTree = "<group>"; };
 		88B5F46E123659520044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
+		88B5F48F12365D760044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88FE04E0122E72F400E9C226 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -474,6 +476,7 @@
 				8852F738122E5E2800243127 /* destroyer.hpp */,
 				8852F739122E5E2800243127 /* placement.hpp */,
 				8852F73A122E5E2800243127 /* renderer.hpp */,
+				88B5F48F12365D760044BEB2 /* stateless.hpp */,
 				8852F73B122E5E2800243127 /* storage.hpp */,
 			);
 			path = meshes;
@@ -760,6 +763,7 @@
 				88FE04E1122E72F400E9C226 /* mesh.hpp in Headers */,
 				88B5F438123647A50044BEB2 /* tracker.hpp in Headers */,
 				88B5F46F123659520044BEB2 /* stateless.hpp in Headers */,
+				88B5F49012365D760044BEB2 /* stateless.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

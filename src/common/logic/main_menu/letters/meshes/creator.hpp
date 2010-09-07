@@ -2,7 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_letters_meshes_creator
 {
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
-    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
+    typedef typename mediator :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts_type ;
     typedef typename mediator :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator :: logic_text_stateless :: logic_text_alphabet_english_type logic_text_alphabet_english_type ;
     typedef typename mediator :: logic_text_stateless :: logic_text_letter_id logic_text_letter_id ;
@@ -107,7 +107,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > _logic_main_menu_stateless_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > _logic_main_menu_letters_meshes_stateless_consts ;
     const _logic_main_menu_letters_meshes_creator_consts_type _logic_main_menu_letters_meshes_creator_consts ;
     
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
@@ -146,7 +146,7 @@ void shy_logic_main_menu_letters_meshes_creator < mediator > :: receive ( typena
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
-    _mediator . get ( ) . logic_main_menu_stateless_consts ( _logic_main_menu_stateless_consts ) ;
+    _mediator . get ( ) . logic_main_menu_letters_meshes_stateless_consts ( _logic_main_menu_letters_meshes_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
     _current_row = _platform_math_consts . get ( ) . whole_0 ;
@@ -406,7 +406,7 @@ void shy_logic_main_menu_letters_meshes_creator < mediator > :: _fill_mesh_conte
     
     mesh = _engine_render_mesh_create_state . mesh ;
     
-    platform_math :: div_fracts ( half_size , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size , _platform_math_consts . get ( ) . fract_2 ) ;
+    platform_math :: div_fracts ( half_size , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size , _platform_math_consts . get ( ) . fract_2 ) ;
     platform_math :: mul_fracts ( x_left , half_size , _platform_math_consts . get ( ) . fract_minus_1 ) ;
     platform_math :: mul_fracts ( y_bottom , half_size , _platform_math_consts . get ( ) . fract_minus_1 ) ;
     platform_math :: mul_fracts ( x_right , half_size , _platform_math_consts . get ( ) . fract_1 ) ;

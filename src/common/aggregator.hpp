@@ -35,6 +35,7 @@ template
     , template < typename mediator > class _logic_main_menu_letters_meshes_destroyer
     , template < typename mediator > class _logic_main_menu_letters_meshes_placement
     , template < typename mediator > class _logic_main_menu_letters_meshes_renderer
+    , template < typename mediator > class _logic_main_menu_letters_meshes_stateless
     , template < typename mediator > class _logic_main_menu_letters_meshes_storage
     , template < typename mediator > class _logic_main_menu_letters_storage
     , template < typename mediator > class _logic_main_menu_renderer
@@ -93,6 +94,7 @@ public :
         typedef _logic_main_menu_letters_meshes_destroyer < mediator > logic_main_menu_letters_meshes_destroyer ;
         typedef _logic_main_menu_letters_meshes_placement < mediator > logic_main_menu_letters_meshes_placement ;
         typedef _logic_main_menu_letters_meshes_renderer < mediator > logic_main_menu_letters_meshes_renderer ;
+        typedef _logic_main_menu_letters_meshes_stateless < mediator > logic_main_menu_letters_meshes_stateless ;
         typedef _logic_main_menu_letters_meshes_storage < mediator > logic_main_menu_letters_meshes_storage ;
         typedef _logic_main_menu_letters_storage < mediator > logic_main_menu_letters_storage ;
         typedef _logic_main_menu_renderer < mediator > logic_main_menu_renderer ;
@@ -148,6 +150,7 @@ template
     , template < typename _mediator > class _logic_main_menu_letters_meshes_destroyer
     , template < typename _mediator > class _logic_main_menu_letters_meshes_placement
     , template < typename _mediator > class _logic_main_menu_letters_meshes_renderer
+    , template < typename _mediator > class _logic_main_menu_letters_meshes_stateless
     , template < typename _mediator > class _logic_main_menu_letters_meshes_storage
     , template < typename _mediator > class _logic_main_menu_letters_storage
     , template < typename _mediator > class _logic_main_menu_renderer
@@ -237,6 +240,7 @@ public :
         , scheduled_logic_main_menu_letters_meshes_destroyer :: template scheduled_module
         , scheduled_logic_main_menu_letters_meshes_placement :: template scheduled_module
         , scheduled_logic_main_menu_letters_meshes_renderer :: template scheduled_module
+        , _logic_main_menu_letters_meshes_stateless
         , scheduled_logic_main_menu_letters_meshes_storage :: template scheduled_module
         , scheduled_logic_main_menu_letters_storage :: template scheduled_module
         , scheduled_logic_main_menu_renderer :: template scheduled_module
@@ -268,6 +272,7 @@ public :
     typedef _logic_image_stateless < mediator_type > logic_image_stateless ;
     typedef _logic_land_stateless < mediator_type > logic_land_stateless ;
     typedef _logic_main_menu_letters_animation_stateless < mediator_type > logic_main_menu_letters_animation_stateless ;
+    typedef _logic_main_menu_letters_meshes_stateless < mediator_type > logic_main_menu_letters_meshes_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
@@ -286,6 +291,7 @@ class shy_aggregator
     typedef typename aggregator_types :: platform :: platform_scheduler :: scheduler scheduler ;
     
     typedef typename aggregator_types :: engine_render_stateless engine_render_stateless ;
+    typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
     typedef typename aggregator_types :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename aggregator_types :: logic_text_stateless logic_text_stateless ;
     
@@ -356,6 +362,7 @@ private :
     logic_main_menu_letters_meshes_destroyer _logic_main_menu_letters_meshes_destroyer ;
     logic_main_menu_letters_meshes_placement _logic_main_menu_letters_meshes_placement ;
     logic_main_menu_letters_meshes_renderer _logic_main_menu_letters_meshes_renderer ;
+    logic_main_menu_letters_meshes_stateless _logic_main_menu_letters_meshes_stateless ;
     logic_main_menu_letters_meshes_storage _logic_main_menu_letters_meshes_storage ;
     logic_main_menu_letters_storage _logic_main_menu_letters_storage ;
     logic_main_menu_renderer _logic_main_menu_renderer ;
@@ -396,6 +403,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_destroyer > logic_main_menu_letters_meshes_destroyer_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_placement > logic_main_menu_letters_meshes_placement_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_renderer > logic_main_menu_letters_meshes_renderer_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_stateless > logic_main_menu_letters_meshes_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_storage > logic_main_menu_letters_meshes_storage_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_storage > logic_main_menu_letters_storage_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_renderer > logic_main_menu_renderer_ptr ;
@@ -432,6 +440,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_letters_meshes_destroyer_ptr , _logic_main_menu_letters_meshes_destroyer ) ;
     platform_pointer :: bind ( logic_main_menu_letters_meshes_placement_ptr , _logic_main_menu_letters_meshes_placement ) ;
     platform_pointer :: bind ( logic_main_menu_letters_meshes_renderer_ptr , _logic_main_menu_letters_meshes_renderer ) ;
+    platform_pointer :: bind ( logic_main_menu_letters_meshes_stateless_ptr , _logic_main_menu_letters_meshes_stateless ) ;
     platform_pointer :: bind ( logic_main_menu_letters_meshes_storage_ptr , _logic_main_menu_letters_meshes_storage ) ;
     platform_pointer :: bind ( logic_main_menu_letters_storage_ptr , _logic_main_menu_letters_storage ) ;
     platform_pointer :: bind ( logic_main_menu_renderer_ptr , _logic_main_menu_renderer ) ;
@@ -500,6 +509,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_letters_meshes_destroyer_ptr
         , logic_main_menu_letters_meshes_placement_ptr
         , logic_main_menu_letters_meshes_renderer_ptr
+        , logic_main_menu_letters_meshes_stateless_ptr
         , logic_main_menu_letters_meshes_storage_ptr
         , logic_main_menu_letters_storage_ptr
         , logic_main_menu_renderer_ptr

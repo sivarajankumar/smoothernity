@@ -1,7 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_letters_animation_idle
 {
-    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
+    typedef typename mediator :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -77,7 +77,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > _logic_main_menu_stateless_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > _logic_main_menu_letters_meshes_stateless_consts ;
     const _logic_main_menu_letters_animation_idle_consts_type _logic_main_menu_letters_animation_idle_consts ;
     
     _logic_main_menu_letters_animation_idle_transform_state_type _logic_main_menu_letters_animation_idle_transform_state ;
@@ -113,7 +113,7 @@ void shy_logic_main_menu_letters_animation_idle < mediator > :: receive ( typena
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
-    _mediator . get ( ) . logic_main_menu_stateless_consts ( _logic_main_menu_stateless_consts ) ;
+    _mediator . get ( ) . logic_main_menu_letters_meshes_stateless_consts ( _logic_main_menu_letters_meshes_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -217,7 +217,7 @@ void shy_logic_main_menu_letters_animation_idle < mediator > :: _compute_horizon
     platform_math :: sin ( delta , phase ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_animation_idle_consts . horizontal_shift_amplitude ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_layout_position_state . scale ) ;
-    platform_math :: mul_fract_by ( delta , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;
     
     platform_vector :: xyz ( horizontal_position_delta , delta , zero , zero ) ;
     
@@ -251,7 +251,7 @@ void shy_logic_main_menu_letters_animation_idle < mediator > :: _compute_vertica
     platform_math :: sin ( delta , phase ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_animation_idle_consts . vertical_shift_amplitude ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_layout_position_state . scale ) ;
-    platform_math :: mul_fract_by ( delta , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;
     
     platform_vector :: xyz ( vertical_position_delta , zero , delta , zero ) ;
     

@@ -3,7 +3,7 @@ class shy_logic_main_menu_letters_layout
 {
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_math :: rect rect ;
-    typedef typename mediator :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
+    typedef typename mediator :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -137,7 +137,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > _logic_main_menu_stateless_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > _logic_main_menu_letters_meshes_stateless_consts ;
     const _logic_main_menu_letters_layout_consts_type _logic_main_menu_letters_layout_consts ;
     
     _logic_main_menu_letters_layout_state_type _logic_main_menu_letters_layout_state ;
@@ -172,7 +172,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
-    _mediator . get ( ) . logic_main_menu_stateless_consts ( _logic_main_menu_stateless_consts ) ;
+    _mediator . get ( ) . logic_main_menu_letters_meshes_stateless_consts ( _logic_main_menu_letters_meshes_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     
     _logic_main_menu_letters_layout_state . max_cols = _platform_math_consts . get ( ) . whole_0 ;
@@ -404,8 +404,8 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_unscaled_menu_s
     platform_math :: add_to_fract ( menu_width , borders_width ) ;
     platform_math :: add_to_fract ( menu_height , borders_height ) ;
 
-    platform_math :: mul_fracts ( unscaled_menu_width , menu_width , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;
-    platform_math :: mul_fracts ( unscaled_menu_height , menu_height , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size ) ;    
+    platform_math :: mul_fracts ( unscaled_menu_width , menu_width , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;
+    platform_math :: mul_fracts ( unscaled_menu_height , menu_height , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;    
 }
 
 template < typename mediator >
@@ -494,7 +494,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_row_rect
     platform_math :: add_fracts ( row_width , letters_width , spacings_width ) ;
     platform_math :: add_fracts ( row_height , fract_1 , _logic_main_menu_letters_layout_consts . letter_size_fract_vertical_spacing ) ;
     
-    platform_math :: mul_fracts ( letter_size , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size , menu_scale ) ;
+    platform_math :: mul_fracts ( letter_size , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size , menu_scale ) ;
     
     platform_math :: mul_fract_by ( row_width , letter_size ) ;
     platform_math :: mul_fract_by ( row_height , letter_size ) ;
@@ -551,7 +551,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect
     num_fract letter_size ;
     
     platform_math :: make_fract_from_whole ( col_number , col ) ;
-    platform_math :: mul_fracts ( letter_size , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size , menu_scale ) ;
+    platform_math :: mul_fracts ( letter_size , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size , menu_scale ) ;
     
     platform_math :: add_fracts ( col_width , _platform_math_consts . get ( ) . fract_1 , _logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_spacing ) ;
     platform_math :: mul_fract_by ( col_width , letter_size ) ;

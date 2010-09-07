@@ -42,6 +42,7 @@
 #include "logic/main_menu/letters/meshes/destroyer.hpp"
 #include "logic/main_menu/letters/meshes/renderer.hpp"
 #include "logic/main_menu/letters/meshes/placement.hpp"
+#include "logic/main_menu/letters/meshes/stateless.hpp"
 #include "logic/main_menu/letters/meshes/storage.hpp"
 #include "logic/main_menu/letters/storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
@@ -108,6 +109,7 @@ private :
         , shy_logic_main_menu_letters_meshes_destroyer
         , shy_logic_main_menu_letters_meshes_placement
         , shy_logic_main_menu_letters_meshes_renderer
+        , shy_logic_main_menu_letters_meshes_stateless
         , shy_logic_main_menu_letters_meshes_storage
         , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_renderer
