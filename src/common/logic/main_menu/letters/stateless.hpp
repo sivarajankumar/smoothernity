@@ -12,6 +12,19 @@ class shy_logic_main_menu_letters_stateless
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
 public :
+
+    class logic_main_menu_letters_stateless_consts_type
+    {
+    public :
+        logic_main_menu_letters_stateless_consts_type ( ) ;
+    public :
+        num_fract letter_size_fract_horizontal_spacing ;
+        num_fract letter_size_fract_vertical_spacing ;
+        num_fract letter_size_fract_horizontal_border ;
+        num_fract letter_size_fract_vertical_border ;
+        num_fract menu_position_z ;
+    } ;
+
     class logic_main_menu_letters_messages
     {
     public :
@@ -102,7 +115,19 @@ public :
         ) ;
 private :
     shy_logic_main_menu_letters_stateless < mediator > & operator= ( const shy_logic_main_menu_letters_stateless < mediator > & ) ;
+public :
+    const logic_main_menu_letters_stateless_consts_type logic_main_menu_letters_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_letters_stateless < mediator > :: logic_main_menu_letters_stateless_consts_type :: logic_main_menu_letters_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( letter_size_fract_horizontal_spacing , 0 , 10 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_vertical_spacing , 10 , 10 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_horizontal_border , 1 , 1 ) ;
+    platform_math :: make_num_fract ( letter_size_fract_vertical_border , 1 , 1 ) ;
+    platform_math :: make_num_fract ( menu_position_z , - 3 , 1 ) ;
+}
 
 template < typename mediator >
 shy_logic_main_menu_letters_stateless < mediator > :: shy_logic_main_menu_letters_stateless ( )
