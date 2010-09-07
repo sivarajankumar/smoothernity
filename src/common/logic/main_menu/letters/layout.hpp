@@ -132,7 +132,12 @@ private :
         , num_whole max_rows
         , num_whole row
         ) ;
-    void _compute_letter_rect ( ) ;
+    void _compute_letter_rect 
+        ( _rect & letter_rect
+        , num_whole col
+        , num_fract menu_scale
+        , _rect row_rect
+        ) ;
     void _compute_letter_position ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -347,7 +352,12 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_layout ( )
         , _logic_main_menu_letters_layout_state . max_rows
         , _logic_main_menu_letters_layout_state . requested_row
         ) ;
-    _compute_letter_rect ( ) ;
+    _compute_letter_rect 
+        ( _logic_main_menu_letters_layout_state . letter_rect
+        , _logic_main_menu_letters_layout_state . requested_col
+        , _logic_main_menu_letters_layout_state . menu_scale
+        , _logic_main_menu_letters_layout_state . row_rect
+        ) ;
     _compute_letter_position ( ) ;
 }
 
@@ -531,26 +541,28 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_decorated_row_r
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect ( )
+void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect 
+    ( _rect & letter_rect
+    , num_whole col
+    , num_fract menu_scale
+    , _rect row_rect
+    )
 {
     num_fract col_number ;
     num_fract col_width ;
     num_fract letter_size ;
-    _rect letter_rect ;
     
-    platform_math :: make_fract_from_whole ( col_number , _logic_main_menu_letters_layout_state . requested_col ) ;
-    platform_math :: mul_fracts ( letter_size , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size , _logic_main_menu_letters_layout_state . menu_scale ) ;
+    platform_math :: make_fract_from_whole ( col_number , col ) ;
+    platform_math :: mul_fracts ( letter_size , _logic_main_menu_stateless_consts . get ( ) . letter_mesh_size , menu_scale ) ;
     
     platform_math :: add_fracts ( col_width , _platform_math_consts . get ( ) . fract_1 , _logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_spacing ) ;
     platform_math :: mul_fract_by ( col_width , letter_size ) ;
     
-    letter_rect . top = _logic_main_menu_letters_layout_state . row_rect . top ;
+    letter_rect . top = row_rect . top ;
     platform_math :: sub_fracts ( letter_rect . bottom , letter_rect . top , letter_size ) ;
     platform_math :: mul_fracts ( letter_rect . left , col_number , col_width ) ;
-    platform_math :: add_to_fract ( letter_rect . left , _logic_main_menu_letters_layout_state . row_rect . left ) ;
+    platform_math :: add_to_fract ( letter_rect . left , row_rect . left ) ;
     platform_math :: add_fracts ( letter_rect . right , letter_rect . left , letter_size ) ;
-    
-    _logic_main_menu_letters_layout_state . letter_rect = letter_rect ;
 }
 
 template < typename mediator >
