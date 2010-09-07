@@ -106,7 +106,7 @@ private :
         , shy_logic_main_menu_letters_animation_idle
         , shy_logic_main_menu_letters_animation_stateless
         , shy_logic_main_menu_letters_creation_director
-        , shy_logic_main_menu_letters_layout
+        , shy_logic_main_menu_letters_layout_position
         , shy_logic_main_menu_letters_layout_stateless
         , shy_logic_main_menu_letters_meshes_creation_director
         , shy_logic_main_menu_letters_meshes_creator

@@ -1,5 +1,5 @@
 template < typename mediator >
-class shy_logic_main_menu_letters_layout
+class shy_logic_main_menu_letters_layout_position
 {
     typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_math :: rect rect ;
@@ -65,7 +65,7 @@ class shy_logic_main_menu_letters_layout
     } ;
     
 public :
-    shy_logic_main_menu_letters_layout ( ) ;
+    shy_logic_main_menu_letters_layout_position ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_position_request ) ;
@@ -75,7 +75,7 @@ public :
     void receive ( typename messages :: logic_main_menu_letters_next_row ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
-    shy_logic_main_menu_letters_layout < mediator > & operator= ( const shy_logic_main_menu_letters_layout < mediator > & ) ;
+    shy_logic_main_menu_letters_layout_position < mediator > & operator= ( const shy_logic_main_menu_letters_layout_position < mediator > & ) ;
     void _proceed_with_layout ( ) ;
     void _obtain_rows_count ( ) ;
     void _obtain_cols_count ( ) ;
@@ -96,18 +96,18 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_main_menu_letters_layout < mediator > :: shy_logic_main_menu_letters_layout ( )
+shy_logic_main_menu_letters_layout_position < mediator > :: shy_logic_main_menu_letters_layout_position ( )
 {
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+void shy_logic_main_menu_letters_layout_position < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: init )
+void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
@@ -121,7 +121,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_position_request msg )
+void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_position_request msg )
 {
     _logic_main_menu_letters_layout_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_letters_layout_state . requested_col = msg . col ;
@@ -130,7 +130,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: logic_main_menu_letters_rows_reply msg )
+void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letters_rows_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_rows_state . requested ) )
     {
@@ -142,7 +142,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: logic_main_menu_letters_cols_reply msg )
+void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letters_cols_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_cols_state . requested )
       && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_cols_state . requested_row , msg . row )
@@ -156,7 +156,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
+void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
 {
     if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . requested ) )
     {
@@ -169,7 +169,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: logic_main_menu_letter_add )
+void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letter_add )
 {
     platform_math :: inc_whole ( _logic_main_menu_letters_layout_state . current_cols ) ;
     engine_math :: max_whole 
@@ -180,14 +180,14 @@ void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messa
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: receive ( typename messages :: logic_main_menu_letters_next_row )
+void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: logic_main_menu_letters_next_row )
 {
     platform_math :: inc_whole ( _logic_main_menu_letters_layout_state . max_rows ) ;
     _logic_main_menu_letters_layout_state . current_cols = _platform_math_consts . get ( ) . whole_0 ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _proceed_with_layout ( )
+void shy_logic_main_menu_letters_layout_position < mediator > :: _proceed_with_layout ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_layout_state . requested ) )
     {
@@ -212,7 +212,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _proceed_with_layout ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _obtain_cols_count ( )
+void shy_logic_main_menu_letters_layout_position < mediator > :: _obtain_cols_count ( )
 {
     _logic_main_menu_letters_cols_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_letters_cols_state . requested_row = _logic_main_menu_letters_layout_state . requested_row ;
@@ -222,28 +222,28 @@ void shy_logic_main_menu_letters_layout < mediator > :: _obtain_cols_count ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _obtain_rows_count ( )
+void shy_logic_main_menu_letters_layout_position < mediator > :: _obtain_rows_count ( )
 {
     _logic_main_menu_letters_rows_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_rows_request ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _obtain_aspect_ratio ( )
+void shy_logic_main_menu_letters_layout_position < mediator > :: _obtain_aspect_ratio ( )
 {
     _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _reply_layout ( )
+void shy_logic_main_menu_letters_layout_position < mediator > :: _reply_layout ( )
 {
     _compute_layout ( ) ;
     _reply_computed_layout ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _reply_computed_layout ( )
+void shy_logic_main_menu_letters_layout_position < mediator > :: _reply_computed_layout ( )
 {
     typename messages :: logic_main_menu_letters_layout_position_reply msg ;
     msg . row = _logic_main_menu_letters_layout_state . requested_row ;
@@ -254,7 +254,7 @@ void shy_logic_main_menu_letters_layout < mediator > :: _reply_computed_layout (
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _compute_layout ( )
+void shy_logic_main_menu_letters_layout_position < mediator > :: _compute_layout ( )
 {
     logic_main_menu_letters_layout_stateless :: compute_unscaled_menu_size 
         ( _logic_main_menu_letters_layout_state . unscaled_menu_width
