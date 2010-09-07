@@ -30,6 +30,8 @@ public :
     public :
         class logic_main_menu_letters_layout_position_reply { public : num_whole row ; num_whole col ; vector_data position ; num_fract scale ; } ;
         class logic_main_menu_letters_layout_position_request { public : num_whole row ; num_whole col ; } ;
+        class logic_main_menu_letters_layout_row_rect_reply { public : num_whole row ; rect row_rect ; } ;
+        class logic_main_menu_letters_layout_row_rect_request { public : num_whole row ; } ;
     } ;
 
     template < typename receivers >
