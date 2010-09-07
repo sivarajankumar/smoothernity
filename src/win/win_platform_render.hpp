@@ -296,8 +296,8 @@ inline void shy_win_platform_render < platform_insider > :: blend_src_alpha_dst_
 {
 	HRESULT hr ;
 	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_ALPHABLENDENABLE , TRUE ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_SRCBLEND , D3DBLEND_SRCCOLOR ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_DESTBLEND , D3DBLEND_INVSRCCOLOR ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_SRCBLEND , D3DBLEND_SRCALPHA ) ) ;
+	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_DESTBLEND , D3DBLEND_INVSRCALPHA ) ) ;
 }
 
 template < typename platform_insider >
