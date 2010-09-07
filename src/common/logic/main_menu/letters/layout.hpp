@@ -107,7 +107,13 @@ private :
         , num_whole max_cols
         , num_whole max_rows
         ) ;
-    void _compute_menu_scale ( ) ;
+    void _compute_menu_scale 
+        ( num_fract & menu_scale
+        , num_fract aspect_width
+        , num_fract aspect_height
+        , num_fract unscaled_menu_width
+        , num_fract unscaled_menu_height
+        ) ;
     void _compute_menu_rect ( ) ;
     void _compute_row_rect ( ) ;
     void _compute_decorated_row_rect ( ) ;
@@ -301,7 +307,13 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_layout ( )
         , _logic_main_menu_letters_layout_state . max_cols
         , _logic_main_menu_letters_layout_state . max_rows
         ) ;
-    _compute_menu_scale ( ) ;
+    _compute_menu_scale 
+        ( _logic_main_menu_letters_layout_state . menu_scale
+        , _engine_render_aspect_state . width
+        , _engine_render_aspect_state . height
+        , _logic_main_menu_letters_layout_state . unscaled_menu_width
+        , _logic_main_menu_letters_layout_state . unscaled_menu_height
+        ) ;
     _compute_menu_rect ( ) ;
     _compute_row_rect ( ) ;
     _compute_decorated_row_rect ( ) ;
@@ -359,23 +371,26 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_unscaled_menu_s
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _compute_menu_scale ( )
+void shy_logic_main_menu_letters_layout < mediator > :: _compute_menu_scale 
+    ( num_fract & menu_scale
+    , num_fract aspect_width
+    , num_fract aspect_height
+    , num_fract unscaled_menu_width
+    , num_fract unscaled_menu_height
+    )
 {
     num_fract screen_ratio ;
     num_fract menu_ratio ;
-    num_fract menu_scale ;
     
-    platform_math :: div_fracts ( screen_ratio , _engine_render_aspect_state . width , _engine_render_aspect_state . height ) ;
-    platform_math :: div_fracts ( menu_ratio , _logic_main_menu_letters_layout_state . unscaled_menu_width , _logic_main_menu_letters_layout_state . unscaled_menu_height ) ;
+    platform_math :: div_fracts ( screen_ratio , aspect_width , aspect_height ) ;
+    platform_math :: div_fracts ( menu_ratio , unscaled_menu_width , unscaled_menu_height ) ;
     
     if ( platform_conditions :: fract_greater_than_fract ( menu_ratio , screen_ratio ) )
-        platform_math :: div_fracts ( menu_scale , _engine_render_aspect_state . width , _logic_main_menu_letters_layout_state . unscaled_menu_width ) ;
+        platform_math :: div_fracts ( menu_scale , aspect_width , unscaled_menu_width ) ;
     else
-        platform_math :: div_fracts ( menu_scale , _engine_render_aspect_state . height , _logic_main_menu_letters_layout_state . unscaled_menu_height ) ;
+        platform_math :: div_fracts ( menu_scale , aspect_height , unscaled_menu_height ) ;
     
     platform_math :: mul_fract_by ( menu_scale , _platform_math_consts . get ( ) . fract_2 ) ;
-    
-    _logic_main_menu_letters_layout_state . menu_scale = menu_scale ;
 }
 
 template < typename mediator >
