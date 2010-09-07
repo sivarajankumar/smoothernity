@@ -138,7 +138,10 @@ private :
         , num_fract menu_scale
         , _rect row_rect
         ) ;
-    void _compute_letter_position ( ) ;
+    void _compute_letter_position 
+        ( vector_data & letter_position
+        , _rect letter_rect
+        ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -358,7 +361,10 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_layout ( )
         , _logic_main_menu_letters_layout_state . menu_scale
         , _logic_main_menu_letters_layout_state . row_rect
         ) ;
-    _compute_letter_position ( ) ;
+    _compute_letter_position 
+        ( _logic_main_menu_letters_layout_state . letter_position
+        , _logic_main_menu_letters_layout_state . letter_rect
+        ) ;
 }
 
 template < typename mediator >
@@ -566,22 +572,25 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_position ( )
+void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_position 
+    ( vector_data & letter_position
+    , _rect letter_rect
+    )
 {
     num_fract letter_position_x ;
     num_fract letter_position_y ;
     num_fract letter_position_z ;
-    _rect letter_rect ;
+    num_fract fract_2 ;
     
-    letter_rect = _logic_main_menu_letters_layout_state . letter_rect ;
+    platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
     
     platform_math :: add_fracts ( letter_position_x , letter_rect . left , letter_rect . right ) ;
     platform_math :: add_fracts ( letter_position_y , letter_rect . bottom , letter_rect . top ) ;
     
-    platform_math :: div_fract_by ( letter_position_x , _platform_math_consts . get ( ) . fract_2 ) ;
-    platform_math :: div_fract_by ( letter_position_y , _platform_math_consts . get ( ) . fract_2 ) ;
+    platform_math :: div_fract_by ( letter_position_x , fract_2 ) ;
+    platform_math :: div_fract_by ( letter_position_y , fract_2 ) ;
     
     letter_position_z = _logic_main_menu_letters_layout_consts . menu_position_z ;
     
-    platform_vector :: xyz ( _logic_main_menu_letters_layout_state . letter_position , letter_position_x , letter_position_y , letter_position_z ) ;
+    platform_vector :: xyz ( letter_position , letter_position_x , letter_position_y , letter_position_z ) ;
 }
