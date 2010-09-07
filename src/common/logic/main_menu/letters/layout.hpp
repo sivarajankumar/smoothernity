@@ -124,10 +124,13 @@ private :
         , num_whole col
         , num_fract menu_scale
         , rect row_rect
+        , num_fract letter_mesh_size
+        , num_fract horizontal_spacing
         ) ;
     static void _compute_letter_position 
         ( vector_data & letter_position
         , rect letter_rect
+        , num_fract letter_position_z
         ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -342,10 +345,13 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_layout ( )
         , _logic_main_menu_letters_layout_state . requested_col
         , _logic_main_menu_letters_layout_state . menu_scale
         , _logic_main_menu_letters_layout_state . row_rect
+        , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size
+        , _logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_spacing
         ) ;
     _compute_letter_position 
         ( _logic_main_menu_letters_layout_state . letter_position
         , _logic_main_menu_letters_layout_state . letter_rect
+        , _logic_main_menu_letters_layout_consts . menu_position_z
         ) ;
 }
 
@@ -515,11 +521,10 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect
     , num_whole col
     , num_fract menu_scale
     , rect row_rect
+    , num_fract letter_mesh_size
+    , num_fract horizontal_spacing
     )
 {
-    static const _logic_main_menu_letters_layout_consts_type logic_main_menu_letters_layout_consts ;
-    static const logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts ;
-
     num_fract col_number ;
     num_fract col_width ;
     num_fract letter_size ;
@@ -528,9 +533,9 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_rect
     platform_math :: make_num_fract ( fract_1 , 1 , 1 ) ;
     
     platform_math :: make_fract_from_whole ( col_number , col ) ;
-    platform_math :: mul_fracts ( letter_size , logic_main_menu_letters_meshes_stateless_consts . letter_mesh_size , menu_scale ) ;
+    platform_math :: mul_fracts ( letter_size , letter_mesh_size , menu_scale ) ;
     
-    platform_math :: add_fracts ( col_width , fract_1 , logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_spacing ) ;
+    platform_math :: add_fracts ( col_width , fract_1 , horizontal_spacing ) ;
     platform_math :: mul_fract_by ( col_width , letter_size ) ;
     
     letter_rect . top = row_rect . top ;
@@ -544,13 +549,11 @@ template < typename mediator >
 void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_position 
     ( vector_data & letter_position
     , rect letter_rect
+    , num_fract letter_position_z
     )
 {
-    static const _logic_main_menu_letters_layout_consts_type logic_main_menu_letters_layout_consts ;
-
     num_fract letter_position_x ;
     num_fract letter_position_y ;
-    num_fract letter_position_z ;
     num_fract fract_2 ;
     
     platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
@@ -560,8 +563,6 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_letter_position
     
     platform_math :: div_fract_by ( letter_position_x , fract_2 ) ;
     platform_math :: div_fract_by ( letter_position_y , fract_2 ) ;
-    
-    letter_position_z = logic_main_menu_letters_layout_consts . menu_position_z ;
     
     platform_vector :: xyz ( letter_position , letter_position_x , letter_position_y , letter_position_z ) ;
 }
