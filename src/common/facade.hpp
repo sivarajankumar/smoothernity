@@ -37,6 +37,7 @@
 #include "logic/main_menu/letters/animation/stateless.hpp"
 #include "logic/main_menu/letters/creation_director.hpp"
 #include "logic/main_menu/letters/layout/position.hpp"
+#include "logic/main_menu/letters/layout/row_rect.hpp"
 #include "logic/main_menu/letters/layout/stateless.hpp"
 #include "logic/main_menu/letters/meshes/creation_director.hpp"
 #include "logic/main_menu/letters/meshes/creator.hpp"
@@ -107,6 +108,7 @@ private :
         , shy_logic_main_menu_letters_animation_stateless
         , shy_logic_main_menu_letters_creation_director
         , shy_logic_main_menu_letters_layout_position
+        , shy_logic_main_menu_letters_layout_row_rect
         , shy_logic_main_menu_letters_layout_stateless
         , shy_logic_main_menu_letters_meshes_creation_director
         , shy_logic_main_menu_letters_meshes_creator
