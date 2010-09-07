@@ -27,6 +27,7 @@ class shy_logic_main_menu_selection_mesh
     } ;
     
 public :
+    shy_logic_main_menu_selection_mesh ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_create ) ;
@@ -34,6 +35,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_mesh_render_request ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
+    shy_logic_main_menu_selection_mesh < mediator > & operator= ( const shy_logic_main_menu_selection_mesh < mediator > & ) ;
     void _bake_mesh ( ) ;
     void _fill_mesh_content ( ) ;
     void _place_mesh ( ) ;
@@ -61,6 +63,11 @@ shy_logic_main_menu_selection_mesh < mediator > :: _logic_main_menu_selection_me
     platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
     platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_selection_mesh < mediator > :: shy_logic_main_menu_selection_mesh ( )
+{
 }
 
 template < typename mediator >
