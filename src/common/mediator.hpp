@@ -67,6 +67,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_messages logic_main_menu_letters_animation_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_messages logic_main_menu_letters_meshes_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_stateless :: logic_main_menu_letters_messages logic_main_menu_letters_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_stateless :: logic_main_menu_selection_messages logic_main_menu_selection_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: logic_sound_messages logic_sound_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
@@ -86,6 +87,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless :: template logic_main_menu_letters_animation_sender < receivers > logic_main_menu_letters_animation_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless :: template logic_main_menu_letters_meshes_sender < receivers > logic_main_menu_letters_meshes_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_stateless :: template logic_main_menu_letters_sender < receivers > logic_main_menu_letters_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_stateless :: template logic_main_menu_selection_sender < receivers > logic_main_menu_selection_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: template logic_sound_sender < receivers > logic_sound_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
@@ -107,6 +109,7 @@ public :
     , public logic_main_menu_letters_animation_messages
     , public logic_main_menu_letters_meshes_messages
     , public logic_main_menu_letters_messages
+    , public logic_main_menu_selection_messages
     , public logic_main_menu_messages
     , public logic_sound_messages
     , public logic_text_messages
@@ -130,6 +133,7 @@ private :
     , public logic_main_menu_letters_animation_sender
     , public logic_main_menu_letters_meshes_sender
     , public logic_main_menu_letters_sender
+    , public logic_main_menu_selection_sender
     , public logic_main_menu_sender
     , public logic_sound_sender
     , public logic_text_sender
@@ -150,6 +154,7 @@ private :
         using logic_main_menu_letters_animation_sender :: send ;
         using logic_main_menu_letters_meshes_sender :: send ;
         using logic_main_menu_letters_sender :: send ;
+        using logic_main_menu_selection_sender :: send ;
         using logic_main_menu_sender :: send ;
         using logic_sound_sender :: send ;
         using logic_text_sender :: send ;
@@ -267,6 +272,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_main_menu_letters_animation_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_letters_meshes_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_letters_sender :: set_receivers ( arg_receivers ) ;
+    logic_main_menu_selection_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
     logic_sound_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;

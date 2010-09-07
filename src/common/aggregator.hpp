@@ -41,6 +41,7 @@ template
     , template < typename mediator > class _logic_main_menu_letters_storage
     , template < typename mediator > class _logic_main_menu_renderer
     , template < typename mediator > class _logic_main_menu_selection_mesh
+    , template < typename mediator > class _logic_main_menu_selection_stateless
     , template < typename mediator > class _logic_main_menu_selection_tracker
     , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_sound
@@ -101,6 +102,7 @@ public :
         typedef _logic_main_menu_letters_storage < mediator > logic_main_menu_letters_storage ;
         typedef _logic_main_menu_renderer < mediator > logic_main_menu_renderer ;
         typedef _logic_main_menu_selection_mesh < mediator > logic_main_menu_selection_mesh ;
+        typedef _logic_main_menu_selection_stateless < mediator > logic_main_menu_selection_stateless ;
         typedef _logic_main_menu_selection_tracker < mediator > logic_main_menu_selection_tracker ;
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_sound < mediator > logic_sound ;
@@ -158,6 +160,7 @@ template
     , template < typename _mediator > class _logic_main_menu_letters_storage
     , template < typename _mediator > class _logic_main_menu_renderer
     , template < typename _mediator > class _logic_main_menu_selection_mesh
+    , template < typename _mediator > class _logic_main_menu_selection_stateless
     , template < typename _mediator > class _logic_main_menu_selection_tracker
     , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_sound
@@ -249,6 +252,7 @@ public :
         , scheduled_logic_main_menu_letters_storage :: template scheduled_module
         , scheduled_logic_main_menu_renderer :: template scheduled_module
         , scheduled_logic_main_menu_selection_mesh :: template scheduled_module
+        , _logic_main_menu_selection_stateless
         , scheduled_logic_main_menu_selection_tracker :: template scheduled_module
         , _logic_main_menu_stateless
         , scheduled_logic_sound :: template scheduled_module
@@ -278,6 +282,7 @@ public :
     typedef _logic_main_menu_letters_animation_stateless < mediator_type > logic_main_menu_letters_animation_stateless ;
     typedef _logic_main_menu_letters_meshes_stateless < mediator_type > logic_main_menu_letters_meshes_stateless ;
     typedef _logic_main_menu_letters_stateless < mediator_type > logic_main_menu_letters_stateless ;
+    typedef _logic_main_menu_selection_stateless < mediator_type > logic_main_menu_selection_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
