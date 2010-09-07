@@ -46,6 +46,7 @@
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/renderer.hpp"
 #include "logic/main_menu/selection/mesh.hpp"
+#include "logic/main_menu/selection/tracker.hpp"
 #include "logic/main_menu/stateless.hpp"
 #include "logic/sound/sound.hpp"
 #include "logic/sound/stateless.hpp"
@@ -109,6 +110,7 @@ private :
         , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_renderer
         , shy_logic_main_menu_selection_mesh
+        , shy_logic_main_menu_selection_tracker
         , shy_logic_main_menu_stateless
         , shy_logic_sound
         , shy_logic_sound_stateless
