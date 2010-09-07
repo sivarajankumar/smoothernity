@@ -93,7 +93,7 @@ private :
     void _reply_layout ( ) ;
     void _reply_computed_layout ( ) ;
     void _compute_layout ( ) ;
-    void _compute_unscaled_menu_size 
+    static void _compute_unscaled_menu_size 
         ( num_fract & unscaled_menu_width
         , num_fract & unscaled_menu_height
         , num_whole max_cols
@@ -367,6 +367,9 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_unscaled_menu_s
     , num_whole max_rows
     )
 {
+    static const _logic_main_menu_letters_layout_consts_type logic_main_menu_letters_layout_consts ;
+    static const logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts ;
+    
     num_fract letters_width ;
     num_fract letters_height ;
     num_fract letters_in_row ;
@@ -379,24 +382,26 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_unscaled_menu_s
     num_fract borders_height ;
     num_fract menu_width ;
     num_fract menu_height ;
-    num_fract two ;
+    num_fract fract_1 ;
+    num_fract fract_2 ;
     
-    platform_math :: make_num_fract ( two , 2 , 1 ) ;
+    platform_math :: make_num_fract ( fract_1 , 1 , 1 ) ;
+    platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
     
     platform_math :: make_fract_from_whole ( letters_in_row , max_cols ) ;
     platform_math :: make_fract_from_whole ( letters_in_col , max_rows ) ;
     
-    platform_math :: sub_fracts ( spacings_in_row , letters_in_row , _platform_math_consts . get ( ) . fract_1 ) ;
-    platform_math :: sub_fracts ( spacings_in_col , letters_in_col , _platform_math_consts . get ( ) . fract_1 ) ;
+    platform_math :: sub_fracts ( spacings_in_row , letters_in_row , fract_1 ) ;
+    platform_math :: sub_fracts ( spacings_in_col , letters_in_col , fract_1 ) ;
     
     letters_width = letters_in_row ;
     letters_height = letters_in_col ;
 
-    platform_math :: mul_fracts ( spacings_width , _logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_spacing , spacings_in_row ) ;
-    platform_math :: mul_fracts ( spacings_height , _logic_main_menu_letters_layout_consts . letter_size_fract_vertical_spacing , spacings_in_col ) ;
+    platform_math :: mul_fracts ( spacings_width , logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_spacing , spacings_in_row ) ;
+    platform_math :: mul_fracts ( spacings_height , logic_main_menu_letters_layout_consts . letter_size_fract_vertical_spacing , spacings_in_col ) ;
     
-    platform_math :: mul_fracts ( borders_width , _logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_border , two ) ;
-    platform_math :: mul_fracts ( borders_height , _logic_main_menu_letters_layout_consts . letter_size_fract_vertical_border , two ) ;
+    platform_math :: mul_fracts ( borders_width , logic_main_menu_letters_layout_consts . letter_size_fract_horizontal_border , fract_2 ) ;
+    platform_math :: mul_fracts ( borders_height , logic_main_menu_letters_layout_consts . letter_size_fract_vertical_border , fract_2 ) ;
     
     platform_math :: add_fracts ( menu_width , letters_width , spacings_width ) ;
     platform_math :: add_fracts ( menu_height , letters_height , spacings_height ) ;
@@ -404,8 +409,8 @@ void shy_logic_main_menu_letters_layout < mediator > :: _compute_unscaled_menu_s
     platform_math :: add_to_fract ( menu_width , borders_width ) ;
     platform_math :: add_to_fract ( menu_height , borders_height ) ;
 
-    platform_math :: mul_fracts ( unscaled_menu_width , menu_width , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;
-    platform_math :: mul_fracts ( unscaled_menu_height , menu_height , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;    
+    platform_math :: mul_fracts ( unscaled_menu_width , menu_width , logic_main_menu_letters_meshes_stateless_consts . letter_mesh_size ) ;
+    platform_math :: mul_fracts ( unscaled_menu_height , menu_height , logic_main_menu_letters_meshes_stateless_consts . letter_mesh_size ) ;    
 }
 
 template < typename mediator >
