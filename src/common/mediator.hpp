@@ -8,6 +8,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless logic_main_menu_letters_animation_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
     
@@ -62,6 +63,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: logic_game_messages logic_game_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: logic_image_messages logic_image_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: logic_land_messages logic_land_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_messages logic_main_menu_letters_animation_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: logic_sound_messages logic_sound_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_messages logic_text_messages ;
@@ -78,6 +80,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: template logic_game_sender < receivers > logic_game_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: template logic_image_sender < receivers > logic_image_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: template logic_land_sender < receivers > logic_land_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless :: template logic_main_menu_letters_animation_sender < receivers > logic_main_menu_letters_animation_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: template logic_sound_sender < receivers > logic_sound_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: template logic_text_sender < receivers > logic_text_sender ;
@@ -96,6 +99,7 @@ public :
     , public logic_game_messages
     , public logic_image_messages
     , public logic_land_messages
+    , public logic_main_menu_letters_animation_messages
     , public logic_main_menu_messages
     , public logic_sound_messages
     , public logic_text_messages
@@ -116,6 +120,7 @@ private :
     , public logic_game_sender
     , public logic_image_sender
     , public logic_land_sender
+    , public logic_main_menu_letters_animation_sender
     , public logic_main_menu_sender
     , public logic_sound_sender
     , public logic_text_sender
@@ -133,6 +138,7 @@ private :
         using logic_game_sender :: send ;
         using logic_image_sender :: send ;
         using logic_land_sender :: send ;
+        using logic_main_menu_letters_animation_sender :: send ;
         using logic_main_menu_sender :: send ;
         using logic_sound_sender :: send ;
         using logic_text_sender :: send ;
@@ -244,6 +250,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_game_sender :: set_receivers ( arg_receivers ) ;
     logic_image_sender :: set_receivers ( arg_receivers ) ;
     logic_land_sender :: set_receivers ( arg_receivers ) ;
+    logic_main_menu_letters_animation_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
     logic_sound_sender :: set_receivers ( arg_receivers ) ;
     logic_text_sender :: set_receivers ( arg_receivers ) ;

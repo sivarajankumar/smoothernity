@@ -27,6 +27,7 @@ template
     , template < typename mediator > class _logic_main_menu_letters_animation_appear
     , template < typename mediator > class _logic_main_menu_letters_animation_disappear
     , template < typename mediator > class _logic_main_menu_letters_animation_idle
+    , template < typename mediator > class _logic_main_menu_letters_animation_stateless
     , template < typename mediator > class _logic_main_menu_letters_creation_director
     , template < typename mediator > class _logic_main_menu_letters_layout
     , template < typename mediator > class _logic_main_menu_letters_meshes_creation_director
@@ -84,6 +85,7 @@ public :
         typedef _logic_main_menu_letters_animation_appear < mediator > logic_main_menu_letters_animation_appear ;
         typedef _logic_main_menu_letters_animation_disappear < mediator > logic_main_menu_letters_animation_disappear ;
         typedef _logic_main_menu_letters_animation_idle < mediator > logic_main_menu_letters_animation_idle ;
+        typedef _logic_main_menu_letters_animation_stateless < mediator > logic_main_menu_letters_animation_stateless ;
         typedef _logic_main_menu_letters_creation_director < mediator > logic_main_menu_letters_creation_director ;
         typedef _logic_main_menu_letters_layout < mediator > logic_main_menu_letters_layout ;
         typedef _logic_main_menu_letters_meshes_creation_director < mediator > logic_main_menu_letters_meshes_creation_director ;
@@ -138,6 +140,7 @@ template
     , template < typename _mediator > class _logic_main_menu_letters_animation_appear
     , template < typename _mediator > class _logic_main_menu_letters_animation_disappear
     , template < typename _mediator > class _logic_main_menu_letters_animation_idle
+    , template < typename _mediator > class _logic_main_menu_letters_animation_stateless
     , template < typename _mediator > class _logic_main_menu_letters_creation_director
     , template < typename _mediator > class _logic_main_menu_letters_layout
     , template < typename _mediator > class _logic_main_menu_letters_meshes_creation_director
@@ -226,6 +229,7 @@ public :
         , scheduled_logic_main_menu_letters_animation_appear :: template scheduled_module
         , scheduled_logic_main_menu_letters_animation_disappear :: template scheduled_module
         , scheduled_logic_main_menu_letters_animation_idle :: template scheduled_module
+        , _logic_main_menu_letters_animation_stateless
         , scheduled_logic_main_menu_letters_creation_director :: template scheduled_module
         , scheduled_logic_main_menu_letters_layout :: template scheduled_module
         , scheduled_logic_main_menu_letters_meshes_creation_director :: template scheduled_module
@@ -263,6 +267,7 @@ public :
     typedef _logic_game_stateless < mediator_type > logic_game_stateless ;
     typedef _logic_image_stateless < mediator_type > logic_image_stateless ;
     typedef _logic_land_stateless < mediator_type > logic_land_stateless ;
+    typedef _logic_main_menu_letters_animation_stateless < mediator_type > logic_main_menu_letters_animation_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
