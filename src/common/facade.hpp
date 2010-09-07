@@ -44,6 +44,7 @@
 #include "logic/main_menu/letters/meshes/placement.hpp"
 #include "logic/main_menu/letters/meshes/stateless.hpp"
 #include "logic/main_menu/letters/meshes/storage.hpp"
+#include "logic/main_menu/letters/stateless.hpp"
 #include "logic/main_menu/letters/storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/renderer.hpp"
@@ -111,6 +112,7 @@ private :
         , shy_logic_main_menu_letters_meshes_renderer
         , shy_logic_main_menu_letters_meshes_stateless
         , shy_logic_main_menu_letters_meshes_storage
+        , shy_logic_main_menu_letters_stateless
         , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_renderer
         , shy_logic_main_menu_selection_mesh

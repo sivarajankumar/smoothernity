@@ -37,6 +37,7 @@ template
     , template < typename mediator > class _logic_main_menu_letters_meshes_renderer
     , template < typename mediator > class _logic_main_menu_letters_meshes_stateless
     , template < typename mediator > class _logic_main_menu_letters_meshes_storage
+    , template < typename mediator > class _logic_main_menu_letters_stateless
     , template < typename mediator > class _logic_main_menu_letters_storage
     , template < typename mediator > class _logic_main_menu_renderer
     , template < typename mediator > class _logic_main_menu_selection_mesh
@@ -96,6 +97,7 @@ public :
         typedef _logic_main_menu_letters_meshes_renderer < mediator > logic_main_menu_letters_meshes_renderer ;
         typedef _logic_main_menu_letters_meshes_stateless < mediator > logic_main_menu_letters_meshes_stateless ;
         typedef _logic_main_menu_letters_meshes_storage < mediator > logic_main_menu_letters_meshes_storage ;
+        typedef _logic_main_menu_letters_stateless < mediator > logic_main_menu_letters_stateless ;
         typedef _logic_main_menu_letters_storage < mediator > logic_main_menu_letters_storage ;
         typedef _logic_main_menu_renderer < mediator > logic_main_menu_renderer ;
         typedef _logic_main_menu_selection_mesh < mediator > logic_main_menu_selection_mesh ;
@@ -152,6 +154,7 @@ template
     , template < typename _mediator > class _logic_main_menu_letters_meshes_renderer
     , template < typename _mediator > class _logic_main_menu_letters_meshes_stateless
     , template < typename _mediator > class _logic_main_menu_letters_meshes_storage
+    , template < typename _mediator > class _logic_main_menu_letters_stateless
     , template < typename _mediator > class _logic_main_menu_letters_storage
     , template < typename _mediator > class _logic_main_menu_renderer
     , template < typename _mediator > class _logic_main_menu_selection_mesh
@@ -242,6 +245,7 @@ public :
         , scheduled_logic_main_menu_letters_meshes_renderer :: template scheduled_module
         , _logic_main_menu_letters_meshes_stateless
         , scheduled_logic_main_menu_letters_meshes_storage :: template scheduled_module
+        , _logic_main_menu_letters_stateless
         , scheduled_logic_main_menu_letters_storage :: template scheduled_module
         , scheduled_logic_main_menu_renderer :: template scheduled_module
         , scheduled_logic_main_menu_selection_mesh :: template scheduled_module
@@ -273,6 +277,7 @@ public :
     typedef _logic_land_stateless < mediator_type > logic_land_stateless ;
     typedef _logic_main_menu_letters_animation_stateless < mediator_type > logic_main_menu_letters_animation_stateless ;
     typedef _logic_main_menu_letters_meshes_stateless < mediator_type > logic_main_menu_letters_meshes_stateless ;
+    typedef _logic_main_menu_letters_stateless < mediator_type > logic_main_menu_letters_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
