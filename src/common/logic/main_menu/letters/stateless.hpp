@@ -1,13 +1,9 @@
 template < typename mediator >
 class shy_logic_main_menu_letters_stateless
 {
-    typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: logic_text_stateless :: logic_text_letter_id logic_text_letter_id ;
-    typedef typename mediator :: platform :: platform_math platform_math ;
-    typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
-    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
