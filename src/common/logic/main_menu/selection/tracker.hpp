@@ -37,11 +37,13 @@ class shy_logic_main_menu_selection_tracker
     } ;
     
 public :
+    shy_logic_main_menu_selection_tracker ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_track ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ) ;
 private :
+    shy_logic_main_menu_selection_tracker < mediator > & operator= ( const shy_logic_main_menu_selection_tracker & ) ;
     void _proceed_with_track ( ) ;
     void _place_mesh ( ) ;
     void _obtain_row_rect ( ) ;
@@ -58,6 +60,11 @@ template < typename mediator >
 shy_logic_main_menu_selection_tracker < mediator > :: _logic_main_menu_selection_tracker_consts_type :: _logic_main_menu_selection_tracker_consts_type ( )
 {
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_selection_tracker < mediator > :: shy_logic_main_menu_selection_tracker ( )
+{
 }
 
 template < typename mediator >
