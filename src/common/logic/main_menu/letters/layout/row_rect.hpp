@@ -29,7 +29,13 @@ void shy_logic_main_menu_letters_layout_row_rect < mediator > :: receive ( typen
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_layout_row_rect < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_row_rect_request )
+void shy_logic_main_menu_letters_layout_row_rect < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_row_rect_request msg )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ( ) ) ;
+    typename messages :: logic_main_menu_letters_layout_row_rect_reply reply_msg ;
+    reply_msg . row = msg . row ;
+    reply_msg . row_rect . left = _platform_math_consts . get ( ) . fract_minus_1 ;
+    reply_msg . row_rect . right = _platform_math_consts . get ( ) . fract_1 ;
+    reply_msg . row_rect . bottom = _platform_math_consts . get ( ) . fract_minus_1 ;
+    reply_msg . row_rect . top = _platform_math_consts . get ( ) . fract_1 ;
+    _mediator . get ( ) . send ( reply_msg ) ;
 }

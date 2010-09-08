@@ -23,9 +23,8 @@ class shy_logic_main_menu_selection_mesh
         num_fract color_b ;
         num_fract color_a ;
         num_fract mesh_size ;
-        num_fract position_z ;
     } ;
-    
+
 public :
     shy_logic_main_menu_selection_mesh ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
@@ -33,6 +32,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_mesh_create ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_destroy_request ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_render_request ) ;
+    void receive ( typename messages :: logic_main_menu_selection_mesh_set_transform ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_main_menu_selection_mesh < mediator > & operator= ( const shy_logic_main_menu_selection_mesh < mediator > & ) ;
@@ -62,7 +62,6 @@ shy_logic_main_menu_selection_mesh < mediator > :: _logic_main_menu_selection_me
     platform_math :: make_num_fract ( color_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
     platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
-    platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
 }
 
 template < typename mediator >
@@ -119,6 +118,15 @@ void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messa
 {
     _render_mesh ( ) ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_render_reply ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_mesh_set_transform msg )
+{
+    typename messages :: engine_render_mesh_set_transform transform_msg ;
+    transform_msg . mesh = _mesh ;
+    transform_msg . transform = msg . transform ;
+    _mediator . get ( ) . send ( transform_msg ) ;
 }
 
 template < typename mediator >
@@ -195,7 +203,7 @@ void shy_logic_main_menu_selection_mesh < mediator > :: _place_mesh ( )
     
     origin_x = _platform_math_consts . get ( ) . fract_0 ;
     origin_y = _platform_math_consts . get ( ) . fract_0 ;
-    origin_z = _logic_main_menu_selection_mesh_consts . position_z ;
+    origin_z = _platform_math_consts . get ( ) . fract_0 ;
     platform_matrix :: identity ( transform ) ;
     platform_matrix :: set_origin ( transform , origin_x , origin_y , origin_z ) ;
 

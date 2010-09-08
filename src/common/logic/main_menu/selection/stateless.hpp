@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_selection_stateless
 {
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
 public :
@@ -13,6 +14,8 @@ public :
         class logic_main_menu_selection_mesh_destroy_request { } ;
         class logic_main_menu_selection_mesh_render_reply { } ;
         class logic_main_menu_selection_mesh_render_request { } ;
+        class logic_main_menu_selection_mesh_set_transform { public : matrix_data transform ; } ;
+        class logic_main_menu_selection_track { } ;
     } ;
 
     template < typename receivers >
@@ -26,6 +29,8 @@ public :
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_destroy_request ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_render_reply ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_render_request ) ;
+        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_set_transform ) ;
+        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -103,3 +108,22 @@ void shy_logic_main_menu_selection_stateless < mediator >
 {
     _receivers . get ( ) . logic_main_menu_renderer . get ( ) . receive ( msg ) ;
 }
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_stateless < mediator > 
+:: logic_main_menu_selection_sender < receivers > 
+:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_set_transform msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_mesh . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_stateless < mediator > 
+:: logic_main_menu_selection_sender < receivers > 
+:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_tracker . get ( ) . receive ( msg ) ;
+}
+
