@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_selection_tracker
 {
+    typedef typename mediator :: engine_math :: rect rect ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -32,15 +33,18 @@ class shy_logic_main_menu_selection_tracker
         num_whole requested ;
         num_whole requested_row ;
         num_whole replied ;
+        rect row_rect ;
     } ;
     
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_track ) ;
+    void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ) ;
 private :
     void _proceed_with_track ( ) ;
     void _place_mesh ( ) ;
+    void _obtain_row_rect ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -78,13 +82,43 @@ void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename me
 }
 
 template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename messages :: logic_main_menu_letters_layout_row_rect_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_layout_row_rect_state . requested )
+      && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_layout_row_rect_state . requested_row , msg . row )
+       )
+    {
+        _logic_main_menu_letters_layout_row_rect_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_layout_row_rect_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_letters_layout_row_rect_state . row_rect = msg . row_rect ;
+        _place_mesh ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: _proceed_with_track ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . requested ) )
     {
         _logic_main_menu_selection_track_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_row_rect ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_layout_row_rect_state . replied ) )
+    {
+        _logic_main_menu_letters_layout_row_rect_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _place_mesh ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _obtain_row_rect ( )
+{
+    _logic_main_menu_letters_layout_row_rect_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_layout_row_rect_state . requested_row = _platform_math_consts . get ( ) . whole_0 ;
+
+    typename messages :: logic_main_menu_letters_layout_row_rect_request msg ;
+    msg . row = _platform_math_consts . get ( ) . whole_0 ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
