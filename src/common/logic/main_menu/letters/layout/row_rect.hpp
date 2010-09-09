@@ -6,6 +6,7 @@ class shy_logic_main_menu_letters_layout_row_rect
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -25,15 +26,26 @@ class shy_logic_main_menu_letters_layout_row_rect
         num_whole rows ;
         num_whole cols ;
     } ;
+
+    class _engine_render_aspect_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract width ;
+        num_fract height ;
+    } ;
     
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_boundaries_reply ) ;
+    void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     void _proceed_with_row_rect ( ) ;
     void _obtain_boundaries ( ) ;
+    void _obtain_aspect_ratio ( ) ;
     void _reply_row_rect ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -43,6 +55,7 @@ private :
     
     _logic_main_menu_letters_layout_row_rect_state_type _logic_main_menu_letters_layout_row_rect_state ;
     _logic_main_menu_letters_boundaries_state_type _logic_main_menu_letters_boundaries_state ;
+    _engine_render_aspect_state_type _engine_render_aspect_state ;
 } ;
 
 template < typename mediator >
@@ -83,6 +96,19 @@ void shy_logic_main_menu_letters_layout_row_rect < mediator > :: receive ( typen
 }
 
 template < typename mediator >
+void shy_logic_main_menu_letters_layout_row_rect < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . requested ) )
+    {
+        _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _engine_render_aspect_state . width = msg . width ;
+        _engine_render_aspect_state . height = msg . height ;
+        _proceed_with_row_rect ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _proceed_with_row_rect ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_layout_row_rect_state . requested ) )
@@ -93,6 +119,11 @@ void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _proceed_with_r
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_boundaries_state . replied ) )
     {
         _logic_main_menu_letters_boundaries_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_aspect_ratio ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . replied ) )
+    {
+        _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _reply_row_rect ( ) ;
     }
 }
@@ -102,6 +133,13 @@ void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _obtain_boundar
 {
     _logic_main_menu_letters_boundaries_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_boundaries_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _obtain_aspect_ratio ( )
+{
+    _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
