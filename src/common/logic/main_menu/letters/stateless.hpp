@@ -72,7 +72,6 @@ void shy_logic_main_menu_letters_stateless < mediator >
 :: send ( typename logic_main_menu_letters_messages :: logic_main_menu_letter_add msg )
 {
     _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -81,6 +80,7 @@ void shy_logic_main_menu_letters_stateless < mediator >
 :: logic_main_menu_letters_sender < receivers > 
 :: send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_boundaries_reply msg )
 {
+    _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -117,7 +117,6 @@ void shy_logic_main_menu_letters_stateless < mediator >
 :: send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_next_row msg ) 
 {
     _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
