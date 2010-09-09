@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_letters_layout_row_rect
 {
+    typedef typename mediator :: engine_math :: rect rect ;
     typedef typename mediator :: logic_main_menu_letters_layout_stateless :: logic_main_menu_letters_layout_stateless_consts_type logic_main_menu_letters_layout_stateless_consts_type ;
     typedef typename mediator :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
@@ -16,6 +17,7 @@ class shy_logic_main_menu_letters_layout_row_rect
     public :
         num_whole requested ;
         num_whole requested_row ;
+        rect row_rect ;
     } ;
     
     class _logic_main_menu_letters_boundaries_state_type
@@ -46,6 +48,8 @@ private :
     void _proceed_with_row_rect ( ) ;
     void _obtain_boundaries ( ) ;
     void _obtain_aspect_ratio ( ) ;
+    void _received_aspect_ratio ( ) ;
+    void _compute_row_rect ( ) ;
     void _reply_row_rect ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -124,7 +128,7 @@ void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _proceed_with_r
     if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . replied ) )
     {
         _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _reply_row_rect ( ) ;
+        _received_aspect_ratio ( ) ;
     }
 }
 
@@ -143,13 +147,30 @@ void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _obtain_aspect_
 }
 
 template < typename mediator >
+void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _received_aspect_ratio ( )
+{
+    _compute_row_rect ( ) ;
+    _reply_row_rect ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _compute_row_rect ( )
+{
+    rect row_rect ;
+    
+    row_rect . left = _platform_math_consts . get ( ) . fract_minus_1 ;
+    row_rect . right = _platform_math_consts . get ( ) . fract_1 ;
+    row_rect . bottom = _platform_math_consts . get ( ) . fract_minus_1 ;
+    row_rect . top = _platform_math_consts . get ( ) . fract_1 ;
+    
+    _logic_main_menu_letters_layout_row_rect_state . row_rect = row_rect ;
+}
+
+template < typename mediator >
 void shy_logic_main_menu_letters_layout_row_rect < mediator > :: _reply_row_rect ( )
 {
     typename messages :: logic_main_menu_letters_layout_row_rect_reply reply_msg ;
     reply_msg . row = _logic_main_menu_letters_layout_row_rect_state . requested_row ;
-    reply_msg . row_rect . left = _platform_math_consts . get ( ) . fract_minus_1 ;
-    reply_msg . row_rect . right = _platform_math_consts . get ( ) . fract_1 ;
-    reply_msg . row_rect . bottom = _platform_math_consts . get ( ) . fract_minus_1 ;
-    reply_msg . row_rect . top = _platform_math_consts . get ( ) . fract_1 ;
+    reply_msg . row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }
