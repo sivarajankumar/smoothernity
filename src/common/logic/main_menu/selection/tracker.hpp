@@ -130,7 +130,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _obtain_row_rect ( )
     _logic_main_menu_letters_layout_row_rect_state . requested_row = _platform_math_consts . get ( ) . whole_0 ;
 
     typename messages :: logic_main_menu_letters_layout_row_rect_request msg ;
-    msg . row = _platform_math_consts . get ( ) . whole_0 ;
+    msg . row = _logic_main_menu_letters_layout_row_rect_state . requested_row ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
