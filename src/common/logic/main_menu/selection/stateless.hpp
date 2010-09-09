@@ -1,10 +1,20 @@
 template < typename mediator >
 class shy_logic_main_menu_selection_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
 public :
+    class logic_main_menu_selection_stateless_consts_type
+    {
+    public :
+        logic_main_menu_selection_stateless_consts_type ( ) ;
+    public :
+        num_fract mesh_size ;
+    } ;
+
     class logic_main_menu_selection_messages
     {
     public :
@@ -39,7 +49,15 @@ public :
     shy_logic_main_menu_selection_stateless ( ) ;
 private :
     shy_logic_main_menu_selection_stateless < mediator > & operator= ( const shy_logic_main_menu_selection_stateless < mediator > & ) ;
+public :
+    const logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_selection_stateless < mediator > :: logic_main_menu_selection_stateless_consts_type :: logic_main_menu_selection_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
+}
 
 template < typename mediator >
 shy_logic_main_menu_selection_stateless < mediator > :: shy_logic_main_menu_selection_stateless ( )

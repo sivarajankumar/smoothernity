@@ -313,6 +313,7 @@ class shy_aggregator
     typedef typename aggregator_types :: engine_render_stateless engine_render_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
+    typedef typename aggregator_types :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
     typedef typename aggregator_types :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename aggregator_types :: logic_text_stateless logic_text_stateless ;
     
@@ -391,6 +392,7 @@ private :
     logic_main_menu_letters_storage _logic_main_menu_letters_storage ;
     logic_main_menu_renderer _logic_main_menu_renderer ;
     logic_main_menu_selection_mesh _logic_main_menu_selection_mesh ;
+    logic_main_menu_selection_stateless _logic_main_menu_selection_stateless ;
     logic_main_menu_selection_tracker _logic_main_menu_selection_tracker ;
     logic_main_menu_stateless _logic_main_menu_stateless ;
     logic_sound _logic_sound ;
@@ -434,6 +436,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_letters_storage > logic_main_menu_letters_storage_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_renderer > logic_main_menu_renderer_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_mesh > logic_main_menu_selection_mesh_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > logic_main_menu_selection_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_tracker > logic_main_menu_selection_tracker_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > logic_main_menu_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_sound > logic_sound_ptr ;
@@ -473,6 +476,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_letters_storage_ptr , _logic_main_menu_letters_storage ) ;
     platform_pointer :: bind ( logic_main_menu_renderer_ptr , _logic_main_menu_renderer ) ;
     platform_pointer :: bind ( logic_main_menu_selection_mesh_ptr , _logic_main_menu_selection_mesh ) ;
+    platform_pointer :: bind ( logic_main_menu_selection_stateless_ptr , _logic_main_menu_selection_stateless ) ;
     platform_pointer :: bind ( logic_main_menu_selection_tracker_ptr , _logic_main_menu_selection_tracker ) ;
     platform_pointer :: bind ( logic_main_menu_stateless_ptr , _logic_main_menu_stateless ) ;
     platform_pointer :: bind ( logic_sound_ptr , _logic_sound ) ;
@@ -545,6 +549,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_letters_storage_ptr
         , logic_main_menu_renderer_ptr
         , logic_main_menu_selection_mesh_ptr
+        , logic_main_menu_selection_stateless_ptr
         , logic_main_menu_selection_tracker_ptr
         , logic_main_menu_stateless_ptr
         , logic_sound_ptr

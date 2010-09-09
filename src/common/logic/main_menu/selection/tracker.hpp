@@ -25,6 +25,7 @@ class shy_logic_main_menu_selection_tracker
     {
     public :
         num_whole requested ;
+        matrix_data transform ;
     } ;
 
     class _logic_main_menu_letters_layout_row_rect_state_type
@@ -45,8 +46,10 @@ public :
 private :
     shy_logic_main_menu_selection_tracker < mediator > & operator= ( const shy_logic_main_menu_selection_tracker & ) ;
     void _proceed_with_track ( ) ;
-    void _place_mesh ( ) ;
     void _obtain_row_rect ( ) ;
+    void _received_row_rect ( ) ;
+    void _compute_mesh_transform ( ) ;
+    void _place_mesh ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -113,7 +116,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _proceed_with_track (
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_layout_row_rect_state . replied ) )
     {
         _logic_main_menu_letters_layout_row_rect_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _place_mesh ( ) ;
+        _received_row_rect ( ) ;
     }
 }
 
@@ -129,7 +132,14 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _obtain_row_rect ( )
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _place_mesh ( )
+void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( )
+{
+    _compute_mesh_transform ( ) ;
+    _place_mesh ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _compute_mesh_transform ( )
 {
     matrix_data transform ;
     num_fract zero ;
@@ -146,7 +156,13 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _place_mesh ( )
     platform_matrix :: set_axis_z ( transform , zero , zero , half ) ;
     platform_matrix :: set_origin ( transform , zero , zero , shift ) ;
     
+    _logic_main_menu_selection_track_state . transform = transform ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _place_mesh ( )
+{
     typename messages :: logic_main_menu_selection_mesh_set_transform transform_msg ;
-    transform_msg . transform = transform ;
+    transform_msg . transform = _logic_main_menu_selection_track_state . transform ;
     _mediator . get ( ) . send ( transform_msg ) ;
 }
