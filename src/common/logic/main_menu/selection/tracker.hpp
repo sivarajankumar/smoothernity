@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_selection_tracker
 {
     typedef typename mediator :: engine_math :: rect rect ;
+    typedef typename mediator :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -53,6 +54,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > _logic_main_menu_selection_stateless_consts ;
     const _logic_main_menu_selection_tracker_consts_type _logic_main_menu_selection_tracker_consts ;
     
     _logic_main_menu_selection_track_state_type _logic_main_menu_selection_track_state ;
@@ -80,6 +82,7 @@ template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . logic_main_menu_selection_stateless_consts ( _logic_main_menu_selection_stateless_consts ) ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
@@ -147,7 +150,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _compute_mesh_transfo
     num_fract shift ;
     
     platform_math :: make_num_fract ( zero , 0 , 1 ) ;
-    platform_math :: make_num_fract ( half , 1 , 2 ) ;
+    platform_math :: div_fracts ( half , _logic_main_menu_selection_stateless_consts . get ( ) . mesh_size , _platform_math_consts . get ( ) . fract_2 ) ;
     shift = _logic_main_menu_selection_tracker_consts . position_z ;
     
     platform_matrix :: identity ( transform ) ;
