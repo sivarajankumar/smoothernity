@@ -147,17 +147,39 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _compute_mesh_transfo
     matrix_data transform ;
     num_fract zero ;
     num_fract half ;
-    num_fract shift ;
+    num_fract scale_x ;
+    num_fract scale_y ;
+    num_fract scale_z ;
+    num_fract pos_x ;
+    num_fract pos_y ;
+    num_fract pos_z ;
+    num_fract width ;
+    num_fract height ;
+    num_fract mesh_size ;
+    rect row_rect ;
     
-    platform_math :: make_num_fract ( zero , 0 , 1 ) ;
-    platform_math :: div_fracts ( half , _logic_main_menu_selection_stateless_consts . get ( ) . mesh_size , _platform_math_consts . get ( ) . fract_2 ) ;
-    shift = _logic_main_menu_selection_tracker_consts . position_z ;
+    row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
+    mesh_size = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_size ;
+    zero = _platform_math_consts . get ( ) . fract_0 ;
+    
+    platform_math :: sub_fracts ( width , row_rect . right , row_rect . left ) ;
+    platform_math :: sub_fracts ( height , row_rect . top , row_rect . bottom ) ;
+    
+    platform_math :: div_fracts ( scale_x , width , mesh_size ) ;
+    platform_math :: div_fracts ( scale_y , height , mesh_size ) ;
+    scale_z = _platform_math_consts . get ( ) . fract_1 ;
+
+    platform_math :: add_fracts ( pos_x , row_rect . right , row_rect . left ) ;
+    platform_math :: add_fracts ( pos_y , row_rect . top , row_rect . bottom ) ;
+    platform_math :: div_fract_by ( pos_x , _platform_math_consts . get ( ) . fract_2 ) ;
+    platform_math :: div_fract_by ( pos_y , _platform_math_consts . get ( ) . fract_2 ) ;
+    pos_z = _logic_main_menu_selection_tracker_consts . position_z ;
     
     platform_matrix :: identity ( transform ) ;
-    platform_matrix :: set_axis_x ( transform , half , zero , zero ) ;
-    platform_matrix :: set_axis_y ( transform , zero , half , zero ) ;
-    platform_matrix :: set_axis_z ( transform , zero , zero , half ) ;
-    platform_matrix :: set_origin ( transform , zero , zero , shift ) ;
+    platform_matrix :: set_axis_x ( transform , scale_x , zero , zero ) ;
+    platform_matrix :: set_axis_y ( transform , zero , scale_y , zero ) ;
+    platform_matrix :: set_axis_z ( transform , zero , zero , scale_z ) ;
+    platform_matrix :: set_origin ( transform , pos_x , pos_y , pos_z ) ;
     
     _logic_main_menu_selection_track_state . transform = transform ;
 }
