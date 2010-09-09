@@ -13,6 +13,8 @@ public :
         class logic_main_menu_letter_add { public : logic_text_letter_id letter ; } ;
         class logic_main_menu_letter_reply { public : num_whole row ; num_whole col ; logic_text_letter_id letter ; } ;
         class logic_main_menu_letter_request { public : num_whole row ; num_whole col ; } ;
+        class logic_main_menu_letters_boundaries_reply { public : num_whole rows ; num_whole cols ; } ;
+        class logic_main_menu_letters_boundaries_request { } ;
         class logic_main_menu_letters_cols_reply { public : num_whole row ; num_whole cols ; } ;
         class logic_main_menu_letters_cols_request { public : num_whole row ; } ;
         class logic_main_menu_letters_create { } ;
@@ -30,6 +32,8 @@ public :
         void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letter_add ) ;
         void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letter_reply ) ;
         void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letter_request ) ;
+        void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_boundaries_reply ) ;
+        void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_boundaries_request ) ;
         void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_cols_reply ) ;
         void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_cols_request ) ;
         void send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_create ) ;
@@ -69,6 +73,23 @@ void shy_logic_main_menu_letters_stateless < mediator >
 {
     _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_letters_stateless < mediator > 
+:: logic_main_menu_letters_sender < receivers > 
+:: send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_boundaries_reply msg )
+{
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_letters_stateless < mediator > 
+:: logic_main_menu_letters_sender < receivers > 
+:: send ( typename logic_main_menu_letters_messages :: logic_main_menu_letters_boundaries_request msg )
+{
+    _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
