@@ -104,9 +104,9 @@ template < typename mediator >
 void shy_logic_main_menu_letters_layout_position < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
-    _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _mediator . get ( ) . logic_main_menu_letters_meshes_stateless_consts ( _logic_main_menu_letters_meshes_stateless_consts ) ;
     _mediator . get ( ) . logic_main_menu_letters_layout_stateless_consts ( _logic_main_menu_letters_layout_stateless_consts ) ;
+    _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;    
 }
 
