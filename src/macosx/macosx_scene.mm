@@ -88,8 +88,8 @@
 }
 
 - ( void ) render
-{
-	_facade -> render ( ) ;
+{    
+    _facade -> render ( ) ;
 	_facade -> update ( ) ;
     _platform_insider -> mouse_insider . set_left_button_down ( false ) ;
     glFinish ( ) ;

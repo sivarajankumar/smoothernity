@@ -116,6 +116,10 @@
             }
         }
 
+        NSPoint window_point = [ [ openGLView window ] mouseLocationOutsideOfEventStream ] ;
+        NSPoint view_point = [ openGLView convertPoint : window_point fromView : nil ] ;
+        [ scene set_mouse_position : view_point ] ;
+    
         [ scene render ] ;
         [ full_screen_context flushBuffer ] ;
 

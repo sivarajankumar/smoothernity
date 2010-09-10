@@ -12,6 +12,7 @@ class shy_logic_main_menu_selection_tracker
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
+    typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
     class _logic_main_menu_selection_tracker_consts_type
@@ -68,6 +69,7 @@ private :
     void _place_mesh ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
+    typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > _logic_main_menu_selection_stateless_consts ;
     const _logic_main_menu_selection_tracker_consts_type _logic_main_menu_selection_tracker_consts ;
@@ -100,6 +102,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename me
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . logic_main_menu_selection_stateless_consts ( _logic_main_menu_selection_stateless_consts ) ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _platform_mouse = platform_obj . get ( ) . mouse ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -218,7 +221,28 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( 
 template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_selection ( )
 {
-    _logic_main_menu_selection_track_state . under_mouse_cursor = _platform_math_consts . get ( ) . whole_true ;
+    num_whole under_mouse_cursor ;
+    num_fract mouse_x ;
+    num_fract mouse_y ;
+    rect row_rect ;
+        
+    row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
+
+    _platform_mouse . get ( ) . x ( mouse_x ) ;
+    _platform_mouse . get ( ) . y ( mouse_y ) ;
+    
+    if ( platform_conditions :: fract_less_than_fract ( mouse_x , row_rect . left ) 
+      || platform_conditions :: fract_less_than_fract ( mouse_y , row_rect . bottom ) 
+      || platform_conditions :: fract_greater_than_fract ( mouse_x , row_rect . right ) 
+      || platform_conditions :: fract_greater_than_fract ( mouse_y , row_rect . top ) 
+       )
+    {
+        under_mouse_cursor = _platform_math_consts . get ( ) . whole_false ;
+    }
+    else
+        under_mouse_cursor = _platform_math_consts . get ( ) . whole_true ;
+    
+    _logic_main_menu_selection_track_state . under_mouse_cursor = under_mouse_cursor ;
 }
 
 template < typename mediator >
@@ -253,7 +277,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _compute_row_rect_mes
     num_fract height ;
     num_fract mesh_size ;
     rect row_rect ;
-    
+
     row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
     mesh_size = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_size ;
     zero = _platform_math_consts . get ( ) . fract_0 ;

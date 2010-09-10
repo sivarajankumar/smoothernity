@@ -55,6 +55,10 @@
 
 - ( void ) render
 {
+    NSPoint window_point = [ [ self window ] mouseLocationOutsideOfEventStream ] ;
+	NSPoint view_point = [ self convertPoint : window_point fromView : nil ] ;
+	[ scene set_mouse_position : view_point ] ;
+    
     [ scene render ] ;
     [ [ self openGLContext ] flushBuffer ] ;
 }
