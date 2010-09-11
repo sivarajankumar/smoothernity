@@ -1,4 +1,5 @@
 #include "DXUT.h"
+#include "Windowsx.h"
 #include "../common/facade.hpp"
 #include "win_platform.hpp"
 
@@ -21,6 +22,21 @@ void smoothernity_done ( )
     delete g_platform ;
     g_facade = 0 ;
     g_platform = 0 ;
+}
+
+void smoothernity_set_mouse_position ( int x_pixel , int y_pixel )
+{
+    HRESULT hr ;
+    D3DVIEWPORT9 viewport ;
+    V ( DXUTGetD3D9Device ( ) -> GetViewport ( & viewport ) ) ;
+    float x = 2.0f * ( - 0.5f + float ( x_pixel ) / float ( viewport . Width ) ) ;
+    float y = 2.0f * ( - 0.5f + float ( y_pixel ) / float ( viewport . Height ) ) ;
+    if ( viewport . Width > viewport . Height )
+        x *= float ( viewport . Width ) / float ( viewport . Height ) ;
+    else
+        y *= float ( viewport . Height ) / float ( viewport . Width ) ;
+    g_platform -> mouse_insider . set_x ( x ) ;
+    g_platform -> mouse_insider . set_y ( - y ) ;
 }
 
 //--------------------------------------------------------------------------------------
@@ -48,6 +64,12 @@ void CALLBACK OnFrameMove ( double fTime , float fElapsedTime , void * pUserCont
 LRESULT CALLBACK MsgProc ( HWND hWnd , UINT uMsg , WPARAM wParam , LPARAM lParam ,
                            bool * pbNoFurtherProcessing , void * pUserContext )
 {
+    if ( uMsg == WM_MOUSEMOVE )
+    {
+        int xPos = GET_X_LPARAM ( lParam ) ;
+        int yPos = GET_Y_LPARAM ( lParam ) ;
+        smoothernity_set_mouse_position ( xPos , yPos ) ;
+    }
     return 0 ;
 }
 
@@ -67,17 +89,7 @@ void CALLBACK OnMouse ( bool bLeftButtonDown , bool bRightButtonDown , bool bMid
                         bool bSideButton1Down , bool bSideButton2Down , int nMouseWheelDelta ,
                         int xPos , int yPos , void * pUserContext )
 {
-    HRESULT hr ;
-    D3DVIEWPORT9 viewport ;
-    V ( DXUTGetD3D9Device ( ) -> GetViewport ( & viewport ) ) ;
-    float x = 2.0f * ( - 0.5f + float ( xPos ) / float ( viewport . Width ) ) ;
-    float y = 2.0f * ( - 0.5f + float ( yPos ) / float ( viewport . Height ) ) ;
-    if ( viewport . Width > viewport . Height )
-        x *= float ( viewport . Width ) / float ( viewport . Height ) ;
-    else
-        y *= float ( viewport . Height ) / float ( viewport . Width ) ;
-    g_platform -> mouse_insider . set_x ( x ) ;
-    g_platform -> mouse_insider . set_y ( - y ) ;
+    smoothernity_set_mouse_position ( xPos , yPos ) ;
     g_platform -> mouse_insider . set_left_button_down ( bLeftButtonDown ) ;
 }
 
