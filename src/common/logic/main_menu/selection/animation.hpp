@@ -41,6 +41,7 @@ class shy_logic_main_menu_selection_animation
     } ;
 
 public :
+    shy_logic_main_menu_selection_animation ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_transform_request ) ;
@@ -48,6 +49,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_track_void_selected ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ) ;
 private :
+    shy_logic_main_menu_selection_animation < mediator > & operator= ( const shy_logic_main_menu_selection_animation < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _obtain_row_rect ( ) ;
     void _received_row_rect ( ) ;
@@ -68,6 +70,11 @@ template < typename mediator >
 shy_logic_main_menu_selection_animation < mediator > :: _logic_main_menu_selection_animation_consts_type :: _logic_main_menu_selection_animation_consts_type ( )
 {
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_selection_animation < mediator > :: shy_logic_main_menu_selection_animation ( )
+{
 }
 
 template < typename mediator >
