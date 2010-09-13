@@ -3,6 +3,7 @@ class shy_logic_main_menu_selection_stateless
 {
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
@@ -27,8 +28,9 @@ public :
         class logic_main_menu_selection_mesh_place { } ;
         class logic_main_menu_selection_mesh_render_reply { } ;
         class logic_main_menu_selection_mesh_render_request { } ;
-        class logic_main_menu_selection_mesh_set_transform { public : matrix_data transform ; } ;
         class logic_main_menu_selection_track { } ;
+        class logic_main_menu_selection_track_row_selected { public : num_whole row ; } ;
+        class logic_main_menu_selection_track_void_selected { } ;
     } ;
 
     template < typename receivers >
@@ -45,8 +47,9 @@ public :
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_place ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_render_reply ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_render_request ) ;
-        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_set_transform ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track ) ;
+        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_row_selected ) ;
+        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_void_selected ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -164,17 +167,26 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_selection_stateless < mediator > 
 :: logic_main_menu_selection_sender < receivers > 
-:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_set_transform msg )
+:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track msg )
 {
-    _receivers . get ( ) . logic_main_menu_selection_mesh . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_tracker . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_selection_stateless < mediator > 
 :: logic_main_menu_selection_sender < receivers > 
-:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track msg )
+:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_row_selected msg )
 {
-    _receivers . get ( ) . logic_main_menu_selection_tracker . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_animation . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_stateless < mediator > 
+:: logic_main_menu_selection_sender < receivers > 
+:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_void_selected msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_animation . get ( ) . receive ( msg ) ;
 }
 

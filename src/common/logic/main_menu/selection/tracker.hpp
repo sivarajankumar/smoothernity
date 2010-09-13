@@ -2,7 +2,6 @@ template < typename mediator >
 class shy_logic_main_menu_selection_tracker
 {
     typedef typename mediator :: engine_math :: rect rect ;
-    typedef typename mediator :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -14,14 +13,6 @@ class shy_logic_main_menu_selection_tracker
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_main_menu_selection_tracker_consts_type
-    {
-    public :
-        _logic_main_menu_selection_tracker_consts_type ( ) ;
-    public :
-        num_fract position_z ;
-    } ;
 
     class _logic_main_menu_selection_track_state_type
     {
@@ -64,26 +55,17 @@ private :
     void _obtain_current_row_rect ( ) ;
     void _received_row_rect ( ) ;
     void _determine_mouse_selection ( ) ;
-    void _compute_row_rect_mesh_transform ( ) ;
-    void _compute_empty_mesh_transform ( ) ;
-    void _place_mesh ( ) ;
+    void _send_row_selected ( ) ;
+    void _send_void_selected ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > _logic_main_menu_selection_stateless_consts ;
-    const _logic_main_menu_selection_tracker_consts_type _logic_main_menu_selection_tracker_consts ;
     
     _logic_main_menu_selection_track_state_type _logic_main_menu_selection_track_state ;
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
     _logic_main_menu_letters_layout_row_rect_state_type _logic_main_menu_letters_layout_row_rect_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_selection_tracker < mediator > :: _logic_main_menu_selection_tracker_consts_type :: _logic_main_menu_selection_tracker_consts_type ( )
-{
-    platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_selection_tracker < mediator > :: shy_logic_main_menu_selection_tracker ( )
@@ -100,7 +82,6 @@ template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
-    _mediator . get ( ) . logic_main_menu_selection_stateless_consts ( _logic_main_menu_selection_stateless_consts ) ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_mouse = platform_obj . get ( ) . mouse ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
@@ -198,10 +179,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( 
     rows_count = _logic_main_menu_letters_rows_state . rows ;
     
     if ( platform_conditions :: whole_is_true ( under_mouse_cursor ) )
-    {
-        _compute_row_rect_mesh_transform ( ) ;
-        _place_mesh ( ) ;
-    }
+        _send_row_selected ( ) ;
     else
     {
         platform_math :: inc_whole ( current_row ) ;
@@ -211,10 +189,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( 
             _obtain_current_row_rect ( ) ;
         }
         else
-        {
-            _compute_empty_mesh_transform ( ) ;
-            _place_mesh ( ) ;
-        }
+            _send_void_selected ( ) ;
     }
 }
 
@@ -246,68 +221,15 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_sele
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _compute_empty_mesh_transform ( )
+void shy_logic_main_menu_selection_tracker < mediator > :: _send_row_selected ( )
 {
-    matrix_data transform ;
-    num_fract zero ;
-    
-    zero = _platform_math_consts . get ( ) . fract_0 ;
-    
-    platform_matrix :: identity ( transform ) ;
-    platform_matrix :: set_axis_x ( transform , zero , zero , zero ) ;
-    platform_matrix :: set_axis_y ( transform , zero , zero , zero ) ;
-    platform_matrix :: set_axis_z ( transform , zero , zero , zero ) ;
-    
-    _logic_main_menu_selection_track_state . transform = transform ;
+    typename messages :: logic_main_menu_selection_track_row_selected msg ;
+    msg . row = _logic_main_menu_selection_track_state . current_row ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _compute_row_rect_mesh_transform ( )
+void shy_logic_main_menu_selection_tracker < mediator > :: _send_void_selected ( )
 {
-    matrix_data transform ;
-    num_fract zero ;
-    num_fract half ;
-    num_fract scale_x ;
-    num_fract scale_y ;
-    num_fract scale_z ;
-    num_fract pos_x ;
-    num_fract pos_y ;
-    num_fract pos_z ;
-    num_fract width ;
-    num_fract height ;
-    num_fract mesh_size ;
-    rect row_rect ;
-
-    row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
-    mesh_size = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_size ;
-    zero = _platform_math_consts . get ( ) . fract_0 ;
-    
-    platform_math :: sub_fracts ( width , row_rect . right , row_rect . left ) ;
-    platform_math :: sub_fracts ( height , row_rect . top , row_rect . bottom ) ;
-    
-    platform_math :: div_fracts ( scale_x , width , mesh_size ) ;
-    platform_math :: div_fracts ( scale_y , height , mesh_size ) ;
-    scale_z = _platform_math_consts . get ( ) . fract_1 ;
-
-    platform_math :: add_fracts ( pos_x , row_rect . right , row_rect . left ) ;
-    platform_math :: add_fracts ( pos_y , row_rect . top , row_rect . bottom ) ;
-    platform_math :: div_fract_by ( pos_x , _platform_math_consts . get ( ) . fract_2 ) ;
-    platform_math :: div_fract_by ( pos_y , _platform_math_consts . get ( ) . fract_2 ) ;
-    pos_z = _logic_main_menu_selection_tracker_consts . position_z ;
-    
-    platform_matrix :: identity ( transform ) ;
-    platform_matrix :: set_axis_x ( transform , scale_x , zero , zero ) ;
-    platform_matrix :: set_axis_y ( transform , zero , scale_y , zero ) ;
-    platform_matrix :: set_axis_z ( transform , zero , zero , scale_z ) ;
-    platform_matrix :: set_origin ( transform , pos_x , pos_y , pos_z ) ;
-    
-    _logic_main_menu_selection_track_state . transform = transform ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _place_mesh ( )
-{
-    typename messages :: logic_main_menu_selection_mesh_set_transform transform_msg ;
-    transform_msg . transform = _logic_main_menu_selection_track_state . transform ;
-    _mediator . get ( ) . send ( transform_msg ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_void_selected ( ) ) ;
 }
