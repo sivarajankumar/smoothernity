@@ -20,6 +20,8 @@ class shy_logic_main_menu_selection_tracker
         num_whole requested ;
         num_whole current_row ;
         num_whole under_mouse_cursor ;
+        num_whole prev_row_is_selected ;
+        num_whole prev_selected_row_index ;
         matrix_data transform ;
     } ;
 
@@ -223,13 +225,35 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_sele
 template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: _send_row_selected ( )
 {
-    typename messages :: logic_main_menu_selection_track_row_selected msg ;
-    msg . row = _logic_main_menu_selection_track_state . current_row ;
-    _mediator . get ( ) . send ( msg ) ;
+    num_whole prev_row_is_selected ;
+    num_whole prev_selected_row_index ;
+    num_whole current_row ;
+    
+    prev_row_is_selected = _logic_main_menu_selection_track_state . prev_row_is_selected ;
+    prev_selected_row_index = _logic_main_menu_selection_track_state . prev_selected_row_index ;
+    current_row = _logic_main_menu_selection_track_state . current_row ;
+    
+    if ( ! platform_conditions :: whole_is_true ( prev_row_is_selected ) 
+    ||   ! platform_conditions :: wholes_are_equal ( prev_selected_row_index , current_row )  )
+    {
+        prev_row_is_selected = _platform_math_consts . get ( ) . whole_true ;
+        prev_selected_row_index = current_row ;
+        
+        _logic_main_menu_selection_track_state . prev_row_is_selected = prev_row_is_selected ;
+        _logic_main_menu_selection_track_state . prev_selected_row_index = prev_selected_row_index ;
+
+        typename messages :: logic_main_menu_selection_track_row_selected msg ;
+        msg . row = _logic_main_menu_selection_track_state . current_row ;
+        _mediator . get ( ) . send ( msg ) ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: _send_void_selected ( )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_void_selected ( ) ) ;
+    if ( ! platform_conditions :: whole_is_false ( _logic_main_menu_selection_track_state . prev_row_is_selected ) )
+    {
+        _logic_main_menu_selection_track_state . prev_row_is_selected = _platform_math_consts . get ( ) . whole_false ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_void_selected ( ) ) ;
+    }
 }
