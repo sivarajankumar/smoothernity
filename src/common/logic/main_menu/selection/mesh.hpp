@@ -34,6 +34,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_mesh_render_request ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_set_transform ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_mesh_place ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_main_menu_selection_mesh < mediator > & operator= ( const shy_logic_main_menu_selection_mesh < mediator > & ) ;
@@ -52,6 +53,7 @@ private :
     typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > _logic_main_menu_selection_stateless_consts ;
     const _logic_main_menu_selection_mesh_consts_type _logic_main_menu_selection_mesh_consts ;
     
+    num_whole _animation_transform_requested ;
     num_whole _creation_requested ;
     engine_render_mesh_id _mesh ;
 } ;
@@ -134,10 +136,21 @@ void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messa
 template < typename mediator >
 void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_transform_reply msg )
 {
-    typename messages :: engine_render_mesh_set_transform transform_msg ;
-    transform_msg . mesh = _mesh ;
-    transform_msg . transform = msg . transform ;
-    _mediator . get ( ) . send ( transform_msg ) ;
+    if ( platform_conditions :: whole_is_true ( _animation_transform_requested ) )
+    {
+        _animation_transform_requested = _platform_math_consts . get ( ) . whole_false ;
+        typename messages :: engine_render_mesh_set_transform transform_msg ;
+        transform_msg . mesh = _mesh ;
+        transform_msg . transform = msg . transform ;
+        _mediator . get ( ) . send ( transform_msg ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_mesh_place )
+{
+    _animation_transform_requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_transform_request ( ) ) ;
 }
 
 template < typename mediator >

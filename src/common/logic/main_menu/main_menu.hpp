@@ -110,6 +110,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
         {
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_place ( ) ) ;
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_place ( ) ) ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _created )
