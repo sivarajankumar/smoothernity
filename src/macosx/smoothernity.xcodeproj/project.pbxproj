@@ -92,6 +92,7 @@
 		29B9732CFDCFA39411CA2CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
 		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
+		88095D1D123E6A9200B2B36F /* animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88095D1C123E6A9200B2B36F /* animation.hpp */; };
 		8809B3BF11E1E7B400869C87 /* macosx_platform_sound_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B3BE11E1E7B400869C87 /* macosx_platform_sound_insider.hpp */; };
 		8809B3DF11E1EC0B00869C87 /* macosx_platform_render_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */; };
 		8809B5A511E219E400869C87 /* platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B5A411E219E400869C87 /* platform.hpp */; };
@@ -205,6 +206,7 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOpenGLFullScreen_Prefix.h; sourceTree = "<group>"; };
 		4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		88095D1C123E6A9200B2B36F /* animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = animation.hpp; sourceTree = "<group>"; };
 		8809B3BE11E1E7B400869C87 /* macosx_platform_sound_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_sound_insider.hpp; sourceTree = "<group>"; };
 		8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render_insider.hpp; sourceTree = "<group>"; };
 		8809B5A411E219E400869C87 /* platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = platform.hpp; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 		88FE04DF122E72C400E9C226 /* selection */ = {
 			isa = PBXGroup;
 			children = (
+				88095D1C123E6A9200B2B36F /* animation.hpp */,
 				88FE04E0122E72F400E9C226 /* mesh.hpp */,
 				88B5F4D71236682E0044BEB2 /* stateless.hpp */,
 				88B5F437123647A50044BEB2 /* tracker.hpp */,
@@ -788,6 +791,7 @@
 				8891230B12368BEB002574A3 /* stateless.hpp in Headers */,
 				8891232112369111002574A3 /* position.hpp in Headers */,
 				8891232F1236938F002574A3 /* row_rect.hpp in Headers */,
+				88095D1D123E6A9200B2B36F /* animation.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

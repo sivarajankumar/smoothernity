@@ -52,6 +52,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_storage logic_main_menu_letters_meshes_storage ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage logic_main_menu_letters_storage ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_renderer logic_main_menu_renderer ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation logic_main_menu_selection_animation ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_mesh logic_main_menu_selection_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_tracker logic_main_menu_selection_tracker ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
@@ -203,6 +204,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_storage > logic_main_menu_letters_meshes_storage ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_storage > logic_main_menu_letters_storage ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_renderer > logic_main_menu_renderer ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation > logic_main_menu_selection_animation ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_mesh > logic_main_menu_selection_mesh ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_tracker > logic_main_menu_selection_tracker ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_sound > logic_sound ;
@@ -250,6 +252,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_storage >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_storage >
         , typename platform_pointer :: template pointer < logic_main_menu_renderer >
+        , typename platform_pointer :: template pointer < logic_main_menu_selection_animation >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_mesh >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_stateless >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_tracker >
@@ -336,6 +339,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_storage > arg_logic_main_menu_letters_meshes_storage
     , typename platform_pointer :: template pointer < logic_main_menu_letters_storage > arg_logic_main_menu_letters_storage
     , typename platform_pointer :: template pointer < logic_main_menu_renderer > arg_logic_main_menu_renderer
+    , typename platform_pointer :: template pointer < logic_main_menu_selection_animation > arg_logic_main_menu_selection_animation
     , typename platform_pointer :: template pointer < logic_main_menu_selection_mesh > arg_logic_main_menu_selection_mesh
     , typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > arg_logic_main_menu_selection_stateless
     , typename platform_pointer :: template pointer < logic_main_menu_selection_tracker > arg_logic_main_menu_selection_tracker
@@ -380,6 +384,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_letters_meshes_storage = arg_logic_main_menu_letters_meshes_storage ;
     _receivers . logic_main_menu_letters_storage = arg_logic_main_menu_letters_storage ;
     _receivers . logic_main_menu_renderer = arg_logic_main_menu_renderer ;
+    _receivers . logic_main_menu_selection_animation = arg_logic_main_menu_selection_animation ;
     _receivers . logic_main_menu_selection_mesh = arg_logic_main_menu_selection_mesh ;
     _receivers . logic_main_menu_selection_tracker = arg_logic_main_menu_selection_tracker ;
     _receivers . logic_sound = arg_logic_sound ;
@@ -420,6 +425,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_letters_meshes_storage . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_storage . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_renderer . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_selection_animation . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_mesh . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_tracker . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_sound . get ( ) . set_mediator ( mediator_ptr ) ;
