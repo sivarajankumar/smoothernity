@@ -33,6 +33,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_mesh_destroy_request ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_render_request ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_set_transform ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_transform_reply ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_main_menu_selection_mesh < mediator > & operator= ( const shy_logic_main_menu_selection_mesh < mediator > & ) ;
@@ -123,6 +124,15 @@ void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messa
 
 template < typename mediator >
 void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_mesh_set_transform msg )
+{
+    typename messages :: engine_render_mesh_set_transform transform_msg ;
+    transform_msg . mesh = _mesh ;
+    transform_msg . transform = msg . transform ;
+    _mediator . get ( ) . send ( transform_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_mesh < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_transform_reply msg )
 {
     typename messages :: engine_render_mesh_set_transform transform_msg ;
     transform_msg . mesh = _mesh ;
