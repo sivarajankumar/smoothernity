@@ -20,8 +20,10 @@ class shy_logic_main_menu_selection_animation
         _logic_main_menu_selection_animation_consts_type ( ) ;
     public :
         num_fract position_z ;
-        num_fract scale_amplitude ;
-        num_fract scale_period_in_seconds ;
+        num_fract horizontal_scale_amplitude ;
+        num_fract horizontal_scale_period_in_seconds ;
+        num_fract vertical_scale_amplitude ;
+        num_fract vertical_scale_period_in_seconds ;
     } ;
 
     class _logic_main_menu_selection_animation_transform_state_type
@@ -30,7 +32,8 @@ class shy_logic_main_menu_selection_animation
         num_whole requested ;
         num_whole row_is_selected ;
         num_whole selected_row_index ;
-        num_fract animation_scale ;
+        num_fract horizontal_animation_scale ;
+        num_fract vertical_animation_scale ;
         matrix_data transform ;
     } ;
 
@@ -66,7 +69,8 @@ private :
     void _obtain_row_rect ( ) ;
     void _received_row_rect ( ) ;
     void _reply_transform ( ) ;
-    void _compute_animation_scale ( ) ;
+    void _compute_horizontal_animation_scale ( ) ;
+    void _compute_vertical_animation_scale ( ) ;
     void _compute_row_rect_mesh_transform ( ) ;
     void _compute_empty_mesh_transform ( ) ;
 private :
@@ -84,8 +88,10 @@ template < typename mediator >
 shy_logic_main_menu_selection_animation < mediator > :: _logic_main_menu_selection_animation_consts_type :: _logic_main_menu_selection_animation_consts_type ( )
 {
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
-    platform_math :: make_num_fract ( scale_amplitude , 1 , 20 ) ;
-    platform_math :: make_num_fract ( scale_period_in_seconds , 1 , 1 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_amplitude , 1 , 20 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_period_in_seconds , 2 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_scale_amplitude , 1 , 10 ) ;
+    platform_math :: make_num_fract ( vertical_scale_period_in_seconds , 1 , 1 ) ;
 }
 
 template < typename mediator >
@@ -190,7 +196,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _received_row_rect 
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_transform_state . row_is_selected ) )
     {
-        _compute_animation_scale ( ) ;
+        _compute_horizontal_animation_scale ( ) ;
+        _compute_vertical_animation_scale ( ) ;
         _compute_row_rect_mesh_transform ( ) ;
     }
     else
@@ -226,7 +233,8 @@ template < typename mediator >
 void shy_logic_main_menu_selection_animation < mediator > :: _compute_row_rect_mesh_transform ( )
 {
     matrix_data transform ;
-    num_fract animation_scale ;
+    num_fract horizontal_animation_scale ;
+    num_fract vertical_animation_scale ;
     num_fract zero ;
     num_fract half ;
     num_fract scale_x ;
@@ -240,7 +248,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_row_rect_m
     num_fract mesh_size ;
     rect row_rect ;
     
-    animation_scale = _logic_main_menu_selection_animation_transform_state . animation_scale ;
+    horizontal_animation_scale = _logic_main_menu_selection_animation_transform_state . horizontal_animation_scale ;
+    vertical_animation_scale = _logic_main_menu_selection_animation_transform_state . vertical_animation_scale ;
     row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
     mesh_size = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_size ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
@@ -252,8 +261,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_row_rect_m
     platform_math :: div_fracts ( scale_y , height , mesh_size ) ;
     scale_z = _platform_math_consts . get ( ) . fract_1 ;
 
-    platform_math :: mul_fract_by ( scale_x , animation_scale ) ;
-    platform_math :: mul_fract_by ( scale_y , animation_scale ) ;
+    platform_math :: mul_fract_by ( scale_x , horizontal_animation_scale ) ;
+    platform_math :: mul_fract_by ( scale_y , vertical_animation_scale ) ;
 
     platform_math :: add_fracts ( pos_x , row_rect . right , row_rect . left ) ;
     platform_math :: add_fracts ( pos_y , row_rect . top , row_rect . bottom ) ;
@@ -271,27 +280,53 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_row_rect_m
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_animation < mediator > :: _compute_animation_scale ( )
+void shy_logic_main_menu_selection_animation < mediator > :: _compute_horizontal_animation_scale ( )
 {
-    num_fract scale_amplitude ;
-    num_fract scale_period_in_seconds ;
+    num_fract horizontal_scale_amplitude ;
+    num_fract horizontal_scale_period_in_seconds ;
     num_fract time ;
     num_fract phase ;
     num_fract scale ;
-    num_fract animation_scale ;
+    num_fract horizontal_animation_scale ;
     
-    scale_amplitude = _logic_main_menu_selection_animation_consts . scale_amplitude ;
-    scale_period_in_seconds = _logic_main_menu_selection_animation_consts . scale_period_in_seconds ;
+    horizontal_scale_amplitude = _logic_main_menu_selection_animation_consts . horizontal_scale_amplitude ;
+    horizontal_scale_period_in_seconds = _logic_main_menu_selection_animation_consts . horizontal_scale_period_in_seconds ;
     time = _logic_main_menu_update_state . time ;
     
-    platform_math :: div_fracts ( phase , time , scale_period_in_seconds ) ;
+    platform_math :: div_fracts ( phase , time , horizontal_scale_period_in_seconds ) ;
     platform_math :: mul_fract_by ( phase , _platform_math_consts . get ( ) . fract_2pi ) ;
     
     platform_math :: sin ( scale , phase ) ;
-    platform_math :: mul_fract_by ( scale , scale_amplitude ) ;
+    platform_math :: mul_fract_by ( scale , horizontal_scale_amplitude ) ;
     
-    platform_math :: sub_fracts ( animation_scale , _platform_math_consts . get ( ) . fract_1 , scale_amplitude ) ;
-    platform_math :: sub_from_fract ( animation_scale , scale ) ;
+    platform_math :: sub_fracts ( horizontal_animation_scale , _platform_math_consts . get ( ) . fract_1 , horizontal_scale_amplitude ) ;
+    platform_math :: sub_from_fract ( horizontal_animation_scale , scale ) ;
     
-    _logic_main_menu_selection_animation_transform_state . animation_scale = animation_scale ;
+    _logic_main_menu_selection_animation_transform_state . horizontal_animation_scale = horizontal_animation_scale ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: _compute_vertical_animation_scale ( )
+{
+    num_fract vertical_scale_amplitude ;
+    num_fract vertical_scale_period_in_seconds ;
+    num_fract time ;
+    num_fract phase ;
+    num_fract scale ;
+    num_fract vertical_animation_scale ;
+    
+    vertical_scale_amplitude = _logic_main_menu_selection_animation_consts . vertical_scale_amplitude ;
+    vertical_scale_period_in_seconds = _logic_main_menu_selection_animation_consts . vertical_scale_period_in_seconds ;
+    time = _logic_main_menu_update_state . time ;
+    
+    platform_math :: div_fracts ( phase , time , vertical_scale_period_in_seconds ) ;
+    platform_math :: mul_fract_by ( phase , _platform_math_consts . get ( ) . fract_2pi ) ;
+    
+    platform_math :: sin ( scale , phase ) ;
+    platform_math :: mul_fract_by ( scale , vertical_scale_amplitude ) ;
+    
+    platform_math :: sub_fracts ( vertical_animation_scale , _platform_math_consts . get ( ) . fract_1 , vertical_scale_amplitude ) ;
+    platform_math :: sub_from_fract ( vertical_animation_scale , scale ) ;
+    
+    _logic_main_menu_selection_animation_transform_state . vertical_animation_scale = vertical_animation_scale ;
 }
