@@ -50,7 +50,7 @@
 #include "logic/main_menu/letters/storage.hpp"
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/renderer.hpp"
-#include "logic/main_menu/selection/animation.hpp"
+#include "logic/main_menu/selection/animation/animation.hpp"
 #include "logic/main_menu/selection/mesh.hpp"
 #include "logic/main_menu/selection/stateless.hpp"
 #include "logic/main_menu/selection/tracker.hpp"
