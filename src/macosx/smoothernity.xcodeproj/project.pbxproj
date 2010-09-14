@@ -183,6 +183,7 @@
 		88B5F4CB123665840044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F4CA123665840044BEB2 /* stateless.hpp */; };
 		88B5F4D81236682E0044BEB2 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88B5F4D71236682E0044BEB2 /* stateless.hpp */; };
 		88F9C3DB123FB9FE0014A3AC /* animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F9C3DA123FB9FE0014A3AC /* animation.hpp */; };
+		88F9C3E2123FBA910014A3AC /* idle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F9C3E1123FBA910014A3AC /* idle.hpp */; };
 		88FE04E1122E72F400E9C226 /* mesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88FE04E0122E72F400E9C226 /* mesh.hpp */; };
 /* End PBXBuildFile section */
 
@@ -297,6 +298,7 @@
 		88B5F4CA123665840044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88B5F4D71236682E0044BEB2 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		88F9C3DA123FB9FE0014A3AC /* animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = animation.hpp; sourceTree = "<group>"; };
+		88F9C3E1123FBA910014A3AC /* idle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idle.hpp; sourceTree = "<group>"; };
 		88FE04E0122E72F400E9C226 /* mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mesh.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -689,6 +691,7 @@
 			isa = PBXGroup;
 			children = (
 				88F9C3DA123FB9FE0014A3AC /* animation.hpp */,
+				88F9C3E1123FBA910014A3AC /* idle.hpp */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -800,6 +803,7 @@
 				8891232112369111002574A3 /* position.hpp in Headers */,
 				8891232F1236938F002574A3 /* row_rect.hpp in Headers */,
 				88F9C3DB123FB9FE0014A3AC /* animation.hpp in Headers */,
+				88F9C3E2123FBA910014A3AC /* idle.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
