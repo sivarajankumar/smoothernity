@@ -4,7 +4,6 @@ class shy_logic_main_menu_selection_stateless
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
-    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
 public :
@@ -19,8 +18,6 @@ public :
     class logic_main_menu_selection_messages
     {
     public :
-        class logic_main_menu_selection_animation_transform_reply { public : matrix_data transform ; } ;
-        class logic_main_menu_selection_animation_transform_request { } ;
         class logic_main_menu_selection_mesh_create { } ;
         class logic_main_menu_selection_mesh_create_finished { } ;
         class logic_main_menu_selection_mesh_destroy_reply { } ;
@@ -38,8 +35,6 @@ public :
     {
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
-        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_animation_transform_reply ) ;
-        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_animation_transform_request ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_create ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_create_finished ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_mesh_destroy_reply ) ;
@@ -80,24 +75,6 @@ void shy_logic_main_menu_selection_stateless < mediator >
 :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
 {
     _receivers = arg_receivers ;
-}
-
-template < typename mediator >
-template < typename receivers >
-void shy_logic_main_menu_selection_stateless < mediator > 
-:: logic_main_menu_selection_sender < receivers > 
-:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_animation_transform_reply msg )
-{
-    _receivers . get ( ) . logic_main_menu_selection_mesh . get ( ) . receive ( msg ) ;
-}
-
-template < typename mediator >
-template < typename receivers >
-void shy_logic_main_menu_selection_stateless < mediator > 
-:: logic_main_menu_selection_sender < receivers > 
-:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_animation_transform_request msg )
-{
-    _receivers . get ( ) . logic_main_menu_selection_animation . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
