@@ -234,7 +234,8 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _send_row_selected ( 
     current_row = _logic_main_menu_selection_track_state . current_row ;
     
     if ( ! platform_conditions :: whole_is_true ( prev_row_is_selected ) 
-    ||   ! platform_conditions :: wholes_are_equal ( prev_selected_row_index , current_row )  )
+    ||   ! platform_conditions :: wholes_are_equal ( prev_selected_row_index , current_row )
+       )
     {
         prev_row_is_selected = _platform_math_consts . get ( ) . whole_true ;
         prev_selected_row_index = current_row ;
