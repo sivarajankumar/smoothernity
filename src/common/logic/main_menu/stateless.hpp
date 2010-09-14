@@ -93,7 +93,7 @@ void shy_logic_main_menu_stateless < mediator >
     _receivers . get ( ) . logic_main_menu_letters_animation_appear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_selection_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_animation_idle . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -125,7 +125,7 @@ void shy_logic_main_menu_stateless < mediator >
     _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_meshes_creation_director . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_main_menu_selection_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_animation_idle . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
