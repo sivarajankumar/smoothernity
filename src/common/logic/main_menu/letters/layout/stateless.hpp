@@ -322,7 +322,7 @@ void shy_logic_main_menu_letters_layout_stateless < mediator > :: compute_row_re
     platform_math :: add_to_fract ( row_rect . top , border_height ) ;
     platform_math :: neg_fract ( row_rect . top ) ;
     platform_math :: add_to_fract ( row_rect . top , menu_rect . top ) ;
-    platform_math :: sub_fracts ( row_rect . bottom , row_rect . top , row_height ) ;
+    platform_math :: sub_fracts ( row_rect . bottom , row_rect . top , letter_size ) ;
     platform_math :: div_fracts ( row_rect . left , row_width , fract_minus_2 ) ;
     platform_math :: div_fracts ( row_rect . right , row_width , fract_2 ) ;
 }

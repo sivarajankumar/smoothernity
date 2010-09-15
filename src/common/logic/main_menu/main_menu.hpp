@@ -29,6 +29,7 @@ public :
     void receive ( typename messages :: logic_main_menu_letters_meshes_destroy_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_create_finished ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_destroy_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_track_reply ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -109,8 +110,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
         else
         {
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_place ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_place ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_request ( ) ) ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _created )
@@ -159,4 +159,10 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 {
     _created = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_render_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_reply )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_place ( ) ) ;
 }

@@ -46,7 +46,7 @@ public :
     shy_logic_main_menu_selection_tracker ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_main_menu_selection_track ) ;
+    void receive ( typename messages :: logic_main_menu_selection_track_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_rows_reply ) ;
 private :
@@ -59,6 +59,7 @@ private :
     void _determine_mouse_selection ( ) ;
     void _send_row_selected ( ) ;
     void _send_void_selected ( ) ;
+    void _send_reply ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
@@ -90,7 +91,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename me
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename messages :: logic_main_menu_selection_track )
+void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_request )
 {
     _logic_main_menu_selection_track_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_track ( ) ;
@@ -181,7 +182,10 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( 
     rows_count = _logic_main_menu_letters_rows_state . rows ;
     
     if ( platform_conditions :: whole_is_true ( under_mouse_cursor ) )
+    {
         _send_row_selected ( ) ;
+        _send_reply ( ) ;
+    }
     else
     {
         platform_math :: inc_whole ( current_row ) ;
@@ -191,7 +195,10 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( 
             _obtain_current_row_rect ( ) ;
         }
         else
+        {
             _send_void_selected ( ) ;
+            _send_reply ( ) ;
+        }
     }
 }
 
@@ -257,4 +264,10 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _send_void_selected (
         _logic_main_menu_selection_track_state . prev_row_is_selected = _platform_math_consts . get ( ) . whole_false ;
         _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_void_selected ( ) ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _send_reply ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_reply ( ) ) ;
 }
