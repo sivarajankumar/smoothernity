@@ -101,6 +101,7 @@
 		8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
 		8812CF45117DE8B4008F67D9 /* macosx_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */; };
 		8812CF52117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
+		8819BF1612411779009A2F16 /* appear.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819BF1512411779009A2F16 /* appear.hpp */; };
 		8819C24511C8E11D003A552B /* static_array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C24411C8E11D003A552B /* static_array.hpp */; };
 		8819C29111C8F262003A552B /* static_array_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C29011C8F262003A552B /* static_array_insider.hpp */; };
 		8819C32611C90AAF003A552B /* pointer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8819C32511C90AAF003A552B /* pointer.hpp */; };
@@ -217,6 +218,7 @@
 		8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_sound_loader.h; sourceTree = "<group>"; };
 		8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_sound_loader.mm; sourceTree = "<group>"; };
 		8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
+		8819BF1512411779009A2F16 /* appear.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = appear.hpp; sourceTree = "<group>"; };
 		8819C24411C8E11D003A552B /* static_array.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_array.hpp; sourceTree = "<group>"; };
 		8819C29011C8F262003A552B /* static_array_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = static_array_insider.hpp; sourceTree = "<group>"; };
 		8819C32511C90AAF003A552B /* pointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointer.hpp; sourceTree = "<group>"; };
@@ -693,6 +695,7 @@
 			isa = PBXGroup;
 			children = (
 				88F9C3DA123FB9FE0014A3AC /* animation.hpp */,
+				8819BF1512411779009A2F16 /* appear.hpp */,
 				88F9C3E1123FBA910014A3AC /* idle.hpp */,
 				88F9C3F0123FC5C30014A3AC /* stateless.hpp */,
 			);
@@ -808,6 +811,7 @@
 				88F9C3DB123FB9FE0014A3AC /* animation.hpp in Headers */,
 				88F9C3E2123FBA910014A3AC /* idle.hpp in Headers */,
 				88F9C3F1123FC5C30014A3AC /* stateless.hpp in Headers */,
+				8819BF1612411779009A2F16 /* appear.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

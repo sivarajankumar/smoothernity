@@ -51,6 +51,7 @@
 #include "logic/main_menu/main_menu.hpp"
 #include "logic/main_menu/renderer.hpp"
 #include "logic/main_menu/selection/animation/animation.hpp"
+#include "logic/main_menu/selection/animation/appear.hpp"
 #include "logic/main_menu/selection/animation/idle.hpp"
 #include "logic/main_menu/selection/animation/stateless.hpp"
 #include "logic/main_menu/selection/mesh.hpp"
@@ -124,6 +125,7 @@ private :
         , shy_logic_main_menu_letters_storage
         , shy_logic_main_menu_renderer
         , shy_logic_main_menu_selection_animation
+        , shy_logic_main_menu_selection_animation_appear
         , shy_logic_main_menu_selection_animation_idle
         , shy_logic_main_menu_selection_animation_stateless
         , shy_logic_main_menu_selection_mesh
