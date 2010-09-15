@@ -14,14 +14,25 @@ class shy_logic_main_menu_selection_tracker
     typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
+    class _logic_main_menu_selection_tracker_consts_type
+    {
+    public :
+        _logic_main_menu_selection_tracker_consts_type ( ) ;
+    public :
+        num_fract selected_rect_vertical_scale ;
+    } ;
+
     class _logic_main_menu_selection_track_state_type
     {
     public :
         num_whole requested ;
         num_whole current_row ;
-        num_whole under_mouse_cursor ;
+        num_whole mouse_cursor_in_selection_rect ;
+        num_whole mouse_cursor_in_prev_selection_rect ;
         num_whole prev_row_is_selected ;
         num_whole prev_selected_row_index ;
+        rect prev_selection_rect ;
+        rect scaled_prev_selection_rect ;
         matrix_data transform ;
     } ;
 
@@ -52,11 +63,15 @@ public :
 private :
     shy_logic_main_menu_selection_tracker < mediator > & operator= ( const shy_logic_main_menu_selection_tracker & ) ;
     void _proceed_with_track ( ) ;
+    void _track_requested ( ) ;
     void _obtain_rows_count ( ) ;
     void _obtain_first_row_rect ( ) ;
     void _obtain_current_row_rect ( ) ;
     void _received_row_rect ( ) ;
-    void _determine_mouse_selection ( ) ;
+    void _determine_mouse_cursor_in_selection_rect ( ) ;
+    void _determine_mouse_cursor_in_prev_selection_rect ( ) ;
+    void _determine_mouse_cursor_in_rect ( num_whole & result , rect row_rect ) ;
+    void _scale_prev_selection_rect ( ) ;
     void _send_row_selected ( ) ;
     void _send_void_selected ( ) ;
     void _send_reply ( ) ;
@@ -64,11 +79,18 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_main_menu_selection_tracker_consts_type _logic_main_menu_selection_tracker_consts ;
     
     _logic_main_menu_selection_track_state_type _logic_main_menu_selection_track_state ;
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
     _logic_main_menu_letters_layout_row_rect_state_type _logic_main_menu_letters_layout_row_rect_state ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_selection_tracker < mediator > :: _logic_main_menu_selection_tracker_consts_type :: _logic_main_menu_selection_tracker_consts_type ( )
+{
+    platform_math :: make_num_fract ( selected_rect_vertical_scale , 20 , 10 ) ;
+}
 
 template < typename mediator >
 shy_logic_main_menu_selection_tracker < mediator > :: shy_logic_main_menu_selection_tracker ( )
@@ -129,7 +151,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _proceed_with_track (
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . requested ) )
     {
         _logic_main_menu_selection_track_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _obtain_rows_count ( ) ;
+        _track_requested ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_rows_state . replied ) )
     {
@@ -141,6 +163,21 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _proceed_with_track (
         _logic_main_menu_letters_layout_row_rect_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _received_row_rect ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _track_requested ( )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . prev_row_is_selected ) )
+    {
+        _determine_mouse_cursor_in_prev_selection_rect ( ) ;
+        if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . mouse_cursor_in_prev_selection_rect ) )
+            _send_reply ( ) ;
+        else
+            _obtain_rows_count ( ) ;
+    }
+    else
+        _obtain_rows_count ( ) ;
 }
 
 template < typename mediator >
@@ -171,17 +208,17 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _obtain_current_row_r
 template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( )
 {
-    num_whole under_mouse_cursor ;
+    num_whole mouse_cursor_in_selection_rect ;
     num_whole current_row ;
     num_whole rows_count ;
     
-    _determine_mouse_selection ( ) ;
+    _determine_mouse_cursor_in_selection_rect ( ) ;
     
-    under_mouse_cursor = _logic_main_menu_selection_track_state . under_mouse_cursor ;
+    mouse_cursor_in_selection_rect = _logic_main_menu_selection_track_state . mouse_cursor_in_selection_rect ;
     current_row = _logic_main_menu_selection_track_state . current_row ;
     rows_count = _logic_main_menu_letters_rows_state . rows ;
     
-    if ( platform_conditions :: whole_is_true ( under_mouse_cursor ) )
+    if ( platform_conditions :: whole_is_true ( mouse_cursor_in_selection_rect ) )
     {
         _send_row_selected ( ) ;
         _send_reply ( ) ;
@@ -203,15 +240,30 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( 
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_selection ( )
+void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_cursor_in_selection_rect ( )
 {
-    num_whole under_mouse_cursor ;
+    _determine_mouse_cursor_in_rect
+        ( _logic_main_menu_selection_track_state . mouse_cursor_in_selection_rect
+        , _logic_main_menu_letters_layout_row_rect_state . row_rect
+        ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_cursor_in_prev_selection_rect ( )
+{
+    _scale_prev_selection_rect ( ) ;
+    _determine_mouse_cursor_in_rect
+        ( _logic_main_menu_selection_track_state . mouse_cursor_in_prev_selection_rect
+        , _logic_main_menu_selection_track_state . scaled_prev_selection_rect
+        ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_cursor_in_rect ( num_whole & result , rect row_rect )
+{
     num_fract mouse_x ;
     num_fract mouse_y ;
-    rect row_rect ;
         
-    row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
-
     _platform_mouse . get ( ) . x ( mouse_x ) ;
     _platform_mouse . get ( ) . y ( mouse_y ) ;
     
@@ -221,12 +273,38 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_sele
       || platform_conditions :: fract_greater_than_fract ( mouse_y , row_rect . top ) 
        )
     {
-        under_mouse_cursor = _platform_math_consts . get ( ) . whole_false ;
+        result = _platform_math_consts . get ( ) . whole_false ;
     }
     else
-        under_mouse_cursor = _platform_math_consts . get ( ) . whole_true ;
+        result = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _scale_prev_selection_rect ( )
+{
+    num_fract selected_rect_vertical_scale ;
+    num_fract rect_height ;
+    num_fract scaled_rect_height ;
+    num_fract half_scaled_rect_height ;
+    num_fract y_center ;
+    rect prev_selection_rect ;
+    rect scaled_prev_selection_rect ;
     
-    _logic_main_menu_selection_track_state . under_mouse_cursor = under_mouse_cursor ;
+    selected_rect_vertical_scale = _logic_main_menu_selection_tracker_consts . selected_rect_vertical_scale ;
+    prev_selection_rect = _logic_main_menu_selection_track_state . prev_selection_rect ;
+    
+    platform_math :: add_fracts ( y_center , prev_selection_rect . top , prev_selection_rect . bottom ) ;
+    platform_math :: div_fract_by ( y_center , _platform_math_consts . get ( ) . fract_2 ) ;
+    
+    platform_math :: sub_fracts ( rect_height , prev_selection_rect . top , prev_selection_rect . bottom ) ;
+    platform_math :: mul_fracts ( scaled_rect_height , rect_height , selected_rect_vertical_scale ) ;
+    platform_math :: div_fracts ( half_scaled_rect_height , scaled_rect_height , _platform_math_consts . get ( ) . fract_2 ) ;
+    
+    scaled_prev_selection_rect = prev_selection_rect ;
+    platform_math :: add_fracts ( scaled_prev_selection_rect . top , y_center , half_scaled_rect_height ) ;
+    platform_math :: sub_fracts ( scaled_prev_selection_rect . bottom , y_center , half_scaled_rect_height ) ;
+    
+    _logic_main_menu_selection_track_state . scaled_prev_selection_rect = scaled_prev_selection_rect ;
 }
 
 template < typename mediator >
@@ -235,13 +313,15 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _send_row_selected ( 
     num_whole prev_row_is_selected ;
     num_whole prev_selected_row_index ;
     num_whole current_row ;
+    rect row_rect ;
     
     prev_row_is_selected = _logic_main_menu_selection_track_state . prev_row_is_selected ;
     prev_selected_row_index = _logic_main_menu_selection_track_state . prev_selected_row_index ;
     current_row = _logic_main_menu_selection_track_state . current_row ;
+    row_rect = _logic_main_menu_letters_layout_row_rect_state . row_rect ;
     
     if ( ! platform_conditions :: whole_is_true ( prev_row_is_selected ) 
-    ||   ! platform_conditions :: wholes_are_equal ( prev_selected_row_index , current_row )
+      || ! platform_conditions :: wholes_are_equal ( prev_selected_row_index , current_row )
        )
     {
         prev_row_is_selected = _platform_math_consts . get ( ) . whole_true ;
@@ -249,6 +329,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _send_row_selected ( 
         
         _logic_main_menu_selection_track_state . prev_row_is_selected = prev_row_is_selected ;
         _logic_main_menu_selection_track_state . prev_selected_row_index = prev_selected_row_index ;
+        _logic_main_menu_selection_track_state . prev_selection_rect = row_rect ;
 
         typename messages :: logic_main_menu_selection_track_row_selected msg ;
         msg . row = _logic_main_menu_selection_track_state . current_row ;
