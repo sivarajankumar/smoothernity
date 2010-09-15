@@ -22,6 +22,16 @@ public :
     static void catmull_rom_spline ( num_fract & result , num_fract t , num_fract p0 , num_fract p1 , num_fract p2 , num_fract p3 ) ;
     static void ease_in_ease_out ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
     static void ease_in_hard_out ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
+    static void hard_attack_ease_decay 
+        ( num_fract & result_value 
+        , num_fract weight 
+        , num_fract from_value 
+        , num_fract from_weight 
+        , num_fract mid_value
+        , num_fract mid_weight
+        , num_fract to_value
+        , num_fract to_weight
+        ) ;
     static void hard_in_ease_out ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
     static void lerp ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
     static void clamp_fract ( num_fract & result , num_fract num , num_fract from , num_fract to ) ;
@@ -225,6 +235,28 @@ void shy_engine_math < mediator > :: ease_in_hard_out
     p0 = p2 ;
     platform_math :: sub_fracts ( p3 , to_value , delta_value ) ;
     catmull_rom_spline ( result_value , t , p0 , p1 , p2 , p3 ) ;
+}
+
+template < typename mediator >
+void shy_engine_math < mediator > :: hard_attack_ease_decay 
+    ( num_fract & result_value 
+    , num_fract weight 
+    , num_fract from_value 
+    , num_fract from_weight 
+    , num_fract mid_value
+    , num_fract mid_weight
+    , num_fract to_value
+    , num_fract to_weight
+    )
+{
+    if ( platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
+        result_value = from_value ;
+    else if ( platform_conditions :: fract_less_than_fract ( weight , mid_weight ) )
+        hard_in_ease_out ( result_value , weight , from_value , from_weight , mid_value , mid_weight ) ;
+    else if ( platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
+        ease_in_ease_out ( result_value , weight , mid_value , mid_weight , to_value , to_weight ) ;
+    else
+        result_value = to_value ;
 }
 
 template < typename mediator >

@@ -210,14 +210,16 @@ void shy_logic_main_menu_letters_animation_appear < mediator > :: _compute_trans
     scale_middle = _logic_main_menu_letters_animation_appear_consts . scale_middle ;
     scale_end = _logic_main_menu_letters_animation_appear_consts . scale_end ;
     
-    if ( platform_conditions :: fract_less_than_fract ( time , time_begin ) )
-        scale = scale_begin ;
-    else if ( platform_conditions :: fract_less_than_fract ( time , time_middle ) )
-        engine_math :: hard_in_ease_out ( scale , time , scale_begin , time_begin , scale_middle , time_middle ) ;
-    else if ( platform_conditions :: fract_less_than_fract ( time , time_end ) )
-        engine_math :: ease_in_ease_out ( scale , time , scale_middle , time_middle , scale_end , time_end ) ;
-    else
-        scale = scale_end ;
+    engine_math :: hard_attack_ease_decay
+        ( scale
+        , time
+        , scale_begin
+        , time_begin
+        , scale_middle
+        , time_middle
+        , scale_end
+        , time_end
+        ) ;
         
     _logic_main_menu_letters_animation_appear_transform_state . scale = scale ;
 }
