@@ -54,6 +54,7 @@
 #include "logic/main_menu/selection/animation/appear.hpp"
 #include "logic/main_menu/selection/animation/disappear.hpp"
 #include "logic/main_menu/selection/animation/idle.hpp"
+#include "logic/main_menu/selection/animation/select.hpp"
 #include "logic/main_menu/selection/animation/stateless.hpp"
 #include "logic/main_menu/selection/mesh.hpp"
 #include "logic/main_menu/selection/stateless.hpp"
@@ -130,6 +131,7 @@ private :
         , shy_logic_main_menu_selection_animation_appear
         , shy_logic_main_menu_selection_animation_disappear
         , shy_logic_main_menu_selection_animation_idle
+        , shy_logic_main_menu_selection_animation_select
         , shy_logic_main_menu_selection_animation_stateless
         , shy_logic_main_menu_selection_mesh
         , shy_logic_main_menu_selection_stateless

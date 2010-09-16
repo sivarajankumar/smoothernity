@@ -59,6 +59,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_animation_idle_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_appear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_disappear_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_select_transform_reply ) ;
 private :
     shy_logic_main_menu_selection_animation < mediator > & operator= ( const shy_logic_main_menu_selection_animation < mediator > & ) ;
     void _proceed_with_transform ( ) ;
@@ -142,6 +143,11 @@ void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename 
         _logic_main_menu_selection_animation_disappear_transform_state . scale_y = msg . scale_y ;
         _proceed_with_transform ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_select_transform_reply msg )
+{
 }
 
 template < typename mediator >
