@@ -106,6 +106,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
             _launched = _platform_math_consts . get ( ) . whole_false ;
             _disappearing = _platform_math_consts . get ( ) . whole_true ;
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_animation_disappear_start ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_disappear_start ( ) ) ;
         }
         else
         {

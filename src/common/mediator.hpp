@@ -54,6 +54,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_renderer logic_main_menu_renderer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation logic_main_menu_selection_animation ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_appear logic_main_menu_selection_animation_appear ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_disappear logic_main_menu_selection_animation_disappear ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_idle logic_main_menu_selection_animation_idle ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_mesh logic_main_menu_selection_mesh ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_tracker logic_main_menu_selection_tracker ;
@@ -213,6 +214,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_renderer > logic_main_menu_renderer ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation > logic_main_menu_selection_animation ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_appear > logic_main_menu_selection_animation_appear ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_disappear > logic_main_menu_selection_animation_disappear ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_idle > logic_main_menu_selection_animation_idle ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_mesh > logic_main_menu_selection_mesh ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_tracker > logic_main_menu_selection_tracker ;
@@ -263,6 +265,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_renderer >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_appear >
+        , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_disappear >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_idle >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_mesh >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_stateless >
@@ -353,6 +356,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_renderer > arg_logic_main_menu_renderer
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation > arg_logic_main_menu_selection_animation
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_appear > arg_logic_main_menu_selection_animation_appear
+    , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_disappear > arg_logic_main_menu_selection_animation_disappear
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_idle > arg_logic_main_menu_selection_animation_idle
     , typename platform_pointer :: template pointer < logic_main_menu_selection_mesh > arg_logic_main_menu_selection_mesh
     , typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > arg_logic_main_menu_selection_stateless
@@ -400,6 +404,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_renderer = arg_logic_main_menu_renderer ;
     _receivers . logic_main_menu_selection_animation = arg_logic_main_menu_selection_animation ;
     _receivers . logic_main_menu_selection_animation_appear = arg_logic_main_menu_selection_animation_appear ;
+    _receivers . logic_main_menu_selection_animation_disappear = arg_logic_main_menu_selection_animation_disappear ;
     _receivers . logic_main_menu_selection_animation_idle = arg_logic_main_menu_selection_animation_idle ;
     _receivers . logic_main_menu_selection_mesh = arg_logic_main_menu_selection_mesh ;
     _receivers . logic_main_menu_selection_tracker = arg_logic_main_menu_selection_tracker ;
@@ -443,6 +448,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_renderer . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation_appear . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_selection_animation_disappear . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation_idle . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_mesh . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_tracker . get ( ) . set_mediator ( mediator_ptr ) ;
