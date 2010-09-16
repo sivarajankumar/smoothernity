@@ -50,6 +50,7 @@ template
     , template < typename mediator > class _logic_main_menu_selection_mesh
     , template < typename mediator > class _logic_main_menu_selection_stateless
     , template < typename mediator > class _logic_main_menu_selection_tracker
+    , template < typename mediator > class _logic_main_menu_selection_tracking_director
     , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_sound_stateless
@@ -118,6 +119,7 @@ public :
         typedef _logic_main_menu_selection_mesh < mediator > logic_main_menu_selection_mesh ;
         typedef _logic_main_menu_selection_stateless < mediator > logic_main_menu_selection_stateless ;
         typedef _logic_main_menu_selection_tracker < mediator > logic_main_menu_selection_tracker ;
+        typedef _logic_main_menu_selection_tracking_director < mediator > logic_main_menu_selection_tracking_director ;
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_sound_stateless < mediator > logic_sound_stateless ;
@@ -183,6 +185,7 @@ template
     , template < typename _mediator > class _logic_main_menu_selection_mesh
     , template < typename _mediator > class _logic_main_menu_selection_stateless
     , template < typename _mediator > class _logic_main_menu_selection_tracker
+    , template < typename _mediator > class _logic_main_menu_selection_tracking_director
     , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_sound
     , template < typename _mediator > class _logic_sound_stateless
@@ -230,6 +233,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_animation_idle > scheduled_logic_main_menu_selection_animation_idle ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_mesh > scheduled_logic_main_menu_selection_mesh ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_tracker > scheduled_logic_main_menu_selection_tracker ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_tracking_director > scheduled_logic_main_menu_selection_tracking_director ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_sound > scheduled_logic_sound ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_text > scheduled_logic_text ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_title > scheduled_logic_title ;
@@ -287,6 +291,7 @@ public :
         , scheduled_logic_main_menu_selection_mesh :: template scheduled_module
         , _logic_main_menu_selection_stateless
         , scheduled_logic_main_menu_selection_tracker :: template scheduled_module
+        , scheduled_logic_main_menu_selection_tracking_director :: template scheduled_module
         , _logic_main_menu_stateless
         , scheduled_logic_sound :: template scheduled_module
         , _logic_sound_stateless
@@ -374,6 +379,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_animation_idle :: template scheduled_module < mediator_type > logic_main_menu_selection_animation_idle ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_mesh :: template scheduled_module < mediator_type > logic_main_menu_selection_mesh ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_tracker :: template scheduled_module < mediator_type > logic_main_menu_selection_tracker ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_selection_tracking_director :: template scheduled_module < mediator_type > logic_main_menu_selection_tracking_director ;
     typedef typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > logic_sound ;
     typedef typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > logic_text ;
     typedef typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > logic_title ;
@@ -427,6 +433,7 @@ private :
     logic_main_menu_selection_mesh _logic_main_menu_selection_mesh ;
     logic_main_menu_selection_stateless _logic_main_menu_selection_stateless ;
     logic_main_menu_selection_tracker _logic_main_menu_selection_tracker ;
+    logic_main_menu_selection_tracking_director _logic_main_menu_selection_tracking_director ;
     logic_main_menu_stateless _logic_main_menu_stateless ;
     logic_sound _logic_sound ;
     logic_text _logic_text ;
@@ -475,6 +482,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_selection_mesh > logic_main_menu_selection_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > logic_main_menu_selection_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_tracker > logic_main_menu_selection_tracker_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_selection_tracking_director > logic_main_menu_selection_tracking_director_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > logic_main_menu_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_sound > logic_sound_ptr ;
     typename platform_pointer :: template pointer < logic_text > logic_text_ptr ;
@@ -519,6 +527,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_selection_mesh_ptr , _logic_main_menu_selection_mesh ) ;
     platform_pointer :: bind ( logic_main_menu_selection_stateless_ptr , _logic_main_menu_selection_stateless ) ;
     platform_pointer :: bind ( logic_main_menu_selection_tracker_ptr , _logic_main_menu_selection_tracker ) ;
+    platform_pointer :: bind ( logic_main_menu_selection_tracking_director_ptr , _logic_main_menu_selection_tracking_director ) ;
     platform_pointer :: bind ( logic_main_menu_stateless_ptr , _logic_main_menu_stateless ) ;
     platform_pointer :: bind ( logic_sound_ptr , _logic_sound ) ;
     platform_pointer :: bind ( logic_text_ptr , _logic_text ) ;
@@ -559,6 +568,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_animation_idle_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_mesh_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_tracker_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_tracking_director_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_sound_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_text_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_title_ptr , scheduler_ptr ) ;
@@ -600,6 +610,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_selection_mesh_ptr
         , logic_main_menu_selection_stateless_ptr
         , logic_main_menu_selection_tracker_ptr
+        , logic_main_menu_selection_tracking_director_ptr
         , logic_main_menu_stateless_ptr
         , logic_sound_ptr
         , logic_text_ptr
