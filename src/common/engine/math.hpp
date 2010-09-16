@@ -174,67 +174,88 @@ template < typename mediator >
 void shy_engine_math < mediator > :: hard_in_ease_out 
     ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight )
 {
-    num_fract p0 ;
-    num_fract p1 ;
-    num_fract p2 ;
-    num_fract p3 ;
-    num_fract delta_value ;
-    num_fract t ;
-    num_fract t0 ;
-    num_fract t1 ;
-    platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
-    platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
-    platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
-    lerp ( t , t0 , from_weight , t1 , to_weight , weight ) ;
-    platform_math :: add_fracts ( p0 , from_value , delta_value ) ;
-    p1 = from_value ;
-    p2 = to_value ;
-    p3 = p1 ;
-    catmull_rom_spline ( result_value , t , p0 , p1 , p2 , p3 ) ;
+    if ( platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
+        result_value = from_value ;
+    else if ( platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
+    {
+        num_fract p0 ;
+        num_fract p1 ;
+        num_fract p2 ;
+        num_fract p3 ;
+        num_fract delta_value ;
+        num_fract t ;
+        num_fract t0 ;
+        num_fract t1 ;
+        platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
+        platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
+        platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
+        lerp ( t , t0 , from_weight , t1 , to_weight , weight ) ;
+        platform_math :: add_fracts ( p0 , from_value , delta_value ) ;
+        p1 = from_value ;
+        p2 = to_value ;
+        p3 = p1 ;
+        catmull_rom_spline ( result_value , t , p0 , p1 , p2 , p3 ) ;
+    }
+    else
+        result_value = to_value ;
 }
 
 template < typename mediator >
 void shy_engine_math < mediator > :: ease_in_ease_out 
     ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight )
 {
-    num_fract p0 ;
-    num_fract p1 ;
-    num_fract p2 ;
-    num_fract p3 ;
-    num_fract t ;
-    num_fract t0 ;
-    num_fract t1 ;
-    platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
-    platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
-    lerp ( t , t0 , from_weight , t1 , to_weight , weight ) ;
-    p1 = from_value ;
-    p2 = to_value ;
-    p0 = p2 ;
-    p3 = p1 ;
-    catmull_rom_spline ( result_value , t , p0 , p1 , p2 , p3 ) ;
+    if ( platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
+        result_value = from_value ;
+    else if ( platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
+    {
+        num_fract p0 ;
+        num_fract p1 ;
+        num_fract p2 ;
+        num_fract p3 ;
+        num_fract t ;
+        num_fract t0 ;
+        num_fract t1 ;
+        platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
+        platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
+        lerp ( t , t0 , from_weight , t1 , to_weight , weight ) ;
+        p1 = from_value ;
+        p2 = to_value ;
+        p0 = p2 ;
+        p3 = p1 ;
+        catmull_rom_spline ( result_value , t , p0 , p1 , p2 , p3 ) ;
+    }
+    else
+        result_value = to_value ;
 }
 
 template < typename mediator >
 void shy_engine_math < mediator > :: ease_in_hard_out
     ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight )
 {
-    num_fract p0 ;
-    num_fract p1 ;
-    num_fract p2 ;
-    num_fract p3 ;
-    num_fract delta_value ;
-    num_fract t ;
-    num_fract t0 ;
-    num_fract t1 ;
-    platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
-    platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
-    platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
-    lerp ( t , t0 , from_weight , t1 , to_weight , weight ) ;
-    p1 = from_value ;
-    p2 = to_value ;
-    p0 = p2 ;
-    platform_math :: sub_fracts ( p3 , to_value , delta_value ) ;
-    catmull_rom_spline ( result_value , t , p0 , p1 , p2 , p3 ) ;
+    if ( platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
+        result_value = from_value ;
+    else if ( platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
+    {
+        num_fract p0 ;
+        num_fract p1 ;
+        num_fract p2 ;
+        num_fract p3 ;
+        num_fract delta_value ;
+        num_fract t ;
+        num_fract t0 ;
+        num_fract t1 ;
+        platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
+        platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
+        platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
+        lerp ( t , t0 , from_weight , t1 , to_weight , weight ) ;
+        p1 = from_value ;
+        p2 = to_value ;
+        p0 = p2 ;
+        platform_math :: sub_fracts ( p3 , to_value , delta_value ) ;
+        catmull_rom_spline ( result_value , t , p0 , p1 , p2 , p3 ) ;
+    }
+    else
+        result_value = to_value ;
 }
 
 template < typename mediator >
