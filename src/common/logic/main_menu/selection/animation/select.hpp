@@ -69,8 +69,8 @@ shy_logic_main_menu_selection_animation_select < mediator > :: _logic_main_menu_
     platform_math :: make_num_fract ( horizontal_scale_time_from_begin_to_end , 1 , 10 ) ;
     platform_math :: make_num_fract ( horizontal_scale_value_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( horizontal_scale_value_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_to_begin , 0 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 1 , 10 ) ;
+    platform_math :: make_num_fract ( vertical_scale_time_to_begin , 0 , 100 ) ;
+    platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 10 , 100 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_end , 1 , 1 ) ;
 }

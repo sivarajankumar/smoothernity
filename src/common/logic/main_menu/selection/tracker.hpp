@@ -333,9 +333,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _send_row_selected ( 
 
         typename messages :: logic_main_menu_selection_track_row_selected msg ;
         msg . row = _logic_main_menu_selection_track_state . current_row ;
-        _mediator . get ( ) . send ( msg ) ;
-        
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
+        _mediator . get ( ) . send ( msg ) ;        
     }
 }
 

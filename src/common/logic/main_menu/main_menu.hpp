@@ -111,7 +111,7 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
         else
         {
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_place ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_request ( ) ) ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_tracking_director_update ( ) ) ;
         }
     }
     if ( platform_conditions :: whole_is_true ( _created )
@@ -160,10 +160,4 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 {
     _created = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_render_permit ( ) ) ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_reply )
-{
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_place ( ) ) ;
 }

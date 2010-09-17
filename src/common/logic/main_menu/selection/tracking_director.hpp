@@ -3,14 +3,40 @@ class shy_logic_main_menu_selection_tracking_director
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    
+    class _logic_main_menu_selection_tracking_director_update_state_type
+    {
+    public :
+        num_whole requested ;
+    } ;
+    
+    class _logic_main_menu_selection_track_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+    } ;
+    
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_main_menu_selection_tracking_director_update ) ;
+    void receive ( typename messages :: logic_main_menu_selection_track_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_track_row_selected ) ;
+private :
+    void _proceed_with_tracking ( ) ;
+    void _request_track ( ) ;
+    void _place_mesh ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    
+    _logic_main_menu_selection_tracking_director_update_state_type _logic_main_menu_selection_tracking_director_update_state ;
+    _logic_main_menu_selection_track_state_type _logic_main_menu_selection_track_state ;
 } ;
 
 template < typename mediator >
@@ -25,4 +51,56 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_tracking_director_update )
+{
+    _logic_main_menu_selection_tracking_director_update_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _proceed_with_tracking ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_reply )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . requested ) )
+    {
+        _logic_main_menu_selection_track_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_selection_track_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _proceed_with_tracking ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_row_selected )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: _proceed_with_tracking ( )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_tracking_director_update_state . requested ) )
+    {
+        _logic_main_menu_selection_tracking_director_update_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _request_track ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . replied ) )
+    {
+        _logic_main_menu_selection_track_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _place_mesh ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: _request_track ( )
+{
+    _logic_main_menu_selection_track_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_track_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: _place_mesh ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_place ( ) ) ;
 }

@@ -29,6 +29,7 @@ public :
         class logic_main_menu_selection_track_request { } ;
         class logic_main_menu_selection_track_row_selected { public : num_whole row ; } ;
         class logic_main_menu_selection_track_void_selected { } ;
+        class logic_main_menu_selection_tracking_director_update { } ;
     } ;
 
     template < typename receivers >
@@ -47,6 +48,7 @@ public :
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_request ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_row_selected ) ;
         void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_void_selected ) ;
+        void send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_tracking_director_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -157,7 +159,7 @@ void shy_logic_main_menu_selection_stateless < mediator >
 :: logic_main_menu_selection_sender < receivers > 
 :: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_reply msg )
 {
-    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -167,6 +169,7 @@ void shy_logic_main_menu_selection_stateless < mediator >
 :: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_row_selected msg )
 {
     _receivers . get ( ) . logic_main_menu_selection_animation_idle . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -176,5 +179,14 @@ void shy_logic_main_menu_selection_stateless < mediator >
 :: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_void_selected msg )
 {
     _receivers . get ( ) . logic_main_menu_selection_animation_idle . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_stateless < mediator > 
+:: logic_main_menu_selection_sender < receivers > 
+:: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_tracking_director_update msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
 }
 
