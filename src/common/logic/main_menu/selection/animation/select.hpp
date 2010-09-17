@@ -21,10 +21,8 @@ class shy_logic_main_menu_selection_animation_select
         num_fract horizontal_scale_value_begin ;
         num_fract horizontal_scale_value_end ;
         num_fract vertical_scale_time_to_begin ;
-        num_fract vertical_scale_time_from_begin_to_middle ;
-        num_fract vertical_scale_time_from_middle_to_end ;
+        num_fract vertical_scale_time_from_begin_to_end ;
         num_fract vertical_scale_value_begin ;
-        num_fract vertical_scale_value_middle ;
         num_fract vertical_scale_value_end ;
     } ;
 
@@ -38,7 +36,7 @@ class shy_logic_main_menu_selection_animation_select
     class _logic_main_menu_update_state_type
     {
     public :
-        num_whole launch_permitted ;
+        num_whole select_started ;
         num_fract time ;
     } ;
 
@@ -47,12 +45,13 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_select_transform_request ) ;
-    void receive ( typename messages :: logic_main_menu_launch_permit ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_select_start ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
 private :
     shy_logic_main_menu_selection_animation_select < mediator > & operator= ( const shy_logic_main_menu_selection_animation_select < mediator > & ) ;
     void _compute_horizontal_scale ( ) ;
     void _compute_vertical_scale ( ) ;
+    void _compute_identity_scale ( ) ;
     void _reply_computed_transform ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -66,15 +65,13 @@ private :
 template < typename mediator >
 shy_logic_main_menu_selection_animation_select < mediator > :: _logic_main_menu_selection_animation_select_consts_type :: _logic_main_menu_selection_animation_select_consts_type ( )
 {
-    platform_math :: make_num_fract ( horizontal_scale_time_to_begin , 5 , 10 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_time_to_begin , 0 , 10 ) ;
     platform_math :: make_num_fract ( horizontal_scale_time_from_begin_to_end , 1 , 10 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_value_begin , 0 , 1 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_value_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( horizontal_scale_value_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_to_begin , 10 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_middle , 1 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_from_middle_to_end , 5 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_value_begin , 1 , 5 ) ;
-    platform_math :: make_num_fract ( vertical_scale_value_middle , 2 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_scale_time_to_begin , 0 , 10 ) ;
+    platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 1 , 10 ) ;
+    platform_math :: make_num_fract ( vertical_scale_value_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_end , 1 , 1 ) ;
 }
 
@@ -98,16 +95,16 @@ void shy_logic_main_menu_selection_animation_select < mediator > :: receive ( ty
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_animation_select < mediator > :: receive ( typename messages :: logic_main_menu_launch_permit )
+void shy_logic_main_menu_selection_animation_select < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_select_start )
 {
-    _logic_main_menu_update_state . launch_permitted = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_update_state . select_started = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_selection_animation_select < mediator > :: receive ( typename messages :: logic_main_menu_update )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . launch_permitted ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . select_started ) )
     {
         num_fract time_step ;
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
@@ -118,8 +115,13 @@ void shy_logic_main_menu_selection_animation_select < mediator > :: receive ( ty
 template < typename mediator >
 void shy_logic_main_menu_selection_animation_select < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_select_transform_request )
 {
-    _compute_horizontal_scale ( ) ;
-    _compute_vertical_scale ( ) ;
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . select_started ) )
+    {
+        _compute_horizontal_scale ( ) ;
+        _compute_vertical_scale ( ) ;
+    }
+    else
+        _compute_identity_scale ( ) ;
     _reply_computed_transform ( ) ;
 }
 
@@ -151,39 +153,38 @@ template < typename mediator >
 void shy_logic_main_menu_selection_animation_select < mediator > :: _compute_vertical_scale ( )
 {
     num_fract vertical_scale_time_to_begin ;
-    num_fract vertical_scale_time_from_begin_to_middle ;
-    num_fract vertical_scale_time_from_middle_to_end ;
+    num_fract vertical_scale_time_from_begin_to_end ;
     num_fract time_begin ;
-    num_fract time_middle ;
     num_fract time_end ;
     
     vertical_scale_time_to_begin = _logic_main_menu_selection_animation_select_consts . vertical_scale_time_to_begin ;
-    vertical_scale_time_from_begin_to_middle = _logic_main_menu_selection_animation_select_consts . vertical_scale_time_from_begin_to_middle ;
-    vertical_scale_time_from_middle_to_end = _logic_main_menu_selection_animation_select_consts . vertical_scale_time_from_middle_to_end ;
+    vertical_scale_time_from_begin_to_end = _logic_main_menu_selection_animation_select_consts . vertical_scale_time_from_begin_to_end ;
     
     time_begin = vertical_scale_time_to_begin ;
-    platform_math :: add_fracts ( time_middle , time_begin , vertical_scale_time_from_begin_to_middle ) ;
-    platform_math :: add_fracts ( time_end , time_middle , vertical_scale_time_from_middle_to_end ) ;
+    platform_math :: add_fracts ( time_end , time_begin , vertical_scale_time_from_begin_to_end ) ;
     
-    engine_math :: hard_attack_ease_decay
+    engine_math :: hard_in_ease_out
         ( _logic_main_menu_selection_animation_select_transform_state . vertical_scale
         , _logic_main_menu_update_state . time
         , _logic_main_menu_selection_animation_select_consts . vertical_scale_value_begin
         , time_begin
-        , _logic_main_menu_selection_animation_select_consts . vertical_scale_value_middle
-        , time_middle
         , _logic_main_menu_selection_animation_select_consts . vertical_scale_value_end
         , time_end
         ) ;
 }
 
 template < typename mediator >
+void shy_logic_main_menu_selection_animation_select < mediator > :: _compute_identity_scale ( )
+{
+    _logic_main_menu_selection_animation_select_transform_state . vertical_scale = _platform_math_consts . get ( ) . fract_1 ;
+    _logic_main_menu_selection_animation_select_transform_state . horizontal_scale = _platform_math_consts . get ( ) . fract_1 ;
+}
+
+template < typename mediator >
 void shy_logic_main_menu_selection_animation_select < mediator > :: _reply_computed_transform ( )
 {
     typename messages :: logic_main_menu_selection_animation_select_transform_reply msg ;
-    msg . scale_x = _platform_math_consts . get ( ) . fract_1 ;
-    msg . scale_y = _platform_math_consts . get ( ) . fract_1 ;
-//    msg . scale_x = _logic_main_menu_selection_animation_select_transform_state . horizontal_scale ;
-//    msg . scale_y = _logic_main_menu_selection_animation_select_transform_state . vertical_scale ;
+    msg . scale_x = _logic_main_menu_selection_animation_select_transform_state . horizontal_scale ;
+    msg . scale_y = _logic_main_menu_selection_animation_select_transform_state . vertical_scale ;
     _mediator . get ( ) . send ( msg ) ;
 }
