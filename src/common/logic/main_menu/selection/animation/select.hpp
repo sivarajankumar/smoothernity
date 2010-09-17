@@ -24,6 +24,7 @@ class shy_logic_main_menu_selection_animation_select
         num_fract vertical_scale_time_from_begin_to_end ;
         num_fract vertical_scale_value_begin ;
         num_fract vertical_scale_value_end ;
+        num_fract total_animation_time ;
     } ;
 
     class _logic_main_menu_selection_animation_select_transform_state_type
@@ -73,6 +74,7 @@ shy_logic_main_menu_selection_animation_select < mediator > :: _logic_main_menu_
     platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 10 , 100 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( total_animation_time , 10 , 100 ) ;
 }
 
 template < typename mediator >
@@ -107,8 +109,22 @@ void shy_logic_main_menu_selection_animation_select < mediator > :: receive ( ty
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . select_started ) )
     {
         num_fract time_step ;
+        num_fract time ;
+        num_fract total_animation_time ;
+        
+        time = _logic_main_menu_update_state . time ;
+        total_animation_time = _logic_main_menu_selection_animation_select_consts . total_animation_time ;
+        
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
-        platform_math :: add_to_fract ( _logic_main_menu_update_state . time , time_step ) ;
+        platform_math :: add_to_fract ( time , time_step ) ;
+        
+        if ( platform_conditions :: fract_greater_than_fract ( time , total_animation_time ) )
+        {
+            _logic_main_menu_update_state . select_started = _platform_math_consts . get ( ) . whole_false ;
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_finished ( ) ) ;
+        }
+
+        _logic_main_menu_update_state . time = time ;
     }
 }
 

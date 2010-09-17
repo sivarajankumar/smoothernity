@@ -12,6 +12,7 @@ class shy_logic_main_menu_selection_tracking_director
     {
     public :
         num_whole requested ;
+        num_whole selection_animation_in_progress ;
     } ;
     
     class _logic_main_menu_selection_track_state_type
@@ -27,8 +28,10 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_tracking_director_update ) ;
     void receive ( typename messages :: logic_main_menu_selection_track_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_track_row_selected ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_select_finished ) ;
 private :
     void _proceed_with_tracking ( ) ;
+    void _update_received ( ) ;
     void _request_track ( ) ;
     void _place_mesh ( ) ;
 private :
@@ -51,6 +54,7 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+    _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -75,6 +79,13 @@ template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_row_selected )
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
+    _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_select_finished )
+{
+    _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -83,13 +94,22 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: _proceed_wi
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_tracking_director_update_state . requested ) )
     {
         _logic_main_menu_selection_tracking_director_update_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _request_track ( ) ;
+        _update_received ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . replied ) )
     {
         _logic_main_menu_selection_track_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _place_mesh ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: _update_received ( )
+{
+    if ( platform_conditions :: whole_is_false ( _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress ) )
+        _request_track ( ) ;
+    else
+        _place_mesh ( ) ;
 }
 
 template < typename mediator >
