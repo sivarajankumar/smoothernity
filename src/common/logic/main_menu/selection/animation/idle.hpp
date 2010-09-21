@@ -62,8 +62,8 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_idle_transform_request ) ;
-    void receive ( typename messages :: logic_main_menu_selection_track_row_selected ) ;
-    void receive ( typename messages :: logic_main_menu_selection_track_void_selected ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_idle_row_selected ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_idle_void_selected ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
@@ -152,14 +152,14 @@ void shy_logic_main_menu_selection_animation_idle < mediator > :: receive ( type
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_animation_idle < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_row_selected msg )
+void shy_logic_main_menu_selection_animation_idle < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_idle_row_selected msg )
 {
     _logic_main_menu_selection_animation_idle_transform_state . row_is_selected = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_selection_animation_idle_transform_state . selected_row_index = msg . row ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_animation_idle < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_void_selected )
+void shy_logic_main_menu_selection_animation_idle < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_idle_void_selected )
 {
     _logic_main_menu_selection_animation_idle_transform_state . row_is_selected = _platform_math_consts . get ( ) . whole_false ;
 }

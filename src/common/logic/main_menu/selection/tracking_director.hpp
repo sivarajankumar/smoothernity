@@ -28,6 +28,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_tracking_director_update ) ;
     void receive ( typename messages :: logic_main_menu_selection_track_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_track_row_selected ) ;
+    void receive ( typename messages :: logic_main_menu_selection_track_void_selected ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_select_finished ) ;
 private :
     void _proceed_with_tracking ( ) ;
@@ -76,10 +77,20 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_row_selected )
+void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_row_selected msg )
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
     _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+
+    typename messages :: logic_main_menu_selection_animation_idle_row_selected idle_row_selected_msg ;
+    idle_row_selected_msg . row = msg . row ;
+    _mediator . get ( ) . send ( idle_row_selected_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_void_selected )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_idle_void_selected ( ) ) ;
 }
 
 template < typename mediator >

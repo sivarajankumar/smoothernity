@@ -168,7 +168,6 @@ void shy_logic_main_menu_selection_stateless < mediator >
 :: logic_main_menu_selection_sender < receivers > 
 :: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_row_selected msg )
 {
-    _receivers . get ( ) . logic_main_menu_selection_animation_idle . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
 }
 
@@ -178,7 +177,7 @@ void shy_logic_main_menu_selection_stateless < mediator >
 :: logic_main_menu_selection_sender < receivers > 
 :: send ( typename logic_main_menu_selection_messages :: logic_main_menu_selection_track_void_selected msg )
 {
-    _receivers . get ( ) . logic_main_menu_selection_animation_idle . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
