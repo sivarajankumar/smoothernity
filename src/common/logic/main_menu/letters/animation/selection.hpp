@@ -34,6 +34,6 @@ void shy_logic_main_menu_letters_animation_selection < mediator > :: receive ( t
     typename messages :: logic_main_menu_letters_animation_selection_transform_reply reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . col = msg . col ;
-    reply_msg . scale = _platform_math_consts . get ( ) . fract_1 ;
+    reply_msg . scale = _platform_math_consts . get ( ) . fract_2 ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }
