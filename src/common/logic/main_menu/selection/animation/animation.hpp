@@ -60,6 +60,15 @@ class shy_logic_main_menu_selection_animation
         num_fract scale_y ;
     } ;
 
+    class _logic_main_menu_selection_animation_unselect_transform_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract scale_x ;
+        num_fract scale_y ;
+    } ;
+
 public :
     shy_logic_main_menu_selection_animation ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
@@ -69,6 +78,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_animation_appear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_disappear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_select_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_unselect_transform_reply ) ;
 private :
     shy_logic_main_menu_selection_animation < mediator > & operator= ( const shy_logic_main_menu_selection_animation < mediator > & ) ;
     void _proceed_with_transform ( ) ;
@@ -76,6 +86,7 @@ private :
     void _obtain_appear_transform ( ) ;
     void _obtain_disappear_transform ( ) ;
     void _obtain_select_transform ( ) ;
+    void _obtain_unselect_transform ( ) ;
     void _reply_transform ( ) ;
     void _reply_computed_transform ( ) ;
     void _compute_transform ( ) ;
@@ -88,6 +99,7 @@ private :
     _logic_main_menu_selection_animation_appear_transform_state_type _logic_main_menu_selection_animation_appear_transform_state ;
     _logic_main_menu_selection_animation_disappear_transform_state_type _logic_main_menu_selection_animation_disappear_transform_state ;
     _logic_main_menu_selection_animation_select_transform_state_type _logic_main_menu_selection_animation_select_transform_state ;
+    _logic_main_menu_selection_animation_unselect_transform_state_type _logic_main_menu_selection_animation_unselect_transform_state ;
 } ;
 
 template < typename mediator >
@@ -170,6 +182,19 @@ void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename 
 }
 
 template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_unselect_transform_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_unselect_transform_state . requested ) )
+    {
+        _logic_main_menu_selection_animation_unselect_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_selection_animation_unselect_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_selection_animation_unselect_transform_state . scale_x = msg . scale_x ;
+        _logic_main_menu_selection_animation_unselect_transform_state . scale_y = msg . scale_y ;
+        _proceed_with_transform ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_selection_animation < mediator > :: _proceed_with_transform ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_transform_state . requested ) )
@@ -195,6 +220,11 @@ void shy_logic_main_menu_selection_animation < mediator > :: _proceed_with_trans
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_select_transform_state . replied ) )
     {
         _logic_main_menu_selection_animation_select_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_unselect_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_unselect_transform_state . replied ) )
+    {
+        _logic_main_menu_selection_animation_unselect_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _reply_transform ( ) ;
     }
 }
@@ -228,6 +258,13 @@ void shy_logic_main_menu_selection_animation < mediator > :: _obtain_select_tran
 }
 
 template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: _obtain_unselect_transform ( )
+{
+    _logic_main_menu_selection_animation_unselect_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_unselect_transform_request ( ) ) ;
+}
+
+template < typename mediator >
 void shy_logic_main_menu_selection_animation < mediator > :: _reply_transform ( )
 {
     _compute_transform ( ) ;
@@ -247,6 +284,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     num_fract disappear_scale_y ;
     num_fract select_scale_x ;
     num_fract select_scale_y ;
+    num_fract unselect_scale_x ;
+    num_fract unselect_scale_y ;
     num_fract scale_x ;
     num_fract scale_y ;
     num_fract scale_z ;
@@ -263,6 +302,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     disappear_scale_y = _logic_main_menu_selection_animation_disappear_transform_state . scale_y ;
     select_scale_x = _logic_main_menu_selection_animation_select_transform_state . scale_x ;
     select_scale_y = _logic_main_menu_selection_animation_select_transform_state . scale_y ;
+    unselect_scale_x = _logic_main_menu_selection_animation_unselect_transform_state . scale_x ;
+    unselect_scale_y = _logic_main_menu_selection_animation_unselect_transform_state . scale_y ;
     
     position = idle_position ;
     platform_math :: mul_fracts ( scale_x , idle_scale_x , appear_scale_x ) ;
@@ -271,6 +312,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     platform_math :: mul_fract_by ( scale_y , disappear_scale_y ) ;
     platform_math :: mul_fract_by ( scale_x , select_scale_x ) ;
     platform_math :: mul_fract_by ( scale_y , select_scale_y ) ;
+    platform_math :: mul_fract_by ( scale_x , unselect_scale_x ) ;
+    platform_math :: mul_fract_by ( scale_y , unselect_scale_y ) ;
     scale_z = _platform_math_consts . get ( ) . fract_1 ;
     
     platform_matrix :: set_origin ( transform , position ) ;
