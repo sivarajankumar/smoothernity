@@ -66,15 +66,15 @@ private :
 template < typename mediator >
 shy_logic_main_menu_selection_animation_select < mediator > :: _logic_main_menu_selection_animation_select_consts_type :: _logic_main_menu_selection_animation_select_consts_type ( )
 {
-    platform_math :: make_num_fract ( horizontal_scale_time_to_begin , 0 , 10 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_time_from_begin_to_end , 1 , 10 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_value_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_value_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_time_to_begin , 0 , 100 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_time_from_begin_to_end , 7 , 100 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_value_begin , 8 , 10 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_value_end , 10 , 10 ) ;
     platform_math :: make_num_fract ( vertical_scale_time_to_begin , 0 , 100 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 10 , 100 ) ;
+    platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 7 , 100 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( total_animation_time , 10 , 100 ) ;
+    platform_math :: make_num_fract ( total_animation_time , 7 , 100 ) ;
 }
 
 template < typename mediator >
