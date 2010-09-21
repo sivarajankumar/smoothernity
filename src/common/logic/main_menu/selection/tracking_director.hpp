@@ -15,6 +15,7 @@ class shy_logic_main_menu_selection_tracking_director
         num_whole row_selected ;
         num_whole selected_row_index ;
         num_whole selection_animation_in_progress ;
+        num_whole unselection_animation_in_progress ;
     } ;
     
     class _logic_main_menu_selection_track_state_type
@@ -32,6 +33,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_track_row_selected ) ;
     void receive ( typename messages :: logic_main_menu_selection_track_void_selected ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_select_finished ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_unselect_finished ) ;
 private :
     void _proceed_with_tracking ( ) ;
     void _update_received ( ) ;
@@ -58,6 +60,7 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_false ;
+    _logic_main_menu_selection_tracking_director_update_state . unselection_animation_in_progress = _platform_math_consts . get ( ) . whole_false ;
     _logic_main_menu_selection_tracking_director_update_state . row_selected = _platform_math_consts . get ( ) . whole_false ;
 }
 
@@ -82,27 +85,63 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
 template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_row_selected msg )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
-    _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+    num_whole prev_row_selected ;
+    
+    prev_row_selected = _logic_main_menu_selection_tracking_director_update_state . row_selected ;
     _logic_main_menu_selection_tracking_director_update_state . row_selected = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_selection_tracking_director_update_state . selected_row_index = msg . row ;
-
-    typename messages :: logic_main_menu_selection_animation_idle_row_selected idle_row_selected_msg ;
-    idle_row_selected_msg . row = msg . row ;
-    _mediator . get ( ) . send ( idle_row_selected_msg ) ;
+    
+    if ( platform_conditions :: whole_is_true ( prev_row_selected ) )
+    {
+        _logic_main_menu_selection_tracking_director_update_state . unselection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_unselect_start ( ) ) ;
+    }
+    else
+    {        
+        _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
+        
+        typename messages :: logic_main_menu_selection_animation_idle_row_selected idle_row_selected_msg ;
+        idle_row_selected_msg . row = _logic_main_menu_selection_tracking_director_update_state . selected_row_index ;
+        _mediator . get ( ) . send ( idle_row_selected_msg ) ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_void_selected )
 {
+    num_whole prev_row_selected ;
+    
+    prev_row_selected = _logic_main_menu_selection_tracking_director_update_state . row_selected ;
     _logic_main_menu_selection_tracking_director_update_state . row_selected = _platform_math_consts . get ( ) . whole_false ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_idle_void_selected ( ) ) ;
+    
+    if ( platform_conditions :: whole_is_true ( prev_row_selected ) )
+    {
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_unselect_start ( ) ) ;
+        _logic_main_menu_selection_tracking_director_update_state . unselection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_select_finished )
 {
     _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_false ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_unselect_finished )
+{
+    _logic_main_menu_selection_tracking_director_update_state . unselection_animation_in_progress = _platform_math_consts . get ( ) . whole_false ;
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_tracking_director_update_state . row_selected ) )
+    {        
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
+        _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+        typename messages :: logic_main_menu_selection_animation_idle_row_selected idle_row_selected_msg ;
+        idle_row_selected_msg . row = _logic_main_menu_selection_tracking_director_update_state . selected_row_index ;
+        _mediator . get ( ) . send ( idle_row_selected_msg ) ;
+    }
+    else
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_idle_void_selected ( ) ) ;
 }
 
 template < typename mediator >
@@ -123,8 +162,12 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: _proceed_wi
 template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: _update_received ( )
 {
-    if ( platform_conditions :: whole_is_false ( _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress ) )
+    if ( platform_conditions :: whole_is_false ( _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress ) 
+      && platform_conditions :: whole_is_false ( _logic_main_menu_selection_tracking_director_update_state . unselection_animation_in_progress )
+       )
+    {
         _request_track ( ) ;
+    }
     else
         _place_mesh ( ) ;
 }
