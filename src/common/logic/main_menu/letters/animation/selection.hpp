@@ -64,10 +64,10 @@ shy_logic_main_menu_letters_animation_selection < mediator >
 :: _logic_main_menu_letters_animation_selection_consts_type
 :: _logic_main_menu_letters_animation_selection_consts_type ( )
 {
-    platform_math :: make_num_fract ( time_stable , 20 , 100 ) ;
-    platform_math :: make_num_fract ( time_transition , 50 , 100 ) ;
-    platform_math :: make_num_fract ( scale_min , 8 , 10 ) ;
-    platform_math :: make_num_fract ( scale_max , 12 , 10 ) ;
+    platform_math :: make_num_fract ( time_stable , 0 , 100 ) ;
+    platform_math :: make_num_fract ( time_transition , 30 , 100 ) ;
+    platform_math :: make_num_fract ( scale_min , 9 , 10 ) ;
+    platform_math :: make_num_fract ( scale_max , 11 , 10 ) ;
 }
 
 template < typename mediator >

@@ -62,8 +62,8 @@ shy_logic_main_menu_letters_animation_selection_weight < mediator >
 :: _logic_main_menu_letters_animation_selection_weight_consts_type
 :: _logic_main_menu_letters_animation_selection_weight_consts_type ( )
 {
-    platform_math :: make_num_fract ( time_to_begin , 5 , 100 ) ;
-    platform_math :: make_num_fract ( time_from_begin_to_end , 50 , 100 ) ;
+    platform_math :: make_num_fract ( time_to_begin , 0 , 100 ) ;
+    platform_math :: make_num_fract ( time_from_begin_to_end , 30 , 100 ) ;
 }
 
 template < typename mediator >
