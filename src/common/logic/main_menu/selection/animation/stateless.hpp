@@ -26,6 +26,10 @@ public :
         class logic_main_menu_selection_animation_select_transform_request { } ;
         class logic_main_menu_selection_animation_transform_reply { public : matrix_data transform ; } ;
         class logic_main_menu_selection_animation_transform_request { } ;
+        class logic_main_menu_selection_animation_unselect_finished { } ;
+        class logic_main_menu_selection_animation_unselect_start { } ;
+        class logic_main_menu_selection_animation_unselect_transform_reply { public : num_fract scale_x ; num_fract scale_y ; } ;
+        class logic_main_menu_selection_animation_unselect_transform_request { } ;
     } ;
 
     template < typename receivers >
@@ -48,6 +52,10 @@ public :
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_select_transform_request ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_transform_reply ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_transform_request ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_finished ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_start ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_transform_reply ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_transform_request ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -195,5 +203,41 @@ void shy_logic_main_menu_selection_animation_stateless < mediator >
 :: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_select_transform_request msg )
 {
     _receivers . get ( ) . logic_main_menu_selection_animation_select . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_finished msg )
+{
+//    _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_start msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_animation_unselect . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_transform_reply msg )
+{
+//    _receivers . get ( ) . logic_main_menu_selection_animation . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_unselect_transform_request msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_animation_unselect . get ( ) . receive ( msg ) ;
 }
 
