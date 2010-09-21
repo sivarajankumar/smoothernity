@@ -73,6 +73,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_selection . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_selection_weight . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_unselection_weight . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_layout_row_rect . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;

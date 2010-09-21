@@ -24,7 +24,9 @@ public :
         class logic_main_menu_letters_animation_selection_weight_reply { public : num_whole row ; num_whole col ; num_fract weight ; } ;
         class logic_main_menu_letters_animation_selection_weight_request { public : num_whole row ; num_whole col ; } ;
         class logic_main_menu_letters_animation_selection_weight_select_row { public : num_whole row ; } ;
-        class logic_main_menu_letters_animation_selection_weight_unselect_row { public : num_whole row ; } ;
+        class logic_main_menu_letters_animation_unselection_weight_reply { public : num_whole row ; num_whole col ; num_fract weight ; } ;
+        class logic_main_menu_letters_animation_unselection_weight_request { public : num_whole row ; num_whole col ; } ;
+        class logic_main_menu_letters_animation_unselection_weight_unselect_row { public : num_whole row ; } ;
         class logic_main_menu_letters_animation_transform_reply { public : num_whole row ; num_whole col ; matrix_data transform ; } ;
         class logic_main_menu_letters_animation_transform_request { public : num_whole row ; num_whole col ; } ;
     } ;
@@ -47,7 +49,9 @@ public :
         void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_selection_weight_reply ) ;
         void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_selection_weight_request ) ;
         void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_selection_weight_select_row ) ;
-        void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_selection_weight_unselect_row ) ;
+        void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_unselection_weight_reply ) ;
+        void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_unselection_weight_request ) ;
+        void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_unselection_weight_unselect_row ) ;
         void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_transform_reply ) ;
         void send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_transform_request ) ;
     private :
@@ -195,9 +199,27 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_main_menu_letters_animation_stateless < mediator > 
 :: logic_main_menu_letters_animation_sender < receivers > 
-:: send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_selection_weight_unselect_row msg )
+:: send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_unselection_weight_reply msg )
 {
-    _receivers . get ( ) . logic_main_menu_letters_animation_selection_weight . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_letters_animation_stateless < mediator > 
+:: logic_main_menu_letters_animation_sender < receivers > 
+:: send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_unselection_weight_request msg )
+{
+    _receivers . get ( ) . logic_main_menu_letters_animation_unselection_weight . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_letters_animation_stateless < mediator > 
+:: logic_main_menu_letters_animation_sender < receivers > 
+:: send ( typename logic_main_menu_letters_animation_messages :: logic_main_menu_letters_animation_unselection_weight_unselect_row msg )
+{
+    _receivers . get ( ) . logic_main_menu_letters_animation_unselection_weight . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

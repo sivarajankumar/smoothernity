@@ -37,6 +37,7 @@
 #include "logic/main_menu/letters/animation/selection.hpp"
 #include "logic/main_menu/letters/animation/selection_weight.hpp"
 #include "logic/main_menu/letters/animation/stateless.hpp"
+#include "logic/main_menu/letters/animation/unselection_weight.hpp"
 #include "logic/main_menu/letters/creation_director.hpp"
 #include "logic/main_menu/letters/layout/position.hpp"
 #include "logic/main_menu/letters/layout/row_rect.hpp"
@@ -118,6 +119,7 @@ private :
         , shy_logic_main_menu_letters_animation_selection
         , shy_logic_main_menu_letters_animation_selection_weight
         , shy_logic_main_menu_letters_animation_stateless
+        , shy_logic_main_menu_letters_animation_unselection_weight
         , shy_logic_main_menu_letters_creation_director
         , shy_logic_main_menu_letters_layout_position
         , shy_logic_main_menu_letters_layout_row_rect

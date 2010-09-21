@@ -65,6 +65,16 @@ class shy_logic_main_menu_letters_animation
         num_fract weight ;
     } ;
     
+    class _logic_main_menu_letters_animation_unselection_weight_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole requested_row ;
+        num_whole requested_col ;
+        num_whole replied ;
+        num_fract weight ;
+    } ;
+    
     class _logic_main_menu_letters_animation_idle_transform_state_type
     {
     public :
@@ -84,6 +94,7 @@ public :
     void receive ( typename messages :: logic_main_menu_letters_animation_disappear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_selection_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_selection_weight_reply ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_unselection_weight_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_idle_transform_reply ) ;
 private :
     void _proceed_with_transform ( ) ;
@@ -91,6 +102,7 @@ private :
     void _obtain_disappear_transform ( ) ;
     void _obtain_selection_transform ( ) ;
     void _obtain_selection_weight ( ) ;
+    void _obtain_unselection_weight ( ) ;
     void _obtain_idle_transform ( ) ;
     void _all_transforms_received ( ) ;
     void _compute_transform ( ) ;
@@ -105,6 +117,7 @@ private :
     _logic_main_menu_letters_animation_disappear_transform_state_type _logic_main_menu_letters_animation_disappear_transform_state ;
     _logic_main_menu_letters_animation_selection_transform_state_type _logic_main_menu_letters_animation_selection_transform_state ;
     _logic_main_menu_letters_animation_selection_weight_state_type _logic_main_menu_letters_animation_selection_weight_state ;
+    _logic_main_menu_letters_animation_unselection_weight_state_type _logic_main_menu_letters_animation_unselection_weight_state ;
     _logic_main_menu_letters_animation_idle_transform_state_type _logic_main_menu_letters_animation_idle_transform_state ;
 } ;
 
@@ -209,6 +222,21 @@ void shy_logic_main_menu_letters_animation < mediator > :: receive ( typename me
 }
 
 template < typename mediator >
+void shy_logic_main_menu_letters_animation < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_unselection_weight_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_unselection_weight_state . requested )
+      && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_animation_unselection_weight_state . requested_row , msg . row )
+      && platform_conditions :: wholes_are_equal ( _logic_main_menu_letters_animation_unselection_weight_state . requested_col , msg . col )
+       )
+    {
+        _logic_main_menu_letters_animation_unselection_weight_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_letters_animation_unselection_weight_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_letters_animation_unselection_weight_state . weight = msg . weight ;
+        _proceed_with_transform ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_letters_animation < mediator > :: _proceed_with_transform ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_transform_state . requested ) )
@@ -239,6 +267,11 @@ void shy_logic_main_menu_letters_animation < mediator > :: _proceed_with_transfo
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_selection_weight_state . replied ) )
     {
         _logic_main_menu_letters_animation_selection_weight_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_unselection_weight ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_animation_unselection_weight_state . replied ) )
+    {
+        _logic_main_menu_letters_animation_unselection_weight_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _all_transforms_received ( ) ;
     }
 }
@@ -292,6 +325,18 @@ void shy_logic_main_menu_letters_animation < mediator > :: _obtain_selection_wei
 }
 
 template < typename mediator >
+void shy_logic_main_menu_letters_animation < mediator > :: _obtain_unselection_weight ( )
+{
+    _logic_main_menu_letters_animation_unselection_weight_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_letters_animation_unselection_weight_state . requested_row = _logic_main_menu_letters_animation_transform_state . row ;
+    _logic_main_menu_letters_animation_unselection_weight_state . requested_col = _logic_main_menu_letters_animation_transform_state . col ;
+    typename messages :: logic_main_menu_letters_animation_unselection_weight_request msg ;
+    msg . row = _logic_main_menu_letters_animation_transform_state . row ;
+    msg . col = _logic_main_menu_letters_animation_transform_state . col ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
 void shy_logic_main_menu_letters_animation < mediator > :: _obtain_idle_transform ( )
 {
     _logic_main_menu_letters_animation_idle_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
@@ -322,6 +367,8 @@ void shy_logic_main_menu_letters_animation < mediator > :: _compute_transform ( 
     num_fract scale_idle ;
     num_fract scale ;
     num_fract weight_selection ;
+    num_fract weight_unselection ;
+    num_fract weight ;
     num_fract zero ;
     
     position = _logic_main_menu_letters_animation_idle_transform_state . position ;
@@ -330,7 +377,10 @@ void shy_logic_main_menu_letters_animation < mediator > :: _compute_transform ( 
     scale_idle = _logic_main_menu_letters_animation_idle_transform_state . scale ;
     scale_selection = _logic_main_menu_letters_animation_selection_transform_state . scale ;
     weight_selection = _logic_main_menu_letters_animation_selection_weight_state . weight ;
+    weight_unselection = _logic_main_menu_letters_animation_unselection_weight_state . weight ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
+    
+    platform_math :: mul_fracts ( weight , weight_selection , weight_unselection ) ;
     
     engine_math :: lerp 
         ( scale_selection_weighted
@@ -338,7 +388,7 @@ void shy_logic_main_menu_letters_animation < mediator > :: _compute_transform ( 
         , _platform_math_consts . get ( ) . fract_0
         , scale_selection
         , _platform_math_consts . get ( ) . fract_1
-        , weight_selection
+        , weight
         ) ;
     
     platform_math :: mul_fracts ( scale , scale_idle , scale_appear ) ;

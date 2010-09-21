@@ -43,6 +43,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_idle logic_main_menu_letters_animation_idle ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_selection logic_main_menu_letters_animation_selection ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_selection_weight logic_main_menu_letters_animation_selection_weight ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_unselection_weight logic_main_menu_letters_animation_unselection_weight ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_creation_director logic_main_menu_letters_creation_director ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_position logic_main_menu_letters_layout_position ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_row_rect logic_main_menu_letters_layout_row_rect ;
@@ -208,6 +209,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_idle > logic_main_menu_letters_animation_idle ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_selection > logic_main_menu_letters_animation_selection ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_selection_weight > logic_main_menu_letters_animation_selection_weight ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_unselection_weight > logic_main_menu_letters_animation_unselection_weight ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_creation_director > logic_main_menu_letters_creation_director ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_position > logic_main_menu_letters_layout_position ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_row_rect > logic_main_menu_letters_layout_row_rect ;
@@ -262,6 +264,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_idle >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection_weight >
+        , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_unselection_weight >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_layout_position >
         , typename platform_pointer :: template pointer < logic_main_menu_letters_layout_row_rect >
@@ -358,6 +361,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_idle > arg_logic_main_menu_letters_animation_idle
     , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection > arg_logic_main_menu_letters_animation_selection
     , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection_weight > arg_logic_main_menu_letters_animation_selection_weight
+    , typename platform_pointer :: template pointer < logic_main_menu_letters_animation_unselection_weight > arg_logic_main_menu_letters_animation_unselection_weight
     , typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director > arg_logic_main_menu_letters_creation_director
     , typename platform_pointer :: template pointer < logic_main_menu_letters_layout_position > arg_logic_main_menu_letters_layout_position
     , typename platform_pointer :: template pointer < logic_main_menu_letters_layout_row_rect > arg_logic_main_menu_letters_layout_row_rect
@@ -413,6 +417,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_letters_animation_idle = arg_logic_main_menu_letters_animation_idle ;
     _receivers . logic_main_menu_letters_animation_selection = arg_logic_main_menu_letters_animation_selection ;
     _receivers . logic_main_menu_letters_animation_selection_weight = arg_logic_main_menu_letters_animation_selection_weight ;
+    _receivers . logic_main_menu_letters_animation_unselection_weight = arg_logic_main_menu_letters_animation_unselection_weight ;
     _receivers . logic_main_menu_letters_creation_director = arg_logic_main_menu_letters_creation_director ;
     _receivers . logic_main_menu_letters_layout_position = arg_logic_main_menu_letters_layout_position ;
     _receivers . logic_main_menu_letters_layout_row_rect = arg_logic_main_menu_letters_layout_row_rect ;
@@ -462,6 +467,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_letters_animation_idle . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_animation_selection . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_animation_selection_weight . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_letters_animation_unselection_weight . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_creation_director . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_layout_position . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_letters_layout_row_rect . get ( ) . set_mediator ( mediator_ptr ) ;
