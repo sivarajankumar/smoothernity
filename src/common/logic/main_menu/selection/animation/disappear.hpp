@@ -134,7 +134,7 @@ void shy_logic_main_menu_selection_animation_disappear < mediator > :: _compute_
     time_begin = horizontal_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , horizontal_scale_time_from_begin_to_end ) ;
     
-    engine_math :: ease_in_hard_out
+    engine_math :: easy_in_hard_out
         ( _logic_main_menu_selection_animation_disappear_transform_state . horizontal_scale
         , _logic_main_menu_update_state . time
         , _logic_main_menu_selection_animation_disappear_consts . horizontal_scale_value_begin
@@ -158,7 +158,7 @@ void shy_logic_main_menu_selection_animation_disappear < mediator > :: _compute_
     time_begin = vertical_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , vertical_scale_time_from_begin_to_end ) ;
     
-    engine_math :: hard_in_ease_out
+    engine_math :: hard_in_easy_out
         ( _logic_main_menu_selection_animation_disappear_transform_state . vertical_scale
         , _logic_main_menu_update_state . time
         , _logic_main_menu_selection_animation_disappear_consts . vertical_scale_value_begin

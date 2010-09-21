@@ -210,7 +210,7 @@ void shy_logic_main_menu_letters_animation_appear < mediator > :: _compute_trans
     scale_middle = _logic_main_menu_letters_animation_appear_consts . scale_middle ;
     scale_end = _logic_main_menu_letters_animation_appear_consts . scale_end ;
     
-    engine_math :: hard_attack_ease_decay
+    engine_math :: hard_attack_easy_decay
         ( scale
         , time
         , scale_begin

@@ -204,7 +204,7 @@ void shy_logic_main_menu_letters_animation_disappear < mediator > :: _compute_tr
     if ( platform_conditions :: fract_less_than_fract ( time , time_begin ) )
         scale = scale_begin ;
     else if ( platform_conditions :: fract_less_than_fract ( time , time_end ) )
-        engine_math :: hard_in_ease_out ( scale , time , scale_begin , time_begin , scale_end , time_end ) ;
+        engine_math :: hard_in_easy_out ( scale , time , scale_begin , time_begin , scale_end , time_end ) ;
     else
         scale = _platform_math_consts . get ( ) . fract_0 ;
 

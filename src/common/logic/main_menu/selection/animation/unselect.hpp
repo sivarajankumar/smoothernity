@@ -72,8 +72,8 @@ shy_logic_main_menu_selection_animation_unselect < mediator > :: _logic_main_men
     platform_math :: make_num_fract ( horizontal_scale_value_end , 1 , 1 ) ;
     platform_math :: make_num_fract ( vertical_scale_time_to_begin , 0 , 100 ) ;
     platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 10 , 100 ) ;
-    platform_math :: make_num_fract ( vertical_scale_value_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_scale_value_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_scale_value_begin , 1 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_scale_value_end , 0 , 1 ) ;
     platform_math :: make_num_fract ( total_animation_time , 10 , 100 ) ;
 }
 
@@ -155,7 +155,7 @@ void shy_logic_main_menu_selection_animation_unselect < mediator > :: _compute_h
     time_begin = horizontal_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , horizontal_scale_time_from_begin_to_end ) ;
     
-    engine_math :: hard_in_ease_out
+    engine_math :: easy_in_hard_out
         ( _logic_main_menu_selection_animation_unselect_transform_state . horizontal_scale
         , _logic_main_menu_update_state . time
         , _logic_main_menu_selection_animation_unselect_consts . horizontal_scale_value_begin
@@ -179,7 +179,7 @@ void shy_logic_main_menu_selection_animation_unselect < mediator > :: _compute_v
     time_begin = vertical_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , vertical_scale_time_from_begin_to_end ) ;
     
-    engine_math :: hard_in_ease_out
+    engine_math :: easy_in_hard_out
         ( _logic_main_menu_selection_animation_unselect_transform_state . vertical_scale
         , _logic_main_menu_update_state . time
         , _logic_main_menu_selection_animation_unselect_consts . vertical_scale_value_begin

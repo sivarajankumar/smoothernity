@@ -155,7 +155,7 @@ void shy_logic_main_menu_selection_animation_select < mediator > :: _compute_hor
     time_begin = horizontal_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , horizontal_scale_time_from_begin_to_end ) ;
     
-    engine_math :: hard_in_ease_out
+    engine_math :: hard_in_easy_out
         ( _logic_main_menu_selection_animation_select_transform_state . horizontal_scale
         , _logic_main_menu_update_state . time
         , _logic_main_menu_selection_animation_select_consts . horizontal_scale_value_begin
@@ -179,7 +179,7 @@ void shy_logic_main_menu_selection_animation_select < mediator > :: _compute_ver
     time_begin = vertical_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , vertical_scale_time_from_begin_to_end ) ;
     
-    engine_math :: hard_in_ease_out
+    engine_math :: hard_in_easy_out
         ( _logic_main_menu_selection_animation_select_transform_state . vertical_scale
         , _logic_main_menu_update_state . time
         , _logic_main_menu_selection_animation_select_consts . vertical_scale_value_begin
