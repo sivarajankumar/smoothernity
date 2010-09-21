@@ -56,7 +56,7 @@ void shy_logic_main_menu_letters_animation_unselection_weight < mediator > :: re
     typename messages :: logic_main_menu_letters_animation_unselection_weight_reply reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . col = msg . col ;
-    reply_msg . weight = _platform_math_consts . get ( ) . fract_0 ;
+    reply_msg . weight = _platform_math_consts . get ( ) . fract_1 ;
     _mediator . get ( ) . send ( reply_msg ) ;
 }
 
