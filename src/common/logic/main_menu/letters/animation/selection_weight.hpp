@@ -23,6 +23,8 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_selection_weight_request ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_selection_weight_select_row ) ;
+    void receive ( typename messages :: logic_main_menu_letters_animation_selection_weight_unselect_row ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -61,4 +63,14 @@ void shy_logic_main_menu_letters_animation_selection_weight < mediator > :: rece
     reply_msg . col = msg . col ;
     reply_msg . weight = _platform_math_consts . get ( ) . fract_0 ;
     _mediator . get ( ) . send ( reply_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_animation_selection_weight < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_selection_weight_select_row )
+{
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_animation_selection_weight < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_selection_weight_unselect_row )
+{
 }
