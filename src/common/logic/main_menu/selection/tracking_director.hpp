@@ -12,6 +12,8 @@ class shy_logic_main_menu_selection_tracking_director
     {
     public :
         num_whole requested ;
+        num_whole row_selected ;
+        num_whole selected_row_index ;
         num_whole selection_animation_in_progress ;
     } ;
     
@@ -56,6 +58,7 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_false ;
+    _logic_main_menu_selection_tracking_director_update_state . row_selected = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -81,6 +84,8 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
 {
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
     _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_selection_tracking_director_update_state . row_selected = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_selection_tracking_director_update_state . selected_row_index = msg . row ;
 
     typename messages :: logic_main_menu_selection_animation_idle_row_selected idle_row_selected_msg ;
     idle_row_selected_msg . row = msg . row ;
@@ -90,6 +95,7 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( t
 template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: receive ( typename messages :: logic_main_menu_selection_track_void_selected )
 {
+    _logic_main_menu_selection_tracking_director_update_state . row_selected = _platform_math_consts . get ( ) . whole_false ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_idle_void_selected ( ) ) ;
 }
 
