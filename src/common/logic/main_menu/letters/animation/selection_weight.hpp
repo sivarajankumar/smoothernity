@@ -125,12 +125,8 @@ void shy_logic_main_menu_letters_animation_selection_weight < mediator > :: _pro
     selected_row_index = _logic_main_menu_letters_animation_selection_weight_state . selected_row_index ;
     requested_row = _logic_main_menu_letters_animation_selection_weight_state . requested_row ;
     
-    if ( platform_conditions :: whole_is_true ( row_selected )
-      && platform_conditions :: wholes_are_equal ( selected_row_index , requested_row )
-       )
-    {
+    if ( platform_conditions :: wholes_are_equal ( selected_row_index , requested_row ) )
         _compute_weight ( ) ;
-    }
     else
         _compute_identity_weight ( ) ;
     _reply_weight ( ) ;
