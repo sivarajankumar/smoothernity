@@ -171,17 +171,31 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: _place_mesh
 template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: _start_selection ( )
 {
+    num_whole selected_row_index ;    
+    selected_row_index = _logic_main_menu_selection_tracking_director_update_state . selected_row_index ;
+
     _logic_main_menu_selection_tracking_director_update_state . selection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_select_start ( ) ) ;
     
     typename messages :: logic_main_menu_selection_animation_idle_row_selected idle_row_selected_msg ;
-    idle_row_selected_msg . row = _logic_main_menu_selection_tracking_director_update_state . selected_row_index ;
+    idle_row_selected_msg . row = selected_row_index ;
     _mediator . get ( ) . send ( idle_row_selected_msg ) ;
+    
+    typename messages :: logic_main_menu_letters_animation_selection_weight_select_row letter_selection_row_select_msg ;
+    letter_selection_row_select_msg . row = selected_row_index ;
+    _mediator . get ( ) . send ( letter_selection_row_select_msg ) ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_selection_tracking_director < mediator > :: _start_unselection ( )
 {
+    num_whole selected_row_index ;    
+    selected_row_index = _logic_main_menu_selection_tracking_director_update_state . selected_row_index ;
+
     _logic_main_menu_selection_tracking_director_update_state . unselection_animation_in_progress = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_unselect_start ( ) ) ;
+
+    typename messages :: logic_main_menu_letters_animation_selection_weight_unselect_row letter_selection_row_unselect_msg ;
+    letter_selection_row_unselect_msg . row = selected_row_index ;
+    _mediator . get ( ) . send ( letter_selection_row_unselect_msg ) ;
 }
