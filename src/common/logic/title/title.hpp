@@ -527,13 +527,13 @@ void shy_logic_title < mediator > :: _title_update ( )
     platform_math :: mul_fract_by ( offset_y , letter_size ) ;
     platform_math :: make_fract_from_whole ( fract_appear_duration_in_frames , _logic_title_consts . appear_duration_in_frames ) ;
     
-    engine_math :: lerp 
+    engine_math :: lerp_refactored 
         ( _scene_scale 
+        , _scene_scale_frames
         , _logic_title_consts . scene_scale_min
         , _platform_math_consts . get ( ) . fract_0 
         , _logic_title_consts . scene_scale_max 
         , fract_appear_duration_in_frames
-        , _scene_scale_frames
         ) ;
     platform_math :: add_to_fract ( _scene_scale_frames , _platform_math_consts . get ( ) . fract_1 ) ;
                     
@@ -583,7 +583,7 @@ void shy_logic_title < mediator > :: _title_update ( )
         platform_math :: sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
         if ( platform_conditions :: whole_greater_than_whole ( _title_frames , starting_frame ) )
         {
-            engine_math :: lerp ( rubber , _rubber_first , _platform_math_consts . get ( ) . fract_0 , _rubber_last , fract_letters_count , fract_i ) ;
+            engine_math :: lerp_refactored ( rubber , fract_i , _rubber_first , _platform_math_consts . get ( ) . fract_0 , _rubber_last , fract_letters_count ) ;
             
             platform_math :: mul_fracts ( pos_angle_old_part , letter . get ( ) . pos_angle , rubber ) ;
             platform_math :: sub_fracts ( pos_angle_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
