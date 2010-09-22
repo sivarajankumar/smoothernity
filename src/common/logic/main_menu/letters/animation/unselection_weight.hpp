@@ -37,6 +37,7 @@ class shy_logic_main_menu_letters_animation_unselection_weight
     } ;
     
 public :
+    shy_logic_main_menu_letters_animation_unselection_weight ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_unselection_weight_request ) ;
@@ -44,6 +45,7 @@ public :
     void receive ( typename messages :: logic_main_menu_letters_animation_unselection_weight_unselect_row ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
 private :
+    shy_logic_main_menu_letters_animation_unselection_weight < mediator > & operator= ( const shy_logic_main_menu_letters_animation_unselection_weight < mediator > & ) ;
     void _proceed_with_weight ( ) ;
     void _compute_weight ( ) ;
     void _compute_identity_weight ( ) ;
@@ -64,6 +66,11 @@ shy_logic_main_menu_letters_animation_unselection_weight < mediator >
 {
     platform_math :: make_num_fract ( time_to_begin , 0 , 100 ) ;
     platform_math :: make_num_fract ( time_from_begin_to_end , 7 , 100 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_letters_animation_unselection_weight < mediator > :: shy_logic_main_menu_letters_animation_unselection_weight ( )
+{
 }
 
 template < typename mediator >

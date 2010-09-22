@@ -39,12 +39,14 @@ class shy_logic_main_menu_letters_animation_selection
     } ;
     
 public :
+    shy_logic_main_menu_letters_animation_selection ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_selection_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_launch_permit ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
 private :
+    shy_logic_main_menu_letters_animation_selection < mediator > operator= ( const shy_logic_main_menu_letters_animation_selection < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _compute_weight ( ) ;
     void _invert_even_weight ( ) ;
@@ -68,6 +70,11 @@ shy_logic_main_menu_letters_animation_selection < mediator >
     platform_math :: make_num_fract ( time_transition , 30 , 100 ) ;
     platform_math :: make_num_fract ( scale_min , 9 , 10 ) ;
     platform_math :: make_num_fract ( scale_max , 11 , 10 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_letters_animation_selection < mediator > :: shy_logic_main_menu_letters_animation_selection ( )
+{
 }
 
 template < typename mediator >

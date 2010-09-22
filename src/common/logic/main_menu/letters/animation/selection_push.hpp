@@ -40,11 +40,13 @@ class shy_logic_main_menu_letters_animation_selection_push
     } ;
     
 public :
+    shy_logic_main_menu_letters_animation_selection_push ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_selection_push_transform_request ) ;
 private :
+    shy_logic_main_menu_letters_animation_selection_push < mediator > & operator= ( const shy_logic_main_menu_letters_animation_selection_push < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _compute_transform ( ) ;
     void _reply_transform ( ) ;
@@ -68,6 +70,11 @@ shy_logic_main_menu_letters_animation_selection_push < mediator >
     platform_math :: make_num_fract ( scale_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( scale_middle , 5 , 10 ) ;
     platform_math :: make_num_fract ( scale_end , 8 , 10 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_letters_animation_selection_push < mediator > :: shy_logic_main_menu_letters_animation_selection_push ( )
+{
 }
 
 template < typename mediator >
