@@ -416,7 +416,6 @@ void shy_logic_main_menu_letters_animation < mediator > :: _compute_transform ( 
     num_fract weight_unselection ;
     num_fract weight ;
     num_fract zero ;
-    num_fract final_selection_scale ;
     
     position = _logic_main_menu_letters_animation_idle_transform_state . position ;
     scale_appear = _logic_main_menu_letters_animation_appear_transform_state . scale ;
@@ -429,20 +428,20 @@ void shy_logic_main_menu_letters_animation < mediator > :: _compute_transform ( 
     zero = _platform_math_consts . get ( ) . fract_0 ;
     
     platform_math :: mul_fracts ( weight , weight_selection , weight_unselection ) ;
-    platform_math :: mul_fracts ( final_selection_scale , scale_selection , scale_selection_push ) ;
     
-    engine_math :: lerp 
+    engine_math :: lerp
         ( scale_selection_weighted
         , weight
         , _platform_math_consts . get ( ) . fract_1
         , _platform_math_consts . get ( ) . fract_0
-        , final_selection_scale
+        , scale_selection
         , _platform_math_consts . get ( ) . fract_1
         ) ;
     
     platform_math :: mul_fracts ( scale , scale_idle , scale_appear ) ;
     platform_math :: mul_fract_by ( scale , scale_disappear ) ;
     platform_math :: mul_fract_by ( scale , scale_selection_weighted ) ;
+    platform_math :: mul_fract_by ( scale , scale_selection_push ) ;
     
     platform_matrix :: set_origin ( transform , position ) ;
     platform_matrix :: set_axis_x ( transform , scale , zero , zero ) ;
