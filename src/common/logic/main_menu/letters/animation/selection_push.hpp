@@ -29,8 +29,6 @@ class shy_logic_main_menu_letters_animation_selection_push
     public :
         num_whole requested_row ;
         num_whole requested_col ;
-        num_whole row_selected ;
-        num_whole selected_row_index ;
         num_fract scale ;
     } ;
     
@@ -45,13 +43,10 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
-    void receive ( typename messages :: logic_main_menu_letters_animation_selection_push_select_row ) ;
-    void receive ( typename messages :: logic_main_menu_letters_animation_selection_push_unselect_row ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_selection_push_transform_request ) ;
 private :
     void _proceed_with_transform ( ) ;
     void _compute_transform ( ) ;
-    void _compute_identity_transform ( ) ;
     void _reply_transform ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -68,11 +63,11 @@ shy_logic_main_menu_letters_animation_selection_push < mediator >
 :: _logic_main_menu_letters_animation_selection_push_consts_type
 :: _logic_main_menu_letters_animation_selection_push_consts_type ( )
 {
-    platform_math :: make_num_fract ( time_from_begin_to_middle , 10 , 100 ) ;
+    platform_math :: make_num_fract ( time_from_begin_to_middle , 5 , 100 ) ;
     platform_math :: make_num_fract ( time_from_middle_to_end , 30 , 100 ) ;
     platform_math :: make_num_fract ( scale_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( scale_middle , 3 , 10 ) ;
-    platform_math :: make_num_fract ( scale_end , 7 , 10 ) ;
+    platform_math :: make_num_fract ( scale_middle , 5 , 10 ) ;
+    platform_math :: make_num_fract ( scale_end , 8 , 10 ) ;
 }
 
 template < typename mediator >
@@ -109,19 +104,6 @@ void shy_logic_main_menu_letters_animation_selection_push < mediator > :: receiv
 }
 
 template < typename mediator >
-void shy_logic_main_menu_letters_animation_selection_push < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_selection_push_select_row msg )
-{
-    _logic_main_menu_letters_animation_selection_push_transform_state . row_selected = _platform_math_consts . get ( ) . whole_true ;
-    _logic_main_menu_letters_animation_selection_push_transform_state . selected_row_index = msg . row ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu_letters_animation_selection_push < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_selection_push_unselect_row msg )
-{
-    _logic_main_menu_letters_animation_selection_push_transform_state . row_selected = _platform_math_consts . get ( ) . whole_false ;
-}
-
-template < typename mediator >
 void shy_logic_main_menu_letters_animation_selection_push < mediator > :: receive ( typename messages :: logic_main_menu_letters_animation_selection_push_transform_request msg )
 {
     _logic_main_menu_letters_animation_selection_push_transform_state . requested_row = msg . row ;
@@ -132,19 +114,7 @@ void shy_logic_main_menu_letters_animation_selection_push < mediator > :: receiv
 template < typename mediator >
 void shy_logic_main_menu_letters_animation_selection_push < mediator > :: _proceed_with_transform ( )
 {
-    num_whole requested_row ;
-    num_whole row_selected ;
-    num_whole selected_row_index ;
-    
-    requested_row = _logic_main_menu_letters_animation_selection_push_transform_state . requested_row ;
-    row_selected = _logic_main_menu_letters_animation_selection_push_transform_state . row_selected ;
-    selected_row_index = _logic_main_menu_letters_animation_selection_push_transform_state . selected_row_index ;
-    
-    if ( platform_conditions :: whole_is_true ( row_selected ) && platform_conditions :: wholes_are_equal ( selected_row_index , requested_row ) )
-        _compute_transform ( ) ;
-    else
-        _compute_identity_transform ( ) ;
-    
+    _compute_transform ( ) ;
     _reply_transform ( ) ;
 }
 
@@ -185,12 +155,6 @@ void shy_logic_main_menu_letters_animation_selection_push < mediator > :: _compu
         ) ;
         
     _logic_main_menu_letters_animation_selection_push_transform_state . scale = scale ;
-}
-
-template < typename mediator >
-void shy_logic_main_menu_letters_animation_selection_push < mediator > :: _compute_identity_transform ( )
-{
-    _logic_main_menu_letters_animation_selection_push_transform_state . scale = _platform_math_consts . get ( ) . fract_1 ;
 }
 
 template < typename mediator >
