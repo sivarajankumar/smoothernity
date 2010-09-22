@@ -28,6 +28,7 @@ template
     , template < typename mediator > class _logic_main_menu_letters_animation_disappear
     , template < typename mediator > class _logic_main_menu_letters_animation_idle
     , template < typename mediator > class _logic_main_menu_letters_animation_selection
+    , template < typename mediator > class _logic_main_menu_letters_animation_selection_push
     , template < typename mediator > class _logic_main_menu_letters_animation_selection_weight
     , template < typename mediator > class _logic_main_menu_letters_animation_stateless
     , template < typename mediator > class _logic_main_menu_letters_animation_unselection_weight
@@ -102,6 +103,7 @@ public :
         typedef _logic_main_menu_letters_animation_disappear < mediator > logic_main_menu_letters_animation_disappear ;
         typedef _logic_main_menu_letters_animation_idle < mediator > logic_main_menu_letters_animation_idle ;
         typedef _logic_main_menu_letters_animation_selection < mediator > logic_main_menu_letters_animation_selection ;
+        typedef _logic_main_menu_letters_animation_selection_push < mediator > logic_main_menu_letters_animation_selection_push ;
         typedef _logic_main_menu_letters_animation_selection_weight < mediator > logic_main_menu_letters_animation_selection_weight ;
         typedef _logic_main_menu_letters_animation_stateless < mediator > logic_main_menu_letters_animation_stateless ;
         typedef _logic_main_menu_letters_animation_unselection_weight < mediator > logic_main_menu_letters_animation_unselection_weight ;
@@ -173,6 +175,7 @@ template
     , template < typename _mediator > class _logic_main_menu_letters_animation_disappear
     , template < typename _mediator > class _logic_main_menu_letters_animation_idle
     , template < typename _mediator > class _logic_main_menu_letters_animation_selection
+    , template < typename _mediator > class _logic_main_menu_letters_animation_selection_push
     , template < typename _mediator > class _logic_main_menu_letters_animation_selection_weight
     , template < typename _mediator > class _logic_main_menu_letters_animation_stateless
     , template < typename _mediator > class _logic_main_menu_letters_animation_unselection_weight
@@ -232,6 +235,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_disappear > scheduled_logic_main_menu_letters_animation_disappear ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_idle > scheduled_logic_main_menu_letters_animation_idle ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_selection > scheduled_logic_main_menu_letters_animation_selection ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_selection_push > scheduled_logic_main_menu_letters_animation_selection_push ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_selection_weight > scheduled_logic_main_menu_letters_animation_selection_weight ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_animation_unselection_weight > scheduled_logic_main_menu_letters_animation_unselection_weight ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_letters_creation_director > scheduled_logic_main_menu_letters_creation_director ;
@@ -289,6 +293,7 @@ public :
         , scheduled_logic_main_menu_letters_animation_disappear :: template scheduled_module
         , scheduled_logic_main_menu_letters_animation_idle :: template scheduled_module
         , scheduled_logic_main_menu_letters_animation_selection :: template scheduled_module
+        , scheduled_logic_main_menu_letters_animation_selection_push :: template scheduled_module
         , scheduled_logic_main_menu_letters_animation_selection_weight :: template scheduled_module
         , _logic_main_menu_letters_animation_stateless
         , scheduled_logic_main_menu_letters_animation_unselection_weight :: template scheduled_module
@@ -388,6 +393,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_disappear :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_disappear ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_idle :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_idle ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_selection :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_selection ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_selection_push :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_selection_push ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_selection_weight :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_selection_weight ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_animation_unselection_weight :: template scheduled_module < mediator_type > logic_main_menu_letters_animation_unselection_weight ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_letters_creation_director :: template scheduled_module < mediator_type > logic_main_menu_letters_creation_director ;
@@ -444,6 +450,7 @@ private :
     logic_main_menu_letters_animation_disappear _logic_main_menu_letters_animation_disappear ;
     logic_main_menu_letters_animation_idle _logic_main_menu_letters_animation_idle ;
     logic_main_menu_letters_animation_selection _logic_main_menu_letters_animation_selection ;
+    logic_main_menu_letters_animation_selection_push _logic_main_menu_letters_animation_selection_push ;
     logic_main_menu_letters_animation_selection_weight _logic_main_menu_letters_animation_selection_weight ;
     logic_main_menu_letters_animation_unselection_weight _logic_main_menu_letters_animation_unselection_weight ;
     logic_main_menu_letters_creation_director _logic_main_menu_letters_creation_director ;
@@ -498,6 +505,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_disappear > logic_main_menu_letters_animation_disappear_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_idle > logic_main_menu_letters_animation_idle_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection > logic_main_menu_letters_animation_selection_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection_push > logic_main_menu_letters_animation_selection_push_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection_weight > logic_main_menu_letters_animation_selection_weight_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_unselection_weight > logic_main_menu_letters_animation_unselection_weight_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director > logic_main_menu_letters_creation_director_ptr ;
@@ -548,6 +556,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_letters_animation_disappear_ptr , _logic_main_menu_letters_animation_disappear ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_idle_ptr , _logic_main_menu_letters_animation_idle ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_selection_ptr , _logic_main_menu_letters_animation_selection ) ;
+    platform_pointer :: bind ( logic_main_menu_letters_animation_selection_push_ptr , _logic_main_menu_letters_animation_selection_push ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_selection_weight_ptr , _logic_main_menu_letters_animation_selection_weight ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_unselection_weight_ptr , _logic_main_menu_letters_animation_unselection_weight ) ;
     platform_pointer :: bind ( logic_main_menu_letters_creation_director_ptr , _logic_main_menu_letters_creation_director ) ;
@@ -597,6 +606,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_disappear_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_idle_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_selection_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_selection_push_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_selection_weight_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_animation_unselection_weight_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_letters_creation_director_ptr , scheduler_ptr ) ;
@@ -641,6 +651,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_letters_animation_disappear_ptr
         , logic_main_menu_letters_animation_idle_ptr
         , logic_main_menu_letters_animation_selection_ptr
+        , logic_main_menu_letters_animation_selection_push_ptr
         , logic_main_menu_letters_animation_selection_weight_ptr
         , logic_main_menu_letters_animation_unselection_weight_ptr
         , logic_main_menu_letters_creation_director_ptr

@@ -35,6 +35,7 @@
 #include "logic/main_menu/letters/animation/disappear.hpp"
 #include "logic/main_menu/letters/animation/idle.hpp"
 #include "logic/main_menu/letters/animation/selection.hpp"
+#include "logic/main_menu/letters/animation/selection_push.hpp"
 #include "logic/main_menu/letters/animation/selection_weight.hpp"
 #include "logic/main_menu/letters/animation/stateless.hpp"
 #include "logic/main_menu/letters/animation/unselection_weight.hpp"
@@ -117,6 +118,7 @@ private :
         , shy_logic_main_menu_letters_animation_disappear
         , shy_logic_main_menu_letters_animation_idle
         , shy_logic_main_menu_letters_animation_selection
+        , shy_logic_main_menu_letters_animation_selection_push
         , shy_logic_main_menu_letters_animation_selection_weight
         , shy_logic_main_menu_letters_animation_stateless
         , shy_logic_main_menu_letters_animation_unselection_weight
