@@ -382,13 +382,13 @@ void shy_logic_main_menu_letters_animation < mediator > :: _compute_transform ( 
     
     platform_math :: mul_fracts ( weight , weight_selection , weight_unselection ) ;
     
-    engine_math :: lerp_unrefactored 
+    engine_math :: lerp 
         ( scale_selection_weighted
+        , weight
         , _platform_math_consts . get ( ) . fract_1
         , _platform_math_consts . get ( ) . fract_0
         , scale_selection
         , _platform_math_consts . get ( ) . fract_1
-        , weight
         ) ;
     
     platform_math :: mul_fracts ( scale , scale_idle , scale_appear ) ;

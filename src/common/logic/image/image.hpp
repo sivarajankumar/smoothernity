@@ -213,13 +213,13 @@ void shy_logic_image < mediator > :: _update_image_mesh ( )
     num_fract fract_scale_in_frames ;
     platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_image_consts . scale_in_frames ) ;
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
-    engine_math :: lerp_unrefactored 
+    engine_math :: lerp 
         ( scale 
+        , fract_scale_frames 
         , _platform_math_consts . get ( ) . fract_0 
         , _platform_math_consts . get ( ) . fract_0 
         , _logic_image_consts . final_scale
         , fract_scale_in_frames 
-        , fract_scale_frames 
         ) ;
     platform_matrix :: set_axis_x ( matrix , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;

@@ -212,7 +212,7 @@ void shy_logic_main_menu_letters_animation_selection < mediator > :: _compute_tr
     weight_max = _platform_math_consts . get ( ) . fract_1 ;
     weight = _logic_main_menu_letters_animation_selection_transform_state . weight ;
     
-    engine_math :: lerp_refactored
+    engine_math :: lerp
         ( scale
         , weight
         , scale_min

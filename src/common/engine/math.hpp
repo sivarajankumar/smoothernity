@@ -20,8 +20,7 @@ public :
 public :
     static void catmull_rom_spline ( vector_data & result , num_fract t , vector_data p0 , vector_data p1 , vector_data p2 , vector_data p3 ) ;
     static void catmull_rom_spline ( num_fract & result , num_fract t , num_fract p0 , num_fract p1 , num_fract p2 , num_fract p3 ) ;
-    static void lerp_unrefactored ( num_fract & result , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight , num_fract weight ) ;
-    static void lerp_refactored ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
+    static void lerp ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
     static void easy_in_easy_out ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
     static void easy_in_hard_out ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
     static void hard_in_easy_out ( num_fract & result_value , num_fract weight , num_fract from_value , num_fract from_weight , num_fract to_value , num_fract to_weight ) ;
@@ -151,28 +150,7 @@ void shy_engine_math < mediator > :: catmull_rom_spline
 }
 
 template < typename mediator >
-void shy_engine_math < mediator > :: lerp_unrefactored 
-    ( num_fract & result
-    , num_fract from_value 
-    , num_fract from_weight 
-    , num_fract to_value 
-    , num_fract to_weight 
-    , num_fract weight 
-    )
-{
-    num_fract value_diff ;
-    num_fract weight_diff ;
-    num_fract current_diff ;
-    platform_math :: sub_fracts ( value_diff , to_value , from_value ) ;
-    platform_math :: sub_fracts ( weight_diff , to_weight , from_weight ) ;
-    platform_math :: sub_fracts ( current_diff , weight , from_weight ) ;
-    platform_math :: mul_fracts ( result , value_diff , current_diff ) ;
-    platform_math :: div_fract_by ( result , weight_diff ) ;
-    platform_math :: add_to_fract ( result , from_value ) ;
-}
-
-template < typename mediator >
-void shy_engine_math < mediator > :: lerp_refactored
+void shy_engine_math < mediator > :: lerp
     ( num_fract & result_value
     , num_fract weight
     , num_fract from_value 
@@ -211,7 +189,7 @@ void shy_engine_math < mediator > :: hard_in_easy_out
         platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
         platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
         platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
-        lerp_unrefactored ( t , t0 , from_weight , t1 , to_weight , weight ) ;
+        lerp ( t , weight , t0 , from_weight , t1 , to_weight ) ;
         platform_math :: add_fracts ( p0 , from_value , delta_value ) ;
         p1 = from_value ;
         p2 = to_value ;
@@ -239,7 +217,7 @@ void shy_engine_math < mediator > :: easy_in_easy_out
         num_fract t1 ;
         platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
         platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
-        lerp_unrefactored ( t , t0 , from_weight , t1 , to_weight , weight ) ;
+        lerp ( t , weight , t0 , from_weight , t1 , to_weight ) ;
         p1 = from_value ;
         p2 = to_value ;
         p0 = p2 ;
@@ -269,7 +247,7 @@ void shy_engine_math < mediator > :: easy_in_hard_out
         platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
         platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
         platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
-        lerp_unrefactored ( t , t0 , from_weight , t1 , to_weight , weight ) ;
+        lerp ( t , weight , t0 , from_weight , t1 , to_weight ) ;
         p1 = from_value ;
         p2 = to_value ;
         p0 = p2 ;

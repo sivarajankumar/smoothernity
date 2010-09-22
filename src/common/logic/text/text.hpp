@@ -384,7 +384,7 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
     
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
     platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_text_consts . scale_in_frames ) ;
-    engine_math :: lerp_refactored 
+    engine_math :: lerp 
         ( scale 
         , fract_scale_frames 
         , _platform_math_consts . get ( ) . fract_0 
