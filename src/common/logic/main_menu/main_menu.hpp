@@ -40,6 +40,8 @@ private :
     num_whole _created ;
     num_whole _launched ;
     num_whole _disappearing ;
+    num_whole _prev_touch_occured ;
+    num_whole _prev_mouse_button ;
 } ;
 
 template < typename mediator >
@@ -62,6 +64,8 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: init )
     _launched = _platform_math_consts . get ( ) . whole_false ;
     _created = _platform_math_consts . get ( ) . whole_false ;
     _disappearing = _platform_math_consts . get ( ) . whole_false ;
+    _prev_touch_occured = _platform_math_consts . get ( ) . whole_false ;
+    _prev_mouse_button = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -99,8 +103,8 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
         num_whole mouse_button ;
         _platform_touch . get ( ) . occured ( touch_occured ) ;
         _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
-        if ( platform_conditions :: whole_is_true ( touch_occured )
-          || platform_conditions :: whole_is_true ( mouse_button )
+        if ( ( platform_conditions :: whole_is_false ( touch_occured ) && platform_conditions :: whole_is_true ( _prev_touch_occured ) )
+          || ( platform_conditions :: whole_is_false ( mouse_button ) && platform_conditions :: whole_is_true ( _prev_mouse_button ) )
            )
         {
             _launched = _platform_math_consts . get ( ) . whole_false ;
@@ -113,6 +117,8 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_place ( ) ) ;
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_tracking_director_update ( ) ) ;
         }
+        _prev_touch_occured = touch_occured ;
+        _prev_mouse_button = mouse_button ;
     }
     if ( platform_conditions :: whole_is_true ( _created )
       && platform_conditions :: whole_is_true ( _disappearing )

@@ -169,6 +169,15 @@
 	[ scene mouse_left_button_down ] ;
 }
 
+- ( void ) mouseUp : ( NSEvent * ) the_event
+{
+    shy_macosx_scene * scene = [ openGLView scene ] ;
+    NSPoint window_point = [ the_event locationInWindow ] ;
+	NSPoint view_point = [ openGLView convertPoint : window_point fromView : nil ] ;
+	[ scene set_mouse_position : view_point ] ;
+	[ scene mouse_left_button_up ] ;
+}
+
 - (BOOL) is_in_full_screen_mode
 {
     return full_screen_context != nil ;

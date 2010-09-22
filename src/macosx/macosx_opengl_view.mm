@@ -83,4 +83,9 @@
     [ controller mouseDown : theEvent ] ;
 }
 
+- ( void ) mouseUp : ( NSEvent * ) theEvent
+{
+    [ controller mouseUp : theEvent ] ;
+}
+
 @end
