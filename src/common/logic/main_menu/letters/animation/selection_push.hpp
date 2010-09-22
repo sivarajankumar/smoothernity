@@ -65,10 +65,10 @@ shy_logic_main_menu_letters_animation_selection_push < mediator >
 :: _logic_main_menu_letters_animation_selection_push_consts_type
 :: _logic_main_menu_letters_animation_selection_push_consts_type ( )
 {
-    platform_math :: make_num_fract ( time_from_begin_to_middle , 5 , 100 ) ;
+    platform_math :: make_num_fract ( time_from_begin_to_middle , 10 , 100 ) ;
     platform_math :: make_num_fract ( time_from_middle_to_end , 30 , 100 ) ;
     platform_math :: make_num_fract ( scale_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( scale_middle , 5 , 10 ) ;
+    platform_math :: make_num_fract ( scale_middle , 3 , 10 ) ;
     platform_math :: make_num_fract ( scale_end , 8 , 10 ) ;
 }
 
