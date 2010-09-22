@@ -384,13 +384,13 @@ void shy_logic_text < mediator > :: _update_text_mesh ( )
     
     platform_math :: make_fract_from_whole ( fract_scale_frames , _scale_frames ) ;
     platform_math :: make_fract_from_whole ( fract_scale_in_frames , _logic_text_consts . scale_in_frames ) ;
-    engine_math :: lerp_unrefactored 
+    engine_math :: lerp_refactored 
         ( scale 
+        , fract_scale_frames 
         , _platform_math_consts . get ( ) . fract_0 
         , _platform_math_consts . get ( ) . fract_0 
         , _logic_text_consts . final_scale 
         , fract_scale_in_frames 
-        , fract_scale_frames 
         ) ;
     platform_matrix :: set_axis_x ( matrix , scale , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
     platform_matrix :: set_axis_y ( matrix , _platform_math_consts . get ( ) . fract_0 , scale , _platform_math_consts . get ( ) . fract_0 ) ;
