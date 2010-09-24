@@ -44,6 +44,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
+    void receive ( typename messages :: logic_main_menu_void_chosen ) ;
     void receive ( typename messages :: logic_main_menu_letters_animation_selection_push_transform_request ) ;
 private :
     shy_logic_main_menu_letters_animation_selection_push < mediator > & operator= ( const shy_logic_main_menu_letters_animation_selection_push < mediator > & ) ;
@@ -91,6 +92,13 @@ void shy_logic_main_menu_letters_animation_selection_push < mediator > :: receiv
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _platform_mouse = platform_obj . get ( ) . mouse ;
 
+    _logic_main_menu_update_state . clicked = _platform_math_consts . get ( ) . whole_false ;
+    _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_letters_animation_selection_push < mediator > :: receive ( typename messages :: logic_main_menu_void_chosen )
+{
     _logic_main_menu_update_state . clicked = _platform_math_consts . get ( ) . whole_false ;
     _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }

@@ -13,6 +13,8 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
+    void receive ( typename messages :: logic_main_menu_choice_row_selected ) ;
+    void receive ( typename messages :: logic_main_menu_choice_void_selected ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -21,6 +23,7 @@ private :
     
     num_whole _prev_touch_occured ;
     num_whole _prev_mouse_button ;
+    num_whole _row_selected ;
 } ;
 
 template < typename mediator >
@@ -43,6 +46,18 @@ void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: i
 }
 
 template < typename mediator >
+void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: logic_main_menu_choice_row_selected )
+{
+    _row_selected = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: logic_main_menu_choice_void_selected )
+{
+    _row_selected = _platform_math_consts . get ( ) . whole_false ;
+}
+
+template < typename mediator >
 void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: logic_main_menu_update )
 {
     num_whole touch_occured ;
@@ -53,7 +68,10 @@ void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: l
       || ( platform_conditions :: whole_is_false ( mouse_button ) && platform_conditions :: whole_is_true ( _prev_mouse_button ) )
        )
     {
-        _mediator . get ( ) . send ( typename messages :: logic_main_menu_row_chosen ( ) ) ;
+        if ( platform_conditions :: whole_is_true ( _row_selected ) )
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_row_chosen ( ) ) ;
+        else
+            _mediator . get ( ) . send ( typename messages :: logic_main_menu_void_chosen ( ) ) ;
     }
     _prev_touch_occured = touch_occured ;
     _prev_mouse_button = mouse_button ;

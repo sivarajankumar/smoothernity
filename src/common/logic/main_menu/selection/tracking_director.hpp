@@ -188,6 +188,8 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: _start_sele
     typename messages :: logic_main_menu_letters_animation_unselection_weight_select_row letter_unselection_row_select_msg ;
     letter_unselection_row_select_msg . row = selected_row_index ;
     _mediator . get ( ) . send ( letter_unselection_row_select_msg ) ;
+    
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_choice_row_selected ( ) ) ;
 }
 
 template < typename mediator >
@@ -206,4 +208,6 @@ void shy_logic_main_menu_selection_tracking_director < mediator > :: _start_unse
     typename messages :: logic_main_menu_letters_animation_unselection_weight_unselect_row letter_unselection_row_unselect_msg ;
     letter_unselection_row_unselect_msg . row = selected_row_index ;
     _mediator . get ( ) . send ( letter_unselection_row_unselect_msg ) ;
+
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_choice_void_selected ( ) ) ;
 }
