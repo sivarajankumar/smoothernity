@@ -29,6 +29,7 @@ public :
         class logic_main_menu_launch_permit { } ;
         class logic_main_menu_render { } ;
         class logic_main_menu_render_permit { } ;
+        class logic_main_menu_row_chosen { } ;
         class logic_main_menu_update { } ;
     } ;
 
@@ -42,6 +43,7 @@ public :
         void send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_render ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_render_permit ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_row_chosen ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
@@ -118,11 +120,21 @@ void shy_logic_main_menu_stateless < mediator >
 
 template < typename mediator >
 template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_row_chosen msg )
+{
+    _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
 void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_update msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_choice . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_appear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_idle . get ( ) . receive ( msg ) ;

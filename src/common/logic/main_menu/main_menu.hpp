@@ -12,10 +12,8 @@ class shy_logic_main_menu
     typedef typename mediator :: platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
-    typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
-    typedef typename mediator :: platform :: platform_touch platform_touch ;    
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
@@ -30,18 +28,15 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_mesh_create_finished ) ;
     void receive ( typename messages :: logic_main_menu_selection_mesh_destroy_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_track_reply ) ;
+    void receive ( typename messages :: logic_main_menu_row_chosen ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
-    typename platform_pointer :: template pointer < platform_touch > _platform_touch ;
     num_whole _creation_permitted ;
     num_whole _launch_permitted ;
     num_whole _created ;
     num_whole _launched ;
     num_whole _disappearing ;
-    num_whole _prev_touch_occured ;
-    num_whole _prev_mouse_button ;
 } ;
 
 template < typename mediator >
@@ -56,16 +51,12 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: init )
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    _platform_mouse = platform_obj . get ( ) . mouse ;
-    _platform_touch = platform_obj . get ( ) . touch ;
     
     _launch_permitted = _platform_math_consts . get ( ) . whole_false ;
     _creation_permitted = _platform_math_consts . get ( ) . whole_false ;
     _launched = _platform_math_consts . get ( ) . whole_false ;
     _created = _platform_math_consts . get ( ) . whole_false ;
     _disappearing = _platform_math_consts . get ( ) . whole_false ;
-    _prev_touch_occured = _platform_math_consts . get ( ) . whole_false ;
-    _prev_mouse_button = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -99,26 +90,8 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
       && platform_conditions :: whole_is_true ( _launched )
        )
     {
-        num_whole touch_occured ;
-        num_whole mouse_button ;
-        _platform_touch . get ( ) . occured ( touch_occured ) ;
-        _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
-        if ( ( platform_conditions :: whole_is_false ( touch_occured ) && platform_conditions :: whole_is_true ( _prev_touch_occured ) )
-          || ( platform_conditions :: whole_is_false ( mouse_button ) && platform_conditions :: whole_is_true ( _prev_mouse_button ) )
-           )
-        {
-            _launched = _platform_math_consts . get ( ) . whole_false ;
-            _disappearing = _platform_math_consts . get ( ) . whole_true ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_animation_disappear_start ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_disappear_start ( ) ) ;
-        }
-        else
-        {
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_place ( ) ) ;
-            _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_tracking_director_update ( ) ) ;
-        }
-        _prev_touch_occured = touch_occured ;
-        _prev_mouse_button = mouse_button ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_place ( ) ) ;
+        _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_tracking_director_update ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _created )
       && platform_conditions :: whole_is_true ( _disappearing )
@@ -127,6 +100,15 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
         _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_meshes_place ( ) ) ;
         _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_mesh_place ( ) ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_main_menu_row_chosen )
+{
+    _launched = _platform_math_consts . get ( ) . whole_false ;
+    _disappearing = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_letters_animation_disappear_start ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_disappear_start ( ) ) ;
 }
 
 template < typename mediator >
