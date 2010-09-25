@@ -30,6 +30,7 @@ class shy_logic_fidget
         num_fract angle_delta ;
         num_whole fidget_edges ;
         num_whole scale_in_frames ;
+        num_whole should_render_fidget ;
     } ;
     
 public :
@@ -83,6 +84,7 @@ shy_logic_fidget < mediator > :: _logic_fidget_consts_type :: _logic_fidget_cons
     platform_math :: make_num_fract ( mesh_z , - 3 , 1 ) ;
     platform_math :: make_num_whole ( fidget_edges , 3 ) ;
     platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
+    platform_math :: make_num_whole ( should_render_fidget , false ) ;
 }
 
 template < typename mediator >
@@ -111,8 +113,11 @@ void shy_logic_fidget < mediator > :: receive ( typename messages :: init )
 template < typename mediator >
 void shy_logic_fidget < mediator > :: receive ( typename messages :: logic_fidget_render_request )
 {
-    if ( platform_conditions :: whole_is_true ( _fidget_mesh_created ) )
-        _render_fidget_mesh ( ) ;
+    if ( platform_conditions :: whole_is_true ( _logic_fidget_consts . should_render_fidget ) )
+    {
+        if ( platform_conditions :: whole_is_true ( _fidget_mesh_created ) )
+            _render_fidget_mesh ( ) ;
+    }
     _mediator . get ( ) . send ( typename messages :: logic_fidget_render_reply ( ) ) ;
 }
 

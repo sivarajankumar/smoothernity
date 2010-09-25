@@ -238,6 +238,7 @@ void shy_logic_main_menu_selection_mesh < mediator > :: _finalize_mesh ( )
 template < typename mediator >
 void shy_logic_main_menu_selection_mesh < mediator > :: _render_mesh ( )
 {
+    _mediator . get ( ) . send ( typename messages :: engine_render_texture_unselect ( ) ) ;
     typename messages :: engine_render_mesh_render msg ;
     msg . mesh = _mesh ;
     _mediator . get ( ) . send ( msg ) ;
