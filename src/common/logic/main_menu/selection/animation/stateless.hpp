@@ -11,6 +11,8 @@ public :
     class logic_main_menu_selection_animation_messages
     {
     public :
+        class logic_main_menu_selection_animation_appear_finished { } ;
+        class logic_main_menu_selection_animation_appear_start { } ;
         class logic_main_menu_selection_animation_appear_transform_reply { public : num_fract scale_x ; num_fract scale_y ; } ;
         class logic_main_menu_selection_animation_appear_transform_request { } ;
         class logic_main_menu_selection_animation_disappear_start { } ;
@@ -39,6 +41,8 @@ public :
     {
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_appear_finished ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_appear_start ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_appear_transform_reply ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_appear_transform_request ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_disappear_start ) ;
@@ -72,6 +76,24 @@ void shy_logic_main_menu_selection_animation_stateless < mediator >
 :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
 {
     _receivers = arg_receivers ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_appear_finished msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_appear_start msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_animation_appear . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
