@@ -158,6 +158,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_void_chosen msg )
 {
     _receivers . get ( ) . logic_main_menu_letters_animation_selection_push . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_animation_push . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -179,6 +180,7 @@ void shy_logic_main_menu_stateless < mediator >
     _receivers . get ( ) . logic_main_menu_selection_animation_appear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_animation_disappear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_animation_idle . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_animation_push . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_animation_select . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_animation_unselect . get ( ) . receive ( msg ) ;
 }
