@@ -45,12 +45,14 @@ class shy_logic_main_menu_selection_animation_push
     } ;
     
 public :
+    shy_logic_main_menu_selection_animation_push ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_void_chosen ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_push_transform_request ) ;
 private :
+    shy_logic_main_menu_selection_animation_push < mediator > & operator= ( const shy_logic_main_menu_selection_animation_push < mediator > & ) ;
     void _calculate_time ( ) ;
     void _calculate_horizontal_scale ( ) ;
     void _calculate_vertical_scale ( ) ;
@@ -78,6 +80,11 @@ shy_logic_main_menu_selection_animation_push < mediator >
     platform_math :: make_num_fract ( vertical_scale_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( vertical_scale_middle , 70 , 100 ) ;
     platform_math :: make_num_fract ( vertical_scale_end , 95 , 100 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_selection_animation_push < mediator > :: shy_logic_main_menu_selection_animation_push ( )
+{
 }
 
 template < typename mediator >
