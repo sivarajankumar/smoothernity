@@ -59,6 +59,7 @@
 #include "logic/main_menu/selection/animation/appear.hpp"
 #include "logic/main_menu/selection/animation/disappear.hpp"
 #include "logic/main_menu/selection/animation/idle.hpp"
+#include "logic/main_menu/selection/animation/idle_attention.hpp"
 #include "logic/main_menu/selection/animation/push.hpp"
 #include "logic/main_menu/selection/animation/push_attention.hpp"
 #include "logic/main_menu/selection/animation/push_weight.hpp"
@@ -145,6 +146,7 @@ private :
         , shy_logic_main_menu_selection_animation_appear
         , shy_logic_main_menu_selection_animation_disappear
         , shy_logic_main_menu_selection_animation_idle
+        , shy_logic_main_menu_selection_animation_idle_attention
         , shy_logic_main_menu_selection_animation_push
         , shy_logic_main_menu_selection_animation_push_attention
         , shy_logic_main_menu_selection_animation_push_weight

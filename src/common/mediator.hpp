@@ -61,6 +61,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_appear logic_main_menu_selection_animation_appear ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_disappear logic_main_menu_selection_animation_disappear ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_idle logic_main_menu_selection_animation_idle ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_idle_attention logic_main_menu_selection_animation_idle_attention ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_push logic_main_menu_selection_animation_push ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_push_attention logic_main_menu_selection_animation_push_attention ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_push_weight logic_main_menu_selection_animation_push_weight ;
@@ -232,6 +233,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_appear > logic_main_menu_selection_animation_appear ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_disappear > logic_main_menu_selection_animation_disappear ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_idle > logic_main_menu_selection_animation_idle ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_idle_attention > logic_main_menu_selection_animation_idle_attention ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_push > logic_main_menu_selection_animation_push ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_push_attention > logic_main_menu_selection_animation_push_attention ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_push_weight > logic_main_menu_selection_animation_push_weight ;
@@ -294,6 +296,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_appear >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_disappear >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_idle >
+        , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_idle_attention >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_attention >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_weight >
@@ -396,6 +399,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_appear > arg_logic_main_menu_selection_animation_appear
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_disappear > arg_logic_main_menu_selection_animation_disappear
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_idle > arg_logic_main_menu_selection_animation_idle
+    , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_idle_attention > arg_logic_main_menu_selection_animation_idle_attention
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push > arg_logic_main_menu_selection_animation_push
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_attention > arg_logic_main_menu_selection_animation_push_attention
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_weight > arg_logic_main_menu_selection_animation_push_weight
@@ -455,6 +459,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_selection_animation_appear = arg_logic_main_menu_selection_animation_appear ;
     _receivers . logic_main_menu_selection_animation_disappear = arg_logic_main_menu_selection_animation_disappear ;
     _receivers . logic_main_menu_selection_animation_idle = arg_logic_main_menu_selection_animation_idle ;
+    _receivers . logic_main_menu_selection_animation_idle_attention = arg_logic_main_menu_selection_animation_idle_attention ;
     _receivers . logic_main_menu_selection_animation_push = arg_logic_main_menu_selection_animation_push ;
     _receivers . logic_main_menu_selection_animation_push_attention = arg_logic_main_menu_selection_animation_push_attention ;
     _receivers . logic_main_menu_selection_animation_push_weight = arg_logic_main_menu_selection_animation_push_weight ;
@@ -510,6 +515,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_selection_animation_appear . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation_disappear . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation_idle . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_main_menu_selection_animation_idle_attention . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation_push . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation_push_attention . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_main_menu_selection_animation_push_weight . get ( ) . set_mediator ( mediator_ptr ) ;
