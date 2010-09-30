@@ -53,6 +53,7 @@ template
     , template < typename mediator > class _logic_main_menu_selection_animation_idle
     , template < typename mediator > class _logic_main_menu_selection_animation_push
     , template < typename mediator > class _logic_main_menu_selection_animation_push_attention
+    , template < typename mediator > class _logic_main_menu_selection_animation_push_weight
     , template < typename mediator > class _logic_main_menu_selection_animation_select
     , template < typename mediator > class _logic_main_menu_selection_animation_stateless
     , template < typename mediator > class _logic_main_menu_selection_animation_unselect
@@ -131,6 +132,7 @@ public :
         typedef _logic_main_menu_selection_animation_idle < mediator > logic_main_menu_selection_animation_idle ;
         typedef _logic_main_menu_selection_animation_push < mediator > logic_main_menu_selection_animation_push ;
         typedef _logic_main_menu_selection_animation_push_attention < mediator > logic_main_menu_selection_animation_push_attention ;
+        typedef _logic_main_menu_selection_animation_push_weight < mediator > logic_main_menu_selection_animation_push_weight ;
         typedef _logic_main_menu_selection_animation_select < mediator > logic_main_menu_selection_animation_select ;
         typedef _logic_main_menu_selection_animation_stateless < mediator > logic_main_menu_selection_animation_stateless ;
         typedef _logic_main_menu_selection_animation_unselect < mediator > logic_main_menu_selection_animation_unselect ;
@@ -206,6 +208,7 @@ template
     , template < typename _mediator > class _logic_main_menu_selection_animation_idle
     , template < typename _mediator > class _logic_main_menu_selection_animation_push
     , template < typename _mediator > class _logic_main_menu_selection_animation_push_attention
+    , template < typename _mediator > class _logic_main_menu_selection_animation_push_weight
     , template < typename _mediator > class _logic_main_menu_selection_animation_select
     , template < typename _mediator > class _logic_main_menu_selection_animation_stateless
     , template < typename _mediator > class _logic_main_menu_selection_animation_unselect
@@ -265,6 +268,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_animation_idle > scheduled_logic_main_menu_selection_animation_idle ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_animation_push > scheduled_logic_main_menu_selection_animation_push ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_animation_push_attention > scheduled_logic_main_menu_selection_animation_push_attention ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_animation_push_weight > scheduled_logic_main_menu_selection_animation_push_weight ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_animation_select > scheduled_logic_main_menu_selection_animation_select ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_animation_unselect > scheduled_logic_main_menu_selection_animation_unselect ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_mesh > scheduled_logic_main_menu_selection_mesh ;
@@ -330,6 +334,7 @@ public :
         , scheduled_logic_main_menu_selection_animation_idle :: template scheduled_module
         , scheduled_logic_main_menu_selection_animation_push :: template scheduled_module
         , scheduled_logic_main_menu_selection_animation_push_attention :: template scheduled_module
+        , scheduled_logic_main_menu_selection_animation_push_weight :: template scheduled_module
         , scheduled_logic_main_menu_selection_animation_select :: template scheduled_module
         , _logic_main_menu_selection_animation_stateless
         , scheduled_logic_main_menu_selection_animation_unselect :: template scheduled_module
@@ -429,6 +434,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_animation_idle :: template scheduled_module < mediator_type > logic_main_menu_selection_animation_idle ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_animation_push :: template scheduled_module < mediator_type > logic_main_menu_selection_animation_push ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_animation_push_attention :: template scheduled_module < mediator_type > logic_main_menu_selection_animation_push_attention ;
+    typedef typename aggregator_types :: scheduled_logic_main_menu_selection_animation_push_weight :: template scheduled_module < mediator_type > logic_main_menu_selection_animation_push_weight ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_animation_select :: template scheduled_module < mediator_type > logic_main_menu_selection_animation_select ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_animation_unselect :: template scheduled_module < mediator_type > logic_main_menu_selection_animation_unselect ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_mesh :: template scheduled_module < mediator_type > logic_main_menu_selection_mesh ;
@@ -491,6 +497,7 @@ private :
     logic_main_menu_selection_animation_idle _logic_main_menu_selection_animation_idle ;
     logic_main_menu_selection_animation_push _logic_main_menu_selection_animation_push ;
     logic_main_menu_selection_animation_push_attention _logic_main_menu_selection_animation_push_attention ;
+    logic_main_menu_selection_animation_push_weight _logic_main_menu_selection_animation_push_weight ;
     logic_main_menu_selection_animation_select _logic_main_menu_selection_animation_select ;
     logic_main_menu_selection_animation_unselect _logic_main_menu_selection_animation_unselect ;
     logic_main_menu_selection_mesh _logic_main_menu_selection_mesh ;
@@ -549,6 +556,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_idle > logic_main_menu_selection_animation_idle_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push > logic_main_menu_selection_animation_push_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_attention > logic_main_menu_selection_animation_push_attention_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_weight > logic_main_menu_selection_animation_push_weight_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_select > logic_main_menu_selection_animation_select_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_unselect > logic_main_menu_selection_animation_unselect_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_mesh > logic_main_menu_selection_mesh_ptr ;
@@ -603,6 +611,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_selection_animation_idle_ptr , _logic_main_menu_selection_animation_idle ) ;
     platform_pointer :: bind ( logic_main_menu_selection_animation_push_ptr , _logic_main_menu_selection_animation_push ) ;
     platform_pointer :: bind ( logic_main_menu_selection_animation_push_attention_ptr , _logic_main_menu_selection_animation_push_attention ) ;
+    platform_pointer :: bind ( logic_main_menu_selection_animation_push_weight_ptr , _logic_main_menu_selection_animation_push_weight ) ;
     platform_pointer :: bind ( logic_main_menu_selection_animation_select_ptr , _logic_main_menu_selection_animation_select ) ;
     platform_pointer :: bind ( logic_main_menu_selection_animation_unselect_ptr , _logic_main_menu_selection_animation_unselect ) ;
     platform_pointer :: bind ( logic_main_menu_selection_mesh_ptr , _logic_main_menu_selection_mesh ) ;
@@ -654,6 +663,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_animation_idle_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_animation_push_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_animation_push_attention_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_animation_push_weight_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_animation_select_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_animation_unselect_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_mesh_ptr , scheduler_ptr ) ;
@@ -704,6 +714,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_selection_animation_idle_ptr
         , logic_main_menu_selection_animation_push_ptr
         , logic_main_menu_selection_animation_push_attention_ptr
+        , logic_main_menu_selection_animation_push_weight_ptr
         , logic_main_menu_selection_animation_select_ptr
         , logic_main_menu_selection_animation_unselect_ptr
         , logic_main_menu_selection_mesh_ptr
