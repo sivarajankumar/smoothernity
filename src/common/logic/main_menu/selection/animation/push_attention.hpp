@@ -8,6 +8,7 @@ class shy_logic_main_menu_selection_animation_push_attention
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_push_attention_transform_request ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -25,4 +26,14 @@ void shy_logic_main_menu_selection_animation_push_attention < mediator > :: rece
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_animation_push_attention < mediator > :: receive 
+    ( typename messages :: logic_main_menu_selection_animation_push_attention_transform_request )
+{
+    typename messages :: logic_main_menu_selection_animation_push_attention_transform_reply msg ;
+    msg . scale_x = _platform_math_consts . get ( ) . fract_1 ;
+    msg . scale_y = _platform_math_consts . get ( ) . fract_1 ;
+    _mediator . get ( ) . send ( msg ) ;
 }
