@@ -1,8 +1,9 @@
 template < typename mediator >
 class shy_logic_main_menu_selection_animation
 {
-    typedef typename mediator :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: engine_math :: rect rect ;
+    typedef typename mediator :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -87,6 +88,14 @@ class shy_logic_main_menu_selection_animation
         num_fract scale_y ;
     } ;
 
+    class _logic_main_menu_selection_animation_push_weight_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract weight ;
+    } ;
+
 public :
     shy_logic_main_menu_selection_animation ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
@@ -99,6 +108,7 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_animation_unselect_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_push_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_push_attention_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_push_weight_reply ) ;
 private :
     shy_logic_main_menu_selection_animation < mediator > & operator= ( const shy_logic_main_menu_selection_animation < mediator > & ) ;
     void _proceed_with_transform ( ) ;
@@ -109,6 +119,7 @@ private :
     void _obtain_unselect_transform ( ) ;
     void _obtain_push_transform ( ) ;
     void _obtain_push_attention_transform ( ) ;
+    void _obtain_push_weight ( ) ;
     void _reply_transform ( ) ;
     void _reply_computed_transform ( ) ;
     void _compute_transform ( ) ;
@@ -124,6 +135,7 @@ private :
     _logic_main_menu_selection_animation_unselect_transform_state_type _logic_main_menu_selection_animation_unselect_transform_state ;
     _logic_main_menu_selection_animation_push_transform_state_type _logic_main_menu_selection_animation_push_transform_state ;
     _logic_main_menu_selection_animation_push_attention_transform_state_type _logic_main_menu_selection_animation_push_attention_transform_state ;
+    _logic_main_menu_selection_animation_push_weight_state_type _logic_main_menu_selection_animation_push_weight_state ;
 } ;
 
 template < typename mediator >
@@ -245,6 +257,18 @@ void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename 
 }
 
 template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_push_weight_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_push_weight_state . requested ) )
+    {
+        _logic_main_menu_selection_animation_push_weight_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_selection_animation_push_weight_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_selection_animation_push_weight_state . weight = msg . weight ;
+        _proceed_with_transform ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_selection_animation < mediator > :: _proceed_with_transform ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_transform_state . requested ) )
@@ -285,6 +309,11 @@ void shy_logic_main_menu_selection_animation < mediator > :: _proceed_with_trans
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_push_attention_transform_state . replied ) )
     {
         _logic_main_menu_selection_animation_push_attention_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_push_weight ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_push_weight_state . replied ) )
+    {
+        _logic_main_menu_selection_animation_push_weight_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _reply_transform ( ) ;
     }
 }
@@ -339,6 +368,13 @@ void shy_logic_main_menu_selection_animation < mediator > :: _obtain_push_attent
 }
 
 template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: _obtain_push_weight ( )
+{
+    _logic_main_menu_selection_animation_push_weight_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_push_weight_request ( ) ) ;
+}
+
+template < typename mediator >
 void shy_logic_main_menu_selection_animation < mediator > :: _reply_transform ( )
 {
     _compute_transform ( ) ;
@@ -352,6 +388,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     vector_data idle_position ;
     num_fract idle_scale_x ;
     num_fract idle_scale_y ;
+    num_fract idle_attention_scale_x ;
+    num_fract idle_attention_scale_y ;
     num_fract appear_scale_x ;
     num_fract appear_scale_y ;
     num_fract disappear_scale_x ;
@@ -364,6 +402,11 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     num_fract push_scale_y ;
     num_fract push_attention_scale_x ;
     num_fract push_attention_scale_y ;
+    num_fract push_weight ;
+    num_fract weighted_scale_x ;
+    num_fract weighted_scale_y ;
+    num_fract weight_0 ;
+    num_fract weight_1 ;
     num_fract scale_x ;
     num_fract scale_y ;
     num_fract scale_z ;
@@ -374,6 +417,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     idle_position = _logic_main_menu_selection_animation_idle_transform_state . position ;
     idle_scale_x = _logic_main_menu_selection_animation_idle_transform_state . scale_x ;
     idle_scale_y = _logic_main_menu_selection_animation_idle_transform_state . scale_y ;
+    idle_attention_scale_x = _platform_math_consts . get ( ) . fract_1 ;
+    idle_attention_scale_y = _platform_math_consts . get ( ) . fract_1 ;
     appear_scale_x = _logic_main_menu_selection_animation_appear_transform_state . scale_x ;
     appear_scale_y = _logic_main_menu_selection_animation_appear_transform_state . scale_y ;
     disappear_scale_x = _logic_main_menu_selection_animation_disappear_transform_state . scale_x ;
@@ -386,6 +431,12 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     push_scale_y = _logic_main_menu_selection_animation_push_transform_state . scale_y ;
     push_attention_scale_x = _logic_main_menu_selection_animation_push_attention_transform_state . scale_x ;
     push_attention_scale_y = _logic_main_menu_selection_animation_push_attention_transform_state . scale_y ;
+    push_weight = _logic_main_menu_selection_animation_push_weight_state . weight ;
+    weight_0 = _platform_math_consts . get ( ) . fract_0 ;
+    weight_1 = _platform_math_consts . get ( ) . fract_1 ;
+
+    engine_math :: lerp ( weighted_scale_x , push_weight , idle_attention_scale_x , weight_0 , push_attention_scale_x , weight_1 ) ;
+    engine_math :: lerp ( weighted_scale_y , push_weight , idle_attention_scale_y , weight_0 , push_attention_scale_y , weight_1 ) ;
     
     position = idle_position ;
     platform_math :: mul_fracts ( scale_x , idle_scale_x , appear_scale_x ) ;
@@ -398,8 +449,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     platform_math :: mul_fract_by ( scale_y , unselect_scale_y ) ;
     platform_math :: mul_fract_by ( scale_x , push_scale_x ) ;
     platform_math :: mul_fract_by ( scale_y , push_scale_y ) ;
-    platform_math :: mul_fract_by ( scale_x , push_attention_scale_x ) ;
-    platform_math :: mul_fract_by ( scale_y , push_attention_scale_y ) ;
+    platform_math :: mul_fract_by ( scale_x , weighted_scale_x ) ;
+    platform_math :: mul_fract_by ( scale_y , weighted_scale_y ) ;
     scale_z = _platform_math_consts . get ( ) . fract_1 ;
     
     platform_matrix :: set_origin ( transform , position ) ;

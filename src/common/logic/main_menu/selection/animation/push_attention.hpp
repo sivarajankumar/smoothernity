@@ -33,7 +33,7 @@ void shy_logic_main_menu_selection_animation_push_attention < mediator > :: rece
     ( typename messages :: logic_main_menu_selection_animation_push_attention_transform_request )
 {
     typename messages :: logic_main_menu_selection_animation_push_attention_transform_reply msg ;
-    msg . scale_x = _platform_math_consts . get ( ) . fract_1 ;
-    msg . scale_y = _platform_math_consts . get ( ) . fract_1 ;
+    msg . scale_x = _platform_math_consts . get ( ) . fract_2 ;
+    msg . scale_y = _platform_math_consts . get ( ) . fract_2 ;
     _mediator . get ( ) . send ( msg ) ;
 }
