@@ -60,8 +60,8 @@ shy_logic_main_menu_selection_animation_push_weight < mediator >
 :: _logic_main_menu_selection_animation_push_weight_consts_type
 :: _logic_main_menu_selection_animation_push_weight_consts_type ( )
 {
-    platform_math :: make_num_fract ( time_to_begin , 30 , 100 ) ;
-    platform_math :: make_num_fract ( time_from_begin_to_end , 30 , 100 ) ;
+    platform_math :: make_num_fract ( time_to_begin , 10 , 100 ) ;
+    platform_math :: make_num_fract ( time_from_begin_to_end , 20 , 100 ) ;
     platform_math :: make_num_fract ( weight_min , 0 , 1 ) ;
     platform_math :: make_num_fract ( weight_max , 1 , 1 ) ;
 }
