@@ -34,6 +34,15 @@ class shy_logic_main_menu_selection_animation
         num_fract scale_y ;
     } ;
 
+    class _logic_main_menu_selection_animation_idle_attention_transform_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract scale_x ;
+        num_fract scale_y ;
+    } ;
+
     class _logic_main_menu_selection_animation_appear_transform_state_type
     {
     public :
@@ -102,6 +111,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_transform_request ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_idle_transform_reply ) ;
+    void receive ( typename messages :: logic_main_menu_selection_animation_idle_attention_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_appear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_disappear_transform_reply ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_select_transform_reply ) ;
@@ -113,6 +123,7 @@ private :
     shy_logic_main_menu_selection_animation < mediator > & operator= ( const shy_logic_main_menu_selection_animation < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _obtain_idle_transform ( ) ;
+    void _obtain_idle_attention_transform ( ) ;
     void _obtain_appear_transform ( ) ;
     void _obtain_disappear_transform ( ) ;
     void _obtain_select_transform ( ) ;
@@ -129,6 +140,7 @@ private :
     
     _logic_main_menu_selection_animation_transform_state_type _logic_main_menu_selection_animation_transform_state ;
     _logic_main_menu_selection_animation_idle_transform_state_type _logic_main_menu_selection_animation_idle_transform_state ;
+    _logic_main_menu_selection_animation_idle_attention_transform_state_type _logic_main_menu_selection_animation_idle_attention_transform_state ;
     _logic_main_menu_selection_animation_appear_transform_state_type _logic_main_menu_selection_animation_appear_transform_state ;
     _logic_main_menu_selection_animation_disappear_transform_state_type _logic_main_menu_selection_animation_disappear_transform_state ;
     _logic_main_menu_selection_animation_select_transform_state_type _logic_main_menu_selection_animation_select_transform_state ;
@@ -174,6 +186,19 @@ void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename 
         _logic_main_menu_selection_animation_idle_transform_state . position = msg . position ;
         _logic_main_menu_selection_animation_idle_transform_state . scale_x = msg . scale_x ;
         _logic_main_menu_selection_animation_idle_transform_state . scale_y = msg . scale_y ;
+        _proceed_with_transform ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: receive ( typename messages :: logic_main_menu_selection_animation_idle_attention_transform_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_idle_attention_transform_state . requested ) )
+    {
+        _logic_main_menu_selection_animation_idle_attention_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_selection_animation_idle_attention_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_selection_animation_idle_attention_transform_state . scale_x = msg . scale_x ;
+        _logic_main_menu_selection_animation_idle_attention_transform_state . scale_y = msg . scale_y ;
         _proceed_with_transform ( ) ;
     }
 }
@@ -279,6 +304,11 @@ void shy_logic_main_menu_selection_animation < mediator > :: _proceed_with_trans
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_idle_transform_state . replied ) )
     {
         _logic_main_menu_selection_animation_idle_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_idle_attention_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_idle_attention_transform_state . replied ) )
+    {
+        _logic_main_menu_selection_animation_idle_attention_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _obtain_appear_transform ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_animation_appear_transform_state . replied ) )
@@ -323,6 +353,13 @@ void shy_logic_main_menu_selection_animation < mediator > :: _obtain_idle_transf
 {
     _logic_main_menu_selection_animation_idle_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_idle_transform_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_animation < mediator > :: _obtain_idle_attention_transform ( )
+{
+    _logic_main_menu_selection_animation_idle_attention_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_selection_animation_idle_attention_transform_request ( ) ) ;
 }
 
 template < typename mediator >
@@ -417,8 +454,8 @@ void shy_logic_main_menu_selection_animation < mediator > :: _compute_transform 
     idle_position = _logic_main_menu_selection_animation_idle_transform_state . position ;
     idle_scale_x = _logic_main_menu_selection_animation_idle_transform_state . scale_x ;
     idle_scale_y = _logic_main_menu_selection_animation_idle_transform_state . scale_y ;
-    idle_attention_scale_x = _platform_math_consts . get ( ) . fract_1 ;
-    idle_attention_scale_y = _platform_math_consts . get ( ) . fract_1 ;
+    idle_attention_scale_x = _logic_main_menu_selection_animation_idle_attention_transform_state . scale_x ;
+    idle_attention_scale_y = _logic_main_menu_selection_animation_idle_attention_transform_state . scale_y ;
     appear_scale_x = _logic_main_menu_selection_animation_appear_transform_state . scale_x ;
     appear_scale_y = _logic_main_menu_selection_animation_appear_transform_state . scale_y ;
     disappear_scale_x = _logic_main_menu_selection_animation_disappear_transform_state . scale_x ;

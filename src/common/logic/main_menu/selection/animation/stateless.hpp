@@ -18,6 +18,8 @@ public :
         class logic_main_menu_selection_animation_disappear_start { } ;
         class logic_main_menu_selection_animation_disappear_transform_reply { public : num_fract scale_x ; num_fract scale_y ; } ;
         class logic_main_menu_selection_animation_disappear_transform_request { } ;
+        class logic_main_menu_selection_animation_idle_attention_transform_reply { public : num_fract scale_x ; num_fract scale_y ; } ;
+        class logic_main_menu_selection_animation_idle_attention_transform_request { } ;
         class logic_main_menu_selection_animation_idle_row_selected { public : num_whole row ; } ;
         class logic_main_menu_selection_animation_idle_transform_reply { public : vector_data position ; num_fract scale_x ; num_fract scale_y ; } ;
         class logic_main_menu_selection_animation_idle_transform_request { } ;
@@ -52,6 +54,8 @@ public :
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_disappear_start ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_disappear_transform_reply ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_disappear_transform_request ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_idle_attention_transform_reply ) ;
+        void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_idle_attention_transform_request ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_idle_row_selected ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_idle_transform_reply ) ;
         void send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_idle_transform_request ) ;
@@ -147,6 +151,24 @@ void shy_logic_main_menu_selection_animation_stateless < mediator >
 :: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_disappear_transform_request msg )
 {
     _receivers . get ( ) . logic_main_menu_selection_animation_disappear . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_idle_attention_transform_reply msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_animation . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_selection_animation_stateless < mediator > 
+:: logic_main_menu_selection_animation_sender < receivers > 
+:: send ( typename logic_main_menu_selection_animation_messages :: logic_main_menu_selection_animation_idle_attention_transform_request msg )
+{
+    _receivers . get ( ) . logic_main_menu_selection_animation_idle_attention . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
