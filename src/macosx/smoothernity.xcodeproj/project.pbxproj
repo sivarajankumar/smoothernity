@@ -96,6 +96,7 @@
 		8809B3DF11E1EC0B00869C87 /* macosx_platform_render_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */; };
 		8809B5A511E219E400869C87 /* platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8809B5A411E219E400869C87 /* platform.hpp */; };
 		880A13BD12561E99003E8834 /* animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 880A13BC12561E99003E8834 /* animation.hpp */; };
+		880A13C712562260003E8834 /* stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 880A13C612562260003E8834 /* stateless.hpp */; };
 		8812CF37117DE7F9008F67D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
 		8812CF3B117DE80B008F67D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
 		8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
@@ -227,6 +228,7 @@
 		8809B3DE11E1EC0B00869C87 /* macosx_platform_render_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = macosx_platform_render_insider.hpp; sourceTree = "<group>"; };
 		8809B5A411E219E400869C87 /* platform.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = platform.hpp; sourceTree = "<group>"; };
 		880A13BC12561E99003E8834 /* animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = animation.hpp; sourceTree = "<group>"; };
+		880A13C612562260003E8834 /* stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stateless.hpp; sourceTree = "<group>"; };
 		8812CF36117DE7F9008F67D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = /System/Library/Frameworks/OpenAL.framework; sourceTree = "<absolute>"; };
 		8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		8812CF3E117DE82C008F67D9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
@@ -465,6 +467,7 @@
 			isa = PBXGroup;
 			children = (
 				880A13BC12561E99003E8834 /* animation.hpp */,
+				880A13C612562260003E8834 /* stateless.hpp */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 				88D1E7401254D64500928C44 /* push_weight.hpp in Headers */,
 				88D1E7551254EDE700928C44 /* idle_attention.hpp in Headers */,
 				880A13BD12561E99003E8834 /* animation.hpp in Headers */,
+				880A13C712562260003E8834 /* stateless.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

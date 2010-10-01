@@ -86,6 +86,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: logic_game_messages logic_game_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: logic_image_messages logic_image_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: logic_land_messages logic_land_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_animation_stateless :: logic_main_menu_animation_messages logic_main_menu_animation_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_messages logic_main_menu_letters_animation_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_stateless :: logic_main_menu_letters_layout_messages logic_main_menu_letters_layout_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_messages logic_main_menu_letters_meshes_messages ;
@@ -108,6 +109,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game_stateless :: template logic_game_sender < receivers > logic_game_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_image_stateless :: template logic_image_sender < receivers > logic_image_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_land_stateless :: template logic_land_sender < receivers > logic_land_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_animation_stateless :: template logic_main_menu_animation_sender < receivers > logic_main_menu_animation_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless :: template logic_main_menu_letters_animation_sender < receivers > logic_main_menu_letters_animation_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_stateless :: template logic_main_menu_letters_layout_sender < receivers > logic_main_menu_letters_layout_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless :: template logic_main_menu_letters_meshes_sender < receivers > logic_main_menu_letters_meshes_sender ;
@@ -132,6 +134,7 @@ public :
     , public logic_game_messages
     , public logic_image_messages
     , public logic_land_messages
+    , public logic_main_menu_animation_messages
     , public logic_main_menu_letters_animation_messages
     , public logic_main_menu_letters_layout_messages
     , public logic_main_menu_letters_meshes_messages
@@ -158,6 +161,7 @@ private :
     , public logic_game_sender
     , public logic_image_sender
     , public logic_land_sender
+    , public logic_main_menu_animation_sender
     , public logic_main_menu_letters_animation_sender
     , public logic_main_menu_letters_layout_sender
     , public logic_main_menu_letters_meshes_sender
@@ -181,6 +185,7 @@ private :
         using logic_game_sender :: send ;
         using logic_image_sender :: send ;
         using logic_land_sender :: send ;
+        using logic_main_menu_animation_sender :: send ;
         using logic_main_menu_letters_animation_sender :: send ;
         using logic_main_menu_letters_layout_sender :: send ;
         using logic_main_menu_letters_meshes_sender :: send ;
@@ -343,6 +348,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_game_sender :: set_receivers ( arg_receivers ) ;
     logic_image_sender :: set_receivers ( arg_receivers ) ;
     logic_land_sender :: set_receivers ( arg_receivers ) ;
+    logic_main_menu_animation_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_letters_animation_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_letters_layout_sender :: set_receivers ( arg_receivers ) ;
     logic_main_menu_letters_meshes_sender :: set_receivers ( arg_receivers ) ;

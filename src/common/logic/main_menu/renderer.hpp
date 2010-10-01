@@ -54,6 +54,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_render ) ;
     void receive ( typename messages :: logic_main_menu_render_permit ) ;
+    void receive ( typename messages :: logic_main_menu_animation_transform_reply ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: logic_fidget_render_reply ) ;
     void receive ( typename messages :: logic_text_use_text_texture_reply ) ;
@@ -116,6 +117,11 @@ void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages ::
     }
     else
         _blue_screen ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_main_menu_animation_transform_reply )
+{
 }
 
 template < typename mediator >

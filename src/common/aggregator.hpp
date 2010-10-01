@@ -24,6 +24,7 @@ template
     , template < typename mediator > class _logic_land_stateless
     , template < typename mediator > class _logic_main_menu
     , template < typename mediator > class _logic_main_menu_animation
+    , template < typename mediator > class _logic_main_menu_animation_stateless
     , template < typename mediator > class _logic_main_menu_choice
     , template < typename mediator > class _logic_main_menu_letters_animation
     , template < typename mediator > class _logic_main_menu_letters_animation_appear
@@ -105,6 +106,7 @@ public :
         typedef _logic_land_stateless < mediator > logic_land_stateless ;
         typedef _logic_main_menu < mediator > logic_main_menu ;
         typedef _logic_main_menu_animation < mediator > logic_main_menu_animation ;
+        typedef _logic_main_menu_animation_stateless < mediator > logic_main_menu_animation_stateless ;
         typedef _logic_main_menu_choice < mediator > logic_main_menu_choice ;
         typedef _logic_main_menu_letters_animation < mediator > logic_main_menu_letters_animation ;
         typedef _logic_main_menu_letters_animation_appear < mediator > logic_main_menu_letters_animation_appear ;
@@ -183,6 +185,7 @@ template
     , template < typename _mediator > class _logic_land_stateless
     , template < typename _mediator > class _logic_main_menu
     , template < typename _mediator > class _logic_main_menu_animation
+    , template < typename _mediator > class _logic_main_menu_animation_stateless
     , template < typename _mediator > class _logic_main_menu_choice
     , template < typename _mediator > class _logic_main_menu_letters_animation
     , template < typename _mediator > class _logic_main_menu_letters_animation_appear
@@ -313,6 +316,7 @@ public :
         , _logic_land_stateless
         , scheduled_logic_main_menu :: template scheduled_module
         , scheduled_logic_main_menu_animation :: template scheduled_module
+        , _logic_main_menu_animation_stateless
         , scheduled_logic_main_menu_choice :: template scheduled_module
         , scheduled_logic_main_menu_letters_animation :: template scheduled_module
         , scheduled_logic_main_menu_letters_animation_appear :: template scheduled_module
@@ -377,6 +381,7 @@ public :
     typedef _logic_game_stateless < mediator_type > logic_game_stateless ;
     typedef _logic_image_stateless < mediator_type > logic_image_stateless ;
     typedef _logic_land_stateless < mediator_type > logic_land_stateless ;
+    typedef _logic_main_menu_animation_stateless < mediator_type > logic_main_menu_animation_stateless ;
     typedef _logic_main_menu_letters_animation_stateless < mediator_type > logic_main_menu_letters_animation_stateless ;
     typedef _logic_main_menu_letters_layout_stateless < mediator_type > logic_main_menu_letters_layout_stateless ;
     typedef _logic_main_menu_letters_meshes_stateless < mediator_type > logic_main_menu_letters_meshes_stateless ;

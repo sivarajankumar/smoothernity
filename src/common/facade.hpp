@@ -31,6 +31,7 @@
 #include "logic/land/land.hpp"
 #include "logic/land/stateless.hpp"
 #include "logic/main_menu/animation/animation.hpp"
+#include "logic/main_menu/animation/stateless.hpp"
 #include "logic/main_menu/choice.hpp"
 #include "logic/main_menu/letters/animation/animation.hpp"
 #include "logic/main_menu/letters/animation/appear.hpp"
@@ -120,6 +121,7 @@ private :
         , shy_logic_land_stateless
         , shy_logic_main_menu
         , shy_logic_main_menu_animation
+        , shy_logic_main_menu_animation_stateless
         , shy_logic_main_menu_choice
         , shy_logic_main_menu_letters_animation
         , shy_logic_main_menu_letters_animation_appear
