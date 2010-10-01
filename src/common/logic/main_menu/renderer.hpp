@@ -6,6 +6,7 @@ class shy_logic_main_menu_renderer
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
     class _logic_main_menu_render_state_type
@@ -14,6 +15,14 @@ class shy_logic_main_menu_renderer
         num_whole requested ;
     } ;
     
+    class _logic_main_menu_animation_transform_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        matrix_data view ;
+    } ;
+
     class _logic_core_use_ortho_projection_state_type
     {
     public :
@@ -68,7 +77,10 @@ private :
     void _clear_screen ( ) ;
     void _blue_screen ( ) ;
     void _request_ortho_projection ( ) ;
+    void _request_animation_transform ( ) ;
     void _request_fidget_render ( ) ;
+    void _animation_transform_received ( ) ;
+    void _apply_animation_transform ( ) ;
     void _select_text_texture ( ) ;
     void _render_selection_mesh ( ) ;
     void _render_letters_meshes ( ) ;
@@ -78,6 +90,7 @@ private :
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;    
     
     _logic_main_menu_render_state_type _logic_main_menu_render_state ;
+    _logic_main_menu_animation_transform_state_type _logic_main_menu_animation_transform_state ;
     _logic_core_use_ortho_projection_state_type _logic_core_use_ortho_projection_state ;
     _logic_fidget_render_state_type _logic_fidget_render_state ;
     _logic_text_use_text_texture_state_type _logic_text_use_text_texture_state ;
@@ -120,8 +133,15 @@ void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages ::
 }
 
 template < typename mediator >
-void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_main_menu_animation_transform_reply )
+void shy_logic_main_menu_renderer < mediator > :: receive ( typename messages :: logic_main_menu_animation_transform_reply msg )
 {
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_transform_state . requested ) )
+    {
+        _logic_main_menu_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_main_menu_animation_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_main_menu_animation_transform_state . view = msg . view ;
+        _proceed_with_render ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -190,7 +210,12 @@ void shy_logic_main_menu_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_core_use_ortho_projection_state . replied ) )
     {
         _logic_core_use_ortho_projection_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _request_fidget_render ( ) ;
+        _request_animation_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_animation_transform_state . replied ) )
+    {
+        _logic_main_menu_animation_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _animation_transform_received ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_fidget_render_state . replied ) )
     {
@@ -220,6 +245,21 @@ void shy_logic_main_menu_renderer < mediator > :: _render_started ( )
     _prepare_render_state ( ) ;
     _clear_screen ( ) ;
     _request_ortho_projection ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_renderer < mediator > :: _animation_transform_received ( )
+{
+    _apply_animation_transform ( ) ;
+    _request_fidget_render ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_renderer < mediator > :: _apply_animation_transform ( )
+{
+    typename messages :: engine_render_matrix_load msg ;
+    msg . matrix = _logic_main_menu_animation_transform_state . view ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
@@ -268,6 +308,13 @@ void shy_logic_main_menu_renderer < mediator > :: _request_ortho_projection ( )
 {
     _logic_core_use_ortho_projection_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_core_use_ortho_projection_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_renderer < mediator > :: _request_animation_transform ( )
+{
+    _logic_main_menu_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_animation_transform_request ( ) ) ;
 }
 
 template < typename mediator >
