@@ -10,6 +10,9 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_animation_transform_request ) ;
+    void receive ( typename messages :: logic_main_menu_animation_shake_transform_reply ) ;
+private :
+    void proceed_with_transform ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -35,4 +38,9 @@ void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :
     typename messages :: logic_main_menu_animation_transform_reply msg ;
     platform_matrix :: identity ( msg . view ) ;
     _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_animation < mediator > :: receive ( typename messages :: logic_main_menu_animation_shake_transform_reply )
+{
 }
