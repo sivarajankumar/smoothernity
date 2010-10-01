@@ -33,6 +33,6 @@ template < typename mediator >
 void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename messages :: logic_main_menu_animation_shake_transform_request )
 {
     typename messages :: logic_main_menu_animation_shake_transform_reply msg ;
-    platform_math :: make_num_fract ( msg . shake_x , 3 , 10 ) ;
+    platform_math :: make_num_fract ( msg . shift_x , 3 , 10 ) ;
     _mediator . get ( ) . send ( msg ) ;
 }
