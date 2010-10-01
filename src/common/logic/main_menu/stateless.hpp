@@ -149,6 +149,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_row_chosen msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_selection_animation_push_weight . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

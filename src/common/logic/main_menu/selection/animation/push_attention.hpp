@@ -32,11 +32,12 @@ class shy_logic_main_menu_selection_animation_push_attention
     class _logic_main_menu_update_state_type
     {
     public :
-        num_whole launch_permitted ;
+        num_whole update_permitted ;
         num_fract time ;
     } ;
 
 public :
+    shy_logic_main_menu_selection_animation_push_attention ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_push_attention_transform_request ) ;
@@ -52,6 +53,7 @@ private :
         , num_fract scale_max
         , num_fract period_in_seconds
         ) ;
+    shy_logic_main_menu_selection_animation_push_attention < mediator > & operator= ( const shy_logic_main_menu_selection_animation_push_attention < mediator > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -66,11 +68,16 @@ shy_logic_main_menu_selection_animation_push_attention < mediator >
 :: _logic_main_menu_selection_animation_push_attention_consts_type 
 :: _logic_main_menu_selection_animation_push_attention_consts_type ( )
 {
-    platform_math :: make_num_fract ( horizontal_scale_min , 19 , 20 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_max , 20 , 20 ) ;
-    platform_math :: make_num_fract ( vertical_scale_min , 20 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_max , 23 , 10 ) ;
-    platform_math :: make_num_fract ( period_in_seconds , 6 , 10 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_min , 195 , 200 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_max , 200 , 200 ) ;
+    platform_math :: make_num_fract ( vertical_scale_min , 200 , 100 ) ;
+    platform_math :: make_num_fract ( vertical_scale_max , 210 , 100 ) ;
+    platform_math :: make_num_fract ( period_in_seconds , 4 , 10 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_selection_animation_push_attention < mediator > :: shy_logic_main_menu_selection_animation_push_attention ( )
+{
 }
 
 template < typename mediator >
@@ -90,14 +97,14 @@ void shy_logic_main_menu_selection_animation_push_attention < mediator > :: rece
 template < typename mediator >
 void shy_logic_main_menu_selection_animation_push_attention < mediator > :: receive ( typename messages :: logic_main_menu_launch_permit )
 {
-    _logic_main_menu_update_state . launch_permitted = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_update_state . update_permitted = _platform_math_consts . get ( ) . whole_true ;
     _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_selection_animation_push_attention < mediator > :: receive ( typename messages :: logic_main_menu_update )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . launch_permitted ) )
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . update_permitted ) )
     {
         num_fract time_step ;
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;

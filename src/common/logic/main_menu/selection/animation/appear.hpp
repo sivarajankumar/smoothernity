@@ -74,7 +74,7 @@ shy_logic_main_menu_selection_animation_appear < mediator > :: _logic_main_menu_
     platform_math :: make_num_fract ( vertical_scale_time_to_begin , 2 , 10 ) ;
     platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_middle , 1 , 10 ) ;
     platform_math :: make_num_fract ( vertical_scale_time_from_middle_to_end , 2 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_value_begin , 1 , 5 ) ;
+    platform_math :: make_num_fract ( vertical_scale_value_begin , 10 , 100 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_middle , 2 , 1 ) ;
     platform_math :: make_num_fract ( vertical_scale_value_end , 1 , 1 ) ;
     platform_math :: make_num_fract ( total_animation_time , 5 , 10 ) ;

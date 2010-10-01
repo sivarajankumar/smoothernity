@@ -37,14 +37,17 @@ class shy_logic_main_menu_selection_animation_push_weight
     } ;
     
 public :
+    shy_logic_main_menu_selection_animation_push_weight ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_push_weight_request ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_void_chosen ) ;
+    void receive ( typename messages :: logic_main_menu_row_chosen ) ;
 private :
     void _compute_weight ( ) ;
     void _reply_weight ( ) ;
+    shy_logic_main_menu_selection_animation_push_weight < mediator > & operator= ( const shy_logic_main_menu_selection_animation_push_weight < mediator > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
@@ -64,6 +67,11 @@ shy_logic_main_menu_selection_animation_push_weight < mediator >
     platform_math :: make_num_fract ( time_from_begin_to_end , 20 , 100 ) ;
     platform_math :: make_num_fract ( weight_min , 0 , 1 ) ;
     platform_math :: make_num_fract ( weight_max , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_selection_animation_push_weight < mediator > :: shy_logic_main_menu_selection_animation_push_weight ( )
+{
 }
 
 template < typename mediator >
@@ -93,6 +101,13 @@ void shy_logic_main_menu_selection_animation_push_weight < mediator > :: receive
 
 template < typename mediator >
 void shy_logic_main_menu_selection_animation_push_weight < mediator > :: receive ( typename messages :: logic_main_menu_void_chosen )
+{
+    _logic_main_menu_update_state . clicked = _platform_math_consts . get ( ) . whole_false ;
+    _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_animation_push_weight < mediator > :: receive ( typename messages :: logic_main_menu_row_chosen )
 {
     _logic_main_menu_update_state . clicked = _platform_math_consts . get ( ) . whole_false ;
     _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;

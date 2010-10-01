@@ -38,6 +38,7 @@ class shy_logic_main_menu_selection_animation_idle_attention
     } ;
 
 public :
+    shy_logic_main_menu_selection_animation_idle_attention ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_selection_animation_idle_attention_transform_request ) ;
@@ -53,6 +54,7 @@ private :
         , num_fract scale_max
         , num_fract period_in_seconds
         ) ;
+    shy_logic_main_menu_selection_animation_idle_attention < mediator > & operator= ( const shy_logic_main_menu_selection_animation_idle_attention & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -73,6 +75,11 @@ shy_logic_main_menu_selection_animation_idle_attention < mediator >
     platform_math :: make_num_fract ( vertical_scale_min , 20 , 10 ) ;
     platform_math :: make_num_fract ( vertical_scale_max , 23 , 10 ) ;
     platform_math :: make_num_fract ( vertical_scale_period_in_seconds , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_selection_animation_idle_attention < mediator > :: shy_logic_main_menu_selection_animation_idle_attention ( )
+{
 }
 
 template < typename mediator >
