@@ -170,6 +170,7 @@ void shy_logic_main_menu_stateless < mediator >
 :: send ( typename logic_main_menu_messages :: logic_main_menu_update msg )
 {
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_animation_shake . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_choice . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_appear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_animation_disappear . get ( ) . receive ( msg ) ;

@@ -10,6 +10,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_main_menu_animation_shake_transform_request ) ;
+    void receive ( typename messages :: logic_main_menu_update ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -30,9 +31,15 @@ void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename mess
 }
 
 template < typename mediator >
+void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename messages :: logic_main_menu_update )
+{
+}
+
+template < typename mediator >
 void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename messages :: logic_main_menu_animation_shake_transform_request )
 {
     typename messages :: logic_main_menu_animation_shake_transform_reply msg ;
-    platform_math :: make_num_fract ( msg . shift_x , 3 , 10 ) ;
+    msg . shift_x = _platform_math_consts . get ( ) . fract_0 ;
     _mediator . get ( ) . send ( msg ) ;
 }
+

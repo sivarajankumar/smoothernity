@@ -4,6 +4,7 @@ class shy_logic_main_menu_animation
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
@@ -111,7 +112,22 @@ template < typename mediator >
 void shy_logic_main_menu_animation < mediator > :: _compute_transform ( )
 {
     matrix_data view ;
+    num_fract shake_shift_x ;
+    num_fract origin_x ;
+    num_fract origin_y ;
+    num_fract origin_z ;
+
+    shake_shift_x = _logic_main_menu_animation_shake_transform_state . shift_x ;
+
+    origin_x = _platform_math_consts . get ( ) . fract_0 ;
+    origin_y = _platform_math_consts . get ( ) . fract_0 ;
+    origin_z = _platform_math_consts . get ( ) . fract_0 ;
+
+    platform_math :: add_to_fract ( origin_x , shake_shift_x ) ;
+
     platform_matrix :: identity ( view ) ;
+    platform_matrix :: set_origin ( view , origin_x , origin_y , origin_z ) ;
+
     _logic_main_menu_animation_transform_state . view = view ;
 }
 
