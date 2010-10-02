@@ -60,10 +60,10 @@ template < typename mediator >
 shy_logic_main_menu_animation_shake < mediator > :: _logic_main_menu_animation_shake_consts_type :: _logic_main_menu_animation_shake_consts_type ( )
 {
     platform_math :: make_num_fract ( time_to_begin , 0 , 10 ) ;
-    platform_math :: make_num_fract ( time_from_begin_to_end , 10 , 10 ) ;
-    platform_math :: make_num_fract ( shift_x_amplitude_begin , 2 , 100 ) ;
-    platform_math :: make_num_fract ( shift_x_amplitude_end , 0 , 10 ) ;
-    platform_math :: make_num_fract ( shift_x_period_in_seconds , 20 , 100 ) ;
+    platform_math :: make_num_fract ( time_from_begin_to_end , 6 , 10 ) ;
+    platform_math :: make_num_fract ( shift_x_amplitude_begin , 20 , 1000 ) ;
+    platform_math :: make_num_fract ( shift_x_amplitude_end , 5 , 1000 ) ;
+    platform_math :: make_num_fract ( shift_x_period_in_seconds , 2 , 10 ) ;
 }
 
 template < typename mediator >
