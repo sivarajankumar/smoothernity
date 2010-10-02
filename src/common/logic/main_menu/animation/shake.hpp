@@ -83,6 +83,8 @@ void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename mess
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+
+    _logic_main_menu_update_state . started = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
@@ -90,17 +92,34 @@ void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename mess
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . started ) )
     {
+        num_fract time ;
         num_fract time_step ;
+        num_fract time_total ;
+        num_fract time_to_begin ;
+        num_fract time_from_begin_to_end ;
+
+        time = _logic_main_menu_update_state . time ;
+        time_to_begin = _logic_main_menu_animation_shake_consts . time_to_begin ;
+        time_from_begin_to_end = _logic_main_menu_animation_shake_consts . time_from_begin_to_end ;
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
-        platform_math :: add_to_fract ( _logic_main_menu_update_state . time , time_step ) ;
+
+        platform_math :: add_fracts ( time_total , time_to_begin , time_from_begin_to_end ) ;
+        platform_math :: add_to_fract ( time , time_step ) ;
+        if ( platform_conditions :: fract_greater_than_fract ( time , time_total ) )
+            _logic_main_menu_update_state . started = _platform_math_consts . get ( ) . whole_false ;
+
+        _logic_main_menu_update_state . time = time ;
     }
 }
 
 template < typename mediator >
 void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename messages :: logic_main_menu_void_chosen )
 {
-    _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
-    _logic_main_menu_update_state . started = _platform_math_consts . get ( ) . whole_true ;
+    if ( platform_conditions :: whole_is_false ( _logic_main_menu_update_state . started ) )
+    {
+        _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
+        _logic_main_menu_update_state . started = _platform_math_consts . get ( ) . whole_true ;
+    }
 }
 
 template < typename mediator >
