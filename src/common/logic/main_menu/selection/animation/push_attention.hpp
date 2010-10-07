@@ -68,10 +68,10 @@ shy_logic_main_menu_selection_animation_push_attention < mediator >
 :: _logic_main_menu_selection_animation_push_attention_consts_type 
 :: _logic_main_menu_selection_animation_push_attention_consts_type ( )
 {
-    platform_math :: make_num_fract ( horizontal_scale_min , 195 , 200 ) ;
+    platform_math :: make_num_fract ( horizontal_scale_min , 185 , 200 ) ;
     platform_math :: make_num_fract ( horizontal_scale_max , 200 , 200 ) ;
     platform_math :: make_num_fract ( vertical_scale_min , 200 , 100 ) ;
-    platform_math :: make_num_fract ( vertical_scale_max , 210 , 100 ) ;
+    platform_math :: make_num_fract ( vertical_scale_max , 250 , 100 ) ;
     platform_math :: make_num_fract ( period_in_seconds , 4 , 10 ) ;
 }
 
