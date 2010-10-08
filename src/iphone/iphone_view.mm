@@ -53,6 +53,8 @@
 	_platform_insider -> render_insider . set_aspect_width ( 1.0f ) ;
 	_platform_insider -> render_insider . set_aspect_height ( 1.5f ) ;
     
+    _platform_insider -> touch_insider . set_enabled ( true ) ;
+
     _frame_time = 0 ;
 }
 

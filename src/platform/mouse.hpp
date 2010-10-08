@@ -10,10 +10,12 @@ class shy_platform_mouse
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
 public :
     shy_platform_mouse ( ) ;
+    void enabled ( num_whole & ) ;
 	void left_button_down ( num_whole & ) ;
 	void x ( num_fract & ) ;
 	void y ( num_fract & ) ;
 private :
+    bool _enabled ;
 	bool _left_button_down ;
 	float _x ;
 	float _y ;
@@ -21,10 +23,17 @@ private :
 
 template < typename platform_insider >
 shy_platform_mouse < platform_insider > :: shy_platform_mouse ( )
-: _left_button_down ( false )
+: _enabled ( false )
+, _left_button_down ( false )
 , _x ( 0 )
 , _y ( 0 )
 {
+}
+
+template < typename platform_insider >
+inline void shy_platform_mouse < platform_insider > :: enabled ( num_whole & result )
+{
+    platform_math_insider :: num_whole_value_set ( result , ( int ) _enabled ) ;
 }
 
 template < typename platform_insider >

@@ -12,6 +12,7 @@ void smoothernity_init ( )
     shy_win_platform_insider :: platform_pointer :: pointer < const shy_platform < shy_win_platform_insider > > platform_ptr ;
     shy_win_platform_insider :: platform_pointer :: bind ( platform_ptr , g_platform -> platform ) ;
     g_platform -> mouse_insider . set_left_button_down ( false ) ;
+    g_platform -> mouse_insider . set_enabled ( true ) ;
     g_facade = new shy_facade < shy_platform < shy_win_platform_insider > > ( platform_ptr ) ;
     g_facade -> init ( ) ;
 }

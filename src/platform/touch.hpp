@@ -10,10 +10,12 @@ class shy_platform_touch
     typedef typename platform_insider :: platform_math_insider platform_math_insider ;
 public :
     shy_platform_touch ( ) ;
+    void enabled ( num_whole & ) ;
 	void occured ( num_whole & ) ;
 	void x ( num_fract & ) ;
 	void y ( num_fract & ) ;
 private :
+    bool _enabled ;
 	bool _occured ;
 	float _x ;
 	float _y ;
@@ -21,10 +23,17 @@ private :
 
 template < typename platform_insider >
 shy_platform_touch < platform_insider > :: shy_platform_touch ( )
-: _occured ( false )
+: _enabled ( false )
+, _occured ( false )
 , _x ( 0 )
 , _y ( 0 )
 {
+}
+
+template < typename platform_insider >
+inline void shy_platform_touch < platform_insider > :: enabled ( num_whole & result )
+{
+    platform_math_insider :: num_whole_value_set ( result , ( int ) _enabled ) ;
 }
 
 template < typename platform_insider >
