@@ -54,6 +54,7 @@
 	_platform_insider -> render_insider . set_aspect_height ( 1.5f ) ;
     
     _platform_insider -> touch_insider . set_enabled ( true ) ;
+    _platform_insider -> touch_insider . set_occured ( false ) ;
 
     _frame_time = 0 ;
 }
@@ -127,13 +128,38 @@
     _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
 }
 
+- ( void ) touchesMoved : ( NSSet * ) touches withEvent : ( UIEvent * ) event
+{
+    UITouch * touch = [ touches anyObject ] ;
+    CGPoint point = [ touch locationInView : [ touch view ] ] ;
+    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
+    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
+}
+
+- ( void ) touchesEnded : ( NSSet * ) touches withEvent : ( UIEvent * ) event
+{
+    UITouch * touch = [ touches anyObject ] ;
+    CGPoint point = [ touch locationInView : [ touch view ] ] ;
+    _platform_insider -> touch_insider . set_occured ( false ) ;
+    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
+    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
+}
+
+- ( void ) touchesCancelled : ( NSSet * ) touches withEvent : ( UIEvent * ) event
+{
+    UITouch * touch = [ touches anyObject ] ;
+    CGPoint point = [ touch locationInView : [ touch view ] ] ;
+    _platform_insider -> touch_insider . set_occured ( false ) ;
+    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
+    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
+}
+
 - ( void ) draw_view : ( id ) sender
 {
     [ EAGLContext setCurrentContext : _gl_context ] ;
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
 	_facade -> render ( ) ;
 	_facade -> update ( ) ;
-    _platform_insider -> touch_insider . set_occured ( false ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
     CFAbsoluteTime finish_time = CFAbsoluteTimeGetCurrent ( ) ;
