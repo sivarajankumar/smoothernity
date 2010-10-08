@@ -40,6 +40,7 @@ void shy_logic_controls_stateless < mediator >
 :: send ( typename logic_controls_messages :: logic_controls_state_reply msg )
 {
     _receivers . get ( ) . logic_main_menu_choice . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_letters_animation_selection_push . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
