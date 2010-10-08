@@ -11,6 +11,7 @@ template
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_camera_stateless
     , template < typename mediator > class _logic_controls
+    , template < typename mediator > class _logic_controls_stateless
     , template < typename mediator > class _logic_core
     , template < typename mediator > class _logic_core_stateless
     , template < typename mediator > class _logic_entities
@@ -95,6 +96,7 @@ public :
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_camera_stateless < mediator > logic_camera_stateless ;
         typedef _logic_controls < mediator > logic_controls ;
+        typedef _logic_controls_stateless < mediator > logic_controls_stateless ;
         typedef _logic_core < mediator > logic_core ;
         typedef _logic_core_stateless < mediator > logic_core_stateless ;
         typedef _logic_entities < mediator > logic_entities ;
@@ -176,6 +178,7 @@ template
     , template < typename _mediator > class _logic_camera
     , template < typename _mediator > class _logic_camera_stateless
     , template < typename _mediator > class _logic_controls
+    , template < typename _mediator > class _logic_controls_stateless
     , template < typename _mediator > class _logic_core
     , template < typename _mediator > class _logic_core_stateless
     , template < typename _mediator > class _logic_entities
@@ -311,6 +314,7 @@ public :
         , scheduled_logic_camera :: template scheduled_module
         , _logic_camera_stateless
         , scheduled_logic_controls :: template scheduled_module
+        , _logic_controls_stateless
         , scheduled_logic_core :: template scheduled_module
         , _logic_core_stateless
         , scheduled_logic_entities :: template scheduled_module
@@ -385,6 +389,7 @@ public :
     typedef _engine_render_stateless < mediator_type > engine_render_stateless ;
     typedef _logic_application_stateless < mediator_type > logic_application_stateless ;
     typedef _logic_camera_stateless < mediator_type > logic_camera_stateless ;
+    typedef _logic_controls_stateless < mediator_type > logic_controls_stateless ;
     typedef _logic_core_stateless < mediator_type > logic_core_stateless ;
     typedef _logic_entities_stateless < mediator_type > logic_entities_stateless ;
     typedef _logic_fidget_stateless < mediator_type > logic_fidget_stateless ;
