@@ -6,24 +6,41 @@ class shy_logic_main_menu_choice
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
-    typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-    typedef typename mediator :: platform :: platform_touch platform_touch ;    
+
+    class _logic_controls_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_whole primary_button_down ;
+    } ;
+
+    class _logic_main_menu_update_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole prev_primary_button_down ;
+        num_whole row_selected ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_controls_state_reply ) ;
     void receive ( typename messages :: logic_main_menu_update ) ;
     void receive ( typename messages :: logic_main_menu_choice_row_selected ) ;
     void receive ( typename messages :: logic_main_menu_choice_void_selected ) ;
 private :
+    void _proceed_with_update ( ) ;
+    void _obtain_controls_state ( ) ;
+    void _controls_state_received ( ) ;
+private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
-    typename platform_pointer :: template pointer < platform_touch > _platform_touch ;
-    
-    num_whole _prev_touch_occured ;
-    num_whole _prev_mouse_button ;
-    num_whole _row_selected ;
+
+    _logic_controls_state_type _logic_controls_state ;
+    _logic_main_menu_update_state_type _logic_main_menu_update_state ;    
 } ;
 
 template < typename mediator >
@@ -38,41 +55,84 @@ void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: i
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
-    _platform_mouse = platform_obj . get ( ) . mouse ;
-    _platform_touch = platform_obj . get ( ) . touch ;
     
-    _prev_touch_occured = _platform_math_consts . get ( ) . whole_false ;
-    _prev_mouse_button = _platform_math_consts . get ( ) . whole_false ;
+    _logic_main_menu_update_state . prev_primary_button_down = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: logic_main_menu_choice_row_selected )
 {
-    _row_selected = _platform_math_consts . get ( ) . whole_true ;
+    _logic_main_menu_update_state . row_selected = _platform_math_consts . get ( ) . whole_true ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: logic_main_menu_choice_void_selected )
 {
-    _row_selected = _platform_math_consts . get ( ) . whole_false ;
+    _logic_main_menu_update_state . row_selected = _platform_math_consts . get ( ) . whole_false ;
 }
 
 template < typename mediator >
 void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: logic_main_menu_update )
 {
-    num_whole touch_occured ;
-    num_whole mouse_button ;
-    _platform_touch . get ( ) . occured ( touch_occured ) ;
-    _platform_mouse . get ( ) . left_button_down ( mouse_button ) ;
-    if ( ( platform_conditions :: whole_is_false ( touch_occured ) && platform_conditions :: whole_is_true ( _prev_touch_occured ) )
-      || ( platform_conditions :: whole_is_false ( mouse_button ) && platform_conditions :: whole_is_true ( _prev_mouse_button ) )
+    _logic_main_menu_update_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _proceed_with_update ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_choice < mediator > :: receive ( typename messages :: logic_controls_state_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_controls_state . requested ) )
+    {
+        _logic_controls_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_controls_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_controls_state . primary_button_down = msg . primary_button_down ;
+        _proceed_with_update ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_choice < mediator > :: _proceed_with_update ( )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_main_menu_update_state . requested ) )
+    {
+        _logic_main_menu_update_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _obtain_controls_state ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_controls_state . replied ) )
+    {
+        _logic_controls_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _controls_state_received ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_main_menu_choice < mediator > :: _obtain_controls_state ( )
+{
+    _logic_controls_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_controls_state_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_choice < mediator > :: _controls_state_received ( )
+{
+    num_whole row_selected ;
+    num_whole primary_button_down ;
+    num_whole prev_primary_button_down ;
+
+    row_selected = _logic_main_menu_update_state . row_selected ;
+    primary_button_down = _logic_controls_state . primary_button_down ;
+    prev_primary_button_down = _logic_main_menu_update_state . prev_primary_button_down ;    
+
+    if ( platform_conditions :: whole_is_false ( primary_button_down ) 
+      && platform_conditions :: whole_is_true ( prev_primary_button_down )
        )
     {
-        if ( platform_conditions :: whole_is_true ( _row_selected ) )
+        if ( platform_conditions :: whole_is_true ( row_selected ) )
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_row_chosen ( ) ) ;
         else
             _mediator . get ( ) . send ( typename messages :: logic_main_menu_void_chosen ( ) ) ;
     }
-    _prev_touch_occured = touch_occured ;
-    _prev_mouse_button = mouse_button ;
+
+    prev_primary_button_down = primary_button_down ;
+    _logic_main_menu_update_state . prev_primary_button_down = prev_primary_button_down ;
 }
