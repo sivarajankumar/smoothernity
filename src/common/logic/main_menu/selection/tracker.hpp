@@ -11,7 +11,6 @@ class shy_logic_main_menu_selection_tracker
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
-    typedef typename mediator :: platform :: platform_mouse platform_mouse ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
     class _logic_main_menu_selection_tracker_consts_type
@@ -27,8 +26,8 @@ class shy_logic_main_menu_selection_tracker
     public :
         num_whole requested ;
         num_whole current_row ;
-        num_whole mouse_cursor_in_selection_rect ;
-        num_whole mouse_cursor_in_prev_selection_rect ;
+        num_whole cursor_in_selection_rect ;
+        num_whole cursor_in_prev_selection_rect ;
         num_whole prev_row_is_selected ;
         num_whole prev_selected_row_index ;
         rect prev_selection_rect ;
@@ -52,7 +51,16 @@ class shy_logic_main_menu_selection_tracker
         num_whole replied ;
         rect row_rect ;
     } ;
-    
+
+    class _logic_controls_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract cursor_x ;
+        num_fract cursor_y ;
+    } ;
+
 public :
     shy_logic_main_menu_selection_tracker ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
@@ -60,27 +68,29 @@ public :
     void receive ( typename messages :: logic_main_menu_selection_track_request ) ;
     void receive ( typename messages :: logic_main_menu_letters_layout_row_rect_reply ) ;
     void receive ( typename messages :: logic_main_menu_letters_rows_reply ) ;
+    void receive ( typename messages :: logic_controls_state_reply ) ;
 private :
     shy_logic_main_menu_selection_tracker < mediator > & operator= ( const shy_logic_main_menu_selection_tracker & ) ;
     void _proceed_with_track ( ) ;
-    void _track_requested ( ) ;
+    void _obtain_controls_state ( ) ;
+    void _controls_state_received ( ) ;
     void _obtain_rows_count ( ) ;
     void _obtain_first_row_rect ( ) ;
     void _obtain_current_row_rect ( ) ;
     void _received_row_rect ( ) ;
-    void _determine_mouse_cursor_in_selection_rect ( ) ;
-    void _determine_mouse_cursor_in_prev_selection_rect ( ) ;
-    void _determine_mouse_cursor_in_rect ( num_whole & result , rect row_rect ) ;
+    void _determine_cursor_in_selection_rect ( ) ;
+    void _determine_cursor_in_prev_selection_rect ( ) ;
+    void _determine_cursor_in_rect ( num_whole & result , rect row_rect ) ;
     void _scale_prev_selection_rect ( ) ;
     void _send_row_selected ( ) ;
     void _send_void_selected ( ) ;
     void _send_reply ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
-    typename platform_pointer :: template pointer < platform_mouse > _platform_mouse ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     const _logic_main_menu_selection_tracker_consts_type _logic_main_menu_selection_tracker_consts ;
     
+    _logic_controls_state_type _logic_controls_state ;
     _logic_main_menu_selection_track_state_type _logic_main_menu_selection_track_state ;
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
     _logic_main_menu_letters_layout_row_rect_state_type _logic_main_menu_letters_layout_row_rect_state ;
@@ -108,7 +118,6 @@ void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename me
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
-    _platform_mouse = platform_obj . get ( ) . mouse ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -146,12 +155,30 @@ void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename me
 }
 
 template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename messages :: logic_controls_state_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_controls_state . requested ) )
+    {
+        _logic_controls_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_controls_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_controls_state . cursor_x = msg . cursor_x ;
+        _logic_controls_state . cursor_y = msg . cursor_y ;
+        _proceed_with_track ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: _proceed_with_track ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . requested ) )
     {
         _logic_main_menu_selection_track_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _track_requested ( ) ;
+        _obtain_controls_state ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_controls_state . replied ) )
+    {
+        _logic_controls_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _controls_state_received ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_letters_rows_state . replied ) )
     {
@@ -166,12 +193,19 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _proceed_with_track (
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _track_requested ( )
+void shy_logic_main_menu_selection_tracker < mediator > :: _obtain_controls_state ( )
+{
+    _logic_controls_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_controls_state_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_main_menu_selection_tracker < mediator > :: _controls_state_received ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . prev_row_is_selected ) )
     {
-        _determine_mouse_cursor_in_prev_selection_rect ( ) ;
-        if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . mouse_cursor_in_prev_selection_rect ) )
+        _determine_cursor_in_prev_selection_rect ( ) ;
+        if ( platform_conditions :: whole_is_true ( _logic_main_menu_selection_track_state . cursor_in_prev_selection_rect ) )
             _send_reply ( ) ;
         else
             _obtain_rows_count ( ) ;
@@ -208,17 +242,17 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _obtain_current_row_r
 template < typename mediator >
 void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( )
 {
-    num_whole mouse_cursor_in_selection_rect ;
+    num_whole cursor_in_selection_rect ;
     num_whole current_row ;
     num_whole rows_count ;
     
-    _determine_mouse_cursor_in_selection_rect ( ) ;
+    _determine_cursor_in_selection_rect ( ) ;
     
-    mouse_cursor_in_selection_rect = _logic_main_menu_selection_track_state . mouse_cursor_in_selection_rect ;
+    cursor_in_selection_rect = _logic_main_menu_selection_track_state . cursor_in_selection_rect ;
     current_row = _logic_main_menu_selection_track_state . current_row ;
     rows_count = _logic_main_menu_letters_rows_state . rows ;
     
-    if ( platform_conditions :: whole_is_true ( mouse_cursor_in_selection_rect ) )
+    if ( platform_conditions :: whole_is_true ( cursor_in_selection_rect ) )
     {
         _send_row_selected ( ) ;
         _send_reply ( ) ;
@@ -240,37 +274,37 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _received_row_rect ( 
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_cursor_in_selection_rect ( )
+void shy_logic_main_menu_selection_tracker < mediator > :: _determine_cursor_in_selection_rect ( )
 {
-    _determine_mouse_cursor_in_rect
-        ( _logic_main_menu_selection_track_state . mouse_cursor_in_selection_rect
+    _determine_cursor_in_rect
+        ( _logic_main_menu_selection_track_state . cursor_in_selection_rect
         , _logic_main_menu_letters_layout_row_rect_state . row_rect
         ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_cursor_in_prev_selection_rect ( )
+void shy_logic_main_menu_selection_tracker < mediator > :: _determine_cursor_in_prev_selection_rect ( )
 {
     _scale_prev_selection_rect ( ) ;
-    _determine_mouse_cursor_in_rect
-        ( _logic_main_menu_selection_track_state . mouse_cursor_in_prev_selection_rect
+    _determine_cursor_in_rect
+        ( _logic_main_menu_selection_track_state . cursor_in_prev_selection_rect
         , _logic_main_menu_selection_track_state . scaled_prev_selection_rect
         ) ;
 }
 
 template < typename mediator >
-void shy_logic_main_menu_selection_tracker < mediator > :: _determine_mouse_cursor_in_rect ( num_whole & result , rect row_rect )
+void shy_logic_main_menu_selection_tracker < mediator > :: _determine_cursor_in_rect ( num_whole & result , rect row_rect )
 {
-    num_fract mouse_x ;
-    num_fract mouse_y ;
-        
-    _platform_mouse . get ( ) . x ( mouse_x ) ;
-    _platform_mouse . get ( ) . y ( mouse_y ) ;
+    num_fract cursor_x ;
+    num_fract cursor_y ;
     
-    if ( platform_conditions :: fract_less_than_fract ( mouse_x , row_rect . left ) 
-      || platform_conditions :: fract_less_than_fract ( mouse_y , row_rect . bottom ) 
-      || platform_conditions :: fract_greater_than_fract ( mouse_x , row_rect . right ) 
-      || platform_conditions :: fract_greater_than_fract ( mouse_y , row_rect . top ) 
+    cursor_x = _logic_controls_state . cursor_x ;
+    cursor_y = _logic_controls_state . cursor_y ;
+    
+    if ( platform_conditions :: fract_less_than_fract ( cursor_x , row_rect . left ) 
+      || platform_conditions :: fract_less_than_fract ( cursor_y , row_rect . bottom ) 
+      || platform_conditions :: fract_greater_than_fract ( cursor_x , row_rect . right ) 
+      || platform_conditions :: fract_greater_than_fract ( cursor_y , row_rect . top ) 
        )
     {
         result = _platform_math_consts . get ( ) . whole_false ;
