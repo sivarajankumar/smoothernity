@@ -30,6 +30,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_controls logic_controls ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_core logic_core ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget logic_fidget ;
@@ -209,6 +210,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: engine_render > engine_render ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_application > logic_application ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_camera > logic_camera ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_controls > logic_controls ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_core > logic_core ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_entities > logic_entities ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_fidget > logic_fidget ;
@@ -272,6 +274,7 @@ public :
         , typename platform_pointer :: template pointer < engine_render_stateless >
         , typename platform_pointer :: template pointer < logic_application >
         , typename platform_pointer :: template pointer < logic_camera >
+        , typename platform_pointer :: template pointer < logic_controls >
         , typename platform_pointer :: template pointer < logic_core >
         , typename platform_pointer :: template pointer < logic_entities >
         , typename platform_pointer :: template pointer < logic_fidget >
@@ -378,6 +381,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
+    , typename platform_pointer :: template pointer < logic_controls > arg_logic_controls
     , typename platform_pointer :: template pointer < logic_core > arg_logic_core
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
     , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
@@ -442,6 +446,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . engine_render = arg_engine_render ;
     _receivers . logic_application = arg_logic_application ;
     _receivers . logic_camera = arg_logic_camera ;
+    _receivers . logic_controls = arg_logic_controls ;
     _receivers . logic_core = arg_logic_core ;
     _receivers . logic_entities = arg_logic_entities ;
     _receivers . logic_fidget = arg_logic_fidget ;
@@ -500,6 +505,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . engine_render . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_application . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_camera . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_controls . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_core . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_entities . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_fidget . get ( ) . set_mediator ( mediator_ptr ) ;

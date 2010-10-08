@@ -10,6 +10,7 @@ template
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_camera_stateless
+    , template < typename mediator > class _logic_controls
     , template < typename mediator > class _logic_core
     , template < typename mediator > class _logic_core_stateless
     , template < typename mediator > class _logic_entities
@@ -93,6 +94,7 @@ public :
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_camera_stateless < mediator > logic_camera_stateless ;
+        typedef _logic_controls < mediator > logic_controls ;
         typedef _logic_core < mediator > logic_core ;
         typedef _logic_core_stateless < mediator > logic_core_stateless ;
         typedef _logic_entities < mediator > logic_entities ;
@@ -173,6 +175,7 @@ template
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_camera
     , template < typename _mediator > class _logic_camera_stateless
+    , template < typename _mediator > class _logic_controls
     , template < typename _mediator > class _logic_core
     , template < typename _mediator > class _logic_core_stateless
     , template < typename _mediator > class _logic_entities
@@ -247,6 +250,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _engine_render , 3000 > scheduled_engine_render ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_camera > scheduled_logic_camera ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_controls > scheduled_logic_controls ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_core > scheduled_logic_core ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_entities > scheduled_logic_entities ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_fidget > scheduled_logic_fidget ;
@@ -306,6 +310,7 @@ public :
         , _logic_application_stateless
         , scheduled_logic_camera :: template scheduled_module
         , _logic_camera_stateless
+        , scheduled_logic_controls :: template scheduled_module
         , scheduled_logic_core :: template scheduled_module
         , _logic_core_stateless
         , scheduled_logic_entities :: template scheduled_module
@@ -421,6 +426,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > engine_render ;
     typedef typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > logic_application ;
     typedef typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > logic_camera ;
+    typedef typename aggregator_types :: scheduled_logic_controls :: template scheduled_module < mediator_type > logic_controls ;
     typedef typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > logic_core ;
     typedef typename aggregator_types :: scheduled_logic_entities :: template scheduled_module < mediator_type > logic_entities ;
     typedef typename aggregator_types :: scheduled_logic_fidget :: template scheduled_module < mediator_type > logic_fidget ;
@@ -485,6 +491,7 @@ private :
     engine_render_stateless _engine_render_stateless ;
     logic_application _logic_application ;
     logic_camera _logic_camera ;
+    logic_controls _logic_controls ;
     logic_core _logic_core ;
     logic_entities _logic_entities ;
     logic_fidget _logic_fidget ;
@@ -547,6 +554,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < engine_render_stateless > engine_render_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_application > logic_application_ptr ;
     typename platform_pointer :: template pointer < logic_camera > logic_camera_ptr ;
+    typename platform_pointer :: template pointer < logic_controls > logic_controls_ptr ;
     typename platform_pointer :: template pointer < logic_core > logic_core_ptr ;
     typename platform_pointer :: template pointer < logic_entities > logic_entities_ptr ;
     typename platform_pointer :: template pointer < logic_fidget > logic_fidget_ptr ;
@@ -605,6 +613,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( engine_render_stateless_ptr , _engine_render_stateless );
     platform_pointer :: bind ( logic_application_ptr , _logic_application ) ;
     platform_pointer :: bind ( logic_camera_ptr , _logic_camera ) ;
+    platform_pointer :: bind ( logic_controls_ptr , _logic_controls ) ;
     platform_pointer :: bind ( logic_core_ptr , _logic_core ) ;
     platform_pointer :: bind ( logic_entities_ptr , _logic_entities ) ;
     platform_pointer :: bind ( logic_fidget_ptr , _logic_fidget ) ;
@@ -662,6 +671,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( engine_render_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_application_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_camera_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_controls_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_core_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_entities_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_fidget_ptr , scheduler_ptr ) ;
@@ -714,6 +724,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , engine_render_stateless_ptr
         , logic_application_ptr
         , logic_camera_ptr
+        , logic_controls_ptr
         , logic_core_ptr
         , logic_entities_ptr
         , logic_fidget_ptr
