@@ -246,11 +246,16 @@ template
     >
 class shy_aggregator_types
 {
+    typedef typename _platform :: platform_math :: const_int_32 const_int_32 ;
     typedef typename _platform :: platform_scheduler platform_scheduler ;
+
+    static const_int_32 _max_rasterizer_messages = 1000 ;
+    static const_int_32 _max_render_messages = 3000 ; 
+
 public :
     typedef _platform platform ;
-    typedef typename platform_scheduler :: template module_wrapper < _engine_rasterizer , 1000 > scheduled_engine_rasterizer ;
-    typedef typename platform_scheduler :: template module_wrapper < _engine_render , 3000 > scheduled_engine_render ;
+    typedef typename platform_scheduler :: template module_wrapper < _engine_rasterizer , _max_rasterizer_messages > scheduled_engine_rasterizer ;
+    typedef typename platform_scheduler :: template module_wrapper < _engine_render , _max_render_messages > scheduled_engine_render ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_camera > scheduled_logic_camera ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_controls > scheduled_logic_controls ;
