@@ -39,5 +39,6 @@
 - ( void ) _init_game ;
 - ( void ) _done_game ;
 - ( void ) _schedule_draw ;
+- ( void ) _update_touch_position : ( NSSet * ) touches ;
 
 @end

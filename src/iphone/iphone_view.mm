@@ -121,35 +121,31 @@
 
 - ( void ) touchesBegan : ( NSSet * ) touches withEvent : ( UIEvent * ) event
 {
-    UITouch * touch = [ touches anyObject ] ;
-    CGPoint point = [ touch locationInView : [ touch view ] ] ;
+    [ self _update_touch_position : touches ] ;
     _platform_insider -> touch_insider . set_occured ( true ) ;
-    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
-    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
 }
 
 - ( void ) touchesMoved : ( NSSet * ) touches withEvent : ( UIEvent * ) event
 {
-    UITouch * touch = [ touches anyObject ] ;
-    CGPoint point = [ touch locationInView : [ touch view ] ] ;
-    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
-    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
+    [ self _update_touch_position : touches ] ;
 }
 
 - ( void ) touchesEnded : ( NSSet * ) touches withEvent : ( UIEvent * ) event
 {
-    UITouch * touch = [ touches anyObject ] ;
-    CGPoint point = [ touch locationInView : [ touch view ] ] ;
+    [ self _update_touch_position : touches ] ;
     _platform_insider -> touch_insider . set_occured ( false ) ;
-    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
-    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
 }
 
 - ( void ) touchesCancelled : ( NSSet * ) touches withEvent : ( UIEvent * ) event
 {
+    [ self _update_touch_position : touches ] ;
+    _platform_insider -> touch_insider . set_occured ( false ) ;
+}
+
+- ( void ) _update_touch_position : ( NSSet * ) touches
+{
     UITouch * touch = [ touches anyObject ] ;
     CGPoint point = [ touch locationInView : [ touch view ] ] ;
-    _platform_insider -> touch_insider . set_occured ( false ) ;
     _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
     _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
 }
