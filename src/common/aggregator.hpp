@@ -7,6 +7,7 @@ template
     , template < typename mediator > class _engine_render
     , template < typename mediator > class _engine_render_stateless
     , template < typename mediator > class _logic_amusement
+    , template < typename mediator > class _logic_amusement_stateless
     , template < typename mediator > class _logic_application
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_camera
@@ -93,6 +94,7 @@ public :
         typedef _engine_render < mediator > engine_render ;
         typedef _engine_render_stateless < mediator > engine_render_stateless ;
         typedef _logic_amusement < mediator > logic_amusement ;
+        typedef _logic_amusement_stateless < mediator > logic_amusement_stateless ;
         typedef _logic_application < mediator > logic_application ;
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_camera < mediator > logic_camera ;
@@ -176,6 +178,7 @@ template
     , template < typename _mediator > class _engine_render
     , template < typename _mediator > class _engine_render_stateless
     , template < typename _mediator > class _logic_amusement
+    , template < typename _mediator > class _logic_amusement_stateless
     , template < typename _mediator > class _logic_application
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_camera
@@ -319,6 +322,7 @@ public :
         , scheduled_engine_render :: template scheduled_module
         , _engine_render_stateless
         , scheduled_logic_amusement :: template scheduled_module
+        , _logic_amusement_stateless
         , scheduled_logic_application :: template scheduled_module
         , _logic_application_stateless
         , scheduled_logic_camera :: template scheduled_module
@@ -397,6 +401,7 @@ public :
     typedef _engine_math < mediator_type > engine_math ;
     typedef _engine_rasterizer_stateless < mediator_type > engine_rasterizer_stateless ;
     typedef _engine_render_stateless < mediator_type > engine_render_stateless ;
+    typedef _logic_amusement_stateless < mediator_type > logic_amusement_stateless ;
     typedef _logic_application_stateless < mediator_type > logic_application_stateless ;
     typedef _logic_camera_stateless < mediator_type > logic_camera_stateless ;
     typedef _logic_controls_stateless < mediator_type > logic_controls_stateless ;
