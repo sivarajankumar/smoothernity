@@ -14,6 +14,7 @@
 #include "engine/rasterizer/stateless.hpp"
 #include "engine/render/render.hpp"
 #include "engine/render/stateless.hpp"
+#include "logic/amusement/amusement.hpp"
 #include "logic/application/application.hpp"
 #include "logic/application/stateless.hpp"
 #include "logic/camera/camera.hpp"
@@ -106,6 +107,7 @@ private :
         , shy_engine_rasterizer_stateless
         , shy_engine_render
         , shy_engine_render_stateless
+        , shy_logic_amusement
         , shy_logic_application
         , shy_logic_application_stateless
         , shy_logic_camera

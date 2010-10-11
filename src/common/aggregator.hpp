@@ -6,6 +6,7 @@ template
     , template < typename mediator > class _engine_rasterizer_stateless
     , template < typename mediator > class _engine_render
     , template < typename mediator > class _engine_render_stateless
+    , template < typename mediator > class _logic_amusement
     , template < typename mediator > class _logic_application
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_camera
@@ -91,6 +92,7 @@ public :
         typedef _engine_rasterizer_stateless < mediator > engine_rasterizer_stateless ;
         typedef _engine_render < mediator > engine_render ;
         typedef _engine_render_stateless < mediator > engine_render_stateless ;
+        typedef _logic_amusement < mediator > logic_amusement ;
         typedef _logic_application < mediator > logic_application ;
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_camera < mediator > logic_camera ;
@@ -173,6 +175,7 @@ template
     , template < typename _mediator > class _engine_rasterizer_stateless
     , template < typename _mediator > class _engine_render
     , template < typename _mediator > class _engine_render_stateless
+    , template < typename _mediator > class _logic_amusement
     , template < typename _mediator > class _logic_application
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_camera
@@ -256,6 +259,7 @@ public :
     typedef _platform platform ;
     typedef typename platform_scheduler :: template module_wrapper < _engine_rasterizer , _max_rasterizer_messages > scheduled_engine_rasterizer ;
     typedef typename platform_scheduler :: template module_wrapper < _engine_render , _max_render_messages > scheduled_engine_render ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_amusement > scheduled_logic_amusement ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_camera > scheduled_logic_camera ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_controls > scheduled_logic_controls ;
@@ -314,6 +318,7 @@ public :
         , _engine_rasterizer_stateless
         , scheduled_engine_render :: template scheduled_module
         , _engine_render_stateless
+        , scheduled_logic_amusement :: template scheduled_module
         , scheduled_logic_application :: template scheduled_module
         , _logic_application_stateless
         , scheduled_logic_camera :: template scheduled_module
@@ -434,6 +439,7 @@ class shy_aggregator
     
     typedef typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > engine_rasterizer ;
     typedef typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > engine_render ;
+    typedef typename aggregator_types :: scheduled_logic_amusement :: template scheduled_module < mediator_type > logic_amusement ;
     typedef typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > logic_application ;
     typedef typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > logic_camera ;
     typedef typename aggregator_types :: scheduled_logic_controls :: template scheduled_module < mediator_type > logic_controls ;
@@ -499,6 +505,7 @@ private :
     engine_rasterizer _engine_rasterizer ;
     engine_render _engine_render ;
     engine_render_stateless _engine_render_stateless ;
+    logic_amusement _logic_amusement ;
     logic_application _logic_application ;
     logic_camera _logic_camera ;
     logic_controls _logic_controls ;
@@ -562,6 +569,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < engine_rasterizer > engine_rasterizer_ptr ;
     typename platform_pointer :: template pointer < engine_render > engine_render_ptr ;
     typename platform_pointer :: template pointer < engine_render_stateless > engine_render_stateless_ptr ;
+    typename platform_pointer :: template pointer < logic_amusement > logic_amusement_ptr ;
     typename platform_pointer :: template pointer < logic_application > logic_application_ptr ;
     typename platform_pointer :: template pointer < logic_camera > logic_camera_ptr ;
     typename platform_pointer :: template pointer < logic_controls > logic_controls_ptr ;
@@ -621,6 +629,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( engine_rasterizer_ptr , _engine_rasterizer ) ;
     platform_pointer :: bind ( engine_render_ptr , _engine_render );
     platform_pointer :: bind ( engine_render_stateless_ptr , _engine_render_stateless );
+    platform_pointer :: bind ( logic_amusement_ptr , _logic_amusement ) ;
     platform_pointer :: bind ( logic_application_ptr , _logic_application ) ;
     platform_pointer :: bind ( logic_camera_ptr , _logic_camera ) ;
     platform_pointer :: bind ( logic_controls_ptr , _logic_controls ) ;
@@ -679,6 +688,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
 
     platform_scheduler :: register_module_in_scheduler ( engine_rasterizer_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( engine_render_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_amusement_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_application_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_camera_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_controls_ptr , scheduler_ptr ) ;
@@ -732,6 +742,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         ( engine_rasterizer_ptr
         , engine_render_ptr
         , engine_render_stateless_ptr
+        , logic_amusement_ptr
         , logic_application_ptr
         , logic_camera_ptr
         , logic_controls_ptr

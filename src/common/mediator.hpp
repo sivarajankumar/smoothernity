@@ -28,6 +28,7 @@ private :
 
 	typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render engine_render ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement logic_amusement ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_controls logic_controls ;
@@ -213,6 +214,7 @@ private :
     public :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer > engine_rasterizer ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: engine_render > engine_render ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_amusement > logic_amusement ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_application > logic_application ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_camera > logic_camera ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_controls > logic_controls ;
@@ -277,6 +279,7 @@ public :
         ( typename platform_pointer :: template pointer < engine_rasterizer >
         , typename platform_pointer :: template pointer < engine_render >
         , typename platform_pointer :: template pointer < engine_render_stateless >
+        , typename platform_pointer :: template pointer < logic_amusement >
         , typename platform_pointer :: template pointer < logic_application >
         , typename platform_pointer :: template pointer < logic_camera >
         , typename platform_pointer :: template pointer < logic_controls >
@@ -385,6 +388,7 @@ void shy_mediator < mediator_types > :: register_modules
     ( typename platform_pointer :: template pointer < engine_rasterizer > arg_engine_rasterizer
     , typename platform_pointer :: template pointer < engine_render > arg_engine_render
     , typename platform_pointer :: template pointer < engine_render_stateless > arg_engine_render_stateless
+    , typename platform_pointer :: template pointer < logic_amusement > arg_logic_amusement
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
     , typename platform_pointer :: template pointer < logic_controls > arg_logic_controls
@@ -450,6 +454,7 @@ void shy_mediator < mediator_types > :: register_modules
     
     _receivers . engine_rasterizer = arg_engine_rasterizer ;
     _receivers . engine_render = arg_engine_render ;
+    _receivers . logic_amusement = arg_logic_amusement ;
     _receivers . logic_application = arg_logic_application ;
     _receivers . logic_camera = arg_logic_camera ;
     _receivers . logic_controls = arg_logic_controls ;
@@ -509,6 +514,7 @@ void shy_mediator < mediator_types > :: register_modules
 
     _receivers . engine_rasterizer . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . engine_render . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_amusement . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_application . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_camera . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_controls . get ( ) . set_mediator ( mediator_ptr ) ;
