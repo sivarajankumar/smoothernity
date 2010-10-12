@@ -9,6 +9,8 @@ class shy_logic_room_mesh
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
     class _logic_room_mesh_consts_type
@@ -20,6 +22,9 @@ class shy_logic_room_mesh
         num_fract color_g ;
         num_fract color_b ;
         num_fract color_a ;
+        num_fract position_x ;
+        num_fract position_y ;
+        num_fract position_z ;
     } ;
 
     class _logic_room_mesh_create_state_type
@@ -47,6 +52,7 @@ private :
     void _request_mesh_creation ( ) ;
     void _mesh_created ( ) ;
     void _fill_mesh_contents ( ) ;
+    void _transform_mesh ( ) ;
     void _reply_mesh_creation_finished ( ) ;
     void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
@@ -68,6 +74,9 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( color_g , 1 , 1 ) ;
     platform_math :: make_num_fract ( color_b , 1 , 1 ) ;
     platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
+    platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
+    platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
 }
 
 template < typename mediator >
@@ -143,6 +152,7 @@ template < typename mediator >
 void shy_logic_room_mesh < mediator > :: _mesh_created ( )
 {
     _fill_mesh_contents ( ) ;
+    _transform_mesh ( ) ;
     _reply_mesh_creation_finished ( ) ;
 }
 
@@ -201,6 +211,27 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
     typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _engine_render_mesh_create_state . mesh ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: _transform_mesh ( )
+{
+    num_fract position_x ;
+    num_fract position_y ;
+    num_fract position_z ;
+    matrix_data transform ;
+
+    position_x = _logic_room_mesh_consts . position_x ;
+    position_y = _logic_room_mesh_consts . position_y ;
+    position_z = _logic_room_mesh_consts . position_z ;
+
+    platform_matrix :: identity ( transform ) ;
+    platform_matrix :: set_origin ( transform , position_x , position_y , position_z ) ;
+
+    typename messages :: engine_render_mesh_set_transform msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    msg . transform = transform ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
