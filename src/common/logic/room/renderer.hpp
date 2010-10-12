@@ -31,7 +31,7 @@ public :
     void receive ( typename messages :: logic_room_mesh_render_reply ) ;
 private :
     void _proceed_with_render ( ) ;
-    void _render_requested ( ) ;
+    void _request_mesh_render ( ) ;
     void _mesh_rendered ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -58,8 +58,11 @@ void shy_logic_room_renderer < mediator > :: receive ( typename messages :: init
 template < typename mediator >
 void shy_logic_room_renderer < mediator > :: receive ( typename messages :: logic_room_render )
 {
-    _logic_room_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _proceed_with_render ( ) ;
+    if ( platform_conditions :: whole_is_true ( _logic_room_render_state . render_permitted ) )
+    {        
+        _logic_room_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
+        _proceed_with_render ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -85,7 +88,7 @@ void shy_logic_room_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_room_render_state . requested ) )
     {
         _logic_room_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _render_requested ( ) ;
+        _request_mesh_render ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_room_mesh_render_state . replied ) )
     {
@@ -95,13 +98,10 @@ void shy_logic_room_renderer < mediator > :: _proceed_with_render ( )
 }
 
 template < typename mediator >
-void shy_logic_room_renderer < mediator > :: _render_requested ( )
+void shy_logic_room_renderer < mediator > :: _request_mesh_render ( )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_room_render_state . render_permitted ) )
-    {
-        _logic_room_mesh_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: logic_room_mesh_render_request ( ) ) ;
-    }
+    _logic_room_mesh_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_room_mesh_render_request ( ) ) ;
 }
 
 template < typename mediator >
