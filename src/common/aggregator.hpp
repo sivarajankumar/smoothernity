@@ -71,6 +71,7 @@ template
     , template < typename mediator > class _logic_main_menu_selection_tracking_director
     , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_room
+    , template < typename mediator > class _logic_room_stateless
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_sound_stateless
     , template < typename mediator > class _logic_text
@@ -159,6 +160,7 @@ public :
         typedef _logic_main_menu_selection_tracking_director < mediator > logic_main_menu_selection_tracking_director ;
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_room < mediator > logic_room ;
+        typedef _logic_room_stateless < mediator > logic_room_stateless ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_sound_stateless < mediator > logic_sound_stateless ;
         typedef _logic_text < mediator > logic_text ;
@@ -244,6 +246,7 @@ template
     , template < typename _mediator > class _logic_main_menu_selection_tracking_director
     , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_room
+    , template < typename _mediator > class _logic_room_stateless
     , template < typename _mediator > class _logic_sound
     , template < typename _mediator > class _logic_sound_stateless
     , template < typename _mediator > class _logic_text
@@ -390,6 +393,7 @@ public :
         , scheduled_logic_main_menu_selection_tracking_director :: template scheduled_module
         , _logic_main_menu_stateless
         , scheduled_logic_room :: template scheduled_module
+        , _logic_room_stateless
         , scheduled_logic_sound :: template scheduled_module
         , _logic_sound_stateless
         , scheduled_logic_text :: template scheduled_module
@@ -424,6 +428,7 @@ public :
     typedef _logic_main_menu_selection_animation_stateless < mediator_type > logic_main_menu_selection_animation_stateless ;
     typedef _logic_main_menu_selection_stateless < mediator_type > logic_main_menu_selection_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
+    typedef _logic_room_stateless < mediator_type > logic_room_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
     typedef _logic_text_stateless < mediator_type > logic_text_stateless ;
     typedef _logic_title_stateless < mediator_type > logic_title_stateless ;
