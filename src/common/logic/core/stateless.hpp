@@ -104,6 +104,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_main_menu_selection_tracker . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_tracking_director . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
