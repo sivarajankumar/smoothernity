@@ -14,6 +14,7 @@ public :
         class logic_room_mesh_render_reply { } ;
         class logic_room_mesh_render_request { } ;
         class logic_room_render { } ;
+        class logic_room_render_permit { } ;
         class logic_room_update { } ;
     } ;
 
@@ -30,6 +31,7 @@ public :
         void send ( typename logic_room_messages :: logic_room_mesh_render_reply ) ;
         void send ( typename logic_room_messages :: logic_room_mesh_render_request ) ;
         void send ( typename logic_room_messages :: logic_room_render ) ;
+        void send ( typename logic_room_messages :: logic_room_render_permit ) ;
         void send ( typename logic_room_messages :: logic_room_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
@@ -114,7 +116,16 @@ void shy_logic_room_stateless < mediator >
 :: logic_room_sender < receivers >
 :: send ( typename logic_room_messages :: logic_room_render msg )
 {
-    _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_room_renderer . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_room_stateless < mediator >
+:: logic_room_sender < receivers >
+:: send ( typename logic_room_messages :: logic_room_render_permit msg )
+{
+    _receivers . get ( ) . logic_room_renderer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

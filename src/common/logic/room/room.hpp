@@ -31,7 +31,6 @@ public :
     void receive ( typename messages :: logic_room_creation_permit ) ;
     void receive ( typename messages :: logic_room_launch_permit ) ;
     void receive ( typename messages :: logic_room_mesh_creation_finished ) ;
-    void receive ( typename messages :: logic_room_render ) ;
     void receive ( typename messages :: logic_room_update ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -77,11 +76,7 @@ void shy_logic_room < mediator > :: receive ( typename messages :: logic_room_la
 template < typename mediator >
 void shy_logic_room < mediator > :: receive ( typename messages :: logic_room_mesh_creation_finished )
 {
-}
-
-template < typename mediator >
-void shy_logic_room < mediator > :: receive ( typename messages :: logic_room_render )
-{
+    _mediator . get ( ) . send ( typename messages :: logic_room_render_permit ( ) ) ;
 }
 
 template < typename mediator >
