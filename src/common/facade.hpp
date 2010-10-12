@@ -78,6 +78,7 @@
 #include "logic/main_menu/selection/tracker.hpp"
 #include "logic/main_menu/selection/tracking_director.hpp"
 #include "logic/main_menu/stateless.hpp"
+#include "logic/room/room.hpp"
 #include "logic/sound/sound.hpp"
 #include "logic/sound/stateless.hpp"
 #include "logic/text/stateless.hpp"
@@ -172,6 +173,7 @@ private :
         , shy_logic_main_menu_selection_tracker
         , shy_logic_main_menu_selection_tracking_director
         , shy_logic_main_menu_stateless
+        , shy_logic_room
         , shy_logic_sound
         , shy_logic_sound_stateless
         , shy_logic_text
