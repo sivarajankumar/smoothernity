@@ -42,6 +42,7 @@ class shy_logic_room_renderer
     } ;
 
 public :
+    shy_logic_room_renderer ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_room_render ) ;
@@ -49,6 +50,7 @@ public :
     void receive ( typename messages :: logic_room_mesh_render_reply ) ;
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
 private :
+    shy_logic_room_renderer < mediator > & operator= ( const shy_logic_room_renderer < mediator > & ) ;
     void _proceed_with_render ( ) ;
     void _render_requested ( ) ;
     void _request_perspective_projection ( ) ;
@@ -72,6 +74,11 @@ shy_logic_room_renderer < mediator > :: _logic_room_renderer_consts_type :: _log
     platform_math :: make_num_fract ( clear_color_r , 0 , 1 ) ;
     platform_math :: make_num_fract ( clear_color_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( clear_color_b , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_room_renderer < mediator > :: shy_logic_room_renderer ( )
+{
 }
 
 template < typename mediator >

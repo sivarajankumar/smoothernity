@@ -26,12 +26,15 @@ class shy_logic_room
     } ;
 
 public :
+    shy_logic_room ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_room_creation_permit ) ;
     void receive ( typename messages :: logic_room_launch_permit ) ;
     void receive ( typename messages :: logic_room_mesh_creation_finished ) ;
     void receive ( typename messages :: logic_room_update ) ;
+private :
+    shy_logic_room < mediator > & operator= ( const shy_logic_room < mediator > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -44,6 +47,11 @@ template < typename mediator >
 shy_logic_room < mediator > :: _logic_room_consts_type :: _logic_room_consts_type ( )
 {
     platform_math :: make_num_fract ( show_time , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_room < mediator > :: shy_logic_room ( )
+{
 }
 
 template < typename mediator >
