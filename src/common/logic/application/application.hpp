@@ -17,6 +17,7 @@ public :
     void receive ( typename messages :: logic_title_created ) ;
     void receive ( typename messages :: logic_title_finished ) ;
     void receive ( typename messages :: logic_text_prepared ) ;
+    void receive ( typename messages :: logic_main_menu_created ) ;
     void receive ( typename messages :: logic_main_menu_finished ) ;
     void receive ( typename messages :: logic_amusement_finished ) ;
 private :
@@ -74,8 +75,13 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
 {
     _title_active = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_render_active = _platform_math_consts . get ( ) . whole_true ;
-    _amusement_update_active = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application < mediator > :: receive ( typename messages :: logic_main_menu_created )
+{
+    _amusement_update_active = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_amusement_creation_permit ( ) ) ;
 }
 

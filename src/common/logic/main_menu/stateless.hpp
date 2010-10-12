@@ -26,6 +26,7 @@ public :
     public :
         class logic_main_menu_choice_row_selected { } ;
         class logic_main_menu_choice_void_selected { } ;
+        class logic_main_menu_created { } ;
         class logic_main_menu_creation_permit { } ;
         class logic_main_menu_finished { } ;
         class logic_main_menu_launch_permit { } ;
@@ -43,6 +44,7 @@ public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_choice_row_selected ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_choice_void_selected ) ;
+        void send ( typename logic_main_menu_messages :: logic_main_menu_created ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_creation_permit ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_finished ) ;
         void send ( typename logic_main_menu_messages :: logic_main_menu_launch_permit ) ;
@@ -80,6 +82,15 @@ void shy_logic_main_menu_stateless < mediator >
 :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
 {
     _receivers = arg_receivers ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_main_menu_stateless < mediator > 
+:: logic_main_menu_sender < receivers > 
+:: send ( typename logic_main_menu_messages :: logic_main_menu_created msg )
+{
+    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

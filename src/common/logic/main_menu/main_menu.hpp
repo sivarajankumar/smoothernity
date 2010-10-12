@@ -148,4 +148,5 @@ void shy_logic_main_menu < mediator > :: receive ( typename messages :: logic_ma
 {
     _created = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_main_menu_render_permit ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_created ( ) ) ;
 }
