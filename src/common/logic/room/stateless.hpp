@@ -7,6 +7,7 @@ public :
     {
     public :
         class logic_room_creation_permit { } ;
+        class logic_room_finished { } ;
         class logic_room_launch_permit { } ;
         class logic_room_render { } ;
         class logic_room_update { } ;
@@ -18,6 +19,7 @@ public :
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename logic_room_messages :: logic_room_creation_permit ) ;
+        void send ( typename logic_room_messages :: logic_room_finished ) ;
         void send ( typename logic_room_messages :: logic_room_launch_permit ) ;
         void send ( typename logic_room_messages :: logic_room_render ) ;
         void send ( typename logic_room_messages :: logic_room_update ) ;
@@ -42,6 +44,15 @@ void shy_logic_room_stateless < mediator >
 :: send ( typename logic_room_messages :: logic_room_creation_permit msg )
 {
     _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_room_stateless < mediator >
+:: logic_room_sender < receivers >
+:: send ( typename logic_room_messages :: logic_room_finished msg )
+{
+    _receivers . get ( ) . logic_amusement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
