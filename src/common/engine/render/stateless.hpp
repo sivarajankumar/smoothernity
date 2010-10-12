@@ -358,6 +358,7 @@ void shy_engine_render_stateless < mediator >
     _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_meshes_creator . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_mesh . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;

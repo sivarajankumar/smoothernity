@@ -9,6 +9,8 @@ public :
         class logic_room_creation_permit { } ;
         class logic_room_finished { } ;
         class logic_room_launch_permit { } ;
+        class logic_room_mesh_create { } ;
+        class logic_room_mesh_creation_finished { } ;
         class logic_room_render { } ;
         class logic_room_update { } ;
     } ;
@@ -21,6 +23,8 @@ public :
         void send ( typename logic_room_messages :: logic_room_creation_permit ) ;
         void send ( typename logic_room_messages :: logic_room_finished ) ;
         void send ( typename logic_room_messages :: logic_room_launch_permit ) ;
+        void send ( typename logic_room_messages :: logic_room_mesh_create ) ;
+        void send ( typename logic_room_messages :: logic_room_mesh_creation_finished ) ;
         void send ( typename logic_room_messages :: logic_room_render ) ;
         void send ( typename logic_room_messages :: logic_room_update ) ;
     private :
@@ -60,6 +64,24 @@ template < typename receivers >
 void shy_logic_room_stateless < mediator >
 :: logic_room_sender < receivers >
 :: send ( typename logic_room_messages :: logic_room_launch_permit msg )
+{
+    _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_room_stateless < mediator >
+:: logic_room_sender < receivers >
+:: send ( typename logic_room_messages :: logic_room_mesh_create msg )
+{
+    _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_room_stateless < mediator >
+:: logic_room_sender < receivers >
+:: send ( typename logic_room_messages :: logic_room_mesh_creation_finished msg )
 {
     _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
 }
