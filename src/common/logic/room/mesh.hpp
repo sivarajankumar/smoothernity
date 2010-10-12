@@ -41,6 +41,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_room_mesh_create ) ;
+    void receive ( typename messages :: logic_room_mesh_render_request ) ;
 private :
     void _proceed_with_creation ( ) ;
     void _request_mesh_creation ( ) ;
@@ -100,6 +101,16 @@ void shy_logic_room_mesh < mediator > :: receive ( typename messages :: logic_ro
 {
     _logic_room_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_creation ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: receive ( typename messages :: logic_room_mesh_render_request )
+{
+    typename messages :: engine_render_mesh_render render_msg ;
+    render_msg . mesh = _engine_render_mesh_create_state . mesh ;
+    _mediator . get ( ) . send ( render_msg ) ;
+
+    _mediator . get ( ) . send ( typename messages :: logic_room_mesh_render_reply ( ) ) ;
 }
 
 template < typename mediator >

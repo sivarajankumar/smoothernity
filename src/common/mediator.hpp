@@ -76,6 +76,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_tracking_director logic_main_menu_selection_tracking_director ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_room logic_room ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_room_mesh logic_room_mesh ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_room_renderer logic_room_renderer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound logic_sound ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text logic_text ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title logic_title ;
@@ -274,6 +275,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_tracking_director > logic_main_menu_selection_tracking_director ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_room > logic_room ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_room_mesh > logic_room_mesh ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_room_renderer > logic_room_renderer ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_sound > logic_sound ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_text > logic_text ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_title > logic_title ;
@@ -345,6 +347,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_stateless >
         , typename platform_pointer :: template pointer < logic_room >
         , typename platform_pointer :: template pointer < logic_room_mesh >
+        , typename platform_pointer :: template pointer < logic_room_renderer >
         , typename platform_pointer :: template pointer < logic_sound >
         , typename platform_pointer :: template pointer < logic_text >
         , typename platform_pointer :: template pointer < logic_text_stateless >
@@ -458,6 +461,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_stateless > arg_logic_main_menu_stateless
     , typename platform_pointer :: template pointer < logic_room > arg_logic_room
     , typename platform_pointer :: template pointer < logic_room_mesh > arg_logic_room_mesh
+    , typename platform_pointer :: template pointer < logic_room_renderer > arg_logic_room_renderer
     , typename platform_pointer :: template pointer < logic_sound > arg_logic_sound
     , typename platform_pointer :: template pointer < logic_text > arg_logic_text
     , typename platform_pointer :: template pointer < logic_text_stateless > arg_logic_text_stateless
@@ -522,6 +526,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_selection_tracking_director = arg_logic_main_menu_selection_tracking_director ;
     _receivers . logic_room = arg_logic_room ;
     _receivers . logic_room_mesh = arg_logic_room_mesh ;
+    _receivers . logic_room_renderer = arg_logic_room_renderer ;
     _receivers . logic_sound = arg_logic_sound ;
     _receivers . logic_text = arg_logic_text ;
     _receivers . logic_title = arg_logic_title ;
@@ -584,6 +589,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_main_menu_selection_tracking_director . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_room . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_room_mesh . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_room_renderer . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_sound . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_text . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_title . get ( ) . set_mediator ( mediator_ptr ) ;
