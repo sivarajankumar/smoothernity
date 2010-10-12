@@ -135,5 +135,6 @@ void shy_logic_room_stateless < mediator >
 :: send ( typename logic_room_messages :: logic_room_update msg )
 {
     _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
 }
 

@@ -25,6 +25,7 @@ class shy_logic_room_mesh
         num_fract position_x ;
         num_fract position_y ;
         num_fract position_z ;
+        num_fract rotation_period ;
     } ;
 
     class _logic_room_mesh_create_state_type
@@ -41,12 +42,19 @@ class shy_logic_room_mesh
         engine_render_mesh_id mesh ;
     } ;
 
+    class _logic_room_update_state_type
+    {
+    public :
+        num_fract time ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_room_mesh_create ) ;
     void receive ( typename messages :: logic_room_mesh_render_request ) ;
+    void receive ( typename messages :: logic_room_update ) ;
 private :
     void _proceed_with_creation ( ) ;
     void _request_mesh_creation ( ) ;
@@ -64,6 +72,7 @@ private :
     _logic_room_mesh_consts_type _logic_room_mesh_consts ;
 
     _logic_room_mesh_create_state_type _logic_room_mesh_create_state ;
+    _logic_room_update_state_type _logic_room_update_state ;
     _engine_render_mesh_create_state_type _engine_render_mesh_create_state ;
 } ;
 
@@ -77,6 +86,7 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
+    platform_math :: make_num_fract ( rotation_period , 1 , 1 ) ;
 }
 
 template < typename mediator >
@@ -91,6 +101,8 @@ void shy_logic_room_mesh < mediator > :: receive ( typename messages :: init )
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+
+    _logic_room_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
 
 template < typename mediator >
@@ -120,6 +132,15 @@ void shy_logic_room_mesh < mediator > :: receive ( typename messages :: logic_ro
     _mediator . get ( ) . send ( render_msg ) ;
 
     _mediator . get ( ) . send ( typename messages :: logic_room_mesh_render_reply ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: receive ( typename messages :: logic_room_update )
+{
+    num_fract time_step ;
+    platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
+    platform_math :: add_to_fract ( _logic_room_update_state . time , time_step ) ;
+    _transform_mesh ( ) ;
 }
 
 template < typename mediator >
@@ -215,16 +236,34 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
 template < typename mediator >
 void shy_logic_room_mesh < mediator > :: _transform_mesh ( )
 {
+    num_fract phase ;
+    num_fract axis_x_x ;
+    num_fract axis_x_y ;
+    num_fract axis_x_z ;
+    num_fract axis_z_x ;
+    num_fract axis_z_y ;
+    num_fract axis_z_z ;
     num_fract position_x ;
     num_fract position_y ;
     num_fract position_z ;
     matrix_data transform ;
 
+    axis_x_y = _platform_math_consts . get ( ) . fract_1 ;
+    axis_z_y = _platform_math_consts . get ( ) . fract_1 ; 
+
     position_x = _logic_room_mesh_consts . position_x ;
     position_y = _logic_room_mesh_consts . position_y ;
     position_z = _logic_room_mesh_consts . position_z ;
 
+    platform_math :: mul_fracts ( phase , _logic_room_update_state . time , _platform_math_consts . get ( ) . fract_2pi ) ;
+    platform_math :: cos ( axis_x_x , phase ) ;
+    platform_math :: sin ( axis_x_z , phase ) ;
+    platform_math :: mul_fracts ( axis_z_x , axis_x_z , _platform_math_consts . get ( ) . fract_minus_1 ) ;
+    platform_math :: mul_fracts ( axis_z_z , axis_x_x , _platform_math_consts . get ( ) . fract_1 ) ;
+
     platform_matrix :: identity ( transform ) ;
+    platform_matrix :: set_axis_x ( transform , axis_x_x , axis_x_y , axis_x_z ) ;
+    platform_matrix :: set_axis_z ( transform , axis_z_x , axis_z_y , axis_z_z ) ;
     platform_matrix :: set_origin ( transform , position_x , position_y , position_z ) ;
 
     typename messages :: engine_render_mesh_set_transform msg ;
