@@ -172,7 +172,6 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
     num_fract color_g ;
     num_fract color_b ;
     num_fract color_a ;
-    num_whole index ;
     
     x_left = _platform_math_consts . get ( ) . fract_minus_1 ;
     x_right = _platform_math_consts . get ( ) . fract_1 ;
