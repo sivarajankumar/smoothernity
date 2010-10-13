@@ -95,6 +95,12 @@ private :
     void _fill_mesh_contents ( ) ;
     void _transform_mesh ( ) ;
     void _reply_mesh_creation_finished ( ) ;
+    void _add_cube_sides ( ) ;
+    void _add_near_side ( ) ;
+    void _add_far_side ( ) ;
+    void _add_left_side ( ) ;
+    void _add_right_side ( ) ;
+    void _finalize_mesh ( ) ;
     void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
     void _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
@@ -448,9 +454,40 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
     
-    typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
-    mesh_finalize_msg . mesh = _engine_render_mesh_create_state . mesh ;
-    _mediator . get ( ) . send ( mesh_finalize_msg ) ;
+    _finalize_mesh ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: _add_cube_sides ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: _add_near_side ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: _add_right_side ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: _add_far_side ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: _add_left_side ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_room_mesh < mediator > :: _finalize_mesh ( )
+{
+    typename messages :: engine_render_mesh_finalize msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
