@@ -46,7 +46,7 @@ private :
 template < typename mediator >
 shy_logic_room < mediator > :: _logic_room_consts_type :: _logic_room_consts_type ( )
 {
-    platform_math :: make_num_fract ( show_time , 1 , 1 ) ;
+    platform_math :: make_num_fract ( show_time , 5 , 1 ) ;
 }
 
 template < typename mediator >

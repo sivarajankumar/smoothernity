@@ -85,7 +85,7 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
     platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
+    platform_math :: make_num_fract ( position_z , - 10 , 1 ) ;
     platform_math :: make_num_fract ( rotation_period , 1 , 1 ) ;
 }
 
@@ -164,7 +164,7 @@ void shy_logic_room_mesh < mediator > :: _request_mesh_creation ( )
     _engine_render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
     typename messages :: engine_render_mesh_create_request msg ;
     msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
-    msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_4 ;
+    msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_6 ;
     msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
     _mediator . get ( ) . send ( msg ) ;
 }
@@ -227,6 +227,9 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
     _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_3 , color_r , color_g , color_b , color_a ) ;
     _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_3 , u_right , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_3 , _platform_math_consts . get ( ) . whole_3 ) ;
+    
+    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_4 , _platform_math_consts . get ( ) . whole_0 ) ;
+    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_5 , _platform_math_consts . get ( ) . whole_1 ) ;
 
     typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _engine_render_mesh_create_state . mesh ;
@@ -248,8 +251,8 @@ void shy_logic_room_mesh < mediator > :: _transform_mesh ( )
     num_fract position_z ;
     matrix_data transform ;
 
-    axis_x_y = _platform_math_consts . get ( ) . fract_1 ;
-    axis_z_y = _platform_math_consts . get ( ) . fract_1 ; 
+    axis_x_y = _platform_math_consts . get ( ) . fract_0 ;
+    axis_z_y = _platform_math_consts . get ( ) . fract_0 ; 
 
     position_x = _logic_room_mesh_consts . position_x ;
     position_y = _logic_room_mesh_consts . position_y ;
