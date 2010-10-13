@@ -18,14 +18,44 @@ class shy_logic_room_mesh
     public :
         _logic_room_mesh_consts_type ( ) ;
     public :
-        num_fract color_r ;
-        num_fract color_g ;
-        num_fract color_b ;
-        num_fract color_a ;
+        num_fract color_right_r ;
+        num_fract color_right_g ;
+        num_fract color_right_b ;
+        num_fract color_right_a ;
+        num_fract color_left_r ;
+        num_fract color_left_g ;
+        num_fract color_left_b ;
+        num_fract color_left_a ;
+        num_fract color_near_r ;
+        num_fract color_near_g ;
+        num_fract color_near_b ;
+        num_fract color_near_a ;
+        num_fract color_far_r ;
+        num_fract color_far_g ;
+        num_fract color_far_b ;
+        num_fract color_far_a ;
+        num_fract color_top_r ;
+        num_fract color_top_g ;
+        num_fract color_top_b ;
+        num_fract color_top_a ;
+        num_fract color_bottom_r ;
+        num_fract color_bottom_g ;
+        num_fract color_bottom_b ;
+        num_fract color_bottom_a ;
         num_fract position_x ;
         num_fract position_y ;
         num_fract position_z ;
         num_fract rotation_period ;
+        num_fract x_left ;
+        num_fract x_right ;
+        num_fract y_top ;
+        num_fract y_bottom ;
+        num_fract z_near ;
+        num_fract z_far ;
+        num_fract u_left ;
+        num_fract u_right ;
+        num_fract v_top ;
+        num_fract v_bottom ;
     } ;
 
     class _logic_room_mesh_create_state_type
@@ -79,14 +109,55 @@ private :
 template < typename mediator >
 shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_mesh_consts_type ( )
 {
-    platform_math :: make_num_fract ( color_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_b , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_left_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_left_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_left_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_left_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( color_right_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_right_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_right_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_right_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( color_near_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_near_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_near_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_near_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( color_far_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_far_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_far_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_far_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( color_top_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_top_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_top_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_top_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( color_bottom_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_bottom_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_bottom_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( color_bottom_a , 1 , 1 ) ;
+
     platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_z , - 10 , 1 ) ;
     platform_math :: make_num_fract ( rotation_period , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( x_left , - 1 , 1 ) ;
+    platform_math :: make_num_fract ( x_right , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( y_top , 1 , 1 ) ; 
+    platform_math :: make_num_fract ( y_bottom , - 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
+    platform_math :: make_num_fract ( z_far , - 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( u_right , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
 }
 
 template < typename mediator >
@@ -163,8 +234,8 @@ void shy_logic_room_mesh < mediator > :: _request_mesh_creation ( )
 {
     _engine_render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
     typename messages :: engine_render_mesh_create_request msg ;
-    msg . vertices = _platform_math_consts . get ( ) . whole_4 ;
-    msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_6 ;
+    msg . vertices = _platform_math_consts . get ( ) . whole_8 ;
+    msg . triangle_strip_indices = _platform_math_consts . get ( ) . whole_8 ;
     msg . triangle_fan_indices = _platform_math_consts . get ( ) . whole_0 ;
     _mediator . get ( ) . send ( msg ) ;
 }
@@ -188,49 +259,122 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
     num_fract u_right ;
     num_fract v_top ;
     num_fract v_bottom ;
-    num_fract z ;
-    num_fract color_r ;
-    num_fract color_g ;
-    num_fract color_b ;
-    num_fract color_a ;
+    num_fract z_near ;
+    num_fract z_far ;
+    num_fract color_left_r ;
+    num_fract color_left_g ;
+    num_fract color_left_b ;
+    num_fract color_left_a ;
+    num_fract color_right_r ;
+    num_fract color_right_g ;
+    num_fract color_right_b ;
+    num_fract color_right_a ;
+    num_fract color_top_r ;
+    num_fract color_top_g ;
+    num_fract color_top_b ;
+    num_fract color_top_a ;
+    num_fract color_bottom_r ;
+    num_fract color_bottom_g ;
+    num_fract color_bottom_b ;
+    num_fract color_bottom_a ; 
+    num_fract color_near_r ;
+    num_fract color_near_g ;
+    num_fract color_near_b ;
+    num_fract color_near_a ; 
+    num_fract color_far_r ;
+    num_fract color_far_g ;
+    num_fract color_far_b ;
+    num_fract color_far_a ; 
     
-    x_left = _platform_math_consts . get ( ) . fract_minus_1 ;
-    x_right = _platform_math_consts . get ( ) . fract_1 ;
-    y_top = _platform_math_consts . get ( ) . fract_1 ;
-    y_bottom = _platform_math_consts . get ( ) . fract_minus_1 ;
-    u_left = _platform_math_consts . get ( ) . fract_0 ;
-    u_right = _platform_math_consts . get ( ) . fract_1 ;
-    v_top = _platform_math_consts . get ( ) . fract_1 ;
-    v_bottom = _platform_math_consts . get ( ) . fract_0 ;
-    z = _platform_math_consts . get ( ) . fract_0 ;
-    color_r = _logic_room_mesh_consts . color_r ;
-    color_g = _logic_room_mesh_consts . color_g ;
-    color_b = _logic_room_mesh_consts . color_b ;
-    color_a = _logic_room_mesh_consts . color_a ;
+    x_left = _logic_room_mesh_consts . x_left ;
+    x_right = _logic_room_mesh_consts . x_right ;
+    y_top = _logic_room_mesh_consts . y_top ; 
+    y_bottom = _logic_room_mesh_consts . y_bottom ; 
+    u_left = _logic_room_mesh_consts . u_left ;
+    u_right = _logic_room_mesh_consts . u_right ;
+    v_top = _logic_room_mesh_consts . v_top ;
+    v_bottom = _logic_room_mesh_consts . v_bottom ;
+    z_near = _logic_room_mesh_consts . z_near ;
+    z_far = _logic_room_mesh_consts . z_far ;
 
-    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_0 , x_left , y_top , z ) ;
-    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_0 , color_r , color_g , color_b , color_a ) ;
+    color_left_r = _logic_room_mesh_consts . color_left_r ;
+    color_left_g = _logic_room_mesh_consts . color_left_g ;
+    color_left_b = _logic_room_mesh_consts . color_left_b ;
+    color_left_a = _logic_room_mesh_consts . color_left_a ;
+
+    color_right_r = _logic_room_mesh_consts . color_right_r ;
+    color_right_g = _logic_room_mesh_consts . color_right_g ;
+    color_right_b = _logic_room_mesh_consts . color_right_b ;
+    color_right_a = _logic_room_mesh_consts . color_right_a ;
+
+    color_top_r = _logic_room_mesh_consts . color_top_r ;
+    color_top_g = _logic_room_mesh_consts . color_top_g ;
+    color_top_b = _logic_room_mesh_consts . color_top_b ;
+    color_top_a = _logic_room_mesh_consts . color_top_a ;
+
+    color_bottom_r = _logic_room_mesh_consts . color_bottom_r ;
+    color_bottom_g = _logic_room_mesh_consts . color_bottom_g ;
+    color_bottom_b = _logic_room_mesh_consts . color_bottom_b ;
+    color_bottom_a = _logic_room_mesh_consts . color_bottom_a ;
+
+    color_near_r = _logic_room_mesh_consts . color_near_r ;
+    color_near_g = _logic_room_mesh_consts . color_near_g ;
+    color_near_b = _logic_room_mesh_consts . color_near_b ;
+    color_near_a = _logic_room_mesh_consts . color_near_a ;
+
+    color_far_r = _logic_room_mesh_consts . color_far_r ;
+    color_far_g = _logic_room_mesh_consts . color_far_g ;
+    color_far_b = _logic_room_mesh_consts . color_far_b ;
+    color_far_a = _logic_room_mesh_consts . color_far_a ;
+
+    //
+    // near plane
+    //
+
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_0 , x_left , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_0 , color_near_r , color_near_g , color_near_b , color_near_a ) ;
     _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_0 , u_left , v_top ) ;
     _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_0 , _platform_math_consts . get ( ) . whole_0 ) ;
 
-    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_1 , x_left , y_bottom , z ) ;
-    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_1 , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_1 , x_left , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_1 , color_near_r , color_near_g , color_near_b , color_near_a ) ;
     _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_1 , u_left , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_1 , _platform_math_consts . get ( ) . whole_1 ) ;
 
-    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_2 , x_right , y_top , z ) ;
-    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_2 , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_2 , x_right , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_2 , color_near_r , color_near_g , color_near_b , color_near_a ) ;
     _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_2 , u_right , v_top ) ;
     _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_2 , _platform_math_consts . get ( ) . whole_2 ) ;
 
-    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_3 , x_right , y_bottom , z ) ;
-    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_3 , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_3 , x_right , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_3 , color_near_r , color_near_g , color_near_b , color_near_a ) ;
     _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_3 , u_right , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_3 , _platform_math_consts . get ( ) . whole_3 ) ;
     
-    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_4 , _platform_math_consts . get ( ) . whole_0 ) ;
-    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_5 , _platform_math_consts . get ( ) . whole_1 ) ;
+    //
+    // right plane
+    //
 
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_4 , x_right , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_4 , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_4 , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_4 , _platform_math_consts . get ( ) . whole_4 ) ;
+
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_5 , x_right , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_5 , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_5 , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_5 , _platform_math_consts . get ( ) . whole_5 ) ;
+    
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_6 , x_right , y_top , z_far ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_6 , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_6 , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_6 , _platform_math_consts . get ( ) . whole_6 ) ;
+
+    _mesh_set_vertex_position            ( _platform_math_consts . get ( ) . whole_7 , x_right , y_bottom , z_far ) ;
+    _mesh_set_vertex_color               ( _platform_math_consts . get ( ) . whole_7 , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( _platform_math_consts . get ( ) . whole_7 , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( _platform_math_consts . get ( ) . whole_7 , _platform_math_consts . get ( ) . whole_7 ) ;
+    
     typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _engine_render_mesh_create_state . mesh ;
     _mediator . get ( ) . send ( mesh_finalize_msg ) ;

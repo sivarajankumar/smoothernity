@@ -73,7 +73,7 @@ shy_logic_room_renderer < mediator > :: _logic_room_renderer_consts_type :: _log
 {
     platform_math :: make_num_fract ( clear_color_r , 0 , 1 ) ;
     platform_math :: make_num_fract ( clear_color_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( clear_color_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( clear_color_b , 1 , 3 ) ;
 }
 
 template < typename mediator >
