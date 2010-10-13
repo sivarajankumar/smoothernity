@@ -161,8 +161,8 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
     platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
 
-    platform_math :: make_num_whole ( vertices_count , 12 ) ;
-    platform_math :: make_num_whole ( triangle_strip_indices_count , 12 ) ;
+    platform_math :: make_num_whole ( vertices_count , 16 ) ;
+    platform_math :: make_num_whole ( triangle_strip_indices_count , 16 ) ;
 }
 
 template < typename mediator >
@@ -415,6 +415,34 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
 
     _mesh_set_vertex_position            ( index , x_left , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
+    _mesh_set_vertex_tex_coord           ( index , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( index , index ) ;
+    platform_math :: inc_whole           ( index ) ;
+    
+    //
+    // left plane
+    //
+
+    _mesh_set_vertex_position            ( index , x_left , y_top , z_far ) ;
+    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
+    _mesh_set_vertex_tex_coord           ( index , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( index , index ) ;
+    platform_math :: inc_whole           ( index ) ;
+
+    _mesh_set_vertex_position            ( index , x_left , y_bottom , z_far ) ;
+    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
+    _mesh_set_vertex_tex_coord           ( index , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( index , index ) ;
+    platform_math :: inc_whole           ( index ) ;
+    
+    _mesh_set_vertex_position            ( index , x_left , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
+    _mesh_set_vertex_tex_coord           ( index , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( index , index ) ;
+    platform_math :: inc_whole           ( index ) ;
+
+    _mesh_set_vertex_position            ( index , x_left , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
     _mesh_set_vertex_tex_coord           ( index , u_right , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( index , index ) ;
     platform_math :: inc_whole           ( index ) ;
