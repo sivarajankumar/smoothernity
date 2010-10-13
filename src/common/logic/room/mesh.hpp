@@ -64,6 +64,7 @@ class shy_logic_room_mesh
     {
     public :
         num_whole requested ;
+        num_whole current_index ;
     } ;
 
     class _engine_render_mesh_create_state_type
@@ -290,7 +291,7 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
     num_fract color_far_g ;
     num_fract color_far_b ;
     num_fract color_far_a ; 
-    num_whole index ;
+    num_whole current_index ;
     
     x_left = _logic_room_mesh_consts . x_left ;
     x_right = _logic_room_mesh_consts . x_right ;
@@ -333,119 +334,119 @@ void shy_logic_room_mesh < mediator > :: _fill_mesh_contents ( )
     color_far_b = _logic_room_mesh_consts . color_far_b ;
     color_far_a = _logic_room_mesh_consts . color_far_a ;
 
-    index = _platform_math_consts . get ( ) . whole_0 ;
+    current_index = _platform_math_consts . get ( ) . whole_0 ;
 
     //
     // near plane
     //
 
-    _mesh_set_vertex_position            ( index , x_left , y_top , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_left , y_bottom , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_right , y_top , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_right , y_bottom , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
     
     //
     // right plane
     //
 
-    _mesh_set_vertex_position            ( index , x_right , y_top , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_right , y_bottom , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
     
-    _mesh_set_vertex_position            ( index , x_right , y_top , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_top , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_right , y_bottom , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
     
     //
     // far plane
     //
 
-    _mesh_set_vertex_position            ( index , x_right , y_top , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_top , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_right , y_bottom , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
     
-    _mesh_set_vertex_position            ( index , x_left , y_top , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_top , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_left , y_bottom , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
     
     //
     // left plane
     //
 
-    _mesh_set_vertex_position            ( index , x_left , y_top , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_top , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_left , y_bottom , z_far ) ;
-    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_left , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_far ) ;
+    _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
     
-    _mesh_set_vertex_position            ( index , x_left , y_top , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_top ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_top , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( index , x_left , y_bottom , z_near ) ;
-    _mesh_set_vertex_color               ( index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( index , u_right , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( index , index ) ;
-    platform_math :: inc_whole           ( index ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_near ) ;
+    _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
     
     typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = _engine_render_mesh_create_state . mesh ;
