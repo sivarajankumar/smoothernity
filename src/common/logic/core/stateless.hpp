@@ -106,6 +106,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_renderer . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_room_texture . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_sound . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;

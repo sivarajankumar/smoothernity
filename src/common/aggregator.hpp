@@ -74,6 +74,7 @@ template
     , template < typename mediator > class _logic_room_mesh
     , template < typename mediator > class _logic_room_renderer
     , template < typename mediator > class _logic_room_stateless
+    , template < typename mediator > class _logic_room_texture
     , template < typename mediator > class _logic_sound
     , template < typename mediator > class _logic_sound_stateless
     , template < typename mediator > class _logic_text
@@ -165,6 +166,7 @@ public :
         typedef _logic_room_mesh < mediator > logic_room_mesh ;
         typedef _logic_room_renderer < mediator > logic_room_renderer ;
         typedef _logic_room_stateless < mediator > logic_room_stateless ;
+        typedef _logic_room_texture < mediator > logic_room_texture ;
         typedef _logic_sound < mediator > logic_sound ;
         typedef _logic_sound_stateless < mediator > logic_sound_stateless ;
         typedef _logic_text < mediator > logic_text ;
@@ -253,6 +255,7 @@ template
     , template < typename _mediator > class _logic_room_mesh
     , template < typename _mediator > class _logic_room_renderer
     , template < typename _mediator > class _logic_room_stateless
+    , template < typename _mediator > class _logic_room_texture
     , template < typename _mediator > class _logic_sound
     , template < typename _mediator > class _logic_sound_stateless
     , template < typename _mediator > class _logic_text
@@ -323,6 +326,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_room > scheduled_logic_room ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room_mesh > scheduled_logic_room_mesh ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room_renderer > scheduled_logic_room_renderer ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_room_texture > scheduled_logic_room_texture ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_sound > scheduled_logic_sound ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_text > scheduled_logic_text ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_title > scheduled_logic_title ;
@@ -404,6 +408,7 @@ public :
         , scheduled_logic_room_mesh :: template scheduled_module
         , scheduled_logic_room_renderer :: template scheduled_module
         , _logic_room_stateless
+        , scheduled_logic_room_texture :: template scheduled_module
         , scheduled_logic_sound :: template scheduled_module
         , _logic_sound_stateless
         , scheduled_logic_text :: template scheduled_module
@@ -513,6 +518,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_room :: template scheduled_module < mediator_type > logic_room ;
     typedef typename aggregator_types :: scheduled_logic_room_mesh :: template scheduled_module < mediator_type > logic_room_mesh ;
     typedef typename aggregator_types :: scheduled_logic_room_renderer :: template scheduled_module < mediator_type > logic_room_renderer ;
+    typedef typename aggregator_types :: scheduled_logic_room_texture :: template scheduled_module < mediator_type > logic_room_texture ;
     typedef typename aggregator_types :: scheduled_logic_sound :: template scheduled_module < mediator_type > logic_sound ;
     typedef typename aggregator_types :: scheduled_logic_text :: template scheduled_module < mediator_type > logic_text ;
     typedef typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > logic_title ;
@@ -586,6 +592,7 @@ private :
     logic_room _logic_room ;
     logic_room_mesh _logic_room_mesh ;
     logic_room_renderer _logic_room_renderer ;
+    logic_room_texture _logic_room_texture ;
     logic_sound _logic_sound ;
     logic_text _logic_text ;
     logic_text_stateless _logic_text_stateless ;
@@ -653,6 +660,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_room > logic_room_ptr ;
     typename platform_pointer :: template pointer < logic_room_mesh > logic_room_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_room_renderer > logic_room_renderer_ptr ;
+    typename platform_pointer :: template pointer < logic_room_texture > logic_room_texture_ptr ;
     typename platform_pointer :: template pointer < logic_sound > logic_sound_ptr ;
     typename platform_pointer :: template pointer < logic_text > logic_text_ptr ;
     typename platform_pointer :: template pointer < logic_text_stateless > logic_text_stateless_ptr ;
@@ -716,6 +724,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_room_ptr , _logic_room ) ;
     platform_pointer :: bind ( logic_room_mesh_ptr , _logic_room_mesh ) ;
     platform_pointer :: bind ( logic_room_renderer_ptr , _logic_room_renderer ) ;
+    platform_pointer :: bind ( logic_room_texture_ptr , _logic_room_texture ) ;
     platform_pointer :: bind ( logic_sound_ptr , _logic_sound ) ;
     platform_pointer :: bind ( logic_text_ptr , _logic_text ) ;
     platform_pointer :: bind ( logic_text_stateless_ptr , _logic_text_stateless ) ;
@@ -774,6 +783,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_room_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_mesh_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_renderer_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_room_texture_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_sound_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_text_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_title_ptr , scheduler_ptr ) ;
@@ -835,6 +845,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_room_ptr
         , logic_room_mesh_ptr
         , logic_room_renderer_ptr
+        , logic_room_texture_ptr
         , logic_sound_ptr
         , logic_text_ptr
         , logic_text_stateless_ptr
