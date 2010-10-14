@@ -33,6 +33,7 @@ public :
     void receive ( typename messages :: logic_room_launch_permit ) ;
     void receive ( typename messages :: logic_room_mesh_creation_finished ) ;
     void receive ( typename messages :: logic_room_update ) ;
+    void receive ( typename messages :: logic_room_texture_creation_finished ) ;
 private :
     shy_logic_room < mediator > & operator= ( const shy_logic_room < mediator > & ) ;
 private :
@@ -85,6 +86,11 @@ template < typename mediator >
 void shy_logic_room < mediator > :: receive ( typename messages :: logic_room_mesh_creation_finished )
 {
     _mediator . get ( ) . send ( typename messages :: logic_room_render_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_room < mediator > :: receive ( typename messages :: logic_room_texture_creation_finished )
+{
 }
 
 template < typename mediator >
