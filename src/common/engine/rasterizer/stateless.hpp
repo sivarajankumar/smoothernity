@@ -60,6 +60,7 @@ void shy_engine_rasterizer_stateless < mediator >
 :: send ( typename engine_rasterizer_messages :: engine_rasterizer_finalize_reply msg )
 {
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_room_texture . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
