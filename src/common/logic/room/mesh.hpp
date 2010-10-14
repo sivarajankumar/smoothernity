@@ -155,7 +155,7 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_z , 0 , 1 ) ;
-    platform_math :: make_num_fract ( rotation_period , 3 , 1 ) ;
+    platform_math :: make_num_fract ( rotation_period , 10 , 1 ) ;
     platform_math :: make_num_fract ( vertical_offset_period , 2 , 1 ) ;
     platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 1 ) ;
 
@@ -169,9 +169,9 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( z_far , - 10 , 1 ) ;
 
     platform_math :: make_num_fract ( u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( u_right , 10 , 1 ) ;
 
-    platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( v_top , 10 , 1 ) ;
     platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
 
     platform_math :: make_num_whole ( vertices_count , 27 ) ;
