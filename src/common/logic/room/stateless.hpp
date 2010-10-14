@@ -180,6 +180,5 @@ void shy_logic_room_stateless < mediator >
 {
     _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
-    _receivers . get ( ) . logic_room_texture . get ( ) . receive ( msg ) ;
 }
 

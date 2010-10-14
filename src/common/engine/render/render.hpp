@@ -36,7 +36,7 @@ class shy_engine_render
         num_whole max_vertices ;
         num_whole max_indices ;
         static const_int_32 max_meshes = 100 ;
-        static const_int_32 max_textures = 5 ;
+        static const_int_32 max_textures = 10 ;
     } ;
     
     class _texture_data

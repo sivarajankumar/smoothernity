@@ -432,6 +432,7 @@ void shy_engine_render_stateless < mediator >
     _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_room_texture . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

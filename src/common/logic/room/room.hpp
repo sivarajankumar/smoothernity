@@ -166,7 +166,7 @@ void shy_logic_room < mediator > :: _proceed_with_creation ( )
     }
     if ( platform_conditions :: whole_is_true ( _logic_room_mesh_create_state . replied ) )
     {
-        _logic_room_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_room_mesh_create_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _request_texture_create ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_room_texture_create_state . replied ) )
@@ -187,7 +187,7 @@ template < typename mediator >
 void shy_logic_room < mediator > :: _request_texture_create ( )
 {
     _logic_room_texture_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_room_texture_create_state ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_room_texture_create ( ) ) ;
 }
 
 template < typename mediator >
