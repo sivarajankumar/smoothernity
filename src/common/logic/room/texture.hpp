@@ -57,6 +57,8 @@ private :
     void _request_texture_create ( ) ;
     void _texture_received ( ) ;
     void _rasterizer_finalized ( ) ;
+    void _draw_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
+    void _use_texel ( texel_data ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -165,8 +167,10 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
     num_whole texture_height ;
     num_whole x_left ;
     num_whole x_right ;
+    num_whole x_center ;
     num_whole y_top ;
     num_whole y_bottom ;
+    num_whole y_center ;
     num_fract pen_intensity ;
     num_fract alpha ;
     texel_data pen ;
@@ -183,11 +187,10 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
     y_bottom = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: sub_wholes ( y_top , texture_height , _platform_math_consts . get ( ) . whole_1 ) ;
 
-    engine_render_stateless :: set_texel_color ( pen , pen_intensity , pen_intensity , pen_intensity , alpha ) ;
+    platform_math :: div_wholes ( x_center , texture_width , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_math :: div_wholes ( y_center , texture_height , _platform_math_consts . get ( ) . whole_2 ) ;
 
-    typename messages :: engine_rasterizer_use_texel texel_msg ;
-    texel_msg . texel = pen ;
-    _mediator . get ( ) . send ( texel_msg ) ;
+    engine_render_stateless :: set_texel_color ( pen , pen_intensity , pen_intensity , pen_intensity , alpha ) ;
 
     typename messages :: engine_rasterizer_use_texture texture_msg ;
     texture_msg . texture = texture ;
@@ -195,12 +198,8 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
     texture_msg . origin_y = _platform_math_consts . get ( ) . whole_0 ;
     _mediator . get ( ) . send ( texture_msg ) ;
 
-    typename messages :: engine_rasterizer_draw_rect draw_msg ;
-    draw_msg . x1 = x_left ;
-    draw_msg . x2 = x_right ;
-    draw_msg . y1 = y_bottom ;
-    draw_msg . y2 = y_top ;
-    _mediator . get ( ) . send ( draw_msg ) ;
+    _use_texel ( pen ) ;
+    _draw_rect ( x_left , y_bottom , x_right , y_top ) ;
 
     _engine_rasterizer_finalize_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: engine_rasterizer_finalize_request ( ) ) ;
@@ -214,5 +213,24 @@ void shy_logic_room_texture < mediator > :: _rasterizer_finalized ( )
     _mediator . get ( ) . send ( msg ) ;
 
     _mediator . get ( ) . send ( typename messages :: logic_room_texture_creation_finished ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_room_texture < mediator > :: _draw_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
+{
+    typename messages :: engine_rasterizer_draw_rect msg ;
+    msg . x1 = x1 ;
+    msg . y1 = y1 ;
+    msg . x2 = x2 ;
+    msg . y2 = y2 ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_room_texture < mediator > :: _use_texel ( texel_data texel )
+{
+    typename messages :: engine_rasterizer_use_texel msg ;
+    msg . texel = texel ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
