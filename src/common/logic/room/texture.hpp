@@ -1,6 +1,8 @@
 template < typename mediator >
 class shy_logic_room_texture
 {
+    typedef typename mediator :: engine_render_stateless engine_render_stateless ;
+    typedef typename mediator :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -10,11 +12,12 @@ class shy_logic_room_texture
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
 
-    class _logic_room_texture_consts
+    class _logic_room_texture_consts_type
     {
     public :
-        _logic_room_texture_consts ( ) ;
+        _logic_room_texture_consts_type ( ) ;
     public :
         num_fract pen_intensity ;
         num_fract paper_intensity ;
@@ -57,6 +60,8 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > _engine_render_stateless_consts ;
+    const _logic_room_texture_consts_type _logic_room_texture_consts ;
 
     _logic_room_texture_create_state_type _logic_room_texture_create_state ;
     _engine_render_texture_create_state_type _engine_render_texture_create_state ;
@@ -64,7 +69,7 @@ private :
 } ;
 
 template < typename mediator >
-shy_logic_room_texture < mediator > :: _logic_room_texture_consts :: _logic_room_texture_consts ( )
+shy_logic_room_texture < mediator > :: _logic_room_texture_consts_type :: _logic_room_texture_consts_type ( )
 {
     platform_math :: make_num_fract ( pen_intensity , 1 , 1 ) ;
     platform_math :: make_num_fract ( paper_intensity , 1 , 2 ) ;
@@ -82,6 +87,7 @@ void shy_logic_room_texture < mediator > :: receive ( typename messages :: init 
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . engine_render_stateless_consts ( _engine_render_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -95,6 +101,10 @@ void shy_logic_room_texture < mediator > :: receive ( typename messages :: logic
 template < typename mediator >
 void shy_logic_room_texture < mediator > :: receive ( typename messages :: logic_room_texture_select_request )
 {
+    typename messages :: engine_render_texture_select msg ;
+    msg . texture = _engine_render_texture_create_state . texture ;
+    _mediator . get ( ) . send ( msg ) ;
+
     _mediator . get ( ) . send ( typename messages :: logic_room_texture_select_reply ( ) ) ;
 }
 
@@ -151,6 +161,47 @@ void shy_logic_room_texture < mediator > :: _request_texture_create ( )
 template < typename mediator >
 void shy_logic_room_texture < mediator > :: _texture_received ( )
 {
+    num_whole texture_width ;
+    num_whole texture_height ;
+    num_whole x_left ;
+    num_whole x_right ;
+    num_whole y_top ;
+    num_whole y_bottom ;
+    num_fract pen_intensity ;
+    num_fract alpha ;
+    texel_data pen ;
+    engine_render_texture_id texture ;
+
+    texture_width = _engine_render_stateless_consts . get ( ) . texture_width ;
+    texture_height = _engine_render_stateless_consts . get ( ) . texture_height ;
+    pen_intensity = _logic_room_texture_consts . pen_intensity ;
+    alpha = _logic_room_texture_consts . alpha ;
+    texture = _engine_render_texture_create_state . texture ;
+
+    x_left = _platform_math_consts . get ( ) . whole_0 ;
+    platform_math :: sub_wholes ( x_right , texture_width , _platform_math_consts . get ( ) . whole_1 ) ;
+    y_bottom = _platform_math_consts . get ( ) . whole_0 ;
+    platform_math :: sub_wholes ( y_top , texture_height , _platform_math_consts . get ( ) . whole_1 ) ;
+
+    engine_render_stateless :: set_texel_color ( pen , pen_intensity , pen_intensity , pen_intensity , alpha ) ;
+
+    typename messages :: engine_rasterizer_use_texel texel_msg ;
+    texel_msg . texel = pen ;
+    _mediator . get ( ) . send ( texel_msg ) ;
+
+    typename messages :: engine_rasterizer_use_texture texture_msg ;
+    texture_msg . texture = texture ;
+    texture_msg . origin_x = _platform_math_consts . get ( ) . whole_0 ;
+    texture_msg . origin_y = _platform_math_consts . get ( ) . whole_0 ;
+    _mediator . get ( ) . send ( texture_msg ) ;
+
+    typename messages :: engine_rasterizer_draw_rect draw_msg ;
+    draw_msg . x1 = x_left ;
+    draw_msg . x2 = x_right ;
+    draw_msg . y1 = y_bottom ;
+    draw_msg . y2 = y_top ;
+    _mediator . get ( ) . send ( draw_msg ) ;
+
     _engine_rasterizer_finalize_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: engine_rasterizer_finalize_request ( ) ) ;
 }
