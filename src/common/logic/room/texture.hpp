@@ -46,6 +46,7 @@ class shy_logic_room_texture
     } ;
 
 public :
+    shy_logic_room_texture ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_room_texture_create ) ;
@@ -53,6 +54,7 @@ public :
     void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_rasterizer_finalize_reply ) ;
 private :
+    shy_logic_room_texture < mediator > & operator= ( const shy_logic_room_texture < mediator > & ) ;
     void _proceed_with_creation ( ) ;
     void _request_texture_create ( ) ;
     void _texture_received ( ) ;
@@ -76,6 +78,11 @@ shy_logic_room_texture < mediator > :: _logic_room_texture_consts_type :: _logic
     platform_math :: make_num_fract ( pen_intensity , 1 , 1 ) ;
     platform_math :: make_num_fract ( paper_intensity , 1 , 2 ) ;
     platform_math :: make_num_fract ( alpha , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_room_texture < mediator > :: shy_logic_room_texture ( )
+{
 }
 
 template < typename mediator >
