@@ -22,6 +22,7 @@ class shy_logic_room_texture
         num_fract pen_intensity ;
         num_fract paper_intensity ;
         num_fract alpha ;
+        num_whole grid_size ;
     } ;
 
     class _logic_room_texture_create_state_type
@@ -59,6 +60,7 @@ private :
     void _request_texture_create ( ) ;
     void _texture_received ( ) ;
     void _rasterizer_finalized ( ) ;
+    void _draw_cell ( num_whole x_left , num_whole y_bottom , num_whole x_right , num_whole y_top ) ;
     void _draw_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
     void _use_texel ( texel_data ) ;
 private :
@@ -174,22 +176,12 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
     num_whole texture_height ;
     num_whole x_left ;
     num_whole x_right ;
-    num_whole x_center ;
     num_whole y_top ;
     num_whole y_bottom ;
-    num_whole y_center ;
-    num_fract pen_intensity ;
-    num_fract paper_intensity ;
-    num_fract alpha ;
-    texel_data pen ;
-    texel_data paper ;
     engine_render_texture_id texture ;
 
     texture_width = _engine_render_stateless_consts . get ( ) . texture_width ;
     texture_height = _engine_render_stateless_consts . get ( ) . texture_height ;
-    pen_intensity = _logic_room_texture_consts . pen_intensity ;
-    paper_intensity = _logic_room_texture_consts . paper_intensity ;
-    alpha = _logic_room_texture_consts . alpha ;
     texture = _engine_render_texture_create_state . texture ;
 
     x_left = _platform_math_consts . get ( ) . whole_0 ;
@@ -197,23 +189,13 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
     y_bottom = _platform_math_consts . get ( ) . whole_0 ;
     platform_math :: sub_wholes ( y_top , texture_height , _platform_math_consts . get ( ) . whole_1 ) ;
 
-    platform_math :: div_wholes ( x_center , texture_width , _platform_math_consts . get ( ) . whole_2 ) ;
-    platform_math :: div_wholes ( y_center , texture_height , _platform_math_consts . get ( ) . whole_2 ) ;
-
-    engine_render_stateless :: set_texel_color ( pen , pen_intensity , pen_intensity , pen_intensity , alpha ) ;
-    engine_render_stateless :: set_texel_color ( paper , paper_intensity , paper_intensity , paper_intensity , alpha ) ;
-
     typename messages :: engine_rasterizer_use_texture texture_msg ;
     texture_msg . texture = texture ;
     texture_msg . origin_x = _platform_math_consts . get ( ) . whole_0 ;
     texture_msg . origin_y = _platform_math_consts . get ( ) . whole_0 ;
     _mediator . get ( ) . send ( texture_msg ) ;
 
-    _use_texel ( pen ) ;
-    _draw_rect ( x_left , y_bottom , x_right , y_top ) ;
-    _use_texel ( paper ) ;
-    _draw_rect ( x_left , y_bottom , x_center , y_center ) ;
-    _draw_rect ( x_center , y_center , x_right , y_top ) ;
+    _draw_cell ( x_left , y_bottom , x_right , y_top ) ;
 
     _engine_rasterizer_finalize_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: engine_rasterizer_finalize_request ( ) ) ;
@@ -227,6 +209,36 @@ void shy_logic_room_texture < mediator > :: _rasterizer_finalized ( )
     _mediator . get ( ) . send ( msg ) ;
 
     _mediator . get ( ) . send ( typename messages :: logic_room_texture_creation_finished ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_room_texture < mediator > :: _draw_cell ( num_whole x_left , num_whole y_bottom , num_whole x_right , num_whole y_top )
+{
+    num_whole x_center ;
+    num_whole y_center ;
+    num_fract pen_intensity ;
+    num_fract paper_intensity ;
+    num_fract alpha ;
+    texel_data pen ;
+    texel_data paper ;
+
+    pen_intensity = _logic_room_texture_consts . pen_intensity ;
+    paper_intensity = _logic_room_texture_consts . paper_intensity ;
+    alpha = _logic_room_texture_consts . alpha ;
+
+    engine_render_stateless :: set_texel_color ( pen , pen_intensity , pen_intensity , pen_intensity , alpha ) ;
+    engine_render_stateless :: set_texel_color ( paper , paper_intensity , paper_intensity , paper_intensity , alpha ) ;
+
+    platform_math :: add_wholes ( x_center , x_left , x_right ) ;
+    platform_math :: add_wholes ( y_center , y_bottom , y_top ) ;
+    platform_math :: div_whole_by ( x_center , _platform_math_consts . get ( ) . whole_2 ) ;
+    platform_math :: div_whole_by ( y_center , _platform_math_consts . get ( ) . whole_2 ) ;
+
+    _use_texel ( pen ) ;
+    _draw_rect ( x_left , y_bottom , x_right , y_top ) ;
+    _use_texel ( paper ) ;
+    _draw_rect ( x_left , y_bottom , x_center , y_center ) ;
+    _draw_rect ( x_center , y_center , x_right , y_top ) ;
 }
 
 template < typename mediator >
