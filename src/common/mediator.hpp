@@ -33,6 +33,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera logic_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_controls logic_controls ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_core logic_core ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_door logic_door ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget logic_fidget ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_game logic_game ;
@@ -233,6 +234,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_camera > logic_camera ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_controls > logic_controls ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_core > logic_core ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_door > logic_door ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_entities > logic_entities ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_fidget > logic_fidget ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_game > logic_game ;
@@ -302,6 +304,7 @@ public :
         , typename platform_pointer :: template pointer < logic_camera >
         , typename platform_pointer :: template pointer < logic_controls >
         , typename platform_pointer :: template pointer < logic_core >
+        , typename platform_pointer :: template pointer < logic_door >
         , typename platform_pointer :: template pointer < logic_entities >
         , typename platform_pointer :: template pointer < logic_fidget >
         , typename platform_pointer :: template pointer < logic_game >
@@ -417,6 +420,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_camera > arg_logic_camera
     , typename platform_pointer :: template pointer < logic_controls > arg_logic_controls
     , typename platform_pointer :: template pointer < logic_core > arg_logic_core
+    , typename platform_pointer :: template pointer < logic_door > arg_logic_door
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
     , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
     , typename platform_pointer :: template pointer < logic_game > arg_logic_game
@@ -487,6 +491,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_camera = arg_logic_camera ;
     _receivers . logic_controls = arg_logic_controls ;
     _receivers . logic_core = arg_logic_core ;
+    _receivers . logic_door = arg_logic_door ;
     _receivers . logic_entities = arg_logic_entities ;
     _receivers . logic_fidget = arg_logic_fidget ;
     _receivers . logic_game = arg_logic_game ;
@@ -551,6 +556,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_camera . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_controls . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_core . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_door . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_entities . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_fidget . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_game . get ( ) . set_mediator ( mediator_ptr ) ;
