@@ -54,10 +54,30 @@ class shy_logic_room_mesh
         num_fract y_bottom ;
         num_fract z_near ;
         num_fract z_far ;
-        num_fract u_left ;
-        num_fract u_right ;
-        num_fract v_top ;
-        num_fract v_bottom ;
+        num_fract right_side_u_left ;
+        num_fract right_side_u_right ;
+        num_fract right_side_v_top ;
+        num_fract right_side_v_bottom ;
+        num_fract left_side_u_left ;
+        num_fract left_side_u_right ;
+        num_fract left_side_v_top ;
+        num_fract left_side_v_bottom ;
+        num_fract near_side_u_left ;
+        num_fract near_side_u_right ;
+        num_fract near_side_v_top ;
+        num_fract near_side_v_bottom ;
+        num_fract far_side_u_left ;
+        num_fract far_side_u_right ;
+        num_fract far_side_v_top ;
+        num_fract far_side_v_bottom ;
+        num_fract top_side_u_left ;
+        num_fract top_side_u_right ;
+        num_fract top_side_v_top ;
+        num_fract top_side_v_bottom ;
+        num_fract bottom_side_u_left ;
+        num_fract bottom_side_u_right ;
+        num_fract bottom_side_v_top ;
+        num_fract bottom_side_v_bottom ;
         num_whole vertices_count ;
         num_whole triangle_strip_indices_count ;
     } ;
@@ -168,11 +188,35 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( z_near , 10 , 1 ) ;
     platform_math :: make_num_fract ( z_far , - 10 , 1 ) ;
 
-    platform_math :: make_num_fract ( u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( right_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( right_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( right_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( right_side_v_bottom , 0 , 1 ) ;
 
-    platform_math :: make_num_fract ( v_top , 1 , 1 ) ;
-    platform_math :: make_num_fract ( v_bottom , 0 , 1 ) ;
+    platform_math :: make_num_fract ( left_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( left_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( left_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( left_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( near_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( near_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( near_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( near_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( far_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( far_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( far_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( far_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( top_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( top_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( top_side_v_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( top_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( bottom_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( bottom_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( bottom_side_v_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( bottom_side_v_bottom , 0 , 1 ) ;
 
     platform_math :: make_num_whole ( vertices_count , 27 ) ;
     platform_math :: make_num_whole ( triangle_strip_indices_count , 27 ) ;
@@ -292,10 +336,10 @@ void shy_logic_room_mesh < mediator > :: _add_near_side ( )
     num_fract x_right ;
     num_fract y_top ;
     num_fract y_bottom ;
-    num_fract u_left ;
-    num_fract u_right ;
-    num_fract v_top ;
-    num_fract v_bottom ;
+    num_fract near_side_u_left ;
+    num_fract near_side_u_right ;
+    num_fract near_side_v_top ;
+    num_fract near_side_v_bottom ;
     num_fract z_near ;
     num_fract color_near_r ;
     num_fract color_near_g ;
@@ -307,10 +351,10 @@ void shy_logic_room_mesh < mediator > :: _add_near_side ( )
     x_right = _logic_room_mesh_consts . x_right ;
     y_top = _logic_room_mesh_consts . y_top ; 
     y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    u_left = _logic_room_mesh_consts . u_left ;
-    u_right = _logic_room_mesh_consts . u_right ;
-    v_top = _logic_room_mesh_consts . v_top ;
-    v_bottom = _logic_room_mesh_consts . v_bottom ;
+    near_side_u_left = _logic_room_mesh_consts . near_side_u_left ;
+    near_side_u_right = _logic_room_mesh_consts . near_side_u_right ;
+    near_side_v_top = _logic_room_mesh_consts . near_side_v_top ;
+    near_side_v_bottom = _logic_room_mesh_consts . near_side_v_bottom ;
     z_near = _logic_room_mesh_consts . z_near ;
 
     color_near_r = _logic_room_mesh_consts . color_near_r ;
@@ -322,25 +366,25 @@ void shy_logic_room_mesh < mediator > :: _add_near_side ( )
 
     _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , near_side_u_left , near_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , near_side_u_left , near_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , near_side_u_right , near_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , near_side_u_right , near_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
@@ -353,10 +397,10 @@ void shy_logic_room_mesh < mediator > :: _add_right_side ( )
     num_fract x_right ;
     num_fract y_top ;
     num_fract y_bottom ;
-    num_fract u_left ;
-    num_fract u_right ;
-    num_fract v_top ;
-    num_fract v_bottom ;
+    num_fract right_side_u_left ;
+    num_fract right_side_u_right ;
+    num_fract right_side_v_top ;
+    num_fract right_side_v_bottom ;
     num_fract z_near ;
     num_fract z_far ;
     num_fract color_right_r ;
@@ -368,10 +412,10 @@ void shy_logic_room_mesh < mediator > :: _add_right_side ( )
     x_right = _logic_room_mesh_consts . x_right ;
     y_top = _logic_room_mesh_consts . y_top ; 
     y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    u_left = _logic_room_mesh_consts . u_left ;
-    u_right = _logic_room_mesh_consts . u_right ;
-    v_top = _logic_room_mesh_consts . v_top ;
-    v_bottom = _logic_room_mesh_consts . v_bottom ;
+    right_side_u_left = _logic_room_mesh_consts . right_side_u_left ;
+    right_side_u_right = _logic_room_mesh_consts . right_side_u_right ;
+    right_side_v_top = _logic_room_mesh_consts . right_side_v_top ;
+    right_side_v_bottom = _logic_room_mesh_consts . right_side_v_bottom ;
     z_near = _logic_room_mesh_consts . z_near ;
     z_far = _logic_room_mesh_consts . z_far ;
 
@@ -384,25 +428,25 @@ void shy_logic_room_mesh < mediator > :: _add_right_side ( )
 
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , right_side_u_left , right_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , right_side_u_left , right_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
     
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , right_side_u_right , right_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_right_r , color_right_g , color_right_b , color_right_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , right_side_u_right , right_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
@@ -416,10 +460,10 @@ void shy_logic_room_mesh < mediator > :: _add_far_side ( )
     num_fract x_right ;
     num_fract y_top ;
     num_fract y_bottom ;
-    num_fract u_left ;
-    num_fract u_right ;
-    num_fract v_top ;
-    num_fract v_bottom ;
+    num_fract far_side_u_left ;
+    num_fract far_side_u_right ;
+    num_fract far_side_v_top ;
+    num_fract far_side_v_bottom ;
     num_fract z_far ;
     num_fract color_far_r ;
     num_fract color_far_g ;
@@ -431,10 +475,10 @@ void shy_logic_room_mesh < mediator > :: _add_far_side ( )
     x_right = _logic_room_mesh_consts . x_right ;
     y_top = _logic_room_mesh_consts . y_top ; 
     y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    u_left = _logic_room_mesh_consts . u_left ;
-    u_right = _logic_room_mesh_consts . u_right ;
-    v_top = _logic_room_mesh_consts . v_top ;
-    v_bottom = _logic_room_mesh_consts . v_bottom ;
+    far_side_u_left = _logic_room_mesh_consts . far_side_u_left ;
+    far_side_u_right = _logic_room_mesh_consts . far_side_u_right ;
+    far_side_v_top = _logic_room_mesh_consts . far_side_v_top ;
+    far_side_v_bottom = _logic_room_mesh_consts . far_side_v_bottom ;
     z_far = _logic_room_mesh_consts . z_far ;
 
     color_far_r = _logic_room_mesh_consts . color_far_r ;
@@ -446,25 +490,25 @@ void shy_logic_room_mesh < mediator > :: _add_far_side ( )
 
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , far_side_u_left , far_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , far_side_u_left , far_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
     
     _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , far_side_u_right , far_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_far_r , color_far_g , color_far_b , color_far_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , far_side_u_right , far_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
@@ -477,10 +521,10 @@ void shy_logic_room_mesh < mediator > :: _add_left_side ( )
     num_fract x_left ;
     num_fract y_top ;
     num_fract y_bottom ;
-    num_fract u_left ;
-    num_fract u_right ;
-    num_fract v_top ;
-    num_fract v_bottom ;
+    num_fract left_side_u_left ;
+    num_fract left_side_u_right ;
+    num_fract left_side_v_top ;
+    num_fract left_side_v_bottom ;
     num_fract z_near ;
     num_fract z_far ;
     num_fract color_left_r ;
@@ -492,10 +536,10 @@ void shy_logic_room_mesh < mediator > :: _add_left_side ( )
     x_left = _logic_room_mesh_consts . x_left ;
     y_top = _logic_room_mesh_consts . y_top ; 
     y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    u_left = _logic_room_mesh_consts . u_left ;
-    u_right = _logic_room_mesh_consts . u_right ;
-    v_top = _logic_room_mesh_consts . v_top ;
-    v_bottom = _logic_room_mesh_consts . v_bottom ;
+    left_side_u_left = _logic_room_mesh_consts . left_side_u_left ;
+    left_side_u_right = _logic_room_mesh_consts . left_side_u_right ;
+    left_side_v_top = _logic_room_mesh_consts . left_side_v_top ;
+    left_side_v_bottom = _logic_room_mesh_consts . left_side_v_bottom ;
     z_near = _logic_room_mesh_consts . z_near ;
     z_far = _logic_room_mesh_consts . z_far ;
 
@@ -507,25 +551,25 @@ void shy_logic_room_mesh < mediator > :: _add_left_side ( )
 
     _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , left_side_u_left , left_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , left_side_u_left , left_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
     
     _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , left_side_u_right , left_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_left_r , color_left_g , color_left_b , color_left_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , left_side_u_right , left_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
@@ -539,10 +583,10 @@ void shy_logic_room_mesh < mediator > :: _add_top_side ( )
     num_fract x_right ;
     num_fract y_top ;
     num_fract y_bottom ;
-    num_fract u_left ;
-    num_fract u_right ;
-    num_fract v_top ;
-    num_fract v_bottom ;
+    num_fract top_side_u_left ;
+    num_fract top_side_u_right ;
+    num_fract top_side_v_top ;
+    num_fract top_side_v_bottom ;
     num_fract z_near ;
     num_fract z_far ;
     num_fract color_top_r ;
@@ -555,10 +599,10 @@ void shy_logic_room_mesh < mediator > :: _add_top_side ( )
     x_right = _logic_room_mesh_consts . x_right ;
     y_top = _logic_room_mesh_consts . y_top ; 
     y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    u_left = _logic_room_mesh_consts . u_left ;
-    u_right = _logic_room_mesh_consts . u_right ;
-    v_top = _logic_room_mesh_consts . v_top ;
-    v_bottom = _logic_room_mesh_consts . v_bottom ;
+    top_side_u_left = _logic_room_mesh_consts . top_side_u_left ;
+    top_side_u_right = _logic_room_mesh_consts . top_side_u_right ;
+    top_side_v_top = _logic_room_mesh_consts . top_side_v_top ;
+    top_side_v_bottom = _logic_room_mesh_consts . top_side_v_bottom ;
     z_near = _logic_room_mesh_consts . z_near ;
     z_far = _logic_room_mesh_consts . z_far ;
 
@@ -570,25 +614,25 @@ void shy_logic_room_mesh < mediator > :: _add_top_side ( )
 
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_top_r , color_top_g , color_top_b , color_top_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , top_side_u_left , top_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_top_r , color_top_g , color_top_b , color_top_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , top_side_u_left , top_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
     
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_top_r , color_top_g , color_top_b , color_top_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , top_side_u_right , top_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_top_r , color_top_g , color_top_b , color_top_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , top_side_u_right , top_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
@@ -602,10 +646,10 @@ void shy_logic_room_mesh < mediator > :: _add_bottom_side ( )
     num_fract x_right ;
     num_fract y_top ;
     num_fract y_bottom ;
-    num_fract u_left ;
-    num_fract u_right ;
-    num_fract v_top ;
-    num_fract v_bottom ;
+    num_fract bottom_side_u_left ;
+    num_fract bottom_side_u_right ;
+    num_fract bottom_side_v_top ;
+    num_fract bottom_side_v_bottom ;
     num_fract z_near ;
     num_fract z_far ;
     num_fract color_bottom_r ;
@@ -618,10 +662,10 @@ void shy_logic_room_mesh < mediator > :: _add_bottom_side ( )
     x_right = _logic_room_mesh_consts . x_right ;
     y_top = _logic_room_mesh_consts . y_top ; 
     y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    u_left = _logic_room_mesh_consts . u_left ;
-    u_right = _logic_room_mesh_consts . u_right ;
-    v_top = _logic_room_mesh_consts . v_top ;
-    v_bottom = _logic_room_mesh_consts . v_bottom ;
+    bottom_side_u_left = _logic_room_mesh_consts . bottom_side_u_left ;
+    bottom_side_u_right = _logic_room_mesh_consts . bottom_side_u_right ;
+    bottom_side_v_top = _logic_room_mesh_consts . bottom_side_v_top ;
+    bottom_side_v_bottom = _logic_room_mesh_consts . bottom_side_v_bottom ;
     z_near = _logic_room_mesh_consts . z_near ;
     z_far = _logic_room_mesh_consts . z_far ;
 
@@ -637,19 +681,19 @@ void shy_logic_room_mesh < mediator > :: _add_bottom_side ( )
 
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_bottom_r , color_bottom_g , color_bottom_b , color_bottom_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , bottom_side_u_right , bottom_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_bottom_r , color_bottom_g , color_bottom_b , color_bottom_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , bottom_side_u_right , bottom_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_bottom_r , color_bottom_g , color_bottom_b , color_bottom_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , bottom_side_u_right , bottom_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
@@ -659,25 +703,25 @@ void shy_logic_room_mesh < mediator > :: _add_bottom_side ( )
 
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_bottom_r , color_bottom_g , color_bottom_b , color_bottom_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , bottom_side_u_right , bottom_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_bottom_r , color_bottom_g , color_bottom_b , color_bottom_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , bottom_side_u_right , bottom_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
     
     _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_far ) ;
     _mesh_set_vertex_color               ( current_index , color_bottom_r , color_bottom_g , color_bottom_b , color_bottom_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , bottom_side_u_left , bottom_side_v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_near ) ;
     _mesh_set_vertex_color               ( current_index , color_bottom_r , color_bottom_g , color_bottom_b , color_bottom_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , bottom_side_u_left , bottom_side_v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
