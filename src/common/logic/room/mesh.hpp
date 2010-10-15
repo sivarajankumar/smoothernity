@@ -190,22 +190,22 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
 
     platform_math :: make_num_fract ( right_side_u_left , 0 , 1 ) ;
     platform_math :: make_num_fract ( right_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( right_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( right_side_v_top , 1 , 3 ) ;
     platform_math :: make_num_fract ( right_side_v_bottom , 0 , 1 ) ;
 
     platform_math :: make_num_fract ( left_side_u_left , 0 , 1 ) ;
     platform_math :: make_num_fract ( left_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( left_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( left_side_v_top , 1 , 3 ) ;
     platform_math :: make_num_fract ( left_side_v_bottom , 0 , 1 ) ;
 
     platform_math :: make_num_fract ( near_side_u_left , 0 , 1 ) ;
     platform_math :: make_num_fract ( near_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( near_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( near_side_v_top , 1 , 3 ) ;
     platform_math :: make_num_fract ( near_side_v_bottom , 0 , 1 ) ;
 
     platform_math :: make_num_fract ( far_side_u_left , 0 , 1 ) ;
     platform_math :: make_num_fract ( far_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( far_side_v_top , 3 , 10 ) ;
+    platform_math :: make_num_fract ( far_side_v_top , 1 , 3 ) ;
     platform_math :: make_num_fract ( far_side_v_bottom , 0 , 1 ) ;
 
     platform_math :: make_num_fract ( top_side_u_left , 0 , 1 ) ;
