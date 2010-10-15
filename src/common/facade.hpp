@@ -25,6 +25,7 @@
 #include "logic/core/core.hpp"
 #include "logic/core/stateless.hpp"
 #include "logic/door/door.hpp"
+#include "logic/door/stateless.hpp"
 #include "logic/entities/entities.hpp"
 #include "logic/entities/stateless.hpp"
 #include "logic/fidget/fidget.hpp"
@@ -125,6 +126,7 @@ private :
         , shy_logic_core
         , shy_logic_core_stateless
         , shy_logic_door
+        , shy_logic_door_stateless
         , shy_logic_entities
         , shy_logic_entities_stateless
         , shy_logic_fidget

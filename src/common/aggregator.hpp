@@ -17,6 +17,7 @@ template
     , template < typename mediator > class _logic_core
     , template < typename mediator > class _logic_core_stateless
     , template < typename mediator > class _logic_door
+    , template < typename mediator > class _logic_door_stateless
     , template < typename mediator > class _logic_entities
     , template < typename mediator > class _logic_entities_stateless
     , template < typename mediator > class _logic_fidget
@@ -110,6 +111,7 @@ public :
         typedef _logic_core < mediator > logic_core ;
         typedef _logic_core_stateless < mediator > logic_core_stateless ;
         typedef _logic_door < mediator > logic_door ;
+        typedef _logic_door_stateless < mediator > logic_door_stateless ;
         typedef _logic_entities < mediator > logic_entities ;
         typedef _logic_entities_stateless < mediator > logic_entities_stateless ;
         typedef _logic_fidget < mediator > logic_fidget ;
@@ -200,6 +202,7 @@ template
     , template < typename _mediator > class _logic_core
     , template < typename _mediator > class _logic_core_stateless
     , template < typename _mediator > class _logic_door
+    , template < typename _mediator > class _logic_door_stateless
     , template < typename _mediator > class _logic_entities
     , template < typename _mediator > class _logic_entities_stateless
     , template < typename _mediator > class _logic_fidget
@@ -355,6 +358,7 @@ public :
         , scheduled_logic_core :: template scheduled_module
         , _logic_core_stateless
         , scheduled_logic_door :: template scheduled_module
+        , _logic_door_stateless
         , scheduled_logic_entities :: template scheduled_module
         , _logic_entities_stateless
         , scheduled_logic_fidget :: template scheduled_module
@@ -435,6 +439,7 @@ public :
     typedef _logic_camera_stateless < mediator_type > logic_camera_stateless ;
     typedef _logic_controls_stateless < mediator_type > logic_controls_stateless ;
     typedef _logic_core_stateless < mediator_type > logic_core_stateless ;
+    typedef _logic_door_stateless < mediator_type > logic_door_stateless ;
     typedef _logic_entities_stateless < mediator_type > logic_entities_stateless ;
     typedef _logic_fidget_stateless < mediator_type > logic_fidget_stateless ;
     typedef _logic_game_stateless < mediator_type > logic_game_stateless ;
