@@ -80,6 +80,7 @@ shy_logic_room_texture < mediator > :: _logic_room_texture_consts_type :: _logic
     platform_math :: make_num_fract ( pen_intensity , 1 , 1 ) ;
     platform_math :: make_num_fract ( paper_intensity , 1 , 2 ) ;
     platform_math :: make_num_fract ( alpha , 1 , 1 ) ;
+    platform_math :: make_num_whole ( grid_size , 10 ) ;
 }
 
 template < typename mediator >
@@ -174,20 +175,13 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
 {
     num_whole texture_width ;
     num_whole texture_height ;
-    num_whole x_left ;
-    num_whole x_right ;
-    num_whole y_top ;
-    num_whole y_bottom ;
+    num_whole grid_size ;
     engine_render_texture_id texture ;
 
     texture_width = _engine_render_stateless_consts . get ( ) . texture_width ;
     texture_height = _engine_render_stateless_consts . get ( ) . texture_height ;
     texture = _engine_render_texture_create_state . texture ;
-
-    x_left = _platform_math_consts . get ( ) . whole_0 ;
-    platform_math :: sub_wholes ( x_right , texture_width , _platform_math_consts . get ( ) . whole_1 ) ;
-    y_bottom = _platform_math_consts . get ( ) . whole_0 ;
-    platform_math :: sub_wholes ( y_top , texture_height , _platform_math_consts . get ( ) . whole_1 ) ;
+    grid_size = _logic_room_texture_consts . grid_size ;
 
     typename messages :: engine_rasterizer_use_texture texture_msg ;
     texture_msg . texture = texture ;
@@ -195,7 +189,44 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
     texture_msg . origin_y = _platform_math_consts . get ( ) . whole_0 ;
     _mediator . get ( ) . send ( texture_msg ) ;
 
-    _draw_cell ( x_left , y_bottom , x_right , y_top ) ;
+    for ( num_whole grid_y = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( grid_y , grid_size )
+        ; platform_math :: inc_whole ( grid_y )
+        )
+    {
+        for ( num_whole grid_x = _platform_math_consts . get ( ) . whole_0
+            ; platform_conditions :: whole_less_than_whole ( grid_x , grid_size )
+            ; platform_math :: inc_whole ( grid_x )
+            )
+        {
+            num_whole next_grid_x ;
+            num_whole next_grid_y ;
+            num_whole x_left ;
+            num_whole x_right ;
+            num_whole y_top ;
+            num_whole y_bottom ;
+
+            platform_math :: add_wholes ( next_grid_x , grid_x , _platform_math_consts . get ( ) . whole_1 ) ;
+            platform_math :: add_wholes ( next_grid_y , grid_y , _platform_math_consts . get ( ) . whole_1 ) ;
+
+            platform_math :: mul_wholes ( x_left , texture_width , grid_x ) ;
+            platform_math :: div_whole_by ( x_left , grid_size ) ;
+
+            platform_math :: mul_wholes ( x_right , texture_width , next_grid_x ) ;
+            platform_math :: div_whole_by ( x_right , grid_size ) ;
+
+            platform_math :: mul_wholes ( y_bottom , texture_height , grid_y ) ;
+            platform_math :: div_whole_by ( y_bottom , grid_size ) ;
+
+            platform_math :: mul_wholes ( y_top , texture_height , next_grid_y ) ;
+            platform_math :: div_whole_by ( y_top , grid_size ) ;
+
+            platform_math :: dec_whole ( x_right ) ;
+            platform_math :: dec_whole ( y_top ) ;
+
+            _draw_cell ( x_left , y_bottom , x_right , y_top ) ;
+        }
+    }
 
     _engine_rasterizer_finalize_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: engine_rasterizer_finalize_request ( ) ) ;
