@@ -1,10 +1,12 @@
 template < typename mediator >
 class shy_logic_door_mesh
 {
+    typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
@@ -31,6 +33,20 @@ class shy_logic_door_mesh
         num_fract position_z ;
     } ;
 
+    class _engine_render_mesh_create_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        engine_render_mesh_id mesh ;
+    } ;
+
+    class _logic_door_mesh_create_state_type
+    {
+    public :
+        num_whole requested ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
@@ -39,6 +55,9 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     const _logic_door_mesh_consts_type _logic_door_mesh_consts ;
+
+    _engine_render_mesh_create_state_type _engine_render_mesh_create_state ;
+    _logic_door_mesh_create_state_type _logic_door_mesh_create_state ;
 } ;
 
 template < typename mediator >
