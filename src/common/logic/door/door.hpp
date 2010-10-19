@@ -9,6 +9,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_creation_permit ) ;
+    void receive ( typename messages :: logic_door_mesh_creation_finished ) ;
     void receive ( typename messages :: logic_door_render ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -31,6 +32,12 @@ void shy_logic_door < mediator > :: receive ( typename messages :: init )
 
 template < typename mediator >
 void shy_logic_door < mediator > :: receive ( typename messages :: logic_door_creation_permit )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_door_mesh_create ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_door < mediator > :: receive ( typename messages :: logic_door_mesh_creation_finished )
 {
     _mediator . get ( ) . send ( typename messages :: logic_door_creation_finished ( ) ) ;
 }
