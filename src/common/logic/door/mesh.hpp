@@ -48,9 +48,12 @@ class shy_logic_door_mesh
     } ;
 
 public :
+    shy_logic_door_mesh ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_mesh_create ) ;
+private :
+    shy_logic_door_mesh < mediator > & operator= ( const shy_logic_door_mesh < mediator > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -82,6 +85,11 @@ shy_logic_door_mesh < mediator > :: _logic_door_mesh_consts_type :: _logic_door_
     platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_door_mesh < mediator > :: shy_logic_door_mesh ( )
+{
 }
 
 template < typename mediator >
