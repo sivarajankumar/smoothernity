@@ -4,6 +4,7 @@ class shy_logic_door_mesh
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
@@ -28,6 +29,9 @@ class shy_logic_door_mesh
         num_fract mesh_u_right ;
         num_fract mesh_v_bottom ;
         num_fract mesh_v_top ;
+        num_whole mesh_vertices_count ;
+        num_whole mesh_triangle_strip_indices_count ;
+        num_whole mesh_triangle_fan_indices_count ;
         num_fract position_x ;
         num_fract position_y ;
         num_fract position_z ;
@@ -52,8 +56,15 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_mesh_create ) ;
+    void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_door_mesh < mediator > & operator= ( const shy_logic_door_mesh < mediator > & ) ;
+    void _proceed_with_creation ( ) ;
+    void _request_mesh_create ( ) ;
+    void _mesh_created ( ) ;
+    void _fill_mesh_contents ( ) ;
+    void _finalize_mesh ( ) ;
+    void _reply_creation_finished ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -82,6 +93,10 @@ shy_logic_door_mesh < mediator > :: _logic_door_mesh_consts_type :: _logic_door_
     platform_math :: make_num_fract ( mesh_v_bottom , 0 , 1 ) ;
     platform_math :: make_num_fract ( mesh_v_top , 1 , 1 ) ;
 
+    platform_math :: make_num_whole ( mesh_vertices_count , 4 ) ;
+    platform_math :: make_num_whole ( mesh_triangle_strip_indices_count , 4 ) ;
+    platform_math :: make_num_whole ( mesh_triangle_fan_indices_count , 0 ) ;
+
     platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
@@ -108,6 +123,72 @@ void shy_logic_door_mesh < mediator > :: receive ( typename messages :: init )
 
 template < typename mediator >
 void shy_logic_door_mesh < mediator > :: receive ( typename messages :: logic_door_mesh_create )
+{
+    _logic_door_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;    
+    _proceed_with_creation ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: receive ( typename messages :: engine_render_mesh_create_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _engine_render_mesh_create_state . requested ) )
+    {
+        _engine_render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _engine_render_mesh_create_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _engine_render_mesh_create_state . mesh = msg . mesh ;
+        _proceed_with_creation ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _proceed_with_creation ( )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_door_mesh_create_state . requested ) )
+    {
+        _logic_door_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _request_mesh_create ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _engine_render_mesh_create_state . replied ) )
+    {
+        _engine_render_mesh_create_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _mesh_created ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _request_mesh_create ( )
+{
+    _engine_render_mesh_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    typename messages :: engine_render_mesh_create_request msg ;
+    msg . vertices = _logic_door_mesh_consts . mesh_vertices_count ;
+    msg . triangle_strip_indices = _logic_door_mesh_consts . mesh_triangle_strip_indices_count ;
+    msg . triangle_fan_indices = _logic_door_mesh_consts . mesh_triangle_fan_indices_count ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _mesh_created ( )
+{
+    _fill_mesh_contents ( ) ;
+    _finalize_mesh ( ) ;
+    _reply_creation_finished ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _fill_mesh_contents ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _finalize_mesh ( )
+{
+    typename messages :: engine_render_mesh_finalize msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _reply_creation_finished ( )
 {
     _mediator . get ( ) . send ( typename messages :: logic_door_mesh_creation_finished ( ) ) ;
 }
