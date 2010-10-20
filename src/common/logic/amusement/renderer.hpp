@@ -48,6 +48,7 @@ class shy_logic_amusement_renderer
     } ;
 
 public :
+    shy_logic_amusement_renderer ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_amusement_render ) ;
@@ -55,6 +56,7 @@ public :
     void receive ( typename messages :: logic_door_render_reply ) ;
     void receive ( typename messages :: logic_room_render_reply ) ;
 private :
+    shy_logic_amusement_renderer < mediator > & operator= ( const shy_logic_amusement_renderer < mediator > & ) ;
     void _proceed_with_render ( ) ;
     void _render_requested ( ) ;
     void _request_perspective_projection ( ) ;
@@ -78,6 +80,11 @@ shy_logic_amusement_renderer < mediator > :: _logic_amusement_renderer_consts_ty
     platform_math :: make_num_fract ( clear_color_r , 0 , 1 ) ;
     platform_math :: make_num_fract ( clear_color_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( clear_color_b , 1 , 3 ) ;
+}
+
+template < typename mediator >
+shy_logic_amusement_renderer < mediator > :: shy_logic_amusement_renderer ( )
+{
 }
 
 template < typename mediator >

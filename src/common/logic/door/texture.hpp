@@ -47,12 +47,14 @@ class shy_logic_door_texture
     } ;
 
 public :
+    shy_logic_door_texture ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_texture_create ) ;
     void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_rasterizer_finalize_reply ) ;
 private :
+    shy_logic_door_texture < mediator > & operator= ( const shy_logic_door_texture < mediator > & ) ;
     void _proceed_with_creation ( ) ;
     void _request_texture_create ( ) ;
     void _texture_created ( ) ;
@@ -81,6 +83,11 @@ shy_logic_door_texture < mediator > :: _logic_door_texture_consts_type :: _logic
     platform_math :: make_num_fract ( pen_g , 1 , 1 ) ;
     platform_math :: make_num_fract ( pen_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( pen_a , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_door_texture < mediator > :: shy_logic_door_texture ( )
+{
 }
 
 template < typename mediator >
@@ -200,9 +207,9 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
     _mediator . get ( ) . send ( texture_msg ) ;
 
     x_left = _platform_math_consts . get ( ) . whole_0 ;
-    x_right = texture_width ;
     y_bottom = _platform_math_consts . get ( ) . whole_0 ;
-    y_top = texture_height ;
+    platform_math :: sub_wholes ( x_right , texture_width , _platform_math_consts . get ( ) . whole_1 ) ;
+    platform_math :: sub_wholes ( y_top , texture_height , _platform_math_consts . get ( ) . whole_1 ) ;
 
     engine_render_stateless :: set_texel_color ( pen , pen_r , pen_g , pen_b , pen_a ) ;
 
