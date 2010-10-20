@@ -9,6 +9,8 @@ class shy_logic_door_mesh
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
     class _logic_door_mesh_consts_type
@@ -65,6 +67,7 @@ private :
     void _mesh_created ( ) ;
     void _fill_mesh_contents ( ) ;
     void _finalize_mesh ( ) ;
+    void _transform_mesh ( ) ;
     void _reply_creation_finished ( ) ;
     void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
@@ -186,6 +189,7 @@ void shy_logic_door_mesh < mediator > :: _mesh_created ( )
 {
     _fill_mesh_contents ( ) ;
     _finalize_mesh ( ) ;
+    _transform_mesh ( ) ;
     _reply_creation_finished ( ) ;
 }
 
@@ -224,27 +228,27 @@ void shy_logic_door_mesh < mediator > :: _fill_mesh_contents ( )
 
     current_index = _platform_math_consts . get ( ) . whole_0 ;
 
-    _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z ) ;
-    _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
-    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
-    platform_math :: inc_whole           ( current_index ) ;
-
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z ) ;
     _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
     _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
-    _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z ) ;
+    _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z ) ;
     _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
-    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 
     _mesh_set_vertex_position            ( current_index , x_right , y_top , z ) ;
     _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
     _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
+
+    _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z ) ;
+    _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
 }
@@ -254,6 +258,27 @@ void shy_logic_door_mesh < mediator > :: _finalize_mesh ( )
 {
     typename messages :: engine_render_mesh_finalize msg ;
     msg . mesh = _engine_render_mesh_create_state . mesh ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _transform_mesh ( )
+{
+    matrix_data transform ;
+    num_fract position_x ;
+    num_fract position_y ;
+    num_fract position_z ;
+
+    position_x = _logic_door_mesh_consts . position_x ;
+    position_y = _logic_door_mesh_consts . position_y ;
+    position_z = _logic_door_mesh_consts . position_z ;
+
+    platform_matrix :: identity ( transform ) ;
+    platform_matrix :: set_origin ( transform , position_x , position_y , position_z ) ;
+
+    typename messages :: engine_render_mesh_set_transform msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    msg . transform = transform ;
     _mediator . get ( ) . send ( msg ) ;
 }
 

@@ -159,6 +159,7 @@ void shy_logic_room_renderer < mediator > :: _prepare_render_state ( )
 {
     _mediator . get ( ) . send ( typename messages :: engine_render_texture_unselect ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: engine_render_blend_disable ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_disable_depth_test ( ) ) ;
 }
 
 template < typename mediator >
