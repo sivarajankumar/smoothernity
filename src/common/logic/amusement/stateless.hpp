@@ -70,7 +70,7 @@ void shy_logic_amusement_stateless < mediator >
 :: logic_amusement_sender < receivers >
 :: send ( typename logic_amusement_messages :: logic_amusement_render msg )
 {
-    _receivers . get ( ) . logic_amusement . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_amusement_renderer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
