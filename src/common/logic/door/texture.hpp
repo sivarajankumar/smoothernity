@@ -1,13 +1,29 @@
 template < typename mediator >
 class shy_logic_door_texture
 {
+    typedef typename mediator :: engine_render_stateless engine_render_stateless ;
+    typedef typename mediator :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
+
+    class _logic_door_texture_consts_type
+    {
+    public :
+        _logic_door_texture_consts_type ( ) ;
+    public :
+        num_fract pen_r ;
+        num_fract pen_g ;
+        num_fract pen_b ;
+        num_fract pen_a ;
+    } ;
 
     class _logic_door_texture_create_state_type
     {
@@ -45,14 +61,27 @@ private :
     void _reply_door_texture_created ( ) ;
     void _request_rasterizer_finalize ( ) ;
     void _rasterizer_finalized ( ) ;
+    void _use_texel ( texel_data ) ;
+    void _draw_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > _engine_render_stateless_consts ;
+    const _logic_door_texture_consts_type _logic_door_texture_consts ;
 
     _logic_door_texture_create_state_type _logic_door_texture_create_state ;
     _engine_render_texture_create_state_type _engine_render_texture_create_state ;
     _engine_rasterizer_finalize_state_type _engine_rasterizer_finalize_state ;
 } ;
+
+template < typename mediator >
+shy_logic_door_texture < mediator > :: _logic_door_texture_consts_type :: _logic_door_texture_consts_type ( )
+{
+    platform_math :: make_num_fract ( pen_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( pen_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( pen_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( pen_a , 1 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_door_texture < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -65,6 +94,7 @@ void shy_logic_door_texture < mediator > :: receive ( typename messages :: init 
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . engine_render_stateless_consts ( _engine_render_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -142,6 +172,61 @@ void shy_logic_door_texture < mediator > :: _rasterizer_finalized ( )
 template < typename mediator >
 void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
 {
+    num_fract pen_r ;
+    num_fract pen_g ;
+    num_fract pen_b ;
+    num_fract pen_a ;
+    num_whole x_left ;
+    num_whole x_right ;
+    num_whole y_bottom ;
+    num_whole y_top ;
+    num_whole texture_width ;
+    num_whole texture_height ;
+    engine_render_texture_id texture ;
+    texel_data pen ;
+
+    pen_r = _logic_door_texture_consts . pen_r ;
+    pen_g = _logic_door_texture_consts . pen_g ;
+    pen_b = _logic_door_texture_consts . pen_b ;
+    pen_a = _logic_door_texture_consts . pen_a ;
+    texture_width = _engine_render_stateless_consts . get ( ) . texture_width ;
+    texture_height = _engine_render_stateless_consts . get ( ) . texture_height ;
+    texture = _engine_render_texture_create_state . texture ;
+
+    typename messages :: engine_rasterizer_use_texture texture_msg ;
+    texture_msg . texture = texture ;
+    texture_msg . origin_x = _platform_math_consts . get ( ) . whole_0 ;
+    texture_msg . origin_y = _platform_math_consts . get ( ) . whole_0 ;
+    _mediator . get ( ) . send ( texture_msg ) ;
+
+    x_left = _platform_math_consts . get ( ) . whole_0 ;
+    x_right = texture_width ;
+    y_bottom = _platform_math_consts . get ( ) . whole_0 ;
+    y_top = texture_height ;
+
+    engine_render_stateless :: set_texel_color ( pen , pen_r , pen_g , pen_b , pen_a ) ;
+
+    _use_texel ( pen ) ;
+    _draw_rect ( x_left , y_bottom , x_right , y_top ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_texture < mediator > :: _use_texel ( texel_data texel )
+{
+    typename messages :: engine_rasterizer_use_texel msg ;
+    msg . texel = texel ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_texture < mediator > :: _draw_rect ( num_whole x1 , num_whole y1 , num_whole x2 , num_whole y2 )
+{
+    typename messages :: engine_rasterizer_draw_rect msg ;
+    msg . x1 = x1 ;
+    msg . y1 = y1 ;
+    msg . x2 = x2 ;
+    msg . y2 = y2 ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >
