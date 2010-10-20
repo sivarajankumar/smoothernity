@@ -27,6 +27,7 @@
 #include "logic/core/stateless.hpp"
 #include "logic/door/door.hpp"
 #include "logic/door/mesh.hpp"
+#include "logic/door/renderer.hpp"
 #include "logic/door/stateless.hpp"
 #include "logic/entities/entities.hpp"
 #include "logic/entities/stateless.hpp"
@@ -130,6 +131,7 @@ private :
         , shy_logic_core_stateless
         , shy_logic_door
         , shy_logic_door_mesh
+        , shy_logic_door_renderer
         , shy_logic_door_stateless
         , shy_logic_entities
         , shy_logic_entities_stateless
