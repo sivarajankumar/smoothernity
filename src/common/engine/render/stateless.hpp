@@ -430,10 +430,11 @@ void shy_engine_render_stateless < mediator >
 :: engine_render_sender < receivers > 
 :: send ( typename engine_render_messages :: engine_render_texture_create_reply msg )
 {
-    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_door_texture . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_texture . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_text . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
