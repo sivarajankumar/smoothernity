@@ -3,16 +3,63 @@ class shy_logic_amusement_renderer
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+
+    class _logic_amusement_renderer_consts_type
+    {
+    public :
+        _logic_amusement_renderer_consts_type ( ) ;
+    public :
+        num_fract clear_color_r ;
+        num_fract clear_color_g ;
+        num_fract clear_color_b ;
+    } ;
+
+    class _logic_amusement_render_state_type
+    {
+    public :
+        num_whole requested ;
+    } ;
+
+    class _logic_core_use_perspective_projection_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_amusement_render ) ;
+    void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
+private :
+    void _proceed_with_render ( ) ;
+    void _render_requested ( ) ;
+    void _request_perspective_projection ( ) ;
+    void _clear_screen ( ) ;
+    void _render_all ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_amusement_renderer_consts_type _logic_amusement_renderer_consts ;
+
+    _logic_amusement_render_state_type _logic_amusement_render_state ;
+    _logic_core_use_perspective_projection_state_type _logic_core_use_perspective_projection_state ;
 } ;
+
+template < typename mediator >
+shy_logic_amusement_renderer < mediator > :: _logic_amusement_renderer_consts_type :: _logic_amusement_renderer_consts_type ( )
+{
+    platform_math :: make_num_fract ( clear_color_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( clear_color_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( clear_color_b , 1 , 3 ) ;
+}
 
 template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -31,8 +78,64 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
 template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_amusement_render )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_room_render ( ) ) ;
-    _mediator . get ( ) . send ( typename messages :: logic_door_render ( ) ) ;
+    _logic_amusement_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _proceed_with_render ( ) ;
 }
 
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_core_use_perspective_projection_reply )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_core_use_perspective_projection_state . requested ) )
+    {
+        _logic_core_use_perspective_projection_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_core_use_perspective_projection_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_amusement_render_state . requested ) )
+    {
+        _logic_amusement_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _render_requested ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_core_use_perspective_projection_state . replied ) )
+    {
+        _logic_core_use_perspective_projection_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _render_all ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _render_requested ( )
+{
+    _clear_screen ( ) ;
+    _request_perspective_projection ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _render_all ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_door_render ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_room_render ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _request_perspective_projection ( )
+{
+    _logic_core_use_perspective_projection_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_core_use_perspective_projection_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _clear_screen ( )
+{
+    typename messages :: engine_render_clear_screen msg ;
+    msg . r = _logic_amusement_renderer_consts . clear_color_r ; 
+    msg . g = _logic_amusement_renderer_consts . clear_color_g ; 
+    msg . b = _logic_amusement_renderer_consts . clear_color_b ; 
+    _mediator . get ( ) . send ( msg ) ;
+}
 
