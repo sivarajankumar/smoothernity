@@ -13,8 +13,9 @@ public :
         class logic_room_mesh_creation_finished { } ;
         class logic_room_mesh_render_reply { } ;
         class logic_room_mesh_render_request { } ;
-        class logic_room_render { } ;
         class logic_room_render_permit { } ;
+        class logic_room_render_reply { } ;
+        class logic_room_render_request { } ;
         class logic_room_texture_create { } ;
         class logic_room_texture_creation_finished { } ;
         class logic_room_texture_select_reply { } ;
@@ -34,8 +35,9 @@ public :
         void send ( typename logic_room_messages :: logic_room_mesh_creation_finished ) ;
         void send ( typename logic_room_messages :: logic_room_mesh_render_reply ) ;
         void send ( typename logic_room_messages :: logic_room_mesh_render_request ) ;
-        void send ( typename logic_room_messages :: logic_room_render ) ;
         void send ( typename logic_room_messages :: logic_room_render_permit ) ;
+        void send ( typename logic_room_messages :: logic_room_render_reply ) ;
+        void send ( typename logic_room_messages :: logic_room_render_request ) ;
         void send ( typename logic_room_messages :: logic_room_texture_create ) ;
         void send ( typename logic_room_messages :: logic_room_texture_creation_finished ) ;
         void send ( typename logic_room_messages :: logic_room_texture_select_reply ) ;
@@ -122,7 +124,7 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_room_stateless < mediator >
 :: logic_room_sender < receivers >
-:: send ( typename logic_room_messages :: logic_room_render msg )
+:: send ( typename logic_room_messages :: logic_room_render_permit msg )
 {
     _receivers . get ( ) . logic_room_renderer . get ( ) . receive ( msg ) ;
 }
@@ -131,7 +133,16 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_room_stateless < mediator >
 :: logic_room_sender < receivers >
-:: send ( typename logic_room_messages :: logic_room_render_permit msg )
+:: send ( typename logic_room_messages :: logic_room_render_reply msg )
+{
+    _receivers . get ( ) . logic_amusement_renderer . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_room_stateless < mediator >
+:: logic_room_sender < receivers >
+:: send ( typename logic_room_messages :: logic_room_render_request msg )
 {
     _receivers . get ( ) . logic_room_renderer . get ( ) . receive ( msg ) ;
 }

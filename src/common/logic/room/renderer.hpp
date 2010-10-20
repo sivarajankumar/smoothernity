@@ -35,7 +35,7 @@ public :
     shy_logic_room_renderer ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
-    void receive ( typename messages :: logic_room_render ) ;
+    void receive ( typename messages :: logic_room_render_request ) ;
     void receive ( typename messages :: logic_room_render_permit ) ;
     void receive ( typename messages :: logic_room_mesh_render_reply ) ;
     void receive ( typename messages :: logic_room_texture_select_reply ) ;
@@ -76,7 +76,7 @@ void shy_logic_room_renderer < mediator > :: receive ( typename messages :: init
 }
 
 template < typename mediator >
-void shy_logic_room_renderer < mediator > :: receive ( typename messages :: logic_room_render )
+void shy_logic_room_renderer < mediator > :: receive ( typename messages :: logic_room_render_request )
 {
     if ( platform_conditions :: whole_is_true ( _logic_room_render_state . render_permitted ) )
     {        
@@ -164,5 +164,6 @@ void shy_logic_room_renderer < mediator > :: _prepare_render_state ( )
 template < typename mediator >
 void shy_logic_room_renderer < mediator > :: _reply_room_render ( )
 {
+    _mediator . get ( ) . send ( typename messages :: logic_room_render_reply ( ) ) ;
 }
 

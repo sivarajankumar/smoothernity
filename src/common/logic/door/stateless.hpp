@@ -12,7 +12,8 @@ public :
         class logic_door_mesh_creation_finished { } ;
         class logic_door_mesh_render_reply { } ;
         class logic_door_mesh_render_request { } ;
-        class logic_door_render { } ;
+        class logic_door_render_reply { } ;
+        class logic_door_render_request { } ;
     } ;
 
     template < typename receivers >
@@ -26,7 +27,8 @@ public :
         void send ( typename logic_door_messages :: logic_door_mesh_creation_finished ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_render_reply ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_render_request ) ;
-        void send ( typename logic_door_messages :: logic_door_render ) ;
+        void send ( typename logic_door_messages :: logic_door_render_reply ) ;
+        void send ( typename logic_door_messages :: logic_door_render_request ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -83,6 +85,7 @@ void shy_logic_door_stateless < mediator >
 :: logic_door_sender < receivers >
 :: send ( typename logic_door_messages :: logic_door_mesh_render_reply msg )
 {
+    _receivers . get ( ) . logic_door_renderer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -98,8 +101,17 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_door_stateless < mediator >
 :: logic_door_sender < receivers >
-:: send ( typename logic_door_messages :: logic_door_render msg )
+:: send ( typename logic_door_messages :: logic_door_render_reply msg )
 {
-    _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_amusement_renderer . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_door_stateless < mediator >
+:: logic_door_sender < receivers >
+:: send ( typename logic_door_messages :: logic_door_render_request msg )
+{
+    _receivers . get ( ) . logic_door_renderer . get ( ) . receive ( msg ) ;
 }
 
