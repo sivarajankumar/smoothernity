@@ -65,6 +65,10 @@ private :
     void _fill_mesh_contents ( ) ;
     void _finalize_mesh ( ) ;
     void _reply_creation_finished ( ) ;
+    void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
+    void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
+    void _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a ) ;
+    void _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -177,6 +181,61 @@ void shy_logic_door_mesh < mediator > :: _mesh_created ( )
 template < typename mediator >
 void shy_logic_door_mesh < mediator > :: _fill_mesh_contents ( )
 {
+    num_fract x_left ;
+    num_fract x_right ;
+    num_fract y_top ;
+    num_fract y_bottom ;
+    num_fract u_left ;
+    num_fract u_right ;
+    num_fract v_top ;
+    num_fract v_bottom ;
+    num_fract z ;
+    num_fract color_r ;
+    num_fract color_g ;
+    num_fract color_b ;
+    num_fract color_a ; 
+    num_whole current_index ;
+    
+    x_left = _logic_door_mesh_consts . mesh_x_left ;
+    x_right = _logic_door_mesh_consts . mesh_x_right ;
+    y_top = _logic_door_mesh_consts . mesh_y_top ; 
+    y_bottom = _logic_door_mesh_consts . mesh_y_bottom ; 
+    u_left = _logic_door_mesh_consts . mesh_u_left ;
+    u_right = _logic_door_mesh_consts . mesh_u_right ;
+    v_top = _logic_door_mesh_consts . mesh_v_top ;
+    v_bottom = _logic_door_mesh_consts . mesh_v_bottom ;
+    z = _logic_door_mesh_consts . mesh_z ;
+
+    color_r = _logic_door_mesh_consts . color_r ;
+    color_g = _logic_door_mesh_consts . color_g ;
+    color_b = _logic_door_mesh_consts . color_b ;
+    color_a = _logic_door_mesh_consts . color_a ;
+
+    current_index = _platform_math_consts . get ( ) . whole_0 ;
+
+    _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z ) ;
+    _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
+
+    _mesh_set_vertex_position            ( current_index , x_left , y_top , z ) ;
+    _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_left , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
+
+    _mesh_set_vertex_position            ( current_index , x_right , y_bottom , z ) ;
+    _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_bottom ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
+
+    _mesh_set_vertex_position            ( current_index , x_right , y_top , z ) ;
+    _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    _mesh_set_vertex_tex_coord           ( current_index , u_right , v_top ) ;
+    _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    platform_math :: inc_whole           ( current_index ) ;
 }
 
 template < typename mediator >
@@ -191,5 +250,51 @@ template < typename mediator >
 void shy_logic_door_mesh < mediator > :: _reply_creation_finished ( )
 {
     _mediator . get ( ) . send ( typename messages :: logic_door_mesh_creation_finished ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z )
+{
+    typename messages :: engine_render_mesh_set_vertex_position msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    msg . offset = offset ;
+    msg . x = x ;
+    msg . y = y ;
+    msg . z = z ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v )
+{
+    typename messages :: engine_render_mesh_set_vertex_tex_coord msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    msg . offset = offset ;
+    msg . u = u ;
+    msg . v = v ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _mesh_set_vertex_color ( num_whole offset , num_fract r , num_fract g , num_fract b , num_fract a )
+{
+    typename messages :: engine_render_mesh_set_vertex_color msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    msg . offset = offset ;
+    msg . r = r ;
+    msg . g = g ;
+    msg . b = b ;
+    msg . a = a ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: _mesh_set_triangle_strip_index_value ( num_whole offset , num_whole index )
+{
+    typename messages :: engine_render_mesh_set_triangle_strip_index_value msg ;
+    msg . mesh = _engine_render_mesh_create_state . mesh ;
+    msg . offset = offset ;
+    msg . index = index ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 

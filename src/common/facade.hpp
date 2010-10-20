@@ -15,6 +15,7 @@
 #include "engine/render/render.hpp"
 #include "engine/render/stateless.hpp"
 #include "logic/amusement/amusement.hpp"
+#include "logic/amusement/renderer.hpp"
 #include "logic/amusement/stateless.hpp"
 #include "logic/application/application.hpp"
 #include "logic/application/stateless.hpp"
@@ -117,6 +118,7 @@ private :
         , shy_engine_render
         , shy_engine_render_stateless
         , shy_logic_amusement
+        , shy_logic_amusement_renderer
         , shy_logic_amusement_stateless
         , shy_logic_application
         , shy_logic_application_stateless
