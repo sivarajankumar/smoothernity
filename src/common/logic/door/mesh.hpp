@@ -100,16 +100,16 @@ shy_logic_door_mesh < mediator > :: _logic_door_mesh_consts_type :: _logic_door_
     platform_math :: make_num_fract ( mesh_y_top , 1 , 2 ) ;
     platform_math :: make_num_fract ( mesh_z , 0 , 1 ) ;
 
-    platform_math :: make_num_fract ( mesh_u_top_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_u_top_left , 1 , 2 ) ;
     platform_math :: make_num_fract ( mesh_v_top_left , 1 , 1 ) ;
 
     platform_math :: make_num_fract ( mesh_u_bottom_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_v_bottom_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_v_bottom_left , 1 , 2 ) ;
 
     platform_math :: make_num_fract ( mesh_u_top_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_v_top_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_v_top_right , 1 , 2 ) ;
 
-    platform_math :: make_num_fract ( mesh_u_bottom_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_u_bottom_right , 1 , 2 ) ;
     platform_math :: make_num_fract ( mesh_v_bottom_right , 0 , 1 ) ;
 
     platform_math :: make_num_whole ( mesh_vertices_count , 4 ) ;
