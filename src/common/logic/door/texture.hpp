@@ -51,6 +51,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_texture_create ) ;
+    void receive ( typename messages :: logic_door_texture_select_request ) ;
     void receive ( typename messages :: engine_render_texture_create_reply ) ;
     void receive ( typename messages :: engine_rasterizer_finalize_reply ) ;
 private :
@@ -110,6 +111,15 @@ void shy_logic_door_texture < mediator > :: receive ( typename messages :: logic
 {
     _logic_door_texture_create_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_creation ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_texture < mediator > :: receive ( typename messages :: logic_door_texture_select_request )
+{
+    typename messages :: engine_render_texture_select msg ;
+    msg . texture = _engine_render_texture_create_state . texture ;
+    _mediator . get ( ) . send ( msg ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_door_texture_select_reply ( ) ) ;
 }
 
 template < typename mediator >

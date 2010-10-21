@@ -22,16 +22,25 @@ class shy_logic_door_renderer
         num_whole replied ;
     } ;
 
+    class _logic_door_texture_select_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_render_request ) ;
     void receive ( typename messages :: logic_door_mesh_render_reply ) ;
+    void receive ( typename messages :: logic_door_texture_select_reply ) ;
 private :
     void _proceed_with_render ( ) ;
     void _render_requested ( ) ;
     void _prepare_render_state ( ) ;
     void _request_mesh_render ( ) ;
+    void _request_texture_select ( ) ;
     void _reply_door_render ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -39,6 +48,7 @@ private :
 
     _logic_door_render_state_type _logic_door_render_state ;
     _logic_door_mesh_render_state_type _logic_door_mesh_render_state ;
+    _logic_door_texture_select_state_type _logic_door_texture_select_state ;
 } ;
 
 template < typename mediator >
@@ -74,12 +84,28 @@ void shy_logic_door_renderer < mediator > :: receive ( typename messages :: logi
 }
 
 template < typename mediator >
+void shy_logic_door_renderer < mediator > :: receive ( typename messages :: logic_door_texture_select_reply )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_door_texture_select_state . requested ) )
+    {
+        _logic_door_texture_select_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_door_texture_select_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_door_renderer < mediator > :: _proceed_with_render ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_door_render_state . requested ) )
     {
         _logic_door_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
         _render_requested ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_door_texture_select_state . replied ) )
+    {
+        _logic_door_texture_select_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _request_mesh_render ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_door_mesh_render_state . replied ) )
     {
@@ -92,7 +118,7 @@ template < typename mediator >
 void shy_logic_door_renderer < mediator > :: _render_requested ( )
 {
     _prepare_render_state ( ) ;
-    _request_mesh_render ( ) ;
+    _request_texture_select ( ) ;
 }
 
 template < typename mediator >
@@ -108,6 +134,13 @@ void shy_logic_door_renderer < mediator > :: _request_mesh_render ( )
 {
     _logic_door_mesh_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_door_mesh_render_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_renderer < mediator > :: _request_texture_select ( )
+{
+    _logic_door_texture_select_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_door_texture_select_request ( ) ) ;
 }
 
 template < typename mediator >

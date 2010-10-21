@@ -87,7 +87,7 @@ shy_logic_door_mesh < mediator > :: _logic_door_mesh_consts_type :: _logic_door_
 {
     platform_math :: make_num_fract ( color_r , 1 , 1 ) ;
     platform_math :: make_num_fract ( color_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( color_b , 1 , 1 ) ;
     platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
 
     platform_math :: make_num_fract ( mesh_x_left , - 1 , 2 ) ;

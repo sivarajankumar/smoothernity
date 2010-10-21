@@ -16,6 +16,8 @@ public :
         class logic_door_render_request { } ;
         class logic_door_texture_create { } ;
         class logic_door_texture_creation_finished { } ;
+        class logic_door_texture_select_reply { } ;
+        class logic_door_texture_select_request { } ;
     } ;
 
     template < typename receivers >
@@ -33,6 +35,8 @@ public :
         void send ( typename logic_door_messages :: logic_door_render_request ) ;
         void send ( typename logic_door_messages :: logic_door_texture_create ) ;
         void send ( typename logic_door_messages :: logic_door_texture_creation_finished ) ;
+        void send ( typename logic_door_messages :: logic_door_texture_select_reply ) ;
+        void send ( typename logic_door_messages :: logic_door_texture_select_request ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -135,5 +139,23 @@ void shy_logic_door_stateless < mediator >
 :: send ( typename logic_door_messages :: logic_door_texture_creation_finished msg )
 {
     _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_door_stateless < mediator >
+:: logic_door_sender < receivers >
+:: send ( typename logic_door_messages :: logic_door_texture_select_reply msg )
+{
+    _receivers . get ( ) . logic_door_renderer . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_door_stateless < mediator >
+:: logic_door_sender < receivers >
+:: send ( typename logic_door_messages :: logic_door_texture_select_request msg )
+{
+    _receivers . get ( ) . logic_door_texture . get ( ) . receive ( msg ) ;
 }
 
