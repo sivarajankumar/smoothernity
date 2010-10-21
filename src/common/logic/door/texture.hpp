@@ -23,6 +23,11 @@ class shy_logic_door_texture
         num_fract pen_g ;
         num_fract pen_b ;
         num_fract pen_a ;
+        num_fract paper_r ;
+        num_fract paper_g ;
+        num_fract paper_b ;
+        num_fract paper_a ;
+        num_whole stripes ;
     } ;
 
     class _logic_door_texture_create_state_type
@@ -84,6 +89,11 @@ shy_logic_door_texture < mediator > :: _logic_door_texture_consts_type :: _logic
     platform_math :: make_num_fract ( pen_g , 1 , 1 ) ;
     platform_math :: make_num_fract ( pen_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( pen_a , 1 , 1 ) ;
+    platform_math :: make_num_fract ( paper_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( paper_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( paper_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( paper_a , 1 , 1 ) ;
+    platform_math :: make_num_whole ( stripes , 5 ) ;
 }
 
 template < typename mediator >
@@ -193,19 +203,29 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
     num_fract pen_g ;
     num_fract pen_b ;
     num_fract pen_a ;
+    num_fract paper_r ;
+    num_fract paper_g ;
+    num_fract paper_b ;
+    num_fract paper_a ;
     num_whole x_left ;
     num_whole x_right ;
     num_whole y_bottom ;
     num_whole y_top ;
     num_whole texture_width ;
     num_whole texture_height ;
+    num_whole stripes ;
     engine_render_texture_id texture ;
     texel_data pen ;
+    texel_data paper ;
 
     pen_r = _logic_door_texture_consts . pen_r ;
     pen_g = _logic_door_texture_consts . pen_g ;
     pen_b = _logic_door_texture_consts . pen_b ;
     pen_a = _logic_door_texture_consts . pen_a ;
+    paper_r = _logic_door_texture_consts . paper_r ;
+    paper_g = _logic_door_texture_consts . paper_g ;
+    paper_b = _logic_door_texture_consts . paper_b ;
+    stripes = _logic_door_texture_consts . stripes ;
     texture_width = _engine_render_stateless_consts . get ( ) . texture_width ;
     texture_height = _engine_render_stateless_consts . get ( ) . texture_height ;
     texture = _engine_render_texture_create_state . texture ;
@@ -222,9 +242,35 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
     platform_math :: sub_wholes ( y_top , texture_height , _platform_math_consts . get ( ) . whole_1 ) ;
 
     engine_render_stateless :: set_texel_color ( pen , pen_r , pen_g , pen_b , pen_a ) ;
+    engine_render_stateless :: set_texel_color ( paper , paper_r , paper_g , paper_b , paper_a ) ;
+
+    _use_texel ( paper ) ;
+    _draw_rect ( x_left , y_bottom , x_right , y_top ) ;
 
     _use_texel ( pen ) ;
-    _draw_rect ( x_left , y_bottom , x_right , y_top ) ;
+    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
+        ; platform_conditions :: whole_less_than_whole ( i , stripes )
+        ; platform_math :: inc_whole ( i )
+        )
+    {
+        num_whole next_i ;
+        num_whole stripe_y_top ;
+        num_whole stripe_y_bottom ;
+        num_whole stripe_y_center ;
+
+        platform_math :: add_wholes ( next_i , i , _platform_math_consts . get ( ) . whole_1 ) ;
+
+        platform_math :: mul_wholes ( stripe_y_top , next_i , y_top ) ;
+        platform_math :: mul_wholes ( stripe_y_bottom , i , y_top ) ;
+
+        platform_math :: div_whole_by ( stripe_y_top , stripes ) ;
+        platform_math :: div_whole_by ( stripe_y_bottom , stripes ) ;
+
+        platform_math :: add_wholes ( stripe_y_center , stripe_y_top , stripe_y_bottom ) ;
+        platform_math :: div_whole_by ( stripe_y_center , _platform_math_consts . get ( ) . whole_2 ) ;
+
+        _draw_rect ( x_left , stripe_y_bottom , x_right , stripe_y_center ) ;
+    }
 }
 
 template < typename mediator >
