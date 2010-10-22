@@ -93,7 +93,7 @@ shy_logic_door_texture < mediator > :: _logic_door_texture_consts_type :: _logic
     platform_math :: make_num_fract ( paper_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( paper_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( paper_a , 1 , 1 ) ;
-    platform_math :: make_num_whole ( stripes , 5 ) ;
+    platform_math :: make_num_whole ( stripes , 9 ) ;
 }
 
 template < typename mediator >
@@ -214,6 +214,7 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
     num_whole texture_width ;
     num_whole texture_height ;
     num_whole stripes ;
+    num_whole colored_stripe ;
     engine_render_texture_id texture ;
     texel_data pen ;
     texel_data paper ;
@@ -248,6 +249,7 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
     _draw_rect ( x_left , y_bottom , x_right , y_top ) ;
 
     _use_texel ( pen ) ;
+    colored_stripe = _platform_math_consts . get ( ) . whole_false ;
     for ( num_whole i = _platform_math_consts . get ( ) . whole_0
         ; platform_conditions :: whole_less_than_whole ( i , stripes )
         ; platform_math :: inc_whole ( i )
@@ -256,7 +258,6 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
         num_whole next_i ;
         num_whole stripe_y_top ;
         num_whole stripe_y_bottom ;
-        num_whole stripe_y_center ;
 
         platform_math :: add_wholes ( next_i , i , _platform_math_consts . get ( ) . whole_1 ) ;
 
@@ -266,10 +267,13 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
         platform_math :: div_whole_by ( stripe_y_top , stripes ) ;
         platform_math :: div_whole_by ( stripe_y_bottom , stripes ) ;
 
-        platform_math :: add_wholes ( stripe_y_center , stripe_y_top , stripe_y_bottom ) ;
-        platform_math :: div_whole_by ( stripe_y_center , _platform_math_consts . get ( ) . whole_2 ) ;
-
-        _draw_rect ( x_left , stripe_y_bottom , x_right , stripe_y_center ) ;
+        if ( platform_conditions :: whole_is_true ( colored_stripe ) )
+        {
+            colored_stripe = _platform_math_consts . get ( ) . whole_false ;
+            _draw_rect ( x_left , stripe_y_bottom , x_right , stripe_y_top ) ;
+        }
+        else
+            colored_stripe = _platform_math_consts . get ( ) . whole_true ;
     }
 }
 
