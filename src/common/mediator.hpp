@@ -96,6 +96,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: logic_camera_messages logic_camera_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_controls_stateless :: logic_controls_messages logic_controls_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless :: logic_core_messages logic_core_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_animation_stateless :: logic_door_animation_messages logic_door_animation_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_stateless :: logic_door_messages logic_door_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless :: logic_entities_messages logic_entities_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: logic_fidget_messages logic_fidget_messages ;
@@ -123,6 +124,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: template logic_camera_sender < receivers > logic_camera_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_controls_stateless :: template logic_controls_sender < receivers > logic_controls_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_core_stateless :: template logic_core_sender < receivers > logic_core_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_animation_stateless :: template logic_door_animation_sender < receivers > logic_door_animation_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_stateless :: template logic_door_sender < receivers > logic_door_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities_stateless :: template logic_entities_sender < receivers > logic_entities_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_fidget_stateless :: template logic_fidget_sender < receivers > logic_fidget_sender ;
@@ -152,6 +154,7 @@ public :
     , public logic_camera_messages
     , public logic_controls_messages
     , public logic_core_messages
+    , public logic_door_animation_messages
     , public logic_door_messages
     , public logic_entities_messages
     , public logic_fidget_messages
@@ -183,6 +186,7 @@ private :
     , public logic_camera_sender
     , public logic_controls_sender
     , public logic_core_sender
+    , public logic_door_animation_sender
     , public logic_door_sender
     , public logic_entities_sender
     , public logic_fidget_sender
@@ -211,6 +215,7 @@ private :
         using logic_camera_sender :: send ;
         using logic_controls_sender :: send ;
         using logic_core_sender :: send ;
+        using logic_door_animation_sender :: send ;
         using logic_door_sender :: send ;
         using logic_entities_sender :: send ;
         using logic_fidget_sender :: send ;
@@ -404,6 +409,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_camera_sender :: set_receivers ( arg_receivers ) ;
     logic_controls_sender :: set_receivers ( arg_receivers ) ;
     logic_core_sender :: set_receivers ( arg_receivers ) ;
+    logic_door_animation_sender :: set_receivers ( arg_receivers ) ;
     logic_door_sender :: set_receivers ( arg_receivers ) ;
     logic_entities_sender :: set_receivers ( arg_receivers ) ;
     logic_fidget_sender :: set_receivers ( arg_receivers ) ;
