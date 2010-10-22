@@ -34,6 +34,12 @@ void shy_logic_door_animation < mediator > :: receive ( typename messages :: log
 {
     typename messages :: logic_door_animation_transform_reply msg ;
     platform_matrix :: identity ( msg . transform ) ;
+    platform_matrix :: set_origin 
+        ( msg . transform 
+        , _platform_math_consts . get ( ) . fract_0
+        , _platform_math_consts . get ( ) . fract_0
+        , _platform_math_consts . get ( ) . fract_minus_3
+        ) ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
