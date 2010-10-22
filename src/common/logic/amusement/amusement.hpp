@@ -41,12 +41,14 @@ void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_am
 template < typename mediator >
 void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_amusement_launch_permit )
 {
+    _mediator . get ( ) . send ( typename messages :: logic_door_launch_permit ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_room_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_amusement_update )
 {
+    _mediator . get ( ) . send ( typename messages :: logic_door_update ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_room_update ( ) ) ;
 }
 

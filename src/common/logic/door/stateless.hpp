@@ -9,6 +9,7 @@ public :
     public :
         class logic_door_creation_finished { } ;
         class logic_door_creation_permit { } ;
+        class logic_door_launch_permit { } ;
         class logic_door_mesh_create { } ;
         class logic_door_mesh_creation_finished { } ;
         class logic_door_mesh_render_reply { } ;
@@ -21,6 +22,7 @@ public :
         class logic_door_texture_creation_finished { } ;
         class logic_door_texture_select_reply { } ;
         class logic_door_texture_select_request { } ;
+        class logic_door_update { } ;
     } ;
 
     template < typename receivers >
@@ -30,6 +32,7 @@ public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename logic_door_messages :: logic_door_creation_finished ) ;
         void send ( typename logic_door_messages :: logic_door_creation_permit ) ;
+        void send ( typename logic_door_messages :: logic_door_launch_permit ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_create ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_creation_finished ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_render_reply ) ;
@@ -42,6 +45,7 @@ public :
         void send ( typename logic_door_messages :: logic_door_texture_creation_finished ) ;
         void send ( typename logic_door_messages :: logic_door_texture_select_reply ) ;
         void send ( typename logic_door_messages :: logic_door_texture_select_request ) ;
+        void send ( typename logic_door_messages :: logic_door_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -70,6 +74,15 @@ template < typename receivers >
 void shy_logic_door_stateless < mediator >
 :: logic_door_sender < receivers >
 :: send ( typename logic_door_messages :: logic_door_creation_permit msg )
+{
+    _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_door_stateless < mediator >
+:: logic_door_sender < receivers >
+:: send ( typename logic_door_messages :: logic_door_launch_permit msg )
 {
     _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
 }
@@ -180,5 +193,14 @@ void shy_logic_door_stateless < mediator >
 :: send ( typename logic_door_messages :: logic_door_texture_select_request msg )
 {
     _receivers . get ( ) . logic_door_texture . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_door_stateless < mediator >
+:: logic_door_sender < receivers >
+:: send ( typename logic_door_messages :: logic_door_update msg )
+{
+    _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
 }
 
