@@ -38,9 +38,6 @@ class shy_logic_door_mesh
         num_whole mesh_vertices_count ;
         num_whole mesh_triangle_strip_indices_count ;
         num_whole mesh_triangle_fan_indices_count ;
-        num_fract position_x ;
-        num_fract position_y ;
-        num_fract position_z ;
     } ;
 
     class _engine_render_mesh_create_state_type
@@ -72,7 +69,6 @@ private :
     void _mesh_created ( ) ;
     void _fill_mesh_contents ( ) ;
     void _finalize_mesh ( ) ;
-    void _transform_mesh ( ) ;
     void _reply_creation_finished ( ) ;
     void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
     void _mesh_set_vertex_tex_coord ( num_whole offset , num_fract u , num_fract v ) ;
@@ -116,10 +112,6 @@ shy_logic_door_mesh < mediator > :: _logic_door_mesh_consts_type :: _logic_door_
     platform_math :: make_num_whole ( mesh_vertices_count , 4 ) ;
     platform_math :: make_num_whole ( mesh_triangle_strip_indices_count , 4 ) ;
     platform_math :: make_num_whole ( mesh_triangle_fan_indices_count , 0 ) ;
-
-    platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
 }
 
 template < typename mediator >
@@ -210,7 +202,6 @@ void shy_logic_door_mesh < mediator > :: _mesh_created ( )
 {
     _fill_mesh_contents ( ) ;
     _finalize_mesh ( ) ;
-    _transform_mesh ( ) ;
     _reply_creation_finished ( ) ;
 }
 
@@ -287,27 +278,6 @@ void shy_logic_door_mesh < mediator > :: _finalize_mesh ( )
 {
     typename messages :: engine_render_mesh_finalize msg ;
     msg . mesh = _engine_render_mesh_create_state . mesh ;
-    _mediator . get ( ) . send ( msg ) ;
-}
-
-template < typename mediator >
-void shy_logic_door_mesh < mediator > :: _transform_mesh ( )
-{
-    matrix_data transform ;
-    num_fract position_x ;
-    num_fract position_y ;
-    num_fract position_z ;
-
-    position_x = _logic_door_mesh_consts . position_x ;
-    position_y = _logic_door_mesh_consts . position_y ;
-    position_z = _logic_door_mesh_consts . position_z ;
-
-    platform_matrix :: identity ( transform ) ;
-    platform_matrix :: set_origin ( transform , position_x , position_y , position_z ) ;
-
-    typename messages :: engine_render_mesh_set_transform msg ;
-    msg . mesh = _engine_render_mesh_create_state . mesh ;
-    msg . transform = transform ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
