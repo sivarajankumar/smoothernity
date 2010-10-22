@@ -37,6 +37,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door logic_door ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_animation logic_door_animation ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_mesh logic_door_mesh ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_placement logic_door_placement ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_renderer logic_door_renderer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_texture logic_door_texture ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_entities logic_entities ;
@@ -253,6 +254,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_door > logic_door ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_door_animation > logic_door_animation ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_door_mesh > logic_door_mesh ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_door_placement > logic_door_placement ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_door_renderer > logic_door_renderer ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_door_texture > logic_door_texture ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_entities > logic_entities ;
@@ -328,6 +330,7 @@ public :
         , typename platform_pointer :: template pointer < logic_door >
         , typename platform_pointer :: template pointer < logic_door_animation >
         , typename platform_pointer :: template pointer < logic_door_mesh >
+        , typename platform_pointer :: template pointer < logic_door_placement >
         , typename platform_pointer :: template pointer < logic_door_renderer >
         , typename platform_pointer :: template pointer < logic_door_texture >
         , typename platform_pointer :: template pointer < logic_entities >
@@ -451,6 +454,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_door > arg_logic_door
     , typename platform_pointer :: template pointer < logic_door_animation > arg_logic_door_animation
     , typename platform_pointer :: template pointer < logic_door_mesh > arg_logic_door_mesh
+    , typename platform_pointer :: template pointer < logic_door_placement > arg_logic_door_placement
     , typename platform_pointer :: template pointer < logic_door_renderer > arg_logic_door_renderer
     , typename platform_pointer :: template pointer < logic_door_texture > arg_logic_door_texture
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
@@ -527,6 +531,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_door = arg_logic_door ;
     _receivers . logic_door_animation = arg_logic_door_animation ;
     _receivers . logic_door_mesh = arg_logic_door_mesh ;
+    _receivers . logic_door_placement = arg_logic_door_placement ;
     _receivers . logic_door_renderer = arg_logic_door_renderer ;
     _receivers . logic_door_texture = arg_logic_door_texture ;
     _receivers . logic_entities = arg_logic_entities ;
@@ -597,6 +602,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_door . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_door_animation . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_door_mesh . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_door_placement . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_door_renderer . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_door_texture . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_entities . get ( ) . set_mediator ( mediator_ptr ) ;

@@ -29,6 +29,7 @@
 #include "logic/door/animation/stateless.hpp"
 #include "logic/door/door.hpp"
 #include "logic/door/mesh.hpp"
+#include "logic/door/placement.hpp"
 #include "logic/door/renderer.hpp"
 #include "logic/door/stateless.hpp"
 #include "logic/door/texture.hpp"
@@ -136,6 +137,7 @@ private :
         , shy_logic_door_animation
         , shy_logic_door_animation_stateless
         , shy_logic_door_mesh
+        , shy_logic_door_placement
         , shy_logic_door_renderer
         , shy_logic_door_stateless
         , shy_logic_door_texture

@@ -10,6 +10,7 @@ public :
         class logic_door_creation_permit { } ;
         class logic_door_mesh_create { } ;
         class logic_door_mesh_creation_finished { } ;
+        class logic_door_mesh_place { } ;
         class logic_door_mesh_render_reply { } ;
         class logic_door_mesh_render_request { } ;
         class logic_door_render_reply { } ;
@@ -29,6 +30,7 @@ public :
         void send ( typename logic_door_messages :: logic_door_creation_permit ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_create ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_creation_finished ) ;
+        void send ( typename logic_door_messages :: logic_door_mesh_place ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_render_reply ) ;
         void send ( typename logic_door_messages :: logic_door_mesh_render_request ) ;
         void send ( typename logic_door_messages :: logic_door_render_reply ) ;
@@ -85,6 +87,14 @@ void shy_logic_door_stateless < mediator >
 :: send ( typename logic_door_messages :: logic_door_mesh_creation_finished msg )
 {
     _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_door_stateless < mediator >
+:: logic_door_sender < receivers >
+:: send ( typename logic_door_messages :: logic_door_mesh_place msg )
+{
 }
 
 template < typename mediator >
