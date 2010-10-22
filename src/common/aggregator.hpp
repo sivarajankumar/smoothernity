@@ -18,6 +18,7 @@ template
     , template < typename mediator > class _logic_core
     , template < typename mediator > class _logic_core_stateless
     , template < typename mediator > class _logic_door
+    , template < typename mediator > class _logic_door_animation
     , template < typename mediator > class _logic_door_mesh
     , template < typename mediator > class _logic_door_renderer
     , template < typename mediator > class _logic_door_stateless
@@ -116,6 +117,7 @@ public :
         typedef _logic_core < mediator > logic_core ;
         typedef _logic_core_stateless < mediator > logic_core_stateless ;
         typedef _logic_door < mediator > logic_door ;
+        typedef _logic_door_animation < mediator > logic_door_animation ;
         typedef _logic_door_mesh < mediator > logic_door_mesh ;
         typedef _logic_door_renderer < mediator > logic_door_renderer ;
         typedef _logic_door_stateless < mediator > logic_door_stateless ;
@@ -211,6 +213,7 @@ template
     , template < typename _mediator > class _logic_core
     , template < typename _mediator > class _logic_core_stateless
     , template < typename _mediator > class _logic_door
+    , template < typename _mediator > class _logic_door_animation
     , template < typename _mediator > class _logic_door_mesh
     , template < typename _mediator > class _logic_door_renderer
     , template < typename _mediator > class _logic_door_stateless
@@ -302,6 +305,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_controls > scheduled_logic_controls ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_core > scheduled_logic_core ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_door > scheduled_logic_door ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_door_animation > scheduled_logic_door_animation ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_door_mesh > scheduled_logic_door_mesh ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_door_renderer > scheduled_logic_door_renderer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_door_texture > scheduled_logic_door_texture ;
@@ -375,6 +379,7 @@ public :
         , scheduled_logic_core :: template scheduled_module
         , _logic_core_stateless
         , scheduled_logic_door :: template scheduled_module
+        , scheduled_logic_door_animation :: template scheduled_module
         , scheduled_logic_door_mesh :: template scheduled_module
         , scheduled_logic_door_renderer :: template scheduled_module
         , _logic_door_stateless
@@ -506,6 +511,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_controls :: template scheduled_module < mediator_type > logic_controls ;
     typedef typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > logic_core ;
     typedef typename aggregator_types :: scheduled_logic_door :: template scheduled_module < mediator_type > logic_door ;
+    typedef typename aggregator_types :: scheduled_logic_door_animation :: template scheduled_module < mediator_type > logic_door_animation ;
     typedef typename aggregator_types :: scheduled_logic_door_mesh :: template scheduled_module < mediator_type > logic_door_mesh ;
     typedef typename aggregator_types :: scheduled_logic_door_renderer :: template scheduled_module < mediator_type > logic_door_renderer ;
     typedef typename aggregator_types :: scheduled_logic_door_texture :: template scheduled_module < mediator_type > logic_door_texture ;
@@ -581,6 +587,7 @@ private :
     logic_controls _logic_controls ;
     logic_core _logic_core ;
     logic_door _logic_door ;
+    logic_door_animation _logic_door_animation ;
     logic_door_mesh _logic_door_mesh ;
     logic_door_renderer _logic_door_renderer ;
     logic_door_texture _logic_door_texture ;
@@ -654,6 +661,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_controls > logic_controls_ptr ;
     typename platform_pointer :: template pointer < logic_core > logic_core_ptr ;
     typename platform_pointer :: template pointer < logic_door > logic_door_ptr ;
+    typename platform_pointer :: template pointer < logic_door_animation > logic_door_animation_ptr ;
     typename platform_pointer :: template pointer < logic_door_mesh > logic_door_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_door_renderer > logic_door_renderer_ptr ;
     typename platform_pointer :: template pointer < logic_door_texture > logic_door_texture_ptr ;
@@ -723,6 +731,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_controls_ptr , _logic_controls ) ;
     platform_pointer :: bind ( logic_core_ptr , _logic_core ) ;
     platform_pointer :: bind ( logic_door_ptr , _logic_door ) ;
+    platform_pointer :: bind ( logic_door_animation_ptr , _logic_door_animation ) ;
     platform_pointer :: bind ( logic_door_mesh_ptr , _logic_door_mesh ) ;
     platform_pointer :: bind ( logic_door_renderer_ptr , _logic_door_renderer ) ;
     platform_pointer :: bind ( logic_door_texture_ptr , _logic_door_texture ) ;
@@ -791,6 +800,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_controls_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_core_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_door_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_door_animation_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_door_mesh_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_door_renderer_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_door_texture_ptr , scheduler_ptr ) ;
@@ -854,6 +864,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_controls_ptr
         , logic_core_ptr
         , logic_door_ptr
+        , logic_door_animation_ptr
         , logic_door_mesh_ptr
         , logic_door_renderer_ptr
         , logic_door_texture_ptr
