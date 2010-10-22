@@ -38,6 +38,7 @@ void shy_logic_door_animation_stateless < mediator >
 :: logic_door_animation_sender < receivers >
 :: send ( typename logic_door_animation_messages :: logic_door_animation_transform_reply msg )
 {
+    _receivers . get ( ) . logic_door_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

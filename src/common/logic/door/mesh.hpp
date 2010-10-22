@@ -63,6 +63,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_mesh_create ) ;
     void receive ( typename messages :: logic_door_mesh_render_request ) ;
+    void receive ( typename messages :: logic_door_mesh_set_transform ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_door_mesh < mediator > & operator= ( const shy_logic_door_mesh < mediator > & ) ;
@@ -155,6 +156,15 @@ void shy_logic_door_mesh < mediator > :: receive ( typename messages :: logic_do
     _mediator . get ( ) . send ( msg ) ;
 
     _mediator . get ( ) . send ( typename messages :: logic_door_mesh_render_reply ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_mesh < mediator > :: receive ( typename messages :: logic_door_mesh_set_transform msg )
+{
+    typename messages :: engine_render_mesh_set_transform mesh_msg ;
+    mesh_msg . transform = msg . transform ;
+    mesh_msg . mesh = _engine_render_mesh_create_state . mesh ;
+    _mediator . get ( ) . send ( mesh_msg ) ;
 }
 
 template < typename mediator >
