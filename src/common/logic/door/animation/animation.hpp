@@ -82,7 +82,42 @@ void shy_logic_door_animation < mediator > :: receive ( typename messages :: ini
 template < typename mediator >
 void shy_logic_door_animation < mediator > :: receive ( typename messages :: logic_door_animation_transform_request )
 {
-    _reply_computed_transform ( ) ;
+    _logic_door_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _proceed_with_transform ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_animation < mediator > :: receive ( typename messages :: logic_door_animation_appear_transform_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_door_animation_appear_transform_state . requested ) )
+    {
+        _logic_door_animation_appear_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_door_animation_appear_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_door_animation_appear_transform_state . scale = msg . scale ;
+        _proceed_with_transform ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_door_animation < mediator > :: _proceed_with_transform ( )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_door_animation_transform_state . requested ) )
+    {
+        _logic_door_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _request_appear_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_door_animation_appear_transform_state . replied ) )
+    {
+        _logic_door_animation_appear_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _reply_computed_transform ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_door_animation < mediator > :: _request_appear_transform ( )
+{
+    _logic_door_animation_appear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_door_animation_appear_transform_request ( ) ) ;
 }
 
 template < typename mediator >
@@ -98,13 +133,20 @@ void shy_logic_door_animation < mediator > :: _compute_transform ( )
     num_fract origin_x ;
     num_fract origin_y ;
     num_fract origin_z ;
+    num_fract scale ;
+    num_fract zero ;
     matrix_data transform ;
 
     origin_x = _logic_door_animation_consts . origin_x ;
     origin_y = _logic_door_animation_consts . origin_y ;
     origin_z = _logic_door_animation_consts . origin_z ;
+    scale = _logic_door_animation_appear_transform_state . scale ;
+    zero = _platform_math_consts . get ( ) . fract_0 ;
 
     platform_matrix :: identity ( transform ) ;
+    platform_matrix :: set_axis_x ( transform , scale , zero , zero ) ;
+    platform_matrix :: set_axis_y ( transform , zero , scale , zero ) ;
+    platform_matrix :: set_axis_z ( transform , zero , zero , scale ) ;
     platform_matrix :: set_origin ( transform , origin_x , origin_y , origin_z ) ;
 
     _logic_door_animation_transform_state . transform = transform ;
