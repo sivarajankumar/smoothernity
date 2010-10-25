@@ -1,9 +1,19 @@
 template < typename mediator >
 class shy_logic_door_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
+    class logic_door_stateless_consts_type
+    {
+    public :
+        logic_door_stateless_consts_type ( ) ;
+    public :
+        num_whole stripes ;
+    } ;
+
     class logic_door_messages
     {
     public :
@@ -49,7 +59,23 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+public :
+    void logic_door_stateless_consts ( typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > & ) ;
+private :
+    const logic_door_stateless_consts_type _logic_door_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_door_stateless < mediator > :: logic_door_stateless_consts_type :: logic_door_stateless_consts_type ( )
+{
+    platform_math :: make_num_whole ( stripes , 9 ) ;
+}
+
+template < typename mediator >
+void shy_logic_door_stateless < mediator > :: logic_door_stateless_consts ( typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > & ptr )
+{
+    platform_pointer :: bind ( ptr , _logic_door_stateless_consts ) ;
+}
 
 template < typename mediator >
 template < typename receivers >
