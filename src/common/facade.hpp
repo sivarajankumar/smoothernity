@@ -20,6 +20,7 @@
 #include "logic/application/application.hpp"
 #include "logic/application/stateless.hpp"
 #include "logic/blanket/blanket.hpp"
+#include "logic/blanket/stateless.hpp"
 #include "logic/camera/camera.hpp"
 #include "logic/camera/stateless.hpp"
 #include "logic/controls/controls.hpp"
@@ -130,6 +131,7 @@ private :
         , shy_logic_application
         , shy_logic_application_stateless
         , shy_logic_blanket
+        , shy_logic_blanket_stateless
         , shy_logic_camera
         , shy_logic_camera_stateless
         , shy_logic_controls
