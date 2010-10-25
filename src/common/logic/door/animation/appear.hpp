@@ -55,7 +55,7 @@ private :
 template < typename mediator >
 shy_logic_door_animation_appear < mediator > :: _logic_door_animation_appear_consts_type :: _logic_door_animation_appear_consts_type ( )
 {
-    platform_math :: make_num_fract ( scale_begin , 10 , 1 ) ;
+    platform_math :: make_num_fract ( scale_begin , 30 , 1 ) ;
     platform_math :: make_num_fract ( scale_end , 1 , 1 ) ;
     platform_math :: make_num_fract ( time_from_begin_to_end , 2 , 1 ) ;
 }
@@ -72,6 +72,8 @@ void shy_logic_door_animation_appear < mediator > :: receive ( typename messages
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+
+    _logic_door_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
 
 template < typename mediator >

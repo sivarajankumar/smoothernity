@@ -96,8 +96,8 @@
 
 - ( void ) render
 {    
-    _facade -> render ( ) ;
 	_facade -> update ( ) ;
+    _facade -> render ( ) ;
     glFinish ( ) ;
 }
 

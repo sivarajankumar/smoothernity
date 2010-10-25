@@ -61,6 +61,7 @@ void shy_logic_door < mediator > :: receive ( typename messages :: logic_door_te
 {
     _created = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_door_creation_finished ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_door_place ( ) ) ;
 }
 
 template < typename mediator >
