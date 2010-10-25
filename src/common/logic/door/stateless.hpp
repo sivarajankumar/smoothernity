@@ -202,5 +202,6 @@ void shy_logic_door_stateless < mediator >
 :: send ( typename logic_door_messages :: logic_door_update msg )
 {
     _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_door_animation_appear . get ( ) . receive ( msg ) ;
 }
 

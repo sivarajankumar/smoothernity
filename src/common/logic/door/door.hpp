@@ -47,6 +47,7 @@ template < typename mediator >
 void shy_logic_door < mediator > :: receive ( typename messages :: logic_door_launch_permit )
 {
     _launch_permitted = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_door_animation_appear_start ( ) ) ;
 }
 
 template < typename mediator >
