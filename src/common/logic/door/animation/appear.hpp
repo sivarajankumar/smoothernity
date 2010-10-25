@@ -55,7 +55,7 @@ private :
 template < typename mediator >
 shy_logic_door_animation_appear < mediator > :: _logic_door_animation_appear_consts_type :: _logic_door_animation_appear_consts_type ( )
 {
-    platform_math :: make_num_fract ( scale_begin , 30 , 1 ) ;
+    platform_math :: make_num_fract ( scale_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( scale_end , 1 , 1 ) ;
     platform_math :: make_num_fract ( time_from_begin_to_end , 2 , 1 ) ;
 }

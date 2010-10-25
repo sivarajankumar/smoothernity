@@ -62,6 +62,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_amusement . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_amusement_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_blanket . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_controls . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
