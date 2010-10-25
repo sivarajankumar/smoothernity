@@ -8,7 +8,6 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_stateless logic_door_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
@@ -21,7 +20,6 @@ private :
     typedef typename mediator_types :: platform :: platform_pointer platform_pointer ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
-    typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_stateless :: logic_door_stateless_consts_type logic_door_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_stateless :: logic_main_menu_letters_layout_stateless_consts_type logic_main_menu_letters_layout_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
@@ -315,7 +313,6 @@ private :
 public :
     shy_mediator ( typename platform_pointer :: template pointer < const platform > ) ;
     void engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & ) ;
-    void logic_door_stateless_consts ( typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > & ) ;
     void logic_main_menu_letters_layout_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_letters_layout_stateless_consts_type > & ) ;
     void logic_main_menu_letters_meshes_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > & ) ;
     void logic_main_menu_selection_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > & ) ;
@@ -338,7 +335,6 @@ public :
         , typename platform_pointer :: template pointer < logic_door_mesh >
         , typename platform_pointer :: template pointer < logic_door_placement >
         , typename platform_pointer :: template pointer < logic_door_renderer >
-        , typename platform_pointer :: template pointer < logic_door_stateless >
         , typename platform_pointer :: template pointer < logic_door_texture >
         , typename platform_pointer :: template pointer < logic_entities >
         , typename platform_pointer :: template pointer < logic_fidget >
@@ -399,7 +395,6 @@ public :
     void send ( message_type ) ;
 private :
     typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
-    typename platform_pointer :: template pointer < logic_door_stateless > _logic_door_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_layout_stateless > _logic_main_menu_letters_layout_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_stateless > _logic_main_menu_letters_meshes_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > _logic_main_menu_selection_stateless ;
@@ -465,7 +460,6 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_door_mesh > arg_logic_door_mesh
     , typename platform_pointer :: template pointer < logic_door_placement > arg_logic_door_placement
     , typename platform_pointer :: template pointer < logic_door_renderer > arg_logic_door_renderer
-    , typename platform_pointer :: template pointer < logic_door_stateless > arg_logic_door_stateless
     , typename platform_pointer :: template pointer < logic_door_texture > arg_logic_door_texture
     , typename platform_pointer :: template pointer < logic_entities > arg_logic_entities
     , typename platform_pointer :: template pointer < logic_fidget > arg_logic_fidget
@@ -524,7 +518,6 @@ void shy_mediator < mediator_types > :: register_modules
     )
 {
     _engine_render_stateless = arg_engine_render_stateless ;
-    _logic_door_stateless = arg_logic_door_stateless ;
     _logic_main_menu_letters_layout_stateless = arg_logic_main_menu_letters_layout_stateless ;
     _logic_main_menu_letters_meshes_stateless = arg_logic_main_menu_letters_meshes_stateless ;
     _logic_main_menu_selection_stateless = arg_logic_main_menu_selection_stateless ;
@@ -679,12 +672,6 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & result )
 {
     platform_pointer :: bind ( result , _engine_render_stateless . get ( ) . engine_render_stateless_consts ) ;
-}
-
-template < typename mediator_types >
-void shy_mediator < mediator_types > :: logic_door_stateless_consts ( typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > & result )
-{
-    platform_pointer :: bind ( result , _logic_door_stateless . get ( ) . logic_door_stateless_consts ) ;
 }
 
 template < typename mediator_types >

@@ -4,7 +4,6 @@ class shy_logic_door_texture
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
-    typedef typename mediator :: logic_door_stateless :: logic_door_stateless_consts_type logic_door_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -28,6 +27,7 @@ class shy_logic_door_texture
         num_fract paper_g ;
         num_fract paper_b ;
         num_fract paper_a ;
+        num_whole stripes ;
     } ;
 
     class _logic_door_texture_create_state_type
@@ -75,7 +75,6 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > _engine_render_stateless_consts ;
-    typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > _logic_door_stateless_consts ;
     const _logic_door_texture_consts_type _logic_door_texture_consts ;
 
     _logic_door_texture_create_state_type _logic_door_texture_create_state ;
@@ -94,6 +93,7 @@ shy_logic_door_texture < mediator > :: _logic_door_texture_consts_type :: _logic
     platform_math :: make_num_fract ( paper_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( paper_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( paper_a , 1 , 1 ) ;
+    platform_math :: make_num_whole ( stripes , 9 ) ;
 }
 
 template < typename mediator >
@@ -113,7 +113,6 @@ void shy_logic_door_texture < mediator > :: receive ( typename messages :: init 
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _mediator . get ( ) . engine_render_stateless_consts ( _engine_render_stateless_consts ) ;
-    _mediator . get ( ) . logic_door_stateless_consts ( _logic_door_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -227,7 +226,7 @@ void shy_logic_door_texture < mediator > :: _fill_texture_contents ( )
     paper_r = _logic_door_texture_consts . paper_r ;
     paper_g = _logic_door_texture_consts . paper_g ;
     paper_b = _logic_door_texture_consts . paper_b ;
-    stripes = _logic_door_stateless_consts . get ( ) . stripes ;
+    stripes = _logic_door_texture_consts . stripes ;
     texture_width = _engine_render_stateless_consts . get ( ) . texture_width ;
     texture_height = _engine_render_stateless_consts . get ( ) . texture_height ;
     texture = _engine_render_texture_create_state . texture ;
