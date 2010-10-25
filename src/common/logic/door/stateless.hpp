@@ -60,21 +60,13 @@ public :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
 public :
-    void logic_door_stateless_consts ( typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > & ) ;
-private :
-    const logic_door_stateless_consts_type _logic_door_stateless_consts ;
+    const logic_door_stateless_consts_type logic_door_stateless_consts ;
 } ;
 
 template < typename mediator >
 shy_logic_door_stateless < mediator > :: logic_door_stateless_consts_type :: logic_door_stateless_consts_type ( )
 {
     platform_math :: make_num_whole ( stripes , 9 ) ;
-}
-
-template < typename mediator >
-void shy_logic_door_stateless < mediator > :: logic_door_stateless_consts ( typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > & ptr )
-{
-    platform_pointer :: bind ( ptr , _logic_door_stateless_consts ) ;
 }
 
 template < typename mediator >
