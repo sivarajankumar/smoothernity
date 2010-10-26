@@ -12,6 +12,7 @@ template
     , template < typename mediator > class _logic_application
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_blanket
+    , template < typename mediator > class _logic_blanket_mesh
     , template < typename mediator > class _logic_blanket_stateless
     , template < typename mediator > class _logic_camera
     , template < typename mediator > class _logic_camera_stateless
@@ -116,6 +117,7 @@ public :
         typedef _logic_application < mediator > logic_application ;
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_blanket < mediator > logic_blanket ;
+        typedef _logic_blanket_mesh < mediator > logic_blanket_mesh ;
         typedef _logic_blanket_stateless < mediator > logic_blanket_stateless ;
         typedef _logic_camera < mediator > logic_camera ;
         typedef _logic_camera_stateless < mediator > logic_camera_stateless ;
@@ -217,6 +219,7 @@ template
     , template < typename _mediator > class _logic_application
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_blanket
+    , template < typename _mediator > class _logic_blanket_mesh
     , template < typename _mediator > class _logic_blanket_stateless
     , template < typename _mediator > class _logic_camera
     , template < typename _mediator > class _logic_camera_stateless
@@ -317,6 +320,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_amusement_renderer > scheduled_logic_amusement_renderer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket > scheduled_logic_blanket ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_mesh > scheduled_logic_blanket_mesh ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_camera > scheduled_logic_camera ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_controls > scheduled_logic_controls ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_core > scheduled_logic_core ;
@@ -391,6 +395,7 @@ public :
         , scheduled_logic_application :: template scheduled_module
         , _logic_application_stateless
         , scheduled_logic_blanket :: template scheduled_module
+        , scheduled_logic_blanket_mesh :: template scheduled_module
         , _logic_blanket_stateless
         , scheduled_logic_camera :: template scheduled_module
         , _logic_camera_stateless
@@ -533,6 +538,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_amusement_renderer :: template scheduled_module < mediator_type > logic_amusement_renderer ;
     typedef typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > logic_application ;
     typedef typename aggregator_types :: scheduled_logic_blanket :: template scheduled_module < mediator_type > logic_blanket ;
+    typedef typename aggregator_types :: scheduled_logic_blanket_mesh :: template scheduled_module < mediator_type > logic_blanket_mesh ;
     typedef typename aggregator_types :: scheduled_logic_camera :: template scheduled_module < mediator_type > logic_camera ;
     typedef typename aggregator_types :: scheduled_logic_controls :: template scheduled_module < mediator_type > logic_controls ;
     typedef typename aggregator_types :: scheduled_logic_core :: template scheduled_module < mediator_type > logic_core ;
@@ -612,6 +618,7 @@ private :
     logic_amusement_renderer _logic_amusement_renderer ;
     logic_application _logic_application ;
     logic_blanket _logic_blanket ;
+    logic_blanket_mesh _logic_blanket_mesh ;
     logic_camera _logic_camera ;
     logic_controls _logic_controls ;
     logic_core _logic_core ;
@@ -689,6 +696,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_amusement_renderer > logic_amusement_renderer_ptr ;
     typename platform_pointer :: template pointer < logic_application > logic_application_ptr ;
     typename platform_pointer :: template pointer < logic_blanket > logic_blanket_ptr ;
+    typename platform_pointer :: template pointer < logic_blanket_mesh > logic_blanket_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_camera > logic_camera_ptr ;
     typename platform_pointer :: template pointer < logic_controls > logic_controls_ptr ;
     typename platform_pointer :: template pointer < logic_core > logic_core_ptr ;
@@ -762,6 +770,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_amusement_renderer_ptr , _logic_amusement_renderer ) ;
     platform_pointer :: bind ( logic_application_ptr , _logic_application ) ;
     platform_pointer :: bind ( logic_blanket_ptr , _logic_blanket ) ;
+    platform_pointer :: bind ( logic_blanket_mesh_ptr , _logic_blanket_mesh ) ;
     platform_pointer :: bind ( logic_camera_ptr , _logic_camera ) ;
     platform_pointer :: bind ( logic_controls_ptr , _logic_controls ) ;
     platform_pointer :: bind ( logic_core_ptr , _logic_core ) ;
@@ -834,6 +843,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_amusement_renderer_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_application_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_blanket_mesh_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_camera_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_controls_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_core_ptr , scheduler_ptr ) ;
@@ -901,6 +911,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_amusement_renderer_ptr
         , logic_application_ptr
         , logic_blanket_ptr
+        , logic_blanket_mesh_ptr
         , logic_camera_ptr
         , logic_controls_ptr
         , logic_core_ptr
