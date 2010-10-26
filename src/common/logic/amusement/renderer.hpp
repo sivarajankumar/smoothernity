@@ -26,6 +26,13 @@ class shy_logic_amusement_renderer
         num_whole requested ;
     } ;
 
+    class _logic_core_use_ortho_projection_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+    } ;
+
     class _logic_core_use_perspective_projection_state_type
     {
     public :
@@ -59,6 +66,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_amusement_render ) ;
+    void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
     void receive ( typename messages :: logic_blanket_render_reply ) ;
     void receive ( typename messages :: logic_door_render_reply ) ;
@@ -66,18 +74,23 @@ public :
 private :
     shy_logic_amusement_renderer < mediator > & operator= ( const shy_logic_amusement_renderer < mediator > & ) ;
     void _proceed_with_render ( ) ;
-    void _render_requested ( ) ;
+    void _prepare_ortho_render ( ) ;
+    void _prepare_perspective_render ( ) ;
+    void _request_ortho_projection ( ) ;
     void _request_perspective_projection ( ) ;
     void _request_blanket_render ( ) ;
     void _request_door_render ( ) ;
     void _request_room_render ( ) ;
     void _clear_screen ( ) ;
+    void _disable_depth_test ( ) ;
+    void _enable_depth_test ( ) ; 
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     const _logic_amusement_renderer_consts_type _logic_amusement_renderer_consts ;
 
     _logic_amusement_render_state_type _logic_amusement_render_state ;
+    _logic_core_use_ortho_projection_state_type _logic_core_use_ortho_projection_state ;
     _logic_core_use_perspective_projection_state_type _logic_core_use_perspective_projection_state ;
     _logic_blanket_render_state_type _logic_blanket_render_state ; 
     _logic_door_render_state_type _logic_door_render_state ;
@@ -116,6 +129,17 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
 {
     _logic_amusement_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _proceed_with_render ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_core_use_ortho_projection_reply )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_core_use_ortho_projection_state . requested ) )
+    {
+        _logic_core_use_ortho_projection_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_core_use_ortho_projection_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _proceed_with_render ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -168,7 +192,7 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_amusement_render_state . requested ) )
     {
         _logic_amusement_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _render_requested ( ) ;
+        _prepare_perspective_render ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_core_use_perspective_projection_state . replied ) )
     {
@@ -183,6 +207,11 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_door_render_state . replied ) )
     {
         _logic_door_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _prepare_ortho_render ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_core_use_ortho_projection_state . replied ) )
+    {
+        _logic_core_use_ortho_projection_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _request_blanket_render ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_blanket_render_state . replied ) )
@@ -192,10 +221,18 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
 }
 
 template < typename mediator >
-void shy_logic_amusement_renderer < mediator > :: _render_requested ( )
+void shy_logic_amusement_renderer < mediator > :: _prepare_perspective_render ( )
 {
     _clear_screen ( ) ;
+    _enable_depth_test ( ) ;
     _request_perspective_projection ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _prepare_ortho_render ( )
+{
+    _disable_depth_test ( ) ;
+    _request_ortho_projection ( ) ;
 }
 
 template < typename mediator >
@@ -203,6 +240,25 @@ void shy_logic_amusement_renderer < mediator > :: _request_perspective_projectio
 {
     _logic_core_use_perspective_projection_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_core_use_perspective_projection_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _request_ortho_projection ( )
+{
+    _logic_core_use_ortho_projection_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_core_use_ortho_projection_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _enable_depth_test ( )
+{
+    _mediator . get ( ) . send ( typename messages :: engine_render_enable_depth_test ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _disable_depth_test ( ) 
+{
+    _mediator . get ( ) . send ( typename messages :: engine_render_disable_depth_test ( ) ) ;
 }
 
 template < typename mediator >
