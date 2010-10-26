@@ -8,6 +8,7 @@ class shy_logic_blanket_renderer
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_blanket_render_request ) ;
     void receive ( typename messages :: logic_blanket_mesh_render_reply ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -29,7 +30,14 @@ void shy_logic_blanket_renderer < mediator > :: receive ( typename messages :: i
 }
 
 template < typename mediator >
+void shy_logic_blanket_renderer < mediator > :: receive ( typename messages :: logic_blanket_render_request )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_mesh_render_request ( ) ) ;
+}
+
+template < typename mediator >
 void shy_logic_blanket_renderer < mediator > :: receive ( typename messages :: logic_blanket_mesh_render_reply )
 {
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_render_reply ( ) ) ;
 }
 

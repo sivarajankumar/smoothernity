@@ -90,6 +90,6 @@ void shy_logic_blanket_stateless < mediator >
 :: logic_blanket_sender < receivers >
 :: send ( typename logic_blanket_messages :: logic_blanket_render_request msg )
 {
-    _receivers . get ( ) . logic_blanket . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_blanket_renderer . get ( ) . receive ( msg ) ;
 }
 
