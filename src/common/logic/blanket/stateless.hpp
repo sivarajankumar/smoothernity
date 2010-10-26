@@ -8,6 +8,8 @@ public :
     public :
         class logic_blanket_creation_finished { } ;
         class logic_blanket_creation_permit { } ;
+        class logic_blanket_mesh_render_reply { } ;
+        class logic_blanket_mesh_render_request { } ;
         class logic_blanket_render_reply { } ;
         class logic_blanket_render_request { } ;
     } ;
@@ -19,6 +21,8 @@ public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_creation_finished ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_creation_permit ) ;
+        void send ( typename logic_blanket_messages :: logic_blanket_mesh_render_reply ) ;
+        void send ( typename logic_blanket_messages :: logic_blanket_mesh_render_request ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_render_reply ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_render_request ) ;
     private :
@@ -51,6 +55,24 @@ void shy_logic_blanket_stateless < mediator >
 :: send ( typename logic_blanket_messages :: logic_blanket_creation_permit msg )
 {
     _receivers . get ( ) . logic_blanket . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_blanket_stateless < mediator >
+:: logic_blanket_sender < receivers >
+:: send ( typename logic_blanket_messages :: logic_blanket_mesh_render_reply msg )
+{
+    _receivers . get ( ) . logic_blanket_renderer . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_blanket_stateless < mediator >
+:: logic_blanket_sender < receivers >
+:: send ( typename logic_blanket_messages :: logic_blanket_mesh_render_request msg )
+{
+    _receivers . get ( ) . logic_blanket_mesh . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
