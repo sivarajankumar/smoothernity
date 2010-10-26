@@ -33,6 +33,13 @@ class shy_logic_amusement_renderer
         num_whole replied ;
     } ;
 
+    class _logic_blanket_render_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+    } ;
+
     class _logic_door_render_state_type
     {
     public :
@@ -53,6 +60,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_amusement_render ) ;
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
+    void receive ( typename messages :: logic_blanket_render_reply ) ;
     void receive ( typename messages :: logic_door_render_reply ) ;
     void receive ( typename messages :: logic_room_render_reply ) ;
 private :
@@ -60,6 +68,7 @@ private :
     void _proceed_with_render ( ) ;
     void _render_requested ( ) ;
     void _request_perspective_projection ( ) ;
+    void _request_blanket_render ( ) ;
     void _request_door_render ( ) ;
     void _request_room_render ( ) ;
     void _clear_screen ( ) ;
@@ -70,6 +79,7 @@ private :
 
     _logic_amusement_render_state_type _logic_amusement_render_state ;
     _logic_core_use_perspective_projection_state_type _logic_core_use_perspective_projection_state ;
+    _logic_blanket_render_state_type _logic_blanket_render_state ; 
     _logic_door_render_state_type _logic_door_render_state ;
     _logic_room_render_state_type _logic_room_render_state ;
 } ;
@@ -120,6 +130,17 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
 }
 
 template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_blanket_render_reply )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_blanket_render_state . requested ) )
+    {
+        _logic_blanket_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_blanket_render_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_door_render_reply )
 {
     if ( platform_conditions :: whole_is_true ( _logic_door_render_state . requested ) )
@@ -162,6 +183,11 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_door_render_state . replied ) )
     {
         _logic_door_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _request_blanket_render ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_blanket_render_state . replied ) )
+    {
+        _logic_blanket_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
     }
 }
 
@@ -187,6 +213,13 @@ void shy_logic_amusement_renderer < mediator > :: _clear_screen ( )
     msg . g = _logic_amusement_renderer_consts . clear_color_g ; 
     msg . b = _logic_amusement_renderer_consts . clear_color_b ; 
     _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _request_blanket_render ( )
+{
+    _logic_blanket_render_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_render_request ( ) ) ;
 }
 
 template < typename mediator >

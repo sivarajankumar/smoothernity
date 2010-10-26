@@ -9,6 +9,7 @@ public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_blanket_creation_permit ) ;
+    void receive ( typename messages :: logic_blanket_render_request ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -32,5 +33,11 @@ template < typename mediator >
 void shy_logic_blanket < mediator > :: receive ( typename messages :: logic_blanket_creation_permit )
 {
     _mediator . get ( ) . send ( typename messages :: logic_blanket_creation_finished ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_blanket < mediator > :: receive ( typename messages :: logic_blanket_render_request )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_render_reply ( ) ) ;
 }
 
