@@ -35,12 +35,14 @@ class shy_logic_door_animation_appear
     } ;
 
 public :
+    shy_logic_door_animation_appear ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_door_update ) ;
     void receive ( typename messages :: logic_door_animation_appear_start ) ;
     void receive ( typename messages :: logic_door_animation_appear_transform_request ) ;
 private :
+    shy_logic_door_animation_appear < mediator > & operator= ( const shy_logic_door_animation_appear < mediator > & ) ;
     void _compute_transform ( ) ;
     void _reply_transform ( ) ;
 private :
@@ -58,6 +60,11 @@ shy_logic_door_animation_appear < mediator > :: _logic_door_animation_appear_con
     platform_math :: make_num_fract ( scale_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( scale_end , 1 , 1 ) ;
     platform_math :: make_num_fract ( time_from_begin_to_end , 2 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_door_animation_appear < mediator > :: shy_logic_door_animation_appear ( )
+{
 }
 
 template < typename mediator >
