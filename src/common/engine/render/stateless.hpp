@@ -352,6 +352,7 @@ void shy_engine_render_stateless < mediator >
 :: engine_render_sender < receivers > 
 :: send ( typename engine_render_messages :: engine_render_mesh_create_reply msg )
 {
+    _receivers . get ( ) . logic_blanket_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_door_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
