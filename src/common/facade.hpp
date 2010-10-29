@@ -21,6 +21,7 @@
 #include "logic/application/stateless.hpp"
 #include "logic/blanket/blanket.hpp"
 #include "logic/blanket/mesh.hpp"
+#include "logic/blanket/placement.hpp"
 #include "logic/blanket/renderer.hpp"
 #include "logic/blanket/stateless.hpp"
 #include "logic/camera/camera.hpp"
@@ -134,6 +135,7 @@ private :
         , shy_logic_application_stateless
         , shy_logic_blanket
         , shy_logic_blanket_mesh
+        , shy_logic_blanket_placement
         , shy_logic_blanket_renderer
         , shy_logic_blanket_stateless
         , shy_logic_camera
