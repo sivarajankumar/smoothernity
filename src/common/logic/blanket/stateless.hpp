@@ -14,6 +14,7 @@ public :
         class logic_blanket_mesh_render_request { } ;
         class logic_blanket_render_reply { } ;
         class logic_blanket_render_request { } ;
+        class logic_blanket_update { } ;
     } ;
     
     template < typename receivers >
@@ -29,6 +30,7 @@ public :
         void send ( typename logic_blanket_messages :: logic_blanket_mesh_render_request ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_render_reply ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_render_request ) ;
+        void send ( typename logic_blanket_messages :: logic_blanket_update ) ;
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
@@ -113,5 +115,14 @@ void shy_logic_blanket_stateless < mediator >
 :: send ( typename logic_blanket_messages :: logic_blanket_render_request msg )
 {
     _receivers . get ( ) . logic_blanket_renderer . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_blanket_stateless < mediator >
+:: logic_blanket_sender < receivers >
+:: send ( typename logic_blanket_messages :: logic_blanket_update msg )
+{
+    _receivers . get ( ) . logic_blanket . get ( ) . receive ( msg ) ;
 }
 
