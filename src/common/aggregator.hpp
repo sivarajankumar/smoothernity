@@ -13,6 +13,7 @@ template
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_blanket
     , template < typename mediator > class _logic_blanket_animation
+    , template < typename mediator > class _logic_blanket_animation_stateless
     , template < typename mediator > class _logic_blanket_mesh
     , template < typename mediator > class _logic_blanket_placement
     , template < typename mediator > class _logic_blanket_renderer
@@ -121,6 +122,7 @@ public :
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_blanket < mediator > logic_blanket ;
         typedef _logic_blanket_animation < mediator > logic_blanket_animation ;
+        typedef _logic_blanket_animation_stateless < mediator > logic_blanket_animation_stateless ;
         typedef _logic_blanket_mesh < mediator > logic_blanket_mesh ;
         typedef _logic_blanket_placement < mediator > logic_blanket_placement ;
         typedef _logic_blanket_renderer < mediator > logic_blanket_renderer ;
@@ -226,6 +228,7 @@ template
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_blanket
     , template < typename _mediator > class _logic_blanket_animation
+    , template < typename _mediator > class _logic_blanket_animation_stateless
     , template < typename _mediator > class _logic_blanket_mesh
     , template < typename _mediator > class _logic_blanket_placement
     , template < typename _mediator > class _logic_blanket_renderer
@@ -408,6 +411,7 @@ public :
         , _logic_application_stateless
         , scheduled_logic_blanket :: template scheduled_module
         , scheduled_logic_blanket_animation :: template scheduled_module
+        , _logic_blanket_animation_stateless
         , scheduled_logic_blanket_mesh :: template scheduled_module
         , scheduled_logic_blanket_placement :: template scheduled_module
         , scheduled_logic_blanket_renderer :: template scheduled_module
@@ -504,6 +508,7 @@ public :
     typedef _engine_render_stateless < mediator_type > engine_render_stateless ;
     typedef _logic_amusement_stateless < mediator_type > logic_amusement_stateless ;
     typedef _logic_application_stateless < mediator_type > logic_application_stateless ;
+    typedef _logic_blanket_animation_stateless < mediator_type > logic_blanket_animation_stateless ;
     typedef _logic_blanket_stateless < mediator_type > logic_blanket_stateless ;
     typedef _logic_camera_stateless < mediator_type > logic_camera_stateless ;
     typedef _logic_controls_stateless < mediator_type > logic_controls_stateless ;

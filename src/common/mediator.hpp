@@ -100,6 +100,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_messages engine_render_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement_stateless :: logic_amusement_messages logic_amusement_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_messages logic_application_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_stateless :: logic_blanket_animation_messages logic_blanket_animation_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_stateless :: logic_blanket_messages logic_blanket_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: logic_camera_messages logic_camera_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_controls_stateless :: logic_controls_messages logic_controls_messages ;
@@ -129,6 +130,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: template engine_render_sender < receivers > engine_render_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement_stateless :: template logic_amusement_sender < receivers > logic_amusement_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: template logic_application_sender < receivers > logic_application_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_stateless :: template logic_blanket_animation_sender < receivers > logic_blanket_animation_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_stateless :: template logic_blanket_sender < receivers > logic_blanket_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_camera_stateless :: template logic_camera_sender < receivers > logic_camera_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_controls_stateless :: template logic_controls_sender < receivers > logic_controls_sender ;
@@ -160,6 +162,7 @@ public :
     , public engine_render_messages
     , public logic_amusement_messages
     , public logic_application_messages
+    , public logic_blanket_animation_messages
     , public logic_blanket_messages
     , public logic_camera_messages
     , public logic_controls_messages
@@ -193,6 +196,7 @@ private :
     , public engine_render_sender
     , public logic_amusement_sender
     , public logic_application_sender
+    , public logic_blanket_animation_sender
     , public logic_blanket_sender
     , public logic_camera_sender
     , public logic_controls_sender
@@ -223,6 +227,7 @@ private :
         using engine_render_sender :: send ;
         using logic_amusement_sender :: send ;
         using logic_application_sender :: send ;
+        using logic_blanket_animation_sender :: send ;
         using logic_blanket_sender :: send ;
         using logic_camera_sender :: send ;
         using logic_controls_sender :: send ;
@@ -432,6 +437,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     engine_render_sender :: set_receivers ( arg_receivers ) ;
     logic_amusement_sender :: set_receivers ( arg_receivers ) ;
     logic_application_sender :: set_receivers ( arg_receivers ) ;
+    logic_blanket_animation_sender :: set_receivers ( arg_receivers ) ;
     logic_blanket_sender :: set_receivers ( arg_receivers ) ;
     logic_camera_sender :: set_receivers ( arg_receivers ) ;
     logic_controls_sender :: set_receivers ( arg_receivers ) ;
