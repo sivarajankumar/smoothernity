@@ -19,6 +19,7 @@
 #include "logic/amusement/stateless.hpp"
 #include "logic/application/application.hpp"
 #include "logic/application/stateless.hpp"
+#include "logic/blanket/animation/animation.hpp"
 #include "logic/blanket/blanket.hpp"
 #include "logic/blanket/mesh.hpp"
 #include "logic/blanket/placement.hpp"
@@ -134,6 +135,7 @@ private :
         , shy_logic_application
         , shy_logic_application_stateless
         , shy_logic_blanket
+        , shy_logic_blanket_animation
         , shy_logic_blanket_mesh
         , shy_logic_blanket_placement
         , shy_logic_blanket_renderer
