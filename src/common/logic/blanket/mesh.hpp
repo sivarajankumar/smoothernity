@@ -27,9 +27,6 @@ class shy_logic_blanket_mesh
         num_fract color_g ;
         num_fract color_b ;
         num_fract color_a ;
-        num_fract origin_x ;
-        num_fract origin_y ;
-        num_fract origin_z ;
         num_whole vertices ;
         num_whole triangle_strip_indices ;
         num_whole triangle_fan_indices ;
@@ -55,6 +52,7 @@ public :
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_blanket_mesh_create ) ;
     void receive ( typename messages :: logic_blanket_mesh_render_request ) ;
+    void receive ( typename messages :: logic_blanket_mesh_set_transform ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
 private :
     shy_logic_blanket_mesh < mediator > & operator= ( const shy_logic_blanket_mesh < mediator > & ) ;
@@ -62,7 +60,6 @@ private :
     void _request_mesh_create ( ) ;
     void _mesh_created ( ) ;
     void _fill_mesh_contents ( ) ;
-    void _transform_mesh ( ) ;
     void _finalize_mesh ( ) ;
     void _reply_creation_finished ( ) ;
     void _mesh_set_vertex_position ( num_whole offset , num_fract x , num_fract y , num_fract z ) ;
@@ -89,9 +86,6 @@ shy_logic_blanket_mesh < mediator > :: _logic_blanket_mesh_consts_type :: _logic
     platform_math :: make_num_fract ( color_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( color_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
-    platform_math :: make_num_fract ( origin_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
     platform_math :: make_num_whole ( vertices , 4 ) ;
     platform_math :: make_num_whole ( triangle_strip_indices , 4 ) ;
     platform_math :: make_num_whole ( triangle_fan_indices , 0 ) ;
@@ -131,6 +125,15 @@ void shy_logic_blanket_mesh < mediator > :: receive ( typename messages :: logic
     _mediator . get ( ) . send ( msg ) ;
 
     _mediator . get ( ) . send ( typename messages :: logic_blanket_mesh_render_reply ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_blanket_mesh < mediator > :: receive ( typename messages :: logic_blanket_mesh_set_transform msg )
+{
+    typename messages :: engine_render_mesh_set_transform transform_msg ;
+    transform_msg . mesh = _engine_render_mesh_create_state . mesh ;
+    transform_msg . transform = msg . transform ;
+    _mediator . get ( ) . send ( transform_msg ) ;
 }
 
 template < typename mediator >
@@ -176,7 +179,6 @@ void shy_logic_blanket_mesh < mediator > :: _mesh_created ( )
 {
     _fill_mesh_contents ( ) ;
     _finalize_mesh ( ) ;
-    _transform_mesh ( ) ;
     _reply_creation_finished ( ) ;
 }
 
@@ -225,27 +227,6 @@ void shy_logic_blanket_mesh < mediator > :: _fill_mesh_contents ( )
     _mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
     _mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
     platform_math :: inc_whole           ( current_index ) ;
-}
-
-template < typename mediator >
-void shy_logic_blanket_mesh < mediator > :: _transform_mesh ( )
-{
-    num_fract origin_x ;
-    num_fract origin_y ;
-    num_fract origin_z ;
-    matrix_data transform ;
-
-    origin_x = _logic_blanket_mesh_consts . origin_x ;
-    origin_y = _logic_blanket_mesh_consts . origin_y ;
-    origin_z = _logic_blanket_mesh_consts . origin_z ;
-
-    platform_matrix :: identity ( transform ) ;
-    platform_matrix :: set_origin ( transform , origin_x , origin_y , origin_z ) ;
-
-    typename messages :: engine_render_mesh_set_transform msg ;
-    msg . mesh = _engine_render_mesh_create_state . mesh ;
-    msg . transform = transform ;
-    _mediator . get ( ) . send ( msg ) ;
 }
 
 template < typename mediator >

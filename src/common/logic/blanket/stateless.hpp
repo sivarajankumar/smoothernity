@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_blanket_stateless
 {
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     class logic_blanket_messages
@@ -12,6 +13,8 @@ public :
         class logic_blanket_mesh_creation_finished { } ;
         class logic_blanket_mesh_render_reply { } ;
         class logic_blanket_mesh_render_request { } ;
+        class logic_blanket_mesh_set_transform { public : matrix_data transform ; } ;
+        class logic_blanket_place { } ;
         class logic_blanket_render_reply { } ;
         class logic_blanket_render_request { } ;
         class logic_blanket_update { } ;
@@ -28,6 +31,8 @@ public :
         void send ( typename logic_blanket_messages :: logic_blanket_mesh_creation_finished ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_mesh_render_reply ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_mesh_render_request ) ;
+        void send ( typename logic_blanket_messages :: logic_blanket_mesh_set_transform ) ;
+        void send ( typename logic_blanket_messages :: logic_blanket_place ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_render_reply ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_render_request ) ;
         void send ( typename logic_blanket_messages :: logic_blanket_update ) ;
@@ -97,6 +102,24 @@ void shy_logic_blanket_stateless < mediator >
 :: send ( typename logic_blanket_messages :: logic_blanket_mesh_render_request msg )
 {
     _receivers . get ( ) . logic_blanket_mesh . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_blanket_stateless < mediator >
+:: logic_blanket_sender < receivers >
+:: send ( typename logic_blanket_messages :: logic_blanket_mesh_set_transform msg )
+{
+    _receivers . get ( ) . logic_blanket_mesh . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_blanket_stateless < mediator >
+:: logic_blanket_sender < receivers >
+:: send ( typename logic_blanket_messages :: logic_blanket_place msg )
+{
+    _receivers . get ( ) . logic_blanket_placement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

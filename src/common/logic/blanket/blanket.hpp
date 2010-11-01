@@ -3,6 +3,8 @@ class shy_logic_blanket
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
@@ -14,6 +16,7 @@ public :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    num_whole _created ;
 } ;
 
 template < typename mediator >
@@ -39,11 +42,14 @@ void shy_logic_blanket < mediator > :: receive ( typename messages :: logic_blan
 template < typename mediator >
 void shy_logic_blanket < mediator > :: receive ( typename messages :: logic_blanket_mesh_creation_finished )
 {
+    _created = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_blanket_creation_finished ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_blanket < mediator > :: receive ( typename messages :: logic_blanket_update )
 {
+    if ( platform_conditions :: whole_is_true ( _created ) )
+        _mediator . get ( ) . send ( typename messages :: logic_blanket_place ( ) ) ;
 }
 
