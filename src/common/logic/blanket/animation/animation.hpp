@@ -21,9 +21,12 @@ class shy_logic_blanket_animation
     } ;
 
 public :
+    shy_logic_blanket_animation ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_blanket_animation_transform_request ) ;
+private :
+    shy_logic_blanket_animation < mediator > & operator= ( const shy_logic_blanket_animation < mediator > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -36,6 +39,11 @@ shy_logic_blanket_animation < mediator > :: _logic_blanket_animation_consts_type
     platform_math :: make_num_fract ( origin_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_blanket_animation < mediator > :: shy_logic_blanket_animation ( )
+{
 }
 
 template < typename mediator >
