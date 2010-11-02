@@ -13,6 +13,7 @@ public :
     void receive ( typename messages :: logic_amusement_update ) ;
     void receive ( typename messages :: logic_room_finished ) ;
     void receive ( typename messages :: logic_blanket_creation_finished ) ;
+    void receive ( typename messages :: logic_blanket_animation_appear_finished ) ;
     void receive ( typename messages :: logic_door_creation_finished ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -69,6 +70,12 @@ void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_am
 
 template < typename mediator >
 void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_room_finished )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_animation_appear_start ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_blanket_animation_appear_finished )
 {
     _mediator . get ( ) . send ( typename messages :: logic_amusement_finished ( ) ) ;
 }
