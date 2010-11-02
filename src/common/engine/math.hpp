@@ -160,15 +160,22 @@ void shy_engine_math < mediator > :: lerp
     , num_fract to_weight 
     )
 {
-    num_fract value_diff ;
-    num_fract weight_diff ;
-    num_fract current_diff ;
-    platform_math :: sub_fracts ( value_diff , to_value , from_value ) ;
-    platform_math :: sub_fracts ( weight_diff , to_weight , from_weight ) ;
-    platform_math :: sub_fracts ( current_diff , weight , from_weight ) ;
-    platform_math :: mul_fracts ( result_value , value_diff , current_diff ) ;
-    platform_math :: div_fract_by ( result_value , weight_diff ) ;
-    platform_math :: add_to_fract ( result_value , from_value ) ;
+    if ( platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
+        result_value = from_value ;
+    else if ( platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
+    {
+        num_fract value_diff ;
+        num_fract weight_diff ;
+        num_fract current_diff ;
+        platform_math :: sub_fracts ( value_diff , to_value , from_value ) ;
+        platform_math :: sub_fracts ( weight_diff , to_weight , from_weight ) ;
+        platform_math :: sub_fracts ( current_diff , weight , from_weight ) ;
+        platform_math :: mul_fracts ( result_value , value_diff , current_diff ) ;
+        platform_math :: div_fract_by ( result_value , weight_diff ) ;
+        platform_math :: add_to_fract ( result_value , from_value ) ;
+    }
+    else
+        result_value = to_value ;
 }
 
 template < typename mediator >

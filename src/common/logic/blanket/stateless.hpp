@@ -147,5 +147,6 @@ void shy_logic_blanket_stateless < mediator >
 :: send ( typename logic_blanket_messages :: logic_blanket_update msg )
 {
     _receivers . get ( ) . logic_blanket . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_blanket_animation_disappear . get ( ) . receive ( msg ) ;
 }
 

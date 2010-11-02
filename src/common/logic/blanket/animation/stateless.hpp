@@ -8,6 +8,7 @@ public :
     class logic_blanket_animation_messages
     {
     public :
+        class logic_blanket_animation_disappear_start { } ;
         class logic_blanket_animation_disappear_transform_reply { public : num_fract scale ; num_fract rotation ; } ;
         class logic_blanket_animation_disappear_transform_request { } ;
         class logic_blanket_animation_fit_transform_reply { public : num_fract scale ; } ;
@@ -21,6 +22,7 @@ public :
     {
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_start ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_transform_reply ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_transform_request ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_fit_transform_reply ) ;
@@ -39,6 +41,15 @@ void shy_logic_blanket_animation_stateless < mediator >
 :: set_receivers ( typename platform_pointer :: template pointer < const receivers > arg_receivers )
 {
     _receivers = arg_receivers ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_blanket_animation_stateless < mediator >
+:: logic_blanket_animation_sender < receivers >
+:: send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_start msg )
+{
+    _receivers . get ( ) . logic_blanket_animation_disappear . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
