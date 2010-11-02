@@ -109,7 +109,6 @@ void shy_logic_blanket_animation_appear < mediator > :: receive ( typename messa
         if ( platform_conditions :: fract_greater_than_fract ( time , time_from_begin_to_end ) )
         {
             started = _platform_math_consts . get ( ) . whole_false ;
-            time = _platform_math_consts . get ( ) . fract_0 ;
             _mediator . get ( ) . send ( typename messages :: logic_blanket_animation_appear_finished ( ) ) ;
         }
 

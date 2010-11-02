@@ -12,6 +12,7 @@ public :
         class logic_blanket_animation_appear_start { } ;
         class logic_blanket_animation_appear_transform_reply { public : num_fract scale ; num_fract rotation ; } ;
         class logic_blanket_animation_appear_transform_request { } ;
+        class logic_blanket_animation_disappear_finished { } ;
         class logic_blanket_animation_disappear_start { } ;
         class logic_blanket_animation_disappear_transform_reply { public : num_fract scale ; num_fract rotation ; } ;
         class logic_blanket_animation_disappear_transform_request { } ;
@@ -30,6 +31,7 @@ public :
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_appear_start ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_appear_transform_reply ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_appear_transform_request ) ;
+        void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_finished ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_start ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_transform_reply ) ;
         void send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_transform_request ) ;
@@ -91,9 +93,9 @@ template < typename mediator >
 template < typename receivers >
 void shy_logic_blanket_animation_stateless < mediator >
 :: logic_blanket_animation_sender < receivers >
-:: send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_transform_reply msg )
+:: send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_finished msg )
 {
-    _receivers . get ( ) . logic_blanket_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_amusement . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -103,6 +105,15 @@ void shy_logic_blanket_animation_stateless < mediator >
 :: send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_start msg )
 {
     _receivers . get ( ) . logic_blanket_animation_disappear . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_blanket_animation_stateless < mediator >
+:: logic_blanket_animation_sender < receivers >
+:: send ( typename logic_blanket_animation_messages :: logic_blanket_animation_disappear_transform_reply msg )
+{
+    _receivers . get ( ) . logic_blanket_animation . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

@@ -95,9 +95,26 @@ void shy_logic_blanket_animation_disappear < mediator > :: receive ( typename me
 {
     if ( platform_conditions :: whole_is_true ( _logic_blanket_update_state . started ) )
     {
+        num_fract time ;
         num_fract time_step ;
+        num_fract time_from_begin_to_end ;
+        num_whole started ;
+
+        time = _logic_blanket_update_state . time ;
+        started = _logic_blanket_update_state . started ;
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
-        platform_math :: add_to_fract ( _logic_blanket_update_state . time , time_step ) ;
+        time_from_begin_to_end = _logic_blanket_animation_disappear_consts . time_from_begin_to_end ;
+
+        platform_math :: add_to_fract ( time , time_step ) ;
+
+        if ( platform_conditions :: fract_greater_than_fract ( time , time_from_begin_to_end ) )
+        {
+            started = _platform_math_consts . get ( ) . whole_false ;
+            _mediator . get ( ) . send ( typename messages :: logic_blanket_animation_disappear_finished ( ) ) ;
+        }
+
+        _logic_blanket_update_state . time = time ;
+        _logic_blanket_update_state . started = started ;
     }
 }
 
