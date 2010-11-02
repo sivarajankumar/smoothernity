@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_blanket_animation
 {
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -11,6 +12,8 @@ class shy_logic_blanket_animation
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_vector platform_vector ;
+    typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
     class _logic_blanket_animation_consts_type
     {
@@ -142,20 +145,38 @@ void shy_logic_blanket_animation < mediator > :: _compute_transform ( )
     num_fract origin_x ;
     num_fract origin_y ;
     num_fract origin_z ;
-    num_fract scale ;
+    num_fract disappear_scale ;
+    num_fract disappear_rotation ;
+    num_fract one ;
     num_fract zero ;
+    num_fract scale ;
+    num_fract rotation ;
+    vector_data axis_x ;
+    vector_data axis_y ;
+    vector_data axis_z ;
     matrix_data transform ;
 
     origin_x = _logic_blanket_animation_consts . origin_x ;
     origin_y = _logic_blanket_animation_consts . origin_y ;
     origin_z = _logic_blanket_animation_consts . origin_z ;
-    scale = _logic_blanket_animation_disappear_transform_state . scale ;
+    one = _platform_math_consts . get ( ) . fract_1 ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
+    disappear_scale = _logic_blanket_animation_disappear_transform_state . scale ;
+    disappear_rotation = _logic_blanket_animation_disappear_transform_state . rotation ;
+
+    scale = disappear_scale ;
+    rotation = disappear_rotation ;
+
+    engine_math :: rotation_z ( axis_x , axis_y , rotation ) ;
+    platform_vector :: xyz ( axis_z , zero , zero , one ) ;
+
+    platform_vector :: mul_by ( axis_x , scale ) ;
+    platform_vector :: mul_by ( axis_y , scale ) ;
 
     platform_matrix :: identity ( transform ) ;
-    platform_matrix :: set_axis_x ( transform , scale , zero , zero ) ;
-    platform_matrix :: set_axis_y ( transform , zero , scale , zero ) ;
-    platform_matrix :: set_axis_z ( transform , zero , zero , scale ) ;
+    platform_matrix :: set_axis_x ( transform , axis_x ) ;
+    platform_matrix :: set_axis_y ( transform , axis_y ) ;
+    platform_matrix :: set_axis_z ( transform , axis_z ) ;
     platform_matrix :: set_origin ( transform , origin_x , origin_y , origin_z ) ;
 
     _logic_blanket_animation_transform_state . transform = transform ;

@@ -39,6 +39,7 @@ public :
     static void min_whole ( num_whole & result , num_whole a , num_whole b ) ;
     static void max_whole ( num_whole & result , num_whole a , num_whole b ) ;
     static void abs_whole ( num_whole & result , num_whole a ) ;
+    static void rotation_z ( vector_data & axis_x , vector_data & axis_y , num_fract angle ) ;
 } ;
 
 template < typename mediator >
@@ -326,3 +327,31 @@ void shy_engine_math < mediator > :: abs_whole ( num_whole & result , num_whole 
     else
         result = a ;
 }
+
+template < typename mediator >
+void shy_engine_math < mediator > :: rotation_z ( vector_data & axis_x , vector_data & axis_y , num_fract angle )
+{
+    num_fract rot_sin ;
+    num_fract rot_cos ;
+    num_fract axis_x_x ;
+    num_fract axis_x_y ;
+    num_fract axis_x_z ;
+    num_fract axis_y_x ;
+    num_fract axis_y_y ;
+    num_fract axis_y_z ;
+
+    platform_math :: sin ( rot_sin , angle ) ;
+    platform_math :: cos ( rot_cos , angle ) ;
+
+    axis_x_x = rot_cos ;
+    axis_x_y = rot_sin ;
+    platform_math :: make_num_fract ( axis_x_z , 0 , 1 ) ;
+
+    platform_math :: neg_fract ( axis_y_x , rot_sin ) ;
+    axis_y_y = rot_cos ;
+    platform_math :: make_num_fract ( axis_y_z , 0 , 1 ) ;
+
+    platform_vector :: xyz ( axis_x , axis_x_x , axis_x_y , axis_x_z ) ;
+    platform_vector :: xyz ( axis_y , axis_y_x , axis_y_y , axis_y_z ) ;
+}
+
