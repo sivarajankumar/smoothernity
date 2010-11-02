@@ -3,6 +3,7 @@ class shy_logic_blanket_animation
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
@@ -89,22 +90,43 @@ void shy_logic_blanket_animation < mediator > :: receive ( typename messages :: 
 template < typename mediator >
 void shy_logic_blanket_animation < mediator > :: receive ( typename messages :: logic_blanket_animation_transform_request )
 {
-    _reply_computed_transform ( ) ;
+    _logic_blanket_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _proceed_with_transform ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_blanket_animation < mediator > :: receive ( typename messages :: logic_blanket_animation_disappear_transform_reply msg )
 {
+    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_disappear_transform_state . requested ) )
+    {
+        _logic_blanket_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_blanket_animation_disappear_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_blanket_animation_disappear_transform_state . scale = msg . scale ;
+        _logic_blanket_animation_disappear_transform_state . rotation = msg . rotation ;
+        _proceed_with_transform ( ) ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_blanket_animation < mediator > :: _proceed_with_transform ( )
 {
+    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_transform_state . requested ) )
+    {
+        _logic_blanket_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _request_disappear_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_disappear_transform_state . replied ) )
+    {
+        _logic_blanket_animation_disappear_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _reply_computed_transform ( ) ;
+    }
 }
 
 template < typename mediator >
 void shy_logic_blanket_animation < mediator > :: _request_disappear_transform ( )
 {
+    _logic_blanket_animation_disappear_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_animation_disappear_transform_request ( ) ) ;
 }
 
 template < typename mediator >
