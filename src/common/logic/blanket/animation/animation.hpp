@@ -41,16 +41,26 @@ class shy_logic_blanket_animation
         num_fract rotation ;
     } ;
 
+    class _logic_blanket_animation_fit_transform_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract scale ;
+    } ;
+
 public :
     shy_logic_blanket_animation ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_blanket_animation_transform_request ) ;
     void receive ( typename messages :: logic_blanket_animation_disappear_transform_reply ) ;
+    void receive ( typename messages :: logic_blanket_animation_fit_transform_reply ) ;
 private :
     shy_logic_blanket_animation < mediator > & operator= ( const shy_logic_blanket_animation < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _request_disappear_transform ( ) ;
+    void _request_fit_transform ( ) ;
     void _reply_computed_transform ( ) ;
     void _compute_transform ( ) ;
     void _reply_transform ( ) ;
@@ -61,6 +71,7 @@ private :
 
     _logic_blanket_animation_transform_state_type _logic_blanket_animation_transform_state ;
     _logic_blanket_animation_disappear_transform_state_type _logic_blanket_animation_disappear_transform_state ;
+    _logic_blanket_animation_fit_transform_state_type _logic_blanket_animation_fit_transform_state ;
 } ;
 
 template < typename mediator >
@@ -111,11 +122,28 @@ void shy_logic_blanket_animation < mediator > :: receive ( typename messages :: 
 }
 
 template < typename mediator >
+void shy_logic_blanket_animation < mediator > :: receive ( typename messages :: logic_blanket_animation_fit_transform_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_fit_transform_state . requested ) )
+    {
+        _logic_blanket_animation_fit_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_blanket_animation_fit_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_blanket_animation_fit_transform_state . scale = msg . scale ;
+        _proceed_with_transform ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_blanket_animation < mediator > :: _proceed_with_transform ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_transform_state . requested ) )
     {
         _logic_blanket_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _request_fit_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_fit_transform_state . replied ) )
+    {
+        _logic_blanket_animation_fit_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _request_disappear_transform ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_disappear_transform_state . replied ) )
@@ -133,6 +161,13 @@ void shy_logic_blanket_animation < mediator > :: _request_disappear_transform ( 
 }
 
 template < typename mediator >
+void shy_logic_blanket_animation < mediator > :: _request_fit_transform ( )
+{
+    _logic_blanket_animation_fit_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_animation_fit_transform_request ( ) ) ;
+}
+
+template < typename mediator >
 void shy_logic_blanket_animation < mediator > :: _reply_computed_transform ( )
 {
     _compute_transform ( ) ;
@@ -147,6 +182,7 @@ void shy_logic_blanket_animation < mediator > :: _compute_transform ( )
     num_fract origin_z ;
     num_fract disappear_scale ;
     num_fract disappear_rotation ;
+    num_fract fit_scale ;
     num_fract one ;
     num_fract zero ;
     num_fract scale ;
@@ -163,8 +199,9 @@ void shy_logic_blanket_animation < mediator > :: _compute_transform ( )
     zero = _platform_math_consts . get ( ) . fract_0 ;
     disappear_scale = _logic_blanket_animation_disappear_transform_state . scale ;
     disappear_rotation = _logic_blanket_animation_disappear_transform_state . rotation ;
+    fit_scale = _logic_blanket_animation_fit_transform_state . scale ;
 
-    scale = disappear_scale ;
+    platform_math :: mul_fracts ( scale , disappear_scale , fit_scale ) ;
     rotation = disappear_rotation ;
 
     engine_math :: rotation_z ( axis_x , axis_y , rotation ) ;
