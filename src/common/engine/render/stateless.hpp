@@ -408,6 +408,7 @@ void shy_engine_render_stateless < mediator >
 :: engine_render_sender < receivers > 
 :: send ( typename engine_render_messages :: engine_render_aspect_reply msg )
 {
+    _receivers . get ( ) . logic_blanket_animation_fit . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_core . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
