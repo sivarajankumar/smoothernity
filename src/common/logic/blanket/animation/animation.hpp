@@ -142,13 +142,20 @@ void shy_logic_blanket_animation < mediator > :: _compute_transform ( )
     num_fract origin_x ;
     num_fract origin_y ;
     num_fract origin_z ;
+    num_fract scale ;
+    num_fract zero ;
     matrix_data transform ;
 
     origin_x = _logic_blanket_animation_consts . origin_x ;
     origin_y = _logic_blanket_animation_consts . origin_y ;
     origin_z = _logic_blanket_animation_consts . origin_z ;
+    scale = _logic_blanket_animation_disappear_transform_state . scale ;
+    zero = _platform_math_consts . get ( ) . fract_0 ;
 
     platform_matrix :: identity ( transform ) ;
+    platform_matrix :: set_axis_x ( transform , scale , zero , zero ) ;
+    platform_matrix :: set_axis_y ( transform , zero , scale , zero ) ;
+    platform_matrix :: set_axis_z ( transform , zero , zero , scale ) ;
     platform_matrix :: set_origin ( transform , origin_x , origin_y , origin_z ) ;
 
     _logic_blanket_animation_transform_state . transform = transform ;

@@ -33,7 +33,7 @@ template < typename mediator >
 void shy_logic_blanket_animation_disappear < mediator > :: receive ( typename messages :: logic_blanket_animation_disappear_transform_request )
 {
     typename messages :: logic_blanket_animation_disappear_transform_reply msg ;
-    platform_math :: make_num_fract ( msg . scale , 2 , 1 ) ;
+    platform_math :: make_num_fract ( msg . scale , 3 , 2 ) ;
     platform_math :: make_num_fract ( msg . rotation , 1 , 2 ) ;
     _mediator . get ( ) . send ( msg ) ;
 }
