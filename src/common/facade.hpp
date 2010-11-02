@@ -20,6 +20,7 @@
 #include "logic/application/application.hpp"
 #include "logic/application/stateless.hpp"
 #include "logic/blanket/animation/animation.hpp"
+#include "logic/blanket/animation/appear.hpp"
 #include "logic/blanket/animation/disappear.hpp"
 #include "logic/blanket/animation/fit.hpp"
 #include "logic/blanket/animation/stateless.hpp"
@@ -139,6 +140,7 @@ private :
         , shy_logic_application_stateless
         , shy_logic_blanket
         , shy_logic_blanket_animation
+        , shy_logic_blanket_animation_appear
         , shy_logic_blanket_animation_disappear
         , shy_logic_blanket_animation_fit
         , shy_logic_blanket_animation_stateless

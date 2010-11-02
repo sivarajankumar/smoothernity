@@ -33,6 +33,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket logic_blanket ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation logic_blanket_animation ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_appear logic_blanket_animation_appear ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_disappear logic_blanket_animation_disappear ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_fit logic_blanket_animation_fit ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_mesh logic_blanket_mesh ;
@@ -268,6 +269,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_application > logic_application ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket > logic_blanket ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation > logic_blanket_animation ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_appear > logic_blanket_animation_appear ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_disappear > logic_blanket_animation_disappear ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_fit > logic_blanket_animation_fit ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket_mesh > logic_blanket_mesh ;
@@ -352,6 +354,7 @@ public :
         , typename platform_pointer :: template pointer < logic_application >
         , typename platform_pointer :: template pointer < logic_blanket >
         , typename platform_pointer :: template pointer < logic_blanket_animation >
+        , typename platform_pointer :: template pointer < logic_blanket_animation_appear >
         , typename platform_pointer :: template pointer < logic_blanket_animation_disappear >
         , typename platform_pointer :: template pointer < logic_blanket_animation_fit >
         , typename platform_pointer :: template pointer < logic_blanket_mesh >
@@ -486,6 +489,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
     , typename platform_pointer :: template pointer < logic_blanket > arg_logic_blanket
     , typename platform_pointer :: template pointer < logic_blanket_animation > arg_logic_blanket_animation
+    , typename platform_pointer :: template pointer < logic_blanket_animation_appear > arg_logic_blanket_animation_appear
     , typename platform_pointer :: template pointer < logic_blanket_animation_disappear > arg_logic_blanket_animation_disappear
     , typename platform_pointer :: template pointer < logic_blanket_animation_fit > arg_logic_blanket_animation_fit
     , typename platform_pointer :: template pointer < logic_blanket_mesh > arg_logic_blanket_mesh
@@ -571,6 +575,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_application = arg_logic_application ;
     _receivers . logic_blanket = arg_logic_blanket ;
     _receivers . logic_blanket_animation = arg_logic_blanket_animation ;
+    _receivers . logic_blanket_animation_appear = arg_logic_blanket_animation_appear ;
     _receivers . logic_blanket_animation_disappear = arg_logic_blanket_animation_disappear ;
     _receivers . logic_blanket_animation_fit = arg_logic_blanket_animation_fit ;
     _receivers . logic_blanket_mesh = arg_logic_blanket_mesh ;
@@ -650,6 +655,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_application . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket_animation . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_blanket_animation_appear . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket_animation_disappear . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket_animation_fit . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket_mesh . get ( ) . set_mediator ( mediator_ptr ) ;

@@ -64,6 +64,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket_animation . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_blanket_animation_appear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket_animation_disappear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket_animation_fit . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket_mesh . get ( ) . receive ( msg ) ;
