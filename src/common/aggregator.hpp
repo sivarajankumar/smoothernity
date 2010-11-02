@@ -13,6 +13,7 @@ template
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_blanket
     , template < typename mediator > class _logic_blanket_animation
+    , template < typename mediator > class _logic_blanket_animation_disappear
     , template < typename mediator > class _logic_blanket_animation_stateless
     , template < typename mediator > class _logic_blanket_mesh
     , template < typename mediator > class _logic_blanket_placement
@@ -122,6 +123,7 @@ public :
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_blanket < mediator > logic_blanket ;
         typedef _logic_blanket_animation < mediator > logic_blanket_animation ;
+        typedef _logic_blanket_animation_disappear < mediator > logic_blanket_animation_disappear ;
         typedef _logic_blanket_animation_stateless < mediator > logic_blanket_animation_stateless ;
         typedef _logic_blanket_mesh < mediator > logic_blanket_mesh ;
         typedef _logic_blanket_placement < mediator > logic_blanket_placement ;
@@ -228,6 +230,7 @@ template
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_blanket
     , template < typename _mediator > class _logic_blanket_animation
+    , template < typename _mediator > class _logic_blanket_animation_disappear
     , template < typename _mediator > class _logic_blanket_animation_stateless
     , template < typename _mediator > class _logic_blanket_mesh
     , template < typename _mediator > class _logic_blanket_placement
@@ -333,6 +336,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket > scheduled_logic_blanket ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_animation > scheduled_logic_blanket_animation ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_animation_disappear > scheduled_logic_blanket_animation_disappear ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_mesh > scheduled_logic_blanket_mesh ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_placement > scheduled_logic_blanket_placement ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_renderer > scheduled_logic_blanket_renderer ;
@@ -411,6 +415,7 @@ public :
         , _logic_application_stateless
         , scheduled_logic_blanket :: template scheduled_module
         , scheduled_logic_blanket_animation :: template scheduled_module
+        , scheduled_logic_blanket_animation_disappear :: template scheduled_module
         , _logic_blanket_animation_stateless
         , scheduled_logic_blanket_mesh :: template scheduled_module
         , scheduled_logic_blanket_placement :: template scheduled_module
@@ -559,6 +564,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > logic_application ;
     typedef typename aggregator_types :: scheduled_logic_blanket :: template scheduled_module < mediator_type > logic_blanket ;
     typedef typename aggregator_types :: scheduled_logic_blanket_animation :: template scheduled_module < mediator_type > logic_blanket_animation ;
+    typedef typename aggregator_types :: scheduled_logic_blanket_animation_disappear :: template scheduled_module < mediator_type > logic_blanket_animation_disappear ;
     typedef typename aggregator_types :: scheduled_logic_blanket_mesh :: template scheduled_module < mediator_type > logic_blanket_mesh ;
     typedef typename aggregator_types :: scheduled_logic_blanket_placement :: template scheduled_module < mediator_type > logic_blanket_placement ;
     typedef typename aggregator_types :: scheduled_logic_blanket_renderer :: template scheduled_module < mediator_type > logic_blanket_renderer ;
@@ -642,6 +648,7 @@ private :
     logic_application _logic_application ;
     logic_blanket _logic_blanket ;
     logic_blanket_animation _logic_blanket_animation ;
+    logic_blanket_animation_disappear _logic_blanket_animation_disappear ;
     logic_blanket_mesh _logic_blanket_mesh ;
     logic_blanket_placement _logic_blanket_placement ;
     logic_blanket_renderer _logic_blanket_renderer ;
@@ -723,6 +730,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_application > logic_application_ptr ;
     typename platform_pointer :: template pointer < logic_blanket > logic_blanket_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_animation > logic_blanket_animation_ptr ;
+    typename platform_pointer :: template pointer < logic_blanket_animation_disappear > logic_blanket_animation_disappear_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_mesh > logic_blanket_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_placement > logic_blanket_placement_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_renderer > logic_blanket_renderer_ptr ;
@@ -800,6 +808,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_application_ptr , _logic_application ) ;
     platform_pointer :: bind ( logic_blanket_ptr , _logic_blanket ) ;
     platform_pointer :: bind ( logic_blanket_animation_ptr , _logic_blanket_animation ) ;
+    platform_pointer :: bind ( logic_blanket_animation_disappear_ptr , _logic_blanket_animation_disappear ) ;
     platform_pointer :: bind ( logic_blanket_mesh_ptr , _logic_blanket_mesh ) ;
     platform_pointer :: bind ( logic_blanket_placement_ptr , _logic_blanket_placement ) ;
     platform_pointer :: bind ( logic_blanket_renderer_ptr , _logic_blanket_renderer ) ;
@@ -876,6 +885,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_application_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_animation_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_blanket_animation_disappear_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_mesh_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_placement_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_renderer_ptr , scheduler_ptr ) ;
@@ -947,6 +957,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_application_ptr
         , logic_blanket_ptr
         , logic_blanket_animation_ptr
+        , logic_blanket_animation_disappear_ptr
         , logic_blanket_mesh_ptr
         , logic_blanket_placement_ptr
         , logic_blanket_renderer_ptr
