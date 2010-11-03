@@ -38,12 +38,14 @@ class shy_logic_blanket_animation_disappear
     } ;
 
 public :
+    shy_logic_blanket_animation_disappear ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_blanket_update ) ;
     void receive ( typename messages :: logic_blanket_animation_disappear_start ) ;
     void receive ( typename messages :: logic_blanket_animation_disappear_transform_request ) ;
 private :
+    shy_logic_blanket_animation_disappear < mediator > & operator= ( const shy_logic_blanket_animation_disappear < mediator > & ) ;
     void _compute_scale ( ) ;
     void _compute_rotation ( ) ;
     void _reply_transform ( ) ; 
@@ -64,6 +66,11 @@ shy_logic_blanket_animation_disappear < mediator > :: _logic_blanket_animation_d
     platform_math :: make_num_fract ( rotation_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( rotation_end , 10 , 1 ) ;
     platform_math :: make_num_fract ( time_from_begin_to_end , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_blanket_animation_disappear < mediator > :: shy_logic_blanket_animation_disappear ( )
+{
 }
 
 template < typename mediator >
