@@ -91,6 +91,7 @@ template
     , template < typename mediator > class _logic_main_menu_selection_tracking_director
     , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_observer
+    , template < typename mediator > class _logic_observer_animation
     , template < typename mediator > class _logic_observer_stateless
     , template < typename mediator > class _logic_room
     , template < typename mediator > class _logic_room_mesh
@@ -205,6 +206,7 @@ public :
         typedef _logic_main_menu_selection_tracking_director < mediator > logic_main_menu_selection_tracking_director ;
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_observer < mediator > logic_observer ;
+        typedef _logic_observer_animation < mediator > logic_observer_animation ;
         typedef _logic_observer_stateless < mediator > logic_observer_stateless ;
         typedef _logic_room < mediator > logic_room ;
         typedef _logic_room_mesh < mediator > logic_room_mesh ;
@@ -316,6 +318,7 @@ template
     , template < typename _mediator > class _logic_main_menu_selection_tracking_director
     , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_observer
+    , template < typename _mediator > class _logic_observer_animation
     , template < typename _mediator > class _logic_observer_stateless
     , template < typename _mediator > class _logic_room
     , template < typename _mediator > class _logic_room_mesh
@@ -406,6 +409,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_tracker > scheduled_logic_main_menu_selection_tracker ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_main_menu_selection_tracking_director > scheduled_logic_main_menu_selection_tracking_director ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_observer > scheduled_logic_observer ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_observer_animation > scheduled_logic_observer_animation ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room > scheduled_logic_room ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room_mesh > scheduled_logic_room_mesh ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room_renderer > scheduled_logic_room_renderer ;
@@ -508,6 +512,7 @@ public :
         , scheduled_logic_main_menu_selection_tracking_director :: template scheduled_module
         , _logic_main_menu_stateless
         , scheduled_logic_observer :: template scheduled_module
+        , scheduled_logic_observer_animation :: template scheduled_module
         , _logic_observer_stateless
         , scheduled_logic_room :: template scheduled_module
         , scheduled_logic_room_mesh :: template scheduled_module
@@ -642,6 +647,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_tracker :: template scheduled_module < mediator_type > logic_main_menu_selection_tracker ;
     typedef typename aggregator_types :: scheduled_logic_main_menu_selection_tracking_director :: template scheduled_module < mediator_type > logic_main_menu_selection_tracking_director ;
     typedef typename aggregator_types :: scheduled_logic_observer :: template scheduled_module < mediator_type > logic_observer ;
+    typedef typename aggregator_types :: scheduled_logic_observer_animation :: template scheduled_module < mediator_type > logic_observer_animation ;
     typedef typename aggregator_types :: scheduled_logic_room :: template scheduled_module < mediator_type > logic_room ;
     typedef typename aggregator_types :: scheduled_logic_room_mesh :: template scheduled_module < mediator_type > logic_room_mesh ;
     typedef typename aggregator_types :: scheduled_logic_room_renderer :: template scheduled_module < mediator_type > logic_room_renderer ;
@@ -733,6 +739,7 @@ private :
     logic_main_menu_selection_tracking_director _logic_main_menu_selection_tracking_director ;
     logic_main_menu_stateless _logic_main_menu_stateless ;
     logic_observer _logic_observer ;
+    logic_observer_animation _logic_observer_animation ;
     logic_room _logic_room ;
     logic_room_mesh _logic_room_mesh ;
     logic_room_renderer _logic_room_renderer ;
@@ -818,6 +825,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_selection_tracking_director > logic_main_menu_selection_tracking_director_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > logic_main_menu_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_observer > logic_observer_ptr ;
+    typename platform_pointer :: template pointer < logic_observer_animation > logic_observer_animation_ptr ;
     typename platform_pointer :: template pointer < logic_room > logic_room_ptr ;
     typename platform_pointer :: template pointer < logic_room_mesh > logic_room_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_room_renderer > logic_room_renderer_ptr ;
@@ -899,6 +907,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_selection_tracking_director_ptr , _logic_main_menu_selection_tracking_director ) ;
     platform_pointer :: bind ( logic_main_menu_stateless_ptr , _logic_main_menu_stateless ) ;
     platform_pointer :: bind ( logic_observer_ptr , _logic_observer ) ;
+    platform_pointer :: bind ( logic_observer_animation_ptr , _logic_observer_animation ) ;
     platform_pointer :: bind ( logic_room_ptr , _logic_room ) ;
     platform_pointer :: bind ( logic_room_mesh_ptr , _logic_room_mesh ) ;
     platform_pointer :: bind ( logic_room_renderer_ptr , _logic_room_renderer ) ;
@@ -975,6 +984,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_tracker_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_main_menu_selection_tracking_director_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_observer_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_observer_animation_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_mesh_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_renderer_ptr , scheduler_ptr ) ;
@@ -1054,6 +1064,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_selection_tracking_director_ptr
         , logic_main_menu_stateless_ptr
         , logic_observer_ptr
+        , logic_observer_animation_ptr
         , logic_room_ptr
         , logic_room_mesh_ptr
         , logic_room_renderer_ptr
