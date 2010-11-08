@@ -4,11 +4,13 @@ class shy_logic_observer
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_observer_update ) ;
+    void receive ( typename messages :: logic_observer_transform_request ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -31,5 +33,13 @@ void shy_logic_observer < mediator > :: receive ( typename messages :: init )
 template < typename mediator >
 void shy_logic_observer < mediator > :: receive ( typename messages :: logic_observer_update )
 {
+}
+
+template < typename mediator >
+void shy_logic_observer < mediator > :: receive ( typename messages :: logic_observer_transform_request )
+{
+    typename messages :: logic_observer_transform_reply msg ;
+    platform_matrix :: identity ( msg . transform ) ;
+    _mediator . get ( ) . send ( msg ) ;
 }
 
