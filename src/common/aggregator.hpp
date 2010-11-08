@@ -92,6 +92,7 @@ template
     , template < typename mediator > class _logic_main_menu_stateless
     , template < typename mediator > class _logic_observer
     , template < typename mediator > class _logic_observer_animation
+    , template < typename mediator > class _logic_observer_animation_stateless
     , template < typename mediator > class _logic_observer_stateless
     , template < typename mediator > class _logic_room
     , template < typename mediator > class _logic_room_mesh
@@ -207,6 +208,7 @@ public :
         typedef _logic_main_menu_stateless < mediator > logic_main_menu_stateless ;
         typedef _logic_observer < mediator > logic_observer ;
         typedef _logic_observer_animation < mediator > logic_observer_animation ;
+        typedef _logic_observer_animation_stateless < mediator > logic_observer_animation_stateless ;
         typedef _logic_observer_stateless < mediator > logic_observer_stateless ;
         typedef _logic_room < mediator > logic_room ;
         typedef _logic_room_mesh < mediator > logic_room_mesh ;
@@ -319,6 +321,7 @@ template
     , template < typename _mediator > class _logic_main_menu_stateless
     , template < typename _mediator > class _logic_observer
     , template < typename _mediator > class _logic_observer_animation
+    , template < typename _mediator > class _logic_observer_animation_stateless
     , template < typename _mediator > class _logic_observer_stateless
     , template < typename _mediator > class _logic_room
     , template < typename _mediator > class _logic_room_mesh
@@ -513,6 +516,7 @@ public :
         , _logic_main_menu_stateless
         , scheduled_logic_observer :: template scheduled_module
         , scheduled_logic_observer_animation :: template scheduled_module
+        , _logic_observer_animation_stateless
         , _logic_observer_stateless
         , scheduled_logic_room :: template scheduled_module
         , scheduled_logic_room_mesh :: template scheduled_module
@@ -557,6 +561,7 @@ public :
     typedef _logic_main_menu_selection_animation_stateless < mediator_type > logic_main_menu_selection_animation_stateless ;
     typedef _logic_main_menu_selection_stateless < mediator_type > logic_main_menu_selection_stateless ;
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
+    typedef _logic_observer_animation_stateless < mediator_type > logic_observer_animation_stateless ;
     typedef _logic_observer_stateless < mediator_type > logic_observer_stateless ;
     typedef _logic_room_stateless < mediator_type > logic_room_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;
