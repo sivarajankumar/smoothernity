@@ -41,7 +41,7 @@ class shy_logic_amusement_renderer
         num_whole replied ;
     } ;
 
-    class _logic_observer_transform_state_type
+    class _logic_observer_animation_transform_state_type
     {
     public :
         num_whole requested ;
@@ -77,7 +77,7 @@ public :
     void receive ( typename messages :: logic_amusement_render ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
-    void receive ( typename messages :: logic_observer_transform_reply ) ;
+    void receive ( typename messages :: logic_observer_animation_transform_reply ) ;
     void receive ( typename messages :: logic_blanket_render_reply ) ;
     void receive ( typename messages :: logic_door_render_reply ) ;
     void receive ( typename messages :: logic_room_render_reply ) ;
@@ -105,7 +105,7 @@ private :
     _logic_amusement_render_state_type _logic_amusement_render_state ;
     _logic_core_use_ortho_projection_state_type _logic_core_use_ortho_projection_state ;
     _logic_core_use_perspective_projection_state_type _logic_core_use_perspective_projection_state ;
-    _logic_observer_transform_state_type _logic_observer_transform_state ;
+    _logic_observer_animation_transform_state_type _logic_observer_animation_transform_state ;
     _logic_blanket_render_state_type _logic_blanket_render_state ; 
     _logic_door_render_state_type _logic_door_render_state ;
     _logic_room_render_state_type _logic_room_render_state ;
@@ -168,13 +168,13 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
 }
 
 template < typename mediator >
-void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_observer_transform_reply msg )
+void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_observer_animation_transform_reply msg )
 {
-    if ( platform_conditions :: whole_is_true ( _logic_observer_transform_state . requested ) )
+    if ( platform_conditions :: whole_is_true ( _logic_observer_animation_transform_state . requested ) )
     {
-        _logic_observer_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _logic_observer_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
-        _logic_observer_transform_state . transform = msg . transform ;
+        _logic_observer_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_observer_animation_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_observer_animation_transform_state . transform = msg . transform ;
         _proceed_with_render ( ) ;
     }
 }
@@ -225,9 +225,9 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
         _logic_core_use_perspective_projection_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _request_observer_transform ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_observer_transform_state . replied ) )
+    if ( platform_conditions :: whole_is_true ( _logic_observer_animation_transform_state . replied ) )
     {
-        _logic_observer_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _logic_observer_animation_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _observer_transform_received ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_room_render_state . replied ) )
@@ -270,8 +270,8 @@ void shy_logic_amusement_renderer < mediator > :: _prepare_ortho_render ( )
 template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: _request_observer_transform ( )
 {
-    _logic_observer_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_observer_transform_request ( ) ) ;
+    _logic_observer_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_observer_animation_transform_request ( ) ) ;
 }
 
 template < typename mediator >
@@ -321,7 +321,7 @@ template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: _use_observer_transform ( )
 {
     typename messages :: engine_render_matrix_load msg ;
-    msg . matrix = _logic_observer_transform_state . transform ;
+    msg . matrix = _logic_observer_animation_transform_state . transform ;
     _mediator . get ( ) . send ( msg ) ;
 }
 
