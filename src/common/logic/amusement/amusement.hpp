@@ -65,6 +65,7 @@ void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_am
 {
     _mediator . get ( ) . send ( typename messages :: logic_blanket_update ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_door_update ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_observer_update ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_room_update ( ) ) ;
 }
 

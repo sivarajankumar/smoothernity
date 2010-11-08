@@ -98,6 +98,8 @@
 #include "logic/main_menu/selection/tracker.hpp"
 #include "logic/main_menu/selection/tracking_director.hpp"
 #include "logic/main_menu/stateless.hpp"
+#include "logic/observer/observer.hpp"
+#include "logic/observer/stateless.hpp"
 #include "logic/room/mesh.hpp"
 #include "logic/room/renderer.hpp"
 #include "logic/room/room.hpp"
@@ -217,6 +219,8 @@ private :
         , shy_logic_main_menu_selection_tracker
         , shy_logic_main_menu_selection_tracking_director
         , shy_logic_main_menu_stateless
+        , shy_logic_observer
+        , shy_logic_observer_stateless
         , shy_logic_room
         , shy_logic_room_mesh
         , shy_logic_room_renderer
