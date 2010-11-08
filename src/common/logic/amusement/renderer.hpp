@@ -92,6 +92,7 @@ private :
     void _request_blanket_render ( ) ;
     void _request_door_render ( ) ;
     void _request_room_render ( ) ;
+    void _observer_transform_received ( ) ;
     void _clear_screen ( ) ;
     void _disable_depth_test ( ) ;
     void _enable_depth_test ( ) ;
@@ -217,17 +218,17 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_amusement_render_state . requested ) )
     {
         _logic_amusement_render_state . requested = _platform_math_consts . get ( ) . whole_false ;
-        _request_observer_transform ( ) ;
-    }
-    if ( platform_conditions :: whole_is_true ( _logic_observer_transform_state . replied ) )
-    {
-        _logic_observer_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _prepare_perspective_render ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_core_use_perspective_projection_state . replied ) )
     {
         _logic_core_use_perspective_projection_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _request_room_render ( ) ;
+        _request_observer_transform ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_observer_transform_state . replied ) )
+    {
+        _logic_observer_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _observer_transform_received ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_room_render_state . replied ) )
     {
@@ -285,6 +286,13 @@ void shy_logic_amusement_renderer < mediator > :: _request_ortho_projection ( )
 {
     _logic_core_use_ortho_projection_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_core_use_ortho_projection_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _observer_transform_received ( )
+{
+    _use_observer_transform ( ) ;
+    _request_room_render ( ) ;
 }
 
 template < typename mediator >
