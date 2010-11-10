@@ -42,11 +42,13 @@ class shy_logic_observer_animation
     } ;
 
 public :
+    shy_logic_observer_animation ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_observer_animation_transform_request ) ;
     void receive ( typename messages :: logic_observer_animation_flight_transform_reply ) ;
 private :
+    shy_logic_observer_animation < mediator > & operator= ( const shy_logic_observer_animation < mediator > & ) ;
     void _proceed_with_transform ( ) ;
     void _request_flight_transform ( ) ;
     void _reply_computed_transform ( ) ;
@@ -67,6 +69,11 @@ shy_logic_observer_animation < mediator > :: _logic_observer_animation_consts_ty
     platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
     platform_math :: make_num_fract ( up_z , 0 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_observer_animation < mediator > :: shy_logic_observer_animation ( )
+{
 }
 
 template < typename mediator >

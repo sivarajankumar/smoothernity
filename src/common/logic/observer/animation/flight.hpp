@@ -36,11 +36,13 @@ class shy_logic_observer_animation_flight
     } ;
 
 public :
+    shy_logic_observer_animation_flight ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_observer_animation_flight_transform_request ) ;
     void receive ( typename messages :: logic_observer_update ) ;
 private :
+    shy_logic_observer_animation_flight < mediator > & operator= ( const shy_logic_observer_animation_flight < mediator > & ) ;
     void _compute_vertical_offset ( ) ;
     void _compute_eye ( ) ;
     void _compute_target ( ) ;
@@ -60,6 +62,11 @@ shy_logic_observer_animation_flight < mediator > :: _logic_observer_animation_fl
     platform_math :: make_num_fract ( rotation_period , 10 , 1 ) ;
     platform_math :: make_num_fract ( vertical_offset_period , 2 , 1 ) ;
     platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_observer_animation_flight < mediator > :: shy_logic_observer_animation_flight ( )
+{
 }
 
 template < typename mediator >
