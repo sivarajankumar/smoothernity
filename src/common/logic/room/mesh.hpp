@@ -46,8 +46,6 @@ class shy_logic_room_mesh
         num_fract position_y ;
         num_fract position_z ;
         num_fract rotation_period ;
-        num_fract vertical_offset_period ;
-        num_fract vertical_offset_amplitude ;
         num_fract x_left ;
         num_fract x_right ;
         num_fract y_top ;
@@ -176,8 +174,6 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
     platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( position_z , 0 , 1 ) ;
     platform_math :: make_num_fract ( rotation_period , 10 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_offset_period , 2 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 1 ) ;
 
     platform_math :: make_num_fract ( x_left , - 10 , 1 ) ;
     platform_math :: make_num_fract ( x_right , 10 , 1 ) ;
@@ -750,10 +746,6 @@ void shy_logic_room_mesh < mediator > :: _transform_mesh ( )
     num_fract position_x ;
     num_fract position_y ;
     num_fract position_z ;
-    num_fract vertical_offset ;
-    num_fract vertical_offset_period ;
-    num_fract vertical_offset_phase ;
-    num_fract vertical_offset_amplitude ;
     num_fract time ;
     matrix_data transform ;
 
@@ -766,15 +758,6 @@ void shy_logic_room_mesh < mediator > :: _transform_mesh ( )
 
     time = _logic_room_update_state . time ;
     rotation_period = _logic_room_mesh_consts . rotation_period ;
-    vertical_offset_period = _logic_room_mesh_consts . vertical_offset_period ;
-    vertical_offset_amplitude = _logic_room_mesh_consts . vertical_offset_amplitude ;
-
-    platform_math :: mul_fracts ( vertical_offset_phase , time , _platform_math_consts . get ( ) . fract_2pi ) ;
-    platform_math :: div_fract_by ( vertical_offset_phase , vertical_offset_period ) ;
-    platform_math :: sin ( vertical_offset , vertical_offset_phase ) ;
-    platform_math :: mul_fract_by ( vertical_offset , vertical_offset_amplitude ) ;
-
-    platform_math :: add_to_fract ( position_y , vertical_offset ) ;
 
     platform_math :: mul_fracts ( rotation_phase , time , _platform_math_consts . get ( ) . fract_2pi ) ;
     platform_math :: div_fract_by ( rotation_phase , rotation_period ) ;

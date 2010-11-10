@@ -11,12 +11,27 @@ class shy_logic_observer_animation_flight
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
+    class _logic_observer_animation_flight_consts_type
+    {
+    public :
+        _logic_observer_animation_flight_consts_type ( ) ;
+    public :
+        num_fract vertical_offset_period ;
+        num_fract vertical_offset_amplitude ;
+    } ;
+
     class _logic_observer_animation_flight_transform_state_type
     {
     public :
         vector_data eye ;
         vector_data target ;
-        num_fract offset_y ;
+        num_fract vertical_offset ;
+    } ;
+
+    class _logic_observer_update_state_type
+    {
+    public :
+        num_fract time ;
     } ;
 
 public :
@@ -25,16 +40,25 @@ public :
     void receive ( typename messages :: logic_observer_animation_flight_transform_request ) ;
     void receive ( typename messages :: logic_observer_update ) ;
 private :
-    void _compute_offset_y ( ) ;
+    void _compute_vertical_offset ( ) ;
     void _compute_eye ( ) ;
     void _compute_target ( ) ;
     void _reply_transform ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_observer_animation_flight_consts_type _logic_observer_animation_flight_consts ;
 
+    _logic_observer_update_state_type _logic_observer_update_state ;
     _logic_observer_animation_flight_transform_state_type _logic_observer_animation_flight_transform_state ;
 } ;
+
+template < typename mediator >
+shy_logic_observer_animation_flight < mediator > :: _logic_observer_animation_flight_consts_type :: _logic_observer_animation_flight_consts_type ( )
+{
+    platform_math :: make_num_fract ( vertical_offset_period , 2 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_observer_animation_flight < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -48,39 +72,59 @@ void shy_logic_observer_animation_flight < mediator > :: receive ( typename mess
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+    _logic_observer_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
 
 template < typename mediator >
 void shy_logic_observer_animation_flight < mediator > :: receive ( typename messages :: logic_observer_update )
 {
+    num_fract time_step ;
+    platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
+    platform_math :: add_to_fract ( _logic_observer_update_state . time , time_step ) ;
 }
 
 template < typename mediator >
 void shy_logic_observer_animation_flight < mediator > :: receive ( typename messages :: logic_observer_animation_flight_transform_request )
 {
-    _compute_offset_y ( ) ;
+    _compute_vertical_offset ( ) ;
     _compute_eye ( ) ;
     _compute_target ( ) ;
     _reply_transform ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_observer_animation_flight < mediator > :: _compute_offset_y ( )
+void shy_logic_observer_animation_flight < mediator > :: _compute_vertical_offset ( )
 {
-    _logic_observer_animation_flight_transform_state . offset_y = _platform_math_consts . get ( ) . fract_0 ;
+    num_fract time ;
+    num_fract vertical_offset ;
+    num_fract vertical_offset_period ;
+    num_fract vertical_offset_amplitude ;
+    num_fract vertical_offset_phase ;
+
+    time = _logic_observer_update_state . time ;
+    vertical_offset_period = _logic_observer_animation_flight_consts . vertical_offset_period ;
+    vertical_offset_amplitude = _logic_observer_animation_flight_consts . vertical_offset_amplitude ;
+
+    platform_math :: mul_fracts ( vertical_offset_phase , time , _platform_math_consts . get ( ) . fract_2pi ) ;
+    platform_math :: div_fract_by ( vertical_offset_phase , vertical_offset_period ) ;
+
+    platform_math :: sin ( vertical_offset , vertical_offset_phase ) ;
+    platform_math :: mul_fract_by ( vertical_offset , vertical_offset_amplitude ) ;
+
+    _logic_observer_animation_flight_transform_state . vertical_offset = vertical_offset ;
 }
 
 template < typename mediator >
 void shy_logic_observer_animation_flight < mediator > :: _compute_eye ( )
 {
-    num_fract offset_y ;
+    num_fract vertical_offset ;
     num_fract zero ;
     vector_data eye ;
 
-    offset_y = _logic_observer_animation_flight_transform_state . offset_y ;
+    vertical_offset = _logic_observer_animation_flight_transform_state . vertical_offset ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
 
-    platform_vector :: xyz ( eye , zero , offset_y , zero ) ;
+    platform_vector :: xyz ( eye , zero , vertical_offset , zero ) ;
 
     _logic_observer_animation_flight_transform_state . eye = eye ;
 }
@@ -88,16 +132,16 @@ void shy_logic_observer_animation_flight < mediator > :: _compute_eye ( )
 template < typename mediator >
 void shy_logic_observer_animation_flight < mediator > :: _compute_target ( )
 {
-    num_fract offset_y ;
+    num_fract vertical_offset ;
     num_fract zero ;
     num_fract minus_1 ;
     vector_data target ;
 
-    offset_y = _logic_observer_animation_flight_transform_state . offset_y ;
+    vertical_offset = _logic_observer_animation_flight_transform_state . vertical_offset ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
     minus_1 = _platform_math_consts . get ( ) . fract_minus_1 ;
 
-    platform_vector :: xyz ( target , zero , offset_y , minus_1 ) ;
+    platform_vector :: xyz ( target , zero , vertical_offset , minus_1 ) ;
 
     _logic_observer_animation_flight_transform_state . target = target ;
 }
