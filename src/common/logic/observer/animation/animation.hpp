@@ -1,15 +1,29 @@
 template < typename mediator >
 class shy_logic_observer_animation
 {
+    typedef typename mediator :: engine_camera engine_camera ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
+
+    class _logic_observer_animation_consts_type
+    {
+    public :
+        _logic_observer_animation_consts_type ( ) ;
+    public :
+        num_fract up_x ;
+        num_fract up_y ;
+        num_fract up_z ;
+    } ;
 
     class _logic_observer_animation_transform_state_type
     {
@@ -41,10 +55,19 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_observer_animation_consts_type _logic_observer_animation_consts ;
 
     _logic_observer_animation_transform_state_type _logic_observer_animation_transform_state ;
     _logic_observer_animation_flight_transform_state_type _logic_observer_animation_flight_transform_state ;
 } ;
+
+template < typename mediator >
+shy_logic_observer_animation < mediator > :: _logic_observer_animation_consts_type :: _logic_observer_animation_consts_type ( )
+{
+    platform_math :: make_num_fract ( up_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( up_y , 1 , 1 ) ;
+    platform_math :: make_num_fract ( up_z , 0 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_observer_animation < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -112,8 +135,23 @@ void shy_logic_observer_animation < mediator > :: _reply_computed_transform ( )
 template < typename mediator >
 void shy_logic_observer_animation < mediator > :: _compute_transform ( )
 {
+    num_fract up_x ;
+    num_fract up_y ;
+    num_fract up_z ;
+    vector_data up ;
+    vector_data eye ;
+    vector_data target ;
     matrix_data transform ;
-    platform_matrix :: identity ( transform ) ;
+
+    up_x = _logic_observer_animation_consts . up_x ;
+    up_y = _logic_observer_animation_consts . up_y ;
+    up_z = _logic_observer_animation_consts . up_z ;
+    eye = _logic_observer_animation_flight_transform_state . eye ;
+    target = _logic_observer_animation_flight_transform_state . target ;
+
+    platform_vector :: xyz ( up , up_x , up_y , up_z ) ;
+    engine_camera :: camera_matrix_look_at ( transform , eye , target , up ) ;
+
     _logic_observer_animation_transform_state . transform = transform ;
 }
 
