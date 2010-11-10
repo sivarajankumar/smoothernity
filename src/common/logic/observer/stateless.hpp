@@ -36,6 +36,6 @@ void shy_logic_observer_stateless < mediator >
 :: logic_observer_sender < receivers >
 :: send ( typename logic_observer_messages :: logic_observer_update msg )
 {
-    _receivers . get ( ) . logic_observer . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_observer_animation_flight . get ( ) . receive ( msg ) ;
 }
 
