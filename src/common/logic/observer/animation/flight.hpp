@@ -16,6 +16,7 @@ class shy_logic_observer_animation_flight
     public :
         _logic_observer_animation_flight_consts_type ( ) ;
     public :
+        num_fract rotation_period ;
         num_fract vertical_offset_period ;
         num_fract vertical_offset_amplitude ;
     } ;
@@ -56,6 +57,7 @@ private :
 template < typename mediator >
 shy_logic_observer_animation_flight < mediator > :: _logic_observer_animation_flight_consts_type :: _logic_observer_animation_flight_consts_type ( )
 {
+    platform_math :: make_num_fract ( rotation_period , 10 , 1 ) ;
     platform_math :: make_num_fract ( vertical_offset_period , 2 , 1 ) ;
     platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 1 ) ;
 }
@@ -132,16 +134,27 @@ void shy_logic_observer_animation_flight < mediator > :: _compute_eye ( )
 template < typename mediator >
 void shy_logic_observer_animation_flight < mediator > :: _compute_target ( )
 {
+    num_fract time ;
+    num_fract rotation_period ;
+    num_fract rotation_phase ;
     num_fract vertical_offset ;
-    num_fract zero ;
-    num_fract minus_1 ;
+    num_fract target_x ;
+    num_fract target_y ;
+    num_fract target_z ;
     vector_data target ;
 
+    time = _logic_observer_update_state . time ;
+    rotation_period = _logic_observer_animation_flight_consts . rotation_period ;
     vertical_offset = _logic_observer_animation_flight_transform_state . vertical_offset ;
-    zero = _platform_math_consts . get ( ) . fract_0 ;
-    minus_1 = _platform_math_consts . get ( ) . fract_minus_1 ;
 
-    platform_vector :: xyz ( target , zero , vertical_offset , minus_1 ) ;
+    platform_math :: mul_fracts ( rotation_phase , time , _platform_math_consts . get ( ) . fract_2pi ) ;
+    platform_math :: div_fract_by ( rotation_phase , rotation_period ) ;
+
+    target_y = vertical_offset ;
+    platform_math :: sin ( target_x , rotation_phase ) ;
+    platform_math :: cos ( target_z , rotation_phase ) ;
+
+    platform_vector :: xyz ( target , target_x , target_y , target_z ) ;
 
     _logic_observer_animation_flight_transform_state . target = target ;
 }
