@@ -7,7 +7,7 @@ public :
     class logic_perspective_messages
     {
     public :
-        class logic_perspective_planes_reply { public : num_fract x_left ; num_fract x_right ; num_fract y_bottom ; num_fract y_top ; num_fract z_near ; num_fract z_far ; } ;
+        class logic_perspective_planes_reply { public : num_fract x_left ; num_fract x_right ; num_fract y_bottom ; num_fract y_top ; num_fract z_near ; num_fract z_far ; num_fract scene_scale ; } ;
         class logic_perspective_planes_request { } ;
     } ;
 

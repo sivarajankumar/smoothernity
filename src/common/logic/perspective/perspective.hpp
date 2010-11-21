@@ -20,6 +20,7 @@ class shy_logic_perspective
         num_fract y_bottom ;
         num_fract z_near ;
         num_fract z_far ;
+        num_fract scene_scale ;
     } ;
 
     class _engine_render_aspect_state_type
@@ -45,6 +46,7 @@ private :
     void _compute_y_bottom ( ) ;
     void _compute_z_near ( ) ;
     void _compute_z_far ( ) ;
+    void _compute_scene_scale ( ) ;
     void _reply_computed_planes ( ) ;
     void _reply_planes ( ) ;
 private :
@@ -120,6 +122,7 @@ void shy_logic_perspective < mediator > :: _reply_computed_planes ( )
     _compute_y_bottom ( ) ;
     _compute_z_near ( ) ;
     _compute_z_far ( ) ;
+    _compute_scene_scale ( ) ;
     _reply_planes ( ) ;
 }
 
@@ -154,6 +157,11 @@ void shy_logic_perspective < mediator > :: _compute_z_far ( )
 }
 
 template < typename mediator >
+void shy_logic_perspective < mediator > :: _compute_scene_scale ( )
+{
+}
+
+template < typename mediator >
 void shy_logic_perspective < mediator > :: _reply_planes ( )
 {
     typename messages :: logic_perspective_planes_reply msg ;
@@ -163,5 +171,6 @@ void shy_logic_perspective < mediator > :: _reply_planes ( )
     msg . y_bottom = _logic_perspective_planes_state . y_bottom ;
     msg . z_near = _logic_perspective_planes_state . z_near ;
     msg . z_far = _logic_perspective_planes_state . z_far ;
+    msg . scene_scale = _logic_perspective_planes_state . scene_scale ;
     _mediator . get ( ) . send ( msg ) ;
 }
