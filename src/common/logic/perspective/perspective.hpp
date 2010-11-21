@@ -129,6 +129,13 @@ void shy_logic_perspective < mediator > :: _reply_computed_planes ( )
 template < typename mediator >
 void shy_logic_perspective < mediator > :: _compute_x_left ( )
 {
+    num_fract x_left ;
+    num_fract aspect_width ;
+
+    aspect_width = _engine_render_aspect_state . width ;
+    x_left = aspect_width ;
+
+    _logic_perspective_planes_state . x_left = x_left ;
 }
 
 template < typename mediator >
