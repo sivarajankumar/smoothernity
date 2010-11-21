@@ -6,6 +6,8 @@ class shy_engine_math
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
+    typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 public :
@@ -40,6 +42,7 @@ public :
     static void max_whole ( num_whole & result , num_whole a , num_whole b ) ;
     static void abs_whole ( num_whole & result , num_whole a ) ;
     static void rotation_z ( vector_data & axis_x , vector_data & axis_y , num_fract angle ) ;
+    static void scale ( matrix_data & matrix , num_fract scale ) ;
 } ;
 
 template < typename mediator >
@@ -362,3 +365,13 @@ void shy_engine_math < mediator > :: rotation_z ( vector_data & axis_x , vector_
     platform_vector :: xyz ( axis_y , axis_y_x , axis_y_y , axis_y_z ) ;
 }
 
+template < typename mediator >
+void shy_engine_math < mediator > :: scale ( matrix_data & matrix , num_fract scale )
+{
+    num_fract zero ;
+    platform_math :: make_num_fract ( zero , 0 , 1 ) ;
+    platform_matrix :: identity ( matrix ) ;
+    platform_matrix :: set_axis_x ( matrix , scale , zero , zero ) ;
+    platform_matrix :: set_axis_y ( matrix , zero , scale , zero ) ;
+    platform_matrix :: set_axis_z ( matrix , zero , zero , scale ) ;
+}

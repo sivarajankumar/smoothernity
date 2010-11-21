@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_amusement_renderer
 {
+    typedef typename mediator :: engine_math engine_math ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -50,6 +51,14 @@ class shy_logic_amusement_renderer
         matrix_data transform ;
     } ;
 
+    class _logic_observer_size_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract size ;
+    } ;
+
     class _logic_blanket_render_state_type
     {
     public :
@@ -90,6 +99,7 @@ private :
     void _prepare_perspective_render ( ) ;
     void _request_ortho_projection ( ) ;
     void _request_perspective_projection ( ) ;
+    void _request_observer_size ( ) ;
     void _request_observer_transform ( ) ;
     void _request_blanket_render ( ) ;
     void _request_door_render ( ) ;
@@ -98,6 +108,7 @@ private :
     void _clear_screen ( ) ;
     void _disable_depth_test ( ) ;
     void _enable_depth_test ( ) ;
+    void _use_observer_size ( ) ;
     void _use_observer_transform ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -108,6 +119,7 @@ private :
     _logic_core_use_ortho_projection_state_type _logic_core_use_ortho_projection_state ;
     _logic_core_use_perspective_projection_state_type _logic_core_use_perspective_projection_state ;
     _logic_observer_animation_transform_state_type _logic_observer_animation_transform_state ;
+    _logic_observer_size_state_type _logic_observer_size_state ;
     _logic_blanket_render_state_type _logic_blanket_render_state ; 
     _logic_door_render_state_type _logic_door_render_state ;
     _logic_room_render_state_type _logic_room_render_state ;
@@ -182,8 +194,15 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
 }
 
 template < typename mediator >
-void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_observer_size_reply )
+void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_observer_size_reply msg )
 {
+    if ( platform_conditions :: whole_is_true ( _logic_observer_size_state . requested ) )
+    {
+        _logic_observer_size_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_observer_size_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _logic_observer_size_state . size = msg . size ;
+        _proceed_with_render ( ) ;
+    }
 }
 
 template < typename mediator >
@@ -230,6 +249,11 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_core_use_perspective_projection_state . replied ) )
     {
         _logic_core_use_perspective_projection_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _request_observer_size ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_observer_size_state . replied ) )
+    {
+        _logic_observer_size_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _request_observer_transform ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_observer_animation_transform_state . replied ) )
@@ -282,6 +306,13 @@ void shy_logic_amusement_renderer < mediator > :: _request_observer_transform ( 
 }
 
 template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _request_observer_size ( )
+{
+    _logic_observer_size_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_observer_size_request ( ) ) ;
+}
+
+template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: _request_perspective_projection ( )
 {
     _logic_core_use_perspective_projection_state . requested = _platform_math_consts . get ( ) . whole_true ;
@@ -299,6 +330,7 @@ template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: _observer_transform_received ( )
 {
     _use_observer_transform ( ) ;
+    _use_observer_size ( ) ;
     _request_room_render ( ) ;
 }
 
@@ -329,6 +361,20 @@ void shy_logic_amusement_renderer < mediator > :: _use_observer_transform ( )
 {
     typename messages :: engine_render_matrix_load msg ;
     msg . matrix = _logic_observer_animation_transform_state . transform ;
+    _mediator . get ( ) . send ( msg ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _use_observer_size ( )
+{
+    num_fract size ;
+    matrix_data transform ;
+
+    size = _logic_observer_size_state . size ;
+    engine_math :: scale ( transform , size ) ;
+
+    typename messages :: engine_render_matrix_mult msg ;
+    msg . matrix = transform ;
     _mediator . get ( ) . send ( msg ) ;
 }
 

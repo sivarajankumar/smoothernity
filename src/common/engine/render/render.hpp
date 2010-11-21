@@ -99,6 +99,7 @@ public :
     void receive ( typename messages :: engine_render_disable_depth_test ) ;
     void receive ( typename messages :: engine_render_enable_depth_test ) ;
     void receive ( typename messages :: engine_render_matrix_load ) ;
+    void receive ( typename messages :: engine_render_matrix_mult ) ;
     void receive ( typename messages :: engine_render_fog_disable ) ;
     void receive ( typename messages :: engine_render_blend_src_alpha_dst_one_minus_alpha ) ;
     void receive ( typename messages :: engine_render_blend_disable ) ;
@@ -248,6 +249,12 @@ template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_matrix_load msg )
 {
     _platform_render . get ( ) . matrix_load ( msg . matrix ) ;
+}
+
+template < typename mediator >
+void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_matrix_mult msg )
+{
+    _platform_render . get ( ) . matrix_mult ( msg . matrix ) ;
 }
 
 template < typename mediator >

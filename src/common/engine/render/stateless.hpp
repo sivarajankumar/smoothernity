@@ -56,6 +56,7 @@ public :
         class engine_render_frame_loss_request { } ;
         class engine_render_matrix_identity { } ;
         class engine_render_matrix_load { public : matrix_data matrix ; } ;
+        class engine_render_matrix_mult { public : matrix_data matrix ; } ;
         class engine_render_mesh_create_reply { public : engine_render_mesh_id mesh ; } ;
         class engine_render_mesh_create_request { public : num_whole vertices ; num_whole triangle_strip_indices ; num_whole triangle_fan_indices ; } ;
         class engine_render_mesh_delete { public : engine_render_mesh_id mesh ; } ;
@@ -102,6 +103,7 @@ public :
         void send ( typename engine_render_messages :: engine_render_frame_loss_request ) ;
         void send ( typename engine_render_messages :: engine_render_matrix_identity ) ;
         void send ( typename engine_render_messages :: engine_render_matrix_load ) ;
+        void send ( typename engine_render_messages :: engine_render_matrix_mult ) ;
         void send ( typename engine_render_messages :: engine_render_mesh_create_reply ) ;
         void send ( typename engine_render_messages :: engine_render_mesh_create_request ) ;
         void send ( typename engine_render_messages :: engine_render_mesh_delete ) ;
@@ -252,6 +254,15 @@ template < typename receivers >
 void shy_engine_render_stateless < mediator > 
 :: engine_render_sender < receivers > 
 :: send ( typename engine_render_messages :: engine_render_matrix_load msg )
+{
+    _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_engine_render_stateless < mediator > 
+:: engine_render_sender < receivers > 
+:: send ( typename engine_render_messages :: engine_render_matrix_mult msg )
 {
     _receivers . get ( ) . engine_render . get ( ) . receive ( msg ) ;
 }
