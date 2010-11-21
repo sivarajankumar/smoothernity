@@ -3,15 +3,44 @@ class shy_logic_perspective
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
+
+    class _logic_perspective_planes_state_type
+    {
+    public :
+        num_whole requested ;
+        num_fract x_left ;
+        num_fract x_right ;
+        num_fract y_top ;
+        num_fract y_bottom ;
+        num_fract z_near ;
+        num_fract z_far ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_perspective_planes_request ) ;
 private :
+    void _proceed_with_planes ( ) ;
+    void _compute_x_left ( ) ;
+    void _compute_x_right ( ) ;
+    void _compute_y_top ( ) ;
+    void _compute_y_bottom ( ) ;
+    void _compute_z_near ( ) ;
+    void _compute_z_far ( ) ;
+    void _reply_computed_planes ( ) ;
+    void _reply_planes ( ) ;
+private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+
+    _logic_perspective_planes_state_type _logic_perspective_planes_state ;
 } ;
 
 template < typename mediator >
@@ -31,5 +60,71 @@ void shy_logic_perspective < mediator > :: receive ( typename messages :: init )
 template < typename mediator >
 void shy_logic_perspective < mediator > :: receive ( typename messages :: logic_perspective_planes_request )
 {
-    _mediator . get ( ) . send ( typename messages :: logic_perspective_planes_reply ( ) ) ;
+    _logic_perspective_planes_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _proceed_with_planes ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _proceed_with_planes ( )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_perspective_planes_state . requested ) )
+    {
+        _logic_perspective_planes_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _reply_computed_planes ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _reply_computed_planes ( )
+{
+    _compute_x_left ( ) ;
+    _compute_x_right ( ) ;
+    _compute_y_top ( ) ;
+    _compute_y_bottom ( ) ;
+    _compute_z_near ( ) ;
+    _compute_z_far ( ) ;
+    _reply_planes ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _compute_x_left ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _compute_x_right ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _compute_y_bottom ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _compute_y_top ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _compute_z_near ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _compute_z_far ( )
+{
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _reply_planes ( )
+{
+    typename messages :: logic_perspective_planes_reply msg ;
+    msg . x_left = _logic_perspective_planes_state . x_left ;
+    msg . x_right = _logic_perspective_planes_state . x_right ;
+    msg . y_top = _logic_perspective_planes_state . y_top ;
+    msg . y_bottom = _logic_perspective_planes_state . y_bottom ;
+    msg . z_near = _logic_perspective_planes_state . z_near ;
+    msg . z_far = _logic_perspective_planes_state . z_far ;
+    _mediator . get ( ) . send ( msg ) ;
 }
