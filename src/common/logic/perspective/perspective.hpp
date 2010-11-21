@@ -22,12 +22,23 @@ class shy_logic_perspective
         num_fract z_far ;
     } ;
 
+    class _engine_render_aspect_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract width ;
+        num_fract height ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_perspective_planes_request ) ;
+    void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     void _proceed_with_planes ( ) ;
+    void _request_aspect ( ) ;
     void _compute_x_left ( ) ;
     void _compute_x_right ( ) ;
     void _compute_y_top ( ) ;
@@ -41,6 +52,7 @@ private :
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
 
     _logic_perspective_planes_state_type _logic_perspective_planes_state ;
+    _engine_render_aspect_state_type _engine_render_aspect_state ;
 } ;
 
 template < typename mediator >
@@ -65,13 +77,38 @@ void shy_logic_perspective < mediator > :: receive ( typename messages :: logic_
 }
 
 template < typename mediator >
+void shy_logic_perspective < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . requested ) )
+    {
+        _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _engine_render_aspect_state . width = msg . width ;
+        _engine_render_aspect_state . height = msg . height ;
+        _proceed_with_planes ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_perspective < mediator > :: _proceed_with_planes ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_perspective_planes_state . requested ) )
     {
         _logic_perspective_planes_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _request_aspect ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . replied ) )
+    {
+        _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _reply_computed_planes ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _request_aspect ( )
+{
+    _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
