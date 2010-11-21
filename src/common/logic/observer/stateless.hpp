@@ -41,7 +41,6 @@ void shy_logic_observer_stateless < mediator >
 :: logic_observer_sender < receivers >
 :: send ( typename logic_observer_messages :: logic_observer_size_reply msg )
 {
-    _receivers . get ( ) . logic_amusement_renderer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
