@@ -150,6 +150,7 @@ void shy_logic_core_stateless < mediator >
 {
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_observer_size . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
