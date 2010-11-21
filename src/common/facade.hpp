@@ -102,7 +102,6 @@
 #include "logic/observer/animation/flight.hpp"
 #include "logic/observer/animation/stateless.hpp"
 #include "logic/observer/observer.hpp"
-#include "logic/observer/size.hpp"
 #include "logic/observer/stateless.hpp"
 #include "logic/perspective/perspective.hpp"
 #include "logic/perspective/stateless.hpp"
@@ -229,7 +228,6 @@ private :
         , shy_logic_observer_animation
         , shy_logic_observer_animation_flight
         , shy_logic_observer_animation_stateless
-        , shy_logic_observer_size
         , shy_logic_observer_stateless
         , shy_logic_perspective
         , shy_logic_perspective_stateless
