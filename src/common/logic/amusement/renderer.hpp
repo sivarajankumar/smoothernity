@@ -276,8 +276,8 @@ void shy_logic_amusement_renderer < mediator > :: _prepare_perspective_render ( 
     _clear_screen ( ) ;
     _enable_depth_test ( ) ;
     _use_perspective_projection ( ) ;
-    _use_observer_transform ( ) ;
     _use_observer_size ( ) ;
+    _use_observer_transform ( ) ;
     _request_room_render ( ) ;
 }
 
@@ -347,7 +347,7 @@ void shy_logic_amusement_renderer < mediator > :: _use_perspective_projection ( 
 template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: _use_observer_transform ( )
 {
-    typename messages :: engine_render_matrix_load msg ;
+    typename messages :: engine_render_matrix_mult msg ;
     msg . matrix = _logic_observer_animation_transform_state . transform ;
     _mediator . get ( ) . send ( msg ) ;
 }
@@ -361,7 +361,7 @@ void shy_logic_amusement_renderer < mediator > :: _use_observer_size ( )
     scene_scale = _logic_perspective_planes_state . scene_scale ;
     engine_math :: scale ( transform , scene_scale ) ;
 
-    typename messages :: engine_render_matrix_mult msg ;
+    typename messages :: engine_render_matrix_load msg ;
     msg . matrix = transform ;
     _mediator . get ( ) . send ( msg ) ;
 }
