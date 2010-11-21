@@ -146,7 +146,19 @@ void shy_logic_observer_size < mediator > :: _reply_calculated_size ( )
 template < typename mediator >
 void shy_logic_observer_size < mediator > :: _calculate_size ( )
 {
-    _logic_observer_size_state . size = _platform_math_consts . get ( ) . fract_2 ;
+    num_fract size ;
+    num_fract aspect_width ;
+    num_fract aspect_height ;
+    num_fract near_distance ;
+
+    aspect_width = _engine_render_aspect_state . width ;
+    aspect_height = _engine_render_aspect_state . height ;
+    near_distance = _logic_core_near_plane_distance_state . distance ;
+
+    platform_math :: add_fracts ( size , aspect_width , aspect_height ) ;
+    platform_math :: add_to_fract ( size , near_distance ) ;
+
+    _logic_observer_size_state . size = size ;
 }
 
 template < typename mediator >
