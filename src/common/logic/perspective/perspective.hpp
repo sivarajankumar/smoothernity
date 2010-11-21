@@ -10,6 +10,14 @@ class shy_logic_perspective
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
+    class _logic_perspective_consts_type
+    {
+    public :
+        _logic_perspective_consts_type ( ) ;
+    public :
+        num_fract z_far_unscaled ;
+    } ;
+
     class _logic_perspective_planes_state_type
     {
     public :
@@ -49,13 +57,22 @@ private :
     void _compute_scene_scale ( ) ;
     void _reply_computed_planes ( ) ;
     void _reply_planes ( ) ;
+    void _scene_scale ( num_fract & ) ;
+    void _z_near ( num_fract & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    const _logic_perspective_consts_type _logic_perspective_consts ; 
 
     _logic_perspective_planes_state_type _logic_perspective_planes_state ;
     _engine_render_aspect_state_type _engine_render_aspect_state ;
 } ;
+
+template < typename mediator >
+shy_logic_perspective < mediator > :: _logic_perspective_consts_type :: _logic_perspective_consts_type ( )
+{
+    platform_math :: make_num_fract ( z_far_unscaled , 50 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_perspective < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -133,7 +150,7 @@ void shy_logic_perspective < mediator > :: _compute_x_left ( )
     num_fract aspect_width ;
 
     aspect_width = _engine_render_aspect_state . width ;
-    x_left = aspect_width ;
+    platform_math :: mul_fracts ( x_left , aspect_width , _platform_math_consts . get ( ) . fract_minus_1 ) ;
 
     _logic_perspective_planes_state . x_left = x_left ;
 }
@@ -141,31 +158,93 @@ void shy_logic_perspective < mediator > :: _compute_x_left ( )
 template < typename mediator >
 void shy_logic_perspective < mediator > :: _compute_x_right ( )
 {
+    num_fract x_right ;
+    num_fract aspect_width ;
+
+    aspect_width = _engine_render_aspect_state . width ;
+    x_right = aspect_width ;
+
+    _logic_perspective_planes_state . x_right = x_right ;
 }
 
 template < typename mediator >
 void shy_logic_perspective < mediator > :: _compute_y_bottom ( )
 {
+    num_fract y_bottom ;
+    num_fract aspect_height ;
+
+    aspect_height = _engine_render_aspect_state . height ;
+    platform_math :: mul_fracts ( y_bottom , aspect_height , _platform_math_consts . get ( ) . fract_minus_1 ) ;
+
+    _logic_perspective_planes_state . y_bottom = y_bottom ;
 }
 
 template < typename mediator >
 void shy_logic_perspective < mediator > :: _compute_y_top ( )
 {
+    num_fract y_top ;
+    num_fract aspect_height ;
+
+    aspect_height = _engine_render_aspect_state . height ;
+    y_top = aspect_height ;
+
+    _logic_perspective_planes_state . y_top = y_top ;
 }
 
 template < typename mediator >
 void shy_logic_perspective < mediator > :: _compute_z_near ( )
 {
+    num_fract z_near ;
+    _z_near ( z_near ) ;
+    _logic_perspective_planes_state . z_near = z_near ;
 }
 
 template < typename mediator >
 void shy_logic_perspective < mediator > :: _compute_z_far ( )
 {
+    num_fract scene_scale ;
+    num_fract z_far_unscaled ;
+    num_fract z_far ;
+
+    z_far_unscaled = _logic_perspective_consts . z_far_unscaled ;
+    _scene_scale ( scene_scale ) ;
+    platform_math :: mul_fracts ( z_far , z_far_unscaled , scene_scale ) ;
+
+    _logic_perspective_planes_state . z_far = z_far ;
 }
 
 template < typename mediator >
 void shy_logic_perspective < mediator > :: _compute_scene_scale ( )
 {
+    num_fract scene_scale ;
+    _scene_scale ( scene_scale ) ;
+    _logic_perspective_planes_state . scene_scale = scene_scale ;
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _scene_scale ( num_fract & scene_scale )
+{
+    num_fract aspect_width ;
+    num_fract aspect_height ;
+    num_fract z_near ;
+
+    aspect_width = _engine_render_aspect_state . width ;
+    aspect_height = _engine_render_aspect_state . height ;
+    _z_near ( z_near ) ;
+
+    platform_math :: add_fracts ( scene_scale , aspect_width , aspect_height ) ;
+    platform_math :: add_to_fract ( scene_scale , z_near ) ;
+}
+
+template < typename mediator >
+void shy_logic_perspective < mediator > :: _z_near ( num_fract & z_near )
+{
+    num_fract aspect_width ;
+    num_fract aspect_height ;
+
+    aspect_width = _engine_render_aspect_state . width ;
+    aspect_height = _engine_render_aspect_state . height ;
+    platform_math :: add_fracts ( z_near , aspect_width , aspect_height ) ;
 }
 
 template < typename mediator >
