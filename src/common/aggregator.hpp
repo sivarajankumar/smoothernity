@@ -96,6 +96,7 @@ template
     , template < typename mediator > class _logic_observer_animation_stateless
     , template < typename mediator > class _logic_observer_size
     , template < typename mediator > class _logic_observer_stateless
+    , template < typename mediator > class _logic_perspective
     , template < typename mediator > class _logic_room
     , template < typename mediator > class _logic_room_mesh
     , template < typename mediator > class _logic_room_renderer
@@ -214,6 +215,7 @@ public :
         typedef _logic_observer_animation_stateless < mediator > logic_observer_animation_stateless ;
         typedef _logic_observer_size < mediator > logic_observer_size ;
         typedef _logic_observer_stateless < mediator > logic_observer_stateless ;
+        typedef _logic_perspective < mediator > logic_perspective ;
         typedef _logic_room < mediator > logic_room ;
         typedef _logic_room_mesh < mediator > logic_room_mesh ;
         typedef _logic_room_renderer < mediator > logic_room_renderer ;
@@ -329,6 +331,7 @@ template
     , template < typename _mediator > class _logic_observer_animation_stateless
     , template < typename _mediator > class _logic_observer_size
     , template < typename _mediator > class _logic_observer_stateless
+    , template < typename _mediator > class _logic_perspective
     , template < typename _mediator > class _logic_room
     , template < typename _mediator > class _logic_room_mesh
     , template < typename _mediator > class _logic_room_renderer
@@ -421,6 +424,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_observer_animation > scheduled_logic_observer_animation ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_observer_animation_flight > scheduled_logic_observer_animation_flight ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_observer_size > scheduled_logic_observer_size ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_perspective > scheduled_logic_perspective ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room > scheduled_logic_room ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room_mesh > scheduled_logic_room_mesh ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_room_renderer > scheduled_logic_room_renderer ;
@@ -528,6 +532,7 @@ public :
         , _logic_observer_animation_stateless
         , scheduled_logic_observer_size :: template scheduled_module
         , _logic_observer_stateless
+        , scheduled_logic_perspective :: template scheduled_module
         , scheduled_logic_room :: template scheduled_module
         , scheduled_logic_room_mesh :: template scheduled_module
         , scheduled_logic_room_renderer :: template scheduled_module
@@ -665,6 +670,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_observer_animation :: template scheduled_module < mediator_type > logic_observer_animation ;
     typedef typename aggregator_types :: scheduled_logic_observer_animation_flight :: template scheduled_module < mediator_type > logic_observer_animation_flight ;
     typedef typename aggregator_types :: scheduled_logic_observer_size :: template scheduled_module < mediator_type > logic_observer_size ;
+    typedef typename aggregator_types :: scheduled_logic_perspective :: template scheduled_module < mediator_type > logic_perspective ;
     typedef typename aggregator_types :: scheduled_logic_room :: template scheduled_module < mediator_type > logic_room ;
     typedef typename aggregator_types :: scheduled_logic_room_mesh :: template scheduled_module < mediator_type > logic_room_mesh ;
     typedef typename aggregator_types :: scheduled_logic_room_renderer :: template scheduled_module < mediator_type > logic_room_renderer ;
@@ -759,6 +765,7 @@ private :
     logic_observer_animation _logic_observer_animation ;
     logic_observer_animation_flight _logic_observer_animation_flight ;
     logic_observer_size _logic_observer_size ;
+    logic_perspective _logic_perspective ;
     logic_room _logic_room ;
     logic_room_mesh _logic_room_mesh ;
     logic_room_renderer _logic_room_renderer ;
@@ -847,6 +854,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_observer_animation > logic_observer_animation_ptr ;
     typename platform_pointer :: template pointer < logic_observer_animation_flight > logic_observer_animation_flight_ptr ;
     typename platform_pointer :: template pointer < logic_observer_size > logic_observer_size_ptr ;
+    typename platform_pointer :: template pointer < logic_perspective > logic_perspective_ptr ;
     typename platform_pointer :: template pointer < logic_room > logic_room_ptr ;
     typename platform_pointer :: template pointer < logic_room_mesh > logic_room_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_room_renderer > logic_room_renderer_ptr ;
@@ -931,6 +939,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_observer_animation_ptr , _logic_observer_animation ) ;
     platform_pointer :: bind ( logic_observer_animation_flight_ptr , _logic_observer_animation_flight ) ;
     platform_pointer :: bind ( logic_observer_size_ptr , _logic_observer_size ) ;
+    platform_pointer :: bind ( logic_perspective_ptr , _logic_perspective ) ;
     platform_pointer :: bind ( logic_room_ptr , _logic_room ) ;
     platform_pointer :: bind ( logic_room_mesh_ptr , _logic_room_mesh ) ;
     platform_pointer :: bind ( logic_room_renderer_ptr , _logic_room_renderer ) ;
@@ -1010,6 +1019,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_observer_animation_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_observer_animation_flight_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_observer_size_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_perspective_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_mesh_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_room_renderer_ptr , scheduler_ptr ) ;
@@ -1092,6 +1102,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_observer_animation_ptr
         , logic_observer_animation_flight_ptr
         , logic_observer_size_ptr
+        , logic_perspective_ptr
         , logic_room_ptr
         , logic_room_mesh_ptr
         , logic_room_renderer_ptr

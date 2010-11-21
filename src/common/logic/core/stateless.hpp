@@ -123,6 +123,7 @@ void shy_logic_core_stateless < mediator >
     _receivers . get ( ) . logic_observer_animation . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_observer_animation_flight . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_observer_size . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_perspective . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_renderer . get ( ) . receive ( msg ) ;

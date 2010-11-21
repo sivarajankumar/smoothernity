@@ -104,6 +104,7 @@
 #include "logic/observer/observer.hpp"
 #include "logic/observer/size.hpp"
 #include "logic/observer/stateless.hpp"
+#include "logic/perspective/perspective.hpp"
 #include "logic/room/mesh.hpp"
 #include "logic/room/renderer.hpp"
 #include "logic/room/room.hpp"
@@ -229,6 +230,7 @@ private :
         , shy_logic_observer_animation_stateless
         , shy_logic_observer_size
         , shy_logic_observer_stateless
+        , shy_logic_perspective
         , shy_logic_room
         , shy_logic_room_mesh
         , shy_logic_room_renderer
