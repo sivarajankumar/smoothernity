@@ -8,6 +8,7 @@ class shy_logic_amusement_renderer
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
+    typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
@@ -78,6 +79,7 @@ public :
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: logic_core_use_perspective_projection_reply ) ;
     void receive ( typename messages :: logic_observer_animation_transform_reply ) ;
+    void receive ( typename messages :: logic_observer_size_reply ) ;
     void receive ( typename messages :: logic_blanket_render_reply ) ;
     void receive ( typename messages :: logic_door_render_reply ) ;
     void receive ( typename messages :: logic_room_render_reply ) ;
@@ -177,6 +179,11 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
         _logic_observer_animation_transform_state . transform = msg . transform ;
         _proceed_with_render ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_observer_size_reply )
+{
 }
 
 template < typename mediator >
