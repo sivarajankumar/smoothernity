@@ -17,12 +17,23 @@ class shy_logic_observer_size
         num_fract size ;
     } ;
 
+    class _engine_render_aspect_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+        num_fract width ;
+        num_fract height ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_observer_size_request ) ;
+    void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
     void _proceed_with_size ( ) ;
+    void _request_aspect ( ) ;
     void _reply_calculated_size ( ) ;
     void _calculate_size ( ) ;
     void _reply_size ( ) ;
@@ -31,6 +42,7 @@ private :
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
 
     _logic_observer_size_state_type _logic_observer_size_state ;
+    _engine_render_aspect_state_type _engine_render_aspect_state ;
 } ;
 
 template < typename mediator >
@@ -55,13 +67,38 @@ void shy_logic_observer_size < mediator > :: receive ( typename messages :: logi
 }
 
 template < typename mediator >
+void shy_logic_observer_size < mediator > :: receive ( typename messages :: engine_render_aspect_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . requested ) )
+    {
+        _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_true ;
+        _engine_render_aspect_state . width = msg . width ;
+        _engine_render_aspect_state . height = msg . height ;
+        _proceed_with_size ( ) ;
+    }
+}
+
+template < typename mediator >
 void shy_logic_observer_size < mediator > :: _proceed_with_size ( ) 
 {
     if ( platform_conditions :: whole_is_true ( _logic_observer_size_state . requested ) )
     {
         _logic_observer_size_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _request_aspect ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _engine_render_aspect_state . replied ) )
+    {
+        _engine_render_aspect_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _reply_calculated_size ( ) ;
     }
+}
+
+template < typename mediator >
+void shy_logic_observer_size < mediator > :: _request_aspect ( )
+{
+    _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 
 template < typename mediator >
