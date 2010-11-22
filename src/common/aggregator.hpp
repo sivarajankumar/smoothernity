@@ -96,6 +96,7 @@ template
     , template < typename mediator > class _logic_observer_animation_stateless
     , template < typename mediator > class _logic_observer_stateless
     , template < typename mediator > class _logic_ortho
+    , template < typename mediator > class _logic_ortho_stateless
     , template < typename mediator > class _logic_perspective
     , template < typename mediator > class _logic_perspective_stateless
     , template < typename mediator > class _logic_room
@@ -216,6 +217,7 @@ public :
         typedef _logic_observer_animation_stateless < mediator > logic_observer_animation_stateless ;
         typedef _logic_observer_stateless < mediator > logic_observer_stateless ;
         typedef _logic_ortho < mediator > logic_ortho ;
+        typedef _logic_ortho_stateless < mediator > logic_ortho_stateless ;
         typedef _logic_perspective < mediator > logic_perspective ;
         typedef _logic_perspective_stateless < mediator > logic_perspective_stateless ;
         typedef _logic_room < mediator > logic_room ;
@@ -333,6 +335,7 @@ template
     , template < typename _mediator > class _logic_observer_animation_stateless
     , template < typename _mediator > class _logic_observer_stateless
     , template < typename _mediator > class _logic_ortho
+    , template < typename _mediator > class _logic_ortho_stateless
     , template < typename _mediator > class _logic_perspective
     , template < typename _mediator > class _logic_perspective_stateless
     , template < typename _mediator > class _logic_room
@@ -535,6 +538,7 @@ public :
         , _logic_observer_animation_stateless
         , _logic_observer_stateless
         , scheduled_logic_ortho :: template scheduled_module
+        , _logic_ortho_stateless
         , scheduled_logic_perspective :: template scheduled_module
         , _logic_perspective_stateless
         , scheduled_logic_room :: template scheduled_module
@@ -582,6 +586,7 @@ public :
     typedef _logic_main_menu_stateless < mediator_type > logic_main_menu_stateless ;
     typedef _logic_observer_animation_stateless < mediator_type > logic_observer_animation_stateless ;
     typedef _logic_observer_stateless < mediator_type > logic_observer_stateless ;
+    typedef _logic_ortho_stateless < mediator_type > logic_ortho_stateless ;
     typedef _logic_perspective_stateless < mediator_type > logic_perspective_stateless ;
     typedef _logic_room_stateless < mediator_type > logic_room_stateless ;
     typedef _logic_sound_stateless < mediator_type > logic_sound_stateless ;

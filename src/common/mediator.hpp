@@ -130,6 +130,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_messages logic_main_menu_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_observer_animation_stateless :: logic_observer_animation_messages logic_observer_animation_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_observer_stateless :: logic_observer_messages logic_observer_messages ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_ortho_stateless :: logic_ortho_messages logic_ortho_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_perspective_stateless :: logic_perspective_messages logic_perspective_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_room_stateless :: logic_room_messages logic_room_messages ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: logic_sound_messages logic_sound_messages ;
@@ -163,6 +164,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: template logic_main_menu_sender < receivers > logic_main_menu_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_observer_animation_stateless :: template logic_observer_animation_sender < receivers > logic_observer_animation_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_observer_stateless :: template logic_observer_sender < receivers > logic_observer_sender ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_ortho_stateless :: template logic_ortho_sender < receivers > logic_ortho_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_perspective_stateless :: template logic_perspective_sender < receivers > logic_perspective_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_room_stateless :: template logic_room_sender < receivers > logic_room_sender ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_sound_stateless :: template logic_sound_sender < receivers > logic_sound_sender ;
@@ -198,6 +200,7 @@ public :
     , public logic_main_menu_messages
     , public logic_observer_animation_messages
     , public logic_observer_messages
+    , public logic_ortho_messages
     , public logic_perspective_messages
     , public logic_room_messages
     , public logic_sound_messages
@@ -235,6 +238,7 @@ private :
     , public logic_main_menu_sender
     , public logic_observer_animation_sender
     , public logic_observer_sender
+    , public logic_ortho_sender
     , public logic_perspective_sender
     , public logic_room_sender
     , public logic_sound_sender
@@ -269,6 +273,7 @@ private :
         using logic_main_menu_sender :: send ;
         using logic_observer_animation_sender :: send ;
         using logic_observer_sender :: send ;
+        using logic_ortho_sender :: send ;
         using logic_perspective_sender :: send ;
         using logic_room_sender :: send ;
         using logic_sound_sender :: send ;
@@ -498,6 +503,7 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
     logic_main_menu_sender :: set_receivers ( arg_receivers ) ;
     logic_observer_animation_sender :: set_receivers ( arg_receivers ) ;
     logic_observer_sender :: set_receivers ( arg_receivers ) ;
+    logic_ortho_sender :: set_receivers ( arg_receivers ) ;
     logic_perspective_sender :: set_receivers ( arg_receivers ) ;
     logic_room_sender :: set_receivers ( arg_receivers ) ;
     logic_sound_sender :: set_receivers ( arg_receivers ) ;
