@@ -124,6 +124,7 @@ void shy_logic_ortho < mediator > :: _proceed_with_planes ( )
 template < typename mediator >
 void shy_logic_ortho < mediator > :: _request_aspect ( )
 {
+    _engine_render_aspect_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: engine_render_aspect_request ( ) ) ;
 }
 

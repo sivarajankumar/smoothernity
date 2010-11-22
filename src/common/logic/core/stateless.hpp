@@ -186,7 +186,6 @@ void shy_logic_core_stateless < mediator >
 :: logic_core_sender < receivers >
 :: send ( typename logic_core_messages :: logic_core_use_ortho_projection_reply msg )
 {
-    _receivers . get ( ) . logic_amusement_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
