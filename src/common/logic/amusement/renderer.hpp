@@ -44,6 +44,13 @@ class shy_logic_amusement_renderer
         matrix_data transform ;
     } ;
 
+    class _logic_ortho_planes_state_type
+    {
+    public :
+        num_whole requested ;
+        num_whole replied ;
+    } ;
+
     class _logic_perspective_planes_state_type
     {
     public :
@@ -86,6 +93,7 @@ public :
     void receive ( typename messages :: logic_amusement_render ) ;
     void receive ( typename messages :: logic_core_use_ortho_projection_reply ) ;
     void receive ( typename messages :: logic_observer_animation_transform_reply ) ;
+    void receive ( typename messages :: logic_ortho_planes_reply ) ;
     void receive ( typename messages :: logic_perspective_planes_reply ) ;
     void receive ( typename messages :: logic_blanket_render_reply ) ;
     void receive ( typename messages :: logic_door_render_reply ) ;
@@ -98,6 +106,7 @@ private :
     void _request_ortho_projection ( ) ;
     void _request_observer_size ( ) ;
     void _request_observer_transform ( ) ;
+    void _request_ortho_planes ( ) ;
     void _request_perspective_planes ( ) ;
     void _request_blanket_render ( ) ;
     void _request_door_render ( ) ;
@@ -117,6 +126,7 @@ private :
     _logic_amusement_render_state_type _logic_amusement_render_state ;
     _logic_core_use_ortho_projection_state_type _logic_core_use_ortho_projection_state ;
     _logic_observer_animation_transform_state_type _logic_observer_animation_transform_state ;
+    _logic_ortho_planes_state_type _logic_ortho_planes_state ;
     _logic_perspective_planes_state_type _logic_perspective_planes_state ;
     _logic_blanket_render_state_type _logic_blanket_render_state ; 
     _logic_door_render_state_type _logic_door_render_state ;
@@ -176,6 +186,17 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
         _logic_observer_animation_transform_state . requested = _platform_math_consts . get ( ) . whole_false ;
         _logic_observer_animation_transform_state . replied = _platform_math_consts . get ( ) . whole_true ;
         _logic_observer_animation_transform_state . transform = msg . transform ;
+        _proceed_with_render ( ) ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: receive ( typename messages :: logic_ortho_planes_reply msg )
+{
+    if ( platform_conditions :: whole_is_true ( _logic_ortho_planes_state . requested ) )
+    {
+        _logic_ortho_planes_state . requested = _platform_math_consts . get ( ) . whole_false ;
+        _logic_ortho_planes_state . replied = _platform_math_consts . get ( ) . whole_true ;
         _proceed_with_render ( ) ;
     }
 }
@@ -257,6 +278,11 @@ void shy_logic_amusement_renderer < mediator > :: _proceed_with_render ( )
     if ( platform_conditions :: whole_is_true ( _logic_door_render_state . replied ) )
     {
         _logic_door_render_state . replied = _platform_math_consts . get ( ) . whole_false ;
+        _request_ortho_planes ( ) ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_ortho_planes_state . replied ) )
+    {
+        _logic_ortho_planes_state . replied = _platform_math_consts . get ( ) . whole_false ;
         _prepare_ortho_render ( ) ;
     }
     if ( platform_conditions :: whole_is_true ( _logic_core_use_ortho_projection_state . replied ) )
@@ -293,6 +319,13 @@ void shy_logic_amusement_renderer < mediator > :: _request_perspective_planes ( 
 {
     _logic_perspective_planes_state . requested = _platform_math_consts . get ( ) . whole_true ;
     _mediator . get ( ) . send ( typename messages :: logic_perspective_planes_request ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement_renderer < mediator > :: _request_ortho_planes ( )
+{
+    _logic_ortho_planes_state . requested = _platform_math_consts . get ( ) . whole_true ;
+    _mediator . get ( ) . send ( typename messages :: logic_ortho_planes_request ( ) ) ;
 }
 
 template < typename mediator >
