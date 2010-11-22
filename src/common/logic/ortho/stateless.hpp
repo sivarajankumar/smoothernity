@@ -39,6 +39,7 @@ void shy_logic_ortho_stateless < mediator >
 :: send ( typename logic_ortho_messages :: logic_ortho_planes_reply msg )
 {
     _receivers . get ( ) . logic_amusement_renderer . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_main_menu_renderer . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
