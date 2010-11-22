@@ -425,6 +425,7 @@ void shy_engine_render_stateless < mediator >
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_layout_position . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_layout_row_rect . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_ortho . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_perspective . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_title . get ( ) . receive ( msg ) ;
 }
