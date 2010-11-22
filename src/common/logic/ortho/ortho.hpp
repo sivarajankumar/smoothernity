@@ -13,6 +13,8 @@ class shy_logic_ortho
     class _logic_ortho_consts_type
     {
     public :
+        _logic_ortho_consts_type ( ) ;
+    public :
         num_fract z_near ;
         num_fract z_far ;
     } ;
@@ -62,6 +64,13 @@ private :
     _engine_render_aspect_state_type _engine_render_aspect_state ;
     _logic_ortho_planes_state_type _logic_ortho_planes_state ;
 } ;
+
+template < typename mediator >
+shy_logic_ortho < mediator > :: _logic_ortho_consts_type :: _logic_ortho_consts_type ( )
+{
+    platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
+    platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
+}
 
 template < typename mediator >
 void shy_logic_ortho < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
@@ -146,30 +155,64 @@ void shy_logic_ortho < mediator > :: _reply_planes ( )
 template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_x_left ( )
 {
+    num_fract aspect_width ;
+    num_fract x_left ;
+
+    aspect_width = _engine_render_aspect_state . width ;
+    platform_math :: neg_fract ( x_left , aspect_width ) ;
+
+    _logic_ortho_planes_state . x_left = x_left ;
 }
 
 template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_x_right ( )
 {
+    num_fract aspect_width ;
+    num_fract x_right ;
+
+    aspect_width = _engine_render_aspect_state . width ;
+    x_right = aspect_width ;
+
+    _logic_ortho_planes_state . x_right = x_right ;
 }
 
 template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_y_bottom ( )
 {
+    num_fract aspect_height ;
+    num_fract y_bottom ;
+
+    aspect_height = _engine_render_aspect_state . height ;
+    platform_math :: neg_fract ( y_bottom , aspect_height ) ;
+
+    _logic_ortho_planes_state . y_bottom = y_bottom ;
 }
 
 template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_y_top ( )
 {
+    num_fract aspect_height ;
+    num_fract y_top ;
+
+    aspect_height = _engine_render_aspect_state . height ;
+    y_top = aspect_height ;
+
+    _logic_ortho_planes_state . y_top = y_top ;
 }
 
 template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_z_near ( )
 {
+    num_fract z_near ;
+    z_near = _logic_ortho_consts . z_near ;
+    _logic_ortho_planes_state . z_near = z_near ;
 }
 
 template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_z_far ( )
 {
+    num_fract z_far ;
+    z_far = _logic_ortho_consts . z_far ;
+    _logic_ortho_planes_state . z_far = z_far ;
 }
 
