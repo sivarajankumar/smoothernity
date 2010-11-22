@@ -51,7 +51,7 @@ public :
         class engine_render_enable_depth_test { } ;
         class engine_render_enable_face_culling { } ;
         class engine_render_fog_disable { } ;
-        class engine_render_fog_linear { public : num_fract znear ; num_fract zfar ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
+        class engine_render_fog_linear { public : num_fract z_near ; num_fract z_far ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class engine_render_frame_loss_reply { public : num_whole frame_loss ; } ;
         class engine_render_frame_loss_request { } ;
         class engine_render_matrix_identity { } ;
@@ -68,8 +68,8 @@ public :
         class engine_render_mesh_set_vertex_color { public : engine_render_mesh_id mesh ; num_whole offset ; num_fract r ; num_fract g ; num_fract b ; num_fract a ; } ;
         class engine_render_mesh_set_vertex_position { public : engine_render_mesh_id mesh ; num_whole offset ; num_fract x ; num_fract y ; num_fract z ; } ;
         class engine_render_mesh_set_vertex_tex_coord { public : engine_render_mesh_id mesh ; num_whole offset ; num_fract u ; num_fract v ; } ;
-        class engine_render_projection_frustum { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
-        class engine_render_projection_ortho { public : num_fract left ; num_fract right ; num_fract bottom ; num_fract top ; num_fract znear ; num_fract zfar ; } ;
+        class engine_render_projection_frustum { public : num_fract x_left ; num_fract x_right ; num_fract y_bottom ; num_fract y_top ; num_fract z_near ; num_fract z_far ; } ;
+        class engine_render_projection_ortho { public : num_fract x_left ; num_fract x_right ; num_fract y_bottom ; num_fract y_top ; num_fract z_near ; num_fract z_far ; } ;
         class engine_render_texture_create_reply { public : engine_render_texture_id texture ; } ;
         class engine_render_texture_create_request { } ;
         class engine_render_texture_finalize { public : engine_render_texture_id texture ; } ;

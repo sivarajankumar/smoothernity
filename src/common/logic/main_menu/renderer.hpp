@@ -322,12 +322,12 @@ template < typename mediator >
 void shy_logic_main_menu_renderer < mediator > :: _use_ortho_projection ( )
 {
     typename messages :: engine_render_projection_ortho msg ;
-    msg . left = _logic_ortho_planes_state . x_left ;
-    msg . right = _logic_ortho_planes_state . x_right ;
-    msg . bottom = _logic_ortho_planes_state . y_bottom ;
-    msg . top = _logic_ortho_planes_state . y_top ;
-    msg . znear = _logic_ortho_planes_state . z_near ;
-    msg . zfar = _logic_ortho_planes_state . z_far ;
+    msg . x_left = _logic_ortho_planes_state . x_left ;
+    msg . x_right = _logic_ortho_planes_state . x_right ;
+    msg . y_bottom = _logic_ortho_planes_state . y_bottom ;
+    msg . y_top = _logic_ortho_planes_state . y_top ;
+    msg . z_near = _logic_ortho_planes_state . z_near ;
+    msg . z_far = _logic_ortho_planes_state . z_far ;
     _mediator . get ( ) . send ( msg ) ;
 }
 

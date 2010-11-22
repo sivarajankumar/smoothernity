@@ -401,8 +401,8 @@ void shy_logic_game < mediator > :: _clear_screen ( )
     platform_math :: add_fracts ( fog_near , _logic_game_consts . fog_near_shift , _near_plane_distance ) ;
     
     typename messages :: engine_render_fog_linear fog_msg ;
-    fog_msg . znear = fog_near ;
-    fog_msg . zfar = fog_far ;
+    fog_msg . z_near = fog_near ;
+    fog_msg . z_far = fog_far ;
     fog_msg . r = _color_r ;
     fog_msg . g = _color_g ;
     fog_msg . b = _color_b ;

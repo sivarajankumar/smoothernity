@@ -161,12 +161,12 @@ void shy_logic_core < mediator > :: receive ( typename messages :: engine_render
             platform_math :: neg_fract ( neg_height , height ) ;
             
             typename messages :: engine_render_projection_ortho proj_msg ;
-            proj_msg . left = neg_width ;
-            proj_msg . right = width ;
-            proj_msg . bottom = neg_height ;
-            proj_msg . top = height ;
-            proj_msg . znear = _logic_consts . z_near ;
-            proj_msg . zfar = _logic_consts . z_far ;
+            proj_msg . x_left = neg_width ;
+            proj_msg . x_right = width ;
+            proj_msg . y_bottom = neg_height ;
+            proj_msg . y_top = height ;
+            proj_msg . z_near = _logic_consts . z_near ;
+            proj_msg . z_far = _logic_consts . z_far ;
             _mediator . get ( ) . send ( proj_msg ) ;
             
             _mediator . get ( ) . send ( typename messages :: engine_render_matrix_identity ( ) ) ;
@@ -186,12 +186,12 @@ void shy_logic_core < mediator > :: receive ( typename messages :: engine_render
             platform_math :: neg_fract ( neg_height , height ) ;
             
             typename messages :: engine_render_projection_frustum proj_msg ;
-            proj_msg . left = neg_width ;
-            proj_msg . right = width ;
-            proj_msg . bottom = neg_height ;
-            proj_msg . top = height ;
-            proj_msg . znear = z_near ;
-            proj_msg . zfar = _logic_consts . z_far ;
+            proj_msg . x_left = neg_width ;
+            proj_msg . x_right = width ;
+            proj_msg . y_bottom = neg_height ;
+            proj_msg . y_top = height ;
+            proj_msg . z_near = z_near ;
+            proj_msg . z_far = _logic_consts . z_far ;
             _mediator . get ( ) . send ( proj_msg ) ;
             
             _mediator . get ( ) . send ( typename messages :: engine_render_matrix_identity ( ) ) ;

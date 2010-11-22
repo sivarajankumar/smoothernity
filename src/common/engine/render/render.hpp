@@ -278,19 +278,19 @@ void shy_engine_render < mediator > :: receive ( typename messages :: engine_ren
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_fog_linear msg )
 {
-    _platform_render . get ( ) . fog_linear ( msg . znear , msg . zfar , msg . r , msg . g , msg . b , msg . a ) ;
+    _platform_render . get ( ) . fog_linear ( msg . z_near , msg . z_far , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_projection_frustum msg )
 {
-    _platform_render . get ( ) . projection_frustum ( msg . left , msg . right , msg . bottom , msg . top , msg . znear , msg . zfar ) ;
+    _platform_render . get ( ) . projection_frustum ( msg . x_left , msg . x_right , msg . y_bottom , msg . y_top , msg . z_near , msg . z_far ) ;
 }
 
 template < typename mediator >
 void shy_engine_render < mediator > :: receive ( typename messages :: engine_render_projection_ortho msg )
 {
-    _platform_render . get ( ) . projection_ortho ( msg . left , msg . right , msg . bottom , msg . top , msg . znear , msg . zfar ) ;
+    _platform_render . get ( ) . projection_ortho ( msg . x_left , msg . x_right , msg . y_bottom , msg . y_top , msg . z_near , msg . z_far ) ;
 }
 
 template < typename mediator >
