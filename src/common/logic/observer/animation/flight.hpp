@@ -65,9 +65,9 @@ shy_logic_observer_animation_flight < mediator > :: _logic_observer_animation_fl
 {
     platform_math :: make_num_fract ( target_z , - 1 , 1 ) ;
     platform_math :: make_num_fract ( horizontal_offset_period , 11 , 10 ) ;
-    platform_math :: make_num_fract ( horizontal_offset_amplitude , 1 , 1 ) ;
+    platform_math :: make_num_fract ( horizontal_offset_amplitude , 1 , 3 ) ;
     platform_math :: make_num_fract ( vertical_offset_period , 17 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 1 ) ;
+    platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 3 ) ;
 }
 
 template < typename mediator >
