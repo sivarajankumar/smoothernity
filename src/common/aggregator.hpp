@@ -607,6 +607,7 @@ class shy_aggregator
     
     typedef typename aggregator_types :: engine_render_stateless engine_render_stateless ;
     typedef typename aggregator_types :: logic_amusement_stateless logic_amusement_stateless ;
+    typedef typename aggregator_types :: logic_blanket_stateless logic_blanket_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
     typedef typename aggregator_types :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
@@ -718,6 +719,7 @@ private :
     logic_blanket_mesh _logic_blanket_mesh ;
     logic_blanket_placement _logic_blanket_placement ;
     logic_blanket_renderer _logic_blanket_renderer ;
+    logic_blanket_stateless _logic_blanket_stateless ;
     logic_camera _logic_camera ;
     logic_controls _logic_controls ;
     logic_core _logic_core ;
@@ -808,6 +810,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_blanket_mesh > logic_blanket_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_placement > logic_blanket_placement_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_renderer > logic_blanket_renderer_ptr ;
+    typename platform_pointer :: template pointer < logic_blanket_stateless > logic_blanket_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_camera > logic_camera_ptr ;
     typename platform_pointer :: template pointer < logic_controls > logic_controls_ptr ;
     typename platform_pointer :: template pointer < logic_core > logic_core_ptr ;
@@ -894,6 +897,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_blanket_mesh_ptr , _logic_blanket_mesh ) ;
     platform_pointer :: bind ( logic_blanket_placement_ptr , _logic_blanket_placement ) ;
     platform_pointer :: bind ( logic_blanket_renderer_ptr , _logic_blanket_renderer ) ;
+    platform_pointer :: bind ( logic_blanket_stateless_ptr , _logic_blanket_stateless ) ;
     platform_pointer :: bind ( logic_camera_ptr , _logic_camera ) ;
     platform_pointer :: bind ( logic_controls_ptr , _logic_controls ) ;
     platform_pointer :: bind ( logic_core_ptr , _logic_core ) ;
@@ -1058,6 +1062,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_blanket_mesh_ptr
         , logic_blanket_placement_ptr
         , logic_blanket_renderer_ptr
+        , logic_blanket_stateless_ptr
         , logic_camera_ptr
         , logic_controls_ptr
         , logic_core_ptr
