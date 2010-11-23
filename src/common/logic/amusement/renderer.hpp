@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_amusement_renderer
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_amusement_stateless :: logic_amusement_stateless_consts_type logic_amusement_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -12,16 +13,6 @@ class shy_logic_amusement_renderer
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_amusement_renderer_consts_type
-    {
-    public :
-        _logic_amusement_renderer_consts_type ( ) ;
-    public :
-        num_fract clear_color_r ;
-        num_fract clear_color_g ;
-        num_fract clear_color_b ;
-    } ;
 
     class _logic_amusement_render_state_type
     {
@@ -120,7 +111,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_amusement_renderer_consts_type _logic_amusement_renderer_consts ;
+    typename platform_pointer :: template pointer < const logic_amusement_stateless_consts_type > _logic_amusement_stateless_consts ;
 
     _logic_amusement_render_state_type _logic_amusement_render_state ;
     _logic_observer_animation_transform_state_type _logic_observer_animation_transform_state ;
@@ -130,14 +121,6 @@ private :
     _logic_door_render_state_type _logic_door_render_state ;
     _logic_room_render_state_type _logic_room_render_state ;
 } ;
-
-template < typename mediator >
-shy_logic_amusement_renderer < mediator > :: _logic_amusement_renderer_consts_type :: _logic_amusement_renderer_consts_type ( )
-{
-    platform_math :: make_num_fract ( clear_color_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( clear_color_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( clear_color_b , 1 , 3 ) ;
-}
 
 template < typename mediator >
 shy_logic_amusement_renderer < mediator > :: shy_logic_amusement_renderer ( )
@@ -155,6 +138,7 @@ void shy_logic_amusement_renderer < mediator > :: receive ( typename messages ::
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_amusement_stateless_consts ( _logic_amusement_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -341,9 +325,9 @@ template < typename mediator >
 void shy_logic_amusement_renderer < mediator > :: _clear_screen ( )
 {
     typename messages :: engine_render_clear_screen msg ;
-    msg . r = _logic_amusement_renderer_consts . clear_color_r ; 
-    msg . g = _logic_amusement_renderer_consts . clear_color_g ; 
-    msg . b = _logic_amusement_renderer_consts . clear_color_b ; 
+    msg . r = _logic_amusement_stateless_consts . get ( ) . renderer_clear_color_r ; 
+    msg . g = _logic_amusement_stateless_consts . get ( ) . renderer_clear_color_g ; 
+    msg . b = _logic_amusement_stateless_consts . get ( ) . renderer_clear_color_b ; 
     _mediator . get ( ) . send ( msg ) ;
 }
 
