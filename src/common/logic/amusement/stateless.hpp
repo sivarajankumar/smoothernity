@@ -1,8 +1,20 @@
 template < typename mediator >
 class shy_logic_amusement_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
+    class logic_amusement_stateless_consts_type
+    {
+    public :
+        logic_amusement_stateless_consts_type ( ) ;
+    public :
+        num_fract renderer_clear_color_r ;
+        num_fract renderer_clear_color_g ;
+        num_fract renderer_clear_color_b ;
+    } ;
+
     class logic_amusement_messages
     {
     public :
@@ -26,7 +38,17 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+public :
+    const logic_amusement_stateless_consts_type logic_amusement_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_amusement_stateless < mediator > :: logic_amusement_stateless_consts_type :: logic_amusement_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( renderer_clear_color_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( renderer_clear_color_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( renderer_clear_color_b , 1 , 3 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >
