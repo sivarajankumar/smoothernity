@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_blanket_animation
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_blanket_animation_stateless :: logic_blanket_animation_stateless_consts_type logic_blanket_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -14,16 +15,6 @@ class shy_logic_blanket_animation
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
-
-    class _logic_blanket_animation_consts_type
-    {
-    public :
-        _logic_blanket_animation_consts_type ( ) ;
-    public :
-        num_fract origin_x ;
-        num_fract origin_y ;
-        num_fract origin_z ;
-    } ;
 
     class _logic_blanket_animation_transform_state_type
     {
@@ -78,21 +69,13 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_blanket_animation_consts_type _logic_blanket_animation_consts ;
+    typename platform_pointer :: template pointer < const logic_blanket_animation_stateless_consts_type > _logic_blanket_animation_stateless_consts ;
 
     _logic_blanket_animation_transform_state_type _logic_blanket_animation_transform_state ;
     _logic_blanket_animation_appear_transform_state_type _logic_blanket_animation_appear_transform_state ;
     _logic_blanket_animation_disappear_transform_state_type _logic_blanket_animation_disappear_transform_state ;
     _logic_blanket_animation_fit_transform_state_type _logic_blanket_animation_fit_transform_state ;
 } ;
-
-template < typename mediator >
-shy_logic_blanket_animation < mediator > :: _logic_blanket_animation_consts_type :: _logic_blanket_animation_consts_type ( )
-{
-    platform_math :: make_num_fract ( origin_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( origin_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( origin_z , - 3 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_blanket_animation < mediator > :: shy_logic_blanket_animation ( )
@@ -110,6 +93,7 @@ void shy_logic_blanket_animation < mediator > :: receive ( typename messages :: 
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_blanket_animation_stateless_consts ( _logic_blanket_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -231,9 +215,9 @@ void shy_logic_blanket_animation < mediator > :: _compute_transform ( )
     vector_data axis_z ;
     matrix_data transform ;
 
-    origin_x = _logic_blanket_animation_consts . origin_x ;
-    origin_y = _logic_blanket_animation_consts . origin_y ;
-    origin_z = _logic_blanket_animation_consts . origin_z ;
+    origin_x = _logic_blanket_animation_stateless_consts . get ( ) . animation_origin_x ;
+    origin_y = _logic_blanket_animation_stateless_consts . get ( ) . animation_origin_y ;
+    origin_z = _logic_blanket_animation_stateless_consts . get ( ) . animation_origin_z ;
     one = _platform_math_consts . get ( ) . fract_1 ;
     zero = _platform_math_consts . get ( ) . fract_0 ;
     appear_scale = _logic_blanket_animation_appear_transform_state . scale ;
