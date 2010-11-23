@@ -14,6 +14,16 @@ public :
         num_fract animation_origin_x ;
         num_fract animation_origin_y ;
         num_fract animation_origin_z ;
+        num_fract appear_scale_begin ;
+        num_fract appear_scale_end ;
+        num_fract appear_rotation_begin ;
+        num_fract appear_rotation_end ;
+        num_fract appear_time_from_begin_to_end ;
+        num_fract disappear_scale_begin ;
+        num_fract disappear_scale_end ;
+        num_fract disappear_rotation_begin ;
+        num_fract disappear_rotation_end ;
+        num_fract disappear_time_from_begin_to_end ;
     } ;
 
     class logic_blanket_animation_messages
@@ -68,6 +78,16 @@ shy_logic_blanket_animation_stateless < mediator > :: logic_blanket_animation_st
     platform_math :: make_num_fract ( animation_origin_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( animation_origin_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( animation_origin_z , - 3 , 1 ) ;
+    platform_math :: make_num_fract ( appear_scale_begin , 0 , 1 ) ;
+    platform_math :: make_num_fract ( appear_scale_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( appear_rotation_begin , 0 , 1 ) ;
+    platform_math :: make_num_fract ( appear_rotation_end , 10 , 1 ) ;
+    platform_math :: make_num_fract ( appear_time_from_begin_to_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( disappear_scale_begin , 1 , 1 ) ;
+    platform_math :: make_num_fract ( disappear_scale_end , 0 , 1 ) ;
+    platform_math :: make_num_fract ( disappear_rotation_begin , 0 , 1 ) ;
+    platform_math :: make_num_fract ( disappear_rotation_end , 10 , 1 ) ;
+    platform_math :: make_num_fract ( disappear_time_from_begin_to_end , 1 , 1 ) ;
 }
 
 template < typename mediator >

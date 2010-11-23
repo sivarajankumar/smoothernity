@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_blanket_animation_appear
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_blanket_animation_stateless :: logic_blanket_animation_stateless_consts_type logic_blanket_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -10,18 +11,6 @@ class shy_logic_blanket_animation_appear
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_blanket_animation_appear_consts_type
-    {
-    public :
-        _logic_blanket_animation_appear_consts_type ( ) ;
-    public :
-        num_fract scale_begin ;
-        num_fract scale_end ;
-        num_fract rotation_begin ;
-        num_fract rotation_end ;
-        num_fract time_from_begin_to_end ;
-    } ;
 
     class _logic_blanket_animation_appear_transform_state_type
     {
@@ -52,21 +41,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_blanket_animation_appear_consts_type _logic_blanket_animation_appear_consts ;
+    typename platform_pointer :: template pointer < const logic_blanket_animation_stateless_consts_type > _logic_blanket_animation_stateless_consts ;
 
     _logic_blanket_update_state_type _logic_blanket_update_state ;
     _logic_blanket_animation_appear_transform_state_type _logic_blanket_animation_appear_transform_state ;
 } ;
-
-template < typename mediator >
-shy_logic_blanket_animation_appear < mediator > :: _logic_blanket_animation_appear_consts_type :: _logic_blanket_animation_appear_consts_type ( )
-{
-    platform_math :: make_num_fract ( scale_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( scale_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( rotation_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( rotation_end , 10 , 1 ) ;
-    platform_math :: make_num_fract ( time_from_begin_to_end , 1 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_blanket_animation_appear < mediator > :: shy_logic_blanket_animation_appear ( )
@@ -84,6 +63,7 @@ void shy_logic_blanket_animation_appear < mediator > :: receive ( typename messa
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_blanket_animation_stateless_consts ( _logic_blanket_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 
     _logic_blanket_update_state . started = _platform_math_consts . get ( ) . whole_false ;
@@ -109,7 +89,7 @@ void shy_logic_blanket_animation_appear < mediator > :: receive ( typename messa
 
         time = _logic_blanket_update_state . time ;
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
-        time_from_begin_to_end = _logic_blanket_animation_appear_consts . time_from_begin_to_end ;
+        time_from_begin_to_end = _logic_blanket_animation_stateless_consts . get ( ) . appear_time_from_begin_to_end ;
         started = _logic_blanket_update_state . started ;
 
         platform_math :: add_to_fract ( time , time_step ) ;
@@ -143,9 +123,9 @@ void shy_logic_blanket_animation_appear < mediator > :: _compute_scale ( )
     num_fract time_end ;
     num_fract time_from_begin_to_end ;
 
-    scale_begin = _logic_blanket_animation_appear_consts . scale_begin ;
-    scale_end = _logic_blanket_animation_appear_consts . scale_end ;
-    time_from_begin_to_end = _logic_blanket_animation_appear_consts . time_from_begin_to_end ;
+    scale_begin = _logic_blanket_animation_stateless_consts . get ( ) . appear_scale_begin ;
+    scale_end = _logic_blanket_animation_stateless_consts . get ( ) . appear_scale_end ;
+    time_from_begin_to_end = _logic_blanket_animation_stateless_consts . get ( ) . appear_time_from_begin_to_end ;
     time = _logic_blanket_update_state . time ;
 
     time_begin = _platform_math_consts . get ( ) . fract_0 ;
@@ -167,9 +147,9 @@ void shy_logic_blanket_animation_appear < mediator > :: _compute_rotation ( )
     num_fract time_end ;
     num_fract time_from_begin_to_end ;
 
-    rotation_begin = _logic_blanket_animation_appear_consts . rotation_begin ;
-    rotation_end = _logic_blanket_animation_appear_consts . rotation_end ;
-    time_from_begin_to_end = _logic_blanket_animation_appear_consts . time_from_begin_to_end ;
+    rotation_begin = _logic_blanket_animation_stateless_consts . get ( ) . appear_rotation_begin ;
+    rotation_end = _logic_blanket_animation_stateless_consts . get ( ) . appear_rotation_end ;
+    time_from_begin_to_end = _logic_blanket_animation_stateless_consts . get ( ) . appear_time_from_begin_to_end ;
     time = _logic_blanket_update_state . time ;
 
     time_begin = _platform_math_consts . get ( ) . fract_0 ;
