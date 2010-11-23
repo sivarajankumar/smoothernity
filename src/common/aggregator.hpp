@@ -607,6 +607,7 @@ class shy_aggregator
     
     typedef typename aggregator_types :: engine_render_stateless engine_render_stateless ;
     typedef typename aggregator_types :: logic_amusement_stateless logic_amusement_stateless ;
+    typedef typename aggregator_types :: logic_blanket_animation_stateless logic_blanket_animation_stateless ;
     typedef typename aggregator_types :: logic_blanket_stateless logic_blanket_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
@@ -716,6 +717,7 @@ private :
     logic_blanket_animation_appear _logic_blanket_animation_appear ;
     logic_blanket_animation_disappear _logic_blanket_animation_disappear ;
     logic_blanket_animation_fit _logic_blanket_animation_fit ;
+    logic_blanket_animation_stateless _logic_blanket_animation_stateless ;
     logic_blanket_mesh _logic_blanket_mesh ;
     logic_blanket_placement _logic_blanket_placement ;
     logic_blanket_renderer _logic_blanket_renderer ;
@@ -807,6 +809,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_blanket_animation_appear > logic_blanket_animation_appear_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_animation_disappear > logic_blanket_animation_disappear_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_animation_fit > logic_blanket_animation_fit_ptr ;
+    typename platform_pointer :: template pointer < logic_blanket_animation_stateless > logic_blanket_animation_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_mesh > logic_blanket_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_placement > logic_blanket_placement_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_renderer > logic_blanket_renderer_ptr ;
@@ -894,6 +897,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_blanket_animation_appear_ptr , _logic_blanket_animation_appear ) ;
     platform_pointer :: bind ( logic_blanket_animation_disappear_ptr , _logic_blanket_animation_disappear ) ;
     platform_pointer :: bind ( logic_blanket_animation_fit_ptr , _logic_blanket_animation_fit ) ;
+    platform_pointer :: bind ( logic_blanket_animation_stateless_ptr , _logic_blanket_animation_stateless ) ;
     platform_pointer :: bind ( logic_blanket_mesh_ptr , _logic_blanket_mesh ) ;
     platform_pointer :: bind ( logic_blanket_placement_ptr , _logic_blanket_placement ) ;
     platform_pointer :: bind ( logic_blanket_renderer_ptr , _logic_blanket_renderer ) ;
@@ -1059,6 +1063,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_blanket_animation_appear_ptr
         , logic_blanket_animation_disappear_ptr
         , logic_blanket_animation_fit_ptr
+        , logic_blanket_animation_stateless_ptr
         , logic_blanket_mesh_ptr
         , logic_blanket_placement_ptr
         , logic_blanket_renderer_ptr
