@@ -1,9 +1,35 @@
 template < typename mediator >
 class shy_logic_door_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
+    class logic_door_stateless_consts_type
+    {
+    public :
+        logic_door_stateless_consts_type ( ) ;
+    public :
+        num_fract mesh_color_r ;
+        num_fract mesh_color_g ;
+        num_fract mesh_color_b ;
+        num_fract mesh_color_a ;
+        num_fract mesh_x_left ;
+        num_fract mesh_x_right ;
+        num_fract mesh_y_bottom ;
+        num_fract mesh_y_top ;
+        num_fract mesh_z ;
+        num_fract mesh_u_top_left ;
+        num_fract mesh_v_top_left ;
+        num_fract mesh_u_top_right ;
+        num_fract mesh_v_top_right ;
+        num_fract mesh_u_bottom_left ;
+        num_fract mesh_v_bottom_left ;
+        num_fract mesh_u_bottom_right ;
+        num_fract mesh_v_bottom_right ;
+    } ;
+
     class logic_door_messages
     {
     public :
@@ -49,7 +75,37 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+
+public :
+    const logic_door_stateless_consts_type logic_door_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_door_stateless < mediator > :: logic_door_stateless_consts_type :: logic_door_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( mesh_color_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_x_left , - 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_x_right , 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_y_bottom , - 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_y_top , 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_z , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_u_top_left , 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_v_top_left , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_u_bottom_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_v_bottom_left , 1 , 2 ) ;
+
+    platform_math :: make_num_fract ( mesh_u_top_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_v_top_right , 1 , 2 ) ;
+
+    platform_math :: make_num_fract ( mesh_u_bottom_right , 1 , 2 ) ;
+    platform_math :: make_num_fract ( mesh_v_bottom_right , 0 , 1 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >
