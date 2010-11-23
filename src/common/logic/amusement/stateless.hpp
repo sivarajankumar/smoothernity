@@ -39,6 +39,10 @@ public :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
 public :
+    shy_logic_amusement_stateless ( ) ;
+private :
+    shy_logic_amusement_stateless < mediator > & operator= ( const shy_logic_amusement_stateless < mediator > & ) ;
+public :
     const logic_amusement_stateless_consts_type logic_amusement_stateless_consts ;
 } ;
 
@@ -48,6 +52,11 @@ shy_logic_amusement_stateless < mediator > :: logic_amusement_stateless_consts_t
     platform_math :: make_num_fract ( renderer_clear_color_r , 0 , 1 ) ;
     platform_math :: make_num_fract ( renderer_clear_color_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( renderer_clear_color_b , 1 , 3 ) ;
+}
+
+template < typename mediator >
+shy_logic_amusement_stateless < mediator > :: shy_logic_amusement_stateless ( )
+{
 }
 
 template < typename mediator >

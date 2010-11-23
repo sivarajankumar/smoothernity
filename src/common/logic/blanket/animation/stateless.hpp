@@ -55,6 +55,10 @@ public :
     } ;
 
 public :
+    shy_logic_blanket_animation_stateless ( ) ;
+private :
+    shy_logic_blanket_animation_stateless < mediator > & operator= ( const shy_logic_blanket_animation_stateless < mediator > & ) ;
+public :
     const logic_blanket_animation_stateless_consts_type logic_blanket_animation_stateless_consts ;
 } ;
 
@@ -64,6 +68,11 @@ shy_logic_blanket_animation_stateless < mediator > :: logic_blanket_animation_st
     platform_math :: make_num_fract ( animation_origin_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( animation_origin_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( animation_origin_z , - 3 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_blanket_animation_stateless < mediator > :: shy_logic_blanket_animation_stateless ( )
+{
 }
 
 template < typename mediator >

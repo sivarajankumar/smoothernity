@@ -41,11 +41,13 @@ class shy_logic_perspective
     } ;
 
 public :
+    shy_logic_perspective ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_perspective_planes_request ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
+    shy_logic_perspective < mediator > & operator= ( const shy_logic_perspective < mediator > & ) ;
     void _proceed_with_planes ( ) ;
     void _request_aspect ( ) ;
     void _compute_x_left ( ) ;
@@ -72,6 +74,11 @@ template < typename mediator >
 shy_logic_perspective < mediator > :: _logic_perspective_consts_type :: _logic_perspective_consts_type ( )
 {
     platform_math :: make_num_fract ( z_far_unscaled , 50 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_perspective < mediator > :: shy_logic_perspective ( )
+{
 }
 
 template < typename mediator >

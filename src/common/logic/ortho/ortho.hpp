@@ -41,11 +41,13 @@ class shy_logic_ortho
     } ;
 
 public :
+    shy_logic_ortho ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: logic_ortho_planes_request ) ;
     void receive ( typename messages :: engine_render_aspect_reply ) ;
 private :
+    shy_logic_ortho < mediator > & operator= ( const shy_logic_ortho < mediator > & ) ;
     void _proceed_with_planes ( ) ;
     void _request_aspect ( ) ;
     void _compute_x_left ( ) ;
@@ -70,6 +72,11 @@ shy_logic_ortho < mediator > :: _logic_ortho_consts_type :: _logic_ortho_consts_
 {
     platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
     platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_ortho < mediator > :: shy_logic_ortho ( )
+{
 }
 
 template < typename mediator >

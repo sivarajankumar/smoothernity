@@ -59,6 +59,10 @@ public :
     } ;
 
 public :
+    shy_logic_blanket_stateless ( ) ;
+private :
+    shy_logic_blanket_stateless < mediator > & operator= ( const shy_logic_blanket_stateless < mediator > & ) ;
+public :
     const logic_blanket_stateless_consts_type logic_blanket_stateless_consts ;
 } ;
 
@@ -74,6 +78,11 @@ shy_logic_blanket_stateless < mediator > :: logic_blanket_stateless_consts_type 
     platform_math :: make_num_fract ( mesh_color_g , 0 , 1 ) ;
     platform_math :: make_num_fract ( mesh_color_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( mesh_color_a , 1 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_blanket_stateless < mediator > :: shy_logic_blanket_stateless ( )
+{
 }
 
 template < typename mediator >
