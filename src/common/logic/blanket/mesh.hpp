@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_blanket_mesh
 {
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
+    typedef typename mediator :: logic_blanket_stateless :: logic_blanket_stateless_consts_type logic_blanket_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -18,15 +19,6 @@ class shy_logic_blanket_mesh
     public :
         _logic_blanket_mesh_consts_type ( ) ;
     public :
-        num_fract vertex_x_left ;
-        num_fract vertex_x_right ;
-        num_fract vertex_y_bottom ;
-        num_fract vertex_y_top ;
-        num_fract vertex_z ;
-        num_fract color_r ;
-        num_fract color_g ;
-        num_fract color_b ;
-        num_fract color_a ;
         num_whole vertices ;
         num_whole triangle_strip_indices ;
         num_whole triangle_fan_indices ;
@@ -68,6 +60,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_blanket_stateless_consts_type > _logic_blanket_stateless_consts ;
     const _logic_blanket_mesh_consts_type _logic_blanket_mesh_consts ;
 
     _logic_blanket_mesh_create_state_type _logic_blanket_mesh_create_state ;
@@ -77,15 +70,6 @@ private :
 template < typename mediator >
 shy_logic_blanket_mesh < mediator > :: _logic_blanket_mesh_consts_type :: _logic_blanket_mesh_consts_type ( )
 {
-    platform_math :: make_num_fract ( vertex_x_left , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( vertex_x_right , 1 , 2 ) ;
-    platform_math :: make_num_fract ( vertex_y_bottom , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( vertex_y_top , 1 , 2 ) ;
-    platform_math :: make_num_fract ( vertex_z , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
     platform_math :: make_num_whole ( vertices , 4 ) ;
     platform_math :: make_num_whole ( triangle_strip_indices , 4 ) ;
     platform_math :: make_num_whole ( triangle_fan_indices , 0 ) ;
@@ -107,6 +91,7 @@ void shy_logic_blanket_mesh < mediator > :: receive ( typename messages :: init 
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_blanket_stateless_consts ( _logic_blanket_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -196,15 +181,15 @@ void shy_logic_blanket_mesh < mediator > :: _fill_mesh_contents ( )
     num_fract color_a ;
     num_whole current_index ;
 
-    x_left = _logic_blanket_mesh_consts . vertex_x_left ;
-    x_right = _logic_blanket_mesh_consts . vertex_x_right ;
-    y_bottom = _logic_blanket_mesh_consts . vertex_y_bottom ;
-    y_top = _logic_blanket_mesh_consts . vertex_y_top ;
-    z = _logic_blanket_mesh_consts . vertex_z ;
-    color_r = _logic_blanket_mesh_consts . color_r ;
-    color_g = _logic_blanket_mesh_consts . color_g ;
-    color_b = _logic_blanket_mesh_consts . color_b ;
-    color_a = _logic_blanket_mesh_consts . color_a ;
+    x_left = _logic_blanket_stateless_consts . get ( ) . mesh_vertex_x_left ;
+    x_right = _logic_blanket_stateless_consts . get ( ) . mesh_vertex_x_right ;
+    y_bottom = _logic_blanket_stateless_consts . get ( ) . mesh_vertex_y_bottom ;
+    y_top = _logic_blanket_stateless_consts . get ( ) . mesh_vertex_y_top ;
+    z = _logic_blanket_stateless_consts . get ( ) . mesh_vertex_z ;
+    color_r = _logic_blanket_stateless_consts . get ( ) . mesh_color_r ;
+    color_g = _logic_blanket_stateless_consts . get ( ) . mesh_color_g ;
+    color_b = _logic_blanket_stateless_consts . get ( ) . mesh_color_b ;
+    color_a = _logic_blanket_stateless_consts . get ( ) . mesh_color_a ;
 
     current_index = _platform_math_consts . get ( ) . whole_0 ;
 
