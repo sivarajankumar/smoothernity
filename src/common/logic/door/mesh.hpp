@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_door_mesh
 {
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
+    typedef typename mediator :: logic_door_stateless :: logic_door_stateless_consts_type logic_door_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -18,23 +19,6 @@ class shy_logic_door_mesh
     public :
         _logic_door_mesh_consts_type ( ) ;
     public :
-        num_fract color_r ;
-        num_fract color_g ;
-        num_fract color_b ;
-        num_fract color_a ;
-        num_fract mesh_x_left ;
-        num_fract mesh_x_right ;
-        num_fract mesh_y_bottom ;
-        num_fract mesh_y_top ;
-        num_fract mesh_z ;
-        num_fract mesh_u_top_left ;
-        num_fract mesh_v_top_left ;
-        num_fract mesh_u_top_right ;
-        num_fract mesh_v_top_right ;
-        num_fract mesh_u_bottom_left ;
-        num_fract mesh_v_bottom_left ;
-        num_fract mesh_u_bottom_right ;
-        num_fract mesh_v_bottom_right ;
         num_whole mesh_vertices_count ;
         num_whole mesh_triangle_strip_indices_count ;
         num_whole mesh_triangle_fan_indices_count ;
@@ -77,6 +61,7 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_door_stateless_consts_type > _logic_door_stateless_consts ;
     const _logic_door_mesh_consts_type _logic_door_mesh_consts ;
 
     _engine_render_mesh_create_state_type _engine_render_mesh_create_state ;
@@ -86,29 +71,6 @@ private :
 template < typename mediator >
 shy_logic_door_mesh < mediator > :: _logic_door_mesh_consts_type :: _logic_door_mesh_consts_type ( )
 {
-    platform_math :: make_num_fract ( color_r , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_b , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( mesh_x_left , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_x_right , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_y_bottom , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_y_top , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_z , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_top_left , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_v_top_left , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_bottom_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_v_bottom_left , 1 , 2 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_top_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_v_top_right , 1 , 2 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_bottom_right , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_v_bottom_right , 0 , 1 ) ;
-
     platform_math :: make_num_whole ( mesh_vertices_count , 4 ) ;
     platform_math :: make_num_whole ( mesh_triangle_strip_indices_count , 4 ) ;
     platform_math :: make_num_whole ( mesh_triangle_fan_indices_count , 0 ) ;
@@ -130,6 +92,7 @@ void shy_logic_door_mesh < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_door_stateless_consts ( _logic_door_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -227,24 +190,24 @@ void shy_logic_door_mesh < mediator > :: _fill_mesh_contents ( )
     num_fract color_a ; 
     num_whole current_index ;
     
-    x_left = _logic_door_mesh_consts . mesh_x_left ;
-    x_right = _logic_door_mesh_consts . mesh_x_right ;
-    y_top = _logic_door_mesh_consts . mesh_y_top ; 
-    y_bottom = _logic_door_mesh_consts . mesh_y_bottom ; 
-    u_top_left = _logic_door_mesh_consts . mesh_u_top_left ;
-    v_top_left = _logic_door_mesh_consts . mesh_v_top_left ;
-    u_top_right = _logic_door_mesh_consts . mesh_u_top_right ;
-    v_top_right = _logic_door_mesh_consts . mesh_v_top_right ;
-    u_bottom_left = _logic_door_mesh_consts . mesh_u_bottom_left ;
-    v_bottom_left = _logic_door_mesh_consts . mesh_v_bottom_left ;
-    u_bottom_right = _logic_door_mesh_consts . mesh_u_bottom_right ;
-    v_bottom_right = _logic_door_mesh_consts . mesh_v_bottom_right ;
-    z = _logic_door_mesh_consts . mesh_z ;
+    x_left = _logic_door_stateless_consts . get ( ) . mesh_x_left ;
+    x_right = _logic_door_stateless_consts . get ( ) . mesh_x_right ;
+    y_top = _logic_door_stateless_consts . get ( ) . mesh_y_top ; 
+    y_bottom = _logic_door_stateless_consts . get ( ) . mesh_y_bottom ; 
+    u_top_left = _logic_door_stateless_consts . get ( ) . mesh_u_top_left ;
+    v_top_left = _logic_door_stateless_consts . get ( ) . mesh_v_top_left ;
+    u_top_right = _logic_door_stateless_consts . get ( ) . mesh_u_top_right ;
+    v_top_right = _logic_door_stateless_consts . get ( ) . mesh_v_top_right ;
+    u_bottom_left = _logic_door_stateless_consts . get ( ) . mesh_u_bottom_left ;
+    v_bottom_left = _logic_door_stateless_consts . get ( ) . mesh_v_bottom_left ;
+    u_bottom_right = _logic_door_stateless_consts . get ( ) . mesh_u_bottom_right ;
+    v_bottom_right = _logic_door_stateless_consts . get ( ) . mesh_v_bottom_right ;
+    z = _logic_door_stateless_consts . get ( ) . mesh_z ;
 
-    color_r = _logic_door_mesh_consts . color_r ;
-    color_g = _logic_door_mesh_consts . color_g ;
-    color_b = _logic_door_mesh_consts . color_b ;
-    color_a = _logic_door_mesh_consts . color_a ;
+    color_r = _logic_door_stateless_consts . get ( ) . mesh_color_r ;
+    color_g = _logic_door_stateless_consts . get ( ) . mesh_color_g ;
+    color_b = _logic_door_stateless_consts . get ( ) . mesh_color_b ;
+    color_a = _logic_door_stateless_consts . get ( ) . mesh_color_a ;
 
     current_index = _platform_math_consts . get ( ) . whole_0 ;
 
