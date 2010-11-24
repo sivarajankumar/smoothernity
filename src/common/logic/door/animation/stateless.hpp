@@ -14,6 +14,9 @@ public :
         num_fract animation_origin_x ;
         num_fract animation_origin_y ;
         num_fract animation_origin_z ;
+        num_fract appear_scale_begin ;
+        num_fract appear_scale_end ;
+        num_fract appear_time_from_begin_to_end ;
     } ;
 
     class logic_door_animation_messages
@@ -50,6 +53,9 @@ shy_logic_door_animation_stateless < mediator > :: logic_door_animation_stateles
     platform_math :: make_num_fract ( animation_origin_x , 0 , 1 ) ;
     platform_math :: make_num_fract ( animation_origin_y , 0 , 1 ) ;
     platform_math :: make_num_fract ( animation_origin_z , - 3 , 1 ) ;
+    platform_math :: make_num_fract ( appear_scale_begin , 0 , 1 ) ;
+    platform_math :: make_num_fract ( appear_scale_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( appear_time_from_begin_to_end , 2 , 1 ) ;
 }
 
 template < typename mediator >

@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_door_animation_appear
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_door_animation_stateless :: logic_door_animation_stateless_consts_type logic_door_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -10,16 +11,6 @@ class shy_logic_door_animation_appear
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_door_animation_appear_consts_type
-    {
-    public :
-        _logic_door_animation_appear_consts_type ( ) ;
-    public :
-        num_fract scale_begin ;
-        num_fract scale_end ;
-        num_fract time_from_begin_to_end ;
-    } ;
 
     class _logic_door_animation_appear_transform_state_type
     {
@@ -48,19 +39,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_door_animation_appear_consts_type _logic_door_animation_appear_consts ;
+    typename platform_pointer :: template pointer < const logic_door_animation_stateless_consts_type > _logic_door_animation_stateless_consts ;
 
     _logic_door_update_state_type _logic_door_update_state ;
     _logic_door_animation_appear_transform_state_type _logic_door_animation_appear_transform_state ;
 } ;
-
-template < typename mediator >
-shy_logic_door_animation_appear < mediator > :: _logic_door_animation_appear_consts_type :: _logic_door_animation_appear_consts_type ( )
-{
-    platform_math :: make_num_fract ( scale_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( scale_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( time_from_begin_to_end , 2 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_door_animation_appear < mediator > :: shy_logic_door_animation_appear ( )
@@ -78,6 +61,7 @@ void shy_logic_door_animation_appear < mediator > :: receive ( typename messages
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_door_animation_stateless_consts ( _logic_door_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 
     _logic_door_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
@@ -119,9 +103,9 @@ void shy_logic_door_animation_appear < mediator > :: _compute_transform ( )
     num_fract time_end ;
     num_fract time ;
 
-    scale_begin = _logic_door_animation_appear_consts . scale_begin ;
-    scale_end = _logic_door_animation_appear_consts . scale_end ;
-    time_from_begin_to_end = _logic_door_animation_appear_consts . time_from_begin_to_end ;
+    scale_begin = _logic_door_animation_stateless_consts . get ( ) . appear_scale_begin ;
+    scale_end = _logic_door_animation_stateless_consts . get ( ) . appear_scale_end ;
+    time_from_begin_to_end = _logic_door_animation_stateless_consts . get ( ) . appear_time_from_begin_to_end ;
     time = _logic_door_update_state . time ;
 
     time_begin = _platform_math_consts . get ( ) . fract_0 ;
