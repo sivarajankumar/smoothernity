@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_selection_animation_disappear
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_main_menu_selection_animation_stateless :: logic_main_menu_selection_animation_stateless_consts_type logic_main_menu_selection_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -11,21 +12,6 @@ class shy_logic_main_menu_selection_animation_disappear
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
-    class _logic_main_menu_selection_animation_disappear_consts_type
-    {
-    public :
-        _logic_main_menu_selection_animation_disappear_consts_type ( ) ;
-    public :
-        num_fract horizontal_scale_time_to_begin ;
-        num_fract horizontal_scale_time_from_begin_to_end ;
-        num_fract horizontal_scale_value_begin ;
-        num_fract horizontal_scale_value_end ;
-        num_fract vertical_scale_time_to_begin ;
-        num_fract vertical_scale_time_from_begin_to_end ;
-        num_fract vertical_scale_value_begin ;
-        num_fract vertical_scale_value_end ;
-    } ;
-
     class _logic_main_menu_selection_animation_disappear_transform_state_type
     {
     public :
@@ -55,24 +41,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_selection_animation_disappear_consts_type _logic_main_menu_selection_animation_disappear_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_selection_animation_stateless_consts_type > _logic_main_menu_selection_animation_stateless_consts ;
     
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
     _logic_main_menu_selection_animation_disappear_transform_state_type _logic_main_menu_selection_animation_disappear_transform_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_selection_animation_disappear < mediator > :: _logic_main_menu_selection_animation_disappear_consts_type :: _logic_main_menu_selection_animation_disappear_consts_type ( )
-{
-    platform_math :: make_num_fract ( horizontal_scale_time_to_begin , 4 , 10 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_time_from_begin_to_end , 1 , 10 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_value_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_value_end , 0 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_to_begin , 0 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_time_from_begin_to_end , 1 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_value_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_scale_value_end , 10 , 100 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_selection_animation_disappear < mediator > :: shy_logic_main_menu_selection_animation_disappear ( )
@@ -90,6 +63,7 @@ void shy_logic_main_menu_selection_animation_disappear < mediator > :: receive (
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_selection_animation_stateless_consts ( _logic_main_menu_selection_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _logic_main_menu_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
@@ -128,8 +102,8 @@ void shy_logic_main_menu_selection_animation_disappear < mediator > :: _compute_
     num_fract time_begin ;
     num_fract time_end ;
     
-    horizontal_scale_time_to_begin = _logic_main_menu_selection_animation_disappear_consts . horizontal_scale_time_to_begin ;
-    horizontal_scale_time_from_begin_to_end = _logic_main_menu_selection_animation_disappear_consts . horizontal_scale_time_from_begin_to_end ;
+    horizontal_scale_time_to_begin = _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_horizontal_scale_time_to_begin ;
+    horizontal_scale_time_from_begin_to_end = _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_horizontal_scale_time_from_begin_to_end ;
     
     time_begin = horizontal_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , horizontal_scale_time_from_begin_to_end ) ;
@@ -137,9 +111,9 @@ void shy_logic_main_menu_selection_animation_disappear < mediator > :: _compute_
     engine_math :: easy_in_hard_out
         ( _logic_main_menu_selection_animation_disappear_transform_state . horizontal_scale
         , _logic_main_menu_update_state . time
-        , _logic_main_menu_selection_animation_disappear_consts . horizontal_scale_value_begin
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_horizontal_scale_value_begin
         , time_begin
-        , _logic_main_menu_selection_animation_disappear_consts . horizontal_scale_value_end
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_horizontal_scale_value_end
         , time_end
         ) ;
 }
@@ -152,8 +126,8 @@ void shy_logic_main_menu_selection_animation_disappear < mediator > :: _compute_
     num_fract time_begin ;
     num_fract time_end ;
     
-    vertical_scale_time_to_begin = _logic_main_menu_selection_animation_disappear_consts . vertical_scale_time_to_begin ;
-    vertical_scale_time_from_begin_to_end = _logic_main_menu_selection_animation_disappear_consts . vertical_scale_time_from_begin_to_end ;
+    vertical_scale_time_to_begin = _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_vertical_scale_time_to_begin ;
+    vertical_scale_time_from_begin_to_end = _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_vertical_scale_time_from_begin_to_end ;
     
     time_begin = vertical_scale_time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , vertical_scale_time_from_begin_to_end ) ;
@@ -161,9 +135,9 @@ void shy_logic_main_menu_selection_animation_disappear < mediator > :: _compute_
     engine_math :: hard_in_easy_out
         ( _logic_main_menu_selection_animation_disappear_transform_state . vertical_scale
         , _logic_main_menu_update_state . time
-        , _logic_main_menu_selection_animation_disappear_consts . vertical_scale_value_begin
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_vertical_scale_value_begin
         , time_begin
-        , _logic_main_menu_selection_animation_disappear_consts . vertical_scale_value_end
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . disappear_vertical_scale_value_end
         , time_end
         ) ;
 }
