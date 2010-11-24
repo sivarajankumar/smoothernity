@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_room_mesh
 {
     typedef typename mediator :: engine_render_stateless :: engine_render_mesh_id engine_render_mesh_id ;
+    typedef typename mediator :: logic_room_stateless :: logic_room_stateless_consts_type logic_room_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -18,63 +19,6 @@ class shy_logic_room_mesh
     public :
         _logic_room_mesh_consts_type ( ) ;
     public :
-        num_fract color_right_r ;
-        num_fract color_right_g ;
-        num_fract color_right_b ;
-        num_fract color_right_a ;
-        num_fract color_left_r ;
-        num_fract color_left_g ;
-        num_fract color_left_b ;
-        num_fract color_left_a ;
-        num_fract color_near_r ;
-        num_fract color_near_g ;
-        num_fract color_near_b ;
-        num_fract color_near_a ;
-        num_fract color_far_r ;
-        num_fract color_far_g ;
-        num_fract color_far_b ;
-        num_fract color_far_a ;
-        num_fract color_top_r ;
-        num_fract color_top_g ;
-        num_fract color_top_b ;
-        num_fract color_top_a ;
-        num_fract color_bottom_r ;
-        num_fract color_bottom_g ;
-        num_fract color_bottom_b ;
-        num_fract color_bottom_a ;
-        num_fract position_x ;
-        num_fract position_y ;
-        num_fract position_z ;
-        num_fract x_left ;
-        num_fract x_right ;
-        num_fract y_top ;
-        num_fract y_bottom ;
-        num_fract z_near ;
-        num_fract z_far ;
-        num_fract right_side_u_left ;
-        num_fract right_side_u_right ;
-        num_fract right_side_v_top ;
-        num_fract right_side_v_bottom ;
-        num_fract left_side_u_left ;
-        num_fract left_side_u_right ;
-        num_fract left_side_v_top ;
-        num_fract left_side_v_bottom ;
-        num_fract near_side_u_left ;
-        num_fract near_side_u_right ;
-        num_fract near_side_v_top ;
-        num_fract near_side_v_bottom ;
-        num_fract far_side_u_left ;
-        num_fract far_side_u_right ;
-        num_fract far_side_v_top ;
-        num_fract far_side_v_bottom ;
-        num_fract top_side_u_left ;
-        num_fract top_side_u_right ;
-        num_fract top_side_v_top ;
-        num_fract top_side_v_bottom ;
-        num_fract bottom_side_u_left ;
-        num_fract bottom_side_u_right ;
-        num_fract bottom_side_v_top ;
-        num_fract bottom_side_v_bottom ;
         num_whole vertices_count ;
         num_whole triangle_strip_indices_count ;
     } ;
@@ -122,7 +66,8 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    _logic_room_mesh_consts_type _logic_room_mesh_consts ;
+    typename platform_pointer :: template pointer < const logic_room_stateless_consts_type > _logic_room_stateless_consts ;
+    const _logic_room_mesh_consts_type _logic_room_mesh_consts ;
 
     _logic_room_mesh_create_state_type _logic_room_mesh_create_state ;
     _engine_render_mesh_create_state_type _engine_render_mesh_create_state ;
@@ -131,79 +76,6 @@ private :
 template < typename mediator >
 shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_mesh_consts_type ( )
 {
-    platform_math :: make_num_fract ( color_left_r , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_left_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_left_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_left_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( color_right_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_right_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_right_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_right_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( color_near_r , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_near_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_near_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_near_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( color_far_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_far_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_far_b , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_far_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( color_top_r , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_top_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_top_b , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_top_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( color_bottom_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_bottom_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_bottom_b , 1 , 1 ) ;
-    platform_math :: make_num_fract ( color_bottom_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( position_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( position_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( position_z , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( x_left , - 10 , 1 ) ;
-    platform_math :: make_num_fract ( x_right , 10 , 1 ) ;
-
-    platform_math :: make_num_fract ( y_top , 3 , 1 ) ; 
-    platform_math :: make_num_fract ( y_bottom , - 3 , 1 ) ;
-
-    platform_math :: make_num_fract ( z_near , 10 , 1 ) ;
-    platform_math :: make_num_fract ( z_far , - 10 , 1 ) ;
-
-    platform_math :: make_num_fract ( right_side_u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( right_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( right_side_v_top , 1 , 3 ) ;
-    platform_math :: make_num_fract ( right_side_v_bottom , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( left_side_u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( left_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( left_side_v_top , 1 , 3 ) ;
-    platform_math :: make_num_fract ( left_side_v_bottom , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( near_side_u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( near_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( near_side_v_top , 1 , 3 ) ;
-    platform_math :: make_num_fract ( near_side_v_bottom , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( far_side_u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( far_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( far_side_v_top , 1 , 3 ) ;
-    platform_math :: make_num_fract ( far_side_v_bottom , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( top_side_u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( top_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( top_side_v_top , 1 , 1 ) ;
-    platform_math :: make_num_fract ( top_side_v_bottom , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( bottom_side_u_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( bottom_side_u_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( bottom_side_v_top , 1 , 1 ) ;
-    platform_math :: make_num_fract ( bottom_side_v_bottom , 0 , 1 ) ;
-
     platform_math :: make_num_whole ( vertices_count , 27 ) ;
     platform_math :: make_num_whole ( triangle_strip_indices_count , 27 ) ;
 }
@@ -219,6 +91,7 @@ void shy_logic_room_mesh < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_room_stateless_consts ( _logic_room_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -322,20 +195,20 @@ void shy_logic_room_mesh < mediator > :: _add_near_side ( )
     num_fract color_near_a ; 
     num_whole current_index ;
     
-    x_left = _logic_room_mesh_consts . x_left ;
-    x_right = _logic_room_mesh_consts . x_right ;
-    y_top = _logic_room_mesh_consts . y_top ; 
-    y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    near_side_u_left = _logic_room_mesh_consts . near_side_u_left ;
-    near_side_u_right = _logic_room_mesh_consts . near_side_u_right ;
-    near_side_v_top = _logic_room_mesh_consts . near_side_v_top ;
-    near_side_v_bottom = _logic_room_mesh_consts . near_side_v_bottom ;
-    z_near = _logic_room_mesh_consts . z_near ;
+    x_left = _logic_room_stateless_consts . get ( ) . mesh_x_left ;
+    x_right = _logic_room_stateless_consts . get ( ) . mesh_x_right ;
+    y_top = _logic_room_stateless_consts . get ( ) . mesh_y_top ; 
+    y_bottom = _logic_room_stateless_consts . get ( ) . mesh_y_bottom ; 
+    near_side_u_left = _logic_room_stateless_consts . get ( ) . mesh_near_side_u_left ;
+    near_side_u_right = _logic_room_stateless_consts . get ( ) . mesh_near_side_u_right ;
+    near_side_v_top = _logic_room_stateless_consts . get ( ) . mesh_near_side_v_top ;
+    near_side_v_bottom = _logic_room_stateless_consts . get ( ) . mesh_near_side_v_bottom ;
+    z_near = _logic_room_stateless_consts . get ( ) . mesh_z_near ;
 
-    color_near_r = _logic_room_mesh_consts . color_near_r ;
-    color_near_g = _logic_room_mesh_consts . color_near_g ;
-    color_near_b = _logic_room_mesh_consts . color_near_b ;
-    color_near_a = _logic_room_mesh_consts . color_near_a ;
+    color_near_r = _logic_room_stateless_consts . get ( ) . mesh_color_near_r ;
+    color_near_g = _logic_room_stateless_consts . get ( ) . mesh_color_near_g ;
+    color_near_b = _logic_room_stateless_consts . get ( ) . mesh_color_near_b ;
+    color_near_a = _logic_room_stateless_consts . get ( ) . mesh_color_near_a ;
 
     current_index = _logic_room_mesh_create_state . current_index ;
 
@@ -384,20 +257,20 @@ void shy_logic_room_mesh < mediator > :: _add_right_side ( )
     num_fract color_right_a ;
     num_whole current_index ;
     
-    x_right = _logic_room_mesh_consts . x_right ;
-    y_top = _logic_room_mesh_consts . y_top ; 
-    y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    right_side_u_left = _logic_room_mesh_consts . right_side_u_left ;
-    right_side_u_right = _logic_room_mesh_consts . right_side_u_right ;
-    right_side_v_top = _logic_room_mesh_consts . right_side_v_top ;
-    right_side_v_bottom = _logic_room_mesh_consts . right_side_v_bottom ;
-    z_near = _logic_room_mesh_consts . z_near ;
-    z_far = _logic_room_mesh_consts . z_far ;
+    x_right = _logic_room_stateless_consts . get ( ) . mesh_x_right ;
+    y_top = _logic_room_stateless_consts . get ( ) . mesh_y_top ; 
+    y_bottom = _logic_room_stateless_consts . get ( ) . mesh_y_bottom ; 
+    right_side_u_left = _logic_room_stateless_consts . get ( ) . mesh_right_side_u_left ;
+    right_side_u_right = _logic_room_stateless_consts . get ( ) . mesh_right_side_u_right ;
+    right_side_v_top = _logic_room_stateless_consts . get ( ) . mesh_right_side_v_top ;
+    right_side_v_bottom = _logic_room_stateless_consts . get ( ) . mesh_right_side_v_bottom ;
+    z_near = _logic_room_stateless_consts . get ( ) . mesh_z_near ;
+    z_far = _logic_room_stateless_consts . get ( ) . mesh_z_far ;
 
-    color_right_r = _logic_room_mesh_consts . color_right_r ;
-    color_right_g = _logic_room_mesh_consts . color_right_g ;
-    color_right_b = _logic_room_mesh_consts . color_right_b ;
-    color_right_a = _logic_room_mesh_consts . color_right_a ;
+    color_right_r = _logic_room_stateless_consts . get ( ) . mesh_color_right_r ;
+    color_right_g = _logic_room_stateless_consts . get ( ) . mesh_color_right_g ;
+    color_right_b = _logic_room_stateless_consts . get ( ) . mesh_color_right_b ;
+    color_right_a = _logic_room_stateless_consts . get ( ) . mesh_color_right_a ;
 
     current_index = _logic_room_mesh_create_state . current_index ;
 
@@ -446,20 +319,20 @@ void shy_logic_room_mesh < mediator > :: _add_far_side ( )
     num_fract color_far_a ; 
     num_whole current_index ;
     
-    x_left = _logic_room_mesh_consts . x_left ;
-    x_right = _logic_room_mesh_consts . x_right ;
-    y_top = _logic_room_mesh_consts . y_top ; 
-    y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    far_side_u_left = _logic_room_mesh_consts . far_side_u_left ;
-    far_side_u_right = _logic_room_mesh_consts . far_side_u_right ;
-    far_side_v_top = _logic_room_mesh_consts . far_side_v_top ;
-    far_side_v_bottom = _logic_room_mesh_consts . far_side_v_bottom ;
-    z_far = _logic_room_mesh_consts . z_far ;
+    x_left = _logic_room_stateless_consts . get ( ) . mesh_x_left ;
+    x_right = _logic_room_stateless_consts . get ( ) . mesh_x_right ;
+    y_top = _logic_room_stateless_consts . get ( ) . mesh_y_top ; 
+    y_bottom = _logic_room_stateless_consts . get ( ) . mesh_y_bottom ; 
+    far_side_u_left = _logic_room_stateless_consts . get ( ) . mesh_far_side_u_left ;
+    far_side_u_right = _logic_room_stateless_consts . get ( ) . mesh_far_side_u_right ;
+    far_side_v_top = _logic_room_stateless_consts . get ( ) . mesh_far_side_v_top ;
+    far_side_v_bottom = _logic_room_stateless_consts . get ( ) . mesh_far_side_v_bottom ;
+    z_far = _logic_room_stateless_consts . get ( ) . mesh_z_far ;
 
-    color_far_r = _logic_room_mesh_consts . color_far_r ;
-    color_far_g = _logic_room_mesh_consts . color_far_g ;
-    color_far_b = _logic_room_mesh_consts . color_far_b ;
-    color_far_a = _logic_room_mesh_consts . color_far_a ;
+    color_far_r = _logic_room_stateless_consts . get ( ) . mesh_color_far_r ;
+    color_far_g = _logic_room_stateless_consts . get ( ) . mesh_color_far_g ;
+    color_far_b = _logic_room_stateless_consts . get ( ) . mesh_color_far_b ;
+    color_far_a = _logic_room_stateless_consts . get ( ) . mesh_color_far_a ;
 
     current_index = _logic_room_mesh_create_state . current_index ;
 
@@ -508,20 +381,20 @@ void shy_logic_room_mesh < mediator > :: _add_left_side ( )
     num_fract color_left_a ;
     num_whole current_index ;
     
-    x_left = _logic_room_mesh_consts . x_left ;
-    y_top = _logic_room_mesh_consts . y_top ; 
-    y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    left_side_u_left = _logic_room_mesh_consts . left_side_u_left ;
-    left_side_u_right = _logic_room_mesh_consts . left_side_u_right ;
-    left_side_v_top = _logic_room_mesh_consts . left_side_v_top ;
-    left_side_v_bottom = _logic_room_mesh_consts . left_side_v_bottom ;
-    z_near = _logic_room_mesh_consts . z_near ;
-    z_far = _logic_room_mesh_consts . z_far ;
+    x_left = _logic_room_stateless_consts . get ( ) . mesh_x_left ;
+    y_top = _logic_room_stateless_consts . get ( ) . mesh_y_top ; 
+    y_bottom = _logic_room_stateless_consts . get ( ) . mesh_y_bottom ; 
+    left_side_u_left = _logic_room_stateless_consts . get ( ) . mesh_left_side_u_left ;
+    left_side_u_right = _logic_room_stateless_consts . get ( ) . mesh_left_side_u_right ;
+    left_side_v_top = _logic_room_stateless_consts . get ( ) . mesh_left_side_v_top ;
+    left_side_v_bottom = _logic_room_stateless_consts . get ( ) . mesh_left_side_v_bottom ;
+    z_near = _logic_room_stateless_consts . get ( ) . mesh_z_near ;
+    z_far = _logic_room_stateless_consts . get ( ) . mesh_z_far ;
 
-    color_left_r = _logic_room_mesh_consts . color_left_r ;
-    color_left_g = _logic_room_mesh_consts . color_left_g ;
-    color_left_b = _logic_room_mesh_consts . color_left_b ;
-    color_left_a = _logic_room_mesh_consts . color_left_a ;
+    color_left_r = _logic_room_stateless_consts . get ( ) . mesh_color_left_r ;
+    color_left_g = _logic_room_stateless_consts . get ( ) . mesh_color_left_g ;
+    color_left_b = _logic_room_stateless_consts . get ( ) . mesh_color_left_b ;
+    color_left_a = _logic_room_stateless_consts . get ( ) . mesh_color_left_a ;
     current_index = _logic_room_mesh_create_state . current_index ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_far ) ;
@@ -570,21 +443,21 @@ void shy_logic_room_mesh < mediator > :: _add_top_side ( )
     num_fract color_top_a ;
     num_whole current_index ;
     
-    x_left = _logic_room_mesh_consts . x_left ;
-    x_right = _logic_room_mesh_consts . x_right ;
-    y_top = _logic_room_mesh_consts . y_top ; 
-    y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    top_side_u_left = _logic_room_mesh_consts . top_side_u_left ;
-    top_side_u_right = _logic_room_mesh_consts . top_side_u_right ;
-    top_side_v_top = _logic_room_mesh_consts . top_side_v_top ;
-    top_side_v_bottom = _logic_room_mesh_consts . top_side_v_bottom ;
-    z_near = _logic_room_mesh_consts . z_near ;
-    z_far = _logic_room_mesh_consts . z_far ;
+    x_left = _logic_room_stateless_consts . get ( ) . mesh_x_left ;
+    x_right = _logic_room_stateless_consts . get ( ) . mesh_x_right ;
+    y_top = _logic_room_stateless_consts . get ( ) . mesh_y_top ; 
+    y_bottom = _logic_room_stateless_consts . get ( ) . mesh_y_bottom ; 
+    top_side_u_left = _logic_room_stateless_consts . get ( ) . mesh_top_side_u_left ;
+    top_side_u_right = _logic_room_stateless_consts . get ( ) . mesh_top_side_u_right ;
+    top_side_v_top = _logic_room_stateless_consts . get ( ) . mesh_top_side_v_top ;
+    top_side_v_bottom = _logic_room_stateless_consts . get ( ) . mesh_top_side_v_bottom ;
+    z_near = _logic_room_stateless_consts . get ( ) . mesh_z_near ;
+    z_far = _logic_room_stateless_consts . get ( ) . mesh_z_far ;
 
-    color_top_r = _logic_room_mesh_consts . color_top_r ;
-    color_top_g = _logic_room_mesh_consts . color_top_g ;
-    color_top_b = _logic_room_mesh_consts . color_top_b ;
-    color_top_a = _logic_room_mesh_consts . color_top_a ;
+    color_top_r = _logic_room_stateless_consts . get ( ) . mesh_color_top_r ;
+    color_top_g = _logic_room_stateless_consts . get ( ) . mesh_color_top_g ;
+    color_top_b = _logic_room_stateless_consts . get ( ) . mesh_color_top_b ;
+    color_top_a = _logic_room_stateless_consts . get ( ) . mesh_color_top_a ;
     current_index = _logic_room_mesh_create_state . current_index ;
 
     _mesh_set_vertex_position            ( current_index , x_left , y_top , z_near ) ;
@@ -633,21 +506,21 @@ void shy_logic_room_mesh < mediator > :: _add_bottom_side ( )
     num_fract color_bottom_a ;
     num_whole current_index ;
     
-    x_left = _logic_room_mesh_consts . x_left ;
-    x_right = _logic_room_mesh_consts . x_right ;
-    y_top = _logic_room_mesh_consts . y_top ; 
-    y_bottom = _logic_room_mesh_consts . y_bottom ; 
-    bottom_side_u_left = _logic_room_mesh_consts . bottom_side_u_left ;
-    bottom_side_u_right = _logic_room_mesh_consts . bottom_side_u_right ;
-    bottom_side_v_top = _logic_room_mesh_consts . bottom_side_v_top ;
-    bottom_side_v_bottom = _logic_room_mesh_consts . bottom_side_v_bottom ;
-    z_near = _logic_room_mesh_consts . z_near ;
-    z_far = _logic_room_mesh_consts . z_far ;
+    x_left = _logic_room_stateless_consts . get ( ) . mesh_x_left ;
+    x_right = _logic_room_stateless_consts . get ( ) . mesh_x_right ;
+    y_top = _logic_room_stateless_consts . get ( ) . mesh_y_top ; 
+    y_bottom = _logic_room_stateless_consts . get ( ) . mesh_y_bottom ; 
+    bottom_side_u_left = _logic_room_stateless_consts . get ( ) . mesh_bottom_side_u_left ;
+    bottom_side_u_right = _logic_room_stateless_consts . get ( ) . mesh_bottom_side_u_right ;
+    bottom_side_v_top = _logic_room_stateless_consts . get ( ) . mesh_bottom_side_v_top ;
+    bottom_side_v_bottom = _logic_room_stateless_consts . get ( ) . mesh_bottom_side_v_bottom ;
+    z_near = _logic_room_stateless_consts . get ( ) . mesh_z_near ;
+    z_far = _logic_room_stateless_consts . get ( ) . mesh_z_far ;
 
-    color_bottom_r = _logic_room_mesh_consts . color_bottom_r ;
-    color_bottom_g = _logic_room_mesh_consts . color_bottom_g ;
-    color_bottom_b = _logic_room_mesh_consts . color_bottom_b ;
-    color_bottom_a = _logic_room_mesh_consts . color_bottom_a ;
+    color_bottom_r = _logic_room_stateless_consts . get ( ) . mesh_color_bottom_r ;
+    color_bottom_g = _logic_room_stateless_consts . get ( ) . mesh_color_bottom_g ;
+    color_bottom_b = _logic_room_stateless_consts . get ( ) . mesh_color_bottom_b ;
+    color_bottom_a = _logic_room_stateless_consts . get ( ) . mesh_color_bottom_a ;
     current_index = _logic_room_mesh_create_state . current_index ;
 
     //
@@ -719,9 +592,9 @@ void shy_logic_room_mesh < mediator > :: _transform_mesh ( )
     num_fract position_z ;
     matrix_data transform ;
 
-    position_x = _logic_room_mesh_consts . position_x ;
-    position_y = _logic_room_mesh_consts . position_y ;
-    position_z = _logic_room_mesh_consts . position_z ;
+    position_x = _logic_room_stateless_consts . get ( ) . mesh_position_x ;
+    position_y = _logic_room_stateless_consts . get ( ) . mesh_position_y ;
+    position_z = _logic_room_stateless_consts . get ( ) . mesh_position_z ;
 
     platform_matrix :: identity ( transform ) ;
     platform_matrix :: set_origin ( transform , position_x , position_y , position_z ) ;
