@@ -3,6 +3,7 @@ class shy_logic_door_stateless
 {
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
@@ -28,6 +29,15 @@ public :
         num_fract mesh_v_bottom_left ;
         num_fract mesh_u_bottom_right ;
         num_fract mesh_v_bottom_right ;
+        num_fract texture_pen_r ;
+        num_fract texture_pen_g ;
+        num_fract texture_pen_b ;
+        num_fract texture_pen_a ;
+        num_fract texture_paper_r ;
+        num_fract texture_paper_g ;
+        num_fract texture_paper_b ;
+        num_fract texture_paper_a ;
+        num_whole texture_stripes ;
     } ;
 
     class logic_door_messages
@@ -105,6 +115,16 @@ shy_logic_door_stateless < mediator > :: logic_door_stateless_consts_type :: log
 
     platform_math :: make_num_fract ( mesh_u_bottom_right , 1 , 2 ) ;
     platform_math :: make_num_fract ( mesh_v_bottom_right , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( texture_pen_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( texture_pen_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( texture_pen_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( texture_pen_a , 1 , 1 ) ;
+    platform_math :: make_num_fract ( texture_paper_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( texture_paper_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( texture_paper_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( texture_paper_a , 1 , 1 ) ;
+    platform_math :: make_num_whole ( texture_stripes , 9 ) ;
 }
 
 template < typename mediator >
