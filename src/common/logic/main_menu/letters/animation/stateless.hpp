@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_letters_animation_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
@@ -8,6 +9,20 @@ class shy_logic_main_menu_letters_animation_stateless
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
 public :
+    class logic_main_menu_letters_animation_stateless_consts_type
+    {
+    public :
+        logic_main_menu_letters_animation_stateless_consts_type ( ) ;
+    public :
+        num_fract appear_time_from_begin_to_middle_in_seconds ;
+        num_fract appear_time_from_middle_to_end_in_seconds ;
+        num_fract appear_delay_per_col_in_seconds ;
+        num_fract appear_delay_per_row_in_seconds ;
+        num_fract appear_scale_begin ;
+        num_fract appear_scale_middle ;
+        num_fract appear_scale_end ;
+    } ;
+
     class logic_main_menu_letters_animation_messages
     {
     public :
@@ -70,7 +85,22 @@ public :
     shy_logic_main_menu_letters_animation_stateless ( ) ;
 private :
     shy_logic_main_menu_letters_animation_stateless < mediator > & operator= ( const shy_logic_main_menu_letters_animation_stateless < mediator > & ) ;
+
+public :
+    const logic_main_menu_letters_animation_stateless_consts_type logic_main_menu_letters_animation_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_letters_animation_stateless < mediator > :: logic_main_menu_letters_animation_stateless_consts_type :: logic_main_menu_letters_animation_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( appear_time_from_begin_to_middle_in_seconds , 1 , 10 ) ;
+    platform_math :: make_num_fract ( appear_time_from_middle_to_end_in_seconds , 7 , 10 ) ;
+    platform_math :: make_num_fract ( appear_delay_per_col_in_seconds , 2 , 100 ) ;
+    platform_math :: make_num_fract ( appear_delay_per_row_in_seconds , 5 , 100 ) ;
+    platform_math :: make_num_fract ( appear_scale_begin , 0 , 1 ) ;
+    platform_math :: make_num_fract ( appear_scale_middle , 3 , 2 ) ;
+    platform_math :: make_num_fract ( appear_scale_end , 1 , 1 ) ;
+}
 
 template < typename mediator >
 shy_logic_main_menu_letters_animation_stateless < mediator > :: shy_logic_main_menu_letters_animation_stateless ( )

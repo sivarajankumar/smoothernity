@@ -613,6 +613,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_door_stateless logic_door_stateless ;
     typedef typename aggregator_types :: logic_fidget_stateless logic_fidget_stateless ;
     typedef typename aggregator_types :: logic_main_menu_animation_stateless logic_main_menu_animation_stateless ;
+    typedef typename aggregator_types :: logic_main_menu_letters_animation_stateless logic_main_menu_letters_animation_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
     typedef typename aggregator_types :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
@@ -756,6 +757,7 @@ private :
     logic_main_menu_letters_animation_selection _logic_main_menu_letters_animation_selection ;
     logic_main_menu_letters_animation_selection_push _logic_main_menu_letters_animation_selection_push ;
     logic_main_menu_letters_animation_selection_weight _logic_main_menu_letters_animation_selection_weight ;
+    logic_main_menu_letters_animation_stateless _logic_main_menu_letters_animation_stateless ;
     logic_main_menu_letters_animation_unselection_weight _logic_main_menu_letters_animation_unselection_weight ;
     logic_main_menu_letters_creation_director _logic_main_menu_letters_creation_director ;
     logic_main_menu_letters_layout_position _logic_main_menu_letters_layout_position ;
@@ -852,6 +854,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection > logic_main_menu_letters_animation_selection_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection_push > logic_main_menu_letters_animation_selection_push_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_selection_weight > logic_main_menu_letters_animation_selection_weight_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_letters_animation_stateless > logic_main_menu_letters_animation_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_unselection_weight > logic_main_menu_letters_animation_unselection_weight_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_creation_director > logic_main_menu_letters_creation_director_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_layout_position > logic_main_menu_letters_layout_position_ptr ;
@@ -944,6 +947,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_letters_animation_selection_ptr , _logic_main_menu_letters_animation_selection ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_selection_push_ptr , _logic_main_menu_letters_animation_selection_push ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_selection_weight_ptr , _logic_main_menu_letters_animation_selection_weight ) ;
+    platform_pointer :: bind ( logic_main_menu_letters_animation_stateless_ptr , _logic_main_menu_letters_animation_stateless ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_unselection_weight_ptr , _logic_main_menu_letters_animation_unselection_weight ) ;
     platform_pointer :: bind ( logic_main_menu_letters_creation_director_ptr , _logic_main_menu_letters_creation_director ) ;
     platform_pointer :: bind ( logic_main_menu_letters_layout_position_ptr , _logic_main_menu_letters_layout_position ) ;
@@ -1114,6 +1118,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_letters_animation_selection_ptr
         , logic_main_menu_letters_animation_selection_push_ptr
         , logic_main_menu_letters_animation_selection_weight_ptr
+        , logic_main_menu_letters_animation_stateless_ptr
         , logic_main_menu_letters_animation_unselection_weight_ptr
         , logic_main_menu_letters_creation_director_ptr
         , logic_main_menu_letters_layout_position_ptr
