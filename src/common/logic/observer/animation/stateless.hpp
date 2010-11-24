@@ -1,10 +1,22 @@
 template < typename mediator >
 class shy_logic_observer_animation_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 public :
+    class logic_observer_animation_stateless_consts_type
+    {
+    public :
+        logic_observer_animation_stateless_consts_type ( ) ;
+    public :
+        num_fract animation_up_x ;
+        num_fract animation_up_y ;
+        num_fract animation_up_z ;
+    } ;
+
     class logic_observer_animation_messages
     {
     public :
@@ -26,7 +38,18 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+
+public :
+    const logic_observer_animation_stateless_consts_type logic_observer_animation_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_observer_animation_stateless < mediator > :: logic_observer_animation_stateless_consts_type :: logic_observer_animation_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( animation_up_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( animation_up_y , 1 , 1 ) ;
+    platform_math :: make_num_fract ( animation_up_z , 0 , 1 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >
