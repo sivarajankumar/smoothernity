@@ -612,6 +612,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_door_animation_stateless logic_door_animation_stateless ;
     typedef typename aggregator_types :: logic_door_stateless logic_door_stateless ;
     typedef typename aggregator_types :: logic_fidget_stateless logic_fidget_stateless ;
+    typedef typename aggregator_types :: logic_main_menu_animation_stateless logic_main_menu_animation_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
     typedef typename aggregator_types :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
@@ -746,6 +747,7 @@ private :
     logic_main_menu _logic_main_menu ;
     logic_main_menu_animation _logic_main_menu_animation ;
     logic_main_menu_animation_shake _logic_main_menu_animation_shake ;
+    logic_main_menu_animation_stateless _logic_main_menu_animation_stateless ;
     logic_main_menu_choice _logic_main_menu_choice ;
     logic_main_menu_letters_animation _logic_main_menu_letters_animation ;
     logic_main_menu_letters_animation_appear _logic_main_menu_letters_animation_appear ;
@@ -841,6 +843,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu > logic_main_menu_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_animation > logic_main_menu_animation_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_animation_shake > logic_main_menu_animation_shake_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_animation_stateless > logic_main_menu_animation_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_choice > logic_main_menu_choice_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation > logic_main_menu_letters_animation_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_appear > logic_main_menu_letters_animation_appear_ptr ;
@@ -932,6 +935,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_ptr , _logic_main_menu ) ;
     platform_pointer :: bind ( logic_main_menu_animation_ptr , _logic_main_menu_animation ) ;
     platform_pointer :: bind ( logic_main_menu_animation_shake_ptr , _logic_main_menu_animation_shake ) ;
+    platform_pointer :: bind ( logic_main_menu_animation_stateless_ptr , _logic_main_menu_animation_stateless ) ;
     platform_pointer :: bind ( logic_main_menu_choice_ptr , _logic_main_menu_choice ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_ptr , _logic_main_menu_letters_animation ) ;
     platform_pointer :: bind ( logic_main_menu_letters_animation_appear_ptr , _logic_main_menu_letters_animation_appear ) ;
@@ -1101,6 +1105,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_ptr
         , logic_main_menu_animation_ptr
         , logic_main_menu_animation_shake_ptr
+        , logic_main_menu_animation_stateless_ptr
         , logic_main_menu_choice_ptr
         , logic_main_menu_letters_animation_ptr
         , logic_main_menu_letters_animation_appear_ptr

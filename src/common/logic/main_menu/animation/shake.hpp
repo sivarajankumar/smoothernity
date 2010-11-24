@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_animation_shake
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_main_menu_animation_stateless :: logic_main_menu_animation_stateless_consts_type logic_main_menu_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -10,18 +11,6 @@ class shy_logic_main_menu_animation_shake
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_main_menu_animation_shake_consts_type
-    {
-    public :
-        _logic_main_menu_animation_shake_consts_type ( ) ;
-    public :
-        num_fract time_to_begin ;
-        num_fract time_from_begin_to_end ;
-        num_fract shift_x_amplitude_begin ;
-        num_fract shift_x_amplitude_end ;
-        num_fract shift_x_period_in_seconds ;
-    } ;
 
     class _logic_main_menu_animation_shake_transform_state_type
     {
@@ -50,21 +39,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_animation_shake_consts_type _logic_main_menu_animation_shake_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_animation_stateless_consts_type > _logic_main_menu_animation_stateless_consts ;
 
     _logic_main_menu_animation_shake_transform_state_type _logic_main_menu_animation_shake_transform_state ;
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_animation_shake < mediator > :: _logic_main_menu_animation_shake_consts_type :: _logic_main_menu_animation_shake_consts_type ( )
-{
-    platform_math :: make_num_fract ( time_to_begin , 0 , 10 ) ;
-    platform_math :: make_num_fract ( time_from_begin_to_end , 6 , 10 ) ;
-    platform_math :: make_num_fract ( shift_x_amplitude_begin , 20 , 1000 ) ;
-    platform_math :: make_num_fract ( shift_x_amplitude_end , 5 , 1000 ) ;
-    platform_math :: make_num_fract ( shift_x_period_in_seconds , 2 , 10 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_animation_shake < mediator > :: shy_logic_main_menu_animation_shake ( )
@@ -82,6 +61,7 @@ void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename mess
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_animation_stateless_consts ( _logic_main_menu_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 
     _logic_main_menu_update_state . started = _platform_math_consts . get ( ) . whole_false ;
@@ -99,8 +79,8 @@ void shy_logic_main_menu_animation_shake < mediator > :: receive ( typename mess
         num_fract time_from_begin_to_end ;
 
         time = _logic_main_menu_update_state . time ;
-        time_to_begin = _logic_main_menu_animation_shake_consts . time_to_begin ;
-        time_from_begin_to_end = _logic_main_menu_animation_shake_consts . time_from_begin_to_end ;
+        time_to_begin = _logic_main_menu_animation_stateless_consts . get ( ) . shake_time_to_begin ;
+        time_from_begin_to_end = _logic_main_menu_animation_stateless_consts . get ( ) . shake_time_from_begin_to_end ;
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
 
         platform_math :: add_fracts ( time_total , time_to_begin , time_from_begin_to_end ) ;
@@ -145,11 +125,11 @@ void shy_logic_main_menu_animation_shake < mediator > :: _compute_transform ( )
     num_fract shift_x ;
 
     time = _logic_main_menu_update_state . time ;
-    time_to_begin = _logic_main_menu_animation_shake_consts . time_to_begin ;
-    time_from_begin_to_end = _logic_main_menu_animation_shake_consts . time_from_begin_to_end ;
-    shift_x_amplitude_begin = _logic_main_menu_animation_shake_consts . shift_x_amplitude_begin ;
-    shift_x_amplitude_end = _logic_main_menu_animation_shake_consts . shift_x_amplitude_end ;
-    shift_x_period_in_seconds = _logic_main_menu_animation_shake_consts . shift_x_period_in_seconds ;
+    time_to_begin = _logic_main_menu_animation_stateless_consts . get ( ) . shake_time_to_begin ;
+    time_from_begin_to_end = _logic_main_menu_animation_stateless_consts . get ( ) . shake_time_from_begin_to_end ;
+    shift_x_amplitude_begin = _logic_main_menu_animation_stateless_consts . get ( ) . shake_shift_x_amplitude_begin ;
+    shift_x_amplitude_end = _logic_main_menu_animation_stateless_consts . get ( ) . shake_shift_x_amplitude_end ;
+    shift_x_period_in_seconds = _logic_main_menu_animation_stateless_consts . get ( ) . shake_shift_x_period_in_seconds ;
 
     time_begin = time_to_begin ;
     platform_math :: add_fracts ( time_end , time_begin , time_from_begin_to_end ) ;

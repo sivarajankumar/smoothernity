@@ -7,6 +7,18 @@ class shy_logic_main_menu_animation_stateless
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 
 public :
+    class logic_main_menu_animation_stateless_consts_type
+    {
+    public :
+        logic_main_menu_animation_stateless_consts_type ( ) ;
+    public :
+        num_fract shake_time_to_begin ;
+        num_fract shake_time_from_begin_to_end ;
+        num_fract shake_shift_x_amplitude_begin ;
+        num_fract shake_shift_x_amplitude_end ;
+        num_fract shake_shift_x_period_in_seconds ;
+    } ;
+
     class logic_main_menu_animation_messages
     {
     public :
@@ -28,7 +40,20 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+
+public :
+    const logic_main_menu_animation_stateless_consts_type logic_main_menu_animation_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_animation_stateless < mediator > :: logic_main_menu_animation_stateless_consts_type :: logic_main_menu_animation_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( shake_time_to_begin , 0 , 10 ) ;
+    platform_math :: make_num_fract ( shake_time_from_begin_to_end , 6 , 10 ) ;
+    platform_math :: make_num_fract ( shake_shift_x_amplitude_begin , 20 , 1000 ) ;
+    platform_math :: make_num_fract ( shake_shift_x_amplitude_end , 5 , 1000 ) ;
+    platform_math :: make_num_fract ( shake_shift_x_period_in_seconds , 2 , 10 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >
