@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_selection_tracker
 {
     typedef typename mediator :: engine_math :: rect rect ;
+    typedef typename mediator :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -12,14 +13,6 @@ class shy_logic_main_menu_selection_tracker
     typedef typename mediator :: platform :: platform_matrix platform_matrix ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_main_menu_selection_tracker_consts_type
-    {
-    public :
-        _logic_main_menu_selection_tracker_consts_type ( ) ;
-    public :
-        num_fract selected_rect_vertical_scale ;
-    } ;
 
     class _logic_main_menu_selection_track_state_type
     {
@@ -88,19 +81,13 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_selection_tracker_consts_type _logic_main_menu_selection_tracker_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > _logic_main_menu_selection_stateless_consts ;
     
     _logic_controls_state_type _logic_controls_state ;
     _logic_main_menu_selection_track_state_type _logic_main_menu_selection_track_state ;
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
     _logic_main_menu_letters_layout_row_rect_state_type _logic_main_menu_letters_layout_row_rect_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_selection_tracker < mediator > :: _logic_main_menu_selection_tracker_consts_type :: _logic_main_menu_selection_tracker_consts_type ( )
-{
-    platform_math :: make_num_fract ( selected_rect_vertical_scale , 20 , 10 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_selection_tracker < mediator > :: shy_logic_main_menu_selection_tracker ( )
@@ -118,6 +105,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: receive ( typename me
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_selection_stateless_consts ( _logic_main_menu_selection_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -324,7 +312,7 @@ void shy_logic_main_menu_selection_tracker < mediator > :: _scale_prev_selection
     rect prev_selection_rect ;
     rect scaled_prev_selection_rect ;
     
-    selected_rect_vertical_scale = _logic_main_menu_selection_tracker_consts . selected_rect_vertical_scale ;
+    selected_rect_vertical_scale = _logic_main_menu_selection_stateless_consts . get ( ) . selected_rect_vertical_scale ;
     prev_selection_rect = _logic_main_menu_selection_track_state . prev_selection_rect ;
     
     platform_math :: add_fracts ( y_center , prev_selection_rect . top , prev_selection_rect . bottom ) ;

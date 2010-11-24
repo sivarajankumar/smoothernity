@@ -17,6 +17,7 @@ public :
         num_fract mesh_color_g ;
         num_fract mesh_color_b ;
         num_fract mesh_color_a ;
+        num_fract selected_rect_vertical_scale ;
     } ;
 
     class logic_main_menu_selection_messages
@@ -73,6 +74,7 @@ shy_logic_main_menu_selection_stateless < mediator > :: logic_main_menu_selectio
     platform_math :: make_num_fract ( mesh_color_g , 1 , 4 ) ;
     platform_math :: make_num_fract ( mesh_color_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( mesh_color_a , 1 , 1 ) ;
+    platform_math :: make_num_fract ( selected_rect_vertical_scale , 20 , 10 ) ;
 }
 
 template < typename mediator >
