@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_observer_animation_flight
 {
+    typedef typename mediator :: logic_observer_animation_stateless :: logic_observer_animation_stateless_consts_type logic_observer_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_math platform_math ;
@@ -10,18 +11,6 @@ class shy_logic_observer_animation_flight
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
-
-    class _logic_observer_animation_flight_consts_type
-    {
-    public :
-        _logic_observer_animation_flight_consts_type ( ) ;
-    public :
-        num_fract target_z ;
-        num_fract horizontal_offset_period ;
-        num_fract horizontal_offset_amplitude ;
-        num_fract vertical_offset_period ;
-        num_fract vertical_offset_amplitude ;
-    } ;
 
     class _logic_observer_animation_flight_transform_state_type
     {
@@ -54,21 +43,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_observer_animation_flight_consts_type _logic_observer_animation_flight_consts ;
+    typename platform_pointer :: template pointer < const logic_observer_animation_stateless_consts_type > _logic_observer_animation_stateless_consts ;
 
     _logic_observer_update_state_type _logic_observer_update_state ;
     _logic_observer_animation_flight_transform_state_type _logic_observer_animation_flight_transform_state ;
 } ;
-
-template < typename mediator >
-shy_logic_observer_animation_flight < mediator > :: _logic_observer_animation_flight_consts_type :: _logic_observer_animation_flight_consts_type ( )
-{
-    platform_math :: make_num_fract ( target_z , - 1 , 1 ) ;
-    platform_math :: make_num_fract ( horizontal_offset_period , 11 , 10 ) ;
-    platform_math :: make_num_fract ( horizontal_offset_amplitude , 1 , 3 ) ;
-    platform_math :: make_num_fract ( vertical_offset_period , 17 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_offset_amplitude , 1 , 3 ) ;
-}
 
 template < typename mediator >
 shy_logic_observer_animation_flight < mediator > :: shy_logic_observer_animation_flight ( )
@@ -86,6 +65,7 @@ void shy_logic_observer_animation_flight < mediator > :: receive ( typename mess
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_observer_animation_stateless_consts ( _logic_observer_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
     _logic_observer_update_state . time = _platform_math_consts . get ( ) . fract_0 ;
 }
@@ -118,8 +98,8 @@ void shy_logic_observer_animation_flight < mediator > :: _compute_vertical_offse
     num_fract vertical_offset_phase ;
 
     time = _logic_observer_update_state . time ;
-    vertical_offset_period = _logic_observer_animation_flight_consts . vertical_offset_period ;
-    vertical_offset_amplitude = _logic_observer_animation_flight_consts . vertical_offset_amplitude ;
+    vertical_offset_period = _logic_observer_animation_stateless_consts . get ( ) . flight_vertical_offset_period ;
+    vertical_offset_amplitude = _logic_observer_animation_stateless_consts . get ( ) . flight_vertical_offset_amplitude ;
 
     platform_math :: mul_fracts ( vertical_offset_phase , time , _platform_math_consts . get ( ) . fract_2pi ) ;
     platform_math :: div_fract_by ( vertical_offset_phase , vertical_offset_period ) ;
@@ -140,8 +120,8 @@ void shy_logic_observer_animation_flight < mediator > :: _compute_horizontal_off
     num_fract horizontal_offset_phase ;
 
     time = _logic_observer_update_state . time ;
-    horizontal_offset_period = _logic_observer_animation_flight_consts . horizontal_offset_period ;
-    horizontal_offset_amplitude = _logic_observer_animation_flight_consts . horizontal_offset_amplitude ;
+    horizontal_offset_period = _logic_observer_animation_stateless_consts . get ( ) . flight_horizontal_offset_period ;
+    horizontal_offset_amplitude = _logic_observer_animation_stateless_consts . get ( ) . flight_horizontal_offset_amplitude ;
 
     platform_math :: mul_fracts ( horizontal_offset_phase , time , _platform_math_consts . get ( ) . fract_2pi ) ;
     platform_math :: div_fract_by ( horizontal_offset_phase , horizontal_offset_period ) ;
@@ -182,7 +162,7 @@ void shy_logic_observer_animation_flight < mediator > :: _compute_target ( )
 
     vertical_offset = _logic_observer_animation_flight_transform_state . vertical_offset ;
     horizontal_offset = _logic_observer_animation_flight_transform_state . horizontal_offset ;
-    const_target_z = _logic_observer_animation_flight_consts . target_z ;
+    const_target_z = _logic_observer_animation_stateless_consts . get ( ) . flight_target_z ;
 
     target_x = horizontal_offset ;
     target_y = vertical_offset ;
