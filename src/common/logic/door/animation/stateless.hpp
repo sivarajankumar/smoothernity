@@ -1,10 +1,21 @@
 template < typename mediator >
 class shy_logic_door_animation_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
+    class logic_door_animation_stateless_consts_type
+    {
+    public :
+        logic_door_animation_stateless_consts_type ( ) ;
+    public :
+        num_fract animation_origin_x ;
+        num_fract animation_origin_y ;
+        num_fract animation_origin_z ;
+    } ;
+
     class logic_door_animation_messages
     {
     public :
@@ -28,7 +39,18 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+
+public :
+    const logic_door_animation_stateless_consts_type logic_door_animation_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_door_animation_stateless < mediator > :: logic_door_animation_stateless_consts_type :: logic_door_animation_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( animation_origin_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( animation_origin_y , 0 , 1 ) ;
+    platform_math :: make_num_fract ( animation_origin_z , - 3 , 1 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >

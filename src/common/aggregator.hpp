@@ -609,6 +609,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_amusement_stateless logic_amusement_stateless ;
     typedef typename aggregator_types :: logic_blanket_animation_stateless logic_blanket_animation_stateless ;
     typedef typename aggregator_types :: logic_blanket_stateless logic_blanket_stateless ;
+    typedef typename aggregator_types :: logic_door_animation_stateless logic_door_animation_stateless ;
     typedef typename aggregator_types :: logic_door_stateless logic_door_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
@@ -729,6 +730,7 @@ private :
     logic_door _logic_door ;
     logic_door_animation _logic_door_animation ;
     logic_door_animation_appear _logic_door_animation_appear ;
+    logic_door_animation_stateless _logic_door_animation_stateless ;
     logic_door_mesh _logic_door_mesh ;
     logic_door_placement _logic_door_placement ;
     logic_door_renderer _logic_door_renderer ;
@@ -822,6 +824,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_door > logic_door_ptr ;
     typename platform_pointer :: template pointer < logic_door_animation > logic_door_animation_ptr ;
     typename platform_pointer :: template pointer < logic_door_animation_appear > logic_door_animation_appear_ptr ;
+    typename platform_pointer :: template pointer < logic_door_animation_stateless > logic_door_animation_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_door_mesh > logic_door_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_door_placement > logic_door_placement_ptr ;
     typename platform_pointer :: template pointer < logic_door_renderer > logic_door_renderer_ptr ;
@@ -911,6 +914,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_door_ptr , _logic_door ) ;
     platform_pointer :: bind ( logic_door_animation_ptr , _logic_door_animation ) ;
     platform_pointer :: bind ( logic_door_animation_appear_ptr , _logic_door_animation_appear ) ;
+    platform_pointer :: bind ( logic_door_animation_stateless_ptr , _logic_door_animation_stateless ) ;
     platform_pointer :: bind ( logic_door_mesh_ptr , _logic_door_mesh ) ;
     platform_pointer :: bind ( logic_door_placement_ptr , _logic_door_placement ) ;
     platform_pointer :: bind ( logic_door_renderer_ptr , _logic_door_renderer ) ;
@@ -1078,6 +1082,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_door_ptr
         , logic_door_animation_ptr
         , logic_door_animation_appear_ptr
+        , logic_door_animation_stateless_ptr
         , logic_door_mesh_ptr
         , logic_door_placement_ptr
         , logic_door_renderer_ptr
