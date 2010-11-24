@@ -611,6 +611,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_blanket_stateless logic_blanket_stateless ;
     typedef typename aggregator_types :: logic_door_animation_stateless logic_door_animation_stateless ;
     typedef typename aggregator_types :: logic_door_stateless logic_door_stateless ;
+    typedef typename aggregator_types :: logic_fidget_stateless logic_fidget_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
     typedef typename aggregator_types :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
@@ -738,6 +739,7 @@ private :
     logic_door_texture _logic_door_texture ;
     logic_entities _logic_entities ;
     logic_fidget _logic_fidget ;
+    logic_fidget_stateless _logic_fidget_stateless ;
     logic_game _logic_game ;
     logic_image _logic_image ;
     logic_land _logic_land ;
@@ -832,6 +834,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_door_texture > logic_door_texture_ptr ;
     typename platform_pointer :: template pointer < logic_entities > logic_entities_ptr ;
     typename platform_pointer :: template pointer < logic_fidget > logic_fidget_ptr ;
+    typename platform_pointer :: template pointer < logic_fidget_stateless > logic_fidget_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_game > logic_game_ptr ;
     typename platform_pointer :: template pointer < logic_image > logic_image_ptr ;
     typename platform_pointer :: template pointer < logic_land > logic_land_ptr ;
@@ -922,6 +925,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_door_texture_ptr , _logic_door_texture ) ;
     platform_pointer :: bind ( logic_entities_ptr , _logic_entities ) ;
     platform_pointer :: bind ( logic_fidget_ptr , _logic_fidget ) ;
+    platform_pointer :: bind ( logic_fidget_stateless_ptr , _logic_fidget_stateless ) ;
     platform_pointer :: bind ( logic_game_ptr , _logic_game ) ;
     platform_pointer :: bind ( logic_image_ptr , _logic_image ) ;
     platform_pointer :: bind ( logic_land_ptr , _logic_land ) ;
@@ -1090,6 +1094,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_door_texture_ptr
         , logic_entities_ptr
         , logic_fidget_ptr
+        , logic_fidget_stateless_ptr
         , logic_game_ptr
         , logic_image_ptr
         , logic_land_ptr
