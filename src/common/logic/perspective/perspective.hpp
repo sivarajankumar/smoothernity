@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_perspective
 {
+    typedef typename mediator :: logic_perspective_stateless :: logic_perspective_stateless_consts_type logic_perspective_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -9,14 +10,6 @@ class shy_logic_perspective
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_perspective_consts_type
-    {
-    public :
-        _logic_perspective_consts_type ( ) ;
-    public :
-        num_fract z_far_unscaled ;
-    } ;
 
     class _logic_perspective_planes_state_type
     {
@@ -64,17 +57,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_perspective_consts_type _logic_perspective_consts ; 
+    typename platform_pointer :: template pointer < const logic_perspective_stateless_consts_type > _logic_perspective_stateless_consts ;
 
     _logic_perspective_planes_state_type _logic_perspective_planes_state ;
     _engine_render_aspect_state_type _engine_render_aspect_state ;
 } ;
-
-template < typename mediator >
-shy_logic_perspective < mediator > :: _logic_perspective_consts_type :: _logic_perspective_consts_type ( )
-{
-    platform_math :: make_num_fract ( z_far_unscaled , 50 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_perspective < mediator > :: shy_logic_perspective ( )
@@ -92,6 +79,7 @@ void shy_logic_perspective < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_perspective_stateless_consts ( _logic_perspective_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -213,7 +201,7 @@ void shy_logic_perspective < mediator > :: _compute_z_far ( )
     num_fract z_far_unscaled ;
     num_fract z_far ;
 
-    z_far_unscaled = _logic_perspective_consts . z_far_unscaled ;
+    z_far_unscaled = _logic_perspective_stateless_consts . get ( ) . z_far_unscaled ;
     _scene_scale ( scene_scale ) ;
     platform_math :: mul_fracts ( z_far , z_far_unscaled , scene_scale ) ;
 
