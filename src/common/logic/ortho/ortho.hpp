@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_ortho
 {
+    typedef typename mediator :: logic_ortho_stateless :: logic_ortho_stateless_consts_type logic_ortho_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -9,15 +10,6 @@ class shy_logic_ortho
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_ortho_consts_type
-    {
-    public :
-        _logic_ortho_consts_type ( ) ;
-    public :
-        num_fract z_near ;
-        num_fract z_far ;
-    } ;
 
     class _logic_ortho_planes_state_type
     {
@@ -61,18 +53,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_ortho_consts_type _logic_ortho_consts ;
+    typename platform_pointer :: template pointer < const logic_ortho_stateless_consts_type > _logic_ortho_stateless_consts ;
 
     _engine_render_aspect_state_type _engine_render_aspect_state ;
     _logic_ortho_planes_state_type _logic_ortho_planes_state ;
 } ;
-
-template < typename mediator >
-shy_logic_ortho < mediator > :: _logic_ortho_consts_type :: _logic_ortho_consts_type ( )
-{
-    platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
-    platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_ortho < mediator > :: shy_logic_ortho ( )
@@ -90,6 +75,7 @@ void shy_logic_ortho < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_ortho_stateless_consts ( _logic_ortho_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -212,7 +198,7 @@ template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_z_near ( )
 {
     num_fract z_near ;
-    z_near = _logic_ortho_consts . z_near ;
+    z_near = _logic_ortho_stateless_consts . get ( ) . z_near ;
     _logic_ortho_planes_state . z_near = z_near ;
 }
 
@@ -220,7 +206,7 @@ template < typename mediator >
 void shy_logic_ortho < mediator > :: _compute_z_far ( )
 {
     num_fract z_far ;
-    z_far = _logic_ortho_consts . z_far ;
+    z_far = _logic_ortho_stateless_consts . get ( ) . z_far ;
     _logic_ortho_planes_state . z_far = z_far ;
 }
 
