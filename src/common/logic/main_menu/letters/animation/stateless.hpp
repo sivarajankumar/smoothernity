@@ -43,6 +43,8 @@ public :
         num_fract selection_push_scale_begin ;
         num_fract selection_push_scale_middle ;
         num_fract selection_push_scale_end ;
+        num_fract selection_weight_time_to_begin ;
+        num_fract selection_weight_time_from_begin_to_end ;
     } ;
 
     class logic_main_menu_letters_animation_messages
@@ -144,6 +146,8 @@ shy_logic_main_menu_letters_animation_stateless < mediator > :: logic_main_menu_
     platform_math :: make_num_fract ( selection_push_scale_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( selection_push_scale_middle , 6 , 10 ) ;
     platform_math :: make_num_fract ( selection_push_scale_end , 8 , 10 ) ;
+    platform_math :: make_num_fract ( selection_weight_time_to_begin , 10 , 100 ) ;
+    platform_math :: make_num_fract ( selection_weight_time_from_begin_to_end , 30 , 100 ) ;
 }
 
 template < typename mediator >
