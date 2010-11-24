@@ -622,6 +622,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_observer_animation_stateless logic_observer_animation_stateless ;
     typedef typename aggregator_types :: logic_ortho_stateless logic_ortho_stateless ;
     typedef typename aggregator_types :: logic_perspective_stateless logic_perspective_stateless ;
+    typedef typename aggregator_types :: logic_room_stateless logic_room_stateless ;
     typedef typename aggregator_types :: logic_text_stateless logic_text_stateless ;
     
     typedef typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > engine_rasterizer ;
@@ -803,6 +804,7 @@ private :
     logic_room _logic_room ;
     logic_room_mesh _logic_room_mesh ;
     logic_room_renderer _logic_room_renderer ;
+    logic_room_stateless _logic_room_stateless ;
     logic_room_texture _logic_room_texture ;
     logic_sound _logic_sound ;
     logic_text _logic_text ;
@@ -904,6 +906,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_room > logic_room_ptr ;
     typename platform_pointer :: template pointer < logic_room_mesh > logic_room_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_room_renderer > logic_room_renderer_ptr ;
+    typename platform_pointer :: template pointer < logic_room_stateless > logic_room_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_room_texture > logic_room_texture_ptr ;
     typename platform_pointer :: template pointer < logic_sound > logic_sound_ptr ;
     typename platform_pointer :: template pointer < logic_text > logic_text_ptr ;
@@ -1001,6 +1004,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_room_ptr , _logic_room ) ;
     platform_pointer :: bind ( logic_room_mesh_ptr , _logic_room_mesh ) ;
     platform_pointer :: bind ( logic_room_renderer_ptr , _logic_room_renderer ) ;
+    platform_pointer :: bind ( logic_room_stateless_ptr , _logic_room_stateless ) ;
     platform_pointer :: bind ( logic_room_texture_ptr , _logic_room_texture ) ;
     platform_pointer :: bind ( logic_sound_ptr , _logic_sound ) ;
     platform_pointer :: bind ( logic_text_ptr , _logic_text ) ;
@@ -1176,6 +1180,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_room_ptr
         , logic_room_mesh_ptr
         , logic_room_renderer_ptr
+        , logic_room_stateless_ptr
         , logic_room_texture_ptr
         , logic_sound_ptr
         , logic_text_ptr

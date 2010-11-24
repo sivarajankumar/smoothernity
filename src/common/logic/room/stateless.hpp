@@ -1,8 +1,74 @@
 template < typename mediator >
 class shy_logic_room_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
+    class logic_room_stateless_consts_type
+    {
+    public :
+        logic_room_stateless_consts_type ( ) ;
+    public :
+        num_fract mesh_color_right_r ;
+        num_fract mesh_color_right_g ;
+        num_fract mesh_color_right_b ;
+        num_fract mesh_color_right_a ;
+        num_fract mesh_color_left_r ;
+        num_fract mesh_color_left_g ;
+        num_fract mesh_color_left_b ;
+        num_fract mesh_color_left_a ;
+        num_fract mesh_color_near_r ;
+        num_fract mesh_color_near_g ;
+        num_fract mesh_color_near_b ;
+        num_fract mesh_color_near_a ;
+        num_fract mesh_color_far_r ;
+        num_fract mesh_color_far_g ;
+        num_fract mesh_color_far_b ;
+        num_fract mesh_color_far_a ;
+        num_fract mesh_color_top_r ;
+        num_fract mesh_color_top_g ;
+        num_fract mesh_color_top_b ;
+        num_fract mesh_color_top_a ;
+        num_fract mesh_color_bottom_r ;
+        num_fract mesh_color_bottom_g ;
+        num_fract mesh_color_bottom_b ;
+        num_fract mesh_color_bottom_a ;
+        num_fract mesh_position_x ;
+        num_fract mesh_position_y ;
+        num_fract mesh_position_z ;
+        num_fract mesh_x_left ;
+        num_fract mesh_x_right ;
+        num_fract mesh_y_top ;
+        num_fract mesh_y_bottom ;
+        num_fract mesh_z_near ;
+        num_fract mesh_z_far ;
+        num_fract mesh_right_side_u_left ;
+        num_fract mesh_right_side_u_right ;
+        num_fract mesh_right_side_v_top ;
+        num_fract mesh_right_side_v_bottom ;
+        num_fract mesh_left_side_u_left ;
+        num_fract mesh_left_side_u_right ;
+        num_fract mesh_left_side_v_top ;
+        num_fract mesh_left_side_v_bottom ;
+        num_fract mesh_near_side_u_left ;
+        num_fract mesh_near_side_u_right ;
+        num_fract mesh_near_side_v_top ;
+        num_fract mesh_near_side_v_bottom ;
+        num_fract mesh_far_side_u_left ;
+        num_fract mesh_far_side_u_right ;
+        num_fract mesh_far_side_v_top ;
+        num_fract mesh_far_side_v_bottom ;
+        num_fract mesh_top_side_u_left ;
+        num_fract mesh_top_side_u_right ;
+        num_fract mesh_top_side_v_top ;
+        num_fract mesh_top_side_v_bottom ;
+        num_fract mesh_bottom_side_u_left ;
+        num_fract mesh_bottom_side_u_right ;
+        num_fract mesh_bottom_side_v_top ;
+        num_fract mesh_bottom_side_v_bottom ;
+    } ;
+
     class logic_room_messages
     {
     public :
@@ -46,7 +112,87 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+
+public :
+    const logic_room_stateless_consts_type logic_room_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_room_stateless < mediator > :: logic_room_stateless_consts_type :: logic_room_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( mesh_color_left_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_left_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_left_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_left_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_color_right_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_right_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_right_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_right_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_color_near_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_near_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_near_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_near_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_color_far_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_far_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_far_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_far_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_color_top_r , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_top_g , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_top_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_top_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_color_bottom_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_bottom_g , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_bottom_b , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_bottom_a , 1 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_position_x , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_position_y , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_position_z , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_x_left , - 10 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_x_right , 10 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_y_top , 3 , 1 ) ; 
+    platform_math :: make_num_fract ( mesh_y_bottom , - 3 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_z_near , 10 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_z_far , - 10 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_right_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_right_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_right_side_v_top , 1 , 3 ) ;
+    platform_math :: make_num_fract ( mesh_right_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_left_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_left_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_left_side_v_top , 1 , 3 ) ;
+    platform_math :: make_num_fract ( mesh_left_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_near_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_near_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_near_side_v_top , 1 , 3 ) ;
+    platform_math :: make_num_fract ( mesh_near_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_far_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_far_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_far_side_v_top , 1 , 3 ) ;
+    platform_math :: make_num_fract ( mesh_far_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_top_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_top_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_top_side_v_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_top_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( mesh_bottom_side_u_left , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_bottom_side_u_right , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_bottom_side_v_top , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_bottom_side_v_bottom , 0 , 1 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >
