@@ -21,6 +21,12 @@ public :
         num_fract appear_scale_begin ;
         num_fract appear_scale_middle ;
         num_fract appear_scale_end ;
+        num_fract disappear_animation_time_in_seconds ; 
+        num_fract disappear_time_from_begin_to_end_in_seconds ;
+        num_fract disappear_delay_per_row_in_seconds ;
+        num_fract disappear_delay_per_col_in_seconds ;
+        num_fract disappear_scale_begin ;
+        num_fract disappear_scale_end ;
     } ;
 
     class logic_main_menu_letters_animation_messages
@@ -100,6 +106,12 @@ shy_logic_main_menu_letters_animation_stateless < mediator > :: logic_main_menu_
     platform_math :: make_num_fract ( appear_scale_begin , 0 , 1 ) ;
     platform_math :: make_num_fract ( appear_scale_middle , 3 , 2 ) ;
     platform_math :: make_num_fract ( appear_scale_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( disappear_animation_time_in_seconds , 8 , 10 ) ;
+    platform_math :: make_num_fract ( disappear_time_from_begin_to_end_in_seconds , 3 , 10 ) ;
+    platform_math :: make_num_fract ( disappear_delay_per_col_in_seconds , 2 , 100 ) ;
+    platform_math :: make_num_fract ( disappear_delay_per_row_in_seconds , 5 , 100 ) ;
+    platform_math :: make_num_fract ( disappear_scale_begin , 1 , 1 ) ;
+    platform_math :: make_num_fract ( disappear_scale_end , 1 , 10 ) ;
 }
 
 template < typename mediator >
