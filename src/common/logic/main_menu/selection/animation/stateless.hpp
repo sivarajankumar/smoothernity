@@ -33,6 +33,7 @@ public :
         num_fract disappear_vertical_scale_time_from_begin_to_end ;
         num_fract disappear_vertical_scale_value_begin ;
         num_fract disappear_vertical_scale_value_end ;
+        num_fract idle_position_z ;
     } ;
 
     class logic_main_menu_selection_animation_messages
@@ -133,6 +134,7 @@ shy_logic_main_menu_selection_animation_stateless < mediator > :: logic_main_men
     platform_math :: make_num_fract ( disappear_vertical_scale_time_from_begin_to_end , 1 , 10 ) ;
     platform_math :: make_num_fract ( disappear_vertical_scale_value_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( disappear_vertical_scale_value_end , 10 , 100 ) ;
+    platform_math :: make_num_fract ( idle_position_z , - 3 , 1 ) ;
 }
 
 template < typename mediator >

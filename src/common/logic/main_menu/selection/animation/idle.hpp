@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_selection_animation_idle
 {
+    typedef typename mediator :: logic_main_menu_selection_animation_stateless :: logic_main_menu_selection_animation_stateless_consts_type logic_main_menu_selection_animation_stateless_consts_type ;
     typedef typename mediator :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
     typedef typename mediator :: engine_math :: rect rect ;
     typedef typename mediator :: messages messages ;
@@ -13,14 +14,6 @@ class shy_logic_main_menu_selection_animation_idle
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
-
-    class _logic_main_menu_selection_animation_idle_consts_type
-    {
-    public :
-        _logic_main_menu_selection_animation_idle_consts_type ( ) ;
-    public :
-        num_fract position_z ;
-    } ;
 
     class _logic_main_menu_selection_animation_idle_transform_state_type
     {
@@ -61,18 +54,12 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_selection_animation_stateless_consts_type > _logic_main_menu_selection_animation_stateless_consts ;
     typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > _logic_main_menu_selection_stateless_consts ;
-    const _logic_main_menu_selection_animation_idle_consts_type _logic_main_menu_selection_animation_idle_consts ;
     
     _logic_main_menu_selection_animation_idle_transform_state_type _logic_main_menu_selection_animation_idle_transform_state ;
     _logic_main_menu_letters_layout_row_rect_state_type _logic_main_menu_letters_layout_row_rect_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_selection_animation_idle < mediator > :: _logic_main_menu_selection_animation_idle_consts_type :: _logic_main_menu_selection_animation_idle_consts_type ( )
-{
-    platform_math :: make_num_fract ( position_z , - 3 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_selection_animation_idle < mediator > :: shy_logic_main_menu_selection_animation_idle ( )
@@ -89,6 +76,7 @@ template < typename mediator >
 void shy_logic_main_menu_selection_animation_idle < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . logic_main_menu_selection_animation_stateless_consts ( _logic_main_menu_selection_animation_stateless_consts ) ;
     _mediator . get ( ) . logic_main_menu_selection_stateless_consts ( _logic_main_menu_selection_stateless_consts ) ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;    
@@ -218,7 +206,7 @@ void shy_logic_main_menu_selection_animation_idle < mediator > :: _compute_row_r
     platform_math :: add_fracts ( pos_y , row_rect . top , row_rect . bottom ) ;
     platform_math :: div_fract_by ( pos_x , _platform_math_consts . get ( ) . fract_2 ) ;
     platform_math :: div_fract_by ( pos_y , _platform_math_consts . get ( ) . fract_2 ) ;
-    pos_z = _logic_main_menu_selection_animation_idle_consts . position_z ;
+    pos_z = _logic_main_menu_selection_animation_stateless_consts . get ( ) . idle_position_z ;
     
     platform_vector :: xyz ( position , pos_x , pos_y , pos_z ) ;
     
