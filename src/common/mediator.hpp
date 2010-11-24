@@ -23,6 +23,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_observer_animation_stateless logic_observer_animation_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_ortho_stateless logic_ortho_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_perspective_stateless logic_perspective_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
     
 private :
@@ -46,6 +47,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_observer_animation_stateless :: logic_observer_animation_stateless_consts_type logic_observer_animation_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_ortho_stateless :: logic_ortho_stateless_consts_type logic_ortho_stateless_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_perspective_stateless :: logic_perspective_stateless_consts_type logic_perspective_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_rasterizer engine_rasterizer ;
@@ -406,6 +408,7 @@ public :
     void logic_main_menu_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > & ) ;
     void logic_observer_animation_stateless_consts ( typename platform_pointer :: template pointer < const logic_observer_animation_stateless_consts_type > & ) ;
     void logic_ortho_stateless_consts ( typename platform_pointer :: template pointer < const logic_ortho_stateless_consts_type > & ) ;
+    void logic_perspective_stateless_consts ( typename platform_pointer :: template pointer < const logic_perspective_stateless_consts_type > & ) ;
     void logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & ) ;
     void platform_obj ( typename platform_pointer :: template pointer < const platform > & ) ;
     void register_modules
@@ -494,6 +497,7 @@ public :
         , typename platform_pointer :: template pointer < logic_ortho >
         , typename platform_pointer :: template pointer < logic_ortho_stateless >
         , typename platform_pointer :: template pointer < logic_perspective >
+        , typename platform_pointer :: template pointer < logic_perspective_stateless >
         , typename platform_pointer :: template pointer < logic_room >
         , typename platform_pointer :: template pointer < logic_room_mesh >
         , typename platform_pointer :: template pointer < logic_room_renderer >
@@ -523,6 +527,7 @@ private :
     typename platform_pointer :: template pointer < logic_main_menu_stateless > _logic_main_menu_stateless ;
     typename platform_pointer :: template pointer < logic_observer_animation_stateless > _logic_observer_animation_stateless ;
     typename platform_pointer :: template pointer < logic_ortho_stateless > _logic_ortho_stateless ;
+    typename platform_pointer :: template pointer < logic_perspective_stateless > _logic_perspective_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < const platform > _platform ;
     receivers _receivers ;
@@ -660,6 +665,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_ortho > arg_logic_ortho
     , typename platform_pointer :: template pointer < logic_ortho_stateless > arg_logic_ortho_stateless
     , typename platform_pointer :: template pointer < logic_perspective > arg_logic_perspective
+    , typename platform_pointer :: template pointer < logic_perspective_stateless > arg_logic_perspective_stateless
     , typename platform_pointer :: template pointer < logic_room > arg_logic_room
     , typename platform_pointer :: template pointer < logic_room_mesh > arg_logic_room_mesh
     , typename platform_pointer :: template pointer < logic_room_renderer > arg_logic_room_renderer
@@ -687,6 +693,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_main_menu_stateless = arg_logic_main_menu_stateless ;
     _logic_observer_animation_stateless = arg_logic_observer_animation_stateless ;
     _logic_ortho_stateless = arg_logic_ortho_stateless ;
+    _logic_perspective_stateless = arg_logic_perspective_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
     
     _receivers . engine_rasterizer = arg_engine_rasterizer ;
@@ -953,6 +960,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: logic_ortho_stateless_consts ( typename platform_pointer :: template pointer < const logic_ortho_stateless_consts_type > & result )
 {
     platform_pointer :: bind ( result , _logic_ortho_stateless . get ( ) . logic_ortho_stateless_consts ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: logic_perspective_stateless_consts ( typename platform_pointer :: template pointer < const logic_perspective_stateless_consts_type > & result )
+{
+    platform_pointer :: bind ( result , _logic_perspective_stateless . get ( ) . logic_perspective_stateless_consts ) ;
 }
 
 template < typename mediator_types >
