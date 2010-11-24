@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_letters_animation_unselection_weight
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_stateless_consts_type logic_main_menu_letters_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -10,15 +11,6 @@ class shy_logic_main_menu_letters_animation_unselection_weight
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-    
-    class _logic_main_menu_letters_animation_unselection_weight_consts_type
-    {
-    public :
-        _logic_main_menu_letters_animation_unselection_weight_consts_type ( ) ;
-    public :
-        num_fract time_to_begin ;
-        num_fract time_from_begin_to_end ;
-    } ;
     
     class _logic_main_menu_letters_animation_unselection_weight_state_type
     {
@@ -53,20 +45,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_letters_animation_unselection_weight_consts_type _logic_main_menu_letters_animation_unselection_weight_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_letters_animation_stateless_consts_type > _logic_main_menu_letters_animation_stateless_consts ;
     
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
     _logic_main_menu_letters_animation_unselection_weight_state_type _logic_main_menu_letters_animation_unselection_weight_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_letters_animation_unselection_weight < mediator > 
-:: _logic_main_menu_letters_animation_unselection_weight_consts_type
-:: _logic_main_menu_letters_animation_unselection_weight_consts_type ( )
-{
-    platform_math :: make_num_fract ( time_to_begin , 0 , 100 ) ;
-    platform_math :: make_num_fract ( time_from_begin_to_end , 7 , 100 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_letters_animation_unselection_weight < mediator > :: shy_logic_main_menu_letters_animation_unselection_weight ( )
@@ -84,6 +67,7 @@ void shy_logic_main_menu_letters_animation_unselection_weight < mediator > :: re
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_letters_animation_stateless_consts ( _logic_main_menu_letters_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -155,8 +139,8 @@ void shy_logic_main_menu_letters_animation_unselection_weight < mediator > :: _c
     num_fract weight_end ;
     num_fract weight ;
     
-    time_to_begin = _logic_main_menu_letters_animation_unselection_weight_consts . time_to_begin ;
-    time_from_begin_to_end = _logic_main_menu_letters_animation_unselection_weight_consts . time_from_begin_to_end ;
+    time_to_begin = _logic_main_menu_letters_animation_stateless_consts . get ( ) . unselection_weight_time_to_begin ;
+    time_from_begin_to_end = _logic_main_menu_letters_animation_stateless_consts . get ( ) . unselection_weight_time_from_begin_to_end ;
     time = _logic_main_menu_update_state . time ;
     weight_begin = _platform_math_consts . get ( ) . fract_1 ;
     weight_end = _platform_math_consts . get ( ) . fract_0 ;
