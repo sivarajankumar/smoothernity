@@ -18,6 +18,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless logic_main_menu_letters_animation_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_stateless logic_main_menu_selection_animation_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
@@ -38,6 +39,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_stateless_consts_type logic_main_menu_letters_animation_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_layout_stateless :: logic_main_menu_letters_layout_stateless_consts_type logic_main_menu_letters_layout_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_animation_stateless :: logic_main_menu_selection_animation_stateless_consts_type logic_main_menu_selection_animation_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_selection_stateless :: logic_main_menu_selection_stateless_consts_type logic_main_menu_selection_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_main_menu_stateless :: logic_main_menu_stateless_consts_type logic_main_menu_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless :: logic_text_stateless_consts_type logic_text_stateless_consts_type ;
@@ -395,6 +397,7 @@ public :
     void logic_main_menu_letters_animation_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_letters_animation_stateless_consts_type > & ) ;
     void logic_main_menu_letters_layout_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_letters_layout_stateless_consts_type > & ) ;
     void logic_main_menu_letters_meshes_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > & ) ;
+    void logic_main_menu_selection_animation_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_selection_animation_stateless_consts_type > & ) ;
     void logic_main_menu_selection_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > & ) ;
     void logic_main_menu_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_stateless_consts_type > & ) ;
     void logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & ) ;
@@ -471,6 +474,7 @@ public :
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_attention >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_weight >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_select >
+        , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_stateless >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_unselect >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_mesh >
         , typename platform_pointer :: template pointer < logic_main_menu_selection_stateless >
@@ -506,6 +510,7 @@ private :
     typename platform_pointer :: template pointer < logic_main_menu_letters_animation_stateless > _logic_main_menu_letters_animation_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_layout_stateless > _logic_main_menu_letters_layout_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_letters_meshes_stateless > _logic_main_menu_letters_meshes_stateless ;
+    typename platform_pointer :: template pointer < logic_main_menu_selection_animation_stateless > _logic_main_menu_selection_animation_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > _logic_main_menu_selection_stateless ;
     typename platform_pointer :: template pointer < logic_main_menu_stateless > _logic_main_menu_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
@@ -631,6 +636,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_attention > arg_logic_main_menu_selection_animation_push_attention
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_weight > arg_logic_main_menu_selection_animation_push_weight
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_select > arg_logic_main_menu_selection_animation_select
+    , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_stateless > arg_logic_main_menu_selection_animation_stateless
     , typename platform_pointer :: template pointer < logic_main_menu_selection_animation_unselect > arg_logic_main_menu_selection_animation_unselect
     , typename platform_pointer :: template pointer < logic_main_menu_selection_mesh > arg_logic_main_menu_selection_mesh
     , typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > arg_logic_main_menu_selection_stateless
@@ -664,6 +670,7 @@ void shy_mediator < mediator_types > :: register_modules
     _logic_main_menu_letters_animation_stateless = arg_logic_main_menu_letters_animation_stateless ;
     _logic_main_menu_letters_layout_stateless = arg_logic_main_menu_letters_layout_stateless ;
     _logic_main_menu_letters_meshes_stateless = arg_logic_main_menu_letters_meshes_stateless ;
+    _logic_main_menu_selection_animation_stateless = arg_logic_main_menu_selection_animation_stateless ;
     _logic_main_menu_selection_stateless = arg_logic_main_menu_selection_stateless ;
     _logic_main_menu_stateless = arg_logic_main_menu_stateless ;
     _logic_text_stateless = arg_logic_text_stateless ;
@@ -902,6 +909,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: logic_main_menu_letters_meshes_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > & result )
 {
     platform_pointer :: bind ( result , _logic_main_menu_letters_meshes_stateless . get ( ) . logic_main_menu_letters_meshes_stateless_consts ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: logic_main_menu_selection_animation_stateless_consts ( typename platform_pointer :: template pointer < const logic_main_menu_selection_animation_stateless_consts_type > & result )
+{
+    platform_pointer :: bind ( result , _logic_main_menu_selection_animation_stateless . get ( ) . logic_main_menu_selection_animation_stateless_consts ) ;
 }
 
 template < typename mediator_types >

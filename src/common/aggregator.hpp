@@ -616,6 +616,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_main_menu_letters_animation_stateless logic_main_menu_letters_animation_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_layout_stateless logic_main_menu_letters_layout_stateless ;
     typedef typename aggregator_types :: logic_main_menu_letters_meshes_stateless logic_main_menu_letters_meshes_stateless ;
+    typedef typename aggregator_types :: logic_main_menu_selection_animation_stateless logic_main_menu_selection_animation_stateless ;
     typedef typename aggregator_types :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
     typedef typename aggregator_types :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename aggregator_types :: logic_text_stateless logic_text_stateless ;
@@ -781,6 +782,7 @@ private :
     logic_main_menu_selection_animation_push_attention _logic_main_menu_selection_animation_push_attention ;
     logic_main_menu_selection_animation_push_weight _logic_main_menu_selection_animation_push_weight ;
     logic_main_menu_selection_animation_select _logic_main_menu_selection_animation_select ;
+    logic_main_menu_selection_animation_stateless _logic_main_menu_selection_animation_stateless ;
     logic_main_menu_selection_animation_unselect _logic_main_menu_selection_animation_unselect ;
     logic_main_menu_selection_mesh _logic_main_menu_selection_mesh ;
     logic_main_menu_selection_stateless _logic_main_menu_selection_stateless ;
@@ -878,6 +880,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_attention > logic_main_menu_selection_animation_push_attention_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_push_weight > logic_main_menu_selection_animation_push_weight_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_select > logic_main_menu_selection_animation_select_ptr ;
+    typename platform_pointer :: template pointer < logic_main_menu_selection_animation_stateless > logic_main_menu_selection_animation_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_animation_unselect > logic_main_menu_selection_animation_unselect_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_mesh > logic_main_menu_selection_mesh_ptr ;
     typename platform_pointer :: template pointer < logic_main_menu_selection_stateless > logic_main_menu_selection_stateless_ptr ;
@@ -971,6 +974,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_main_menu_selection_animation_push_attention_ptr , _logic_main_menu_selection_animation_push_attention ) ;
     platform_pointer :: bind ( logic_main_menu_selection_animation_push_weight_ptr , _logic_main_menu_selection_animation_push_weight ) ;
     platform_pointer :: bind ( logic_main_menu_selection_animation_select_ptr , _logic_main_menu_selection_animation_select ) ;
+    platform_pointer :: bind ( logic_main_menu_selection_animation_stateless_ptr , _logic_main_menu_selection_animation_stateless ) ;
     platform_pointer :: bind ( logic_main_menu_selection_animation_unselect_ptr , _logic_main_menu_selection_animation_unselect ) ;
     platform_pointer :: bind ( logic_main_menu_selection_mesh_ptr , _logic_main_menu_selection_mesh ) ;
     platform_pointer :: bind ( logic_main_menu_selection_stateless_ptr , _logic_main_menu_selection_stateless ) ;
@@ -1142,6 +1146,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_main_menu_selection_animation_push_attention_ptr
         , logic_main_menu_selection_animation_push_weight_ptr
         , logic_main_menu_selection_animation_select_ptr
+        , logic_main_menu_selection_animation_stateless_ptr
         , logic_main_menu_selection_animation_unselect_ptr
         , logic_main_menu_selection_mesh_ptr
         , logic_main_menu_selection_stateless_ptr

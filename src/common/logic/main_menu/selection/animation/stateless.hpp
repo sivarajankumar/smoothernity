@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_selection_animation_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
@@ -8,6 +9,24 @@ class shy_logic_main_menu_selection_animation_stateless
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
 
 public :
+    class logic_main_menu_selection_animation_stateless_consts_type
+    {
+    public :
+        logic_main_menu_selection_animation_stateless_consts_type ( ) ;
+    public :
+        num_fract appear_horizontal_scale_time_to_begin ;
+        num_fract appear_horizontal_scale_time_from_begin_to_end ;
+        num_fract appear_horizontal_scale_value_begin ;
+        num_fract appear_horizontal_scale_value_end ;
+        num_fract appear_vertical_scale_time_to_begin ;
+        num_fract appear_vertical_scale_time_from_begin_to_middle ;
+        num_fract appear_vertical_scale_time_from_middle_to_end ;
+        num_fract appear_vertical_scale_value_begin ;
+        num_fract appear_vertical_scale_value_middle ;
+        num_fract appear_vertical_scale_value_end ;
+        num_fract appear_total_animation_time ;
+    } ;
+
     class logic_main_menu_selection_animation_messages
     {
     public :
@@ -79,7 +98,26 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+
+public :
+    const logic_main_menu_selection_animation_stateless_consts_type logic_main_menu_selection_animation_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_main_menu_selection_animation_stateless < mediator > :: logic_main_menu_selection_animation_stateless_consts_type :: logic_main_menu_selection_animation_stateless_consts_type ( )
+{
+    platform_math :: make_num_fract ( appear_horizontal_scale_time_to_begin , 0 , 10 ) ;
+    platform_math :: make_num_fract ( appear_horizontal_scale_time_from_begin_to_end , 1 , 10 ) ;
+    platform_math :: make_num_fract ( appear_horizontal_scale_value_begin , 8 , 10 ) ;
+    platform_math :: make_num_fract ( appear_horizontal_scale_value_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( appear_vertical_scale_time_to_begin , 2 , 10 ) ;
+    platform_math :: make_num_fract ( appear_vertical_scale_time_from_begin_to_middle , 1 , 10 ) ;
+    platform_math :: make_num_fract ( appear_vertical_scale_time_from_middle_to_end , 2 , 10 ) ;
+    platform_math :: make_num_fract ( appear_vertical_scale_value_begin , 10 , 100 ) ;
+    platform_math :: make_num_fract ( appear_vertical_scale_value_middle , 2 , 1 ) ;
+    platform_math :: make_num_fract ( appear_vertical_scale_value_end , 1 , 1 ) ;
+    platform_math :: make_num_fract ( appear_total_animation_time , 5 , 10 ) ;
+}
 
 template < typename mediator >
 template < typename receivers >
