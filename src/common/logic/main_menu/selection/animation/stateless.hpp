@@ -48,6 +48,11 @@ public :
         num_fract push_vertical_scale_begin ;
         num_fract push_vertical_scale_middle ;
         num_fract push_vertical_scale_end ;
+        num_fract push_attention_horizontal_scale_min ;
+        num_fract push_attention_horizontal_scale_max ;
+        num_fract push_attention_vertical_scale_min ;
+        num_fract push_attention_vertical_scale_max ;
+        num_fract push_attention_period_in_seconds ;
     } ;
 
     class logic_main_menu_selection_animation_messages
@@ -163,6 +168,11 @@ shy_logic_main_menu_selection_animation_stateless < mediator > :: logic_main_men
     platform_math :: make_num_fract ( push_vertical_scale_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( push_vertical_scale_middle , 70 , 100 ) ;
     platform_math :: make_num_fract ( push_vertical_scale_end , 95 , 100 ) ;
+    platform_math :: make_num_fract ( push_attention_horizontal_scale_min , 185 , 200 ) ;
+    platform_math :: make_num_fract ( push_attention_horizontal_scale_max , 200 , 200 ) ;
+    platform_math :: make_num_fract ( push_attention_vertical_scale_min , 200 , 100 ) ;
+    platform_math :: make_num_fract ( push_attention_vertical_scale_max , 250 , 100 ) ;
+    platform_math :: make_num_fract ( push_attention_period_in_seconds , 4 , 10 ) ;
 }
 
 template < typename mediator >
