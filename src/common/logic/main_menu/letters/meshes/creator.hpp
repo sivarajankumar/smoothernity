@@ -18,17 +18,6 @@ class shy_logic_main_menu_letters_meshes_creator
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_static_array platform_static_array ;
     
-    class _logic_main_menu_letters_meshes_creator_consts_type
-    {
-    public :
-        _logic_main_menu_letters_meshes_creator_consts_type ( ) ;
-    public :
-        num_fract color_r ;
-        num_fract color_g ;
-        num_fract color_b ;
-        num_fract color_a ;
-    } ;
-    
     class _logic_main_menu_letters_rows_state_type
     {
     public :
@@ -108,7 +97,6 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > _logic_main_menu_letters_meshes_stateless_consts ;
-    const _logic_main_menu_letters_meshes_creator_consts_type _logic_main_menu_letters_meshes_creator_consts ;
     
     _logic_main_menu_letters_rows_state_type _logic_main_menu_letters_rows_state ;
     _logic_main_menu_letters_cols_state_type _logic_main_menu_letters_cols_state ;
@@ -120,15 +108,6 @@ private :
     num_whole _current_row ;
     num_whole _current_col ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_letters_meshes_creator < mediator > :: _logic_main_menu_letters_meshes_creator_consts_type :: _logic_main_menu_letters_meshes_creator_consts_type ( )
-{
-    platform_math :: make_num_fract ( color_r , 0 , 255 ) ;
-    platform_math :: make_num_fract ( color_g , 255 , 255 ) ;
-    platform_math :: make_num_fract ( color_b , 0 , 255 ) ;
-    platform_math :: make_num_fract ( color_a , 255 , 255 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_letters_meshes_creator < mediator > :: shy_logic_main_menu_letters_meshes_creator ( )
@@ -418,10 +397,10 @@ void shy_logic_main_menu_letters_meshes_creator < mediator > :: _fill_mesh_conte
     v_bottom = _logic_text_letter_big_tex_coords_state . bottom ;
     v_top = _logic_text_letter_big_tex_coords_state . top ;
     
-    color_r = _logic_main_menu_letters_meshes_creator_consts . color_r ;
-    color_g = _logic_main_menu_letters_meshes_creator_consts . color_g ;
-    color_b = _logic_main_menu_letters_meshes_creator_consts . color_b ;
-    color_a = _logic_main_menu_letters_meshes_creator_consts . color_a ;
+    color_r = _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_color_r ;
+    color_g = _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_color_g ;
+    color_b = _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_color_b ;
+    color_a = _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_color_a ;
 
     index_left_top = _platform_math_consts . get ( ) . whole_0 ;
     index_left_bottom = _platform_math_consts . get ( ) . whole_1 ;

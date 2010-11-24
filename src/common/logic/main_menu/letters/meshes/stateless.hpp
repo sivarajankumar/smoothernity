@@ -14,6 +14,10 @@ public :
         logic_main_menu_letters_meshes_stateless_consts_type ( ) ;
     public :
         num_fract letter_mesh_size ;
+        num_fract letter_mesh_color_r ;
+        num_fract letter_mesh_color_g ;
+        num_fract letter_mesh_color_b ;
+        num_fract letter_mesh_color_a ;
         num_fract time_between_creation ;
     } ;
     
@@ -84,6 +88,10 @@ template < typename mediator >
 shy_logic_main_menu_letters_meshes_stateless < mediator > :: logic_main_menu_letters_meshes_stateless_consts_type :: logic_main_menu_letters_meshes_stateless_consts_type ( )
 {
     platform_math :: make_num_fract ( letter_mesh_size , 1 , 1 ) ;
+    platform_math :: make_num_fract ( letter_mesh_color_r , 0 , 255 ) ;
+    platform_math :: make_num_fract ( letter_mesh_color_g , 255 , 255 ) ;
+    platform_math :: make_num_fract ( letter_mesh_color_b , 0 , 255 ) ;
+    platform_math :: make_num_fract ( letter_mesh_color_a , 255 , 255 ) ;
     platform_math :: make_num_fract ( time_between_creation , 50 , 1000 ) ;
 }
 
