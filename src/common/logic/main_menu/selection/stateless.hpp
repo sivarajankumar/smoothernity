@@ -13,6 +13,10 @@ public :
         logic_main_menu_selection_stateless_consts_type ( ) ;
     public :
         num_fract mesh_size ;
+        num_fract mesh_color_r ;
+        num_fract mesh_color_g ;
+        num_fract mesh_color_b ;
+        num_fract mesh_color_a ;
     } ;
 
     class logic_main_menu_selection_messages
@@ -65,6 +69,10 @@ template < typename mediator >
 shy_logic_main_menu_selection_stateless < mediator > :: logic_main_menu_selection_stateless_consts_type :: logic_main_menu_selection_stateless_consts_type ( )
 {
     platform_math :: make_num_fract ( mesh_size , 1 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_r , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_g , 1 , 4 ) ;
+    platform_math :: make_num_fract ( mesh_color_b , 0 , 1 ) ;
+    platform_math :: make_num_fract ( mesh_color_a , 1 , 1 ) ;
 }
 
 template < typename mediator >

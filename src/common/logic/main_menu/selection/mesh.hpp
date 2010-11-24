@@ -14,17 +14,6 @@ class shy_logic_main_menu_selection_mesh
     typedef typename mediator :: platform :: platform_matrix :: matrix_data matrix_data ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
-    class _logic_main_menu_selection_mesh_consts_type
-    {
-    public :
-        _logic_main_menu_selection_mesh_consts_type ( ) ;
-    public :
-        num_fract color_r ;
-        num_fract color_g ;
-        num_fract color_b ;
-        num_fract color_a ;
-    } ;
-
 public :
     shy_logic_main_menu_selection_mesh ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
@@ -50,21 +39,11 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < const logic_main_menu_selection_stateless_consts_type > _logic_main_menu_selection_stateless_consts ;
-    const _logic_main_menu_selection_mesh_consts_type _logic_main_menu_selection_mesh_consts ;
     
     num_whole _animation_transform_requested ;
     num_whole _creation_requested ;
     engine_render_mesh_id _mesh ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_selection_mesh < mediator > :: _logic_main_menu_selection_mesh_consts_type :: _logic_main_menu_selection_mesh_consts_type ( )
-{
-    platform_math :: make_num_fract ( color_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_g , 1 , 4 ) ;
-    platform_math :: make_num_fract ( color_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( color_a , 1 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_selection_mesh < mediator > :: shy_logic_main_menu_selection_mesh ( )
@@ -180,10 +159,10 @@ void shy_logic_main_menu_selection_mesh < mediator > :: _fill_mesh_content ( )
     platform_math :: mul_fracts ( y_top , half_size , _platform_math_consts . get ( ) . fract_1 ) ;
     z = _platform_math_consts . get ( ) . fract_0 ;
     
-    color_r = _logic_main_menu_selection_mesh_consts . color_r ;
-    color_g = _logic_main_menu_selection_mesh_consts . color_g ;
-    color_b = _logic_main_menu_selection_mesh_consts . color_b ;
-    color_a = _logic_main_menu_selection_mesh_consts . color_a ;
+    color_r = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_color_r ;
+    color_g = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_color_g ;
+    color_b = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_color_b ;
+    color_a = _logic_main_menu_selection_stateless_consts . get ( ) . mesh_color_a ;
 
     index_left_top = _platform_math_consts . get ( ) . whole_0 ;
     index_left_bottom = _platform_math_consts . get ( ) . whole_1 ;
