@@ -34,6 +34,10 @@ public :
         num_fract idle_horizontal_shift_period_in_seconds ;
         num_fract idle_horizontal_shift_phase_per_row ;
         num_fract idle_horizontal_shift_amplitude ;
+        num_fract selection_time_stable ;
+        num_fract selection_time_transition ;
+        num_fract selection_scale_min ;
+        num_fract selection_scale_max ;
     } ;
 
     class logic_main_menu_letters_animation_messages
@@ -126,6 +130,10 @@ shy_logic_main_menu_letters_animation_stateless < mediator > :: logic_main_menu_
     platform_math :: make_num_fract ( idle_horizontal_shift_period_in_seconds , 2 , 1 ) ;
     platform_math :: make_num_fract ( idle_horizontal_shift_phase_per_row , 1 , 2 ) ;
     platform_math :: make_num_fract ( idle_horizontal_shift_amplitude , 1 , 20 ) ;
+    platform_math :: make_num_fract ( selection_time_stable , 0 , 100 ) ;
+    platform_math :: make_num_fract ( selection_time_transition , 30 , 100 ) ;
+    platform_math :: make_num_fract ( selection_scale_min , 9 , 10 ) ;
+    platform_math :: make_num_fract ( selection_scale_max , 11 , 10 ) ;
 }
 
 template < typename mediator >

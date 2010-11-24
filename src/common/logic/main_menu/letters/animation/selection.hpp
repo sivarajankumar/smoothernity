@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_letters_animation_selection
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_stateless_consts_type logic_main_menu_letters_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -11,17 +12,6 @@ class shy_logic_main_menu_letters_animation_selection
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
-    class _logic_main_menu_letters_animation_selection_consts_type
-    {
-    public :
-        _logic_main_menu_letters_animation_selection_consts_type ( ) ;
-    public :
-        num_fract time_stable ;
-        num_fract time_transition ;
-        num_fract scale_min ;
-        num_fract scale_max ;
-    } ;
-
     class _logic_main_menu_letters_animation_selection_transform_state_type
     {
     public :
@@ -55,22 +45,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_letters_animation_selection_consts_type _logic_main_menu_letters_animation_selection_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_letters_animation_stateless_consts_type > _logic_main_menu_letters_animation_stateless_consts ;
     
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
     _logic_main_menu_letters_animation_selection_transform_state_type _logic_main_menu_letters_animation_selection_transform_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_letters_animation_selection < mediator >
-:: _logic_main_menu_letters_animation_selection_consts_type
-:: _logic_main_menu_letters_animation_selection_consts_type ( )
-{
-    platform_math :: make_num_fract ( time_stable , 0 , 100 ) ;
-    platform_math :: make_num_fract ( time_transition , 30 , 100 ) ;
-    platform_math :: make_num_fract ( scale_min , 9 , 10 ) ;
-    platform_math :: make_num_fract ( scale_max , 11 , 10 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_letters_animation_selection < mediator > :: shy_logic_main_menu_letters_animation_selection ( )
@@ -88,6 +67,7 @@ void shy_logic_main_menu_letters_animation_selection < mediator > :: receive ( t
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_letters_animation_stateless_consts ( _logic_main_menu_letters_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -141,8 +121,8 @@ void shy_logic_main_menu_letters_animation_selection < mediator > :: _compute_we
     num_fract weight ;
     
     time = _logic_main_menu_update_state . time ;
-    time_stable = _logic_main_menu_letters_animation_selection_consts . time_stable ;
-    time_transition = _logic_main_menu_letters_animation_selection_consts . time_transition ;
+    time_stable = _logic_main_menu_letters_animation_stateless_consts . get ( ) . selection_time_stable ;
+    time_transition = _logic_main_menu_letters_animation_stateless_consts . get ( ) . selection_time_transition ;
     weight_low = _platform_math_consts . get ( ) . fract_0 ;
     weight_high = _platform_math_consts . get ( ) . fract_1 ;
 
@@ -213,8 +193,8 @@ void shy_logic_main_menu_letters_animation_selection < mediator > :: _compute_tr
     num_fract weight_max ;
     num_fract weight ;
     
-    scale_min = _logic_main_menu_letters_animation_selection_consts . scale_min ;
-    scale_max = _logic_main_menu_letters_animation_selection_consts . scale_max ;
+    scale_min = _logic_main_menu_letters_animation_stateless_consts . get ( ) . selection_scale_min ;
+    scale_max = _logic_main_menu_letters_animation_stateless_consts . get ( ) . selection_scale_max ;
     weight_min = _platform_math_consts . get ( ) . fract_0 ;
     weight_max = _platform_math_consts . get ( ) . fract_1 ;
     weight = _logic_main_menu_letters_animation_selection_transform_state . weight ;
