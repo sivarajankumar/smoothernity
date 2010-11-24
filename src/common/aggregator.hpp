@@ -620,6 +620,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_main_menu_selection_stateless logic_main_menu_selection_stateless ;
     typedef typename aggregator_types :: logic_main_menu_stateless logic_main_menu_stateless ;
     typedef typename aggregator_types :: logic_observer_animation_stateless logic_observer_animation_stateless ;
+    typedef typename aggregator_types :: logic_ortho_stateless logic_ortho_stateless ;
     typedef typename aggregator_types :: logic_text_stateless logic_text_stateless ;
     
     typedef typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > engine_rasterizer ;
@@ -795,6 +796,7 @@ private :
     logic_observer_animation_flight _logic_observer_animation_flight ;
     logic_observer_animation_stateless _logic_observer_animation_stateless ;
     logic_ortho _logic_ortho ;
+    logic_ortho_stateless _logic_ortho_stateless ;
     logic_perspective _logic_perspective ;
     logic_room _logic_room ;
     logic_room_mesh _logic_room_mesh ;
@@ -894,6 +896,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_observer_animation_flight > logic_observer_animation_flight_ptr ;
     typename platform_pointer :: template pointer < logic_observer_animation_stateless > logic_observer_animation_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_ortho > logic_ortho_ptr ;
+    typename platform_pointer :: template pointer < logic_ortho_stateless > logic_ortho_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_perspective > logic_perspective_ptr ;
     typename platform_pointer :: template pointer < logic_room > logic_room_ptr ;
     typename platform_pointer :: template pointer < logic_room_mesh > logic_room_mesh_ptr ;
@@ -989,6 +992,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_observer_animation_flight_ptr , _logic_observer_animation_flight ) ;
     platform_pointer :: bind ( logic_observer_animation_stateless_ptr , _logic_observer_animation_stateless ) ;
     platform_pointer :: bind ( logic_ortho_ptr , _logic_ortho ) ;
+    platform_pointer :: bind ( logic_ortho_stateless_ptr , _logic_ortho_stateless ) ;
     platform_pointer :: bind ( logic_perspective_ptr , _logic_perspective ) ;
     platform_pointer :: bind ( logic_room_ptr , _logic_room ) ;
     platform_pointer :: bind ( logic_room_mesh_ptr , _logic_room_mesh ) ;
@@ -1162,6 +1166,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_observer_animation_flight_ptr
         , logic_observer_animation_stateless_ptr
         , logic_ortho_ptr
+        , logic_ortho_stateless_ptr
         , logic_perspective_ptr
         , logic_room_ptr
         , logic_room_mesh_ptr
