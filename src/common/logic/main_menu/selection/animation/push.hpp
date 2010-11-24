@@ -2,6 +2,7 @@ template < typename mediator >
 class shy_logic_main_menu_selection_animation_push
 {
     typedef typename mediator :: engine_math engine_math ;
+    typedef typename mediator :: logic_main_menu_selection_animation_stateless :: logic_main_menu_selection_animation_stateless_consts_type logic_main_menu_selection_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -11,21 +12,6 @@ class shy_logic_main_menu_selection_animation_push
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     
-    class _logic_main_menu_selection_animation_push_consts_type
-    {
-    public :
-        _logic_main_menu_selection_animation_push_consts_type ( ) ;
-    public :
-        num_fract time_from_begin_to_middle ;
-        num_fract time_from_middle_to_end ;
-        num_fract horizontal_scale_begin ;
-        num_fract horizontal_scale_middle ;
-        num_fract horizontal_scale_end ;
-        num_fract vertical_scale_begin ;
-        num_fract vertical_scale_middle ;
-        num_fract vertical_scale_end ;
-    } ;
-
     class _logic_controls_state_type
     {
     public :
@@ -72,27 +58,12 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_selection_animation_push_consts_type _logic_main_menu_selection_animation_push_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_selection_animation_stateless_consts_type > _logic_main_menu_selection_animation_stateless_consts ;
 
     _logic_controls_state_type _logic_controls_state ;
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
     _logic_main_menu_selection_animation_push_transform_state_type _logic_main_menu_selection_animation_push_transform_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_selection_animation_push < mediator > 
-:: _logic_main_menu_selection_animation_push_consts_type 
-:: _logic_main_menu_selection_animation_push_consts_type ( )
-{
-    platform_math :: make_num_fract ( time_from_begin_to_middle , 10 , 100 ) ;
-    platform_math :: make_num_fract ( time_from_middle_to_end , 20 , 100 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_middle , 90 , 100 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_end , 95 , 100 ) ;
-    platform_math :: make_num_fract ( vertical_scale_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_scale_middle , 70 , 100 ) ;
-    platform_math :: make_num_fract ( vertical_scale_end , 95 , 100 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_selection_animation_push < mediator > :: shy_logic_main_menu_selection_animation_push ( )
@@ -110,6 +81,7 @@ void shy_logic_main_menu_selection_animation_push < mediator > :: receive ( type
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_selection_animation_stateless_consts ( _logic_main_menu_selection_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 
     _logic_main_menu_update_state . clicked = _platform_math_consts . get ( ) . whole_false ;
@@ -205,8 +177,8 @@ void shy_logic_main_menu_selection_animation_push < mediator > :: _calculate_tim
     num_fract time_middle ;
     num_fract time_end ;
     
-    time_from_begin_to_middle = _logic_main_menu_selection_animation_push_consts . time_from_begin_to_middle ;
-    time_from_middle_to_end = _logic_main_menu_selection_animation_push_consts . time_from_middle_to_end ;
+    time_from_begin_to_middle = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_time_from_begin_to_middle ;
+    time_from_middle_to_end = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_time_from_middle_to_end ;
 
     time_begin = _platform_math_consts . get ( ) . fract_0 ;
     time_middle = time_from_begin_to_middle ;
@@ -233,9 +205,9 @@ void shy_logic_main_menu_selection_animation_push < mediator > :: _calculate_hor
     time_middle = _logic_main_menu_selection_animation_push_transform_state . time_middle ;
     time_end = _logic_main_menu_selection_animation_push_transform_state . time_end ;
     time = _logic_main_menu_update_state . time ;
-    horizontal_scale_begin = _logic_main_menu_selection_animation_push_consts . horizontal_scale_begin ;
-    horizontal_scale_middle = _logic_main_menu_selection_animation_push_consts . horizontal_scale_middle ;
-    horizontal_scale_end = _logic_main_menu_selection_animation_push_consts . horizontal_scale_end ;
+    horizontal_scale_begin = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_horizontal_scale_begin ;
+    horizontal_scale_middle = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_horizontal_scale_middle ;
+    horizontal_scale_end = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_horizontal_scale_end ;
 
     engine_math :: hard_attack_easy_decay
         ( horizontal_scale
@@ -267,9 +239,9 @@ void shy_logic_main_menu_selection_animation_push < mediator > :: _calculate_ver
     time_middle = _logic_main_menu_selection_animation_push_transform_state . time_middle ;
     time_end = _logic_main_menu_selection_animation_push_transform_state . time_end ;
     time = _logic_main_menu_update_state . time ;
-    vertical_scale_begin = _logic_main_menu_selection_animation_push_consts . vertical_scale_begin ;
-    vertical_scale_middle = _logic_main_menu_selection_animation_push_consts . vertical_scale_middle ;
-    vertical_scale_end = _logic_main_menu_selection_animation_push_consts . vertical_scale_end ;
+    vertical_scale_begin = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_vertical_scale_begin ;
+    vertical_scale_middle = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_vertical_scale_middle ;
+    vertical_scale_end = _logic_main_menu_selection_animation_stateless_consts . get ( ) . push_vertical_scale_end ;
 
     engine_math :: hard_attack_easy_decay
         ( vertical_scale
