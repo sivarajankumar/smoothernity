@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_selection_animation_idle_attention
 {
+    typedef typename mediator :: logic_main_menu_selection_animation_stateless :: logic_main_menu_selection_animation_stateless_consts_type logic_main_menu_selection_animation_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -9,19 +10,6 @@ class shy_logic_main_menu_selection_animation_idle_attention
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_main_menu_selection_animation_idle_attention_consts_type
-    {
-    public :
-        _logic_main_menu_selection_animation_idle_attention_consts_type ( ) ;
-    public :
-        num_fract horizontal_scale_min ;
-        num_fract horizontal_scale_max ;
-        num_fract horizontal_scale_period_in_seconds ;
-        num_fract vertical_scale_min ;
-        num_fract vertical_scale_max ;
-        num_fract vertical_scale_period_in_seconds ;
-    } ;
 
     class _logic_main_menu_selection_animation_idle_attention_transform_state_type
     {
@@ -58,24 +46,11 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_main_menu_selection_animation_idle_attention_consts_type _logic_main_menu_selection_animation_idle_attention_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_selection_animation_stateless_consts_type > _logic_main_menu_selection_animation_stateless_consts ;
     
     _logic_main_menu_selection_animation_idle_attention_transform_state_type _logic_main_menu_selection_animation_idle_attention_transform_state ;
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_selection_animation_idle_attention < mediator > 
-:: _logic_main_menu_selection_animation_idle_attention_consts_type 
-:: _logic_main_menu_selection_animation_idle_attention_consts_type ( )
-{
-    platform_math :: make_num_fract ( horizontal_scale_min , 19 , 20 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_max , 20 , 20 ) ;
-    platform_math :: make_num_fract ( horizontal_scale_period_in_seconds , 2 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_scale_min , 20 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_max , 23 , 10 ) ;
-    platform_math :: make_num_fract ( vertical_scale_period_in_seconds , 1 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_selection_animation_idle_attention < mediator > :: shy_logic_main_menu_selection_animation_idle_attention ( )
@@ -93,6 +68,7 @@ void shy_logic_main_menu_selection_animation_idle_attention < mediator > :: rece
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_selection_animation_stateless_consts ( _logic_main_menu_selection_animation_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -136,9 +112,9 @@ void shy_logic_main_menu_selection_animation_idle_attention < mediator > :: _com
 {
     _compute_animation_scale
         ( _logic_main_menu_selection_animation_idle_attention_transform_state . horizontal_scale
-        , _logic_main_menu_selection_animation_idle_attention_consts . horizontal_scale_min
-        , _logic_main_menu_selection_animation_idle_attention_consts . horizontal_scale_max
-        , _logic_main_menu_selection_animation_idle_attention_consts . horizontal_scale_period_in_seconds
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . idle_attention_horizontal_scale_min
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . idle_attention_horizontal_scale_max
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . idle_attention_horizontal_scale_period_in_seconds
         ) ;
 }
 
@@ -147,9 +123,9 @@ void shy_logic_main_menu_selection_animation_idle_attention < mediator > :: _com
 {
     _compute_animation_scale
         ( _logic_main_menu_selection_animation_idle_attention_transform_state . vertical_scale
-        , _logic_main_menu_selection_animation_idle_attention_consts . vertical_scale_min
-        , _logic_main_menu_selection_animation_idle_attention_consts . vertical_scale_max
-        , _logic_main_menu_selection_animation_idle_attention_consts . vertical_scale_period_in_seconds
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . idle_attention_vertical_scale_min
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . idle_attention_vertical_scale_max
+        , _logic_main_menu_selection_animation_stateless_consts . get ( ) . idle_attention_vertical_scale_period_in_seconds
         ) ;
 }
 
