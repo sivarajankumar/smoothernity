@@ -14,6 +14,7 @@ public :
         logic_main_menu_letters_meshes_stateless_consts_type ( ) ;
     public :
         num_fract letter_mesh_size ;
+        num_fract time_between_creation ;
     } ;
     
     class logic_main_menu_letters_meshes_messages
@@ -83,6 +84,7 @@ template < typename mediator >
 shy_logic_main_menu_letters_meshes_stateless < mediator > :: logic_main_menu_letters_meshes_stateless_consts_type :: logic_main_menu_letters_meshes_stateless_consts_type ( )
 {
     platform_math :: make_num_fract ( letter_mesh_size , 1 , 1 ) ;
+    platform_math :: make_num_fract ( time_between_creation , 50 , 1000 ) ;
 }
 
 template < typename mediator >
