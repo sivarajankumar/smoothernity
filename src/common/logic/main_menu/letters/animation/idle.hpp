@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_main_menu_letters_animation_idle
 {
+    typedef typename mediator :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_stateless_consts_type logic_main_menu_letters_animation_stateless_consts_type ;
     typedef typename mediator :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type logic_main_menu_letters_meshes_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
@@ -12,20 +13,6 @@ class shy_logic_main_menu_letters_animation_idle
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_vector platform_vector ;
     typedef typename mediator :: platform :: platform_vector :: vector_data vector_data ;
-    
-    class _logic_main_menu_letters_animation_idle_consts_type
-    {
-    public :
-        _logic_main_menu_letters_animation_idle_consts_type ( ) ;
-    public :
-        num_fract vertical_shift_period_in_seconds ;
-        num_fract vertical_shift_phase_per_col ;
-        num_fract vertical_shift_phase_per_row ;
-        num_fract vertical_shift_amplitude ;
-        num_fract horizontal_shift_period_in_seconds ;
-        num_fract horizontal_shift_phase_per_row ;
-        num_fract horizontal_shift_amplitude ;
-    } ;
     
     class _logic_main_menu_letters_animation_idle_transform_state_type
     {
@@ -77,25 +64,13 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_main_menu_letters_animation_stateless_consts_type > _logic_main_menu_letters_animation_stateless_consts ;
     typename platform_pointer :: template pointer < const logic_main_menu_letters_meshes_stateless_consts_type > _logic_main_menu_letters_meshes_stateless_consts ;
-    const _logic_main_menu_letters_animation_idle_consts_type _logic_main_menu_letters_animation_idle_consts ;
     
     _logic_main_menu_letters_animation_idle_transform_state_type _logic_main_menu_letters_animation_idle_transform_state ;
     _logic_main_menu_letters_layout_position_state_type _logic_main_menu_letters_layout_position_state ;
     _logic_main_menu_update_state_type _logic_main_menu_update_state ;
 } ;
-
-template < typename mediator >
-shy_logic_main_menu_letters_animation_idle < mediator > :: _logic_main_menu_letters_animation_idle_consts_type :: _logic_main_menu_letters_animation_idle_consts_type ( )
-{
-    platform_math :: make_num_fract ( vertical_shift_period_in_seconds , 1 , 1 ) ;
-    platform_math :: make_num_fract ( vertical_shift_phase_per_col , 1 , 3 ) ;
-    platform_math :: make_num_fract ( vertical_shift_phase_per_row , 1 , 5 ) ;
-    platform_math :: make_num_fract ( vertical_shift_amplitude , 1 , 30 ) ;
-    platform_math :: make_num_fract ( horizontal_shift_period_in_seconds , 2 , 1 ) ;
-    platform_math :: make_num_fract ( horizontal_shift_phase_per_row , 1 , 2 ) ;
-    platform_math :: make_num_fract ( horizontal_shift_amplitude , 1 , 20 ) ;
-}
 
 template < typename mediator >
 shy_logic_main_menu_letters_animation_idle < mediator > :: shy_logic_main_menu_letters_animation_idle ( )
@@ -113,6 +88,7 @@ void shy_logic_main_menu_letters_animation_idle < mediator > :: receive ( typena
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_main_menu_letters_animation_stateless_consts ( _logic_main_menu_letters_animation_stateless_consts ) ;
     _mediator . get ( ) . logic_main_menu_letters_meshes_stateless_consts ( _logic_main_menu_letters_meshes_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
@@ -208,14 +184,14 @@ void shy_logic_main_menu_letters_animation_idle < mediator > :: _compute_horizon
     
     zero = _platform_math_consts . get ( ) . fract_0 ;
     platform_math :: make_fract_from_whole ( row , _logic_main_menu_letters_animation_idle_transform_state . row ) ;
-    platform_math :: mul_fracts ( phase_shift , row , _logic_main_menu_letters_animation_idle_consts . horizontal_shift_phase_per_row ) ;
+    platform_math :: mul_fracts ( phase_shift , row , _logic_main_menu_letters_animation_stateless_consts . get ( ) . idle_horizontal_shift_phase_per_row ) ;
     
-    platform_math :: div_fracts ( phase , _logic_main_menu_update_state . time , _logic_main_menu_letters_animation_idle_consts . horizontal_shift_period_in_seconds ) ;
+    platform_math :: div_fracts ( phase , _logic_main_menu_update_state . time , _logic_main_menu_letters_animation_stateless_consts . get ( ) . idle_horizontal_shift_period_in_seconds ) ;
     platform_math :: add_to_fract ( phase , phase_shift ) ;
     platform_math :: mul_fract_by ( phase , _platform_math_consts . get ( ) . fract_2pi ) ;
     
     platform_math :: sin ( delta , phase ) ;
-    platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_animation_idle_consts . horizontal_shift_amplitude ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_animation_stateless_consts . get ( ) . idle_horizontal_shift_amplitude ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_layout_position_state . scale ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;
     
@@ -240,16 +216,16 @@ void shy_logic_main_menu_letters_animation_idle < mediator > :: _compute_vertica
     platform_math :: make_fract_from_whole ( col , _logic_main_menu_letters_animation_idle_transform_state . col ) ;
     platform_math :: make_fract_from_whole ( row , _logic_main_menu_letters_animation_idle_transform_state . row ) ;
     
-    platform_math :: mul_fracts ( phase_shift_col , col , _logic_main_menu_letters_animation_idle_consts . vertical_shift_phase_per_col ) ;
-    platform_math :: mul_fracts ( phase_shift_row , row , _logic_main_menu_letters_animation_idle_consts . vertical_shift_phase_per_row ) ;
+    platform_math :: mul_fracts ( phase_shift_col , col , _logic_main_menu_letters_animation_stateless_consts . get ( ) . idle_vertical_shift_phase_per_col ) ;
+    platform_math :: mul_fracts ( phase_shift_row , row , _logic_main_menu_letters_animation_stateless_consts . get ( ) . idle_vertical_shift_phase_per_row ) ;
     
-    platform_math :: div_fracts ( phase , _logic_main_menu_update_state . time , _logic_main_menu_letters_animation_idle_consts . vertical_shift_period_in_seconds ) ;
+    platform_math :: div_fracts ( phase , _logic_main_menu_update_state . time , _logic_main_menu_letters_animation_stateless_consts . get ( ) . idle_vertical_shift_period_in_seconds ) ;
     platform_math :: add_to_fract ( phase , phase_shift_col ) ;
     platform_math :: add_to_fract ( phase , phase_shift_row ) ;
     platform_math :: mul_fract_by ( phase , _platform_math_consts . get ( ) . fract_2pi ) ;
     
     platform_math :: sin ( delta , phase ) ;
-    platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_animation_idle_consts . vertical_shift_amplitude ) ;
+    platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_animation_stateless_consts . get ( ) . idle_vertical_shift_amplitude ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_layout_position_state . scale ) ;
     platform_math :: mul_fract_by ( delta , _logic_main_menu_letters_meshes_stateless_consts . get ( ) . letter_mesh_size ) ;
     

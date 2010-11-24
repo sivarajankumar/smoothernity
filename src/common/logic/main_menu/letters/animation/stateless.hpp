@@ -27,6 +27,13 @@ public :
         num_fract disappear_delay_per_col_in_seconds ;
         num_fract disappear_scale_begin ;
         num_fract disappear_scale_end ;
+        num_fract idle_vertical_shift_period_in_seconds ;
+        num_fract idle_vertical_shift_phase_per_col ;
+        num_fract idle_vertical_shift_phase_per_row ;
+        num_fract idle_vertical_shift_amplitude ;
+        num_fract idle_horizontal_shift_period_in_seconds ;
+        num_fract idle_horizontal_shift_phase_per_row ;
+        num_fract idle_horizontal_shift_amplitude ;
     } ;
 
     class logic_main_menu_letters_animation_messages
@@ -112,6 +119,13 @@ shy_logic_main_menu_letters_animation_stateless < mediator > :: logic_main_menu_
     platform_math :: make_num_fract ( disappear_delay_per_row_in_seconds , 5 , 100 ) ;
     platform_math :: make_num_fract ( disappear_scale_begin , 1 , 1 ) ;
     platform_math :: make_num_fract ( disappear_scale_end , 1 , 10 ) ;
+    platform_math :: make_num_fract ( idle_vertical_shift_period_in_seconds , 1 , 1 ) ;
+    platform_math :: make_num_fract ( idle_vertical_shift_phase_per_col , 1 , 3 ) ;
+    platform_math :: make_num_fract ( idle_vertical_shift_phase_per_row , 1 , 5 ) ;
+    platform_math :: make_num_fract ( idle_vertical_shift_amplitude , 1 , 30 ) ;
+    platform_math :: make_num_fract ( idle_horizontal_shift_period_in_seconds , 2 , 1 ) ;
+    platform_math :: make_num_fract ( idle_horizontal_shift_phase_per_row , 1 , 2 ) ;
+    platform_math :: make_num_fract ( idle_horizontal_shift_amplitude , 1 , 20 ) ;
 }
 
 template < typename mediator >
