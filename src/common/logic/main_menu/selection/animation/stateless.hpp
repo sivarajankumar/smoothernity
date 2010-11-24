@@ -57,6 +57,15 @@ public :
         num_fract push_weight_time_from_begin_to_end ;
         num_fract push_weight_min ;
         num_fract push_weight_max ;
+        num_fract select_horizontal_scale_time_to_begin ;
+        num_fract select_horizontal_scale_time_from_begin_to_end ;
+        num_fract select_horizontal_scale_value_begin ;
+        num_fract select_horizontal_scale_value_end ;
+        num_fract select_vertical_scale_time_to_begin ;
+        num_fract select_vertical_scale_time_from_begin_to_end ;
+        num_fract select_vertical_scale_value_begin ;
+        num_fract select_vertical_scale_value_end ;
+        num_fract select_total_animation_time ;
     } ;
 
     class logic_main_menu_selection_animation_messages
@@ -181,6 +190,15 @@ shy_logic_main_menu_selection_animation_stateless < mediator > :: logic_main_men
     platform_math :: make_num_fract ( push_weight_time_from_begin_to_end , 20 , 100 ) ;
     platform_math :: make_num_fract ( push_weight_min , 0 , 1 ) ;
     platform_math :: make_num_fract ( push_weight_max , 1 , 1 ) ;
+    platform_math :: make_num_fract ( select_horizontal_scale_time_to_begin , 0 , 100 ) ;
+    platform_math :: make_num_fract ( select_horizontal_scale_time_from_begin_to_end , 7 , 100 ) ;
+    platform_math :: make_num_fract ( select_horizontal_scale_value_begin , 8 , 10 ) ;
+    platform_math :: make_num_fract ( select_horizontal_scale_value_end , 10 , 10 ) ;
+    platform_math :: make_num_fract ( select_vertical_scale_time_to_begin , 0 , 100 ) ;
+    platform_math :: make_num_fract ( select_vertical_scale_time_from_begin_to_end , 7 , 100 ) ;
+    platform_math :: make_num_fract ( select_vertical_scale_value_begin , 5 , 10 ) ;
+    platform_math :: make_num_fract ( select_vertical_scale_value_end , 10 , 10 ) ;
+    platform_math :: make_num_fract ( select_total_animation_time , 7 , 100 ) ;
 }
 
 template < typename mediator >
