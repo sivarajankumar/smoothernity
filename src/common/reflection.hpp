@@ -13,6 +13,7 @@ private :
     void _bind_logic_amusement_stateless_consts ( ) ;
     void _bind_logic_blanket_animation_stateless_consts ( ) ;
     void _bind_logic_blanket_stateless_consts ( ) ;
+    void _bind_logic_door_animation_stateless_consts ( ) ;
     void _bind_logic_door_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
@@ -31,6 +32,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_amusement_stateless_consts ( ) ;
     _bind_logic_blanket_animation_stateless_consts ( ) ;
     _bind_logic_blanket_stateless_consts ( ) ;
+    _bind_logic_door_animation_stateless_consts ( ) ;
     _bind_logic_door_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
@@ -82,6 +84,20 @@ void shy_reflection < context > :: _bind_logic_blanket_stateless_consts ( )
     _binder . get ( ) . bind ( "mesh_color_g" , consts . get ( ) . mesh_color_g ) ;
     _binder . get ( ) . bind ( "mesh_color_b" , consts . get ( ) . mesh_color_b ) ;
     _binder . get ( ) . bind ( "mesh_color_a" , consts . get ( ) . mesh_color_a ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_door_animation_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_door_animation_stateless :: logic_door_animation_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_door_animation_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_door_animation_stateless" ) ;
+    _binder . get ( ) . bind ( "animation_origin_x" , consts . get ( ) . animation_origin_x ) ;
+    _binder . get ( ) . bind ( "animation_origin_y" , consts . get ( ) . animation_origin_y ) ;
+    _binder . get ( ) . bind ( "animation_origin_z" , consts . get ( ) . animation_origin_z ) ;
+    _binder . get ( ) . bind ( "appear_scale_begin" , consts . get ( ) . appear_scale_begin ) ;
+    _binder . get ( ) . bind ( "appear_scale_end" , consts . get ( ) . appear_scale_end ) ;
+    _binder . get ( ) . bind ( "appear_time_from_begin_to_end" , consts . get ( ) . appear_time_from_begin_to_end ) ;
 }
 
 template < typename context >
