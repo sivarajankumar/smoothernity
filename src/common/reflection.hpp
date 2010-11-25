@@ -25,6 +25,7 @@ private :
     void _bind_logic_observer_animation_stateless_consts ( ) ;
     void _bind_logic_ortho_stateless_consts ( ) ;
     void _bind_logic_perspective_stateless_consts ( ) ;
+    void _bind_logic_room_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -54,6 +55,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_observer_animation_stateless_consts ( ) ;
     _bind_logic_ortho_stateless_consts ( ) ;
     _bind_logic_perspective_stateless_consts ( ) ;
+    _bind_logic_room_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -367,6 +369,76 @@ void shy_reflection < context > :: _bind_logic_perspective_stateless_consts ( )
     _mediator . get ( ) . logic_perspective_stateless_consts ( consts ) ;
     _binder . get ( ) . module ( "logic_perspective_stateless" ) ;
     _binder . get ( ) . bind ( "z_far_unscaled" , consts . get ( ) . z_far_unscaled ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_room_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_room_stateless :: logic_room_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_room_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_room_stateless" ) ;
+    _binder . get ( ) . bind ( "mesh_color_right_r" , consts . get ( ) . mesh_color_right_r ) ;
+    _binder . get ( ) . bind ( "mesh_color_right_g" , consts . get ( ) . mesh_color_right_g ) ;
+    _binder . get ( ) . bind ( "mesh_color_right_b" , consts . get ( ) . mesh_color_right_b ) ;
+    _binder . get ( ) . bind ( "mesh_color_right_a" , consts . get ( ) . mesh_color_right_a ) ;
+    _binder . get ( ) . bind ( "mesh_color_left_r" , consts . get ( ) . mesh_color_left_r ) ;
+    _binder . get ( ) . bind ( "mesh_color_left_g" , consts . get ( ) . mesh_color_left_g ) ;
+    _binder . get ( ) . bind ( "mesh_color_left_b" , consts . get ( ) . mesh_color_left_b ) ;
+    _binder . get ( ) . bind ( "mesh_color_left_a" , consts . get ( ) . mesh_color_left_a ) ;
+    _binder . get ( ) . bind ( "mesh_color_near_r" , consts . get ( ) . mesh_color_near_r ) ;
+    _binder . get ( ) . bind ( "mesh_color_near_g" , consts . get ( ) . mesh_color_near_g ) ;
+    _binder . get ( ) . bind ( "mesh_color_near_b" , consts . get ( ) . mesh_color_near_b ) ;
+    _binder . get ( ) . bind ( "mesh_color_near_a" , consts . get ( ) . mesh_color_near_a ) ;
+    _binder . get ( ) . bind ( "mesh_color_far_r" , consts . get ( ) . mesh_color_far_r ) ;
+    _binder . get ( ) . bind ( "mesh_color_far_g" , consts . get ( ) . mesh_color_far_g ) ;
+    _binder . get ( ) . bind ( "mesh_color_far_b" , consts . get ( ) . mesh_color_far_b ) ;
+    _binder . get ( ) . bind ( "mesh_color_far_a" , consts . get ( ) . mesh_color_far_a ) ;
+    _binder . get ( ) . bind ( "mesh_color_top_r" , consts . get ( ) . mesh_color_top_r ) ;
+    _binder . get ( ) . bind ( "mesh_color_top_g" , consts . get ( ) . mesh_color_top_g ) ;
+    _binder . get ( ) . bind ( "mesh_color_top_b" , consts . get ( ) . mesh_color_top_b ) ;
+    _binder . get ( ) . bind ( "mesh_color_top_a" , consts . get ( ) . mesh_color_top_a ) ;
+    _binder . get ( ) . bind ( "mesh_color_bottom_r" , consts . get ( ) . mesh_color_bottom_r ) ;
+    _binder . get ( ) . bind ( "mesh_color_bottom_g" , consts . get ( ) . mesh_color_bottom_g ) ;
+    _binder . get ( ) . bind ( "mesh_color_bottom_b" , consts . get ( ) . mesh_color_bottom_b ) ;
+    _binder . get ( ) . bind ( "mesh_color_bottom_a" , consts . get ( ) . mesh_color_bottom_a ) ;
+    _binder . get ( ) . bind ( "mesh_position_x" , consts . get ( ) . mesh_position_x ) ;
+    _binder . get ( ) . bind ( "mesh_position_y" , consts . get ( ) . mesh_position_y ) ;
+    _binder . get ( ) . bind ( "mesh_position_z" , consts . get ( ) . mesh_position_z ) ;
+    _binder . get ( ) . bind ( "mesh_x_left" , consts . get ( ) . mesh_x_left ) ;
+    _binder . get ( ) . bind ( "mesh_x_right" , consts . get ( ) . mesh_x_right ) ;
+    _binder . get ( ) . bind ( "mesh_y_top" , consts . get ( ) . mesh_y_top ) ;
+    _binder . get ( ) . bind ( "mesh_y_bottom" , consts . get ( ) . mesh_y_bottom ) ;
+    _binder . get ( ) . bind ( "mesh_z_near" , consts . get ( ) . mesh_z_near ) ;
+    _binder . get ( ) . bind ( "mesh_z_far" , consts . get ( ) . mesh_z_far ) ;
+    _binder . get ( ) . bind ( "mesh_right_side_u_left" , consts . get ( ) . mesh_right_side_u_left ) ;
+    _binder . get ( ) . bind ( "mesh_right_side_u_right" , consts . get ( ) . mesh_right_side_u_right ) ;
+    _binder . get ( ) . bind ( "mesh_right_side_v_top" , consts . get ( ) . mesh_right_side_v_top ) ;
+    _binder . get ( ) . bind ( "mesh_right_side_v_bottom" , consts . get ( ) . mesh_right_side_v_bottom ) ;
+    _binder . get ( ) . bind ( "mesh_left_side_u_left" , consts . get ( ) . mesh_left_side_u_left ) ;
+    _binder . get ( ) . bind ( "mesh_left_side_u_right" , consts . get ( ) . mesh_left_side_u_right ) ;
+    _binder . get ( ) . bind ( "mesh_left_side_v_top" , consts . get ( ) . mesh_left_side_v_top ) ;
+    _binder . get ( ) . bind ( "mesh_left_side_v_bottom" , consts . get ( ) . mesh_left_side_v_bottom ) ;
+    _binder . get ( ) . bind ( "mesh_near_side_u_left" , consts . get ( ) . mesh_near_side_u_left ) ;
+    _binder . get ( ) . bind ( "mesh_near_side_u_right" , consts . get ( ) . mesh_near_side_u_right ) ;
+    _binder . get ( ) . bind ( "mesh_near_side_v_top" , consts . get ( ) . mesh_near_side_v_top ) ;
+    _binder . get ( ) . bind ( "mesh_near_side_v_bottom" , consts . get ( ) . mesh_near_side_v_bottom ) ;
+    _binder . get ( ) . bind ( "mesh_far_side_u_left" , consts . get ( ) . mesh_far_side_u_left ) ;
+    _binder . get ( ) . bind ( "mesh_far_side_u_right" , consts . get ( ) . mesh_far_side_u_right ) ;
+    _binder . get ( ) . bind ( "mesh_far_side_v_top" , consts . get ( ) . mesh_far_side_v_top ) ;
+    _binder . get ( ) . bind ( "mesh_far_side_v_bottom" , consts . get ( ) . mesh_far_side_v_bottom ) ;
+    _binder . get ( ) . bind ( "mesh_top_side_u_left" , consts . get ( ) . mesh_top_side_u_left ) ;
+    _binder . get ( ) . bind ( "mesh_top_side_u_right" , consts . get ( ) . mesh_top_side_u_right ) ;
+    _binder . get ( ) . bind ( "mesh_top_side_v_top" , consts . get ( ) . mesh_top_side_v_top ) ;
+    _binder . get ( ) . bind ( "mesh_top_side_v_bottom" , consts . get ( ) . mesh_top_side_v_bottom ) ;
+    _binder . get ( ) . bind ( "mesh_bottom_side_u_left" , consts . get ( ) . mesh_bottom_side_u_left ) ;
+    _binder . get ( ) . bind ( "mesh_bottom_side_u_right" , consts . get ( ) . mesh_bottom_side_u_right ) ;
+    _binder . get ( ) . bind ( "mesh_bottom_side_v_top" , consts . get ( ) . mesh_bottom_side_v_top ) ;
+    _binder . get ( ) . bind ( "mesh_bottom_side_v_bottom" , consts . get ( ) . mesh_bottom_side_v_bottom ) ;
+    _binder . get ( ) . bind ( "room_show_time" , consts . get ( ) . room_show_time ) ;
+    _binder . get ( ) . bind ( "texture_pen_intensity" , consts . get ( ) . texture_pen_intensity ) ;
+    _binder . get ( ) . bind ( "texture_paper_intensity" , consts . get ( ) . texture_paper_intensity ) ;
+    _binder . get ( ) . bind ( "texture_alpha" , consts . get ( ) . texture_alpha ) ;
+    _binder . get ( ) . bind ( "texture_grid_size" , consts . get ( ) . texture_grid_size ) ;
 }
 
 template < typename context >
