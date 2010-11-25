@@ -22,6 +22,7 @@ private :
     void _bind_logic_main_menu_letters_meshes_stateless_consts ( ) ;
     void _bind_logic_main_menu_selection_animation_stateless_consts ( ) ;
     void _bind_logic_main_menu_selection_stateless_consts ( ) ;
+    void _bind_logic_observer_animation_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -48,6 +49,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_main_menu_letters_meshes_stateless_consts ( ) ;
     _bind_logic_main_menu_selection_animation_stateless_consts ( ) ;
     _bind_logic_main_menu_selection_stateless_consts ( ) ;
+    _bind_logic_observer_animation_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -329,6 +331,19 @@ void shy_reflection < context > :: _bind_logic_main_menu_selection_stateless_con
     _binder . get ( ) . bind ( "mesh_color_b" , consts . get ( ) . mesh_color_b ) ;
     _binder . get ( ) . bind ( "mesh_color_a" , consts . get ( ) . mesh_color_a ) ;
     _binder . get ( ) . bind ( "selected_rect_vertical_scale" , consts . get ( ) . selected_rect_vertical_scale ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_observer_animation_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_observer_animation_stateless :: logic_observer_animation_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_observer_animation_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_observer_animation_stateless" ) ;
+    _binder . get ( ) . bind ( "flight_target_z" , consts . get ( ) . flight_target_z ) ;
+    _binder . get ( ) . bind ( "flight_horizontal_offset_period" , consts . get ( ) . flight_horizontal_offset_period ) ;
+    _binder . get ( ) . bind ( "flight_horizontal_offset_amplitude" , consts . get ( ) . flight_horizontal_offset_amplitude ) ;
+    _binder . get ( ) . bind ( "flight_vertical_offset_period" , consts . get ( ) . flight_vertical_offset_period ) ;
+    _binder . get ( ) . bind ( "flight_vertical_offset_amplitude" , consts . get ( ) . flight_vertical_offset_amplitude ) ;
 }
 
 template < typename context >
