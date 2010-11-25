@@ -4,6 +4,7 @@ class shy_logic_room_texture
     typedef typename mediator :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator :: engine_render_stateless :: engine_render_texture_id engine_render_texture_id ;
+    typedef typename mediator :: logic_room_stateless :: logic_room_stateless_consts_type logic_room_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -13,17 +14,6 @@ class shy_logic_room_texture
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename mediator :: platform :: platform_render :: texel_data texel_data ;
-
-    class _logic_room_texture_consts_type
-    {
-    public :
-        _logic_room_texture_consts_type ( ) ;
-    public :
-        num_fract pen_intensity ;
-        num_fract paper_intensity ;
-        num_fract alpha ;
-        num_whole grid_size ;
-    } ;
 
     class _logic_room_texture_create_state_type
     {
@@ -67,21 +57,12 @@ private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > _engine_render_stateless_consts ;
-    const _logic_room_texture_consts_type _logic_room_texture_consts ;
+    typename platform_pointer :: template pointer < const logic_room_stateless_consts_type > _logic_room_stateless_consts ;
 
     _logic_room_texture_create_state_type _logic_room_texture_create_state ;
     _engine_render_texture_create_state_type _engine_render_texture_create_state ;
     _engine_rasterizer_finalize_state_type _engine_rasterizer_finalize_state ;
 } ;
-
-template < typename mediator >
-shy_logic_room_texture < mediator > :: _logic_room_texture_consts_type :: _logic_room_texture_consts_type ( )
-{
-    platform_math :: make_num_fract ( pen_intensity , 1 , 1 ) ;
-    platform_math :: make_num_fract ( paper_intensity , 1 , 2 ) ;
-    platform_math :: make_num_fract ( alpha , 1 , 1 ) ;
-    platform_math :: make_num_whole ( grid_size , 10 ) ;
-}
 
 template < typename mediator >
 shy_logic_room_texture < mediator > :: shy_logic_room_texture ( )
@@ -100,6 +81,7 @@ void shy_logic_room_texture < mediator > :: receive ( typename messages :: init 
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _mediator . get ( ) . engine_render_stateless_consts ( _engine_render_stateless_consts ) ;
+    _mediator . get ( ) . logic_room_stateless_consts ( _logic_room_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -181,7 +163,7 @@ void shy_logic_room_texture < mediator > :: _texture_received ( )
     texture_width = _engine_render_stateless_consts . get ( ) . texture_width ;
     texture_height = _engine_render_stateless_consts . get ( ) . texture_height ;
     texture = _engine_render_texture_create_state . texture ;
-    grid_size = _logic_room_texture_consts . grid_size ;
+    grid_size = _logic_room_stateless_consts . get ( ) . texture_grid_size ;
 
     typename messages :: engine_rasterizer_use_texture texture_msg ;
     texture_msg . texture = texture ;
@@ -253,9 +235,9 @@ void shy_logic_room_texture < mediator > :: _draw_cell ( num_whole x_left , num_
     texel_data pen ;
     texel_data paper ;
 
-    pen_intensity = _logic_room_texture_consts . pen_intensity ;
-    paper_intensity = _logic_room_texture_consts . paper_intensity ;
-    alpha = _logic_room_texture_consts . alpha ;
+    pen_intensity = _logic_room_stateless_consts . get ( ) . texture_pen_intensity ;
+    paper_intensity = _logic_room_stateless_consts . get ( ) . texture_paper_intensity ;
+    alpha = _logic_room_stateless_consts . get ( ) . texture_alpha ;
 
     engine_render_stateless :: set_texel_color ( pen , pen_intensity , pen_intensity , pen_intensity , alpha ) ;
     engine_render_stateless :: set_texel_color ( paper , paper_intensity , paper_intensity , paper_intensity , alpha ) ;

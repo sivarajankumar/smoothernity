@@ -3,6 +3,7 @@ class shy_logic_room_stateless
 {
     typedef typename mediator :: platform :: platform_math platform_math ;
     typedef typename mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
     class logic_room_stateless_consts_type
@@ -68,6 +69,10 @@ public :
         num_fract mesh_bottom_side_v_top ;
         num_fract mesh_bottom_side_v_bottom ;
         num_fract room_show_time ;
+        num_fract texture_pen_intensity ;
+        num_fract texture_paper_intensity ;
+        num_fract texture_alpha ;
+        num_whole texture_grid_size ;
     } ;
 
     class logic_room_messages
@@ -195,6 +200,11 @@ shy_logic_room_stateless < mediator > :: logic_room_stateless_consts_type :: log
     platform_math :: make_num_fract ( mesh_bottom_side_v_bottom , 0 , 1 ) ;
 
     platform_math :: make_num_fract ( room_show_time , 10 , 1 ) ;
+
+    platform_math :: make_num_fract ( texture_pen_intensity , 1 , 1 ) ;
+    platform_math :: make_num_fract ( texture_paper_intensity , 1 , 2 ) ;
+    platform_math :: make_num_fract ( texture_alpha , 1 , 1 ) ;
+    platform_math :: make_num_whole ( texture_grid_size , 10 ) ;
 }
 
 template < typename mediator >
