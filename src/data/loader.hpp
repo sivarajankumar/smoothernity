@@ -1,6 +1,6 @@
 template 
     < typename facade
-    , template < typename context > reflection
+    , template < typename context > class reflection
     >
 class shy_data_loader
 {
@@ -16,11 +16,11 @@ class shy_data_loader
         class reflection_binder
         {
         public :
-            void bind ( const char * name , num_fract & value )
+            void bind ( const char * name , const num_fract & value )
             {
                 std :: cout << std :: string ( name ) << std :: endl ;
             }
-            void bind ( const char * name , num_whole & value )
+            void bind ( const char * name , const num_whole & value )
             {
                 std :: cout << std :: string ( name ) << std :: endl ;
             }

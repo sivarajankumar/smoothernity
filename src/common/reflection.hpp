@@ -25,6 +25,7 @@ void shy_reflection < context > :: bind_all
 {
     _mediator = arg_mediator ;
     _binder = arg_binder ;
+    _bind_logic_title_stateless_consts ( ) ;
 }
 
 template < typename context >

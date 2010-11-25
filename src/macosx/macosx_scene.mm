@@ -1,5 +1,11 @@
 #include "macosx_scene.h"
 
+#include <string>
+#include <iostream>
+
+#include "../common/reflection.hpp"
+#include "../data/loader.hpp"
+
 @implementation shy_macosx_scene
 
 - init
@@ -21,6 +27,10 @@
         shy_macosx_platform_insider :: platform_pointer :: bind ( platform_obj , _platform_insider -> platform ) ;
         
 		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
+        
+        shy_data_loader < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > loader ;
+        loader . load ( * _facade ) ;
+
 		_facade -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
         NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_platform < shy_macosx_platform_insider > > ) ) ;
