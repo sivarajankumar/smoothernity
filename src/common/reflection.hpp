@@ -20,6 +20,7 @@ private :
     void _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
     void _bind_logic_main_menu_letters_layout_stateless_consts ( ) ;
     void _bind_logic_main_menu_letters_meshes_stateless_consts ( ) ;
+    void _bind_logic_main_menu_selection_animation_stateless_consts ( ) ;
     void _bind_logic_main_menu_selection_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
@@ -45,6 +46,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
     _bind_logic_main_menu_letters_layout_stateless_consts ( ) ;
     _bind_logic_main_menu_letters_meshes_stateless_consts ( ) ;
+    _bind_logic_main_menu_selection_animation_stateless_consts ( ) ;
     _bind_logic_main_menu_selection_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
@@ -244,6 +246,75 @@ void shy_reflection < context > :: _bind_logic_main_menu_letters_meshes_stateles
     _binder . get ( ) . bind ( "letter_mesh_color_b" , consts . get ( ) . letter_mesh_color_b ) ;
     _binder . get ( ) . bind ( "letter_mesh_color_a" , consts . get ( ) . letter_mesh_color_a ) ;
     _binder . get ( ) . bind ( "time_between_creation" , consts . get ( ) . time_between_creation ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_main_menu_selection_animation_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_main_menu_selection_animation_stateless :: logic_main_menu_selection_animation_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_main_menu_selection_animation_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_main_menu_selection_animation_stateless" ) ;
+    _binder . get ( ) . bind ( "appear_horizontal_scale_time_to_begin" , consts . get ( ) . appear_horizontal_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "appear_horizontal_scale_time_from_begin_to_end" , consts . get ( ) . appear_horizontal_scale_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "appear_horizontal_scale_value_begin" , consts . get ( ) . appear_horizontal_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "appear_horizontal_scale_value_end" , consts . get ( ) . appear_horizontal_scale_value_end ) ;
+    _binder . get ( ) . bind ( "appear_vertical_scale_time_to_begin" , consts . get ( ) . appear_vertical_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "appear_vertical_scale_time_from_begin_to_middle" , consts . get ( ) . appear_vertical_scale_time_from_begin_to_middle ) ;
+    _binder . get ( ) . bind ( "appear_vertical_scale_time_from_middle_to_end" , consts . get ( ) . appear_vertical_scale_time_from_middle_to_end ) ;
+    _binder . get ( ) . bind ( "appear_vertical_scale_value_begin" , consts . get ( ) . appear_vertical_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "appear_vertical_scale_value_middle" , consts . get ( ) . appear_vertical_scale_value_middle ) ;
+    _binder . get ( ) . bind ( "appear_vertical_scale_value_end" , consts . get ( ) . appear_vertical_scale_value_end ) ;
+    _binder . get ( ) . bind ( "appear_total_animation_time" , consts . get ( ) . appear_total_animation_time ) ;
+    _binder . get ( ) . bind ( "disappear_horizontal_scale_time_to_begin" , consts . get ( ) . disappear_horizontal_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "disappear_horizontal_scale_time_from_begin_to_end" , consts . get ( ) . disappear_horizontal_scale_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "disappear_horizontal_scale_value_begin" , consts . get ( ) . disappear_horizontal_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "disappear_horizontal_scale_value_end" , consts . get ( ) . disappear_horizontal_scale_value_end ) ;
+    _binder . get ( ) . bind ( "disappear_vertical_scale_time_to_begin" , consts . get ( ) . disappear_vertical_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "disappear_vertical_scale_time_from_begin_to_end" , consts . get ( ) . disappear_vertical_scale_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "disappear_vertical_scale_value_begin" , consts . get ( ) . disappear_vertical_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "disappear_vertical_scale_value_end" , consts . get ( ) . disappear_vertical_scale_value_end ) ;
+    _binder . get ( ) . bind ( "idle_position_z" , consts . get ( ) . idle_position_z ) ;
+    _binder . get ( ) . bind ( "idle_attention_horizontal_scale_min" , consts . get ( ) . idle_attention_horizontal_scale_min ) ;
+    _binder . get ( ) . bind ( "idle_attention_horizontal_scale_max" , consts . get ( ) . idle_attention_horizontal_scale_max ) ;
+    _binder . get ( ) . bind ( "idle_attention_horizontal_scale_period_in_seconds" , consts . get ( ) . idle_attention_horizontal_scale_period_in_seconds ) ;
+    _binder . get ( ) . bind ( "idle_attention_vertical_scale_min" , consts . get ( ) . idle_attention_vertical_scale_min ) ;
+    _binder . get ( ) . bind ( "idle_attention_vertical_scale_max" , consts . get ( ) . idle_attention_vertical_scale_max ) ;
+    _binder . get ( ) . bind ( "idle_attention_vertical_scale_period_in_seconds" , consts . get ( ) . idle_attention_vertical_scale_period_in_seconds ) ;
+    _binder . get ( ) . bind ( "push_time_from_begin_to_middle" , consts . get ( ) . push_time_from_begin_to_middle ) ;
+    _binder . get ( ) . bind ( "push_time_from_middle_to_end" , consts . get ( ) . push_time_from_middle_to_end ) ;
+    _binder . get ( ) . bind ( "push_horizontal_scale_begin" , consts . get ( ) . push_horizontal_scale_begin ) ;
+    _binder . get ( ) . bind ( "push_horizontal_scale_middle" , consts . get ( ) . push_horizontal_scale_middle ) ;
+    _binder . get ( ) . bind ( "push_horizontal_scale_end" , consts . get ( ) . push_horizontal_scale_end ) ;
+    _binder . get ( ) . bind ( "push_vertical_scale_begin" , consts . get ( ) . push_vertical_scale_begin ) ;
+    _binder . get ( ) . bind ( "push_vertical_scale_middle" , consts . get ( ) . push_vertical_scale_middle ) ;
+    _binder . get ( ) . bind ( "push_vertical_scale_end" , consts . get ( ) . push_vertical_scale_end ) ;
+    _binder . get ( ) . bind ( "push_attention_horizontal_scale_min" , consts . get ( ) . push_attention_horizontal_scale_min ) ;
+    _binder . get ( ) . bind ( "push_attention_horizontal_scale_max" , consts . get ( ) . push_attention_horizontal_scale_max ) ;
+    _binder . get ( ) . bind ( "push_attention_vertical_scale_min" , consts . get ( ) . push_attention_vertical_scale_min ) ;
+    _binder . get ( ) . bind ( "push_attention_vertical_scale_max" , consts . get ( ) . push_attention_vertical_scale_max ) ;
+    _binder . get ( ) . bind ( "push_attention_period_in_seconds" , consts . get ( ) . push_attention_period_in_seconds ) ;
+    _binder . get ( ) . bind ( "push_weight_time_to_begin" , consts . get ( ) . push_weight_time_to_begin ) ;
+    _binder . get ( ) . bind ( "push_weight_time_from_begin_to_end" , consts . get ( ) . push_weight_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "push_weight_min" , consts . get ( ) . push_weight_min ) ;
+    _binder . get ( ) . bind ( "push_weight_max" , consts . get ( ) . push_weight_max ) ;
+    _binder . get ( ) . bind ( "select_horizontal_scale_time_to_begin" , consts . get ( ) . select_horizontal_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "select_horizontal_scale_time_from_begin_to_end" , consts . get ( ) . select_horizontal_scale_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "select_horizontal_scale_value_begin" , consts . get ( ) . select_horizontal_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "select_horizontal_scale_value_end" , consts . get ( ) . select_horizontal_scale_value_end ) ;
+    _binder . get ( ) . bind ( "select_vertical_scale_time_to_begin" , consts . get ( ) . select_vertical_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "select_vertical_scale_time_from_begin_to_end" , consts . get ( ) . select_vertical_scale_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "select_vertical_scale_value_begin" , consts . get ( ) . select_vertical_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "select_vertical_scale_value_end" , consts . get ( ) . select_vertical_scale_value_end ) ;
+    _binder . get ( ) . bind ( "select_total_animation_time" , consts . get ( ) . select_total_animation_time ) ;
+    _binder . get ( ) . bind ( "unselect_horizontal_scale_time_to_begin" , consts . get ( ) . unselect_horizontal_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "unselect_horizontal_scale_time_from_begin_to_end" , consts . get ( ) . unselect_horizontal_scale_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "unselect_horizontal_scale_value_begin" , consts . get ( ) . unselect_horizontal_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "unselect_horizontal_scale_value_end" , consts . get ( ) . unselect_horizontal_scale_value_end ) ;
+    _binder . get ( ) . bind ( "unselect_vertical_scale_time_to_begin" , consts . get ( ) . unselect_vertical_scale_time_to_begin ) ;
+    _binder . get ( ) . bind ( "unselect_vertical_scale_time_from_begin_to_end" , consts . get ( ) . unselect_vertical_scale_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "unselect_vertical_scale_value_begin" , consts . get ( ) . unselect_vertical_scale_value_begin ) ;
+    _binder . get ( ) . bind ( "unselect_vertical_scale_value_end" , consts . get ( ) . unselect_vertical_scale_value_end ) ;
+    _binder . get ( ) . bind ( "unselect_total_animation_time" , consts . get ( ) . unselect_total_animation_time ) ;
 }
 
 template < typename context >
