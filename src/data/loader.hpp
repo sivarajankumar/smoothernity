@@ -16,13 +16,18 @@ class shy_data_loader
         class reflection_binder
         {
         public :
+            void module ( const char * name )
+            {
+                std :: cout << std :: endl ;
+                std :: cout << std :: string ( "consts " ) << std :: string ( name ) << std :: endl ;
+            }
             void bind ( const char * name , const num_fract & value )
             {
-                std :: cout << std :: string ( name ) << std :: endl ;
+                std :: cout << std :: string ( "    " ) << std :: string ( name ) << std :: endl ;
             }
             void bind ( const char * name , const num_whole & value )
             {
-                std :: cout << std :: string ( name ) << std :: endl ;
+                std :: cout << std :: string ( "    " ) << std :: string ( name ) << std :: endl ;
             }
         } ;
     } ;

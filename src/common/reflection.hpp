@@ -11,6 +11,7 @@ public :
         ) ;
 private :
     void _bind_logic_amusement_stateless_consts ( ) ;
+    void _bind_logic_blanket_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -26,6 +27,7 @@ void shy_reflection < context > :: bind_all
     _mediator = arg_mediator ;
     _binder = arg_binder ;
     _bind_logic_amusement_stateless_consts ( ) ;
+    _bind_logic_blanket_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -34,9 +36,27 @@ void shy_reflection < context > :: _bind_logic_amusement_stateless_consts ( )
 {
     typename platform_pointer :: template pointer < const typename mediator :: logic_amusement_stateless :: logic_amusement_stateless_consts_type > consts ;
     _mediator . get ( ) . logic_amusement_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_amusement_stateless" ) ;
     _binder . get ( ) . bind ( "renderer_clear_color_r" , consts . get ( ) . renderer_clear_color_r ) ;
     _binder . get ( ) . bind ( "renderer_clear_color_g" , consts . get ( ) . renderer_clear_color_g ) ;
     _binder . get ( ) . bind ( "renderer_clear_color_b" , consts . get ( ) . renderer_clear_color_b ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_blanket_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_blanket_stateless :: logic_blanket_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_blanket_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_blanket_stateless" ) ;
+    _binder . get ( ) . bind ( "mesh_vertex_x_left" , consts . get ( ) . mesh_vertex_x_left ) ;
+    _binder . get ( ) . bind ( "mesh_vertex_x_right" , consts . get ( ) . mesh_vertex_x_right ) ;
+    _binder . get ( ) . bind ( "mesh_vertex_y_bottom" , consts . get ( ) . mesh_vertex_y_bottom ) ;
+    _binder . get ( ) . bind ( "mesh_vertex_y_top" , consts . get ( ) . mesh_vertex_y_top ) ;
+    _binder . get ( ) . bind ( "mesh_vertex_z" , consts . get ( ) . mesh_vertex_z ) ;
+    _binder . get ( ) . bind ( "mesh_color_r" , consts . get ( ) . mesh_color_r ) ;
+    _binder . get ( ) . bind ( "mesh_color_g" , consts . get ( ) . mesh_color_g ) ;
+    _binder . get ( ) . bind ( "mesh_color_b" , consts . get ( ) . mesh_color_b ) ;
+    _binder . get ( ) . bind ( "mesh_color_a" , consts . get ( ) . mesh_color_a ) ;
 }
 
 template < typename context >
@@ -44,6 +64,7 @@ void shy_reflection < context > :: _bind_logic_title_stateless_consts ( )
 {
     typename platform_pointer :: template pointer < const typename mediator :: logic_title_stateless :: logic_title_stateless_consts_type > consts ;
     _mediator . get ( ) . logic_title_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_title_stateless" ) ;
     _binder . get ( ) . bind ( "appear_pos_angle_periods" , consts . get ( ) . appear_pos_angle_periods ) ;
     _binder . get ( ) . bind ( "appear_rubber_first" , consts . get ( ) . appear_rubber_first ) ;
     _binder . get ( ) . bind ( "appear_rubber_last" , consts . get ( ) . appear_rubber_last ) ;
