@@ -23,6 +23,8 @@ private :
     void _bind_logic_main_menu_selection_animation_stateless_consts ( ) ;
     void _bind_logic_main_menu_selection_stateless_consts ( ) ;
     void _bind_logic_observer_animation_stateless_consts ( ) ;
+    void _bind_logic_ortho_stateless_consts ( ) ;
+    void _bind_logic_perspective_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -50,6 +52,8 @@ void shy_reflection < context > :: bind_all
     _bind_logic_main_menu_selection_animation_stateless_consts ( ) ;
     _bind_logic_main_menu_selection_stateless_consts ( ) ;
     _bind_logic_observer_animation_stateless_consts ( ) ;
+    _bind_logic_ortho_stateless_consts ( ) ;
+    _bind_logic_perspective_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -344,6 +348,25 @@ void shy_reflection < context > :: _bind_logic_observer_animation_stateless_cons
     _binder . get ( ) . bind ( "flight_horizontal_offset_amplitude" , consts . get ( ) . flight_horizontal_offset_amplitude ) ;
     _binder . get ( ) . bind ( "flight_vertical_offset_period" , consts . get ( ) . flight_vertical_offset_period ) ;
     _binder . get ( ) . bind ( "flight_vertical_offset_amplitude" , consts . get ( ) . flight_vertical_offset_amplitude ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_ortho_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_ortho_stateless :: logic_ortho_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_ortho_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_ortho_stateless" ) ;
+    _binder . get ( ) . bind ( "z_near" , consts . get ( ) . z_near ) ;
+    _binder . get ( ) . bind ( "z_far" , consts . get ( ) . z_far ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_perspective_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_perspective_stateless :: logic_perspective_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_perspective_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_perspective_stateless" ) ;
+    _binder . get ( ) . bind ( "z_far_unscaled" , consts . get ( ) . z_far_unscaled ) ;
 }
 
 template < typename context >
