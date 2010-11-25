@@ -125,15 +125,8 @@
 template < typename platform >
 class shy_facade
 {
-public :
-    shy_facade ( typename platform :: platform_pointer :: template pointer < const platform > ) ;
-    void init ( ) ;
-    void done ( ) ;
-    void render ( ) ;
-    void update ( ) ;
-    void video_mode_changed ( ) ;
-private :
-    shy_aggregator < shy_aggregator_types
+    typedef typename platform :: platform_pointer platform_pointer ;
+    typedef shy_aggregator < shy_aggregator_types
         < platform
         , shy_mediator
         , shy_engine_camera
@@ -248,14 +241,31 @@ private :
         , shy_logic_title_stateless
         , shy_logic_touch
 		, shy_logic_touch_stateless
-        > >
-        _aggregator ;
+        > > aggregator_type ;
+public :
+    typedef typename aggregator_type :: mediator_type mediator ;
+public :
+    shy_facade ( typename platform_pointer :: template pointer < const platform > ) ;
+    void mediator_obj ( typename platform_pointer :: template pointer < mediator > & ) ;
+    void init ( ) ;
+    void done ( ) ;
+    void render ( ) ;
+    void update ( ) ;
+    void video_mode_changed ( ) ;
+private :
+    aggregator_type _aggregator ;
 } ;
 
 template < typename platform >
-shy_facade < platform > :: shy_facade ( typename platform :: platform_pointer :: template pointer < const platform > arg_platform )
+shy_facade < platform > :: shy_facade ( typename platform_pointer :: template pointer < const platform > arg_platform )
 : _aggregator ( arg_platform )
 {
+}
+
+template < typename platform >
+void shy_facade < platform > :: mediator_obj ( typename platform_pointer :: template pointer < mediator > & result )
+{
+    _aggregator . mediator_obj ( result ) ;
 }
 
 template < typename platform >

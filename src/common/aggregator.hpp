@@ -598,7 +598,9 @@ public :
 template < typename aggregator_types >
 class shy_aggregator
 {
+public :
     typedef typename aggregator_types :: mediator_type mediator_type ;
+private :
     typedef typename aggregator_types :: messages messages ;
     typedef typename aggregator_types :: platform platform ;
     typedef typename aggregator_types :: platform :: platform_pointer platform_pointer ;
@@ -705,6 +707,7 @@ class shy_aggregator
     typedef typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > logic_touch ;
 public :
     shy_aggregator ( typename platform_pointer :: template pointer < const platform > ) ;
+    void mediator_obj ( typename platform_pointer :: template pointer < mediator_type > & ) ;
     void init ( ) ;
     void done ( ) ;
     void render ( ) ;
@@ -1193,6 +1196,12 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_title_stateless_ptr
         , logic_touch_ptr
         ) ;
+}
+
+template < typename aggregator_types >
+void shy_aggregator < aggregator_types > :: mediator_obj ( typename platform_pointer :: template pointer < mediator_type > & result )
+{
+    platform_pointer :: bind ( result , _mediator ) ;
 }
 
 template < typename aggregator_types >
