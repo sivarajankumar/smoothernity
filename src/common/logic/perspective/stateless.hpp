@@ -32,6 +32,10 @@ public :
     } ;
 
 public :
+    shy_logic_perspective_stateless ( ) ;
+private :
+    shy_logic_perspective_stateless < mediator > & operator= ( const shy_logic_perspective_stateless < mediator > & ) ;
+public :
     const logic_perspective_stateless_consts_type logic_perspective_stateless_consts ;
 } ;
 
@@ -39,6 +43,11 @@ template < typename mediator >
 shy_logic_perspective_stateless < mediator > :: logic_perspective_stateless_consts_type :: logic_perspective_stateless_consts_type ( )
 {
     platform_math :: make_num_fract ( z_far_unscaled , 50 , 1 ) ;
+}
+
+template < typename mediator >
+shy_logic_perspective_stateless < mediator > :: shy_logic_perspective_stateless ( )
+{
 }
 
 template < typename mediator >

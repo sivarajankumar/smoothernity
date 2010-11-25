@@ -87,6 +87,10 @@ public :
     } ;
 
 public :
+    shy_logic_door_stateless ( ) ;
+private :
+    shy_logic_door_stateless < mediator > & operator= ( const shy_logic_door_stateless < mediator > & ) ;
+public :
     const logic_door_stateless_consts_type logic_door_stateless_consts ;
 } ;
 
@@ -125,6 +129,11 @@ shy_logic_door_stateless < mediator > :: logic_door_stateless_consts_type :: log
     platform_math :: make_num_fract ( texture_paper_b , 0 , 1 ) ;
     platform_math :: make_num_fract ( texture_paper_a , 1 , 1 ) ;
     platform_math :: make_num_whole ( texture_stripes , 9 ) ;
+}
+
+template < typename mediator >
+shy_logic_door_stateless < mediator > :: shy_logic_door_stateless ( )
+{
 }
 
 template < typename mediator >

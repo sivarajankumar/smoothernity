@@ -39,12 +39,14 @@ class shy_logic_room_mesh
     } ;
 
 public :
+    shy_logic_room_mesh ( ) ;
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
     void receive ( typename messages :: engine_render_mesh_create_reply ) ;
     void receive ( typename messages :: logic_room_mesh_create ) ;
     void receive ( typename messages :: logic_room_mesh_render_request ) ;
 private :
+    shy_logic_room_mesh < mediator > & operator= ( const shy_logic_room_mesh < mediator > & ) ;
     void _proceed_with_creation ( ) ;
     void _request_mesh_creation ( ) ;
     void _mesh_created ( ) ;
@@ -78,6 +80,11 @@ shy_logic_room_mesh < mediator > :: _logic_room_mesh_consts_type :: _logic_room_
 {
     platform_math :: make_num_whole ( vertices_count , 27 ) ;
     platform_math :: make_num_whole ( triangle_strip_indices_count , 27 ) ;
+}
+
+template < typename mediator >
+shy_logic_room_mesh < mediator > :: shy_logic_room_mesh ( )
+{
 }
 
 template < typename mediator >

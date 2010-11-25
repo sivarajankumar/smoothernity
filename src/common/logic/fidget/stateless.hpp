@@ -49,6 +49,10 @@ public :
     } ;
 
 public :
+    shy_logic_fidget_stateless ( ) ;
+private :
+    shy_logic_fidget_stateless < mediator > & operator= ( const shy_logic_fidget_stateless < mediator > & ) ;
+public :
     const logic_fidget_stateless_consts_type logic_fidget_stateless_consts ;
 } ;
 
@@ -66,6 +70,11 @@ shy_logic_fidget_stateless < mediator > :: logic_fidget_stateless_consts_type ::
     platform_math :: make_num_whole ( fidget_edges , 3 ) ;
     platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
     platform_math :: make_num_whole ( should_render_fidget , false ) ;
+}
+
+template < typename mediator >
+shy_logic_fidget_stateless < mediator > :: shy_logic_fidget_stateless ( )
+{
 }
 
 template < typename mediator >

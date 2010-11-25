@@ -53,6 +53,10 @@ public :
 	} ;
 
 public :
+    shy_logic_title_stateless ( ) ;
+private :
+    shy_logic_title_stateless < mediator > & operator= ( const shy_logic_title_stateless < mediator > & ) ;
+public :
     const logic_title_stateless_consts_type logic_title_stateless_consts ;
 } ;
 
@@ -74,6 +78,11 @@ shy_logic_title_stateless < mediator > :: logic_title_stateless_consts_type :: l
     
     platform_math :: make_num_fract ( spin_radius_in_letters , 2 , 1 ) ;
     platform_math :: make_num_whole ( frames_between_letters , 5 ) ;
+}
+
+template < typename mediator >
+shy_logic_title_stateless < mediator > :: shy_logic_title_stateless ( )
+{
 }
 
 template < typename mediator >

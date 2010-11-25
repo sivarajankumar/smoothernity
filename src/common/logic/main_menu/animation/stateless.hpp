@@ -42,6 +42,10 @@ public :
     } ;
 
 public :
+    shy_logic_main_menu_animation_stateless ( ) ;
+private :
+    shy_logic_main_menu_animation_stateless < mediator > & operator= ( const shy_logic_main_menu_animation_stateless < mediator > & ) ;
+public :
     const logic_main_menu_animation_stateless_consts_type logic_main_menu_animation_stateless_consts ;
 } ;
 
@@ -53,6 +57,11 @@ shy_logic_main_menu_animation_stateless < mediator > :: logic_main_menu_animatio
     platform_math :: make_num_fract ( shake_shift_x_amplitude_begin , 20 , 1000 ) ;
     platform_math :: make_num_fract ( shake_shift_x_amplitude_end , 5 , 1000 ) ;
     platform_math :: make_num_fract ( shake_shift_x_period_in_seconds , 2 , 10 ) ;
+}
+
+template < typename mediator >
+shy_logic_main_menu_animation_stateless < mediator > :: shy_logic_main_menu_animation_stateless ( )
+{
 }
 
 template < typename mediator >

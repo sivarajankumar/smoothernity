@@ -120,6 +120,10 @@ public :
     } ;
 
 public :
+    shy_logic_room_stateless ( ) ;
+private :
+    shy_logic_room_stateless < mediator > & operator= ( const shy_logic_room_stateless < mediator > & ) ;
+public :
     const logic_room_stateless_consts_type logic_room_stateless_consts ;
 } ;
 
@@ -205,6 +209,11 @@ shy_logic_room_stateless < mediator > :: logic_room_stateless_consts_type :: log
     platform_math :: make_num_fract ( texture_paper_intensity , 1 , 2 ) ;
     platform_math :: make_num_fract ( texture_alpha , 1 , 1 ) ;
     platform_math :: make_num_whole ( texture_grid_size , 10 ) ;
+}
+
+template < typename mediator >
+shy_logic_room_stateless < mediator > :: shy_logic_room_stateless ( )
+{
 }
 
 template < typename mediator >
