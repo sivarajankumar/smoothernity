@@ -18,6 +18,7 @@ private :
     void _bind_logic_fidget_stateless_consts ( ) ;
     void _bind_logic_main_menu_animation_stateless_consts ( ) ;
     void _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
+    void _bind_logic_main_menu_letters_layout_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -40,6 +41,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_fidget_stateless_consts ( ) ;
     _bind_logic_main_menu_animation_stateless_consts ( ) ;
     _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
+    _bind_logic_main_menu_letters_layout_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -211,6 +213,19 @@ void shy_reflection < context > :: _bind_logic_main_menu_letters_animation_state
     _binder . get ( ) . bind ( "selection_weight_time_from_begin_to_end" , consts . get ( ) . selection_weight_time_from_begin_to_end ) ;
     _binder . get ( ) . bind ( "unselection_weight_time_to_begin" , consts . get ( ) . unselection_weight_time_to_begin ) ;
     _binder . get ( ) . bind ( "unselection_weight_time_from_begin_to_end" , consts . get ( ) . unselection_weight_time_from_begin_to_end ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_main_menu_letters_layout_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_main_menu_letters_layout_stateless :: logic_main_menu_letters_layout_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_main_menu_letters_layout_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_main_menu_letters_layout_stateless" ) ;
+    _binder . get ( ) . bind ( "letter_size_fract_horizontal_spacing" , consts . get ( ) . letter_size_fract_horizontal_spacing ) ;
+    _binder . get ( ) . bind ( "letter_size_fract_vertical_spacing" , consts . get ( ) . letter_size_fract_vertical_spacing ) ;
+    _binder . get ( ) . bind ( "letter_size_fract_horizontal_border" , consts . get ( ) . letter_size_fract_horizontal_border ) ;
+    _binder . get ( ) . bind ( "letter_size_fract_vertical_border" , consts . get ( ) . letter_size_fract_vertical_border ) ;
+    _binder . get ( ) . bind ( "menu_position_z" , consts . get ( ) . menu_position_z ) ;
 }
 
 template < typename context >
