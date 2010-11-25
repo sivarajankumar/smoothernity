@@ -15,6 +15,7 @@ private :
     void _bind_logic_blanket_stateless_consts ( ) ;
     void _bind_logic_door_animation_stateless_consts ( ) ;
     void _bind_logic_door_stateless_consts ( ) ;
+    void _bind_logic_fidget_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -34,6 +35,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_blanket_stateless_consts ( ) ;
     _bind_logic_door_animation_stateless_consts ( ) ;
     _bind_logic_door_stateless_consts ( ) ;
+    _bind_logic_fidget_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -132,6 +134,25 @@ void shy_reflection < context > :: _bind_logic_door_stateless_consts ( )
     _binder . get ( ) . bind ( "texture_paper_b" , consts . get ( ) . texture_paper_b ) ;
     _binder . get ( ) . bind ( "texture_paper_a" , consts . get ( ) . texture_paper_a ) ;
     _binder . get ( ) . bind ( "texture_stripes" , consts . get ( ) . texture_stripes ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_fidget_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_fidget_stateless :: logic_fidget_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_fidget_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_fidget_stateless" ) ;
+    _binder . get ( ) . bind ( "fidget_size" , consts . get ( ) . fidget_size ) ;
+    _binder . get ( ) . bind ( "fidget_r" , consts . get ( ) . fidget_r ) ;
+    _binder . get ( ) . bind ( "fidget_g" , consts . get ( ) . fidget_g ) ;
+    _binder . get ( ) . bind ( "fidget_b" , consts . get ( ) . fidget_b ) ;
+    _binder . get ( ) . bind ( "mesh_x" , consts . get ( ) . mesh_x ) ;
+    _binder . get ( ) . bind ( "mesh_y_from_top" , consts . get ( ) . mesh_y_from_top ) ;
+    _binder . get ( ) . bind ( "mesh_z" , consts . get ( ) . mesh_z ) ;
+    _binder . get ( ) . bind ( "angle_delta" , consts . get ( ) . angle_delta ) ;
+    _binder . get ( ) . bind ( "fidget_edges" , consts . get ( ) . fidget_edges ) ;
+    _binder . get ( ) . bind ( "scale_in_frames" , consts . get ( ) . scale_in_frames ) ;
+    _binder . get ( ) . bind ( "should_render_fidget" , consts . get ( ) . should_render_fidget ) ;
 }
 
 template < typename context >
