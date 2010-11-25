@@ -624,6 +624,7 @@ class shy_aggregator
     typedef typename aggregator_types :: logic_perspective_stateless logic_perspective_stateless ;
     typedef typename aggregator_types :: logic_room_stateless logic_room_stateless ;
     typedef typename aggregator_types :: logic_text_stateless logic_text_stateless ;
+    typedef typename aggregator_types :: logic_title_stateless logic_title_stateless ;
     
     typedef typename aggregator_types :: scheduled_engine_rasterizer :: template scheduled_module < mediator_type > engine_rasterizer ;
     typedef typename aggregator_types :: scheduled_engine_render :: template scheduled_module < mediator_type > engine_render ;
@@ -809,6 +810,7 @@ private :
     logic_sound _logic_sound ;
     logic_text _logic_text ;
     logic_text_stateless _logic_text_stateless ;
+    logic_title_stateless _logic_title_stateless ;
     logic_title _logic_title ;
     logic_touch _logic_touch ;
 } ;
@@ -912,6 +914,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_text > logic_text_ptr ;
     typename platform_pointer :: template pointer < logic_text_stateless > logic_text_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_title > logic_title_ptr ;
+    typename platform_pointer :: template pointer < logic_title_stateless > logic_title_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_touch > logic_touch_ptr ;
     typename platform_pointer :: template pointer < scheduler > scheduler_ptr ;
     
@@ -1010,6 +1013,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_text_ptr , _logic_text ) ;
     platform_pointer :: bind ( logic_text_stateless_ptr , _logic_text_stateless ) ;
     platform_pointer :: bind ( logic_title_ptr , _logic_title ) ;
+    platform_pointer :: bind ( logic_title_stateless_ptr , _logic_title_stateless ) ;
     platform_pointer :: bind ( logic_touch_ptr , _logic_touch ) ;
     platform_pointer :: bind ( scheduler_ptr , _scheduler ) ;
 
@@ -1186,6 +1190,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_text_ptr
         , logic_text_stateless_ptr
         , logic_title_ptr
+        , logic_title_stateless_ptr
         , logic_touch_ptr
         ) ;
 }
