@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_room
 {
+    typedef typename mediator :: logic_room_stateless :: logic_room_stateless_consts_type logic_room_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -9,14 +10,6 @@ class shy_logic_room
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
-
-    class _logic_room_consts_type
-    {
-    public :
-        _logic_room_consts_type ( ) ;
-    public :
-        num_fract show_time ;
-    } ;
 
     class _logic_room_update_state_type
     {
@@ -63,19 +56,13 @@ private :
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
-    const _logic_room_consts_type _logic_room_consts ;
+    typename platform_pointer :: template pointer < const logic_room_stateless_consts_type > _logic_room_stateless_consts ;
 
     _logic_room_update_state_type _logic_room_update_state ;
     _logic_room_creation_permit_state_type _logic_room_creation_permit_state ;
     _logic_room_mesh_create_state_type _logic_room_mesh_create_state ;
     _logic_room_texture_create_state_type _logic_room_texture_create_state ;
 } ;
-
-template < typename mediator >
-shy_logic_room < mediator > :: _logic_room_consts_type :: _logic_room_consts_type ( )
-{
-    platform_math :: make_num_fract ( show_time , 10 , 1 ) ;
-}
 
 template < typename mediator >
 shy_logic_room < mediator > :: shy_logic_room ( )
@@ -93,6 +80,7 @@ void shy_logic_room < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
+    _mediator . get ( ) . logic_room_stateless_consts ( _logic_room_stateless_consts ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 }
 
@@ -142,7 +130,7 @@ void shy_logic_room < mediator > :: receive ( typename messages :: logic_room_up
         num_fract show_time ;
 
         time = _logic_room_update_state . time ;
-        show_time = _logic_room_consts . show_time ;
+        show_time = _logic_room_stateless_consts . get ( ) . room_show_time ;
         platform_math :: make_num_fract ( time_step , 1 , platform :: frames_per_second ) ;
 
         platform_math :: add_to_fract ( time , time_step ) ;

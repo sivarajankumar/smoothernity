@@ -67,6 +67,7 @@ public :
         num_fract mesh_bottom_side_u_right ;
         num_fract mesh_bottom_side_v_top ;
         num_fract mesh_bottom_side_v_bottom ;
+        num_fract room_show_time ;
     } ;
 
     class logic_room_messages
@@ -192,6 +193,8 @@ shy_logic_room_stateless < mediator > :: logic_room_stateless_consts_type :: log
     platform_math :: make_num_fract ( mesh_bottom_side_u_right , 1 , 1 ) ;
     platform_math :: make_num_fract ( mesh_bottom_side_v_top , 1 , 1 ) ;
     platform_math :: make_num_fract ( mesh_bottom_side_v_bottom , 0 , 1 ) ;
+
+    platform_math :: make_num_fract ( room_show_time , 10 , 1 ) ;
 }
 
 template < typename mediator >
