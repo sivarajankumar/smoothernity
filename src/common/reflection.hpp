@@ -19,6 +19,7 @@ private :
     void _bind_logic_main_menu_animation_stateless_consts ( ) ;
     void _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
     void _bind_logic_main_menu_letters_layout_stateless_consts ( ) ;
+    void _bind_logic_main_menu_letters_meshes_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -42,6 +43,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_main_menu_animation_stateless_consts ( ) ;
     _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
     _bind_logic_main_menu_letters_layout_stateless_consts ( ) ;
+    _bind_logic_main_menu_letters_meshes_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -226,6 +228,20 @@ void shy_reflection < context > :: _bind_logic_main_menu_letters_layout_stateles
     _binder . get ( ) . bind ( "letter_size_fract_horizontal_border" , consts . get ( ) . letter_size_fract_horizontal_border ) ;
     _binder . get ( ) . bind ( "letter_size_fract_vertical_border" , consts . get ( ) . letter_size_fract_vertical_border ) ;
     _binder . get ( ) . bind ( "menu_position_z" , consts . get ( ) . menu_position_z ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_main_menu_letters_meshes_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_main_menu_letters_meshes_stateless :: logic_main_menu_letters_meshes_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_main_menu_letters_meshes_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_main_menu_letters_meshes_stateless" ) ;
+    _binder . get ( ) . bind ( "letter_mesh_size" , consts . get ( ) . letter_mesh_size ) ;
+    _binder . get ( ) . bind ( "letter_mesh_color_r" , consts . get ( ) . letter_mesh_color_r ) ;
+    _binder . get ( ) . bind ( "letter_mesh_color_g" , consts . get ( ) . letter_mesh_color_g ) ;
+    _binder . get ( ) . bind ( "letter_mesh_color_b" , consts . get ( ) . letter_mesh_color_b ) ;
+    _binder . get ( ) . bind ( "letter_mesh_color_a" , consts . get ( ) . letter_mesh_color_a ) ;
+    _binder . get ( ) . bind ( "time_between_creation" , consts . get ( ) . time_between_creation ) ;
 }
 
 template < typename context >
