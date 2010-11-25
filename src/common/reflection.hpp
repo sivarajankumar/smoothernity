@@ -16,6 +16,7 @@ private :
     void _bind_logic_door_animation_stateless_consts ( ) ;
     void _bind_logic_door_stateless_consts ( ) ;
     void _bind_logic_fidget_stateless_consts ( ) ;
+    void _bind_logic_main_menu_animation_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -36,6 +37,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_door_animation_stateless_consts ( ) ;
     _bind_logic_door_stateless_consts ( ) ;
     _bind_logic_fidget_stateless_consts ( ) ;
+    _bind_logic_main_menu_animation_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -153,6 +155,19 @@ void shy_reflection < context > :: _bind_logic_fidget_stateless_consts ( )
     _binder . get ( ) . bind ( "fidget_edges" , consts . get ( ) . fidget_edges ) ;
     _binder . get ( ) . bind ( "scale_in_frames" , consts . get ( ) . scale_in_frames ) ;
     _binder . get ( ) . bind ( "should_render_fidget" , consts . get ( ) . should_render_fidget ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_main_menu_animation_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_main_menu_animation_stateless :: logic_main_menu_animation_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_main_menu_animation_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_main_menu_animation_stateless" ) ;
+    _binder . get ( ) . bind ( "shake_time_to_begin" , consts . get ( ) . shake_time_to_begin ) ;
+    _binder . get ( ) . bind ( "shake_time_from_begin_to_end" , consts . get ( ) . shake_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "shake_shift_x_amplitude_begin" , consts . get ( ) . shake_shift_x_amplitude_begin ) ;
+    _binder . get ( ) . bind ( "shake_shift_x_amplitude_end" , consts . get ( ) . shake_shift_x_amplitude_end ) ;
+    _binder . get ( ) . bind ( "shake_shift_x_period_in_seconds" , consts . get ( ) . shake_shift_x_period_in_seconds ) ;
 }
 
 template < typename context >
