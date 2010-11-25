@@ -17,6 +17,7 @@ private :
     void _bind_logic_door_stateless_consts ( ) ;
     void _bind_logic_fidget_stateless_consts ( ) ;
     void _bind_logic_main_menu_animation_stateless_consts ( ) ;
+    void _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
     void _bind_logic_title_stateless_consts ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
@@ -38,6 +39,7 @@ void shy_reflection < context > :: bind_all
     _bind_logic_door_stateless_consts ( ) ;
     _bind_logic_fidget_stateless_consts ( ) ;
     _bind_logic_main_menu_animation_stateless_consts ( ) ;
+    _bind_logic_main_menu_letters_animation_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
 }
 
@@ -168,6 +170,47 @@ void shy_reflection < context > :: _bind_logic_main_menu_animation_stateless_con
     _binder . get ( ) . bind ( "shake_shift_x_amplitude_begin" , consts . get ( ) . shake_shift_x_amplitude_begin ) ;
     _binder . get ( ) . bind ( "shake_shift_x_amplitude_end" , consts . get ( ) . shake_shift_x_amplitude_end ) ;
     _binder . get ( ) . bind ( "shake_shift_x_period_in_seconds" , consts . get ( ) . shake_shift_x_period_in_seconds ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_main_menu_letters_animation_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_main_menu_letters_animation_stateless :: logic_main_menu_letters_animation_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_main_menu_letters_animation_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_main_menu_letters_animation_stateless" ) ;
+    _binder . get ( ) . bind ( "appear_time_from_begin_to_middle_in_seconds" , consts . get ( ) . appear_time_from_begin_to_middle_in_seconds ) ;
+    _binder . get ( ) . bind ( "appear_time_from_middle_to_end_in_seconds" , consts . get ( ) . appear_time_from_middle_to_end_in_seconds ) ;
+    _binder . get ( ) . bind ( "appear_delay_per_col_in_seconds" , consts . get ( ) . appear_delay_per_col_in_seconds ) ;
+    _binder . get ( ) . bind ( "appear_delay_per_row_in_seconds" , consts . get ( ) . appear_delay_per_row_in_seconds ) ;
+    _binder . get ( ) . bind ( "appear_scale_begin" , consts . get ( ) . appear_scale_begin ) ;
+    _binder . get ( ) . bind ( "appear_scale_middle" , consts . get ( ) . appear_scale_middle ) ;
+    _binder . get ( ) . bind ( "appear_scale_end" , consts . get ( ) . appear_scale_end ) ;
+    _binder . get ( ) . bind ( "disappear_animation_time_in_seconds" , consts . get ( ) . disappear_animation_time_in_seconds ) ;
+    _binder . get ( ) . bind ( "disappear_time_from_begin_to_end_in_seconds" , consts . get ( ) . disappear_time_from_begin_to_end_in_seconds ) ;
+    _binder . get ( ) . bind ( "disappear_delay_per_row_in_seconds" , consts . get ( ) . disappear_delay_per_row_in_seconds ) ;
+    _binder . get ( ) . bind ( "disappear_delay_per_col_in_seconds" , consts . get ( ) . disappear_delay_per_col_in_seconds ) ;
+    _binder . get ( ) . bind ( "disappear_scale_begin" , consts . get ( ) . disappear_scale_begin ) ;
+    _binder . get ( ) . bind ( "disappear_scale_end" , consts . get ( ) . disappear_scale_end ) ;
+    _binder . get ( ) . bind ( "idle_vertical_shift_period_in_seconds" , consts . get ( ) . idle_vertical_shift_period_in_seconds ) ;
+    _binder . get ( ) . bind ( "idle_vertical_shift_phase_per_col" , consts . get ( ) . idle_vertical_shift_phase_per_col ) ;
+    _binder . get ( ) . bind ( "idle_vertical_shift_phase_per_row" , consts . get ( ) . idle_vertical_shift_phase_per_row ) ;
+    _binder . get ( ) . bind ( "idle_vertical_shift_amplitude" , consts . get ( ) . idle_vertical_shift_amplitude ) ;
+    _binder . get ( ) . bind ( "idle_horizontal_shift_period_in_seconds" , consts . get ( ) . idle_horizontal_shift_period_in_seconds ) ;
+    _binder . get ( ) . bind ( "idle_horizontal_shift_phase_per_row" , consts . get ( ) . idle_horizontal_shift_phase_per_row ) ;
+    _binder . get ( ) . bind ( "idle_horizontal_shift_amplitude" , consts . get ( ) . idle_horizontal_shift_amplitude ) ;
+    _binder . get ( ) . bind ( "selection_time_stable" , consts . get ( ) . selection_time_stable ) ;
+    _binder . get ( ) . bind ( "selection_time_transition" , consts . get ( ) . selection_time_transition ) ;
+    _binder . get ( ) . bind ( "selection_scale_min" , consts . get ( ) . selection_scale_min ) ;
+    _binder . get ( ) . bind ( "selection_scale_max" , consts . get ( ) . selection_scale_max ) ;
+    _binder . get ( ) . bind ( "selection_push_time_from_begin_to_middle" , consts . get ( ) . selection_push_time_from_begin_to_middle ) ;
+    _binder . get ( ) . bind ( "selection_push_time_from_middle_to_end" , consts . get ( ) . selection_push_time_from_middle_to_end ) ;
+    _binder . get ( ) . bind ( "selection_push_scale_begin" , consts . get ( ) . selection_push_scale_begin ) ;
+    _binder . get ( ) . bind ( "selection_push_scale_middle" , consts . get ( ) . selection_push_scale_middle ) ;
+    _binder . get ( ) . bind ( "selection_push_scale_end" , consts . get ( ) . selection_push_scale_end ) ;
+    _binder . get ( ) . bind ( "selection_weight_time_to_begin" , consts . get ( ) . selection_weight_time_to_begin ) ;
+    _binder . get ( ) . bind ( "selection_weight_time_from_begin_to_end" , consts . get ( ) . selection_weight_time_from_begin_to_end ) ;
+    _binder . get ( ) . bind ( "unselection_weight_time_to_begin" , consts . get ( ) . unselection_weight_time_to_begin ) ;
+    _binder . get ( ) . bind ( "unselection_weight_time_from_begin_to_end" , consts . get ( ) . unselection_weight_time_from_begin_to_end ) ;
 }
 
 template < typename context >
