@@ -92,6 +92,9 @@ class shy_data_loader
     private :
         void _store_error ( std :: string ) ;
         void _read_next_token ( ) ;
+        void _trim_first_char ( ) ;
+        char _first_char ( ) ;
+        bool _any_chars_in_line ( ) ;
     public :
         _reflection_modules_type * _modules ;
         _state_type _state ;
@@ -204,6 +207,40 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: parse (
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _read_next_token ( )
 {
+    std :: locale locale ;
+    _token = std :: string ( ) ;
+    _token_class = _token_class_none ;
+    while ( _any_chars_in_line ( ) )
+    {
+        if ( ! std :: isspace ( _first_char ( ) , locale ) )
+            break ;
+        _trim_first_char ( ) ;
+    }
+    while ( _any_chars_in_line ( ) )
+    {
+        if ( std :: isspace ( _first_char ( ) , locale ) )
+            break ;
+        _token += std :: string ( 1 , _first_char ( ) ) ;
+        _trim_first_char ( ) ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _trim_first_char ( )
+{
+    _remaining_line . erase ( _remaining_line . begin ( ) ) ;
+}
+
+template < typename data_loader_types >
+char shy_data_loader < data_loader_types > :: _reflection_parser_type :: _first_char ( )
+{
+    return _remaining_line . at ( 0 ) ;
+}
+
+template < typename data_loader_types >
+bool shy_data_loader < data_loader_types > :: _reflection_parser_type :: _any_chars_in_line ( )
+{
+    return ! _remaining_line . empty ( ) ;
 }
 
 template < typename data_loader_types >

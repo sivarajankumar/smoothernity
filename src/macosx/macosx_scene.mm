@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include <locale>
 #include <iostream>
 
 #include "../common/reflection.hpp"
