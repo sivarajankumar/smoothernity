@@ -27,6 +27,7 @@ class shy_data_loader
     {
     public :
         static std :: string consts ( ) { return "consts" ; }
+        static char divide ( ) { return '/' ; }
         static std :: string error_expected_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'consts', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
         static std :: string next_line ( ) { return "\n" ; }
@@ -34,6 +35,7 @@ class shy_data_loader
         static std :: string report_indent ( ) { return "    " ; }
         static std :: string report_modules ( ) { return " modules" ; }
         static std :: string report_summary ( ) { return "summary: " ; }
+        static char underscore ( ) { return '_' ; }
         static std :: string whitespace ( ) { return " " ; }
     } ;
 
@@ -212,13 +214,38 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _read_n
     _token_class = _token_class_none ;
     while ( _any_chars_in_line ( ) )
     {
-        if ( ! std :: isspace ( _first_char ( ) , locale ) )
+        if ( std :: isspace ( _first_char ( ) , locale ) )
+            _trim_first_char ( ) ;
+        else
             break ;
-        _trim_first_char ( ) ;
     }
     while ( _any_chars_in_line ( ) )
     {
-        if ( std :: isspace ( _first_char ( ) , locale ) )
+        if ( _token_class == _token_class_none )
+        {
+            if ( std :: isdigit ( _first_char ( ) , locale ) )
+                _token_class = _token_class_number ;
+            else if ( std :: isalpha ( _first_char ( ) , locale ) )
+                _token_class = _token_class_identifier ;
+            else if ( _first_char ( ) == _consts :: divide ( ) )
+                _token_class = _token_class_divide ;
+        }
+        else if ( _token_class == _token_class_number )
+        {
+            if ( ! std :: isdigit ( _first_char ( ) , locale ) )
+                break ;
+        }
+        else if ( _token_class == _token_class_identifier )
+        {
+            if ( ! std :: isalpha ( _first_char ( ) , locale ) 
+              && ! std :: isdigit ( _first_char ( ) , locale )
+              && _first_char ( ) != _consts :: underscore ( )
+               )
+            {
+                break ;
+            }
+        }
+        else if ( _token_class == _token_class_divide )
             break ;
         _token += std :: string ( 1 , _first_char ( ) ) ;
         _trim_first_char ( ) ;
