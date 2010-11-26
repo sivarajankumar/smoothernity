@@ -43,13 +43,23 @@ class shy_data_loader
     {
     public :
         reflection_binder_type ( ) ;
-        void set_modules ( reflection_modules_type & modules ) ;
-        void module ( std :: string name ) ;
-        void bind ( std :: string name , const num_fract & value ) ;
-        void bind ( std :: string name , const num_whole & value ) ;
+        void set_modules ( reflection_modules_type & ) ;
+        void module ( std :: string ) ;
+        void bind ( std :: string , const num_fract & ) ;
+        void bind ( std :: string , const num_whole & ) ;
     public :
         reflection_modules_type * _modules ;
         reflection_attributes_type * _current_attributes ;
+    } ;
+
+    class reflection_parser_type
+    {
+    public :
+        reflection_parser_type ( ) ;
+        void set_modules ( reflection_modules_type & ) ;
+        void parse ( std :: string ) ;
+    public :
+        reflection_modules_type * _modules ;
     } ;
 
     class reflection_types
@@ -60,11 +70,14 @@ class shy_data_loader
     } ;
 
 public :
-    void load ( facade & arg_facade ) ;
+    shy_data_loader ( ) ;
+    void bind ( facade & ) ;
+    void parse ( std :: string ) ;
 private :
     void _report ( ) ;
 private :
     reflection_binder_type _reflection_binder ;
+    reflection_parser_type _reflection_parser ;
     reflection_modules_type _reflection_modules ;
 } ;
 
@@ -103,7 +116,31 @@ void shy_data_loader < data_loader_types > :: reflection_binder_type :: bind ( s
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: load ( facade & arg_facade )
+shy_data_loader < data_loader_types > :: reflection_parser_type :: reflection_parser_type ( )
+: _modules ( 0 )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: reflection_parser_type :: set_modules ( reflection_modules_type & modules )
+{
+    _modules = & modules ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: reflection_parser_type :: parse ( std :: string line )
+{
+}
+
+template < typename data_loader_types >
+shy_data_loader < data_loader_types > :: shy_data_loader ( )
+{
+    _reflection_binder . set_modules ( _reflection_modules ) ;
+    _reflection_parser . set_modules ( _reflection_modules ) ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: bind ( facade & arg_facade )
 {
     typename platform_pointer :: template pointer < mediator > mediator_obj ;
     typename platform_pointer :: template pointer < reflection_binder_type > reflection_binder_obj ;
@@ -111,7 +148,6 @@ void shy_data_loader < data_loader_types > :: load ( facade & arg_facade )
 
     arg_facade . mediator_obj ( mediator_obj ) ;
     platform_pointer :: bind ( reflection_binder_obj , _reflection_binder ) ;
-    _reflection_binder . set_modules ( _reflection_modules ) ;
     reflection . bind_all ( mediator_obj , reflection_binder_obj ) ;
     _report ( ) ;
 }
@@ -155,5 +191,11 @@ void shy_data_loader < data_loader_types > :: _report ( )
     }
     std :: cout << std :: endl ;
     std :: cout << std :: string ( "summary: " ) << consts << std :: string ( " consts in " ) << modules << std :: string ( " modules" ) << std :: endl ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: parse ( std :: string line )
+{
+    _reflection_parser . parse ( line ) ;
 }
 

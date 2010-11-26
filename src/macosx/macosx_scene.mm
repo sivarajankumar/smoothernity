@@ -30,7 +30,9 @@
 		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
         
         shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
-        loader . load ( * _facade ) ;
+        loader . bind ( * _facade ) ;
+        loader . parse ( "consts logic_fidget_stateless" ) ;
+        loader . parse ( "should_render_fidget 1" ) ;
 
 		_facade -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
