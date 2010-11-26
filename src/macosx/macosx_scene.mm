@@ -1,5 +1,6 @@
 #include "macosx_scene.h"
 
+#include <map>
 #include <string>
 #include <iostream>
 
