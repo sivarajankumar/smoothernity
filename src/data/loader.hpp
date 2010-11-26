@@ -1,19 +1,33 @@
 template 
-    < typename facade
-    , template < typename context > class reflection
+    < typename _facade
+    , template < typename reflection_types > class _reflection
     >
+class shy_data_loader_types
+{
+public :
+    typedef _facade facade ;
+    template < typename reflection_types >
+    class types
+    {
+    public :
+        typedef _reflection < reflection_types > reflection ;
+    } ;
+} ;
+
+template < typename data_loader_types >
 class shy_data_loader
 {
-    typedef typename facade :: mediator :: platform :: platform_math :: num_fract num_fract ;
-    typedef typename facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
-    typedef typename facade :: mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename data_loader_types :: facade facade ;
+    typedef typename data_loader_types :: facade :: mediator mediator ;
+    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_fract num_fract ;
+    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_pointer platform_pointer ;
 
     class reflection_attributes_type
     {
     public :
         typedef std :: map < std :: string , num_fract * > name_to_fract_type ;
         typedef std :: map < std :: string , num_whole * > name_to_whole_type ;
-
         name_to_fract_type name_to_fract ;
         name_to_whole_type name_to_whole ;
     } ;
@@ -57,22 +71,24 @@ class shy_data_loader
         reflection_attributes_type * _current_attributes ;
     } ;
 
-    class reflection_context_type
+    class reflection_types
     {
     public :
-        typedef typename facade :: mediator mediator ;
+        typedef typename data_loader_types :: facade :: mediator mediator ;
         typedef reflection_binder_type reflection_binder ;
     } ;
 
 public :
     void load ( facade & arg_facade )
     {
-        typename platform_pointer :: template pointer < typename facade :: mediator > mediator_obj ;
+        typename platform_pointer :: template pointer < mediator > mediator_obj ;
         typename platform_pointer :: template pointer < reflection_binder_type > reflection_binder_obj ;
+        typename data_loader_types :: template types < reflection_types > :: reflection reflection ;
+
         arg_facade . mediator_obj ( mediator_obj ) ;
         platform_pointer :: bind ( reflection_binder_obj , _reflection_binder ) ;
         _reflection_binder . set_modules ( _reflection_modules ) ;
-        reflection < reflection_context_type > ( ) . bind_all ( mediator_obj , reflection_binder_obj ) ;
+        reflection . bind_all ( mediator_obj , reflection_binder_obj ) ;
         _report ( ) ;
     }
 private :

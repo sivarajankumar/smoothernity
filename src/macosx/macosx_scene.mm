@@ -29,7 +29,7 @@
         
 		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
         
-        shy_data_loader < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > loader ;
+        shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
         loader . load ( * _facade ) ;
 
 		_facade -> init ( ) ;
