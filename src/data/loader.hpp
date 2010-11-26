@@ -27,6 +27,9 @@ class shy_data_loader
     {
     public :
         static std :: string consts ( ) { return "consts" ; }
+        static std :: string error_expected_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'consts', but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
+        static std :: string next_line ( ) { return "\n" ; }
         static std :: string report_consts_in ( ) { return " consts in " ; }
         static std :: string report_indent ( ) { return "    " ; }
         static std :: string report_modules ( ) { return " modules" ; }
@@ -65,12 +68,38 @@ class shy_data_loader
 
     class _reflection_parser_type
     {
+        enum _token_class_type
+        {
+            _token_class_none ,
+            _token_class_identifier ,
+            _token_class_number ,
+            _token_class_divide
+        } ;
+        enum _state_type
+        {
+            _state_none ,
+            _state_error ,
+            _state_reading_module_name ,
+            _state_reading_attribute_name ,
+            _state_reading_attribute_numerator ,
+            _state_reading_attribute_denominator
+        } ;
     public :
         _reflection_parser_type ( ) ;
         void set_modules ( _reflection_modules_type & ) ;
         void parse ( std :: string ) ;
+        std :: string error ( ) ;
+    private :
+        void _store_error ( std :: string ) ;
+        void _read_next_token ( ) ;
     public :
         _reflection_modules_type * _modules ;
+        _state_type _state ;
+        _token_class_type _token_class ;
+        std :: string _token ;
+        std :: string _error ;
+        std :: string _whole_line ;
+        std :: string _remaining_line ;
     } ;
 
     class _reflection_types
@@ -84,6 +113,7 @@ public :
     shy_data_loader ( ) ;
     void bind ( facade & ) ;
     void parse ( std :: string ) ;
+    std :: string error ( ) ;
 private :
     void _report ( ) ;
 private :
@@ -129,6 +159,8 @@ void shy_data_loader < data_loader_types > :: _reflection_binder_type :: bind ( 
 template < typename data_loader_types >
 shy_data_loader < data_loader_types > :: _reflection_parser_type :: _reflection_parser_type ( )
 : _modules ( 0 )
+, _state ( _state_none )
+, _token_class ( _token_class_none )
 {
 }
 
@@ -139,8 +171,49 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: set_mod
 }
 
 template < typename data_loader_types >
+std :: string shy_data_loader < data_loader_types > :: _reflection_parser_type :: error ( )
+{
+    return _error ;
+}
+
+template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: parse ( std :: string line )
 {
+    _whole_line = line ;
+    _remaining_line = line ;
+    do
+    {
+        _read_next_token ( ) ;
+        if ( _state == _state_none )
+        {
+            if ( _token_class == _token_class_identifier )
+            {
+                if ( _token == _consts :: consts ( ) )
+                    _state = _state_reading_module_name ;
+                else
+                {
+                    _store_error ( _consts :: error_expected_consts_instead_of ( _token ) ) ;
+                    _state = _state_error ;
+                }
+            }
+        }
+    }
+    while ( _token_class != _token_class_none ) ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _read_next_token ( )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_error ( std :: string arg_error )
+{
+    _error = std :: string ( ) ;
+    _error += arg_error ;
+    _error += _consts :: next_line ( ) ;
+    _error += _consts :: error_whole_line ( ) ;
+    _error += _whole_line ;
 }
 
 template < typename data_loader_types >
@@ -208,5 +281,11 @@ template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: parse ( std :: string line )
 {
     _reflection_parser . parse ( line ) ;
+}
+
+template < typename data_loader_types >
+std :: string shy_data_loader < data_loader_types > :: error ( )
+{
+    return _reflection_parser . error ( ) ;
 }
 

@@ -33,6 +33,9 @@
         loader . bind ( * _facade ) ;
         loader . parse ( "consts logic_fidget_stateless" ) ;
         loader . parse ( "should_render_fidget 1" ) ;
+        std :: string parsing_error = loader . error ( ) ;
+        if ( ! parsing_error . empty ( ) )
+            std :: cerr << "parsing error: " << parsing_error << std :: endl ;
 
 		_facade -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
