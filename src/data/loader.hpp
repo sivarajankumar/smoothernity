@@ -114,9 +114,13 @@ class shy_data_loader
         _state_type _state ;
         _token_class_type _token_class ;
         std :: string _token ;
-        std :: string _error ;
         std :: string _whole_line ;
         std :: string _remaining_line ;
+        std :: string _error ;
+        std :: string _module_name ;
+        std :: string _attribute_name ;
+        std :: string _attribute_numerator ;
+        std :: string _attribute_denominator ;
     } ;
 
     class _reflection_types
@@ -379,33 +383,43 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_module_name ( std :: string )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_module_name ( std :: string module_name )
 {
+    _module_name = module_name ;
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_name ( std :: string )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_name ( std :: string attribute_name )
 {
+    _attribute_name = attribute_name ;
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_numerator ( std :: string )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_numerator ( std :: string attribute_numerator )
 {
+    _attribute_numerator = attribute_numerator ;
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_denominator ( std :: string )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_denominator ( std :: string attribute_denominator )
 {
+    _attribute_denominator = attribute_denominator ;
 }
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_whole_value ( )
 {
+    std :: cout << _module_name << _consts :: whitespace ( ) << _attribute_name << _consts :: whitespace ( ) ;
+    std :: cout << _attribute_numerator << std :: endl ;
 }
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_fract_value ( )
 {
+    std :: cout << _module_name << _consts :: whitespace ( ) << _attribute_name << _consts :: whitespace ( ) ;
+    std :: cout << _attribute_numerator << _consts :: whitespace ( ) ;
+    std :: cout << std :: string ( 1 , _consts :: divide ( ) ) << _consts :: whitespace ( ) ;
+    std :: cout << _attribute_denominator << std :: endl ;
 }
 
 template < typename data_loader_types >
