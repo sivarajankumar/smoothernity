@@ -28,7 +28,12 @@ class shy_data_loader
     public :
         static std :: string consts ( ) { return "consts" ; }
         static char divide ( ) { return '/' ; }
+        static std :: string error_expected_attribute_name_instead_of ( std :: string token ) { return std :: string ( "expected attribute name, but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'consts', but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_denominator_instead_of ( std :: string token ) { return std :: string ( "expected denominator, but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_divide_or_identifier_instead_of ( std :: string token ) { return std :: string ( "expected '/' or identifier, but got '" ) + token + std :: string ( "'" ) ; } 
+        static std :: string error_expected_module_name_instead_of ( std :: string token ) { return std :: string ( "expected module name, but got '" ) + token + std :: string ( "'" ) ; } 
+        static std :: string error_expected_numerator_instead_of ( std :: string token ) { return std :: string ( "expected numerator, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
         static std :: string next_line ( ) { return "\n" ; }
         static std :: string report_consts_in ( ) { return " consts in " ; }
@@ -84,7 +89,8 @@ class shy_data_loader
             _state_reading_module_name ,
             _state_reading_attribute_name ,
             _state_reading_attribute_numerator ,
-            _state_reading_attribute_denominator
+            _state_reading_attribute_denominator ,
+            _state_determining_value_format 
         } ;
     public :
         _reflection_parser_type ( ) ;
@@ -93,6 +99,12 @@ class shy_data_loader
         std :: string error ( ) ;
     private :
         void _store_error ( std :: string ) ;
+        void _store_module_name ( std :: string ) ;
+        void _store_attribute_name ( std :: string ) ;
+        void _store_attribute_numerator ( std :: string ) ;
+        void _store_attribute_denominator ( std :: string ) ;
+        void _set_whole_value ( ) ;
+        void _set_fract_value ( ) ;
         void _read_next_token ( ) ;
         void _trim_first_char ( ) ;
         char _first_char ( ) ;
@@ -186,24 +198,110 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: parse (
 {
     _whole_line = line ;
     _remaining_line = line ;
-    do
+    _read_next_token ( ) ;
+    while ( true )
     {
-        _read_next_token ( ) ;
         if ( _state == _state_none )
+        {
+            if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
+            {
+                _read_next_token ( ) ;
+                _state = _state_reading_module_name ;
+            }
+            else
+            {
+                _store_error ( _consts :: error_expected_consts_instead_of ( _token ) ) ;
+                _state = _state_error ;
+            }
+        }
+        else if ( _state == _state_reading_module_name )
         {
             if ( _token_class == _token_class_identifier )
             {
-                if ( _token == _consts :: consts ( ) )
-                    _state = _state_reading_module_name ;
-                else
-                {
-                    _store_error ( _consts :: error_expected_consts_instead_of ( _token ) ) ;
-                    _state = _state_error ;
-                }
+                _store_module_name ( _token ) ;
+                _read_next_token ( ) ;
+                _state = _state_reading_attribute_name ;
+            }
+            else
+            {
+                _store_error ( _consts :: error_expected_module_name_instead_of ( _token ) ) ;
+                _state = _state_error ;
             }
         }
+        else if ( _state == _state_reading_attribute_name )
+        {
+            if ( _token_class == _token_class_identifier )
+            {
+                if ( _token == _consts :: consts ( ) ) 
+                {
+                    _read_next_token ( ) ;
+                    _state = _state_reading_module_name ;
+                }
+                else
+                {
+                    _store_attribute_name ( _token ) ;
+                    _read_next_token ( ) ;
+                    _state = _state_reading_attribute_numerator ;
+                }
+            }
+            else if ( _token_class == _token_class_none )
+                break ;
+            else
+            {
+                _store_error ( _consts :: error_expected_attribute_name_instead_of ( _token ) ) ;
+                _state = _state_error ;
+            }
+        }
+        else if ( _state == _state_reading_attribute_numerator )
+        {
+            if ( _token_class == _token_class_number )
+            {
+                _store_attribute_numerator ( _token ) ;
+                _read_next_token ( ) ;
+                _state = _state_determining_value_format ;
+            }
+            else
+            {
+                _store_error ( _consts :: error_expected_numerator_instead_of ( _token ) ) ;
+                _state = _state_error ;
+            }
+        }
+        else if ( _state == _state_determining_value_format )
+        {
+            if ( _token_class == _token_class_divide )
+            {
+                _read_next_token ( ) ;
+                _state = _state_reading_attribute_denominator ;
+            }
+            else if ( _token_class == _token_class_identifier || _token_class == _token_class_none )
+            {
+                _set_whole_value ( ) ;
+                _state = _state_reading_attribute_name ;
+            }
+            else
+            {
+                _store_error ( _consts :: error_expected_divide_or_identifier_instead_of ( _token ) ) ;
+                _state = _state_error ;
+            }
+        }
+        else if ( _state == _state_reading_attribute_denominator )
+        {
+            if ( _token_class == _token_class_number )
+            {
+                _store_attribute_denominator ( _token ) ;
+                _set_fract_value ( ) ;
+                _read_next_token ( ) ;
+                _state = _state_reading_attribute_name ;
+            }
+            else
+            {
+                _store_error ( _consts :: error_expected_denominator_instead_of ( _token ) ) ;
+                _state = _state_error ;
+            }
+        }
+        else if ( _state == _state_error )
+            break ;
     }
-    while ( _token_class != _token_class_none ) ;
 }
 
 template < typename data_loader_types >
@@ -278,6 +376,36 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_
     _error += _consts :: next_line ( ) ;
     _error += _consts :: error_whole_line ( ) ;
     _error += _whole_line ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_module_name ( std :: string )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_name ( std :: string )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_numerator ( std :: string )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_denominator ( std :: string )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_whole_value ( )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_fract_value ( )
+{
 }
 
 template < typename data_loader_types >
