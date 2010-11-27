@@ -47,7 +47,7 @@
             
             std :: string parsing_error = loader . error ( ) ;
             if ( ! parsing_error . empty ( ) )
-                std :: cerr << "parsing error: " << parsing_error << std :: endl ;
+                NSLog ( @"parsing error: %s" , parsing_error . c_str ( ) ) ;
         }
 
 		_facade -> init ( ) ;
