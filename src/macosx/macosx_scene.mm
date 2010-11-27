@@ -30,18 +30,23 @@
         shy_macosx_platform_insider :: platform_pointer :: bind ( platform_obj , _platform_insider -> platform ) ;
         
 		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
-        
-        shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
-        loader . bind ( * _facade ) ;
-        loader . parse ( "consts logic_fidget_stateless" ) ;
-        loader . parse ( "should_render_fidget 1" ) ;
-        loader . parse ( "fidget_r 1 / 3" ) ;
-        loader . parse ( "fidget_g 1 / 3" ) ;
-        loader . parse ( "fidget_b 1 / 1" ) ;
-        
-        std :: string parsing_error = loader . error ( ) ;
-        if ( ! parsing_error . empty ( ) )
-            std :: cerr << "parsing error: " << parsing_error << std :: endl ;
+
+        NSUserDefaults * args = [ NSUserDefaults standardUserDefaults ] ;
+
+        if ( [ args boolForKey : @"load" ] )        
+        {
+            shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
+            loader . bind ( * _facade ) ;
+            loader . parse ( "consts logic_fidget_stateless" ) ;
+            loader . parse ( "should_render_fidget 1" ) ;
+            loader . parse ( "fidget_r 1 / 3" ) ;
+            loader . parse ( "fidget_g 1 / 3" ) ;
+            loader . parse ( "fidget_b 1 / 1" ) ;
+            
+            std :: string parsing_error = loader . error ( ) ;
+            if ( ! parsing_error . empty ( ) )
+                std :: cerr << "parsing error: " << parsing_error << std :: endl ;
+        }
 
 		_facade -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
