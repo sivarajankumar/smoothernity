@@ -19,6 +19,7 @@ class shy_data_loader
 {
     typedef typename data_loader_types :: facade facade ;
     typedef typename data_loader_types :: facade :: mediator mediator ;
+    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math platform_math ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_pointer platform_pointer ;
@@ -34,14 +35,12 @@ class shy_data_loader
         static std :: string error_expected_divide_or_identifier_instead_of ( std :: string token ) { return std :: string ( "expected '/' or identifier, but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_module_name_instead_of ( std :: string token ) { return std :: string ( "expected module name, but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_numerator_instead_of ( std :: string token ) { return std :: string ( "expected numerator, but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_unknown_fract_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown fract attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
+        static std :: string error_unknown_module ( std :: string module ) { return std :: string ( "unknown module '" ) + module + std :: string ( "'" ) ; }
+        static std :: string error_unknown_whole_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown whole attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
         static std :: string next_line ( ) { return "\n" ; }
-        static std :: string report_consts_in ( ) { return " consts in " ; }
-        static std :: string report_indent ( ) { return "    " ; }
-        static std :: string report_modules ( ) { return " modules" ; }
-        static std :: string report_summary ( ) { return "summary: " ; }
         static char underscore ( ) { return '_' ; }
-        static std :: string whitespace ( ) { return " " ; }
     } ;
 
     class _reflection_attributes_type
@@ -135,8 +134,6 @@ public :
     void bind ( facade & ) ;
     void parse ( std :: string ) ;
     std :: string error ( ) ;
-private :
-    void _report ( ) ;
 private :
     _reflection_binder_type _reflection_binder ;
     _reflection_parser_type _reflection_parser ;
@@ -409,17 +406,51 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_whole_value ( )
 {
-    std :: cout << _module_name << _consts :: whitespace ( ) << _attribute_name << _consts :: whitespace ( ) ;
-    std :: cout << _attribute_numerator << std :: endl ;
+    typename _reflection_modules_type :: name_to_module_type :: const_iterator module_i ;
+    module_i = _modules -> name_to_module . find ( _module_name ) ;
+    if ( module_i == _modules -> name_to_module . end ( ) )
+        _error = _consts :: error_unknown_module ( _module_name ) ;
+    else
+    {
+        const _reflection_attributes_type & attributes = module_i -> second ;
+        typename _reflection_attributes_type :: name_to_whole_type :: const_iterator attribute_i ;
+        attribute_i = attributes . name_to_whole . find ( _attribute_name ) ;
+        if ( attribute_i == attributes . name_to_whole . end ( ) )
+            _error = _consts :: error_unknown_whole_attribute_in_module ( _attribute_name , _module_name ) ;
+        else
+        {
+            num_whole & value = * ( attribute_i -> second ) ;
+            int numerator = 0 ;
+            std :: istringstream ( _attribute_numerator ) >> numerator ;
+            platform_math :: make_num_whole ( value , numerator ) ;
+        }
+    }
 }
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_fract_value ( )
 {
-    std :: cout << _module_name << _consts :: whitespace ( ) << _attribute_name << _consts :: whitespace ( ) ;
-    std :: cout << _attribute_numerator << _consts :: whitespace ( ) ;
-    std :: cout << std :: string ( 1 , _consts :: divide ( ) ) << _consts :: whitespace ( ) ;
-    std :: cout << _attribute_denominator << std :: endl ;
+    typename _reflection_modules_type :: name_to_module_type :: const_iterator module_i ;
+    module_i = _modules -> name_to_module . find ( _module_name ) ;
+    if ( module_i == _modules -> name_to_module . end ( ) )
+        _error = _consts :: error_unknown_module ( _module_name ) ;
+    else
+    {
+        const _reflection_attributes_type & attributes = module_i -> second ;
+        typename _reflection_attributes_type :: name_to_fract_type :: const_iterator attribute_i ;
+        attribute_i = attributes . name_to_fract . find ( _attribute_name ) ;
+        if ( attribute_i == attributes . name_to_fract . end ( ) )
+            _error = _consts :: error_unknown_fract_attribute_in_module ( _attribute_name , _module_name ) ;
+        else
+        {
+            num_fract & value = * ( attribute_i -> second ) ;
+            int numerator = 0 ;
+            int denominator = 0 ;
+            std :: istringstream ( _attribute_numerator ) >> numerator ;
+            std :: istringstream ( _attribute_denominator ) >> denominator ;
+            platform_math :: make_num_fract ( value , numerator , denominator ) ;
+        }
+    }
 }
 
 template < typename data_loader_types >
@@ -439,48 +470,6 @@ void shy_data_loader < data_loader_types > :: bind ( facade & arg_facade )
     arg_facade . mediator_obj ( mediator_obj ) ;
     platform_pointer :: bind ( reflection_binder_obj , _reflection_binder ) ;
     reflection . bind_all ( mediator_obj , reflection_binder_obj ) ;
-    _report ( ) ;
-}
-
-template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _report ( )
-{
-    int modules = 0 ;
-    int attrs = 0 ;
-    for ( typename _reflection_modules_type :: name_to_module_type :: const_iterator module_i = _reflection_modules . name_to_module . begin ( )
-        ; module_i != _reflection_modules . name_to_module . end ( )
-        ; ++ module_i
-        )
-    {
-        std :: string module_name = module_i -> first ;
-        const _reflection_attributes_type & attributes = module_i -> second ;
-
-        ++ modules ;
-        std :: cout << std :: endl ;
-        std :: cout << _consts :: consts ( ) << _consts :: whitespace ( ) << std :: string ( module_name ) << std :: endl ;
-
-        for ( typename _reflection_attributes_type :: name_to_fract_type :: const_iterator fract_i = attributes . name_to_fract . begin ( )
-            ; fract_i != attributes . name_to_fract . end ( )
-            ; ++ fract_i
-            )
-        {
-            ++ attrs ;
-            std :: string fract_name = fract_i -> first ;
-            std :: cout << _consts :: report_indent ( ) << std :: string ( fract_name ) << std :: endl ;
-        }
-
-        for ( typename _reflection_attributes_type :: name_to_whole_type :: const_iterator whole_i = attributes . name_to_whole . begin ( )
-            ; whole_i != attributes . name_to_whole . end ( )
-            ; ++ whole_i
-            )
-        {
-            ++ attrs ;
-            std :: string whole_name = whole_i -> first ;
-            std :: cout << _consts :: report_indent ( ) << std :: string ( whole_name ) << std :: endl ;
-        }
-    }
-    std :: cout << std :: endl ;
-    std :: cout << _consts :: report_summary ( ) << attrs << _consts :: report_consts_in ( ) << modules << _consts :: report_modules ( ) << std :: endl ;
 }
 
 template < typename data_loader_types >

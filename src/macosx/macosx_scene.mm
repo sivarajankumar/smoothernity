@@ -1,5 +1,6 @@
 #include "macosx_scene.h"
 
+#include <sstream>
 #include <map>
 #include <string>
 #include <locale>
@@ -34,6 +35,10 @@
         loader . bind ( * _facade ) ;
         loader . parse ( "consts logic_fidget_stateless" ) ;
         loader . parse ( "should_render_fidget 1" ) ;
+        loader . parse ( "fidget_r 1 / 3" ) ;
+        loader . parse ( "fidget_g 1 / 3" ) ;
+        loader . parse ( "fidget_b 1 / 1" ) ;
+        
         std :: string parsing_error = loader . error ( ) ;
         if ( ! parsing_error . empty ( ) )
             std :: cerr << "parsing error: " << parsing_error << std :: endl ;
