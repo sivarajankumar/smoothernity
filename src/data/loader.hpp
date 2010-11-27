@@ -97,6 +97,10 @@ class shy_data_loader
         void parse ( std :: string ) ;
         std :: string error ( ) ;
     private :
+        void _handle_token_class_none ( ) ;
+        void _handle_token_class_identifier ( ) ;
+        void _handle_token_class_number ( ) ;
+        void _handle_token_class_divide ( ) ;
         void _handle_state_none ( ) ;
         void _handle_state_error ( ) ;
         void _handle_state_reading_module_name ( ) ;
@@ -115,6 +119,7 @@ class shy_data_loader
         void _trim_first_char ( ) ;
         void _trim_whitespaces ( ) ;
         void _append_first_char_to_token ( ) ;
+        void _move_first_char_to_token ( ) ;
         char _first_char ( ) ;
         bool _any_chars_in_line ( ) ;
     public :
@@ -357,56 +362,69 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _read_n
     while ( _any_chars_in_line ( ) && _continue_reading_next_token )
     {
         if ( _token_class == _token_class_none )
-        {
-            if ( std :: isdigit ( _first_char ( ) , _locale ) )
-                _token_class = _token_class_number ;
-            else if ( std :: isalpha ( _first_char ( ) , _locale ) )
-                _token_class = _token_class_identifier ;
-            else if ( _first_char ( ) == _consts :: divide ( ) )
-                _token_class = _token_class_divide ;
-        }
+            _handle_token_class_none ( ) ;
         else if ( _token_class == _token_class_number )
-        {
-            if ( std :: isdigit ( _first_char ( ) , _locale ) )
-            {
-                _append_first_char_to_token ( ) ;
-                _trim_first_char ( ) ;
-            }
-            else
-                _continue_reading_next_token = false ;
-        }
+            _handle_token_class_number ( ) ;
         else if ( _token_class == _token_class_identifier )
-        {
-            if ( std :: isalpha ( _first_char ( ) , _locale ) 
-              || std :: isdigit ( _first_char ( ) , _locale )
-              || _first_char ( ) == _consts :: underscore ( )
-               )
-            {
-                _append_first_char_to_token ( ) ;
-                _trim_first_char ( ) ;
-            }
-            else
-                _continue_reading_next_token = false ;
-        }
+            _handle_token_class_identifier ( ) ;
         else if ( _token_class == _token_class_divide )
-        {
-            _append_first_char_to_token ( ) ;
-            _trim_first_char ( ) ;
-            _continue_reading_next_token = false ;
-        }
+            _handle_token_class_divide ( ) ;
     }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_none ( )
+{
+    if ( std :: isdigit ( _first_char ( ) , _locale ) )
+        _token_class = _token_class_number ;
+    else if ( std :: isalpha ( _first_char ( ) , _locale ) )
+        _token_class = _token_class_identifier ;
+    else if ( _first_char ( ) == _consts :: divide ( ) )
+        _token_class = _token_class_divide ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_number ( )
+{
+    if ( std :: isdigit ( _first_char ( ) , _locale ) )
+        _move_first_char_to_token ( ) ;
+    else
+        _continue_reading_next_token = false ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_identifier ( )
+{
+    if ( std :: isalpha ( _first_char ( ) , _locale ) 
+      || std :: isdigit ( _first_char ( ) , _locale )
+      || _first_char ( ) == _consts :: underscore ( )
+       )
+    {
+        _move_first_char_to_token ( ) ;
+    }
+    else
+        _continue_reading_next_token = false ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_divide ( )
+{
+    _move_first_char_to_token ( ) ;
+    _continue_reading_next_token = false ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _move_first_char_to_token ( )
+{
+    _append_first_char_to_token ( ) ;
+    _trim_first_char ( ) ;
 }
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _trim_whitespaces ( )
 {
-    while ( _any_chars_in_line ( ) )
-    {
-        if ( std :: isspace ( _first_char ( ) , _locale ) )
-            _trim_first_char ( ) ;
-        else
-            break ;
-    }
+    while ( _any_chars_in_line ( ) && std :: isspace ( _first_char ( ) , _locale ) )
+        _trim_first_char ( ) ;
 }
 
 template < typename data_loader_types >
