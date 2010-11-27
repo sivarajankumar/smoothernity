@@ -97,6 +97,13 @@ class shy_data_loader
         void parse ( std :: string ) ;
         std :: string error ( ) ;
     private :
+        void _handle_state_none ( ) ;
+        void _handle_state_error ( ) ;
+        void _handle_state_reading_module_name ( ) ;
+        void _handle_state_reading_attribute_name ( ) ;
+        void _handle_state_reading_attribute_numerator ( ) ;
+        void _handle_state_reading_attribute_denominator ( ) ;
+        void _handle_state_determining_value_format ( ) ;
         void _store_error ( std :: string ) ;
         void _store_module_name ( std :: string ) ;
         void _store_attribute_name ( std :: string ) ;
@@ -112,6 +119,7 @@ class shy_data_loader
         _reflection_modules_type * _modules ;
         _state_type _state ;
         _token_class_type _token_class ;
+        bool _continue_parsing ;
         std :: string _token ;
         std :: string _whole_line ;
         std :: string _remaining_line ;
@@ -179,6 +187,7 @@ shy_data_loader < data_loader_types > :: _reflection_parser_type :: _reflection_
 : _modules ( 0 )
 , _state ( _state_none )
 , _token_class ( _token_class_none )
+, _continue_parsing ( false )
 {
 }
 
@@ -199,110 +208,138 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: parse (
 {
     _whole_line = line ;
     _remaining_line = line ;
+    _continue_parsing = true ;
     _read_next_token ( ) ;
-    while ( true )
+    while ( _continue_parsing )
     {
         if ( _state == _state_none )
-        {
-            if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
-            {
-                _read_next_token ( ) ;
-                _state = _state_reading_module_name ;
-            }
-            else
-            {
-                _store_error ( _consts :: error_expected_consts_instead_of ( _token ) ) ;
-                _state = _state_error ;
-            }
-        }
+            _handle_state_none ( ) ;
         else if ( _state == _state_reading_module_name )
-        {
-            if ( _token_class == _token_class_identifier )
-            {
-                _store_module_name ( _token ) ;
-                _read_next_token ( ) ;
-                _state = _state_reading_attribute_name ;
-            }
-            else
-            {
-                _store_error ( _consts :: error_expected_module_name_instead_of ( _token ) ) ;
-                _state = _state_error ;
-            }
-        }
+            _handle_state_reading_module_name ( ) ;
         else if ( _state == _state_reading_attribute_name )
-        {
-            if ( _token_class == _token_class_identifier )
-            {
-                if ( _token == _consts :: consts ( ) ) 
-                {
-                    _read_next_token ( ) ;
-                    _state = _state_reading_module_name ;
-                }
-                else
-                {
-                    _store_attribute_name ( _token ) ;
-                    _read_next_token ( ) ;
-                    _state = _state_reading_attribute_numerator ;
-                }
-            }
-            else if ( _token_class == _token_class_none )
-                break ;
-            else
-            {
-                _store_error ( _consts :: error_expected_attribute_name_instead_of ( _token ) ) ;
-                _state = _state_error ;
-            }
-        }
+            _handle_state_reading_attribute_name ( ) ;
         else if ( _state == _state_reading_attribute_numerator )
-        {
-            if ( _token_class == _token_class_number )
-            {
-                _store_attribute_numerator ( _token ) ;
-                _read_next_token ( ) ;
-                _state = _state_determining_value_format ;
-            }
-            else
-            {
-                _store_error ( _consts :: error_expected_numerator_instead_of ( _token ) ) ;
-                _state = _state_error ;
-            }
-        }
+            _handle_state_reading_attribute_numerator ( ) ;
         else if ( _state == _state_determining_value_format )
-        {
-            if ( _token_class == _token_class_divide )
-            {
-                _read_next_token ( ) ;
-                _state = _state_reading_attribute_denominator ;
-            }
-            else if ( _token_class == _token_class_identifier || _token_class == _token_class_none )
-            {
-                _set_whole_value ( ) ;
-                _state = _state_reading_attribute_name ;
-            }
-            else
-            {
-                _store_error ( _consts :: error_expected_divide_or_identifier_instead_of ( _token ) ) ;
-                _state = _state_error ;
-            }
-        }
+            _handle_state_determining_value_format ( ) ;
         else if ( _state == _state_reading_attribute_denominator )
-        {
-            if ( _token_class == _token_class_number )
-            {
-                _store_attribute_denominator ( _token ) ;
-                _set_fract_value ( ) ;
-                _read_next_token ( ) ;
-                _state = _state_reading_attribute_name ;
-            }
-            else
-            {
-                _store_error ( _consts :: error_expected_denominator_instead_of ( _token ) ) ;
-                _state = _state_error ;
-            }
-        }
+            _handle_state_reading_attribute_denominator ( ) ;
         else if ( _state == _state_error )
-            break ;
+            _handle_state_error ( ) ;
     }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_none ( )
+{
+    if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_module_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_consts_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_module_name ( )
+{
+    if ( _token_class == _token_class_identifier )
+    {
+        _store_module_name ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_attribute_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_module_name_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_name ( )
+{
+    if ( _token_class == _token_class_none )
+        _continue_parsing = false ;
+    else if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_module_name ;
+    }
+    else if ( _token_class == _token_class_identifier )
+    {
+        _store_attribute_name ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_attribute_numerator ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_attribute_name_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_numerator ( )
+{
+    if ( _token_class == _token_class_number )
+    {
+        _store_attribute_numerator ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_determining_value_format ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_numerator_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_determining_value_format ( )
+{
+    if ( _token_class == _token_class_divide )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_attribute_denominator ;
+    }
+    else if ( _token_class == _token_class_identifier || _token_class == _token_class_none )
+    {
+        _set_whole_value ( ) ;
+        _state = _state_reading_attribute_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_divide_or_identifier_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_denominator ( )
+{
+    if ( _token_class == _token_class_number )
+    {
+        _store_attribute_denominator ( _token ) ;
+        _set_fract_value ( ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_attribute_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_denominator_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_error ( )
+{
+    _continue_parsing = false ;
 }
 
 template < typename data_loader_types >
