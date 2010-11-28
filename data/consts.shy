@@ -120,3 +120,10 @@ consts logic_main_menu_letters_animation_stateless
     unselection_weight_time_to_begin 0 / 100
     unselection_weight_time_from_begin_to_end 7 / 100
 
+consts logic_main_menu_letters_layout_stateless
+    letter_size_fract_horizontal_spacing 0 / 1
+    letter_size_fract_vertical_spacing 1 / 1
+    letter_size_fract_horizontal_border 1 / 1
+    letter_size_fract_vertical_border 1 / 1
+    menu_position_z - 3 / 1
+
