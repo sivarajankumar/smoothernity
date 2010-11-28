@@ -78,3 +78,10 @@ consts logic_fidget_stateless
     scale_in_frames 60
     should_render_fidget 0
 
+consts logic_main_menu_animation_stateless
+    shake_time_to_begin 0 / 10
+    shake_time_from_begin_to_end 6 / 10
+    shake_shift_x_amplitude_begin 20 / 1000
+    shake_shift_x_amplitude_end 5 / 1000
+    shake_shift_x_period_in_seconds 2 / 10
+
