@@ -57,22 +57,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_fidget_stateless < mediator > :: logic_fidget_stateless_consts_type :: logic_fidget_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( fidget_size , 3 , 10 ) ;
-    platform_math :: make_num_fract ( fidget_r , 255 , 255 ) ;
-    platform_math :: make_num_fract ( fidget_g , 128 , 255 ) ;
-    platform_math :: make_num_fract ( fidget_b , 0 , 255 ) ;
-    platform_math :: make_num_fract ( angle_delta , 125 , 1000 ) ;
-    platform_math :: make_num_fract ( mesh_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_y_from_top , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_z , - 3 , 1 ) ;
-    platform_math :: make_num_whole ( fidget_edges , 3 ) ;
-    platform_math :: make_num_whole ( scale_in_frames , 60 ) ;
-    platform_math :: make_num_whole ( should_render_fidget , false ) ;
-}
-
-template < typename mediator >
 shy_logic_fidget_stateless < mediator > :: shy_logic_fidget_stateless ( )
 {
 }

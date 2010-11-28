@@ -67,20 +67,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_blanket_stateless < mediator > :: logic_blanket_stateless_consts_type :: logic_blanket_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( mesh_vertex_x_left , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_vertex_x_right , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_vertex_y_bottom , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_vertex_y_top , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_vertex_z , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_color_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_color_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_color_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_color_a , 1 , 1 ) ;
-}
-
-template < typename mediator >
 shy_logic_blanket_stateless < mediator > :: shy_logic_blanket_stateless ( )
 {
 }

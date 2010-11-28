@@ -95,43 +95,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_door_stateless < mediator > :: logic_door_stateless_consts_type :: logic_door_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( mesh_color_r , 1 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_color_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_color_b , 1 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_color_a , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( mesh_x_left , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_x_right , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_y_bottom , - 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_y_top , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_z , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_top_left , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_v_top_left , 1 , 1 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_bottom_left , 0 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_v_bottom_left , 1 , 2 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_top_right , 1 , 1 ) ;
-    platform_math :: make_num_fract ( mesh_v_top_right , 1 , 2 ) ;
-
-    platform_math :: make_num_fract ( mesh_u_bottom_right , 1 , 2 ) ;
-    platform_math :: make_num_fract ( mesh_v_bottom_right , 0 , 1 ) ;
-
-    platform_math :: make_num_fract ( texture_pen_r , 1 , 1 ) ;
-    platform_math :: make_num_fract ( texture_pen_g , 1 , 1 ) ;
-    platform_math :: make_num_fract ( texture_pen_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( texture_pen_a , 1 , 1 ) ;
-    platform_math :: make_num_fract ( texture_paper_r , 0 , 1 ) ;
-    platform_math :: make_num_fract ( texture_paper_g , 0 , 1 ) ;
-    platform_math :: make_num_fract ( texture_paper_b , 0 , 1 ) ;
-    platform_math :: make_num_fract ( texture_paper_a , 1 , 1 ) ;
-    platform_math :: make_num_whole ( texture_stripes , 9 ) ;
-}
-
-template < typename mediator >
 shy_logic_door_stateless < mediator > :: shy_logic_door_stateless ( )
 {
 }

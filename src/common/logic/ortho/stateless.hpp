@@ -41,13 +41,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_ortho_stateless < mediator > :: logic_ortho_stateless_consts_type :: logic_ortho_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( z_near , 1 , 1 ) ;
-    platform_math :: make_num_fract ( z_far , 50 , 1 ) ;
-}
-
-template < typename mediator >
 shy_logic_ortho_stateless < mediator > :: shy_logic_ortho_stateless ( )
 {
 }

@@ -50,16 +50,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_main_menu_animation_stateless < mediator > :: logic_main_menu_animation_stateless_consts_type :: logic_main_menu_animation_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( shake_time_to_begin , 0 , 10 ) ;
-    platform_math :: make_num_fract ( shake_time_from_begin_to_end , 6 , 10 ) ;
-    platform_math :: make_num_fract ( shake_shift_x_amplitude_begin , 20 , 1000 ) ;
-    platform_math :: make_num_fract ( shake_shift_x_amplitude_end , 5 , 1000 ) ;
-    platform_math :: make_num_fract ( shake_shift_x_period_in_seconds , 2 , 10 ) ;
-}
-
-template < typename mediator >
 shy_logic_main_menu_animation_stateless < mediator > :: shy_logic_main_menu_animation_stateless ( )
 {
 }

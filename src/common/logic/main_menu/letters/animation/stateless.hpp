@@ -117,44 +117,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_main_menu_letters_animation_stateless < mediator > :: logic_main_menu_letters_animation_stateless_consts_type :: logic_main_menu_letters_animation_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( appear_time_from_begin_to_middle_in_seconds , 1 , 10 ) ;
-    platform_math :: make_num_fract ( appear_time_from_middle_to_end_in_seconds , 7 , 10 ) ;
-    platform_math :: make_num_fract ( appear_delay_per_col_in_seconds , 2 , 100 ) ;
-    platform_math :: make_num_fract ( appear_delay_per_row_in_seconds , 5 , 100 ) ;
-    platform_math :: make_num_fract ( appear_scale_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( appear_scale_middle , 3 , 2 ) ;
-    platform_math :: make_num_fract ( appear_scale_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( disappear_animation_time_in_seconds , 8 , 10 ) ;
-    platform_math :: make_num_fract ( disappear_time_from_begin_to_end_in_seconds , 3 , 10 ) ;
-    platform_math :: make_num_fract ( disappear_delay_per_col_in_seconds , 2 , 100 ) ;
-    platform_math :: make_num_fract ( disappear_delay_per_row_in_seconds , 5 , 100 ) ;
-    platform_math :: make_num_fract ( disappear_scale_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( disappear_scale_end , 1 , 10 ) ;
-    platform_math :: make_num_fract ( idle_vertical_shift_period_in_seconds , 1 , 1 ) ;
-    platform_math :: make_num_fract ( idle_vertical_shift_phase_per_col , 1 , 3 ) ;
-    platform_math :: make_num_fract ( idle_vertical_shift_phase_per_row , 1 , 5 ) ;
-    platform_math :: make_num_fract ( idle_vertical_shift_amplitude , 1 , 30 ) ;
-    platform_math :: make_num_fract ( idle_horizontal_shift_period_in_seconds , 2 , 1 ) ;
-    platform_math :: make_num_fract ( idle_horizontal_shift_phase_per_row , 1 , 2 ) ;
-    platform_math :: make_num_fract ( idle_horizontal_shift_amplitude , 1 , 20 ) ;
-    platform_math :: make_num_fract ( selection_time_stable , 0 , 100 ) ;
-    platform_math :: make_num_fract ( selection_time_transition , 30 , 100 ) ;
-    platform_math :: make_num_fract ( selection_scale_min , 9 , 10 ) ;
-    platform_math :: make_num_fract ( selection_scale_max , 11 , 10 ) ;
-    platform_math :: make_num_fract ( selection_push_time_from_begin_to_middle , 10 , 100 ) ;
-    platform_math :: make_num_fract ( selection_push_time_from_middle_to_end , 20 , 100 ) ;
-    platform_math :: make_num_fract ( selection_push_scale_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( selection_push_scale_middle , 6 , 10 ) ;
-    platform_math :: make_num_fract ( selection_push_scale_end , 8 , 10 ) ;
-    platform_math :: make_num_fract ( selection_weight_time_to_begin , 10 , 100 ) ;
-    platform_math :: make_num_fract ( selection_weight_time_from_begin_to_end , 30 , 100 ) ;
-    platform_math :: make_num_fract ( unselection_weight_time_to_begin , 0 , 100 ) ;
-    platform_math :: make_num_fract ( unselection_weight_time_from_begin_to_end , 7 , 100 ) ;
-}
-
-template < typename mediator >
 shy_logic_main_menu_letters_animation_stateless < mediator > :: shy_logic_main_menu_letters_animation_stateless ( )
 {
 }

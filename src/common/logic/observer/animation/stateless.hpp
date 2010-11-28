@@ -50,16 +50,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_observer_animation_stateless < mediator > :: logic_observer_animation_stateless_consts_type :: logic_observer_animation_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( flight_target_z , - 1 , 1 ) ;
-    platform_math :: make_num_fract ( flight_horizontal_offset_period , 11 , 10 ) ;
-    platform_math :: make_num_fract ( flight_horizontal_offset_amplitude , 1 , 3 ) ;
-    platform_math :: make_num_fract ( flight_vertical_offset_period , 17 , 10 ) ;
-    platform_math :: make_num_fract ( flight_vertical_offset_amplitude , 1 , 3 ) ;
-}
-
-template < typename mediator >
 shy_logic_observer_animation_stateless < mediator > :: shy_logic_observer_animation_stateless ( )
 {
 }

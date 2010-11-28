@@ -52,17 +52,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_door_animation_stateless < mediator > :: logic_door_animation_stateless_consts_type :: logic_door_animation_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( animation_origin_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( animation_origin_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( animation_origin_z , - 3 , 1 ) ;
-    platform_math :: make_num_fract ( appear_scale_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( appear_scale_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( appear_time_from_begin_to_end , 2 , 1 ) ;
-}
-
-template < typename mediator >
 shy_logic_door_animation_stateless < mediator > :: shy_logic_door_animation_stateless ( )
 {
 }

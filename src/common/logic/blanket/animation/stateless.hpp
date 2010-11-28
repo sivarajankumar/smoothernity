@@ -73,24 +73,6 @@ public :
 } ;
 
 template < typename mediator >
-shy_logic_blanket_animation_stateless < mediator > :: logic_blanket_animation_stateless_consts_type :: logic_blanket_animation_stateless_consts_type ( )
-{
-    platform_math :: make_num_fract ( animation_origin_x , 0 , 1 ) ;
-    platform_math :: make_num_fract ( animation_origin_y , 0 , 1 ) ;
-    platform_math :: make_num_fract ( animation_origin_z , - 3 , 1 ) ;
-    platform_math :: make_num_fract ( appear_scale_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( appear_scale_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( appear_rotation_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( appear_rotation_end , 10 , 1 ) ;
-    platform_math :: make_num_fract ( appear_time_from_begin_to_end , 1 , 1 ) ;
-    platform_math :: make_num_fract ( disappear_scale_begin , 1 , 1 ) ;
-    platform_math :: make_num_fract ( disappear_scale_end , 0 , 1 ) ;
-    platform_math :: make_num_fract ( disappear_rotation_begin , 0 , 1 ) ;
-    platform_math :: make_num_fract ( disappear_rotation_end , 10 , 1 ) ;
-    platform_math :: make_num_fract ( disappear_time_from_begin_to_end , 1 , 1 ) ;
-}
-
-template < typename mediator >
 shy_logic_blanket_animation_stateless < mediator > :: shy_logic_blanket_animation_stateless ( )
 {
 }
