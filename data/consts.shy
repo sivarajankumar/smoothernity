@@ -65,3 +65,16 @@ consts logic_door_stateless
     texture_paper_a 1 / 1
     texture_stripes 9
 
+consts logic_fidget_stateless
+    fidget_size 3 / 10
+    fidget_r 255 / 255
+    fidget_g 128 / 255
+    fidget_b 0 / 255
+    angle_delta 125 / 1000
+    mesh_x 0 / 1
+    mesh_y_from_top 1 / 2
+    mesh_z - 3 / 1
+    fidget_edges 3
+    scale_in_frames 60
+    should_render_fidget 0
+
