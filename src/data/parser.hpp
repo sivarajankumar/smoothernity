@@ -499,7 +499,7 @@ void shy_data_parser < data_parser_types > :: _set_whole_value ( )
             _error = _consts :: error_unknown_whole_attribute_in_module ( _attribute_name , _module_name ) ;
         else
         {
-            num_whole & value = * ( attribute_i -> second ) ;
+            num_whole & value = * ( attribute_i -> second . binding ) ;
             int numerator = 0 ;
             std :: istringstream ( _attribute_numerator_sign + _attribute_numerator_value ) >> numerator ;
             platform_math :: make_num_whole ( value , numerator ) ;
@@ -523,7 +523,7 @@ void shy_data_parser < data_parser_types > :: _set_fract_value ( )
             _error = _consts :: error_unknown_fract_attribute_in_module ( _attribute_name , _module_name ) ;
         else
         {
-            num_fract & value = * ( attribute_i -> second ) ;
+            num_fract & value = * ( attribute_i -> second . binding ) ;
             int numerator = 0 ;
             int denominator = 0 ;
             std :: istringstream ( _attribute_numerator_sign + _attribute_numerator_value ) >> numerator ;
