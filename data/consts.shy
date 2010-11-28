@@ -206,3 +206,10 @@ consts logic_main_menu_selection_stateless
     mesh_color_a 1 / 1
     selected_rect_vertical_scale 20 / 10
 
+consts logic_observer_animation_stateless
+    flight_target_z - 1 / 1
+    flight_horizontal_offset_period 11 / 10
+    flight_horizontal_offset_amplitude 1 / 3
+    flight_vertical_offset_period 17 / 10
+    flight_vertical_offset_amplitude 1 / 3
+
