@@ -493,7 +493,7 @@ void shy_data_parser < data_parser_types > :: _set_whole_value ( )
     else
     {
         const data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules_attributes :: name_to_whole_type :: const_iterator attribute_i ;
+        typename data_modules :: name_to_whole_type :: const_iterator attribute_i ;
         attribute_i = attributes . name_to_whole . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_whole . end ( ) )
             _error = _consts :: error_unknown_whole_attribute_in_module ( _attribute_name , _module_name ) ;
@@ -517,7 +517,7 @@ void shy_data_parser < data_parser_types > :: _set_fract_value ( )
     else
     {
         const data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules_attributes :: name_to_fract_type :: const_iterator attribute_i ;
+        typename data_modules :: name_to_fract_type :: const_iterator attribute_i ;
         attribute_i = attributes . name_to_fract . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_fract . end ( ) )
             _error = _consts :: error_unknown_fract_attribute_in_module ( _attribute_name , _module_name ) ;
