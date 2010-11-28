@@ -213,3 +213,10 @@ consts logic_observer_animation_stateless
     flight_vertical_offset_period 17 / 10
     flight_vertical_offset_amplitude 1 / 3
 
+consts logic_ortho_stateless
+    z_near 1 / 1
+    z_far 50 / 1
+
+consts logic_perspective_stateless
+    z_far_unscaled 50 / 1
+
