@@ -31,18 +31,18 @@ class shy_data_loader
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_pointer platform_pointer ;
 
-    typedef shy_data_modules < shy_data_modules_types < platform > > _reflection_modules_type ;
+    typedef shy_data_modules < shy_data_modules_types < platform > > data_modules ;
 
-    typedef shy_data_assigner < shy_data_assigner_types < _reflection_modules_type , platform > > _reflection_assigner_type ;
-    typedef shy_data_binder < shy_data_binder_types < _reflection_modules_type , platform > > _reflection_binder_type ;
-    typedef shy_data_generator < shy_data_generator_types < _reflection_modules_type > > _reflection_generator_type ;
-    typedef shy_data_parser < shy_data_parser_types < _reflection_modules_type , platform > > _reflection_parser_type ;
+    typedef shy_data_assigner < shy_data_assigner_types < data_modules , platform > > data_assigner ;
+    typedef shy_data_binder < shy_data_binder_types < data_modules , platform > > data_binder ;
+    typedef shy_data_generator < shy_data_generator_types < data_modules > > data_generator ;
+    typedef shy_data_parser < shy_data_parser_types < data_modules , platform > > data_parser ;
 
     class _reflection_types
     {
     public :
         typedef typename data_loader_types :: facade :: mediator mediator ;
-        typedef _reflection_binder_type reflection_binder ;
+        typedef data_binder reflection_binder ;
     } ;
 
 public :
@@ -53,50 +53,50 @@ public :
     std :: string generate ( ) ;
     std :: string error ( ) ;
 private :
-    _reflection_binder_type _reflection_binder ;
-    _reflection_parser_type _reflection_parser ;
-    _reflection_assigner_type _reflection_assigner ;
-    _reflection_generator_type _reflection_generator ;
-    _reflection_modules_type _reflection_modules ;
+    data_binder _binder ;
+    data_parser _parser ;
+    data_assigner _assigner ;
+    data_generator _generator ;
+    data_modules _modules ;
 } ;
 
 template < typename data_loader_types >
 shy_data_loader < data_loader_types > :: shy_data_loader ( )
 {
-    _reflection_binder . set_modules ( _reflection_modules ) ;
-    _reflection_parser . set_modules ( _reflection_modules ) ;
-    _reflection_assigner . set_modules ( _reflection_modules ) ;
-    _reflection_generator . set_modules ( _reflection_modules ) ;
+    _binder . set_modules ( _modules ) ;
+    _parser . set_modules ( _modules ) ;
+    _assigner . set_modules ( _modules ) ;
+    _generator . set_modules ( _modules ) ;
 }
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: bind ( facade & arg_facade )
 {
     typename platform_pointer :: template pointer < mediator > mediator_obj ;
-    typename platform_pointer :: template pointer < _reflection_binder_type > reflection_binder_obj ;
+    typename platform_pointer :: template pointer < data_binder > binder_obj ;
     typename data_loader_types :: template types < _reflection_types > :: reflection reflection ;
 
     arg_facade . mediator_obj ( mediator_obj ) ;
-    platform_pointer :: bind ( reflection_binder_obj , _reflection_binder ) ;
-    reflection . bind_all ( mediator_obj , reflection_binder_obj ) ;
+    platform_pointer :: bind ( binder_obj , _binder ) ;
+    reflection . bind_all ( mediator_obj , binder_obj ) ;
 }
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: parse ( std :: string line )
 {
-    _reflection_parser . parse ( line ) ;
+    _parser . parse ( line ) ;
 }
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: assign ( )
 {
-    _reflection_assigner . assign ( ) ;
+    _assigner . assign ( ) ;
 }
 
 template < typename data_loader_types >
 std :: string shy_data_loader < data_loader_types > :: generate ( )
 {
-    return _reflection_generator . generate ( ) ;
+    return _generator . generate ( ) ;
 }
 
 template < typename data_loader_types >
@@ -104,9 +104,9 @@ std :: string shy_data_loader < data_loader_types > :: error ( )
 {
     std :: string result ;
     if ( result . empty ( ) )
-        result = _reflection_parser . error ( ) ;
+        result = _parser . error ( ) ;
     if ( result . empty ( ) )
-        result = _reflection_assigner . error ( ) ;
+        result = _assigner . error ( ) ;
     return result ;
 }
 
