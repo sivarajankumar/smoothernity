@@ -29,6 +29,14 @@ consts logic_blanket_stateless
     mesh_color_b 0 / 1
     mesh_color_a 1 / 1
 
+consts logic_door_animation_stateless
+    animation_origin_x 0 / 1
+    animation_origin_y 0 / 1
+    animation_origin_z - 3 / 1
+    appear_scale_begin 0 / 1
+    appear_scale_end 1 / 1
+    appear_time_from_begin_to_end 2 / 1
+
 consts logic_door_stateless
     mesh_color_r 1 / 1
     mesh_color_g 1 / 1
