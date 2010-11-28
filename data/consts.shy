@@ -67,9 +67,9 @@ consts logic_door_stateless
 
 consts logic_fidget_stateless
     fidget_size 3 / 10
-    fidget_r 255 / 255
-    fidget_g 128 / 255
-    fidget_b 0 / 255
+    fidget_r 1 / 1
+    fidget_g 1 / 2
+    fidget_b 0 / 1
     angle_delta 125 / 1000
     mesh_x 0 / 1
     mesh_y_from_top 1 / 2
@@ -129,10 +129,10 @@ consts logic_main_menu_letters_layout_stateless
 
 consts logic_main_menu_letters_meshes_stateless
     letter_mesh_size 1 / 1
-    letter_mesh_color_r 0 / 255
-    letter_mesh_color_g 255 / 255
-    letter_mesh_color_b 0 / 255
-    letter_mesh_color_a 255 / 255
+    letter_mesh_color_r 0 / 1
+    letter_mesh_color_g 1 / 1
+    letter_mesh_color_b 0 / 1
+    letter_mesh_color_a 1 / 1
     time_between_creation 50 / 1000
 
 consts logic_main_menu_selection_animation_stateless
