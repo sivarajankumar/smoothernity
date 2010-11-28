@@ -47,7 +47,7 @@
             
             std :: string parsing_error = loader . error ( ) ;
             if ( parsing_error . empty ( ) )
-                std :: cout << loader . generate ( ) ;
+                std :: cout << loader . generate ( ) << std :: endl ;
             else
                 NSLog ( @"parsing error: %s" , parsing_error . c_str ( ) ) ;
         }
