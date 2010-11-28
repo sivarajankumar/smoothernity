@@ -1,0 +1,27 @@
+system application
+    machine main
+        state initial
+            to idle
+        state idle
+            on entry 
+                action1 
+                action2
+            on exit 
+                action3
+            to working
+        state working
+            on { message1 message2 } { message3 }
+                action4
+                action5
+            to quit
+                if { message4 } { message5 }
+            to warning
+                if { ( state of slave is idle ) message3 } { message6 }
+        state quit
+            on entry
+                perform_quit
+    machine slave
+        state initial
+            to idle
+        state idle
+
