@@ -1,12 +1,8 @@
-template 
-    < typename _data_modules 
-    , typename _platform
-    >
+template < typename _data_modules >
 class shy_data_parser_types
 {
 public :
     typedef _data_modules data_modules ;
-    typedef _platform platform ;
 } ;
 
 template < typename data_parser_types >
@@ -14,9 +10,8 @@ class shy_data_parser
 {
     typedef typename data_parser_types :: data_modules data_modules ;
     typedef typename data_parser_types :: data_modules :: data_modules_attributes data_modules_attributes ;
-    typedef typename data_parser_types :: platform :: platform_math platform_math ;
-    typedef typename data_parser_types :: platform :: platform_math :: num_fract num_fract ;
-    typedef typename data_parser_types :: platform :: platform_math :: num_whole num_whole ;
+    typedef typename data_parser_types :: data_modules :: data_modules_fract data_modules_fract ;
+    typedef typename data_parser_types :: data_modules :: data_modules_whole data_modules_whole ;
 
     class _consts
     {
@@ -486,23 +481,22 @@ void shy_data_parser < data_parser_types > :: _store_attribute_denominator_value
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _set_whole_value ( )
 {
-    typename data_modules :: name_to_module_type :: const_iterator module_i ;
+    typename data_modules :: name_to_module_type :: iterator module_i ;
     module_i = _modules -> name_to_module . find ( _module_name ) ;
     if ( module_i == _modules -> name_to_module . end ( ) )
         _error = _consts :: error_unknown_module ( _module_name ) ;
     else
     {
-        const data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules :: name_to_whole_type :: const_iterator attribute_i ;
+        data_modules_attributes & attributes = module_i -> second ;
+        typename data_modules :: name_to_whole_type :: iterator attribute_i ;
         attribute_i = attributes . name_to_whole . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_whole . end ( ) )
             _error = _consts :: error_unknown_whole_attribute_in_module ( _attribute_name , _module_name ) ;
         else
         {
-            num_whole & value = * ( attribute_i -> second . binding ) ;
-            int numerator = 0 ;
-            std :: istringstream ( _attribute_numerator_sign + _attribute_numerator_value ) >> numerator ;
-            platform_math :: make_num_whole ( value , numerator ) ;
+            data_modules_whole & whole = attribute_i -> second ;
+            whole . sign = _attribute_numerator_sign ;
+            whole . value = _attribute_numerator_value ;
         }
     }
 }
@@ -510,25 +504,24 @@ void shy_data_parser < data_parser_types > :: _set_whole_value ( )
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _set_fract_value ( )
 {
-    typename data_modules :: name_to_module_type :: const_iterator module_i ;
+    typename data_modules :: name_to_module_type :: iterator module_i ;
     module_i = _modules -> name_to_module . find ( _module_name ) ;
     if ( module_i == _modules -> name_to_module . end ( ) )
         _error = _consts :: error_unknown_module ( _module_name ) ;
     else
     {
-        const data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules :: name_to_fract_type :: const_iterator attribute_i ;
+        data_modules_attributes & attributes = module_i -> second ;
+        typename data_modules :: name_to_fract_type :: iterator attribute_i ;
         attribute_i = attributes . name_to_fract . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_fract . end ( ) )
             _error = _consts :: error_unknown_fract_attribute_in_module ( _attribute_name , _module_name ) ;
         else
         {
-            num_fract & value = * ( attribute_i -> second . binding ) ;
-            int numerator = 0 ;
-            int denominator = 0 ;
-            std :: istringstream ( _attribute_numerator_sign + _attribute_numerator_value ) >> numerator ;
-            std :: istringstream ( _attribute_denominator_sign + _attribute_denominator_value ) >> denominator ;
-            platform_math :: make_num_fract ( value , numerator , denominator ) ;
+            data_modules_fract & fract = attribute_i -> second ;
+            fract . numerator_sign = _attribute_numerator_sign ;
+            fract . numerator_value = _attribute_numerator_value ;
+            fract . denominator_sign = _attribute_denominator_sign ;
+            fract . denominator_value = _attribute_denominator_value ;
         }
     }
 }

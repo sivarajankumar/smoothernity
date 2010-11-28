@@ -36,7 +36,7 @@ class shy_data_loader
     typedef shy_data_assigner < shy_data_assigner_types < data_modules , platform > > data_assigner ;
     typedef shy_data_binder < shy_data_binder_types < data_modules , platform > > data_binder ;
     typedef shy_data_generator < shy_data_generator_types < data_modules > > data_generator ;
-    typedef shy_data_parser < shy_data_parser_types < data_modules , platform > > data_parser ;
+    typedef shy_data_parser < shy_data_parser_types < data_modules > > data_parser ;
 
     class _reflection_types
     {
