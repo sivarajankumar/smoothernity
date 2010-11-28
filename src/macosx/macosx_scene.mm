@@ -44,12 +44,14 @@
                 std :: getline ( std :: cin , line ) ;
                 loader . parse ( line ) ;
             }
-            
-            std :: string parsing_error = loader . error ( ) ;
-            if ( parsing_error . empty ( ) )
+
+            loader . assign ( ) ; 
+
+            std :: string loader_error = loader . error ( ) ;
+            if ( loader_error . empty ( ) )
                 std :: cout << loader . generate ( ) << std :: endl ;
             else
-                NSLog ( @"parsing error: %s" , parsing_error . c_str ( ) ) ;
+                NSLog ( @"loader error: %s" , loader_error . c_str ( ) ) ;
         }
 
 		_facade -> init ( ) ;

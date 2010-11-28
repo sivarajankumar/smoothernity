@@ -17,7 +17,6 @@
     GLint renderer_id ;
     NSOpenGLPixelFormat * pixel_format = [ [ NSOpenGLPixelFormat alloc ] initWithAttributes : attrs ] ;
     [ pixel_format getValues : & renderer_id forAttribute : NSOpenGLPFARendererID forVirtualScreen : 0 ] ;
-    NSLog ( @"NSOpenGLView pixelFormat RendererID = %08x" , ( unsigned ) renderer_id ) ;
     self = [ super initWithFrame : frameRect pixelFormat : pixel_format ] ;
     if ( self )
 	{
