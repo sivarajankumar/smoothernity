@@ -135,3 +135,11 @@ consts logic_main_menu_letters_meshes_stateless
     letter_mesh_color_a 255 / 255
     time_between_creation 50 / 1000
 
+consts logic_main_menu_selection_stateless
+    mesh_size 1 / 1
+    mesh_color_r 0 / 1
+    mesh_color_g 1 / 4
+    mesh_color_b 0 / 1
+    mesh_color_a 1 / 1
+    selected_rect_vertical_scale 20 / 10
+
