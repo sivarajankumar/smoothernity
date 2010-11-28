@@ -1,3 +1,5 @@
+#include "binder.hpp"
+
 template 
     < typename _facade
     , template < typename reflection_types > class _reflection
@@ -19,6 +21,7 @@ class shy_data_loader
 {
     typedef typename data_loader_types :: facade facade ;
     typedef typename data_loader_types :: facade :: mediator mediator ;
+    typedef typename data_loader_types :: facade :: mediator :: platform platform ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math platform_math ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_fract num_fract ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
@@ -78,22 +81,12 @@ class shy_data_loader
     class _reflection_modules_type
     {
     public :
+        typedef _reflection_attributes_type data_modules_attributes ;
         typedef std :: map < std :: string , _reflection_attributes_type > name_to_module_type ;
         name_to_module_type name_to_module ;
     } ;
 
-    class _reflection_binder_type
-    {
-    public :
-        _reflection_binder_type ( ) ;
-        void set_modules ( _reflection_modules_type & ) ;
-        void module ( std :: string ) ;
-        void bind ( std :: string , const num_fract & ) ;
-        void bind ( std :: string , const num_whole & ) ;
-    public :
-        _reflection_modules_type * _modules ;
-        _reflection_attributes_type * _current_attributes ;
-    } ;
+    typedef shy_data_binder < shy_data_binder_types < _reflection_modules_type , platform > > _reflection_binder_type ;
 
     class _reflection_parser_type
     {
@@ -217,40 +210,6 @@ private :
     _reflection_generator_type _reflection_generator ;
     _reflection_modules_type _reflection_modules ;
 } ;
-
-template < typename data_loader_types >
-shy_data_loader < data_loader_types > :: _reflection_binder_type :: _reflection_binder_type ( )
-: _modules ( 0 )
-, _current_attributes ( 0 )
-{
-}
-
-template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_binder_type :: set_modules ( _reflection_modules_type & modules )
-{
-    _modules = & modules ;
-}
-
-template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_binder_type :: module ( std :: string name )
-{
-    _modules -> name_to_module [ name ] = _reflection_attributes_type ( ) ;
-    _current_attributes = & ( _modules -> name_to_module [ name ] ) ;
-}
-
-template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_binder_type :: bind ( std :: string name , const num_fract & value )
-{
-    if ( _current_attributes )
-        _current_attributes -> name_to_fract [ name ] = const_cast < num_fract * > ( & value ) ;
-}
-
-template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_binder_type :: bind ( std :: string name , const num_whole & value )
-{
-    if ( _current_attributes )
-        _current_attributes -> name_to_whole [ name ] = const_cast < num_whole * > ( & value ) ;
-}
 
 template < typename data_loader_types >
 shy_data_loader < data_loader_types > :: _reflection_parser_type :: _reflection_parser_type ( )
