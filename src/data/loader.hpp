@@ -39,6 +39,7 @@ class shy_data_loader
         static std :: string error_unknown_module ( std :: string module ) { return std :: string ( "unknown module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_unknown_whole_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown whole attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
+        static char minus ( ) { return '-' ; }
         static std :: string next_line ( ) { return "\n" ; }
         static char underscore ( ) { return '_' ; }
     } ;
@@ -80,6 +81,7 @@ class shy_data_loader
             _token_class_identifier ,
             _token_class_number ,
             _token_class_divide ,
+            _token_class_minus ,
             _token_class_unknown
         } ;
         enum _state_type
@@ -88,8 +90,10 @@ class shy_data_loader
             _state_error ,
             _state_reading_module_name ,
             _state_reading_attribute_name ,
-            _state_reading_attribute_numerator ,
-            _state_reading_attribute_denominator ,
+            _state_reading_attribute_numerator_sign ,
+            _state_reading_attribute_numerator_value ,
+            _state_reading_attribute_denominator_sign ,
+            _state_reading_attribute_denominator_value ,
             _state_determining_value_format 
         } ;
     public :
@@ -102,19 +106,24 @@ class shy_data_loader
         void _handle_token_class_identifier ( ) ;
         void _handle_token_class_number ( ) ;
         void _handle_token_class_divide ( ) ;
+        void _handle_token_class_minus ( ) ;
         void _handle_token_class_unknown ( ) ;
         void _handle_state_none ( ) ;
         void _handle_state_error ( ) ;
         void _handle_state_reading_module_name ( ) ;
         void _handle_state_reading_attribute_name ( ) ;
-        void _handle_state_reading_attribute_numerator ( ) ;
-        void _handle_state_reading_attribute_denominator ( ) ;
+        void _handle_state_reading_attribute_numerator_sign ( ) ;
+        void _handle_state_reading_attribute_numerator_value ( ) ;
+        void _handle_state_reading_attribute_denominator_sign ( ) ;
+        void _handle_state_reading_attribute_denominator_value ( ) ;
         void _handle_state_determining_value_format ( ) ;
         void _store_error ( std :: string ) ;
         void _store_module_name ( std :: string ) ;
         void _store_attribute_name ( std :: string ) ;
-        void _store_attribute_numerator ( std :: string ) ;
-        void _store_attribute_denominator ( std :: string ) ;
+        void _store_attribute_numerator_sign ( std :: string ) ;
+        void _store_attribute_numerator_value ( std :: string ) ;
+        void _store_attribute_denominator_sign ( std :: string ) ;
+        void _store_attribute_denominator_value ( std :: string ) ;
         void _set_whole_value ( ) ;
         void _set_fract_value ( ) ;
         void _read_next_token ( ) ;
@@ -137,8 +146,10 @@ class shy_data_loader
         std :: string _error ;
         std :: string _module_name ;
         std :: string _attribute_name ;
-        std :: string _attribute_numerator ;
-        std :: string _attribute_denominator ;
+        std :: string _attribute_numerator_sign ;
+        std :: string _attribute_numerator_value ;
+        std :: string _attribute_denominator_sign ;
+        std :: string _attribute_denominator_value ;
     } ;
 
     class _reflection_types
@@ -230,12 +241,16 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: parse (
             _handle_state_reading_module_name ( ) ;
         else if ( _state == _state_reading_attribute_name )
             _handle_state_reading_attribute_name ( ) ;
-        else if ( _state == _state_reading_attribute_numerator )
-            _handle_state_reading_attribute_numerator ( ) ;
+        else if ( _state == _state_reading_attribute_numerator_sign )
+            _handle_state_reading_attribute_numerator_sign ( ) ;
+        else if ( _state == _state_reading_attribute_numerator_value )
+            _handle_state_reading_attribute_numerator_value ( ) ;
         else if ( _state == _state_determining_value_format )
             _handle_state_determining_value_format ( ) ;
-        else if ( _state == _state_reading_attribute_denominator )
-            _handle_state_reading_attribute_denominator ( ) ;
+        else if ( _state == _state_reading_attribute_denominator_sign )
+            _handle_state_reading_attribute_denominator_sign ( ) ;
+        else if ( _state == _state_reading_attribute_denominator_value )
+            _handle_state_reading_attribute_denominator_value ( ) ;
         else if ( _state == _state_error )
             _handle_state_error ( ) ;
     }
@@ -286,7 +301,7 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
     {
         _store_attribute_name ( _token ) ;
         _read_next_token ( ) ;
-        _state = _state_reading_attribute_numerator ;
+        _state = _state_reading_attribute_numerator_sign ;
     }
     else
     {
@@ -296,11 +311,27 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_numerator ( )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_numerator_sign ( )
+{
+    if ( _token_class == _token_class_minus )
+    {
+        _store_attribute_numerator_sign ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_attribute_numerator_value ;
+    }
+    else
+    {
+        _store_attribute_numerator_sign ( std :: string ( ) ) ;
+        _state = _state_reading_attribute_numerator_value ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_numerator_value ( )
 {
     if ( _token_class == _token_class_number )
     {
-        _store_attribute_numerator ( _token ) ;
+        _store_attribute_numerator_value ( _token ) ;
         _read_next_token ( ) ;
         _state = _state_determining_value_format ;
     }
@@ -317,7 +348,7 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
     if ( _token_class == _token_class_divide )
     {
         _read_next_token ( ) ;
-        _state = _state_reading_attribute_denominator ;
+        _state = _state_reading_attribute_denominator_sign ;
     }
     else if ( _token_class == _token_class_identifier || _token_class == _token_class_none )
     {
@@ -332,11 +363,27 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_denominator ( )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_denominator_sign ( )
+{
+    if ( _token_class == _token_class_minus )
+    {
+        _store_attribute_denominator_sign ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_attribute_denominator_value ;
+    }
+    else
+    {
+        _store_attribute_denominator_sign ( std :: string ( ) ) ;
+        _state = _state_reading_attribute_denominator_value ;
+    }
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_state_reading_attribute_denominator_value ( )
 {
     if ( _token_class == _token_class_number )
     {
-        _store_attribute_denominator ( _token ) ;
+        _store_attribute_denominator_value ( _token ) ;
         _set_fract_value ( ) ;
         _read_next_token ( ) ;
         _state = _state_reading_attribute_name ;
@@ -371,6 +418,8 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _read_n
             _handle_token_class_identifier ( ) ;
         else if ( _token_class == _token_class_divide )
             _handle_token_class_divide ( ) ;
+        else if ( _token_class == _token_class_minus )
+            _handle_token_class_minus ( ) ;
         else
             _handle_token_class_unknown ( ) ;
     }
@@ -385,6 +434,8 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
         _token_class = _token_class_identifier ;
     else if ( _first_char ( ) == _consts :: divide ( ) )
         _token_class = _token_class_divide ;
+    else if ( _first_char ( ) == _consts :: minus ( ) )
+        _token_class = _token_class_minus ;
     else
         _token_class = _token_class_unknown ;
 }
@@ -414,6 +465,13 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_divide ( )
+{
+    _move_first_char_to_token ( ) ;
+    _continue_reading_next_token = false ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_minus ( )
 {
     _move_first_char_to_token ( ) ;
     _continue_reading_next_token = false ;
@@ -487,15 +545,27 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_numerator ( std :: string attribute_numerator )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_numerator_sign ( std :: string attribute_numerator_sign )
 {
-    _attribute_numerator = attribute_numerator ;
+    _attribute_numerator_sign = attribute_numerator_sign ;
 }
 
 template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_denominator ( std :: string attribute_denominator )
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_numerator_value ( std :: string attribute_numerator_value )
 {
-    _attribute_denominator = attribute_denominator ;
+    _attribute_numerator_value = attribute_numerator_value ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_denominator_sign ( std :: string attribute_denominator_sign )
+{
+    _attribute_denominator_sign = attribute_denominator_sign ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _store_attribute_denominator_value ( std :: string attribute_denominator_value )
+{
+    _attribute_denominator_value = attribute_denominator_value ;
 }
 
 template < typename data_loader_types >
@@ -516,7 +586,7 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_wh
         {
             num_whole & value = * ( attribute_i -> second ) ;
             int numerator = 0 ;
-            std :: istringstream ( _attribute_numerator ) >> numerator ;
+            std :: istringstream ( _attribute_numerator_sign + _attribute_numerator_value ) >> numerator ;
             platform_math :: make_num_whole ( value , numerator ) ;
         }
     }
@@ -541,8 +611,8 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _set_fr
             num_fract & value = * ( attribute_i -> second ) ;
             int numerator = 0 ;
             int denominator = 0 ;
-            std :: istringstream ( _attribute_numerator ) >> numerator ;
-            std :: istringstream ( _attribute_denominator ) >> denominator ;
+            std :: istringstream ( _attribute_numerator_sign + _attribute_numerator_value ) >> numerator ;
+            std :: istringstream ( _attribute_denominator_sign + _attribute_denominator_value ) >> denominator ;
             platform_math :: make_num_fract ( value , numerator , denominator ) ;
         }
     }
