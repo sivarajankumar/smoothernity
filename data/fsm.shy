@@ -1,4 +1,4 @@
-system application
+system logic_application
     machine main
         state initial
             to idle
