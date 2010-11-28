@@ -79,7 +79,8 @@ class shy_data_loader
             _token_class_none ,
             _token_class_identifier ,
             _token_class_number ,
-            _token_class_divide
+            _token_class_divide ,
+            _token_class_unknown
         } ;
         enum _state_type
         {
@@ -101,6 +102,7 @@ class shy_data_loader
         void _handle_token_class_identifier ( ) ;
         void _handle_token_class_number ( ) ;
         void _handle_token_class_divide ( ) ;
+        void _handle_token_class_unknown ( ) ;
         void _handle_state_none ( ) ;
         void _handle_state_error ( ) ;
         void _handle_state_reading_module_name ( ) ;
@@ -369,6 +371,8 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _read_n
             _handle_token_class_identifier ( ) ;
         else if ( _token_class == _token_class_divide )
             _handle_token_class_divide ( ) ;
+        else
+            _handle_token_class_unknown ( ) ;
     }
 }
 
@@ -381,6 +385,8 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
         _token_class = _token_class_identifier ;
     else if ( _first_char ( ) == _consts :: divide ( ) )
         _token_class = _token_class_divide ;
+    else
+        _token_class = _token_class_unknown ;
 }
 
 template < typename data_loader_types >
@@ -408,6 +414,13 @@ void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle
 
 template < typename data_loader_types >
 void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_divide ( )
+{
+    _move_first_char_to_token ( ) ;
+    _continue_reading_next_token = false ;
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: _reflection_parser_type :: _handle_token_class_unknown ( )
 {
     _move_first_char_to_token ( ) ;
     _continue_reading_next_token = false ;
