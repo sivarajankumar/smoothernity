@@ -1,3 +1,4 @@
+#include "assigner.hpp"
 #include "binder.hpp"
 #include "parser.hpp"
 
@@ -72,20 +73,9 @@ class shy_data_loader
         name_to_module_type name_to_module ;
     } ;
 
+    typedef shy_data_assigner < shy_data_assigner_types < _reflection_modules_type , platform > > _reflection_assigner_type ;
     typedef shy_data_binder < shy_data_binder_types < _reflection_modules_type , platform > > _reflection_binder_type ;
     typedef shy_data_parser < shy_data_parser_types < _reflection_modules_type , platform > > _reflection_parser_type ;
-
-    class _reflection_assigner_type
-    {
-    public :
-        _reflection_assigner_type ( ) ;
-        void set_modules ( _reflection_modules_type & ) ;
-        void assign ( ) ;
-        std :: string error ( ) ;
-    private :
-        _reflection_modules_type * _modules ;
-        std :: string _error ;
-    } ;
 
     class _reflection_generator_type
     {
@@ -118,29 +108,6 @@ private :
     _reflection_generator_type _reflection_generator ;
     _reflection_modules_type _reflection_modules ;
 } ;
-
-template < typename data_loader_types >
-shy_data_loader < data_loader_types > :: _reflection_assigner_type :: _reflection_assigner_type ( )
-: _modules ( 0 )
-{
-}
-
-template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_assigner_type :: set_modules ( _reflection_modules_type & modules )
-{
-    _modules = & modules ;
-}
-
-template < typename data_loader_types >
-void shy_data_loader < data_loader_types > :: _reflection_assigner_type :: assign ( )
-{
-}
-
-template < typename data_loader_types >
-std :: string shy_data_loader < data_loader_types > :: _reflection_assigner_type :: error ( )
-{
-    return _error ;
-}
 
 template < typename data_loader_types >
 shy_data_loader < data_loader_types > :: _reflection_generator_type :: _reflection_generator_type ( )
