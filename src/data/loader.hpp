@@ -1,6 +1,7 @@
 #include "assigner.hpp"
 #include "binder.hpp"
 #include "generator.hpp"
+#include "modules.hpp"
 #include "parser.hpp"
 
 template 
@@ -30,49 +31,7 @@ class shy_data_loader
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_pointer platform_pointer ;
 
-    class _consts
-    {
-    public :
-    } ;
-
-    class _reflection_attribute_fract_type
-    {
-    public :
-        _reflection_attribute_fract_type ( ) ;
-    public :
-        num_fract * binding ;
-        std :: string numerator_sign ;
-        std :: string numerator_value ;
-        std :: string denominator_sign ;
-        std :: string denominator_value ;
-    } ;
-
-    class _reflection_attribute_whole_type
-    {
-    public :
-        _reflection_attribute_whole_type ( ) ;
-    public :
-        num_whole * binding ;
-        std :: string sign ;
-        std :: string value ;
-    } ;
-
-    class _reflection_attributes_type
-    {
-    public :
-        typedef std :: map < std :: string , num_fract * > name_to_fract_type ;
-        typedef std :: map < std :: string , num_whole * > name_to_whole_type ;
-        name_to_fract_type name_to_fract ;
-        name_to_whole_type name_to_whole ;
-    } ;
-
-    class _reflection_modules_type
-    {
-    public :
-        typedef _reflection_attributes_type data_modules_attributes ;
-        typedef std :: map < std :: string , _reflection_attributes_type > name_to_module_type ;
-        name_to_module_type name_to_module ;
-    } ;
+    typedef shy_data_modules < shy_data_modules_types < platform > > _reflection_modules_type ;
 
     typedef shy_data_assigner < shy_data_assigner_types < _reflection_modules_type , platform > > _reflection_assigner_type ;
     typedef shy_data_binder < shy_data_binder_types < _reflection_modules_type , platform > > _reflection_binder_type ;
