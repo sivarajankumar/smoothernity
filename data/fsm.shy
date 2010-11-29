@@ -20,6 +20,7 @@ system logic_application
         state quit
             on entry
                 perform_quit
+        state warning
     machine slave
         state initial
             to idle
