@@ -10,6 +10,7 @@ template
     , template < typename mediator > class _logic_amusement_renderer
     , template < typename mediator > class _logic_amusement_stateless
     , template < typename mediator > class _logic_application
+    , template < typename mediator > class _logic_application_fsm
     , template < typename mediator > class _logic_application_stateless
     , template < typename mediator > class _logic_blanket
     , template < typename mediator > class _logic_blanket_animation
@@ -131,6 +132,7 @@ public :
         typedef _logic_amusement_renderer < mediator > logic_amusement_renderer ;
         typedef _logic_amusement_stateless < mediator > logic_amusement_stateless ;
         typedef _logic_application < mediator > logic_application ;
+        typedef _logic_application_fsm < mediator > logic_application_fsm ;
         typedef _logic_application_stateless < mediator > logic_application_stateless ;
         typedef _logic_blanket < mediator > logic_blanket ;
         typedef _logic_blanket_animation < mediator > logic_blanket_animation ;
@@ -249,6 +251,7 @@ template
     , template < typename _mediator > class _logic_amusement_renderer
     , template < typename _mediator > class _logic_amusement_stateless
     , template < typename _mediator > class _logic_application
+    , template < typename _mediator > class _logic_application_fsm
     , template < typename _mediator > class _logic_application_stateless
     , template < typename _mediator > class _logic_blanket
     , template < typename _mediator > class _logic_blanket_animation
@@ -367,6 +370,7 @@ public :
     typedef typename platform_scheduler :: template module_wrapper < _logic_amusement > scheduled_logic_amusement ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_amusement_renderer > scheduled_logic_amusement_renderer ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_application > scheduled_logic_application ;
+    typedef typename platform_scheduler :: template module_wrapper < _logic_application_fsm > scheduled_logic_application_fsm ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket > scheduled_logic_blanket ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_animation > scheduled_logic_blanket_animation ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_blanket_animation_appear > scheduled_logic_blanket_animation_appear ;
@@ -452,6 +456,7 @@ public :
         , scheduled_logic_amusement_renderer :: template scheduled_module
         , _logic_amusement_stateless
         , scheduled_logic_application :: template scheduled_module
+        , scheduled_logic_application_fsm :: template scheduled_module
         , _logic_application_stateless
         , scheduled_logic_blanket :: template scheduled_module
         , scheduled_logic_blanket_animation :: template scheduled_module
@@ -633,6 +638,7 @@ private :
     typedef typename aggregator_types :: scheduled_logic_amusement :: template scheduled_module < mediator_type > logic_amusement ;
     typedef typename aggregator_types :: scheduled_logic_amusement_renderer :: template scheduled_module < mediator_type > logic_amusement_renderer ;
     typedef typename aggregator_types :: scheduled_logic_application :: template scheduled_module < mediator_type > logic_application ;
+    typedef typename aggregator_types :: scheduled_logic_application_fsm :: template scheduled_module < mediator_type > logic_application_fsm ;
     typedef typename aggregator_types :: scheduled_logic_blanket :: template scheduled_module < mediator_type > logic_blanket ;
     typedef typename aggregator_types :: scheduled_logic_blanket_animation :: template scheduled_module < mediator_type > logic_blanket_animation ;
     typedef typename aggregator_types :: scheduled_logic_blanket_animation_appear :: template scheduled_module < mediator_type > logic_blanket_animation_appear ;
@@ -726,6 +732,7 @@ private :
     logic_amusement_renderer _logic_amusement_renderer ;
     logic_amusement_stateless _logic_amusement_stateless ;
     logic_application _logic_application ;
+    logic_application_fsm _logic_application_fsm ;
     logic_blanket _logic_blanket ;
     logic_blanket_animation _logic_blanket_animation ;
     logic_blanket_animation_appear _logic_blanket_animation_appear ;
@@ -829,6 +836,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_amusement_renderer > logic_amusement_renderer_ptr ;
     typename platform_pointer :: template pointer < logic_amusement_stateless > logic_amusement_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_application > logic_application_ptr ;
+    typename platform_pointer :: template pointer < logic_application_fsm > logic_application_fsm_ptr ;
     typename platform_pointer :: template pointer < logic_blanket > logic_blanket_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_animation > logic_blanket_animation_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_animation_appear > logic_blanket_animation_appear_ptr ;
@@ -928,6 +936,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_amusement_renderer_ptr , _logic_amusement_renderer ) ;
     platform_pointer :: bind ( logic_amusement_stateless_ptr , _logic_amusement_stateless ) ;
     platform_pointer :: bind ( logic_application_ptr , _logic_application ) ;
+    platform_pointer :: bind ( logic_application_fsm_ptr , _logic_application_fsm ) ;
     platform_pointer :: bind ( logic_blanket_ptr , _logic_blanket ) ;
     platform_pointer :: bind ( logic_blanket_animation_ptr , _logic_blanket_animation ) ;
     platform_pointer :: bind ( logic_blanket_animation_appear_ptr , _logic_blanket_animation_appear ) ;
@@ -1025,6 +1034,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_scheduler :: register_module_in_scheduler ( logic_amusement_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_amusement_renderer_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_application_ptr , scheduler_ptr ) ;
+    platform_scheduler :: register_module_in_scheduler ( logic_application_fsm_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_animation_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_blanket_animation_appear_ptr , scheduler_ptr ) ;
@@ -1105,6 +1115,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_amusement_renderer_ptr
         , logic_amusement_stateless_ptr
         , logic_application_ptr
+        , logic_application_fsm_ptr
         , logic_blanket_ptr
         , logic_blanket_animation_ptr
         , logic_blanket_animation_appear_ptr

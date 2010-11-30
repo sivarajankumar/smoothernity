@@ -59,6 +59,7 @@ private :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement logic_amusement ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement_renderer logic_amusement_renderer ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_application logic_application ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_fsm logic_application_fsm ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket logic_blanket ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation logic_blanket_animation ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_appear logic_blanket_animation_appear ;
@@ -320,6 +321,7 @@ private :
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_amusement > logic_amusement ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_amusement_renderer > logic_amusement_renderer ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_application > logic_application ;
+        typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_application_fsm > logic_application_fsm ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket > logic_blanket ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation > logic_blanket_animation ;
         typename platform_pointer :: template pointer < typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_appear > logic_blanket_animation_appear ;
@@ -425,6 +427,7 @@ public :
         , typename platform_pointer :: template pointer < logic_amusement_renderer >
         , typename platform_pointer :: template pointer < logic_amusement_stateless >
         , typename platform_pointer :: template pointer < logic_application >
+        , typename platform_pointer :: template pointer < logic_application_fsm >
         , typename platform_pointer :: template pointer < logic_blanket >
         , typename platform_pointer :: template pointer < logic_blanket_animation >
         , typename platform_pointer :: template pointer < logic_blanket_animation_appear >
@@ -597,6 +600,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_amusement_renderer > arg_logic_amusement_renderer
     , typename platform_pointer :: template pointer < logic_amusement_stateless > arg_logic_amusement_stateless
     , typename platform_pointer :: template pointer < logic_application > arg_logic_application
+    , typename platform_pointer :: template pointer < logic_application_fsm > arg_logic_application_fsm
     , typename platform_pointer :: template pointer < logic_blanket > arg_logic_blanket
     , typename platform_pointer :: template pointer < logic_blanket_animation > arg_logic_blanket_animation
     , typename platform_pointer :: template pointer < logic_blanket_animation_appear > arg_logic_blanket_animation_appear
@@ -715,6 +719,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_amusement = arg_logic_amusement ;
     _receivers . logic_amusement_renderer = arg_logic_amusement_renderer ;
     _receivers . logic_application = arg_logic_application ;
+    _receivers . logic_application_fsm = arg_logic_application_fsm ;
     _receivers . logic_blanket = arg_logic_blanket ;
     _receivers . logic_blanket_animation = arg_logic_blanket_animation ;
     _receivers . logic_blanket_animation_appear = arg_logic_blanket_animation_appear ;
@@ -800,6 +805,7 @@ void shy_mediator < mediator_types > :: register_modules
     _receivers . logic_amusement . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_amusement_renderer . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_application . get ( ) . set_mediator ( mediator_ptr ) ;
+    _receivers . logic_application_fsm . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket_animation . get ( ) . set_mediator ( mediator_ptr ) ;
     _receivers . logic_blanket_animation_appear . get ( ) . set_mediator ( mediator_ptr ) ;
