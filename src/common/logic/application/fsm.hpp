@@ -1,5 +1,6 @@
 template 
     < typename _actions
+    , typename _contents
     , typename _executor
     , typename _inputs 
     , typename _platform
@@ -9,6 +10,7 @@ class shy_fsm_contents_types
 {
 public :
     typedef _actions actions ;
+    typedef _contents contents ;
     typedef _executor executor ;
     typedef _inputs inputs ;
     typedef _platform platform ;
@@ -17,6 +19,7 @@ public :
 
 template < typename fsm_contents_types >
 class shy_logic_application_fsm_contents
+: public fsm_contents_types :: contents
 {
     typedef typename fsm_contents_types :: actions actions ;
     typedef typename fsm_contents_types :: executor executor ;
@@ -68,27 +71,32 @@ public :
         _machine_main_state_initial_type machine_main_state_initial ;
         _machine_slave_state_initial_type machine_slave_state_initial ;
     } ;
+    class all_machines
+    {
+    public :
+        typename platform_pointer :: template pointer < state > machine_main ;
+        typename platform_pointer :: template pointer < state > machine_slave ;
+    } ;
 public :
     shy_logic_application_fsm_contents ( ) ;
-    void tick ( ) ;
+    virtual void tick ( typename platform_pointer :: template pointer < executor > ) ;
 private :
     all_states _all_states ;
-    typename platform_pointer :: template pointer < state > _machine_main ;
-    typename platform_pointer :: template pointer < state > _machine_slave ;
+    all_machines _all_machines ;
 } ;
 
 template < typename fsm_contents_types >
 shy_logic_application_fsm_contents < fsm_contents_types > :: shy_logic_application_fsm_contents ( )
 {
-    platform_pointer :: bind ( _machine_main , _all_states . machine_main_state_initial ) ;
-    platform_pointer :: bind ( _machine_slave , _all_states . machine_slave_state_initial ) ;
+    platform_pointer :: bind ( _all_machines . machine_main , _all_states . machine_main_state_initial ) ;
+    platform_pointer :: bind ( _all_machines . machine_slave , _all_states . machine_slave_state_initial ) ;
 }
 
 template < typename fsm_contents_types >
-void shy_logic_application_fsm_contents < fsm_contents_types > :: tick ( )
+void shy_logic_application_fsm_contents < fsm_contents_types > :: tick ( typename platform_pointer :: template pointer < executor > arg_executor )
 {
-    executor :: tick ( _machine_main ) ;
-    executor :: tick ( _machine_slave ) ;
+    arg_executor . get ( ) . tick ( _all_machines . machine_main ) ;
+    arg_executor . get ( ) . tick ( _all_machines . machine_slave ) ;
 }
 
 
@@ -98,6 +106,7 @@ class shy_logic_application_fsm
 {
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
+    typedef typename mediator :: platform :: platform_conditions platform_conditions ;
     typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_math_consts platform_math_consts ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
@@ -105,37 +114,173 @@ class shy_logic_application_fsm
     class _logic_application_inputs_type
     {
     public :
-        num_whole logic_application_render ;
-        num_whole logic_application_update ;
-        num_whole text_generated ;
-        num_whole title_generated ;
+        num_whole application_render ;
+        num_whole application_update ;
+        num_whole text_prepared ;
+        num_whole title_created ;
+        num_whole title_finished ;
+        num_whole main_menu_created ;
+        num_whole main_menu_finished ;
     } ;
 
     class _logic_application_actions_type
     {
     public :
-        void logic_text_creation_permit ( ) ;
-        void logic_text_update ( ) ;
-        void logic_title_creation_permit ( ) ;
-        void logic_title_render ( ) ;
-        void logic_title_update ( ) ;
+        void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
+
+        void amusement_creation_permit ( ) ;
+        void amusement_launch_permit ( ) ;
+        void amusement_render ( ) ;
+        void amusement_update ( ) ;
+        void game_launch_permit ( ) ;
+        void game_render ( ) ;
+        void game_update ( ) ;
+        void main_menu_creation_permit ( ) ;
+        void main_menu_launch_permit ( ) ;
+        void main_menu_render ( ) ;
+        void main_menu_update ( ) ;
+        void text_prepare_permit ( ) ;
+        void text_update ( ) ;
+        void title_launch_permit ( ) ;
+        void title_render ( ) ;
+        void title_update ( ) ;
+    private :
+        typename platform_pointer :: template pointer < mediator > _mediator ;
     } ;
 
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
+    void receive ( typename messages :: logic_amusement_finished ) ;
+    void receive ( typename messages :: logic_application_render ) ;
     void receive ( typename messages :: logic_application_update ) ;
+    void receive ( typename messages :: logic_text_prepared ) ;
+    void receive ( typename messages :: logic_title_created ) ;
+    void receive ( typename messages :: logic_title_finished ) ;
+    void receive ( typename messages :: logic_main_menu_created ) ;
+    void receive ( typename messages :: logic_main_menu_finished ) ;
+private :
+    void _run_fsm ( ) ;
+    void _run_fsm_with_event ( num_whole & input ) ;
+    void _update_inputs ( ) ;
+    void _tick_fsm ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
 
+    num_whole _fsm_running ;
+    num_whole _inputs_changed ;
     _logic_application_inputs_type _logic_application_inputs ;
+    _logic_application_actions_type _logic_application_actions ;
 } ;
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
+{
+    _mediator = arg_mediator ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: amusement_creation_permit ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_amusement_creation_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: amusement_launch_permit ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_amusement_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: amusement_render ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_amusement_render ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: amusement_update ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_amusement_update ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: game_launch_permit ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_game_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: game_render ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_game_render ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: game_update ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_game_update ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: main_menu_creation_permit ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_creation_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: main_menu_launch_permit ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: main_menu_render ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_render ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: main_menu_update ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_main_menu_update ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: text_prepare_permit ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_text_prepare_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: text_update ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_text_update ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: title_launch_permit ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_title_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: title_render ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_title_render ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _logic_application_actions_type :: title_update ( )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_title_update ( ) ) ;
+}
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
+    _logic_application_actions . set_mediator ( arg_mediator ) ;
 }
 
 template < typename mediator >
@@ -144,5 +289,82 @@ void shy_logic_application_fsm < mediator > :: receive ( typename messages :: in
     typename platform_pointer :: template pointer < const platform > platform_obj ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
+
+    _fsm_running = _platform_math_consts . get ( ) . whole_false ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_amusement_finished )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_amusement_finished ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_application_render )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_application_render ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_application_update )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_application_update ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_text_prepared )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_text_prepared ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_title_created )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_title_created ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_title_finished )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_title_finished ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_main_menu_created )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_main_menu_created ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_main_menu_finished )
+{
+    _run_fsm_with_event ( _logic_application_inputs . logic_main_menu_finished ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _run_fsm_with_event ( num_whole & input )
+{
+    input = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
+    input = _platform_math_consts . get ( ) . whole_false ;
+    _run_fsm ( ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _run_fsm ( )
+{
+    if ( platform_conditions :: whole_is_false ( _fsm_running ) )
+    {
+        _fsm_running = _platform_math_consts . get ( ) . whole_true ;
+        while ( true )
+        {
+            _update_inputs ( ) ;
+            if ( platform_conditions :: whole_is_true ( _inputs_changed ) )
+                _tick_fsm ( ) ;
+            else
+                break ;
+        }
+        _fsm_running = _platform_math_consts . get ( ) . whole_false ;
+    }
 }
 
