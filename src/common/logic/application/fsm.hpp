@@ -116,11 +116,11 @@ class shy_logic_application_fsm
     public :
         num_whole application_render ;
         num_whole application_update ;
+        num_whole main_menu_created ;
+        num_whole main_menu_finished ;
         num_whole text_prepared ;
         num_whole title_created ;
         num_whole title_finished ;
-        num_whole main_menu_created ;
-        num_whole main_menu_finished ;
     } ;
 
     class _logic_application_actions_type
@@ -161,17 +161,21 @@ public :
     void receive ( typename messages :: logic_main_menu_finished ) ;
 private :
     void _run_fsm ( ) ;
-    void _run_fsm_with_event ( num_whole & input ) ;
     void _update_inputs ( ) ;
     void _tick_fsm ( ) ;
+    void _stabilize_fsm ( ) ;
+    void _reset_input_events ( ) ;
+    void _determine_inputs_change ( ) ;
+    void _update_fixed_inputs ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
 
     num_whole _fsm_running ;
     num_whole _inputs_changed ;
-    _logic_application_inputs_type _logic_application_inputs ;
-    _logic_application_actions_type _logic_application_actions ;
+    _logic_application_inputs_type _fixed_inputs ;
+    _logic_application_inputs_type _mutable_inputs ;
+    _logic_application_actions_type _actions ;
 } ;
 
 template < typename mediator >
@@ -280,7 +284,7 @@ template < typename mediator >
 void shy_logic_application_fsm < mediator > :: set_mediator ( typename platform_pointer :: template pointer < mediator > arg_mediator )
 {
     _mediator = arg_mediator ;
-    _logic_application_actions . set_mediator ( arg_mediator ) ;
+    _actions . set_mediator ( arg_mediator ) ;
 }
 
 template < typename mediator >
@@ -296,58 +300,93 @@ void shy_logic_application_fsm < mediator > :: receive ( typename messages :: in
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_amusement_finished )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_amusement_finished ) ;
+    _mutable_inputs . logic_amusement_finished = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_application_render )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_application_render ) ;
+    _mutable_inputs . logic_application_render = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_application_update )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_application_update ) ;
+    _mutable_inputs . logic_application_update = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_text_prepared )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_text_prepared ) ;
+    _mutable_inputs . logic_text_prepared = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_title_created )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_title_created ) ;
+    _mutable_inputs . logic_title_created = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_title_finished )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_title_finished ) ;
+    _mutable_inputs . logic_title_finished = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_main_menu_created )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_main_menu_created ) ;
+    _mutable_inputs . logic_main_menu_created = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: logic_main_menu_finished )
 {
-    _run_fsm_with_event ( _logic_application_inputs . logic_main_menu_finished ) ;
+    _mutable_inputs . logic_main_menu_finished = _platform_math_consts . get ( ) . whole_true ;
+    _run_fsm ( ) ;
 }
 
 template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _run_fsm_with_event ( num_whole & input )
+void shy_logic_application_fsm < mediator > :: _reset_input_events ( )
 {
-    input = _platform_math_consts . get ( ) . whole_true ;
-    _run_fsm ( ) ;
-    input = _platform_math_consts . get ( ) . whole_false ;
-    _run_fsm ( ) ;
+    _mutable_inputs . application_render = _platform_math_consts . get ( ) . whole_false ;
+    _mutable_inputs . application_update = _platform_math_consts . get ( ) . whole_false ;
+    _mutable_inputs . main_menu_created = _platform_math_consts . get ( ) . whole_false ;
+    _mutable_inputs . main_menu_finished = _platform_math_consts . get ( ) . whole_false ;
+    _mutable_inputs . text_prepared = _platform_math_consts . get ( ) . whole_false ;
+    _mutable_inputs . title_created = _platform_math_consts . get ( ) . whole_false ;
+    _mutable_inputs . title_finished = _platform_math_consts . get ( ) . whole_false ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
+{
+    if ( platform_conditions :: wholes_are_equal ( _mutable_inputs . application_render , _fixed_inputs . application_render )
+      && platform_conditions :: wholes_are_equal ( _mutable_inputs . application_update , _fixed_inputs . application_update )
+      && platform_conditions :: wholes_are_equal ( _mutable_inputs . main_menu_created , _fixed_inputs . main_menu_created )
+      && platform_conditions :: wholes_are_equal ( _mutable_inputs . main_menu_finished , _fixed_inputs . main_menu_finished )
+      && platform_conditions :: wholes_are_equal ( _mutable_inputs . text_prepared , _fixed_inputs . text_prepared )
+      && platform_conditions :: wholes_are_equal ( _mutable_inputs . title_created , _fixed_inputs . title_created )
+      && platform_conditions :: wholes_are_equal ( _mutable_inputs . title_finished , _fixed_inputs . title_finished )
+       )
+    {
+        _inputs_changed = _platform_math_consts . get ( ) . whole_false ;
+    }
+    else
+        _inputs_changed = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _update_fixed_inputs ( )
+{
+    _fixed_inputs = _mutable_inputs ;
 }
 
 template < typename mediator >
@@ -356,15 +395,26 @@ void shy_logic_application_fsm < mediator > :: _run_fsm ( )
     if ( platform_conditions :: whole_is_false ( _fsm_running ) )
     {
         _fsm_running = _platform_math_consts . get ( ) . whole_true ;
-        while ( true )
-        {
-            _update_inputs ( ) ;
-            if ( platform_conditions :: whole_is_true ( _inputs_changed ) )
-                _tick_fsm ( ) ;
-            else
-                break ;
-        }
+        _stabilize_fsm ( ) ;
+        _reset_input_events ( ) ;
+        _stabilize_fsm ( ) ;
         _fsm_running = _platform_math_consts . get ( ) . whole_false ;
+    }
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _stabilize_fsm ( )
+{
+    while ( true )
+    {
+        _determine_inputs_change ( ) ;
+        if ( platform_conditions :: whole_is_true ( _inputs_changed ) )
+        {
+            _update_fixed_inputs ( ) ;
+            _tick_fsm ( ) ;
+        }
+        else
+            break ;
     }
 }
 
