@@ -6,6 +6,7 @@ system logic_application
             on entry 
                 action1 
                 action2
+                ( command slave_become_idle )
             on exit 
                 action3
             to working
@@ -24,5 +25,6 @@ system logic_application
     machine slave
         state initial
             to idle
+                if { ( command slave_become_idle ) }
         state idle
 
