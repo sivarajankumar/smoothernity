@@ -9,15 +9,6 @@ class shy_logic_application_fsm
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     typedef shy_logic_application_fsm < mediator > logic_application_fsm ;
 
-    class _logic_application_fsm_state_type
-    {
-    public :
-        virtual void on_entry ( logic_application_fsm & ) ;
-        virtual void on_exit ( logic_application_fsm & ) ;
-        virtual void on_input ( logic_application_fsm & ) ;
-        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ; 
-    } ;
-
     class _logic_application_fsm_inputs_type
     {
     public :
@@ -29,6 +20,20 @@ class shy_logic_application_fsm
         num_whole logic_title_finished ;
         num_whole logic_main_menu_created ;
         num_whole logic_main_menu_finished ;
+    } ;
+
+    class _logic_application_fsm_state_type
+    {
+    public :
+        virtual void on_entry ( logic_application_fsm & ) ;
+        virtual void on_exit ( logic_application_fsm & ) ;
+        virtual void on_input ( logic_application_fsm & ) ;
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ; 
+    } ;
+
+    class _machine_application_state_initial_type
+    : public _logic_application_fsm_state_type
+    {
     } ;
 
 public :
@@ -49,9 +54,14 @@ private :
     void _determine_inputs_change ( ) ;
     void _update_fixed_inputs ( ) ;
     void _tick_all_fsms ( ) ;
+    void _tick_single_fsm ( typename platform_pointer :: template pointer < _logic_application_fsm_state_type > & ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+
+    _machine_application_state_initial_type _machine_application_state_initial ;
+
+    typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_application_state ;
 
     num_whole _inputs_changed ;
     num_whole _fsm_running ;
@@ -96,6 +106,8 @@ void shy_logic_application_fsm < mediator > :: receive ( typename messages :: in
 
     _inputs_changed = _platform_math_consts . get ( ) . whole_false ;
     _fsm_running = _platform_math_consts . get ( ) . whole_false ;
+
+    platform_pointer :: bind ( _machine_application_state , _machine_application_state_initial ) ;
 }
 
 template < typename mediator >
@@ -222,5 +234,28 @@ void shy_logic_application_fsm < mediator > :: _stabilize_fsm ( )
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _tick_all_fsms ( )
 {
+    _tick_single_fsm ( _machine_application_state ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _tick_single_fsm ( typename platform_pointer :: template pointer < _logic_application_fsm_state_type > & state )
+{
+    typename platform_pointer :: template pointer < _logic_application_fsm_state_type > next_state ;
+    num_whole states_are_equal ;
+
+    state . get ( ) . on_input ( * this ) ;
+    while ( true )
+    {
+        platform_pointer :: bind ( next_state , state . get ( ) . transition ( * this ) ) ;
+        platform_pointer :: are_equal ( states_are_equal , state , next_state ) ;
+        if ( platform_conditions :: whole_is_true ( states_are_equal ) )
+            break ;
+        else
+        {
+            state . on_exit ( * this ) ;
+            state = next_state ;
+            state . on_entry ( * this ) ;
+        }
+    }
 }
 
