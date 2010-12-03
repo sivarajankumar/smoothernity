@@ -66,7 +66,6 @@ template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: logic_title_created )
 {
     _main_menu_update_active = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_creation_permit ( ) ) ;
 }
 
 template < typename mediator >
@@ -74,7 +73,6 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
 {
     _title_active = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_render_active = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_main_menu_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
@@ -107,8 +105,6 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
 {
     if ( platform_conditions :: whole_is_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: logic_game_render ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( _title_active ) )
-        _mediator . get ( ) . send ( typename messages :: logic_title_render ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _main_menu_render_active ) )
         _mediator . get ( ) . send ( typename messages :: logic_main_menu_render ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _amusement_render_active ) )
@@ -133,8 +129,6 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
     }
     if ( platform_conditions :: whole_is_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: logic_game_update ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( _title_active ) )
-        _mediator . get ( ) . send ( typename messages :: logic_title_update ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _main_menu_update_active ) )
         _mediator . get ( ) . send ( typename messages :: logic_main_menu_update ( ) ) ;
     if ( platform_conditions :: whole_is_true ( _amusement_update_active ) )

@@ -50,6 +50,14 @@ class shy_logic_application_fsm
     class _machine_application_state_text_prepared_type
     : public _logic_application_fsm_state_type
     {
+    public :
+        virtual void on_input ( logic_application_fsm & ) ;
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_application_state_title_finished_type
+    : public _logic_application_fsm_state_type
+    {
     } ;
 
 public :
@@ -78,6 +86,7 @@ public :
     _machine_application_state_initial_type _machine_application_state_initial ;
     _machine_application_state_launched_type _machine_application_state_launched ;
     _machine_application_state_text_prepared_type _machine_application_state_text_prepared ;
+    _machine_application_state_title_finished_type _machine_application_state_title_finished ;
 
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_application_state ;
 
@@ -123,6 +132,31 @@ shy_logic_application_fsm < mediator > :: _machine_application_state_launched_ty
 {
     if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_text_prepared ) )
         return fsm . _machine_application_state_text_prepared ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_application_state_text_prepared_type :: on_input ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_render ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_title_render ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_title_update ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_title_created ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_creation_permit ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_title_finished ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_application_state_text_prepared_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_title_finished ) )
+        return fsm . _machine_application_state_title_finished ;
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
