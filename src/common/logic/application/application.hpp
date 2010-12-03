@@ -131,7 +131,7 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
     {
         _application_launched = _platform_math_consts . get ( ) . whole_true ;
         _text_active = _platform_math_consts . get ( ) . whole_true ;
-        _mediator . get ( ) . send ( typename messages :: logic_text_prepare_permit ( ) ) ;
+//        _mediator . get ( ) . send ( typename messages :: logic_text_prepare_permit ( ) ) ;
     }
     if ( platform_conditions :: whole_is_true ( _text_active ) )
         _mediator . get ( ) . send ( typename messages :: logic_text_update ( ) ) ;

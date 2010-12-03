@@ -34,6 +34,14 @@ class shy_logic_application_fsm
     class _machine_application_state_initial_type
     : public _logic_application_fsm_state_type
     {
+    public :
+        virtual void on_input ( logic_application_fsm & ) ;
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_application_state_launched_type
+    : public _logic_application_fsm_state_type
+    {
     } ;
 
 public :
@@ -55,11 +63,12 @@ private :
     void _update_fixed_inputs ( ) ;
     void _tick_all_fsms ( ) ;
     void _tick_single_fsm ( typename platform_pointer :: template pointer < _logic_application_fsm_state_type > & ) ;
-private :
+public :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
 
     _machine_application_state_initial_type _machine_application_state_initial ;
+    _machine_application_state_launched_type _machine_application_state_launched ;
 
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_application_state ;
 
@@ -68,6 +77,27 @@ private :
     _logic_application_fsm_inputs_type _current_inputs ;
     _logic_application_fsm_inputs_type _fixed_inputs ;
 } ;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_application_state_initial_type :: on_input ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_text_prepare_permit ( ) ) ;
+}
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_application_state_initial_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
+        return fsm . _machine_application_state_launched ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type :: on_entry ( logic_application_fsm & )
