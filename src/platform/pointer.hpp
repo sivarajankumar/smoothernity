@@ -1,6 +1,8 @@
 template < typename platform_insider >
 class shy_platform_pointer
 {
+    typedef typename platform_insider :: platform_math :: num_whole num_whole ;
+    typedef typename platform_insider :: platform_math_insider platform_math_insider ;
 public :
     template < typename data_type >
     class pointer
@@ -17,6 +19,9 @@ public :
     
     template < typename pointer_type >
     static void bind ( pointer_type & ptr , typename pointer_type :: _data_type & data ) ;
+
+    template < typename pointer_type >
+    static void are_equal ( num_whole & , pointer_type , pointer_type ) ;
 } ;
 
 template < typename platform_insider >
@@ -39,3 +44,11 @@ void shy_platform_pointer < platform_insider > :: bind ( pointer_type & ptr , ty
 {
     ptr . _data_ptr = & data ;
 }
+
+template < typename platform_insider >
+template < typename pointer_type >
+void shy_platform_pointer < platform_insider > :: are_equal ( num_whole & result , pointer_type pointer1 , pointer_type pointer2 )
+{
+    platform_math_insider :: num_whole_value_set ( result , pointer1 . _data_ptr == pointer2 . _data_ptr ) ;
+}
+

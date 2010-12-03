@@ -252,9 +252,9 @@ void shy_logic_application_fsm < mediator > :: _tick_single_fsm ( typename platf
             break ;
         else
         {
-            state . on_exit ( * this ) ;
+            state . get ( ) . on_exit ( * this ) ;
             state = next_state ;
-            state . on_entry ( * this ) ;
+            state . get ( ) . on_entry ( * this ) ;
         }
     }
 }

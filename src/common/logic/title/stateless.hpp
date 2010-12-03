@@ -81,6 +81,7 @@ void shy_logic_title_stateless < mediator >
 :: send ( typename logic_title_messages :: logic_title_created msg )
 {
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
@@ -90,6 +91,7 @@ void shy_logic_title_stateless < mediator >
 :: send ( typename logic_title_messages :: logic_title_finished msg )
 {
     _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
+    _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >
