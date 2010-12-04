@@ -1,30 +1,138 @@
 system logic_application
-    machine main
+
+    machine performer
         state initial
-            to idle
-        state idle
-            on entry 
-                action1 
-                action2
-                ( command slave_become_idle )
-            on exit 
-                action3
-            to working
-        state working
-            on { message1 message2 } { message3 }
-                action4
-                action5
-            to quit
-                if { message4 } { message5 }
-            to warning
-                if { ( state of slave is idle ) message3 } { message6 }
-        state quit
+            to title
+        state title
             on entry
-                perform_quit
-        state warning
-    machine slave
+                ( command start to title_performer )
+            to main_menu
+                if { ( machine title_performer is finished ) }
+        state main_menu
+            on entry
+                ( command start to main_menu_performer )
+            to amusement
+                if { ( machine main_menu_performer is finished ) }
+        state amusement
+            on entry
+                ( command start to amusement_performer )
+
+    machine generator
         state initial
-            to idle
-                if { ( command slave_become_idle ) }
-        state idle
+            to text
+        state text
+            on entry
+                ( command start to text_generator )
+            to title
+                if { ( machine text_generator is finished ) }
+        state title
+            on entry
+                ( command start to title_generator )
+            to main_menu
+                if { ( machine title_generator is finished ) }
+        state main_menu
+            on entry
+                ( command start to main_menu_generator )
+            to amusement
+                if { ( machine main_menu_generator is finished ) }
+        state amusement
+            on entry
+                ( command start to amusement_generator )
+
+    machine text_generator
+        state initial
+            to generating
+                if { ( command start ) }
+        state generating
+            on entry
+                logic_text_prepare_permit
+            on { logic_application_update }
+                logic_text_update
+            to finished
+                if { logic_text_prepared }
+        state finished
+
+    machine title_generator
+        state initial
+            to generating
+                if { ( command start ) }
+        state generating
+            on entry
+                logic_title_prepare_permit
+            on { logic_application_update }
+                logic_title_update
+            to finished
+                if { logic_title_created }
+        state finished
+
+    machine title_performer
+        state initial
+            to performing
+                if { ( command start ) }
+        state performing
+            on entry
+                logic_title_launch_permit
+            on { logic_application_render }
+                logic_title_render
+            on { logic_application_update }
+                logic_title_update
+            to finished
+                if { logic_title_finished }
+        state finished
+
+    machine main_menu_generator
+        state initial
+            to generating
+                if { ( command start ) }
+        state generating
+            on entry
+                logic_main_menu_creation_permit
+            on { logic_application_update }
+                logic_main_menu_update
+            to finished
+                if { logic_main_menu_creation_finished }
+        state finished
+
+    machine main_menu_performer
+        state initial
+            to performing
+                if { ( command start ) }
+        state performing
+            on entry
+                logic_main_menu_launch_permit
+            on { logic_application_render }
+                logic_main_menu_render
+            on { logic_application_update }
+                logic_main_menu_update
+            to finished
+                if { logic_main_menu_finished }
+        state finished
+
+    machine amusement_generator
+        state initial
+            to generating
+                if { ( command start ) }
+        state generating
+            on entry
+                logic_amusement_creation_permit
+            on { logic_application_update }
+                logic_amusement_update
+            to finished
+                if { logic_amusement_creation_finished }
+        state finished
+
+    machine amusement_performer
+        state initial
+            to performing
+                if { ( command start ) }
+        state performing
+            on entry
+                logic_amusement_launch_permit
+            on { logic_application_render }
+                logic_amusement_render
+            on { logic_application_update }
+                logic_amusement_update
+            to finished
+                if { logic_amusement_finished }
+        state finished
 
