@@ -86,7 +86,6 @@ void shy_logic_amusement_stateless < mediator >
 :: logic_amusement_sender < receivers >
 :: send ( typename logic_amusement_messages :: logic_amusement_finished msg )
 {
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 

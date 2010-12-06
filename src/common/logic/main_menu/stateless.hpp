@@ -90,7 +90,6 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_created msg )
 {
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 
@@ -100,7 +99,6 @@ void shy_logic_main_menu_stateless < mediator >
 :: logic_main_menu_sender < receivers > 
 :: send ( typename logic_main_menu_messages :: logic_main_menu_finished msg )
 {
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 

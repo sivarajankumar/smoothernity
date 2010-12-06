@@ -17,7 +17,6 @@
 #include "logic/amusement/amusement.hpp"
 #include "logic/amusement/renderer.hpp"
 #include "logic/amusement/stateless.hpp"
-#include "logic/application/application.hpp"
 #include "logic/application/fsm.hpp"
 #include "logic/application/stateless.hpp"
 #include "logic/blanket/animation/animation.hpp"
@@ -141,7 +140,6 @@ class shy_facade
         , shy_logic_amusement
         , shy_logic_amusement_renderer
         , shy_logic_amusement_stateless
-        , shy_logic_application
         , shy_logic_application_fsm
         , shy_logic_application_stateless
         , shy_logic_blanket

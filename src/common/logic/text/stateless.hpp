@@ -195,7 +195,6 @@ void shy_logic_text_stateless < mediator >
 :: logic_text_sender < receivers > 
 :: send ( typename logic_text_messages :: logic_text_prepared msg )
 {
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 

@@ -37,7 +37,6 @@ void shy_logic_application_stateless < mediator >
 :: logic_application_sender < receivers >
 :: send ( typename logic_application_messages :: logic_application_render msg )
 {
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 
@@ -47,6 +46,5 @@ void shy_logic_application_stateless < mediator >
 :: logic_application_sender < receivers >
 :: send ( typename logic_application_messages :: logic_application_update msg )
 {
-    _receivers . get ( ) . logic_application . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
