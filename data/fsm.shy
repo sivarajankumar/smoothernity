@@ -16,6 +16,11 @@ system logic_application
         state amusement
             on entry
                 ( command start to amusement_performer )
+            to game
+                if { ( machine amusement_performer is finished ) }
+        state game
+            on entry
+                ( command start to game_performer )
 
     machine generator
         state initial
@@ -38,6 +43,9 @@ system logic_application
         state amusement
             on entry
                 ( command start to amusement_generator )
+            to game
+                if { ( machine amusement_generator is finished ) }
+        state game
 
     machine text_generator
         state initial
@@ -58,7 +66,7 @@ system logic_application
                 if { ( command start ) }
         state generating
             on entry
-                logic_title_prepare_permit
+                logic_title_launch_permit
             on { logic_application_update }
                 logic_title_update
             to finished
@@ -70,8 +78,6 @@ system logic_application
             to performing
                 if { ( command start ) }
         state performing
-            on entry
-                logic_title_launch_permit
             on { logic_application_render }
                 logic_title_render
             on { logic_application_update }
@@ -90,7 +96,7 @@ system logic_application
             on { logic_application_update }
                 logic_main_menu_update
             to finished
-                if { logic_main_menu_creation_finished }
+                if { logic_main_menu_created }
         state finished
 
     machine main_menu_performer
@@ -118,7 +124,7 @@ system logic_application
             on { logic_application_update }
                 logic_amusement_update
             to finished
-                if { logic_amusement_creation_finished }
+                if { logic_amusement_created }
         state finished
 
     machine amusement_performer
