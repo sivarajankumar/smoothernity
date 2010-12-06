@@ -1107,7 +1107,7 @@ void shy_logic_application_fsm < mediator > :: _run_fsm ( )
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _stabilize_fsm ( )
 {
-    while ( true )
+    for ( ; ; )
     {
         _recalc_current_inputs ( ) ;
         _determine_inputs_change ( ) ;
@@ -1143,7 +1143,7 @@ void shy_logic_application_fsm < mediator > :: _tick_single_fsm ( typename platf
     num_whole states_are_equal ;
 
     state . get ( ) . on_input ( * this ) ;
-    while ( true )
+    for ( ; ; )
     {
         platform_pointer :: bind ( next_state , state . get ( ) . transition ( * this ) ) ;
         platform_pointer :: are_equal ( states_are_equal , state , next_state ) ;
