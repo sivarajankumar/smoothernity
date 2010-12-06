@@ -18,6 +18,7 @@ public :
     class logic_amusement_messages
     {
     public :
+        class logic_amusement_created { } ;
         class logic_amusement_creation_permit { } ;
         class logic_amusement_finished { } ;
         class logic_amusement_launch_permit { } ;
@@ -30,6 +31,7 @@ public :
     {
     public :
         void set_receivers ( typename platform_pointer :: template pointer < const receivers > ) ;
+        void send ( typename logic_amusement_messages :: logic_amusement_created ) ;
         void send ( typename logic_amusement_messages :: logic_amusement_creation_permit ) ;
         void send ( typename logic_amusement_messages :: logic_amusement_finished ) ;
         void send ( typename logic_amusement_messages :: logic_amusement_launch_permit ) ;
@@ -67,6 +69,15 @@ void shy_logic_amusement_stateless < mediator >
 :: send ( typename logic_amusement_messages :: logic_amusement_creation_permit msg )
 {
     _receivers . get ( ) . logic_amusement . get ( ) . receive ( msg ) ;
+}
+
+template < typename mediator >
+template < typename receivers >
+void shy_logic_amusement_stateless < mediator >
+:: logic_amusement_sender < receivers >
+:: send ( typename logic_amusement_messages :: logic_amusement_created msg )
+{
+    _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
 }
 
 template < typename mediator >

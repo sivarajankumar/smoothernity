@@ -79,7 +79,6 @@ template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: logic_main_menu_created )
 {
     _amusement_update_active = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_amusement_creation_permit ( ) ) ;
 }
 
 template < typename mediator >
@@ -88,7 +87,6 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
     _main_menu_update_active = _platform_math_consts . get ( ) . whole_false ;
     _main_menu_render_active = _platform_math_consts . get ( ) . whole_false ;
     _amusement_render_active = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_amusement_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
@@ -105,8 +103,6 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
 {
     if ( platform_conditions :: whole_is_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: logic_game_render ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( _amusement_render_active ) )
-        _mediator . get ( ) . send ( typename messages :: logic_amusement_render ( ) ) ;
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
         typename messages :: engine_render_clear_screen clear_screen_msg ;
@@ -127,6 +123,4 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
     }
     if ( platform_conditions :: whole_is_true ( _game_active ) )
         _mediator . get ( ) . send ( typename messages :: logic_game_update ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( _amusement_update_active ) )
-        _mediator . get ( ) . send ( typename messages :: logic_amusement_update ( ) ) ;
 }

@@ -11,6 +11,7 @@ public :
     void receive ( typename messages :: logic_amusement_creation_permit ) ;
     void receive ( typename messages :: logic_amusement_launch_permit ) ;
     void receive ( typename messages :: logic_amusement_update ) ;
+    void receive ( typename messages :: logic_room_creation_finished ) ;
     void receive ( typename messages :: logic_room_finished ) ;
     void receive ( typename messages :: logic_blanket_creation_finished ) ;
     void receive ( typename messages :: logic_blanket_animation_appear_finished ) ;
@@ -51,6 +52,12 @@ template < typename mediator >
 void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_door_creation_finished )
 {
     _mediator . get ( ) . send ( typename messages :: logic_room_creation_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_room_creation_finished )
+{
+    _mediator . get ( ) . send ( typename messages :: logic_amusement_created ( ) ) ;
 }
 
 template < typename mediator >

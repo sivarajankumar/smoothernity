@@ -52,7 +52,7 @@ private :
     void _proceed_with_creation ( ) ;
     void _request_mesh_create ( ) ;
     void _request_texture_create ( ) ;
-    void _permit_render ( ) ;
+    void _texture_created ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -160,7 +160,7 @@ void shy_logic_room < mediator > :: _proceed_with_creation ( )
     if ( platform_conditions :: whole_is_true ( _logic_room_texture_create_state . replied ) )
     {
         _logic_room_texture_create_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _permit_render ( ) ;
+        _texture_created ( ) ;
     }
 }
 
@@ -179,8 +179,9 @@ void shy_logic_room < mediator > :: _request_texture_create ( )
 }
 
 template < typename mediator >
-void shy_logic_room < mediator > :: _permit_render ( )
+void shy_logic_room < mediator > :: _texture_created ( )
 {
+    _mediator . get ( ) . send ( typename messages :: logic_room_creation_finished ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_room_render_permit ( ) ) ;
 }
 
