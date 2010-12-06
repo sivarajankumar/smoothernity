@@ -95,14 +95,11 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
     _amusement_update_active = _platform_math_consts . get ( ) . whole_false ;
     _amusement_render_active = _platform_math_consts . get ( ) . whole_false ;
     _game_active = _platform_math_consts . get ( ) . whole_true ;
-    _mediator . get ( ) . send ( typename messages :: logic_game_launch_permit ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_application < mediator > :: receive ( typename messages :: logic_application_render )
 {
-    if ( platform_conditions :: whole_is_true ( _game_active ) )
-        _mediator . get ( ) . send ( typename messages :: logic_game_render ( ) ) ;
     if ( platform_conditions :: whole_is_false ( _application_launched ) )
     {
         typename messages :: engine_render_clear_screen clear_screen_msg ;
@@ -121,6 +118,4 @@ void shy_logic_application < mediator > :: receive ( typename messages :: logic_
         _application_launched = _platform_math_consts . get ( ) . whole_true ;
         _text_active = _platform_math_consts . get ( ) . whole_true ;
     }
-    if ( platform_conditions :: whole_is_true ( _game_active ) )
-        _mediator . get ( ) . send ( typename messages :: logic_game_update ( ) ) ;
 }

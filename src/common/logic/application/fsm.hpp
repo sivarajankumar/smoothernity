@@ -25,6 +25,7 @@ class shy_logic_application_fsm
         num_whole machine_amusement_generator_state_is_finished ;
         num_whole machine_amusement_performer_command_start ;
         num_whole machine_amusement_performer_state_is_finished ;
+        num_whole machine_game_performer_command_start ;
         num_whole machine_main_menu_generator_command_start ;
         num_whole machine_main_menu_generator_state_is_finished ;
         num_whole machine_main_menu_performer_command_start ;
@@ -84,6 +85,8 @@ class shy_logic_application_fsm
     class _machine_performer_state_game_type
     : public _logic_application_fsm_state_type
     {
+    public :
+        virtual void on_entry ( logic_application_fsm & ) ;
     } ;
 
     //
@@ -306,6 +309,24 @@ class shy_logic_application_fsm
     {
     } ;
 
+    //
+    // game_performer
+    //
+
+    class _machine_game_performer_state_initial_type
+    : public _logic_application_fsm_state_type
+    {
+    public :
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_game_performer_state_performing_type
+    : public _logic_application_fsm_state_type
+    {
+        virtual void on_entry ( logic_application_fsm & ) ;
+        virtual void on_input ( logic_application_fsm & ) ;
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
@@ -321,6 +342,7 @@ public :
 public :
     void _machine_amusement_generator_command_start ( ) ;
     void _machine_amusement_performer_command_start ( ) ;
+    void _machine_game_performer_command_start ( ) ;
     void _machine_main_menu_generator_command_start ( ) ;
     void _machine_main_menu_performer_command_start ( ) ;
     void _machine_text_generator_command_start ( ) ;
@@ -343,8 +365,10 @@ public :
     _machine_amusement_generator_state_generating_type _machine_amusement_generator_state_generating ;
     _machine_amusement_generator_state_initial_type _machine_amusement_generator_state_initial ;
     _machine_amusement_performer_state_finished_type _machine_amusement_performer_state_finished ;
-    _machine_amusement_performer_state_performing_type _machine_amusement_performer_state_performing ;
     _machine_amusement_performer_state_initial_type _machine_amusement_performer_state_initial ;
+    _machine_amusement_performer_state_performing_type _machine_amusement_performer_state_performing ;
+    _machine_game_performer_state_initial_type _machine_game_performer_state_initial ;
+    _machine_game_performer_state_performing_type _machine_game_performer_state_performing ;
     _machine_generator_state_amusement_type _machine_generator_state_amusement ;
     _machine_generator_state_game_type _machine_generator_state_game ;
     _machine_generator_state_initial_type _machine_generator_state_initial ;
@@ -355,8 +379,8 @@ public :
     _machine_main_menu_generator_state_generating_type _machine_main_menu_generator_state_generating ;
     _machine_main_menu_generator_state_initial_type _machine_main_menu_generator_state_initial ;
     _machine_main_menu_performer_state_finished_type _machine_main_menu_performer_state_finished ;
-    _machine_main_menu_performer_state_performing_type _machine_main_menu_performer_state_performing ;
     _machine_main_menu_performer_state_initial_type _machine_main_menu_performer_state_initial ;
+    _machine_main_menu_performer_state_performing_type _machine_main_menu_performer_state_performing ;
     _machine_performer_state_amusement_type _machine_performer_state_amusement ;
     _machine_performer_state_game_type _machine_performer_state_game ;
     _machine_performer_state_initial_type _machine_performer_state_initial ;
@@ -369,11 +393,12 @@ public :
     _machine_title_generator_state_generating_type _machine_title_generator_state_generating ;
     _machine_title_generator_state_initial_type _machine_title_generator_state_initial ;
     _machine_title_performer_state_finished_type _machine_title_performer_state_finished ;
-    _machine_title_performer_state_performing_type _machine_title_performer_state_performing ;
     _machine_title_performer_state_initial_type _machine_title_performer_state_initial ;
+    _machine_title_performer_state_performing_type _machine_title_performer_state_performing ;
 
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_amusement_generator_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_amusement_performer_state ;
+    typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_game_performer_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_generator_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_main_menu_generator_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_main_menu_performer_state ;
@@ -449,6 +474,14 @@ shy_logic_application_fsm < mediator > :: _machine_performer_state_amusement_typ
         return fsm . _machine_performer_state_game ;
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_performer_state_game_type :: on_entry ( logic_application_fsm & fsm )
+{
+    fsm . _machine_game_performer_command_start ( ) ;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -794,6 +827,35 @@ shy_logic_application_fsm < mediator > :: _machine_amusement_performer_state_per
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_game_performer_state_initial_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_game_performer_command_start ) )
+        return fsm . _machine_game_performer_state_performing ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_game_performer_state_performing_type :: on_entry ( logic_application_fsm & fsm )
+{
+    fsm . _mediator . get ( ) . send ( typename messages :: logic_game_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_game_performer_state_performing_type :: on_input ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_render ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_game_render ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_game_update ( ) ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type :: on_entry ( logic_application_fsm & )
 {
 }
@@ -833,6 +895,7 @@ void shy_logic_application_fsm < mediator > :: receive ( typename messages :: in
 
     platform_pointer :: bind ( _machine_amusement_generator_state , _machine_amusement_generator_state_initial ) ;
     platform_pointer :: bind ( _machine_amusement_performer_state , _machine_amusement_performer_state_initial ) ;
+    platform_pointer :: bind ( _machine_game_performer_state , _machine_game_performer_state_initial ) ;
     platform_pointer :: bind ( _machine_generator_state , _machine_generator_state_initial ) ;
     platform_pointer :: bind ( _machine_main_menu_generator_state , _machine_main_menu_generator_state_initial ) ;
     platform_pointer :: bind ( _machine_main_menu_performer_state , _machine_main_menu_performer_state_initial ) ;
@@ -918,6 +981,12 @@ void shy_logic_application_fsm < mediator > :: _machine_amusement_performer_comm
 }
 
 template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_game_performer_command_start ( )
+{
+    _current_inputs . machine_game_performer_command_start = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _machine_main_menu_generator_command_start ( )
 {
     _current_inputs . machine_main_menu_generator_command_start = _platform_math_consts . get ( ) . whole_true ;
@@ -961,6 +1030,7 @@ void shy_logic_application_fsm < mediator > :: _reset_input_events ( )
     _current_inputs . logic_title_finished = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_amusement_generator_command_start = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_amusement_performer_command_start = _platform_math_consts . get ( ) . whole_false ;
+    _current_inputs . machine_game_performer_command_start = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_main_menu_generator_command_start = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_main_menu_performer_command_start = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_text_generator_command_start = _platform_math_consts . get ( ) . whole_false ;
@@ -984,6 +1054,7 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_amusement_generator_state_is_finished , _fixed_inputs . machine_amusement_generator_state_is_finished )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_amusement_performer_command_start , _fixed_inputs . machine_amusement_performer_command_start )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_amusement_performer_state_is_finished , _fixed_inputs . machine_amusement_performer_state_is_finished )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . machine_game_performer_command_start , _fixed_inputs . machine_game_performer_command_start )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_main_menu_generator_command_start , _fixed_inputs . machine_main_menu_generator_command_start )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_main_menu_generator_state_is_finished , _fixed_inputs . machine_main_menu_generator_state_is_finished )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_main_menu_performer_command_start , _fixed_inputs . machine_main_menu_performer_command_start )
@@ -1055,6 +1126,7 @@ void shy_logic_application_fsm < mediator > :: _tick_all_fsms ( )
 {
     _tick_single_fsm ( _machine_amusement_generator_state ) ;
     _tick_single_fsm ( _machine_amusement_performer_state ) ;
+    _tick_single_fsm ( _machine_game_performer_state ) ;
     _tick_single_fsm ( _machine_generator_state ) ;
     _tick_single_fsm ( _machine_main_menu_generator_state ) ;
     _tick_single_fsm ( _machine_main_menu_performer_state ) ;
