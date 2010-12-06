@@ -65,6 +65,7 @@ void shy_logic_amusement < mediator > :: receive ( typename messages :: logic_am
 {
     _mediator . get ( ) . send ( typename messages :: logic_room_launch_permit ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_blanket_animation_disappear_start ( ) ) ;
+    _mediator . get ( ) . send ( typename messages :: logic_blanket_place ( ) ) ;
 }
 
 template < typename mediator >
