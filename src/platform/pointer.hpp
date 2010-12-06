@@ -22,6 +22,9 @@ public :
 
     template < typename pointer_type >
     static void are_equal ( num_whole & , pointer_type , pointer_type ) ;
+
+    template < typename pointer_type >
+    static void is_bound_to ( num_whole & , pointer_type , typename pointer_type :: _data_type & data ) ;
 } ;
 
 template < typename platform_insider >
@@ -50,5 +53,12 @@ template < typename pointer_type >
 void shy_platform_pointer < platform_insider > :: are_equal ( num_whole & result , pointer_type pointer1 , pointer_type pointer2 )
 {
     platform_math_insider :: num_whole_value_set ( result , pointer1 . _data_ptr == pointer2 . _data_ptr ) ;
+}
+
+template < typename platform_insider >
+template < typename pointer_type >
+void shy_platform_pointer < platform_insider > :: is_bound_to ( num_whole & result , pointer_type pointer , typename pointer_type :: _data_type & data )
+{
+    platform_math_insider :: num_whole_value_set ( result , pointer . _data_ptr == & data ) ;
 }
 
