@@ -20,6 +20,10 @@ class shy_logic_application_fsm
         num_whole logic_title_finished ;
         num_whole logic_main_menu_created ;
         num_whole logic_main_menu_finished ;
+        num_whole machine_main_menu_generator_command_start ;
+        num_whole machine_main_menu_generator_state_is_finished ;
+        num_whole machine_main_menu_performer_command_start ;
+        num_whole machine_main_menu_performer_state_is_finished ;
         num_whole machine_text_generator_command_start ;
         num_whole machine_text_generator_state_is_finished ;
         num_whole machine_title_generator_command_start ;
@@ -35,39 +39,6 @@ class shy_logic_application_fsm
         virtual void on_exit ( logic_application_fsm & ) ;
         virtual void on_input ( logic_application_fsm & ) ;
         virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ; 
-    } ;
-
-    //
-    // application
-    //
-
-    class _machine_application_state_initial_type
-    : public _logic_application_fsm_state_type
-    {
-    public :
-        virtual void on_input ( logic_application_fsm & ) ;
-        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
-    } ;
-
-    class _machine_application_state_launched_type
-    : public _logic_application_fsm_state_type
-    {
-    public :
-        virtual void on_input ( logic_application_fsm & ) ;
-        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
-    } ;
-
-    class _machine_application_state_text_prepared_type
-    : public _logic_application_fsm_state_type
-    {
-    public :
-        virtual void on_input ( logic_application_fsm & ) ;
-        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
-    } ;
-
-    class _machine_application_state_title_finished_type
-    : public _logic_application_fsm_state_type
-    {
     } ;
 
     //
@@ -90,6 +61,14 @@ class shy_logic_application_fsm
     } ;
 
     class _machine_performer_state_main_menu_type
+    : public _logic_application_fsm_state_type
+    {
+    public :
+        virtual void on_entry ( logic_application_fsm & ) ;
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_performer_state_amusement_type
     : public _logic_application_fsm_state_type
     {
     } ;
@@ -122,6 +101,13 @@ class shy_logic_application_fsm
     } ;
 
     class _machine_generator_state_main_menu_type
+    : public _logic_application_fsm_state_type
+    {
+        virtual void on_entry ( logic_application_fsm & ) ;
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_generator_state_amusement_type
     : public _logic_application_fsm_state_type
     {
     } ;
@@ -200,6 +186,56 @@ class shy_logic_application_fsm
     {
     } ;
 
+    //
+    // main_menu_generator
+    //
+
+    class _machine_main_menu_generator_state_initial_type
+    : public _logic_application_fsm_state_type
+    {
+    public :
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_main_menu_generator_state_generating_type
+    : public _logic_application_fsm_state_type
+    {
+    public :
+        virtual void on_entry ( logic_application_fsm & ) ;
+        virtual void on_input ( logic_application_fsm & ) ;
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_main_menu_generator_state_finished_type
+    : public _logic_application_fsm_state_type
+    {
+    } ;
+
+    //
+    // main_menu_performer
+    //
+
+    class _machine_main_menu_performer_state_initial_type
+    : public _logic_application_fsm_state_type
+    {
+    public :
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_main_menu_performer_state_performing_type
+    : public _logic_application_fsm_state_type
+    {
+    public :
+        virtual void on_entry ( logic_application_fsm & ) ;
+        virtual void on_input ( logic_application_fsm & ) ;
+        virtual _logic_application_fsm_state_type & transition ( logic_application_fsm & ) ;
+    } ;
+
+    class _machine_main_menu_performer_state_finished_type
+    : public _logic_application_fsm_state_type
+    {
+    } ;
+
 public :
     void set_mediator ( typename platform_pointer :: template pointer < mediator > ) ;
     void receive ( typename messages :: init ) ;
@@ -212,6 +248,8 @@ public :
     void receive ( typename messages :: logic_main_menu_created ) ;
     void receive ( typename messages :: logic_main_menu_finished ) ;
 public :
+    void _machine_main_menu_generator_command_start ( ) ;
+    void _machine_main_menu_performer_command_start ( ) ;
     void _machine_text_generator_command_start ( ) ;
     void _machine_title_generator_command_start ( ) ;
     void _machine_title_performer_command_start ( ) ;
@@ -228,14 +266,18 @@ public :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
 
-    _machine_application_state_initial_type _machine_application_state_initial ;
-    _machine_application_state_launched_type _machine_application_state_launched ;
-    _machine_application_state_text_prepared_type _machine_application_state_text_prepared ;
-    _machine_application_state_title_finished_type _machine_application_state_title_finished ;
+    _machine_generator_state_amusement_type _machine_generator_state_amusement ;
     _machine_generator_state_initial_type _machine_generator_state_initial ;
     _machine_generator_state_main_menu_type _machine_generator_state_main_menu ;
     _machine_generator_state_text_type _machine_generator_state_text ;
     _machine_generator_state_title_type _machine_generator_state_title ;
+    _machine_main_menu_generator_state_finished_type _machine_main_menu_generator_state_finished ;
+    _machine_main_menu_generator_state_generating_type _machine_main_menu_generator_state_generating ;
+    _machine_main_menu_generator_state_initial_type _machine_main_menu_generator_state_initial ;
+    _machine_main_menu_performer_state_finished_type _machine_main_menu_performer_state_finished ;
+    _machine_main_menu_performer_state_performing_type _machine_main_menu_performer_state_performing ;
+    _machine_main_menu_performer_state_initial_type _machine_main_menu_performer_state_initial ;
+    _machine_performer_state_amusement_type _machine_performer_state_amusement ;
     _machine_performer_state_initial_type _machine_performer_state_initial ;
     _machine_performer_state_main_menu_type _machine_performer_state_main_menu ;
     _machine_performer_state_title_type _machine_performer_state_title ;
@@ -249,8 +291,9 @@ public :
     _machine_title_performer_state_performing_type _machine_title_performer_state_performing ;
     _machine_title_performer_state_initial_type _machine_title_performer_state_initial ;
 
-    typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_application_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_generator_state ;
+    typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_main_menu_generator_state ;
+    typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_main_menu_performer_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_performer_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_text_generator_state ;
     typename platform_pointer :: template pointer < _logic_application_fsm_state_type > _machine_title_generator_state ;
@@ -261,71 +304,6 @@ public :
     _logic_application_fsm_inputs_type _current_inputs ;
     _logic_application_fsm_inputs_type _fixed_inputs ;
 } ;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _machine_application_state_initial_type :: on_input ( logic_application_fsm & fsm )
-{
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
-        fsm . _mediator . get ( ) . send ( typename messages :: logic_text_prepare_permit ( ) ) ;
-}
-
-template < typename mediator >
-typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
-shy_logic_application_fsm < mediator > :: _machine_application_state_initial_type :: transition ( logic_application_fsm & fsm )
-{
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
-        return fsm . _machine_application_state_launched ;
-    else
-        return _logic_application_fsm_state_type :: transition ( fsm ) ;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _machine_application_state_launched_type :: on_input ( logic_application_fsm & fsm )
-{
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
-        fsm . _mediator . get ( ) . send ( typename messages :: logic_text_update ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_text_prepared ) )
-        fsm . _mediator . get ( ) . send ( typename messages :: logic_title_launch_permit ( ) ) ;
-}
-
-template < typename mediator >
-typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
-shy_logic_application_fsm < mediator > :: _machine_application_state_launched_type :: transition ( logic_application_fsm & fsm )
-{
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_text_prepared ) )
-        return fsm . _machine_application_state_text_prepared ;
-    else
-        return _logic_application_fsm_state_type :: transition ( fsm ) ;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _machine_application_state_text_prepared_type :: on_input ( logic_application_fsm & fsm )
-{
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_render ) )
-        fsm . _mediator . get ( ) . send ( typename messages :: logic_title_render ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
-        fsm . _mediator . get ( ) . send ( typename messages :: logic_title_update ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_title_created ) )
-        fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_creation_permit ( ) ) ;
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_title_finished ) )
-        fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_launch_permit ( ) ) ;
-}
-
-template < typename mediator >
-typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
-shy_logic_application_fsm < mediator > :: _machine_application_state_text_prepared_type :: transition ( logic_application_fsm & fsm )
-{
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_title_finished ) )
-        return fsm . _machine_application_state_title_finished ;
-    else
-        return _logic_application_fsm_state_type :: transition ( fsm ) ;
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -350,6 +328,24 @@ shy_logic_application_fsm < mediator > :: _machine_performer_state_title_type ::
 {
     if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_performer_state_is_finished ) )
         return fsm . _machine_performer_state_main_menu ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_performer_state_main_menu_type :: on_entry ( logic_application_fsm & fsm )
+{
+    fsm . _machine_main_menu_performer_command_start ( ) ;
+}
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_performer_state_main_menu_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_main_menu_performer_state_is_finished ) )
+        return fsm . _machine_performer_state_amusement ;
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
@@ -395,6 +391,24 @@ shy_logic_application_fsm < mediator > :: _machine_generator_state_title_type ::
 {
     if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_generator_state_is_finished ) )
         return fsm . _machine_generator_state_main_menu ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_generator_state_main_menu_type :: on_entry ( logic_application_fsm & fsm )
+{
+    fsm . _machine_main_menu_generator_command_start ( ) ;
+}
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_generator_state_main_menu_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_main_menu_generator_state_is_finished ) )
+        return fsm . _machine_generator_state_amusement ;
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
@@ -479,7 +493,10 @@ template < typename mediator >
 typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
 shy_logic_application_fsm < mediator > :: _machine_title_performer_state_initial_type :: transition ( logic_application_fsm & fsm )
 {
-    return fsm . _machine_title_performer_state_performing ;
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_performer_command_start ) )
+        return fsm . _machine_title_performer_state_performing ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -499,6 +516,82 @@ shy_logic_application_fsm < mediator > :: _machine_title_performer_state_perform
 {
     if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_title_finished ) )
         return fsm . _machine_title_performer_state_finished ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_main_menu_generator_state_initial_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_main_menu_generator_command_start ) )
+        return fsm . _machine_main_menu_generator_state_generating ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_main_menu_generator_state_generating_type :: on_entry ( logic_application_fsm & fsm )
+{
+    fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_creation_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_main_menu_generator_state_generating_type :: on_input ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_update ( ) ) ;
+}
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_main_menu_generator_state_generating_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_main_menu_created ) )
+        return fsm . _machine_main_menu_generator_state_finished ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_main_menu_performer_state_initial_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_main_menu_performer_command_start ) )
+        return fsm . _machine_main_menu_performer_state_performing ;
+    else
+        return _logic_application_fsm_state_type :: transition ( fsm ) ;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_main_menu_performer_state_performing_type :: on_entry ( logic_application_fsm & fsm )
+{
+    fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_launch_permit ( ) ) ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_main_menu_performer_state_performing_type :: on_input ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_render ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_render ( ) ) ;
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_application_update ) )
+        fsm . _mediator . get ( ) . send ( typename messages :: logic_main_menu_update ( ) ) ;
+}
+
+template < typename mediator >
+typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
+shy_logic_application_fsm < mediator > :: _machine_main_menu_performer_state_performing_type :: transition ( logic_application_fsm & fsm )
+{
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . logic_main_menu_finished ) )
+        return fsm . _machine_main_menu_performer_state_finished ;
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
@@ -543,8 +636,9 @@ void shy_logic_application_fsm < mediator > :: receive ( typename messages :: in
     _inputs_changed = _platform_math_consts . get ( ) . whole_false ;
     _fsm_running = _platform_math_consts . get ( ) . whole_false ;
 
-    platform_pointer :: bind ( _machine_application_state , _machine_application_state_initial ) ;
     platform_pointer :: bind ( _machine_generator_state , _machine_generator_state_initial ) ;
+    platform_pointer :: bind ( _machine_main_menu_generator_state , _machine_main_menu_generator_state_initial ) ;
+    platform_pointer :: bind ( _machine_main_menu_performer_state , _machine_main_menu_performer_state_initial ) ;
     platform_pointer :: bind ( _machine_performer_state , _machine_performer_state_initial ) ;
     platform_pointer :: bind ( _machine_text_generator_state , _machine_text_generator_state_initial ) ;
     platform_pointer :: bind ( _machine_title_generator_state , _machine_title_generator_state_initial ) ;
@@ -608,6 +702,18 @@ void shy_logic_application_fsm < mediator > :: receive ( typename messages :: lo
 }
 
 template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_main_menu_generator_command_start ( )
+{
+    _current_inputs . machine_main_menu_generator_command_start = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
+void shy_logic_application_fsm < mediator > :: _machine_main_menu_performer_command_start ( )
+{
+    _current_inputs . machine_main_menu_performer_command_start = _platform_math_consts . get ( ) . whole_true ;
+}
+
+template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _machine_text_generator_command_start ( )
 {
     _current_inputs . machine_text_generator_command_start = _platform_math_consts . get ( ) . whole_true ;
@@ -635,6 +741,8 @@ void shy_logic_application_fsm < mediator > :: _reset_input_events ( )
     _current_inputs . logic_text_prepared = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . logic_title_created = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . logic_title_finished = _platform_math_consts . get ( ) . whole_false ;
+    _current_inputs . machine_main_menu_generator_command_start = _platform_math_consts . get ( ) . whole_false ;
+    _current_inputs . machine_main_menu_performer_command_start = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_text_generator_command_start = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_title_generator_command_start = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . machine_title_performer_command_start = _platform_math_consts . get ( ) . whole_false ;
@@ -650,6 +758,10 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_text_prepared , _fixed_inputs . logic_text_prepared )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_title_created , _fixed_inputs . logic_title_created )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_title_finished , _fixed_inputs . logic_title_finished )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . machine_main_menu_generator_command_start , _fixed_inputs . machine_main_menu_generator_command_start )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . machine_main_menu_generator_state_is_finished , _fixed_inputs . machine_main_menu_generator_state_is_finished )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . machine_main_menu_performer_command_start , _fixed_inputs . machine_main_menu_performer_command_start )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . machine_main_menu_performer_state_is_finished , _fixed_inputs . machine_main_menu_performer_state_is_finished )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_text_generator_command_start , _fixed_inputs . machine_text_generator_command_start )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_text_generator_state_is_finished , _fixed_inputs . machine_text_generator_state_is_finished )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_title_generator_command_start , _fixed_inputs . machine_title_generator_command_start )
@@ -667,6 +779,8 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _recalc_current_inputs ( )
 {
+    platform_pointer :: is_bound_to ( _current_inputs . machine_main_menu_generator_state_is_finished , _machine_main_menu_generator_state , _machine_main_menu_generator_state_finished ) ;
+    platform_pointer :: is_bound_to ( _current_inputs . machine_main_menu_performer_state_is_finished , _machine_main_menu_performer_state , _machine_main_menu_performer_state_finished ) ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_text_generator_state_is_finished , _machine_text_generator_state , _machine_text_generator_state_finished ) ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_title_generator_state_is_finished , _machine_title_generator_state , _machine_title_generator_state_finished ) ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_title_performer_state_is_finished , _machine_title_performer_state , _machine_title_performer_state_finished ) ;
@@ -711,12 +825,13 @@ void shy_logic_application_fsm < mediator > :: _stabilize_fsm ( )
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _tick_all_fsms ( )
 {
-    _tick_single_fsm ( _machine_application_state ) ;
-    //_tick_single_fsm ( _machine_generator_state ) ;
-    //_tick_single_fsm ( _machine_performer_state ) ;
-    //_tick_single_fsm ( _machine_text_generator_state ) ;
-    //_tick_single_fsm ( _machine_title_generator_state ) ;
-    //_tick_single_fsm ( _machine_title_performer_state ) ;
+    _tick_single_fsm ( _machine_generator_state ) ;
+    _tick_single_fsm ( _machine_main_menu_generator_state ) ;
+    _tick_single_fsm ( _machine_main_menu_performer_state ) ;
+    _tick_single_fsm ( _machine_performer_state ) ;
+    _tick_single_fsm ( _machine_text_generator_state ) ;
+    _tick_single_fsm ( _machine_title_generator_state ) ;
+    _tick_single_fsm ( _machine_title_performer_state ) ;
 }
 
 template < typename mediator >
