@@ -142,3 +142,15 @@ system logic_application
                 if { logic_amusement_finished }
         state finished
 
+    machine game_performer
+        state initial
+            to performing
+                if { ( command start ) }
+        state performing
+            on entry
+                logic_game_launch_permit
+            on { logic_application_render }
+                logic_game_render
+            on { logic_application_update }
+                logic_game_update
+
