@@ -16,9 +16,6 @@ class shy_logic_application_fsm
         num_whole logic_amusement_created ;
         num_whole logic_amusement_finished ;
         num_whole logic_application_render ;
-        num_whole logic_application_stateless_consts_skip_amusement ;
-        num_whole logic_application_stateless_consts_skip_main_menu ;
-        num_whole logic_application_stateless_consts_skip_title ;
         num_whole logic_application_update ;
         num_whole logic_text_prepared ;
         num_whole logic_title_created ;
@@ -40,6 +37,12 @@ class shy_logic_application_fsm
         num_whole machine_title_generator_state_is_finished ;
         num_whole machine_title_performer_command_start ;
         num_whole machine_title_performer_state_is_finished ;
+        num_whole stage_amusement_disabled ;
+        num_whole stage_amusement_enabled ;
+        num_whole stage_main_menu_disabled ;
+        num_whole stage_main_menu_enabled ;
+        num_whole stage_title_disabled ;
+        num_whole stage_title_enabled ;
     } ;
 
     class _logic_application_fsm_state_type
@@ -1050,9 +1053,6 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
     if ( platform_conditions :: wholes_are_equal ( _current_inputs . logic_amusement_created , _fixed_inputs . logic_amusement_created )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_amusement_finished , _fixed_inputs . logic_amusement_finished )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_render , _fixed_inputs . logic_application_render )
-      && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_stateless_consts_skip_amusement , _fixed_inputs . logic_application_stateless_consts_skip_amusement )
-      && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_stateless_consts_skip_main_menu , _fixed_inputs . logic_application_stateless_consts_skip_main_menu )
-      && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_stateless_consts_skip_title , _fixed_inputs . logic_application_stateless_consts_skip_title )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_update , _fixed_inputs . logic_application_update )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_main_menu_created , _fixed_inputs . logic_main_menu_created )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_main_menu_finished , _fixed_inputs . logic_main_menu_finished )
@@ -1074,6 +1074,12 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_title_generator_state_is_finished , _fixed_inputs . machine_title_generator_state_is_finished )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_title_performer_command_start , _fixed_inputs . machine_title_performer_command_start )
       && platform_conditions :: wholes_are_equal ( _current_inputs . machine_title_performer_state_is_finished , _fixed_inputs . machine_title_performer_state_is_finished )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . stage_amusement_disabled , _fixed_inputs . stage_amusement_disabled )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . stage_amusement_enabled , _fixed_inputs . stage_amusement_enabled )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . stage_main_menu_disabled , _fixed_inputs . stage_main_menu_disabled )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . stage_main_menu_enabled , _fixed_inputs . stage_main_menu_enabled )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . stage_title_disabled , _fixed_inputs . stage_title_disabled )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . stage_title_enabled , _fixed_inputs . stage_title_enabled )
        )
     {
         _inputs_changed = _platform_math_consts . get ( ) . whole_false ;
@@ -1085,9 +1091,36 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _recalc_current_inputs ( )
 {
-    _current_inputs . logic_application_stateless_consts_skip_amusement = _logic_application_stateless_consts . get ( ) . skip_amusement ;
-    _current_inputs . logic_application_stateless_consts_skip_main_menu = _logic_application_stateless_consts . get ( ) . skip_main_menu ;
-    _current_inputs . logic_application_stateless_consts_skip_title = _logic_application_stateless_consts . get ( ) . skip_title ;
+    if ( platform_conditions :: whole_is_true ( _logic_application_stateless_consts . get ( ) . skip_amusement ) )
+    {
+        _current_inputs . stage_amusement_disabled = _platform_math_consts . get ( ) . whole_true ;
+        _current_inputs . stage_amusement_enabled = _platform_math_consts . get ( ) . whole_false ;
+    }
+    else
+    {
+        _current_inputs . stage_amusement_disabled = _platform_math_consts . get ( ) . whole_false ;
+        _current_inputs . stage_amusement_enabled = _platform_math_consts . get ( ) . whole_true ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_application_stateless_consts . get ( ) . skip_main_menu ) )
+    {
+        _current_inputs . stage_main_menu_disabled = _platform_math_consts . get ( ) . whole_true ;
+        _current_inputs . stage_main_menu_enabled = _platform_math_consts . get ( ) . whole_false ;
+    }
+    else
+    {
+        _current_inputs . stage_main_menu_disabled = _platform_math_consts . get ( ) . whole_false ;
+        _current_inputs . stage_main_menu_enabled = _platform_math_consts . get ( ) . whole_true ;
+    }
+    if ( platform_conditions :: whole_is_true ( _logic_application_stateless_consts . get ( ) . skip_title ) )
+    {
+        _current_inputs . stage_title_disabled = _platform_math_consts . get ( ) . whole_true ;
+        _current_inputs . stage_title_enabled = _platform_math_consts . get ( ) . whole_false ;
+    }
+    else
+    {
+        _current_inputs . stage_title_disabled = _platform_math_consts . get ( ) . whole_false ;
+        _current_inputs . stage_title_enabled = _platform_math_consts . get ( ) . whole_true ;
+    }
     platform_pointer :: is_bound_to ( _current_inputs . machine_amusement_generator_state_is_finished , _machine_amusement_generator_state , _machine_amusement_generator_state_finished ) ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_amusement_performer_state_is_finished , _machine_amusement_performer_state , _machine_amusement_performer_state_finished ) ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_main_menu_generator_state_is_finished , _machine_main_menu_generator_state , _machine_main_menu_generator_state_finished ) ;
