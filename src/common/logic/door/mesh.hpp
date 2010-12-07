@@ -29,6 +29,7 @@ class shy_logic_door_mesh
     public :
         num_whole requested ;
         num_whole replied ;
+        num_whole finalized ;
         engine_render_mesh_id mesh ;
     } ;
 
@@ -106,10 +107,12 @@ void shy_logic_door_mesh < mediator > :: receive ( typename messages :: logic_do
 template < typename mediator >
 void shy_logic_door_mesh < mediator > :: receive ( typename messages :: logic_door_mesh_render_request )
 {
-    typename messages :: engine_render_mesh_render msg ;
-    msg . mesh = _engine_render_mesh_create_state . mesh ;
-    _mediator . get ( ) . send ( msg ) ;
-
+    if ( platform_conditions :: whole_is_true ( _engine_render_mesh_create_state . finalized ) )
+    {
+        typename messages :: engine_render_mesh_render msg ;
+        msg . mesh = _engine_render_mesh_create_state . mesh ;
+        _mediator . get ( ) . send ( msg ) ;
+    }
     _mediator . get ( ) . send ( typename messages :: logic_door_mesh_render_reply ( ) ) ;
 }
 
@@ -239,6 +242,7 @@ void shy_logic_door_mesh < mediator > :: _fill_mesh_contents ( )
 template < typename mediator >
 void shy_logic_door_mesh < mediator > :: _finalize_mesh ( )
 {
+    _engine_render_mesh_create_state . finalized = _platform_math_consts . get ( ) . whole_true ;
     typename messages :: engine_render_mesh_finalize msg ;
     msg . mesh = _engine_render_mesh_create_state . mesh ;
     _mediator . get ( ) . send ( msg ) ;

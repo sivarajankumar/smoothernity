@@ -35,6 +35,7 @@ class shy_logic_blanket_mesh
     public :
         num_whole requested ;
         num_whole replied ;
+        num_whole finalized ;
         engine_render_mesh_id mesh ;
     } ;
 
@@ -105,20 +106,25 @@ void shy_logic_blanket_mesh < mediator > :: receive ( typename messages :: logic
 template < typename mediator >
 void shy_logic_blanket_mesh < mediator > :: receive ( typename messages :: logic_blanket_mesh_render_request )
 {
-    typename messages :: engine_render_mesh_render msg ;
-    msg . mesh = _engine_render_mesh_create_state . mesh ;
-    _mediator . get ( ) . send ( msg ) ;
-
+    if ( platform_conditions :: whole_is_true ( _engine_render_mesh_create_state . finalized ) )
+    {
+        typename messages :: engine_render_mesh_render msg ;
+        msg . mesh = _engine_render_mesh_create_state . mesh ;
+        _mediator . get ( ) . send ( msg ) ;
+    }
     _mediator . get ( ) . send ( typename messages :: logic_blanket_mesh_render_reply ( ) ) ;
 }
 
 template < typename mediator >
 void shy_logic_blanket_mesh < mediator > :: receive ( typename messages :: logic_blanket_mesh_set_transform msg )
 {
-    typename messages :: engine_render_mesh_set_transform transform_msg ;
-    transform_msg . mesh = _engine_render_mesh_create_state . mesh ;
-    transform_msg . transform = msg . transform ;
-    _mediator . get ( ) . send ( transform_msg ) ;
+    if ( platform_conditions :: whole_is_true ( _engine_render_mesh_create_state . finalized ) )
+    {
+        typename messages :: engine_render_mesh_set_transform transform_msg ;
+        transform_msg . mesh = _engine_render_mesh_create_state . mesh ;
+        transform_msg . transform = msg . transform ;
+        _mediator . get ( ) . send ( transform_msg ) ;
+    }
 }
 
 template < typename mediator >
@@ -217,6 +223,7 @@ void shy_logic_blanket_mesh < mediator > :: _fill_mesh_contents ( )
 template < typename mediator >
 void shy_logic_blanket_mesh < mediator > :: _finalize_mesh ( )
 {
+    _engine_render_mesh_create_state . finalized = _platform_math_consts . get ( ) . whole_true ;
     typename messages :: engine_render_mesh_finalize msg ;
     msg . mesh = _engine_render_mesh_create_state . mesh ;
     _mediator . get ( ) . send ( msg ) ;

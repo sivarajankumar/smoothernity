@@ -35,6 +35,7 @@ class shy_logic_room_mesh
     public :
         num_whole requested ;
         num_whole replied ;
+        num_whole finalized ;
         engine_render_mesh_id mesh ;
     } ;
 
@@ -124,10 +125,12 @@ void shy_logic_room_mesh < mediator > :: receive ( typename messages :: logic_ro
 template < typename mediator >
 void shy_logic_room_mesh < mediator > :: receive ( typename messages :: logic_room_mesh_render_request )
 {
-    typename messages :: engine_render_mesh_render render_msg ;
-    render_msg . mesh = _engine_render_mesh_create_state . mesh ;
-    _mediator . get ( ) . send ( render_msg ) ;
-
+    if ( platform_conditions :: whole_is_true ( _engine_render_mesh_create_state . finalized ) )
+    {
+        typename messages :: engine_render_mesh_render render_msg ;
+        render_msg . mesh = _engine_render_mesh_create_state . mesh ;
+        _mediator . get ( ) . send ( render_msg ) ;
+    }
     _mediator . get ( ) . send ( typename messages :: logic_room_mesh_render_reply ( ) ) ;
 }
 
@@ -586,6 +589,7 @@ void shy_logic_room_mesh < mediator > :: _add_bottom_side ( )
 template < typename mediator >
 void shy_logic_room_mesh < mediator > :: _finalize_mesh ( )
 {
+    _engine_render_mesh_create_state . finalized = _platform_math_consts . get ( ) . whole_true ;
     typename messages :: engine_render_mesh_finalize msg ;
     msg . mesh = _engine_render_mesh_create_state . mesh ;
     _mediator . get ( ) . send ( msg ) ;
