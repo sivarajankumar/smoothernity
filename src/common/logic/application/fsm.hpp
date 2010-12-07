@@ -616,8 +616,18 @@ template < typename mediator >
 typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
 shy_logic_application_fsm < mediator > :: _machine_title_generator_state_initial_type :: transition ( logic_application_fsm & fsm )
 {
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_generator_command_start ) )
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_generator_command_start )
+      && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_title_enabled )
+       )
+    {
         return fsm . _machine_title_generator_state_generating ;
+    }
+    else if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_generator_command_start )
+           && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_title_disabled )
+            )
+    {
+        return fsm . _machine_title_generator_state_finished ;
+    }
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
@@ -653,8 +663,18 @@ template < typename mediator >
 typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
 shy_logic_application_fsm < mediator > :: _machine_title_performer_state_initial_type :: transition ( logic_application_fsm & fsm )
 {
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_performer_command_start ) )
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_performer_command_start )
+      && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_title_enabled )
+       )
+    {
         return fsm . _machine_title_performer_state_performing ;
+    }
+    else if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_title_performer_command_start )
+           && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_title_disabled )
+            )
+    {
+        return fsm . _machine_title_performer_state_finished ;
+    }
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
@@ -762,8 +782,18 @@ template < typename mediator >
 typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
 shy_logic_application_fsm < mediator > :: _machine_amusement_generator_state_initial_type :: transition ( logic_application_fsm & fsm )
 {
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_amusement_generator_command_start ) )
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_amusement_generator_command_start ) 
+      && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_amusement_enabled )
+       )
+    {
         return fsm . _machine_amusement_generator_state_generating ;
+    }
+    else if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_amusement_generator_command_start ) 
+           && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_amusement_disabled )
+            )
+    {
+        return fsm . _machine_amusement_generator_state_finished ;
+    }
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
@@ -799,8 +829,18 @@ template < typename mediator >
 typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
 shy_logic_application_fsm < mediator > :: _machine_amusement_performer_state_initial_type :: transition ( logic_application_fsm & fsm )
 {
-    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_amusement_performer_command_start ) )
+    if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_amusement_performer_command_start )
+      && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_amusement_enabled )
+       )
+    {
         return fsm . _machine_amusement_performer_state_performing ;
+    }
+    else if ( platform_conditions :: whole_is_true ( fsm . _fixed_inputs . machine_amusement_performer_command_start )
+           && platform_conditions :: whole_is_true ( fsm . _fixed_inputs . stage_amusement_disabled )
+            )
+    {
+        return fsm . _machine_amusement_performer_state_finished ;
+    }
     else
         return _logic_application_fsm_state_type :: transition ( fsm ) ;
 }
