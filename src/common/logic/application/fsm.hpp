@@ -1,6 +1,7 @@
 template < typename mediator >
 class shy_logic_application_fsm
 {
+    typedef typename mediator :: logic_application_stateless :: logic_application_stateless_consts_type logic_application_stateless_consts_type ;
     typedef typename mediator :: messages messages ;
     typedef typename mediator :: platform platform ;
     typedef typename mediator :: platform :: platform_conditions platform_conditions ;
@@ -15,6 +16,9 @@ class shy_logic_application_fsm
         num_whole logic_amusement_created ;
         num_whole logic_amusement_finished ;
         num_whole logic_application_render ;
+        num_whole logic_application_stateless_consts_skip_amusement ;
+        num_whole logic_application_stateless_consts_skip_main_menu ;
+        num_whole logic_application_stateless_consts_skip_title ;
         num_whole logic_application_update ;
         num_whole logic_text_prepared ;
         num_whole logic_title_created ;
@@ -360,6 +364,7 @@ public :
 public :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
+    typename platform_pointer :: template pointer < const logic_application_stateless_consts_type > _logic_application_stateless_consts ;
 
     _machine_amusement_generator_state_finished_type _machine_amusement_generator_state_finished ;
     _machine_amusement_generator_state_generating_type _machine_amusement_generator_state_generating ;
@@ -887,6 +892,7 @@ template < typename mediator >
 void shy_logic_application_fsm < mediator > :: receive ( typename messages :: init )
 {
     typename platform_pointer :: template pointer < const platform > platform_obj ;
+    _mediator . get ( ) . logic_application_stateless_consts ( _logic_application_stateless_consts ) ;
     _mediator . get ( ) . platform_obj ( platform_obj ) ;
     _platform_math_consts = platform_obj . get ( ) . math_consts ;
 
@@ -1044,6 +1050,9 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
     if ( platform_conditions :: wholes_are_equal ( _current_inputs . logic_amusement_created , _fixed_inputs . logic_amusement_created )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_amusement_finished , _fixed_inputs . logic_amusement_finished )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_render , _fixed_inputs . logic_application_render )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_stateless_consts_skip_amusement , _fixed_inputs . logic_application_stateless_consts_skip_amusement )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_stateless_consts_skip_main_menu , _fixed_inputs . logic_application_stateless_consts_skip_main_menu )
+      && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_stateless_consts_skip_title , _fixed_inputs . logic_application_stateless_consts_skip_title )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_application_update , _fixed_inputs . logic_application_update )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_main_menu_created , _fixed_inputs . logic_main_menu_created )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_main_menu_finished , _fixed_inputs . logic_main_menu_finished )
@@ -1076,6 +1085,9 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( )
 template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _recalc_current_inputs ( )
 {
+    _current_inputs . logic_application_stateless_consts_skip_amusement = _logic_application_stateless_consts . get ( ) . skip_amusement ;
+    _current_inputs . logic_application_stateless_consts_skip_main_menu = _logic_application_stateless_consts . get ( ) . skip_main_menu ;
+    _current_inputs . logic_application_stateless_consts_skip_title = _logic_application_stateless_consts . get ( ) . skip_title ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_amusement_generator_state_is_finished , _machine_amusement_generator_state , _machine_amusement_generator_state_finished ) ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_amusement_performer_state_is_finished , _machine_amusement_performer_state , _machine_amusement_performer_state_finished ) ;
     platform_pointer :: is_bound_to ( _current_inputs . machine_main_menu_generator_state_is_finished , _machine_main_menu_generator_state , _machine_main_menu_generator_state_finished ) ;
