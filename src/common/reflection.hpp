@@ -11,6 +11,7 @@ public :
         ) ;
 private :
     void _bind_logic_amusement_stateless_consts ( ) ;
+    void _bind_logic_application_stateless_consts ( ) ;
     void _bind_logic_blanket_animation_stateless_consts ( ) ;
     void _bind_logic_blanket_stateless_consts ( ) ;
     void _bind_logic_door_animation_stateless_consts ( ) ;
@@ -41,6 +42,7 @@ void shy_reflection < context > :: bind_all
     _mediator = arg_mediator ;
     _binder = arg_binder ;
     _bind_logic_amusement_stateless_consts ( ) ;
+    _bind_logic_application_stateless_consts ( ) ;
     _bind_logic_blanket_animation_stateless_consts ( ) ;
     _bind_logic_blanket_stateless_consts ( ) ;
     _bind_logic_door_animation_stateless_consts ( ) ;
@@ -68,6 +70,17 @@ void shy_reflection < context > :: _bind_logic_amusement_stateless_consts ( )
     _binder . get ( ) . bind ( "renderer_clear_color_r" , consts . get ( ) . renderer_clear_color_r ) ;
     _binder . get ( ) . bind ( "renderer_clear_color_g" , consts . get ( ) . renderer_clear_color_g ) ;
     _binder . get ( ) . bind ( "renderer_clear_color_b" , consts . get ( ) . renderer_clear_color_b ) ;
+}
+
+template < typename context >
+void shy_reflection < context > :: _bind_logic_application_stateless_consts ( )
+{
+    typename platform_pointer :: template pointer < const typename mediator :: logic_application_stateless :: logic_application_stateless_consts_type > consts ;
+    _mediator . get ( ) . logic_application_stateless_consts ( consts ) ;
+    _binder . get ( ) . module ( "logic_application_stateless" ) ;
+    _binder . get ( ) . bind ( "skip_title" , consts . get ( ) . skip_title ) ;
+    _binder . get ( ) . bind ( "skip_main_menu" , consts . get ( ) . skip_main_menu ) ;
+    _binder . get ( ) . bind ( "skip_amusement" , consts . get ( ) . skip_amusement ) ;
 }
 
 template < typename context >

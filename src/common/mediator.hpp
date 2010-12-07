@@ -9,6 +9,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement_stateless logic_amusement_stateless ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless logic_application_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_stateless logic_blanket_animation_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_stateless logic_blanket_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_animation_stateless logic_door_animation_stateless ;
@@ -35,6 +36,7 @@ private :
 
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless :: engine_render_stateless_consts_type engine_render_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement_stateless :: logic_amusement_stateless_consts_type logic_amusement_stateless_consts_type ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: logic_application_stateless :: logic_application_stateless_consts_type logic_application_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_animation_stateless :: logic_blanket_animation_stateless_consts_type logic_blanket_animation_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_blanket_stateless :: logic_blanket_stateless_consts_type logic_blanket_stateless_consts_type ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_door_animation_stateless :: logic_door_animation_stateless_consts_type logic_door_animation_stateless_consts_type ;
@@ -398,6 +400,7 @@ public :
     shy_mediator ( typename platform_pointer :: template pointer < const platform > ) ;
     void engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & ) ;
     void logic_amusement_stateless_consts ( typename platform_pointer :: template pointer < const logic_amusement_stateless_consts_type > & ) ;
+    void logic_application_stateless_consts ( typename platform_pointer :: template pointer < const logic_application_stateless_consts_type > & ) ;
     void logic_blanket_animation_stateless_consts ( typename platform_pointer :: template pointer < const logic_blanket_animation_stateless_consts_type > & ) ;
     void logic_blanket_stateless_consts ( typename platform_pointer :: template pointer < const logic_blanket_stateless_consts_type > & ) ;
     void logic_door_animation_stateless_consts ( typename platform_pointer :: template pointer < const logic_door_animation_stateless_consts_type > & ) ;
@@ -425,6 +428,7 @@ public :
         , typename platform_pointer :: template pointer < logic_amusement_renderer >
         , typename platform_pointer :: template pointer < logic_amusement_stateless >
         , typename platform_pointer :: template pointer < logic_application_fsm >
+        , typename platform_pointer :: template pointer < logic_application_stateless >
         , typename platform_pointer :: template pointer < logic_blanket >
         , typename platform_pointer :: template pointer < logic_blanket_animation >
         , typename platform_pointer :: template pointer < logic_blanket_animation_appear >
@@ -521,6 +525,7 @@ public :
 private :
     typename platform_pointer :: template pointer < engine_render_stateless > _engine_render_stateless ;
     typename platform_pointer :: template pointer < logic_amusement_stateless > _logic_amusement_stateless ;
+    typename platform_pointer :: template pointer < logic_application_stateless > _logic_application_stateless ;
     typename platform_pointer :: template pointer < logic_blanket_animation_stateless > _logic_blanket_animation_stateless ;
     typename platform_pointer :: template pointer < logic_blanket_stateless > _logic_blanket_stateless ;
     typename platform_pointer :: template pointer < logic_door_animation_stateless > _logic_door_animation_stateless ;
@@ -597,6 +602,7 @@ void shy_mediator < mediator_types > :: register_modules
     , typename platform_pointer :: template pointer < logic_amusement_renderer > arg_logic_amusement_renderer
     , typename platform_pointer :: template pointer < logic_amusement_stateless > arg_logic_amusement_stateless
     , typename platform_pointer :: template pointer < logic_application_fsm > arg_logic_application_fsm
+    , typename platform_pointer :: template pointer < logic_application_stateless > arg_logic_application_stateless
     , typename platform_pointer :: template pointer < logic_blanket > arg_logic_blanket
     , typename platform_pointer :: template pointer < logic_blanket_animation > arg_logic_blanket_animation
     , typename platform_pointer :: template pointer < logic_blanket_animation_appear > arg_logic_blanket_animation_appear
@@ -691,6 +697,7 @@ void shy_mediator < mediator_types > :: register_modules
 {
     _engine_render_stateless = arg_engine_render_stateless ;
     _logic_amusement_stateless = arg_logic_amusement_stateless ;
+    _logic_application_stateless = arg_logic_application_stateless ;
     _logic_blanket_animation_stateless = arg_logic_blanket_animation_stateless ;
     _logic_blanket_stateless = arg_logic_blanket_stateless ;
     _logic_door_animation_stateless = arg_logic_door_animation_stateless ;
@@ -890,6 +897,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: logic_amusement_stateless_consts ( typename platform_pointer :: template pointer < const logic_amusement_stateless_consts_type > & result )
 {
     platform_pointer :: bind ( result , _logic_amusement_stateless . get ( ) . logic_amusement_stateless_consts ) ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: logic_application_stateless_consts ( typename platform_pointer :: template pointer < const logic_application_stateless_consts_type > & result )
+{
+    platform_pointer :: bind ( result , _logic_application_stateless . get ( ) . logic_application_stateless_consts ) ;
 }
 
 template < typename mediator_types >

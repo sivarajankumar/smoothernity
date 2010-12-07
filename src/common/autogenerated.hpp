@@ -11,6 +11,16 @@ shy_logic_amusement_stateless < mediator >
 }
 
 template < typename mediator >
+shy_logic_application_stateless < mediator >
+:: logic_application_stateless_consts_type 
+:: logic_application_stateless_consts_type ( )
+{
+    platform_math :: make_num_whole ( skip_amusement , 0 ) ;
+    platform_math :: make_num_whole ( skip_main_menu , 0 ) ;
+    platform_math :: make_num_whole ( skip_title , 0 ) ;
+}
+
+template < typename mediator >
 shy_logic_blanket_animation_stateless < mediator >
 :: logic_blanket_animation_stateless_consts_type 
 :: logic_blanket_animation_stateless_consts_type ( )

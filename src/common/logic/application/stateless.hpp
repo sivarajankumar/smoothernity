@@ -1,8 +1,20 @@
 template < typename mediator >
 class shy_logic_application_stateless
 {
+    typedef typename mediator :: platform :: platform_math platform_math ;
+    typedef typename mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename mediator :: platform :: platform_pointer platform_pointer ;
 public :
+    class logic_application_stateless_consts_type
+    {
+    public :
+        logic_application_stateless_consts_type ( ) ;
+    public :
+        num_whole skip_title ;
+        num_whole skip_main_menu ;
+        num_whole skip_amusement ;
+    } ;
+
     class logic_application_messages
     {
     public :
@@ -20,6 +32,8 @@ public :
     private :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
+public :
+    const logic_application_stateless_consts_type logic_application_stateless_consts ;
 } ;
 
 template < typename mediator >

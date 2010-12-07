@@ -609,6 +609,7 @@ private :
     
     typedef typename aggregator_types :: engine_render_stateless engine_render_stateless ;
     typedef typename aggregator_types :: logic_amusement_stateless logic_amusement_stateless ;
+    typedef typename aggregator_types :: logic_application_stateless logic_application_stateless ;
     typedef typename aggregator_types :: logic_blanket_animation_stateless logic_blanket_animation_stateless ;
     typedef typename aggregator_types :: logic_blanket_stateless logic_blanket_stateless ;
     typedef typename aggregator_types :: logic_door_animation_stateless logic_door_animation_stateless ;
@@ -726,6 +727,7 @@ private :
     logic_amusement_renderer _logic_amusement_renderer ;
     logic_amusement_stateless _logic_amusement_stateless ;
     logic_application_fsm _logic_application_fsm ;
+    logic_application_stateless _logic_application_stateless ;
     logic_blanket _logic_blanket ;
     logic_blanket_animation _logic_blanket_animation ;
     logic_blanket_animation_appear _logic_blanket_animation_appear ;
@@ -829,6 +831,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     typename platform_pointer :: template pointer < logic_amusement_renderer > logic_amusement_renderer_ptr ;
     typename platform_pointer :: template pointer < logic_amusement_stateless > logic_amusement_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_application_fsm > logic_application_fsm_ptr ;
+    typename platform_pointer :: template pointer < logic_application_stateless > logic_application_stateless_ptr ;
     typename platform_pointer :: template pointer < logic_blanket > logic_blanket_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_animation > logic_blanket_animation_ptr ;
     typename platform_pointer :: template pointer < logic_blanket_animation_appear > logic_blanket_animation_appear_ptr ;
@@ -928,6 +931,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
     platform_pointer :: bind ( logic_amusement_renderer_ptr , _logic_amusement_renderer ) ;
     platform_pointer :: bind ( logic_amusement_stateless_ptr , _logic_amusement_stateless ) ;
     platform_pointer :: bind ( logic_application_fsm_ptr , _logic_application_fsm ) ;
+    platform_pointer :: bind ( logic_application_stateless_ptr , _logic_application_stateless ) ;
     platform_pointer :: bind ( logic_blanket_ptr , _logic_blanket ) ;
     platform_pointer :: bind ( logic_blanket_animation_ptr , _logic_blanket_animation ) ;
     platform_pointer :: bind ( logic_blanket_animation_appear_ptr , _logic_blanket_animation_appear ) ;
@@ -1105,6 +1109,7 @@ shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointe
         , logic_amusement_renderer_ptr
         , logic_amusement_stateless_ptr
         , logic_application_fsm_ptr
+        , logic_application_stateless_ptr
         , logic_blanket_ptr
         , logic_blanket_animation_ptr
         , logic_blanket_animation_appear_ptr
