@@ -33,8 +33,17 @@ public :
         typename platform_pointer :: template pointer < const receivers > _receivers ;
     } ;
 public :
+    shy_logic_application_stateless ( ) ;
+private :
+    shy_logic_application_stateless < mediator > & operator= ( const shy_logic_application_stateless < mediator > & ) ;
+public :
     const logic_application_stateless_consts_type logic_application_stateless_consts ;
 } ;
+
+template < typename mediator >
+shy_logic_application_stateless < mediator > :: shy_logic_application_stateless ( )
+{
+}
 
 template < typename mediator >
 template < typename receivers >
