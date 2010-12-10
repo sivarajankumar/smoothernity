@@ -107,14 +107,7 @@ class shy_logic_application_fsm
         typename platform_pointer :: template pointer < _logic_application_fsm_inputs_type > inputs ;
     } ;
 
-    class _logic_application_fsm_state_type
-    {
-    public :
-        virtual void on_entry ( _logic_application_fsm_state_environment_type & ) ;
-        virtual void on_exit ( _logic_application_fsm_state_environment_type & ) ;
-        virtual void on_input ( _logic_application_fsm_state_environment_type & ) ;
-        virtual _logic_application_fsm_state_type & transition ( _logic_application_fsm_state_environment_type & ) ; 
-    } ;
+    typedef typename engine_fsm :: template fsm_state_type < _logic_application_fsm_state_environment_type > _logic_application_fsm_state_type ;
 
     //
     // performer
@@ -1150,30 +1143,6 @@ template < typename mediator >
 void shy_logic_application_fsm < mediator > :: _logic_application_fsm_actions_type :: logic_title_update ( )
 {
     _fsm . get ( ) . _mediator . get ( ) . send ( typename messages :: logic_title_update ( ) ) ;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type :: on_entry ( _logic_application_fsm_state_environment_type & )
-{
-}
-
-template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type :: on_exit ( _logic_application_fsm_state_environment_type & )
-{
-}
-
-template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type :: on_input ( _logic_application_fsm_state_environment_type & )
-{
-}
-
-template < typename mediator >
-typename shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type &
-shy_logic_application_fsm < mediator > :: _logic_application_fsm_state_type :: transition ( _logic_application_fsm_state_environment_type & )
-{
-    return * this ;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
