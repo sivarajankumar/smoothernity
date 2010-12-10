@@ -76,11 +76,10 @@ public :
     void receive ( typename messages :: logic_title_finished ) ;
     void receive ( typename messages :: logic_main_menu_created ) ;
     void receive ( typename messages :: logic_main_menu_finished ) ;
-public :
-    void _reset_input_events ( ) ;
-    void _recalc_current_inputs ( ) ;
-    void _determine_inputs_change ( num_whole & ) ;
-    void _update_fixed_inputs ( ) ;
+    void reset_input_events ( ) ;
+    void recalc_current_inputs ( ) ;
+    void determine_inputs_change ( num_whole & ) ;
+    void update_fixed_inputs ( ) ;
 private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
@@ -288,7 +287,7 @@ void shy_logic_application_fsm < mediator > :: receive ( typename messages :: lo
 }
 
 template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _reset_input_events ( )
+void shy_logic_application_fsm < mediator > :: reset_input_events ( )
 {
     _current_inputs . logic_amusement_created = _platform_math_consts . get ( ) . whole_false ;
     _current_inputs . logic_amusement_finished = _platform_math_consts . get ( ) . whole_false ;
@@ -302,7 +301,7 @@ void shy_logic_application_fsm < mediator > :: _reset_input_events ( )
 }
 
 template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( num_whole & inputs_changed )
+void shy_logic_application_fsm < mediator > :: determine_inputs_change ( num_whole & inputs_changed )
 {
     if ( platform_conditions :: wholes_are_equal ( _current_inputs . logic_amusement_created , _fixed_inputs . logic_amusement_created )
       && platform_conditions :: wholes_are_equal ( _current_inputs . logic_amusement_finished , _fixed_inputs . logic_amusement_finished )
@@ -328,7 +327,7 @@ void shy_logic_application_fsm < mediator > :: _determine_inputs_change ( num_wh
 }
 
 template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _recalc_current_inputs ( )
+void shy_logic_application_fsm < mediator > :: recalc_current_inputs ( )
 {
     if ( platform_conditions :: whole_is_true ( _logic_application_stateless_consts . get ( ) . skip_amusement ) )
     {
@@ -363,7 +362,7 @@ void shy_logic_application_fsm < mediator > :: _recalc_current_inputs ( )
 }
 
 template < typename mediator >
-void shy_logic_application_fsm < mediator > :: _update_fixed_inputs ( )
+void shy_logic_application_fsm < mediator > :: update_fixed_inputs ( )
 {
     _fixed_inputs = _current_inputs ;
 }
