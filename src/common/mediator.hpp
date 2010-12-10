@@ -6,6 +6,7 @@ public :
 
     typedef typename mediator_types :: platform platform ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
+    typedef typename mediator_types :: template modules < shy_mediator > :: engine_fsm engine_fsm ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_render_stateless engine_render_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_amusement_stateless logic_amusement_stateless ;

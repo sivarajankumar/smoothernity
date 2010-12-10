@@ -9,6 +9,7 @@
 
 #include "aggregator.hpp"
 #include "engine/camera.hpp"
+#include "engine/fsm.hpp"
 #include "engine/math.hpp"
 #include "engine/rasterizer/rasterizer.hpp"
 #include "engine/rasterizer/stateless.hpp"
@@ -132,6 +133,7 @@ class shy_facade
         < platform
         , shy_mediator
         , shy_engine_camera
+        , shy_engine_fsm
         , shy_engine_math
         , shy_engine_rasterizer
         , shy_engine_rasterizer_stateless

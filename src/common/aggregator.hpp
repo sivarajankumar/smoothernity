@@ -1,6 +1,7 @@
 template 
     < typename _platform
     , template < typename mediator > class _engine_camera
+    , template < typename mediator > class _engine_fsm
     , template < typename mediator > class _engine_math
     , template < typename mediator > class _engine_rasterizer
     , template < typename mediator > class _engine_rasterizer_stateless
@@ -122,6 +123,7 @@ public :
     {
     public :
         typedef _engine_camera < mediator > engine_camera ;
+        typedef _engine_fsm < mediator > engine_fsm ;
         typedef _engine_math < mediator > engine_math ;
         typedef _engine_rasterizer < mediator > engine_rasterizer ;
         typedef _engine_rasterizer_stateless < mediator > engine_rasterizer_stateless ;
@@ -240,6 +242,7 @@ template
     < typename _platform
     , template < typename _mediator_types > class _mediator
     , template < typename _mediator > class _engine_camera
+    , template < typename _mediator > class _engine_fsm
     , template < typename _mediator > class _engine_math
     , template < typename _mediator > class _engine_rasterizer
     , template < typename _mediator > class _engine_rasterizer_stateless
@@ -443,6 +446,7 @@ public :
     typedef _mediator < mediator_types
         < _platform 
         , _engine_camera
+        , _engine_fsm
         , _engine_math
         , scheduled_engine_rasterizer :: template scheduled_module
         , _engine_rasterizer_stateless
@@ -559,6 +563,7 @@ public :
     typedef typename mediator_type :: messages messages ;
     
     typedef _engine_camera < mediator_type > engine_camera ;
+    typedef _engine_fsm < mediator_type > engine_fsm ;
     typedef _engine_math < mediator_type > engine_math ;
     typedef _engine_rasterizer_stateless < mediator_type > engine_rasterizer_stateless ;
     typedef _engine_render_stateless < mediator_type > engine_render_stateless ;
