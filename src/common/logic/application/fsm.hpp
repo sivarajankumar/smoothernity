@@ -81,7 +81,7 @@ public :
     void _recalc_current_inputs ( ) ;
     void _determine_inputs_change ( num_whole & ) ;
     void _update_fixed_inputs ( ) ;
-public :
+private :
     typename platform_pointer :: template pointer < mediator > _mediator ;
     typename platform_pointer :: template pointer < const platform_math_consts > _platform_math_consts ;
     typename platform_pointer :: template pointer < const logic_application_stateless_consts_type > _logic_application_stateless_consts ;
