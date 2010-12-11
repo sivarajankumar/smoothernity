@@ -143,6 +143,7 @@ class shy_facade
     typedef typename platform :: platform_pointer platform_pointer ;
     typedef shy_aggregator < shy_aggregator_types
         < platform
+        , fsm_collection
         , shy_mediator
         , shy_engine_camera
         , shy_engine_fsm

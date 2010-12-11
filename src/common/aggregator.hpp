@@ -1,5 +1,6 @@
 template 
     < typename _platform
+    , typename _fsm_collection
     , template < typename mediator > class _engine_camera
     , template < typename mediator > class _engine_fsm
     , template < typename mediator > class _engine_math
@@ -118,6 +119,7 @@ class mediator_types
 {
 public :
     typedef _platform platform ;
+    typedef _fsm_collection fsm_collection ;
     template < typename mediator >
     class modules
     {
@@ -240,6 +242,7 @@ public :
 
 template 
     < typename _platform
+    , typename _fsm_collection
     , template < typename _mediator_types > class _mediator
     , template < typename _mediator > class _engine_camera
     , template < typename _mediator > class _engine_fsm
@@ -365,6 +368,7 @@ class shy_aggregator_types
 
 public :
     typedef _platform platform ;
+    typedef _fsm_collection fsm_collection ;
     typedef typename platform_scheduler :: template module_wrapper < _engine_rasterizer , _max_rasterizer_messages > scheduled_engine_rasterizer ;
     typedef typename platform_scheduler :: template module_wrapper < _engine_render , _max_render_messages > scheduled_engine_render ;
     typedef typename platform_scheduler :: template module_wrapper < _logic_amusement > scheduled_logic_amusement ;
@@ -445,6 +449,7 @@ public :
     
     typedef _mediator < mediator_types
         < _platform 
+        , _fsm_collection
         , _engine_camera
         , _engine_fsm
         , _engine_math

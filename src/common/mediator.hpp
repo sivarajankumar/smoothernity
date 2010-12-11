@@ -5,6 +5,7 @@ public :
     class messages ;
 
     typedef typename mediator_types :: platform platform ;
+    typedef typename mediator_types :: fsm_collection fsm_collection ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_camera engine_camera ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_fsm engine_fsm ;
     typedef typename mediator_types :: template modules < shy_mediator > :: engine_math engine_math ;
