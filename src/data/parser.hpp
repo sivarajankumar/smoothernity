@@ -18,18 +18,25 @@ class shy_data_parser
     public :
         static std :: string consts ( ) { return "consts" ; }
         static char divide ( ) { return '/' ; }
-        static std :: string error_expected_attribute_name_instead_of ( std :: string token ) { return std :: string ( "expected attribute name, but got '" ) + token + std :: string ( "'" ) ; } 
-        static std :: string error_expected_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'consts', but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_attribute_name_or_consts_or_system_instead_of ( std :: string token ) { return std :: string ( "expected attribute name or 'consts' or 'system', but got '" ) + token + std :: string ( "'" ) ; } 
+        static std :: string error_expected_consts_or_system_instead_of ( std :: string token ) { return std :: string ( "expected 'consts' or 'system', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_denominator_instead_of ( std :: string token ) { return std :: string ( "expected denominator, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_divide_or_identifier_instead_of ( std :: string token ) { return std :: string ( "expected '/' or identifier, but got '" ) + token + std :: string ( "'" ) ; } 
+        static std :: string error_expected_machine_name_instead_of ( std :: string token ) { return std :: string ( "expected machine name, but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'machine' or 'system' or 'consts', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_module_name_instead_of ( std :: string token ) { return std :: string ( "expected module name, but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_numerator_instead_of ( std :: string token ) { return std :: string ( "expected numerator, but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_state_or_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'state' or 'machine' or 'system' or 'consts', but got'" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_system_name_instead_of ( std :: string token ) { return std :: string ( "expected system name, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_unknown_fract_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown fract attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_unknown_module ( std :: string module ) { return std :: string ( "unknown module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_unknown_whole_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown whole attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
+        static std :: string machine ( ) { return "machine" ; }
         static char minus ( ) { return '-' ; }
         static std :: string next_line ( ) { return "\n" ; }
+        static std :: string state ( ) { return "state" ; }
+        static std :: string system ( ) { return "system" ; }
         static char underscore ( ) { return '_' ; }
     } ;
 
@@ -53,7 +60,12 @@ class shy_data_parser
         _state_reading_attribute_numerator_value ,
         _state_reading_attribute_denominator_sign ,
         _state_reading_attribute_denominator_value ,
-        _state_determining_value_format 
+        _state_determining_value_format ,
+        _state_reading_system_name ,
+        _state_reading_machine_token ,
+        _state_reading_machine_name ,
+        _state_reading_state_token ,
+        _state_reading_state_name
     } ;
 
 public :
@@ -78,6 +90,11 @@ private :
     void _handle_state_reading_attribute_denominator_sign ( ) ;
     void _handle_state_reading_attribute_denominator_value ( ) ;
     void _handle_state_determining_value_format ( ) ;
+    void _handle_state_reading_system_name ( ) ;
+    void _handle_state_reading_machine_token ( ) ;
+    void _handle_state_reading_machine_name ( ) ;
+    void _handle_state_reading_state_token ( ) ;
+    void _handle_state_reading_state_name ( ) ;
     void _store_error ( std :: string ) ;
     void _store_module_name ( std :: string ) ;
     void _store_attribute_name ( std :: string ) ;
@@ -85,6 +102,8 @@ private :
     void _store_attribute_numerator_value ( std :: string ) ;
     void _store_attribute_denominator_sign ( std :: string ) ;
     void _store_attribute_denominator_value ( std :: string ) ;
+    void _store_system_name ( std :: string ) ;
+    void _store_machine_name ( std :: string ) ;
     void _set_whole_value ( ) ;
     void _set_fract_value ( ) ;
     void _read_next_token ( ) ;
@@ -161,6 +180,16 @@ void shy_data_parser < data_parser_types > :: parse ( std :: string line )
             _handle_state_reading_attribute_denominator_sign ( ) ;
         else if ( _state == _state_reading_attribute_denominator_value )
             _handle_state_reading_attribute_denominator_value ( ) ;
+        else if ( _state == _state_reading_system_name )
+            _handle_state_reading_system_name ( ) ;
+        else if ( _state == _state_reading_machine_token )
+            _handle_state_reading_machine_token ( ) ;
+        else if ( _state == _state_reading_machine_name )
+            _handle_state_reading_machine_name ( ) ;
+        else if ( _state == _state_reading_state_token )
+            _handle_state_reading_state_token ( ) ;
+        else if ( _state == _state_reading_state_name )
+            _handle_state_reading_state_name ( ) ;
         else if ( _state == _state_error )
             _handle_state_error ( ) ;
     }
@@ -174,9 +203,14 @@ void shy_data_parser < data_parser_types > :: _handle_state_none ( )
         _read_next_token ( ) ;
         _state = _state_reading_module_name ;
     }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: system ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_system_name ;
+    }
     else
     {
-        _store_error ( _consts :: error_expected_consts_instead_of ( _token ) ) ;
+        _store_error ( _consts :: error_expected_consts_or_system_instead_of ( _token ) ) ;
         _state = _state_error ;
     }
 }
@@ -207,6 +241,11 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_attribute_na
         _read_next_token ( ) ;
         _state = _state_reading_module_name ;
     }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: system ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_system_name ;
+    }
     else if ( _token_class == _token_class_identifier )
     {
         _store_attribute_name ( _token ) ;
@@ -215,7 +254,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_attribute_na
     }
     else
     {
-        _store_error ( _consts :: error_expected_attribute_name_instead_of ( _token ) ) ;
+        _store_error ( _consts :: error_expected_attribute_name_or_consts_or_system_instead_of ( _token ) ) ;
         _state = _state_error ;
     }
 }
@@ -303,6 +342,100 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_attribute_de
         _store_error ( _consts :: error_expected_denominator_instead_of ( _token ) ) ;
         _state = _state_error ;
     }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_system_name ( )
+{
+    if ( _token_class == _token_class_identifier )
+    {
+        _store_system_name ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_machine_token ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_system_name_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_machine_token ( )
+{
+    if ( _token_class == _token_class_none )
+        _continue_parsing = false ;
+    else if ( _token_class == _token_class_identifier && _token == _consts :: machine ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_machine_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: system ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_system_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_module_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_machine_or_system_or_consts_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_machine_name ( )
+{
+    if ( _token_class == _token_class_identifier )
+    {
+        _store_machine_name ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_state_token ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_machine_name_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_state_token ( )
+{
+    if ( _token_class == _token_class_identifier && _token == _consts :: state ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_state_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: machine ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_machine_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: system ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_system_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_module_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_state_or_machine_or_system_or_consts_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_state_name ( )
+{
 }
 
 template < typename data_parser_types >
@@ -476,6 +609,16 @@ template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_attribute_denominator_value ( std :: string attribute_denominator_value )
 {
     _attribute_denominator_value = attribute_denominator_value ;
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_system_name ( std :: string )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_machine_name ( std :: string )
+{
 }
 
 template < typename data_parser_types >
