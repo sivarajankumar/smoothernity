@@ -37,6 +37,7 @@ class shy_data_parser
         static std :: string error_expected_input_name_or_parenthesis_open_instead_of ( std :: string token ) { return std :: string ( "expected input name or '(', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_input_name_or_parenthesis_open_or_brace_close_instead_of ( std :: string token ) { return std :: string ( "expected input name or '(' or '}', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_machine_name_instead_of ( std :: string token ) { return std :: string ( "expected machine name, but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_machine_or_command_instead_of ( std :: string token ) { return std :: string ( "expected 'machine' or 'command', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'machine' or 'system' or 'consts', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_module_name_instead_of ( std :: string token ) { return std :: string ( "expected module name, but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_numerator_instead_of ( std :: string token ) { return std :: string ( "expected numerator, but got '" ) + token + std :: string ( "'" ) ; }
@@ -105,6 +106,8 @@ class shy_data_parser
         _state_reading_first_condition_in_group ,
         _state_reading_next_condition_in_group ,
         _state_reading_parametric_condition_token ,
+        _state_reading_state_condition_machine_name ,
+        _state_reading_command_condition_command_name ,
         _state_reading_transition_state_name ,
         _state_reading_transition_if_token
     } ;
@@ -152,6 +155,8 @@ private :
     void _handle_state_reading_first_condition_in_group ( ) ;
     void _handle_state_reading_next_condition_in_group ( ) ;
     void _handle_state_reading_parametric_condition_token ( ) ;
+    void _handle_state_reading_state_condition_machine_name ( ) ;
+    void _handle_state_reading_command_condition_command_name ( ) ;
     void _handle_state_reading_transition_state_name ( ) ;
     void _handle_state_reading_transition_if_token ( ) ;
     void _store_error ( std :: string ) ;
@@ -292,6 +297,10 @@ void shy_data_parser < data_parser_types > :: parse ( std :: string line )
             _handle_state_reading_next_condition_in_group ( ) ;
         else if ( _state == _state_reading_parametric_condition_token )
             _handle_state_reading_parametric_condition_token ( ) ;
+        else if ( _state == _state_reading_state_condition_machine_name )
+            _handle_state_reading_state_condition_machine_name ( ) ;
+        else if ( _state == _state_reading_command_condition_command_name )
+            _handle_state_reading_command_condition_command_name ( ) ;
         else if ( _state == _state_reading_transition_state_name )
             _handle_state_reading_transition_state_name ( ) ;
         else if ( _state == _state_reading_transition_if_token )
@@ -822,6 +831,31 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_next_conditi
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_parametric_condition_token ( )
+{
+    if ( _token_class == _token_class_identifier && _token == _consts :: machine ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_state_condition_machine_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: command ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_command_condition_command_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_machine_or_command_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_state_condition_machine_name ( )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_command_condition_command_name ( )
 {
 }
 
