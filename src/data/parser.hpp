@@ -193,6 +193,7 @@ private :
     void _store_state_condition ( ) ;
     void _store_command_condition_command_name ( std :: string ) ;
     void _store_command_condition ( ) ;
+    void _store_transition_always ( ) ;
     void _select_entry_actions_container ( ) ;
     void _select_exit_actions_container ( ) ;
     void _select_input_actions_container ( ) ;
@@ -998,8 +999,8 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_transition_i
     }
     else
     {
-        _store_error ( _consts :: error_expected_if_instead_of ( _token ) ) ;
-        _state = _state_error ;
+        _store_transition_always ( ) ;
+        _state = _state_reading_state_content ;
     }
 }
 
@@ -1289,6 +1290,11 @@ void shy_data_parser < data_parser_types > :: _store_command_condition_command_n
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_command_condition ( )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_transition_always ( )
 {
 }
 
