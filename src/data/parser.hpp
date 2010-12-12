@@ -43,6 +43,7 @@ class shy_data_parser
         static std :: string error_expected_module_name_instead_of ( std :: string token ) { return std :: string ( "expected module name, but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_numerator_instead_of ( std :: string token ) { return std :: string ( "expected numerator, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_on_or_to_or_state_or_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'on' or 'to' or 'state' or 'machine' or 'system' or 'consts' instead of '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_parenthesis_close_instead_of ( std :: string token ) { return std :: string ( "expected ')', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_state_name_instead_of ( std :: string token ) { return std :: string ( "expected state name, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_state_or_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'state' or 'machine' or 'system' or 'consts', but got'" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_system_name_instead_of ( std :: string token ) { return std :: string ( "expected system name, but got '" ) + token + std :: string ( "'" ) ; }
@@ -113,6 +114,7 @@ class shy_data_parser
         _state_reading_state_condition_state_name ,
         _state_reading_state_condition_parenthesis_close ,
         _state_reading_command_condition_command_name ,
+        _state_reading_command_condition_parenthesis_close ,
         _state_reading_transition_state_name ,
         _state_reading_transition_if_token
     } ;
@@ -165,6 +167,7 @@ private :
     void _handle_state_reading_state_condition_state_name ( ) ;
     void _handle_state_reading_state_condition_parenthesis_close ( ) ;
     void _handle_state_reading_command_condition_command_name ( ) ;
+    void _handle_state_reading_command_condition_parenthesis_close ( ) ;
     void _handle_state_reading_transition_state_name ( ) ;
     void _handle_state_reading_transition_if_token ( ) ;
     void _store_error ( std :: string ) ;
@@ -187,6 +190,9 @@ private :
     void _store_input_condition ( std :: string ) ;
     void _store_state_condition_machine_name ( std :: string ) ;
     void _store_state_condition_state_name ( std :: string ) ;
+    void _store_state_condition ( ) ;
+    void _store_command_condition_command_name ( std :: string ) ;
+    void _store_command_condition ( ) ;
     void _select_entry_actions_container ( ) ;
     void _select_exit_actions_container ( ) ;
     void _select_input_actions_container ( ) ;
@@ -318,6 +324,8 @@ void shy_data_parser < data_parser_types > :: parse ( std :: string line )
             _handle_state_reading_state_condition_parenthesis_close ( ) ;
         else if ( _state == _state_reading_command_condition_command_name )
             _handle_state_reading_command_condition_command_name ( ) ;
+        else if ( _state == _state_reading_command_condition_parenthesis_close )
+            _handle_state_reading_command_condition_parenthesis_close ( ) ;
         else if ( _state == _state_reading_transition_state_name )
             _handle_state_reading_transition_state_name ( ) ;
         else if ( _state == _state_reading_transition_if_token )
@@ -917,11 +925,49 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_state_condit
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_state_condition_parenthesis_close ( )
 {
+    if ( _token_class == _token_class_parenthesis_close )
+    {
+        _store_state_condition ( ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_next_condition_in_group ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_parenthesis_close_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_command_condition_command_name ( )
 {
+    if ( _token_class == _token_class_identifier )
+    {
+        _store_command_condition_command_name ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_command_condition_parenthesis_close ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_command_name_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_command_condition_parenthesis_close ( )
+{
+    if ( _token_class == _token_class_parenthesis_close )
+    {
+        _store_command_condition ( ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_next_condition_in_group ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_parenthesis_close_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
 }
 
 template < typename data_parser_types >
@@ -1228,6 +1274,21 @@ void shy_data_parser < data_parser_types > :: _store_state_condition_machine_nam
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_state_condition_state_name ( std :: string )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_state_condition ( )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_command_condition_command_name ( std :: string )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_command_condition ( )
 {
 }
 
