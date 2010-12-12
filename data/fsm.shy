@@ -1,3 +1,20 @@
+system empty_system
+
+consts empty_consts
+
+system another_system
+
+system and_another_system
+    machine another_machine
+
+system yet_another_system
+    machine empty_machine
+consts empty_consts
+
+system other_system
+    machine first_machine
+    machine second_machine
+
 system logic_application
 
     machine performer
@@ -5,44 +22,44 @@ system logic_application
             to title
         state title
             on entry
-                ( command start to title_performer )
+                command start to title_performer
             to main_menu
                 if { ( machine title_performer is finished ) }
         state main_menu
             on entry
-                ( command start to main_menu_performer )
+                command start to main_menu_performer
             to amusement
                 if { ( machine main_menu_performer is finished ) }
         state amusement
             on entry
-                ( command start to amusement_performer )
+                command start to amusement_performer
             to game
                 if { ( machine amusement_performer is finished ) }
         state game
             on entry
-                ( command start to game_performer )
+                command start to game_performer
 
     machine generator
         state initial
             to text
         state text
             on entry
-                ( command start to text_generator )
+                command start to text_generator
             to title
                 if { ( machine text_generator is finished ) }
         state title
             on entry
-                ( command start to title_generator )
+                command start to title_generator
             to main_menu
                 if { ( machine title_generator is finished ) }
         state main_menu
             on entry
-                ( command start to main_menu_generator )
+                command start to main_menu_generator
             to amusement
                 if { ( machine main_menu_generator is finished ) }
         state amusement
             on entry
-                ( command start to amusement_generator )
+                command start to amusement_generator
             to game
                 if { ( machine amusement_generator is finished ) }
         state game
@@ -53,9 +70,9 @@ system logic_application
                 if { ( command start ) }
         state generating
             on entry
-                logic_text_prepare_permit
+                do logic_text_prepare_permit
             on { logic_application_update }
-                logic_text_update
+                do logic_text_update
             to finished
                 if { logic_text_prepared }
         state finished
@@ -66,9 +83,9 @@ system logic_application
                 if { ( command start ) }
         state generating
             on entry
-                logic_title_launch_permit
+                do logic_title_launch_permit
             on { logic_application_update }
-                logic_title_update
+                do logic_title_update
             to finished
                 if { logic_title_created }
         state finished
@@ -79,9 +96,9 @@ system logic_application
                 if { ( command start ) }
         state performing
             on { logic_application_render }
-                logic_title_render
+                do logic_title_render
             on { logic_application_update }
-                logic_title_update
+                do logic_title_update
             to finished
                 if { logic_title_finished }
         state finished
@@ -92,9 +109,9 @@ system logic_application
                 if { ( command start ) }
         state generating
             on entry
-                logic_main_menu_creation_permit
+                do logic_main_menu_creation_permit
             on { logic_application_update }
-                logic_main_menu_update
+                do logic_main_menu_update
             to finished
                 if { logic_main_menu_created }
         state finished
@@ -105,11 +122,11 @@ system logic_application
                 if { ( command start ) }
         state performing
             on entry
-                logic_main_menu_launch_permit
+                do logic_main_menu_launch_permit
             on { logic_application_render }
-                logic_main_menu_render
+                do logic_main_menu_render
             on { logic_application_update }
-                logic_main_menu_update
+                do logic_main_menu_update
             to finished
                 if { logic_main_menu_finished }
         state finished
@@ -120,9 +137,9 @@ system logic_application
                 if { ( command start ) }
         state generating
             on entry
-                logic_amusement_creation_permit
+                do logic_amusement_creation_permit
             on { logic_application_update }
-                logic_amusement_update
+                do logic_amusement_update
             to finished
                 if { logic_amusement_created }
         state finished
@@ -133,11 +150,11 @@ system logic_application
                 if { ( command start ) }
         state performing
             on entry
-                logic_amusement_launch_permit
+                do logic_amusement_launch_permit
             on { logic_application_render }
-                logic_amusement_render
+                do logic_amusement_render
             on { logic_application_update }
-                logic_amusement_update
+                do logic_amusement_update
             to finished
                 if { logic_amusement_finished }
         state finished
@@ -148,9 +165,9 @@ system logic_application
                 if { ( command start ) }
         state performing
             on entry
-                logic_game_launch_permit
+                do logic_game_launch_permit
             on { logic_application_render }
-                logic_game_render
+                do logic_game_render
             on { logic_application_update }
-                logic_game_update
+                do logic_game_update
 

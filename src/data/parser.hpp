@@ -16,12 +16,16 @@ class shy_data_parser
     class _consts
     {
     public :
+        static char brace_close ( ) { return '}' ; }
+        static char brace_open ( ) { return '{' ; }
         static std :: string consts ( ) { return "consts" ; }
         static char divide ( ) { return '/' ; }
+        static std :: string entry ( ) { return "entry" ; }
         static std :: string error_expected_attribute_name_or_consts_or_system_instead_of ( std :: string token ) { return std :: string ( "expected attribute name or 'consts' or 'system', but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_consts_or_system_instead_of ( std :: string token ) { return std :: string ( "expected 'consts' or 'system', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_denominator_instead_of ( std :: string token ) { return std :: string ( "expected denominator, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_divide_or_identifier_instead_of ( std :: string token ) { return std :: string ( "expected '/' or identifier, but got '" ) + token + std :: string ( "'" ) ; } 
+        static std :: string error_expected_entry_or_exit_or_brace_open_instead_of ( std :: string token ) { return std :: string ( "expected 'entry' or 'exit' or '{', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_machine_name_instead_of ( std :: string token ) { return std :: string ( "expected machine name, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'machine' or 'system' or 'consts', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_module_name_instead_of ( std :: string token ) { return std :: string ( "expected module name, but got '" ) + token + std :: string ( "'" ) ; } 
@@ -34,6 +38,7 @@ class shy_data_parser
         static std :: string error_unknown_module ( std :: string module ) { return std :: string ( "unknown module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_unknown_whole_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown whole attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
+        static std :: string exit ( ) { return "exit" ; }
         static std :: string machine ( ) { return "machine" ; }
         static char minus ( ) { return '-' ; }
         static std :: string next_line ( ) { return "\n" ; }
@@ -51,6 +56,8 @@ class shy_data_parser
         _token_class_number ,
         _token_class_divide ,
         _token_class_minus ,
+        _token_class_brace_open ,
+        _token_class_brace_close ,
         _token_class_unknown
     } ;
 
@@ -72,6 +79,9 @@ class shy_data_parser
         _state_reading_state_name ,
         _state_reading_state_content ,
         _state_reading_event_type ,
+        _state_reading_entry_actions ,
+        _state_reading_exit_actions ,
+        _state_reading_input_conditions ,
         _state_reading_transition_state_name
     } ;
 
@@ -87,6 +97,8 @@ private :
     void _handle_token_class_number ( ) ;
     void _handle_token_class_divide ( ) ;
     void _handle_token_class_minus ( ) ;
+    void _handle_token_class_brace_open ( ) ;
+    void _handle_token_class_brace_close ( ) ;
     void _handle_token_class_unknown ( ) ;
     void _handle_state_none ( ) ;
     void _handle_state_error ( ) ;
@@ -104,6 +116,9 @@ private :
     void _handle_state_reading_state_name ( ) ;
     void _handle_state_reading_state_content ( ) ;
     void _handle_state_reading_event_type ( ) ;
+    void _handle_state_reading_entry_actions ( ) ;
+    void _handle_state_reading_exit_actions ( ) ;
+    void _handle_state_reading_input_conditions ( ) ;
     void _handle_state_reading_transition_state_name ( ) ;
     void _store_error ( std :: string ) ;
     void _store_module_name ( std :: string ) ;
@@ -205,6 +220,12 @@ void shy_data_parser < data_parser_types > :: parse ( std :: string line )
             _handle_state_reading_state_content ( ) ;
         else if ( _state == _state_reading_event_type )
             _handle_state_reading_event_type ( ) ;
+        else if ( _state == _state_reading_entry_actions )
+            _handle_state_reading_entry_actions ( ) ;
+        else if ( _state == _state_reading_exit_actions )
+            _handle_state_reading_exit_actions ( ) ;
+        else if ( _state == _state_reading_input_conditions )
+            _handle_state_reading_input_conditions ( ) ;
         else if ( _state == _state_reading_transition_state_name )
             _handle_state_reading_transition_state_name ( ) ;
         else if ( _state == _state_error )
@@ -513,6 +534,41 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_state_conten
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_event_type ( )
 {
+    if ( _token_class == _token_class_identifier && _token == _consts :: entry ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_entry_actions ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: exit ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_exit_actions ;
+    }
+    else if ( _token_class == _token_class_brace_open )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_input_conditions ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_entry_or_exit_or_brace_open_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_entry_actions ( )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_exit_actions ( )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_input_conditions ( )
+{
 }
 
 template < typename data_parser_types >
@@ -561,6 +617,10 @@ void shy_data_parser < data_parser_types > :: _handle_token_class_none ( )
         _token_class = _token_class_divide ;
     else if ( _first_char ( ) == _consts :: minus ( ) )
         _token_class = _token_class_minus ;
+    else if ( _first_char ( ) == _consts :: brace_open ( ) )
+        _token_class = _token_class_brace_open ;
+    else if ( _first_char ( ) == _consts :: brace_close ( ) )
+        _token_class = _token_class_brace_close ;
     else
         _token_class = _token_class_unknown ;
 }
@@ -597,6 +657,20 @@ void shy_data_parser < data_parser_types > :: _handle_token_class_divide ( )
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_token_class_minus ( )
+{
+    _move_first_char_to_token ( ) ;
+    _continue_reading_next_token = false ;
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_token_class_brace_open ( )
+{
+    _move_first_char_to_token ( ) ;
+    _continue_reading_next_token = false ;
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_token_class_brace_close ( )
 {
     _move_first_char_to_token ( ) ;
     _continue_reading_next_token = false ;
