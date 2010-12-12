@@ -39,6 +39,7 @@ class shy_data_parser
         static std :: string error_expected_state_name_instead_of ( std :: string token ) { return std :: string ( "expected state name, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_state_or_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'state' or 'machine' or 'system' or 'consts', but got'" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_system_name_instead_of ( std :: string token ) { return std :: string ( "expected system name, but got '" ) + token + std :: string ( "'" ) ; }
+        static std :: string error_expected_to_instead_of ( std :: string token ) { return std :: string ( "expected 'to', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_unknown_fract_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown fract attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_unknown_module ( std :: string module ) { return std :: string ( "unknown module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_unknown_whole_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown whole attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
@@ -88,6 +89,7 @@ class shy_data_parser
         _state_reading_action_name ,
         _state_reading_action_command_name ,
         _state_reading_action_command_to_token ,
+        _state_reading_action_command_machine_name ,
         _state_reading_input_conditions ,
         _state_reading_transition_state_name
     } ;
@@ -127,6 +129,7 @@ private :
     void _handle_state_reading_action_name ( ) ;
     void _handle_state_reading_action_command_name ( ) ;
     void _handle_state_reading_action_command_to_token ( ) ;
+    void _handle_state_reading_action_command_machine_name ( ) ;
     void _handle_state_reading_input_conditions ( ) ;
     void _handle_state_reading_transition_state_name ( ) ;
     void _store_error ( std :: string ) ;
@@ -141,6 +144,7 @@ private :
     void _store_state_name ( std :: string ) ;
     void _store_action_name ( std :: string ) ;
     void _store_action_command_name ( std :: string ) ;
+    void _store_action_command_machine_name ( std :: string ) ;
     void _select_entry_actions_container ( ) ;
     void _select_exit_actions_container ( ) ;
     void _set_whole_value ( ) ;
@@ -241,6 +245,8 @@ void shy_data_parser < data_parser_types > :: parse ( std :: string line )
             _handle_state_reading_action_command_name ( ) ;
         else if ( _state == _state_reading_action_command_to_token )
             _handle_state_reading_action_command_to_token ( ) ;
+        else if ( _state == _state_reading_action_command_machine_name )
+            _handle_state_reading_action_command_machine_name ( ) ;
         else if ( _state == _state_reading_input_conditions )
             _handle_state_reading_input_conditions ( ) ;
         else if ( _state == _state_reading_transition_state_name )
@@ -662,6 +668,32 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_action_comma
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_action_command_to_token ( )
 {
+    if ( _token_class == _token_class_identifier && _token == _consts :: to ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_action_command_machine_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_to_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_action_command_machine_name ( )
+{
+    if ( _token_class == _token_class_identifier )
+    {
+        _store_action_command_machine_name ( _token ) ;
+        _read_next_token ( ) ;
+        _state = _state_reading_action_token ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_machine_name_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
 }
 
 template < typename data_parser_types >
@@ -887,6 +919,11 @@ void shy_data_parser < data_parser_types > :: _store_action_name ( std :: string
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command_name ( std :: string )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_action_command_machine_name ( std :: string )
 {
 }
 
