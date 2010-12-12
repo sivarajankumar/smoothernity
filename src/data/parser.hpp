@@ -18,13 +18,16 @@ class shy_data_parser
     public :
         static char brace_close ( ) { return '}' ; }
         static char brace_open ( ) { return '{' ; }
+        static std :: string command ( ) { return "command" ; }
         static std :: string consts ( ) { return "consts" ; }
         static char divide ( ) { return '/' ; }
+        static std :: string do_token ( ) { return "do" ; }
         static std :: string entry ( ) { return "entry" ; }
         static std :: string error_expected_attribute_name_or_consts_or_system_instead_of ( std :: string token ) { return std :: string ( "expected attribute name or 'consts' or 'system', but got '" ) + token + std :: string ( "'" ) ; } 
         static std :: string error_expected_consts_or_system_instead_of ( std :: string token ) { return std :: string ( "expected 'consts' or 'system', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_denominator_instead_of ( std :: string token ) { return std :: string ( "expected denominator, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_divide_or_identifier_instead_of ( std :: string token ) { return std :: string ( "expected '/' or identifier, but got '" ) + token + std :: string ( "'" ) ; } 
+        static std :: string error_expected_do_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'do' or 'command' or 'on' or 'to' or 'state' or 'machine' or 'system' or 'consts', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_entry_or_exit_or_brace_open_instead_of ( std :: string token ) { return std :: string ( "expected 'entry' or 'exit' or '{', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_machine_name_instead_of ( std :: string token ) { return std :: string ( "expected machine name, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_machine_or_system_or_consts_instead_of ( std :: string token ) { return std :: string ( "expected 'machine' or 'system' or 'consts', but got '" ) + token + std :: string ( "'" ) ; }
@@ -79,8 +82,9 @@ class shy_data_parser
         _state_reading_state_name ,
         _state_reading_state_content ,
         _state_reading_event_type ,
-        _state_reading_entry_actions ,
-        _state_reading_exit_actions ,
+        _state_reading_action_token ,
+        _state_reading_action_name ,
+        _state_reading_command_name ,
         _state_reading_input_conditions ,
         _state_reading_transition_state_name
     } ;
@@ -116,8 +120,9 @@ private :
     void _handle_state_reading_state_name ( ) ;
     void _handle_state_reading_state_content ( ) ;
     void _handle_state_reading_event_type ( ) ;
-    void _handle_state_reading_entry_actions ( ) ;
-    void _handle_state_reading_exit_actions ( ) ;
+    void _handle_state_reading_action_token ( ) ;
+    void _handle_state_reading_action_name ( ) ;
+    void _handle_state_reading_command_name ( ) ;
     void _handle_state_reading_input_conditions ( ) ;
     void _handle_state_reading_transition_state_name ( ) ;
     void _store_error ( std :: string ) ;
@@ -130,6 +135,8 @@ private :
     void _store_system_name ( std :: string ) ;
     void _store_machine_name ( std :: string ) ;
     void _store_state_name ( std :: string ) ;
+    void _select_entry_actions_container ( ) ;
+    void _select_exit_actions_container ( ) ;
     void _set_whole_value ( ) ;
     void _set_fract_value ( ) ;
     void _read_next_token ( ) ;
@@ -220,10 +227,12 @@ void shy_data_parser < data_parser_types > :: parse ( std :: string line )
             _handle_state_reading_state_content ( ) ;
         else if ( _state == _state_reading_event_type )
             _handle_state_reading_event_type ( ) ;
-        else if ( _state == _state_reading_entry_actions )
-            _handle_state_reading_entry_actions ( ) ;
-        else if ( _state == _state_reading_exit_actions )
-            _handle_state_reading_exit_actions ( ) ;
+        else if ( _state == _state_reading_action_token )
+            _handle_state_reading_action_token ( ) ;
+        else if ( _state == _state_reading_action_name )
+            _handle_state_reading_action_name ( ) ;
+        else if ( _state == _state_reading_command_name )
+            _handle_state_reading_command_name ( ) ;
         else if ( _state == _state_reading_input_conditions )
             _handle_state_reading_input_conditions ( ) ;
         else if ( _state == _state_reading_transition_state_name )
@@ -536,13 +545,15 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_event_type (
 {
     if ( _token_class == _token_class_identifier && _token == _consts :: entry ( ) )
     {
+        _select_entry_actions_container ( ) ;
         _read_next_token ( ) ;
-        _state = _state_reading_entry_actions ;
+        _state = _state_reading_action_token ;
     }
     else if ( _token_class == _token_class_identifier && _token == _consts :: exit ( ) )
     {
+        _select_exit_actions_container ( ) ;
         _read_next_token ( ) ;
-        _state = _state_reading_exit_actions ;
+        _state = _state_reading_action_token ;
     }
     else if ( _token_class == _token_class_brace_open )
     {
@@ -557,12 +568,64 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_event_type (
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _handle_state_reading_entry_actions ( )
+void shy_data_parser < data_parser_types > :: _handle_state_reading_action_token ( )
+{
+    if ( _token_class == _token_class_none )
+        _continue_parsing = false ;
+    else if ( _token_class == _token_class_identifier && _token == _consts :: do_token ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_action_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: command ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_command_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: on ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_event_type ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: to ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_transition_state_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: state ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_state_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: machine ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_machine_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: system ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_system_name ;
+    }
+    else if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
+    {
+        _read_next_token ( ) ;
+        _state = _state_reading_module_name ;
+    }
+    else
+    {
+        _store_error ( _consts :: error_expected_do_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of ( _token ) ) ;
+        _state = _state_error ;
+    }
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_state_reading_action_name ( )
 {
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _handle_state_reading_exit_actions ( )
+void shy_data_parser < data_parser_types > :: _handle_state_reading_command_name ( )
 {
 }
 
@@ -779,6 +842,16 @@ void shy_data_parser < data_parser_types > :: _store_machine_name ( std :: strin
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_state_name ( std :: string )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _select_entry_actions_container ( )
+{
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _select_exit_actions_container ( )
 {
 }
 
