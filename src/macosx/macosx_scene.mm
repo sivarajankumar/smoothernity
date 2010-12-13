@@ -38,13 +38,15 @@
             shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
             loader . bind ( * _facade ) ;
 
+            std :: string input ;
             while ( ! std :: cin . eof ( ) )
             {
                 std :: string line ;
                 std :: getline ( std :: cin , line ) ;
-                loader . parse ( line ) ;
+                input += line + std :: string ( "\n" ) ;
             }
 
+            loader . parse ( input ) ;
             loader . assign ( ) ; 
 
             std :: string loader_error = loader . error ( ) ;
