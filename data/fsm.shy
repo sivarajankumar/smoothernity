@@ -1,20 +1,3 @@
-system empty_system
-
-consts empty_consts
-
-system another_system
-
-system and_another_system
-    machine another_machine
-
-system yet_another_system
-    machine empty_machine
-consts empty_consts
-
-system other_system
-    machine first_machine
-    machine second_machine
-
 system logic_application
 
     machine performer
