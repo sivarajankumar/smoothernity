@@ -63,6 +63,7 @@ class shy_data_parser
         static char parenthesis_open ( ) { return '(' ; }
         static std :: string state ( ) { return "state" ; }
         static std :: string system ( ) { return "system" ; }
+        static char terminator ( ) { return '#' ; }
         static std :: string to ( ) { return "to" ; }
         static char underscore ( ) { return '_' ; }
     } ;
@@ -70,6 +71,7 @@ class shy_data_parser
     enum _token_class_type
     {
         _token_class_none ,
+        _token_class_terminator ,
         _token_class_identifier ,
         _token_class_number ,
         _token_class_divide ,
@@ -129,6 +131,7 @@ private :
     void _handle_token_class_none ( ) ;
     void _handle_token_class_identifier ( ) ;
     void _handle_token_class_number ( ) ;
+    void _handle_token_class_terminator ( ) ;
     void _handle_token_class_divide ( ) ;
     void _handle_token_class_minus ( ) ;
     void _handle_token_class_brace_open ( ) ;
@@ -263,7 +266,7 @@ void shy_data_parser < data_parser_types > :: parse ( std :: string line )
     _remaining_line = line ;
     _continue_parsing = true ;
     _read_next_token ( ) ;
-    while ( _continue_parsing )
+    while ( _continue_parsing && _token_class != _token_class_none )
     {
         if ( _state == _state_none )
             _handle_state_none ( ) ;
@@ -440,7 +443,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_determining_value_fo
         _read_next_token ( ) ;
         _state = _state_reading_attribute_denominator_sign ;
     }
-    else if ( _token_class == _token_class_identifier || _token_class == _token_class_none )
+    else if ( _token_class == _token_class_identifier || _token_class == _token_class_terminator )
     {
         _set_whole_value ( ) ;
         _state = _state_reading_attribute_name ;
@@ -504,7 +507,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_system_name 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_machine_token ( )
 {
-    if ( _token_class == _token_class_none )
+    if ( _token_class == _token_class_terminator )
         _continue_parsing = false ;
     else if ( _token_class == _token_class_identifier && _token == _consts :: machine ( ) )
     {
@@ -547,7 +550,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_machine_name
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_state_token ( )
 {
-    if ( _token_class == _token_class_none )
+    if ( _token_class == _token_class_terminator )
         _continue_parsing = false ;
     else if ( _token_class == _token_class_identifier && _token == _consts :: state ( ) )
     {
@@ -595,7 +598,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_state_name (
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_state_content ( )
 {
-    if ( _token_class == _token_class_none )
+    if ( _token_class == _token_class_terminator )
         _continue_parsing = false ;
     else if ( _token_class == _token_class_identifier && _token == _consts :: on ( ) )
     {
@@ -665,7 +668,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_event_type (
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_action_token ( )
 {
-    if ( _token_class == _token_class_none )
+    if ( _token_class == _token_class_terminator )
         _continue_parsing = false ;
     else if ( _token_class == _token_class_identifier && _token == _consts :: do_token ( ) )
     {
@@ -1021,6 +1024,8 @@ void shy_data_parser < data_parser_types > :: _read_next_token ( )
     {
         if ( _token_class == _token_class_none )
             _handle_token_class_none ( ) ;
+        else if ( _token_class == _token_class_terminator )
+            _handle_token_class_terminator ( ) ;
         else if ( _token_class == _token_class_number )
             _handle_token_class_number ( ) ;
         else if ( _token_class == _token_class_identifier )
@@ -1029,6 +1034,14 @@ void shy_data_parser < data_parser_types > :: _read_next_token ( )
             _handle_token_class_divide ( ) ;
         else if ( _token_class == _token_class_minus )
             _handle_token_class_minus ( ) ;
+        else if ( _token_class == _token_class_brace_open )
+            _handle_token_class_brace_open ( ) ;
+        else if ( _token_class == _token_class_brace_close )
+            _handle_token_class_brace_close ( ) ;
+        else if ( _token_class == _token_class_parenthesis_open )
+            _handle_token_class_parenthesis_open ( ) ;
+        else if ( _token_class == _token_class_parenthesis_close )
+            _handle_token_class_parenthesis_close ( ) ;
         else
             _handle_token_class_unknown ( ) ;
     }
@@ -1041,6 +1054,8 @@ void shy_data_parser < data_parser_types > :: _handle_token_class_none ( )
         _token_class = _token_class_number ;
     else if ( std :: isalpha ( _first_char ( ) , _locale ) )
         _token_class = _token_class_identifier ;
+    else if ( _first_char ( ) == _consts :: terminator ( ) )
+        _token_class = _token_class_terminator ;
     else if ( _first_char ( ) == _consts :: divide ( ) )
         _token_class = _token_class_divide ;
     else if ( _first_char ( ) == _consts :: minus ( ) )
@@ -1078,6 +1093,13 @@ void shy_data_parser < data_parser_types > :: _handle_token_class_identifier ( )
     }
     else
         _continue_reading_next_token = false ;
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _handle_token_class_terminator ( )
+{
+    _move_first_char_to_token ( ) ;
+    _continue_reading_next_token = false ;
 }
 
 template < typename data_parser_types >
