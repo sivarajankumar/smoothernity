@@ -186,6 +186,7 @@ private :
     void _store_action_name ( std :: string ) ;
     void _store_action_command_name ( std :: string ) ;
     void _store_action_command_machine_name ( std :: string ) ;
+    void _store_action_command ( ) ;
     void _store_transition_state_name ( std :: string ) ;
     void _store_input_actions_conditions ( ) ;
     void _store_transition_conditions ( ) ;
@@ -770,6 +771,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_action_comma
     if ( _token_class == _token_class_identifier )
     {
         _store_action_command_machine_name ( _token ) ;
+        _store_action_command ( ) ;
         _read_next_token ( ) ;
         _state = _state_reading_action_token ;
     }
@@ -1269,6 +1271,12 @@ template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command_machine_name ( std :: string name )
 {
     NSLog ( @"_store_action_command_machine_name %s" , name . c_str ( ) ) ;
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _store_action_command ( )
+{
+    NSLog ( @"_store_action_command" ) ;
 }
 
 template < typename data_parser_types >
