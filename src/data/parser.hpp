@@ -1236,103 +1236,123 @@ void shy_data_parser < data_parser_types > :: _store_attribute_denominator_value
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_system_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_system_name ( std :: string name )
 {
+    NSLog ( @"_store_system_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_machine_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_machine_name ( std :: string name )
 {
+    NSLog ( @"_store_machine_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_state_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_state_name ( std :: string name )
 {
+    NSLog ( @"_store_state_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_action_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_action_name ( std :: string name )
 {
+    NSLog ( @"_store_action_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_action_command_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_action_command_name ( std :: string name )
 {
+    NSLog ( @"_store_action_command_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_action_command_machine_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_action_command_machine_name ( std :: string name )
 {
+    NSLog ( @"_store_action_command_machine_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_transition_state_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_transition_state_name ( std :: string name )
 {
+    NSLog ( @"_store_transition_state_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_input_actions_conditions ( )
 {
+    NSLog ( @"_store_input_actions_conditions" ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_transition_conditions ( )
 {
+    NSLog ( @"_store_transition_conditions" ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_condition_group ( )
 {
+    NSLog ( @"_store_condition_group" ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_input_condition ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_input_condition ( std :: string input )
 {
+    NSLog ( @"_store_input_condition %s" , input . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_state_condition_machine_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_state_condition_machine_name ( std :: string name )
 {
+    NSLog ( @"_store_state_condition_machine_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_state_condition_state_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_state_condition_state_name ( std :: string name )
 {
+    NSLog ( @"_store_state_condition_state_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_state_condition ( )
 {
+    NSLog ( @"_store_state_condition" ) ;
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_command_condition_command_name ( std :: string )
+void shy_data_parser < data_parser_types > :: _store_command_condition_command_name ( std :: string name )
 {
+    NSLog ( @"_store_command_condition_command_name %s" , name . c_str ( ) ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_command_condition ( )
 {
+    NSLog ( @"_store_command_condition" ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_transition_always ( )
 {
+    NSLog ( @"_store_transition_always" ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _select_entry_actions_container ( )
 {
+    NSLog ( @"_select_entry_actions_container" ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _select_exit_actions_container ( )
 {
+    NSLog ( @"_select_exit_actions_container" ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _select_input_actions_container ( )
 {
+    NSLog ( @"_select_input_actions_container" ) ;
 }
 
 template < typename data_parser_types >
@@ -1352,11 +1372,13 @@ void shy_data_parser < data_parser_types > :: _select_transition_conditions ( )
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _reset_condition_groups ( )
 {
+    NSLog ( @"_reset_condition_groups" ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _reset_conditions ( )
 {
+    NSLog ( @"_reset_conditions" ) ;
 }
 
 template < typename data_parser_types >
