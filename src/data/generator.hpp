@@ -9,10 +9,10 @@ template < typename data_generator_types >
 class shy_data_generator
 {
     typedef typename data_generator_types :: data_content data_content ;
-    typedef typename data_generator_types :: data_content :: data_content_attributes data_content_attributes ;
-    typedef typename data_generator_types :: data_content :: data_content_attributes_container data_content_attributes_container ;
     typedef typename data_generator_types :: data_content :: data_content_fract data_content_fract ;
     typedef typename data_generator_types :: data_content :: data_content_fract_container data_content_fract_container ;
+    typedef typename data_generator_types :: data_content :: data_content_module data_content_module ;
+    typedef typename data_generator_types :: data_content :: data_content_module_container data_content_module_container ;
     typedef typename data_generator_types :: data_content :: data_content_whole data_content_whole ;
     typedef typename data_generator_types :: data_content :: data_content_whole_container data_content_whole_container ;
 
@@ -97,23 +97,23 @@ std :: string shy_data_generator < data_generator_types > :: generate ( )
 
     code += _consts :: file_begin ( ) ;
 
-    for ( typename data_content :: data_content_attributes_container :: const_iterator module_i = _content -> modules . begin ( )
+    for ( typename data_content :: data_content_module_container :: const_iterator module_i = _content -> modules . begin ( )
         ; module_i != _content -> modules . end ( )
         ; ++ module_i
         )
     {
         std :: string module_name = module_i -> first ;
-        const data_content_attributes & attributes = module_i -> second ;
+        const data_content_module & module = module_i -> second ;
 
         code += _consts :: module_begin ( module_name ) ;
 
-        for ( typename data_content_whole_container :: const_iterator attribute_i = attributes . name_to_whole . begin ( )
-            ; attribute_i != attributes . name_to_whole . end ( )
-            ; ++ attribute_i
+        for ( typename data_content_whole_container :: const_iterator whole_i = module . name_to_whole . begin ( )
+            ; whole_i != module . name_to_whole . end ( )
+            ; ++ whole_i
             )
         {
-            std :: string whole_name = attribute_i -> first ;
-            const data_content_whole & whole = attribute_i -> second ;
+            std :: string whole_name = whole_i -> first ;
+            const data_content_whole & whole = whole_i -> second ;
             
             std :: string value ;
             value += whole . sign ;
@@ -123,13 +123,13 @@ std :: string shy_data_generator < data_generator_types > :: generate ( )
 
             code += _consts :: set_whole_value ( whole_name , value ) ;
         }
-        for ( typename data_content_fract_container :: const_iterator attribute_i = attributes . name_to_fract . begin ( )
-            ; attribute_i != attributes . name_to_fract . end ( )
-            ; ++ attribute_i
+        for ( typename data_content_fract_container :: const_iterator fract_i = module . name_to_fract . begin ( )
+            ; fract_i != module . name_to_fract . end ( )
+            ; ++ fract_i
             )
         {
-            std :: string fract_name = attribute_i -> first ;
-            const data_content_fract & fract = attribute_i -> second ;
+            std :: string fract_name = fract_i -> first ;
+            const data_content_fract & fract = fract_i -> second ;
             
             std :: string numerator ;
             numerator += fract . numerator_sign ;

@@ -12,7 +12,6 @@ class shy_data_content
     typedef typename data_content_types :: platform :: platform_math :: num_whole num_whole ;
 
 public :
-    class data_content_attributes ;
     class data_content_fract ;
     class data_content_fsm_action_command ;
     class data_content_fsm_action_do ;
@@ -26,9 +25,9 @@ public :
     class data_content_fsm_state ;
     class data_content_fsm_system ;
     class data_content_fsm_transition ;
+    class data_content_module ;
     class data_content_whole ;
 
-    typedef std :: map < std :: string , data_content_attributes > data_content_attributes_container ;
     typedef std :: map < std :: string , data_content_fract > data_content_fract_container ;
     typedef std :: vector < data_content_fsm_action_command > data_content_fsm_action_command_container ;
     typedef std :: vector < data_content_fsm_action_do > data_content_fsm_action_do_container ;
@@ -41,6 +40,7 @@ public :
     typedef std :: map < std :: string , data_content_fsm_system > data_content_fsm_system_container ;
     typedef std :: vector < data_content_fsm_transition > data_content_fsm_transition_container ;
     typedef std :: map < std :: string , data_content_fsm_state > data_content_fsm_state_container ;
+    typedef std :: map < std :: string , data_content_module > data_content_module_container ;
     typedef std :: map < std :: string , data_content_whole > data_content_whole_container ;
 
     class data_content_fract
@@ -65,7 +65,7 @@ public :
         std :: string value ;
     } ;
 
-    class data_content_attributes
+    class data_content_module
     {
     public :
         data_content_fract_container name_to_fract ;
@@ -154,7 +154,7 @@ public :
         std :: string command ;
     } ;
 
-    data_content_attributes_container modules ;
+    data_content_module_container modules ;
     data_content_fsm_system_container fsm_systems ;
 } ;
 
