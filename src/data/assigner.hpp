@@ -14,6 +14,7 @@ class shy_data_assigner
 {
     typedef typename data_assigner_types :: data_modules data_modules ;
     typedef typename data_assigner_types :: data_modules :: data_modules_attributes data_modules_attributes ;
+    typedef typename data_assigner_types :: data_modules :: data_modules_attributes_container data_modules_attributes_container ;
     typedef typename data_assigner_types :: data_modules :: data_modules_fract data_modules_fract ;
     typedef typename data_assigner_types :: data_modules :: data_modules_whole data_modules_whole ;
     typedef typename data_assigner_types :: platform :: platform_math platform_math ;
@@ -49,7 +50,7 @@ void shy_data_assigner < data_assigner_types > :: set_modules ( data_modules & m
 template < typename data_assigner_types >
 void shy_data_assigner < data_assigner_types > :: assign ( )
 {
-    for ( typename data_modules :: name_to_module_type :: const_iterator module_i = _modules -> modules . begin ( )
+    for ( typename data_modules_attributes_container :: const_iterator module_i = _modules -> modules . begin ( )
         ; module_i != _modules -> modules . end ( )
         ; ++ module_i
         )

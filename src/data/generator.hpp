@@ -10,6 +10,7 @@ class shy_data_generator
 {
     typedef typename data_generator_types :: data_modules data_modules ;
     typedef typename data_generator_types :: data_modules :: data_modules_attributes data_modules_attributes ;
+    typedef typename data_generator_types :: data_modules :: data_modules_attributes_container data_modules_attributes_container ;
     typedef typename data_generator_types :: data_modules :: data_modules_fract data_modules_fract ;
     typedef typename data_generator_types :: data_modules :: data_modules_whole data_modules_whole ;
 
@@ -94,7 +95,7 @@ std :: string shy_data_generator < data_generator_types > :: generate ( )
 
     code += _consts :: file_begin ( ) ;
 
-    for ( typename data_modules :: name_to_module_type :: const_iterator module_i = _modules -> modules . begin ( )
+    for ( typename data_modules :: data_modules_attributes_container :: const_iterator module_i = _modules -> modules . begin ( )
         ; module_i != _modules -> modules . end ( )
         ; ++ module_i
         )

@@ -41,7 +41,7 @@ public :
     typedef std :: map < std :: string , data_modules_fsm_state > data_modules_fsm_state_container ;
     typedef std :: map < std :: string , data_modules_fract > name_to_fract_type ;
     typedef std :: map < std :: string , data_modules_whole > name_to_whole_type ;
-    typedef std :: map < std :: string , data_modules_attributes > name_to_module_type ;
+    typedef std :: map < std :: string , data_modules_attributes > data_modules_attributes_container ;
 
     class data_modules_fract
     {
@@ -154,7 +154,7 @@ public :
         std :: string command ;
     } ;
 
-    name_to_module_type modules ;
+    data_modules_attributes_container modules ;
     data_modules_fsm_system_container fsm_systems ;
 } ;
 
