@@ -18,6 +18,7 @@ class shy_data_assigner
     typedef typename data_assigner_types :: data_modules :: data_modules_fract data_modules_fract ;
     typedef typename data_assigner_types :: data_modules :: data_modules_fract_container data_modules_fract_container ;
     typedef typename data_assigner_types :: data_modules :: data_modules_whole data_modules_whole ;
+    typedef typename data_assigner_types :: data_modules :: data_modules_whole_container data_modules_whole_container ;
     typedef typename data_assigner_types :: platform :: platform_math platform_math ;
 
     class _consts
@@ -58,7 +59,7 @@ void shy_data_assigner < data_assigner_types > :: assign ( )
     {
         std :: string module_name = module_i -> first ;
         const data_modules_attributes & attributes = module_i -> second ;
-        for ( typename data_modules :: name_to_whole_type :: const_iterator attribute_i = attributes . name_to_whole . begin ( )
+        for ( typename data_modules_whole_container :: const_iterator attribute_i = attributes . name_to_whole . begin ( )
             ; attribute_i != attributes . name_to_whole . end ( )
             ; ++ attribute_i
             )

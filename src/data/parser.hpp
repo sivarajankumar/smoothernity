@@ -13,6 +13,7 @@ class shy_data_parser
     typedef typename data_parser_types :: data_modules :: data_modules_fract data_modules_fract ;
     typedef typename data_parser_types :: data_modules :: data_modules_fract_container data_modules_fract_container ;
     typedef typename data_parser_types :: data_modules :: data_modules_whole data_modules_whole ;
+    typedef typename data_parser_types :: data_modules :: data_modules_whole_container data_modules_whole_container ;
 
     class _consts
     {
@@ -1400,7 +1401,7 @@ void shy_data_parser < data_parser_types > :: _set_whole_value ( )
     else
     {
         data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules :: name_to_whole_type :: iterator attribute_i ;
+        typename data_modules_whole_container :: iterator attribute_i ;
         attribute_i = attributes . name_to_whole . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_whole . end ( ) )
             _error = _consts :: error_unknown_whole_attribute_in_module ( _attribute_name , _module_name ) ;
