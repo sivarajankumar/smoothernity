@@ -16,6 +16,7 @@ class shy_data_assigner
     typedef typename data_assigner_types :: data_modules :: data_modules_attributes data_modules_attributes ;
     typedef typename data_assigner_types :: data_modules :: data_modules_attributes_container data_modules_attributes_container ;
     typedef typename data_assigner_types :: data_modules :: data_modules_fract data_modules_fract ;
+    typedef typename data_assigner_types :: data_modules :: data_modules_fract_container data_modules_fract_container ;
     typedef typename data_assigner_types :: data_modules :: data_modules_whole data_modules_whole ;
     typedef typename data_assigner_types :: platform :: platform_math platform_math ;
 
@@ -75,7 +76,7 @@ void shy_data_assigner < data_assigner_types > :: assign ( )
                 platform_math :: make_num_whole ( * whole . binding , int_value ) ;
             }
         }
-        for ( typename data_modules :: name_to_fract_type :: const_iterator attribute_i = attributes . name_to_fract . begin ( )
+        for ( typename data_modules_fract_container :: const_iterator attribute_i = attributes . name_to_fract . begin ( )
             ; attribute_i != attributes . name_to_fract . end ( )
             ; ++ attribute_i
             )

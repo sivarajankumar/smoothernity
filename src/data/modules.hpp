@@ -28,6 +28,7 @@ public :
     class data_modules_fsm_transition ;
     class data_modules_whole ;
 
+    typedef std :: map < std :: string , data_modules_attributes > data_modules_attributes_container ;
     typedef std :: vector < data_modules_fsm_action_command > data_modules_fsm_action_command_container ;
     typedef std :: vector < data_modules_fsm_action_do > data_modules_fsm_action_do_container ;
     typedef std :: vector < data_modules_fsm_condition_command > data_modules_fsm_condition_command_container ;
@@ -39,9 +40,8 @@ public :
     typedef std :: map < std :: string , data_modules_fsm_system > data_modules_fsm_system_container ;
     typedef std :: vector < data_modules_fsm_transition > data_modules_fsm_transition_container ;
     typedef std :: map < std :: string , data_modules_fsm_state > data_modules_fsm_state_container ;
-    typedef std :: map < std :: string , data_modules_fract > name_to_fract_type ;
+    typedef std :: map < std :: string , data_modules_fract > data_modules_fract_container ;
     typedef std :: map < std :: string , data_modules_whole > name_to_whole_type ;
-    typedef std :: map < std :: string , data_modules_attributes > data_modules_attributes_container ;
 
     class data_modules_fract
     {
@@ -68,7 +68,7 @@ public :
     class data_modules_attributes
     {
     public :
-        name_to_fract_type name_to_fract ;
+        data_modules_fract_container name_to_fract ;
         name_to_whole_type name_to_whole ;
     } ;
 

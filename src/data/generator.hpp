@@ -12,6 +12,7 @@ class shy_data_generator
     typedef typename data_generator_types :: data_modules :: data_modules_attributes data_modules_attributes ;
     typedef typename data_generator_types :: data_modules :: data_modules_attributes_container data_modules_attributes_container ;
     typedef typename data_generator_types :: data_modules :: data_modules_fract data_modules_fract ;
+    typedef typename data_generator_types :: data_modules :: data_modules_fract_container data_modules_fract_container ;
     typedef typename data_generator_types :: data_modules :: data_modules_whole data_modules_whole ;
 
     class _consts
@@ -121,7 +122,7 @@ std :: string shy_data_generator < data_generator_types > :: generate ( )
 
             code += _consts :: set_whole_value ( whole_name , value ) ;
         }
-        for ( typename data_modules :: name_to_fract_type :: const_iterator attribute_i = attributes . name_to_fract . begin ( )
+        for ( typename data_modules_fract_container :: const_iterator attribute_i = attributes . name_to_fract . begin ( )
             ; attribute_i != attributes . name_to_fract . end ( )
             ; ++ attribute_i
             )

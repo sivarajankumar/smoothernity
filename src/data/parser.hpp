@@ -11,6 +11,7 @@ class shy_data_parser
     typedef typename data_parser_types :: data_modules data_modules ;
     typedef typename data_parser_types :: data_modules :: data_modules_attributes data_modules_attributes ;
     typedef typename data_parser_types :: data_modules :: data_modules_fract data_modules_fract ;
+    typedef typename data_parser_types :: data_modules :: data_modules_fract_container data_modules_fract_container ;
     typedef typename data_parser_types :: data_modules :: data_modules_whole data_modules_whole ;
 
     class _consts
@@ -1422,7 +1423,7 @@ void shy_data_parser < data_parser_types > :: _set_fract_value ( )
     else
     {
         data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules :: name_to_fract_type :: iterator attribute_i ;
+        typename data_modules_fract_container :: iterator attribute_i ;
         attribute_i = attributes . name_to_fract . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_fract . end ( ) )
             _error = _consts :: error_unknown_fract_attribute_in_module ( _attribute_name , _module_name ) ;
