@@ -1,10 +1,11 @@
 #include "macosx_scene.h"
 
-#include <sstream>
-#include <map>
-#include <string>
-#include <locale>
 #include <iostream>
+#include <locale>
+#include <map>
+#include <sstream>
+#include <string>
+#include <vector>
 
 #include "../common/reflection.hpp"
 #include "../data/loader.hpp"
