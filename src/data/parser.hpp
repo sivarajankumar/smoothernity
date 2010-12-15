@@ -1,19 +1,19 @@
-template < typename _data_modules >
+template < typename _data_content >
 class shy_data_parser_types
 {
 public :
-    typedef _data_modules data_modules ;
+    typedef _data_content data_content ;
 } ;
 
 template < typename data_parser_types >
 class shy_data_parser
 {
-    typedef typename data_parser_types :: data_modules data_modules ;
-    typedef typename data_parser_types :: data_modules :: data_modules_attributes data_modules_attributes ;
-    typedef typename data_parser_types :: data_modules :: data_modules_fract data_modules_fract ;
-    typedef typename data_parser_types :: data_modules :: data_modules_fract_container data_modules_fract_container ;
-    typedef typename data_parser_types :: data_modules :: data_modules_whole data_modules_whole ;
-    typedef typename data_parser_types :: data_modules :: data_modules_whole_container data_modules_whole_container ;
+    typedef typename data_parser_types :: data_content data_content ;
+    typedef typename data_parser_types :: data_content :: data_content_attributes data_content_attributes ;
+    typedef typename data_parser_types :: data_content :: data_content_fract data_content_fract ;
+    typedef typename data_parser_types :: data_content :: data_content_fract_container data_content_fract_container ;
+    typedef typename data_parser_types :: data_content :: data_content_whole data_content_whole ;
+    typedef typename data_parser_types :: data_content :: data_content_whole_container data_content_whole_container ;
 
     class _consts
     {
@@ -125,7 +125,7 @@ class shy_data_parser
 
 public :
     shy_data_parser ( ) ;
-    void set_modules ( data_modules & ) ;
+    void set_content ( data_content & ) ;
     void parse ( std :: string ) ;
     std :: string error ( ) ;
 
@@ -218,7 +218,7 @@ private :
     bool _any_chars_in_line ( ) ;
 
 private :
-    data_modules * _modules ;
+    data_content * _content ;
     _state_type _state ;
     _token_class_type _token_class ;
     bool _continue_parsing ;
@@ -240,7 +240,7 @@ private :
 
 template < typename data_parser_types >
 shy_data_parser < data_parser_types > :: shy_data_parser ( )
-: _modules ( 0 )
+: _content ( 0 )
 , _state ( _state_none )
 , _token_class ( _token_class_none )
 , _continue_parsing ( false )
@@ -251,9 +251,9 @@ shy_data_parser < data_parser_types > :: shy_data_parser ( )
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: set_modules ( data_modules & modules )
+void shy_data_parser < data_parser_types > :: set_content ( data_content & content )
 {
-    _modules = & modules ;
+    _content = & content ;
 }
 
 template < typename data_parser_types >
@@ -1394,20 +1394,20 @@ void shy_data_parser < data_parser_types > :: _reset_conditions ( )
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _set_whole_value ( )
 {
-    typename data_modules :: data_modules_attributes_container :: iterator module_i ;
-    module_i = _modules -> modules . find ( _module_name ) ;
-    if ( module_i == _modules -> modules . end ( ) )
+    typename data_content :: data_content_attributes_container :: iterator module_i ;
+    module_i = _content -> modules . find ( _module_name ) ;
+    if ( module_i == _content -> modules . end ( ) )
         _error = _consts :: error_unknown_module ( _module_name ) ;
     else
     {
-        data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules_whole_container :: iterator attribute_i ;
+        data_content_attributes & attributes = module_i -> second ;
+        typename data_content_whole_container :: iterator attribute_i ;
         attribute_i = attributes . name_to_whole . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_whole . end ( ) )
             _error = _consts :: error_unknown_whole_attribute_in_module ( _attribute_name , _module_name ) ;
         else
         {
-            data_modules_whole & whole = attribute_i -> second ;
+            data_content_whole & whole = attribute_i -> second ;
             whole . sign = _attribute_numerator_sign ;
             whole . value = _attribute_numerator_value ;
         }
@@ -1417,20 +1417,20 @@ void shy_data_parser < data_parser_types > :: _set_whole_value ( )
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _set_fract_value ( )
 {
-    typename data_modules :: data_modules_attributes_container :: iterator module_i ;
-    module_i = _modules -> modules . find ( _module_name ) ;
-    if ( module_i == _modules -> modules . end ( ) )
+    typename data_content :: data_content_attributes_container :: iterator module_i ;
+    module_i = _content -> modules . find ( _module_name ) ;
+    if ( module_i == _content -> modules . end ( ) )
         _error = _consts :: error_unknown_module ( _module_name ) ;
     else
     {
-        data_modules_attributes & attributes = module_i -> second ;
-        typename data_modules_fract_container :: iterator attribute_i ;
+        data_content_attributes & attributes = module_i -> second ;
+        typename data_content_fract_container :: iterator attribute_i ;
         attribute_i = attributes . name_to_fract . find ( _attribute_name ) ;
         if ( attribute_i == attributes . name_to_fract . end ( ) )
             _error = _consts :: error_unknown_fract_attribute_in_module ( _attribute_name , _module_name ) ;
         else
         {
-            data_modules_fract & fract = attribute_i -> second ;
+            data_content_fract & fract = attribute_i -> second ;
             fract . numerator_sign = _attribute_numerator_sign ;
             fract . numerator_value = _attribute_numerator_value ;
             fract . denominator_sign = _attribute_denominator_sign ;

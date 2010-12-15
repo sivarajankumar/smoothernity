@@ -1,24 +1,24 @@
 template
-    < typename _data_modules
+    < typename _data_content
     , typename _platform
     >
 class shy_data_assigner_types
 {
 public :
-    typedef _data_modules data_modules ;
+    typedef _data_content data_content ;
     typedef _platform platform ;
 } ;
 
 template < typename data_assigner_types >
 class shy_data_assigner
 {
-    typedef typename data_assigner_types :: data_modules data_modules ;
-    typedef typename data_assigner_types :: data_modules :: data_modules_attributes data_modules_attributes ;
-    typedef typename data_assigner_types :: data_modules :: data_modules_attributes_container data_modules_attributes_container ;
-    typedef typename data_assigner_types :: data_modules :: data_modules_fract data_modules_fract ;
-    typedef typename data_assigner_types :: data_modules :: data_modules_fract_container data_modules_fract_container ;
-    typedef typename data_assigner_types :: data_modules :: data_modules_whole data_modules_whole ;
-    typedef typename data_assigner_types :: data_modules :: data_modules_whole_container data_modules_whole_container ;
+    typedef typename data_assigner_types :: data_content data_content ;
+    typedef typename data_assigner_types :: data_content :: data_content_attributes data_content_attributes ;
+    typedef typename data_assigner_types :: data_content :: data_content_attributes_container data_content_attributes_container ;
+    typedef typename data_assigner_types :: data_content :: data_content_fract data_content_fract ;
+    typedef typename data_assigner_types :: data_content :: data_content_fract_container data_content_fract_container ;
+    typedef typename data_assigner_types :: data_content :: data_content_whole data_content_whole ;
+    typedef typename data_assigner_types :: data_content :: data_content_whole_container data_content_whole_container ;
     typedef typename data_assigner_types :: platform :: platform_math platform_math ;
 
     class _consts
@@ -29,43 +29,43 @@ class shy_data_assigner
 
 public :
     shy_data_assigner ( ) ;
-    void set_modules ( data_modules & ) ;
+    void set_content ( data_content & ) ;
     void assign ( ) ;
     std :: string error ( ) ;
 private :
-    data_modules * _modules ;
+    data_content * _content ;
     std :: string _error ;
 } ;
 
 template < typename data_assigner_types >
 shy_data_assigner < data_assigner_types > :: shy_data_assigner ( )
-: _modules ( 0 )
+: _content ( 0 )
 {
 }
 
 template < typename data_assigner_types >
-void shy_data_assigner < data_assigner_types > :: set_modules ( data_modules & modules )
+void shy_data_assigner < data_assigner_types > :: set_content ( data_content & content )
 {
-    _modules = & modules ;
+    _content = & content ;
 }
 
 template < typename data_assigner_types >
 void shy_data_assigner < data_assigner_types > :: assign ( )
 {
-    for ( typename data_modules_attributes_container :: const_iterator module_i = _modules -> modules . begin ( )
-        ; module_i != _modules -> modules . end ( )
-        ; ++ module_i
+    for ( typename data_content_attributes_container :: const_iterator content_i = _content -> modules . begin ( )
+        ; content_i != _content -> modules . end ( )
+        ; ++ content_i
         )
     {
-        std :: string module_name = module_i -> first ;
-        const data_modules_attributes & attributes = module_i -> second ;
-        for ( typename data_modules_whole_container :: const_iterator attribute_i = attributes . name_to_whole . begin ( )
+        std :: string module_name = content_i -> first ;
+        const data_content_attributes & attributes = content_i -> second ;
+        for ( typename data_content_whole_container :: const_iterator attribute_i = attributes . name_to_whole . begin ( )
             ; attribute_i != attributes . name_to_whole . end ( )
             ; ++ attribute_i
             )
         {
             std :: string whole_name = attribute_i -> first ;
-            const data_modules_whole & whole = attribute_i -> second ;
+            const data_content_whole & whole = attribute_i -> second ;
             
             std :: string string_value = whole . sign + whole . value ;
             if ( string_value . empty ( ) )
@@ -77,13 +77,13 @@ void shy_data_assigner < data_assigner_types > :: assign ( )
                 platform_math :: make_num_whole ( * whole . binding , int_value ) ;
             }
         }
-        for ( typename data_modules_fract_container :: const_iterator attribute_i = attributes . name_to_fract . begin ( )
+        for ( typename data_content_fract_container :: const_iterator attribute_i = attributes . name_to_fract . begin ( )
             ; attribute_i != attributes . name_to_fract . end ( )
             ; ++ attribute_i
             )
         {
             std :: string fract_name = attribute_i -> first ;
-            const data_modules_fract & fract = attribute_i -> second ;
+            const data_content_fract & fract = attribute_i -> second ;
             
             std :: string string_numerator = fract . numerator_sign + fract . numerator_value ;
             std :: string string_denominator = fract . denominator_sign + fract . denominator_value ;

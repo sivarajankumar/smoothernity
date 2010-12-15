@@ -31,12 +31,12 @@ class shy_data_loader
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_loader_types :: facade :: mediator :: platform :: platform_pointer platform_pointer ;
 
-    typedef shy_data_modules < shy_data_modules_types < platform > > data_modules ;
+    typedef shy_data_content < shy_data_content_types < platform > > data_content ;
 
-    typedef shy_data_assigner < shy_data_assigner_types < data_modules , platform > > data_assigner ;
-    typedef shy_data_binder < shy_data_binder_types < data_modules , platform > > data_binder ;
-    typedef shy_data_generator < shy_data_generator_types < data_modules > > data_generator ;
-    typedef shy_data_parser < shy_data_parser_types < data_modules > > data_parser ;
+    typedef shy_data_assigner < shy_data_assigner_types < data_content , platform > > data_assigner ;
+    typedef shy_data_binder < shy_data_binder_types < data_content , platform > > data_binder ;
+    typedef shy_data_generator < shy_data_generator_types < data_content > > data_generator ;
+    typedef shy_data_parser < shy_data_parser_types < data_content > > data_parser ;
 
     class _reflection_types
     {
@@ -57,16 +57,16 @@ private :
     data_parser _parser ;
     data_assigner _assigner ;
     data_generator _generator ;
-    data_modules _modules ;
+    data_content _content ;
 } ;
 
 template < typename data_loader_types >
 shy_data_loader < data_loader_types > :: shy_data_loader ( )
 {
-    _binder . set_modules ( _modules ) ;
-    _parser . set_modules ( _modules ) ;
-    _assigner . set_modules ( _modules ) ;
-    _generator . set_modules ( _modules ) ;
+    _binder . set_content ( _content ) ;
+    _parser . set_content ( _content ) ;
+    _assigner . set_content ( _content ) ;
+    _generator . set_content ( _content ) ;
 }
 
 template < typename data_loader_types >
