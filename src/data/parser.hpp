@@ -11,6 +11,8 @@ class shy_data_parser
     typedef typename data_parser_types :: data_content data_content ;
     typedef typename data_parser_types :: data_content :: data_content_fract data_content_fract ;
     typedef typename data_parser_types :: data_content :: data_content_fract_container data_content_fract_container ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_machine data_content_fsm_machine ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_system data_content_fsm_system ;
     typedef typename data_parser_types :: data_content :: data_content_module data_content_module ;
     typedef typename data_parser_types :: data_content :: data_content_whole data_content_whole ;
     typedef typename data_parser_types :: data_content :: data_content_whole_container data_content_whole_container ;
@@ -223,6 +225,8 @@ private :
     _token_class_type _token_class ;
     bool _continue_parsing ;
     bool _continue_reading_next_token ;
+    bool _input_actions_conditions_selected ;
+    bool _transition_conditions_selected ;
     std :: locale _locale ;
     std :: string _token ;
     std :: string _whole_line ;
@@ -234,8 +238,8 @@ private :
     std :: string _attribute_numerator_value ;
     std :: string _attribute_denominator_sign ;
     std :: string _attribute_denominator_value ;
-    bool _input_actions_conditions_selected ;
-    bool _transition_conditions_selected ;
+    data_content_fsm_system * _current_fsm_system ;
+    data_content_fsm_machine * _current_fsm_machine ;
 } ;
 
 template < typename data_parser_types >
@@ -247,6 +251,8 @@ shy_data_parser < data_parser_types > :: shy_data_parser ( )
 , _continue_reading_next_token ( false )
 , _input_actions_conditions_selected ( false )
 , _transition_conditions_selected ( false )
+, _current_fsm_system ( 0 )
+, _current_fsm_machine ( 0 )
 {
 }
 
@@ -1242,13 +1248,20 @@ void shy_data_parser < data_parser_types > :: _store_attribute_denominator_value
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_system_name ( std :: string name )
 {
-    NSLog ( @"_store_system_name %s" , name . c_str ( ) ) ;
+    if ( _content -> fsm_systems . find ( name ) == _content -> fsm_systems . end ( ) )
+        _content -> fsm_systems [ name ] = data_content_fsm_system ( ) ;
+    _current_fsm_system = & ( _content -> fsm_systems [ name ] ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_machine_name ( std :: string name )
 {
-    NSLog ( @"_store_machine_name %s" , name . c_str ( ) ) ;
+    if ( _current_fsm_system )
+    {
+        if ( _current_fsm_system -> machines . find ( name ) == _current_fsm_system -> machines . end ( ) )
+            _current_fsm_system -> machines [ name ] = data_content_fsm_machine ( ) ;
+        _current_fsm_machine = & ( _current_fsm_system -> machines [ name ] ) ;
+    }
 }
 
 template < typename data_parser_types >
