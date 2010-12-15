@@ -1393,8 +1393,8 @@ template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _set_whole_value ( )
 {
     typename data_modules :: name_to_module_type :: iterator module_i ;
-    module_i = _modules -> name_to_module . find ( _module_name ) ;
-    if ( module_i == _modules -> name_to_module . end ( ) )
+    module_i = _modules -> modules . find ( _module_name ) ;
+    if ( module_i == _modules -> modules . end ( ) )
         _error = _consts :: error_unknown_module ( _module_name ) ;
     else
     {
@@ -1416,8 +1416,8 @@ template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _set_fract_value ( )
 {
     typename data_modules :: name_to_module_type :: iterator module_i ;
-    module_i = _modules -> name_to_module . find ( _module_name ) ;
-    if ( module_i == _modules -> name_to_module . end ( ) )
+    module_i = _modules -> modules . find ( _module_name ) ;
+    if ( module_i == _modules -> modules . end ( ) )
         _error = _consts :: error_unknown_module ( _module_name ) ;
     else
     {

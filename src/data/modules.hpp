@@ -154,7 +154,7 @@ public :
         std :: string command ;
     } ;
 
-    name_to_module_type name_to_module ;
+    name_to_module_type modules ;
     data_modules_fsm_system_container fsm_systems ;
 } ;
 

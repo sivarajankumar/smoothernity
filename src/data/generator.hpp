@@ -94,8 +94,8 @@ std :: string shy_data_generator < data_generator_types > :: generate ( )
 
     code += _consts :: file_begin ( ) ;
 
-    for ( typename data_modules :: name_to_module_type :: const_iterator module_i = _modules -> name_to_module . begin ( )
-        ; module_i != _modules -> name_to_module . end ( )
+    for ( typename data_modules :: name_to_module_type :: const_iterator module_i = _modules -> modules . begin ( )
+        ; module_i != _modules -> modules . end ( )
         ; ++ module_i
         )
     {

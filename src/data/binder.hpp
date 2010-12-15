@@ -45,8 +45,8 @@ void shy_data_binder < data_binder_types > :: set_modules ( data_modules & modul
 template < typename data_binder_types >
 void shy_data_binder < data_binder_types > :: module ( std :: string name )
 {
-    _modules -> name_to_module [ name ] = data_modules_attributes ( ) ;
-    _current_attributes = & ( _modules -> name_to_module [ name ] ) ;
+    _modules -> modules [ name ] = data_modules_attributes ( ) ;
+    _current_attributes = & ( _modules -> modules [ name ] ) ;
 }
 
 template < typename data_binder_types >
