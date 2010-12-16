@@ -11,7 +11,9 @@ class shy_data_parser
     typedef typename data_parser_types :: data_content data_content ;
     typedef typename data_parser_types :: data_content :: data_content_fract data_content_fract ;
     typedef typename data_parser_types :: data_content :: data_content_fract_container data_content_fract_container ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_actions data_content_fsm_actions ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_machine data_content_fsm_machine ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_on_input data_content_fsm_on_input ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_state data_content_fsm_state ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_system data_content_fsm_system ;
     typedef typename data_parser_types :: data_content :: data_content_module data_content_module ;
@@ -208,6 +210,7 @@ private :
     void _select_input_actions_container ( ) ;
     void _select_input_actions_conditions ( ) ;
     void _select_transition_conditions ( ) ;
+    void _add_on_input_event ( ) ;
     void _reset_condition_groups ( ) ;
     void _reset_conditions ( ) ;
     void _set_whole_value ( ) ;
@@ -239,9 +242,11 @@ private :
     std :: string _attribute_numerator_value ;
     std :: string _attribute_denominator_sign ;
     std :: string _attribute_denominator_value ;
-    data_content_fsm_system * _current_fsm_system ;
+    data_content_fsm_actions * _current_fsm_actions ;
     data_content_fsm_machine * _current_fsm_machine ;
+    data_content_fsm_on_input * _current_fsm_on_input ;
     data_content_fsm_state * _current_fsm_state ;
+    data_content_fsm_system * _current_fsm_system ;
 } ;
 
 template < typename data_parser_types >
@@ -253,9 +258,11 @@ shy_data_parser < data_parser_types > :: shy_data_parser ( )
 , _continue_reading_next_token ( false )
 , _input_actions_conditions_selected ( false )
 , _transition_conditions_selected ( false )
-, _current_fsm_system ( 0 )
+, _current_fsm_actions ( 0 )
 , _current_fsm_machine ( 0 )
+, _current_fsm_on_input ( 0 )
 , _current_fsm_state ( 0 )
+, _current_fsm_system ( 0 )
 {
 }
 
@@ -666,6 +673,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_event_type (
     }
     else if ( _token_class == _token_class_brace_open )
     {
+        _add_on_input_event ( ) ;
         _select_input_actions_conditions ( ) ;
         _reset_condition_groups ( ) ;
         _state = _state_reading_first_condition_group ;
@@ -1371,19 +1379,22 @@ void shy_data_parser < data_parser_types > :: _store_transition_always ( )
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _select_entry_actions_container ( )
 {
-    NSLog ( @"_select_entry_actions_container" ) ;
+    if ( _current_fsm_state )
+        _current_fsm_actions = & _current_fsm_state -> on_entry ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _select_exit_actions_container ( )
 {
-    NSLog ( @"_select_exit_actions_container" ) ;
+    if ( _current_fsm_state )
+        _current_fsm_actions = & _current_fsm_state -> on_exit ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _select_input_actions_container ( )
 {
-    NSLog ( @"_select_input_actions_container" ) ;
+    if ( _current_fsm_on_input )
+        _current_fsm_actions = & _current_fsm_on_input -> actions ;
 }
 
 template < typename data_parser_types >
@@ -1398,6 +1409,16 @@ void shy_data_parser < data_parser_types > :: _select_transition_conditions ( )
 {
     _input_actions_conditions_selected = false ;
     _transition_conditions_selected = true ;
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: _add_on_input_event ( )
+{
+    if ( _current_fsm_state )
+    {
+        _current_fsm_state -> on_input . push_back ( data_content_fsm_on_input ( ) ) ;
+        _current_fsm_on_input = & _current_fsm_state -> on_input . back ( ) ;
+    }
 }
 
 template < typename data_parser_types >
