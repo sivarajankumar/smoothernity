@@ -11,6 +11,8 @@ class shy_data_parser
     typedef typename data_parser_types :: data_content data_content ;
     typedef typename data_parser_types :: data_content :: data_content_fract data_content_fract ;
     typedef typename data_parser_types :: data_content :: data_content_fract_container data_content_fract_container ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_action_command data_content_fsm_action_command ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_action_do data_content_fsm_action_do ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_actions data_content_fsm_actions ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_machine data_content_fsm_machine ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_on_input data_content_fsm_on_input ;
@@ -242,6 +244,8 @@ private :
     std :: string _attribute_numerator_value ;
     std :: string _attribute_denominator_sign ;
     std :: string _attribute_denominator_value ;
+    std :: string _fsm_action_command_name ;
+    std :: string _fsm_action_command_machine_name ;
     data_content_fsm_actions * _current_fsm_actions ;
     data_content_fsm_machine * _current_fsm_machine ;
     data_content_fsm_on_input * _current_fsm_on_input ;
@@ -1289,25 +1293,36 @@ void shy_data_parser < data_parser_types > :: _store_state_name ( std :: string 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_name ( std :: string name )
 {
-    NSLog ( @"_store_action_name %s" , name . c_str ( ) ) ;
+    if ( _current_fsm_actions )
+    {
+        data_content_fsm_action_do action_do ;
+        action_do . action = name ;
+        _current_fsm_actions -> actions . push_back ( action_do ) ;
+    }
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command_name ( std :: string name )
 {
-    NSLog ( @"_store_action_command_name %s" , name . c_str ( ) ) ;
+    _fsm_action_command_name = name ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command_machine_name ( std :: string name )
 {
-    NSLog ( @"_store_action_command_machine_name %s" , name . c_str ( ) ) ;
+    _fsm_action_command_machine_name = name ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command ( )
 {
-    NSLog ( @"_store_action_command" ) ;
+    if ( _current_fsm_actions )
+    {
+        data_content_fsm_action_command action_command ;
+        action_command . command = _fsm_action_command_name ;
+        action_command . machine = _fsm_action_command_machine_name ;
+        _current_fsm_actions -> commands . push_back ( action_command ) ;
+    }
 }
 
 template < typename data_parser_types >
