@@ -12,6 +12,7 @@ class shy_data_parser
     typedef typename data_parser_types :: data_content :: data_content_fract data_content_fract ;
     typedef typename data_parser_types :: data_content :: data_content_fract_container data_content_fract_container ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_machine data_content_fsm_machine ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_state data_content_fsm_state ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_system data_content_fsm_system ;
     typedef typename data_parser_types :: data_content :: data_content_module data_content_module ;
     typedef typename data_parser_types :: data_content :: data_content_whole data_content_whole ;
@@ -240,6 +241,7 @@ private :
     std :: string _attribute_denominator_value ;
     data_content_fsm_system * _current_fsm_system ;
     data_content_fsm_machine * _current_fsm_machine ;
+    data_content_fsm_state * _current_fsm_state ;
 } ;
 
 template < typename data_parser_types >
@@ -253,6 +255,7 @@ shy_data_parser < data_parser_types > :: shy_data_parser ( )
 , _transition_conditions_selected ( false )
 , _current_fsm_system ( 0 )
 , _current_fsm_machine ( 0 )
+, _current_fsm_state ( 0 )
 {
 }
 
@@ -1267,7 +1270,12 @@ void shy_data_parser < data_parser_types > :: _store_machine_name ( std :: strin
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_state_name ( std :: string name )
 {
-    NSLog ( @"_store_state_name %s" , name . c_str ( ) ) ;
+    if ( _current_fsm_machine )
+    {
+        if ( _current_fsm_machine -> states . find ( name ) == _current_fsm_machine -> states . end ( ) )
+            _current_fsm_machine -> states [ name ] = data_content_fsm_state ( ) ;
+        _current_fsm_state = & ( _current_fsm_machine -> states [ name ] ) ;
+    }
 }
 
 template < typename data_parser_types >
