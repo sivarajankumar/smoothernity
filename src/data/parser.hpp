@@ -14,8 +14,11 @@ class shy_data_parser
     typedef typename data_parser_types :: data_content :: data_content_fsm_action_command data_content_fsm_action_command ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_action_do data_content_fsm_action_do ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_actions data_content_fsm_actions ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_condition_command data_content_fsm_condition_command ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_condition_group data_content_fsm_condition_group ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_condition_group_container data_content_fsm_condition_group_container ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_condition_input data_content_fsm_condition_input ;
+    typedef typename data_parser_types :: data_content :: data_content_fsm_condition_state data_content_fsm_condition_state ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_machine data_content_fsm_machine ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_on_input data_content_fsm_on_input ;
     typedef typename data_parser_types :: data_content :: data_content_fsm_state data_content_fsm_state ;
@@ -200,14 +203,11 @@ private :
     void _store_action_command_machine_name ( std :: string ) ;
     void _store_action_command ( ) ;
     void _store_transition_state_name ( std :: string ) ;
-    void _store_condition_group ( ) ;
     void _store_input_condition ( std :: string ) ;
     void _store_state_condition_machine_name ( std :: string ) ;
     void _store_state_condition_state_name ( std :: string ) ;
     void _store_state_condition ( ) ;
     void _store_command_condition_command_name ( std :: string ) ;
-    void _store_command_condition ( ) ;
-    void _store_transition_always ( ) ;
     void _select_entry_actions_container ( ) ;
     void _select_exit_actions_container ( ) ;
     void _select_input_actions_container ( ) ;
@@ -218,7 +218,6 @@ private :
     void _add_on_input_event ( ) ;
     void _add_transition ( ) ;
     void _add_condition_group ( ) ;
-    void _reset_condition_groups ( ) ;
     void _set_whole_value ( ) ;
     void _set_fract_value ( ) ;
     void _read_next_token ( ) ;
@@ -248,11 +247,11 @@ private :
     std :: string _attribute_numerator_value ;
     std :: string _attribute_denominator_sign ;
     std :: string _attribute_denominator_value ;
-    std :: string _fsm_action_command_name ;
-    std :: string _fsm_action_command_machine_name ;
+    data_content_fsm_action_command _current_fsm_action_command ;
     data_content_fsm_actions * _current_fsm_actions ;
     data_content_fsm_condition_group * _current_fsm_condition_group ;
     data_content_fsm_condition_group_container * _current_fsm_condition_group_container ;
+    data_content_fsm_condition_state _current_fsm_condition_state ;
     data_content_fsm_machine * _current_fsm_machine ;
     data_content_fsm_on_input * _current_fsm_on_input ;
     data_content_fsm_state * _current_fsm_state ;
@@ -689,9 +688,9 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_event_type (
     else if ( _token_class == _token_class_brace_open )
     {
         _add_on_input_event ( ) ;
+        _select_input_actions_container ( ) ;
         _select_input_actions_conditions ( ) ;
         _select_input_actions_condition_group_container ( ) ;
-        _reset_condition_groups ( ) ;
         _state = _state_reading_first_condition_group ;
     }
     else
@@ -840,10 +839,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_next_conditi
         _state = _state_reading_first_condition_in_group ;
     }
     else if ( _token_class == _token_class_identifier && _input_actions_conditions_selected )
-    {
-        _select_input_actions_container ( ) ;    
         _state = _state_reading_action_token ;
-    }
     else if ( _token_class == _token_class_identifier && _transition_conditions_selected )
         _state = _state_reading_state_content ;
     else
@@ -882,7 +878,6 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_next_conditi
     }
     else if ( _token_class == _token_class_brace_close )
     {
-        _store_condition_group ( ) ;
         _read_next_token ( ) ;
         _state = _state_reading_next_condition_group ;
     }
@@ -997,7 +992,6 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_command_cond
 {
     if ( _token_class == _token_class_parenthesis_close )
     {
-        _store_command_condition ( ) ;
         _read_next_token ( ) ;
         _state = _state_reading_next_condition_in_group ;
     }
@@ -1035,10 +1029,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_transition_i
         _state = _state_reading_first_condition_group ;
     }
     else
-    {
-        _store_transition_always ( ) ;
         _state = _state_reading_state_content ;
-    }
 }
 
 template < typename data_parser_types >
@@ -1313,25 +1304,20 @@ void shy_data_parser < data_parser_types > :: _store_action_name ( std :: string
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command_name ( std :: string name )
 {
-    _fsm_action_command_name = name ;
+    _current_fsm_action_command . command = name ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command_machine_name ( std :: string name )
 {
-    _fsm_action_command_machine_name = name ;
+    _current_fsm_action_command . machine = name ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_command ( )
 {
     if ( _current_fsm_actions )
-    {
-        data_content_fsm_action_command action_command ;
-        action_command . command = _fsm_action_command_name ;
-        action_command . machine = _fsm_action_command_machine_name ;
-        _current_fsm_actions -> commands . push_back ( action_command ) ;
-    }
+        _current_fsm_actions -> commands . push_back ( _current_fsm_action_command ) ;
 }
 
 template < typename data_parser_types >
@@ -1342,51 +1328,44 @@ void shy_data_parser < data_parser_types > :: _store_transition_state_name ( std
 }
 
 template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_condition_group ( )
-{
-    NSLog ( @"_store_condition_group" ) ;
-}
-
-template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_input_condition ( std :: string input )
 {
-    NSLog ( @"_store_input_condition %s" , input . c_str ( ) ) ;
+    if ( _current_fsm_condition_group )
+    {
+        data_content_fsm_condition_input condition ;
+        condition . input = input ;
+        _current_fsm_condition_group -> inputs . push_back ( condition ) ;
+    }
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_state_condition_machine_name ( std :: string name )
 {
-    NSLog ( @"_store_state_condition_machine_name %s" , name . c_str ( ) ) ;
+    _current_fsm_condition_state . machine = name ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_state_condition_state_name ( std :: string name )
 {
-    NSLog ( @"_store_state_condition_state_name %s" , name . c_str ( ) ) ;
+    _current_fsm_condition_state . state = name ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_state_condition ( )
 {
-    NSLog ( @"_store_state_condition" ) ;
+    if ( _current_fsm_condition_group )
+        _current_fsm_condition_group -> states . push_back ( _current_fsm_condition_state ) ;
 }
 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_command_condition_command_name ( std :: string name )
 {
-    NSLog ( @"_store_command_condition_command_name %s" , name . c_str ( ) ) ;
-}
-
-template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_command_condition ( )
-{
-    NSLog ( @"_store_command_condition" ) ;
-}
-
-template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _store_transition_always ( )
-{
-    NSLog ( @"_store_transition_always" ) ;
+    if ( _current_fsm_condition_group )
+    {
+        data_content_fsm_condition_command condition ;
+        condition . command = name ;
+        _current_fsm_condition_group -> commands . push_back ( condition ) ;
+    }
 }
 
 template < typename data_parser_types >
@@ -1466,12 +1445,6 @@ void shy_data_parser < data_parser_types > :: _add_condition_group ( )
         _current_fsm_condition_group_container -> push_back ( data_content_fsm_condition_group ( ) ) ;
         _current_fsm_condition_group = & _current_fsm_condition_group_container -> back ( ) ;
     }
-}
-
-template < typename data_parser_types >
-void shy_data_parser < data_parser_types > :: _reset_condition_groups ( )
-{
-    NSLog ( @"_reset_condition_groups" ) ;
 }
 
 template < typename data_parser_types >
