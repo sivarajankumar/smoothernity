@@ -410,7 +410,7 @@ void shy_data_parser < data_parser_types > :: _handle_state_reading_module_name 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _handle_state_reading_attribute_name ( )
 {
-    if ( _token_class == _token_class_none )
+    if ( _token_class == _token_class_terminator )
         _continue_parsing = false ;
     else if ( _token_class == _token_class_identifier && _token == _consts :: consts ( ) )
     {
