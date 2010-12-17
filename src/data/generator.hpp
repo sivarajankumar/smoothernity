@@ -75,6 +75,9 @@ public :
     void set_content ( data_content & ) ;
     std :: string generate ( ) ;
 private :
+    std :: string _generate_modules ( ) ;
+    std :: string _generate_fsm_systems ( ) ;
+private :
     data_content * _content ;
 } ;
 
@@ -94,9 +97,17 @@ template < typename data_generator_types >
 std :: string shy_data_generator < data_generator_types > :: generate ( )
 {
     std :: string code ;
-
     code += _consts :: file_begin ( ) ;
+    code += _generate_modules ( ) ;
+    code += _generate_fsm_systems ( ) ;
+    code += _consts :: file_end ( ) ;
+    return code ;
+}
 
+template < typename data_generator_types >
+std :: string shy_data_generator < data_generator_types > :: _generate_modules ( )
+{
+    std :: string code ;
     for ( typename data_content :: data_content_module_container :: const_iterator module_i = _content -> modules . begin ( )
         ; module_i != _content -> modules . end ( )
         ; ++ module_i
@@ -147,9 +158,13 @@ std :: string shy_data_generator < data_generator_types > :: generate ( )
         }
         code += _consts :: module_end ( ) ;
     }
+    return code ;
+}
 
-    code += _consts :: file_end ( ) ;
-
+template < typename data_generator_types >
+std :: string shy_data_generator < data_generator_types > :: _generate_fsm_systems ( )
+{
+    std :: string code ;
     return code ;
 }
 
