@@ -146,6 +146,33 @@ class shy_data_generator
                 + std :: string ( "    } ;\n" )
                 ;
         }
+        static std :: string fsm_states_type_begin ( )
+        {
+            return std :: string ( )
+                + std :: string ( "\n" )
+                + std :: string ( "    class _states_type\n" )
+                + std :: string ( "    {\n" )
+                + std :: string ( "    public :\n" )
+                ;
+        }
+        static std :: string fsm_states_type_end ( )
+        {
+            return std :: string ( "    } ;\n" ) ;
+        }
+        static std :: string fsm_states_type_entry ( std :: string machine , std :: string state )
+        {
+            return std :: string ( )
+                + std :: string ( "        _machine_" )
+                + machine
+                + std :: string ( "_state_" )
+                + state
+                + std :: string ( "_type " )
+                + machine
+                + std :: string ( "_state_" )
+                + state
+                + std :: string ( " ;\n" )
+                ;
+        }
         static std :: string fsm_system_begin ( std :: string name )
         {
             return std :: string ( )
@@ -225,6 +252,7 @@ private :
     void _generate_fsm_inputs_type ( ) ;
     void _generate_fsm_actions_type ( ) ;
     void _generate_fsm_machines_states_types ( ) ;
+    void _generate_fsm_states_type ( ) ;
     void _collect_fsm_inputs_from_actions ( const data_content_fsm_actions & ) ;
     void _collect_fsm_inputs_from_condition_groups ( std :: string , const data_content_fsm_condition_group_container & ) ;
     void _collect_fsm_actions ( const data_content_fsm_actions & ) ;
@@ -237,6 +265,7 @@ private :
     std :: string _fsm_inputs_type_code ;
     std :: string _fsm_actions_type_code ;
     std :: string _fsm_machines_states_types_code ;
+    std :: string _fsm_states_type_code ;
     std :: string _current_fsm_system_name ;
     _collected_fsm_inputs_type _collected_fsm_inputs ;
     _collected_fsm_actions_type _collected_fsm_actions ;
@@ -336,9 +365,11 @@ void shy_data_generator < data_generator_types > :: _generate_fsm_systems ( )
 
         _current_fsm_system = & fsm_system ;
         _current_fsm_system_name = fsm_system_name ;
+
         _generate_fsm_inputs_type ( ) ;
         _generate_fsm_actions_type ( ) ;
         _generate_fsm_machines_states_types ( ) ;
+        _generate_fsm_states_type ( ) ;
 
         _fsm_systems_code = _fsm_systems_code
             + _consts :: fsm_system_begin ( fsm_system_name )
@@ -346,6 +377,7 @@ void shy_data_generator < data_generator_types > :: _generate_fsm_systems ( )
             + _fsm_actions_type_code
             + _consts :: fsm_state_environment_type ( )
             + _fsm_machines_states_types_code
+            + _fsm_states_type_code
             + _consts :: fsm_system_end ( )
             ;
     }
@@ -544,5 +576,31 @@ template < typename data_generator_types >
 bool shy_data_generator < data_generator_types > :: _fsm_actions_empty ( const data_content_fsm_actions & actions )
 {
     return actions . actions . empty ( ) && actions . commands . empty ( ) ;
+}
+
+template < typename data_generator_types >
+void shy_data_generator < data_generator_types > :: _generate_fsm_states_type ( )
+{
+    _fsm_states_type_code = _consts :: fsm_states_type_begin ( ) ;
+
+    for ( typename data_content_fsm_machine_container :: const_iterator fsm_machine_i = _current_fsm_system -> machines . begin ( )
+        ; fsm_machine_i != _current_fsm_system -> machines . end ( )
+        ; ++ fsm_machine_i
+        )
+    {
+        std :: string fsm_machine_name = fsm_machine_i -> first ;
+        const data_content_fsm_machine & fsm_machine = fsm_machine_i -> second ;
+        for ( typename data_content_fsm_state_container :: const_iterator fsm_state_i = fsm_machine . states . begin ( )
+            ; fsm_state_i != fsm_machine . states . end ( )
+            ; ++ fsm_state_i
+            )
+        {
+            std :: string fsm_state_name = fsm_state_i -> first ;
+            const data_content_fsm_state & fsm_state = fsm_state_i -> second ;
+            _fsm_states_type_code += _consts :: fsm_states_type_entry ( fsm_machine_name , fsm_state_name ) ;
+        }
+    }
+
+    _fsm_states_type_code += _consts :: fsm_states_type_end ( ) ;
 }
 
