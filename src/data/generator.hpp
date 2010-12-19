@@ -772,6 +772,17 @@ class shy_data_generator
                 + std :: string ( " ;\n" )
                 ;
         }
+        static std :: string fsm_transition_always_implementation_else ( std :: string machine , std :: string state )
+        {
+            return std :: string ( )
+                + std :: string ( "    else\n" )
+                + std :: string ( "        return env . states . get ( ) . " )
+                + machine
+                + std :: string ( "_state_" )
+                + state
+                + std :: string ( " ;\n" )
+                ;
+        }
         static std :: string fsm_transition_conditional_implementation ( std :: string machine , std :: string state )
         {
             return std :: string ( )
@@ -1431,40 +1442,63 @@ void shy_data_generator < data_generator_types > :: _generate_current_fsm_machin
                 , _current_fsm_machine_name 
                 , _current_fsm_state_name 
                 ) ;
-        if ( _current_fsm_state -> transitions . begin ( ) -> condition_groups . empty ( ) )
+        bool transition_always = false ;
+        for ( typename data_content_fsm_transition_container :: const_iterator transition_i = _current_fsm_state -> transitions . begin ( )
+            ; transition_i != _current_fsm_state -> transitions . end ( )
+            ; ++ transition_i
+            )
         {
-            _fsm_machine_state_transition_implementation_code +=
-                _consts :: fsm_transition_always_implementation ( _current_fsm_machine_name , _current_fsm_state -> transitions . begin ( ) -> state ) ;
+            bool first_entry = transition_i == _current_fsm_state -> transitions . begin ( ) ;
+            const data_content_fsm_transition & transition = * transition_i ;
+
+            transition_always = transition . condition_groups . empty ( ) ;
+
+            if ( first_entry )
+            {
+                if ( transition_always )
+                {
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_transition_always_implementation ( _current_fsm_machine_name , transition . state ) ;
+                    break ;
+                }
+                else
+                {
+                    _generate_fsm_conditions_implementation ( transition . condition_groups ) ;
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_condition_implementation_begin ( _fsm_conditions_implementation_code ) ;
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_transition_conditional_implementation ( _current_fsm_machine_name , transition . state ) ;
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_condition_implementation_end ( ) ;
+                }
+            }
+            else
+            {
+                if ( transition_always )
+                {
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_transition_always_implementation_else ( _current_fsm_machine_name , transition . state ) ;
+                    break ;
+                }
+                else
+                {
+                    _generate_fsm_conditions_implementation ( transition . condition_groups ) ;
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_condition_implementation_begin_else ( _fsm_conditions_implementation_code ) ;
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_transition_conditional_implementation ( _current_fsm_machine_name , transition . state ) ;
+                    _fsm_machine_state_transition_implementation_code +=
+                        _consts :: fsm_condition_implementation_end ( ) ;
+                }
+            }
+        }
+        if ( transition_always )
+        {
             _fsm_machine_state_transition_implementation_code +=
                 _consts :: fsm_machine_state_transition_implementation_end_always ( ) ;
         }
         else
         {
-            for ( typename data_content_fsm_transition_container :: const_iterator transition_i = _current_fsm_state -> transitions . begin ( )
-                ; transition_i != _current_fsm_state -> transitions . end ( )
-                ; ++ transition_i
-                )
-            {
-                bool first_entry = transition_i == _current_fsm_state -> transitions . begin ( ) ;
-                const data_content_fsm_transition & transition = * transition_i ;
-
-                _generate_fsm_conditions_implementation ( transition . condition_groups ) ;
-
-                if ( first_entry )
-                {
-                    _fsm_machine_state_transition_implementation_code +=
-                        _consts :: fsm_condition_implementation_begin ( _fsm_conditions_implementation_code ) ;
-                }
-                else
-                {
-                    _fsm_machine_state_transition_implementation_code +=
-                        _consts :: fsm_condition_implementation_begin_else ( _fsm_conditions_implementation_code ) ;
-                }
-                _fsm_machine_state_transition_implementation_code +=
-                    _consts :: fsm_transition_conditional_implementation ( _current_fsm_machine_name , transition . state ) ;
-                _fsm_machine_state_transition_implementation_code +=
-                    _consts :: fsm_condition_implementation_end ( ) ;
-            }
             _fsm_machine_state_transition_implementation_code +=
                 _consts :: fsm_machine_state_transition_implementation_end ( ) ;
         }
