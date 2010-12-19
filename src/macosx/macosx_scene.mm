@@ -35,8 +35,9 @@
 
         NSUserDefaults * args = [ NSUserDefaults standardUserDefaults ] ;
 
-        if ( [ args boolForKey : @"load" ] )        
+        if ( [ args boolForKey : @"load" ] )
         {
+            NSLog ( @"loading data" ) ;
             shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
             loader . bind ( * _facade ) ;
 
@@ -48,18 +49,21 @@
             }
 
             loader . parse ( "#" ) ;
-            loader . assign ( ) ; 
+            loader . assign ( ) ;
 
             std :: string loader_error = loader . error ( ) ;
             if ( loader_error . empty ( ) )
+            {
                 std :: cout << loader . generate ( ) << std :: endl ;
+                NSLog ( @"data loaded, code generated" ) ;
+            }
             else
                 NSLog ( @"loader error: %s" , loader_error . c_str ( ) ) ;
         }
 
 		_facade -> init ( ) ;
         NSLog ( @"platform part size = %u bytes" , sizeof ( shy_macosx_platform_insider ) ) ;
-        NSLog ( @"common application part size = %u bytes" , sizeof ( shy_facade < shy_platform < shy_macosx_platform_insider > > ) ) ;
+        NSLog ( @"common part size = %u bytes" , sizeof ( shy_facade < shy_platform < shy_macosx_platform_insider > > ) ) ;
 	}
     return self ;
 }
