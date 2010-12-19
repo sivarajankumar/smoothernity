@@ -63,7 +63,9 @@ system logic_application
     machine title_generator
         state initial
             to generating
-                if { ( command start ) }
+                if { ( command start ) stage_title_enabled }
+            to finished
+                if { ( command start ) stage_title_disabled }
         state generating
             on entry
                 do logic_title_launch_permit
@@ -76,7 +78,9 @@ system logic_application
     machine title_performer
         state initial
             to performing
-                if { ( command start ) }
+                if { ( command start ) stage_title_enabled }
+            to finished
+                if { ( command start ) stage_title_disabled }
         state performing
             on { logic_application_render }
                 do logic_title_render
@@ -89,7 +93,9 @@ system logic_application
     machine main_menu_generator
         state initial
             to generating
-                if { ( command start ) }
+                if { ( command start ) stage_main_menu_enabled }
+            to finished
+                if { ( command start ) stage_main_menu_disabled }
         state generating
             on entry
                 do logic_main_menu_creation_permit
@@ -102,7 +108,9 @@ system logic_application
     machine main_menu_performer
         state initial
             to performing
-                if { ( command start ) }
+                if { ( command start ) stage_main_menu_enabled }
+            to finished
+                if { ( command start ) stage_main_menu_disabled }
         state performing
             on entry
                 do logic_main_menu_launch_permit
@@ -117,7 +125,9 @@ system logic_application
     machine amusement_generator
         state initial
             to generating
-                if { ( command start ) }
+                if { ( command start ) stage_amusement_enabled }
+            to finished
+                if { ( command start ) stage_amusement_disabled }
         state generating
             on entry
                 do logic_amusement_creation_permit
@@ -130,7 +140,9 @@ system logic_application
     machine amusement_performer
         state initial
             to performing
-                if { ( command start ) }
+                if { ( command start ) stage_amusement_enabled }
+            to finished
+                if { ( command start ) stage_amusement_disabled }
         state performing
             on entry
                 do logic_amusement_launch_permit
