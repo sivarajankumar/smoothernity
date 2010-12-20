@@ -79,7 +79,7 @@ void shy_data_loader < data_loader_types > :: bind ( facade & arg_facade )
 
     arg_facade . mediator_obj ( mediator_obj ) ;
     platform_pointer :: bind ( binder_obj , _binder ) ;
-    reflection . bind_all ( mediator_obj , binder_obj ) ;
+    reflection . bind_modules ( mediator_obj , binder_obj ) ;
 }
 
 template < typename data_loader_types >

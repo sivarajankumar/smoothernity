@@ -18,7 +18,7 @@ class shy_reflection
     typedef typename context :: mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename context :: reflection_binder reflection_binder ;
 public :
-    void bind_all 
+    void bind_modules 
         ( typename platform_pointer :: template pointer < mediator >
         , typename platform_pointer :: template pointer < reflection_binder > 
         ) ;
@@ -59,7 +59,7 @@ private :
 } ;
 
 template < typename context >
-void shy_reflection < context > :: bind_all 
+void shy_reflection < context > :: bind_modules
     ( typename platform_pointer :: template pointer < mediator > arg_mediator
     , typename platform_pointer :: template pointer < reflection_binder > arg_binder 
     )
