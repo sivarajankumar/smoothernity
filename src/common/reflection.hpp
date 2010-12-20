@@ -13,12 +13,26 @@ template < typename context >
 class shy_reflection
 {
     typedef typename context :: mediator mediator ;
+    typedef typename context :: mediator :: logic_application_stateless :: logic_application_fsm_actions_type logic_application_fsm_actions_type ;
+    typedef typename context :: mediator :: logic_application_stateless :: logic_application_fsm_inputs_type logic_application_fsm_inputs_type ;
     typedef typename context :: mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename context :: reflection_binder reflection_binder ;
 public :
     void bind_all 
         ( typename platform_pointer :: template pointer < mediator >
         , typename platform_pointer :: template pointer < reflection_binder > 
+        ) ;
+
+    template < typename fsm_inputs_binder >
+    void bind_fsm_inputs
+        ( typename platform_pointer :: template pointer < logic_application_fsm_inputs_type >
+        , typename platform_pointer :: template pointer < fsm_inputs_binder >
+        ) ;
+
+    template < typename fsm_actions_binder >
+    void bind_fsm_actions
+        ( typename platform_pointer :: template pointer < logic_application_fsm_actions_type >
+        , typename platform_pointer :: template pointer < fsm_actions_binder >
         ) ;
 private :
     void _bind_logic_amusement_stateless_consts ( ) ;
@@ -70,6 +84,56 @@ void shy_reflection < context > :: bind_all
     _bind_logic_perspective_stateless_consts ( ) ;
     _bind_logic_room_stateless_consts ( ) ;
     _bind_logic_title_stateless_consts ( ) ;
+}
+
+template < typename context >
+template < typename fsm_inputs_binder >
+void shy_reflection < context > :: bind_fsm_inputs
+    ( typename platform_pointer :: template pointer < logic_application_fsm_inputs_type > inputs
+    , typename platform_pointer :: template pointer < fsm_inputs_binder > binder
+    )
+{
+    binder . get ( ) . bind ( "logic_amusement_created" , inputs . get ( ) . logic_amusement_created ) ;
+    binder . get ( ) . bind ( "logic_amusement_finished" , inputs . get ( ) . logic_amusement_finished ) ;
+    binder . get ( ) . bind ( "logic_application_render" , inputs . get ( ) . logic_application_render ) ;
+    binder . get ( ) . bind ( "logic_application_update" , inputs . get ( ) . logic_application_update ) ;
+    binder . get ( ) . bind ( "logic_text_prepared" , inputs . get ( ) . logic_text_prepared ) ;
+    binder . get ( ) . bind ( "logic_title_created" , inputs . get ( ) . logic_title_created ) ;
+    binder . get ( ) . bind ( "logic_title_finished" , inputs . get ( ) . logic_title_finished ) ;
+    binder . get ( ) . bind ( "logic_main_menu_created" , inputs . get ( ) . logic_main_menu_created ) ;
+    binder . get ( ) . bind ( "logic_main_menu_finished" , inputs . get ( ) . logic_main_menu_finished ) ;
+    binder . get ( ) . bind ( "stage_amusement_disabled" , inputs . get ( ) . stage_amusement_disabled ) ;
+    binder . get ( ) . bind ( "stage_amusement_enabled" , inputs . get ( ) . stage_amusement_enabled ) ;
+    binder . get ( ) . bind ( "stage_main_menu_disabled" , inputs . get ( ) . stage_main_menu_disabled ) ;
+    binder . get ( ) . bind ( "stage_main_menu_enabled" , inputs . get ( ) . stage_main_menu_enabled ) ;
+    binder . get ( ) . bind ( "stage_title_disabled" , inputs . get ( ) . stage_title_disabled ) ;
+    binder . get ( ) . bind ( "stage_title_enabled" , inputs . get ( ) . stage_title_enabled ) ;
+}
+
+template < typename context >
+template < typename fsm_actions_binder >
+void shy_reflection < context > :: bind_fsm_actions
+    ( typename platform_pointer :: template pointer < logic_application_fsm_actions_type >
+    , typename platform_pointer :: template pointer < fsm_actions_binder > binder
+    )
+{
+    typedef logic_application_fsm_actions_type actions_type ;
+    binder . get ( ) . bind ( "logic_amusement_creation_permit" , actions_type :: logic_amusement_creation_permit ) ;
+    binder . get ( ) . bind ( "logic_amusement_launch_permit" , actions_type :: logic_amusement_launch_permit ) ;
+    binder . get ( ) . bind ( "logic_amusement_render" , actions_type :: logic_amusement_render ) ;
+    binder . get ( ) . bind ( "logic_amusement_update" , actions_type :: logic_amusement_update ) ;
+    binder . get ( ) . bind ( "logic_game_launch_permit" , actions_type :: logic_game_launch_permit ) ;
+    binder . get ( ) . bind ( "logic_game_render" , actions_type :: logic_game_render ) ;
+    binder . get ( ) . bind ( "logic_game_update" , actions_type :: logic_game_update ) ;
+    binder . get ( ) . bind ( "logic_main_menu_creation_permit" , actions_type :: logic_main_menu_creation_permit ) ;
+    binder . get ( ) . bind ( "logic_main_menu_launch_permit" , actions_type :: logic_main_menu_launch_permit ) ;
+    binder . get ( ) . bind ( "logic_main_menu_render" , actions_type :: logic_main_menu_render ) ;
+    binder . get ( ) . bind ( "logic_main_menu_update" , actions_type :: logic_main_menu_update ) ;
+    binder . get ( ) . bind ( "logic_text_prepare_permit" , actions_type :: logic_text_prepare_permit ) ;
+    binder . get ( ) . bind ( "logic_text_update" , actions_type :: logic_text_update ) ;
+    binder . get ( ) . bind ( "logic_title_launch_permit" , actions_type :: logic_title_launch_permit ) ;
+    binder . get ( ) . bind ( "logic_title_render" , actions_type :: logic_title_render ) ;
+    binder . get ( ) . bind ( "logic_title_update" , actions_type :: logic_title_update ) ;
 }
 
 template < typename context >

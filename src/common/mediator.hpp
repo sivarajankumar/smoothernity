@@ -30,7 +30,7 @@ public :
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_room_stateless logic_room_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_text_stateless logic_text_stateless ;
     typedef typename mediator_types :: template modules < shy_mediator > :: logic_title_stateless logic_title_stateless ;
-    
+
 private :
     class receivers ;
 
