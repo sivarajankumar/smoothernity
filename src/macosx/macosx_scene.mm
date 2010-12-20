@@ -8,8 +8,8 @@
 #include <string>
 #include <vector>
 
-#include "../common/reflection.hpp"
 #include "../data/loader.hpp"
+#include "../common/reflection.hpp"
 
 @implementation shy_macosx_scene
 
@@ -35,13 +35,13 @@
 
         if ( [ args boolForKey : @"load" ] )
         {
-            shy_facade < shy_platform < shy_macosx_platform_insider > > * facade_loadable =
-		        new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
+            shy_facade < shy_platform < shy_macosx_platform_insider > , shy_fsm_collection_loadable > * facade_loadable =
+		        new shy_facade < shy_platform < shy_macosx_platform_insider > , shy_fsm_collection_loadable > ( platform_obj ) ;
 
             _facade = facade_loadable ;
 
             NSLog ( @"loading data" ) ;
-            shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
+            shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > , shy_fsm_collection_loadable > , shy_reflection > > loader ;
             loader . bind ( * facade_loadable ) ;
 
             while ( ! std :: cin . eof ( ) )

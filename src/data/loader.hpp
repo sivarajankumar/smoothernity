@@ -1,6 +1,7 @@
 #include "assigner.hpp"
 #include "binder.hpp"
 #include "content.hpp"
+#include "fsm_loadable.hpp"
 #include "generator.hpp"
 #include "parser.hpp"
 

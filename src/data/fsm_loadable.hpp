@@ -36,13 +36,13 @@ shy_data_fsm_loadable < logic_fsm > :: shy_data_fsm_loadable ( )
 
 template < typename logic_fsm >
 template < typename inputs_type >
-void shy_data_fsm_loadable < logic_fsm > :: set_inputs < inputs_type > ( typename platform_pointer :: template pointer < inputs_type > )
+void shy_data_fsm_loadable < logic_fsm > :: set_inputs ( typename platform_pointer :: template pointer < inputs_type > )
 {
 }
 
 template < typename logic_fsm >
 template < typename actions_type >
-void shy_data_fsm_loadable < logic_fsm > :: set_actions < actions_type > ( typename platform_pointer :: template pointer < actions_type > )
+void shy_data_fsm_loadable < logic_fsm > :: set_actions ( typename platform_pointer :: template pointer < actions_type > )
 {
 }
 
