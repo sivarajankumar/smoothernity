@@ -31,15 +31,18 @@
         shy_macosx_platform_insider :: platform_pointer :: pointer < const shy_platform < shy_macosx_platform_insider > > platform_obj ;
         shy_macosx_platform_insider :: platform_pointer :: bind ( platform_obj , _platform_insider -> platform ) ;
         
-		_facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
-
         NSUserDefaults * args = [ NSUserDefaults standardUserDefaults ] ;
 
         if ( [ args boolForKey : @"load" ] )
         {
+            shy_facade < shy_platform < shy_macosx_platform_insider > > * facade_loadable =
+		        new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
+
+            _facade = facade_loadable ;
+
             NSLog ( @"loading data" ) ;
             shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > > , shy_reflection > > loader ;
-            loader . bind ( * _facade ) ;
+            loader . bind ( * facade_loadable ) ;
 
             while ( ! std :: cin . eof ( ) )
             {
@@ -59,6 +62,10 @@
             }
             else
                 NSLog ( @"loader error: %s" , loader_error . c_str ( ) ) ;
+        }
+        else
+        {
+		    _facade = new shy_facade < shy_platform < shy_macosx_platform_insider > > ( platform_obj ) ;
         }
 
 		_facade -> init ( ) ;
