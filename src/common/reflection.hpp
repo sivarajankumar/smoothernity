@@ -20,6 +20,21 @@ public :
 class shy_fsm_reflection
 {
 public :
+    template < typename mediator >
+    class binder
+    {
+        typedef typename mediator :: logic_application_stateless :: logic_application_fsm_actions_type logic_application_fsm_actions_type ;
+        typedef typename mediator :: logic_application_stateless :: logic_application_fsm_inputs_type logic_application_fsm_inputs_type ;
+    public :
+        void bind_fsm_system_name ( logic_application_fsm_actions_type * )
+        {
+            NSLog ( @"logic application fsm from actions" ) ;
+        }
+        void bind_fsm_system_name ( logic_application_fsm_inputs_type * )
+        {
+            NSLog ( @"logic application fsm from inputs" ) ;
+        }
+    } ;
 } ;
 
 template < typename context >
