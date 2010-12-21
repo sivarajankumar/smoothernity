@@ -35,13 +35,16 @@
 
         if ( [ args boolForKey : @"load" ] )
         {
-            shy_facade < shy_platform < shy_macosx_platform_insider > , shy_fsm_collection_loadable > * facade_loadable =
-		        new shy_facade < shy_platform < shy_macosx_platform_insider > , shy_fsm_collection_loadable > ( platform_obj ) ;
+            typedef shy_platform < shy_macosx_platform_insider > shy_macosx_platform ;
+            typedef shy_fsm_collection_loadable < shy_fsm_collection_loadable_types < shy_fsm_reflection > > shy_fsm_collection_loadable_type ;
+            typedef shy_facade < shy_macosx_platform , shy_fsm_collection_loadable_type > shy_facade_loadable ;
+
+            shy_facade_loadable * facade_loadable = new shy_facade_loadable ( platform_obj ) ;
 
             _facade = facade_loadable ;
 
             NSLog ( @"loading data" ) ;
-            shy_data_loader < shy_data_loader_types < shy_facade < shy_platform < shy_macosx_platform_insider > , shy_fsm_collection_loadable > , shy_reflection > > loader ;
+            shy_data_loader < shy_data_loader_types < shy_facade_loadable , shy_reflection > > loader ;
             loader . bind ( * facade_loadable ) ;
 
             while ( ! std :: cin . eof ( ) )
