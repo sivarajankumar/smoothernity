@@ -25,8 +25,9 @@ class shy_data_fsm_loadable
 public :
     shy_data_fsm_loadable ( ) ;
 
-    void set_inputs ( typename platform_pointer :: template pointer < inputs_type > ) ;
+    void set_mediator ( typename platform_pointer :: template pointer < mediator_type > ) ;
     void set_actions ( typename platform_pointer :: template pointer < actions_type > ) ;
+    void set_inputs ( typename platform_pointer :: template pointer < inputs_type > ) ;
 
     void is_fsm_running ( num_whole & ) ;
     void run_fsm_begin ( ) ;
@@ -51,12 +52,17 @@ shy_data_fsm_loadable < data_fsm_loadable_types > :: shy_data_fsm_loadable ( )
 }
 
 template < typename data_fsm_loadable_types >
-void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_inputs ( typename platform_pointer :: template pointer < inputs_type > )
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_mediator ( typename platform_pointer :: template pointer < mediator_type > )
 {
 }
 
 template < typename data_fsm_loadable_types >
 void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_actions ( typename platform_pointer :: template pointer < actions_type > )
+{
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_inputs ( typename platform_pointer :: template pointer < inputs_type > )
 {
 }
 
