@@ -7,12 +7,14 @@
 
 template 
     < typename _facade
+    , typename _platform
     , template < typename reflection_types > class _reflection
     >
 class shy_data_loader_types
 {
 public :
     typedef _facade facade ;
+    typedef _platform platform ;
     template < typename reflection_types >
     class types
     {
@@ -23,14 +25,12 @@ public :
 
 template < typename data_loader_types >
 class shy_data_loader
+: public shy_facade_interface
 {
     typedef typename data_loader_types :: facade facade ;
     typedef typename data_loader_types :: facade :: mediator mediator ;
-    typedef typename data_loader_types :: facade :: mediator :: platform platform ;
-    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math platform_math ;
-    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_fract num_fract ;
-    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_math :: num_whole num_whole ;
-    typedef typename data_loader_types :: facade :: mediator :: platform :: platform_pointer platform_pointer ;
+    typedef typename data_loader_types :: platform platform ;
+    typedef typename data_loader_types :: platform :: platform_pointer platform_pointer ;
 
     typedef shy_data_content < shy_data_content_types < platform > > data_content ;
 
@@ -48,6 +48,14 @@ class shy_data_loader
 
 public :
     shy_data_loader ( ) ;
+    virtual ~ shy_data_loader ( ) ;
+
+    virtual void init ( ) ;
+    virtual void done ( ) ;
+    virtual void render ( ) ;
+    virtual void update ( ) ;
+    virtual void video_mode_changed ( ) ;
+
     void bind ( facade & ) ;
     void parse ( std :: string ) ;
     void assign ( ) ;
@@ -68,6 +76,36 @@ shy_data_loader < data_loader_types > :: shy_data_loader ( )
     _parser . set_content ( _content ) ;
     _assigner . set_content ( _content ) ;
     _generator . set_content ( _content ) ;
+}
+
+template < typename data_loader_types >
+shy_data_loader < data_loader_types > :: ~ shy_data_loader ( )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: init ( )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: done ( )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: render ( )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: update ( )
+{
+}
+
+template < typename data_loader_types >
+void shy_data_loader < data_loader_types > :: video_mode_changed ( )
+{
 }
 
 template < typename data_loader_types >
