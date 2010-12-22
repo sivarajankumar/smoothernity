@@ -16,24 +16,28 @@ public :
     public :
         typedef shy_data_fsm_loadable < shy_data_fsm_loadable_types < logic_application_fsm , typename fsm_collection_loadable_types :: fsm_reflection > > type ;
     } ;
+
+public :
+    void add_fsm_system ( std :: string name )
+    {
+        NSLog ( @"add fsm system" ) ;
+    }
 } ;
 
 class shy_fsm_reflection
 {
 public :
     template < typename mediator >
-    class binder
+    class reflection
     {
+        typedef typename mediator :: fsm_collection fsm_collection ;
         typedef typename mediator :: logic_application_stateless :: logic_application_fsm_actions_type logic_application_fsm_actions_type ;
         typedef typename mediator :: logic_application_stateless :: logic_application_fsm_inputs_type logic_application_fsm_inputs_type ;
+        typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     public :
-        void bind_fsm_system_name ( logic_application_fsm_actions_type * )
+        static void add_fsm_system ( logic_application_fsm_actions_type * , typename platform_pointer :: template pointer < fsm_collection > arg_fsm_collection )
         {
-            NSLog ( @"logic application fsm from actions" ) ;
-        }
-        void bind_fsm_system_name ( logic_application_fsm_inputs_type * )
-        {
-            NSLog ( @"logic application fsm from inputs" ) ;
+            arg_fsm_collection . get ( ) . add_fsm_system ( "logic_application" ) ;
         }
     } ;
 } ;
