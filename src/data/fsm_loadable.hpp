@@ -12,15 +12,15 @@ public :
 template < typename data_fsm_loadable_types >
 class shy_data_fsm_loadable
 {
+    typedef typename data_fsm_loadable_types :: logic_fsm :: actions_type actions_type ;
+    typedef typename data_fsm_loadable_types :: logic_fsm :: inputs_type inputs_type ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type mediator_type ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: engine_fsm engine_fsm ;
+    typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: fsm_collection fsm_collection ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_conditions platform_conditions ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_math platform_math ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_pointer platform_pointer ;
-
-    typedef typename data_fsm_loadable_types :: logic_fsm :: inputs_type inputs_type ;
-    typedef typename data_fsm_loadable_types :: logic_fsm :: actions_type actions_type ;
 
 public :
     shy_data_fsm_loadable ( ) ;
@@ -39,6 +39,7 @@ public :
     void tick_all_fsms ( ) ;
 private :
     num_whole _fsm_running ;
+    typename platform_pointer :: template pointer < fsm_collection > _fsm_collection ;
 } ;
 
 template < typename data_fsm_loadable_types >
@@ -52,8 +53,9 @@ shy_data_fsm_loadable < data_fsm_loadable_types > :: shy_data_fsm_loadable ( )
 }
 
 template < typename data_fsm_loadable_types >
-void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_mediator ( typename platform_pointer :: template pointer < mediator_type > )
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_mediator ( typename platform_pointer :: template pointer < mediator_type > mediator )
 {
+    mediator . get ( ) . fsm_collection_obj ( _fsm_collection ) ;
 }
 
 template < typename data_fsm_loadable_types >
