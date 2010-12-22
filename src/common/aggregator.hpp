@@ -611,6 +611,7 @@ class shy_aggregator
 public :
     typedef typename aggregator_types :: mediator_type mediator_type ;
 private :
+    typedef typename aggregator_types :: fsm_collection fsm_collection ;
     typedef typename aggregator_types :: messages messages ;
     typedef typename aggregator_types :: platform platform ;
     typedef typename aggregator_types :: platform :: platform_pointer platform_pointer ;
@@ -717,7 +718,10 @@ private :
     typedef typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > logic_title ;
     typedef typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > logic_touch ;
 public :
-    shy_aggregator ( typename platform_pointer :: template pointer < const platform > ) ;
+    shy_aggregator 
+        ( typename platform_pointer :: template pointer < const platform >
+        , typename platform_pointer :: template pointer < fsm_collection >
+        ) ;
     void mediator_obj ( typename platform_pointer :: template pointer < mediator_type > & ) ;
     void init ( ) ;
     void done ( ) ;
@@ -831,8 +835,11 @@ private :
 } ;
 
 template < typename aggregator_types >
-shy_aggregator < aggregator_types > :: shy_aggregator ( typename platform_pointer :: template pointer < const platform > arg_platform )
-: _mediator ( arg_platform )
+shy_aggregator < aggregator_types > :: shy_aggregator 
+    ( typename platform_pointer :: template pointer < const platform > arg_platform
+    , typename platform_pointer :: template pointer < fsm_collection > arg_fsm_collection
+    )
+: _mediator ( arg_platform , arg_fsm_collection )
 {
     typename platform_pointer :: template pointer < engine_rasterizer > engine_rasterizer_ptr ;
     typename platform_pointer :: template pointer < engine_render > engine_render_ptr ;

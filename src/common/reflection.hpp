@@ -7,6 +7,7 @@ public :
 
 template < typename fsm_collection_loadable_types >
 class shy_fsm_collection_loadable
+: public shy_fsm_collection_interface
 {
 public :
     template < typename logic_application_fsm >

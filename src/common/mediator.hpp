@@ -399,7 +399,11 @@ private :
     } ;
 
 public :
-    shy_mediator ( typename platform_pointer :: template pointer < const platform > ) ;
+    shy_mediator 
+        ( typename platform_pointer :: template pointer < const platform > 
+        , typename platform_pointer :: template pointer < fsm_collection >
+        ) ;
+
     void engine_render_stateless_consts ( typename platform_pointer :: template pointer < const engine_render_stateless_consts_type > & ) ;
     void logic_amusement_stateless_consts ( typename platform_pointer :: template pointer < const logic_amusement_stateless_consts_type > & ) ;
     void logic_application_stateless_consts ( typename platform_pointer :: template pointer < const logic_application_stateless_consts_type > & ) ;
@@ -421,7 +425,10 @@ public :
     void logic_room_stateless_consts ( typename platform_pointer :: template pointer < const logic_room_stateless_consts_type > & ) ;
     void logic_text_stateless_consts ( typename platform_pointer :: template pointer < const logic_text_stateless_consts_type > & ) ;
     void logic_title_stateless_consts ( typename platform_pointer :: template pointer < const logic_title_stateless_consts_type > & ) ;
+
     void platform_obj ( typename platform_pointer :: template pointer < const platform > & ) ;
+    void fsm_collection_obj ( typename platform_pointer :: template pointer < fsm_collection > & ) ;
+
     void register_modules
         ( typename platform_pointer :: template pointer < engine_rasterizer >
         , typename platform_pointer :: template pointer < engine_render >
@@ -546,7 +553,10 @@ private :
     typename platform_pointer :: template pointer < logic_room_stateless > _logic_room_stateless ;
     typename platform_pointer :: template pointer < logic_text_stateless > _logic_text_stateless ;
     typename platform_pointer :: template pointer < logic_title_stateless > _logic_title_stateless ;
+
     typename platform_pointer :: template pointer < const platform > _platform ;
+    typename platform_pointer :: template pointer < fsm_collection > _fsm_collection ;
+
     receivers _receivers ;
     sender _sender ;
 } ;
@@ -590,9 +600,13 @@ void shy_mediator < mediator_types > :: sender :: set_receivers ( typename platf
 }
 
 template < typename mediator_types >
-shy_mediator < mediator_types > :: shy_mediator ( typename platform_pointer :: template pointer < const platform > arg_platform )
+shy_mediator < mediator_types > :: shy_mediator 
+    ( typename platform_pointer :: template pointer < const platform > arg_platform
+    , typename platform_pointer :: template pointer < fsm_collection > arg_fsm_collection
+    )
 {
     _platform = arg_platform ;
+    _fsm_collection = arg_fsm_collection ;
 }
 
 template < typename mediator_types >
@@ -887,6 +901,12 @@ template < typename mediator_types >
 void shy_mediator < mediator_types > :: platform_obj ( typename platform_pointer :: template pointer < const platform > & result )
 {
     result = _platform ;
+}
+
+template < typename mediator_types >
+void shy_mediator < mediator_types > :: fsm_collection_obj ( typename platform_pointer :: template pointer < fsm_collection > & result )
+{
+    result = _fsm_collection ;
 }
 
 template < typename mediator_types >

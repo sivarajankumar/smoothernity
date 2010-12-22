@@ -8,6 +8,7 @@
     shy_macosx_texture_loader * _texture_loader ;
     shy_macosx_platform_insider * _platform_insider ;
 	shy_facade_interface * _facade ;
+    shy_fsm_collection_interface * _fsm_collection ;
 	NSRect _bounds ;
 }
 
