@@ -1,12 +1,10 @@
 template 
     < typename _logic_fsm
-    , typename _fsm_reflection
     >
 class shy_data_fsm_loadable_types
 {
 public :
     typedef _logic_fsm logic_fsm ;
-    typedef _fsm_reflection fsm_reflection ;
 } ;
 
 template < typename data_fsm_loadable_types >
@@ -22,7 +20,7 @@ class shy_data_fsm_loadable
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_pointer platform_pointer ;
 
-    typedef typename data_fsm_loadable_types :: fsm_reflection :: template reflection < mediator_type > reflection ;
+    typedef typename fsm_collection :: template reflection < mediator_type > reflection ;
 
 public :
     shy_data_fsm_loadable ( ) ;
@@ -54,7 +52,7 @@ template < typename data_fsm_loadable_types >
 void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_mediator ( typename platform_pointer :: template pointer < mediator_type > mediator )
 {
     mediator . get ( ) . fsm_collection_obj ( _fsm_collection ) ;
-    reflection :: add_fsm_system ( ( actions_type * ) ( 0 ) , _fsm_collection ) ;
+    reflection :: bind ( ( actions_type * ) ( 0 ) , ( inputs_type * ) ( 0 ) , _fsm_collection ) ;
 }
 
 template < typename data_fsm_loadable_types >
