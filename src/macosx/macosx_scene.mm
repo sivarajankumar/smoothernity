@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-#include "../common/composer.hpp"
 #include "../facade/loadable.hpp"
 #include "../facade/static.hpp"
 

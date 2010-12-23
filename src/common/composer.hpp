@@ -1,3 +1,6 @@
+#ifndef _shy_composer_included_
+#define _shy_composer_included_
+
 #define char no_chars
 #define double no_doubles
 #define float no_floats
@@ -318,3 +321,4 @@ void shy_composer < platform , fsm_collection > :: video_mode_changed ( )
 #undef short
 #undef unsigned
 
+#endif

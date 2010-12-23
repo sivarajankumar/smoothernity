@@ -1,9 +1,13 @@
+#ifndef _shy_facade_loadable_included_
+#define _shy_facade_loadable_included_
+
 #include "../data/assigner.hpp"
 #include "../data/binder.hpp"
 #include "../data/content.hpp"
 #include "../data/fsm_loadable.hpp"
 #include "../data/generator.hpp"
 #include "../data/parser.hpp"
+#include "../common/composer.hpp"
 #include "../common/reflection.hpp"
 
 template < typename platform >
@@ -128,4 +132,6 @@ std :: string shy_facade_loadable < data_loader_types > :: error ( )
         result = _assigner . error ( ) ;
     return result ;
 }
+
+#endif
 
