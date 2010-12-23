@@ -14,16 +14,15 @@ template < typename platform >
 class shy_facade_loadable
 : public shy_facade_interface
 {
-    typedef shy_composer < platform , shy_fsm_collection_loadable > composer ;
-    typedef typename composer :: mediator mediator ;
-    typedef typename platform :: platform_pointer platform_pointer ;
-
     typedef shy_data_content < shy_data_content_types < platform > > data_content ;
-
     typedef shy_data_assigner < shy_data_assigner_types < data_content , platform > > data_assigner ;
     typedef shy_data_binder < shy_data_binder_types < data_content , platform > > data_binder ;
     typedef shy_data_generator < shy_data_generator_types < data_content > > data_generator ;
     typedef shy_data_parser < shy_data_parser_types < data_content > > data_parser ;
+    typedef shy_fsm_collection_loadable < shy_fsm_collection_loadable_types < data_binder , platform > > fsm_collection_loadable ;
+    typedef shy_composer < platform , fsm_collection_loadable > composer ;
+    typedef typename composer :: mediator mediator ;
+    typedef typename platform :: platform_pointer platform_pointer ;
 
     class _reflection_types
     {
@@ -45,7 +44,7 @@ public :
     std :: string error ( ) ;
 private :
     composer _composer ;
-    shy_fsm_collection_loadable _fsm_collection ;
+    fsm_collection_loadable _fsm_collection ;
     data_binder _binder ;
     data_parser _parser ;
     data_assigner _assigner ;
@@ -61,7 +60,9 @@ shy_facade_loadable < platform > :: shy_facade_loadable ( typename platform_poin
     _assigner . set_content ( _content ) ;
     _generator . set_content ( _content ) ;
 
-    typename platform_pointer :: template pointer < shy_fsm_collection_loadable > fsm_collection_ptr ;
+    _fsm_collection . set_binder ( _binder ) ;
+
+    typename platform_pointer :: template pointer < fsm_collection_loadable > fsm_collection_ptr ;
     platform_pointer :: bind ( fsm_collection_ptr , _fsm_collection ) ;
     _composer . register_components ( platform_ptr , fsm_collection_ptr ) ;
 
@@ -80,7 +81,7 @@ shy_facade_loadable < platform > :: shy_facade_loadable ( typename platform_poin
         _parser . parse ( line ) ;
     }
 
-    _parser . parse ( "#" ) ;
+    _parser . terminate ( ) ;
     _assigner . assign ( ) ;
 
     if ( _parser . error ( ) . empty ( ) && _assigner . error ( ) . empty ( ) )

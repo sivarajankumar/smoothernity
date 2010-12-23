@@ -15,6 +15,7 @@ class shy_data_fsm_loadable
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type mediator_type ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: engine_fsm engine_fsm ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: fsm_collection fsm_collection ;
+    typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: fsm_collection :: data_binder data_binder ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_conditions platform_conditions ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_math platform_math ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_math :: num_whole num_whole ;
@@ -52,7 +53,11 @@ template < typename data_fsm_loadable_types >
 void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_mediator ( typename platform_pointer :: template pointer < mediator_type > mediator )
 {
     mediator . get ( ) . fsm_collection_obj ( _fsm_collection ) ;
-    reflection :: bind ( ( actions_type * ) ( 0 ) , ( inputs_type * ) ( 0 ) , _fsm_collection ) ;
+
+    typename platform_pointer :: template pointer < data_binder > binder_ptr ;
+    _fsm_collection . get ( ) . binder ( binder_ptr ) ;
+
+    reflection :: bind ( ( actions_type * ) ( 0 ) , ( inputs_type * ) ( 0 ) , binder_ptr ) ;
 }
 
 template < typename data_fsm_loadable_types >

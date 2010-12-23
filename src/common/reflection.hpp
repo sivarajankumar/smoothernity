@@ -1,61 +1,68 @@
+template
+    < typename _data_binder 
+    , typename _platform
+    >
+class shy_fsm_collection_loadable_types
+{
+public :
+    typedef _data_binder data_binder ;
+    typedef _platform platform ;
+} ;
+
+template < typename fsm_collection_loadable_types >
 class shy_fsm_collection_loadable
 {
-    class _fsm_system_type
-    {
-    public :
-        std :: string name ;
-        std :: vector < std :: string > inputs ;
-        std :: vector < std :: string > actions ;
-    } ;
+    typedef typename fsm_collection_loadable_types :: platform :: platform_pointer platform_pointer ;
 public :
+    typedef typename fsm_collection_loadable_types :: data_binder data_binder ;
+
     template < typename mediator >
     class reflection
     {
         typedef typename mediator :: fsm_collection fsm_collection ;
         typedef typename mediator :: logic_application_stateless :: logic_application_fsm_actions_type logic_application_fsm_actions_type ;
         typedef typename mediator :: logic_application_stateless :: logic_application_fsm_inputs_type logic_application_fsm_inputs_type ;
-        typedef typename mediator :: platform :: platform_pointer platform_pointer ;
     public :
         static void bind 
             ( logic_application_fsm_actions_type *
             , logic_application_fsm_inputs_type *
-            , typename platform_pointer :: template pointer < fsm_collection > collection
+            , typename platform_pointer :: template pointer < data_binder > binder
             )
         {
-            collection . get ( ) . fsm_system ( "logic_application" ) ;
+            binder . get ( ) . fsm_system ( "logic_application" ) ;
             
-            collection . get ( ) . fsm_input ( "logic_amusement_created" ) ;
-            collection . get ( ) . fsm_input ( "logic_amusement_finished" ) ;
-            collection . get ( ) . fsm_input ( "logic_application_render" ) ;
-            collection . get ( ) . fsm_input ( "logic_application_update" ) ;
-            collection . get ( ) . fsm_input ( "logic_text_prepared" ) ;
-            collection . get ( ) . fsm_input ( "logic_title_created" ) ;
-            collection . get ( ) . fsm_input ( "logic_title_finished" ) ;
-            collection . get ( ) . fsm_input ( "logic_main_menu_created" ) ;
-            collection . get ( ) . fsm_input ( "logic_main_menu_finished" ) ;
-            collection . get ( ) . fsm_input ( "stage_amusement_disabled" ) ;
-            collection . get ( ) . fsm_input ( "stage_amusement_enabled" ) ;
-            collection . get ( ) . fsm_input ( "stage_main_menu_disabled" ) ;
-            collection . get ( ) . fsm_input ( "stage_main_menu_enabled" ) ;
-            collection . get ( ) . fsm_input ( "stage_title_disabled" ) ;
-            collection . get ( ) . fsm_input ( "stage_title_enabled" ) ;
+            binder . get ( ) . fsm_input ( "logic_amusement_created" ) ;
+            binder . get ( ) . fsm_input ( "logic_amusement_finished" ) ;
+            binder . get ( ) . fsm_input ( "logic_application_render" ) ;
+            binder . get ( ) . fsm_input ( "logic_application_update" ) ;
+            binder . get ( ) . fsm_input ( "logic_text_prepared" ) ;
+            binder . get ( ) . fsm_input ( "logic_title_created" ) ;
+            binder . get ( ) . fsm_input ( "logic_title_finished" ) ;
+            binder . get ( ) . fsm_input ( "logic_main_menu_created" ) ;
+            binder . get ( ) . fsm_input ( "logic_main_menu_finished" ) ;
+            binder . get ( ) . fsm_input ( "stage_amusement_disabled" ) ;
+            binder . get ( ) . fsm_input ( "stage_amusement_enabled" ) ;
+            binder . get ( ) . fsm_input ( "stage_main_menu_disabled" ) ;
+            binder . get ( ) . fsm_input ( "stage_main_menu_enabled" ) ;
+            binder . get ( ) . fsm_input ( "stage_title_disabled" ) ;
+            binder . get ( ) . fsm_input ( "stage_title_enabled" ) ;
 
-            collection . get ( ) . fsm_action ( "logic_amusement_creation_permit" ) ;
-            collection . get ( ) . fsm_action ( "logic_amusement_launch_permit" ) ;
-            collection . get ( ) . fsm_action ( "logic_amusement_render" ) ;
-            collection . get ( ) . fsm_action ( "logic_amusement_update" ) ;
-            collection . get ( ) . fsm_action ( "logic_game_launch_permit" ) ;
-            collection . get ( ) . fsm_action ( "logic_game_render" ) ;
-            collection . get ( ) . fsm_action ( "logic_game_update" ) ;
-            collection . get ( ) . fsm_action ( "logic_main_menu_creation_permit" ) ;
-            collection . get ( ) . fsm_action ( "logic_main_menu_launch_permit" ) ;
-            collection . get ( ) . fsm_action ( "logic_main_menu_render" ) ;
-            collection . get ( ) . fsm_action ( "logic_main_menu_update" ) ;
-            collection . get ( ) . fsm_action ( "logic_text_prepare_permit" ) ;
-            collection . get ( ) . fsm_action ( "logic_text_update" ) ;
-            collection . get ( ) . fsm_action ( "logic_title_launch_permit" ) ;
-            collection . get ( ) . fsm_action ( "logic_title_render" ) ;
-            collection . get ( ) . fsm_action ( "logic_title_update" ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_creation_permit" ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_launch_permit" ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_render" ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_update" ) ;
+            binder . get ( ) . fsm_action ( "logic_game_launch_permit" ) ;
+            binder . get ( ) . fsm_action ( "logic_game_render" ) ;
+            binder . get ( ) . fsm_action ( "logic_game_update" ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_creation_permit" ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_launch_permit" ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_render" ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_update" ) ;
+            binder . get ( ) . fsm_action ( "logic_text_prepare_permit" ) ;
+            binder . get ( ) . fsm_action ( "logic_text_update" ) ;
+            binder . get ( ) . fsm_action ( "logic_title_launch_permit" ) ;
+            binder . get ( ) . fsm_action ( "logic_title_render" ) ;
+            binder . get ( ) . fsm_action ( "logic_title_update" ) ;
         }
     } ;
 
@@ -67,30 +74,18 @@ public :
     } ;
 
 public :
-    shy_fsm_collection_loadable ( )
-    : _current_fsm_system ( 0 )
+    void set_binder ( data_binder & binder_arg )
     {
+        platform_pointer :: bind ( _binder , binder_arg ) ;
     }
-    void fsm_system ( std :: string name )
+
+    void binder ( typename platform_pointer :: template pointer < data_binder > & result )
     {
-        _fsm_systems . push_back ( _fsm_system_type ( ) ) ;
-        _current_fsm_system = & _fsm_systems . back ( ) ;
-        _current_fsm_system -> name = name ;
-    }
-    void fsm_input ( std :: string name )
-    {
-        if ( _current_fsm_system )
-            _current_fsm_system -> inputs . push_back ( name ) ;
-    }
-    void fsm_action ( std :: string name )
-    {
-        if ( _current_fsm_system )
-            _current_fsm_system -> actions . push_back ( name ) ;
+        result = _binder ;
     }
 
 private :
-    std :: vector < _fsm_system_type > _fsm_systems ;
-    _fsm_system_type * _current_fsm_system ;
+    typename platform_pointer :: template pointer < data_binder > _binder ;
 } ;
 
 template < typename context >

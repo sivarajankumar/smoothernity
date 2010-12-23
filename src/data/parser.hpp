@@ -140,6 +140,7 @@ public :
     shy_data_parser ( ) ;
     void set_content ( data_content & ) ;
     void parse ( std :: string ) ;
+    void terminate ( ) ;
     std :: string error ( ) ;
 
 private :
@@ -289,6 +290,12 @@ template < typename data_parser_types >
 std :: string shy_data_parser < data_parser_types > :: error ( )
 {
     return _error ;
+}
+
+template < typename data_parser_types >
+void shy_data_parser < data_parser_types > :: terminate ( )
+{
+    parse ( std :: string ( 1 , _consts :: terminator ( ) ) ) ;
 }
 
 template < typename data_parser_types >

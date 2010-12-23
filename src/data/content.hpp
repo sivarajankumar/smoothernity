@@ -76,6 +76,8 @@ public :
     {
     public :
         data_content_fsm_machine_container machines ;
+        std :: set < std :: string > inputs ;
+        std :: set < std :: string > actions ;
     } ;
 
     class data_content_fsm_machine
