@@ -26,8 +26,10 @@ public :
     void bind ( std :: string , const num_fract & ) ;
     void bind ( std :: string , const num_whole & ) ;
     void fsm_system ( std :: string ) ;
-    void fsm_input ( std :: string ) ;
-    void fsm_action ( std :: string ) ;
+    void fsm_input ( std :: string , num_whole & ) ;
+
+    template < typename actions_type >
+    void fsm_action ( std :: string , void ( actions_type :: * ) ( ) ) ;
 public :
     data_content * _content ;
     data_content_module * _current_module ;
@@ -83,14 +85,15 @@ void shy_data_binder < data_binder_types > :: fsm_system ( std :: string name )
 }
 
 template < typename data_binder_types >
-void shy_data_binder < data_binder_types > :: fsm_input ( std :: string name )
+void shy_data_binder < data_binder_types > :: fsm_input ( std :: string name , num_whole & )
 {
     if ( _current_fsm_system )
         _current_fsm_system -> inputs . insert ( name ) ;
 }
 
 template < typename data_binder_types >
-void shy_data_binder < data_binder_types > :: fsm_action ( std :: string name )
+template < typename actions_type >
+void shy_data_binder < data_binder_types > :: fsm_action ( std :: string name , void ( actions_type :: * ) ( ) )
 {
     if ( _current_fsm_system )
         _current_fsm_system -> actions . insert ( name ) ;

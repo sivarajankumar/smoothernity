@@ -24,45 +24,45 @@ public :
         typedef typename mediator :: logic_application_stateless :: logic_application_fsm_inputs_type logic_application_fsm_inputs_type ;
     public :
         static void bind 
-            ( logic_application_fsm_actions_type *
-            , logic_application_fsm_inputs_type *
+            ( typename platform_pointer :: template pointer < logic_application_fsm_actions_type > actions
+            , typename platform_pointer :: template pointer < logic_application_fsm_inputs_type > inputs
             , typename platform_pointer :: template pointer < data_binder > binder
             )
         {
             binder . get ( ) . fsm_system ( "logic_application" ) ;
             
-            binder . get ( ) . fsm_input ( "logic_amusement_created" ) ;
-            binder . get ( ) . fsm_input ( "logic_amusement_finished" ) ;
-            binder . get ( ) . fsm_input ( "logic_application_render" ) ;
-            binder . get ( ) . fsm_input ( "logic_application_update" ) ;
-            binder . get ( ) . fsm_input ( "logic_text_prepared" ) ;
-            binder . get ( ) . fsm_input ( "logic_title_created" ) ;
-            binder . get ( ) . fsm_input ( "logic_title_finished" ) ;
-            binder . get ( ) . fsm_input ( "logic_main_menu_created" ) ;
-            binder . get ( ) . fsm_input ( "logic_main_menu_finished" ) ;
-            binder . get ( ) . fsm_input ( "stage_amusement_disabled" ) ;
-            binder . get ( ) . fsm_input ( "stage_amusement_enabled" ) ;
-            binder . get ( ) . fsm_input ( "stage_main_menu_disabled" ) ;
-            binder . get ( ) . fsm_input ( "stage_main_menu_enabled" ) ;
-            binder . get ( ) . fsm_input ( "stage_title_disabled" ) ;
-            binder . get ( ) . fsm_input ( "stage_title_enabled" ) ;
+            binder . get ( ) . fsm_input ( "logic_amusement_created" , inputs . get ( ) . logic_amusement_created ) ;
+            binder . get ( ) . fsm_input ( "logic_amusement_finished" , inputs . get ( ) . logic_amusement_finished ) ;
+            binder . get ( ) . fsm_input ( "logic_application_render" , inputs . get ( ) . logic_application_render ) ;
+            binder . get ( ) . fsm_input ( "logic_application_update" , inputs . get ( ) . logic_application_update ) ;
+            binder . get ( ) . fsm_input ( "logic_text_prepared" , inputs . get ( ) . logic_text_prepared ) ;
+            binder . get ( ) . fsm_input ( "logic_title_created" , inputs . get ( ) . logic_title_created ) ;
+            binder . get ( ) . fsm_input ( "logic_title_finished" , inputs . get ( ) . logic_title_finished ) ;
+            binder . get ( ) . fsm_input ( "logic_main_menu_created" , inputs . get ( ) . logic_main_menu_created ) ;
+            binder . get ( ) . fsm_input ( "logic_main_menu_finished" , inputs . get ( ) . logic_main_menu_finished ) ;
+            binder . get ( ) . fsm_input ( "stage_amusement_disabled" , inputs . get ( ) . stage_amusement_disabled ) ;
+            binder . get ( ) . fsm_input ( "stage_amusement_enabled" , inputs . get ( ) . stage_amusement_enabled ) ;
+            binder . get ( ) . fsm_input ( "stage_main_menu_disabled" , inputs . get ( ) . stage_main_menu_disabled ) ;
+            binder . get ( ) . fsm_input ( "stage_main_menu_enabled" , inputs . get ( ) . stage_main_menu_enabled ) ;
+            binder . get ( ) . fsm_input ( "stage_title_disabled" , inputs . get ( ) . stage_title_disabled ) ;
+            binder . get ( ) . fsm_input ( "stage_title_enabled" , inputs . get ( ) . stage_title_enabled ) ;
 
-            binder . get ( ) . fsm_action ( "logic_amusement_creation_permit" ) ;
-            binder . get ( ) . fsm_action ( "logic_amusement_launch_permit" ) ;
-            binder . get ( ) . fsm_action ( "logic_amusement_render" ) ;
-            binder . get ( ) . fsm_action ( "logic_amusement_update" ) ;
-            binder . get ( ) . fsm_action ( "logic_game_launch_permit" ) ;
-            binder . get ( ) . fsm_action ( "logic_game_render" ) ;
-            binder . get ( ) . fsm_action ( "logic_game_update" ) ;
-            binder . get ( ) . fsm_action ( "logic_main_menu_creation_permit" ) ;
-            binder . get ( ) . fsm_action ( "logic_main_menu_launch_permit" ) ;
-            binder . get ( ) . fsm_action ( "logic_main_menu_render" ) ;
-            binder . get ( ) . fsm_action ( "logic_main_menu_update" ) ;
-            binder . get ( ) . fsm_action ( "logic_text_prepare_permit" ) ;
-            binder . get ( ) . fsm_action ( "logic_text_update" ) ;
-            binder . get ( ) . fsm_action ( "logic_title_launch_permit" ) ;
-            binder . get ( ) . fsm_action ( "logic_title_render" ) ;
-            binder . get ( ) . fsm_action ( "logic_title_update" ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_creation_permit" , & logic_application_fsm_actions_type :: logic_amusement_creation_permit ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_launch_permit" , & logic_application_fsm_actions_type :: logic_amusement_launch_permit ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_render" , & logic_application_fsm_actions_type :: logic_amusement_render ) ;
+            binder . get ( ) . fsm_action ( "logic_amusement_update" , & logic_application_fsm_actions_type :: logic_amusement_update ) ;
+            binder . get ( ) . fsm_action ( "logic_game_launch_permit" , & logic_application_fsm_actions_type :: logic_game_launch_permit ) ;
+            binder . get ( ) . fsm_action ( "logic_game_render" , & logic_application_fsm_actions_type :: logic_game_render ) ;
+            binder . get ( ) . fsm_action ( "logic_game_update" , & logic_application_fsm_actions_type :: logic_game_update ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_creation_permit" , & logic_application_fsm_actions_type :: logic_main_menu_creation_permit ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_launch_permit" , & logic_application_fsm_actions_type :: logic_main_menu_launch_permit ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_render" , & logic_application_fsm_actions_type :: logic_main_menu_render ) ;
+            binder . get ( ) . fsm_action ( "logic_main_menu_update" , & logic_application_fsm_actions_type :: logic_main_menu_update ) ;
+            binder . get ( ) . fsm_action ( "logic_text_prepare_permit" , & logic_application_fsm_actions_type :: logic_text_prepare_permit ) ;
+            binder . get ( ) . fsm_action ( "logic_text_update" , & logic_application_fsm_actions_type :: logic_text_update ) ;
+            binder . get ( ) . fsm_action ( "logic_title_launch_permit" , & logic_application_fsm_actions_type :: logic_title_launch_permit ) ;
+            binder . get ( ) . fsm_action ( "logic_title_render" , & logic_application_fsm_actions_type :: logic_title_render ) ;
+            binder . get ( ) . fsm_action ( "logic_title_update" , & logic_application_fsm_actions_type :: logic_title_update ) ;
         }
     } ;
 

@@ -57,7 +57,16 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_mediator ( typenam
     typename platform_pointer :: template pointer < data_binder > binder_ptr ;
     _fsm_collection . get ( ) . binder ( binder_ptr ) ;
 
-    reflection :: bind ( ( actions_type * ) ( 0 ) , ( inputs_type * ) ( 0 ) , binder_ptr ) ;
+    actions_type dummy_actions ;
+    inputs_type dummy_inputs ;
+
+    typename platform_pointer :: template pointer < actions_type > dummy_actions_ptr ;
+    typename platform_pointer :: template pointer < inputs_type > dummy_inputs_ptr ;
+
+    platform_pointer :: bind ( dummy_actions_ptr , dummy_actions ) ;
+    platform_pointer :: bind ( dummy_inputs_ptr , dummy_inputs ) ;
+
+    reflection :: bind ( dummy_actions_ptr , dummy_inputs_ptr , binder_ptr ) ;
 }
 
 template < typename data_fsm_loadable_types >
