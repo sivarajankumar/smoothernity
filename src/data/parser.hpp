@@ -64,6 +64,9 @@ class shy_data_parser
         static std :: string error_expected_system_name_instead_of ( std :: string token ) { return std :: string ( "expected system name, but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_expected_to_instead_of ( std :: string token ) { return std :: string ( "expected 'to', but got '" ) + token + std :: string ( "'" ) ; }
         static std :: string error_unknown_fract_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown fract attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
+        static std :: string error_unknown_fsm_action ( std :: string fsm_action , std :: string fsm_system ) { return std :: string ( "unknown fsm action '" ) + fsm_action + std :: string ( "' in fsm system '" ) + fsm_system + std :: string ( "'" ) ; }
+        static std :: string error_unknown_fsm_input ( std :: string fsm_input , std :: string fsm_system ) { return std :: string ( "unknown fsm input '" ) + fsm_input + std :: string ( "' in fsm system '" ) + fsm_system + std :: string ( "'" ) ; }
+        static std :: string error_unknown_fsm_system ( std :: string fsm_system ) { return std :: string ( "unknown fsm system '" ) + fsm_system + std :: string ( "'" ) ; }
         static std :: string error_unknown_module ( std :: string module ) { return std :: string ( "unknown module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_unknown_whole_attribute_in_module ( std :: string attribute , std :: string module ) { return std :: string ( "unknown whole attribute '" ) + attribute + std :: string ( "' in module '" ) + module + std :: string ( "'" ) ; }
         static std :: string error_whole_line ( ) { return std :: string ( "whole line: " ) ; }
@@ -248,6 +251,7 @@ private :
     std :: string _attribute_numerator_value ;
     std :: string _attribute_denominator_sign ;
     std :: string _attribute_denominator_value ;
+    std :: string _current_fsm_system_name ;
     data_content_fsm_action_command _current_fsm_action_command ;
     data_content_fsm_actions * _current_fsm_actions ;
     data_content_fsm_condition_group * _current_fsm_condition_group ;
@@ -1271,8 +1275,16 @@ template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_system_name ( std :: string name )
 {
     if ( _content -> fsm_systems . find ( name ) == _content -> fsm_systems . end ( ) )
-        _content -> fsm_systems [ name ] = data_content_fsm_system ( ) ;
-    _current_fsm_system = & ( _content -> fsm_systems [ name ] ) ;
+    {
+        _error = _consts :: error_unknown_fsm_system ( name ) ;
+        _current_fsm_system_name = std :: string ( ) ;
+        _current_fsm_system = 0 ;
+    }
+    else
+    {
+        _current_fsm_system_name = name ;
+        _current_fsm_system = & ( _content -> fsm_systems [ name ] ) ;
+    }
 }
 
 template < typename data_parser_types >
@@ -1300,7 +1312,9 @@ void shy_data_parser < data_parser_types > :: _store_state_name ( std :: string 
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_action_name ( std :: string name )
 {
-    if ( _current_fsm_actions )
+    if ( _current_fsm_system && _current_fsm_system -> actions . count ( name ) == 0 )
+        _error = _consts :: error_unknown_fsm_action ( name , _current_fsm_system_name) ;
+    else if ( _current_fsm_actions )
     {
         data_content_fsm_action_do action_do ;
         action_do . action = name ;
@@ -1337,7 +1351,9 @@ void shy_data_parser < data_parser_types > :: _store_transition_state_name ( std
 template < typename data_parser_types >
 void shy_data_parser < data_parser_types > :: _store_input_condition ( std :: string input )
 {
-    if ( _current_fsm_condition_group )
+    if ( _current_fsm_system && _current_fsm_system -> inputs . count ( input ) == 0 )
+        _error = _consts :: error_unknown_fsm_input ( input , _current_fsm_system_name ) ;
+    else if ( _current_fsm_condition_group )
     {
         data_content_fsm_condition_input condition ;
         condition . input = input ;
