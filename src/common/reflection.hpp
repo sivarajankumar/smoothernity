@@ -92,8 +92,6 @@ template < typename context >
 class shy_reflection
 {
     typedef typename context :: mediator mediator ;
-    typedef typename context :: mediator :: logic_application_stateless :: logic_application_fsm_actions_type logic_application_fsm_actions_type ;
-    typedef typename context :: mediator :: logic_application_stateless :: logic_application_fsm_inputs_type logic_application_fsm_inputs_type ;
     typedef typename context :: mediator :: platform :: platform_pointer platform_pointer ;
     typedef typename context :: reflection_binder reflection_binder ;
 public :
