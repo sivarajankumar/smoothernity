@@ -1,5 +1,5 @@
 #include "macosx_platform.hpp"
-#include "../common/facade.hpp"
+#include "../facade/interface.hpp"
 
 @interface shy_macosx_scene : NSObject
 {
@@ -8,7 +8,6 @@
     shy_macosx_texture_loader * _texture_loader ;
     shy_macosx_platform_insider * _platform_insider ;
 	shy_facade_interface * _facade ;
-    shy_fsm_collection_interface * _fsm_collection ;
 	NSRect _bounds ;
 }
 

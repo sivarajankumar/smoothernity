@@ -718,7 +718,7 @@ private :
     typedef typename aggregator_types :: scheduled_logic_title :: template scheduled_module < mediator_type > logic_title ;
     typedef typename aggregator_types :: scheduled_logic_touch :: template scheduled_module < mediator_type > logic_touch ;
 public :
-    shy_aggregator 
+    void register_components
         ( typename platform_pointer :: template pointer < const platform >
         , typename platform_pointer :: template pointer < fsm_collection >
         ) ;
@@ -835,11 +835,10 @@ private :
 } ;
 
 template < typename aggregator_types >
-shy_aggregator < aggregator_types > :: shy_aggregator 
+void shy_aggregator < aggregator_types > :: register_components
     ( typename platform_pointer :: template pointer < const platform > arg_platform
     , typename platform_pointer :: template pointer < fsm_collection > arg_fsm_collection
     )
-: _mediator ( arg_platform , arg_fsm_collection )
 {
     typename platform_pointer :: template pointer < engine_rasterizer > engine_rasterizer_ptr ;
     typename platform_pointer :: template pointer < engine_render > engine_render_ptr ;
@@ -1118,6 +1117,8 @@ shy_aggregator < aggregator_types > :: shy_aggregator
     platform_scheduler :: register_module_in_scheduler ( logic_text_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_title_ptr , scheduler_ptr ) ;
     platform_scheduler :: register_module_in_scheduler ( logic_touch_ptr , scheduler_ptr ) ;
+
+    _mediator . register_components ( arg_platform , arg_fsm_collection ) ;
     _mediator . register_modules
         ( engine_rasterizer_ptr
         , engine_render_ptr

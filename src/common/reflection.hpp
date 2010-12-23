@@ -1,13 +1,4 @@
-template < typename _fsm_reflection >
-class shy_fsm_collection_loadable_types
-{
-public :
-    typedef _fsm_reflection fsm_reflection ;
-} ;
-
-template < typename fsm_collection_loadable_types >
 class shy_fsm_collection_loadable
-: public shy_fsm_collection_interface
 {
     class _fsm_system_type
     {
@@ -100,11 +91,6 @@ public :
 private :
     std :: vector < _fsm_system_type > _fsm_systems ;
     _fsm_system_type * _current_fsm_system ;
-} ;
-
-class shy_fsm_reflection
-{
-public :
 } ;
 
 template < typename context >
