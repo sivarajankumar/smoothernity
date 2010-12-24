@@ -28,6 +28,7 @@ class shy_data_fsm_loadable
     typedef typename data_content :: data_content_fsm_machine_container data_content_fsm_machine_container ;
     typedef typename data_content :: data_content_fsm_machine data_content_fsm_machine ;
     typedef typename data_content :: data_content_fsm_state_container data_content_fsm_state_container ;
+    typedef typename data_content :: data_content_fsm_state data_content_fsm_state ;
     typedef typename data_content :: data_content_fsm_system data_content_fsm_system ;
 
     typedef typename fsm_collection :: template reflection < mediator_type > reflection ;
@@ -55,11 +56,18 @@ class shy_data_fsm_loadable
     : public engine_fsm :: template fsm_state_type < _state_environment_type >
     {
     public :
+        _state_type ( ) ;
         virtual ~ _state_type ( ) ;
+
         virtual void on_entry ( _state_environment_type & ) ;
         virtual void on_exit ( _state_environment_type & ) ;
         virtual void on_input ( _state_environment_type & ) ;
         virtual _state_type & transition ( _state_environment_type & ) ;
+
+        void set_fsm ( data_fsm_loadable & ) ;
+        void set_content ( const data_content_fsm_state & ) ;
+    private :
+        data_fsm_loadable * _fsm ;
     } ;
 
 public :
@@ -98,7 +106,24 @@ private :
 } ;
 
 template < typename data_fsm_loadable_types >
+shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _state_type ( )
+: _fsm ( 0 )
+{
+}
+
+template < typename data_fsm_loadable_types >
 shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: ~ _state_type ( )
+{
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: set_fsm ( data_fsm_loadable & fsm )
+{
+    _fsm = & fsm ;
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: set_content ( const data_content_fsm_state & )
 {
 }
 
@@ -174,6 +199,10 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: init ( )
             )
         {
             std :: string fsm_state_name = fsm_state_i -> first ;
+            const data_content_fsm_state & fsm_state = fsm_state_i -> second ;
+            _state_type state ;
+            state . set_fsm ( * this ) ;
+            state . set_content ( fsm_state ) ;
             states [ fsm_state_name ] = _state_type ( ) ;
         }
         _machine_states [ fsm_machine_name ] = states ;
