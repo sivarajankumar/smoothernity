@@ -14,6 +14,8 @@ class shy_data_binder
 {
     typedef typename data_binder_types :: data_content data_content ;
     typedef typename data_binder_types :: data_content :: data_content_fract data_content_fract ;
+    typedef typename data_binder_types :: data_content :: data_content_fsm_action_binding data_content_fsm_action_binding ;
+    typedef typename data_binder_types :: data_content :: data_content_fsm_input_binding data_content_fsm_input_binding ;
     typedef typename data_binder_types :: data_content :: data_content_fsm_system data_content_fsm_system ;
     typedef typename data_binder_types :: data_content :: data_content_module data_content_module ;
     typedef typename data_binder_types :: data_content :: data_content_whole data_content_whole ;
@@ -85,17 +87,23 @@ void shy_data_binder < data_binder_types > :: fsm_system ( std :: string name )
 }
 
 template < typename data_binder_types >
-void shy_data_binder < data_binder_types > :: fsm_input ( std :: string name , num_whole & )
+void shy_data_binder < data_binder_types > :: fsm_input ( std :: string name , num_whole & input )
 {
     if ( _current_fsm_system )
-        _current_fsm_system -> inputs . insert ( name ) ;
+    {
+        _current_fsm_system -> inputs [ name ] = data_content_fsm_input_binding ( ) ;
+        _current_fsm_system -> inputs [ name ] . binding = & input ;
+    }
 }
 
 template < typename data_binder_types >
 template < typename actions_type >
-void shy_data_binder < data_binder_types > :: fsm_action ( std :: string name , void ( actions_type :: * ) ( ) )
+void shy_data_binder < data_binder_types > :: fsm_action ( std :: string name , void ( actions_type :: * action ) ( ) )
 {
     if ( _current_fsm_system )
-        _current_fsm_system -> actions . insert ( name ) ;
+    {
+        _current_fsm_system -> actions [ name ] = data_content_fsm_action_binding ( ) ;
+        _current_fsm_system -> actions [ name ] . binding = reinterpret_cast < void ( data_content :: * ) ( ) > ( action ) ;
+    }
 }
 
