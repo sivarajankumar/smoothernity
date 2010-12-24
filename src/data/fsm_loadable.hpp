@@ -89,6 +89,7 @@ class shy_data_fsm_loadable
         void load_from ( const data_content_fsm_state & ) ;
     private :
         void _load_actions ( _state_actions_type & , const data_content_fsm_actions & ) ;
+        void _perform_actions ( _state_actions_type & ) ;
     private :
         data_fsm_loadable * _fsm ;
         _state_actions_type _on_entry ;
@@ -180,13 +181,28 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _load_a
 }
 
 template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _perform_actions ( _state_actions_type & actions )
+{
+    for ( typename _state_action_do_container_type :: const_iterator action_i = actions . actions . begin ( )
+        ; action_i != actions . actions . end ( )
+        ; ++ action_i
+        )
+    {
+        _action_binding_type binding = * action_i ;
+        ( _fsm -> _actions . get ( ) .* binding ) ( ) ;
+    }
+}
+
+template < typename data_fsm_loadable_types >
 void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: on_entry ( _state_environment_type & )
 {
+    _perform_actions ( _on_entry ) ;
 }
 
 template < typename data_fsm_loadable_types >
 void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: on_exit ( _state_environment_type & )
 {
+    _perform_actions ( _on_exit ) ;
 }
 
 template < typename data_fsm_loadable_types >
