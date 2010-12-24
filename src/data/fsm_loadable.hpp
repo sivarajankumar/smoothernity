@@ -10,6 +10,9 @@ public :
 template < typename data_fsm_loadable_types >
 class shy_data_fsm_loadable
 {
+    class _state_type ;
+
+    typedef typename data_fsm_loadable_types :: logic_fsm logic_fsm ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: actions_type actions_type ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: inputs_type inputs_type ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type mediator_type ;
@@ -23,15 +26,40 @@ class shy_data_fsm_loadable
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_pointer platform_pointer ;
 
     typedef typename data_content :: data_content_fsm_machine_container data_content_fsm_machine_container ;
+    typedef typename data_content :: data_content_fsm_machine data_content_fsm_machine ;
+    typedef typename data_content :: data_content_fsm_state_container data_content_fsm_state_container ;
     typedef typename data_content :: data_content_fsm_system data_content_fsm_system ;
 
     typedef typename fsm_collection :: template reflection < mediator_type > reflection ;
     typedef shy_data_fsm_loadable < data_fsm_loadable_types > data_fsm_loadable ;
 
+    typedef void ( actions_type :: * _action_binding_type ) ( ) ;
+
+    typedef typename std :: map < std :: string , _action_binding_type > _action_binding_container_type ;
+    typedef typename std :: map < std :: string , num_whole * > _input_binding_container_type ;
+    typedef typename std :: map < std :: string , _state_type * > _machine_state_current_container_type ;
+    typedef typename std :: map < std :: string , _state_type > _state_container_type ;
+    typedef typename std :: map < std :: string , _state_container_type > _machine_states_container_type ;
+
     class _consts
     {
     public :
         static std :: string state_initial ( ) { return "initial" ; }
+    } ;
+
+    class _state_environment_type
+    {
+    } ;
+
+    class _state_type
+    : public engine_fsm :: template fsm_state_type < _state_environment_type >
+    {
+    public :
+        virtual ~ _state_type ( ) ;
+        virtual void on_entry ( _state_environment_type & ) ;
+        virtual void on_exit ( _state_environment_type & ) ;
+        virtual void on_input ( _state_environment_type & ) ;
+        virtual _state_type & transition ( _state_environment_type & ) ;
     } ;
 
 public :
@@ -53,7 +81,7 @@ public :
 
     void bind_fsm_system ( std :: string ) ;
     void bind_fsm_input ( std :: string , num_whole & ) ;
-    void bind_fsm_action ( std :: string , void ( actions_type :: * ) ( ) ) ;
+    void bind_fsm_action ( std :: string , _action_binding_type ) ;
 private :
     num_whole _fsm_running ;
     typename platform_pointer :: template pointer < fsm_collection > _fsm_collection ;
@@ -63,10 +91,38 @@ private :
     typename platform_pointer :: template pointer < data_content > _content ;
 
     std :: string _fsm_system_name ;
-    std :: map < std :: string , num_whole * > _inputs_binding ;
-    std :: map < std :: string , void ( actions_type :: * ) ( ) > _actions_binding ;
-    std :: map < std :: string , std :: string > _machines ;
+    _input_binding_container_type _inputs_binding ;
+    _action_binding_container_type _actions_binding ;
+    _machine_state_current_container_type _machine_state_current ;
+    _machine_states_container_type _machine_states ;
 } ;
+
+template < typename data_fsm_loadable_types >
+shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: ~ _state_type ( )
+{
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: on_entry ( _state_environment_type & )
+{
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: on_exit ( _state_environment_type & )
+{
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: on_input ( _state_environment_type & )
+{
+}
+
+template < typename data_fsm_loadable_types >
+typename shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type &
+shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: transition ( _state_environment_type & )
+{
+    return * this ;
+}
 
 template < typename data_fsm_loadable_types >
 shy_data_fsm_loadable < data_fsm_loadable_types > :: shy_data_fsm_loadable ( )
@@ -110,7 +166,25 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: init ( )
         )
     {
         std :: string fsm_machine_name = fsm_machine_i -> first ;
-        _machines [ fsm_machine_name ] = _consts :: state_initial ( ) ;
+        const data_content_fsm_machine & fsm_machine = fsm_machine_i -> second ;
+        _state_container_type states ;
+        for ( typename data_content_fsm_state_container :: const_iterator fsm_state_i = fsm_machine . states . begin ( )
+            ; fsm_state_i != fsm_machine . states . end ( )
+            ; ++ fsm_state_i
+            )
+        {
+            std :: string fsm_state_name = fsm_state_i -> first ;
+            states [ fsm_state_name ] = _state_type ( ) ;
+        }
+        _machine_states [ fsm_machine_name ] = states ;
+    }
+    for ( typename data_content_fsm_machine_container :: const_iterator fsm_machine_i = fsm_system . machines . begin ( )
+        ; fsm_machine_i != fsm_system . machines . end ( )
+        ; ++ fsm_machine_i
+        )
+    {
+        std :: string fsm_machine_name = fsm_machine_i -> first ;
+        _machine_state_current [ fsm_machine_name ] = & _machine_states [ fsm_machine_name ] [ _consts :: state_initial ( ) ] ;
     }
 }
 
@@ -129,7 +203,7 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: bind_fsm_input ( std :
 }
 
 template < typename data_fsm_loadable_types >
-void shy_data_fsm_loadable < data_fsm_loadable_types > :: bind_fsm_action ( std :: string name , void ( actions_type :: * action ) ( ) )
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: bind_fsm_action ( std :: string name , _action_binding_type action )
 {
     _actions_binding [ name ] = action ;
     _binder . get ( ) . bind_fsm_action ( name ) ;
