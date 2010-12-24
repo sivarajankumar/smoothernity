@@ -22,8 +22,17 @@ class shy_data_fsm_loadable
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_pointer platform_pointer ;
 
+    typedef typename data_content :: data_content_fsm_machine_container data_content_fsm_machine_container ;
+    typedef typename data_content :: data_content_fsm_system data_content_fsm_system ;
+
     typedef typename fsm_collection :: template reflection < mediator_type > reflection ;
     typedef shy_data_fsm_loadable < data_fsm_loadable_types > data_fsm_loadable ;
+
+    class _consts
+    {
+    public :
+        static std :: string state_initial ( ) { return "initial" ; }
+    } ;
 
 public :
     shy_data_fsm_loadable ( ) ;
@@ -94,6 +103,15 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: set_inputs ( typename 
 template < typename data_fsm_loadable_types >
 void shy_data_fsm_loadable < data_fsm_loadable_types > :: init ( )
 {
+    data_content_fsm_system & fsm_system = _content . get ( ) . fsm_systems [ _fsm_system_name ] ;
+    for ( typename data_content_fsm_machine_container :: const_iterator fsm_machine_i = fsm_system . machines . begin ( )
+        ; fsm_machine_i != fsm_system . machines . end ( )
+        ; ++ fsm_machine_i
+        )
+    {
+        std :: string fsm_machine_name = fsm_machine_i -> first ;
+        _machines [ fsm_machine_name ] = _consts :: state_initial ( ) ;
+    }
 }
 
 template < typename data_fsm_loadable_types >
