@@ -136,7 +136,8 @@ class shy_data_fsm_loadable
     private :
         void _load_actions ( _state_actions_type & , const data_content_fsm_actions & ) ;
         void _load_condition_groups ( _state_condition_group_container_type & , const data_content_fsm_condition_group_container & ) ;
-        void _perform_actions ( _state_actions_type & ) ;
+        void _perform_actions ( const _state_actions_type & ) ;
+        bool _perform_condition_groups ( const _state_condition_group_container_type & ) ;
     private :
         data_fsm_loadable * _fsm ;
         _state_actions_type _on_entry ;
@@ -273,7 +274,7 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _load_c
 }
 
 template < typename data_fsm_loadable_types >
-void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _perform_actions ( _state_actions_type & actions )
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _perform_actions ( const _state_actions_type & actions )
 {
     for ( typename _state_action_do_container_type :: const_iterator action_i = actions . actions . begin ( )
         ; action_i != actions . actions . end ( )
@@ -283,6 +284,35 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _perfor
         _action_binding_type binding = * action_i ;
         ( _fsm -> _actions . get ( ) .* binding ) ( ) ;
     }
+}
+
+template < typename data_fsm_loadable_types >
+bool shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _perform_condition_groups ( const _state_condition_group_container_type & condition_groups )
+{
+    if ( condition_groups . empty ( ) )
+        return true ;
+    for ( typename _state_condition_group_container_type :: const_iterator condition_group_i = condition_groups . begin ( )
+        ; condition_group_i != condition_groups . end ( )
+        ; ++ condition_group_i
+        )
+    {
+        bool result = true ;
+
+        _state_condition_group_type condition_group = * condition_group_i ;
+        for ( typename _state_condition_input_container_type :: const_iterator condition_input_i = condition_group . inputs . begin ( )
+            ; condition_input_i != condition_group . inputs . end ( )
+            ; ++ condition_input_i
+            )
+        {
+            num_whole * binding = condition_input_i -> binding ;
+            if ( platform_conditions :: whole_is_false ( * binding ) )
+                result = false ; 
+        }        
+
+        if ( result )
+            return true ;
+    }
+    return false ;
 }
 
 template < typename data_fsm_loadable_types >
@@ -300,6 +330,15 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: on_exit
 template < typename data_fsm_loadable_types >
 void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: on_input ( _state_environment_type & )
 {
+    for ( typename _state_on_input_container_type :: const_iterator on_input_i = _on_input . begin ( )
+        ; on_input_i != _on_input . end ( )
+        ; ++ on_input_i
+        )
+    {
+        const _state_on_input_type & state_on_input = * on_input_i ;
+        if ( _perform_condition_groups ( state_on_input . condition_groups ) )
+            _perform_actions ( state_on_input . actions ) ;
+    }
 }
 
 template < typename data_fsm_loadable_types >
