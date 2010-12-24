@@ -19,7 +19,7 @@ class shy_facade_loadable
     typedef shy_data_binder < shy_data_binder_types < data_content , platform > > data_binder ;
     typedef shy_data_generator < shy_data_generator_types < data_content > > data_generator ;
     typedef shy_data_parser < shy_data_parser_types < data_content > > data_parser ;
-    typedef shy_fsm_collection_loadable < shy_fsm_collection_loadable_types < data_binder , platform > > fsm_collection_loadable ;
+    typedef shy_fsm_collection_loadable < shy_fsm_collection_loadable_types < data_binder , data_content , platform > > fsm_collection_loadable ;
     typedef shy_composer < platform , fsm_collection_loadable > composer ;
     typedef typename composer :: mediator mediator ;
     typedef typename platform :: platform_pointer platform_pointer ;
@@ -61,6 +61,7 @@ shy_facade_loadable < platform > :: shy_facade_loadable ( typename platform_poin
     _generator . set_content ( _content ) ;
 
     _fsm_collection . set_binder ( _binder ) ;
+    _fsm_collection . set_content ( _content ) ;
 
     typename platform_pointer :: template pointer < fsm_collection_loadable > fsm_collection_ptr ;
     platform_pointer :: bind ( fsm_collection_ptr , _fsm_collection ) ;

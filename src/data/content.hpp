@@ -31,7 +31,7 @@ public :
     class data_content_whole ;
 
     typedef std :: map < std :: string , data_content_fract > data_content_fract_container ;
-    typedef std :: map < std :: string , data_content_fsm_action_binding > data_content_fsm_action_binding_container ;
+    typedef std :: set < std :: string > data_content_fsm_action_binding_container ;
     typedef std :: vector < data_content_fsm_action_command > data_content_fsm_action_command_container ;
     typedef std :: vector < data_content_fsm_action_do > data_content_fsm_action_do_container ;
     typedef std :: vector < data_content_fsm_condition_command > data_content_fsm_condition_command_container ;
@@ -40,7 +40,7 @@ public :
     typedef std :: vector < data_content_fsm_condition_state > data_content_fsm_condition_state_container ;
     typedef std :: map < std :: string , data_content_fsm_machine > data_content_fsm_machine_container ;
     typedef std :: vector < data_content_fsm_on_input > data_content_fsm_on_input_container ;
-    typedef std :: map < std :: string , data_content_fsm_input_binding > data_content_fsm_input_binding_container ;
+    typedef std :: set < std :: string > data_content_fsm_input_binding_container ;
     typedef std :: map < std :: string , data_content_fsm_system > data_content_fsm_system_container ;
     typedef std :: vector < data_content_fsm_transition > data_content_fsm_transition_container ;
     typedef std :: map < std :: string , data_content_fsm_state > data_content_fsm_state_container ;
@@ -82,22 +82,6 @@ public :
         data_content_fsm_machine_container machines ;
         data_content_fsm_input_binding_container inputs ;
         data_content_fsm_action_binding_container actions ;
-    } ;
-
-    class data_content_fsm_input_binding
-    {
-    public :
-        data_content_fsm_input_binding ( ) ;
-    public :
-        num_whole * binding ;
-    } ;
-
-    class data_content_fsm_action_binding
-    {
-    public :
-        data_content_fsm_action_binding ( ) ;
-    public :
-        void ( shy_data_content :: * binding ) ( ) ;
     } ;
 
     class data_content_fsm_machine
@@ -188,18 +172,6 @@ shy_data_content < data_content_types > :: data_content_fract :: data_content_fr
 
 template < typename data_content_types >
 shy_data_content < data_content_types > :: data_content_whole :: data_content_whole ( )
-: binding ( 0 )
-{
-}
-
-template < typename data_content_types >
-shy_data_content < data_content_types > :: data_content_fsm_input_binding :: data_content_fsm_input_binding ( )
-: binding ( 0 )
-{
-}
-
-template < typename data_content_types >
-shy_data_content < data_content_types > :: data_content_fsm_action_binding :: data_content_fsm_action_binding ( )
 : binding ( 0 )
 {
 }

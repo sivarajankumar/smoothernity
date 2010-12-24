@@ -27,11 +27,9 @@ public :
     void module ( std :: string ) ;
     void bind ( std :: string , const num_fract & ) ;
     void bind ( std :: string , const num_whole & ) ;
-    void fsm_system ( std :: string ) ;
-    void fsm_input ( std :: string , num_whole & ) ;
-
-    template < typename actions_type >
-    void fsm_action ( std :: string , void ( actions_type :: * ) ( ) ) ;
+    void bind_fsm_system ( std :: string ) ;
+    void bind_fsm_input ( std :: string ) ;
+    void bind_fsm_action ( std :: string ) ;
 public :
     data_content * _content ;
     data_content_module * _current_module ;
@@ -80,30 +78,23 @@ void shy_data_binder < data_binder_types > :: bind ( std :: string name , const 
 }
 
 template < typename data_binder_types >
-void shy_data_binder < data_binder_types > :: fsm_system ( std :: string name )
+void shy_data_binder < data_binder_types > :: bind_fsm_system ( std :: string name )
 {
     _content -> fsm_systems [ name ] = data_content_fsm_system ( ) ;
     _current_fsm_system = & ( _content -> fsm_systems [ name ] ) ;
 }
 
 template < typename data_binder_types >
-void shy_data_binder < data_binder_types > :: fsm_input ( std :: string name , num_whole & input )
+void shy_data_binder < data_binder_types > :: bind_fsm_input ( std :: string name )
 {
     if ( _current_fsm_system )
-    {
-        _current_fsm_system -> inputs [ name ] = data_content_fsm_input_binding ( ) ;
-        _current_fsm_system -> inputs [ name ] . binding = & input ;
-    }
+        _current_fsm_system -> inputs . insert ( name ) ;
 }
 
 template < typename data_binder_types >
-template < typename actions_type >
-void shy_data_binder < data_binder_types > :: fsm_action ( std :: string name , void ( actions_type :: * action ) ( ) )
+void shy_data_binder < data_binder_types > :: bind_fsm_action ( std :: string name )
 {
     if ( _current_fsm_system )
-    {
-        _current_fsm_system -> actions [ name ] = data_content_fsm_action_binding ( ) ;
-        _current_fsm_system -> actions [ name ] . binding = reinterpret_cast < void ( data_content :: * ) ( ) > ( action ) ;
-    }
+        _current_fsm_system -> actions . insert ( name ) ;
 }
 
