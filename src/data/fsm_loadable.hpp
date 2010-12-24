@@ -12,6 +12,11 @@ class shy_data_fsm_loadable
 {
     class _state_type ;
     class _state_action_command_type ;
+    class _state_condition_command_type ;
+    class _state_condition_group_type ;
+    class _state_condition_input_type ;
+    class _state_condition_state_type ;
+    class _state_on_input_type ;
 
     typedef typename data_fsm_loadable_types :: logic_fsm logic_fsm ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: actions_type actions_type ;
@@ -28,8 +33,13 @@ class shy_data_fsm_loadable
 
     typedef typename data_content :: data_content_fsm_action_do_container data_content_fsm_action_do_container ;
     typedef typename data_content :: data_content_fsm_actions data_content_fsm_actions ;
+    typedef typename data_content :: data_content_fsm_condition_group data_content_fsm_condition_group ;
+    typedef typename data_content :: data_content_fsm_condition_group_container data_content_fsm_condition_group_container ;
+    typedef typename data_content :: data_content_fsm_condition_input data_content_fsm_condition_input ;
+    typedef typename data_content :: data_content_fsm_condition_input_container data_content_fsm_condition_input_container ;
     typedef typename data_content :: data_content_fsm_machine_container data_content_fsm_machine_container ;
     typedef typename data_content :: data_content_fsm_machine data_content_fsm_machine ;
+    typedef typename data_content :: data_content_fsm_on_input_container data_content_fsm_on_input_container ;
     typedef typename data_content :: data_content_fsm_state_container data_content_fsm_state_container ;
     typedef typename data_content :: data_content_fsm_state data_content_fsm_state ;
     typedef typename data_content :: data_content_fsm_system data_content_fsm_system ;
@@ -46,6 +56,11 @@ class shy_data_fsm_loadable
     typedef typename std :: map < std :: string , _state_container_type > _machine_states_container_type ;
     typedef typename std :: vector < _action_binding_type > _state_action_do_container_type ;
     typedef typename std :: vector < _state_action_command_type > _state_action_command_container_type ;
+    typedef typename std :: vector < _state_condition_command_type > _state_condition_command_container_type ;
+    typedef typename std :: vector < _state_condition_group_type > _state_condition_group_container_type ;
+    typedef typename std :: vector < _state_condition_input_type > _state_condition_input_container_type ;
+    typedef typename std :: vector < _state_condition_state_type > _state_condition_state_container_type ;
+    typedef typename std :: vector < _state_on_input_type > _state_on_input_container_type ;
 
     class _consts
     {
@@ -72,6 +87,37 @@ class shy_data_fsm_loadable
         _state_action_command_container_type commands ;
     } ;
 
+    class _state_condition_input_type
+    {
+    public :
+        _state_condition_input_type ( ) ;
+    public :
+        num_whole * binding ;
+    } ;
+
+    class _state_condition_state_type
+    {
+    } ;
+
+    class _state_condition_command_type
+    {
+    } ;
+
+    class _state_condition_group_type
+    {
+    public :
+        _state_condition_input_container_type inputs ;
+        _state_condition_state_container_type states ;
+        _state_condition_command_container_type commands ;
+    } ;
+
+    class _state_on_input_type
+    {
+    public :
+        _state_condition_group_container_type condition_groups ;
+        _state_actions_type actions ;
+    } ;
+
     class _state_type
     : public engine_fsm :: template fsm_state_type < _state_environment_type >
     {
@@ -89,11 +135,13 @@ class shy_data_fsm_loadable
         void load_from ( const data_content_fsm_state & ) ;
     private :
         void _load_actions ( _state_actions_type & , const data_content_fsm_actions & ) ;
+        void _load_condition_groups ( _state_condition_group_container_type & , const data_content_fsm_condition_group_container & ) ;
         void _perform_actions ( _state_actions_type & ) ;
     private :
         data_fsm_loadable * _fsm ;
         _state_actions_type _on_entry ;
         _state_actions_type _on_exit ;
+        _state_on_input_container_type _on_input ;
         std :: string _machine_name ;
     } ;
 
@@ -135,6 +183,12 @@ private :
 } ;
 
 template < typename data_fsm_loadable_types >
+shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_condition_input_type :: _state_condition_input_type ( )
+: binding ( 0 )
+{
+}
+
+template < typename data_fsm_loadable_types >
 shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _state_type ( )
 : _fsm ( 0 )
 {
@@ -162,6 +216,16 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: load_fr
 {
     _load_actions ( _on_entry , fsm_state . on_entry ) ;
     _load_actions ( _on_exit , fsm_state . on_exit ) ;
+    for ( typename data_content_fsm_on_input_container :: const_iterator on_input_i = fsm_state . on_input . begin ( )
+        ; on_input_i != fsm_state . on_input . end ( )
+        ; ++ on_input_i
+        )
+    {
+        _state_on_input_type state_on_input ;
+        _load_actions ( state_on_input . actions , on_input_i -> actions ) ;
+        _load_condition_groups ( state_on_input . condition_groups , on_input_i -> condition_groups ) ;
+        _on_input . push_back ( state_on_input ) ;
+    }
 }
 
 template < typename data_fsm_loadable_types >
@@ -177,6 +241,34 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _load_a
     {
         std :: string action_name = action_i -> action ;
         actions_to . actions . push_back ( _fsm -> _actions_binding [ action_name ] ) ;
+    }
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _load_condition_groups
+    ( _state_condition_group_container_type & condition_groups_to
+    , const data_content_fsm_condition_group_container & condition_groups_from
+    )
+{
+    for ( typename data_content_fsm_condition_group_container :: const_iterator condition_group_i = condition_groups_from . begin ( )
+        ; condition_group_i != condition_groups_from . end ( )
+        ; ++ condition_group_i
+        )
+    {
+        const data_content_fsm_condition_group & data_condition_group = * condition_group_i ;
+        _state_condition_group_type condition_group ;
+        for ( typename data_content_fsm_condition_input_container :: const_iterator condition_input_i = data_condition_group . inputs . begin ( )
+            ; condition_input_i != data_condition_group . inputs . end ( )
+            ; ++ condition_input_i
+            )
+        {
+            const data_content_fsm_condition_input & data_condition_input = * condition_input_i ;
+            _state_condition_input_type condition_input ;
+            std :: string input_name = data_condition_input . input ;
+            condition_input . binding = _fsm -> _inputs_binding [ input_name ] ;
+            condition_group . inputs . push_back ( condition_input ) ;
+        }
+        condition_groups_to . push_back ( condition_group ) ;
     }
 }
 
