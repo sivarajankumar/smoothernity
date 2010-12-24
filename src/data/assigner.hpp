@@ -15,6 +15,10 @@ class shy_data_assigner
     typedef typename data_assigner_types :: data_content data_content ;
     typedef typename data_assigner_types :: data_content :: data_content_fract data_content_fract ;
     typedef typename data_assigner_types :: data_content :: data_content_fract_container data_content_fract_container ;
+    typedef typename data_assigner_types :: data_content :: data_content_fsm_machine data_content_fsm_machine ;
+    typedef typename data_assigner_types :: data_content :: data_content_fsm_machine_container data_content_fsm_machine_container ;
+    typedef typename data_assigner_types :: data_content :: data_content_fsm_system data_content_fsm_system ;
+    typedef typename data_assigner_types :: data_content :: data_content_fsm_system_container data_content_fsm_system_container ;
     typedef typename data_assigner_types :: data_content :: data_content_module data_content_module ;
     typedef typename data_assigner_types :: data_content :: data_content_module_container data_content_module_container ;
     typedef typename data_assigner_types :: data_content :: data_content_whole data_content_whole ;
@@ -24,7 +28,9 @@ class shy_data_assigner
     class _consts
     {
     public :
+        static std :: string error_no_initial_state_in_machine_of_system ( std :: string fsm_machine , std :: string fsm_system ) { return std :: string ( "no state 'initial' in fsm machine '" ) + fsm_machine + std :: string ( "' of fsm system '" ) + fsm_system + std :: string ( "'" ) ; }
         static std :: string error_no_value_assigned_to_module_attribute ( std :: string module , std :: string attribute ) { return std :: string ( "no value assigned to module '" ) + module + std :: string ( "' attribute '" ) + attribute + std :: string ( "'" ) ; }
+        static std :: string state_initial ( ) { return std :: string ( "initial" ) ; }
     } ;
 
 public :
@@ -32,6 +38,9 @@ public :
     void set_content ( data_content & ) ;
     void assign ( ) ;
     std :: string error ( ) ;
+private :
+    void _assign_modules ( ) ;
+    void _assign_fsm_systems ( ) ;
 private :
     data_content * _content ;
     std :: string _error ;
@@ -51,6 +60,13 @@ void shy_data_assigner < data_assigner_types > :: set_content ( data_content & c
 
 template < typename data_assigner_types >
 void shy_data_assigner < data_assigner_types > :: assign ( )
+{
+    _assign_modules ( ) ;
+    _assign_fsm_systems ( ) ;
+}
+
+template < typename data_assigner_types >
+void shy_data_assigner < data_assigner_types > :: _assign_modules ( )
 {
     for ( typename data_content_module_container :: const_iterator module_i = _content -> modules . begin ( )
         ; module_i != _content -> modules . end ( )
@@ -97,6 +113,29 @@ void shy_data_assigner < data_assigner_types > :: assign ( )
                 std :: istringstream ( string_denominator ) >> int_denominator ;
                 platform_math :: make_num_fract ( * fract . binding , int_numerator , int_denominator ) ;
             }
+        }
+    }
+}
+
+template < typename data_assigner_types >
+void shy_data_assigner < data_assigner_types > :: _assign_fsm_systems ( )
+{
+    for ( typename data_content_fsm_system_container :: const_iterator fsm_system_i = _content -> fsm_systems . begin ( )
+        ; fsm_system_i != _content -> fsm_systems . end ( )
+        ; ++ fsm_system_i
+        )
+    {
+        std :: string fsm_system_name = fsm_system_i -> first ;
+        const data_content_fsm_system & fsm_system = fsm_system_i -> second ;
+        for ( typename data_content_fsm_machine_container :: const_iterator fsm_machine_i = fsm_system . machines . begin ( )
+            ; fsm_machine_i != fsm_system . machines . end ( )
+            ; ++ fsm_machine_i
+            )
+        {
+            std :: string fsm_machine_name = fsm_machine_i -> first ;
+            const data_content_fsm_machine & fsm_machine = fsm_machine_i -> second ;
+            if ( fsm_machine . states . find ( _consts :: state_initial ( ) ) == fsm_machine . states . end ( ) )
+                _error = _consts :: error_no_initial_state_in_machine_of_system ( fsm_machine_name , fsm_system_name ) ;
         }
     }
 }
