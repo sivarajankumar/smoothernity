@@ -11,6 +11,7 @@ template < typename data_fsm_loadable_types >
 class shy_data_fsm_loadable
 {
     class _state_type ;
+    class _state_action_command_type ;
 
     typedef typename data_fsm_loadable_types :: logic_fsm logic_fsm ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: actions_type actions_type ;
@@ -25,6 +26,8 @@ class shy_data_fsm_loadable
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_math :: num_whole num_whole ;
     typedef typename data_fsm_loadable_types :: logic_fsm :: mediator_type :: platform :: platform_pointer platform_pointer ;
 
+    typedef typename data_content :: data_content_fsm_action_do_container data_content_fsm_action_do_container ;
+    typedef typename data_content :: data_content_fsm_actions data_content_fsm_actions ;
     typedef typename data_content :: data_content_fsm_machine_container data_content_fsm_machine_container ;
     typedef typename data_content :: data_content_fsm_machine data_content_fsm_machine ;
     typedef typename data_content :: data_content_fsm_state_container data_content_fsm_state_container ;
@@ -41,6 +44,8 @@ class shy_data_fsm_loadable
     typedef typename std :: map < std :: string , _state_type * > _machine_state_current_container_type ;
     typedef typename std :: map < std :: string , _state_type > _state_container_type ;
     typedef typename std :: map < std :: string , _state_container_type > _machine_states_container_type ;
+    typedef typename std :: vector < _action_binding_type > _state_action_do_container_type ;
+    typedef typename std :: vector < _state_action_command_type > _state_action_command_container_type ;
 
     class _consts
     {
@@ -50,6 +55,17 @@ class shy_data_fsm_loadable
 
     class _state_environment_type
     {
+    } ;
+
+    class _state_action_command_type
+    {
+    } ;
+
+    class _state_actions_type
+    {
+    public :
+        _state_action_do_container_type actions ;
+        _state_action_command_container_type commands ;
     } ;
 
     class _state_type
@@ -65,9 +81,13 @@ class shy_data_fsm_loadable
         virtual _state_type & transition ( _state_environment_type & ) ;
 
         void set_fsm ( data_fsm_loadable & ) ;
-        void set_content ( const data_content_fsm_state & ) ;
+        void load_from ( const data_content_fsm_state & ) ;
+    private :
+        void _load_actions ( _state_actions_type & , const data_content_fsm_actions & ) ;
     private :
         data_fsm_loadable * _fsm ;
+        _state_actions_type _on_entry ;
+        _state_actions_type _on_exit ;
     } ;
 
 public :
@@ -123,8 +143,26 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: set_fsm
 }
 
 template < typename data_fsm_loadable_types >
-void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: set_content ( const data_content_fsm_state & )
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: load_from ( const data_content_fsm_state & fsm_state )
 {
+    _load_actions ( _on_entry , fsm_state . on_entry ) ;
+    _load_actions ( _on_exit , fsm_state . on_exit ) ;
+}
+
+template < typename data_fsm_loadable_types >
+void shy_data_fsm_loadable < data_fsm_loadable_types > :: _state_type :: _load_actions 
+    ( _state_actions_type & actions_to 
+    , const data_content_fsm_actions & actions_from
+    )
+{
+    for ( typename data_content_fsm_action_do_container :: const_iterator action_i = actions_from . actions . begin ( )
+        ; action_i != actions_from . actions . end ( )
+        ; ++ action_i
+        )
+    {
+        std :: string action_name = action_i -> action ;
+        actions_to . actions . push_back ( _fsm -> _actions_binding [ action_name ] ) ;
+    }
 }
 
 template < typename data_fsm_loadable_types >
@@ -202,7 +240,7 @@ void shy_data_fsm_loadable < data_fsm_loadable_types > :: init ( )
             const data_content_fsm_state & fsm_state = fsm_state_i -> second ;
             _state_type state ;
             state . set_fsm ( * this ) ;
-            state . set_content ( fsm_state ) ;
+            state . load_from ( fsm_state ) ;
             states [ fsm_state_name ] = _state_type ( ) ;
         }
         _machine_states [ fsm_machine_name ] = states ;
