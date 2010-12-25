@@ -4,5 +4,5 @@
 typedef so_called_platform :: platform_scheduler :: scheduled_context < my_module1 > :: module so_called_module1 ;
 typedef so_called_platform :: platform_scheduler :: scheduled_context < my_module2 > :: module so_called_module2 ;
 
-#include "mediator.cxx"
+#include "module2_sender.cxx"
 

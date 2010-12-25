@@ -2,5 +2,5 @@
 
 typedef my_platform so_called_platform ;
 
-#include "mediator_injection_of_modules.cxx"
+#include "module2_sender_injection_of_modules.cxx"
 
