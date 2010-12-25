@@ -1,3 +1,4 @@
+#include "platform.hpp"
 #include "module1_sender.hpp"
 #include "module2_sender.hpp"
 
