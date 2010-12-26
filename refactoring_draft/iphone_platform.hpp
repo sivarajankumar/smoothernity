@@ -29,6 +29,8 @@ public :
         {
         public :
             typedef _module module ;
+        public :
+            static void register_in_scheduler ( ) { }
         private :
             static scheduled_context _singleton ;
         } ;

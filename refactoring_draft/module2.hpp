@@ -11,6 +11,7 @@ typedef so_called_platform :: platform_scheduler :: scheduled_context < my_modul
 class my_module2
 {
 public :
+    static void register_in_scheduler ( ) ;
     static void receive ( message_from_first_module_to_other_modules ) ;
     static void receive ( message_my_second_module_function ) ;
     static void receive ( message_to_second_module_from_other_modules ) ;

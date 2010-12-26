@@ -8,6 +8,11 @@
 typedef so_called_platform :: platform_scheduler :: scheduled_context < my_module2 > my_module2_scheduled_context ;
 template < > my_module2_scheduled_context my_module2_scheduled_context :: _singleton = my_module2_scheduled_context ( ) ;
 
+void my_module2 :: register_in_scheduler ( )
+{
+    my_module2_scheduled_context :: register_in_scheduler ( ) ;
+}
+
 void my_module2 :: receive ( message_my_second_module_function msg )
 {
     so_called_platform :: platform_print :: print_string ( "my second module function (arg1 = " ) ;

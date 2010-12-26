@@ -2,6 +2,11 @@
 #include "module1_messages.hpp"
 #include "module2_messages.hpp"
 
+void my_facade :: init ( )
+{
+    so_called_scheduler_registrator :: perform ( ) ;
+}
+
 void my_facade :: my_first_module_function ( int arg )
 {
     message_my_first_module_function msg ;
