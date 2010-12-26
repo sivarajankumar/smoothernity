@@ -4,6 +4,9 @@
 class message_from_second_module_to_other_modules ;
 class message_my_first_module_function ;
 class message_to_first_module_from_other_modules ;
+class my_module1 ;
+
+typedef so_called_platform :: platform_scheduler :: scheduled_context < my_module1 > :: module scheduled_module1 ;
 
 class my_module1
 {

@@ -2,8 +2,8 @@
 #include "module1.hpp"
 #include "module2.hpp"
 
-typedef so_called_platform :: platform_scheduler :: scheduled_context < my_module1 > :: module so_called_module1 ;
-typedef so_called_platform :: platform_scheduler :: scheduled_context < my_module2 > :: module so_called_module2 ;
+typedef scheduled_module1 so_called_module1 ;
+typedef scheduled_module2 so_called_module2 ;
 
 #include "module2_sender.cxx"
 
