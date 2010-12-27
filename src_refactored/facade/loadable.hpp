@@ -8,6 +8,10 @@ void shy_facade_loadable :: done ( )
 {
 }
 
+void shy_facade_loadable :: render ( )
+{
+}
+
 void shy_facade_loadable :: update ( )
 {
 }
