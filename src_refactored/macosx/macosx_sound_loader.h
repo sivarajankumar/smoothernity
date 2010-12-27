@@ -1,3 +1,6 @@
+#ifndef _macosx_sound_loader_included
+#define _macosx_sound_loader_included
+
 #include <AudioToolbox/AudioToolbox.h>
 #include <AudioToolbox/ExtendedAudioFile.h>
 #include <Foundation/NSBundle.h>
@@ -25,3 +28,5 @@
 - ( void ) _perform_load ;
 
 @end
+
+#endif

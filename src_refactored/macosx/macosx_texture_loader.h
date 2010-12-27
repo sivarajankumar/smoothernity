@@ -1,3 +1,6 @@
+#ifndef _macosx_texture_loader_included
+#define _macosx_texture_loader_included
+
 #include <Cocoa/Cocoa.h>
 
 @interface shy_macosx_texture_loader : NSObject
@@ -21,3 +24,5 @@
 - ( void ) _perform_load ;
 
 @end
+
+#endif

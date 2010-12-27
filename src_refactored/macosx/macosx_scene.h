@@ -1,14 +1,12 @@
-#include "macosx_platform.hpp"
-#include "../facade/interface.hpp"
+#include "macosx_sound_loader.h"
+#include "macosx_texture_loader.h"
 
 @interface shy_macosx_scene : NSObject
 {
 @private
     shy_macosx_sound_loader * _sound_loader ;
     shy_macosx_texture_loader * _texture_loader ;
-    shy_macosx_platform_insider * _platform_insider ;
-	shy_facade_interface * _facade ;
-	NSRect _bounds ;
+    NSRect _bounds ;
 }
 
 - init ;
