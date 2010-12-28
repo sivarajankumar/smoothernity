@@ -763,8 +763,8 @@
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					build_for_macosx,
-					build_loadable_way,
+					shy_build_loadable_way,
+					shy_build_for_macosx,
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = NO;
@@ -802,8 +802,8 @@
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					build_for_macosx,
-					build_static_way,
+					shy_build_for_macosx,
+					shy_build_static_way,
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = NO;
