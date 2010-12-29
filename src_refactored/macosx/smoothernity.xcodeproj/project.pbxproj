@@ -55,6 +55,8 @@
 		080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		19135A2912CBC7AB003FA31B /* shy_touch_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19135A2712CBC7AB003FA31B /* shy_touch_injections.cpp */; };
+		19135A2A12CBC7AB003FA31B /* shy_touch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19135A2812CBC7AB003FA31B /* shy_touch.hpp */; };
 		19431B4712CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19431B4512CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp */; };
 		19431B4812CBA0EA00417BF9 /* shy_matrix_float_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19431B4612CBA0EA00417BF9 /* shy_matrix_float_insider.hpp */; };
 		1949341212CA399300B3F694 /* shy_facade.h in Headers */ = {isa = PBXBuildFile; fileRef = 1949340D12CA399300B3F694 /* shy_facade.h */; };
@@ -167,6 +169,8 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		17587328FF379C6511CA2CBB /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		19135A2712CBC7AB003FA31B /* shy_touch_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_touch_injections.cpp; sourceTree = "<group>"; };
+		19135A2812CBC7AB003FA31B /* shy_touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_touch.hpp; sourceTree = "<group>"; };
 		19431B4512CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_matrix_float_insider_injections.cpp; sourceTree = "<group>"; };
 		19431B4612CBA0EA00417BF9 /* shy_matrix_float_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_matrix_float_insider.hpp; sourceTree = "<group>"; };
 		1949340D12CA399300B3F694 /* shy_facade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_facade.h; sourceTree = "<group>"; };
@@ -412,6 +416,8 @@
 				1949343012CA399D00B3F694 /* shy_static_array_insider.h */,
 				1949343112CA399D00B3F694 /* shy_static_assert.h */,
 				1949343212CA399D00B3F694 /* shy_touch.h */,
+				19135A2812CBC7AB003FA31B /* shy_touch.hpp */,
+				19135A2712CBC7AB003FA31B /* shy_touch_injections.cpp */,
 				1949343312CA399D00B3F694 /* shy_vector_float.h */,
 				198284D312CB998A0002DB27 /* shy_vector_float.hpp */,
 				198284D212CB998A0002DB27 /* shy_vector_float_injections.cpp */,
@@ -561,6 +567,7 @@
 				1953A63F12CB9DCF00C2C00D /* shy_matrix_float.hpp in Headers */,
 				19431B4812CBA0EA00417BF9 /* shy_matrix_float_insider.hpp in Headers */,
 				19C2183712CBA33400D2BDFD /* shy_mouse.hpp in Headers */,
+				19135A2A12CBC7AB003FA31B /* shy_touch.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,6 +671,7 @@
 				1953A63E12CB9DCF00C2C00D /* shy_matrix_float_injections.cpp in Sources */,
 				19431B4712CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp in Sources */,
 				19C2183612CBA33400D2BDFD /* shy_mouse_injections.cpp in Sources */,
+				19135A2912CBC7AB003FA31B /* shy_touch_injections.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
