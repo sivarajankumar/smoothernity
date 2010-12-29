@@ -51,16 +51,12 @@
 /* End PBXApplicationTarget section */
 
 /* Begin PBXBuildFile section */
-		05689227046B13F600000102 /* macosx_opengl_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689225046B13F600000102 /* macosx_opengl_view.h */; };
-		05689228046B13F600000102 /* macosx_opengl_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689226046B13F600000102 /* macosx_opengl_view.mm */; };
 		0568922A046B142600000102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05689229046B142600000102 /* OpenGL.framework */; };
-		05689231046B14B900000102 /* macosx_main_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* macosx_main_controller.h */; };
-		05689232046B14B900000102 /* macosx_main_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* macosx_main_controller.mm */; };
-		05689235046B2C0900000102 /* macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* macosx_scene.h */; };
-		05689236046B2C0900000102 /* macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* macosx_scene.mm */; };
 		080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		19431B4712CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19431B4512CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp */; };
+		19431B4812CBA0EA00417BF9 /* shy_matrix_float_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19431B4612CBA0EA00417BF9 /* shy_matrix_float_insider.hpp */; };
 		1949341212CA399300B3F694 /* shy_facade.h in Headers */ = {isa = PBXBuildFile; fileRef = 1949340D12CA399300B3F694 /* shy_facade.h */; };
 		1949341312CA399300B3F694 /* shy_platform_consts_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 1949340E12CA399300B3F694 /* shy_platform_consts_insider.h */; };
 		1949341412CA399300B3F694 /* shy_platform_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 1949340F12CA399300B3F694 /* shy_platform_math.h */; };
@@ -95,84 +91,84 @@
 		1949344F12CA399D00B3F694 /* shy_touch.h in Headers */ = {isa = PBXBuildFile; fileRef = 1949343212CA399D00B3F694 /* shy_touch.h */; };
 		1949345012CA399D00B3F694 /* shy_vector_float.h in Headers */ = {isa = PBXBuildFile; fileRef = 1949343312CA399D00B3F694 /* shy_vector_float.h */; };
 		1949345112CA399D00B3F694 /* shy_vector_float_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 1949343412CA399D00B3F694 /* shy_vector_float_insider.h */; };
+		194C630912CB94E80071A5BD /* shy_macosx_main_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62E612CB94E80071A5BD /* shy_macosx_main_controller.h */; };
+		194C630A12CB94E80071A5BD /* shy_macosx_main_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C62E712CB94E80071A5BD /* shy_macosx_main_controller.mm */; };
+		194C630B12CB94E80071A5BD /* shy_macosx_opengl_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62E812CB94E80071A5BD /* shy_macosx_opengl_view.h */; };
+		194C630C12CB94E80071A5BD /* shy_macosx_opengl_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */; };
+		194C630D12CB94E80071A5BD /* shy_macosx_platform_conditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62EA12CB94E80071A5BD /* shy_macosx_platform_conditions.h */; };
+		194C630E12CB94E80071A5BD /* shy_macosx_platform_consts_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62EB12CB94E80071A5BD /* shy_macosx_platform_consts_insider.h */; };
+		194C630F12CB94E80071A5BD /* shy_macosx_platform_consts.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62EC12CB94E80071A5BD /* shy_macosx_platform_consts.h */; };
+		194C631012CB94E80071A5BD /* shy_macosx_platform_math_consts.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62ED12CB94E80071A5BD /* shy_macosx_platform_math_consts.h */; };
+		194C631112CB94E80071A5BD /* shy_macosx_platform_math_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62EE12CB94E80071A5BD /* shy_macosx_platform_math_insider.h */; };
+		194C631212CB94E80071A5BD /* shy_macosx_platform_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62EF12CB94E80071A5BD /* shy_macosx_platform_math.h */; };
+		194C631312CB94E80071A5BD /* shy_macosx_platform_matrix_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F012CB94E80071A5BD /* shy_macosx_platform_matrix_insider.h */; };
+		194C631412CB94E80071A5BD /* shy_macosx_platform_matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F112CB94E80071A5BD /* shy_macosx_platform_matrix.h */; };
+		194C631512CB94E80071A5BD /* shy_macosx_platform_mouse_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F212CB94E80071A5BD /* shy_macosx_platform_mouse_insider.h */; };
+		194C631612CB94E80071A5BD /* shy_macosx_platform_mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F312CB94E80071A5BD /* shy_macosx_platform_mouse.h */; };
+		194C631712CB94E80071A5BD /* shy_macosx_platform_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F412CB94E80071A5BD /* shy_macosx_platform_pointer.h */; };
+		194C631812CB94E80071A5BD /* shy_macosx_platform_render_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F512CB94E80071A5BD /* shy_macosx_platform_render_insider.h */; };
+		194C631912CB94E80071A5BD /* shy_macosx_platform_render_insider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C62F612CB94E80071A5BD /* shy_macosx_platform_render_insider.mm */; };
+		194C631A12CB94E80071A5BD /* shy_macosx_platform_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F712CB94E80071A5BD /* shy_macosx_platform_render.h */; };
+		194C631B12CB94E80071A5BD /* shy_macosx_platform_scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F812CB94E80071A5BD /* shy_macosx_platform_scheduler.h */; };
+		194C631C12CB94E80071A5BD /* shy_macosx_platform_sound_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62F912CB94E80071A5BD /* shy_macosx_platform_sound_insider.h */; };
+		194C631D12CB94E80071A5BD /* shy_macosx_platform_sound_insider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C62FA12CB94E80071A5BD /* shy_macosx_platform_sound_insider.mm */; };
+		194C631E12CB94E80071A5BD /* shy_macosx_platform_sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62FB12CB94E80071A5BD /* shy_macosx_platform_sound.h */; };
+		194C631F12CB94E80071A5BD /* shy_macosx_platform_static_array_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62FC12CB94E80071A5BD /* shy_macosx_platform_static_array_insider.h */; };
+		194C632012CB94E80071A5BD /* shy_macosx_platform_static_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62FD12CB94E80071A5BD /* shy_macosx_platform_static_array.h */; };
+		194C632112CB94E80071A5BD /* shy_macosx_platform_static_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62FE12CB94E80071A5BD /* shy_macosx_platform_static_assert.h */; };
+		194C632212CB94E80071A5BD /* shy_macosx_platform_time.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62FF12CB94E80071A5BD /* shy_macosx_platform_time.h */; };
+		194C632312CB94E80071A5BD /* shy_macosx_platform_touch.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630012CB94E80071A5BD /* shy_macosx_platform_touch.h */; };
+		194C632412CB94E80071A5BD /* shy_macosx_platform_vector_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630112CB94E80071A5BD /* shy_macosx_platform_vector_insider.h */; };
+		194C632512CB94E80071A5BD /* shy_macosx_platform_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630212CB94E80071A5BD /* shy_macosx_platform_vector.h */; };
+		194C632612CB94E80071A5BD /* shy_macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630312CB94E80071A5BD /* shy_macosx_scene.h */; };
+		194C632712CB94E80071A5BD /* shy_macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630412CB94E80071A5BD /* shy_macosx_scene.mm */; };
+		194C632812CB94E80071A5BD /* shy_macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630512CB94E80071A5BD /* shy_macosx_sound_loader.h */; };
+		194C632912CB94E80071A5BD /* shy_macosx_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */; };
+		194C632A12CB94E80071A5BD /* shy_macosx_texture_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630712CB94E80071A5BD /* shy_macosx_texture_loader.h */; };
+		194C632B12CB94E80071A5BD /* shy_macosx_texture_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630812CB94E80071A5BD /* shy_macosx_texture_loader.mm */; };
+		1953A63E12CB9DCF00C2C00D /* shy_matrix_float_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1953A63C12CB9DCF00C2C00D /* shy_matrix_float_injections.cpp */; };
+		1953A63F12CB9DCF00C2C00D /* shy_matrix_float.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1953A63D12CB9DCF00C2C00D /* shy_matrix_float.hpp */; };
+		196BEE2A12CB9ACC001EEDC0 /* shy_vector_float_insider_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 196BEE2812CB9ACC001EEDC0 /* shy_vector_float_insider_injections.cpp */; };
+		196BEE2B12CB9ACC001EEDC0 /* shy_vector_float_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 196BEE2912CB9ACC001EEDC0 /* shy_vector_float_insider.hpp */; };
+		198284D412CB998A0002DB27 /* shy_vector_float_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198284D212CB998A0002DB27 /* shy_vector_float_injections.cpp */; };
+		198284D512CB998A0002DB27 /* shy_vector_float.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198284D312CB998A0002DB27 /* shy_vector_float.hpp */; };
 		198EFFA012CA33B300AB439D /* shy_loadable.h in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9A12CA33B300AB439D /* shy_loadable.h */; };
 		198EFFA112CA33B300AB439D /* shy_loadable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9B12CA33B300AB439D /* shy_loadable.hpp */; };
 		198EFFA212CA33B300AB439D /* shy_loadable_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198EFF9C12CA33B300AB439D /* shy_loadable_injections.cpp */; };
 		198EFFA312CA33B300AB439D /* shy_static.h in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9D12CA33B300AB439D /* shy_static.h */; };
 		198EFFA412CA33B300AB439D /* shy_static.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9E12CA33B300AB439D /* shy_static.hpp */; };
 		198EFFA512CA33B300AB439D /* shy_static_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198EFF9F12CA33B300AB439D /* shy_static_injections.cpp */; };
-		19A2577712CA2D9B0023FE2D /* macosx_platform_conditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576512CA2D9B0023FE2D /* macosx_platform_conditions.h */; };
-		19A2577812CA2D9B0023FE2D /* macosx_platform_consts_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576612CA2D9B0023FE2D /* macosx_platform_consts_insider.h */; };
-		19A2577912CA2D9B0023FE2D /* macosx_platform_consts.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576712CA2D9B0023FE2D /* macosx_platform_consts.h */; };
-		19A2577A12CA2D9B0023FE2D /* macosx_platform_math_consts.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576812CA2D9B0023FE2D /* macosx_platform_math_consts.h */; };
-		19A2577B12CA2D9B0023FE2D /* macosx_platform_math_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576912CA2D9B0023FE2D /* macosx_platform_math_insider.h */; };
-		19A2577C12CA2D9B0023FE2D /* macosx_platform_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576A12CA2D9B0023FE2D /* macosx_platform_math.h */; };
-		19A2577D12CA2D9B0023FE2D /* macosx_platform_matrix_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576B12CA2D9B0023FE2D /* macosx_platform_matrix_insider.h */; };
-		19A2577E12CA2D9B0023FE2D /* macosx_platform_matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576C12CA2D9B0023FE2D /* macosx_platform_matrix.h */; };
-		19A2577F12CA2D9B0023FE2D /* macosx_platform_mouse_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576D12CA2D9B0023FE2D /* macosx_platform_mouse_insider.h */; };
-		19A2578012CA2D9B0023FE2D /* macosx_platform_mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576E12CA2D9B0023FE2D /* macosx_platform_mouse.h */; };
-		19A2578112CA2D9B0023FE2D /* macosx_platform_pointer.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2576F12CA2D9B0023FE2D /* macosx_platform_pointer.h */; };
-		19A2578212CA2D9B0023FE2D /* macosx_platform_scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2577012CA2D9B0023FE2D /* macosx_platform_scheduler.h */; };
-		19A2578312CA2D9B0023FE2D /* macosx_platform_static_array_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2577112CA2D9B0023FE2D /* macosx_platform_static_array_insider.h */; };
-		19A2578412CA2D9B0023FE2D /* macosx_platform_static_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2577212CA2D9B0023FE2D /* macosx_platform_static_array.h */; };
-		19A2578512CA2D9B0023FE2D /* macosx_platform_static_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2577312CA2D9B0023FE2D /* macosx_platform_static_assert.h */; };
-		19A2578612CA2D9B0023FE2D /* macosx_platform_touch.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2577412CA2D9B0023FE2D /* macosx_platform_touch.h */; };
-		19A2578712CA2D9B0023FE2D /* macosx_platform_vector_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2577512CA2D9B0023FE2D /* macosx_platform_vector_insider.h */; };
-		19A2578812CA2D9B0023FE2D /* macosx_platform_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2577612CA2D9B0023FE2D /* macosx_platform_vector.h */; };
 		19AE0FEC11B269A300A5B332 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
-		19AE0FED11B269A300A5B332 /* macosx_opengl_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689225046B13F600000102 /* macosx_opengl_view.h */; };
-		19AE0FEE11B269A300A5B332 /* macosx_main_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 0568922F046B14B900000102 /* macosx_main_controller.h */; };
-		19AE0FEF11B269A300A5B332 /* macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 05689233046B2C0900000102 /* macosx_scene.h */; };
-		19AE100311B269A300A5B332 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
-		19AE100A11B269A300A5B332 /* macosx_texture_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 883E9477119D62680040B1D6 /* macosx_texture_loader.h */; };
 		19AE101111B269A300A5B332 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		19AE101211B269A300A5B332 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		19AE101311B269A300A5B332 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
 		19AE101411B269A300A5B332 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
 		19AE101511B269A300A5B332 /* texture_resource_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 883E94D9119D67C00040B1D6 /* texture_resource_1.png */; };
 		19AE101711B269A300A5B332 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		19AE101811B269A300A5B332 /* macosx_opengl_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689226046B13F600000102 /* macosx_opengl_view.mm */; };
-		19AE101911B269A300A5B332 /* macosx_main_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689230046B14B900000102 /* macosx_main_controller.mm */; };
-		19AE101A11B269A300A5B332 /* macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05689234046B2C0900000102 /* macosx_scene.mm */; };
-		19AE101C11B269A300A5B332 /* macosx_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */; };
-		19AE101D11B269A300A5B332 /* macosx_texture_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883E9478119D62680040B1D6 /* macosx_texture_loader.mm */; };
 		19AE101F11B269A300A5B332 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		19AE102011B269A300A5B332 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05689229046B142600000102 /* OpenGL.framework */; };
 		19AE102111B269A300A5B332 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
 		19AE102211B269A300A5B332 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
 		19AE102311B269A300A5B332 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
-		19C45C7012C8B41100AB2BA5 /* macosx_platform_render_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19C45C6712C8B41100AB2BA5 /* macosx_platform_render_insider.h */; };
-		19C45C7112C8B41100AB2BA5 /* macosx_platform_render_insider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19C45C6812C8B41100AB2BA5 /* macosx_platform_render_insider.mm */; };
-		19C45C7212C8B41100AB2BA5 /* macosx_platform_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 19C45C6912C8B41100AB2BA5 /* macosx_platform_render.h */; };
-		19C45C7312C8B41100AB2BA5 /* macosx_platform_sound_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19C45C6A12C8B41100AB2BA5 /* macosx_platform_sound_insider.h */; };
-		19C45C7412C8B41100AB2BA5 /* macosx_platform_sound_insider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19C45C6B12C8B41100AB2BA5 /* macosx_platform_sound_insider.mm */; };
-		19C45C7512C8B41100AB2BA5 /* macosx_platform_sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 19C45C6C12C8B41100AB2BA5 /* macosx_platform_sound.h */; };
-		19C45C7612C8B41100AB2BA5 /* macosx_platform_time.h in Headers */ = {isa = PBXBuildFile; fileRef = 19C45C6D12C8B41100AB2BA5 /* macosx_platform_time.h */; };
+		19C2183612CBA33400D2BDFD /* shy_mouse_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19C2183412CBA33400D2BDFD /* shy_mouse_injections.cpp */; };
+		19C2183712CBA33400D2BDFD /* shy_mouse.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19C2183512CBA33400D2BDFD /* shy_mouse.hpp */; };
 		29B9732CFDCFA39411CA2CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
 		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
 		8812CF37117DE7F9008F67D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
 		8812CF3B117DE80B008F67D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
 		8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
-		8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */; };
-		8812CF45117DE8B4008F67D9 /* macosx_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */; };
 		8812CF52117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
-		883E9479119D62680040B1D6 /* macosx_texture_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 883E9477119D62680040B1D6 /* macosx_texture_loader.h */; };
-		883E947A119D62680040B1D6 /* macosx_texture_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883E9478119D62680040B1D6 /* macosx_texture_loader.mm */; };
 		883E94DA119D67C00040B1D6 /* texture_resource_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 883E94D9119D67C00040B1D6 /* texture_resource_1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		05689225046B13F600000102 /* macosx_opengl_view.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = macosx_opengl_view.h; sourceTree = "<group>"; };
-		05689226046B13F600000102 /* macosx_opengl_view.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_opengl_view.mm; sourceTree = "<group>"; };
 		05689229046B142600000102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		0568922F046B14B900000102 /* macosx_main_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_main_controller.h; sourceTree = "<group>"; };
-		05689230046B14B900000102 /* macosx_main_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_main_controller.mm; sourceTree = "<group>"; };
-		05689233046B2C0900000102 /* macosx_scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_scene.h; sourceTree = "<group>"; };
-		05689234046B2C0900000102 /* macosx_scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_scene.mm; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		17587328FF379C6511CA2CBB /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		19431B4512CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_matrix_float_insider_injections.cpp; sourceTree = "<group>"; };
+		19431B4612CBA0EA00417BF9 /* shy_matrix_float_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_matrix_float_insider.hpp; sourceTree = "<group>"; };
 		1949340D12CA399300B3F694 /* shy_facade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_facade.h; sourceTree = "<group>"; };
 		1949340E12CA399300B3F694 /* shy_platform_consts_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_platform_consts_insider.h; sourceTree = "<group>"; };
 		1949340F12CA399300B3F694 /* shy_platform_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_platform_math.h; sourceTree = "<group>"; };
@@ -207,39 +203,57 @@
 		1949343212CA399D00B3F694 /* shy_touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_touch.h; sourceTree = "<group>"; };
 		1949343312CA399D00B3F694 /* shy_vector_float.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_vector_float.h; sourceTree = "<group>"; };
 		1949343412CA399D00B3F694 /* shy_vector_float_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_vector_float_insider.h; sourceTree = "<group>"; };
+		194C62E612CB94E80071A5BD /* shy_macosx_main_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_main_controller.h; sourceTree = "<group>"; };
+		194C62E712CB94E80071A5BD /* shy_macosx_main_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_main_controller.mm; sourceTree = "<group>"; };
+		194C62E812CB94E80071A5BD /* shy_macosx_opengl_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_opengl_view.h; sourceTree = "<group>"; };
+		194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_opengl_view.mm; sourceTree = "<group>"; };
+		194C62EA12CB94E80071A5BD /* shy_macosx_platform_conditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_conditions.h; sourceTree = "<group>"; };
+		194C62EB12CB94E80071A5BD /* shy_macosx_platform_consts_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_consts_insider.h; sourceTree = "<group>"; };
+		194C62EC12CB94E80071A5BD /* shy_macosx_platform_consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_consts.h; sourceTree = "<group>"; };
+		194C62ED12CB94E80071A5BD /* shy_macosx_platform_math_consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_math_consts.h; sourceTree = "<group>"; };
+		194C62EE12CB94E80071A5BD /* shy_macosx_platform_math_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_math_insider.h; sourceTree = "<group>"; };
+		194C62EF12CB94E80071A5BD /* shy_macosx_platform_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_math.h; sourceTree = "<group>"; };
+		194C62F012CB94E80071A5BD /* shy_macosx_platform_matrix_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_matrix_insider.h; sourceTree = "<group>"; };
+		194C62F112CB94E80071A5BD /* shy_macosx_platform_matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_matrix.h; sourceTree = "<group>"; };
+		194C62F212CB94E80071A5BD /* shy_macosx_platform_mouse_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_mouse_insider.h; sourceTree = "<group>"; };
+		194C62F312CB94E80071A5BD /* shy_macosx_platform_mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_mouse.h; sourceTree = "<group>"; };
+		194C62F412CB94E80071A5BD /* shy_macosx_platform_pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_pointer.h; sourceTree = "<group>"; };
+		194C62F512CB94E80071A5BD /* shy_macosx_platform_render_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_render_insider.h; sourceTree = "<group>"; };
+		194C62F612CB94E80071A5BD /* shy_macosx_platform_render_insider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_platform_render_insider.mm; sourceTree = "<group>"; };
+		194C62F712CB94E80071A5BD /* shy_macosx_platform_render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_render.h; sourceTree = "<group>"; };
+		194C62F812CB94E80071A5BD /* shy_macosx_platform_scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_scheduler.h; sourceTree = "<group>"; };
+		194C62F912CB94E80071A5BD /* shy_macosx_platform_sound_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_sound_insider.h; sourceTree = "<group>"; };
+		194C62FA12CB94E80071A5BD /* shy_macosx_platform_sound_insider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_platform_sound_insider.mm; sourceTree = "<group>"; };
+		194C62FB12CB94E80071A5BD /* shy_macosx_platform_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_sound.h; sourceTree = "<group>"; };
+		194C62FC12CB94E80071A5BD /* shy_macosx_platform_static_array_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_static_array_insider.h; sourceTree = "<group>"; };
+		194C62FD12CB94E80071A5BD /* shy_macosx_platform_static_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_static_array.h; sourceTree = "<group>"; };
+		194C62FE12CB94E80071A5BD /* shy_macosx_platform_static_assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_static_assert.h; sourceTree = "<group>"; };
+		194C62FF12CB94E80071A5BD /* shy_macosx_platform_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_time.h; sourceTree = "<group>"; };
+		194C630012CB94E80071A5BD /* shy_macosx_platform_touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_touch.h; sourceTree = "<group>"; };
+		194C630112CB94E80071A5BD /* shy_macosx_platform_vector_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_vector_insider.h; sourceTree = "<group>"; };
+		194C630212CB94E80071A5BD /* shy_macosx_platform_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_platform_vector.h; sourceTree = "<group>"; };
+		194C630312CB94E80071A5BD /* shy_macosx_scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_scene.h; sourceTree = "<group>"; };
+		194C630412CB94E80071A5BD /* shy_macosx_scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_scene.mm; sourceTree = "<group>"; };
+		194C630512CB94E80071A5BD /* shy_macosx_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_sound_loader.h; sourceTree = "<group>"; };
+		194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_sound_loader.mm; sourceTree = "<group>"; };
+		194C630712CB94E80071A5BD /* shy_macosx_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_texture_loader.h; sourceTree = "<group>"; };
+		194C630812CB94E80071A5BD /* shy_macosx_texture_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_texture_loader.mm; sourceTree = "<group>"; };
+		1953A63C12CB9DCF00C2C00D /* shy_matrix_float_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_matrix_float_injections.cpp; sourceTree = "<group>"; };
+		1953A63D12CB9DCF00C2C00D /* shy_matrix_float.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_matrix_float.hpp; sourceTree = "<group>"; };
+		196BEE2812CB9ACC001EEDC0 /* shy_vector_float_insider_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_vector_float_insider_injections.cpp; sourceTree = "<group>"; };
+		196BEE2912CB9ACC001EEDC0 /* shy_vector_float_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_vector_float_insider.hpp; sourceTree = "<group>"; };
+		198284D212CB998A0002DB27 /* shy_vector_float_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_vector_float_injections.cpp; sourceTree = "<group>"; };
+		198284D312CB998A0002DB27 /* shy_vector_float.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_vector_float.hpp; sourceTree = "<group>"; };
 		198EFF9A12CA33B300AB439D /* shy_loadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loadable.h; sourceTree = "<group>"; };
 		198EFF9B12CA33B300AB439D /* shy_loadable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loadable.hpp; sourceTree = "<group>"; };
 		198EFF9C12CA33B300AB439D /* shy_loadable_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_loadable_injections.cpp; sourceTree = "<group>"; };
 		198EFF9D12CA33B300AB439D /* shy_static.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_static.h; sourceTree = "<group>"; };
 		198EFF9E12CA33B300AB439D /* shy_static.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_static.hpp; sourceTree = "<group>"; };
 		198EFF9F12CA33B300AB439D /* shy_static_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_static_injections.cpp; sourceTree = "<group>"; };
-		19A2576512CA2D9B0023FE2D /* macosx_platform_conditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_conditions.h; sourceTree = "<group>"; };
-		19A2576612CA2D9B0023FE2D /* macosx_platform_consts_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_consts_insider.h; sourceTree = "<group>"; };
-		19A2576712CA2D9B0023FE2D /* macosx_platform_consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_consts.h; sourceTree = "<group>"; };
-		19A2576812CA2D9B0023FE2D /* macosx_platform_math_consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_math_consts.h; sourceTree = "<group>"; };
-		19A2576912CA2D9B0023FE2D /* macosx_platform_math_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_math_insider.h; sourceTree = "<group>"; };
-		19A2576A12CA2D9B0023FE2D /* macosx_platform_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_math.h; sourceTree = "<group>"; };
-		19A2576B12CA2D9B0023FE2D /* macosx_platform_matrix_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_matrix_insider.h; sourceTree = "<group>"; };
-		19A2576C12CA2D9B0023FE2D /* macosx_platform_matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_matrix.h; sourceTree = "<group>"; };
-		19A2576D12CA2D9B0023FE2D /* macosx_platform_mouse_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_mouse_insider.h; sourceTree = "<group>"; };
-		19A2576E12CA2D9B0023FE2D /* macosx_platform_mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_mouse.h; sourceTree = "<group>"; };
-		19A2576F12CA2D9B0023FE2D /* macosx_platform_pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_pointer.h; sourceTree = "<group>"; };
-		19A2577012CA2D9B0023FE2D /* macosx_platform_scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_scheduler.h; sourceTree = "<group>"; };
-		19A2577112CA2D9B0023FE2D /* macosx_platform_static_array_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_static_array_insider.h; sourceTree = "<group>"; };
-		19A2577212CA2D9B0023FE2D /* macosx_platform_static_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_static_array.h; sourceTree = "<group>"; };
-		19A2577312CA2D9B0023FE2D /* macosx_platform_static_assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_static_assert.h; sourceTree = "<group>"; };
-		19A2577412CA2D9B0023FE2D /* macosx_platform_touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_touch.h; sourceTree = "<group>"; };
-		19A2577512CA2D9B0023FE2D /* macosx_platform_vector_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_vector_insider.h; sourceTree = "<group>"; };
-		19A2577612CA2D9B0023FE2D /* macosx_platform_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_vector.h; sourceTree = "<group>"; };
 		19AE102811B269A300A5B332 /* Info-smoothernity__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-smoothernity__Upgraded_.plist"; sourceTree = "<group>"; };
 		19AE102911B269A300A5B332 /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		19C45C6712C8B41100AB2BA5 /* macosx_platform_render_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_render_insider.h; sourceTree = "<group>"; };
-		19C45C6812C8B41100AB2BA5 /* macosx_platform_render_insider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_platform_render_insider.mm; sourceTree = "<group>"; };
-		19C45C6912C8B41100AB2BA5 /* macosx_platform_render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_render.h; sourceTree = "<group>"; };
-		19C45C6A12C8B41100AB2BA5 /* macosx_platform_sound_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_sound_insider.h; sourceTree = "<group>"; };
-		19C45C6B12C8B41100AB2BA5 /* macosx_platform_sound_insider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_platform_sound_insider.mm; sourceTree = "<group>"; };
-		19C45C6C12C8B41100AB2BA5 /* macosx_platform_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_sound.h; sourceTree = "<group>"; };
-		19C45C6D12C8B41100AB2BA5 /* macosx_platform_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_platform_time.h; sourceTree = "<group>"; };
+		19C2183412CBA33400D2BDFD /* shy_mouse_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_mouse_injections.cpp; sourceTree = "<group>"; };
+		19C2183512CBA33400D2BDFD /* shy_mouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_mouse.hpp; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -249,11 +263,7 @@
 		8812CF36117DE7F9008F67D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = /System/Library/Frameworks/OpenAL.framework; sourceTree = "<absolute>"; };
 		8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		8812CF3E117DE82C008F67D9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
-		8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_sound_loader.h; sourceTree = "<group>"; };
-		8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_sound_loader.mm; sourceTree = "<group>"; };
 		8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
-		883E9477119D62680040B1D6 /* macosx_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macosx_texture_loader.h; sourceTree = "<group>"; };
-		883E9478119D62680040B1D6 /* macosx_texture_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macosx_texture_loader.mm; sourceTree = "<group>"; };
 		883E94D9119D67C00040B1D6 /* texture_resource_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture_resource_1.png; path = ../../resources/texture_resource_1.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -291,41 +301,41 @@
 				1949341712CA399D00B3F694 /* platform */,
 				1949340C12CA399300B3F694 /* injections */,
 				198EFF9912CA33B300AB439D /* facade */,
-				0568922F046B14B900000102 /* macosx_main_controller.h */,
-				05689230046B14B900000102 /* macosx_main_controller.mm */,
-				05689225046B13F600000102 /* macosx_opengl_view.h */,
-				05689226046B13F600000102 /* macosx_opengl_view.mm */,
-				19A2576512CA2D9B0023FE2D /* macosx_platform_conditions.h */,
-				19A2576612CA2D9B0023FE2D /* macosx_platform_consts_insider.h */,
-				19A2576712CA2D9B0023FE2D /* macosx_platform_consts.h */,
-				19A2576812CA2D9B0023FE2D /* macosx_platform_math_consts.h */,
-				19A2576912CA2D9B0023FE2D /* macosx_platform_math_insider.h */,
-				19A2576A12CA2D9B0023FE2D /* macosx_platform_math.h */,
-				19A2576B12CA2D9B0023FE2D /* macosx_platform_matrix_insider.h */,
-				19A2576C12CA2D9B0023FE2D /* macosx_platform_matrix.h */,
-				19A2576D12CA2D9B0023FE2D /* macosx_platform_mouse_insider.h */,
-				19A2576E12CA2D9B0023FE2D /* macosx_platform_mouse.h */,
-				19A2576F12CA2D9B0023FE2D /* macosx_platform_pointer.h */,
-				19C45C6912C8B41100AB2BA5 /* macosx_platform_render.h */,
-				19C45C6712C8B41100AB2BA5 /* macosx_platform_render_insider.h */,
-				19C45C6812C8B41100AB2BA5 /* macosx_platform_render_insider.mm */,
-				19A2577012CA2D9B0023FE2D /* macosx_platform_scheduler.h */,
-				19C45C6C12C8B41100AB2BA5 /* macosx_platform_sound.h */,
-				19C45C6A12C8B41100AB2BA5 /* macosx_platform_sound_insider.h */,
-				19C45C6B12C8B41100AB2BA5 /* macosx_platform_sound_insider.mm */,
-				19A2577112CA2D9B0023FE2D /* macosx_platform_static_array_insider.h */,
-				19A2577212CA2D9B0023FE2D /* macosx_platform_static_array.h */,
-				19A2577312CA2D9B0023FE2D /* macosx_platform_static_assert.h */,
-				19C45C6D12C8B41100AB2BA5 /* macosx_platform_time.h */,
-				19A2577412CA2D9B0023FE2D /* macosx_platform_touch.h */,
-				19A2577512CA2D9B0023FE2D /* macosx_platform_vector_insider.h */,
-				19A2577612CA2D9B0023FE2D /* macosx_platform_vector.h */,
-				05689233046B2C0900000102 /* macosx_scene.h */,
-				05689234046B2C0900000102 /* macosx_scene.mm */,
-				8812CF42117DE8B4008F67D9 /* macosx_sound_loader.h */,
-				8812CF43117DE8B4008F67D9 /* macosx_sound_loader.mm */,
-				883E9477119D62680040B1D6 /* macosx_texture_loader.h */,
-				883E9478119D62680040B1D6 /* macosx_texture_loader.mm */,
+				194C62E612CB94E80071A5BD /* shy_macosx_main_controller.h */,
+				194C62E712CB94E80071A5BD /* shy_macosx_main_controller.mm */,
+				194C62E812CB94E80071A5BD /* shy_macosx_opengl_view.h */,
+				194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */,
+				194C62EA12CB94E80071A5BD /* shy_macosx_platform_conditions.h */,
+				194C62EB12CB94E80071A5BD /* shy_macosx_platform_consts_insider.h */,
+				194C62EC12CB94E80071A5BD /* shy_macosx_platform_consts.h */,
+				194C62ED12CB94E80071A5BD /* shy_macosx_platform_math_consts.h */,
+				194C62EE12CB94E80071A5BD /* shy_macosx_platform_math_insider.h */,
+				194C62EF12CB94E80071A5BD /* shy_macosx_platform_math.h */,
+				194C62F012CB94E80071A5BD /* shy_macosx_platform_matrix_insider.h */,
+				194C62F112CB94E80071A5BD /* shy_macosx_platform_matrix.h */,
+				194C62F212CB94E80071A5BD /* shy_macosx_platform_mouse_insider.h */,
+				194C62F312CB94E80071A5BD /* shy_macosx_platform_mouse.h */,
+				194C62F412CB94E80071A5BD /* shy_macosx_platform_pointer.h */,
+				194C62F512CB94E80071A5BD /* shy_macosx_platform_render_insider.h */,
+				194C62F612CB94E80071A5BD /* shy_macosx_platform_render_insider.mm */,
+				194C62F712CB94E80071A5BD /* shy_macosx_platform_render.h */,
+				194C62F812CB94E80071A5BD /* shy_macosx_platform_scheduler.h */,
+				194C62F912CB94E80071A5BD /* shy_macosx_platform_sound_insider.h */,
+				194C62FA12CB94E80071A5BD /* shy_macosx_platform_sound_insider.mm */,
+				194C62FB12CB94E80071A5BD /* shy_macosx_platform_sound.h */,
+				194C62FC12CB94E80071A5BD /* shy_macosx_platform_static_array_insider.h */,
+				194C62FD12CB94E80071A5BD /* shy_macosx_platform_static_array.h */,
+				194C62FE12CB94E80071A5BD /* shy_macosx_platform_static_assert.h */,
+				194C62FF12CB94E80071A5BD /* shy_macosx_platform_time.h */,
+				194C630012CB94E80071A5BD /* shy_macosx_platform_touch.h */,
+				194C630112CB94E80071A5BD /* shy_macosx_platform_vector_insider.h */,
+				194C630212CB94E80071A5BD /* shy_macosx_platform_vector.h */,
+				194C630312CB94E80071A5BD /* shy_macosx_scene.h */,
+				194C630412CB94E80071A5BD /* shy_macosx_scene.mm */,
+				194C630512CB94E80071A5BD /* shy_macosx_sound_loader.h */,
+				194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */,
+				194C630712CB94E80071A5BD /* shy_macosx_texture_loader.h */,
+				194C630812CB94E80071A5BD /* shy_macosx_texture_loader.mm */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */,
 			);
@@ -384,8 +394,14 @@
 				1949342412CA399D00B3F694 /* shy_math_int_float_insider.hpp */,
 				1949342512CA399D00B3F694 /* shy_math_int_float_insider_injections.cpp */,
 				1949342612CA399D00B3F694 /* shy_matrix_float.h */,
+				1953A63D12CB9DCF00C2C00D /* shy_matrix_float.hpp */,
+				1953A63C12CB9DCF00C2C00D /* shy_matrix_float_injections.cpp */,
 				1949342712CA399D00B3F694 /* shy_matrix_float_insider.h */,
+				19431B4612CBA0EA00417BF9 /* shy_matrix_float_insider.hpp */,
+				19431B4512CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp */,
 				1949342812CA399D00B3F694 /* shy_mouse.h */,
+				19C2183512CBA33400D2BDFD /* shy_mouse.hpp */,
+				19C2183412CBA33400D2BDFD /* shy_mouse_injections.cpp */,
 				1949342912CA399D00B3F694 /* shy_mouse_insider.h */,
 				1949342A12CA399D00B3F694 /* shy_mouse_insider.hpp */,
 				1949342B12CA399D00B3F694 /* shy_mouse_insider_injections.cpp */,
@@ -397,7 +413,11 @@
 				1949343112CA399D00B3F694 /* shy_static_assert.h */,
 				1949343212CA399D00B3F694 /* shy_touch.h */,
 				1949343312CA399D00B3F694 /* shy_vector_float.h */,
+				198284D312CB998A0002DB27 /* shy_vector_float.hpp */,
+				198284D212CB998A0002DB27 /* shy_vector_float_injections.cpp */,
 				1949343412CA399D00B3F694 /* shy_vector_float_insider.h */,
+				196BEE2912CB9ACC001EEDC0 /* shy_vector_float_insider.hpp */,
+				196BEE2812CB9ACC001EEDC0 /* shy_vector_float_insider_injections.cpp */,
 			);
 			name = platform;
 			path = ../platform;
@@ -475,34 +495,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				19AE0FEC11B269A300A5B332 /* NSOpenGLFullScreen_Prefix.h in Headers */,
-				19AE0FED11B269A300A5B332 /* macosx_opengl_view.h in Headers */,
-				19AE0FEE11B269A300A5B332 /* macosx_main_controller.h in Headers */,
-				19AE0FEF11B269A300A5B332 /* macosx_scene.h in Headers */,
-				19AE100311B269A300A5B332 /* macosx_sound_loader.h in Headers */,
-				19AE100A11B269A300A5B332 /* macosx_texture_loader.h in Headers */,
-				19C45C7012C8B41100AB2BA5 /* macosx_platform_render_insider.h in Headers */,
-				19C45C7212C8B41100AB2BA5 /* macosx_platform_render.h in Headers */,
-				19C45C7312C8B41100AB2BA5 /* macosx_platform_sound_insider.h in Headers */,
-				19C45C7512C8B41100AB2BA5 /* macosx_platform_sound.h in Headers */,
-				19C45C7612C8B41100AB2BA5 /* macosx_platform_time.h in Headers */,
-				19A2577712CA2D9B0023FE2D /* macosx_platform_conditions.h in Headers */,
-				19A2577812CA2D9B0023FE2D /* macosx_platform_consts_insider.h in Headers */,
-				19A2577912CA2D9B0023FE2D /* macosx_platform_consts.h in Headers */,
-				19A2577A12CA2D9B0023FE2D /* macosx_platform_math_consts.h in Headers */,
-				19A2577B12CA2D9B0023FE2D /* macosx_platform_math_insider.h in Headers */,
-				19A2577C12CA2D9B0023FE2D /* macosx_platform_math.h in Headers */,
-				19A2577D12CA2D9B0023FE2D /* macosx_platform_matrix_insider.h in Headers */,
-				19A2577E12CA2D9B0023FE2D /* macosx_platform_matrix.h in Headers */,
-				19A2577F12CA2D9B0023FE2D /* macosx_platform_mouse_insider.h in Headers */,
-				19A2578012CA2D9B0023FE2D /* macosx_platform_mouse.h in Headers */,
-				19A2578112CA2D9B0023FE2D /* macosx_platform_pointer.h in Headers */,
-				19A2578212CA2D9B0023FE2D /* macosx_platform_scheduler.h in Headers */,
-				19A2578312CA2D9B0023FE2D /* macosx_platform_static_array_insider.h in Headers */,
-				19A2578412CA2D9B0023FE2D /* macosx_platform_static_array.h in Headers */,
-				19A2578512CA2D9B0023FE2D /* macosx_platform_static_assert.h in Headers */,
-				19A2578612CA2D9B0023FE2D /* macosx_platform_touch.h in Headers */,
-				19A2578712CA2D9B0023FE2D /* macosx_platform_vector_insider.h in Headers */,
-				19A2578812CA2D9B0023FE2D /* macosx_platform_vector.h in Headers */,
 				198EFFA012CA33B300AB439D /* shy_loadable.h in Headers */,
 				198EFFA112CA33B300AB439D /* shy_loadable.hpp in Headers */,
 				198EFFA312CA33B300AB439D /* shy_static.h in Headers */,
@@ -536,6 +528,39 @@
 				1949344F12CA399D00B3F694 /* shy_touch.h in Headers */,
 				1949345012CA399D00B3F694 /* shy_vector_float.h in Headers */,
 				1949345112CA399D00B3F694 /* shy_vector_float_insider.h in Headers */,
+				194C630912CB94E80071A5BD /* shy_macosx_main_controller.h in Headers */,
+				194C630B12CB94E80071A5BD /* shy_macosx_opengl_view.h in Headers */,
+				194C630D12CB94E80071A5BD /* shy_macosx_platform_conditions.h in Headers */,
+				194C630E12CB94E80071A5BD /* shy_macosx_platform_consts_insider.h in Headers */,
+				194C630F12CB94E80071A5BD /* shy_macosx_platform_consts.h in Headers */,
+				194C631012CB94E80071A5BD /* shy_macosx_platform_math_consts.h in Headers */,
+				194C631112CB94E80071A5BD /* shy_macosx_platform_math_insider.h in Headers */,
+				194C631212CB94E80071A5BD /* shy_macosx_platform_math.h in Headers */,
+				194C631312CB94E80071A5BD /* shy_macosx_platform_matrix_insider.h in Headers */,
+				194C631412CB94E80071A5BD /* shy_macosx_platform_matrix.h in Headers */,
+				194C631512CB94E80071A5BD /* shy_macosx_platform_mouse_insider.h in Headers */,
+				194C631612CB94E80071A5BD /* shy_macosx_platform_mouse.h in Headers */,
+				194C631712CB94E80071A5BD /* shy_macosx_platform_pointer.h in Headers */,
+				194C631812CB94E80071A5BD /* shy_macosx_platform_render_insider.h in Headers */,
+				194C631A12CB94E80071A5BD /* shy_macosx_platform_render.h in Headers */,
+				194C631B12CB94E80071A5BD /* shy_macosx_platform_scheduler.h in Headers */,
+				194C631C12CB94E80071A5BD /* shy_macosx_platform_sound_insider.h in Headers */,
+				194C631E12CB94E80071A5BD /* shy_macosx_platform_sound.h in Headers */,
+				194C631F12CB94E80071A5BD /* shy_macosx_platform_static_array_insider.h in Headers */,
+				194C632012CB94E80071A5BD /* shy_macosx_platform_static_array.h in Headers */,
+				194C632112CB94E80071A5BD /* shy_macosx_platform_static_assert.h in Headers */,
+				194C632212CB94E80071A5BD /* shy_macosx_platform_time.h in Headers */,
+				194C632312CB94E80071A5BD /* shy_macosx_platform_touch.h in Headers */,
+				194C632412CB94E80071A5BD /* shy_macosx_platform_vector_insider.h in Headers */,
+				194C632512CB94E80071A5BD /* shy_macosx_platform_vector.h in Headers */,
+				194C632612CB94E80071A5BD /* shy_macosx_scene.h in Headers */,
+				194C632812CB94E80071A5BD /* shy_macosx_sound_loader.h in Headers */,
+				194C632A12CB94E80071A5BD /* shy_macosx_texture_loader.h in Headers */,
+				198284D512CB998A0002DB27 /* shy_vector_float.hpp in Headers */,
+				196BEE2B12CB9ACC001EEDC0 /* shy_vector_float_insider.hpp in Headers */,
+				1953A63F12CB9DCF00C2C00D /* shy_matrix_float.hpp in Headers */,
+				19431B4812CBA0EA00417BF9 /* shy_matrix_float_insider.hpp in Headers */,
+				19C2183712CBA33400D2BDFD /* shy_mouse.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,11 +569,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */,
-				05689227046B13F600000102 /* macosx_opengl_view.h in Headers */,
-				05689231046B14B900000102 /* macosx_main_controller.h in Headers */,
-				05689235046B2C0900000102 /* macosx_scene.h in Headers */,
-				8812CF44117DE8B4008F67D9 /* macosx_sound_loader.h in Headers */,
-				883E9479119D62680040B1D6 /* macosx_texture_loader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,13 +645,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				19AE101711B269A300A5B332 /* main.m in Sources */,
-				19AE101811B269A300A5B332 /* macosx_opengl_view.mm in Sources */,
-				19AE101911B269A300A5B332 /* macosx_main_controller.mm in Sources */,
-				19AE101A11B269A300A5B332 /* macosx_scene.mm in Sources */,
-				19AE101C11B269A300A5B332 /* macosx_sound_loader.mm in Sources */,
-				19AE101D11B269A300A5B332 /* macosx_texture_loader.mm in Sources */,
-				19C45C7112C8B41100AB2BA5 /* macosx_platform_render_insider.mm in Sources */,
-				19C45C7412C8B41100AB2BA5 /* macosx_platform_sound_insider.mm in Sources */,
 				198EFFA212CA33B300AB439D /* shy_loadable_injections.cpp in Sources */,
 				198EFFA512CA33B300AB439D /* shy_static_injections.cpp in Sources */,
 				1949343712CA399D00B3F694 /* shy_conditions_injections.cpp in Sources */,
@@ -639,6 +652,18 @@
 				1949343F12CA399D00B3F694 /* shy_math_int_float_injections.cpp in Sources */,
 				1949344212CA399D00B3F694 /* shy_math_int_float_insider_injections.cpp in Sources */,
 				1949344812CA399D00B3F694 /* shy_mouse_insider_injections.cpp in Sources */,
+				194C630A12CB94E80071A5BD /* shy_macosx_main_controller.mm in Sources */,
+				194C630C12CB94E80071A5BD /* shy_macosx_opengl_view.mm in Sources */,
+				194C631912CB94E80071A5BD /* shy_macosx_platform_render_insider.mm in Sources */,
+				194C631D12CB94E80071A5BD /* shy_macosx_platform_sound_insider.mm in Sources */,
+				194C632712CB94E80071A5BD /* shy_macosx_scene.mm in Sources */,
+				194C632912CB94E80071A5BD /* shy_macosx_sound_loader.mm in Sources */,
+				194C632B12CB94E80071A5BD /* shy_macosx_texture_loader.mm in Sources */,
+				198284D412CB998A0002DB27 /* shy_vector_float_injections.cpp in Sources */,
+				196BEE2A12CB9ACC001EEDC0 /* shy_vector_float_insider_injections.cpp in Sources */,
+				1953A63E12CB9DCF00C2C00D /* shy_matrix_float_injections.cpp in Sources */,
+				19431B4712CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp in Sources */,
+				19C2183612CBA33400D2BDFD /* shy_mouse_injections.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,11 +672,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B9732CFDCFA39411CA2CEA /* main.m in Sources */,
-				05689228046B13F600000102 /* macosx_opengl_view.mm in Sources */,
-				05689232046B14B900000102 /* macosx_main_controller.mm in Sources */,
-				05689236046B2C0900000102 /* macosx_scene.mm in Sources */,
-				8812CF45117DE8B4008F67D9 /* macosx_sound_loader.mm in Sources */,
-				883E947A119D62680040B1D6 /* macosx_texture_loader.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
