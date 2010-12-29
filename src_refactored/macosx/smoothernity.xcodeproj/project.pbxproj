@@ -140,6 +140,9 @@
 		198EFFA312CA33B300AB439D /* shy_static.h in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9D12CA33B300AB439D /* shy_static.h */; };
 		198EFFA412CA33B300AB439D /* shy_static.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9E12CA33B300AB439D /* shy_static.hpp */; };
 		198EFFA512CA33B300AB439D /* shy_static_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198EFF9F12CA33B300AB439D /* shy_static_injections.cpp */; };
+		19A2DAB212CBCA9B00E7B2DD /* shy_touch_insider_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A2DAAF12CBCA9B00E7B2DD /* shy_touch_insider_injections.cpp */; };
+		19A2DAB312CBCA9B00E7B2DD /* shy_touch_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A2DAB012CBCA9B00E7B2DD /* shy_touch_insider.h */; };
+		19A2DAB412CBCA9B00E7B2DD /* shy_touch_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19A2DAB112CBCA9B00E7B2DD /* shy_touch_insider.hpp */; };
 		19AE0FEC11B269A300A5B332 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
 		19AE101111B269A300A5B332 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		19AE101211B269A300A5B332 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -254,6 +257,9 @@
 		198EFF9D12CA33B300AB439D /* shy_static.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_static.h; sourceTree = "<group>"; };
 		198EFF9E12CA33B300AB439D /* shy_static.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_static.hpp; sourceTree = "<group>"; };
 		198EFF9F12CA33B300AB439D /* shy_static_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_static_injections.cpp; sourceTree = "<group>"; };
+		19A2DAAF12CBCA9B00E7B2DD /* shy_touch_insider_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_touch_insider_injections.cpp; sourceTree = "<group>"; };
+		19A2DAB012CBCA9B00E7B2DD /* shy_touch_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_touch_insider.h; sourceTree = "<group>"; };
+		19A2DAB112CBCA9B00E7B2DD /* shy_touch_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_touch_insider.hpp; sourceTree = "<group>"; };
 		19AE102811B269A300A5B332 /* Info-smoothernity__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-smoothernity__Upgraded_.plist"; sourceTree = "<group>"; };
 		19AE102911B269A300A5B332 /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19C2183412CBA33400D2BDFD /* shy_mouse_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_mouse_injections.cpp; sourceTree = "<group>"; };
@@ -418,6 +424,9 @@
 				1949343212CA399D00B3F694 /* shy_touch.h */,
 				19135A2812CBC7AB003FA31B /* shy_touch.hpp */,
 				19135A2712CBC7AB003FA31B /* shy_touch_injections.cpp */,
+				19A2DAB012CBCA9B00E7B2DD /* shy_touch_insider.h */,
+				19A2DAB112CBCA9B00E7B2DD /* shy_touch_insider.hpp */,
+				19A2DAAF12CBCA9B00E7B2DD /* shy_touch_insider_injections.cpp */,
 				1949343312CA399D00B3F694 /* shy_vector_float.h */,
 				198284D312CB998A0002DB27 /* shy_vector_float.hpp */,
 				198284D212CB998A0002DB27 /* shy_vector_float_injections.cpp */,
@@ -568,6 +577,8 @@
 				19431B4812CBA0EA00417BF9 /* shy_matrix_float_insider.hpp in Headers */,
 				19C2183712CBA33400D2BDFD /* shy_mouse.hpp in Headers */,
 				19135A2A12CBC7AB003FA31B /* shy_touch.hpp in Headers */,
+				19A2DAB312CBCA9B00E7B2DD /* shy_touch_insider.h in Headers */,
+				19A2DAB412CBCA9B00E7B2DD /* shy_touch_insider.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,6 +683,7 @@
 				19431B4712CBA0EA00417BF9 /* shy_matrix_float_insider_injections.cpp in Sources */,
 				19C2183612CBA33400D2BDFD /* shy_mouse_injections.cpp in Sources */,
 				19135A2912CBC7AB003FA31B /* shy_touch_injections.cpp in Sources */,
+				19A2DAB212CBCA9B00E7B2DD /* shy_touch_insider_injections.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
