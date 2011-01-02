@@ -94,8 +94,25 @@ typedef shy_message_common_engine_render_texture_unselect so_called_message_comm
 
 #include "../../../injections/shy_platform_static_assert.h"
 #include "../../../injections/shy_platform_scheduler.h"
+#include "../../logic/blanket/shy_mesh.h"
+#include "../../logic/door/shy_mesh.h"
+#include "../../logic/entities/shy_entities.h"
+#include "../../logic/fidget/shy_fidget.h"
+#include "../../logic/image/shy_image.h"
+#include "../../logic/land/shy_land.h"
+#include "../../logic/main_menu/letters/shy_meshes_creator.h"
+#include "../../logic/main_menu/selection/shy_mesh.h"
 #include "shy_render.h"
-typedef shy_common_engine_render so_called_common_engine_render ;
+
+typedef shy_common_logic_blanket_mesh_scheduled so_called_common_logic_blanket_mesh ;
+typedef shy_common_logic_door_mesh_scheduled so_called_common_logic_door_mesh ;
+typedef shy_common_logic_entities_scheduled so_called_common_logic_entities ;
+typedef shy_common_logic_fidget_scheduled so_called_common_logic_fidget ;
+typedef shy_common_logic_image_scheduled so_called_common_logic_image ;
+typedef shy_common_logic_land_scheduled so_called_common_logic_land ;
+typedef shy_common_logic_main_menu_letters_meshes_creator_scheduled so_called_common_logic_main_menu_letters_meshes_creator ;
+typedef shy_common_logic_main_menu_selection_mesh_scheduled so_called_common_logic_main_menu_selection_mesh ;
+typedef shy_common_engine_render_scheduled so_called_common_engine_render ;
 
 #include "shy_sender.hpp"
 
