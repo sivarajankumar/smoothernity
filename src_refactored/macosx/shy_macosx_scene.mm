@@ -1,7 +1,7 @@
 #include "shy_macosx_scene.h"
-#include "shy_macosx_platform_render_insider.h"
-#include "shy_macosx_platform_sound_insider.h"
-#include "shy_macosx_platform_mouse_insider.h"
+#include "platform/shy_macosx_platform_render_insider.h"
+#include "platform/shy_macosx_platform_sound_insider.h"
+#include "platform/shy_macosx_platform_mouse_insider.h"
 #include "../injections/shy_facade.h"
 
 @implementation shy_macosx_scene

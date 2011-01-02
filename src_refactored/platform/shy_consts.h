@@ -4,7 +4,7 @@
 class shy_platform_consts
 {
 public :
-    static const int frames_per_second = 60 ;
+    static so_called_platform_math :: const_int_32 frames_per_second = 60 ;
 } ;
 
 #endif
