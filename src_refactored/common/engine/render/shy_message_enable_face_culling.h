@@ -1,0 +1,9 @@
+#ifndef _shy_message_common_engine_render_enable_face_culling_included
+#define _shy_message_common_engine_render_enable_face_culling_included
+
+class shy_message_common_engine_render_enable_face_culling
+{
+} ;
+
+#endif
+

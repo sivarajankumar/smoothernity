@@ -1,0 +1,9 @@
+#ifndef _shy_message_common_engine_render_matrix_identity_included
+#define _shy_message_common_engine_render_matrix_identity_included
+
+class shy_message_common_engine_render_matrix_identity
+{
+} ;
+
+#endif
+

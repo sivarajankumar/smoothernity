@@ -65,6 +65,19 @@
 		194C632912CB94E80071A5BD /* shy_macosx_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */; };
 		194C632A12CB94E80071A5BD /* shy_macosx_texture_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630712CB94E80071A5BD /* shy_macosx_texture_loader.h */; };
 		194C632B12CB94E80071A5BD /* shy_macosx_texture_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630812CB94E80071A5BD /* shy_macosx_texture_loader.mm */; };
+		198290B612D0AA84005544F1 /* shy_consts.h in Headers */ = {isa = PBXBuildFile; fileRef = 198290A712D0AA84005544F1 /* shy_consts.h */; };
+		198290B712D0AA84005544F1 /* shy_consts.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198290A812D0AA84005544F1 /* shy_consts.hpp */; };
+		198290B812D0AA84005544F1 /* shy_consts_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198290A912D0AA84005544F1 /* shy_consts_injections.cpp */; };
+		198290B912D0AA84005544F1 /* shy_type_mesh_id.h in Headers */ = {isa = PBXBuildFile; fileRef = 198290AA12D0AA84005544F1 /* shy_type_mesh_id.h */; };
+		198290BA12D0AA84005544F1 /* shy_type_texture_id.h in Headers */ = {isa = PBXBuildFile; fileRef = 198290AB12D0AA84005544F1 /* shy_type_texture_id.h */; };
+		198290BB12D0AA84005544F1 /* shy_camera_stateless.h in Headers */ = {isa = PBXBuildFile; fileRef = 198290AC12D0AA84005544F1 /* shy_camera_stateless.h */; };
+		198290BC12D0AA84005544F1 /* shy_camera_stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198290AD12D0AA84005544F1 /* shy_camera_stateless.hpp */; };
+		198290BD12D0AA84005544F1 /* shy_camera_stateless_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198290AE12D0AA84005544F1 /* shy_camera_stateless_injections.cpp */; };
+		198290BE12D0AA84005544F1 /* shy_fsm_stateless.h in Headers */ = {isa = PBXBuildFile; fileRef = 198290AF12D0AA84005544F1 /* shy_fsm_stateless.h */; };
+		198290BF12D0AA84005544F1 /* shy_math_stateless.h in Headers */ = {isa = PBXBuildFile; fileRef = 198290B012D0AA84005544F1 /* shy_math_stateless.h */; };
+		198290C012D0AA84005544F1 /* shy_math_stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198290B112D0AA84005544F1 /* shy_math_stateless.hpp */; };
+		198290C112D0AA84005544F1 /* shy_math_stateless_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198290B212D0AA84005544F1 /* shy_math_stateless_injections.cpp */; };
+		198290C212D0AA84005544F1 /* shy_type_rect.h in Headers */ = {isa = PBXBuildFile; fileRef = 198290B312D0AA84005544F1 /* shy_type_rect.h */; };
 		198EFFA012CA33B300AB439D /* shy_loadable.h in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9A12CA33B300AB439D /* shy_loadable.h */; };
 		198EFFA112CA33B300AB439D /* shy_loadable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9B12CA33B300AB439D /* shy_loadable.hpp */; };
 		198EFFA312CA33B300AB439D /* shy_static.h in Headers */ = {isa = PBXBuildFile; fileRef = 198EFF9D12CA33B300AB439D /* shy_static.h */; };
@@ -181,13 +194,6 @@
 		19CBFF4812CFD89900E8DD3F /* shy_type_macosx_platform_sound_stereo_resource_id.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19CBFEE812CFD89900E8DD3F /* shy_type_macosx_platform_sound_stereo_resource_id.hpp */; };
 		19CBFF4912CFD89900E8DD3F /* shy_type_macosx_platform_vector_data_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19CBFEE912CFD89900E8DD3F /* shy_type_macosx_platform_vector_data_injections.mm */; };
 		19CBFF4A12CFD89900E8DD3F /* shy_type_macosx_platform_vector_data.h in Headers */ = {isa = PBXBuildFile; fileRef = 19CBFEEA12CFD89900E8DD3F /* shy_type_macosx_platform_vector_data.h */; };
-		19E29CD312CF2B2700588127 /* shy_camera_stateless.h in Headers */ = {isa = PBXBuildFile; fileRef = 19E29CCB12CF2B2700588127 /* shy_camera_stateless.h */; };
-		19E29CD412CF2B2700588127 /* shy_camera_stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19E29CCC12CF2B2700588127 /* shy_camera_stateless.hpp */; };
-		19E29CD512CF2B2700588127 /* shy_camera_stateless_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19E29CCD12CF2B2700588127 /* shy_camera_stateless_injections.cpp */; };
-		19E29CD612CF2B2700588127 /* shy_math_stateless.h in Headers */ = {isa = PBXBuildFile; fileRef = 19E29CCE12CF2B2700588127 /* shy_math_stateless.h */; };
-		19E29CD712CF2B2700588127 /* shy_math_stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19E29CCF12CF2B2700588127 /* shy_math_stateless.hpp */; };
-		19E29CD812CF2B2700588127 /* shy_math_stateless_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19E29CD012CF2B2700588127 /* shy_math_stateless_injections.cpp */; };
-		19E29CD912CF2B2700588127 /* shy_type_rect.h in Headers */ = {isa = PBXBuildFile; fileRef = 19E29CD112CF2B2700588127 /* shy_type_rect.h */; };
 		19ECCFD812CDCFD9003735C3 /* shy_loadable_injections.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19ECCFD612CDCFD9003735C3 /* shy_loadable_injections.hpp */; };
 		19ECCFD912CDCFD9003735C3 /* shy_static_injections.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 19ECCFD712CDCFD9003735C3 /* shy_static_injections.hpp */; };
 		19F1D66512CF604000DED115 /* shy_conditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 19F1D63212CF604000DED115 /* shy_conditions.h */; };
@@ -287,6 +293,19 @@
 		194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_sound_loader.mm; sourceTree = "<group>"; };
 		194C630712CB94E80071A5BD /* shy_macosx_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_texture_loader.h; sourceTree = "<group>"; };
 		194C630812CB94E80071A5BD /* shy_macosx_texture_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_texture_loader.mm; sourceTree = "<group>"; };
+		198290A712D0AA84005544F1 /* shy_consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_consts.h; sourceTree = "<group>"; };
+		198290A812D0AA84005544F1 /* shy_consts.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_consts.hpp; sourceTree = "<group>"; };
+		198290A912D0AA84005544F1 /* shy_consts_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_consts_injections.cpp; sourceTree = "<group>"; };
+		198290AA12D0AA84005544F1 /* shy_type_mesh_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_type_mesh_id.h; sourceTree = "<group>"; };
+		198290AB12D0AA84005544F1 /* shy_type_texture_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_type_texture_id.h; sourceTree = "<group>"; };
+		198290AC12D0AA84005544F1 /* shy_camera_stateless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_camera_stateless.h; sourceTree = "<group>"; };
+		198290AD12D0AA84005544F1 /* shy_camera_stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_camera_stateless.hpp; sourceTree = "<group>"; };
+		198290AE12D0AA84005544F1 /* shy_camera_stateless_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_camera_stateless_injections.cpp; sourceTree = "<group>"; };
+		198290AF12D0AA84005544F1 /* shy_fsm_stateless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_fsm_stateless.h; sourceTree = "<group>"; };
+		198290B012D0AA84005544F1 /* shy_math_stateless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_math_stateless.h; sourceTree = "<group>"; };
+		198290B112D0AA84005544F1 /* shy_math_stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_math_stateless.hpp; sourceTree = "<group>"; };
+		198290B212D0AA84005544F1 /* shy_math_stateless_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_math_stateless_injections.cpp; sourceTree = "<group>"; };
+		198290B312D0AA84005544F1 /* shy_type_rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_type_rect.h; sourceTree = "<group>"; };
 		198EFF9A12CA33B300AB439D /* shy_loadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loadable.h; sourceTree = "<group>"; };
 		198EFF9B12CA33B300AB439D /* shy_loadable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loadable.hpp; sourceTree = "<group>"; };
 		198EFF9D12CA33B300AB439D /* shy_static.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_static.h; sourceTree = "<group>"; };
@@ -393,13 +412,6 @@
 		19CBFEE812CFD89900E8DD3F /* shy_type_macosx_platform_sound_stereo_resource_id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = shy_type_macosx_platform_sound_stereo_resource_id.hpp; path = platform/shy_type_macosx_platform_sound_stereo_resource_id.hpp; sourceTree = "<group>"; };
 		19CBFEE912CFD89900E8DD3F /* shy_type_macosx_platform_vector_data_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = shy_type_macosx_platform_vector_data_injections.mm; path = platform/shy_type_macosx_platform_vector_data_injections.mm; sourceTree = "<group>"; };
 		19CBFEEA12CFD89900E8DD3F /* shy_type_macosx_platform_vector_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shy_type_macosx_platform_vector_data.h; path = platform/shy_type_macosx_platform_vector_data.h; sourceTree = "<group>"; };
-		19E29CCB12CF2B2700588127 /* shy_camera_stateless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_camera_stateless.h; sourceTree = "<group>"; };
-		19E29CCC12CF2B2700588127 /* shy_camera_stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_camera_stateless.hpp; sourceTree = "<group>"; };
-		19E29CCD12CF2B2700588127 /* shy_camera_stateless_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_camera_stateless_injections.cpp; sourceTree = "<group>"; };
-		19E29CCE12CF2B2700588127 /* shy_math_stateless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_math_stateless.h; sourceTree = "<group>"; };
-		19E29CCF12CF2B2700588127 /* shy_math_stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_math_stateless.hpp; sourceTree = "<group>"; };
-		19E29CD012CF2B2700588127 /* shy_math_stateless_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_math_stateless_injections.cpp; sourceTree = "<group>"; };
-		19E29CD112CF2B2700588127 /* shy_type_rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_type_rect.h; sourceTree = "<group>"; };
 		19ECCFD612CDCFD9003735C3 /* shy_loadable_injections.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loadable_injections.hpp; sourceTree = "<group>"; };
 		19ECCFD712CDCFD9003735C3 /* shy_static_injections.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_static_injections.hpp; sourceTree = "<group>"; };
 		19F1D63212CF604000DED115 /* shy_conditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_conditions.h; sourceTree = "<group>"; };
@@ -518,10 +530,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				198290A312D0AA84005544F1 /* common */,
 				19CBFE8A12CFD88400E8DD3F /* macosx_platform */,
 				19F1D69812CF604F00DED115 /* injections */,
 				19F1D63112CF604000DED115 /* platform */,
-				19E29CC912CF2B2700588127 /* common */,
 				198EFF9912CA33B300AB439D /* facade */,
 				194C62E612CB94E80071A5BD /* shy_macosx_main_controller.h */,
 				194C62E712CB94E80071A5BD /* shy_macosx_main_controller.mm */,
@@ -558,6 +570,51 @@
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 			);
 			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		198290A312D0AA84005544F1 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				198290A412D0AA84005544F1 /* engine */,
+				198290B412D0AA84005544F1 /* logic */,
+			);
+			name = common;
+			path = ../common;
+			sourceTree = SOURCE_ROOT;
+		};
+		198290A412D0AA84005544F1 /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				198290A512D0AA84005544F1 /* render */,
+				198290AC12D0AA84005544F1 /* shy_camera_stateless.h */,
+				198290AD12D0AA84005544F1 /* shy_camera_stateless.hpp */,
+				198290AE12D0AA84005544F1 /* shy_camera_stateless_injections.cpp */,
+				198290AF12D0AA84005544F1 /* shy_fsm_stateless.h */,
+				198290B012D0AA84005544F1 /* shy_math_stateless.h */,
+				198290B112D0AA84005544F1 /* shy_math_stateless.hpp */,
+				198290B212D0AA84005544F1 /* shy_math_stateless_injections.cpp */,
+				198290B312D0AA84005544F1 /* shy_type_rect.h */,
+			);
+			path = engine;
+			sourceTree = "<group>";
+		};
+		198290A512D0AA84005544F1 /* render */ = {
+			isa = PBXGroup;
+			children = (
+				198290A712D0AA84005544F1 /* shy_consts.h */,
+				198290A812D0AA84005544F1 /* shy_consts.hpp */,
+				198290A912D0AA84005544F1 /* shy_consts_injections.cpp */,
+				198290AA12D0AA84005544F1 /* shy_type_mesh_id.h */,
+				198290AB12D0AA84005544F1 /* shy_type_texture_id.h */,
+			);
+			path = render;
+			sourceTree = "<group>";
+		};
+		198290B412D0AA84005544F1 /* logic */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = logic;
 			sourceTree = "<group>";
 		};
 		198EFF9912CA33B300AB439D /* facade */ = {
@@ -684,37 +741,6 @@
 				19CBFEEA12CFD89900E8DD3F /* shy_type_macosx_platform_vector_data.h */,
 			);
 			name = macosx_platform;
-			sourceTree = "<group>";
-		};
-		19E29CC912CF2B2700588127 /* common */ = {
-			isa = PBXGroup;
-			children = (
-				19E29CCA12CF2B2700588127 /* engine */,
-				19E29CD212CF2B2700588127 /* logic */,
-			);
-			name = common;
-			path = ../common;
-			sourceTree = SOURCE_ROOT;
-		};
-		19E29CCA12CF2B2700588127 /* engine */ = {
-			isa = PBXGroup;
-			children = (
-				19E29CCB12CF2B2700588127 /* shy_camera_stateless.h */,
-				19E29CCC12CF2B2700588127 /* shy_camera_stateless.hpp */,
-				19E29CCD12CF2B2700588127 /* shy_camera_stateless_injections.cpp */,
-				19E29CCE12CF2B2700588127 /* shy_math_stateless.h */,
-				19E29CCF12CF2B2700588127 /* shy_math_stateless.hpp */,
-				19E29CD012CF2B2700588127 /* shy_math_stateless_injections.cpp */,
-				19E29CD112CF2B2700588127 /* shy_type_rect.h */,
-			);
-			path = engine;
-			sourceTree = "<group>";
-		};
-		19E29CD212CF2B2700588127 /* logic */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = logic;
 			sourceTree = "<group>";
 		};
 		19F1D63112CF604000DED115 /* platform */ = {
@@ -869,11 +895,6 @@
 				194C632A12CB94E80071A5BD /* shy_macosx_texture_loader.h in Headers */,
 				19ECCFD812CDCFD9003735C3 /* shy_loadable_injections.hpp in Headers */,
 				19ECCFD912CDCFD9003735C3 /* shy_static_injections.hpp in Headers */,
-				19E29CD312CF2B2700588127 /* shy_camera_stateless.h in Headers */,
-				19E29CD412CF2B2700588127 /* shy_camera_stateless.hpp in Headers */,
-				19E29CD612CF2B2700588127 /* shy_math_stateless.h in Headers */,
-				19E29CD712CF2B2700588127 /* shy_math_stateless.hpp in Headers */,
-				19E29CD912CF2B2700588127 /* shy_type_rect.h in Headers */,
 				19F1D66512CF604000DED115 /* shy_conditions.h in Headers */,
 				19F1D66612CF604000DED115 /* shy_conditions.hpp in Headers */,
 				19F1D66712CF604000DED115 /* shy_conditions_injections.hpp in Headers */,
@@ -1010,6 +1031,16 @@
 				19CBFF4712CFD89900E8DD3F /* shy_type_macosx_platform_sound_stereo_resource_id.h in Headers */,
 				19CBFF4812CFD89900E8DD3F /* shy_type_macosx_platform_sound_stereo_resource_id.hpp in Headers */,
 				19CBFF4A12CFD89900E8DD3F /* shy_type_macosx_platform_vector_data.h in Headers */,
+				198290B612D0AA84005544F1 /* shy_consts.h in Headers */,
+				198290B712D0AA84005544F1 /* shy_consts.hpp in Headers */,
+				198290B912D0AA84005544F1 /* shy_type_mesh_id.h in Headers */,
+				198290BA12D0AA84005544F1 /* shy_type_texture_id.h in Headers */,
+				198290BB12D0AA84005544F1 /* shy_camera_stateless.h in Headers */,
+				198290BC12D0AA84005544F1 /* shy_camera_stateless.hpp in Headers */,
+				198290BE12D0AA84005544F1 /* shy_fsm_stateless.h in Headers */,
+				198290BF12D0AA84005544F1 /* shy_math_stateless.h in Headers */,
+				198290C012D0AA84005544F1 /* shy_math_stateless.hpp in Headers */,
+				198290C212D0AA84005544F1 /* shy_type_rect.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,8 +1130,6 @@
 				194C632712CB94E80071A5BD /* shy_macosx_scene.mm in Sources */,
 				194C632912CB94E80071A5BD /* shy_macosx_sound_loader.mm in Sources */,
 				194C632B12CB94E80071A5BD /* shy_macosx_texture_loader.mm in Sources */,
-				19E29CD512CF2B2700588127 /* shy_camera_stateless_injections.cpp in Sources */,
-				19E29CD812CF2B2700588127 /* shy_math_stateless_injections.cpp in Sources */,
 				19F1D6AF12CF604F00DED115 /* shy_facade_injections.cpp in Sources */,
 				19CBFEEB12CFD89900E8DD3F /* shy_macosx_platform_conditions_injections.mm in Sources */,
 				19CBFEEF12CFD89900E8DD3F /* shy_macosx_platform_math_consts_injections.mm in Sources */,
@@ -1137,6 +1166,9 @@
 				19CBFF4312CFD89900E8DD3F /* shy_type_macosx_platform_sound_source_id_injections.mm in Sources */,
 				19CBFF4612CFD89900E8DD3F /* shy_type_macosx_platform_sound_stereo_resource_id_injections.mm in Sources */,
 				19CBFF4912CFD89900E8DD3F /* shy_type_macosx_platform_vector_data_injections.mm in Sources */,
+				198290B812D0AA84005544F1 /* shy_consts_injections.cpp in Sources */,
+				198290BD12D0AA84005544F1 /* shy_camera_stateless_injections.cpp in Sources */,
+				198290C112D0AA84005544F1 /* shy_math_stateless_injections.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

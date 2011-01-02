@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_engine_render_blend_disable_included
+#define _shy_message_common_engine_render_blend_disable_included
+
+class shy_message_common_engine_render_blend_disable
+{
+} ;
+
+#endif

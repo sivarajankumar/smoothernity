@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha_included
+#define _shy_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha_included
+
+class shy_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha
+{
+} ;
+
+#endif
