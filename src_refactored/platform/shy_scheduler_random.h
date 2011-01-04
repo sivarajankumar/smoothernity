@@ -1,6 +1,8 @@
 #ifndef _shy_platform_scheduler_random_included
 #define _shy_platform_scheduler_random_included
 
+#include <new>
+
 class shy_platform_scheduler_random
 {
     static const int _max_scheduled_modules = 100 ;

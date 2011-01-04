@@ -1,0 +1,12 @@
+#ifndef _shy_common_logic_door_texture_included
+#define _shy_common_logic_door_texture_included
+
+class _shy_common_logic_door_texture
+{
+public :
+    static void receive ( so_called_message_common_engine_render_texture_create_reply ) ;
+} ;
+
+typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_door_texture > :: module shy_common_logic_door_texture_scheduled ;
+
+#endif

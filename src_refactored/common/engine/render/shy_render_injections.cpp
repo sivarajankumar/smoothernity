@@ -3,6 +3,8 @@
 #include "../../../injections/shy_type_platform_matrix_data.h"
 #include "../../../injections/shy_type_platform_render_texel_data.h"
 #include "../../../injections/shy_type_platform_render_texture_resource_id.h"
+#include "../../../injections/shy_platform_static_assert.h"
+#include "../../../injections/shy_platform_scheduler.h"
 
 #include "shy_type_mesh_id.h"
 #include "shy_type_texture_id.h"
@@ -92,53 +94,5 @@ typedef shy_message_common_engine_render_texture_set_texel_rgba so_called_messag
 typedef shy_message_common_engine_render_texture_set_texels_rect so_called_message_common_engine_render_texture_set_texels_rect ;
 typedef shy_message_common_engine_render_texture_unselect so_called_message_common_engine_render_texture_unselect ;
 
-#include "../../../injections/shy_platform_static_assert.h"
-#include "../../../injections/shy_platform_scheduler.h"
-#include "../../logic/blanket/animation/shy_fit.h"
-#include "../../logic/blanket/shy_mesh.h"
-#include "../../logic/camera/shy_camera.h"
-#include "../../logic/core/shy_core.h"
-#include "../../logic/door/shy_mesh.h"
-#include "../../logic/door/shy_texture.h"
-#include "../../logic/entities/shy_entities.h"
-#include "../../logic/fidget/shy_fidget.h"
-#include "../../logic/image/shy_image.h"
-#include "../../logic/land/shy_land.h"
-#include "../../logic/main_menu/letters/layout/shy_position.h"
-#include "../../logic/main_menu/letters/layout/shy_row_rect.h"
-#include "../../logic/main_menu/letters/shy_meshes_creator.h"
-#include "../../logic/main_menu/selection/shy_mesh.h"
-#include "../../logic/ortho/shy_ortho.h"
-#include "../../logic/perspective/shy_perspective.h"
-#include "../../logic/room/shy_mesh.h"
-#include "../../logic/room/shy_texture.h"
-#include "../../logic/text/shy_text.h"
-#include "../../logic/title/shy_title.h"
-#include "../../logic/touch/shy_touch.h"
-#include "shy_render.h"
-
-typedef shy_common_logic_blanket_animation_fit_scheduled so_called_common_logic_blanket_animation_fit ;
-typedef shy_common_logic_blanket_mesh_scheduled so_called_common_logic_blanket_mesh ;
-typedef shy_common_logic_camera_scheduled so_called_common_logic_camera ;
-typedef shy_common_logic_core_scheduled so_called_common_logic_core ;
-typedef shy_common_logic_door_mesh_scheduled so_called_common_logic_door_mesh ;
-typedef shy_common_logic_door_texture_scheduled so_called_common_logic_door_texture ;
-typedef shy_common_logic_entities_scheduled so_called_common_logic_entities ;
-typedef shy_common_logic_fidget_scheduled so_called_common_logic_fidget ;
-typedef shy_common_logic_image_scheduled so_called_common_logic_image ;
-typedef shy_common_logic_land_scheduled so_called_common_logic_land ;
-typedef shy_common_logic_main_menu_letters_layout_position_scheduled so_called_common_logic_main_menu_letters_layout_position ;
-typedef shy_common_logic_main_menu_letters_layout_row_rect_scheduled so_called_common_logic_main_menu_letters_layout_row_rect ;
-typedef shy_common_logic_main_menu_letters_meshes_creator_scheduled so_called_common_logic_main_menu_letters_meshes_creator ;
-typedef shy_common_logic_main_menu_selection_mesh_scheduled so_called_common_logic_main_menu_selection_mesh ;
-typedef shy_common_logic_ortho_scheduled so_called_common_logic_ortho ;
-typedef shy_common_logic_perspective_scheduled so_called_common_logic_perspective ;
-typedef shy_common_logic_room_mesh_scheduled so_called_common_logic_room_mesh ;
-typedef shy_common_logic_room_texture_scheduled so_called_common_logic_room_texture ;
-typedef shy_common_logic_text_scheduled so_called_common_logic_text ;
-typedef shy_common_logic_title_scheduled so_called_common_logic_title ;
-typedef shy_common_logic_touch_scheduled so_called_common_logic_touch ;
-typedef shy_common_engine_render_scheduled so_called_common_engine_render ;
-
-#include "shy_sender.hpp"
+#include "shy_render.hpp"
 
