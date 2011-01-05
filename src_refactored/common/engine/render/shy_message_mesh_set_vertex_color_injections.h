@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_engine_render_mesh_set_vertex_color_injections_included
+#define _shy_message_common_engine_render_mesh_set_vertex_color_injections_included
+
+#include "shy_message_mesh_set_vertex_color.h"
+
+typedef shy_message_common_engine_render_mesh_set_vertex_color so_called_message_common_engine_render_mesh_set_vertex_color ;
+
+#endif

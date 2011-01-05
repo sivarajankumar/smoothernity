@@ -1,0 +1,10 @@
+#ifndef _shy_message_common_engine_render_texture_finalize_injections_included
+#define _shy_message_common_engine_render_texture_finalize_injections_included
+
+#include "shy_type_texture_id_injections.h"
+
+#include "shy_message_texture_finalize.h"
+
+typedef shy_message_common_engine_render_texture_finalize so_called_message_common_engine_render_texture_finalize ;
+
+#endif
