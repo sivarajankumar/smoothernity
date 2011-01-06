@@ -1,7 +1,7 @@
 #include "shy_macosx_scene.h"
-#include "platform/shy_macosx_platform_render_insider.h"
-#include "platform/shy_macosx_platform_sound_insider.h"
-#include "platform/shy_macosx_platform_mouse_insider.h"
+#include "platform/shy_render_insider_injections.h"
+#include "platform/shy_sound_insider_injections.h"
+#include "platform/shy_mouse_insider_injections.h"
 #include "../injections/shy_facade.h"
 
 @implementation shy_macosx_scene
@@ -16,10 +16,10 @@
         [ _sound_loader thread_run ] ;
         [ _texture_loader thread_run ] ;
 
-        shy_macosx_platform_render_insider :: set_texture_loader ( _texture_loader ) ;
-        shy_macosx_platform_sound_insider :: set_sound_loader ( _sound_loader ) ;
-        shy_macosx_platform_mouse_insider :: set_left_button_down ( false ) ;
-        shy_macosx_platform_mouse_insider :: set_enabled ( true ) ;
+        so_called_platform_render_insider :: set_texture_loader ( _texture_loader ) ;
+        so_called_platform_sound_insider :: set_sound_loader ( _sound_loader ) ;
+        so_called_platform_mouse_insider :: set_left_button_down ( false ) ;
+        so_called_platform_mouse_insider :: set_enabled ( true ) ;
         
         so_called_facade :: init ( ) ;
         NSLog ( @"facade initialized" ) ;
@@ -31,8 +31,8 @@
 {
     so_called_facade :: done ( ) ;
 
-    shy_macosx_platform_render_insider :: set_texture_loader ( 0 ) ;
-    shy_macosx_platform_sound_insider :: set_sound_loader ( 0 ) ;
+    so_called_platform_render_insider :: set_texture_loader ( 0 ) ;
+    so_called_platform_sound_insider :: set_sound_loader ( 0 ) ;
 
     [ _sound_loader thread_stop ] ;
     [ _texture_loader thread_stop ] ;
@@ -53,13 +53,13 @@
     _bounds = bounds ;
     if ( bounds . size . width > bounds . size . height )
     {
-        shy_macosx_platform_render_insider :: set_aspect_width ( bounds . size . width / bounds . size . height ) ;
-        shy_macosx_platform_render_insider :: set_aspect_height ( 1.0f ) ;
+        so_called_platform_render_insider :: set_aspect_width ( bounds . size . width / bounds . size . height ) ;
+        so_called_platform_render_insider :: set_aspect_height ( 1.0f ) ;
     }
     else
     {
-        shy_macosx_platform_render_insider :: set_aspect_width ( 1.0f ) ;
-        shy_macosx_platform_render_insider :: set_aspect_height ( bounds . size . height / bounds . size . width ) ;
+        so_called_platform_render_insider :: set_aspect_width ( 1.0f ) ;
+        so_called_platform_render_insider :: set_aspect_height ( bounds . size . height / bounds . size . width ) ;
     }
 }
 
@@ -67,28 +67,28 @@
 {
     if ( _bounds . size . width > _bounds . size . height )
     {
-        shy_macosx_platform_mouse_insider :: set_x 
+        so_called_platform_mouse_insider :: set_x 
             ( ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . height ) ;
-        shy_macosx_platform_mouse_insider :: set_y 
+        so_called_platform_mouse_insider :: set_y 
             ( ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . height ) ;
     }
     else
     {
-        shy_macosx_platform_mouse_insider :: set_x
+        so_called_platform_mouse_insider :: set_x
             ( ( 2.0f * ( position . x - _bounds . origin . x ) - _bounds . size . width ) / _bounds . size . width ) ;
-        shy_macosx_platform_mouse_insider :: set_y
+        so_called_platform_mouse_insider :: set_y
             ( ( 2.0f * ( position . y - _bounds . origin . y ) - _bounds . size . height ) / _bounds . size . width ) ;
     }
 }
 
 - ( void ) mouse_left_button_down
 {
-    shy_macosx_platform_mouse_insider :: set_left_button_down ( true ) ;
+    so_called_platform_mouse_insider :: set_left_button_down ( true ) ;
 }
 
 - ( void ) mouse_left_button_up
 {
-    shy_macosx_platform_mouse_insider :: set_left_button_down ( false ) ;
+    so_called_platform_mouse_insider :: set_left_button_down ( false ) ;
 }
 
 - ( void ) render
