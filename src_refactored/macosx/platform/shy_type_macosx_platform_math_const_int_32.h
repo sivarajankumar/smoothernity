@@ -1,7 +1,0 @@
-#ifndef _shy_type_macosx_platform_math_const_int_32_included
-#define _shy_type_macosx_platform_math_const_int_32_included
-
-#include "../../platform/shy_type_math_int_float_const_int_32.h"
-typedef shy_type_platform_math_int_float_const_int_32 shy_type_macosx_platform_math_const_int_32 ;
-
-#endif

@@ -2,8 +2,7 @@
 #define _shy_injections_type_platform_render_texture_resource_id_included
 
 #ifdef shy_build_for_macosx
-    #include "../macosx/platform/shy_type_macosx_platform_render_texture_resource_id.h"
-    typedef shy_type_macosx_platform_render_texture_resource_id so_called_type_platform_render_texture_resource_id ;
+    #include "../macosx/platform/shy_type_macosx_platform_render_texture_resource_id_injections.h"
 #endif
 
 #endif

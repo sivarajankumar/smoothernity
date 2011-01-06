@@ -2,13 +2,11 @@
 #define _shy_injections_facade_included
 
 #ifdef shy_build_static_way
-    #include "../facade/shy_static.h"
-    typedef shy_facade_static so_called_facade ;
+    #include "../facade/shy_static_injections.h"
 #endif
 
 #ifdef shy_build_loadable_way
-    #include "../facade/shy_loadable.h"
-    typedef shy_facade_loadable so_called_facade ;
+    #include "../facade/shy_loadable_injections.h"
 #endif
 
 #endif
