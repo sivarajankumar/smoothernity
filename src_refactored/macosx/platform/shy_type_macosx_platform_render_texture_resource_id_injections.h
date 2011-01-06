@@ -1,8 +1,0 @@
-#ifndef _shy_type_macosx_platform_render_texture_resource_id_injections_included
-#define _shy_type_macosx_platform_render_texture_resource_id_injections_included
-
-#include "shy_type_macosx_platform_render_texture_resource_id.h"
-
-typedef shy_type_macosx_platform_render_texture_resource_id so_called_type_platform_render_texture_resource_id ;
-
-#endif
