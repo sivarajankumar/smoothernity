@@ -1,0 +1,6 @@
+#ifndef _shy_platform_static_array_insider_injections_included
+#define _shy_platform_static_array_insider_injections_included
+
+#include "shy_static_array_insider.h"
+
+#endif

@@ -1,0 +1,6 @@
+#ifndef _shy_type_platform_vector_data_injections_included
+#define _shy_type_platform_vector_data_injections_included
+
+#include "shy_type_vector_data.h"
+
+#endif

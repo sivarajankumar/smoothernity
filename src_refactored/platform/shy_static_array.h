@@ -1,21 +1,17 @@
 #ifndef _shy_platform_static_array_included
 #define _shy_platform_static_array_included
 
-class shy_platform_static_array_insider ;
-
 class shy_platform_static_array
 {
-    typedef so_called_platform_math :: const_int_32 const_int_32 ;
-    typedef so_called_platform_math :: num_whole num_whole ;
 public :
-    template < typename data_type , const_int_32 size >
+    template < typename data_type , so_called_type_platform_math_const_int_32 size >
     class static_array
     {
         friend class shy_platform_static_array ;
         friend class shy_platform_static_array_insider ;
     private :
         typedef data_type _data_type ;
-        static const_int_32 _array_size = size ;
+        static so_called_type_platform_math_const_int_32 _array_size = size ;
         data_type _elements [ _array_size ] ;
     } ;
 public :

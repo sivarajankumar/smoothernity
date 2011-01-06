@@ -1,0 +1,6 @@
+#ifndef _shy_type_platform_math_int_float_num_whole_injections_included
+#define _shy_type_platform_math_int_float_num_whole_injections_included
+
+#include "shy_type_math_int_float_num_whole.h"
+
+#endif
