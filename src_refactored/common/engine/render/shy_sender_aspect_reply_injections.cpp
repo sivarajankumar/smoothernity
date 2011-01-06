@@ -1,3 +1,5 @@
+#include "shy_sender_aspect_reply_injections.h"
+
 #include "../../logic/blanket/animation/shy_fit_injections.h"
 #include "../../logic/core/shy_core_injections.h"
 #include "../../logic/camera/shy_camera_injections.h"

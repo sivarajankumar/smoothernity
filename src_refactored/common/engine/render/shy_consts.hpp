@@ -1,5 +1,3 @@
-#include "shy_consts.h"
-
 so_called_type_platform_math_num_whole shy_common_engine_render_consts :: texture_width ;
 so_called_type_platform_math_num_whole shy_common_engine_render_consts :: texture_height ;
 
