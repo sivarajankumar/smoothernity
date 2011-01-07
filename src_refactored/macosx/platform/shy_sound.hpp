@@ -1,8 +1,3 @@
-#include "shy_sound.h"
-#include "../shy_macosx_sound_loader.h"
-#include <OpenAL/alc.h>
-#include <OpenAL/MacOSX_OALExtensions.h>
-
 void * shy_macosx_platform_sound :: _sound_loader = 0 ;
 
 void shy_macosx_platform_sound :: set_listener_position ( so_called_type_platform_vector_data position )

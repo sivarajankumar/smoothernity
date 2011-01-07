@@ -1,8 +1,6 @@
 #ifndef _shy_macosx_platform_sound_included
 #define _shy_macosx_platform_sound_included
 
-#include <OpenAL/al.h>
-
 class shy_macosx_platform_sound
 {
     friend class shy_macosx_platform_sound_insider ;

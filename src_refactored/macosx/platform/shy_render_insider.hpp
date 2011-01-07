@@ -1,5 +1,3 @@
-#include "shy_render_insider.h"
-
 void shy_macosx_platform_render_insider :: set_texture_loader ( void * texture_loader )
 {
     so_called_platform_render :: _texture_loader = texture_loader ;

@@ -1,7 +1,3 @@
-#include "shy_render.h"
-#include "../shy_macosx_texture_loader.h"
-#include <OpenGL/glext.h>
-
 void * shy_macosx_platform_render :: _texture_loader = 0 ;
 float shy_macosx_platform_render :: _aspect_width = 1.0f ;
 float shy_macosx_platform_render :: _aspect_height = 1.0f ;
