@@ -1,3 +1,5 @@
+#include "shy_sender_mesh_create_reply_injections.h"
+
 #include "../../logic/blanket/shy_mesh_injections.h"
 #include "../../logic/door/shy_mesh_injections.h"
 #include "../../logic/entities/shy_entities_injections.h"

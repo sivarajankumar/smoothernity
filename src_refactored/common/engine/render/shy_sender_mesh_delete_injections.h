@@ -1,0 +1,11 @@
+#ifndef _shy_sender_common_engine_render_mesh_delete_injections_included
+#define _shy_sender_common_engine_render_mesh_delete_injections_included
+
+#include "shy_message_mesh_delete_injections.h"
+
+#include "shy_sender_mesh_delete.h"
+
+typedef shy_sender_common_engine_render_mesh_delete so_called_sender_common_engine_render_mesh_delete ;
+
+#endif
+
