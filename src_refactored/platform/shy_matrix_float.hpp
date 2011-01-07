@@ -1,5 +1,3 @@
-#include "shy_matrix_float.h"
-
 class shy_platform_matrix_float_guts
 {
 public :

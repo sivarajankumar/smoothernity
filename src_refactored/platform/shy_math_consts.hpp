@@ -1,5 +1,3 @@
-#include "shy_math_consts.h"
-
 const so_called_type_platform_math_num_fract shy_platform_math_consts :: fract_pi ;
 const so_called_type_platform_math_num_fract shy_platform_math_consts :: fract_pi2 ;
 const so_called_type_platform_math_num_fract shy_platform_math_consts :: fract_2pi ;

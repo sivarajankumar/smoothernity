@@ -1,5 +1,3 @@
-#include "shy_math_int_float_insider.h"
-
 void shy_platform_math_int_float_insider :: num_whole_value_get ( int & value , so_called_type_platform_math_num_whole num )
 {
     value = num . _value ;

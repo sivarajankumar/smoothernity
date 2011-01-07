@@ -1,6 +1,3 @@
-#include "shy_vector_float.h"
-#include <math.h>
-
 void shy_platform_vector_float :: xyz 
     ( so_called_type_platform_vector_data & result 
     , so_called_type_platform_math_num_fract x 

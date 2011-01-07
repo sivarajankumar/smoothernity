@@ -1,5 +1,3 @@
-#include "shy_conditions.h"
-
 int shy_platform_conditions :: wholes_are_equal ( so_called_type_platform_math_num_whole a , so_called_type_platform_math_num_whole b )
 {
     int a_int = 0 ;

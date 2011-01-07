@@ -1,5 +1,3 @@
-#include "shy_touch_insider.h"
-
 bool shy_platform_touch_insider :: _enabled = false ;
 bool shy_platform_touch_insider :: _occured = false ;
 float shy_platform_touch_insider :: _x = 0.0f ;

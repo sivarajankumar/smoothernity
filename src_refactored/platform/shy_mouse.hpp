@@ -1,5 +1,3 @@
-#include "shy_mouse.h"
-
 void shy_platform_mouse :: enabled ( so_called_type_platform_math_num_whole & result )
 {
     so_called_platform_math_insider :: num_whole_value_set ( result , ( int ) so_called_platform_mouse_insider :: _enabled ) ;

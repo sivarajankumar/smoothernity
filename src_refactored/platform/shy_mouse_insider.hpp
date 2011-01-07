@@ -1,5 +1,3 @@
-#include "shy_mouse_insider.h"
-
 bool shy_platform_mouse_insider :: _enabled = false ;
 bool shy_platform_mouse_insider :: _left_button_down = false ;
 float shy_platform_mouse_insider :: _x = 0.0f ;

@@ -1,5 +1,3 @@
-#include "shy_touch.h"
-
 void shy_platform_touch :: enabled ( so_called_type_platform_math_num_whole & result )
 {
     so_called_platform_math_insider :: num_whole_value_set ( result , ( int ) so_called_platform_touch_insider :: _enabled ) ;

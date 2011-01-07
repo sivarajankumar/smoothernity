@@ -1,5 +1,3 @@
-#include "shy_vector_float_insider.h"
-
 void shy_platform_vector_float_insider :: x_get ( float & x , so_called_type_platform_vector_data v )
 {
     x = v . _x ;

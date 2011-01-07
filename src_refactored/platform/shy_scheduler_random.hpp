@@ -1,5 +1,3 @@
-#include "shy_scheduler_random.h"
-
 shy_platform_scheduler_random :: _abstract_scheduled_context * shy_platform_scheduler_random :: _contexts [ _max_scheduled_modules ] ;
 int shy_platform_scheduler_random :: _contexts_count = 0 ;
 

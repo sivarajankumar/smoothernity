@@ -1,6 +1,3 @@
-#include "shy_math_int_float.h"
-#include <math.h>
-
 void shy_platform_math_int_float :: sin ( so_called_type_platform_math_num_fract & result , so_called_type_platform_math_num_fract a )
 {
     result . _value = sinf ( a . _value ) ;
