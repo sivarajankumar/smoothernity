@@ -1,0 +1,11 @@
+#ifndef _shy_sender_common_engine_render_mesh_set_triangle_fan_index_value_injections_included
+#define _shy_sender_common_engine_render_mesh_set_triangle_fan_index_value_injections_included
+
+#include "../message/shy_mesh_set_triangle_fan_index_value_injections.h"
+
+#include "shy_mesh_set_triangle_fan_index_value.h"
+
+typedef shy_sender_common_engine_render_mesh_set_triangle_fan_index_value so_called_sender_common_engine_render_mesh_set_triangle_fan_index_value ;
+
+#endif
+

@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_engine_render_texture_unselect_injections_included
+#define _shy_message_common_engine_render_texture_unselect_injections_included
+
+#include "shy_texture_unselect.h"
+
+typedef shy_message_common_engine_render_texture_unselect so_called_message_common_engine_render_texture_unselect ;
+
+#endif

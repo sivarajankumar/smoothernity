@@ -1,8 +1,0 @@
-#ifndef _shy_message_common_engine_render_fog_disable_injections_included
-#define _shy_message_common_engine_render_fog_disable_injections_included
-
-#include "shy_message_fog_disable.h"
-
-typedef shy_message_common_engine_render_fog_disable so_called_message_common_engine_render_fog_disable ;
-
-#endif

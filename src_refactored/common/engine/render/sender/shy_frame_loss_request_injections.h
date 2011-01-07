@@ -1,0 +1,11 @@
+#ifndef _shy_sender_common_engine_render_frame_loss_request_injections_included
+#define _shy_sender_common_engine_render_frame_loss_request_injections_included
+
+#include "../message/shy_frame_loss_request_injections.h"
+
+#include "shy_frame_loss_request.h"
+
+typedef shy_sender_common_engine_render_frame_loss_request so_called_sender_common_engine_render_frame_loss_request ;
+
+#endif
+

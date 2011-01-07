@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_engine_render_texture_mode_modulate_injections_included
+#define _shy_message_common_engine_render_texture_mode_modulate_injections_included
+
+#include "shy_texture_mode_modulate.h"
+
+typedef shy_message_common_engine_render_texture_mode_modulate so_called_message_common_engine_render_texture_mode_modulate ;
+
+#endif
