@@ -1,0 +1,11 @@
+#ifndef _shy_sender_common_engine_render_texture_set_texels_rect_injections_included
+#define _shy_sender_common_engine_render_texture_set_texels_rect_injections_included
+
+#include "shy_message_texture_set_texels_rect_injections.h"
+
+#include "shy_sender_texture_set_texels_rect.h"
+
+typedef shy_sender_common_engine_render_texture_set_texels_rect so_called_sender_common_engine_render_texture_set_texels_rect ;
+
+#endif
+
