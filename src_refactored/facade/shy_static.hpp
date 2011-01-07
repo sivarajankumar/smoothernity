@@ -1,5 +1,3 @@
-#include "shy_static.h"
-
 void shy_facade_static :: init ( )
 {
     so_called_platform_math_consts :: init ( ) ;
