@@ -1,5 +1,3 @@
-#include "shy_math_stateless.h"
-
 void shy_common_engine_math_stateless :: catmull_rom_spline
     ( so_called_type_platform_vector_data & result 
     , so_called_type_platform_math_num_fract t 
