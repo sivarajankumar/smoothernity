@@ -18,7 +18,7 @@
 #include "message/mesh_delete/shy_mesh_delete_injections.h"
 #include "message/mesh_finalize/shy_mesh_finalize_injections.h"
 #include "message/mesh_render/shy_mesh_render_injections.h"
-#include "message/shy_mesh_set_transform_injections.h"
+#include "message/mesh_set_transform/shy_mesh_set_transform_injections.h"
 #include "message/shy_mesh_set_triangle_fan_index_value_injections.h"
 #include "message/shy_mesh_set_triangle_strip_index_value_injections.h"
 #include "message/shy_mesh_set_vertex_color_injections.h"
