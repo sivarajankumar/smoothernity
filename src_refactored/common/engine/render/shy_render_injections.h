@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_injections_included
 #define _shy_common_engine_render_injections_included
 
-#include "message/shy_aspect_request_injections.h"
+#include "message/aspect_request/shy_aspect_request_injections.h"
 #include "message/shy_blend_disable_injections.h"
 #include "message/shy_blend_src_alpha_dst_one_minus_alpha_injections.h"
 #include "message/shy_clear_screen_injections.h"
