@@ -21,7 +21,7 @@
 #include "message/mesh_set_transform/shy_mesh_set_transform_injections.h"
 #include "message/mesh_set_triangle_fan_index_value/shy_mesh_set_triangle_fan_index_value_injections.h"
 #include "message/mesh_set_triangle_strip_index_value/shy_mesh_set_triangle_strip_index_value_injections.h"
-#include "message/shy_mesh_set_vertex_color_injections.h"
+#include "message/mesh_set_vertex_color/shy_mesh_set_vertex_color_injections.h"
 #include "message/shy_mesh_set_vertex_position_injections.h"
 #include "message/shy_mesh_set_vertex_tex_coord_injections.h"
 #include "message/shy_projection_frustum_injections.h"
