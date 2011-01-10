@@ -7,7 +7,7 @@
 #include "message/clear_screen/shy_clear_screen_injections.h"
 #include "message/disable_depth_test/shy_disable_depth_test_injections.h"
 #include "message/enable_depth_test/shy_enable_depth_test_injections.h"
-#include "message/shy_enable_face_culling_injections.h"
+#include "message/enable_face_culling/shy_enable_face_culling_injections.h"
 #include "message/shy_fog_disable_injections.h"
 #include "message/shy_fog_linear_injections.h"
 #include "message/shy_frame_loss_request_injections.h"
