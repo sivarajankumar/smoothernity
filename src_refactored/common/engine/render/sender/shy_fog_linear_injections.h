@@ -1,7 +1,7 @@
 #ifndef _shy_sender_common_engine_render_fog_linear_injections_included
 #define _shy_sender_common_engine_render_fog_linear_injections_included
 
-#include "../message/shy_fog_linear_injections.h"
+#include "../message/fog_linear/shy_fog_linear_injections.h"
 
 #include "shy_fog_linear.h"
 
