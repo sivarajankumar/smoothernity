@@ -1,7 +1,7 @@
 #ifndef _shy_message_common_engine_render_disable_depth_test_injections_included
 #define _shy_message_common_engine_render_disable_depth_test_injections_included
 
-#include "shy_disable_depth_test.h"
+#include "./shy_disable_depth_test.h"
 
 typedef shy_message_common_engine_render_disable_depth_test so_called_message_common_engine_render_disable_depth_test ;
 

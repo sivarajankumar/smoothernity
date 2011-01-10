@@ -3,7 +3,7 @@
 
 #include "../../shy_type_mesh_id_injections.h"
 
-#include "shy_mesh_set_triangle_fan_index_value.h"
+#include "./shy_mesh_set_triangle_fan_index_value.h"
 
 typedef shy_message_common_engine_render_mesh_set_triangle_fan_index_value so_called_message_common_engine_render_mesh_set_triangle_fan_index_value ;
 

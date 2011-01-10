@@ -3,7 +3,7 @@
 
 #include "../../../../../injections/shy_type_platform_math_num_whole.h"
 
-#include "shy_mesh_create_request.h"
+#include "./shy_mesh_create_request.h"
 
 typedef shy_message_common_engine_render_mesh_create_request so_called_message_common_engine_render_mesh_create_request ;
 

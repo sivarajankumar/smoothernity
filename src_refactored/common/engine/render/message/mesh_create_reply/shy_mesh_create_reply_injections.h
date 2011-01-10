@@ -3,7 +3,7 @@
 
 #include "../../shy_type_mesh_id_injections.h"
 
-#include "shy_mesh_create_reply.h"
+#include "./shy_mesh_create_reply.h"
 
 typedef shy_message_common_engine_render_mesh_create_reply so_called_message_common_engine_render_mesh_create_reply ;
 
