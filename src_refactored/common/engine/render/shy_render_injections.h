@@ -10,7 +10,7 @@
 #include "message/enable_face_culling/shy_enable_face_culling_injections.h"
 #include "message/fog_disable/shy_fog_disable_injections.h"
 #include "message/fog_linear/shy_fog_linear_injections.h"
-#include "message/shy_frame_loss_request_injections.h"
+#include "message/frame_loss_request/shy_frame_loss_request_injections.h"
 #include "message/shy_matrix_identity_injections.h"
 #include "message/shy_matrix_load_injections.h"
 #include "message/shy_matrix_mult_injections.h"
