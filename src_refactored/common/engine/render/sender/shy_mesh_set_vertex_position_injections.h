@@ -1,7 +1,7 @@
 #ifndef _shy_sender_common_engine_render_mesh_set_vertex_position_injections_included
 #define _shy_sender_common_engine_render_mesh_set_vertex_position_injections_included
 
-#include "../message/shy_mesh_set_vertex_position_injections.h"
+#include "../message/mesh_set_vertex_position/shy_mesh_set_vertex_position_injections.h"
 
 #include "shy_mesh_set_vertex_position.h"
 
