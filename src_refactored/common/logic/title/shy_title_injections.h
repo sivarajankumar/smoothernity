@@ -2,7 +2,7 @@
 #define _shy_common_logic_title_injections_included
 
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
-#include "../../engine/render/message/shy_mesh_create_reply_injections.h"
+#include "../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 
 #include "../../../injections/shy_platform_static_assert.h"
 #include "../../../injections/shy_platform_scheduler.h"
