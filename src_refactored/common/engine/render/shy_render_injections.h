@@ -4,7 +4,7 @@
 #include "message/aspect_request/shy_aspect_request_injections.h"
 #include "message/blend_disable/shy_blend_disable_injections.h"
 #include "message/blend_src_alpha_dst_one_minus_alpha/shy_blend_src_alpha_dst_one_minus_alpha_injections.h"
-#include "message/shy_clear_screen_injections.h"
+#include "message/clear_screen/shy_clear_screen_injections.h"
 #include "message/shy_disable_depth_test_injections.h"
 #include "message/shy_enable_depth_test_injections.h"
 #include "message/shy_enable_face_culling_injections.h"
