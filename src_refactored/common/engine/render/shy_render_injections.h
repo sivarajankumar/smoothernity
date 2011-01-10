@@ -16,7 +16,7 @@
 #include "message/matrix_mult/shy_matrix_mult_injections.h"
 #include "message/mesh_create_request/shy_mesh_create_request_injections.h"
 #include "message/mesh_delete/shy_mesh_delete_injections.h"
-#include "message/shy_mesh_finalize_injections.h"
+#include "message/mesh_finalize/shy_mesh_finalize_injections.h"
 #include "message/shy_mesh_render_injections.h"
 #include "message/shy_mesh_set_transform_injections.h"
 #include "message/shy_mesh_set_triangle_fan_index_value_injections.h"
