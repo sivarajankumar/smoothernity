@@ -1,7 +1,7 @@
 #include "./shy_mesh_create_reply_injections.h"
 
 #include "../../../../logic/blanket/mesh/shy_mesh_injections.h"
-#include "../../../../logic/door/shy_mesh_injections.h"
+#include "../../../../logic/door/mesh/shy_mesh_injections.h"
 #include "../../../../logic/entities/shy_entities_injections.h"
 #include "../../../../logic/fidget/shy_fidget_injections.h"
 #include "../../../../logic/image/shy_image_injections.h"
