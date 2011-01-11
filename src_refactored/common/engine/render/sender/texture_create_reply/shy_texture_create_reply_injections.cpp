@@ -1,6 +1,6 @@
 #include "./shy_texture_create_reply_injections.h"
 
-#include "../../../../logic/door/shy_texture_injections.h"
+#include "../../../../logic/door/texture/shy_texture_injections.h"
 #include "../../../../logic/image/shy_image_injections.h"
 #include "../../../../logic/land/shy_land_injections.h"
 #include "../../../../logic/room/shy_texture_injections.h"
