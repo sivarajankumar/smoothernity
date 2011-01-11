@@ -1,7 +1,7 @@
 #ifndef _shy_sender_common_engine_render_texture_loader_ready_request_injections_included
 #define _shy_sender_common_engine_render_texture_loader_ready_request_injections_included
 
-#include "../message/shy_texture_loader_ready_request_injections.h"
+#include "../message/texture_loader_ready_request/shy_texture_loader_ready_request_injections.h"
 
 #include "shy_texture_loader_ready_request.h"
 
