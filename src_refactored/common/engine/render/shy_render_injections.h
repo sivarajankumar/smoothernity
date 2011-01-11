@@ -34,7 +34,7 @@
 #include "message/texture_select/shy_texture_select_injections.h"
 #include "message/texture_set_texel/shy_texture_set_texel_injections.h"
 #include "message/texture_set_texel_rgba/shy_texture_set_texel_rgba_injections.h"
-#include "message/shy_texture_set_texels_rect_injections.h"
+#include "message/texture_set_texels_rect/shy_texture_set_texels_rect_injections.h"
 #include "message/shy_texture_unselect_injections.h"
 
 #include "../../../injections/shy_platform_static_assert.h"
