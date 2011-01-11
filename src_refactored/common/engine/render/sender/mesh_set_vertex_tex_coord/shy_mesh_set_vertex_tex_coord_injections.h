@@ -1,9 +1,9 @@
 #ifndef _shy_sender_common_engine_render_mesh_set_vertex_tex_coord_injections_included
 #define _shy_sender_common_engine_render_mesh_set_vertex_tex_coord_injections_included
 
-#include "../message/mesh_set_vertex_tex_coord/shy_mesh_set_vertex_tex_coord_injections.h"
+#include "../../message/mesh_set_vertex_tex_coord/shy_mesh_set_vertex_tex_coord_injections.h"
 
-#include "shy_mesh_set_vertex_tex_coord.h"
+#include "./shy_mesh_set_vertex_tex_coord.h"
 
 typedef shy_sender_common_engine_render_mesh_set_vertex_tex_coord so_called_sender_common_engine_render_mesh_set_vertex_tex_coord ;
 
