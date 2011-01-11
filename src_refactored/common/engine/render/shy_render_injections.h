@@ -25,7 +25,7 @@
 #include "message/mesh_set_vertex_position/shy_mesh_set_vertex_position_injections.h"
 #include "message/mesh_set_vertex_tex_coord/shy_mesh_set_vertex_tex_coord_injections.h"
 #include "message/projection_frustum/shy_projection_frustum_injections.h"
-#include "message/shy_projection_ortho_injections.h"
+#include "message/projection_ortho/shy_projection_ortho_injections.h"
 #include "message/shy_texture_create_request_injections.h"
 #include "message/shy_texture_finalize_injections.h"
 #include "message/shy_texture_load_from_resource_injections.h"
