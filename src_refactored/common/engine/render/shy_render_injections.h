@@ -28,7 +28,7 @@
 #include "message/projection_ortho/shy_projection_ortho_injections.h"
 #include "message/texture_create_request/shy_texture_create_request_injections.h"
 #include "message/texture_finalize/shy_texture_finalize_injections.h"
-#include "message/shy_texture_load_from_resource_injections.h"
+#include "message/texture_load_from_resource/shy_texture_load_from_resource_injections.h"
 #include "message/shy_texture_loader_ready_request_injections.h"
 #include "message/shy_texture_mode_modulate_injections.h"
 #include "message/shy_texture_select_injections.h"
