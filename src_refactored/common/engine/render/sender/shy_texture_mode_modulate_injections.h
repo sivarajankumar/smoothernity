@@ -1,7 +1,7 @@
 #ifndef _shy_sender_common_engine_render_texture_mode_modulate_injections_included
 #define _shy_sender_common_engine_render_texture_mode_modulate_injections_included
 
-#include "../message/shy_texture_mode_modulate_injections.h"
+#include "../message/texture_mode_modulate/shy_texture_mode_modulate_injections.h"
 
 #include "shy_texture_mode_modulate.h"
 

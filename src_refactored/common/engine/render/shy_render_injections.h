@@ -30,7 +30,7 @@
 #include "message/texture_finalize/shy_texture_finalize_injections.h"
 #include "message/texture_load_from_resource/shy_texture_load_from_resource_injections.h"
 #include "message/texture_loader_ready_request/shy_texture_loader_ready_request_injections.h"
-#include "message/shy_texture_mode_modulate_injections.h"
+#include "message/texture_mode_modulate/shy_texture_mode_modulate_injections.h"
 #include "message/shy_texture_select_injections.h"
 #include "message/shy_texture_set_texel_injections.h"
 #include "message/shy_texture_set_texel_rgba_injections.h"
