@@ -1,10 +1,10 @@
 #ifndef _shy_message_common_engine_render_texture_set_texel_rgba_injections_included
 #define _shy_message_common_engine_render_texture_set_texel_rgba_injections_included
 
-#include "../shy_type_texture_id_injections.h"
-#include "../../../../injections/shy_type_platform_math_num_fract.h"
+#include "../../shy_type_texture_id_injections.h"
+#include "../../../../../injections/shy_type_platform_math_num_fract.h"
 
-#include "shy_texture_set_texel_rgba.h"
+#include "./shy_texture_set_texel_rgba.h"
 
 typedef shy_message_common_engine_render_texture_set_texel_rgba so_called_message_common_engine_render_texture_set_texel_rgba ;
 
