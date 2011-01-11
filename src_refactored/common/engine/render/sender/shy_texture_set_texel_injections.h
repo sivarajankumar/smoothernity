@@ -1,7 +1,7 @@
 #ifndef _shy_sender_common_engine_render_texture_set_texel_injections_included
 #define _shy_sender_common_engine_render_texture_set_texel_injections_included
 
-#include "../message/shy_texture_set_texel_injections.h"
+#include "../message/texture_set_texel/shy_texture_set_texel_injections.h"
 
 #include "shy_texture_set_texel.h"
 
