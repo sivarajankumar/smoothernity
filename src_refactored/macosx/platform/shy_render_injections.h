@@ -1,7 +1,7 @@
 #ifndef _shy_macosx_platform_render_injections_included
 #define _shy_macosx_platform_render_injections_included
 
-#include "../../injections/shy_platform_pointer.h"
+#include "../../injections/platform/pointer/shy_pointer.h"
 #include "../../injections/shy_platform_static_array_insider.h"
 #include "../../injections/shy_type_platform_math_num_fract.h"
 #include "../../injections/shy_type_platform_math_num_whole.h"
