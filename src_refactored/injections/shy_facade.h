@@ -6,7 +6,7 @@
 #endif
 
 #ifdef shy_build_loadable_way
-    #include "../facade/shy_loadable_injections.h"
+    #include "../facade/loadable/shy_loadable_injections.h"
 #endif
 
 #endif
