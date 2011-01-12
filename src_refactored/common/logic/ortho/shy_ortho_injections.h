@@ -6,7 +6,7 @@
 #include "../../../injections/shy_platform_static_assert.h"
 #include "../../../injections/shy_platform_scheduler.h"
 
-#include "shy_ortho.h"
+#include ".//shy_ortho.h"
 
 typedef shy_common_logic_ortho_scheduled so_called_common_logic_ortho ;
 

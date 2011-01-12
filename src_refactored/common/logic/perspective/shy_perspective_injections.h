@@ -6,7 +6,7 @@
 #include "../../../injections/shy_platform_static_assert.h"
 #include "../../../injections/shy_platform_scheduler.h"
 
-#include "shy_perspective.h"
+#include "./shy_perspective.h"
 
 typedef shy_common_logic_perspective_scheduled so_called_common_logic_perspective ;
 
