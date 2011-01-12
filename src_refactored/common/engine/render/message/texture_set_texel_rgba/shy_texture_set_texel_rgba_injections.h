@@ -2,7 +2,7 @@
 #define _shy_message_common_engine_render_texture_set_texel_rgba_injections_included
 
 #include "../../type/texture_id/shy_texture_id_injections.h"
-#include "../../../../../injections/shy_type_platform_math_num_fract.h"
+#include "../../../../../injections/platform/math/type/num_fract/shy_num_fract.h"
 
 #include "./shy_texture_set_texel_rgba.h"
 
