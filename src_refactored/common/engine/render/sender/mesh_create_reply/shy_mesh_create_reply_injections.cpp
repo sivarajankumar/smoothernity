@@ -8,7 +8,7 @@
 #include "../../../../logic/land/shy_land_injections.h"
 #include "../../../../logic/main_menu/letters/meshes_creator/shy_meshes_creator_injections.h"
 #include "../../../../logic/main_menu/selection/mesh/shy_mesh_injections.h"
-#include "../../../../logic/room/shy_mesh_injections.h"
+#include "../../../../logic/room/mesh/shy_mesh_injections.h"
 #include "../../../../logic/text/shy_text_injections.h"
 #include "../../../../logic/title/shy_title_injections.h"
 #include "../../../../logic/touch/shy_touch_injections.h"
