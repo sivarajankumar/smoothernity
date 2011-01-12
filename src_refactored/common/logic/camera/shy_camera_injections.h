@@ -6,7 +6,7 @@
 #include "../../../injections/shy_platform_static_assert.h"
 #include "../../../injections/shy_platform_scheduler.h"
 
-#include "shy_camera.h"
+#include "./shy_camera.h"
 
 typedef shy_common_logic_camera_scheduled so_called_common_logic_camera ;
 
