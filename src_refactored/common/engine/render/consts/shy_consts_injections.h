@@ -7,4 +7,6 @@
 
 #include "./shy_consts.h"
 
+typedef shy_common_engine_render_consts so_called_common_engine_render_consts ;
+
 #endif
