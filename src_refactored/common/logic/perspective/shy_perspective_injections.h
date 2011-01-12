@@ -3,8 +3,7 @@
 
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 
-#include "../../../injections/shy_platform_static_assert.h"
-#include "../../../injections/shy_platform_scheduler.h"
+#include "../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_perspective.h"
 

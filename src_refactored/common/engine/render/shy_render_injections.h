@@ -37,8 +37,7 @@
 #include "./message/texture_set_texels_rect/shy_texture_set_texels_rect_injections.h"
 #include "./message/texture_unselect/shy_texture_unselect_injections.h"
 
-#include "../../../injections/shy_platform_static_assert.h"
-#include "../../../injections/shy_platform_scheduler.h"
+#include "../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_render.h"
 
