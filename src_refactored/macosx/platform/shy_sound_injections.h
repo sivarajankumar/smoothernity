@@ -1,7 +1,7 @@
 #ifndef _shy_macosx_platform_sound_injections_included
 #define _shy_macosx_platform_sound_injections_included
 
-#include "../../injections/shy_platform_static_array_insider.h"
+#include "../../injections/platform/static_array/insider/shy_insider.h"
 #include "../../injections/shy_type_platform_math_const_int_32.h"
 #include "../../injections/shy_type_platform_math_num_fract.h"
 #include "../../injections/shy_type_platform_math_num_whole.h"
