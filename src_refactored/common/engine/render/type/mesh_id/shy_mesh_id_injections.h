@@ -1,7 +1,7 @@
 #ifndef _shy_type_common_engine_render_mesh_id_injections_included
 #define _shy_type_common_engine_render_mesh_id_injections_included
 
-#include "../../../../../injections/shy_type_platform_math_num_whole.h"
+#include "../../../../../injections/platform/math/type/num_whole/shy_num_whole.h"
 
 #include "./shy_mesh_id.h"
 
