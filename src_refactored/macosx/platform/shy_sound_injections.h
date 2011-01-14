@@ -8,8 +8,8 @@
 #include "../../injections/platform/sound/type/sample_mono/shy_sample_mono.h"
 #include "../../injections/platform/sound/type/sample_stereo/shy_sample_stereo.h"
 #include "../../injections/platform/sound/type/source_id/shy_source_id.h"
+#include "../../injections/platform/sound/type/stereo_resource_id/shy_stereo_resource_id.h"
 #include "../../injections/platform/static_array/insider/shy_insider.h"
-#include "../../injections/shy_type_platform_sound_stereo_resource_id.h"
 #include "../../injections/shy_type_platform_vector_data.h"
 
 #include "shy_sound.h"
