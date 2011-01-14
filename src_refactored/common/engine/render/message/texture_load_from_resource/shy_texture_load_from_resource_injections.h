@@ -2,7 +2,7 @@
 #define _shy_message_common_engine_render_texture_load_from_resource_injections_included
 
 #include "../../type/texture_id/shy_texture_id_injections.h"
-#include "../../../../../injections/shy_type_platform_render_texture_resource_id.h"
+#include "../../../../../injections/platform/render/type/texture_resource_id/shy_texture_resource_id.h"
 
 #include "./shy_texture_load_from_resource.h"
 
