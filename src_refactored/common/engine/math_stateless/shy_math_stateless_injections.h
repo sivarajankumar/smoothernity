@@ -4,7 +4,7 @@
 #include "../../../injections/platform/math/type/num_fract/shy_num_fract.h"
 #include "../../../injections/platform/math/type/num_whole/shy_num_whole.h"
 #include "../../../injections/platform/matrix/type/data/shy_data.h"
-#include "../../../injections/shy_type_platform_vector_data.h"
+#include "../../../injections/platform/vector/type/data/shy_data.h"
 
 #include "./shy_math_stateless.h"
 
