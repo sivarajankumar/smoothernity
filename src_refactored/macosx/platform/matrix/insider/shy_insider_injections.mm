@@ -1,2 +1,2 @@
-#include "../../../../platform/shy_matrix_float_insider_injections.hpp"
+#include "../../../../platform/matrix/float/insider/shy_insider_injections.hpp"
 
