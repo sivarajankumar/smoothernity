@@ -3,7 +3,7 @@
 
 #include <OpenAL/al.h>
 
-#include "shy_type_sound_sample_stereo.h"
+#include "./shy_sample_stereo.h"
 
 typedef shy_type_macosx_platform_sound_sample_stereo so_called_type_platform_sound_sample_stereo ;
 
