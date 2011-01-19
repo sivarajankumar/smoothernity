@@ -1,2 +1,2 @@
-#include "../../../../platform/shy_math_consts_injections.hpp"
+#include "../../../../platform/math/consts/shy_consts_injections.hpp"
 
