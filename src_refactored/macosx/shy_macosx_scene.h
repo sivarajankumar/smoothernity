@@ -1,5 +1,5 @@
-#include "shy_macosx_sound_loader.h"
-#include "shy_macosx_texture_loader.h"
+#include "./shy_macosx_sound_loader.h"
+#include "./shy_macosx_texture_loader.h"
 
 @interface shy_macosx_scene : NSObject
 {

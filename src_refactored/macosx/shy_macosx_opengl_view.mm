@@ -1,5 +1,5 @@
-#include "shy_macosx_opengl_view.h"
-#include "shy_macosx_scene.h"
+#include "./shy_macosx_opengl_view.h"
+#include "./shy_macosx_scene.h"
 
 @implementation MyOpenGLView
 

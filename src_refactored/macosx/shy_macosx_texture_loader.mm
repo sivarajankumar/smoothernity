@@ -1,4 +1,4 @@
-#include "shy_macosx_texture_loader.h"
+#include "./shy_macosx_texture_loader.h"
 
 @implementation shy_macosx_texture_loader
 

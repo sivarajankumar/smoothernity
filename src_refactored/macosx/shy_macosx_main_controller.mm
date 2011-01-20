@@ -1,6 +1,6 @@
-#include "shy_macosx_main_controller.h"
-#include "shy_macosx_opengl_view.h"
-#include "shy_macosx_scene.h"
+#include "./shy_macosx_main_controller.h"
+#include "./shy_macosx_opengl_view.h"
+#include "./shy_macosx_scene.h"
 
 #include <OpenGL/OpenGL.h>
 
