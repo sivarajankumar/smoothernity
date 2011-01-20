@@ -1,23 +1,22 @@
-class shy_common_engine_render_guts_consts
-{
-public :
-    static const so_called_type_platform_math_num_whole texture_size_pow2_base ;
-    static const so_called_type_platform_math_num_whole max_vertices ;
-    static const so_called_type_platform_math_num_whole max_indices ;
-    static so_called_type_platform_math_const_int_32 max_meshes = 100 ;
-    static so_called_type_platform_math_const_int_32 max_textures = 10 ;
-} ;
-
 class shy_common_engine_render_guts
 {
 public :
+    class consts
+    {
+    public :
+        static const so_called_type_platform_math_num_whole texture_size_pow2_base ;
+        static const so_called_type_platform_math_num_whole max_vertices ;
+        static const so_called_type_platform_math_num_whole max_indices ;
+        static so_called_type_platform_math_const_int_32 max_meshes = 100 ;
+        static so_called_type_platform_math_const_int_32 max_textures = 10 ;
+    } ;
 } ;
 
-const so_called_type_platform_math_num_whole shy_common_engine_render_guts_consts :: texture_size_pow2_base
+const so_called_type_platform_math_num_whole shy_common_engine_render_guts :: consts :: texture_size_pow2_base
     = so_called_platform_math :: init_num_whole ( so_called_common_engine_render_consts :: texture_size_pow2_base_int ) ;
-const so_called_type_platform_math_num_whole shy_common_engine_render_guts_consts :: max_vertices 
+const so_called_type_platform_math_num_whole shy_common_engine_render_guts :: consts :: max_vertices 
     = so_called_platform_math :: init_num_whole ( 300 ) ;
-const so_called_type_platform_math_num_whole shy_common_engine_render_guts_consts :: max_indices
+const so_called_type_platform_math_num_whole shy_common_engine_render_guts :: consts :: max_indices
     = so_called_platform_math :: init_num_whole ( 300 ) ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_render > _scheduled_context_type ;
