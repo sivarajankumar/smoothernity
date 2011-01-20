@@ -1,2 +1,2 @@
-#include "../../../../../platform/shy_type_vector_float_data_injections.hpp"
+#include "../../../../../platform/vector/float/type/data/shy_data_injections.hpp"
 
