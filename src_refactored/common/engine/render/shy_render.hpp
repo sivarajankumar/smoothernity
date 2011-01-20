@@ -93,6 +93,10 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 {
 }
 
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_init )
+{
+}
+
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_identity )
 {
 }
