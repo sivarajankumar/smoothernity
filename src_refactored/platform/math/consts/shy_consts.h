@@ -4,11 +4,6 @@
 class shy_platform_math_consts
 {
 public :
-    static void init ( ) ;
-private :
-    static void _assign_const_num_fract ( const so_called_type_platform_math_num_fract & , float ) ;
-    static void _assign_const_num_whole ( const so_called_type_platform_math_num_whole & , int ) ;
-public :
     static const so_called_type_platform_math_num_fract fract_pi ;
     static const so_called_type_platform_math_num_fract fract_pi2 ;
     static const so_called_type_platform_math_num_fract fract_2pi ;

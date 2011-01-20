@@ -59,6 +59,23 @@ void shy_platform_math_int_float :: make_num_fract
     result . _value = float ( numerator ) / float ( denominator ) ;
 }
 
+so_called_type_platform_math_num_whole shy_platform_math_int_float :: init_num_whole ( so_called_type_platform_math_const_int_32 value )
+{
+    so_called_type_platform_math_num_whole result ;
+    result . _value = int ( value ) ;
+    return result ;
+}
+
+so_called_type_platform_math_num_fract shy_platform_math_int_float :: init_num_fract 
+    ( so_called_type_platform_math_const_int_32 numerator 
+    , so_called_type_platform_math_const_int_32 denominator 
+    )
+{
+    so_called_type_platform_math_num_fract result ;
+    result . _value = float ( numerator ) / float ( denominator ) ;
+    return result ;
+}
+
 void shy_platform_math_int_float :: make_whole_from_fract ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_fract fract )
 {
     result . _value = int ( fract . _value ) ;

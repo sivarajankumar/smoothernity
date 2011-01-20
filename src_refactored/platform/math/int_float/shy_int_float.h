@@ -84,6 +84,14 @@ public :
         , so_called_type_platform_math_const_int_32 numerator 
         , so_called_type_platform_math_const_int_32 denominator 
         ) ;
+
+    static so_called_type_platform_math_num_whole init_num_whole 
+        ( so_called_type_platform_math_const_int_32 value 
+        ) ;
+    static so_called_type_platform_math_num_fract init_num_fract 
+        ( so_called_type_platform_math_const_int_32 numerator
+        , so_called_type_platform_math_const_int_32 denominator
+        ) ;
 } ;
 
 #endif

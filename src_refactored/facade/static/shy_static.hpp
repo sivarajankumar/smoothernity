@@ -1,7 +1,5 @@
 void shy_facade_static :: init ( )
 {
-    so_called_common_engine_render_consts :: init ( ) ;
-    so_called_platform_math_consts :: init ( ) ;
     so_called_platform_scheduler :: init ( ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
