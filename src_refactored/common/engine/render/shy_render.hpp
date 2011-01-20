@@ -10,6 +10,37 @@ public :
         static so_called_type_platform_math_const_int_32 max_meshes = 100 ;
         static so_called_type_platform_math_const_int_32 max_textures = 10 ;
     } ;
+
+    class texture_data
+    {
+    public :
+        so_called_platform_static_array :: static_array 
+            < so_called_type_platform_render_texel_data 
+            , so_called_common_engine_render_consts :: texture_size_int
+            * so_called_common_engine_render_consts :: texture_size_int
+            > texels ;
+        so_called_type_platform_render_texture_id render_id ;
+    } ;
+
+    class mesh_data
+    {
+    public :
+        so_called_type_platform_math_num_whole finalized ;
+        
+        so_called_type_platform_render_vertex_buffer_id vertex_buffer_id ;
+        so_called_type_platform_render_index_buffer_id triangle_strip_index_buffer_id ;
+        so_called_type_platform_render_index_buffer_id triangle_fan_index_buffer_id ;
+        
+        so_called_type_platform_render_vertex_buffer_mapped_data vertex_buffer_mapped_data ;
+        so_called_type_platform_render_index_buffer_mapped_data triangle_strip_index_buffer_mapped_data ;
+        so_called_type_platform_render_index_buffer_mapped_data triangle_fan_index_buffer_mapped_data ;
+        
+        so_called_type_platform_math_num_whole vertices_count ;
+        so_called_type_platform_math_num_whole triangle_strip_indices_count ;
+        so_called_type_platform_math_num_whole triangle_fan_indices_count ;
+        
+        so_called_type_platform_matrix_data transform ;
+    } ;
 } ;
 
 const so_called_type_platform_math_num_whole shy_common_engine_render_guts :: consts :: texture_size_pow2_base

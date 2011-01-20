@@ -16,11 +16,11 @@ public :
     } ;
 public :
     template < typename array_type , typename pointer_type >
-    static void element_ptr ( pointer_type & , array_type & , num_whole ) ;
+    static void element_ptr ( pointer_type & , array_type & , so_called_type_platform_math_num_whole ) ;
 } ;
 
 template < typename array_type , typename pointer_type >
-void shy_platform_static_array :: element_ptr ( pointer_type & element_ptr , array_type & array , num_whole index )
+void shy_platform_static_array :: element_ptr ( pointer_type & element_ptr , array_type & array , so_called_type_platform_math_num_whole index )
 {
     int index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
