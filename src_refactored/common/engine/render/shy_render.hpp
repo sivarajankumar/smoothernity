@@ -41,6 +41,12 @@ public :
         
         so_called_type_platform_matrix_data transform ;
     } ;
+
+    static so_called_platform_static_array :: static_array < texture_data , consts :: max_textures > textures_datas ;
+    static so_called_platform_static_array :: static_array < mesh_data , consts :: max_meshes > meshes_datas ;
+    static so_called_platform_static_array :: static_array < so_called_type_platform_math_num_whole , consts :: max_meshes > vacant_mesh_ids ;
+    static so_called_type_platform_math_num_whole next_texture_id ;
+    static so_called_type_platform_math_num_whole next_vacant_mesh_id_index ;
 } ;
 
 const so_called_type_platform_math_num_whole shy_common_engine_render_guts :: consts :: texture_size_pow2_base
@@ -49,6 +55,15 @@ const so_called_type_platform_math_num_whole shy_common_engine_render_guts :: co
     = so_called_platform_math :: init_num_whole ( 300 ) ;
 const so_called_type_platform_math_num_whole shy_common_engine_render_guts :: consts :: max_indices
     = so_called_platform_math :: init_num_whole ( 300 ) ;
+
+so_called_platform_static_array :: static_array < shy_common_engine_render_guts :: texture_data , shy_common_engine_render_guts :: consts :: max_textures >
+    shy_common_engine_render_guts :: textures_datas ;
+so_called_platform_static_array :: static_array < shy_common_engine_render_guts :: mesh_data , shy_common_engine_render_guts :: consts :: max_meshes >
+    shy_common_engine_render_guts :: meshes_datas ;
+so_called_platform_static_array :: static_array < so_called_type_platform_math_num_whole , shy_common_engine_render_guts :: consts :: max_meshes >
+    shy_common_engine_render_guts :: vacant_mesh_ids ;
+so_called_type_platform_math_num_whole shy_common_engine_render_guts :: next_texture_id ;
+so_called_type_platform_math_num_whole shy_common_engine_render_guts :: next_vacant_mesh_id_index ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_render > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
