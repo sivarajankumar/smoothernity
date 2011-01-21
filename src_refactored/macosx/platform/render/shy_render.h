@@ -28,12 +28,12 @@ public :
         , so_called_type_platform_math_num_fract v 
         ) ;
     static void mapped_vertex_buffer_element 
-        ( so_called_platform_pointer :: pointer < so_called_type_platform_render_vertex_data > & ptr 
+        ( so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > & ptr 
         , so_called_type_platform_render_vertex_buffer_mapped_data data 
         , so_called_type_platform_math_num_whole index 
         ) ;
     static void mapped_index_buffer_element 
-        ( so_called_platform_pointer :: pointer < so_called_type_platform_render_index_data > & ptr 
+        ( so_called_type_platform_pointer_data < so_called_type_platform_render_index_data > & ptr 
         , so_called_type_platform_render_index_buffer_mapped_data data 
         , so_called_type_platform_math_num_whole index 
         ) ;

@@ -4,7 +4,7 @@
 #include "../../../injections/platform/math/type/num_fract/shy_num_fract.h"
 #include "../../../injections/platform/math/type/num_whole/shy_num_whole.h"
 #include "../../../injections/platform/matrix/type/data/shy_data.h"
-#include "../../../injections/platform/pointer/shy_pointer.h"
+#include "../../../injections/platform/pointer/type/data/shy_data.h"
 #include "../../../injections/platform/render/type/index_buffer_id/shy_index_buffer_id.h"
 #include "../../../injections/platform/render/type/index_buffer_mapped_data/shy_index_buffer_mapped_data.h"
 #include "../../../injections/platform/render/type/index_data/shy_index_data.h"

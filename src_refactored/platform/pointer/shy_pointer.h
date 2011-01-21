@@ -1,19 +1,6 @@
 class shy_platform_pointer
 {
 public :
-    template < typename data_type >
-    class pointer
-    {
-        friend class shy_platform_pointer ;
-        typedef data_type _data_type ;
-    public :
-        pointer ( ) ;
-    public :
-        data_type & get ( ) const ;
-    private :
-        data_type * _data_ptr ;
-    } ;
-    
     template < typename pointer_type >
     static void bind ( pointer_type & ptr , typename pointer_type :: _data_type & data ) ;
 
@@ -23,18 +10,6 @@ public :
     template < typename pointer_type >
     static void is_bound_to ( so_called_type_platform_math_num_whole & , pointer_type , typename pointer_type :: _data_type & data ) ;
 } ;
-
-template < typename data_type >
-shy_platform_pointer :: pointer < data_type > :: pointer ( )
-: _data_ptr ( reinterpret_cast < data_type * > ( so_called_platform_consts_insider :: uninitialized_value ) )
-{
-}
-
-template < typename data_type >
-data_type & shy_platform_pointer :: pointer < data_type > :: get ( ) const
-{
-    return * _data_ptr ;
-}
 
 template < typename pointer_type >
 void shy_platform_pointer :: bind ( pointer_type & ptr , typename pointer_type :: _data_type & data )

@@ -97,7 +97,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_platform_pointer :: pointer < shy_guts :: mesh_data > mesh ;
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
         so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , i ) ;
         
         so_called_platform_render :: delete_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
@@ -112,7 +112,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_platform_pointer :: pointer < shy_guts :: texture_data > texture ;
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
         so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , i ) ;
         so_called_platform_render :: delete_texture_id ( texture . get ( ) . render_id ) ;
     }
@@ -150,14 +150,14 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_platform_pointer :: pointer < shy_guts :: mesh_data > mesh ;
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
         so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , i ) ;
         
         so_called_platform_render :: create_vertex_buffer ( mesh . get ( ) . vertex_buffer_id , shy_guts :: consts :: max_vertices ) ;
         so_called_platform_render :: create_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id , shy_guts :: consts :: max_indices ) ;
         so_called_platform_render :: create_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id , shy_guts :: consts :: max_indices ) ;
 
-        so_called_platform_pointer :: pointer < so_called_type_platform_math_num_whole > vacant_id ;
+        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > vacant_id ;
         so_called_platform_static_array :: element_ptr ( vacant_id , shy_guts :: vacant_mesh_ids , i ) ;
         vacant_id . get ( ) = i ;
     }
@@ -169,7 +169,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_platform_pointer :: pointer < shy_guts :: texture_data > texture ;
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
         so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , i ) ;
         so_called_platform_render :: create_texture_id ( texture . get ( ) . render_id , shy_guts :: consts :: texture_size_pow2_base ) ;
     }
