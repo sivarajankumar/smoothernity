@@ -1,6 +1,3 @@
-#ifndef _shy_facade_loadable_included
-#define _shy_facade_loadable_included
-
 class shy_facade_loadable
 {
 public :
@@ -10,5 +7,3 @@ public :
     static void render ( ) ;
     static void video_mode_changed ( ) ;
 } ;
-
-#endif
