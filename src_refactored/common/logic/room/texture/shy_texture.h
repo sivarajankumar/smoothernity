@@ -1,6 +1,3 @@
-#ifndef _shy_common_logic_room_texture_included
-#define _shy_common_logic_room_texture_included
-
 class _shy_common_logic_room_texture
 {
 public :
@@ -8,6 +5,3 @@ public :
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_room_texture > :: module shy_common_logic_room_texture_scheduled ;
-
-#endif
-

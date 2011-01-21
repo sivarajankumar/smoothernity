@@ -1,6 +1,3 @@
-#ifndef _shy_common_logic_perspective_included
-#define _shy_common_logic_perspective_included
-
 class _shy_common_logic_perspective
 {
 public :
@@ -8,5 +5,3 @@ public :
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_perspective > :: module shy_common_logic_perspective_scheduled ;
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef _shy_common_logic_title_included
-#define _shy_common_logic_title_included
-
 class _shy_common_logic_title
 {
 public :
@@ -9,5 +6,3 @@ public :
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_title > :: module shy_common_logic_title_scheduled ;
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef _shy_common_logic_camera_included
-#define _shy_common_logic_camera_included
-
 class _shy_common_logic_camera
 {
 public :
@@ -8,5 +5,3 @@ public :
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_camera > :: module shy_common_logic_camera_scheduled ;
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef _shy_common_logic_main_menu_letters_layout_position_included
-#define _shy_common_logic_main_menu_letters_layout_position_included
-
 class _shy_common_logic_main_menu_letters_layout_position
 {
 public :
@@ -9,5 +6,3 @@ public :
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_main_menu_letters_layout_position > :: module 
     shy_common_logic_main_menu_letters_layout_position_scheduled ;
-
-#endif

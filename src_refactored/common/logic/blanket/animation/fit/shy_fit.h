@@ -1,6 +1,3 @@
-#ifndef _shy_common_logic_blanket_animation_fit_included
-#define _shy_common_logic_blanket_animation_fit_included
-
 class _shy_common_logic_blanket_animation_fit
 {
 public :
@@ -8,5 +5,3 @@ public :
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_blanket_animation_fit > :: module shy_common_logic_blanket_animation_fit_scheduled ;
-
-#endif
