@@ -1,6 +1,3 @@
-#ifndef _shy_common_engine_math_stateless
-#define _shy_common_engine_math_stateless
-
 class shy_common_engine_math_stateless
 {
 public :
@@ -91,5 +88,3 @@ public :
     static void abs_whole ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole a ) ;
     static void scale ( so_called_type_platform_matrix_data & matrix , so_called_type_platform_math_num_fract scale ) ;
 } ;
-
-#endif

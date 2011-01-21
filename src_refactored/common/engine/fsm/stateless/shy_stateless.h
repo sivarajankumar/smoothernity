@@ -1,6 +1,3 @@
-#ifndef _shy_common_engine_fsm_stateless_included
-#define _shy_common_engine_fsm_stateless_included
-
 class shy_common_engine_fsm_stateless
 {
 public :
@@ -115,5 +112,3 @@ void shy_common_engine_fsm_stateless :: _stabilize_fsm ( fsm_type & fsm , fsm_au
             break ;
     }
 }
-
-#endif

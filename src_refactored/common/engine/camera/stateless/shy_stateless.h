@@ -1,6 +1,3 @@
-#ifndef _shy_common_engine_camera_stateless_included
-#define _shy_common_engine_camera_stateless_included
-
 class shy_common_engine_camera_stateless
 {
 public :
@@ -11,5 +8,3 @@ public :
         , so_called_type_platform_vector_data norm_up 
         ) ;
 } ;
-
-#endif
