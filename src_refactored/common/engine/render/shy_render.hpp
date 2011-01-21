@@ -70,6 +70,10 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_aspect_request )
 {
+    so_called_message_common_engine_render_aspect_reply reply_msg ;
+    so_called_platform_render :: get_aspect_width ( reply_msg . width ) ;
+    so_called_platform_render :: get_aspect_height ( reply_msg . height ) ;
+    so_called_sender_common_engine_render_aspect_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_blend_disable )
