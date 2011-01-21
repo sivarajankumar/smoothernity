@@ -1,6 +1,3 @@
-#ifndef _shy_message_common_engine_render_mesh_set_vertex_position_included
-#define _shy_message_common_engine_render_mesh_set_vertex_position_included
-
 class shy_message_common_engine_render_mesh_set_vertex_position
 {
 public :
@@ -10,5 +7,3 @@ public :
     so_called_type_platform_math_num_fract y ;
     so_called_type_platform_math_num_fract z ;
 } ;
-
-#endif

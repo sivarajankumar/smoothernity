@@ -1,6 +1,3 @@
-#ifndef _shy_message_common_engine_render_mesh_set_vertex_tex_coord_included
-#define _shy_message_common_engine_render_mesh_set_vertex_tex_coord_included
-
 class shy_message_common_engine_render_mesh_set_vertex_tex_coord
 {
 public :
@@ -9,5 +6,3 @@ public :
     so_called_type_platform_math_num_fract u ;
     so_called_type_platform_math_num_fract v ;
 } ;
-
-#endif

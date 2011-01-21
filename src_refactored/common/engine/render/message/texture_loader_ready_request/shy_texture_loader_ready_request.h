@@ -1,9 +1,3 @@
-#ifndef _shy_message_common_engine_render_texture_loader_ready_request_included
-#define _shy_message_common_engine_render_texture_loader_ready_request_included
-
 class shy_message_common_engine_render_texture_loader_ready_request
 {
 } ;
-
-#endif
-
