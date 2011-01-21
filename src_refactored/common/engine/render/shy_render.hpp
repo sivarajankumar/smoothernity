@@ -90,6 +90,32 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_done )
 {
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , whole_max_meshes )
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_platform_pointer :: pointer < shy_guts :: mesh_data > mesh ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , i ) ;
+        
+        so_called_platform_render :: delete_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
+        so_called_platform_render :: delete_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+        so_called_platform_render :: delete_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+    }
+
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , whole_max_textures )
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_platform_pointer :: pointer < shy_guts :: texture_data > texture ;
+        so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , i ) ;
+        so_called_platform_render :: delete_texture_id ( texture . get ( ) . render_id ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_enable_depth_test )
