@@ -274,12 +274,23 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_load_from_resource )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_load_from_resource msg )
 {
+    so_called_type_platform_math_num_whole size_pow2_base ;
+    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+    so_called_platform_render :: load_texture_resource 
+        ( msg . resource 
+        , shy_guts :: consts :: texture_size_pow2_base 
+        , texture . get ( ) . texels 
+        ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_loader_ready_request )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_loader_ready_request msg )
 {
+    so_called_message_common_engine_render_texture_loader_ready_reply reply_msg ;
+    so_called_platform_render :: texture_loader_ready ( reply_msg . ready ) ;
+    so_called_sender_common_engine_render_texture_loader_ready_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_mode_modulate )
