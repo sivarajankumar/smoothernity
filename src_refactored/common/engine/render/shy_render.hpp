@@ -78,18 +78,22 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_blend_disable )
 {
+    so_called_platform_render :: blend_disable ( ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha )
 {
+    so_called_platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_clear_screen )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_clear_screen msg )
 {
+    so_called_platform_render :: clear_screen ( msg . r , msg . g , msg . b ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_disable_depth_test )
 {
+    so_called_platform_render :: disable_depth_test ( ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_done )
@@ -124,18 +128,22 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_enable_depth_test )
 {
+    so_called_platform_render :: enable_depth_test ( ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_enable_face_culling )
 {
+    so_called_platform_render :: enable_face_culling ( ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_fog_disable )
 {
+    so_called_platform_render :: fog_disable ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_fog_linear )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_fog_linear msg )
 {
+    so_called_platform_render :: fog_linear ( msg . z_near , msg . z_far , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_frame_loss_request )
@@ -181,14 +189,17 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_identity )
 {
+    so_called_platform_render :: matrix_identity ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_load )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_load msg )
 {
+    so_called_platform_render :: matrix_load ( msg . matrix ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_mult )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_mult msg )
 {
+    so_called_platform_render :: matrix_mult ( msg . matrix ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_create_request )
@@ -231,16 +242,22 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 {
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_projection_frustum )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_projection_frustum msg )
 {
+    so_called_platform_render :: projection_frustum ( msg . x_left , msg . x_right , msg . y_bottom , msg . y_top , msg . z_near , msg . z_far ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_projection_ortho )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_projection_ortho msg )
 {
+    so_called_platform_render :: projection_ortho ( msg . x_left , msg . x_right , msg . y_bottom , msg . y_top , msg . z_near , msg . z_far ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_create_request )
 {
+    so_called_message_common_engine_render_texture_create_reply texture_create_reply_msg ;
+    texture_create_reply_msg . texture . _texture_id = shy_guts :: next_texture_id ;
+    so_called_platform_math :: inc_whole ( shy_guts :: next_texture_id ) ;
+    so_called_sender_common_engine_render_texture_create_reply :: send ( texture_create_reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_finalize )
@@ -257,6 +274,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_mode_modulate )
 {
+    so_called_platform_render :: texture_mode_modulate ( ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_select )
