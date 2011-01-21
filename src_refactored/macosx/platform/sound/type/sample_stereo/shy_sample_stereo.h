@@ -1,6 +1,3 @@
-#ifndef _shy_type_macosx_platform_sound_sample_stereo_included
-#define _shy_type_macosx_platform_sound_sample_stereo_included
-
 class shy_type_macosx_platform_sound_sample_stereo
 {
     friend class shy_macosx_platform_sound ;
@@ -10,5 +7,3 @@ private :
     ALushort _left_channel_value ;
     ALushort _right_channel_value ; 
 } ;
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef _shy_type_macosx_platform_sound_sample_mono_included
-#define _shy_type_macosx_platform_sound_sample_mono_included
-
 class shy_type_macosx_platform_sound_sample_mono
 {
     friend class shy_macosx_platform_sound ;
@@ -9,5 +6,3 @@ public :
 private :
     ALubyte _value ;
 } ;
-
-#endif

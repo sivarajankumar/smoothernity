@@ -1,6 +1,3 @@
-#ifndef _shy_macosx_platform_sound_included
-#define _shy_macosx_platform_sound_included
-
 class shy_macosx_platform_sound
 {
     friend class shy_macosx_platform_sound_insider ;
@@ -97,5 +94,3 @@ void shy_macosx_platform_sound :: create_stereo_buffer
 
     _create_stereo_buffer ( result , samples_ptr , samples_count ) ;
 }
-
-#endif

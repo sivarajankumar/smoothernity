@@ -1,6 +1,3 @@
-#ifndef _shy_type_macosx_platform_sound_source_id_included
-#define _shy_type_macosx_platform_sound_source_id_included
-
 class shy_type_macosx_platform_sound_source_id
 {
     friend class shy_macosx_platform_sound ;
@@ -9,5 +6,3 @@ public :
 private :
     ALuint _source_id ;
 } ;
-
-#endif
