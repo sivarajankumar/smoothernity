@@ -260,8 +260,18 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     so_called_sender_common_engine_render_texture_create_reply :: send ( texture_create_reply_msg ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_finalize )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_finalize msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+    so_called_platform_render :: load_texture_subdata 
+        ( texture . get ( ) . render_id 
+        , so_called_platform_math_consts :: whole_0
+        , so_called_platform_math_consts :: whole_0
+        , so_called_common_engine_render_consts :: texture_width
+        , so_called_common_engine_render_consts :: texture_height
+        , texture . get ( ) . texels 
+        ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_load_from_resource )
