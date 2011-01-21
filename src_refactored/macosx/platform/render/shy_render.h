@@ -1,6 +1,3 @@
-#ifndef _shy_macosx_platform_render_included
-#define _shy_macosx_platform_render_included
-
 class shy_macosx_platform_render
 {
     friend class shy_macosx_platform_render_insider ;
@@ -210,5 +207,3 @@ void shy_macosx_platform_render :: load_texture_resource
     so_called_platform_static_array_insider :: elements_ptr ( texels , data ) ;
     _load_texture_resource ( resource_id , size_pow2_base , texels ) ;
 }
-
-#endif
