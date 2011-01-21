@@ -12,6 +12,7 @@
 #include "../../../injections/platform/render/type/index_buffer_mapped_data/shy_index_buffer_mapped_data.h"
 #include "../../../injections/platform/render/type/vertex_buffer_id/shy_vertex_buffer_id.h"
 #include "../../../injections/platform/render/type/vertex_buffer_mapped_data/shy_vertex_buffer_mapped_data.h"
+#include "../../../injections/platform/static_array/type/data/shy_data.h"
 #include "../../../injections/platform/static_array/shy_static_array.h"
 
 #include "./shy_render.hpp"

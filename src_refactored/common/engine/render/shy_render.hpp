@@ -14,7 +14,7 @@ public :
     class texture_data
     {
     public :
-        so_called_platform_static_array :: static_array 
+        so_called_type_platform_static_array_data 
             < so_called_type_platform_render_texel_data 
             , so_called_common_engine_render_consts :: texture_size_int
             * so_called_common_engine_render_consts :: texture_size_int
@@ -42,9 +42,9 @@ public :
         so_called_type_platform_matrix_data transform ;
     } ;
 
-    static so_called_platform_static_array :: static_array < texture_data , consts :: max_textures > textures_datas ;
-    static so_called_platform_static_array :: static_array < mesh_data , consts :: max_meshes > meshes_datas ;
-    static so_called_platform_static_array :: static_array < so_called_type_platform_math_num_whole , consts :: max_meshes > vacant_mesh_ids ;
+    static so_called_type_platform_static_array_data < texture_data , consts :: max_textures > textures_datas ;
+    static so_called_type_platform_static_array_data < mesh_data , consts :: max_meshes > meshes_datas ;
+    static so_called_type_platform_static_array_data < so_called_type_platform_math_num_whole , consts :: max_meshes > vacant_mesh_ids ;
     static so_called_type_platform_math_num_whole next_texture_id ;
     static so_called_type_platform_math_num_whole next_vacant_mesh_id_index ;
 } ;
@@ -56,11 +56,11 @@ const so_called_type_platform_math_num_whole shy_guts :: consts :: max_vertices
 const so_called_type_platform_math_num_whole shy_guts :: consts :: max_indices
     = so_called_platform_math :: init_num_whole ( 300 ) ;
 
-so_called_platform_static_array :: static_array < shy_guts :: texture_data , shy_guts :: consts :: max_textures >
+so_called_type_platform_static_array_data < shy_guts :: texture_data , shy_guts :: consts :: max_textures >
     shy_guts :: textures_datas ;
-so_called_platform_static_array :: static_array < shy_guts :: mesh_data , shy_guts :: consts :: max_meshes >
+so_called_type_platform_static_array_data < shy_guts :: mesh_data , shy_guts :: consts :: max_meshes >
     shy_guts :: meshes_datas ;
-so_called_platform_static_array :: static_array < so_called_type_platform_math_num_whole , shy_guts :: consts :: max_meshes >
+so_called_type_platform_static_array_data < so_called_type_platform_math_num_whole , shy_guts :: consts :: max_meshes >
     shy_guts :: vacant_mesh_ids ;
 so_called_type_platform_math_num_whole shy_guts :: next_texture_id ;
 so_called_type_platform_math_num_whole shy_guts :: next_vacant_mesh_id_index ;
