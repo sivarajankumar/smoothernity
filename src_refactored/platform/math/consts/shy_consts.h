@@ -1,6 +1,3 @@
-#ifndef _shy_platform_math_consts_included
-#define _shy_platform_math_consts_included
-
 class shy_platform_math_consts
 {
 public :
@@ -49,6 +46,3 @@ public :
     static const so_called_type_platform_math_num_whole whole_minus_8 ;
     static const so_called_type_platform_math_num_whole whole_minus_9 ;
 } ;
-
-#endif
-

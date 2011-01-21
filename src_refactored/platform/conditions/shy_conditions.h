@@ -1,6 +1,3 @@
-#ifndef _shy_platform_conditions_included
-#define _shy_platform_conditions_included
-
 class shy_platform_conditions
 {
 public :
@@ -19,6 +16,3 @@ public :
     static int whole_less_than_zero ( so_called_type_platform_math_num_whole ) ;
     static int wholes_are_equal ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
 } ;
-
-#endif
-

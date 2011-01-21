@@ -1,6 +1,3 @@
-#ifndef _shy_platform_math_int_float_insider_included
-#define _shy_platform_math_int_float_insider_included
-
 class shy_platform_math_int_float_insider
 {
 public :
@@ -11,5 +8,3 @@ public :
     static so_called_type_platform_math_num_whole init_num_whole ( int ) ;
     static so_called_type_platform_math_num_fract init_num_fract ( float ) ;
 } ;
-
-#endif

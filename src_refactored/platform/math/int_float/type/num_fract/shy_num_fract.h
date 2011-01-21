@@ -1,6 +1,3 @@
-#ifndef _shy_type_platform_math_int_float_num_fract_included
-#define _shy_type_platform_math_int_float_num_fract_included
-
 class shy_type_platform_math_int_float_num_fract
 {
     friend class shy_platform_math_int_float ;
@@ -12,5 +9,3 @@ private :
 private :
     float _value ;
 } ;
-
-#endif

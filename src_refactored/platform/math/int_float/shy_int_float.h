@@ -1,6 +1,3 @@
-#ifndef _shy_platform_math_int_float_included
-#define _shy_platform_math_int_float_included
-
 class shy_platform_math_int_float
 {
 public :
@@ -93,5 +90,3 @@ public :
         , so_called_type_platform_math_const_int_32 denominator
         ) ;
 } ;
-
-#endif
