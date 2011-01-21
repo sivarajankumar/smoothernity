@@ -1,6 +1,3 @@
-#ifndef _shy_common_engine_render_stateless_included
-#define _shy_common_engine_render_stateless_included
-
 class shy_common_engine_render_stateless
 {
 public :
@@ -15,5 +12,3 @@ public :
         , so_called_type_platform_math_num_whole resource_index
         ) ;
 } ;
-
-#endif
