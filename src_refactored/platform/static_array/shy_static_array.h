@@ -1,6 +1,3 @@
-#ifndef _shy_platform_static_array_included
-#define _shy_platform_static_array_included
-
 class shy_platform_static_array
 {
 public :
@@ -26,6 +23,3 @@ void shy_platform_static_array :: element_ptr ( pointer_type & element_ptr , arr
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
     so_called_platform_pointer :: bind ( element_ptr , array . _elements [ index_int ] ) ;
 }
-
-#endif
-

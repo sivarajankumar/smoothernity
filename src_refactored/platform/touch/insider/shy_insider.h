@@ -1,6 +1,3 @@
-#ifndef _shy_platform_touch_insider_included
-#define _shy_platform_touch_insider_included
-
 class shy_platform_touch_insider
 {
     friend class shy_platform_touch ;
@@ -15,5 +12,3 @@ private :
     static float _x ;
     static float _y ;
 } ;
-
-#endif

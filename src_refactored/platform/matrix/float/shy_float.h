@@ -1,6 +1,3 @@
-#ifndef _shy_platform_matrix_float_included
-#define _shy_platform_matrix_float_included
-
 class shy_platform_matrix_float
 {
 public :
@@ -39,5 +36,3 @@ public :
     static void identity ( so_called_type_platform_matrix_data & ) ;
     static void inverse_rotation_translation ( so_called_type_platform_matrix_data & ) ;
 } ;
-
-#endif

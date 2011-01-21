@@ -1,6 +1,3 @@
-#ifndef _shy_platform_static_assert_included
-#define _shy_platform_static_assert_included
-
 class shy_platform_static_assert
 {
 public :
@@ -10,5 +7,3 @@ public :
         char _data [ condition ? 1 : - 1 ] ;
     } ;
 } ;
-
-#endif

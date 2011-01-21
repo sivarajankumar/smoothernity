@@ -1,6 +1,3 @@
-#ifndef _shy_platform_mouse_insider_included
-#define _shy_platform_mouse_insider_included
-
 class shy_platform_mouse_insider
 {
     friend class shy_platform_mouse ;
@@ -15,5 +12,3 @@ private :
     static float _x ;
     static float _y ;
 } ;
-
-#endif

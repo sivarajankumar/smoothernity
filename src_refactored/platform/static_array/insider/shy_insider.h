@@ -1,6 +1,3 @@
-#ifndef _shy_platform_static_array_insider_included
-#define _shy_platform_static_array_insider_included
-
 class shy_platform_static_array_insider
 {
 public :
@@ -31,5 +28,3 @@ void shy_platform_static_array_insider :: elements_count ( int & count )
 {
     count = int ( static_array :: _array_size ) ;
 }
-
-#endif

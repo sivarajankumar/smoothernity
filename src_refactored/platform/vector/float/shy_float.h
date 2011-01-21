@@ -1,6 +1,3 @@
-#ifndef _shy_platform_vector_float_included
-#define _shy_platform_vector_float_included
-
 class shy_platform_vector_float
 {
 public :
@@ -20,6 +17,3 @@ public :
     static void length ( so_called_type_platform_math_num_fract & , so_called_type_platform_vector_data ) ;
     static void normalize ( so_called_type_platform_vector_data & , so_called_type_platform_vector_data ) ;
 } ;
-
-#endif
-

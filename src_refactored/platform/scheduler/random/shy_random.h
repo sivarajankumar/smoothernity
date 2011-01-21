@@ -1,6 +1,3 @@
-#ifndef _shy_platform_scheduler_random_included
-#define _shy_platform_scheduler_random_included
-
 class shy_platform_scheduler_random
 {
     static const int _max_scheduled_modules = 100 ;
@@ -227,6 +224,3 @@ void shy_platform_scheduler_random
 {
     _register_context ( _singleton ) ;
 }
-
-#endif
-

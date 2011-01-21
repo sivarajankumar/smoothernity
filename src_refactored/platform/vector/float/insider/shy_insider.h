@@ -1,6 +1,3 @@
-#ifndef _shy_platform_vector_float_insider_included
-#define _shy_platform_vector_float_insider_included
-
 class shy_platform_vector_float_insider
 {
 public :
@@ -11,5 +8,3 @@ public :
     static void y_set ( so_called_type_platform_vector_data & , float ) ;
     static void z_set ( so_called_type_platform_vector_data & , float ) ;
 } ;
-
-#endif

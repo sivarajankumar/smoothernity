@@ -1,6 +1,3 @@
-#ifndef _shy_platform_pointer_included
-#define _shy_platform_pointer_included
-
 class shy_platform_pointer
 {
 public :
@@ -64,5 +61,3 @@ void shy_platform_pointer :: is_bound_to
 {
     so_called_platform_math_insider :: num_whole_value_set ( result , pointer . _data_ptr == & data ) ;
 }
-
-#endif
