@@ -202,8 +202,33 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     so_called_platform_render :: matrix_mult ( msg . matrix ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_create_request )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_create_request msg )
 {
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: next_vacant_mesh_id_index , whole_max_meshes ) )
+    {
+        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > vacant_mesh_id ;
+        so_called_platform_static_array :: element_ptr ( vacant_mesh_id , shy_guts :: vacant_mesh_ids , shy_guts :: next_vacant_mesh_id_index ) ;
+        
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , vacant_mesh_id . get ( ) ) ;
+
+        mesh . get ( ) . finalized = so_called_platform_math_consts :: whole_false ;
+        mesh . get ( ) . vertices_count = msg . vertices ;
+        mesh . get ( ) . triangle_strip_indices_count = msg . triangle_strip_indices ;
+        mesh . get ( ) . triangle_fan_indices_count = msg . triangle_fan_indices ;
+        so_called_platform_matrix :: identity ( mesh . get ( ) . transform ) ;
+          
+        so_called_platform_render :: map_vertex_buffer ( mesh . get ( ) . vertex_buffer_mapped_data , mesh . get ( ) . vertex_buffer_id ) ;
+        so_called_platform_render :: map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+        so_called_platform_render :: map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+        
+        so_called_message_common_engine_render_mesh_create_reply reply_msg ;
+        reply_msg . mesh . _mesh_id = vacant_mesh_id . get ( ) ;
+        so_called_platform_math :: inc_whole ( shy_guts :: next_vacant_mesh_id_index ) ;
+        so_called_sender_common_engine_render_mesh_create_reply :: send ( reply_msg ) ;    
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_delete )
