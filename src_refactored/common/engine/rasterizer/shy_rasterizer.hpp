@@ -4,3 +4,7 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_ellipse_in_rect )
 {
 }
+
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_rect )
+{
+}
