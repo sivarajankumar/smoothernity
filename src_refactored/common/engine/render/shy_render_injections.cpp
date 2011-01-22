@@ -2,6 +2,7 @@
 
 #include "./consts/shy_consts_injections.h"
 #include "./sender/aspect_reply/shy_aspect_reply_injections.h"
+#include "./sender/frame_loss_reply/shy_frame_loss_reply_injections.h"
 #include "./sender/mesh_create_reply/shy_mesh_create_reply_injections.h"
 #include "./sender/texture_create_reply/shy_texture_create_reply_injections.h"
 #include "./sender/texture_loader_ready_reply/shy_texture_loader_ready_reply_injections.h"

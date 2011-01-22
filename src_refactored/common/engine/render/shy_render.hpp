@@ -148,6 +148,9 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_frame_loss_request )
 {
+    so_called_message_common_engine_render_frame_loss_reply reply_msg ;
+    so_called_platform_render :: get_frame_loss ( reply_msg . frame_loss ) ;
+    so_called_sender_common_engine_render_frame_loss_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_init )
@@ -280,8 +283,11 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_transform )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_transform msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+    mesh . get ( ) . transform = msg . transform ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_fan_index_value msg )
