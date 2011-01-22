@@ -235,8 +235,14 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 {
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_finalize )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_finalize msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+    mesh . get ( ) . finalized = so_called_platform_math_consts :: whole_true ;
+    so_called_platform_render :: unmap_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
+    so_called_platform_render :: unmap_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+    so_called_platform_render :: unmap_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_render )
@@ -255,16 +261,46 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 {
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_color )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_color msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+    so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
+    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+       )
+    {
+        so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
+        so_called_platform_render :: set_vertex_color ( vertex . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
+    }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_position )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_position msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+    so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
+    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+       )
+    {
+        so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
+        so_called_platform_render :: set_vertex_position ( vertex . get ( ) , msg . x , msg . y , msg . z ) ;
+    }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_tex_coord )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_tex_coord msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+    so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
+    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+       )
+    {
+        so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
+        so_called_platform_render :: set_vertex_tex_coord ( vertex . get ( ) , msg . u , msg . v ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_projection_frustum msg )
