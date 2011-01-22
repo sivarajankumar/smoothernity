@@ -253,12 +253,32 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 {
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_fan_index_value )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_fan_index_value msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+    so_called_type_platform_pointer_data < so_called_type_platform_render_index_data > index ;
+    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized )
+      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_fan_indices_count )
+       )
+    {
+        so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_fan_index_buffer_mapped_data , msg . offset ) ;
+        so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+    }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_strip_index_value )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+    so_called_type_platform_pointer_data < so_called_type_platform_render_index_data > index ;
+    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_strip_indices_count )
+       )
+    {
+        so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_strip_index_buffer_mapped_data , msg . offset ) ;
+        so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_color msg )
