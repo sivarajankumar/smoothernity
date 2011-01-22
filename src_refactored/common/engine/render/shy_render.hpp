@@ -298,23 +298,66 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     so_called_platform_render :: texture_mode_modulate ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_select )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_select msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+    so_called_platform_render :: enable_texturing ( ) ;
+    so_called_platform_render :: use_texture ( texture . get ( ) . render_id ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel msg )
 {
+    so_called_type_platform_math_num_whole texel_offset ;
+    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+    so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
+    
+    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+    so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , msg . y ) ;
+    so_called_platform_math :: add_to_whole ( texel_offset , msg . x ) ;
+    so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+    texel . get ( ) = msg . texel ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel_rgba )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel_rgba msg )
 {
+    so_called_type_platform_math_num_whole texel_offset ;
+    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+    so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
+
+    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+    so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , msg . y ) ;
+    so_called_platform_math :: add_to_whole ( texel_offset , msg . x ) ;
+    so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+    so_called_platform_render :: set_texel_color ( texel . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texels_rect )
+void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texels_rect msg )
 {
+    so_called_type_platform_math_num_whole texel_offset ;
+    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+    for ( so_called_type_platform_math_num_whole y = msg . bottom
+        ; so_called_platform_conditions :: whole_less_or_equal_to_whole ( y , msg . top )
+        ; so_called_platform_math :: inc_whole ( y )
+        )
+    {
+        for ( so_called_type_platform_math_num_whole x = msg . left
+            ; so_called_platform_conditions :: whole_less_or_equal_to_whole ( x , msg . right )
+            ; so_called_platform_math :: inc_whole ( x )
+            )
+        {
+            so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
+            so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , y ) ;
+            so_called_platform_math :: add_to_whole ( texel_offset , x ) ;
+            so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+            texel . get ( ) = msg . texel ;
+        }
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_unselect )
 {
+    so_called_platform_render :: disable_texturing ( ) ;
 }
 
