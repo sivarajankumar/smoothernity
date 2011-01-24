@@ -27,6 +27,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_finalize_request )
 {
+    so_called_sender_common_engine_rasterizer_finalize_reply :: send ( so_called_message_common_engine_rasterizer_finalize_reply ( ) ) ;
 }
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_init )
