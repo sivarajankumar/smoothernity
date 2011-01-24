@@ -122,6 +122,58 @@ void shy_guts :: rasterize_top_triangle_part
     }
 }
 
+void shy_guts :: rasterize_bottom_triangle_part
+    ( so_called_type_platform_math_num_whole x_top
+    , so_called_type_platform_math_num_whole y_top
+    , so_called_type_platform_math_num_whole x_mid
+    , so_called_type_platform_math_num_whole y_mid
+    , so_called_type_platform_math_num_whole x_bottom
+    , so_called_type_platform_math_num_whole y_bottom
+    )
+{
+    for ( so_called_type_platform_math_num_whole y = y_mid 
+        ; so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y , y_bottom )
+        ; so_called_platform_math :: dec_whole ( y )
+        )
+    {
+        so_called_type_platform_math_num_whole x_mid_bottom ;
+        if ( so_called_platform_conditions :: wholes_are_equal ( y_mid , y_bottom ) )
+            x_mid_bottom = x_mid ;
+        else
+        {
+            so_called_type_platform_math_num_whole y_mid_minus_y ;
+            so_called_type_platform_math_num_whole y_mid_minus_y_bottom ;
+            so_called_type_platform_math_num_whole x_bottom_minus_x_mid ;
+
+            so_called_platform_math :: sub_wholes ( y_mid_minus_y , y_mid , y ) ;
+            so_called_platform_math :: sub_wholes ( y_mid_minus_y_bottom , y_mid , y_bottom ) ;
+            so_called_platform_math :: sub_wholes ( x_bottom_minus_x_mid , x_bottom , x_mid ) ;
+            so_called_platform_math :: mul_wholes ( x_mid_bottom , y_mid_minus_y , x_bottom_minus_x_mid ) ;
+            so_called_platform_math :: div_whole_by ( x_mid_bottom , y_mid_minus_y_bottom ) ;
+            so_called_platform_math :: add_to_whole ( x_mid_bottom , x_mid ) ;
+        }
+        
+        so_called_type_platform_math_num_whole x_top_bottom ;
+        if ( so_called_platform_conditions :: wholes_are_equal ( y_top , y_bottom ) )
+            x_top_bottom = x_bottom ;
+        else
+        {
+            so_called_type_platform_math_num_whole y_top_minus_y ;
+            so_called_type_platform_math_num_whole y_top_minus_y_bottom ;
+            so_called_type_platform_math_num_whole x_bottom_minus_x_top ;
+
+            so_called_platform_math :: sub_wholes ( y_top_minus_y , y_top , y ) ;
+            so_called_platform_math :: sub_wholes ( y_top_minus_y_bottom , y_top , y_bottom ) ;
+            so_called_platform_math :: sub_wholes ( x_bottom_minus_x_top , x_bottom , x_top ) ;
+            so_called_platform_math :: mul_wholes ( x_top_bottom , y_top_minus_y , x_bottom_minus_x_top ) ;
+            so_called_platform_math :: div_whole_by ( x_top_bottom , y_top_minus_y_bottom ) ;
+            so_called_platform_math :: add_to_whole ( x_top_bottom , x_top ) ;
+        }
+        
+        rasterize_horizontal_line ( x_mid_bottom , x_top_bottom , y ) ;
+    }
+}
+
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_ellipse_in_rect )
 {
 }
