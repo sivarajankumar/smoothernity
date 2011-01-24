@@ -282,8 +282,32 @@ void shy_guts :: rasterize_bresenham_ellipse
         }
     }
 }
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_ellipse_in_rect )
+
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_ellipse_in_rect msg )
 {
+    so_called_type_platform_math_num_whole width ;
+    so_called_type_platform_math_num_whole height ;
+    so_called_type_platform_math_num_whole y_center ;
+    so_called_type_platform_math_num_whole x_center ;
+    so_called_type_platform_math_num_whole x_diff ;
+    so_called_type_platform_math_num_whole y_diff ;
+
+    so_called_platform_math :: add_wholes ( y_center , msg . y1 , msg . y2 ) ;
+    so_called_platform_math :: div_whole_by ( y_center , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: add_wholes ( x_center , msg . x1 , msg . x2 ) ;
+    so_called_platform_math :: div_whole_by ( x_center , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: sub_wholes ( x_diff , msg . x1 , msg . x2 ) ;
+    so_called_platform_math :: sub_wholes ( y_diff , msg . y1 , msg . y2 ) ;
+    so_called_common_engine_math_stateless :: abs_whole ( width , x_diff ) ;
+    so_called_common_engine_math_stateless :: abs_whole ( height , y_diff ) ;
+    
+    so_called_type_platform_math_num_whole half_width ;
+    so_called_type_platform_math_num_whole half_height ;
+
+    so_called_platform_math :: div_wholes ( half_width , width , so_called_platform_math_consts :: whole_2 ) ;    
+    so_called_platform_math :: div_wholes ( half_height , height , so_called_platform_math_consts :: whole_2 ) ;
+
+    shy_guts :: rasterize_bresenham_ellipse ( x_center , y_center , half_width , half_height ) ;
 }
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_rect )
