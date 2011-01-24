@@ -20,3 +20,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texel )
 {
 }
+
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texture )
+{
+}

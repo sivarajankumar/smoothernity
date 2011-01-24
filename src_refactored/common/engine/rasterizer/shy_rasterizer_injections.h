@@ -6,6 +6,7 @@
 #include "./message/draw_triangle/shy_draw_triangle_injections.h"
 #include "./message/finalize_request/shy_finalize_request_injections.h"
 #include "./message/use_texel/shy_use_texel_injections.h"
+#include "./message/use_texture/shy_use_texture_injections.h"
 
 #include "../../../injections/platform/scheduler/shy_scheduler.h"
 
