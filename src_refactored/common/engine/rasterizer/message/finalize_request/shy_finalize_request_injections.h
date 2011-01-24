@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_engine_rasterizer_finalize_request_injections_included
+#define _shy_message_common_engine_rasterizer_finalize_request_injections_included
+
+#include "./shy_finalize_request.h"
+
+typedef shy_message_common_engine_rasterizer_finalize_request so_called_message_common_engine_rasterizer_finalize_request ;
+
+#endif

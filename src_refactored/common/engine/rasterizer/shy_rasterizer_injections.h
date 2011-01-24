@@ -4,6 +4,7 @@
 #include "./message/draw_ellipse_in_rect/shy_draw_ellipse_in_rect_injections.h"
 #include "./message/draw_rect/shy_draw_rect_injections.h"
 #include "./message/draw_triangle/shy_draw_triangle_injections.h"
+#include "./message/finalize_request/shy_finalize_request_injections.h"
 
 #include "../../../injections/platform/scheduler/shy_scheduler.h"
 
