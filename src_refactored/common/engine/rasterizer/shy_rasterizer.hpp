@@ -290,8 +290,57 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
 {
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_triangle )
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_triangle msg )
 {
+    so_called_type_platform_math_num_whole x1 = msg . x1 ;
+    so_called_type_platform_math_num_whole y1 = msg . y1 ;
+    so_called_type_platform_math_num_whole x2 = msg . x2 ;
+    so_called_type_platform_math_num_whole y2 = msg . y2 ;
+    so_called_type_platform_math_num_whole x3 = msg . x3 ;
+    so_called_type_platform_math_num_whole y3 = msg . y3 ;
+
+    if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y2 ) 
+      && so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y3 )
+       )
+    {
+        shy_guts :: rasterize_top_triangle_part    ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
+        shy_guts :: rasterize_bottom_triangle_part ( x1 , y1 , x2 , y2 , x3 , y3 ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y3 ) 
+           && so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y2 )
+            )
+    {
+        shy_guts :: rasterize_top_triangle_part    ( x1 , y1 , x3 , y3 , x2 , y2 ) ;
+        shy_guts :: rasterize_bottom_triangle_part ( x1 , y1 , x3 , y3 , x2 , y2 ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y1 )
+           && so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y2 )
+            )
+    {
+        shy_guts :: rasterize_top_triangle_part    ( x3 , y3 , x1 , y1 , x2 , y2 ) ;
+        shy_guts :: rasterize_bottom_triangle_part ( x3 , y3 , x1 , y1 , x2 , y2 ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y2 )
+           && so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y1 )
+            )
+    {
+        shy_guts :: rasterize_top_triangle_part    ( x3 , y3 , x2 , y2 , x1 , y1 ) ;
+        shy_guts :: rasterize_bottom_triangle_part ( x3 , y3 , x2 , y2 , x1 , y1 ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y1 )
+           && so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y3 )
+            )
+    {
+        shy_guts :: rasterize_top_triangle_part    ( x2 , y2 , x1 , y1 , x3 , y3 ) ;
+        shy_guts :: rasterize_bottom_triangle_part ( x2 , y2 , x1 , y1 , x3 , y3 ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y3 ) 
+           && so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y3 , y1 )
+            )
+    {
+        shy_guts :: rasterize_top_triangle_part    ( x2 , y2 , x3 , y3 , x1 , y1 ) ;
+        shy_guts :: rasterize_bottom_triangle_part ( x2 , y2 , x3 , y3 , x1 , y1 ) ;
+    }
 }
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_finalize_request )
