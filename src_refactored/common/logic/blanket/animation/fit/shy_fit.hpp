@@ -5,3 +5,6 @@ void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_comm
 {
 }
 
+void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_common_init )
+{
+}
