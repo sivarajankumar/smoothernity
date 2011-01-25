@@ -11,6 +11,7 @@
 #include "../../logic/blanket/animation/shy_animation_injections.h"
 #include "../../logic/blanket/mesh/shy_mesh_injections.h"
 #include "../../logic/blanket/placement/shy_placement_injections.h"
+#include "../../logic/blanket/renderer/shy_renderer_injections.h"
 #include "../../logic/blanket/shy_blanket_injections.h"
 #include "../../logic/core/shy_core_injections.h"
 

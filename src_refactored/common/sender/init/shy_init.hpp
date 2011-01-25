@@ -12,9 +12,9 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_blanket_animation_fit :: receive ( msg ) ;
     so_called_common_logic_blanket_mesh :: receive ( msg ) ;
     so_called_common_logic_blanket_placement :: receive ( msg ) ;
+    so_called_common_logic_blanket_renderer :: receive ( msg ) ;
     so_called_common_logic_core :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_blanket_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_camera . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_controls . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_door . get ( ) . receive ( msg ) ;
