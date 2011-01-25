@@ -310,8 +310,31 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     shy_guts :: rasterize_bresenham_ellipse ( x_center , y_center , half_width , half_height ) ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_rect )
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_rect msg )
 {
+    so_called_type_platform_math_num_whole left ;
+    so_called_type_platform_math_num_whole right ;
+    so_called_type_platform_math_num_whole bottom ;
+    so_called_type_platform_math_num_whole top ;
+
+    so_called_common_engine_math_stateless :: min_whole ( left , msg . x1 , msg . x2 ) ;
+    so_called_common_engine_math_stateless :: max_whole ( right , msg . x1 , msg . x2 ) ;
+    so_called_common_engine_math_stateless :: min_whole ( bottom , msg . y1 , msg . y2 ) ;
+    so_called_common_engine_math_stateless :: max_whole ( top , msg . y1 , msg . y2 ) ;
+    so_called_platform_math :: add_to_whole ( left , shy_guts :: origin_x ) ;
+    so_called_platform_math :: add_to_whole ( right , shy_guts :: origin_x ) ;
+    so_called_platform_math :: add_to_whole ( bottom , shy_guts :: origin_y ) ;
+    so_called_platform_math :: add_to_whole ( top , shy_guts :: origin_y ) ;
+    {
+        so_called_message_common_engine_render_texture_set_texels_rect texture_set_texels_rect_msg ;
+        texture_set_texels_rect_msg . left = left ;
+        texture_set_texels_rect_msg . right = right ;
+        texture_set_texels_rect_msg . bottom = bottom ;
+        texture_set_texels_rect_msg . top = top ;
+        texture_set_texels_rect_msg . texture = shy_guts :: texture_id ;
+        texture_set_texels_rect_msg . texel = shy_guts :: texel ;
+        so_called_sender_common_engine_render_texture_set_texels_rect :: send ( texture_set_texels_rect_msg ) ;
+    }
 }
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_triangle msg )
