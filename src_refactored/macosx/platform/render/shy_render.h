@@ -64,11 +64,11 @@ public :
     static void blend_disable ( ) ;
     static void blend_src_alpha_dst_one_minus_alpha ( ) ;
     
-	static void enable_texturing ( ) ;
-	static void disable_texturing ( ) ;
-	static void texture_mode_modulate ( ) ;
+    static void enable_texturing ( ) ;
+    static void disable_texturing ( ) ;
+    static void texture_mode_modulate ( ) ;
     static void use_texture ( so_called_type_platform_render_texture_id arg_texture_id ) ;
-	static void create_texture_id ( so_called_type_platform_render_texture_id & arg_texture_id , so_called_type_platform_math_num_whole size_pow2_base ) ;
+    static void create_texture_id ( so_called_type_platform_render_texture_id & arg_texture_id , so_called_type_platform_math_num_whole size_pow2_base ) ;
     static void texture_loader_ready ( so_called_type_platform_math_num_whole & is_ready ) ;
 
     static void clear_screen 
@@ -99,8 +99,8 @@ public :
     static void matrix_push ( ) ;
     static void matrix_pop ( ) ;
     
-	static void get_aspect_width ( so_called_type_platform_math_num_fract & result ) ;
-	static void get_aspect_height ( so_called_type_platform_math_num_fract & result ) ;
+    static void get_aspect_width ( so_called_type_platform_math_num_fract & result ) ;
+    static void get_aspect_height ( so_called_type_platform_math_num_fract & result ) ;
     static void get_frame_loss ( so_called_type_platform_math_num_whole & result ) ;
     
     static void delete_vertex_buffer ( so_called_type_platform_render_vertex_buffer_id & arg_buffer_id ) ;
@@ -172,8 +172,8 @@ private :
 
 private :
     static void * _texture_loader ;
-	static float _aspect_width ;
-	static float _aspect_height ;
+    static float _aspect_width ;
+    static float _aspect_height ;
     static so_called_type_platform_render_vertex_data _reference_vertex ;
     static void * _vertex_position_offset ;
     static void * _vertex_tex_coord_offset ;

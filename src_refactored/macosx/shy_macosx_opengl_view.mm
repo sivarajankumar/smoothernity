@@ -6,7 +6,7 @@
 - initWithFrame : ( NSRect ) frameRect
 {
     NSOpenGLPixelFormatAttribute attrs [ ] = 
-	{
+    {
         NSOpenGLPFANoRecovery ,
         NSOpenGLPFAColorSize , 24 ,
         NSOpenGLPFADepthSize , 16 ,
@@ -19,24 +19,24 @@
     [ pixel_format getValues : & renderer_id forAttribute : NSOpenGLPFARendererID forVirtualScreen : 0 ] ;
     self = [ super initWithFrame : frameRect pixelFormat : pixel_format ] ;
     if ( self )
-	{
-		GLint swapInt = 1 ;
-		[ [ self openGLContext ] setValues : & swapInt forParameter : NSOpenGLCPSwapInterval ] ;
-		
-		_al_device = alcOpenDevice ( NULL ) ;
-		_al_context = alcCreateContext ( _al_device , NULL ) ;
-		alcMakeContextCurrent ( _al_context ) ;
-		
+    {
+        GLint swapInt = 1 ;
+        [ [ self openGLContext ] setValues : & swapInt forParameter : NSOpenGLCPSwapInterval ] ;
+        
+        _al_device = alcOpenDevice ( NULL ) ;
+        _al_context = alcCreateContext ( _al_device , NULL ) ;
+        alcMakeContextCurrent ( _al_context ) ;
+        
         scene = [ [ shy_macosx_scene alloc ] init ] ;
-	}
+    }
     return self ;
 }
 
 - ( void ) dealloc
 {
     [ scene release ] ;
-	alcDestroyContext ( _al_context ) ;
-	alcCloseDevice ( _al_device ) ;
+    alcDestroyContext ( _al_context ) ;
+    alcCloseDevice ( _al_device ) ;
     _al_context = nil ;
     _al_device = nil ;
     [ super dealloc ] ;
@@ -49,14 +49,14 @@
 
 - ( void ) drawRect : ( NSRect ) aRect
 {
-	[ self render ] ;
+    [ self render ] ;
 }
 
 - ( void ) render
 {
     NSPoint window_point = [ [ self window ] mouseLocationOutsideOfEventStream ] ;
-	NSPoint view_point = [ self convertPoint : window_point fromView : nil ] ;
-	[ scene set_mouse_position : view_point ] ;
+    NSPoint view_point = [ self convertPoint : window_point fromView : nil ] ;
+    [ scene set_mouse_position : view_point ] ;
     
     [ scene render ] ;
     [ [ self openGLContext ] flushBuffer ] ;

@@ -8,8 +8,8 @@
 {
     shy_macosx_scene * scene ;
     IBOutlet NSResponder * controller ;
-	ALCcontext * _al_context;
-	ALCdevice * _al_device;
+    ALCcontext * _al_context;
+    ALCdevice * _al_device;
 }
 - ( shy_macosx_scene * ) scene ;
 - ( void ) render ;

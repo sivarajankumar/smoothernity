@@ -4,18 +4,18 @@
 
 - ( id ) init
 {
-   	self = [ super init ] ;
+    self = [ super init ] ;
     _is_ready = true ;
     _should_quit = false ;
     _resource_index = 0 ;
     _buffer = 0 ;
     _side_size = 0 ;
-	return self ;
+    return self ;
 }
 
 - ( void ) dealloc
 {
-	[ super dealloc ] ;
+    [ super dealloc ] ;
 }
 
 - ( bool ) loader_ready

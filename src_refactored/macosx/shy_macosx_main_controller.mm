@@ -30,7 +30,7 @@
     GLint new_swap_interval ;
 
     NSOpenGLPixelFormatAttribute attrs [ ] =
-	{
+    {
         NSOpenGLPFAFullScreen ,
         NSOpenGLPFAScreenMask , CGDisplayIDToOpenGLDisplayMask ( kCGDirectMainDisplay ) ,
         NSOpenGLPFAColorSize , 24 ,
@@ -44,23 +44,23 @@
     [ pixel_format getValues : & renderer_id forAttribute : NSOpenGLPFARendererID forVirtualScreen : 0 ] ;
     NSLog ( @"FullScreen pixel_format renderer_id = %08x" , ( unsigned ) renderer_id ) ;
     full_screen_context = [ [ NSOpenGLContext alloc ] 
-		initWithFormat : pixel_format 
-		shareContext : [ openGLView openGLContext ]
-		] ;
+        initWithFormat : pixel_format 
+        shareContext : [ openGLView openGLContext ]
+        ] ;
     [ pixel_format release ] ;
     pixel_format = nil ;
 
     if ( full_screen_context == nil )
-	{
+    {
         NSLog ( @"Failed to create full_screen_context" ) ;
         return ;
     }
 
-	[ self stop_animation ] ;
+    [ self stop_animation ] ;
 
     err = CGCaptureAllDisplays ( ) ;
     if ( err != CGDisplayNoErr )
-	{
+    {
         [ full_screen_context release ] ;
         full_screen_context = nil ;
         return ;
@@ -75,30 +75,30 @@
     CGLSetParameter ( cgl_context , kCGLCPSwapInterval , & new_swap_interval ) ;
 
     [ scene set_viewport_rect : NSMakeRect 
-		( 0 
-		, 0 
-		, CGDisplayPixelsWide ( kCGDirectMainDisplay ) 
-		, CGDisplayPixelsHigh ( kCGDirectMainDisplay ) 
-		) 
-	] ;
+        ( 0 
+        , 0 
+        , CGDisplayPixelsWide ( kCGDirectMainDisplay ) 
+        , CGDisplayPixelsHigh ( kCGDirectMainDisplay ) 
+        ) 
+    ] ;
 
     [ scene video_mode_changed ] ;
     
     stay_in_full_screen_mode = YES ;
     while ( stay_in_full_screen_mode )
-	{
+    {
         NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
 
         NSEvent * event ;
         while ( ( event = [ NSApp 
-			nextEventMatchingMask : NSAnyEventMask 
-			untilDate : [ NSDate distantPast ] 
-			inMode : NSDefaultRunLoopMode 
-			dequeue : YES
-			] ) )
-		{
+            nextEventMatchingMask : NSAnyEventMask 
+            untilDate : [ NSDate distantPast ] 
+            inMode : NSDefaultRunLoopMode 
+            dequeue : YES
+            ] ) )
+        {
             switch ( [ event type ] )
-			{
+            {
                 case NSLeftMouseDown :
                     [ self mouseDown : event ] ;
                     break ;
@@ -143,14 +143,14 @@
     [ scene set_viewport_rect : [ openGLView bounds ] ] ;
     [ openGLView setNeedsDisplay : YES ] ;
 
-	[ self start_animation ] ;
+    [ self start_animation ] ;
 }
 
 - ( void ) keyDown : ( NSEvent * ) event
 {
     unichar c = [ [ event charactersIgnoringModifiers ] characterAtIndex : 0 ] ;
     switch ( c )
-	{
+    {
         case 27 :
             stay_in_full_screen_mode = NO ;
             break ;
@@ -162,13 +162,13 @@
 - ( void ) mouseDown : ( NSEvent * ) the_event
 {
     shy_macosx_scene * scene = [ openGLView scene ] ;
-	[ scene mouse_left_button_down ] ;
+    [ scene mouse_left_button_down ] ;
 }
 
 - ( void ) mouseUp : ( NSEvent * ) the_event
 {
     shy_macosx_scene * scene = [ openGLView scene ] ;
-	[ scene mouse_left_button_up ] ;
+    [ scene mouse_left_button_up ] ;
 }
 
 - (BOOL) is_in_full_screen_mode
@@ -188,7 +188,7 @@
 - ( void ) start_animation
 {
     if ( ! is_animating )
-	{
+    {
         is_animating = YES ;
         if ( ! [ self is_in_full_screen_mode ] )
             [ self start_animation_timer ] ;
@@ -204,27 +204,27 @@
 - ( void ) start_animation_timer
 {
     [ NSTimer
-		scheduledTimerWithTimeInterval : 0
-		target : self
-		selector : @selector ( animation_timer_fired : )
-		userInfo : nil
-		repeats : NO
-	] ;
+        scheduledTimerWithTimeInterval : 0
+        target : self
+        selector : @selector ( animation_timer_fired : )
+        userInfo : nil
+        repeats : NO
+    ] ;
 }
 
 - ( void ) animation_timer_fired : ( NSTimer * ) timer
 {
-	if ( is_animating )
-	{
-		[ openGLView render ] ;
-		[ NSTimer
-			scheduledTimerWithTimeInterval : 0
-			target : self
-			selector : @selector ( animation_timer_fired : )
-			userInfo : nil
-			repeats : NO
-		] ;
-	}
+    if ( is_animating )
+    {
+        [ openGLView render ] ;
+        [ NSTimer
+            scheduledTimerWithTimeInterval : 0
+            target : self
+            selector : @selector ( animation_timer_fired : )
+            userInfo : nil
+            repeats : NO
+        ] ;
+    }
 }
 
 @end

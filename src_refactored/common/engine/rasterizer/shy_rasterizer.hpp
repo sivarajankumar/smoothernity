@@ -22,7 +22,7 @@ public :
         , so_called_type_platform_math_num_whole x_bottom 
         , so_called_type_platform_math_num_whole y_bottom 
         ) ;
-	static void rasterize_bresenham_ellipse 
+    static void rasterize_bresenham_ellipse 
         ( so_called_type_platform_math_num_whole cx 
         , so_called_type_platform_math_num_whole cy
         , so_called_type_platform_math_num_whole x_radius
