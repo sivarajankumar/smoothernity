@@ -4,9 +4,9 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_engine_render :: receive ( msg ) ;
     so_called_common_logic_amusement :: receive ( msg ) ;
     so_called_common_logic_amusement_renderer :: receive ( msg ) ;
+    so_called_common_logic_application_fsm :: receive ( msg ) ;
     so_called_common_logic_core :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_application_fsm . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket_animation . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_blanket_animation_appear . get ( ) . receive ( msg ) ;
