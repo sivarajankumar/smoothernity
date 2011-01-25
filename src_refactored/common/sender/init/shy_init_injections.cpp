@@ -25,5 +25,6 @@
 #include "../../logic/door/texture/shy_texture_injections.h"
 #include "../../logic/entities/shy_entities_injections.h"
 #include "../../logic/fidget/shy_fidget_injections.h"
+#include "../../logic/game/shy_game_injections.h"
 
 #include "./shy_init.hpp"
