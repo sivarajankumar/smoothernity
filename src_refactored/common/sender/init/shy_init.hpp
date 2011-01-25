@@ -22,8 +22,8 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_door_mesh :: receive ( msg ) ;
     so_called_common_logic_door_placement :: receive ( msg ) ;
     so_called_common_logic_door_renderer :: receive ( msg ) ;
+    so_called_common_logic_door_texture :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_door_texture . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_entities . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_fidget . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_game . get ( ) . receive ( msg ) ;
