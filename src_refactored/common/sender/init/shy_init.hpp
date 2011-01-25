@@ -26,8 +26,8 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_entities :: receive ( msg ) ;
     so_called_common_logic_fidget :: receive ( msg ) ;
     so_called_common_logic_game :: receive ( msg ) ;
+    so_called_common_logic_image :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_image . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_land . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_animation . get ( ) . receive ( msg ) ;
