@@ -1,3 +1,10 @@
+echo =========================
+echo modules without scheduler
+echo =========================
+echo
+find ../common \( -name '*.h' -or -name '*.hpp' -or -name '*.m' -or -name '*.mm' -or -name '*.cpp' \) -exec grep -Hn "class shy_common_" {} \;|grep -v stateless|grep -v consts
+
+echo
 echo ==================================
 echo not-injections headers with ifndef
 echo ==================================
@@ -24,3 +31,4 @@ echo files with tabulation
 echo =====================
 echo
 find .. \( -name '*.h' -or -name '*.hpp' -or -name '*.m' -or -name '*.mm' -or -name '*.cpp' \) -exec grep -Hn \.* {} \; | awk '/\t/'
+

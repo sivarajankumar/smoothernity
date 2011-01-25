@@ -5,3 +5,6 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_engine_ren
 {
 }
 
+void _shy_common_logic_entities :: receive ( so_called_message_common_init )
+{
+}
