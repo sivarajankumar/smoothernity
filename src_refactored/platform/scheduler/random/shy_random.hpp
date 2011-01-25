@@ -15,7 +15,7 @@ void shy_platform_scheduler_random :: init ( )
     _message_invoker < _module_dummy , _message_dummy , _default_max_message_size > my_invoker ( my_message ) ;
     my_invoker . invoke ( ) ;
 
-    _contexts_count = 0;
+    _contexts_count = 0 ;
     for ( int i = 0 ; i < _max_scheduled_modules ; i ++ )
         _contexts [ i ] = 0 ;
 }
