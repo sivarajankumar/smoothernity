@@ -395,7 +395,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     so_called_sender_common_engine_rasterizer_finalize_reply :: send ( so_called_message_common_engine_rasterizer_finalize_reply ( ) ) ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_init )
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_init )
 {
     shy_guts :: origin_x = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: origin_y = so_called_platform_math_consts :: whole_0 ;
