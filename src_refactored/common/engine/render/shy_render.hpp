@@ -153,7 +153,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     so_called_sender_common_engine_render_frame_loss_reply :: send ( reply_msg ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_init )
+void _shy_common_engine_render :: receive ( so_called_message_common_init )
 {
     shy_guts :: next_texture_id = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: next_vacant_mesh_id_index = so_called_platform_math_consts :: whole_0 ;

@@ -12,7 +12,6 @@
 #include "./message/fog_disable/shy_fog_disable_injections.h"
 #include "./message/fog_linear/shy_fog_linear_injections.h"
 #include "./message/frame_loss_request/shy_frame_loss_request_injections.h"
-#include "./message/init/shy_init_injections.h"
 #include "./message/matrix_identity/shy_matrix_identity_injections.h"
 #include "./message/matrix_load/shy_matrix_load_injections.h"
 #include "./message/matrix_mult/shy_matrix_mult_injections.h"
@@ -38,6 +37,8 @@
 #include "./message/texture_set_texel_rgba/shy_texture_set_texel_rgba_injections.h"
 #include "./message/texture_set_texels_rect/shy_texture_set_texels_rect_injections.h"
 #include "./message/texture_unselect/shy_texture_unselect_injections.h"
+
+#include "../../message/init/shy_init_injections.h"
 
 #include "../../../injections/platform/scheduler/shy_scheduler.h"
 

@@ -12,7 +12,6 @@ public :
     static void receive ( so_called_message_common_engine_render_fog_disable ) ;
     static void receive ( so_called_message_common_engine_render_fog_linear ) ;
     static void receive ( so_called_message_common_engine_render_frame_loss_request ) ;
-    static void receive ( so_called_message_common_engine_render_init ) ;
     static void receive ( so_called_message_common_engine_render_matrix_identity ) ;
     static void receive ( so_called_message_common_engine_render_matrix_load ) ;
     static void receive ( so_called_message_common_engine_render_matrix_mult ) ;
@@ -38,6 +37,7 @@ public :
     static void receive ( so_called_message_common_engine_render_texture_set_texel_rgba ) ;
     static void receive ( so_called_message_common_engine_render_texture_set_texels_rect ) ;
     static void receive ( so_called_message_common_engine_render_texture_unselect ) ;
+    static void receive ( so_called_message_common_init ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_render > :: module shy_common_engine_render_scheduled ;
