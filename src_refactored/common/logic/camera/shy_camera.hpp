@@ -5,3 +5,6 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_engine_rende
 {
 }
 
+void _shy_common_logic_camera :: receive ( so_called_message_common_init )
+{
+}
