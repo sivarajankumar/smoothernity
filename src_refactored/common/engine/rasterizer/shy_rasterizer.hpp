@@ -401,10 +401,14 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     shy_guts :: origin_y = so_called_platform_math_consts :: whole_0 ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texel )
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texel msg )
 {
+    shy_guts :: texel = msg . texel ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texture )
+void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texture msg )
 {
+    shy_guts :: texture_id = msg . texture ;
+    shy_guts :: origin_x = msg . origin_x ;
+    shy_guts :: origin_y = msg . origin_y ;
 }
