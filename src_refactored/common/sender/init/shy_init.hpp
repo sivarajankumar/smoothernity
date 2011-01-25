@@ -17,8 +17,8 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_controls :: receive ( msg ) ;
     so_called_common_logic_core :: receive ( msg ) ;
     so_called_common_logic_door :: receive ( msg ) ;
+    so_called_common_logic_door_animation :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_door_animation . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_door_animation_appear . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_door_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_door_placement . get ( ) . receive ( msg ) ;

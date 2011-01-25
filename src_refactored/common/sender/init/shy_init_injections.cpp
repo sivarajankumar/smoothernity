@@ -16,6 +16,7 @@
 #include "../../logic/camera/shy_camera_injections.h"
 #include "../../logic/controls/shy_controls_injections.h"
 #include "../../logic/core/shy_core_injections.h"
+#include "../../logic/door/animation/shy_animation_injections.h"
 #include "../../logic/door/shy_door_injections.h"
 
 #include "./shy_init.hpp"
