@@ -3,8 +3,10 @@
 
 #include "../../../message/init/shy_init_injections.h"
 
+#include "../../../../injections/platform/scheduler/shy_scheduler.h"
+
 #include "./shy_placement.h"
 
-typedef shy_common_logic_door_placement so_called_common_logic_door_placement ;
+typedef shy_common_logic_door_placement_scheduled so_called_common_logic_door_placement ;
 
 #endif
