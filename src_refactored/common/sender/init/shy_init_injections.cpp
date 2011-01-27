@@ -39,6 +39,7 @@
 #include "../../logic/main_menu/letters/animation/selection_weight/shy_selection_weight_injections.h"
 #include "../../logic/main_menu/letters/animation/shy_animation_injections.h"
 #include "../../logic/main_menu/letters/animation/unselection_weight/shy_unselection_weight_injections.h"
+#include "../../logic/main_menu/letters/layout/position/shy_position_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
 
 #include "./shy_init.hpp"
