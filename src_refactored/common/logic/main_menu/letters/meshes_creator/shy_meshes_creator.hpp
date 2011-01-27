@@ -5,3 +5,6 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
 {
 }
 
+void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_init )
+{
+}

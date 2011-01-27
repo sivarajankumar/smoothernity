@@ -42,6 +42,7 @@
 #include "../../logic/main_menu/letters/layout/position/shy_position_injections.h"
 #include "../../logic/main_menu/letters/layout/row_rect/shy_row_rect_injections.h"
 #include "../../logic/main_menu/letters/meshes_creation_director/shy_meshes_creation_director_injections.h"
+#include "../../logic/main_menu/letters/meshes_creator/shy_meshes_creator_injections.h"
 #include "../../logic/main_menu/letters/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
 
