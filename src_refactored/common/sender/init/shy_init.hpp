@@ -42,8 +42,8 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_main_menu_letters_animation_unselection_weight :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_layout_position :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_layout_row_rect :: receive ( msg ) ;
+    so_called_common_logic_main_menu_letters_storage :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_main_menu_letters_storage . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_meshes_creation_director . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_meshes_creator . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_letters_meshes_destroyer . get ( ) . receive ( msg ) ;

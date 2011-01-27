@@ -41,6 +41,7 @@
 #include "../../logic/main_menu/letters/animation/unselection_weight/shy_unselection_weight_injections.h"
 #include "../../logic/main_menu/letters/layout/position/shy_position_injections.h"
 #include "../../logic/main_menu/letters/layout/row_rect/shy_row_rect_injections.h"
+#include "../../logic/main_menu/letters/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
 
 #include "./shy_init.hpp"
