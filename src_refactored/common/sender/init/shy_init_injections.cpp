@@ -32,6 +32,7 @@
 #include "../../logic/main_menu/animation/shy_animation_injections.h"
 #include "../../logic/main_menu/choice/shy_choice_injections.h"
 #include "../../logic/main_menu/letters/animation/appear/shy_appear_injections.h"
+#include "../../logic/main_menu/letters/animation/disappear/shy_disappear_injections.h"
 #include "../../logic/main_menu/letters/animation/shy_animation_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
 
