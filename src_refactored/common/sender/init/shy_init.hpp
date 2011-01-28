@@ -56,8 +56,8 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_main_menu_selection_animation_idle :: receive ( msg ) ;
     so_called_common_logic_main_menu_selection_animation_idle_attention :: receive ( msg ) ;
     so_called_common_logic_main_menu_selection_animation_push :: receive ( msg ) ;
+    so_called_common_logic_main_menu_selection_animation_push_attention :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_main_menu_selection_animation_push_attention . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_animation_push_weight . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_animation_select . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_main_menu_selection_animation_unselect . get ( ) . receive ( msg ) ;
