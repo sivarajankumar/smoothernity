@@ -7,6 +7,7 @@ void shy_facade_loadable :: init ( )
 
 void shy_facade_loadable :: done ( )
 {
+    so_called_sender_common_done :: send ( so_called_message_common_done ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 
