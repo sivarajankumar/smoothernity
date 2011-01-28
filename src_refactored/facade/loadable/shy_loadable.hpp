@@ -19,6 +19,7 @@ void shy_facade_loadable :: render ( )
 
 void shy_facade_loadable :: update ( )
 {
+    so_called_sender_common_update :: send ( so_called_message_common_update ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 
