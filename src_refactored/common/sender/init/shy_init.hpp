@@ -64,8 +64,8 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_main_menu_selection_tracker :: receive ( msg ) ;
     so_called_common_logic_main_menu_selection_tracking_director :: receive ( msg ) ;
     so_called_common_logic_observer :: receive ( msg ) ;
+    so_called_common_logic_observer_animation :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_observer_animation . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_observer_animation_flight . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_ortho . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_perspective . get ( ) . receive ( msg ) ;
