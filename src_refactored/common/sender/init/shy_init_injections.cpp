@@ -63,5 +63,6 @@
 #include "../../logic/main_menu/selection/tracker/shy_tracker_injections.h"
 #include "../../logic/main_menu/selection/tracking_director/shy_tracking_director_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
+#include "../../logic/observer/shy_observer_injections.h"
 
 #include "./shy_init.hpp"
