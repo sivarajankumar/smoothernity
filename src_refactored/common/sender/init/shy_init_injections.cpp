@@ -49,6 +49,7 @@
 #include "../../logic/main_menu/letters/meshes/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/letters/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/renderer/shy_renderer_injections.h"
+#include "../../logic/main_menu/selection/animation/appear/shy_appear_injections.h"
 #include "../../logic/main_menu/selection/animation/shy_animation_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
 
