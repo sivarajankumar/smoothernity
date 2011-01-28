@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_camera_injections_included
 #define _shy_common_logic_camera_injections_included
 
+#include "../core/message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
+
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
