@@ -75,7 +75,5 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_sound :: receive ( msg ) ;
     so_called_common_logic_text :: receive ( msg ) ;
     so_called_common_logic_title :: receive ( msg ) ;
-/*
-    _receivers . get ( ) . logic_touch . get ( ) . receive ( msg ) ;
-*/
+    so_called_common_logic_touch :: receive ( msg ) ;
 }
