@@ -25,6 +25,7 @@ void shy_facade_static :: render ( )
 
 void shy_facade_static :: video_mode_changed ( )
 {
+    so_called_sender_common_video_mode_changed :: send ( so_called_message_common_video_mode_changed ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 

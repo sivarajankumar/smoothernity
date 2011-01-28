@@ -6,6 +6,7 @@
 #include "../../message/init/shy_init_injections.h"
 #include "../../message/render/shy_render_injections.h"
 #include "../../message/update/shy_update_injections.h"
+#include "../../message/video_mode_changed/shy_video_mode_changed_injections.h"
 
 #include "../../../injections/platform/scheduler/shy_scheduler.h"
 
