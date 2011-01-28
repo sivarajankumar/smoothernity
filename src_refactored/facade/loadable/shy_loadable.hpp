@@ -13,6 +13,7 @@ void shy_facade_loadable :: done ( )
 
 void shy_facade_loadable :: render ( )
 {
+    so_called_sender_common_render :: send ( so_called_message_common_render ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 

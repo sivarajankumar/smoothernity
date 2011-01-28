@@ -18,6 +18,7 @@ void shy_facade_static :: update ( )
 
 void shy_facade_static :: render ( )
 {
+    so_called_sender_common_render :: send ( so_called_message_common_render ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 
