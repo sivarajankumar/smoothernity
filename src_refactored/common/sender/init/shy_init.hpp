@@ -68,8 +68,8 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_observer_animation_flight :: receive ( msg ) ;
     so_called_common_logic_ortho :: receive ( msg ) ;
     so_called_common_logic_perspective :: receive ( msg ) ;
+    so_called_common_logic_room :: receive ( msg ) ;
 /*
-    _receivers . get ( ) . logic_room . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_mesh . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_renderer . get ( ) . receive ( msg ) ;
     _receivers . get ( ) . logic_room_texture . get ( ) . receive ( msg ) ;
