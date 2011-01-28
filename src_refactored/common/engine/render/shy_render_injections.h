@@ -6,7 +6,6 @@
 #include "./message/blend_src_alpha_dst_one_minus_alpha/shy_blend_src_alpha_dst_one_minus_alpha_injections.h"
 #include "./message/clear_screen/shy_clear_screen_injections.h"
 #include "./message/disable_depth_test/shy_disable_depth_test_injections.h"
-#include "./message/done/shy_done_injections.h"
 #include "./message/enable_depth_test/shy_enable_depth_test_injections.h"
 #include "./message/enable_face_culling/shy_enable_face_culling_injections.h"
 #include "./message/fog_disable/shy_fog_disable_injections.h"
@@ -38,6 +37,7 @@
 #include "./message/texture_set_texels_rect/shy_texture_set_texels_rect_injections.h"
 #include "./message/texture_unselect/shy_texture_unselect_injections.h"
 
+#include "../../message/done/shy_done_injections.h"
 #include "../../message/init/shy_init_injections.h"
 
 #include "../../../injections/platform/scheduler/shy_scheduler.h"

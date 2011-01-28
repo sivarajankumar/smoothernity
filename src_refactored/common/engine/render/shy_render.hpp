@@ -96,7 +96,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     so_called_platform_render :: disable_depth_test ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_done )
+void _shy_common_engine_render :: receive ( so_called_message_common_done )
 {
     so_called_type_platform_math_num_whole whole_max_meshes ;
     so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;

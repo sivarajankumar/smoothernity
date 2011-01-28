@@ -1,12 +1,12 @@
 class _shy_common_engine_render
 {
 public :
+    static void receive ( so_called_message_common_done ) ;
     static void receive ( so_called_message_common_engine_render_aspect_request ) ;
     static void receive ( so_called_message_common_engine_render_blend_disable ) ;
     static void receive ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ) ;
     static void receive ( so_called_message_common_engine_render_clear_screen ) ;
     static void receive ( so_called_message_common_engine_render_disable_depth_test ) ;
-    static void receive ( so_called_message_common_engine_render_done ) ;
     static void receive ( so_called_message_common_engine_render_enable_depth_test ) ;
     static void receive ( so_called_message_common_engine_render_enable_face_culling ) ;
     static void receive ( so_called_message_common_engine_render_fog_disable ) ;
