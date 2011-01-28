@@ -74,5 +74,6 @@
 #include "../../logic/room/texture/shy_texture_injections.h"
 #include "../../logic/sound/shy_sound_injections.h"
 #include "../../logic/text/shy_text_injections.h"
+#include "../../logic/title/shy_title_injections.h"
 
 #include "./shy_init.hpp"
