@@ -78,6 +78,11 @@ void _shy_common_logic_core :: receive ( so_called_message_common_render )
 
 void _shy_common_logic_core :: receive ( so_called_message_common_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_prepared ) )
+        so_called_sender_common_logic_application_update :: send ( so_called_message_common_logic_application_update ( ) ) ;
+    else
+        so_called_sender_common_logic_fidget_prepare_permit :: send ( so_called_message_common_logic_fidget_prepare_permit ( ) ) ;
+    so_called_sender_common_logic_fidget_update :: send ( so_called_message_common_logic_fidget_update ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_video_mode_changed )

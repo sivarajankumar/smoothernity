@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_fidget_prepare_permit_injections_included
+#define _shy_message_common_logic_fidget_prepare_permit_injections_included
+
+#include "./shy_prepare_permit.h"
+
+typedef shy_message_common_logic_fidget_prepare_permit so_called_message_common_logic_fidget_prepare_permit ;
+
+#endif
