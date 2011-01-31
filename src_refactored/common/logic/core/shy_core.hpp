@@ -73,6 +73,7 @@ void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use
 
 void _shy_common_logic_core :: receive ( so_called_message_common_render )
 {
+    so_called_sender_common_logic_application_render :: send ( so_called_message_common_logic_application_render ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_update )
