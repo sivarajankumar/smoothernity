@@ -12,3 +12,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_nea
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_use_ortho_projection_reply )
 {
 }
+
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_use_perspective_projection_reply )
+{
+}
