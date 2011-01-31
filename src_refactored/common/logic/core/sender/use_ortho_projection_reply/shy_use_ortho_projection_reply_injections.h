@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_core_use_ortho_projection_reply_injections_included
+#define _shy_sender_common_logic_core_use_ortho_projection_reply_injections_included
+
+#include "../../message/use_ortho_projection_reply/shy_use_ortho_projection_reply_injections.h"
+
+#include "./shy_use_ortho_projection_reply.h"
+
+typedef shy_sender_common_logic_core_use_ortho_projection_reply so_called_sender_common_logic_core_use_ortho_projection_reply ;
+
+#endif

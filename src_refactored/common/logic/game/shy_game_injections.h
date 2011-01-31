@@ -2,6 +2,7 @@
 #define _shy_common_logic_game_injections_included
 
 #include "../core/message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
+#include "../core/message/use_ortho_projection_reply/shy_use_ortho_projection_reply_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
 

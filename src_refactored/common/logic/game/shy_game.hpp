@@ -8,3 +8,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_init )
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_near_plane_distance_reply )
 {
 }
+
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_use_ortho_projection_reply )
+{
+}
