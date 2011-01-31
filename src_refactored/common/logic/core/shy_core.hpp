@@ -17,6 +17,10 @@ void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use
 {
 }
 
+void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use_perspective_projection_request )
+{
+}
+
 void _shy_common_logic_core :: receive ( so_called_message_common_render )
 {
 }

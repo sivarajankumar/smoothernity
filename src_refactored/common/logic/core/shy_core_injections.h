@@ -3,6 +3,7 @@
 
 #include "./message/near_plane_distance_request/shy_near_plane_distance_request_injections.h"
 #include "./message/use_ortho_projection_request/shy_use_ortho_projection_request_injections.h"
+#include "./message/use_perspective_projection_request/shy_use_perspective_projection_request_injections.h"
 
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 
