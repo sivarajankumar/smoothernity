@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_core_near_plane_distance_request_injections_included
+#define _shy_message_common_logic_core_near_plane_distance_request_injections_included
+
+#include "./shy_near_plane_distance_request.h"
+
+typedef shy_message_common_logic_core_near_plane_distance_request so_called_message_common_logic_core_near_plane_distance_request ;
+
+#endif

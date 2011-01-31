@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_core_injections_included
 #define _shy_common_logic_core_injections_included
 
+#include "./message/near_plane_distance_request/shy_near_plane_distance_request_injections.h"
+
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
