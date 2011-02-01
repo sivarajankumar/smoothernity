@@ -61,6 +61,9 @@ void _shy_common_logic_core :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_near_plane_distance_request )
 {
+    shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: handling_near_plane_distance_request = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use_ortho_projection_request )
@@ -98,4 +101,5 @@ void _shy_common_logic_core :: receive ( so_called_message_common_update )
 
 void _shy_common_logic_core :: receive ( so_called_message_common_video_mode_changed )
 {
+    shy_guts :: init_render ( ) ;
 }
