@@ -5,6 +5,8 @@
 #include "./message/use_ortho_projection_request/shy_use_ortho_projection_request_injections.h"
 #include "./message/use_perspective_projection_request/shy_use_perspective_projection_request_injections.h"
 
+#include "../fidget/message/prepared/shy_prepared_injections.h"
+
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
