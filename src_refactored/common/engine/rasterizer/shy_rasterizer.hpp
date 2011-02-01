@@ -1,6 +1,5 @@
-class shy_guts
+namespace shy_guts
 {
-public :
     static void rasterize_horizontal_line 
         ( so_called_type_platform_math_num_whole x1 
         , so_called_type_platform_math_num_whole x2 
@@ -28,17 +27,12 @@ public :
         , so_called_type_platform_math_num_whole x_radius
         , so_called_type_platform_math_num_whole y_radius 
         ) ;
-public :
+
     static so_called_type_common_engine_render_texture_id texture_id ;
     static so_called_type_platform_render_texel_data texel ;
     static so_called_type_platform_math_num_whole origin_x ;
     static so_called_type_platform_math_num_whole origin_y ;
-} ;
-
-so_called_type_common_engine_render_texture_id shy_guts :: texture_id ;
-so_called_type_platform_render_texel_data shy_guts :: texel ;
-so_called_type_platform_math_num_whole shy_guts :: origin_x ;
-so_called_type_platform_math_num_whole shy_guts :: origin_y ;
+}
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_rasterizer > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
