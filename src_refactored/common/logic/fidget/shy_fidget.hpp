@@ -23,6 +23,50 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: update_fidget ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_aspect_replied )
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: render_frame_loss_replied )
+       )
+    {
+        shy_guts :: render_aspect_replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_frame_loss_replied = so_called_platform_math_consts :: whole_false ;
+    
+        so_called_type_platform_matrix_data matrix ;
+        so_called_type_platform_math_num_fract fract_scale_in_frames ;
+        so_called_type_platform_math_num_fract fract_fidget_scale ;
+        so_called_type_platform_math_num_fract scale ;
+        so_called_type_platform_math_num_fract angle_cos ;
+        so_called_type_platform_math_num_fract angle_sin ;
+        so_called_type_platform_math_num_fract cos_by_scale ;
+        so_called_type_platform_math_num_fract sin_by_scale ;
+        so_called_type_platform_math_num_fract neg_sin_by_scale ;
+        so_called_type_platform_math_num_fract mesh_y ;
+        
+        so_called_platform_math :: add_to_fract ( shy_guts :: fidget_angle , so_called_common_logic_fidget_consts :: angle_delta ) ;
+        so_called_platform_math :: make_fract_from_whole ( fract_scale_in_frames , so_called_common_logic_fidget_consts :: scale_in_frames ) ;
+        so_called_platform_math :: make_fract_from_whole ( fract_fidget_scale , shy_guts :: fidget_scale ) ;
+        so_called_platform_math :: div_fracts ( scale , fract_fidget_scale , fract_scale_in_frames ) ;
+        so_called_platform_math :: cos ( angle_cos , shy_guts :: fidget_angle ) ;
+        so_called_platform_math :: sin ( angle_sin , shy_guts :: fidget_angle ) ;
+        so_called_platform_math :: mul_fracts ( cos_by_scale , angle_cos , scale ) ;
+        so_called_platform_math :: mul_fracts ( sin_by_scale , angle_sin , scale ) ;
+        so_called_platform_math :: neg_fract ( neg_sin_by_scale , sin_by_scale ) ;
+        so_called_platform_math :: sub_fracts ( mesh_y , shy_guts :: render_aspect_height , so_called_common_logic_fidget_consts :: mesh_y_from_top ) ;
+        so_called_platform_matrix :: set_axis_x ( matrix , cos_by_scale , sin_by_scale , so_called_platform_math_consts :: fract_0 ) ;
+        so_called_platform_matrix :: set_axis_y ( matrix , neg_sin_by_scale , cos_by_scale , so_called_platform_math_consts :: fract_0 ) ;
+        so_called_platform_matrix :: set_axis_z ( matrix , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_1 ) ;
+        so_called_platform_matrix :: set_origin ( matrix , so_called_common_logic_fidget_consts :: mesh_x , mesh_y , so_called_common_logic_fidget_consts :: mesh_z ) ;
+        
+        so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = shy_guts :: fidget_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+
+        if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: fidget_scale , so_called_common_logic_fidget_consts :: scale_in_frames ) )
+            so_called_platform_math :: inc_whole ( shy_guts :: fidget_scale ) ;
+
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_frame_loss ) )
+            shy_guts :: fidget_scale = so_called_platform_math_consts :: whole_0 ;
+    }
 }
 
 void shy_guts :: render_fidget_mesh ( )
