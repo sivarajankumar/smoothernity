@@ -8,7 +8,9 @@
 #include "../../engine/render/sender/aspect_request/shy_aspect_request_injections.h"
 #include "../../engine/render/sender/frame_loss_request/shy_frame_loss_request_injections.h"
 #include "../../engine/render/sender/mesh_create_request/shy_mesh_create_request_injections.h"
+#include "../../engine/render/sender/mesh_render/shy_mesh_render_injections.h"
 #include "../../engine/render/sender/mesh_set_transform/shy_mesh_set_transform_injections.h"
+#include "../../engine/render/sender/texture_unselect/shy_texture_unselect_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"

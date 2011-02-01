@@ -5,7 +5,7 @@
 
 #include "./shy_mesh_render.h"
 
-typedef shy_sender_common_engine_render_mesh_render so_called_sender_mesh_common_engine_render_mesh_render ;
+typedef shy_sender_common_engine_render_mesh_render so_called_sender_common_engine_render_mesh_render ;
 
 #endif
 

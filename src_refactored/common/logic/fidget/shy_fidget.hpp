@@ -71,6 +71,11 @@ void shy_guts :: update_fidget ( )
 
 void shy_guts :: render_fidget_mesh ( )
 {
+    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    
+    so_called_message_common_engine_render_mesh_render mesh_render_msg ;
+    mesh_render_msg . mesh = shy_guts :: fidget_mesh_id ;
+    so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
 }
 
 void shy_guts :: create_fidget_mesh ( )
