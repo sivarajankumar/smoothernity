@@ -21,6 +21,10 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget
 {
 }
 
+void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget_render_request )
+{
+}
+
 void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget_update )
 {
 }

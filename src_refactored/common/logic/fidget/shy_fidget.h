@@ -6,6 +6,7 @@ public :
     static void receive ( so_called_message_common_engine_render_mesh_create_reply ) ;
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_fidget_prepare_permit ) ;
+    static void receive ( so_called_message_common_logic_fidget_render_request ) ;
     static void receive ( so_called_message_common_logic_fidget_update ) ;
 } ;
 

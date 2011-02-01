@@ -2,6 +2,7 @@
 #define _shy_common_logic_fidget_injections_included
 
 #include "./message/prepare_permit/shy_prepare_permit_injections.h"
+#include "./message/render_request/shy_render_request_injections.h"
 #include "./message/update/shy_update_injections.h"
 
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
