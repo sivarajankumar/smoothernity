@@ -2,6 +2,7 @@
 
 #include "./consts/shy_consts_injections.h"
 
+#include "./sender/prepared/shy_prepared_injections.h"
 #include "./sender/render_reply/shy_render_reply_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"

@@ -41,8 +41,16 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_rende
 {
 }
 
-void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_mesh_create_reply )
+void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_requested ) )
+    {
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: fidget_mesh_id = msg . mesh ;
+        shy_guts :: create_fidget_mesh ( ) ;
+        shy_guts :: fidget_mesh_created = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_fidget_prepared :: send ( so_called_message_common_logic_fidget_prepared ( ) ) ;
+    }
 }
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_init )
@@ -60,6 +68,7 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget_prepare_permit )
 {
+    shy_guts :: fidget_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget_render_request )
