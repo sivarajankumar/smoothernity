@@ -83,4 +83,24 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_prepare_permitted ) )
+    {
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: fidget_mesh_created ) )
+        {
+            shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
+            
+            so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = so_called_common_logic_fidget_consts :: fidget_edges ;
+            mesh_create_msg . triangle_fan_indices = so_called_common_logic_fidget_consts :: fidget_edges ;
+            mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_0 ;
+            so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+        }
+        else
+        {
+            shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
+            shy_guts :: render_frame_loss_requested = so_called_platform_math_consts :: whole_true ;
+            so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+            so_called_sender_common_engine_render_frame_loss_request :: send ( so_called_message_common_engine_render_frame_loss_request ( ) ) ;
+        }
+    }
 }
