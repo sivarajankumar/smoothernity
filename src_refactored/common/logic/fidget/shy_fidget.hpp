@@ -44,8 +44,15 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_rende
     }
 }
 
-void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_frame_loss_reply )
+void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_frame_loss_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_frame_loss_requested ) )
+    {
+        shy_guts :: render_frame_loss_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_frame_loss_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: render_frame_loss = msg . frame_loss ;
+        shy_guts :: update_fidget ( ) ;
+    }
 }
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
