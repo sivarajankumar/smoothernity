@@ -1,15 +1,16 @@
-class shy_guts
+namespace shy_guts
 {
-public :
-    class consts
+    namespace consts
     {
-    public :
-        static const so_called_type_platform_math_num_whole texture_size_pow2_base ;
-        static const so_called_type_platform_math_num_whole max_vertices ;
-        static const so_called_type_platform_math_num_whole max_indices ;
+        static const so_called_type_platform_math_num_whole texture_size_pow2_base
+            = so_called_platform_math :: init_num_whole ( so_called_common_engine_render_consts :: texture_size_pow2_base_int ) ;
+        static const so_called_type_platform_math_num_whole max_vertices
+            = so_called_platform_math :: init_num_whole ( 300 ) ;
+        static const so_called_type_platform_math_num_whole max_indices
+            = so_called_platform_math :: init_num_whole ( 300 ) ;
         static so_called_type_platform_math_const_int_32 max_meshes = 100 ;
         static so_called_type_platform_math_const_int_32 max_textures = 10 ;
-    } ;
+    }
 
     class texture_data
     {
@@ -47,23 +48,7 @@ public :
     static so_called_type_platform_static_array_data < so_called_type_platform_math_num_whole , consts :: max_meshes > vacant_mesh_ids ;
     static so_called_type_platform_math_num_whole next_texture_id ;
     static so_called_type_platform_math_num_whole next_vacant_mesh_id_index ;
-} ;
-
-const so_called_type_platform_math_num_whole shy_guts :: consts :: texture_size_pow2_base
-    = so_called_platform_math :: init_num_whole ( so_called_common_engine_render_consts :: texture_size_pow2_base_int ) ;
-const so_called_type_platform_math_num_whole shy_guts :: consts :: max_vertices 
-    = so_called_platform_math :: init_num_whole ( 300 ) ;
-const so_called_type_platform_math_num_whole shy_guts :: consts :: max_indices
-    = so_called_platform_math :: init_num_whole ( 300 ) ;
-
-so_called_type_platform_static_array_data < shy_guts :: texture_data , shy_guts :: consts :: max_textures >
-    shy_guts :: textures_datas ;
-so_called_type_platform_static_array_data < shy_guts :: mesh_data , shy_guts :: consts :: max_meshes >
-    shy_guts :: meshes_datas ;
-so_called_type_platform_static_array_data < so_called_type_platform_math_num_whole , shy_guts :: consts :: max_meshes >
-    shy_guts :: vacant_mesh_ids ;
-so_called_type_platform_math_num_whole shy_guts :: next_texture_id ;
-so_called_type_platform_math_num_whole shy_guts :: next_vacant_mesh_id_index ;
+}
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_render > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
