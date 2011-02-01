@@ -69,6 +69,9 @@ void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use
 
 void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use_perspective_projection_request )
 {
+    shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: handling_use_perspective_projection_request = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_render )
