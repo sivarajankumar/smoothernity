@@ -16,3 +16,7 @@ void _shy_common_logic_title :: receive ( so_called_message_common_init )
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_core_use_ortho_projection_reply )
 {
 }
+
+void _shy_common_logic_title :: receive ( so_called_message_common_logic_fidget_render_reply )
+{
+}
