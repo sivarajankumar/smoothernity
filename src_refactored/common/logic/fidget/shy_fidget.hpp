@@ -33,8 +33,15 @@ void shy_guts :: create_fidget_mesh ( )
 {
 }
 
-void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_aspect_reply )
+void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_aspect_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_aspect_requested ) )
+    {
+        shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_aspect_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: render_aspect_height = msg . height ;
+        shy_guts :: update_fidget ( ) ;
+    }
 }
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_frame_loss_reply )
