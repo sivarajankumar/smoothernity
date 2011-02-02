@@ -9,6 +9,10 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_m
 {
 }
 
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_prepared )
+{
+}
+
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_near_plane_distance_reply )
 {
 }
