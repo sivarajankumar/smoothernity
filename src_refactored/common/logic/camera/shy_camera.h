@@ -5,6 +5,7 @@ public :
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_camera_matrix_request ) ;
     static void receive ( so_called_message_common_logic_camera_prepare_permit ) ;
+    static void receive ( so_called_message_common_logic_camera_update ) ;
     static void receive ( so_called_message_common_logic_core_near_plane_distance_reply ) ;
 } ;
 

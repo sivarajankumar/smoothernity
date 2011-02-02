@@ -3,6 +3,7 @@
 
 #include "./message/matrix_request/shy_matrix_request_injections.h"
 #include "./message/prepare_permit/shy_prepare_permit_injections.h"
+#include "./message/update/shy_update_injections.h"
 
 #include "../core/message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
 
