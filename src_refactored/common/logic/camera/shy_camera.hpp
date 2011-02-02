@@ -285,3 +285,14 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entiti
     }
 }
 
+void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_mesh_grid_reply msg )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_mesh_grid_requested ) )
+    {
+        shy_guts :: entities_mesh_grid_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: entities_mesh_grid_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: entities_mesh_grid = msg . grid ;
+        shy_guts :: proceed_with_update ( ) ;
+    }
+}
+
