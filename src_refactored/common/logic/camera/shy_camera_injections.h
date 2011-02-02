@@ -2,6 +2,7 @@
 #define _shy_common_logic_camera_injections_included
 
 #include "./message/matrix_request/shy_matrix_request_injections.h"
+#include "./message/prepare_permit/shy_prepare_permit_injections.h"
 
 #include "../core/message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
 
