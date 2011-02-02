@@ -273,3 +273,15 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera
 void _shy_common_logic_camera :: receive ( so_called_message_common_logic_core_near_plane_distance_reply )
 {
 }
+
+void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_height_reply msg )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_height_requested ) )
+    {
+        shy_guts :: entities_height_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: entities_height_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: entities_height = msg . height ;
+        shy_guts :: proceed_with_update ( ) ;
+    }
+}
+
