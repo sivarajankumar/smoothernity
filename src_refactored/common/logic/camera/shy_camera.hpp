@@ -244,6 +244,12 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera_matrix_request )
 {
+    so_called_message_common_logic_camera_matrix_reply reply_msg ;
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: camera_created ) )
+        reply_msg . matrix = shy_guts :: camera_matrix ;
+    else
+        so_called_platform_matrix :: identity ( reply_msg . matrix ) ;
+    so_called_sender_common_logic_camera_matrix_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera_prepare_permit )

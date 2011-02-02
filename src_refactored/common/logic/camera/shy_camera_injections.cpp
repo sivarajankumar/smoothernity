@@ -1,5 +1,7 @@
 #include "./shy_camera_injections.h"
 
+#include "./sender/matrix_reply/shy_matrix_reply_injections.h"
+
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../injections/platform/math/shy_math.h"
