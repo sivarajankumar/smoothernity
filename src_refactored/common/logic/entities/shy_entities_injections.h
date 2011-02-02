@@ -1,6 +1,9 @@
 #ifndef _shy_common_logic_entities_injections_included
 #define _shy_common_logic_entities_injections_included
 
+#include "./message/height_request/shy_height_request_injections.h"
+#include "./message/mesh_grid_request/shy_mesh_grid_request_injections.h"
+
 #include "../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 
 #include "../../message/init/shy_init_injections.h"

@@ -254,10 +254,20 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera
 
 void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera_prepare_permit )
 {
+    shy_guts :: camera_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: camera_prepare_permitted ) )
+    {
+        shy_guts :: entities_height_requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: entities_mesh_grid_requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: near_plane_distance_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_entities_height_request :: send ( so_called_message_common_logic_entities_height_request ( ) ) ;
+        so_called_sender_common_logic_entities_mesh_grid_request :: send ( so_called_message_common_logic_entities_mesh_grid_request ( ) ) ;
+        so_called_sender_common_logic_core_near_plane_distance_request :: send ( so_called_message_common_logic_core_near_plane_distance_request ( ) ) ;
+    }
 }
 
 void _shy_common_logic_camera :: receive ( so_called_message_common_logic_core_near_plane_distance_reply )

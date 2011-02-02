@@ -5,6 +5,6 @@
 
 #include "./shy_near_plane_distance_request.h"
 
-typedef shy_sender_common_logic_core_near_plane_distance_request so_called_common_logic_core_near_plane_distance_request ;
+typedef shy_sender_common_logic_core_near_plane_distance_request so_called_sender_common_logic_core_near_plane_distance_request ;
 
 #endif

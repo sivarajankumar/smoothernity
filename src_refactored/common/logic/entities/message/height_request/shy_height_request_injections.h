@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_entities_height_request_injections_included
+#define _shy_message_common_logic_entities_height_request_injections_included
+
+#include "./shy_height_request.h"
+
+typedef shy_message_common_logic_entities_height_request so_called_message_common_logic_entities_height_request ;
+
+#endif
