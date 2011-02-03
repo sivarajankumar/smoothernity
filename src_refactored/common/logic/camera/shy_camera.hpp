@@ -419,8 +419,21 @@ void shy_guts :: calc_desired_camera_origin_pos ( )
     so_called_common_engine_math_stateless :: catmull_rom_spline ( shy_guts :: desired_camera_origin , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
 }
 
-void shy_guts :: random_camera_origin_index ( so_called_type_platform_math_num_whole & )
+void shy_guts :: random_camera_origin_index ( so_called_type_platform_math_num_whole & result )
 {
+    so_called_type_platform_math_num_whole index ;
+    so_called_type_platform_math_num_whole index_max ;
+    so_called_type_platform_math_num_whole is_duplicate ;
+
+    index = so_called_platform_math_consts :: whole_0 ;
+    so_called_platform_math :: div_wholes ( index_max , shy_guts :: entities_mesh_grid , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: mul_whole_by ( index_max , shy_guts :: entities_mesh_grid ) ;
+    do
+    {
+        shy_guts :: get_random_index ( index , so_called_platform_math_consts :: whole_0 , index_max ) ;
+        shy_guts :: camera_origin_index_is_duplicate ( is_duplicate , index ) ;
+    } while ( so_called_platform_conditions :: whole_is_true ( is_duplicate ) ) ;
+    result = index ;
 }
 
 void shy_guts :: random_camera_target_index ( so_called_type_platform_math_num_whole & )
