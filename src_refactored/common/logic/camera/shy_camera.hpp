@@ -118,6 +118,31 @@ void shy_guts :: proceed_with_update ( )
 
 void shy_guts :: proceed_with_fill_camera_schedules ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fill_schedules_origin_replied )
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: fill_schedules_target_replied )
+       )
+    {
+        shy_guts :: fill_schedules_origin_replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: fill_schedules_target_replied = so_called_platform_math_consts :: whole_false ;
+        
+        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_origin_index ;
+        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_target_index ;
+        so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_origin_pos ;
+        so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_target_pos ;
+        
+        so_called_platform_static_array :: element_ptr ( scheduled_origin_index , shy_guts :: scheduled_camera_origin_indices , shy_guts :: fill_camera_schedules_index ) ;
+        so_called_platform_static_array :: element_ptr ( scheduled_target_index , shy_guts :: scheduled_camera_target_indices , shy_guts :: fill_camera_schedules_index ) ;
+        so_called_platform_static_array :: element_ptr ( scheduled_origin_pos , shy_guts :: scheduled_camera_origins , shy_guts :: fill_camera_schedules_index ) ;
+        so_called_platform_static_array :: element_ptr ( scheduled_target_pos , shy_guts :: scheduled_camera_targets , shy_guts :: fill_camera_schedules_index ) ;
+
+        scheduled_origin_index . get ( ) = shy_guts :: fill_schedules_origin_index ;
+        scheduled_target_index . get ( ) = shy_guts :: fill_schedules_target_index ;
+        scheduled_origin_pos . get ( ) = shy_guts :: fill_schedules_origin ;
+        scheduled_target_pos . get ( ) = shy_guts :: fill_schedules_target ;
+        
+        so_called_platform_math :: inc_whole ( shy_guts :: fill_camera_schedules_index ) ;
+        shy_guts :: fill_next_camera_schedule ( ) ;
+    }
 }
 
 void shy_guts :: proceed_with_camera_update ( )
@@ -138,6 +163,12 @@ void shy_guts :: fill_next_camera_schedule ( )
 
 void shy_guts :: reset_camera_rubber ( )
 {
+    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > origin_ptr ;
+    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > target_ptr ;
+    so_called_platform_static_array :: element_ptr ( origin_ptr , shy_guts :: scheduled_camera_origins , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_static_array :: element_ptr ( target_ptr , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_2 ) ;
+    shy_guts :: current_camera_origin = origin_ptr . get ( ) ;
+    shy_guts :: current_camera_target = target_ptr . get ( ) ;
 }
 
 void shy_guts :: update_camera ( )
