@@ -303,6 +303,40 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entiti
     }
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_origin_reply )
+void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_origin_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fill_schedules_origin_requested )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: fill_schedules_origin_index , msg . index )
+       )
+    {
+        shy_guts :: fill_schedules_origin_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: fill_schedules_origin_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: fill_schedules_origin = msg . origin ;
+        shy_guts :: proceed_with_fill_camera_schedules ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fill_schedules_target_requested )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: fill_schedules_target_index , msg . index )
+       )
+    {
+        shy_guts :: fill_schedules_target_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: fill_schedules_target_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: fill_schedules_target = msg . origin ;
+        shy_guts :: proceed_with_fill_camera_schedules ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: desired_camera_origin_new_requested )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: desired_camera_origin_new_index , msg . index )
+       )
+    {
+        shy_guts :: desired_camera_origin_new_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: desired_camera_origin_new_position = msg . origin ;
+        shy_guts :: proceed_with_update_desired_camera_origin ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: desired_camera_target_new_requested )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: desired_camera_target_new_index , msg . index )
+       )
+    {
+        shy_guts :: desired_camera_target_new_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: desired_camera_target_new_position = msg . origin ;
+        shy_guts :: proceed_with_update_desired_camera_target ( ) ;
+    }
 }
