@@ -1,10 +1,12 @@
 #include "./shy_camera_injections.h"
 
 #include "./sender/matrix_reply/shy_matrix_reply_injections.h"
+#include "./sender/prepared/shy_prepared_injections.h"
 
 #include "../core/sender/near_plane_distance_request/shy_near_plane_distance_request_injections.h"
 #include "../entities/sender/height_request/shy_height_request_injections.h"
 #include "../entities/sender/mesh_grid_request/shy_mesh_grid_request_injections.h"
+#include "../entities/sender/origin_request/shy_origin_request_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"

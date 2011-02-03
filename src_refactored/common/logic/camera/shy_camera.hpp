@@ -159,6 +159,27 @@ void shy_guts :: proceed_with_update_desired_camera_origin ( )
 
 void shy_guts :: fill_next_camera_schedule ( )
 {
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: fill_camera_schedules_index , so_called_platform_math_consts :: whole_4 ) )
+    {
+        shy_guts :: random_camera_origin_index ( shy_guts :: fill_schedules_origin_index ) ;
+        shy_guts :: random_camera_target_index ( shy_guts :: fill_schedules_target_index ) ;
+        shy_guts :: fill_schedules_origin_requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: fill_schedules_target_requested = so_called_platform_math_consts :: whole_true ;
+
+        so_called_message_common_logic_entities_origin_request origin_request_msg ;
+        so_called_message_common_logic_entities_origin_request target_request_msg ;
+        origin_request_msg . index = shy_guts :: fill_schedules_origin_index ;
+        target_request_msg . index = shy_guts :: fill_schedules_target_index ;
+        so_called_sender_common_logic_entities_origin_request :: send ( origin_request_msg ) ;
+        so_called_sender_common_logic_entities_origin_request :: send ( target_request_msg ) ;
+    }
+    else
+    {
+        shy_guts :: reset_camera_rubber ( ) ;
+        shy_guts :: update_camera ( ) ;
+        shy_guts :: camera_created = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_camera_prepared :: send ( so_called_message_common_logic_camera_prepared ( ) ) ;
+    }
 }
 
 void shy_guts :: reset_camera_rubber ( )
