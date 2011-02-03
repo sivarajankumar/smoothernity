@@ -178,8 +178,14 @@ void shy_guts :: get_random_index
 {
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_engine_render_aspect_reply )
+void _shy_common_logic_camera :: receive ( so_called_message_common_engine_render_aspect_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_aspect_requested ) )
+    {
+        shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_aspect_height = msg . height ;
+        shy_guts :: update_camera_matrix ( ) ;
+    }
 }
 
 void _shy_common_logic_camera :: receive ( so_called_message_common_init )
