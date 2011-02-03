@@ -436,8 +436,23 @@ void shy_guts :: random_camera_origin_index ( so_called_type_platform_math_num_w
     result = index ;
 }
 
-void shy_guts :: random_camera_target_index ( so_called_type_platform_math_num_whole & )
+void shy_guts :: random_camera_target_index ( so_called_type_platform_math_num_whole & result )
 {
+    so_called_type_platform_math_num_whole index ;
+    so_called_type_platform_math_num_whole index_min ;
+    so_called_type_platform_math_num_whole index_max ;
+    so_called_type_platform_math_num_whole is_duplicate ;
+
+    index = so_called_platform_math_consts :: whole_0 ;
+    so_called_platform_math :: div_wholes ( index_min , shy_guts :: entities_mesh_grid , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: mul_whole_by ( index_min , shy_guts :: entities_mesh_grid ) ;
+    so_called_platform_math :: mul_wholes ( index_max , shy_guts :: entities_mesh_grid , shy_guts :: entities_mesh_grid ) ;
+    do
+    {
+        shy_guts :: get_random_index ( index , index_min , index_max ) ;
+        shy_guts :: camera_target_index_is_duplicate ( is_duplicate , index ) ;
+    } while ( so_called_platform_conditions :: whole_is_true ( is_duplicate ) ) ;
+    result = index ;
 }
 
 void shy_guts :: camera_origin_index_is_duplicate ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole index )
