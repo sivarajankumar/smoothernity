@@ -20,3 +20,7 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_origin_request )
 {
 }
+
+void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_prepare_permit )
+{
+}
