@@ -25,6 +25,10 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_use
 {
 }
 
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_entities_prepared )
+{
+}
+
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_fidget_render_reply )
 {
 }
