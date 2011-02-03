@@ -299,6 +299,23 @@ void shy_guts :: update_desired_camera_origin ( )
 
 void shy_guts :: update_desired_camera_target ( )
 {
+    shy_guts :: desired_camera_target_is_ready = so_called_platform_math_consts :: whole_false ;
+    so_called_platform_math :: dec_whole ( shy_guts :: frames_to_change_camera_target ) ;
+    if ( so_called_platform_conditions :: whole_less_or_equal_to_zero ( shy_guts :: frames_to_change_camera_target ) )
+    {
+        shy_guts :: frames_to_change_camera_target = shy_guts :: consts :: change_target_in_frames ;
+        shy_guts :: random_camera_target_index ( shy_guts :: desired_camera_target_new_index ) ;
+        shy_guts :: desired_camera_target_new_requested = so_called_platform_math_consts :: whole_true ;
+
+        so_called_message_common_logic_entities_origin_request entities_origin_request_msg ;
+        entities_origin_request_msg . index = shy_guts :: desired_camera_target_new_index ;
+        so_called_sender_common_logic_entities_origin_request :: send ( entities_origin_request_msg ) ;
+    }
+    else
+    {
+        shy_guts :: calc_desired_camera_target_pos ( ) ;
+        shy_guts :: desired_camera_target_is_ready = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void shy_guts :: update_current_camera_origin ( )
