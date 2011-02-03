@@ -332,6 +332,26 @@ void shy_guts :: update_camera_matrix ( )
 
 void shy_guts :: calc_desired_camera_target_pos ( )
 {
+    so_called_type_platform_math_num_fract fract_frames_to_change_camera_target ;
+    so_called_type_platform_math_num_fract fract_change_target_in_frames ;
+    so_called_type_platform_math_num_fract spline_pos ;
+    so_called_platform_math :: make_fract_from_whole ( fract_frames_to_change_camera_target , shy_guts :: frames_to_change_camera_target ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_change_target_in_frames , shy_guts :: consts :: change_target_in_frames ) ;
+    so_called_platform_math :: div_fracts ( spline_pos , fract_frames_to_change_camera_target , fract_change_target_in_frames ) ;
+    so_called_platform_math :: neg_fract ( spline_pos ) ;
+    so_called_platform_math :: add_to_fract ( spline_pos , so_called_platform_math_consts :: fract_1 ) ;
+    
+    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_0 ;
+    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_1 ;
+    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_2 ;
+    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_3 ;
+    
+    so_called_platform_static_array :: element_ptr ( pos_0 , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_0 ) ;
+    so_called_platform_static_array :: element_ptr ( pos_1 , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_static_array :: element_ptr ( pos_2 , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_static_array :: element_ptr ( pos_3 , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_3 ) ;
+    
+    so_called_common_engine_math_stateless :: catmull_rom_spline ( shy_guts :: desired_camera_target , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
 }
 
 void shy_guts :: calc_desired_camera_origin_pos ( )
