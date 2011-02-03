@@ -96,6 +96,24 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_update ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_height_replied ) 
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_mesh_grid_replied )
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: near_plane_distance_replied )
+       )
+    {
+        shy_guts :: entities_height_replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: entities_mesh_grid_replied = so_called_platform_math_consts :: whole_false ;
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: camera_created ) )
+        {
+            if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: filling_camera_schedules ) )
+            {
+                shy_guts :: filling_camera_schedules = so_called_platform_math_consts :: whole_true ;
+                shy_guts :: fill_next_camera_schedule ( ) ;
+            }
+        }
+        else
+            shy_guts :: update_camera ( ) ;
+    }
 }
 
 void shy_guts :: proceed_with_fill_camera_schedules ( )
