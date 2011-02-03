@@ -469,6 +469,12 @@ void shy_guts :: get_random_index
     , so_called_type_platform_math_num_whole index_max
     )
 {
+    so_called_type_platform_math_num_whole index_diff ;
+    so_called_platform_math :: add_to_whole ( shy_guts :: random_seed , shy_guts :: consts :: random_const_1 ) ;
+    so_called_platform_math :: mod_whole_by ( shy_guts :: random_seed , shy_guts :: consts :: random_const_2 ) ;
+    so_called_platform_math :: sub_wholes ( index_diff , index_max , index_min ) ;
+    so_called_platform_math :: mod_wholes ( result , shy_guts :: random_seed , index_diff ) ;
+    so_called_platform_math :: add_to_whole ( result , index_min ) ;
 }
 
 void _shy_common_logic_camera :: receive ( so_called_message_common_engine_render_aspect_reply msg )
