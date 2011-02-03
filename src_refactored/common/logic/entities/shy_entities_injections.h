@@ -3,6 +3,7 @@
 
 #include "./message/height_request/shy_height_request_injections.h"
 #include "./message/mesh_grid_request/shy_mesh_grid_request_injections.h"
+#include "./message/origin_request/shy_origin_request_injections.h"
 
 #include "../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 

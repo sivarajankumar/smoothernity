@@ -303,3 +303,6 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entiti
     }
 }
 
+void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_origin_reply )
+{
+}

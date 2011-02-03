@@ -8,6 +8,7 @@
 #include "../core/message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
 #include "../entities/message/height_reply/shy_height_reply_injections.h"
 #include "../entities/message/mesh_grid_reply/shy_mesh_grid_reply_injections.h"
+#include "../entities/message/origin_reply/shy_origin_reply_injections.h"
 
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 
