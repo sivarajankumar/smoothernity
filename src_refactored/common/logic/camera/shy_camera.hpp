@@ -320,10 +320,28 @@ void shy_guts :: update_desired_camera_target ( )
 
 void shy_guts :: update_current_camera_origin ( )
 {
+    so_called_type_platform_math_num_fract rubber ;
+    so_called_type_platform_math_num_fract inv_rubber ;
+    so_called_type_platform_vector_data old_part ;
+    so_called_type_platform_vector_data new_part ;
+
+    so_called_platform_math :: sub_fracts ( inv_rubber , so_called_platform_math_consts :: fract_1 , shy_guts :: origin_rubber ) ;
+    so_called_platform_vector :: mul ( old_part , shy_guts :: current_camera_origin , shy_guts :: origin_rubber ) ;
+    so_called_platform_vector :: mul ( new_part , shy_guts :: desired_camera_origin , inv_rubber ) ;
+    so_called_platform_vector :: add ( shy_guts :: current_camera_origin , old_part , new_part ) ;
 }
 
 void shy_guts :: update_current_camera_target ( )
 {
+    so_called_type_platform_math_num_fract rubber ;
+    so_called_type_platform_math_num_fract inv_rubber ;
+    so_called_type_platform_vector_data old_part ;
+    so_called_type_platform_vector_data new_part ;
+
+    so_called_platform_math :: sub_fracts ( inv_rubber , so_called_platform_math_consts :: fract_1 , shy_guts :: target_rubber ) ;
+    so_called_platform_vector :: mul ( old_part , shy_guts :: current_camera_target , shy_guts :: target_rubber ) ;
+    so_called_platform_vector :: mul ( new_part , shy_guts :: desired_camera_target , inv_rubber ) ;
+    so_called_platform_vector :: add ( shy_guts :: current_camera_target , old_part , new_part ) ;
 }
 
 void shy_guts :: update_camera_matrix ( )
