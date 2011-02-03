@@ -8,6 +8,8 @@
 #include "../entities/sender/mesh_grid_request/shy_mesh_grid_request_injections.h"
 #include "../entities/sender/origin_request/shy_origin_request_injections.h"
 
+#include "../../engine/render/sender/aspect_request/shy_aspect_request_injections.h"
+
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../injections/platform/math/shy_math.h"

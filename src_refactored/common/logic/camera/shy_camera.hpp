@@ -147,6 +147,15 @@ void shy_guts :: proceed_with_fill_camera_schedules ( )
 
 void shy_guts :: proceed_with_camera_update ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: desired_camera_origin_is_ready ) 
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: desired_camera_target_is_ready )
+       )
+    {
+        shy_guts :: update_current_camera_origin ( ) ;
+        shy_guts :: update_current_camera_target ( ) ;
+        shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    }
 }
 
 void shy_guts :: proceed_with_update_desired_camera_target ( )
@@ -194,6 +203,9 @@ void shy_guts :: reset_camera_rubber ( )
 
 void shy_guts :: update_camera ( )
 {
+    shy_guts :: update_desired_camera_origin ( ) ;
+    shy_guts :: update_desired_camera_target ( ) ;
+    shy_guts :: proceed_with_camera_update ( ) ;
 }
 
 void shy_guts :: update_desired_camera_origin ( )
