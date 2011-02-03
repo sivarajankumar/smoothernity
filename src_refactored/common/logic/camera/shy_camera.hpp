@@ -475,6 +475,20 @@ void shy_guts :: camera_origin_index_is_duplicate ( so_called_type_platform_math
 
 void shy_guts :: camera_target_index_is_duplicate ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole index )
 {
+    result = so_called_platform_math_consts :: whole_false ;
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0 
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_platform_math_consts :: whole_4 ) 
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index ;
+        so_called_platform_static_array :: element_ptr ( scheduled_index , shy_guts :: scheduled_camera_target_indices , i ) ;
+        if ( so_called_platform_conditions :: wholes_are_equal ( scheduled_index . get ( ) , index ) )
+        {
+            result = so_called_platform_math_consts :: whole_true ;
+            break ;
+        }
+    }
 }
 
 void shy_guts :: get_random_index
