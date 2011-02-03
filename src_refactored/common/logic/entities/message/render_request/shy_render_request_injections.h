@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_entities_render_request
+#define _shy_message_common_logic_entities_render_request
+
+#include "./shy_render_request.h"
+
+typedef shy_message_common_logic_entities_render_request so_called_message_common_logic_entities_render_request ;
+
+#endif
