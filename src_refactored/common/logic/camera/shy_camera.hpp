@@ -346,6 +346,29 @@ void shy_guts :: update_current_camera_target ( )
 
 void shy_guts :: update_camera_matrix ( )
 {
+    so_called_type_platform_math_num_fract up_x ;
+    so_called_type_platform_math_num_fract up_y ;
+    so_called_type_platform_math_num_fract up_z ;
+    so_called_type_platform_math_num_fract shift_x ;
+    so_called_type_platform_math_num_fract shift_y ;
+    so_called_type_platform_math_num_fract shift_z ;
+    so_called_type_platform_vector_data up ;
+    so_called_type_platform_vector_data shift ;
+    so_called_type_platform_vector_data shifted_origin ;
+    
+    up_x = so_called_platform_math_consts :: fract_0 ;
+    up_y = so_called_platform_math_consts :: fract_1 ;
+    up_z = so_called_platform_math_consts :: fract_0 ;
+    shift_x = so_called_platform_math_consts :: fract_0 ;
+    shift_y = shy_guts :: entities_height ;
+    so_called_platform_math :: add_to_fract ( shift_y , shy_guts :: render_aspect_height ) ;
+    so_called_platform_math :: add_to_fract ( shift_y , shy_guts :: near_plane_distance ) ;
+    shift_z = so_called_platform_math_consts :: fract_0 ;
+    so_called_platform_vector :: xyz ( up , up_x , up_y , up_z ) ;
+    so_called_platform_vector :: xyz ( shift , shift_x , shift_y , shift_z ) ;
+    so_called_platform_vector :: add ( shifted_origin , shy_guts :: current_camera_origin , shift ) ;
+
+    so_called_common_engine_camera_stateless :: matrix_look_at ( shy_guts :: camera_matrix , shifted_origin , shy_guts :: current_camera_target , up ) ;
 }
 
 void shy_guts :: calc_desired_camera_target_pos ( )

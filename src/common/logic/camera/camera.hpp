@@ -637,7 +637,6 @@ void shy_logic_camera < mediator > :: _update_camera_matrix ( )
     vector_data up ;
     vector_data shift ;
     vector_data shifted_origin ;
-    num_fract entity_height ;
     
     up_x = _platform_math_consts . get ( ) . fract_0 ;
     up_y = _platform_math_consts . get ( ) . fract_1 ;
