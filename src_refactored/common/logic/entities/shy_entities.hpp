@@ -75,6 +75,27 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: entities_render ( )
 {
+    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0 
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: entities_to_render )
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_type_platform_pointer_data < so_called_type_platform_matrix_data > matrix ;
+        so_called_platform_static_array :: element_ptr ( matrix , shy_guts :: entities_grid_matrices , i ) ;
+        {
+            so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
+            mesh_set_transform_msg . mesh = shy_guts :: entity_mesh_id ;
+            mesh_set_transform_msg . transform = matrix . get ( ) ;
+            so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+        }
+        {
+            so_called_message_common_engine_render_mesh_render mesh_render_msg ;
+            mesh_render_msg . mesh = shy_guts :: entity_mesh_id ;
+            so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+        }
+    }
 }
 
 void shy_guts :: create_entity_mesh ( )
@@ -194,6 +215,9 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_mesh_grid_request )
 {
+    so_called_message_common_logic_entities_mesh_grid_reply entities_mesh_grid_reply_msg ;
+    so_called_platform_math :: make_num_whole ( entities_mesh_grid_reply_msg . grid , shy_guts :: consts :: entity_mesh_grid ) ;
+    so_called_sender_common_logic_entities_mesh_grid_reply :: send ( entities_mesh_grid_reply_msg ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_origin_request msg )
