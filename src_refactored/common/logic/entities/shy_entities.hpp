@@ -208,10 +208,20 @@ void shy_guts :: get_entity_origin ( so_called_type_platform_vector_data & resul
 
 void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
 {
+    so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg ;
+    msg . mesh = shy_guts :: entity_mesh_id ;
+    msg . offset = offset ;
+    msg . index = index ;
+    so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_triangle_fan_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
 {
+    so_called_message_common_engine_render_mesh_set_triangle_fan_index_value msg ;
+    msg . mesh = shy_guts :: entity_mesh_id ;
+    msg . offset = offset ;
+    msg . index = index ;
+    so_called_sender_common_engine_render_mesh_set_triangle_fan_index_value :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_tex_coord 
