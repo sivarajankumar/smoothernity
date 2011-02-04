@@ -100,6 +100,102 @@ void shy_guts :: entities_render ( )
 
 void shy_guts :: create_entity_mesh ( )
 {
+    so_called_type_platform_math_num_fract vertex_x ;
+    so_called_type_platform_math_num_fract vertex_y ;
+    so_called_type_platform_math_num_fract vertex_z ;
+    so_called_type_platform_math_num_fract vertex_r ;
+    so_called_type_platform_math_num_fract vertex_g ;
+    so_called_type_platform_math_num_fract vertex_b ;
+    so_called_type_platform_math_num_fract vertex_a ;
+    so_called_type_platform_math_num_fract fract_entity_mesh_spans ;
+    so_called_type_platform_math_num_whole whole_entity_mesh_spans_plus_1 ;
+    
+    so_called_platform_math :: make_fract_from_whole ( fract_entity_mesh_spans , shy_guts :: consts :: entity_mesh_spans ) ;
+    so_called_platform_math :: add_wholes ( whole_entity_mesh_spans_plus_1 , shy_guts :: consts :: entity_mesh_spans , so_called_platform_math_consts :: whole_1 ) ;
+
+    if ( so_called_platform_conditions :: whole_less_or_equal_to_whole ( shy_guts :: current_strip_mesh_span , shy_guts :: consts :: entity_mesh_spans ) )
+    {
+        so_called_type_platform_math_num_fract angle ;
+        so_called_type_platform_math_num_whole color1 ;
+        so_called_type_platform_math_num_whole color2 ;
+                
+        so_called_platform_math :: make_fract_from_whole ( angle , shy_guts :: current_strip_mesh_span ) ;
+        so_called_platform_math :: mul_fract_by ( angle , so_called_platform_math_consts :: fract_2pi ) ;
+        so_called_platform_math :: div_fract_by ( angle , fract_entity_mesh_spans ) ;
+        
+        so_called_platform_math :: mul_wholes ( color1 , shy_guts :: current_strip_mesh_span , shy_guts :: consts :: color_bias ) ;
+        so_called_platform_math :: div_whole_by ( color1 , whole_entity_mesh_spans_plus_1 ) ;
+        so_called_platform_math :: mod_whole_by ( color1 , shy_guts :: consts :: colors_max ) ;
+        so_called_platform_math :: add_wholes ( color2 , color1 , so_called_platform_math_consts :: whole_1 ) ;
+        so_called_platform_math :: mod_whole_by ( color2 , shy_guts :: consts :: colors_max ) ;
+        
+        so_called_platform_math :: sin ( vertex_x , angle ) ;
+        so_called_platform_math :: div_fracts ( vertex_y , shy_guts :: consts :: entity_mesh_height , so_called_platform_math_consts :: fract_2 ) ;
+        so_called_platform_math :: cos ( vertex_z , angle ) ;
+
+        shy_guts :: entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color1 ) ;
+
+        shy_guts :: mesh_set_vertex_position ( shy_guts :: vertices_count , vertex_x , vertex_y , vertex_z ) ;
+        shy_guts :: mesh_set_vertex_color ( shy_guts :: vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        shy_guts :: mesh_set_triangle_strip_index_value ( shy_guts :: strip_indices_count , shy_guts :: vertices_count ) ;
+
+        so_called_platform_math :: inc_whole ( shy_guts :: strip_indices_count ) ;
+        so_called_platform_math :: inc_whole ( shy_guts :: vertices_count ) ;
+        
+        so_called_platform_math :: neg_fract ( vertex_y ) ;
+        
+        shy_guts :: entity_color ( vertex_r , vertex_g , vertex_b , vertex_a , color2 ) ;
+
+        shy_guts :: mesh_set_vertex_position ( shy_guts :: vertices_count , vertex_x , vertex_y , vertex_z ) ;
+        shy_guts :: mesh_set_vertex_color ( shy_guts :: vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+        shy_guts :: mesh_set_triangle_strip_index_value ( shy_guts :: strip_indices_count , shy_guts :: vertices_count ) ;
+
+        so_called_platform_math :: inc_whole ( shy_guts :: strip_indices_count ) ;
+        so_called_platform_math :: inc_whole ( shy_guts :: vertices_count ) ;
+        so_called_platform_math :: inc_whole ( shy_guts :: current_strip_mesh_span ) ;
+    }
+    else
+    {
+        if ( so_called_platform_conditions :: whole_is_zero ( shy_guts :: current_fan_mesh_span ) )
+        {
+            vertex_x = so_called_platform_math_consts :: fract_0 ;
+            so_called_platform_math :: div_fracts ( vertex_y , shy_guts :: consts :: entity_mesh_height , so_called_platform_math_consts :: fract_2 ) ;
+            vertex_z = so_called_platform_math_consts :: fract_0 ;
+            
+            vertex_r = shy_guts :: consts :: entity_color_roof_r ;
+            vertex_g = shy_guts :: consts :: entity_color_roof_g ;
+            vertex_b = shy_guts :: consts :: entity_color_roof_b ;
+            vertex_a = so_called_platform_math_consts :: fract_1 ;
+
+            shy_guts :: mesh_set_vertex_position ( shy_guts :: vertices_count , vertex_x , vertex_y , vertex_z ) ;
+            shy_guts :: mesh_set_vertex_color ( shy_guts :: vertices_count , vertex_r , vertex_g , vertex_b , vertex_a ) ;
+            shy_guts :: mesh_set_triangle_fan_index_value ( shy_guts :: fan_indices_count , shy_guts :: vertices_count ) ;
+            
+            so_called_platform_math :: inc_whole ( shy_guts :: fan_indices_count ) ;
+            so_called_platform_math :: inc_whole ( shy_guts :: vertices_count ) ;
+        }
+        if ( so_called_platform_conditions :: whole_less_or_equal_to_whole ( shy_guts :: current_fan_mesh_span , shy_guts :: consts :: entity_mesh_spans ) )
+        {
+            so_called_type_platform_math_num_whole index ;
+            so_called_platform_math :: mul_wholes ( index , shy_guts :: current_fan_mesh_span , so_called_platform_math_consts :: whole_2 ) ;
+            shy_guts :: mesh_set_triangle_fan_index_value ( shy_guts :: fan_indices_count , index ) ;
+            so_called_platform_math :: inc_whole ( shy_guts :: fan_indices_count ) ;
+            so_called_platform_math :: inc_whole ( shy_guts :: current_fan_mesh_span ) ;
+        }
+        else if ( so_called_platform_conditions :: whole_is_zero ( shy_guts :: frames_to_render ) )
+        {
+            so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
+            mesh_finalize_msg . mesh = shy_guts :: entity_mesh_id ;
+            so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
+            so_called_platform_math :: inc_whole ( shy_guts :: frames_to_render ) ;
+        }
+        else if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: frames_to_render , shy_guts :: consts :: frames_wait_before_render ) )
+        {
+            so_called_platform_math :: inc_whole ( shy_guts :: frames_to_render ) ;
+        }
+        else
+            shy_guts :: entity_created = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void shy_guts :: update_entity_grid ( )
