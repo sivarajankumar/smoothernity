@@ -187,6 +187,9 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_height_request )
 {
+    so_called_message_common_logic_entities_height_reply entities_height_reply_msg ;
+    entities_height_reply_msg . height = shy_guts :: consts :: entity_mesh_height ;
+    so_called_sender_common_logic_entities_height_reply :: send ( entities_height_reply_msg ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_mesh_grid_request )
