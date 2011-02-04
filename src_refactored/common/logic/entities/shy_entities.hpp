@@ -220,6 +220,12 @@ void shy_guts :: mesh_set_vertex_tex_coord
     , so_called_type_platform_math_num_fract v
     )
 {
+    so_called_message_common_engine_render_mesh_set_vertex_tex_coord msg ;
+    msg . mesh = shy_guts :: entity_mesh_id ;
+    msg . offset = offset ;
+    msg . u = u ;
+    msg . v = v ;
+    so_called_sender_common_engine_render_mesh_set_vertex_tex_coord :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 
@@ -229,6 +235,13 @@ void shy_guts :: mesh_set_vertex_position
     , so_called_type_platform_math_num_fract z
     )
 {
+    so_called_message_common_engine_render_mesh_set_vertex_position msg ;
+    msg . mesh = shy_guts :: entity_mesh_id ;
+    msg . offset = offset ;
+    msg . x = x ;
+    msg . y = y ;
+    msg . z = z ;
+    so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_color 
