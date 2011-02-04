@@ -204,6 +204,29 @@ void shy_guts :: update_entity_grid ( )
 
 void shy_guts :: get_entity_origin ( so_called_type_platform_vector_data & result , so_called_type_platform_math_num_whole index )
 {
+    so_called_type_platform_math_num_whole x ;
+    so_called_type_platform_math_num_whole z ;
+    so_called_type_platform_math_num_whole whole_entity_mesh_grid ;
+    so_called_type_platform_math_num_whole half_entity_mesh_grid ;
+    so_called_type_platform_math_num_fract entity_x ;
+    so_called_type_platform_math_num_fract entity_y ;
+    so_called_type_platform_math_num_fract entity_z ;
+    
+    so_called_platform_math :: make_num_whole ( whole_entity_mesh_grid , shy_guts :: consts :: entity_mesh_grid ) ;
+    so_called_platform_math :: div_wholes ( half_entity_mesh_grid , whole_entity_mesh_grid , so_called_platform_math_consts :: whole_2 ) ;
+    
+    so_called_platform_math :: mod_wholes ( x , index , whole_entity_mesh_grid ) ;
+    so_called_platform_math :: sub_from_whole ( x , half_entity_mesh_grid ) ;
+    so_called_platform_math :: mul_whole_by ( x , shy_guts :: consts :: grid_step ) ;
+    
+    so_called_platform_math :: div_wholes ( z , index , whole_entity_mesh_grid ) ;
+    so_called_platform_math :: sub_from_whole ( z , half_entity_mesh_grid ) ;
+    so_called_platform_math :: mul_whole_by ( z , shy_guts :: consts :: grid_step ) ;
+    
+    so_called_platform_math :: make_fract_from_whole ( entity_x , x ) ;
+    so_called_platform_math :: div_fracts ( entity_y , shy_guts :: consts :: entity_mesh_height , so_called_platform_math_consts :: fract_2 ) ;
+    so_called_platform_math :: make_fract_from_whole ( entity_z , z ) ;
+    so_called_platform_vector :: xyz ( result , entity_x , entity_y , entity_z ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
