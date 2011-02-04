@@ -140,6 +140,43 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_engine_ren
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_init )
 {
+    shy_guts :: entity_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: entities_prepare_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: grid_scale = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: current_strip_mesh_span = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: current_fan_mesh_span = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: strip_indices_count = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: fan_indices_count = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: vertices_count = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: entity_mesh_id_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: frames_to_render = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: entities_to_render = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: frames_to_increase_render_count = so_called_platform_math_consts :: whole_0 ;
+    
+    so_called_type_platform_math_num_whole matrices_count ;
+    so_called_platform_math :: make_num_whole ( matrices_count , shy_guts :: consts :: entity_mesh_grid ) ;
+    so_called_platform_math :: mul_whole_by ( matrices_count , matrices_count ) ;
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , matrices_count )
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_type_platform_vector_data zero ;
+        so_called_type_platform_pointer_data < so_called_type_platform_matrix_data > matrix ;
+
+        so_called_platform_static_array :: element_ptr ( matrix , shy_guts :: entities_grid_matrices , i ) ;
+        so_called_platform_vector :: xyz 
+            ( zero 
+            , so_called_platform_math_consts :: fract_0 
+            , so_called_platform_math_consts :: fract_0 
+            , so_called_platform_math_consts :: fract_0 
+            ) ;
+        so_called_platform_matrix :: identity ( matrix . get ( ) ) ;
+        so_called_platform_matrix :: set_axis_x ( matrix . get ( ) , zero ) ;
+        so_called_platform_matrix :: set_axis_y ( matrix . get ( ) , zero ) ;
+        so_called_platform_matrix :: set_axis_z ( matrix . get ( ) , zero ) ;
+    }
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_height_request )
