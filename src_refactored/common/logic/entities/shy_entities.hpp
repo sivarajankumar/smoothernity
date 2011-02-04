@@ -134,8 +134,14 @@ void shy_guts :: entity_color
 {
 }
 
-void _shy_common_logic_entities :: receive ( so_called_message_common_engine_render_mesh_create_reply )
+void _shy_common_logic_entities :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_requested ) )
+    {
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: entity_mesh_id_created = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: entity_mesh_id = msg . mesh ;
+    }
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_init )
@@ -193,6 +199,7 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_prepare_permit )
 {
+    shy_guts :: entities_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_render_request )
@@ -204,4 +211,37 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_prepare_permitted ) )
+    {
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: entity_created ) )
+        {
+            if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: entity_mesh_id_created ) )
+            {
+                shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
+                
+                so_called_type_platform_math_num_whole vertices_count ;
+                so_called_type_platform_math_num_whole strip_indices_count ;
+                so_called_type_platform_math_num_whole fan_indices_count ;
+                
+                so_called_platform_math :: add_wholes ( vertices_count , shy_guts :: consts :: entity_mesh_spans , so_called_platform_math_consts :: whole_1 ) ;
+                so_called_platform_math :: mul_whole_by ( vertices_count , so_called_platform_math_consts :: whole_2 ) ;
+                so_called_platform_math :: add_to_whole ( vertices_count , so_called_platform_math_consts :: whole_1 ) ;
+                
+                so_called_platform_math :: add_wholes ( strip_indices_count , shy_guts :: consts :: entity_mesh_spans , so_called_platform_math_consts :: whole_1 ) ;
+                so_called_platform_math :: mul_whole_by ( strip_indices_count , so_called_platform_math_consts :: whole_2 ) ;
+                
+                so_called_platform_math :: add_wholes ( fan_indices_count , shy_guts :: consts :: entity_mesh_spans , so_called_platform_math_consts :: whole_2 ) ;
+                
+                so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+                mesh_create_msg . vertices = vertices_count ;
+                mesh_create_msg . triangle_strip_indices = strip_indices_count ;
+                mesh_create_msg . triangle_fan_indices = fan_indices_count ;
+                so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+            }
+            else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entity_mesh_id_created ) )
+                shy_guts :: create_entity_mesh ( ) ;
+        }
+        else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entity_created ) )
+            shy_guts :: update_entity_grid ( ) ;
+    }
 }
