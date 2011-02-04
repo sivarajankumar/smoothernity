@@ -16,6 +16,25 @@ namespace shy_guts
         static const so_called_type_platform_math_num_whole frames_between_render_count_increases = so_called_platform_math :: init_num_whole ( 10 ) ;
         static so_called_type_platform_math_const_int_32 entity_mesh_grid = 5 ;
     }
+    static so_called_type_platform_math_num_whole entity_created ;
+    static so_called_type_platform_math_num_whole entities_prepare_permitted ;
+    static so_called_type_platform_math_num_whole grid_scale ;
+    static so_called_type_platform_math_num_whole current_strip_mesh_span ;
+    static so_called_type_platform_math_num_whole current_fan_mesh_span ;
+    static so_called_type_platform_math_num_whole strip_indices_count ;
+    static so_called_type_platform_math_num_whole fan_indices_count ;
+    static so_called_type_platform_math_num_whole vertices_count ;
+    static so_called_type_platform_math_num_whole entity_mesh_id_created ;
+    static so_called_type_platform_math_num_whole mesh_create_requested ;
+    static so_called_type_platform_math_num_whole frames_to_render ;
+    static so_called_type_platform_math_num_whole entities_to_render ;
+    static so_called_type_platform_math_num_whole frames_to_increase_render_count ;
+    static so_called_type_common_engine_render_mesh_id entity_mesh_id ;
+    static so_called_type_platform_static_array_data \
+        < so_called_type_platform_matrix_data 
+        , shy_guts :: consts :: entity_mesh_grid
+        * shy_guts :: consts :: entity_mesh_grid
+        > entities_grid_matrices ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_entities > _scheduled_context_type ;
