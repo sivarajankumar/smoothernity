@@ -16,6 +16,39 @@ namespace shy_guts
         static const so_called_type_platform_math_num_whole frames_between_render_count_increases = so_called_platform_math :: init_num_whole ( 10 ) ;
         static so_called_type_platform_math_const_int_32 entity_mesh_grid = 5 ;
     }
+
+    static void entities_render ( ) ;
+    static void create_entity_mesh ( ) ;
+    static void update_entity_grid ( ) ;
+    static void get_entity_origin ( so_called_type_platform_vector_data & result , so_called_type_platform_math_num_whole index ) ;
+    static void mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index ) ;
+    static void mesh_set_triangle_fan_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index ) ;
+    static void mesh_set_vertex_tex_coord 
+        ( so_called_type_platform_math_num_whole offset 
+        , so_called_type_platform_math_num_fract u
+        , so_called_type_platform_math_num_fract v
+        ) ;
+    static void mesh_set_vertex_position 
+        ( so_called_type_platform_math_num_whole offset
+        , so_called_type_platform_math_num_fract x
+        , so_called_type_platform_math_num_fract y
+        , so_called_type_platform_math_num_fract z
+        ) ;
+    static void mesh_set_vertex_color 
+        ( so_called_type_platform_math_num_whole offset
+        , so_called_type_platform_math_num_fract r
+        , so_called_type_platform_math_num_fract g
+        , so_called_type_platform_math_num_fract b
+        , so_called_type_platform_math_num_fract a
+        ) ;
+    static void entity_color 
+        ( so_called_type_platform_math_num_fract & r
+        , so_called_type_platform_math_num_fract & g
+        , so_called_type_platform_math_num_fract & b
+        , so_called_type_platform_math_num_fract & a
+        , so_called_type_platform_math_num_whole i
+        ) ;
+
     static so_called_type_platform_math_num_whole entity_created ;
     static so_called_type_platform_math_num_whole entities_prepare_permitted ;
     static so_called_type_platform_math_num_whole grid_scale ;
@@ -39,6 +72,67 @@ namespace shy_guts
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_entities > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
+
+void shy_guts :: entities_render ( )
+{
+}
+
+void shy_guts :: create_entity_mesh ( )
+{
+}
+
+void shy_guts :: update_entity_grid ( )
+{
+}
+
+void shy_guts :: get_entity_origin ( so_called_type_platform_vector_data & result , so_called_type_platform_math_num_whole index )
+{
+}
+
+void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
+{
+}
+
+void shy_guts :: mesh_set_triangle_fan_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
+{
+}
+
+void shy_guts :: mesh_set_vertex_tex_coord 
+    ( so_called_type_platform_math_num_whole offset 
+    , so_called_type_platform_math_num_fract u
+    , so_called_type_platform_math_num_fract v
+    )
+{
+}
+
+void shy_guts :: mesh_set_vertex_position 
+    ( so_called_type_platform_math_num_whole offset
+    , so_called_type_platform_math_num_fract x
+    , so_called_type_platform_math_num_fract y
+    , so_called_type_platform_math_num_fract z
+    )
+{
+}
+
+void shy_guts :: mesh_set_vertex_color 
+    ( so_called_type_platform_math_num_whole offset
+    , so_called_type_platform_math_num_fract r
+    , so_called_type_platform_math_num_fract g
+    , so_called_type_platform_math_num_fract b
+    , so_called_type_platform_math_num_fract a
+    )
+{
+}
+
+void shy_guts :: entity_color 
+    ( so_called_type_platform_math_num_fract & r
+    , so_called_type_platform_math_num_fract & g
+    , so_called_type_platform_math_num_fract & b
+    , so_called_type_platform_math_num_fract & a
+    , so_called_type_platform_math_num_whole i
+    )
+{
+}
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_engine_render_mesh_create_reply )
 {
