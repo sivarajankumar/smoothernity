@@ -196,8 +196,12 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 {
 }
 
-void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_origin_request )
+void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_origin_request msg )
 {
+    so_called_message_common_logic_entities_origin_reply entities_origin_reply_msg ;
+    shy_guts :: get_entity_origin ( entities_origin_reply_msg . origin , msg . index ) ;
+    entities_origin_reply_msg . index = msg . index ;
+    so_called_sender_common_logic_entities_origin_reply :: send ( entities_origin_reply_msg ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_prepare_permit )
