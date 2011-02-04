@@ -153,6 +153,55 @@ void shy_guts :: entity_color
     , so_called_type_platform_math_num_whole i
     )
 {
+    if ( so_called_platform_conditions :: wholes_are_equal ( i , so_called_platform_math_consts :: whole_0 ) )
+    {
+        r = so_called_platform_math_consts :: fract_1 ;
+        g = so_called_platform_math_consts :: fract_0 ;
+        b = so_called_platform_math_consts :: fract_0 ;
+        a = so_called_platform_math_consts :: fract_1 ;
+    }
+    else if ( so_called_platform_conditions :: wholes_are_equal ( i , so_called_platform_math_consts :: whole_1 ) )
+    {
+        r = so_called_platform_math_consts :: fract_1 ;
+        so_called_platform_math :: div_fracts ( g , so_called_platform_math_consts :: fract_1 , so_called_platform_math_consts :: fract_2 ) ;
+        b = so_called_platform_math_consts :: fract_0 ;
+        a = so_called_platform_math_consts :: fract_1 ;
+    }
+    else if ( so_called_platform_conditions :: wholes_are_equal ( i , so_called_platform_math_consts :: whole_2 ) )
+    {
+        r = so_called_platform_math_consts :: fract_1 ;
+        g = so_called_platform_math_consts :: fract_1 ;
+        b = so_called_platform_math_consts :: fract_0 ;
+        a = so_called_platform_math_consts :: fract_1 ;
+    }
+    else if ( so_called_platform_conditions :: wholes_are_equal ( i , so_called_platform_math_consts :: whole_3 ) )
+    {
+        r = so_called_platform_math_consts :: fract_0 ;
+        g = so_called_platform_math_consts :: fract_1 ;
+        b = so_called_platform_math_consts :: fract_0 ;
+        a = so_called_platform_math_consts :: fract_1 ;
+    }
+    else if ( so_called_platform_conditions :: wholes_are_equal ( i , so_called_platform_math_consts :: whole_4 ) )
+    {
+        r = so_called_platform_math_consts :: fract_0 ;
+        g = so_called_platform_math_consts :: fract_1 ;
+        b = so_called_platform_math_consts :: fract_1 ;
+        a = so_called_platform_math_consts :: fract_1 ;
+    }
+    else if ( so_called_platform_conditions :: wholes_are_equal ( i , so_called_platform_math_consts :: whole_5 ) )
+    {
+        r = so_called_platform_math_consts :: fract_0 ;
+        g = so_called_platform_math_consts :: fract_0 ;
+        b = so_called_platform_math_consts :: fract_1 ;
+        a = so_called_platform_math_consts :: fract_1 ;
+    }
+    else if ( so_called_platform_conditions :: wholes_are_equal ( i , so_called_platform_math_consts :: whole_6 ) )
+    {
+        r = so_called_platform_math_consts :: fract_1 ;
+        g = so_called_platform_math_consts :: fract_0 ;
+        b = so_called_platform_math_consts :: fract_1 ;
+        a = so_called_platform_math_consts :: fract_1 ;
+    }
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
