@@ -1,5 +1,7 @@
 #include "./shy_entities_injections.h"
 
+#include "./sender/render_reply/shy_render_reply_injections.h"
+
 #include "../../engine/render/type/mesh_id/shy_mesh_id_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"

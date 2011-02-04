@@ -197,6 +197,9 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_render_request )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entity_created ) )
+        shy_guts :: entities_render ( ) ;
+    so_called_sender_common_logic_entities_render_reply :: send ( so_called_message_common_logic_entities_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_update )
