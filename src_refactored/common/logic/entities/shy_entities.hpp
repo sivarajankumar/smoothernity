@@ -23,11 +23,6 @@ namespace shy_guts
     static void get_entity_origin ( so_called_type_platform_vector_data & result , so_called_type_platform_math_num_whole index ) ;
     static void mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index ) ;
     static void mesh_set_triangle_fan_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index ) ;
-    static void mesh_set_vertex_tex_coord 
-        ( so_called_type_platform_math_num_whole offset 
-        , so_called_type_platform_math_num_fract u
-        , so_called_type_platform_math_num_fract v
-        ) ;
     static void mesh_set_vertex_position 
         ( so_called_type_platform_math_num_whole offset
         , so_called_type_platform_math_num_fract x
@@ -200,6 +195,85 @@ void shy_guts :: create_entity_mesh ( )
 
 void shy_guts :: update_entity_grid ( )
 {
+    so_called_type_platform_math_num_whole whole_entity_mesh_grid ;
+    so_called_type_platform_math_num_whole i_max ;
+    so_called_type_platform_math_num_fract fract_entity_mesh_grid ;
+    so_called_type_platform_math_num_fract fract_scale_in_frames ;
+    so_called_type_platform_math_num_fract fract_grid_scale ;
+    
+    so_called_platform_math :: make_num_whole ( whole_entity_mesh_grid , shy_guts :: consts :: entity_mesh_grid ) ;
+    so_called_platform_math :: make_num_fract ( fract_entity_mesh_grid , shy_guts :: consts :: entity_mesh_grid , 1 ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_scale_in_frames , shy_guts :: consts :: scale_in_frames ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_grid_scale , shy_guts :: grid_scale ) ;
+    so_called_platform_math :: mul_wholes ( i_max , whole_entity_mesh_grid , whole_entity_mesh_grid ) ;
+
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: frames_to_increase_render_count , shy_guts :: consts :: frames_between_render_count_increases ) )
+        so_called_platform_math :: inc_whole ( shy_guts :: frames_to_increase_render_count ) ;
+    else
+    {
+        shy_guts :: frames_to_increase_render_count = so_called_platform_math_consts :: whole_0 ;
+        if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: entities_to_render , i_max ) )
+        {
+            so_called_platform_math :: inc_whole ( shy_guts :: entities_to_render ) ;
+            if ( so_called_platform_conditions :: wholes_are_equal ( shy_guts :: entities_to_render , i_max ) )
+                so_called_sender_common_logic_entities_prepared :: send ( so_called_message_common_logic_entities_prepared ( ) ) ;
+        }
+    }
+
+    if ( so_called_platform_conditions :: wholes_are_equal ( shy_guts :: entities_to_render , i_max ) 
+      && so_called_platform_conditions :: whole_less_or_equal_to_whole ( shy_guts :: grid_scale , shy_guts :: consts :: scale_in_frames )
+       )
+    {
+        for ( so_called_type_platform_math_num_whole x = so_called_platform_math_consts :: whole_0 
+            ; so_called_platform_conditions :: whole_less_than_whole ( x , whole_entity_mesh_grid ) 
+            ; so_called_platform_math :: inc_whole ( x )
+            )
+        {
+            for ( so_called_type_platform_math_num_whole z = so_called_platform_math_consts :: whole_0 
+                ; so_called_platform_conditions :: whole_less_than_whole ( z , whole_entity_mesh_grid )
+                ; so_called_platform_math :: inc_whole ( z )
+                )
+            {
+                so_called_type_platform_math_num_fract fract_x ;
+                so_called_type_platform_math_num_fract fract_z ;
+                so_called_type_platform_math_num_fract scale ;
+                so_called_type_platform_math_num_fract scale_wave_part ;
+                so_called_type_platform_math_num_fract scale_frame_part ;
+                so_called_type_platform_math_num_whole index ;
+                
+                so_called_platform_math :: mul_wholes ( index , z , whole_entity_mesh_grid ) ;
+                so_called_platform_math :: add_to_whole ( index , x ) ;
+                
+                so_called_platform_math :: make_fract_from_whole ( fract_x , x ) ;
+                so_called_platform_math :: make_fract_from_whole ( fract_z , z ) ;
+                
+                so_called_platform_math :: add_fracts ( scale_wave_part , fract_x , fract_z ) ;
+                so_called_platform_math :: mul_fract_by ( scale_wave_part , shy_guts :: consts :: scale_wave ) ;
+                so_called_platform_math :: div_fract_by ( scale_wave_part , fract_entity_mesh_grid ) ;
+                so_called_platform_math :: div_fract_by ( scale_wave_part , so_called_platform_math_consts :: fract_2 ) ;
+                
+                so_called_platform_math :: add_fracts ( scale_frame_part , shy_guts :: consts :: scale_wave , so_called_platform_math_consts :: fract_1 ) ;
+                so_called_platform_math :: mul_fract_by ( scale_frame_part , fract_grid_scale ) ;
+                so_called_platform_math :: div_fract_by ( scale_frame_part , fract_scale_in_frames ) ;
+                so_called_platform_math :: sub_from_fract ( scale_frame_part , shy_guts :: consts :: scale_wave ) ;
+                
+                so_called_platform_math :: add_fracts ( scale , scale_wave_part , scale_frame_part ) ;
+                so_called_common_engine_math_stateless :: clamp_fract ( scale , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_1 ) ;
+
+                so_called_type_platform_vector_data origin ;
+                shy_guts :: get_entity_origin ( origin , index ) ;
+                
+                so_called_type_platform_pointer_data < so_called_type_platform_matrix_data > matrix ;
+                so_called_platform_static_array :: element_ptr ( matrix , shy_guts :: entities_grid_matrices , index ) ;
+                
+                so_called_platform_matrix :: set_axis_x ( matrix . get ( ) , scale , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+                so_called_platform_matrix :: set_axis_y ( matrix . get ( ) , so_called_platform_math_consts :: fract_0 , scale , so_called_platform_math_consts :: fract_0 ) ;
+                so_called_platform_matrix :: set_axis_z ( matrix . get ( ) , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , scale ) ;
+                so_called_platform_matrix :: set_origin ( matrix . get ( ) , origin ) ;
+            }
+        }
+        so_called_platform_math :: inc_whole ( shy_guts :: grid_scale ) ;
+    }
 }
 
 void shy_guts :: get_entity_origin ( so_called_type_platform_vector_data & result , so_called_type_platform_math_num_whole index )
@@ -245,20 +319,6 @@ void shy_guts :: mesh_set_triangle_fan_index_value ( so_called_type_platform_mat
     msg . offset = offset ;
     msg . index = index ;
     so_called_sender_common_engine_render_mesh_set_triangle_fan_index_value :: send ( msg ) ;
-}
-
-void shy_guts :: mesh_set_vertex_tex_coord 
-    ( so_called_type_platform_math_num_whole offset 
-    , so_called_type_platform_math_num_fract u
-    , so_called_type_platform_math_num_fract v
-    )
-{
-    so_called_message_common_engine_render_mesh_set_vertex_tex_coord msg ;
-    msg . mesh = shy_guts :: entity_mesh_id ;
-    msg . offset = offset ;
-    msg . u = u ;
-    msg . v = v ;
-    so_called_sender_common_engine_render_mesh_set_vertex_tex_coord :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 

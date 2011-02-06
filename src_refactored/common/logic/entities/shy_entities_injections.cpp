@@ -3,8 +3,10 @@
 #include "./sender/height_reply/shy_height_reply_injections.h"
 #include "./sender/mesh_grid_reply/shy_mesh_grid_reply_injections.h"
 #include "./sender/origin_reply/shy_origin_reply_injections.h"
+#include "./sender/prepared/shy_prepared_injections.h"
 #include "./sender/render_reply/shy_render_reply_injections.h"
 
+#include "../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../engine/render/sender/mesh_create_request/shy_mesh_create_request_injections.h"
 #include "../../engine/render/sender/mesh_finalize/shy_mesh_finalize_injections.h"
 #include "../../engine/render/sender/mesh_render/shy_mesh_render_injections.h"
