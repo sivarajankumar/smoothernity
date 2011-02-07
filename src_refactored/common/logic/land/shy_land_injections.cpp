@@ -1,5 +1,6 @@
 #include "./shy_land_injections.h"
 
+#include "./sender/prepared/shy_prepared_injections.h"
 #include "./sender/render_reply/shy_render_reply_injections.h"
 
 #include "../../engine/render/sender/mesh_create_request/shy_mesh_create_request_injections.h"

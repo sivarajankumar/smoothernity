@@ -54,8 +54,16 @@ void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_m
 {
 }
 
-void _shy_common_logic_land :: receive ( so_called_message_common_engine_render_mesh_create_reply )
+void _shy_common_logic_land :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_requested ) )
+    {
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: land_mesh_id = msg . mesh ;
+        shy_guts :: create_land_mesh ( ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: land_mesh_created ) )
+            so_called_sender_common_logic_land_prepared :: send ( so_called_message_common_logic_land_prepared ( ) ) ;
+    }
 }
 
 void _shy_common_logic_land :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
