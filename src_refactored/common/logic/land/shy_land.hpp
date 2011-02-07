@@ -20,3 +20,7 @@ void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_pre
 void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_render_request )
 {
 }
+
+void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_update )
+{
+}
