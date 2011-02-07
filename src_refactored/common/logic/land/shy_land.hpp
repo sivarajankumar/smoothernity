@@ -76,10 +76,14 @@ void _shy_common_logic_land :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_prepare_permit )
 {
+    shy_guts :: land_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_render_request )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: land_mesh_created ) && so_called_platform_conditions :: whole_is_true ( shy_guts :: land_texture_created ) )
+        shy_guts :: render_land ( ) ;
+    so_called_sender_common_logic_land_render_reply :: send ( so_called_message_common_logic_land_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_update )
