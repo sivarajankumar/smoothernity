@@ -12,3 +12,7 @@ void _shy_common_logic_land :: receive ( so_called_message_common_engine_render_
 void _shy_common_logic_land :: receive ( so_called_message_common_init )
 {
 }
+
+void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_prepare_permit )
+{
+}
