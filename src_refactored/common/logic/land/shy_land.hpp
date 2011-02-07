@@ -94,4 +94,37 @@ void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_ren
 
 void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: land_prepare_permitted ) )
+    {
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: land_texture_created ) )
+        {
+            if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: texture_create_replied ) )
+            {
+                shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_true ;
+                so_called_sender_common_engine_render_texture_create_request :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
+            }
+            else
+                shy_guts :: create_land_texture ( ) ;
+        }
+        else if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: land_mesh_created ) )
+        {
+            shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
+        
+            so_called_type_platform_math_num_whole total_vertices ;
+            so_called_type_platform_math_num_whole total_indices ;
+            
+            so_called_platform_math :: add_wholes ( total_vertices , shy_guts :: consts :: land_grid , so_called_platform_math_consts :: whole_1 ) ;
+            so_called_platform_math :: mul_whole_by ( total_vertices , total_vertices ) ;
+            
+            so_called_platform_math :: add_wholes ( total_indices , shy_guts :: consts :: land_grid , so_called_platform_math_consts :: whole_1 ) ;
+            so_called_platform_math :: mul_whole_by ( total_indices , shy_guts :: consts :: land_grid ) ;
+            so_called_platform_math :: mul_whole_by ( total_indices , so_called_platform_math_consts :: whole_2 ) ;
+            
+            so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = total_vertices ;
+            mesh_create_msg . triangle_strip_indices = total_indices ;
+            mesh_create_msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
+            so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+        }
+    }
 }
