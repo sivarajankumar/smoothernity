@@ -64,6 +64,14 @@ void _shy_common_logic_land :: receive ( so_called_message_common_engine_render_
 
 void _shy_common_logic_land :: receive ( so_called_message_common_init )
 {
+    shy_guts :: land_mesh_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: land_texture_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: land_prepare_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: land_texture_creation_row = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: land_scale = so_called_platform_math_consts :: fract_0 ;
+    shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: texture_create_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_prepare_permit )
