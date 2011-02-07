@@ -36,3 +36,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_entities
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_fidget_render_reply )
 {
 }
+
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_land_prepared )
+{
+}

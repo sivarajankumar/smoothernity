@@ -9,6 +9,7 @@
 #include "../entities/message/prepared/shy_prepared_injections.h"
 #include "../entities/message/render_reply/shy_render_reply_injections.h"
 #include "../fidget/message/render_reply/shy_render_reply_injections.h"
+#include "../land/message/prepared/shy_prepared_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
 
