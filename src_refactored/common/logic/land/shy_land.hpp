@@ -40,6 +40,38 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: render_land ( )
 {
+    so_called_type_platform_matrix_data matrix ;
+    so_called_type_platform_math_num_fract scale_step ;
+    so_called_type_platform_math_num_fract increased_scale ;
+    so_called_type_platform_math_num_fract fract_scale_in_frames ;
+    
+    {
+        so_called_message_common_engine_render_texture_select texture_select_msg ;
+        texture_select_msg . texture = shy_guts :: land_texture_id ;
+        so_called_sender_common_engine_render_texture_select :: send ( texture_select_msg ) ;
+    }
+    so_called_platform_math :: make_fract_from_whole ( fract_scale_in_frames , shy_guts :: consts :: scale_in_frames ) ;
+    so_called_platform_math :: div_fracts ( scale_step , so_called_platform_math_consts :: fract_1 , fract_scale_in_frames ) ;
+    so_called_platform_math :: add_fracts ( increased_scale , shy_guts :: land_scale , scale_step ) ;
+    if ( so_called_platform_conditions :: fract_less_than_fract ( increased_scale , so_called_platform_math_consts :: fract_1 ) )
+        shy_guts :: land_scale = increased_scale ;
+    else
+        shy_guts :: land_scale = so_called_platform_math_consts :: fract_1 ;
+    so_called_platform_matrix :: set_axis_x ( matrix , shy_guts :: land_scale , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_y ( matrix , so_called_platform_math_consts :: fract_0 , shy_guts :: land_scale , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_z ( matrix , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , shy_guts :: land_scale ) ;
+    so_called_platform_matrix :: set_origin ( matrix , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+    {
+        so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = shy_guts :: land_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+    }
+    {
+        so_called_message_common_engine_render_mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = shy_guts :: land_mesh_id ;
+        so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+    }
 }
 
 void shy_guts :: create_land_mesh ( )
