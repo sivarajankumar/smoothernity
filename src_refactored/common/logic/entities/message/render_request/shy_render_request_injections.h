@@ -1,5 +1,5 @@
-#ifndef _shy_message_common_logic_entities_render_request
-#define _shy_message_common_logic_entities_render_request
+#ifndef _shy_message_common_logic_entities_render_request_injections_included
+#define _shy_message_common_logic_entities_render_request_injections_included
 
 #include "./shy_render_request.h"
 

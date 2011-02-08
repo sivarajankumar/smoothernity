@@ -8,3 +8,7 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_init )
 void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_prepare_permit )
 {
 }
+
+void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_update )
+{
+}
