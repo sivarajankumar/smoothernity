@@ -286,6 +286,11 @@ void shy_guts :: create_land_texture ( )
 
 void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
 {
+    so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg ;
+    msg . mesh = shy_guts :: land_mesh_id ;
+    msg . offset = offset ;
+    msg . index = index ;
+    so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
 }
 
 void _shy_common_logic_land :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
