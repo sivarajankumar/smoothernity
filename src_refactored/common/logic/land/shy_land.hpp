@@ -217,6 +217,71 @@ void shy_guts :: create_land_mesh ( )
 
 void shy_guts :: create_land_texture ( )
 {
+    so_called_type_platform_math_num_whole texture_width ;
+    so_called_type_platform_math_num_whole texture_height ;
+    so_called_type_platform_math_num_whole prev_creation_row = shy_guts :: land_texture_creation_row ;
+
+    texture_width = so_called_common_engine_render_consts :: texture_width ;
+    texture_height = so_called_common_engine_render_consts :: texture_height ;
+    for ( ; ; )
+    {
+        so_called_type_platform_math_num_whole rows_delta ;
+        so_called_type_platform_math_num_whole y = shy_guts :: land_texture_creation_row ;
+        
+        so_called_platform_math :: sub_wholes ( rows_delta , shy_guts :: land_texture_creation_row , prev_creation_row ) ;
+        if ( ! so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: land_texture_creation_row , texture_height )
+          || ! so_called_platform_conditions :: whole_less_or_equal_to_whole ( rows_delta , shy_guts :: consts :: create_rows_per_frame )
+           )
+        {
+            break ;
+        }
+        for ( so_called_type_platform_math_num_whole x = so_called_platform_math_consts :: whole_0
+            ; so_called_platform_conditions :: whole_less_than_whole ( x , texture_width )
+            ; so_called_platform_math :: inc_whole ( x )
+            )
+        {
+            so_called_type_platform_math_num_whole c ;
+            so_called_type_platform_math_num_whole texel_r ;
+            so_called_type_platform_math_num_whole texel_g ;
+            so_called_type_platform_math_num_whole texel_b ;
+            so_called_type_platform_math_num_fract fract_r ;
+            so_called_type_platform_math_num_fract fract_g ;
+            so_called_type_platform_math_num_fract fract_b ;
+            
+            so_called_platform_math :: xor_wholes ( c , x , y ) ;
+            so_called_platform_math :: mod_wholes ( texel_r , c , shy_guts :: consts :: modulator_1 ) ;
+            so_called_platform_math :: mod_wholes ( texel_g , c , shy_guts :: consts :: modulator_2 ) ;
+            so_called_platform_math :: mod_wholes ( texel_b , c , shy_guts :: consts :: modulator_3 ) ;
+            so_called_platform_math :: mul_whole_by ( texel_r , shy_guts :: consts :: multiplier_1 ) ;
+            so_called_platform_math :: mul_whole_by ( texel_g , shy_guts :: consts :: multiplier_2 ) ;
+            so_called_platform_math :: mul_whole_by ( texel_b , shy_guts :: consts :: multiplier_3 ) ;
+
+            so_called_platform_math :: make_fract_from_whole ( fract_r , texel_r ) ;
+            so_called_platform_math :: make_fract_from_whole ( fract_g , texel_g ) ;
+            so_called_platform_math :: make_fract_from_whole ( fract_b , texel_b ) ;
+            so_called_platform_math :: div_fract_by ( fract_r , shy_guts :: consts :: color_scale ) ;
+            so_called_platform_math :: div_fract_by ( fract_g , shy_guts :: consts :: color_scale ) ;
+            so_called_platform_math :: div_fract_by ( fract_b , shy_guts :: consts :: color_scale ) ;
+            
+            so_called_message_common_engine_render_texture_set_texel_rgba texture_set_texel_rgba_msg ;
+            texture_set_texel_rgba_msg . texture = shy_guts :: land_texture_id ;
+            texture_set_texel_rgba_msg . x = x ;
+            texture_set_texel_rgba_msg . y = y ;
+            texture_set_texel_rgba_msg . r = fract_r ;
+            texture_set_texel_rgba_msg . g = fract_g ;
+            texture_set_texel_rgba_msg . b = fract_b ;
+            texture_set_texel_rgba_msg . a = so_called_platform_math_consts :: fract_1 ;
+            so_called_sender_common_engine_render_texture_set_texel_rgba :: send ( texture_set_texel_rgba_msg ) ;
+        }
+        so_called_platform_math :: inc_whole ( shy_guts :: land_texture_creation_row ) ;
+    }
+    if ( so_called_platform_conditions :: wholes_are_equal ( shy_guts :: land_texture_creation_row , texture_height ) )
+    {
+        so_called_message_common_engine_render_texture_finalize texture_finalize_msg ;
+        texture_finalize_msg . texture = shy_guts :: land_texture_id ;
+        so_called_sender_common_engine_render_texture_finalize :: send ( texture_finalize_msg ) ;
+        shy_guts :: land_texture_created = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
