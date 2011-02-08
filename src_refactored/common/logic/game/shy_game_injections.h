@@ -11,6 +11,7 @@
 #include "../fidget/message/render_reply/shy_render_reply_injections.h"
 #include "../land/message/prepared/shy_prepared_injections.h"
 #include "../land/message/render_reply/shy_render_reply_injections.h"
+#include "../sound/message/prepared/shy_prepared_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
 
