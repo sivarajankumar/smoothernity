@@ -113,110 +113,106 @@ void shy_guts :: create_land_mesh ( )
             so_called_type_platform_math_num_fract z ;
             so_called_type_platform_math_num_fract fract_ix ;
             so_called_type_platform_math_num_fract fract_iz ;
-/*
-            num_fract vertex_x ;
-            num_fract vertex_y ;
-            num_fract vertex_z ;
-            num_fract vertex_u ;
-            num_fract vertex_v ;
-            num_fract vertex_r ;
-            num_fract vertex_g ;
-            num_fract vertex_b ;
-            num_fract vertex_a ;
+            so_called_type_platform_math_num_fract vertex_x ;
+            so_called_type_platform_math_num_fract vertex_y ;
+            so_called_type_platform_math_num_fract vertex_z ;
+            so_called_type_platform_math_num_fract vertex_u ;
+            so_called_type_platform_math_num_fract vertex_v ;
+            so_called_type_platform_math_num_fract vertex_r ;
+            so_called_type_platform_math_num_fract vertex_g ;
+            so_called_type_platform_math_num_fract vertex_b ;
+            so_called_type_platform_math_num_fract vertex_a ;
             
-            platform_math :: make_fract_from_whole ( fract_ix , ix ) ;
-            platform_math :: make_fract_from_whole ( fract_iz , iz ) ;
-            platform_math :: mul_fracts ( x , grid_step , fract_ix ) ;
-            platform_math :: mul_fracts ( z , grid_step , fract_iz ) ;
-            platform_math :: add_to_fract ( x , grid_origin_x ) ;
-            platform_math :: add_to_fract ( z , grid_origin_z ) ;
+            so_called_platform_math :: make_fract_from_whole ( fract_ix , ix ) ;
+            so_called_platform_math :: make_fract_from_whole ( fract_iz , iz ) ;
+            so_called_platform_math :: mul_fracts ( x , grid_step , fract_ix ) ;
+            so_called_platform_math :: mul_fracts ( z , grid_step , fract_iz ) ;
+            so_called_platform_math :: add_to_fract ( x , grid_origin_x ) ;
+            so_called_platform_math :: add_to_fract ( z , grid_origin_z ) ;
             vertex_x = x ;
-            vertex_y = _platform_math_consts . get ( ) . fract_0 ;
+            vertex_y = so_called_platform_math_consts :: fract_0 ;
             vertex_z = z ;
-            platform_math :: div_fracts ( vertex_u , fract_iz , fract_land_grid ) ;
-            platform_math :: div_fracts ( vertex_v , fract_ix , fract_land_grid ) ;
-            vertex_r = _logic_land_consts . land_r ;
-            vertex_g = _logic_land_consts . land_g ;
-            vertex_b = _logic_land_consts . land_b ;
-            vertex_a = _platform_math_consts . get ( ) . fract_1 ;
+            so_called_platform_math :: div_fracts ( vertex_u , fract_iz , fract_land_grid ) ;
+            so_called_platform_math :: div_fracts ( vertex_v , fract_ix , fract_land_grid ) ;
+            vertex_r = shy_guts :: consts :: land_r ;
+            vertex_g = shy_guts :: consts :: land_g ;
+            vertex_b = shy_guts :: consts :: land_b ;
+            vertex_a = so_called_platform_math_consts :: fract_1 ;
             
-            typename messages :: engine_render_mesh_set_vertex_position set_pos_msg ;
-            set_pos_msg . mesh = _land_mesh_id ;
+            so_called_message_common_engine_render_mesh_set_vertex_position set_pos_msg ;
+            set_pos_msg . mesh = shy_guts :: land_mesh_id ;
             set_pos_msg . offset = vertices_count ;
             set_pos_msg . x = vertex_x ;
             set_pos_msg . y = vertex_y ;
             set_pos_msg . z = vertex_z ;
-            _mediator . get ( ) . send ( set_pos_msg ) ;
+            so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( set_pos_msg ) ;
             
-            typename messages :: engine_render_mesh_set_vertex_color set_col_msg ;
-            set_col_msg . mesh = _land_mesh_id ;
+            so_called_message_common_engine_render_mesh_set_vertex_color set_col_msg ;
+            set_col_msg . mesh = shy_guts :: land_mesh_id ;
             set_col_msg . offset = vertices_count ;
             set_col_msg . r = vertex_r ;
             set_col_msg . g = vertex_g ;
             set_col_msg . b = vertex_b ;
             set_col_msg . a = vertex_a ;
-            _mediator . get ( ) . send ( set_col_msg ) ;
+            so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( set_col_msg ) ;
             
-            typename messages :: engine_render_mesh_set_vertex_tex_coord set_tex_msg ;
-            set_tex_msg . mesh = _land_mesh_id ;
+            so_called_message_common_engine_render_mesh_set_vertex_tex_coord set_tex_msg ;
+            set_tex_msg . mesh = shy_guts :: land_mesh_id ;
             set_tex_msg . offset = vertices_count ;
             set_tex_msg . u = vertex_u ;
             set_tex_msg . v = vertex_v ;
-            _mediator . get ( ) . send ( set_tex_msg ) ;
+            so_called_sender_common_engine_render_mesh_set_vertex_tex_coord :: send ( set_tex_msg ) ;
             
-            platform_math :: inc_whole ( vertices_count ) ;
-*/
+            so_called_platform_math :: inc_whole ( vertices_count ) ;
         }
     }
-/*    
-    for ( iz = _platform_math_consts . get ( ) . whole_0
+    for ( iz = so_called_platform_math_consts :: whole_0
         , iz_max = land_grid_plus_1
-        ; platform_conditions :: whole_less_than_whole ( iz , iz_max )
-        ; platform_math :: inc_whole ( iz )
+        ; so_called_platform_conditions :: whole_less_than_whole ( iz , iz_max )
+        ; so_called_platform_math :: inc_whole ( iz )
         )
     {
-        for ( ix = _platform_math_consts . get ( ) . whole_0
+        for ( ix = so_called_platform_math_consts :: whole_0
             , ix_max = land_grid_plus_1
-            ; platform_conditions :: whole_less_than_whole ( ix , ix_max )
-            ; platform_math :: inc_whole ( ix )
+            ; so_called_platform_conditions :: whole_less_than_whole ( ix , ix_max )
+            ; so_called_platform_math :: inc_whole ( ix )
             )
         {
-            num_whole index ;
-            num_whole row_size ;
+            so_called_type_platform_math_num_whole index ;
+            so_called_type_platform_math_num_whole row_size ;
             
             row_size = land_grid_plus_1 ;
             
-            if ( platform_conditions :: whole_is_even ( iz ) )
+            if ( so_called_platform_conditions :: whole_is_even ( iz ) )
             {
-                platform_math :: mul_wholes ( index , row_size , iz ) ;
-                platform_math :: add_to_whole ( index , ix ) ;
-                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
-                platform_math :: inc_whole ( indices_count ) ;
+                so_called_platform_math :: mul_wholes ( index , row_size , iz ) ;
+                so_called_platform_math :: add_to_whole ( index , ix ) ;
+                shy_guts :: mesh_set_triangle_strip_index_value ( indices_count , index ) ;
+                so_called_platform_math :: inc_whole ( indices_count ) ;
                 
-                platform_math :: add_to_whole ( index , row_size ) ;
-                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
-                platform_math :: inc_whole ( indices_count ) ;
+                so_called_platform_math :: add_to_whole ( index , row_size ) ;
+                shy_guts :: mesh_set_triangle_strip_index_value ( indices_count , index ) ;
+                so_called_platform_math :: inc_whole ( indices_count ) ;
             }
             else
             {
-                platform_math :: mul_wholes ( index , row_size , iz ) ;
-                platform_math :: add_to_whole ( index , _logic_land_consts . land_grid ) ;
-                platform_math :: sub_from_whole ( index , ix ) ;
-                platform_math :: add_to_whole ( index , row_size ) ;
-                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
-                platform_math :: inc_whole ( indices_count ) ;
+                so_called_platform_math :: mul_wholes ( index , row_size , iz ) ;
+                so_called_platform_math :: add_to_whole ( index , shy_guts :: consts :: land_grid ) ;
+                so_called_platform_math :: sub_from_whole ( index , ix ) ;
+                so_called_platform_math :: add_to_whole ( index , row_size ) ;
+                shy_guts :: mesh_set_triangle_strip_index_value ( indices_count , index ) ;
+                so_called_platform_math :: inc_whole ( indices_count ) ;
                 
-                platform_math :: sub_from_whole ( index , row_size ) ;
-                _mesh_set_triangle_strip_index_value ( indices_count , index ) ;
-                platform_math :: inc_whole ( indices_count ) ;
+                so_called_platform_math :: sub_from_whole ( index , row_size ) ;
+                shy_guts :: mesh_set_triangle_strip_index_value ( indices_count , index ) ;
+                so_called_platform_math :: inc_whole ( indices_count ) ;
             }
         }
     }
-    typename messages :: engine_render_mesh_finalize mesh_finalize_msg ;
-    mesh_finalize_msg . mesh = _land_mesh_id ;
-    _mediator . get ( ) . send ( mesh_finalize_msg ) ;
-    _land_mesh_created = _platform_math_consts . get ( ) . whole_true ;
-*/
+    so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
+    mesh_finalize_msg . mesh = shy_guts :: land_mesh_id ;
+    so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
+    shy_guts :: land_mesh_created = so_called_platform_math_consts :: whole_true ;
 }
 
 void shy_guts :: create_land_texture ( )
