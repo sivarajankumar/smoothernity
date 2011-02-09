@@ -45,6 +45,13 @@ void shy_guts :: load_sound ( )
 
 void shy_guts :: int_to_sample ( so_called_type_platform_math_num_fract & result , so_called_type_platform_math_num_whole i )
 {
+    so_called_type_platform_math_num_whole whole_sample ;
+    so_called_type_platform_math_num_fract fract_half_modulator ;
+    so_called_platform_math :: make_fract_from_whole ( fract_half_modulator , shy_guts :: consts :: half_modulator ) ;
+    so_called_platform_math :: mod_wholes ( whole_sample , i , shy_guts :: consts :: modulator ) ;
+    so_called_platform_math :: sub_from_whole ( whole_sample , shy_guts :: consts :: half_modulator ) ;
+    so_called_platform_math :: make_fract_from_whole ( result , whole_sample ) ;
+    so_called_platform_math :: div_fract_by ( result , fract_half_modulator ) ;
 }
 
 void shy_guts :: create_stereo_sound ( )
