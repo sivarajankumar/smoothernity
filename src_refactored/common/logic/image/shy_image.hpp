@@ -106,8 +106,15 @@ void shy_guts :: mesh_set_vertex_color
 {
 }
 
-void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_mesh_create_reply )
+void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_requested ) )
+    {
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: image_mesh_id = msg . mesh ;
+        shy_guts :: create_image_mesh ( ) ;
+        shy_guts :: image_mesh_created = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
