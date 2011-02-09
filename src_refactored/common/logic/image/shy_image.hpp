@@ -62,6 +62,33 @@ void shy_guts :: render_image_mesh ( )
 
 void shy_guts :: update_image_mesh ( )
 {
+    so_called_type_platform_matrix_data matrix ;
+    so_called_type_platform_math_num_fract scale ;
+    so_called_type_platform_math_num_fract fract_scale_frames ;
+    so_called_type_platform_math_num_fract fract_scale_in_frames ;
+
+    so_called_platform_math :: make_fract_from_whole ( fract_scale_in_frames , shy_guts :: consts :: scale_in_frames ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_scale_frames , shy_guts :: scale_frames ) ;
+    so_called_common_engine_math_stateless :: lerp 
+        ( scale 
+        , fract_scale_frames 
+        , so_called_platform_math_consts :: fract_0 
+        , so_called_platform_math_consts :: fract_0 
+        , shy_guts :: consts :: final_scale
+        , fract_scale_in_frames 
+        ) ;
+    so_called_platform_matrix :: set_axis_x ( matrix , scale , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_y ( matrix , so_called_platform_math_consts :: fract_0 , scale , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_z ( matrix , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , scale ) ;
+    so_called_platform_matrix :: set_origin ( matrix , shy_guts :: consts :: mesh_x , shy_guts :: consts :: mesh_y , shy_guts :: consts :: mesh_z ) ;
+    {
+        so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = shy_guts :: image_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+    }
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: scale_frames , shy_guts :: consts :: scale_in_frames ) )
+        so_called_platform_math :: inc_whole ( shy_guts :: scale_frames ) ;
 }
 
 void shy_guts :: create_image_mesh ( )
