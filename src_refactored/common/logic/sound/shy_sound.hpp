@@ -38,6 +38,9 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: load_sound ( )
 {
+    so_called_type_platform_sound_stereo_resource_id music_resource_id ;
+    so_called_platform_sound :: create_stereo_resource_id ( music_resource_id , shy_guts :: consts :: music_rough_and_heavy_resource_index ) ;
+    so_called_platform_sound :: load_stereo_sample_data ( shy_guts :: stereo_sound_data , music_resource_id ) ;
 }
 
 void shy_guts :: int_to_sample ( so_called_type_platform_math_num_fract & result , so_called_type_platform_math_num_whole i )
