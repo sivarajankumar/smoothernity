@@ -110,8 +110,15 @@ void _shy_common_logic_image :: receive ( so_called_message_common_engine_render
 {
 }
 
-void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_texture_create_reply )
+void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: texture_create_requested ) )
+    {
+        shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: image_texture_created = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: image_texture_id = msg . texture ;
+        shy_guts :: create_image_texture ( ) ;
+    }
 }
 
 void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_texture_loader_ready_reply )
@@ -132,6 +139,7 @@ void _shy_common_logic_image :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_prepare_permit )
 {
+    shy_guts :: image_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_render_request )
