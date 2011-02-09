@@ -16,8 +16,10 @@
 #include "../../engine/render/sender/mesh_set_vertex_tex_coord/shy_mesh_set_vertex_tex_coord_injections.h"
 #include "../../engine/render/sender/texture_create_request/shy_texture_create_request_injections.h"
 #include "../../engine/render/sender/texture_finalize/shy_texture_finalize_injections.h"
+#include "../../engine/render/sender/texture_load_from_resource/shy_texture_load_from_resource_injections.h"
 #include "../../engine/render/sender/texture_loader_ready_request/shy_texture_loader_ready_request_injections.h"
 #include "../../engine/render/sender/texture_select/shy_texture_select_injections.h"
+#include "../../engine/render/stateless/shy_stateless_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"
