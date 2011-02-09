@@ -56,6 +56,46 @@ void shy_guts :: int_to_sample ( so_called_type_platform_math_num_fract & result
 
 void shy_guts :: create_stereo_sound ( )
 {
+    so_called_type_platform_math_num_fract pitch ;
+    so_called_type_platform_math_num_fract pos_x ;
+    so_called_type_platform_math_num_fract pos_y ;
+    so_called_type_platform_math_num_fract pos_z ;
+    so_called_type_platform_math_num_fract vel_x ;
+    so_called_type_platform_math_num_fract vel_y ;
+    so_called_type_platform_math_num_fract vel_z ;
+    so_called_type_platform_math_num_whole loaded_samples_count ;
+    so_called_type_platform_vector_data source_pos ;
+    so_called_type_platform_vector_data source_vel ;
+    so_called_type_platform_sound_buffer_id stereo_sound_buffer ;
+        
+    pitch = so_called_platform_math_consts :: fract_1 ;
+    pos_x = so_called_platform_math_consts :: fract_0 ;
+    pos_y = so_called_platform_math_consts :: fract_0 ;
+    pos_z = so_called_platform_math_consts :: fract_minus_2 ;
+    vel_x = so_called_platform_math_consts :: fract_0 ;
+    vel_y = so_called_platform_math_consts :: fract_0 ;
+    vel_z = so_called_platform_math_consts :: fract_0 ;
+    so_called_platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    so_called_platform_vector :: xyz ( source_vel , vel_x , vel_y , vel_z ) ;
+    
+    so_called_platform_sound :: loaded_samples_count ( loaded_samples_count ) ;
+    so_called_platform_math :: sub_from_whole ( loaded_samples_count , shy_guts :: consts :: music_tail_cut ) ;
+    
+    so_called_type_platform_math_num_whole max_music_samples ;
+    so_called_platform_math :: make_num_whole ( max_music_samples , shy_guts :: consts :: max_stereo_sound_samples ) ;
+    so_called_platform_sound :: create_stereo_buffer 
+        ( stereo_sound_buffer
+        , shy_guts :: stereo_sound_data 
+        , loaded_samples_count
+        ) ;
+    so_called_platform_sound :: create_source ( shy_guts :: stereo_sound_source ) ;
+    so_called_platform_sound :: set_source_gain ( shy_guts :: stereo_sound_source , shy_guts :: consts :: gain ) ;
+    so_called_platform_sound :: set_source_pitch ( shy_guts :: stereo_sound_source , pitch ) ;
+    so_called_platform_sound :: set_source_buffer ( shy_guts :: stereo_sound_source , stereo_sound_buffer ) ;
+    so_called_platform_sound :: set_source_playback_looping ( shy_guts :: stereo_sound_source ) ;
+    so_called_platform_sound :: set_source_position ( shy_guts :: stereo_sound_source , source_pos ) ;
+    so_called_platform_sound :: set_source_velocity ( shy_guts :: stereo_sound_source , source_vel ) ;    
+    so_called_platform_sound :: source_play ( shy_guts :: stereo_sound_source ) ;    
 }
 
 void shy_guts :: create_mono_sound ( )
