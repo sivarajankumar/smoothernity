@@ -128,8 +128,24 @@ void _shy_common_logic_image :: receive ( so_called_message_common_engine_render
     }
 }
 
-void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_texture_loader_ready_reply )
+void _shy_common_logic_image :: receive ( so_called_message_common_engine_render_texture_loader_ready_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: texture_loader_ready_requested ) )
+    {
+        shy_guts :: texture_loader_ready_requested = so_called_platform_math_consts :: whole_false ;
+        if ( so_called_platform_conditions :: whole_is_true ( msg . ready ) )
+        {
+            {
+                so_called_message_common_engine_render_texture_finalize texture_finalize_msg ;
+                texture_finalize_msg . texture = shy_guts :: image_texture_id ;
+                so_called_sender_common_engine_render_texture_finalize :: send ( texture_finalize_msg ) ;
+            }
+            shy_guts :: image_texture_loaded = so_called_platform_math_consts :: whole_true ;
+            so_called_sender_common_logic_image_prepared :: send ( so_called_message_common_logic_image_prepared ( ) ) ;
+        }
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: image_mesh_created ) && so_called_platform_conditions :: whole_is_true ( shy_guts :: image_texture_loaded ) )
+            shy_guts :: update_image_mesh ( ) ;
+    }
 }
 
 void _shy_common_logic_image :: receive ( so_called_message_common_init )
