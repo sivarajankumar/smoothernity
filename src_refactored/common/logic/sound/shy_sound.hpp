@@ -108,8 +108,53 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_prepare_permit )
 {
+    shy_guts :: sound_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: sound_prepare_permitted ) )
+    {
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: stereo_sound_loaded ) )
+        {
+            so_called_type_platform_math_num_whole ready ;
+            so_called_platform_sound :: loader_ready ( ready ) ;
+            if ( so_called_platform_conditions :: whole_is_true ( ready ) )
+            {
+                shy_guts :: load_sound ( ) ;
+                shy_guts :: stereo_sound_loaded = so_called_platform_math_consts :: whole_true ;
+            }
+        }
+        else
+        {
+            so_called_type_platform_math_num_whole ready ;
+            so_called_platform_sound :: loader_ready ( ready ) ;
+            if ( so_called_platform_conditions :: whole_is_true ( ready ) )
+            {
+                if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: stereo_sound_created ) )
+                {
+                    shy_guts :: create_stereo_sound ( ) ;
+                    shy_guts :: stereo_sound_created = so_called_platform_math_consts :: whole_true ;
+                    so_called_sender_common_logic_sound_prepared :: send ( so_called_message_common_logic_sound_prepared ( ) ) ;
+                }
+            }
+        }
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: mono_sound_created ) )
+        {
+            shy_guts :: create_mono_sound ( ) ;
+            shy_guts :: mono_sound_created = so_called_platform_math_consts :: whole_true ;
+        }
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mono_sound_created ) )
+    {
+        so_called_type_platform_math_num_whole touch ;
+        so_called_type_platform_math_num_whole mouse_button ;
+        so_called_platform_touch :: occured ( touch ) ;
+        so_called_platform_mouse :: left_button_down ( mouse_button ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( touch ) || so_called_platform_conditions :: whole_is_true ( mouse_button ) )
+        {
+            so_called_platform_sound :: source_stop ( shy_guts :: mono_sound_source ) ;
+            so_called_platform_sound :: source_play ( shy_guts :: mono_sound_source ) ;
+        }
+    }
 }
