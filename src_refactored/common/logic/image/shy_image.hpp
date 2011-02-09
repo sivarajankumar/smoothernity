@@ -136,6 +136,9 @@ void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_p
 
 void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_render_request )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: image_mesh_created ) && so_called_platform_conditions :: whole_is_true ( shy_guts :: image_texture_loaded ) )
+        shy_guts :: render_image_mesh ( ) ;
+    so_called_sender_common_logic_image_render_reply :: send ( so_called_message_common_logic_image_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_update )
