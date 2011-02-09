@@ -41,6 +41,10 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_pr
 {
 }
 
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_render_reply )
+{
+}
+
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_land_prepared )
 {
 }
