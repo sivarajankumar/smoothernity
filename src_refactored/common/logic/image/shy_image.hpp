@@ -24,3 +24,7 @@ void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_p
 void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_render_request )
 {
 }
+
+void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_update )
+{
+}
