@@ -120,6 +120,14 @@ void _shy_common_logic_image :: receive ( so_called_message_common_engine_render
 
 void _shy_common_logic_image :: receive ( so_called_message_common_init )
 {
+    shy_guts :: image_mesh_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: image_texture_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: image_texture_loaded = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: image_prepare_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: texture_loader_ready_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: scale_frames = so_called_platform_math_consts :: whole_0 ;
 }
 
 void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_prepare_permit )
