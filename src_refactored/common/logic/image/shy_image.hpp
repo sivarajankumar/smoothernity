@@ -158,4 +158,31 @@ void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_r
 
 void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: image_prepare_permitted ) )
+    {
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: image_mesh_created ) )
+        {
+            shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
+            
+            so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = so_called_platform_math_consts :: whole_4 ;
+            mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
+            mesh_create_msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
+            so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;        
+        }
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: image_texture_created ) )
+        {
+            shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_true ;
+            so_called_sender_common_engine_render_texture_create_request :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
+        }
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: image_texture_created ) 
+          && so_called_platform_conditions :: whole_is_false ( shy_guts :: image_texture_loaded )
+           )
+        {
+            shy_guts :: texture_loader_ready_requested = so_called_platform_math_consts :: whole_true ;
+            so_called_sender_common_engine_render_texture_loader_ready_request :: send ( so_called_message_common_engine_render_texture_loader_ready_request ( ) ) ;
+        }
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: image_mesh_created ) && so_called_platform_conditions :: whole_is_true ( shy_guts :: image_texture_loaded ) )
+        shy_guts :: update_image_mesh ( ) ;
 }
