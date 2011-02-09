@@ -100,6 +100,74 @@ void shy_guts :: create_stereo_sound ( )
 
 void shy_guts :: create_mono_sound ( )
 {
+    so_called_type_platform_math_num_whole next_sample ;
+    so_called_type_platform_math_num_whole whole_max_mono_sound_samples ;
+    so_called_type_platform_math_num_fract fract_mono_sound_samples_per_second ;
+
+    so_called_platform_math :: make_num_whole ( whole_max_mono_sound_samples , shy_guts :: consts :: max_mono_sound_samples ) ;
+    so_called_platform_math :: make_num_fract ( fract_mono_sound_samples_per_second , so_called_platform_sound :: mono_sound_samples_per_second , 1 ) ;
+    next_sample = so_called_platform_math_consts :: whole_0 ;
+
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0 
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_type_platform_math_num_fract fract_i ;
+        so_called_type_platform_math_num_fract angle ;
+        so_called_type_platform_math_num_fract angle_sin ;
+        so_called_type_platform_math_num_fract fract_sample_delta ;
+        so_called_type_platform_math_num_fract sample ;
+        so_called_type_platform_math_num_whole whole_sample_delta ;
+
+        so_called_platform_math :: make_fract_from_whole ( fract_i , i ) ;
+        so_called_platform_math :: mul_fracts ( angle , fract_i , so_called_platform_math_consts :: fract_2pi ) ;
+        so_called_platform_math :: div_fract_by ( angle , fract_mono_sound_samples_per_second ) ;        
+        so_called_platform_math :: sin ( angle_sin , angle ) ;
+        so_called_platform_math :: add_fracts ( fract_sample_delta , so_called_platform_math_consts :: fract_1 , angle_sin ) ;
+        so_called_platform_math :: mul_fract_by ( fract_sample_delta , shy_guts :: consts :: magnitude ) ;
+        so_called_platform_math :: make_whole_from_fract ( whole_sample_delta , fract_sample_delta ) ;
+        so_called_platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
+        shy_guts :: int_to_sample ( sample , next_sample ) ;
+
+        so_called_type_platform_pointer_data < so_called_type_platform_sound_sample_mono > sample_ptr ;
+        so_called_platform_static_array :: element_ptr ( sample_ptr , shy_guts :: mono_sound_data , i ) ;
+        so_called_platform_sound :: set_sample_value ( sample_ptr . get ( ) , sample ) ;
+    }
+    
+    so_called_type_platform_math_num_fract gain ;
+    so_called_type_platform_math_num_fract pitch ;
+    so_called_type_platform_math_num_fract pos_x ;
+    so_called_type_platform_math_num_fract pos_y ;
+    so_called_type_platform_math_num_fract pos_z ;
+    so_called_type_platform_math_num_fract vel_x ;
+    so_called_type_platform_math_num_fract vel_y ;
+    so_called_type_platform_math_num_fract vel_z ;
+    so_called_type_platform_vector_data source_pos ;
+    so_called_type_platform_vector_data source_vel ;
+    so_called_type_platform_math_num_whole max_sound_samples ;
+    so_called_type_platform_sound_buffer_id mono_sound_buffer ;
+    
+    gain = so_called_platform_math_consts :: fract_1 ;
+    pitch = so_called_platform_math_consts :: fract_1 ;
+    pos_x = so_called_platform_math_consts :: fract_0 ;
+    pos_y = so_called_platform_math_consts :: fract_0 ;
+    pos_z = so_called_platform_math_consts :: fract_minus_2 ;
+    vel_x = so_called_platform_math_consts :: fract_0 ;
+    vel_y = so_called_platform_math_consts :: fract_0 ;
+    vel_z = so_called_platform_math_consts :: fract_0 ;
+    so_called_platform_math :: make_num_whole ( max_sound_samples , shy_guts :: consts :: max_mono_sound_samples ) ;
+    so_called_platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
+    so_called_platform_vector :: xyz ( source_vel , pos_x , pos_y , pos_z ) ;
+    
+    so_called_platform_sound :: create_mono_buffer ( mono_sound_buffer , shy_guts :: mono_sound_data , max_sound_samples ) ;
+    so_called_platform_sound :: create_source ( shy_guts :: mono_sound_source ) ;
+    so_called_platform_sound :: set_source_gain ( shy_guts :: mono_sound_source , gain ) ;
+    so_called_platform_sound :: set_source_pitch ( shy_guts :: mono_sound_source , pitch ) ;
+    so_called_platform_sound :: set_source_buffer ( shy_guts :: mono_sound_source , mono_sound_buffer ) ;
+    so_called_platform_sound :: set_source_playback_once ( shy_guts :: mono_sound_source ) ;
+    so_called_platform_sound :: set_source_position ( shy_guts :: mono_sound_source , source_pos ) ;
+    so_called_platform_sound :: set_source_velocity ( shy_guts :: mono_sound_source , source_vel ) ;    
 }
 
 void _shy_common_logic_sound :: receive ( so_called_message_common_init )
