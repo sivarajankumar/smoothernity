@@ -54,6 +54,56 @@ void shy_guts :: create_mono_sound ( )
 
 void _shy_common_logic_sound :: receive ( so_called_message_common_init )
 {
+    shy_guts :: mono_sound_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: stereo_sound_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: stereo_sound_loaded = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: sound_prepare_permitted = so_called_platform_math_consts :: whole_false ;
+    
+    so_called_type_platform_math_num_fract pos_x ;
+    so_called_type_platform_math_num_fract pos_y ;
+    so_called_type_platform_math_num_fract pos_z ;
+    
+    so_called_type_platform_math_num_fract vel_x ;
+    so_called_type_platform_math_num_fract vel_y ;
+    so_called_type_platform_math_num_fract vel_z ;
+    
+    so_called_type_platform_math_num_fract look_at_x ;
+    so_called_type_platform_math_num_fract look_at_y ;
+    so_called_type_platform_math_num_fract look_at_z ;
+    
+    so_called_type_platform_math_num_fract up_x ;
+    so_called_type_platform_math_num_fract up_y ;
+    so_called_type_platform_math_num_fract up_z ;
+    
+    so_called_type_platform_vector_data listener_pos ;
+    so_called_type_platform_vector_data listener_vel ;
+    so_called_type_platform_vector_data look_at ;
+    so_called_type_platform_vector_data up ;
+    
+    pos_x = so_called_platform_math_consts :: fract_0 ;
+    pos_y = so_called_platform_math_consts :: fract_0 ;
+    pos_z = so_called_platform_math_consts :: fract_4 ;
+    
+    vel_x = so_called_platform_math_consts :: fract_0 ;
+    vel_y = so_called_platform_math_consts :: fract_0 ;
+    vel_z = so_called_platform_math_consts :: fract_0 ;
+    
+    look_at_x = so_called_platform_math_consts :: fract_0 ;
+    look_at_y = so_called_platform_math_consts :: fract_0 ;
+    look_at_z = so_called_platform_math_consts :: fract_1 ;
+    
+    up_x = so_called_platform_math_consts :: fract_0 ;
+    up_y = so_called_platform_math_consts :: fract_1 ;
+    up_z = so_called_platform_math_consts :: fract_0 ;
+    
+    so_called_platform_vector :: xyz ( listener_pos , pos_x , pos_y , pos_z ) ;
+    so_called_platform_vector :: xyz ( listener_vel , vel_x , vel_y , vel_z ) ;
+    so_called_platform_vector :: xyz ( look_at , look_at_x , look_at_y , look_at_z ) ;
+    so_called_platform_vector :: xyz ( up , up_x , up_y , up_z ) ;
+    
+    so_called_platform_sound :: set_listener_position ( listener_pos ) ;
+    so_called_platform_sound :: set_listener_velocity ( listener_vel ) ;
+    so_called_platform_sound :: set_listener_orientation ( look_at , up ) ;
 }
 
 void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_prepare_permit )
