@@ -73,6 +73,12 @@ void shy_guts :: poll_mouse ( )
 
 void shy_guts :: place_new_spot ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: should_place_new_spot ) )
+    {
+        so_called_platform_vector :: xyz ( shy_guts :: spot_position , shy_guts :: spot_x , shy_guts :: spot_y , shy_guts :: consts :: spot_pos_z ) ;
+        shy_guts :: spot_frames_left = shy_guts :: consts :: spot_lifetime_in_frames ;
+        shy_guts :: should_place_new_spot = so_called_platform_math_consts :: whole_false ;
+    }
 }
 
 void shy_guts :: render_spot_mesh ( )
