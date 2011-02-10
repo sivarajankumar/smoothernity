@@ -12,20 +12,20 @@ namespace shy_guts
     }
 
     static void update_spot ( ) ;
-	static void decrease_spot_lifetime ( ) ;
-	static void poll_touchscreen ( ) ;
+    static void decrease_spot_lifetime ( ) ;
+    static void poll_touchscreen ( ) ;
     static void poll_mouse ( ) ;
-	static void place_new_spot ( ) ;
+    static void place_new_spot ( ) ;
     static void render_spot_mesh ( ) ;
     static void create_spot_mesh ( ) ;
 
     static so_called_type_platform_math_num_whole spot_frames_left ;
     static so_called_type_platform_math_num_whole spot_mesh_created ;
     static so_called_type_platform_math_num_whole spot_prepare_permitted ;
-	static so_called_type_platform_math_num_whole should_place_new_spot ;
+    static so_called_type_platform_math_num_whole should_place_new_spot ;
     static so_called_type_platform_math_num_whole mesh_create_requested ;
-	static so_called_type_platform_math_num_fract spot_x ;
-	static so_called_type_platform_math_num_fract spot_y ;
+    static so_called_type_platform_math_num_fract spot_x ;
+    static so_called_type_platform_math_num_fract spot_y ;
     static so_called_type_common_engine_render_mesh_id spot_mesh_id ;
     static so_called_type_platform_vector_data spot_position ;
 }
