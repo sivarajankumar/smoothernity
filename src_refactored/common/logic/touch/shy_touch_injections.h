@@ -3,6 +3,7 @@
 
 #include "./message/prepare_permit/shy_prepare_permit_injections.h"
 #include "./message/render/shy_render_injections.h"
+#include "./message/update/shy_update_injections.h"
 
 #include "../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 

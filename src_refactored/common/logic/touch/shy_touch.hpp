@@ -16,3 +16,7 @@ void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_p
 void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_render )
 {
 }
+
+void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_update )
+{
+}
