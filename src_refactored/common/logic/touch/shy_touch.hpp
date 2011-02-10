@@ -39,6 +39,11 @@ void _shy_common_logic_touch :: receive ( so_called_message_common_engine_render
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_init )
 {
+    shy_guts :: spot_frames_left = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: spot_mesh_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: spot_prepare_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: should_place_new_spot = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_prepare_permit )
