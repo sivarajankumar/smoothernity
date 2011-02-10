@@ -87,4 +87,19 @@ void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_r
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: spot_prepare_permitted ) )
+    {
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: spot_mesh_created ) )
+        {
+            shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
+            
+            so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+            mesh_create_msg . vertices = shy_guts :: consts :: spot_edges ;
+            mesh_create_msg . triangle_fan_indices = shy_guts :: consts :: spot_edges ;
+            mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_0 ;
+            so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+        }
+        else
+            shy_guts :: update_spot ( ) ;
+    }
 }
