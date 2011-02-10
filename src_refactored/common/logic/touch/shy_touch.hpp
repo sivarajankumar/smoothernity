@@ -111,6 +111,66 @@ void shy_guts :: render_spot_mesh ( )
 
 void shy_guts :: create_spot_mesh ( )
 {
+    so_called_type_platform_math_num_fract fract_spot_edges ;
+    so_called_platform_math :: make_fract_from_whole ( fract_spot_edges , shy_guts :: consts :: spot_edges ) ;
+            
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: consts :: spot_edges ) 
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_type_platform_math_num_fract angle ;
+        so_called_type_platform_math_num_fract fract_i ;
+        so_called_type_platform_math_num_fract angle_cos ;
+        so_called_type_platform_math_num_fract angle_sin ;
+        so_called_type_platform_math_num_fract vertex_x ;
+        so_called_type_platform_math_num_fract vertex_y ;
+        so_called_type_platform_math_num_fract vertex_z ;
+        so_called_type_platform_math_num_fract vertex_r ;
+        so_called_type_platform_math_num_fract vertex_g ;
+        so_called_type_platform_math_num_fract vertex_b ;
+        so_called_type_platform_math_num_fract vertex_a ;
+
+        so_called_platform_math :: make_fract_from_whole ( fract_i , i ) ;
+        so_called_platform_math :: mul_fracts ( angle , so_called_platform_math_consts :: fract_2pi , fract_i ) ;
+        so_called_platform_math :: div_fract_by ( angle , fract_spot_edges ) ;
+        so_called_platform_math :: cos ( angle_cos , angle ) ;
+        so_called_platform_math :: sin ( angle_sin , angle ) ;
+        so_called_platform_math :: mul_fracts ( vertex_x , shy_guts :: consts :: spot_size , angle_cos ) ;
+        so_called_platform_math :: mul_fracts ( vertex_y , shy_guts :: consts :: spot_size , angle_sin ) ;
+        vertex_z = so_called_platform_math_consts :: fract_0 ;
+        vertex_r = shy_guts :: consts :: spot_r ;
+        vertex_g = shy_guts :: consts :: spot_g ;
+        vertex_b = shy_guts :: consts :: spot_b ;
+        vertex_a = so_called_platform_math_consts :: fract_1 ;
+
+        so_called_message_common_engine_render_mesh_set_vertex_position set_pos_msg ;
+        set_pos_msg . mesh = shy_guts :: spot_mesh_id ;
+        set_pos_msg . offset = i ;
+        set_pos_msg . x = vertex_x ;
+        set_pos_msg . y = vertex_y ;
+        set_pos_msg . z = vertex_z ;
+        so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( set_pos_msg ) ;
+
+        so_called_message_common_engine_render_mesh_set_vertex_color set_col_msg ;
+        set_col_msg . mesh = shy_guts :: spot_mesh_id ;
+        set_col_msg . offset = i ;
+        set_col_msg . r = vertex_r ;
+        set_col_msg . g = vertex_g ;
+        set_col_msg . b = vertex_b ;
+        set_col_msg . a = vertex_a ;
+        so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( set_col_msg ) ;
+        
+        so_called_message_common_engine_render_mesh_set_triangle_fan_index_value set_index_msg ;
+        set_index_msg . mesh = shy_guts :: spot_mesh_id ;
+        set_index_msg . offset = i ;
+        set_index_msg . index = i ;
+        so_called_sender_common_engine_render_mesh_set_triangle_fan_index_value :: send ( set_index_msg ) ;
+    }
+    
+    so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
+    mesh_finalize_msg . mesh = shy_guts :: spot_mesh_id ;
+    so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
 }
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
