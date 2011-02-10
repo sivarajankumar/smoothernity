@@ -83,6 +83,30 @@ void shy_guts :: place_new_spot ( )
 
 void shy_guts :: render_spot_mesh ( )
 {
+    so_called_type_platform_matrix_data matrix ;
+    so_called_type_platform_math_num_fract fract_spot_frames_left ;
+    so_called_type_platform_math_num_fract fract_spot_lifetime_in_frames ;
+    so_called_type_platform_math_num_fract scale ;
+
+    so_called_platform_math :: make_fract_from_whole ( fract_spot_frames_left , shy_guts :: spot_frames_left ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_spot_lifetime_in_frames , shy_guts :: consts :: spot_lifetime_in_frames ) ;
+    so_called_platform_math :: div_fracts ( scale , fract_spot_frames_left , fract_spot_lifetime_in_frames ) ;
+    so_called_platform_matrix :: set_axis_x ( matrix , scale , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_y ( matrix , so_called_platform_math_consts :: fract_0 , scale , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_z ( matrix , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , scale ) ;
+    so_called_platform_matrix :: set_origin ( matrix , shy_guts :: spot_position ) ;
+    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    {
+        so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
+        mesh_set_transform_msg . mesh = shy_guts :: spot_mesh_id ;
+        mesh_set_transform_msg . transform = matrix ;
+        so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+    }
+    {
+        so_called_message_common_engine_render_mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = shy_guts :: spot_mesh_id ;
+        so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+    }
 }
 
 void shy_guts :: create_spot_mesh ( )
