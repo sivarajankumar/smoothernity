@@ -35,18 +35,40 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: update_spot ( )
 {
+    shy_guts :: decrease_spot_lifetime ( ) ;
+    shy_guts :: poll_touchscreen ( ) ;
+    shy_guts :: poll_mouse ( ) ;
+    shy_guts :: place_new_spot ( ) ;
 }
 
 void shy_guts :: decrease_spot_lifetime ( )
 {
+    if ( so_called_platform_conditions :: whole_greater_than_zero ( shy_guts :: spot_frames_left ) )
+        so_called_platform_math :: dec_whole ( shy_guts :: spot_frames_left ) ;
 }
 
 void shy_guts :: poll_touchscreen ( )
 {
+    so_called_type_platform_math_num_whole touch ;
+    so_called_platform_touch :: occured ( touch ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( touch ) )
+    {
+        so_called_platform_touch :: x ( shy_guts :: spot_x ) ;
+        so_called_platform_touch :: y ( shy_guts :: spot_y ) ;
+        shy_guts :: should_place_new_spot = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void shy_guts :: poll_mouse ( )
 {
+    so_called_type_platform_math_num_whole mouse_button ;
+    so_called_platform_mouse :: left_button_down ( mouse_button ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( mouse_button ) )
+    {
+        so_called_platform_mouse :: x ( shy_guts :: spot_x ) ;
+        so_called_platform_mouse :: y ( shy_guts :: spot_y ) ;
+        shy_guts :: should_place_new_spot = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void shy_guts :: place_new_spot ( )
