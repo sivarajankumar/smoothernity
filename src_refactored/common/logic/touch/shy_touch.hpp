@@ -61,8 +61,16 @@ void shy_guts :: create_spot_mesh ( )
 {
 }
 
-void _shy_common_logic_touch :: receive ( so_called_message_common_engine_render_mesh_create_reply )
+void _shy_common_logic_touch :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_requested ) )
+    {
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: spot_mesh_id = msg . mesh ;
+        shy_guts :: create_spot_mesh ( ) ;
+        shy_guts :: spot_mesh_created = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_touch_prepared :: send ( so_called_message_common_logic_touch_prepared ( ) ) ;
+    }
 }
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_init )
