@@ -33,6 +33,34 @@ namespace shy_guts
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_touch > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
+void shy_guts :: update_spot ( )
+{
+}
+
+void shy_guts :: decrease_spot_lifetime ( )
+{
+}
+
+void shy_guts :: poll_touchscreen ( )
+{
+}
+
+void shy_guts :: poll_mouse ( )
+{
+}
+
+void shy_guts :: place_new_spot ( )
+{
+}
+
+void shy_guts :: render_spot_mesh ( )
+{
+}
+
+void shy_guts :: create_spot_mesh ( )
+{
+}
+
 void _shy_common_logic_touch :: receive ( so_called_message_common_engine_render_mesh_create_reply )
 {
 }
@@ -48,10 +76,13 @@ void _shy_common_logic_touch :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_prepare_permit )
 {
+    shy_guts :: spot_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_render )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: spot_mesh_created ) && so_called_platform_conditions :: whole_greater_than_zero ( shy_guts :: spot_frames_left ) )
+        shy_guts :: render_spot_mesh ( ) ;
 }
 
 void _shy_common_logic_touch :: receive ( so_called_message_common_logic_touch_update )
