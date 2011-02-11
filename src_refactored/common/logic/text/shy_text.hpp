@@ -120,6 +120,33 @@ namespace shy_guts
         , so_called_type_platform_math_num_whole x3
         , so_called_type_platform_math_num_whole y3
         ) ;
+
+    static so_called_type_platform_math_num_whole texture_create_requested ;
+    static so_called_type_platform_math_num_whole texture_create_replied ;
+    
+    static so_called_type_platform_math_num_whole mesh_create_requested ;
+    static so_called_type_platform_math_num_whole mesh_create_replied ;
+    
+    static so_called_type_platform_math_num_whole rasterize_finalize_requested ;
+    static so_called_type_platform_math_num_whole rasterize_finalize_replied ;
+    
+    static so_called_type_platform_math_num_whole empty_texture_created ;
+    static so_called_type_platform_math_num_whole small_letters_rasterized ;
+    static so_called_type_platform_math_num_whole big_letters_rasterized ;
+        
+    static so_called_type_platform_math_num_whole text_mesh_created ;
+    static so_called_type_platform_math_num_whole text_prepare_permitted ;
+    static so_called_type_common_engine_render_mesh_id text_mesh_id ;
+    static so_called_type_common_engine_render_texture_id text_texture_id ;
+    static so_called_type_platform_render_texel_data filler ;
+    static so_called_type_platform_render_texel_data eraser ;
+    static so_called_type_platform_math_num_whole origin_x ;
+    static so_called_type_platform_math_num_whole origin_y ;
+    static so_called_type_platform_math_num_whole letter_size_x ;
+    static so_called_type_platform_math_num_whole letter_size_y ;
+    static so_called_type_platform_math_num_whole scale_frames ;
+    static shy_guts :: letters_tex_coords letters_big ;
+    static shy_guts :: letters_tex_coords letters_small ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_text > _scheduled_context_type ;
