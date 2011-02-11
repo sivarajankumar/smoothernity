@@ -1,0 +1,10 @@
+#ifndef _shy_message_common_logic_text_letter_small_tex_coords_request_injections_included
+#define _shy_message_common_logic_text_letter_small_tex_coords_request_injections_included
+
+#include "../../type/letter_id/shy_letter_id_injections.h"
+
+#include "./shy_letter_small_tex_coords_request.h"
+
+typedef shy_message_common_logic_text_letter_small_tex_coords_request so_called_message_common_logic_text_letter_small_tex_coords_request ;
+
+#endif
