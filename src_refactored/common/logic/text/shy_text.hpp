@@ -4,17 +4,17 @@ namespace shy_guts
     {
         static so_called_type_platform_math_const_int_32 max_letters_in_alphabet = 32 ;
 
-        static const so_called_type_platform_math_num_fract final_scale ;
-        static const so_called_type_platform_math_num_fract canvas_r ;
-        static const so_called_type_platform_math_num_fract canvas_g ;
-        static const so_called_type_platform_math_num_fract canvas_b ;
-        static const so_called_type_platform_math_num_fract canvas_a ;
-        static const so_called_type_platform_math_num_fract mesh_x ;
-        static const so_called_type_platform_math_num_fract mesh_y ;
-        static const so_called_type_platform_math_num_fract mesh_z ;
-        static const so_called_type_platform_math_num_whole scale_in_frames ;
-        static const so_called_type_platform_math_num_whole small_size ;
-        static const so_called_type_platform_math_num_whole big_size ;
+        static const so_called_type_platform_math_num_fract final_scale = so_called_platform_math :: init_num_fract ( 1 , 2 ) ;
+        static const so_called_type_platform_math_num_fract canvas_r = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static const so_called_type_platform_math_num_fract canvas_g = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static const so_called_type_platform_math_num_fract canvas_b = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static const so_called_type_platform_math_num_fract canvas_a = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static const so_called_type_platform_math_num_fract mesh_x = so_called_platform_math :: init_num_fract ( - 1 , 2 ) ;
+        static const so_called_type_platform_math_num_fract mesh_y = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+        static const so_called_type_platform_math_num_fract mesh_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
+        static const so_called_type_platform_math_num_whole scale_in_frames = so_called_platform_math :: init_num_whole ( 60 ) ;
+        static const so_called_type_platform_math_num_whole small_size = so_called_platform_math :: init_num_whole ( 16 ) ;
+        static const so_called_type_platform_math_num_whole big_size = so_called_platform_math :: init_num_whole ( 32 ) ;
     }
 
     class tex_coords
