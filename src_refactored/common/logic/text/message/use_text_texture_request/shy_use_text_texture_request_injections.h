@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_text_use_text_texture_request_injections_included
+#define _shy_message_common_logic_text_use_text_texture_request_injections_included
+
+#include "./shy_use_text_texture_request.h"
+
+typedef shy_message_common_logic_text_use_text_texture_request so_called_message_common_logic_text_use_text_texture_request ;
+
+#endif

@@ -36,3 +36,7 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_ren
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_update )
 {
 }
+
+void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_use_text_texture_request )
+{
+}
