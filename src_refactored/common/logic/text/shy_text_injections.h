@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_text_injections_included
 #define _shy_common_logic_text_injections_included
 
+#include "./message/letter_big_tex_coords_request/shy_letter_big_tex_coords_request_injections.h"
+
 #include "../../engine/rasterizer/message/finalize_reply/shy_finalize_reply_injections.h"
 #include "../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 #include "../../engine/render/message/texture_create_reply/shy_texture_create_reply_injections.h"
