@@ -8,3 +8,7 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_init )
 {
 }
+
+void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply )
+{
+}

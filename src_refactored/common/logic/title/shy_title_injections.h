@@ -3,6 +3,7 @@
 
 #include "../core/message/use_ortho_projection_reply/shy_use_ortho_projection_reply_injections.h"
 #include "../fidget/message/render_reply/shy_render_reply_injections.h"
+#include "../text/message/letter_big_tex_coords_reply/shy_letter_big_tex_coords_reply_injections.h"
 
 #include "../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 #include "../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"

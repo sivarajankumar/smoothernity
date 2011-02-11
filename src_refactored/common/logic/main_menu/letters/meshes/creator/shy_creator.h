@@ -3,6 +3,7 @@ class _shy_common_logic_main_menu_letters_meshes_creator
 public :
     static void receive ( so_called_message_common_engine_render_mesh_create_reply ) ;
     static void receive ( so_called_message_common_init ) ;
+    static void receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply ) ;
 } ;
 
 typedef so_called_platform_scheduler 
