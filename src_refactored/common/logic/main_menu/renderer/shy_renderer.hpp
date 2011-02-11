@@ -8,3 +8,7 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
 void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_fidget_render_reply )
 {
 }
+
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_text_use_text_texture_reply )
+{
+}

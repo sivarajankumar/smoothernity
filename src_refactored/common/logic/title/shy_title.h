@@ -7,6 +7,7 @@ public :
     static void receive ( so_called_message_common_logic_core_use_ortho_projection_reply ) ;
     static void receive ( so_called_message_common_logic_fidget_render_reply ) ;
     static void receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply ) ;
+    static void receive ( so_called_message_common_logic_text_use_text_texture_reply ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_title > :: module shy_common_logic_title_scheduled ;

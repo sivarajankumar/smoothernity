@@ -3,6 +3,7 @@ class _shy_common_logic_main_menu_renderer
 public :
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_fidget_render_reply ) ;
+    static void receive ( so_called_message_common_logic_text_use_text_texture_reply ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_main_menu_renderer > :: module shy_common_logic_main_menu_renderer_scheduled ;
