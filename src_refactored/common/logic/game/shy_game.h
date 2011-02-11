@@ -15,6 +15,7 @@ public :
     static void receive ( so_called_message_common_logic_land_prepared ) ;
     static void receive ( so_called_message_common_logic_land_render_reply ) ;
     static void receive ( so_called_message_common_logic_sound_prepared ) ;
+    static void receive ( so_called_message_common_logic_text_render_reply ) ;
     static void receive ( so_called_message_common_logic_touch_prepared ) ;
 } ;
 

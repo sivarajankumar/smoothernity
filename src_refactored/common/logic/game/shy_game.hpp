@@ -57,6 +57,10 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_sound_pr
 {
 }
 
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_text_render_reply )
+{
+}
+
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_touch_prepared )
 {
 }
