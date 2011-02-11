@@ -391,6 +391,22 @@ void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_
 
 void _shy_common_logic_text :: receive ( so_called_message_common_init )
 {
+    shy_guts :: empty_texture_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: small_letters_rasterized = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: big_letters_rasterized = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: rasterize_finalize_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: rasterize_finalize_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: texture_create_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: text_mesh_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: text_prepare_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: scale_frames = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: letter_size_x = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: letter_size_y = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: origin_x = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: origin_y = so_called_platform_math_consts :: whole_0 ;
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_request )
