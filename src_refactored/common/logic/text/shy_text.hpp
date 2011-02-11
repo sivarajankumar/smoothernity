@@ -32,3 +32,7 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_pre
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_render_request )
 {
 }
+
+void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_update )
+{
+}
