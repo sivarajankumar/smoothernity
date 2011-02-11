@@ -3,6 +3,7 @@
 
 #include "./message/letter_big_tex_coords_request/shy_letter_big_tex_coords_request_injections.h"
 #include "./message/letter_small_tex_coords_request/shy_letter_small_tex_coords_request_injections.h"
+#include "./message/prepare_permit/shy_prepare_permit_injections.h"
 
 #include "../../engine/rasterizer/message/finalize_reply/shy_finalize_reply_injections.h"
 #include "../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"

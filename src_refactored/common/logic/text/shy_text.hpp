@@ -24,3 +24,7 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_let
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_letter_small_tex_coords_request )
 {
 }
+
+void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_prepare_permit )
+{
+}

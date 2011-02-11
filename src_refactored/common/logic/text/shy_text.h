@@ -7,6 +7,7 @@ public :
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_text_letter_big_tex_coords_request ) ;
     static void receive ( so_called_message_common_logic_text_letter_small_tex_coords_request ) ;
+    static void receive ( so_called_message_common_logic_text_prepare_permit ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_text > :: module shy_common_logic_text_scheduled ;
