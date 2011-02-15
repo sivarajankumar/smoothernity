@@ -667,6 +667,12 @@ void shy_guts :: rasterize_ellipse_in_rect
     , so_called_type_platform_math_num_whole y2
     )
 {
+    so_called_message_common_engine_rasterizer_draw_ellipse_in_rect rasterize_ellipse_in_rect_msg ;
+    rasterize_ellipse_in_rect_msg . x1 = x1 ;
+    rasterize_ellipse_in_rect_msg . y1 = y1 ;
+    rasterize_ellipse_in_rect_msg . x2 = x2 ;
+    rasterize_ellipse_in_rect_msg . y2 = y2 ;
+    so_called_sender_common_engine_rasterizer_draw_ellipse_in_rect :: send ( rasterize_ellipse_in_rect_msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_color 
@@ -696,6 +702,14 @@ void shy_guts :: rasterize_triangle
     , so_called_type_platform_math_num_whole y3
     )
 {
+    so_called_message_common_engine_rasterizer_draw_triangle rasterize_triangle_msg ;
+    rasterize_triangle_msg . x1 = x1 ;
+    rasterize_triangle_msg . y1 = y1 ;
+    rasterize_triangle_msg . x2 = x2 ;
+    rasterize_triangle_msg . y2 = y2 ;
+    rasterize_triangle_msg . x3 = x3 ;
+    rasterize_triangle_msg . y3 = y3 ;
+    so_called_sender_common_engine_rasterizer_draw_triangle :: send ( rasterize_triangle_msg ) ;
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_engine_rasterizer_finalize_reply )
