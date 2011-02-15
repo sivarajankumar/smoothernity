@@ -379,6 +379,11 @@ void shy_guts :: rasterize_triangle
 
 void _shy_common_logic_text :: receive ( so_called_message_common_engine_rasterizer_finalize_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: rasterize_finalize_requested ) )
+    {
+        shy_guts :: rasterize_finalize_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: rasterize_finalize_replied = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
