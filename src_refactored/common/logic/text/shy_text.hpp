@@ -409,8 +409,27 @@ void _shy_common_logic_text :: receive ( so_called_message_common_init )
     shy_guts :: origin_y = so_called_platform_math_consts :: whole_0 ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_request )
+void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_request msg )
 {
+    so_called_message_common_logic_text_letter_big_tex_coords_reply reply_msg ;
+    reply_msg . letter = msg . letter ;
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_mesh_created ) )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: tex_coords > coords ;
+        so_called_platform_static_array :: element_ptr ( coords , shy_guts :: letters_big , msg . letter . _letter_id ) ;
+        reply_msg . left = coords . get ( ) . left ;
+        reply_msg . bottom = coords . get ( ) . bottom ;
+        reply_msg . right = coords . get ( ) . right ;
+        reply_msg . top = coords . get ( ) . top ;
+    }
+    else
+    {
+        reply_msg . left = so_called_platform_math_consts :: fract_0 ;
+        reply_msg . bottom = so_called_platform_math_consts :: fract_0 ;
+        reply_msg . right = so_called_platform_math_consts :: fract_0 ;
+        reply_msg . top = so_called_platform_math_consts :: fract_0 ;
+    }
+    so_called_sender_common_logic_text_letter_big_tex_coords_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_letter_small_tex_coords_request )
