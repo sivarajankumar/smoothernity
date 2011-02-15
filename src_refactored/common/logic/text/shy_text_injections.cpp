@@ -14,6 +14,7 @@
 #include "../../engine/render/sender/mesh_finalize/shy_mesh_finalize_injections.h"
 #include "../../engine/render/sender/mesh_render/shy_mesh_render_injections.h"
 #include "../../engine/render/sender/mesh_set_transform/shy_mesh_set_transform_injections.h"
+#include "../../engine/render/sender/mesh_set_vertex_position/shy_mesh_set_vertex_position_injections.h"
 #include "../../engine/render/sender/texture_create_request/shy_texture_create_request_injections.h"
 #include "../../engine/render/sender/texture_finalize/shy_texture_finalize_injections.h"
 #include "../../engine/render/sender/texture_select/shy_texture_select_injections.h"
