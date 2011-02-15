@@ -14,6 +14,7 @@
 #include "../../engine/render/sender/mesh_finalize/shy_mesh_finalize_injections.h"
 #include "../../engine/render/sender/mesh_render/shy_mesh_render_injections.h"
 #include "../../engine/render/sender/mesh_set_transform/shy_mesh_set_transform_injections.h"
+#include "../../engine/render/sender/mesh_set_triangle_strip_index_value/shy_mesh_set_triangle_strip_index_value_injections.h"
 #include "../../engine/render/sender/mesh_set_vertex_color/shy_mesh_set_vertex_color_injections.h"
 #include "../../engine/render/sender/mesh_set_vertex_position/shy_mesh_set_vertex_position_injections.h"
 #include "../../engine/render/sender/mesh_set_vertex_tex_coord/shy_mesh_set_vertex_tex_coord_injections.h"
