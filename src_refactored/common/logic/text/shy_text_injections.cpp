@@ -10,6 +10,7 @@
 
 #include "../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../engine/rasterizer/sender/draw_ellipse_in_rect/shy_draw_ellipse_in_rect_injections.h"
+#include "../../engine/rasterizer/sender/draw_rect/shy_draw_rect_injections.h"
 #include "../../engine/rasterizer/sender/draw_triangle/shy_draw_triangle_injections.h"
 #include "../../engine/rasterizer/sender/finalize_request/shy_finalize_request_injections.h"
 #include "../../engine/rasterizer/sender/use_texel/shy_use_texel_injections.h"

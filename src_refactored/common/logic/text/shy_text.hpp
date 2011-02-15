@@ -658,6 +658,12 @@ void shy_guts :: rasterize_rect
     , so_called_type_platform_math_num_whole y2
     )
 {
+    so_called_message_common_engine_rasterizer_draw_rect rasterize_rect_msg ;
+    rasterize_rect_msg . x1 = x1 ;
+    rasterize_rect_msg . y1 = y1 ;
+    rasterize_rect_msg . x2 = x2 ;
+    rasterize_rect_msg . y2 = y2 ;
+    so_called_sender_common_engine_rasterizer_draw_rect :: send ( rasterize_rect_msg ) ;
 }
 
 void shy_guts :: rasterize_ellipse_in_rect 
