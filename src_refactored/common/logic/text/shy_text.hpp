@@ -392,8 +392,15 @@ void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_
     }
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_texture_create_reply )
+void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: texture_create_requested ) )
+    {
+        shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: texture_create_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: text_texture_id = msg . texture ;
+        shy_guts :: proceed_with_create_text ( ) ;
+    }
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_init )
