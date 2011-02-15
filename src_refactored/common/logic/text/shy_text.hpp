@@ -355,6 +355,22 @@ void shy_guts :: prepare_rasterizer_for_drawing ( )
 
 void shy_guts :: next_letter_col ( )
 {
+    so_called_type_platform_math_num_whole delta_x ;
+    so_called_type_platform_math_num_whole texture_width ;
+    so_called_type_platform_math_num_whole right_limit ;
+
+    texture_width = so_called_common_engine_render_consts :: texture_width ;
+    so_called_platform_math :: div_wholes ( delta_x , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_8 ) ;
+    so_called_platform_math :: add_to_whole ( shy_guts :: origin_x , shy_guts :: letter_size_x ) ;
+    so_called_platform_math :: add_to_whole ( shy_guts :: origin_x , delta_x ) ;
+    so_called_platform_math :: sub_wholes ( right_limit , texture_width , shy_guts :: letter_size_x ) ;
+    if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( shy_guts :: origin_x , right_limit ) )
+    {
+        so_called_type_platform_math_num_whole delta_y ;
+        so_called_platform_math :: div_wholes ( delta_y , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_4 ) ;
+        so_called_platform_math :: sub_from_whole ( shy_guts :: origin_y , delta_y ) ;
+        shy_guts :: next_letter_row ( ) ;
+    }
 }
 
 void shy_guts :: next_letter_row ( )
