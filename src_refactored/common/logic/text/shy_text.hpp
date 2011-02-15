@@ -452,6 +452,58 @@ void shy_guts :: rasterize_font_english_A ( )
 
 void shy_guts :: rasterize_font_english_B ( )
 {
+    shy_guts :: prepare_rasterizer_for_drawing ( ) ;
+    
+    so_called_type_platform_math_num_whole ellipse_y_top ;
+    so_called_type_platform_math_num_whole ellipse_y_mid ;
+    so_called_type_platform_math_num_whole ellipse_x_right ;
+    so_called_platform_math :: sub_wholes ( ellipse_y_top , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_math :: div_wholes ( ellipse_y_mid , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: sub_wholes ( ellipse_x_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_1 ) ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_ellipse_in_rect ( so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 , ellipse_x_right , ellipse_y_mid ) ;
+    shy_guts :: rasterize_ellipse_in_rect ( so_called_platform_math_consts :: whole_0 , ellipse_y_mid , ellipse_x_right , ellipse_y_top ) ;
+
+    so_called_type_platform_math_num_whole spine_right ;
+    so_called_type_platform_math_num_whole spine_top ;
+    so_called_platform_math :: div_wholes ( spine_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: sub_wholes ( spine_top , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_1 ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_rect ( so_called_platform_math_consts :: whole_0 , spine_top , spine_right , so_called_platform_math_consts :: whole_0 ) ;
+    
+    so_called_type_platform_math_num_whole hole_divider ;
+    so_called_type_platform_math_num_whole hole_left ;
+    so_called_type_platform_math_num_whole hole_right ;
+    so_called_type_platform_math_num_whole hole_top ;
+    so_called_type_platform_math_num_whole hole_bottom ;
+    so_called_type_platform_math_num_whole hole_height ;
+    so_called_type_platform_math_num_whole hole_top_minus_height ;
+    so_called_type_platform_math_num_whole hole_bottom_plus_height ;
+    so_called_platform_math :: make_num_whole ( hole_divider , 16 ) ;
+    so_called_platform_math :: mul_wholes ( hole_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_4 ) ;
+    so_called_platform_math :: div_whole_by ( hole_left , hole_divider ) ;
+    so_called_platform_math :: make_num_whole ( hole_right , 12 ) ;
+    so_called_platform_math :: mul_whole_by ( hole_right , shy_guts :: letter_size_x ) ;
+    so_called_platform_math :: div_whole_by ( hole_right , hole_divider ) ;
+    so_called_platform_math :: make_num_whole ( hole_top , 13 ) ;
+    so_called_platform_math :: mul_whole_by ( hole_top , shy_guts :: letter_size_y ) ;
+    so_called_platform_math :: div_whole_by ( hole_top , hole_divider ) ;
+    so_called_platform_math :: mul_wholes ( hole_bottom , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_3 ) ;
+    so_called_platform_math :: div_whole_by ( hole_bottom , hole_divider ) ;
+    so_called_platform_math :: mul_wholes ( hole_height , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_3 ) ;
+    so_called_platform_math :: div_whole_by ( hole_height , hole_divider ) ;
+    so_called_platform_math :: sub_wholes ( hole_top_minus_height , hole_top , hole_height ) ;
+    so_called_platform_math :: add_wholes ( hole_bottom_plus_height , hole_bottom , hole_height ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_ellipse_in_rect ( hole_left , hole_top , hole_right , hole_top_minus_height ) ;
+    shy_guts :: rasterize_ellipse_in_rect ( hole_left , hole_bottom , hole_right , hole_bottom_plus_height ) ;
+    
+    so_called_type_platform_math_num_whole hole_center_x ;
+    so_called_platform_math :: add_wholes ( hole_center_x , hole_left , hole_right ) ;
+    so_called_platform_math :: div_whole_by ( hole_center_x , so_called_platform_math_consts :: whole_2 ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_rect ( hole_left , hole_top , hole_center_x , hole_top_minus_height ) ;
+    shy_guts :: rasterize_rect ( hole_left , hole_bottom , hole_center_x , hole_bottom_plus_height ) ;    
 }
 
 void shy_guts :: rasterize_font_english_C ( )
