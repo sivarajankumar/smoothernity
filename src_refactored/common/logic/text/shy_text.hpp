@@ -375,6 +375,8 @@ void shy_guts :: next_letter_col ( )
 
 void shy_guts :: next_letter_row ( )
 {
+    so_called_platform_math :: sub_from_whole ( shy_guts :: origin_y , shy_guts :: letter_size_y ) ;
+    shy_guts :: origin_x = so_called_platform_math_consts :: whole_0 ;
 }
 
 void shy_guts :: rasterize_font_english_A ( )
