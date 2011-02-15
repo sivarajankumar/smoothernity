@@ -170,6 +170,59 @@ void shy_guts :: create_text_texture ( )
 
 void shy_guts :: proceed_with_create_text ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_prepare_permitted ) )
+    {
+        shy_guts :: text_prepare_permitted = so_called_platform_math_consts :: whole_false ;
+        
+        shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_engine_render_texture_create_request :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
+        
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+        mesh_create_msg . vertices = so_called_platform_math_consts :: whole_4 ;
+        mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
+        mesh_create_msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
+        so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_replied )
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: texture_create_replied )
+       )
+    {
+        shy_guts :: mesh_create_replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: texture_create_replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: create_text_mesh ( ) ;
+        shy_guts :: create_text_texture ( ) ;
+        shy_guts :: empty_texture_created = so_called_platform_math_consts :: whole_true ;
+    }
+    else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: empty_texture_created ) )
+    {
+        shy_guts :: empty_texture_created = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: small_letters_rasterized = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: rasterize_english_alphabet ( shy_guts :: consts :: small_size , shy_guts :: consts :: small_size , shy_guts :: letters_small ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: small_letters_rasterized ) )
+    {
+        shy_guts :: small_letters_rasterized = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: big_letters_rasterized = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: rasterize_english_alphabet ( shy_guts :: consts :: big_size , shy_guts :: consts :: big_size , shy_guts :: letters_big ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: big_letters_rasterized ) )
+    {
+        shy_guts :: big_letters_rasterized = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: rasterize_finalize_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_engine_rasterizer_finalize_request :: send ( so_called_message_common_engine_rasterizer_finalize_request ( ) ) ;
+    }
+    else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: rasterize_finalize_replied ) )
+    {
+        shy_guts :: rasterize_finalize_replied = so_called_platform_math_consts :: whole_false ;
+        
+        so_called_message_common_engine_render_texture_finalize texture_finalize_msg ;
+        texture_finalize_msg . texture = shy_guts :: text_texture_id ;
+        so_called_sender_common_engine_render_texture_finalize :: send ( texture_finalize_msg ) ;
+        
+        shy_guts :: text_mesh_created = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_text_prepared :: send ( so_called_message_common_logic_text_prepared ( ) ) ;
+    }
 }
 
 void shy_guts :: prepare_rasterizer_for_drawing ( )
