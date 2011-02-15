@@ -457,10 +457,14 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_let
 
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_prepare_permit )
 {
+    shy_guts :: text_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_render_request )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_mesh_created ) )
+        shy_guts :: render_text_mesh ( ) ;
+    so_called_sender_common_logic_text_render_reply :: send ( so_called_message_common_logic_text_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_update )

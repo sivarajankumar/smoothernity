@@ -2,6 +2,7 @@
 
 #include "./sender/letter_big_tex_coords_reply/shy_letter_big_tex_coords_reply_injections.h"
 #include "./sender/letter_small_tex_coords_reply/shy_letter_small_tex_coords_reply_injections.h"
+#include "./sender/render_reply/shy_render_reply_injections.h"
 #include "./sender/use_text_texture_reply/shy_use_text_texture_reply_injections.h"
 
 #include "../../engine/render/sender/texture_select/shy_texture_select_injections.h"
