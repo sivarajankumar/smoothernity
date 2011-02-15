@@ -546,6 +546,37 @@ void shy_guts :: rasterize_letter
     , shy_guts :: letters_tex_coords & letters_tex_coords 
     )
 {
+    so_called_type_platform_math_num_whole match ;
+
+    typedef so_called_common_logic_text_consts :: alphabet_english eng ;
+
+    shy_guts :: store_tex_coords ( letter , letters_tex_coords ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: A ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_A ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: B ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_B ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: C ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_C ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: D ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_D ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: E ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_E ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: F ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_F ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: G ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_G ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: H ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_H ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: I ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_I ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: J ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_J ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: K ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_K ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: L ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_L ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: M ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_M ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: N ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_N ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: O ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_O ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: P ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_P ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: Q ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_Q ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: R ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_R ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: S ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_S ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: T ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_T ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: U ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_U ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: V ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_V ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: W ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_W ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: X ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_X ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: Y ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_Y ( ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( match , letter , eng :: Z ) ; if ( so_called_platform_conditions :: whole_is_true ( match ) ) shy_guts :: rasterize_font_english_Z ( ) ;
 }
 
 void shy_guts :: mesh_set_vertex_tex_coord 
