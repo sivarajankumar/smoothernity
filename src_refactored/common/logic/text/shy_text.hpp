@@ -504,6 +504,36 @@ void shy_guts :: store_tex_coords
     , shy_guts :: letters_tex_coords & letters_tex_coords 
     )
 {
+    so_called_type_platform_math_num_whole letter_id ;
+    so_called_type_platform_math_num_whole whole_left ;
+    so_called_type_platform_math_num_whole whole_bottom ;
+    so_called_type_platform_math_num_whole whole_right ;
+    so_called_type_platform_math_num_whole whole_top ;
+    so_called_type_platform_math_num_whole whole_texture_width ;
+    so_called_type_platform_math_num_whole whole_texture_height ;
+    so_called_type_platform_math_num_fract fract_texture_width ;
+    so_called_type_platform_math_num_fract fract_texture_height ;
+    so_called_type_platform_pointer_data < shy_guts :: tex_coords > coords ;
+
+    so_called_common_logic_text_stateless :: get_letter_id ( letter_id , letter ) ;
+    so_called_platform_static_array :: element_ptr ( coords , letters_tex_coords , letter_id ) ;    
+    
+    whole_left = shy_guts :: origin_x ;
+    whole_bottom = shy_guts :: origin_y ;
+    so_called_platform_math :: add_wholes ( whole_right , shy_guts :: origin_x , shy_guts :: letter_size_x ) ;
+    so_called_platform_math :: add_wholes ( whole_top , shy_guts :: origin_y , shy_guts :: letter_size_y ) ;
+    whole_texture_width = so_called_common_engine_render_consts :: texture_width ;
+    whole_texture_height = so_called_common_engine_render_consts :: texture_height ;
+    so_called_platform_math :: make_fract_from_whole ( fract_texture_width , whole_texture_width ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_texture_height , whole_texture_height ) ;
+    so_called_platform_math :: make_fract_from_whole ( coords . get ( ) . left , whole_left ) ;
+    so_called_platform_math :: make_fract_from_whole ( coords . get ( ) . bottom , whole_bottom ) ;
+    so_called_platform_math :: make_fract_from_whole ( coords . get ( ) . right , whole_right ) ;
+    so_called_platform_math :: make_fract_from_whole ( coords . get ( ) . top , whole_top ) ;
+    so_called_platform_math :: div_fract_by ( coords . get ( ) . left , fract_texture_width ) ;
+    so_called_platform_math :: div_fract_by ( coords . get ( ) . bottom , fract_texture_height ) ;
+    so_called_platform_math :: div_fract_by ( coords . get ( ) . right , fract_texture_width ) ;
+    so_called_platform_math :: div_fract_by ( coords . get ( ) . top , fract_texture_height ) ;
 }
 
 void shy_guts :: rasterize_letter 

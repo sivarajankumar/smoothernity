@@ -13,3 +13,8 @@ so_called_type_common_logic_text_letter_id shy_common_logic_text_stateless :: in
     so_called_platform_math :: make_num_whole ( letter . _letter_id , num ) ;
     return letter ;
 }
+
+void shy_common_logic_text_stateless :: get_letter_id ( so_called_type_platform_math_num_whole & result , so_called_type_common_logic_text_letter_id letter )
+{
+    result = letter . _letter_id ;
+}

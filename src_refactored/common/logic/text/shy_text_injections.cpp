@@ -6,6 +6,7 @@
 #include "./sender/prepared/shy_prepared_injections.h"
 #include "./sender/render_reply/shy_render_reply_injections.h"
 #include "./sender/use_text_texture_reply/shy_use_text_texture_reply_injections.h"
+#include "./stateless/shy_stateless_injections.h"
 
 #include "../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../engine/rasterizer/sender/finalize_request/shy_finalize_request_injections.h"
