@@ -8,6 +8,7 @@
 
 #include "../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../engine/rasterizer/sender/finalize_request/shy_finalize_request_injections.h"
+#include "../../engine/render/consts/shy_consts_injections.h"
 #include "../../engine/render/sender/blend_disable/shy_blend_disable_injections.h"
 #include "../../engine/render/sender/blend_src_alpha_dst_one_minus_alpha/shy_blend_src_alpha_dst_one_minus_alpha_injections.h"
 #include "../../engine/render/sender/mesh_create_request/shy_mesh_create_request_injections.h"
@@ -21,6 +22,8 @@
 #include "../../engine/render/sender/texture_create_request/shy_texture_create_request_injections.h"
 #include "../../engine/render/sender/texture_finalize/shy_texture_finalize_injections.h"
 #include "../../engine/render/sender/texture_select/shy_texture_select_injections.h"
+#include "../../engine/render/sender/texture_set_texels_rect/shy_texture_set_texels_rect_injections.h"
+#include "../../engine/render/stateless/shy_stateless_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"

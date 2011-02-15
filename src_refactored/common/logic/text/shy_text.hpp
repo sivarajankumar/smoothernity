@@ -256,6 +256,40 @@ void shy_guts :: create_text_mesh ( )
 
 void shy_guts :: create_text_texture ( )
 {
+    so_called_type_platform_math_num_whole texture_width ;
+    so_called_type_platform_math_num_whole texture_height ;
+    so_called_type_platform_math_num_fract filler_r ;
+    so_called_type_platform_math_num_fract filler_g ;
+    so_called_type_platform_math_num_fract filler_b ;
+    so_called_type_platform_math_num_fract filler_a ;
+    so_called_type_platform_math_num_fract eraser_r ;
+    so_called_type_platform_math_num_fract eraser_g ;
+    so_called_type_platform_math_num_fract eraser_b ;
+    so_called_type_platform_math_num_fract eraser_a ;
+
+    texture_width = so_called_common_engine_render_consts :: texture_width ;
+    texture_height = so_called_common_engine_render_consts :: texture_height ;
+    filler_r = so_called_platform_math_consts :: fract_1 ;
+    filler_g = so_called_platform_math_consts :: fract_1 ;
+    filler_b = so_called_platform_math_consts :: fract_1 ;
+    filler_a = so_called_platform_math_consts :: fract_1 ;
+    eraser_r = so_called_platform_math_consts :: fract_0 ;
+    eraser_g = so_called_platform_math_consts :: fract_0 ;
+    eraser_b = so_called_platform_math_consts :: fract_0 ;
+    eraser_a = so_called_platform_math_consts :: fract_0 ;
+    so_called_common_engine_render_stateless :: set_texel_color ( shy_guts :: filler , filler_r , filler_g , filler_b , filler_a ) ;
+    so_called_common_engine_render_stateless :: set_texel_color ( shy_guts :: eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
+    
+    so_called_message_common_engine_render_texture_set_texels_rect set_texels_msg ;
+    set_texels_msg . texel = shy_guts :: eraser ;
+    set_texels_msg . texture = shy_guts :: text_texture_id ;
+    set_texels_msg . left = so_called_platform_math_consts :: whole_0 ;
+    set_texels_msg . bottom = so_called_platform_math_consts :: whole_0 ;
+    so_called_platform_math :: sub_wholes ( set_texels_msg . right , texture_width , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_math :: sub_wholes ( set_texels_msg . top , texture_height , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_sender_common_engine_render_texture_set_texels_rect :: send ( set_texels_msg ) ;
+    
+    shy_guts :: origin_y = texture_height ;
 }
 
 void shy_guts :: proceed_with_create_text ( )
