@@ -201,6 +201,57 @@ void shy_guts :: update_text_mesh ( )
 
 void shy_guts :: create_text_mesh ( )
 {
+    so_called_type_platform_math_num_fract x_left ;
+    so_called_type_platform_math_num_fract x_right ;
+    so_called_type_platform_math_num_fract y_top ;
+    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_type_platform_math_num_fract u_left ;
+    so_called_type_platform_math_num_fract u_right ;
+    so_called_type_platform_math_num_fract v_top ;
+    so_called_type_platform_math_num_fract v_bottom ;
+    so_called_type_platform_math_num_fract z ;
+    so_called_type_platform_math_num_fract color_r ;
+    so_called_type_platform_math_num_fract color_g ;
+    so_called_type_platform_math_num_fract color_b ;
+    so_called_type_platform_math_num_fract color_a ;
+
+    x_left = so_called_platform_math_consts :: fract_minus_1 ;
+    x_right = so_called_platform_math_consts :: fract_1 ;
+    y_top = so_called_platform_math_consts :: fract_1 ;
+    y_bottom = so_called_platform_math_consts :: fract_minus_1 ;
+    u_left = so_called_platform_math_consts :: fract_0 ;
+    u_right = so_called_platform_math_consts :: fract_1 ;
+    v_top = so_called_platform_math_consts :: fract_1 ;
+    v_bottom = so_called_platform_math_consts :: fract_0 ;
+    z = so_called_platform_math_consts :: fract_0 ;
+    color_r = shy_guts :: consts :: canvas_r ;
+    color_g = shy_guts :: consts :: canvas_g ;
+    color_b = shy_guts :: consts :: canvas_b ;
+    color_a = shy_guts :: consts :: canvas_a ;
+
+    shy_guts :: mesh_set_vertex_position            ( so_called_platform_math_consts :: whole_0 , x_left , y_top , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( so_called_platform_math_consts :: whole_0 , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( so_called_platform_math_consts :: whole_0 , u_left , v_top ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( so_called_platform_math_consts :: whole_1 , x_left , y_bottom , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( so_called_platform_math_consts :: whole_1 , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( so_called_platform_math_consts :: whole_1 , u_left , v_bottom ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( so_called_platform_math_consts :: whole_1 , so_called_platform_math_consts :: whole_1 ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( so_called_platform_math_consts :: whole_2 , x_right , y_top , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( so_called_platform_math_consts :: whole_2 , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( so_called_platform_math_consts :: whole_2 , u_right , v_top ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( so_called_platform_math_consts :: whole_2 , so_called_platform_math_consts :: whole_2 ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( so_called_platform_math_consts :: whole_3 , x_right , y_bottom , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( so_called_platform_math_consts :: whole_3 , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( so_called_platform_math_consts :: whole_3 , u_right , v_bottom ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( so_called_platform_math_consts :: whole_3 , so_called_platform_math_consts :: whole_3 ) ;
+
+    so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
+    mesh_finalize_msg . mesh = shy_guts :: text_mesh_id ;
+    so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
 }
 
 void shy_guts :: create_text_texture ( )
