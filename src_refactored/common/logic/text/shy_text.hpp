@@ -469,6 +469,10 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_ren
 
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_update )
 {
+    if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: text_mesh_created ) )
+        shy_guts :: proceed_with_create_text ( ) ;    
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_mesh_created ) )
+        shy_guts :: update_text_mesh ( ) ;
 }
 
 void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_use_text_texture_request )
