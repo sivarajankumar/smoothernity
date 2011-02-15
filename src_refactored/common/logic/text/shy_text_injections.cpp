@@ -1,5 +1,6 @@
 #include "./shy_text_injections.h"
 
+#include "./consts/shy_consts_injections.h"
 #include "./sender/letter_big_tex_coords_reply/shy_letter_big_tex_coords_reply_injections.h"
 #include "./sender/letter_small_tex_coords_reply/shy_letter_small_tex_coords_reply_injections.h"
 #include "./sender/prepared/shy_prepared_injections.h"

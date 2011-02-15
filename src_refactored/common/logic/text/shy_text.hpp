@@ -515,6 +515,37 @@ void shy_guts :: rasterize_english_alphabet
     , shy_guts :: letters_tex_coords & letters_tex_coords 
     )
 {
+    typedef so_called_common_logic_text_consts :: alphabet_english eng ;
+    shy_guts :: letter_size_x = letter_size_x ;
+    shy_guts :: letter_size_y = letter_size_y ;
+    shy_guts :: next_letter_row ( ) ;
+    shy_guts :: rasterize_letter ( eng :: A , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: B , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: C , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: D , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: E , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: F , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: G , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: H , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: I , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: J , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: K , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: L , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: M , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: N , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: O , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: P , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: Q , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: R , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: S , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: T , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: U , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: V , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: W , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: X , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: Y , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: rasterize_letter ( eng :: Z , letters_tex_coords ) ; shy_guts :: next_letter_col ( ) ;
+    shy_guts :: next_letter_row ( ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 
