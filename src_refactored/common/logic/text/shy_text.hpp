@@ -351,6 +351,11 @@ void shy_guts :: proceed_with_create_text ( )
 
 void shy_guts :: prepare_rasterizer_for_drawing ( )
 {
+    so_called_message_common_engine_rasterizer_use_texture rasterize_use_texture_msg ;
+    rasterize_use_texture_msg . texture = shy_guts :: text_texture_id ;
+    rasterize_use_texture_msg . origin_x = shy_guts :: origin_x ;
+    rasterize_use_texture_msg . origin_y = shy_guts :: origin_y ;
+    so_called_sender_common_engine_rasterizer_use_texture :: send ( rasterize_use_texture_msg ) ;
 }
 
 void shy_guts :: next_letter_col ( )
