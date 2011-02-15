@@ -490,6 +490,9 @@ void shy_guts :: rasterize_font_english_Z ( )
 
 void shy_guts :: rasterize_use_texel ( so_called_type_platform_render_texel_data texel )
 {
+    so_called_message_common_engine_rasterizer_use_texel rasterize_use_texel_msg ;
+    rasterize_use_texel_msg . texel = texel ;
+    so_called_sender_common_engine_rasterizer_use_texel :: send ( rasterize_use_texel_msg ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value

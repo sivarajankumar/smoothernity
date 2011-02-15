@@ -10,6 +10,7 @@
 
 #include "../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../engine/rasterizer/sender/finalize_request/shy_finalize_request_injections.h"
+#include "../../engine/rasterizer/sender/use_texel/shy_use_texel_injections.h"
 #include "../../engine/rasterizer/sender/use_texture/shy_use_texture_injections.h"
 #include "../../engine/render/consts/shy_consts_injections.h"
 #include "../../engine/render/sender/blend_disable/shy_blend_disable_injections.h"
