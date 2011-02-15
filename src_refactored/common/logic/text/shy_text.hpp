@@ -154,6 +154,18 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: render_text_mesh ( )
 {
+    so_called_sender_common_engine_render_blend_src_alpha_dst_one_minus_alpha :: send ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
+    {
+        so_called_message_common_engine_render_texture_select texture_select_msg ;
+        texture_select_msg . texture = shy_guts :: text_texture_id ;
+        so_called_sender_common_engine_render_texture_select :: send ( texture_select_msg ) ;
+    }
+    {
+        so_called_message_common_engine_render_mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = shy_guts :: text_mesh_id ;
+        so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+    }
+    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
 }
 
 void shy_guts :: update_text_mesh ( )
