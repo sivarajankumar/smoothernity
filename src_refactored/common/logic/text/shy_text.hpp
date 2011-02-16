@@ -1324,6 +1324,26 @@ void shy_guts :: rasterize_font_english_W ( )
 
 void shy_guts :: rasterize_font_english_X ( )
 {
+    shy_guts :: prepare_rasterizer_for_drawing ( ) ;
+
+    so_called_type_platform_math_num_whole left_1 ;
+    so_called_type_platform_math_num_whole right_1 ;
+    so_called_type_platform_math_num_whole left_2 ;
+    so_called_type_platform_math_num_whole right_2 ;
+    so_called_type_platform_math_num_whole top_y ;
+    so_called_type_platform_math_num_whole bottom_y ;
+    left_1 = so_called_platform_math_consts :: whole_0 ;
+    so_called_platform_math :: div_wholes ( right_1 , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_4 ) ;    
+    so_called_platform_math :: mul_wholes ( left_2 , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_3 ) ;
+    so_called_platform_math :: div_whole_by ( left_2 , so_called_platform_math_consts :: whole_4 ) ;    
+    so_called_platform_math :: sub_wholes ( right_2 , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_1 ) ;    
+    so_called_platform_math :: sub_wholes ( top_y , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_1 ) ;    
+    bottom_y = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_triangle ( left_1 , top_y , right_1 , top_y , right_2 , bottom_y ) ;
+    shy_guts :: rasterize_triangle ( left_1 , top_y , left_2 , bottom_y , right_2 , bottom_y ) ;
+    shy_guts :: rasterize_triangle ( left_2 , top_y , right_2 , top_y , right_1 , bottom_y ) ;
+    shy_guts :: rasterize_triangle ( left_2 , top_y , left_1 , bottom_y , right_1 , bottom_y ) ;
 }
 
 void shy_guts :: rasterize_font_english_Y ( )
