@@ -1178,6 +1178,34 @@ void shy_guts :: rasterize_font_english_S ( )
 
 void shy_guts :: rasterize_font_english_T ( )
 {
+    shy_guts :: prepare_rasterizer_for_drawing ( ) ;
+    
+    so_called_type_platform_math_num_whole top_limit ;
+    so_called_type_platform_math_num_whole right ;
+    so_called_platform_math :: sub_wholes ( top_limit , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_math :: mul_wholes ( right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_6 ) ;
+    so_called_platform_math :: div_whole_by ( right , so_called_platform_math_consts :: whole_7 ) ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_rect ( so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 , right , top_limit ) ;
+    
+    so_called_type_platform_math_num_whole hole_left ;
+    so_called_type_platform_math_num_whole hole_right ;
+    so_called_type_platform_math_num_whole hole_mid_left ;
+    so_called_type_platform_math_num_whole hole_mid_right ;
+    so_called_type_platform_math_num_whole hole_top ;
+    so_called_type_platform_math_num_whole hole_bottom ;
+    hole_left = so_called_platform_math_consts :: whole_0 ;
+    hole_right = right ;    
+    so_called_platform_math :: mul_wholes ( hole_mid_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: div_whole_by ( hole_mid_left , so_called_platform_math_consts :: whole_7 ) ;    
+    so_called_platform_math :: mul_wholes ( hole_mid_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_4 ) ;
+    so_called_platform_math :: div_whole_by ( hole_mid_right , so_called_platform_math_consts :: whole_7 ) ;    
+    so_called_platform_math :: mul_wholes ( hole_top , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_4 ) ;
+    so_called_platform_math :: div_whole_by ( hole_top , so_called_platform_math_consts :: whole_5 ) ;    
+    hole_bottom = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_rect ( hole_left , hole_top , hole_mid_left , hole_bottom ) ;
+    shy_guts :: rasterize_rect ( hole_mid_right , hole_top , hole_right , hole_bottom ) ;
 }
 
 void shy_guts :: rasterize_font_english_U ( )
