@@ -20,3 +20,7 @@ void _shy_common_logic_application_fsm :: receive ( so_called_message_common_log
 void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_title_created )
 {
 }
+
+void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_title_finished )
+{
+}
