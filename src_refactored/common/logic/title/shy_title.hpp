@@ -28,3 +28,7 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_le
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_use_text_texture_reply )
 {
 }
+
+void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_launch_permit )
+{
+}
