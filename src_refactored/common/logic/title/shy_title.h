@@ -10,6 +10,7 @@ public :
     static void receive ( so_called_message_common_logic_text_use_text_texture_reply ) ;
     static void receive ( so_called_message_common_logic_title_launch_permit ) ;
     static void receive ( so_called_message_common_logic_title_render ) ;
+    static void receive ( so_called_message_common_logic_title_update ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_title > :: module shy_common_logic_title_scheduled ;
