@@ -1078,6 +1078,102 @@ void shy_guts :: rasterize_font_english_R ( )
 
 void shy_guts :: rasterize_font_english_S ( )
 {
+    shy_guts :: prepare_rasterizer_for_drawing ( ) ;
+    
+    so_called_type_platform_math_num_whole circle_high_left ;
+    so_called_type_platform_math_num_whole circle_high_right ;
+    so_called_type_platform_math_num_whole circle_high_top ;
+    so_called_type_platform_math_num_whole circle_high_bottom ;
+    circle_high_left = so_called_platform_math_consts :: whole_0 ;
+    so_called_platform_math :: div_wholes ( circle_high_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_2 ) ;    
+    so_called_platform_math :: sub_wholes ( circle_high_top , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_1 ) ;    
+    so_called_platform_math :: mul_wholes ( circle_high_bottom , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: div_whole_by ( circle_high_bottom , so_called_platform_math_consts :: whole_5 ) ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_ellipse_in_rect ( circle_high_left , circle_high_top , circle_high_right , circle_high_bottom ) ;
+    
+    so_called_type_platform_math_num_whole circle_low_left ;
+    so_called_type_platform_math_num_whole circle_low_right ;
+    so_called_type_platform_math_num_whole circle_low_top ;
+    so_called_type_platform_math_num_whole circle_low_bottom ;
+    so_called_platform_math :: div_wholes ( circle_low_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_2 ) ;    
+    so_called_platform_math :: sub_wholes ( circle_low_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_1 ) ;    
+    so_called_platform_math :: mul_wholes ( circle_low_top , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_3 ) ;
+    so_called_platform_math :: div_whole_by ( circle_low_top , so_called_platform_math_consts :: whole_5 ) ;    
+    circle_low_bottom = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: rasterize_ellipse_in_rect ( circle_low_left , circle_low_top , circle_low_right , circle_low_bottom ) ;
+
+    so_called_type_platform_math_num_whole board_mid_left ;
+    so_called_type_platform_math_num_whole board_mid_right ;
+    so_called_type_platform_math_num_whole board_mid_top ;
+    so_called_type_platform_math_num_whole board_mid_bottom ;
+    so_called_platform_math :: div_wholes ( board_mid_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_4 ) ;    
+    so_called_platform_math :: mul_wholes ( board_mid_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_3 ) ;
+    so_called_platform_math :: div_whole_by ( board_mid_right , so_called_platform_math_consts :: whole_4 ) ;    
+    board_mid_top = circle_low_top ;
+    board_mid_bottom = circle_high_bottom ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_rect ( board_mid_left , board_mid_top , board_mid_right , board_mid_bottom ) ;
+    
+    so_called_type_platform_math_num_whole board_high_left ;
+    so_called_type_platform_math_num_whole board_high_right ;
+    so_called_type_platform_math_num_whole board_high_top ;
+    so_called_type_platform_math_num_whole board_high_bottom ;
+    board_high_left = board_mid_left ;    
+    so_called_platform_math :: mul_wholes ( board_high_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_8 ) ;
+    so_called_platform_math :: div_whole_by ( board_high_right , so_called_platform_math_consts :: whole_9 ) ;
+    so_called_platform_math :: sub_wholes ( board_high_top , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_1 ) ;    
+    so_called_platform_math :: mul_wholes ( board_high_bottom , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_4 ) ;
+    so_called_platform_math :: div_whole_by ( board_high_bottom , so_called_platform_math_consts :: whole_5 ) ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_rect ( board_high_left , board_high_top , board_high_right , board_high_bottom ) ;
+    
+    so_called_type_platform_math_num_whole board_low_left ;
+    so_called_type_platform_math_num_whole board_low_right ;
+    so_called_type_platform_math_num_whole board_low_top ;
+    so_called_type_platform_math_num_whole board_low_bottom ;
+    so_called_platform_math :: div_wholes ( board_low_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_9 ) ;    
+    board_low_right = board_mid_right ;
+    so_called_platform_math :: div_wholes ( board_low_top , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_5 ) ;    
+    board_low_bottom = so_called_platform_math_consts :: whole_0 ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_rect ( board_low_left , board_low_top , board_low_right , board_low_bottom ) ;
+        
+    so_called_type_platform_math_num_whole hole_high_left ;
+    so_called_type_platform_math_num_whole hole_high_right ;
+    so_called_type_platform_math_num_whole hole_high_top ;
+    so_called_type_platform_math_num_whole hole_high_bottom ;
+    so_called_platform_math :: div_wholes ( hole_high_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_6 ) ;    
+    so_called_platform_math :: div_wholes ( hole_high_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_3 ) ;    
+    so_called_platform_math :: sub_wholes ( hole_high_top , board_high_bottom , so_called_platform_math_consts :: whole_1 ) ;    
+    so_called_platform_math :: add_wholes ( hole_high_bottom , board_mid_top , so_called_platform_math_consts :: whole_1 ) ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_ellipse_in_rect ( hole_high_left , hole_high_top , hole_high_right , hole_high_bottom ) ;
+
+    so_called_type_platform_math_num_whole hole_low_left ;
+    so_called_type_platform_math_num_whole hole_low_right ;
+    so_called_type_platform_math_num_whole hole_low_top ;
+    so_called_type_platform_math_num_whole hole_low_bottom ;
+    so_called_platform_math :: mul_wholes ( hole_low_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: div_whole_by ( hole_low_left , so_called_platform_math_consts :: whole_3 ) ;    
+    so_called_platform_math :: mul_wholes ( hole_low_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_5 ) ;
+    so_called_platform_math :: div_whole_by ( hole_low_right , so_called_platform_math_consts :: whole_6 ) ;    
+    so_called_platform_math :: sub_wholes ( hole_low_top , board_mid_bottom , so_called_platform_math_consts :: whole_1 ) ;    
+    so_called_platform_math :: add_wholes ( hole_low_bottom , board_low_top , so_called_platform_math_consts :: whole_1 ) ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_ellipse_in_rect ( hole_low_left , hole_low_top , hole_low_right , hole_low_bottom ) ;
+    
+    so_called_type_platform_math_num_whole hole_high_center_x ;
+    so_called_platform_math :: add_wholes ( hole_high_center_x , hole_high_left , hole_high_right ) ;
+    so_called_platform_math :: div_whole_by ( hole_high_center_x , so_called_platform_math_consts :: whole_2 ) ;    
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_rect ( hole_high_center_x , hole_high_top , circle_high_right , hole_high_bottom ) ;
+    
+    so_called_type_platform_math_num_whole hole_low_center_x ;
+    so_called_platform_math :: add_wholes ( hole_low_center_x , hole_low_left , hole_low_right ) ;
+    so_called_platform_math :: div_whole_by ( hole_low_center_x , so_called_platform_math_consts :: whole_2 ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_rect ( circle_low_left , hole_low_top , hole_low_center_x , hole_low_bottom ) ;    
 }
 
 void shy_guts :: rasterize_font_english_T ( )
