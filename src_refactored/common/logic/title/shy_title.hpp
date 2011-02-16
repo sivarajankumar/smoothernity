@@ -32,3 +32,7 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_us
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_launch_permit )
 {
 }
+
+void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_render )
+{
+}
