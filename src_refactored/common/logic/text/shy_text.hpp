@@ -793,6 +793,36 @@ void shy_guts :: rasterize_font_english_J ( )
 
 void shy_guts :: rasterize_font_english_K ( )
 {
+    shy_guts :: prepare_rasterizer_for_drawing ( ) ;
+    
+    so_called_type_platform_math_num_whole top_limit ;
+    so_called_type_platform_math_num_whole right_limit ;
+    so_called_type_platform_math_num_whole half_size_y ;    
+    so_called_platform_math :: sub_wholes ( top_limit , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_math :: sub_wholes ( right_limit , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_math :: div_wholes ( half_size_y , shy_guts :: letter_size_y , so_called_platform_math_consts :: whole_2 ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_rect ( so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 , right_limit , top_limit ) ;
+
+    so_called_type_platform_math_num_whole hole_1_left ;
+    so_called_platform_math :: mul_wholes ( hole_1_left , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_3 ) ;
+    so_called_platform_math :: div_whole_by ( hole_1_left , so_called_platform_math_consts :: whole_9 ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_triangle ( hole_1_left , half_size_y , right_limit , top_limit , right_limit , so_called_platform_math_consts :: whole_0 ) ;
+
+    so_called_type_platform_math_num_whole hole_2_right ;
+    so_called_platform_math :: mul_wholes ( hole_2_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_6 ) ;
+    so_called_platform_math :: div_whole_by ( hole_2_right , so_called_platform_math_consts :: whole_9 ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_triangle ( so_called_platform_math_consts :: whole_0 , top_limit , hole_2_right , top_limit , so_called_platform_math_consts :: whole_0 , half_size_y ) ;
+
+    shy_guts :: rasterize_use_texel ( shy_guts :: eraser ) ;
+    shy_guts :: rasterize_triangle ( so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 , hole_2_right , so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 , half_size_y ) ;
+
+    so_called_type_platform_math_num_whole spine_right ;
+    so_called_platform_math :: div_wholes ( spine_right , shy_guts :: letter_size_x , so_called_platform_math_consts :: whole_5 ) ;
+    shy_guts :: rasterize_use_texel ( shy_guts :: filler ) ;
+    shy_guts :: rasterize_rect ( so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 , spine_right , top_limit ) ;
 }
 
 void shy_guts :: rasterize_font_english_L ( )
