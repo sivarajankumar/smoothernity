@@ -127,6 +127,14 @@ void shy_guts :: delete_all_meshes ( )
 
 void shy_guts :: prepare_to_appear ( )
 {
+    shy_guts :: desired_pos_angle = so_called_common_logic_title_consts :: appear_pos_angle_periods ;
+    so_called_platform_math :: mul_fract_by ( shy_guts :: desired_pos_angle , so_called_platform_math_consts :: fract_pi ) ;
+    so_called_platform_math :: mul_fracts ( shy_guts :: desired_rot_angle , so_called_platform_math_consts :: fract_2pi , so_called_platform_math_consts :: fract_3 ) ;
+    shy_guts :: rubber_first = so_called_common_logic_title_consts :: appear_rubber_first ;
+    shy_guts :: rubber_last = so_called_common_logic_title_consts :: appear_rubber_last ;
+    shy_guts :: disappear_at_frames = shy_guts :: consts :: never ;
+    shy_guts :: desired_scale = so_called_platform_math_consts :: fract_1 ;    
+    shy_guts :: desired_pos_radius_coeff = so_called_common_logic_title_consts :: spin_radius_in_letters ;
 }
 
 void shy_guts :: prepare_to_disappear ( )
