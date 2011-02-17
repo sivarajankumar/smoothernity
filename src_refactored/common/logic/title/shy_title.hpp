@@ -111,6 +111,20 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: title_create ( )
 {
+    typedef so_called_common_logic_text_consts :: alphabet_english eng ;
+    shy_guts :: add_letter ( eng :: S ) ;
+    shy_guts :: add_letter ( eng :: M ) ;
+    shy_guts :: add_letter ( eng :: O ) ;
+    shy_guts :: add_letter ( eng :: O ) ;
+    shy_guts :: add_letter ( eng :: T ) ;
+    shy_guts :: add_letter ( eng :: H ) ;
+    shy_guts :: add_letter ( eng :: E ) ;
+    shy_guts :: add_letter ( eng :: R ) ;
+    shy_guts :: add_letter ( eng :: N ) ;
+    shy_guts :: add_letter ( eng :: I ) ;
+    shy_guts :: add_letter ( eng :: T ) ;
+    shy_guts :: add_letter ( eng :: Y ) ;
+    shy_guts :: bake_next_letter ( ) ;
 }
 
 void shy_guts :: title_render ( )
@@ -139,6 +153,15 @@ void shy_guts :: prepare_to_appear ( )
 
 void shy_guts :: prepare_to_disappear ( )
 {
+    shy_guts :: desired_pos_radius_coeff = so_called_platform_math_consts :: fract_0 ;
+    shy_guts :: desired_pos_angle = so_called_common_logic_title_consts :: disappear_pos_angle_periods ;
+    so_called_platform_math :: mul_fract_by ( shy_guts :: desired_pos_angle , so_called_platform_math_consts :: fract_pi ) ;
+    so_called_platform_math :: mul_fracts ( shy_guts :: desired_rot_angle , so_called_platform_math_consts :: fract_2pi , so_called_platform_math_consts :: fract_6 ) ;
+    shy_guts :: rubber_first = so_called_common_logic_title_consts :: disappear_rubber_first ;
+    shy_guts :: rubber_last = so_called_common_logic_title_consts :: disappear_rubber_last ;
+    shy_guts :: desired_scale = so_called_platform_math_consts :: fract_0 ;    
+    shy_guts :: title_appeared = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: disappear_at_frames = so_called_common_logic_title_consts :: disappear_duration_in_frames ;
 }
 
 void shy_guts :: animate_appear ( )
