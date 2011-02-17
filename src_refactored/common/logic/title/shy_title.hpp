@@ -151,6 +151,40 @@ void shy_guts :: bake_next_letter ( )
 
 void shy_guts :: proceed_with_render ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_started ) )
+    {
+        shy_guts :: render_started = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: use_ortho_projection_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_core_use_ortho_projection_request :: send ( so_called_message_common_logic_core_use_ortho_projection_request ( ) ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_ortho_projection_replied ) )
+    {
+        shy_guts :: use_ortho_projection_replied = so_called_platform_math_consts :: whole_false ;
+        so_called_message_common_engine_render_clear_screen clear_screen_msg ;
+        clear_screen_msg . r = so_called_platform_math_consts :: fract_0 ;
+        clear_screen_msg . g = so_called_platform_math_consts :: fract_0 ;
+        clear_screen_msg . b = so_called_platform_math_consts :: fract_0 ;
+        so_called_sender_common_engine_render_clear_screen :: send ( clear_screen_msg ) ;
+        so_called_sender_common_engine_render_disable_depth_test :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
+        so_called_sender_common_engine_render_fog_disable :: send ( so_called_message_common_engine_render_fog_disable ( ) ) ;
+
+        shy_guts :: fidget_render_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_fidget_render_request :: send ( so_called_message_common_logic_fidget_render_request ( ) ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_render_replied ) )
+    {
+        shy_guts :: fidget_render_replied = so_called_platform_math_consts :: whole_false ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: title_created ) && so_called_platform_conditions :: whole_is_false ( shy_guts :: title_finished ) )
+        {
+            shy_guts :: use_text_texture_requested = so_called_platform_math_consts :: whole_true ;
+            so_called_sender_common_logic_text_use_text_texture_request :: send ( so_called_message_common_logic_text_use_text_texture_request ( ) ) ;
+        }
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_text_texture_replied ) )
+    {
+        shy_guts :: use_text_texture_replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: title_render ( ) ;
+    }
 }
 
 void shy_guts :: proceed_with_letter_creation ( )
@@ -263,6 +297,12 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_core_us
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_fidget_render_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_render_requested ) )
+    {
+        shy_guts :: fidget_render_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: fidget_render_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply msg )
@@ -285,6 +325,12 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_le
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_use_text_texture_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_text_texture_requested ) )
+    {
+        shy_guts :: use_text_texture_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: use_text_texture_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_launch_permit )
