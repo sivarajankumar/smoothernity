@@ -59,6 +59,8 @@ namespace shy_guts
         , so_called_type_platform_math_num_fract a
         ) ;
 
+    static so_called_type_platform_static_array_data < shy_guts :: letter_state , shy_guts :: consts :: max_letters > letters ;
+
     static so_called_type_platform_math_num_whole title_launch_permitted ;
     static so_called_type_platform_math_num_whole title_created ;
     static so_called_type_platform_math_num_whole title_finished ;
@@ -197,12 +199,30 @@ void shy_guts :: mesh_set_vertex_color
 {
 }
 
-void _shy_common_logic_title :: receive ( so_called_message_common_engine_render_aspect_reply )
+void _shy_common_logic_title :: receive ( so_called_message_common_engine_render_aspect_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_aspect_requested ) )
+    {
+        shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_aspect_width = msg . width ;
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: title_created ) )
+            shy_guts :: title_create ( ) ;
+        else if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: title_finished ) )
+            shy_guts :: animate_lifecycle ( ) ;
+    }
 }
 
-void _shy_common_logic_title :: receive ( so_called_message_common_engine_render_mesh_create_reply )
+void _shy_common_logic_title :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_requested ) )
+    {
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: mesh_create_replied = so_called_platform_math_consts :: whole_true ;
+        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , shy_guts :: bake_letter_index ) ;
+        letter . get ( ) . mesh = msg . mesh ;
+        shy_guts :: proceed_with_letter_creation ( ) ;
+    }
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_init )
