@@ -1,5 +1,8 @@
 #include "./shy_title_injections.h"
 
+#include "./consts/shy_consts_injections.h"
+#include "./sender/finished/shy_finished_injections.h"
+
 #include "../core/sender/use_ortho_projection_request/shy_use_ortho_projection_request_injections.h"
 #include "../fidget/sender/render_request/shy_render_request_injections.h"
 #include "../text/sender/use_text_texture_request/shy_use_text_texture_request_injections.h"

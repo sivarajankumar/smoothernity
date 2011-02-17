@@ -135,14 +135,35 @@ void shy_guts :: prepare_to_disappear ( )
 
 void shy_guts :: animate_appear ( )
 {
+    so_called_platform_math :: inc_whole ( shy_guts :: title_frames ) ;
+    if ( so_called_platform_conditions :: whole_greater_than_whole ( shy_guts :: title_frames , so_called_common_logic_title_consts :: appear_duration_in_frames ) )
+    {
+        shy_guts :: title_frames = so_called_platform_math_consts :: whole_0 ;
+        shy_guts :: prepare_to_disappear ( ) ;
+    }
+    else
+        shy_guts :: title_update ( ) ;
 }
 
 void shy_guts :: animate_disappear ( )
 {
+    so_called_platform_math :: inc_whole ( shy_guts :: title_frames ) ;
+    if ( so_called_platform_conditions :: whole_greater_than_whole ( shy_guts :: title_frames , so_called_common_logic_title_consts :: disappear_duration_in_frames ) )
+    {
+        shy_guts :: title_finished = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: delete_all_meshes ( ) ;
+        so_called_sender_common_logic_title_finished :: send ( so_called_message_common_logic_title_finished ( ) ) ;
+    }
+    else
+        shy_guts :: title_update ( ) ;
 }
 
 void shy_guts :: animate_lifecycle ( )
 {
+    if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: title_appeared ) )
+        shy_guts :: animate_appear ( ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: title_appeared ) )
+        shy_guts :: animate_disappear ( ) ;
 }
 
 void shy_guts :: bake_next_letter ( )
