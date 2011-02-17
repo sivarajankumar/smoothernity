@@ -2,7 +2,7 @@ namespace shy_guts
 {
     namespace consts
     {
-        static const so_called_type_platform_math_num_whole never ;
+        static const so_called_type_platform_math_num_whole never = so_called_platform_math :: init_num_whole ( 9999 ) ;
         static so_called_type_platform_math_const_int_32 max_letters = 32 ;
     }
     
@@ -207,6 +207,28 @@ void _shy_common_logic_title :: receive ( so_called_message_common_engine_render
 
 void _shy_common_logic_title :: receive ( so_called_message_common_init )
 {
+    shy_guts :: title_launch_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: title_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: title_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: title_appeared = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: disappear_at_frames = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: scene_scale = so_called_platform_math_consts :: fract_1 ;
+    shy_guts :: scene_scale_frames = so_called_platform_math_consts :: fract_0 ;
+    shy_guts :: letters_count = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: title_frames = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: bake_letter_index = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: text_letter_big_tex_coords_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: text_letter_big_tex_coords_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: mesh_create_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_ortho_projection_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_ortho_projection_replied = so_called_platform_math_consts :: whole_false;
+    shy_guts :: fidget_render_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: fidget_render_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_text_texture_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_text_texture_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: render_started = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_core_use_ortho_projection_reply )
