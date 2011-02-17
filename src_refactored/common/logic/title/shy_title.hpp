@@ -265,8 +265,22 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_fidget_
 {
 }
 
-void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply )
+void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply msg )
 {
+    so_called_type_platform_math_num_whole letters_are_equal ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( letters_are_equal , shy_guts :: text_letter_big_tex_coords_letter , msg . letter ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_letter_big_tex_coords_requested ) 
+      && so_called_platform_conditions :: whole_is_true ( letters_are_equal )
+       )
+    {
+        shy_guts :: text_letter_big_tex_coords_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: text_letter_big_tex_coords_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: tex_coords_left = msg . left ;
+        shy_guts :: tex_coords_right = msg . right ;
+        shy_guts :: tex_coords_bottom = msg . bottom ;
+        shy_guts :: tex_coords_top = msg . top ;
+        shy_guts :: proceed_with_letter_creation ( ) ;
+    }
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_use_text_texture_reply )
