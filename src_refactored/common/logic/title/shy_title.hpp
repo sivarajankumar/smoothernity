@@ -233,6 +233,12 @@ void _shy_common_logic_title :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_core_use_ortho_projection_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_ortho_projection_requested ) )
+    {
+        shy_guts :: use_ortho_projection_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: use_ortho_projection_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_fidget_render_reply )
@@ -249,12 +255,20 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_text_us
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_launch_permit )
 {
+    shy_guts :: title_launch_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_render )
 {
+    shy_guts :: render_started = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_render ( ) ;
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: title_launch_permitted ) )
+    {
+        shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    }
 }
