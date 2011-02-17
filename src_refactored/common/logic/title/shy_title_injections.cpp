@@ -9,6 +9,7 @@
 #include "../../engine/render/sender/clear_screen/shy_clear_screen_injections.h"
 #include "../../engine/render/sender/disable_depth_test/shy_disable_depth_test_injections.h"
 #include "../../engine/render/sender/fog_disable/shy_fog_disable_injections.h"
+#include "../../engine/render/sender/mesh_finalize/shy_mesh_finalize_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"

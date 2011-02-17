@@ -189,6 +189,53 @@ void shy_guts :: proceed_with_render ( )
 
 void shy_guts :: proceed_with_letter_creation ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_replied )
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: text_letter_big_tex_coords_replied )
+       )
+    {
+        shy_guts :: mesh_create_replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: text_letter_big_tex_coords_replied = so_called_platform_math_consts :: whole_false ;
+                
+        so_called_type_platform_math_num_fract title_r = so_called_platform_math_consts :: fract_0 ;
+        so_called_type_platform_math_num_fract title_g = so_called_platform_math_consts :: fract_1 ;
+        so_called_type_platform_math_num_fract title_b = so_called_platform_math_consts :: fract_0 ;
+        so_called_type_platform_math_num_fract title_a = so_called_platform_math_consts :: fract_1 ;
+        so_called_type_platform_math_num_fract x_left = so_called_platform_math_consts :: fract_minus_1 ;
+        so_called_type_platform_math_num_fract x_right = so_called_platform_math_consts :: fract_1 ;
+        so_called_type_platform_math_num_fract y_bottom = so_called_platform_math_consts :: fract_minus_1 ;
+        so_called_type_platform_math_num_fract y_top = so_called_platform_math_consts :: fract_1 ;
+        so_called_type_platform_math_num_fract z = so_called_platform_math_consts :: fract_0 ;
+        
+        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , shy_guts :: bake_letter_index ) ;
+        
+        shy_guts :: mesh_set_triangle_strip_index_value ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 ) ;
+        shy_guts :: mesh_set_vertex_color               ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_0 , title_r , title_g , title_b , title_a ) ;
+        shy_guts :: mesh_set_vertex_tex_coord           ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_0 , shy_guts :: tex_coords_left , shy_guts :: tex_coords_top ) ;
+        shy_guts :: mesh_set_vertex_position            ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_0 , x_left , y_top , z ) ;
+        
+        shy_guts :: mesh_set_triangle_strip_index_value ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_1 , so_called_platform_math_consts :: whole_1 ) ;
+        shy_guts :: mesh_set_vertex_color               ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_1 , title_r , title_g , title_b , title_a ) ;
+        shy_guts :: mesh_set_vertex_tex_coord           ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_1 , shy_guts :: tex_coords_left , shy_guts :: tex_coords_bottom ) ;
+        shy_guts :: mesh_set_vertex_position            ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_1 , x_left , y_bottom , z ) ;
+        
+        shy_guts :: mesh_set_triangle_strip_index_value ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_2 , so_called_platform_math_consts :: whole_2 ) ;
+        shy_guts :: mesh_set_vertex_color               ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_2 , title_r , title_g , title_b , title_a ) ;
+        shy_guts :: mesh_set_vertex_tex_coord           ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_2 , shy_guts :: tex_coords_right , shy_guts :: tex_coords_top ) ;
+        shy_guts :: mesh_set_vertex_position            ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_2 , x_right , y_top , z ) ;
+        
+        shy_guts :: mesh_set_triangle_strip_index_value ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_3 , so_called_platform_math_consts :: whole_3 ) ;
+        shy_guts :: mesh_set_vertex_color               ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_3 , title_r , title_g , title_b , title_a ) ;
+        shy_guts :: mesh_set_vertex_tex_coord           ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_3 , shy_guts :: tex_coords_right , shy_guts :: tex_coords_bottom ) ;
+        shy_guts :: mesh_set_vertex_position            ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_3 , x_right , y_bottom , z ) ;
+        
+        so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
+        mesh_finalize_msg . mesh = letter . get ( ) . mesh ;
+        so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
+        
+        so_called_platform_math :: inc_whole ( shy_guts :: bake_letter_index ) ;
+        shy_guts :: bake_next_letter ( ) ;
+    }
 }
 
 void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id )
