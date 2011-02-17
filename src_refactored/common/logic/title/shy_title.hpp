@@ -129,6 +129,31 @@ void shy_guts :: title_create ( )
 
 void shy_guts :: title_render ( )
 {
+    so_called_type_platform_matrix_data scene_tm ;
+
+    so_called_platform_matrix :: set_axis_x ( scene_tm , shy_guts :: scene_scale , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_y ( scene_tm , so_called_platform_math_consts :: fract_0 , shy_guts :: scene_scale , so_called_platform_math_consts :: fract_0 ) ;
+    so_called_platform_matrix :: set_axis_z ( scene_tm , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_1 ) ;
+    so_called_platform_matrix :: set_origin ( scene_tm , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+    
+    so_called_sender_common_engine_render_blend_src_alpha_dst_one_minus_alpha :: send ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
+    
+    so_called_message_common_engine_render_matrix_load matrix_load_msg ;
+    matrix_load_msg . matrix = scene_tm ;
+    so_called_sender_common_engine_render_matrix_load :: send ( matrix_load_msg ) ;
+    
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: letters_count )
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
+        so_called_message_common_engine_render_mesh_render mesh_render_msg ;
+        mesh_render_msg . mesh = letter . get ( ) . mesh ;
+        so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+    }
+    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
 }
 
 void shy_guts :: title_update ( )
