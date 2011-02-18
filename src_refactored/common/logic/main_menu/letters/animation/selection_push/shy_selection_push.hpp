@@ -4,3 +4,7 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_init )
 {
 }
+
+void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_controls_state_reply )
+{
+}
