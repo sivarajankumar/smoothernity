@@ -94,16 +94,30 @@ void _shy_common_logic_game :: receive ( so_called_message_common_init )
     shy_guts :: image_render_replied = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_matrix_reply )
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_matrix_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: camera_matrix_requested ) )
+    {
+        shy_guts :: camera_matrix_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: camera_matrix_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: camera_matrix = msg . matrix ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_prepared )
 {
 }
 
-void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_near_plane_distance_reply )
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_near_plane_distance_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: near_plane_distance_requested ) )
+    {
+        shy_guts :: near_plane_distance_requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: near_plane_distance_replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: near_plane_distance = msg . distance ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_use_ortho_projection_reply )
@@ -144,6 +158,25 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_ren
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: game_launch_permitted ) )
+    {
+        if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: game_launched ) )
+        {
+            so_called_sender_common_logic_camera_prepare_permit :: send ( so_called_message_common_logic_camera_prepare_permit ( ) ) ;
+            shy_guts :: game_launched = so_called_platform_math_consts :: whole_true ;
+        }
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: game_launched ) )
+    {
+        shy_guts :: update_color ( ) ;
+        so_called_sender_common_logic_camera_update :: send ( so_called_message_common_logic_camera_update ( ) ) ;
+        so_called_sender_common_logic_entities_update :: send ( so_called_message_common_logic_entities_update ( ) ) ;
+        so_called_sender_common_logic_land_update :: send ( so_called_message_common_logic_land_update ( ) ) ;
+        so_called_sender_common_logic_image_update :: send ( so_called_message_common_logic_image_update ( ) ) ;
+        so_called_sender_common_logic_sound_update :: send ( so_called_message_common_logic_sound_update ( ) ) ;
+        so_called_sender_common_logic_text_update :: send ( so_called_message_common_logic_text_update ( ) ) ;
+        so_called_sender_common_logic_touch_update :: send ( so_called_message_common_logic_touch_update ( ) ) ;
+    }
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_prepared )
