@@ -10,6 +10,7 @@ public :
     static void receive ( so_called_message_common_logic_entities_prepared ) ;
     static void receive ( so_called_message_common_logic_entities_render_reply ) ;
     static void receive ( so_called_message_common_logic_fidget_render_reply ) ;
+    static void receive ( so_called_message_common_logic_game_launch_permit ) ;
     static void receive ( so_called_message_common_logic_image_prepared ) ;
     static void receive ( so_called_message_common_logic_image_render_reply ) ;
     static void receive ( so_called_message_common_logic_land_prepared ) ;

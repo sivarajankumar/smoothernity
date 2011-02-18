@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_game_injections_included
 #define _shy_common_logic_game_injections_included
 
+#include "./message/launch_permit/shy_launch_permit_injections.h"
+
 #include "../camera/message/matrix_reply/shy_matrix_reply_injections.h"
 #include "../camera/message/prepared/shy_prepared_injections.h"
 #include "../core/message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"

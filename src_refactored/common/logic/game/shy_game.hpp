@@ -37,6 +37,10 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_fidget_r
 {
 }
 
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_launch_permit )
+{
+}
+
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_prepared )
 {
 }
