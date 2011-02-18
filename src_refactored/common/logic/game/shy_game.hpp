@@ -56,10 +56,43 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: clear_screen ( )
 {
+    so_called_type_platform_math_num_fract fog_a ;
+    so_called_type_platform_math_num_fract fog_far ;
+    so_called_type_platform_math_num_fract fog_near ;
+    fog_a = so_called_platform_math_consts :: fract_0 ;
+    so_called_platform_math :: add_fracts ( fog_far , shy_guts :: consts :: fog_far_shift , shy_guts :: near_plane_distance ) ;
+    so_called_platform_math :: add_fracts ( fog_near , shy_guts :: consts :: fog_near_shift , shy_guts :: near_plane_distance ) ;
+    
+    so_called_message_common_engine_render_fog_linear fog_msg ;
+    fog_msg . z_near = fog_near ;
+    fog_msg . z_far = fog_far ;
+    fog_msg . r = shy_guts :: color_r ;
+    fog_msg . g = shy_guts :: color_g ;
+    fog_msg . b = shy_guts :: color_b ;
+    fog_msg . a = fog_a ;
+    so_called_sender_common_engine_render_fog_linear :: send ( fog_msg ) ;
+
+    so_called_message_common_engine_render_clear_screen clear_screen_msg ;
+    clear_screen_msg . r = shy_guts :: color_r ;
+    clear_screen_msg . g = shy_guts :: color_g ;
+    clear_screen_msg . b = shy_guts :: color_b ;
+    so_called_sender_common_engine_render_clear_screen :: send ( clear_screen_msg ) ;
 }
 
 void shy_guts :: update_color ( )
 {
+    so_called_type_platform_math_num_fract scale ;
+    so_called_type_platform_math_num_fract fract_color_frames ;
+    so_called_type_platform_math_num_fract fract_fade_in_frames ;
+
+    so_called_platform_math :: make_fract_from_whole ( fract_fade_in_frames , shy_guts :: consts :: fade_in_frames ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_color_frames , shy_guts :: color_frames ) ;
+    so_called_platform_math :: div_fracts ( scale , fract_color_frames , fract_fade_in_frames ) ;
+    so_called_platform_math :: mul_fracts ( shy_guts :: color_r , scale , shy_guts :: consts :: final_r ) ;
+    so_called_platform_math :: mul_fracts ( shy_guts :: color_g , scale , shy_guts :: consts :: final_g ) ;
+    so_called_platform_math :: mul_fracts ( shy_guts :: color_b , scale , shy_guts :: consts :: final_b ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: color_frames , shy_guts :: consts :: fade_in_frames ) )
+        so_called_platform_math :: inc_whole ( shy_guts :: color_frames ) ;
 }
 
 void shy_guts :: proceed_with_render ( )

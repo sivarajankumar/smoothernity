@@ -24,9 +24,11 @@
 #include "../touch/sender/render/shy_render_injections.h"
 #include "../touch/sender/update/shy_update_injections.h"
 
+#include "../../engine/render/sender/clear_screen/shy_clear_screen_injections.h"
 #include "../../engine/render/sender/disable_depth_test/shy_disable_depth_test_injections.h"
 #include "../../engine/render/sender/enable_depth_test/shy_enable_depth_test_injections.h"
 #include "../../engine/render/sender/fog_disable/shy_fog_disable_injections.h"
+#include "../../engine/render/sender/fog_linear/shy_fog_linear_injections.h"
 #include "../../engine/render/sender/matrix_load/shy_matrix_load_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
