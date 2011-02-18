@@ -128,10 +128,18 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_fidget_r
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_launch_permit )
 {
+    shy_guts :: game_launch_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_render )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: game_launched ) )
+    {
+        shy_guts :: near_plane_distance_requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: camera_matrix_requested = so_called_platform_math_consts :: whole_true ;
+        so_called_sender_common_logic_core_near_plane_distance_request :: send ( so_called_message_common_logic_core_near_plane_distance_request ( ) ) ;
+        so_called_sender_common_logic_camera_matrix_request :: send ( so_called_message_common_logic_camera_matrix_request ( ) ) ;
+    }
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_update )
