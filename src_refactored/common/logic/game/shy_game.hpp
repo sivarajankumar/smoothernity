@@ -131,6 +131,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_use
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_entities_prepared )
 {
+    so_called_sender_common_logic_image_prepare_permit :: send ( so_called_message_common_logic_image_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_entities_render_reply )
