@@ -107,6 +107,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_m
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_prepared )
 {
+    so_called_sender_common_logic_land_prepare_permit :: send ( so_called_message_common_logic_land_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_near_plane_distance_reply msg )
