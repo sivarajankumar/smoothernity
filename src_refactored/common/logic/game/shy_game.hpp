@@ -190,6 +190,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_re
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_land_prepared )
 {
+    so_called_sender_common_logic_entities_prepare_permit :: send ( so_called_message_common_logic_entities_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_land_render_reply )
