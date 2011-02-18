@@ -294,6 +294,17 @@ void shy_guts :: title_update ( )
 
 void shy_guts :: delete_all_meshes ( )
 {
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: letters_count )
+        ; so_called_platform_math :: inc_whole ( i )
+        )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
+        so_called_message_common_engine_render_mesh_delete mesh_delete_msg ;
+        mesh_delete_msg . mesh = letter . get ( ) . mesh ;
+        so_called_sender_common_engine_render_mesh_delete :: send ( mesh_delete_msg ) ;
+    }
 }
 
 void shy_guts :: prepare_to_appear ( )
@@ -356,6 +367,38 @@ void shy_guts :: animate_lifecycle ( )
 
 void shy_guts :: bake_next_letter ( )
 {
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: bake_letter_index , shy_guts :: letters_count ) )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , shy_guts :: bake_letter_index ) ;
+        
+        letter . get ( ) . scale = so_called_platform_math_consts :: fract_0 ;
+        letter . get ( ) . pos_radius = so_called_platform_math_consts :: fract_0 ;
+        letter . get ( ) . pos_angle = so_called_platform_math_consts :: fract_0 ;
+        letter . get ( ) . rot_angle = so_called_platform_math_consts :: fract_0 ;
+        
+        shy_guts :: text_letter_big_tex_coords_requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: text_letter_big_tex_coords_letter = letter . get ( ) . letter ;
+        
+        shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
+        
+        so_called_message_common_logic_text_letter_big_tex_coords_request text_letter_big_tex_coords_request_msg ;
+        text_letter_big_tex_coords_request_msg . letter = letter . get ( ) . letter ;
+        so_called_sender_common_logic_text_letter_big_tex_coords_request :: send ( text_letter_big_tex_coords_request_msg  ) ;        
+        
+        so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+        mesh_create_msg . vertices = so_called_platform_math_consts :: whole_4 ;
+        mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
+        mesh_create_msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
+        so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+    }
+    else
+    {
+        shy_guts :: title_created = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: prepare_to_appear ( ) ;
+        shy_guts :: animate_lifecycle ( ) ;
+        so_called_sender_common_logic_title_created :: send ( so_called_message_common_logic_title_created ( ) ) ;
+    }
 }
 
 void shy_guts :: proceed_with_render ( )
@@ -447,8 +490,12 @@ void shy_guts :: proceed_with_letter_creation ( )
     }
 }
 
-void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id )
+void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id letter )
 {
+    so_called_type_platform_pointer_data < shy_guts :: letter_state > letter_state ;
+    so_called_platform_static_array :: element_ptr ( letter_state , shy_guts :: letters , shy_guts :: letters_count ) ;
+    letter_state . get ( ) . letter = letter ;
+    so_called_platform_math :: inc_whole ( shy_guts :: letters_count ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value 

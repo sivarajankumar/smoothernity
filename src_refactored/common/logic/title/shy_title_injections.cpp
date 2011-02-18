@@ -1,11 +1,13 @@
 #include "./shy_title_injections.h"
 
 #include "./consts/shy_consts_injections.h"
+#include "./sender/created/shy_created_injections.h"
 #include "./sender/finished/shy_finished_injections.h"
 
 #include "../core/sender/use_ortho_projection_request/shy_use_ortho_projection_request_injections.h"
 #include "../fidget/sender/render_request/shy_render_request_injections.h"
 #include "../text/consts/shy_consts_injections.h"
+#include "../text/sender/letter_big_tex_coords_request/shy_letter_big_tex_coords_request_injections.h"
 #include "../text/sender/use_text_texture_request/shy_use_text_texture_request_injections.h"
 #include "../text/stateless/shy_stateless_injections.h"
 
@@ -17,6 +19,8 @@
 #include "../../engine/render/sender/disable_depth_test/shy_disable_depth_test_injections.h"
 #include "../../engine/render/sender/fog_disable/shy_fog_disable_injections.h"
 #include "../../engine/render/sender/matrix_load/shy_matrix_load_injections.h"
+#include "../../engine/render/sender/mesh_create_request/shy_mesh_create_request_injections.h"
+#include "../../engine/render/sender/mesh_delete/shy_mesh_delete_injections.h"
 #include "../../engine/render/sender/mesh_finalize/shy_mesh_finalize_injections.h"
 #include "../../engine/render/sender/mesh_render/shy_mesh_render_injections.h"
 #include "../../engine/render/sender/mesh_set_transform/shy_mesh_set_transform_injections.h"
