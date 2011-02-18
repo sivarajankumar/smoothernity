@@ -12,6 +12,7 @@
 #include "../land/sender/update/shy_update_injections.h"
 #include "../sound/sender/update/shy_update_injections.h"
 #include "../text/sender/update/shy_update_injections.h"
+#include "../touch/sender/prepare_permit/shy_prepare_permit_injections.h"
 #include "../touch/sender/update/shy_update_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"

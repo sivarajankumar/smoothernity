@@ -183,6 +183,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_upd
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_prepared )
 {
+    so_called_sender_common_logic_touch_prepare_permit :: send ( so_called_message_common_logic_touch_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_render_reply )
