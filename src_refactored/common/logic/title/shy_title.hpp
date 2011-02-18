@@ -170,127 +170,126 @@ void shy_guts :: title_update ( )
     offset_y = so_called_common_logic_title_consts :: spin_radius_in_letters ;
     so_called_platform_math :: mul_fract_by ( offset_y , letter_size ) ;
     so_called_platform_math :: make_fract_from_whole ( fract_appear_duration_in_frames , so_called_common_logic_title_consts :: appear_duration_in_frames ) ;
-/* 
+
     so_called_common_engine_math_stateless :: lerp 
         ( shy_guts :: scene_scale 
         , shy_guts :: scene_scale_frames
         , so_called_common_logic_title_consts :: scene_scale_min
         , so_called_platform_math_consts :: fract_0 
-        , _logic_title_stateless_consts . get ( ) . scene_scale_max 
+        , so_called_common_logic_title_consts :: scene_scale_max 
         , fract_appear_duration_in_frames
         ) ;
-    platform_math :: add_to_fract ( _scene_scale_frames , _platform_math_consts . get ( ) . fract_1 ) ;
+    so_called_platform_math :: add_to_fract ( shy_guts :: scene_scale_frames , so_called_platform_math_consts :: fract_1 ) ;
                     
-    for ( num_whole i = _platform_math_consts . get ( ) . whole_0
-        ; platform_conditions :: whole_less_than_whole ( i , _letters_count )
-        ; platform_math :: inc_whole ( i )
+    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: letters_count )
+        ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        num_fract offset_x ;
-        num_fract fract_i ;
-        num_fract rot_cos ;
-        num_fract rot_sin ;
-        num_fract rot_neg_sin ;
-        num_fract pos_cos ;
-        num_fract pos_sin ;
-        num_fract pos_neg_sin ;
-        num_fract rubber ;
-        num_fract pos_radius_old_part ;
-        num_fract pos_radius_new_part ;
-        num_fract pos_angle_old_part ;
-        num_fract pos_angle_new_part ;
-        num_fract rot_angle_old_part ;
-        num_fract rot_angle_new_part ;
-        num_fract scale_old_part ;
-        num_fract scale_new_part ;
-        num_whole starting_frame ;
-        num_whole finishing_frame ;
-        vector_data axis_x ;
-        vector_data axis_y ;
-        vector_data origin ;
-        vector_data offset ;
-        vector_data pos ;
-        matrix_data tm ;
-        typename platform_pointer :: template pointer < _letter_state > letter ;
+        so_called_type_platform_math_num_fract offset_x ;
+        so_called_type_platform_math_num_fract fract_i ;
+        so_called_type_platform_math_num_fract rot_cos ;
+        so_called_type_platform_math_num_fract rot_sin ;
+        so_called_type_platform_math_num_fract rot_neg_sin ;
+        so_called_type_platform_math_num_fract pos_cos ;
+        so_called_type_platform_math_num_fract pos_sin ;
+        so_called_type_platform_math_num_fract pos_neg_sin ;
+        so_called_type_platform_math_num_fract rubber ;
+        so_called_type_platform_math_num_fract pos_radius_old_part ;
+        so_called_type_platform_math_num_fract pos_radius_new_part ;
+        so_called_type_platform_math_num_fract pos_angle_old_part ;
+        so_called_type_platform_math_num_fract pos_angle_new_part ;
+        so_called_type_platform_math_num_fract rot_angle_old_part ;
+        so_called_type_platform_math_num_fract rot_angle_new_part ;
+        so_called_type_platform_math_num_fract scale_old_part ;
+        so_called_type_platform_math_num_fract scale_new_part ;
+        so_called_type_platform_math_num_whole starting_frame ;
+        so_called_type_platform_math_num_whole finishing_frame ;
+        so_called_type_platform_vector_data axis_x ;
+        so_called_type_platform_vector_data axis_y ;
+        so_called_type_platform_vector_data origin ;
+        so_called_type_platform_vector_data offset ;
+        so_called_type_platform_vector_data pos ;
+        so_called_type_platform_matrix_data tm ;
+        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
         
-        platform_static_array :: element_ptr ( letter , _letters , i ) ;
+        so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
         
-        platform_math :: make_fract_from_whole ( fract_i , i ) ;
-        platform_math :: mul_fracts ( offset_x , _render_aspect_width , _platform_math_consts . get ( ) . fract_2 ) ;
-        platform_math :: mul_fract_by ( offset_x , fract_i ) ;
-        platform_math :: div_fract_by ( offset_x , fract_letters_count ) ;
-        platform_math :: sub_from_fract ( offset_x , _render_aspect_width ) ;
-        platform_math :: add_to_fract ( offset_x , letter_size ) ;
-        platform_vector :: xyz ( offset , offset_x , offset_y , _platform_math_consts . get ( ) . fract_minus_3 ) ;        
+        so_called_platform_math :: make_fract_from_whole ( fract_i , i ) ;
+        so_called_platform_math :: mul_fracts ( offset_x , shy_guts :: render_aspect_width , so_called_platform_math_consts :: fract_2 ) ;
+        so_called_platform_math :: mul_fract_by ( offset_x , fract_i ) ;
+        so_called_platform_math :: div_fract_by ( offset_x , fract_letters_count ) ;
+        so_called_platform_math :: sub_from_fract ( offset_x , shy_guts :: render_aspect_width ) ;
+        so_called_platform_math :: add_to_fract ( offset_x , letter_size ) ;
+        so_called_platform_vector :: xyz ( offset , offset_x , offset_y , so_called_platform_math_consts :: fract_minus_3 ) ;        
         
-        platform_math :: mul_wholes ( starting_frame , _logic_title_stateless_consts . get ( ) . frames_between_letters , i ) ;
-        platform_math :: sub_wholes ( finishing_frame , _disappear_at_frames , starting_frame ) ;
-        if ( platform_conditions :: whole_greater_than_whole ( _title_frames , starting_frame ) )
+        so_called_platform_math :: mul_wholes ( starting_frame , so_called_common_logic_title_consts :: frames_between_letters , i ) ;
+        so_called_platform_math :: sub_wholes ( finishing_frame , shy_guts :: disappear_at_frames , starting_frame ) ;
+        if ( so_called_platform_conditions :: whole_greater_than_whole ( shy_guts :: title_frames , starting_frame ) )
         {
-            engine_math :: lerp ( rubber , fract_i , _rubber_first , _platform_math_consts . get ( ) . fract_0 , _rubber_last , fract_letters_count ) ;
+            so_called_common_engine_math_stateless :: lerp ( rubber , fract_i , shy_guts :: rubber_first , so_called_platform_math_consts :: fract_0 , shy_guts :: rubber_last , fract_letters_count ) ;
             
-            platform_math :: mul_fracts ( pos_angle_old_part , letter . get ( ) . pos_angle , rubber ) ;
-            platform_math :: sub_fracts ( pos_angle_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
-            platform_math :: mul_fract_by ( pos_angle_new_part , _desired_pos_angle ) ;
-            platform_math :: add_fracts ( letter . get ( ) . pos_angle , pos_angle_old_part , pos_angle_new_part ) ;
+            so_called_platform_math :: mul_fracts ( pos_angle_old_part , letter . get ( ) . pos_angle , rubber ) ;
+            so_called_platform_math :: sub_fracts ( pos_angle_new_part , so_called_platform_math_consts :: fract_1 , rubber ) ;
+            so_called_platform_math :: mul_fract_by ( pos_angle_new_part , shy_guts :: desired_pos_angle ) ;
+            so_called_platform_math :: add_fracts ( letter . get ( ) . pos_angle , pos_angle_old_part , pos_angle_new_part ) ;
             
-            platform_math :: mul_fracts ( pos_radius_old_part , letter . get ( ) . pos_radius , rubber ) ;
-            platform_math :: sub_fracts ( pos_radius_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
-            platform_math :: mul_fract_by ( pos_radius_new_part , desired_pos_radius ) ;
-            platform_math :: add_fracts ( letter . get ( ) . pos_radius , pos_radius_old_part , pos_radius_new_part ) ;
+            so_called_platform_math :: mul_fracts ( pos_radius_old_part , letter . get ( ) . pos_radius , rubber ) ;
+            so_called_platform_math :: sub_fracts ( pos_radius_new_part , so_called_platform_math_consts :: fract_1 , rubber ) ;
+            so_called_platform_math :: mul_fract_by ( pos_radius_new_part , desired_pos_radius ) ;
+            so_called_platform_math :: add_fracts ( letter . get ( ) . pos_radius , pos_radius_old_part , pos_radius_new_part ) ;
             
-            platform_math :: mul_fracts ( rot_angle_old_part , letter . get ( ) . rot_angle , rubber ) ;
-            platform_math :: sub_fracts ( rot_angle_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
-            platform_math :: mul_fract_by ( rot_angle_new_part , _desired_rot_angle ) ;
-            platform_math :: add_fracts ( letter . get ( ) . rot_angle , rot_angle_old_part , rot_angle_new_part ) ;
+            so_called_platform_math :: mul_fracts ( rot_angle_old_part , letter . get ( ) . rot_angle , rubber ) ;
+            so_called_platform_math :: sub_fracts ( rot_angle_new_part , so_called_platform_math_consts :: fract_1 , rubber ) ;
+            so_called_platform_math :: mul_fract_by ( rot_angle_new_part , shy_guts :: desired_rot_angle ) ;
+            so_called_platform_math :: add_fracts ( letter . get ( ) . rot_angle , rot_angle_old_part , rot_angle_new_part ) ;
             
-            platform_math :: mul_fracts ( scale_old_part , letter . get ( ) . scale , rubber ) ;
-            platform_math :: sub_fracts ( scale_new_part , _platform_math_consts . get ( ) . fract_1 , rubber ) ;
-            platform_math :: mul_fract_by ( scale_new_part , _desired_scale ) ;
-            platform_math :: add_fracts ( letter . get ( ) . scale , scale_old_part , scale_new_part ) ;
+            so_called_platform_math :: mul_fracts ( scale_old_part , letter . get ( ) . scale , rubber ) ;
+            so_called_platform_math :: sub_fracts ( scale_new_part , so_called_platform_math_consts :: fract_1 , rubber ) ;
+            so_called_platform_math :: mul_fract_by ( scale_new_part , shy_guts :: desired_scale ) ;
+            so_called_platform_math :: add_fracts ( letter . get ( ) . scale , scale_old_part , scale_new_part ) ;
         }
         
-        platform_math :: sin ( rot_sin , letter . get ( ) . rot_angle ) ;
-        platform_math :: cos ( rot_cos , letter . get ( ) . rot_angle ) ;
-        platform_math :: neg_fract ( rot_neg_sin , rot_sin ) ;
+        so_called_platform_math :: sin ( rot_sin , letter . get ( ) . rot_angle ) ;
+        so_called_platform_math :: cos ( rot_cos , letter . get ( ) . rot_angle ) ;
+        so_called_platform_math :: neg_fract ( rot_neg_sin , rot_sin ) ;
         
-        platform_math :: sin ( pos_sin , letter . get ( ) . pos_angle ) ;
-        platform_math :: cos ( pos_cos , letter . get ( ) . pos_angle ) ;
-        platform_math :: neg_fract ( pos_neg_sin , pos_sin ) ;
+        so_called_platform_math :: sin ( pos_sin , letter . get ( ) . pos_angle ) ;
+        so_called_platform_math :: cos ( pos_cos , letter . get ( ) . pos_angle ) ;
+        so_called_platform_math :: neg_fract ( pos_neg_sin , pos_sin ) ;
         
-        platform_vector :: xyz ( pos , pos_cos , pos_sin , _platform_math_consts . get ( ) . fract_0 ) ;
-        platform_vector :: mul_by ( pos , letter . get ( ) . pos_radius ) ;
+        so_called_platform_vector :: xyz ( pos , pos_cos , pos_sin , so_called_platform_math_consts :: fract_0 ) ;
+        so_called_platform_vector :: mul_by ( pos , letter . get ( ) . pos_radius ) ;
         
-        if ( platform_conditions :: whole_less_than_whole ( _title_frames , finishing_frame ) )
+        if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: title_frames , finishing_frame ) )
         {
-            platform_vector :: xyz ( axis_x , rot_cos , rot_sin , _platform_math_consts . get ( ) . fract_0 ) ;
-            platform_vector :: xyz ( axis_y , rot_neg_sin , rot_cos , _platform_math_consts . get ( ) . fract_0 ) ;
-            platform_vector :: mul_by ( axis_x , letter . get ( ) . scale ) ;
-            platform_vector :: mul_by ( axis_y , letter . get ( ) . scale ) ;
-            platform_vector :: mul_by ( axis_x , letter_size ) ;
-            platform_vector :: mul_by ( axis_y , letter_size ) ;
+            so_called_platform_vector :: xyz ( axis_x , rot_cos , rot_sin , so_called_platform_math_consts :: fract_0 ) ;
+            so_called_platform_vector :: xyz ( axis_y , rot_neg_sin , rot_cos , so_called_platform_math_consts :: fract_0 ) ;
+            so_called_platform_vector :: mul_by ( axis_x , letter . get ( ) . scale ) ;
+            so_called_platform_vector :: mul_by ( axis_y , letter . get ( ) . scale ) ;
+            so_called_platform_vector :: mul_by ( axis_x , letter_size ) ;
+            so_called_platform_vector :: mul_by ( axis_y , letter_size ) ;
         }
         else
         {
-            platform_vector :: xyz ( axis_x , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
-            platform_vector :: xyz ( axis_y , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 ) ;
+            so_called_platform_vector :: xyz ( axis_x , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
+            so_called_platform_vector :: xyz ( axis_y , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
         }
         
-        platform_vector :: add ( origin , pos , offset ) ;
+        so_called_platform_vector :: add ( origin , pos , offset ) ;
         
-        platform_matrix :: set_axis_x ( tm , axis_x ) ;
-        platform_matrix :: set_axis_y ( tm , axis_y ) ;
-        platform_matrix :: set_axis_z ( tm , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_0 , _platform_math_consts . get ( ) . fract_1 ) ;
-        platform_matrix :: set_origin ( tm , origin ) ;
+        so_called_platform_matrix :: set_axis_x ( tm , axis_x ) ;
+        so_called_platform_matrix :: set_axis_y ( tm , axis_y ) ;
+        so_called_platform_matrix :: set_axis_z ( tm , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_1 ) ;
+        so_called_platform_matrix :: set_origin ( tm , origin ) ;
         
         {
-            typename messages :: engine_render_mesh_set_transform mesh_set_transform_msg ;
+            so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = letter . get ( ) . mesh ;
             mesh_set_transform_msg . transform = tm ;
-            _mediator . get ( ) . send ( mesh_set_transform_msg ) ;
+            so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
         }
     }
-*/
 }
 
 void shy_guts :: delete_all_meshes ( )
