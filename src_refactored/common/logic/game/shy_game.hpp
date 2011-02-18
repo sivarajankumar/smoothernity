@@ -68,6 +68,30 @@ void shy_guts :: proceed_with_render ( )
 
 void _shy_common_logic_game :: receive ( so_called_message_common_init )
 {
+    shy_guts :: color_r = so_called_platform_math_consts :: fract_0 ;
+    shy_guts :: color_g = so_called_platform_math_consts :: fract_0 ;
+    shy_guts :: color_b = so_called_platform_math_consts :: fract_0 ;
+    shy_guts :: color_frames = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: game_launched = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: game_launch_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: near_plane_distance_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: near_plane_distance_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: camera_matrix_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: camera_matrix_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_perspective_projection_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_perspective_projection_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_ortho_projection_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: use_ortho_projection_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: land_render_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: land_render_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: entities_render_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: entities_render_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: fidget_render_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: fidget_render_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: text_render_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: text_render_replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: image_render_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: image_render_replied = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_matrix_reply )
