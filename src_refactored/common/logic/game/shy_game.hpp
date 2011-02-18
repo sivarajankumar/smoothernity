@@ -45,6 +45,10 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_ren
 {
 }
 
+void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_update )
+{
+}
+
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_prepared )
 {
 }
