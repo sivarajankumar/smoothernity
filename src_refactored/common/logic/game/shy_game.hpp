@@ -209,4 +209,5 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_text_ren
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_touch_prepared )
 {
+    so_called_sender_common_logic_sound_prepare_permit :: send ( so_called_message_common_logic_sound_prepare_permit ( ) ) ;
 }
