@@ -36,10 +36,22 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_planes ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_ortho_planes_state :: requested ) )
+    {
+        shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_aspect ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_aspect_state :: replied ) )
+    {
+        shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: reply_computed_planes ( ) ;
+    }
 }
 
 void shy_guts :: request_aspect ( )
 {
+    shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void shy_guts :: compute_x_left ( )
