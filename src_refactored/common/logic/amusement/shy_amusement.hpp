@@ -12,3 +12,7 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amu
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amusement_launch_permit )
 {
 }
+
+void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amusement_update )
+{
+}
