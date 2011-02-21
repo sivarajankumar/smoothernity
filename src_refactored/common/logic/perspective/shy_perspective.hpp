@@ -60,6 +60,13 @@ void shy_guts :: request_aspect ( )
 
 void shy_guts :: compute_x_left ( )
 {
+    so_called_type_platform_math_num_fract x_left ;
+    so_called_type_platform_math_num_fract aspect_width ;
+
+    aspect_width = shy_guts :: engine_render_aspect_state :: width ;
+    so_called_platform_math :: mul_fracts ( x_left , aspect_width , so_called_platform_math_consts :: fract_minus_1 ) ;
+
+    shy_guts :: logic_perspective_planes_state :: x_left = x_left ;
 }
 
 void shy_guts :: compute_x_right ( )
@@ -88,6 +95,14 @@ void shy_guts :: compute_scene_scale ( )
 
 void shy_guts :: reply_computed_planes ( )
 {
+    shy_guts :: compute_x_left ( ) ;
+    shy_guts :: compute_x_right ( ) ;
+    shy_guts :: compute_y_top ( ) ;
+    shy_guts :: compute_y_bottom ( ) ;
+    shy_guts :: compute_z_near ( ) ;
+    shy_guts :: compute_z_far ( ) ;
+    shy_guts :: compute_scene_scale ( ) ;
+    shy_guts :: reply_planes ( ) ;
 }
 
 void shy_guts :: reply_planes ( )
