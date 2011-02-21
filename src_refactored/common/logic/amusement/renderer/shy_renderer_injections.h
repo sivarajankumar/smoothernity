@@ -2,6 +2,7 @@
 #define _shy_common_logic_amusement_renderer_injections_included
 
 #include "../../ortho/message/planes_reply/shy_planes_reply_injections.h"
+#include "../../perspective/message/planes_reply/shy_planes_reply_injections.h"
 
 #include "../../../message/init/shy_init_injections.h"
 
