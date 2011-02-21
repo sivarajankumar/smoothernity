@@ -1,5 +1,7 @@
 #include "./shy_perspective_injections.h"
 
+#include "./consts/shy_consts_injections.h"
+
 #include "../../engine/render/sender/aspect_request/shy_aspect_request_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"

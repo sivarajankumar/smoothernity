@@ -71,22 +71,55 @@ void shy_guts :: compute_x_left ( )
 
 void shy_guts :: compute_x_right ( )
 {
+    so_called_type_platform_math_num_fract x_right ;
+    so_called_type_platform_math_num_fract aspect_width ;
+
+    aspect_width = shy_guts :: engine_render_aspect_state :: width ;
+    x_right = aspect_width ;
+
+    shy_guts :: logic_perspective_planes_state :: x_right = x_right ;
 }
 
 void shy_guts :: compute_y_top ( )
 {
+    so_called_type_platform_math_num_fract y_top ;
+    so_called_type_platform_math_num_fract aspect_height ;
+
+    aspect_height = shy_guts :: engine_render_aspect_state :: height ;
+    y_top = aspect_height ;
+
+    shy_guts :: logic_perspective_planes_state :: y_top = y_top ;
 }
 
 void shy_guts :: compute_y_bottom ( )
 {
+    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_type_platform_math_num_fract aspect_height ;
+
+    aspect_height = shy_guts :: engine_render_aspect_state :: height ;
+    so_called_platform_math :: mul_fracts ( y_bottom , aspect_height , so_called_platform_math_consts :: fract_minus_1 ) ;
+
+    shy_guts :: logic_perspective_planes_state :: y_bottom = y_bottom ;
 }
 
 void shy_guts :: compute_z_near ( )
 {
+    so_called_type_platform_math_num_fract z_near ;
+    shy_guts :: z_near ( z_near ) ;
+    shy_guts :: logic_perspective_planes_state :: z_near = z_near ;
 }
 
 void shy_guts :: compute_z_far ( )
 {
+    so_called_type_platform_math_num_fract scene_scale ;
+    so_called_type_platform_math_num_fract z_far_unscaled ;
+    so_called_type_platform_math_num_fract z_far ;
+
+    z_far_unscaled = so_called_common_logic_perspective_consts :: z_far_unscaled ;
+    shy_guts :: scene_scale ( scene_scale ) ;
+    so_called_platform_math :: mul_fracts ( z_far , z_far_unscaled , scene_scale ) ;
+
+    shy_guts :: logic_perspective_planes_state :: z_far = z_far ;
 }
 
 void shy_guts :: compute_scene_scale ( )
