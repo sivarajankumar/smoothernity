@@ -3,6 +3,7 @@ class _shy_common_logic_application_fsm
 public :
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_amusement_created ) ;
+    static void receive ( so_called_message_common_logic_amusement_finished ) ;
     static void receive ( so_called_message_common_logic_application_render ) ;
     static void receive ( so_called_message_common_logic_application_update ) ;
     static void receive ( so_called_message_common_logic_text_prepared ) ;
