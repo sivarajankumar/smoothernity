@@ -67,7 +67,6 @@
 #include "../../logic/observer/animation/shy_animation_injections.h"
 #include "../../logic/observer/shy_observer_injections.h"
 #include "../../logic/ortho/shy_ortho_injections.h"
-#include "../../logic/perspective/shy_perspective_injections.h"
 #include "../../logic/room/mesh/shy_mesh_injections.h"
 #include "../../logic/room/renderer/shy_renderer_injections.h"
 #include "../../logic/room/shy_room_injections.h"

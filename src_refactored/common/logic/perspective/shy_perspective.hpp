@@ -190,10 +190,6 @@ void _shy_common_logic_perspective :: receive ( so_called_message_common_engine_
     }
 }
 
-void _shy_common_logic_perspective :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_perspective :: receive ( so_called_message_common_logic_perspective_planes_request )
 {
     shy_guts :: logic_perspective_planes_state :: requested = so_called_platform_math_consts :: whole_true ;
