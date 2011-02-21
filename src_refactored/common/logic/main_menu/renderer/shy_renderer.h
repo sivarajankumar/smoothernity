@@ -3,6 +3,7 @@ class _shy_common_logic_main_menu_renderer
 public :
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_fidget_render_reply ) ;
+    static void receive ( so_called_message_common_logic_ortho_planes_reply ) ;
     static void receive ( so_called_message_common_logic_text_use_text_texture_reply ) ;
 } ;
 
