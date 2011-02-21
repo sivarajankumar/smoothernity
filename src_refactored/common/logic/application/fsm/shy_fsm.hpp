@@ -5,6 +5,10 @@ void _shy_common_logic_application_fsm :: receive ( so_called_message_common_ini
 {
 }
 
+void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_amusement_created )
+{
+}
+
 void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_application_render )
 {
 }
