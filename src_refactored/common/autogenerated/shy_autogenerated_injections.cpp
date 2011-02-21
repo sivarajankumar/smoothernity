@@ -1,3 +1,4 @@
+#include "../logic/amusement/consts/shy_consts_injections.h"
 #include "../logic/ortho/consts/shy_consts_injections.h"
 #include "../logic/perspective/consts/shy_consts_injections.h"
 #include "../logic/title/consts/shy_consts_injections.h"
