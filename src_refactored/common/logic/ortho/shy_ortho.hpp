@@ -80,10 +80,25 @@ void shy_guts :: compute_z_far ( )
 
 void shy_guts :: reply_planes ( )
 {
+    so_called_message_common_logic_ortho_planes_reply msg ;
+    msg . x_left = shy_guts :: logic_ortho_planes_state :: x_left ;
+    msg . x_right = shy_guts :: logic_ortho_planes_state :: x_right ;
+    msg . y_bottom = shy_guts :: logic_ortho_planes_state :: y_bottom ;
+    msg . y_top = shy_guts :: logic_ortho_planes_state :: y_top ;
+    msg . z_near = shy_guts :: logic_ortho_planes_state :: z_near ;
+    msg . z_far = shy_guts :: logic_ortho_planes_state :: z_far ;
+    so_called_sender_common_logic_ortho_planes_reply :: send ( msg ) ;
 }
 
 void shy_guts :: reply_computed_planes ( )
 {
+    shy_guts :: compute_x_left ( ) ;
+    shy_guts :: compute_x_right ( ) ;
+    shy_guts :: compute_y_bottom ( ) ;
+    shy_guts :: compute_y_top ( ) ;
+    shy_guts :: compute_z_near ( ) ;
+    shy_guts :: compute_z_far ( ) ;
+    shy_guts :: reply_planes ( ) ;
 }
 
 void _shy_common_logic_ortho :: receive ( so_called_message_common_engine_render_aspect_reply msg )
