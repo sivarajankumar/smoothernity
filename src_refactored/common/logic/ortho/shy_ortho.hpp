@@ -107,6 +107,9 @@ void shy_guts :: compute_z_near ( )
 
 void shy_guts :: compute_z_far ( )
 {
+    so_called_type_platform_math_num_fract z_far ;
+    z_far = so_called_common_logic_ortho_consts :: z_far ;
+    shy_guts :: logic_ortho_planes_state :: z_far = z_far ;
 }
 
 void shy_guts :: reply_planes ( )
