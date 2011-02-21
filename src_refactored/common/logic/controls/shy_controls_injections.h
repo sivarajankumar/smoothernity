@@ -3,8 +3,6 @@
 
 #include "./message/state_request/shy_state_request_injections.h"
 
-#include "../../message/init/shy_init_injections.h"
-
 #include "../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_controls.h"

@@ -76,10 +76,6 @@ void shy_guts :: reply_controls_state ( )
     so_called_sender_common_logic_controls_state_reply :: send ( msg ) ;
 }
 
-void _shy_common_logic_controls :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_controls :: receive ( so_called_message_common_logic_controls_state_request )
 {
     shy_guts :: compute_identity_state ( ) ;
