@@ -1,3 +1,6 @@
+const so_called_type_platform_math_num_fract shy_common_logic_ortho_consts :: z_far = so_called_platform_math :: init_num_fract ( 50 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_ortho_consts :: z_near = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+
 const so_called_type_platform_math_num_whole shy_common_logic_title_consts :: appear_duration_in_frames = so_called_platform_math :: init_num_whole ( 250 ) ;
 const so_called_type_platform_math_num_whole shy_common_logic_title_consts :: disappear_duration_in_frames = so_called_platform_math :: init_num_whole ( 150 ) ;
 const so_called_type_platform_math_num_whole shy_common_logic_title_consts :: frames_between_letters = so_called_platform_math :: init_num_whole ( 5 ) ;
