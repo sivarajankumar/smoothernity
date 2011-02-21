@@ -1,4 +1,5 @@
 #include "./shy_perspective_injections.h"
 
-#include "./shy_perspective.hpp"
+#include "../../../injections/platform/math/shy_math.h"
 
+#include "./shy_perspective.hpp"
