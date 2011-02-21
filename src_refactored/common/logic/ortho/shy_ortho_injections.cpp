@@ -1,5 +1,6 @@
 #include "./shy_ortho_injections.h"
 
+#include "./consts/shy_consts_injections.h"
 #include "./sender/planes_reply/shy_planes_reply_injections.h"
 
 #include "../../engine/render/sender/aspect_request/shy_aspect_request_injections.h"

@@ -56,22 +56,53 @@ void shy_guts :: request_aspect ( )
 
 void shy_guts :: compute_x_left ( )
 {
+    so_called_type_platform_math_num_fract aspect_width ;
+    so_called_type_platform_math_num_fract x_left ;
+
+    aspect_width = shy_guts :: engine_render_aspect_state :: width ;
+    so_called_platform_math :: neg_fract ( x_left , aspect_width ) ;
+
+    shy_guts :: logic_ortho_planes_state :: x_left = x_left ;
 }
 
 void shy_guts :: compute_x_right ( )
 {
+    so_called_type_platform_math_num_fract aspect_width ;
+    so_called_type_platform_math_num_fract x_right ;
+
+    aspect_width = shy_guts :: engine_render_aspect_state :: width ;
+    x_right = aspect_width ;
+
+    shy_guts :: logic_ortho_planes_state :: x_right = x_right ;
 }
 
 void shy_guts :: compute_y_bottom ( )
 {
+    so_called_type_platform_math_num_fract aspect_height ;
+    so_called_type_platform_math_num_fract y_bottom ;
+
+    aspect_height = shy_guts :: engine_render_aspect_state :: height ;
+    so_called_platform_math :: neg_fract ( y_bottom , aspect_height ) ;
+
+    shy_guts :: logic_ortho_planes_state :: y_bottom = y_bottom ;
 }
 
 void shy_guts :: compute_y_top ( )
 {
+    so_called_type_platform_math_num_fract aspect_height ;
+    so_called_type_platform_math_num_fract y_top ;
+
+    aspect_height = shy_guts :: engine_render_aspect_state :: height ;
+    y_top = aspect_height ;
+
+    shy_guts :: logic_ortho_planes_state :: y_top = y_top ;
 }
 
 void shy_guts :: compute_z_near ( )
 {
+    so_called_type_platform_math_num_fract z_near ;
+    z_near = so_called_common_logic_ortho_consts :: z_near ;
+    shy_guts :: logic_ortho_planes_state :: z_near = z_near ;
 }
 
 void shy_guts :: compute_z_far ( )
