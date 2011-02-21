@@ -124,6 +124,9 @@ void shy_guts :: compute_z_far ( )
 
 void shy_guts :: compute_scene_scale ( )
 {
+    so_called_type_platform_math_num_fract scene_scale ;
+    shy_guts :: scene_scale ( scene_scale ) ;
+    shy_guts :: logic_perspective_planes_state :: scene_scale = scene_scale ;
 }
 
 void shy_guts :: reply_computed_planes ( )
@@ -140,14 +143,39 @@ void shy_guts :: reply_computed_planes ( )
 
 void shy_guts :: reply_planes ( )
 {
+    so_called_message_common_logic_perspective_planes_reply msg ;
+    msg . x_left = shy_guts :: logic_perspective_planes_state :: x_left ;
+    msg . x_right = shy_guts :: logic_perspective_planes_state :: x_right ;
+    msg . y_top = shy_guts :: logic_perspective_planes_state :: y_top ;
+    msg . y_bottom = shy_guts :: logic_perspective_planes_state :: y_bottom ;
+    msg . z_near = shy_guts :: logic_perspective_planes_state :: z_near ;
+    msg . z_far = shy_guts :: logic_perspective_planes_state :: z_far ;
+    msg . scene_scale = shy_guts :: logic_perspective_planes_state :: scene_scale ;
+    so_called_sender_common_logic_perspective_planes_reply :: send ( msg ) ;
 }
 
-void shy_guts :: scene_scale ( so_called_type_platform_math_num_fract & )
+void shy_guts :: scene_scale ( so_called_type_platform_math_num_fract & arg_scene_scale )
 {
+    so_called_type_platform_math_num_fract aspect_width ;
+    so_called_type_platform_math_num_fract aspect_height ;
+    so_called_type_platform_math_num_fract z_near_value ;
+
+    aspect_width = shy_guts :: engine_render_aspect_state :: width ;
+    aspect_height = shy_guts :: engine_render_aspect_state :: height ;
+    shy_guts :: z_near ( z_near_value ) ;
+
+    so_called_platform_math :: add_fracts ( arg_scene_scale , aspect_width , aspect_height ) ;
+    so_called_platform_math :: add_to_fract ( arg_scene_scale , z_near_value ) ;
 }
 
-void shy_guts :: z_near ( so_called_type_platform_math_num_fract & )
+void shy_guts :: z_near ( so_called_type_platform_math_num_fract & arg_z_near )
 {
+    so_called_type_platform_math_num_fract aspect_width ;
+    so_called_type_platform_math_num_fract aspect_height ;
+
+    aspect_width = shy_guts :: engine_render_aspect_state :: width ;
+    aspect_height = shy_guts :: engine_render_aspect_state :: height ;
+    so_called_platform_math :: add_fracts ( arg_z_near , aspect_width , aspect_height ) ;
 }
 
 void _shy_common_logic_perspective :: receive ( so_called_message_common_engine_render_aspect_reply msg )
