@@ -8,3 +8,7 @@ void _shy_common_logic_ortho :: receive ( so_called_message_common_engine_render
 void _shy_common_logic_ortho :: receive ( so_called_message_common_init )
 {
 }
+
+void _shy_common_logic_ortho :: receive ( so_called_message_common_logic_ortho_planes_request )
+{
+}
