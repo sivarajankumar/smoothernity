@@ -33,6 +33,7 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_bla
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_door_creation_finished )
 {
+    so_called_sender_common_logic_room_creation_permit :: send ( so_called_message_common_logic_room_creation_permit ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_room_creation_finished )
