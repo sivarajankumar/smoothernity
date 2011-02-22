@@ -6,6 +6,7 @@
 #include "./message/update/shy_update_injections.h"
 
 #include "../room/message/creation_finished/shy_creation_finished_injections.h"
+#include "../room/message/finished/shy_finished_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
 

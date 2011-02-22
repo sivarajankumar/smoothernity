@@ -20,3 +20,7 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amu
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_room_creation_finished )
 {
 }
+
+void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_room_finished )
+{
+}
