@@ -6,7 +6,9 @@
 #include "./message/update/shy_update_injections.h"
 
 #include "../blanket/animation/message/appear_finished/shy_appear_finished_injections.h"
+#include "../blanket/animation/message/disappear_finished/shy_disappear_finished_injections.h"
 #include "../blanket/message/creation_finished/shy_creation_finished_injections.h"
+#include "../door/message/creation_finished/shy_creation_finished_injections.h"
 #include "../room/message/creation_finished/shy_creation_finished_injections.h"
 #include "../room/message/finished/shy_finished_injections.h"
 
