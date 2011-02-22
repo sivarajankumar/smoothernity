@@ -5,6 +5,8 @@
 #include "./message/launch_permit/shy_launch_permit_injections.h"
 #include "./message/update/shy_update_injections.h"
 
+#include "../blanket/animation/message/appear_finished/shy_appear_finished_injections.h"
+#include "../blanket/message/creation_finished/shy_creation_finished_injections.h"
 #include "../room/message/creation_finished/shy_creation_finished_injections.h"
 #include "../room/message/finished/shy_finished_injections.h"
 
