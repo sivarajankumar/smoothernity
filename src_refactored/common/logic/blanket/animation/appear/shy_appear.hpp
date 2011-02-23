@@ -5,6 +5,10 @@ void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_c
 {
 }
 
+void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_common_logic_blanket_animation_appear_start )
+{
+}
+
 void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_common_logic_blanket_update )
 {
 }
