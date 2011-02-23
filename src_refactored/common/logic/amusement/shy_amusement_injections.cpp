@@ -5,5 +5,6 @@
 #include "../blanket/sender/creation_permit/shy_creation_permit_injections.h"
 #include "../door/sender/creation_permit/shy_creation_permit_injections.h"
 #include "../room/sender/creation_permit/shy_creation_permit_injections.h"
+#include "../room/sender/launch_permit/shy_launch_permit_injections.h"
 
 #include "./shy_amusement.hpp"
