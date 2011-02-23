@@ -8,6 +8,7 @@
 #include "../blanket/sender/update/shy_update_injections.h"
 #include "../door/sender/creation_permit/shy_creation_permit_injections.h"
 #include "../door/sender/update/shy_update_injections.h"
+#include "../observer/sender/update/shy_update_injections.h"
 #include "../room/sender/creation_permit/shy_creation_permit_injections.h"
 #include "../room/sender/launch_permit/shy_launch_permit_injections.h"
 
