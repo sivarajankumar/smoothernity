@@ -2,6 +2,12 @@ const so_called_type_platform_math_num_fract shy_common_logic_amusement_consts :
 const so_called_type_platform_math_num_fract shy_common_logic_amusement_consts :: renderer_clear_color_g = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
 const so_called_type_platform_math_num_fract shy_common_logic_amusement_consts :: renderer_clear_color_r = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
 
+const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_horizontal_offset_amplitude = so_called_platform_math :: init_num_fract ( 1 , 3 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_horizontal_offset_period = so_called_platform_math :: init_num_fract ( 11 , 10 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_target_z = so_called_platform_math :: init_num_fract ( - 1 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_vertical_offset_amplitude = so_called_platform_math :: init_num_fract ( 1 , 3 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_vertical_offset_period = so_called_platform_math :: init_num_fract ( 17 , 10 ) ;
+
 const so_called_type_platform_math_num_fract shy_common_logic_ortho_consts :: z_far = so_called_platform_math :: init_num_fract ( 50 , 1 ) ;
 const so_called_type_platform_math_num_fract shy_common_logic_ortho_consts :: z_near = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
 
