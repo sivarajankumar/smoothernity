@@ -27,6 +27,7 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amu
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_animation_appear_finished )
 {
+    so_called_sender_common_logic_amusement_finished :: send ( so_called_message_common_logic_amusement_finished ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_animation_disappear_finished )
