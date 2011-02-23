@@ -32,6 +32,7 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_bla
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_animation_disappear_finished )
 {
+    so_called_sender_common_logic_door_launch_permit :: send ( so_called_message_common_logic_door_launch_permit ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_creation_finished )
