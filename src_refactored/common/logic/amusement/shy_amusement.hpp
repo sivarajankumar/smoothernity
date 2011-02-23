@@ -14,9 +14,7 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amu
 {
     so_called_sender_common_logic_room_launch_permit :: send ( so_called_message_common_logic_room_launch_permit ( ) ) ;
     so_called_sender_common_logic_blanket_animation_disappear_start :: send ( so_called_message_common_logic_blanket_animation_disappear_start ( ) ) ;
-/*
-    _mediator . get ( ) . send ( typename messages :: logic_blanket_place ( ) ) ;
-*/
+    so_called_sender_common_logic_blanket_place :: send ( so_called_message_common_logic_blanket_place ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amusement_update )

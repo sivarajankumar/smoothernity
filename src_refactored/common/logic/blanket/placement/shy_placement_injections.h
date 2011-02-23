@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_blanket_placement_injections_included
 #define _shy_common_logic_blanket_placement_injections_included
 
+#include "../message/place/shy_place_injections.h"
+
 #include "../../../message/init/shy_init_injections.h"
 
 #include "../../../../injections/platform/scheduler/shy_scheduler.h"
