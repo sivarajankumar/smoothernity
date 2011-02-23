@@ -4,3 +4,7 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 void _shy_common_logic_door_animation_appear :: receive ( so_called_message_common_init )
 {
 }
+
+void _shy_common_logic_door_animation_appear :: receive ( so_called_message_common_logic_door_update )
+{
+}

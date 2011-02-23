@@ -20,8 +20,8 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amu
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amusement_update )
 {
     so_called_sender_common_logic_blanket_update :: send ( so_called_message_common_logic_blanket_update ( ) ) ;
+    so_called_sender_common_logic_door_update :: send ( so_called_message_common_logic_door_update ( ) ) ;
 /*
-    _mediator . get ( ) . send ( typename messages :: logic_door_update ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_observer_update ( ) ) ;
     _mediator . get ( ) . send ( typename messages :: logic_room_update ( ) ) ;
 */
