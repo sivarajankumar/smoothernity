@@ -22,9 +22,7 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amu
     so_called_sender_common_logic_blanket_update :: send ( so_called_message_common_logic_blanket_update ( ) ) ;
     so_called_sender_common_logic_door_update :: send ( so_called_message_common_logic_door_update ( ) ) ;
     so_called_sender_common_logic_observer_update :: send ( so_called_message_common_logic_observer_update ( ) ) ;
-/*
-    _mediator . get ( ) . send ( typename messages :: logic_room_update ( ) ) ;
-*/
+    so_called_sender_common_logic_room_update :: send ( so_called_message_common_logic_room_update ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_animation_appear_finished )

@@ -12,3 +12,7 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_cre
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_launch_permit )
 {
 }
+
+void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_update )
+{
+}
