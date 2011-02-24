@@ -46,6 +46,23 @@ void shy_guts :: compute_vertical_offset ( )
 
 void shy_guts :: compute_horizontal_offset ( )
 {
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract horizontal_offset ;
+    so_called_type_platform_math_num_fract horizontal_offset_period ;
+    so_called_type_platform_math_num_fract horizontal_offset_amplitude ;
+    so_called_type_platform_math_num_fract horizontal_offset_phase ;
+
+    time = shy_guts :: logic_observer_update_state :: time ;
+    horizontal_offset_period = so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_period ;
+    horizontal_offset_amplitude = so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_amplitude ;
+
+    so_called_platform_math :: mul_fracts ( horizontal_offset_phase , time , so_called_platform_math_consts :: fract_2pi ) ;
+    so_called_platform_math :: div_fract_by ( horizontal_offset_phase , horizontal_offset_period ) ;
+
+    so_called_platform_math :: sin ( horizontal_offset , horizontal_offset_phase ) ;
+    so_called_platform_math :: mul_fract_by ( horizontal_offset , horizontal_offset_amplitude ) ;
+
+    shy_guts :: logic_observer_animation_flight_transform_state :: horizontal_offset = horizontal_offset ;
 }
 
 void shy_guts :: compute_eye ( )
