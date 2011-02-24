@@ -149,6 +149,8 @@ void shy_guts :: request_ortho_planes ( )
 
 void shy_guts :: request_perspective_planes ( )
 {
+    shy_guts :: logic_perspective_planes_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_perspective_planes_request :: send ( so_called_message_common_logic_perspective_planes_request ( ) ) ;
 }
 
 void shy_guts :: request_blanket_render ( )
