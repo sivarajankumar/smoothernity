@@ -230,6 +230,15 @@ void shy_guts :: use_observer_transform ( )
 
 void shy_guts :: use_observer_size ( )
 {
+    so_called_type_platform_math_num_fract scene_scale ;
+    so_called_type_platform_matrix_data transform ;
+
+    scene_scale = shy_guts :: logic_perspective_planes_state :: scene_scale ;
+    so_called_common_engine_math_stateless :: scale ( transform , scene_scale ) ;
+
+    so_called_message_common_engine_render_matrix_load msg ;
+    msg . matrix = transform ;
+    so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
 }
 
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_init )
