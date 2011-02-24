@@ -67,14 +67,49 @@ void shy_guts :: compute_horizontal_offset ( )
 
 void shy_guts :: compute_eye ( )
 {
+    so_called_type_platform_math_num_fract vertical_offset ;
+    so_called_type_platform_math_num_fract horizontal_offset ;
+    so_called_type_platform_math_num_fract zero ;
+    so_called_type_platform_vector_data eye ;
+
+    vertical_offset = shy_guts :: logic_observer_animation_flight_transform_state :: vertical_offset ;
+    horizontal_offset = shy_guts :: logic_observer_animation_flight_transform_state :: horizontal_offset ;
+    zero = so_called_platform_math_consts :: fract_0 ;
+
+    so_called_platform_vector :: xyz ( eye , horizontal_offset , vertical_offset , zero ) ;
+
+    shy_guts :: logic_observer_animation_flight_transform_state :: eye = eye ;
 }
 
 void shy_guts :: compute_target ( )
 {
+    so_called_type_platform_math_num_fract vertical_offset ;
+    so_called_type_platform_math_num_fract horizontal_offset ;
+    so_called_type_platform_math_num_fract const_target_z ;
+    so_called_type_platform_math_num_fract target_x ;
+    so_called_type_platform_math_num_fract target_y ;
+    so_called_type_platform_math_num_fract target_z ;
+    so_called_type_platform_vector_data target ;
+
+    vertical_offset = shy_guts :: logic_observer_animation_flight_transform_state :: vertical_offset ;
+    horizontal_offset = shy_guts :: logic_observer_animation_flight_transform_state :: horizontal_offset ;
+    const_target_z = so_called_common_logic_observer_animation_consts :: flight_target_z ;
+
+    target_x = horizontal_offset ;
+    target_y = vertical_offset ;
+    target_z = const_target_z ;
+
+    so_called_platform_vector :: xyz ( target , target_x , target_y , target_z ) ;
+
+    shy_guts :: logic_observer_animation_flight_transform_state :: target = target ;
 }
 
 void shy_guts :: reply_transform ( )
 {
+    so_called_message_common_logic_observer_animation_flight_transform_reply msg ;
+    msg . eye = shy_guts :: logic_observer_animation_flight_transform_state :: eye ;
+    msg . target = shy_guts :: logic_observer_animation_flight_transform_state :: target ;
+    so_called_sender_common_logic_observer_animation_flight_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_init )
