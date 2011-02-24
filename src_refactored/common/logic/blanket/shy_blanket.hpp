@@ -9,6 +9,10 @@ void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blank
 {
 }
 
+void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blanket_mesh_creation_finished )
+{
+}
+
 void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blanket_update )
 {
 }

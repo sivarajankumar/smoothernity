@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_blanket_mesh_creation_finished_injections_included
+#define _shy_message_common_logic_blanket_mesh_creation_finished_injections_included
+
+#include "./shy_mesh_creation_finished.h"
+
+typedef shy_message_common_logic_blanket_mesh_creation_finished so_called_message_common_logic_blanket_mesh_creation_finished ;
+
+#endif
