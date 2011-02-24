@@ -25,6 +25,23 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_vertical_offset ( )
 {
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract vertical_offset ;
+    so_called_type_platform_math_num_fract vertical_offset_period ;
+    so_called_type_platform_math_num_fract vertical_offset_amplitude ;
+    so_called_type_platform_math_num_fract vertical_offset_phase ;
+
+    time = shy_guts :: logic_observer_update_state :: time ;
+    vertical_offset_period = so_called_common_logic_observer_animation_consts :: flight_vertical_offset_period ;
+    vertical_offset_amplitude = so_called_common_logic_observer_animation_consts :: flight_vertical_offset_amplitude ;
+
+    so_called_platform_math :: mul_fracts ( vertical_offset_phase , time , so_called_platform_math_consts :: fract_2pi ) ;
+    so_called_platform_math :: div_fract_by ( vertical_offset_phase , vertical_offset_period ) ;
+
+    so_called_platform_math :: sin ( vertical_offset , vertical_offset_phase ) ;
+    so_called_platform_math :: mul_fract_by ( vertical_offset , vertical_offset_amplitude ) ;
+
+    shy_guts :: logic_observer_animation_flight_transform_state :: vertical_offset = vertical_offset ;
 }
 
 void shy_guts :: compute_horizontal_offset ( )
@@ -50,6 +67,11 @@ void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_animation_flight_transform_request )
 {
+    shy_guts :: compute_vertical_offset ( ) ;
+    shy_guts :: compute_horizontal_offset ( ) ;
+    shy_guts :: compute_eye ( ) ;
+    shy_guts :: compute_target ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_update )
