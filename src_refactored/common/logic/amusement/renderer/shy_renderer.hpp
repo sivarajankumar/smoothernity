@@ -159,6 +159,8 @@ void shy_guts :: request_perspective_planes ( )
 
 void shy_guts :: request_blanket_render ( )
 {
+    shy_guts :: logic_blanket_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_blanket_render_request :: send ( so_called_message_common_logic_blanket_render_request ( ) ) ;
 }
 
 void shy_guts :: request_door_render ( )

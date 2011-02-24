@@ -2,6 +2,7 @@
 
 #include "../consts/shy_consts_injections.h"
 
+#include "../../blanket/sender/render_request/shy_render_request_injections.h"
 #include "../../observer/animation/sender/transform_request/shy_transform_request_injections.h"
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
 #include "../../perspective/sender/planes_request/shy_planes_request_injections.h"
