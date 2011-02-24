@@ -237,10 +237,6 @@ void shy_guts :: use_observer_size ( )
     so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
 }
 
-void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_amusement_render )
 {
     shy_guts :: logic_amusement_render_state :: requested = so_called_platform_math_consts :: whole_true ;

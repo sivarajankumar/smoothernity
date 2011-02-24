@@ -2,7 +2,6 @@
 
 #include "../../engine/rasterizer/shy_rasterizer_injections.h"
 #include "../../engine/render/shy_render_injections.h"
-#include "../../logic/amusement/renderer/shy_renderer_injections.h"
 #include "../../logic/application/fsm/shy_fsm_injections.h"
 #include "../../logic/blanket/animation/appear/shy_appear_injections.h"
 #include "../../logic/blanket/animation/disappear/shy_disappear_injections.h"
