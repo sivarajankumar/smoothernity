@@ -8,6 +8,7 @@
 #include "../../observer/animation/message/transform_reply/shy_transform_reply_injections.h"
 #include "../../ortho/message/planes_reply/shy_planes_reply_injections.h"
 #include "../../perspective/message/planes_reply/shy_planes_reply_injections.h"
+#include "../../room/message/render_reply/shy_render_reply_injections.h"
 
 #include "../../../message/init/shy_init_injections.h"
 

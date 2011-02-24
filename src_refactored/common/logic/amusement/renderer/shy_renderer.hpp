@@ -28,3 +28,7 @@ void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_perspective_planes_reply )
 {
 }
+
+void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_room_render_reply )
+{
+}
