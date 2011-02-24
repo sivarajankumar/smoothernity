@@ -4,6 +4,8 @@
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
 #include "../../perspective/sender/planes_request/shy_planes_request_injections.h"
 
+#include "../../../engine/render/sender/enable_depth_test/shy_enable_depth_test_injections.h"
+
 #include "../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../injections/platform/math/consts/shy_consts.h"
 
