@@ -4,3 +4,7 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_init )
 {
 }
+
+void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_render_request )
+{
+}

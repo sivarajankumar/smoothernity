@@ -7,6 +7,7 @@
 #include "../../observer/animation/sender/transform_request/shy_transform_request_injections.h"
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
 #include "../../perspective/sender/planes_request/shy_planes_request_injections.h"
+#include "../../room/sender/render_request/shy_render_request_injections.h"
 
 #include "../../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../../engine/render/sender/clear_screen/shy_clear_screen_injections.h"

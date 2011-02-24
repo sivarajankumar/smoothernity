@@ -58,14 +58,12 @@ namespace shy_guts
     static void proceed_with_render ( ) ;
     static void prepare_ortho_render ( ) ;
     static void prepare_perspective_render ( ) ;
-    static void request_observer_size ( ) ;
     static void request_observer_transform ( ) ;
     static void request_ortho_planes ( ) ;
     static void request_perspective_planes ( ) ;
     static void request_blanket_render ( ) ;
     static void request_door_render ( ) ;
     static void request_room_render ( ) ;
-    static void observer_transform_received ( ) ;
     static void clear_screen ( ) ;
     static void disable_depth_test ( ) ;
     static void enable_depth_test ( ) ;
@@ -135,10 +133,6 @@ void shy_guts :: prepare_perspective_render ( )
     shy_guts :: request_room_render ( ) ;
 }
 
-void shy_guts :: request_observer_size ( )
-{
-}
-
 void shy_guts :: request_observer_transform ( )
 {
     shy_guts :: logic_observer_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
@@ -171,10 +165,8 @@ void shy_guts :: request_door_render ( )
 
 void shy_guts :: request_room_render ( )
 {
-}
-
-void shy_guts :: observer_transform_received ( )
-{
+    shy_guts :: logic_room_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_room_render_request :: send ( so_called_message_common_logic_room_render_request ( ) ) ;
 }
 
 void shy_guts :: clear_screen ( )
