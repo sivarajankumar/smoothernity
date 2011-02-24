@@ -119,10 +119,20 @@ void shy_guts :: proceed_with_render ( )
 
 void shy_guts :: prepare_ortho_render ( )
 {
+    shy_guts :: disable_depth_test ( ) ;
+    shy_guts :: use_ortho_projection ( ) ;
+    shy_guts :: use_identity_transform ( ) ;
+    shy_guts :: request_blanket_render ( ) ;
 }
 
 void shy_guts :: prepare_perspective_render ( )
 {
+    shy_guts :: clear_screen ( ) ;
+    shy_guts :: enable_depth_test ( ) ;
+    shy_guts :: use_perspective_projection ( ) ;
+    shy_guts :: use_observer_size ( ) ;
+    shy_guts :: use_observer_transform ( ) ;
+    shy_guts :: request_room_render ( ) ;
 }
 
 void shy_guts :: request_observer_size ( )
