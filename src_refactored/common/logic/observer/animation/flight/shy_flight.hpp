@@ -45,6 +45,7 @@ void shy_guts :: reply_transform ( )
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_init )
 {
+    shy_guts :: logic_observer_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_animation_flight_transform_request )
