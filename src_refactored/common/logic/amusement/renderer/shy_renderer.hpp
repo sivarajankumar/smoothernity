@@ -218,6 +218,7 @@ void shy_guts :: use_perspective_projection ( )
 
 void shy_guts :: use_identity_transform ( )
 {
+    so_called_sender_common_engine_render_matrix_identity :: send ( so_called_message_common_engine_render_matrix_identity ( ) ) ;
 }
 
 void shy_guts :: use_observer_transform ( )
