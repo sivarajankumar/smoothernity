@@ -54,4 +54,7 @@ void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_update )
 {
+    so_called_type_platform_math_num_fract time_step ;
+    so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
+    so_called_platform_math :: add_to_fract ( shy_guts :: logic_observer_update_state :: time , time_step ) ;
 }
