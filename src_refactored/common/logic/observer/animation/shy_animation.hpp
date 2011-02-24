@@ -81,6 +81,9 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_transform ( )
 {
+    so_called_message_common_logic_observer_animation_transform_reply msg ;
+    msg . transform = shy_guts :: logic_observer_animation_transform_state :: transform ;
+    so_called_sender_common_logic_observer_animation_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_observer_animation :: receive ( so_called_message_common_init )

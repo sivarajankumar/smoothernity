@@ -1,6 +1,7 @@
 #include "./shy_animation_injections.h"
 
 #include "./sender/flight_transform_request/shy_flight_transform_request_injections.h"
+#include "./sender/transform_reply/shy_transform_reply_injections.h"
 
 #include "../../../engine/camera/stateless/shy_stateless_injections.h"
 
