@@ -5,6 +5,10 @@ void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_
 {
 }
 
+void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_animation_flight_transform_request )
+{
+}
+
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_update )
 {
 }

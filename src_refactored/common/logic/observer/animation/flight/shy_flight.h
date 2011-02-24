@@ -2,6 +2,7 @@ class _shy_common_logic_observer_animation_flight
 {
 public :
     static void receive ( so_called_message_common_init ) ;
+    static void receive ( so_called_message_common_logic_observer_animation_flight_transform_request ) ;
     static void receive ( so_called_message_common_logic_observer_update ) ;
 } ;
 
