@@ -222,6 +222,9 @@ void shy_guts :: use_identity_transform ( )
 
 void shy_guts :: use_observer_transform ( )
 {
+    so_called_message_common_engine_render_matrix_mult msg ;
+    msg . matrix = shy_guts :: logic_observer_animation_transform_state :: transform ;
+    so_called_sender_common_engine_render_matrix_mult :: send ( msg ) ;
 }
 
 void shy_guts :: use_observer_size ( )

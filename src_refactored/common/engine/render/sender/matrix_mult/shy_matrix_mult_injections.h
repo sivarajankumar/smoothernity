@@ -5,7 +5,7 @@
 
 #include "./shy_matrix_mult.h"
 
-typedef shy_sender_common_engine_render_matrix_mult so_called_common_engine_render_matrix_mult ;
+typedef shy_sender_common_engine_render_matrix_mult so_called_sender_common_engine_render_matrix_mult ;
 
 #endif
 

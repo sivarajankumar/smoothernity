@@ -9,6 +9,7 @@
 #include "../../../engine/render/sender/clear_screen/shy_clear_screen_injections.h"
 #include "../../../engine/render/sender/disable_depth_test/shy_disable_depth_test_injections.h"
 #include "../../../engine/render/sender/enable_depth_test/shy_enable_depth_test_injections.h"
+#include "../../../engine/render/sender/matrix_mult/shy_matrix_mult_injections.h"
 #include "../../../engine/render/sender/projection_frustum/shy_projection_frustum_injections.h"
 #include "../../../engine/render/sender/projection_ortho/shy_projection_ortho_injections.h"
 
