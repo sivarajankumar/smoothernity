@@ -179,6 +179,7 @@ void shy_guts :: clear_screen ( )
 
 void shy_guts :: disable_depth_test ( )
 {
+    so_called_sender_common_engine_render_disable_depth_test :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
 }
 
 void shy_guts :: enable_depth_test ( )
