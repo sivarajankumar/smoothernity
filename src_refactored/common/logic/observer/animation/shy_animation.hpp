@@ -61,4 +61,6 @@ void _shy_common_logic_observer_animation :: receive ( so_called_message_common_
 
 void _shy_common_logic_observer_animation :: receive ( so_called_message_common_logic_observer_animation_transform_request )
 {
+    shy_guts :: logic_observer_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_transform ( ) ;
 }
