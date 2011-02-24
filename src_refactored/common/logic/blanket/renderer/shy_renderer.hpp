@@ -5,6 +5,10 @@ void _shy_common_logic_blanket_renderer :: receive ( so_called_message_common_in
 {
 }
 
+void _shy_common_logic_blanket_renderer :: receive ( so_called_message_common_logic_blanket_mesh_render_reply )
+{
+}
+
 void _shy_common_logic_blanket_renderer :: receive ( so_called_message_common_logic_blanket_render_request )
 {
 }
