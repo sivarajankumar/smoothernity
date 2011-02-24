@@ -161,6 +161,8 @@ void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_
 
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_amusement_render )
 {
+    shy_guts :: logic_amusement_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_render ( ) ;
 }
 
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_blanket_render_reply )
@@ -171,8 +173,15 @@ void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_
 {
 }
 
-void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_observer_animation_transform_reply )
+void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_observer_animation_transform_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_observer_animation_transform_state :: requested ) )
+    {
+        shy_guts :: logic_observer_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_observer_animation_transform_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_observer_animation_transform_state :: transform = msg . transform ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_ortho_planes_reply )
