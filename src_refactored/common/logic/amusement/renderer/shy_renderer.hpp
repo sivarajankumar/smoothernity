@@ -9,6 +9,10 @@ void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_
 {
 }
 
+void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_observer_animation_transform_reply )
+{
+}
+
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_ortho_planes_reply )
 {
 }

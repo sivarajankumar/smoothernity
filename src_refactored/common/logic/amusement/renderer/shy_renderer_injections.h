@@ -3,6 +3,7 @@
 
 #include "../message/render/shy_render_injections.h"
 
+#include "../../observer/animation/message/transform_reply/shy_transform_reply_injections.h"
 #include "../../ortho/message/planes_reply/shy_planes_reply_injections.h"
 #include "../../perspective/message/planes_reply/shy_planes_reply_injections.h"
 
