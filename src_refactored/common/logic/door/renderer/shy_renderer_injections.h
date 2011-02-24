@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_door_renderer_injections_included
 #define _shy_common_logic_door_renderer_injections_included
 
+#include "../message/render_request/shy_render_request_injections.h"
+
 #include "../../../message/init/shy_init_injections.h"
 
 #include "../../../../injections/platform/scheduler/shy_scheduler.h"
