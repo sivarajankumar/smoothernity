@@ -55,8 +55,16 @@ void _shy_common_logic_observer_animation :: receive ( so_called_message_common_
 {
 }
 
-void _shy_common_logic_observer_animation :: receive ( so_called_message_common_logic_observer_animation_flight_transform_reply )
+void _shy_common_logic_observer_animation :: receive ( so_called_message_common_logic_observer_animation_flight_transform_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_observer_animation_flight_transform_state :: requested ) )
+    {
+        shy_guts :: logic_observer_animation_flight_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_observer_animation_flight_transform_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_observer_animation_flight_transform_state :: eye = msg . eye ;
+        shy_guts :: logic_observer_animation_flight_transform_state :: target = msg . target ;
+        shy_guts :: proceed_with_transform ( ) ;
+    }
 }
 
 void _shy_common_logic_observer_animation :: receive ( so_called_message_common_logic_observer_animation_transform_request )
