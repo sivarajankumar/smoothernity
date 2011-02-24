@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_blanket_mesh_injections_included
 #define _shy_common_logic_blanket_mesh_injections_included
 
+#include "../message/mesh_create/shy_mesh_create_injections.h"
+
 #include "../../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 
 #include "../../../message/init/shy_init_injections.h"
