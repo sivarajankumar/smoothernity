@@ -194,6 +194,14 @@ void shy_guts :: enable_depth_test ( )
 
 void shy_guts :: use_ortho_projection ( )
 {
+    so_called_message_common_engine_render_projection_ortho msg ;
+    msg . x_left = shy_guts :: logic_ortho_planes_state :: x_left ;
+    msg . x_right = shy_guts :: logic_ortho_planes_state :: x_right ;
+    msg . y_bottom = shy_guts :: logic_ortho_planes_state :: y_bottom ;
+    msg . y_top = shy_guts :: logic_ortho_planes_state :: y_top ;
+    msg . z_near = shy_guts :: logic_ortho_planes_state :: z_near ;
+    msg . z_far = shy_guts :: logic_ortho_planes_state :: z_far ;
+    so_called_sender_common_engine_render_projection_ortho :: send ( msg ) ;
 }
 
 void shy_guts :: use_perspective_projection ( )
