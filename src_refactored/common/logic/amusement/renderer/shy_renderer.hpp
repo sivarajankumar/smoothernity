@@ -175,6 +175,11 @@ void shy_guts :: observer_transform_received ( )
 
 void shy_guts :: clear_screen ( )
 {
+    so_called_message_common_engine_render_clear_screen msg ;
+    msg . r = so_called_common_logic_amusement_consts :: renderer_clear_color_r ; 
+    msg . g = so_called_common_logic_amusement_consts :: renderer_clear_color_g ; 
+    msg . b = so_called_common_logic_amusement_consts :: renderer_clear_color_b ; 
+    so_called_sender_common_engine_render_clear_screen :: send ( msg ) ;
 }
 
 void shy_guts :: disable_depth_test ( )
