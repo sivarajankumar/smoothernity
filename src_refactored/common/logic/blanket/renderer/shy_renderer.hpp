@@ -49,6 +49,8 @@ void shy_guts :: prepare_render_state ( )
 
 void shy_guts :: request_blanket_render ( )
 {
+    shy_guts :: logic_blanket_mesh_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_blanket_mesh_render_request :: send ( so_called_message_common_logic_blanket_mesh_render_request ( ) ) ;
 }
 
 void shy_guts :: reply_render ( )
