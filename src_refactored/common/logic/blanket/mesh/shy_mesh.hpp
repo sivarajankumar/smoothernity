@@ -135,6 +135,7 @@ void shy_guts :: finalize_mesh ( )
 
 void shy_guts :: reply_creation_finished ( )
 {
+    so_called_sender_common_logic_blanket_mesh_creation_finished :: send ( so_called_message_common_logic_blanket_mesh_creation_finished ( ) ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
