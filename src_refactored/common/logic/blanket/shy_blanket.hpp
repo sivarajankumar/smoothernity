@@ -17,6 +17,8 @@ void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blank
 
 void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blanket_mesh_creation_finished )
 {
+    shy_guts :: created = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_blanket_creation_finished :: send ( so_called_message_common_logic_blanket_creation_finished ( ) ) ;
 }
 
 void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blanket_update )
