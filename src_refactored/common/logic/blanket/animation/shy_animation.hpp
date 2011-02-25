@@ -13,6 +13,10 @@ void _shy_common_logic_blanket_animation :: receive ( so_called_message_common_l
 {
 }
 
+void _shy_common_logic_blanket_animation :: receive ( so_called_message_common_logic_blanket_animation_fit_transform_reply )
+{
+}
+
 void _shy_common_logic_blanket_animation :: receive ( so_called_message_common_logic_blanket_animation_transform_request )
 {
 }
