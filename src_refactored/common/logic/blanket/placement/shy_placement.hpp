@@ -22,10 +22,22 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_place ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_place_state :: requested ) )
+    {
+        shy_guts :: logic_blanket_place_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_animation_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_animation_transform_state :: replied ) )
+    {
+        shy_guts :: logic_blanket_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: transform_mesh ( ) ;
+    }
 }
 
 void shy_guts :: request_animation_transform ( )
 {
+    shy_guts :: logic_blanket_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_blanket_animation_transform_request :: send ( so_called_message_common_logic_blanket_animation_transform_request ( ) ) ;
 }
 
 void shy_guts :: transform_mesh ( )
