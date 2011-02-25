@@ -74,10 +74,55 @@ void shy_guts :: request_mesh_create ( )
 
 void shy_guts :: mesh_created ( )
 {
+    shy_guts :: fill_mesh_contents ( ) ;
+    shy_guts :: finalize_mesh ( ) ;
+    shy_guts :: reply_creation_finished ( ) ;
 }
 
 void shy_guts :: fill_mesh_contents ( )
 {
+    so_called_type_platform_math_num_fract x_left ;
+    so_called_type_platform_math_num_fract x_right ;
+    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_type_platform_math_num_fract y_top ;
+    so_called_type_platform_math_num_fract z ;
+    so_called_type_platform_math_num_fract color_r ;
+    so_called_type_platform_math_num_fract color_g ;
+    so_called_type_platform_math_num_fract color_b ;
+    so_called_type_platform_math_num_fract color_a ;
+    so_called_type_platform_math_num_whole current_index ;
+
+    x_left = so_called_common_logic_blanket_consts :: mesh_vertex_x_left ;
+    x_right = so_called_common_logic_blanket_consts :: mesh_vertex_x_right ;
+    y_bottom = so_called_common_logic_blanket_consts :: mesh_vertex_y_bottom ;
+    y_top = so_called_common_logic_blanket_consts :: mesh_vertex_y_top ;
+    z = so_called_common_logic_blanket_consts :: mesh_vertex_z ;
+    color_r = so_called_common_logic_blanket_consts :: mesh_color_r ;
+    color_g = so_called_common_logic_blanket_consts :: mesh_color_g ;
+    color_b = so_called_common_logic_blanket_consts :: mesh_color_b ;
+    color_a = so_called_common_logic_blanket_consts :: mesh_color_a ;
+
+    current_index = so_called_platform_math_consts :: whole_0 ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_left , y_top , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_left , y_bottom , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_right , y_top , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_right , y_bottom , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
 }
 
 void shy_guts :: finalize_mesh ( )
