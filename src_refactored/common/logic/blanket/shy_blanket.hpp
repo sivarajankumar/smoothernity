@@ -12,6 +12,7 @@ void _shy_common_logic_blanket :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blanket_creation_permit )
 {
+    so_called_sender_common_logic_blanket_mesh_create :: send ( so_called_message_common_logic_blanket_mesh_create ( ) ) ;
 }
 
 void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blanket_mesh_creation_finished )
