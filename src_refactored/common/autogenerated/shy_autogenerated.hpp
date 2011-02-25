@@ -12,6 +12,20 @@ const so_called_type_platform_math_num_fract shy_common_logic_blanket_consts :: 
 const so_called_type_platform_math_num_fract shy_common_logic_blanket_consts :: mesh_vertex_y_top = so_called_platform_math :: init_num_fract ( 1 , 2 ) ;
 const so_called_type_platform_math_num_fract shy_common_logic_blanket_consts :: mesh_vertex_z = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
 
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: animation_origin_x = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: animation_origin_y = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: animation_origin_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: appear_rotation_begin = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: appear_rotation_end = so_called_platform_math :: init_num_fract ( 10 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: appear_scale_begin = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: appear_scale_end = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: appear_time_from_begin_to_end = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: disappear_rotation_begin = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: disappear_rotation_end = so_called_platform_math :: init_num_fract ( 10 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: disappear_scale_begin = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: disappear_scale_end = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: disappear_time_from_begin_to_end = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+
 const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_horizontal_offset_amplitude = so_called_platform_math :: init_num_fract ( 1 , 3 ) ;
 const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_horizontal_offset_period = so_called_platform_math :: init_num_fract ( 11 , 10 ) ;
 const so_called_type_platform_math_num_fract shy_common_logic_observer_animation_consts :: flight_target_z = so_called_platform_math :: init_num_fract ( - 1 , 1 ) ;
