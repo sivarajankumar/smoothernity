@@ -48,23 +48,21 @@ void shy_guts :: proceed_with_transform ( )
         shy_guts :: logic_blanket_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: request_fit_transform ( ) ;
     }
-/*
-    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_fit_transform_state . replied ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_animation_fit_transform_state :: replied ) )
     {
-        _logic_blanket_animation_fit_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _request_appear_transform ( ) ;
+        shy_guts :: logic_blanket_animation_fit_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_appear_transform ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_appear_transform_state . replied ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_animation_appear_transform_state :: replied ) )
     {
-        _logic_blanket_animation_appear_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _request_disappear_transform ( ) ;
+        shy_guts :: logic_blanket_animation_appear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_disappear_transform ( ) ;
     }
-    if ( platform_conditions :: whole_is_true ( _logic_blanket_animation_disappear_transform_state . replied ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_animation_disappear_transform_state :: replied ) )
     {
-        _logic_blanket_animation_disappear_transform_state . replied = _platform_math_consts . get ( ) . whole_false ;
-        _reply_computed_transform ( ) ;
+        shy_guts :: logic_blanket_animation_disappear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: reply_computed_transform ( ) ;
     }
-*/
 }
 
 void shy_guts :: request_appear_transform ( )
