@@ -42,4 +42,6 @@ void _shy_common_logic_blanket_placement :: receive ( so_called_message_common_l
 
 void _shy_common_logic_blanket_placement :: receive ( so_called_message_common_logic_blanket_place )
 {
+    shy_guts :: logic_blanket_place_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_place ( ) ;
 }
