@@ -58,10 +58,6 @@ void shy_guts :: reply_render ( )
     so_called_sender_common_logic_blanket_render_reply :: send ( so_called_message_common_logic_blanket_render_reply ( ) ) ;
 }
 
-void _shy_common_logic_blanket_renderer :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_blanket_renderer :: receive ( so_called_message_common_logic_blanket_mesh_render_reply )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_mesh_render_state :: requested ) )

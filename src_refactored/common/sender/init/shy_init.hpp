@@ -8,7 +8,6 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_blanket_animation_disappear :: receive ( msg ) ;
     so_called_common_logic_blanket_animation_fit :: receive ( msg ) ;
     so_called_common_logic_blanket_mesh :: receive ( msg ) ;
-    so_called_common_logic_blanket_renderer :: receive ( msg ) ;
     so_called_common_logic_camera :: receive ( msg ) ;
     so_called_common_logic_core :: receive ( msg ) ;
     so_called_common_logic_door :: receive ( msg ) ;
