@@ -55,6 +55,7 @@ void shy_guts :: request_blanket_render ( )
 
 void shy_guts :: reply_render ( )
 {
+    so_called_sender_common_logic_blanket_render_reply :: send ( so_called_message_common_logic_blanket_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_blanket_renderer :: receive ( so_called_message_common_init )
