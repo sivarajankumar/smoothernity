@@ -127,6 +127,10 @@ void shy_guts :: fill_mesh_contents ( )
 
 void shy_guts :: finalize_mesh ( )
 {
+    shy_guts :: engine_render_mesh_create_state :: finalized = so_called_platform_math_consts :: whole_true ;
+    so_called_message_common_engine_render_mesh_finalize msg ;
+    msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    so_called_sender_common_engine_render_mesh_finalize :: send ( msg ) ;
 }
 
 void shy_guts :: reply_creation_finished ( )
