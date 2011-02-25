@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_blanket_animation_disappear_transform_reply_injections_included
+#define _shy_sender_common_logic_blanket_animation_disappear_transform_reply_injections_included
+
+#include "../../message/disappear_transform_reply/shy_disappear_transform_reply_injections.h"
+
+#include "./shy_disappear_transform_reply.h"
+
+typedef shy_sender_common_logic_blanket_animation_disappear_transform_reply so_called_sender_common_logic_blanket_animation_disappear_transform_reply ;
+
+#endif
