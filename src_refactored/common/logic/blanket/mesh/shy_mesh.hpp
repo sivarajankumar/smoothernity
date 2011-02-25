@@ -16,3 +16,7 @@ void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_
 void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_render_request )
 {
 }
+
+void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_set_transform )
+{
+}
