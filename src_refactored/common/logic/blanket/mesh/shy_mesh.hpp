@@ -50,10 +50,26 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_creation ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_mesh_create_state :: requested ) )
+    {
+        shy_guts :: logic_blanket_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_mesh_create ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: replied ) )
+    {
+        shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: mesh_created ( ) ;
+    }
 }
 
 void shy_guts :: request_mesh_create ( )
 {
+    shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_message_common_engine_render_mesh_create_request msg ;
+    msg . vertices = shy_guts :: logic_blanket_mesh_consts :: vertices ;
+    msg . triangle_strip_indices = shy_guts :: logic_blanket_mesh_consts :: triangle_strip_indices ;
+    msg . triangle_fan_indices = shy_guts :: logic_blanket_mesh_consts :: triangle_fan_indices ;
+    so_called_sender_common_engine_render_mesh_create_request :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_created ( )
@@ -95,8 +111,15 @@ void shy_guts :: mesh_set_vertex_color
 {
 }
 
-void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_engine_render_mesh_create_reply )
+void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: requested ) )
+    {
+        shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: engine_render_mesh_create_state :: mesh = msg . mesh ;
+        shy_guts :: proceed_with_creation ( ) ;
+    }
 }
 
 void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_init )
