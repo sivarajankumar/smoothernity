@@ -120,6 +120,13 @@ void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_
     so_called_sender_common_logic_blanket_mesh_render_reply :: send ( so_called_message_common_logic_blanket_mesh_render_reply ( ) ) ;
 }
 
-void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_set_transform )
+void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_set_transform msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: finalized ) )
+    {
+        so_called_message_common_engine_render_mesh_set_transform transform_msg ;
+        transform_msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+        transform_msg . transform = msg . transform ;
+        so_called_sender_common_engine_render_mesh_set_transform :: send ( transform_msg ) ;
+    }
 }
