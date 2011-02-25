@@ -23,14 +23,28 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_render ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_render_state :: requested ) )
+    {
+        shy_guts :: logic_blanket_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_requested ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_mesh_render_state :: replied ) )
+    {
+        shy_guts :: logic_blanket_mesh_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: reply_render ( ) ;
+    }
 }
 
 void shy_guts :: render_requested ( )
 {
+    shy_guts :: prepare_render_state ( ) ;
+    shy_guts :: request_blanket_render ( ) ;
 }
 
 void shy_guts :: prepare_render_state ( )
 {
+    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
+    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
 }
 
 void shy_guts :: request_blanket_render ( )
