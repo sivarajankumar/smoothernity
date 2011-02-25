@@ -42,6 +42,9 @@ void shy_guts :: request_animation_transform ( )
 
 void shy_guts :: transform_mesh ( )
 {
+    so_called_message_common_logic_blanket_mesh_set_transform msg ;
+    msg . transform = shy_guts :: logic_blanket_animation_transform_state :: transform ;
+    so_called_sender_common_logic_blanket_mesh_set_transform :: send ( msg ) ;
 }
 
 void _shy_common_logic_blanket_placement :: receive ( so_called_message_common_init )
