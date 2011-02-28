@@ -44,10 +44,20 @@ void shy_guts :: reply_transform ( )
 {
 }
 
-void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_common_engine_render_aspect_reply )
+void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_common_engine_render_aspect_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_aspect_state :: requested ) )
+    {
+        shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: engine_render_aspect_state :: width = msg . width ;
+        shy_guts :: engine_render_aspect_state :: height = msg . height ;
+        shy_guts :: proceed_with_transform ( ) ;
+    }
 }
 
 void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_common_logic_blanket_animation_fit_transform_request )
 {
+    shy_guts :: logic_blanket_animation_fit_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_transform ( ) ;
 }
