@@ -67,6 +67,9 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_transform ( )
 {
+    so_called_message_common_logic_blanket_animation_fit_transform_reply msg ;
+    msg . scale = shy_guts :: logic_blanket_animation_fit_transform_state :: scale ;
+    so_called_sender_common_logic_blanket_animation_fit_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_common_engine_render_aspect_reply msg )
