@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_door_texture_create_injections_included
+#define _shy_message_common_logic_door_texture_create_injections_included
+
+#include "./shy_texture_create.h"
+
+typedef shy_message_common_logic_door_texture_create so_called_message_common_logic_door_texture_create ;
+
+#endif
