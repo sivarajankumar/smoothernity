@@ -46,10 +46,23 @@ void shy_guts :: request_aspect_ratio ( )
 
 void shy_guts :: reply_computed_transform ( )
 {
+    shy_guts :: compute_transform ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_math_num_fract width ;
+    so_called_type_platform_math_num_fract height ;
+    so_called_type_platform_math_num_fract scale ;
+
+    width = shy_guts :: engine_render_aspect_state :: width ;
+    height = shy_guts :: engine_render_aspect_state :: height ;
+
+    so_called_platform_math :: add_fracts ( scale , width , height ) ;
+    so_called_platform_math :: mul_fract_by ( scale , so_called_platform_math_consts :: fract_2 ) ;
+
+    shy_guts :: logic_blanket_animation_fit_transform_state :: scale = scale ;
 }
 
 void shy_guts :: reply_transform ( )
