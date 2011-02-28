@@ -50,7 +50,6 @@ void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_c
 
 void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_common_logic_blanket_update )
 {
-/*
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_update_state :: started ) )
     {
         so_called_type_platform_math_num_fract time ;
@@ -59,19 +58,18 @@ void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_c
         so_called_type_platform_math_num_whole started ;
 
         time = shy_guts :: logic_blanket_update_state :: time ;
-        so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform :: frames_per_second ) ;
-        time_from_begin_to_end = _logic_blanket_animation_stateless_consts . get ( ) . appear_time_from_begin_to_end ;
-        started = _logic_blanket_update_state . started ;
+        so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
+        time_from_begin_to_end = so_called_common_logic_blanket_animation_consts :: appear_time_from_begin_to_end ;
+        started = shy_guts :: logic_blanket_update_state :: started ;
 
-        platform_math :: add_to_fract ( time , time_step ) ;
-        if ( platform_conditions :: fract_greater_than_fract ( time , time_from_begin_to_end ) )
+        so_called_platform_math :: add_to_fract ( time , time_step ) ;
+        if ( so_called_platform_conditions :: fract_greater_than_fract ( time , time_from_begin_to_end ) )
         {
-            started = _platform_math_consts . get ( ) . whole_false ;
-            _mediator . get ( ) . send ( typename messages :: logic_blanket_animation_appear_finished ( ) ) ;
+            started = so_called_platform_math_consts :: whole_false ;
+            so_called_sender_common_logic_blanket_animation_appear_finished :: send ( so_called_message_common_logic_blanket_animation_appear_finished ( ) ) ;
         }
 
-        _logic_blanket_update_state . started = started ;
-        _logic_blanket_update_state . time = time ;
+        shy_guts :: logic_blanket_update_state :: started = started ;
+        shy_guts :: logic_blanket_update_state :: time = time ;
     }
-*/
 }
