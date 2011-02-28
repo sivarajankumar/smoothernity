@@ -45,10 +45,33 @@ void shy_guts :: compute_scale ( )
 
 void shy_guts :: compute_rotation ( )
 {
+    so_called_type_platform_math_num_fract rotation ;
+    so_called_type_platform_math_num_fract rotation_begin ;
+    so_called_type_platform_math_num_fract rotation_end ;
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time_from_begin_to_end ;
+
+    rotation_begin = so_called_common_logic_blanket_animation_consts :: appear_rotation_begin ;
+    rotation_end = so_called_common_logic_blanket_animation_consts :: appear_rotation_end ;
+    time_from_begin_to_end = so_called_common_logic_blanket_animation_consts :: appear_time_from_begin_to_end ;
+    time = shy_guts :: logic_blanket_update_state :: time ;
+
+    time_begin = so_called_platform_math_consts :: fract_0 ;
+    time_end = time_from_begin_to_end ;
+
+    so_called_common_engine_math_stateless :: lerp ( rotation , time , rotation_begin , time_begin , rotation_end , time_end ) ;
+
+    shy_guts :: logic_blanket_animation_appear_transform_state :: rotation = rotation ;
 }
 
 void shy_guts :: reply_transform ( )
 {
+    so_called_message_common_logic_blanket_animation_appear_transform_reply msg ;
+    msg . scale = shy_guts :: logic_blanket_animation_appear_transform_state :: scale ;
+    msg . rotation = shy_guts :: logic_blanket_animation_appear_transform_state :: rotation ;
+    so_called_sender_common_logic_blanket_animation_appear_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_common_init )
