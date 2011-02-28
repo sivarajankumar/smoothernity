@@ -16,3 +16,7 @@ void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_doo
 void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_render_request )
 {
 }
+
+void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_set_transform )
+{
+}
