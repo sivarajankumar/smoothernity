@@ -13,6 +13,10 @@ void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_lau
 {
 }
 
+void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_mesh_creation_finished )
+{
+}
+
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_update )
 {
 }

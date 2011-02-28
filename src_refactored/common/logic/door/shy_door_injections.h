@@ -3,6 +3,7 @@
 
 #include "./message/creation_permit/shy_creation_permit_injections.h"
 #include "./message/launch_permit/shy_launch_permit_injections.h"
+#include "./message/mesh_creation_finished/shy_mesh_creation_finished_injections.h"
 #include "./message/update/shy_update_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
