@@ -20,6 +20,37 @@ namespace shy_guts
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_blanket_animation_disappear > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
+void shy_guts :: compute_scale ( )
+{
+    so_called_type_platform_math_num_fract scale ;
+    so_called_type_platform_math_num_fract scale_begin ;
+    so_called_type_platform_math_num_fract scale_end ;
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time_from_begin_to_end ;
+
+    scale_begin = so_called_common_logic_blanket_animation_consts :: disappear_scale_begin ;
+    scale_end = so_called_common_logic_blanket_animation_consts :: disappear_scale_end ;
+    time_from_begin_to_end = so_called_common_logic_blanket_animation_consts :: disappear_time_from_begin_to_end ;
+    time = shy_guts :: logic_blanket_update_state :: time ;
+
+    time_begin = so_called_platform_math_consts :: fract_0 ;
+    time_end = time_from_begin_to_end ;
+
+    so_called_common_engine_math_stateless :: lerp ( scale , time , scale_begin , time_begin , scale_end , time_end ) ;
+
+    shy_guts :: logic_blanket_animation_disappear_transform_state :: scale = scale ;
+}
+
+void shy_guts :: compute_rotation ( )
+{
+}
+
+void shy_guts :: reply_transform ( )
+{
+}
+
 void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_message_common_init )
 {
     shy_guts :: logic_blanket_update_state :: started = so_called_platform_math_consts :: whole_false ;
@@ -34,6 +65,9 @@ void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_messag
 
 void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_message_common_logic_blanket_animation_disappear_transform_request )
 {
+    shy_guts :: compute_scale ( ) ;
+    shy_guts :: compute_rotation ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_message_common_logic_blanket_update )
