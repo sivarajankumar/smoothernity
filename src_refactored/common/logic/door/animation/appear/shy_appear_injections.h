@@ -2,6 +2,7 @@
 #define _shy_common_logic_door_animation_appear_injections_included
 
 #include "../message/appear_start/shy_appear_start_injections.h"
+#include "../message/appear_transform_request/shy_appear_transform_request_injections.h"
 
 #include "../../message/update/shy_update_injections.h"
 
