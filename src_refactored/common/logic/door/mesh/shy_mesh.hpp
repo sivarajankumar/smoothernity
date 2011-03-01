@@ -123,6 +123,13 @@ void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_doo
 
 void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_render_request )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: finalized ) )
+    {
+        so_called_message_common_engine_render_mesh_render msg ;
+        msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+        so_called_sender_common_engine_render_mesh_render :: send ( msg ) ;
+    }
+    so_called_sender_common_logic_door_mesh_render_reply :: send ( so_called_message_common_logic_door_mesh_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_set_transform )
