@@ -74,6 +74,7 @@ void shy_guts :: request_texture_select ( )
 
 void shy_guts :: reply_door_render ( )
 {
+    so_called_sender_common_logic_door_render_reply :: send ( so_called_message_common_logic_door_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_door_renderer :: receive ( so_called_message_common_logic_door_mesh_render_reply )
