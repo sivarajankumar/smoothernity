@@ -5,8 +5,6 @@
 #include "../message/render_request/shy_render_request_injections.h"
 #include "../message/texture_select_reply/shy_texture_select_reply_injections.h"
 
-#include "../../../message/init/shy_init_injections.h"
-
 #include "../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_renderer.h"
