@@ -16,3 +16,7 @@ void _shy_common_logic_door_texture :: receive ( so_called_message_common_init )
 void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_door_texture_create )
 {
 }
+
+void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_door_texture_select_request )
+{
+}
