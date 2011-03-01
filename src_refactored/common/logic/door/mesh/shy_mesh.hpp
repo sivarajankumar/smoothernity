@@ -79,6 +79,9 @@ void shy_guts :: request_mesh_create ( )
 
 void shy_guts :: mesh_created ( )
 {
+    shy_guts :: fill_mesh_contents ( ) ;
+    shy_guts :: finalize_mesh ( ) ;
+    shy_guts :: reply_creation_finished ( ) ;
 }
 
 void shy_guts :: fill_mesh_contents ( )
