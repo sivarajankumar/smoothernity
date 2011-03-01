@@ -70,4 +70,10 @@ void _shy_common_logic_door_renderer :: receive ( so_called_message_common_logic
 
 void _shy_common_logic_door_renderer :: receive ( so_called_message_common_logic_door_texture_select_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_door_texture_select_state :: requested ) )
+    {
+        shy_guts :: logic_door_texture_select_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_door_texture_select_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
