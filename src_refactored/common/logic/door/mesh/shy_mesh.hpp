@@ -132,6 +132,10 @@ void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_doo
     so_called_sender_common_logic_door_mesh_render_reply :: send ( so_called_message_common_logic_door_mesh_render_reply ( ) ) ;
 }
 
-void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_set_transform )
+void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_set_transform msg )
 {
+    so_called_message_common_engine_render_mesh_set_transform mesh_msg ;
+    mesh_msg . transform = msg . transform ;
+    mesh_msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_msg ) ;
 }
