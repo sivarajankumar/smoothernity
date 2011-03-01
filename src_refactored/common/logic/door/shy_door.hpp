@@ -20,6 +20,7 @@ void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_lau
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_mesh_creation_finished )
 {
+    so_called_sender_common_logic_door_texture_create :: send ( so_called_message_common_logic_door_texture_create ( ) ) ;
 }
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_update )
