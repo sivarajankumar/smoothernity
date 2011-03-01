@@ -25,6 +25,12 @@ void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_mes
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: launch_permitted )
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: created )
+       )
+    {
+        so_called_sender_common_logic_door_place :: send ( so_called_message_common_logic_door_place ( ) ) ;
+    }
 }
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_texture_creation_finished )
