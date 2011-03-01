@@ -7,4 +7,5 @@ void _shy_common_logic_door_placement :: receive ( so_called_message_common_logi
 
 void _shy_common_logic_door_placement :: receive ( so_called_message_common_logic_door_place )
 {
+    so_called_sender_common_logic_door_animation_transform_request :: send ( so_called_message_common_logic_door_animation_transform_request ( ) ) ;
 }
