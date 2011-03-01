@@ -10,7 +10,6 @@
 #include "../../logic/core/shy_core_injections.h"
 #include "../../logic/door/animation/appear/shy_appear_injections.h"
 #include "../../logic/door/animation/shy_animation_injections.h"
-#include "../../logic/door/placement/shy_placement_injections.h"
 #include "../../logic/door/renderer/shy_renderer_injections.h"
 #include "../../logic/door/texture/shy_texture_injections.h"
 #include "../../logic/entities/shy_entities_injections.h"
