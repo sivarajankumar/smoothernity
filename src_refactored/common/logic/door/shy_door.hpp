@@ -29,4 +29,7 @@ void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_upd
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_texture_creation_finished )
 {
+    shy_guts :: created = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_door_creation_finished :: send ( so_called_message_common_logic_door_creation_finished ( ) ) ;
+    so_called_sender_common_logic_door_place :: send ( so_called_message_common_logic_door_place ( ) ) ;
 }
