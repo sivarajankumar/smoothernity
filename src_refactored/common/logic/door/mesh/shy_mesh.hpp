@@ -86,10 +86,77 @@ void shy_guts :: mesh_created ( )
 
 void shy_guts :: fill_mesh_contents ( )
 {
+    so_called_type_platform_math_num_fract x_left ;
+    so_called_type_platform_math_num_fract x_right ;
+    so_called_type_platform_math_num_fract y_top ;
+    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_type_platform_math_num_fract u_top_left ;
+    so_called_type_platform_math_num_fract v_top_left ;
+    so_called_type_platform_math_num_fract u_top_right ;
+    so_called_type_platform_math_num_fract v_top_right ;
+    so_called_type_platform_math_num_fract u_bottom_left ;
+    so_called_type_platform_math_num_fract v_bottom_left ;
+    so_called_type_platform_math_num_fract u_bottom_right ;
+    so_called_type_platform_math_num_fract v_bottom_right ;
+    so_called_type_platform_math_num_fract z ;
+    so_called_type_platform_math_num_fract color_r ;
+    so_called_type_platform_math_num_fract color_g ;
+    so_called_type_platform_math_num_fract color_b ;
+    so_called_type_platform_math_num_fract color_a ; 
+    so_called_type_platform_math_num_whole current_index ;
+    
+    x_left = so_called_common_logic_door_consts :: mesh_x_left ;
+    x_right = so_called_common_logic_door_consts :: mesh_x_right ;
+    y_top = so_called_common_logic_door_consts :: mesh_y_top ; 
+    y_bottom = so_called_common_logic_door_consts :: mesh_y_bottom ; 
+    u_top_left = so_called_common_logic_door_consts :: mesh_u_top_left ;
+    v_top_left = so_called_common_logic_door_consts :: mesh_v_top_left ;
+    u_top_right = so_called_common_logic_door_consts :: mesh_u_top_right ;
+    v_top_right = so_called_common_logic_door_consts :: mesh_v_top_right ;
+    u_bottom_left = so_called_common_logic_door_consts :: mesh_u_bottom_left ;
+    v_bottom_left = so_called_common_logic_door_consts :: mesh_v_bottom_left ;
+    u_bottom_right = so_called_common_logic_door_consts :: mesh_u_bottom_right ;
+    v_bottom_right = so_called_common_logic_door_consts :: mesh_v_bottom_right ;
+    z = so_called_common_logic_door_consts :: mesh_z ;
+
+    color_r = so_called_common_logic_door_consts :: mesh_color_r ;
+    color_g = so_called_common_logic_door_consts :: mesh_color_g ;
+    color_b = so_called_common_logic_door_consts :: mesh_color_b ;
+    color_a = so_called_common_logic_door_consts :: mesh_color_a ;
+
+    current_index = so_called_platform_math_consts :: whole_0 ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_left , y_top , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , u_top_left , v_top_left ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_left , y_bottom , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , u_bottom_left , v_bottom_left ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_right , y_top , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , u_top_right , v_top_right ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_right , y_bottom , z ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , u_bottom_right , v_bottom_right ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
 }
 
 void shy_guts :: finalize_mesh ( )
 {
+    shy_guts :: engine_render_mesh_create_state :: finalized = so_called_platform_math_consts :: whole_true ;
+    so_called_message_common_engine_render_mesh_finalize msg ;
+    msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    so_called_sender_common_engine_render_mesh_finalize :: send ( msg ) ;
 }
 
 void shy_guts :: reply_creation_finished ( )
