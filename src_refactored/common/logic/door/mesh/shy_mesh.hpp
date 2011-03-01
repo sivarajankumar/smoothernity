@@ -121,6 +121,8 @@ void _shy_common_logic_door_mesh :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_create )
 {
+    shy_guts :: logic_door_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;    
+    shy_guts :: proceed_with_creation ( ) ;
 }
 
 void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_door_mesh_render_request )
