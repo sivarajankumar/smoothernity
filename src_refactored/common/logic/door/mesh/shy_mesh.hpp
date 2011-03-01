@@ -161,6 +161,7 @@ void shy_guts :: finalize_mesh ( )
 
 void shy_guts :: reply_creation_finished ( )
 {
+    so_called_sender_common_logic_door_mesh_creation_finished :: send ( so_called_message_common_logic_door_mesh_creation_finished ( ) ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value 
