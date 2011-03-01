@@ -12,3 +12,7 @@ void _shy_common_logic_door_renderer :: receive ( so_called_message_common_logic
 void _shy_common_logic_door_renderer :: receive ( so_called_message_common_logic_door_render_request )
 {
 }
+
+void _shy_common_logic_door_renderer :: receive ( so_called_message_common_logic_door_texture_select_reply )
+{
+}
