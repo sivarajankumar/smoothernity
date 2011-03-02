@@ -43,10 +43,6 @@ void shy_guts :: reply_transform ( )
 {
 }
 
-void _shy_common_logic_door_animation :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_door_animation :: receive ( so_called_message_common_logic_door_animation_appear_transform_reply )
 {
 }

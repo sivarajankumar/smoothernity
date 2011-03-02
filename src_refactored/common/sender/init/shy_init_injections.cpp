@@ -9,7 +9,6 @@
 #include "../../logic/camera/shy_camera_injections.h"
 #include "../../logic/core/shy_core_injections.h"
 #include "../../logic/door/animation/appear/shy_appear_injections.h"
-#include "../../logic/door/animation/shy_animation_injections.h"
 #include "../../logic/entities/shy_entities_injections.h"
 #include "../../logic/fidget/shy_fidget_injections.h"
 #include "../../logic/game/shy_game_injections.h"
