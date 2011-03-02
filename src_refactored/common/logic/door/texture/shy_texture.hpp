@@ -160,6 +160,7 @@ void shy_guts :: finalize_texture ( )
 
 void shy_guts :: reply_door_texture_created ( )
 {
+    so_called_sender_common_logic_door_texture_creation_finished :: send ( so_called_message_common_logic_door_texture_creation_finished ( ) ) ;
 }
 
 void shy_guts :: request_rasterizer_finalize ( )
