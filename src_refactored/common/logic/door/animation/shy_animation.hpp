@@ -25,10 +25,22 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_transform ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_door_animation_transform_state :: requested ) )
+    {
+        shy_guts :: logic_door_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_appear_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_door_animation_appear_transform_state :: replied ) )
+    {
+        shy_guts :: logic_door_animation_appear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: reply_computed_transform ( ) ;
+    }
 }
 
 void shy_guts :: request_appear_transform ( )
 {
+    shy_guts :: logic_door_animation_appear_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_door_animation_appear_transform_request :: send ( so_called_message_common_logic_door_animation_appear_transform_request ( ) ) ;
 }
 
 void shy_guts :: reply_computed_transform ( )
