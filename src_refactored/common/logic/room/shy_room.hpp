@@ -13,6 +13,10 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_lau
 {
 }
 
+void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_mesh_creation_finished )
+{
+}
+
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_update )
 {
 }
