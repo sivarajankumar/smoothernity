@@ -9,6 +9,10 @@ void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic
 {
 }
 
+void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_render_permit )
+{
+}
+
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_render_request )
 {
 }
