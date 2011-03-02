@@ -42,10 +42,27 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_creation ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_door_texture_create_state :: requested ) )
+    {
+        shy_guts :: logic_door_texture_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_texture_create ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_texture_create_state :: replied ) )
+    {
+        shy_guts :: engine_render_texture_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: texture_created ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_rasterizer_finalize_state :: replied ) )
+    {
+        shy_guts :: engine_rasterizer_finalize_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: rasterizer_finalized ( ) ;
+    }
 }
 
 void shy_guts :: request_texture_create ( )
 {
+    shy_guts :: engine_render_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_engine_render_texture_create_request :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
 }
 
 void shy_guts :: texture_created ( )
@@ -87,10 +104,23 @@ void shy_guts :: draw_rect
 
 void _shy_common_logic_door_texture :: receive ( so_called_message_common_engine_rasterizer_finalize_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_rasterizer_finalize_state :: requested ) )
+    {
+        shy_guts :: engine_rasterizer_finalize_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: engine_rasterizer_finalize_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_creation ( ) ;
+    }
 }
 
-void _shy_common_logic_door_texture :: receive ( so_called_message_common_engine_render_texture_create_reply )
+void _shy_common_logic_door_texture :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_texture_create_state :: requested ) )
+    {
+        shy_guts :: engine_render_texture_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: engine_render_texture_create_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: engine_render_texture_create_state :: texture = msg . texture ;
+        shy_guts :: proceed_with_creation ( ) ;
+    }
 }
 
 void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_door_texture_create )
