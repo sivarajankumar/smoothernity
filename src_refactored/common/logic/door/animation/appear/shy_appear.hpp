@@ -20,6 +20,32 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_math_num_fract scale_begin ;
+    so_called_type_platform_math_num_fract scale_end ;
+    so_called_type_platform_math_num_fract scale ;
+    so_called_type_platform_math_num_fract time_from_begin_to_end ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time ;
+
+    scale_begin = so_called_common_logic_door_animation_consts :: appear_scale_begin ;
+    scale_end = so_called_common_logic_door_animation_consts :: appear_scale_end ;
+    time_from_begin_to_end = so_called_common_logic_door_animation_consts :: appear_time_from_begin_to_end ;
+    time = shy_guts :: logic_door_update_state :: time ;
+
+    time_begin = so_called_platform_math_consts :: fract_0 ;
+    time_end = time_from_begin_to_end ;
+    
+    so_called_common_engine_math_stateless :: hard_in_easy_out
+        ( scale
+        , time
+        , scale_begin
+        , time_begin
+        , scale_end
+        , time_end
+        ) ;
+
+    shy_guts :: logic_door_animation_appear_transform_state :: scale = scale ;
 }
 
 void shy_guts :: reply_transform ( )
@@ -39,6 +65,8 @@ void _shy_common_logic_door_animation_appear :: receive ( so_called_message_comm
 
 void _shy_common_logic_door_animation_appear :: receive ( so_called_message_common_logic_door_animation_appear_transform_request )
 {
+    shy_guts :: compute_transform ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void _shy_common_logic_door_animation_appear :: receive ( so_called_message_common_logic_door_update )
