@@ -101,4 +101,8 @@ void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_
 
 void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_door_texture_select_request )
 {
+    so_called_message_common_engine_render_texture_select msg ;
+    msg . texture = shy_guts :: engine_render_texture_create_state :: texture ;
+    so_called_sender_common_engine_render_texture_select :: send ( msg ) ;
+    so_called_sender_common_logic_door_texture_select_reply :: send ( so_called_message_common_logic_door_texture_select_reply ( ) ) ;
 }
