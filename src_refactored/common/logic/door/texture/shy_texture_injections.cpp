@@ -4,10 +4,12 @@
 #include "../sender/texture_select_reply/shy_texture_select_reply_injections.h"
 
 #include "../../../engine/rasterizer/sender/draw_rect/shy_draw_rect_injections.h"
+#include "../../../engine/rasterizer/sender/finalize_request/shy_finalize_request_injections.h"
 #include "../../../engine/rasterizer/sender/use_texel/shy_use_texel_injections.h"
 #include "../../../engine/rasterizer/sender/use_texture/shy_use_texture_injections.h"
 #include "../../../engine/render/consts/shy_consts_injections.h"
 #include "../../../engine/render/sender/texture_create_request/shy_texture_create_request_injections.h"
+#include "../../../engine/render/sender/texture_finalize/shy_texture_finalize_injections.h"
 #include "../../../engine/render/sender/texture_select/shy_texture_select_injections.h"
 #include "../../../engine/render/stateless/shy_stateless_injections.h"
 

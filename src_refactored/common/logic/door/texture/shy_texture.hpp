@@ -153,6 +153,9 @@ void shy_guts :: fill_texture_contents ( )
 
 void shy_guts :: finalize_texture ( )
 {
+    so_called_message_common_engine_render_texture_finalize msg ;
+    msg . texture = shy_guts :: engine_render_texture_create_state :: texture ;
+    so_called_sender_common_engine_render_texture_finalize :: send ( msg ) ;
 }
 
 void shy_guts :: reply_door_texture_created ( )
@@ -161,6 +164,8 @@ void shy_guts :: reply_door_texture_created ( )
 
 void shy_guts :: request_rasterizer_finalize ( )
 {
+    shy_guts :: engine_rasterizer_finalize_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_engine_rasterizer_finalize_request :: send ( so_called_message_common_engine_rasterizer_finalize_request ( ) ) ;
 }
 
 void shy_guts :: rasterizer_finalized ( )
