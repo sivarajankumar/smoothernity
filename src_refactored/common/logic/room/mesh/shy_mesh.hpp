@@ -87,10 +87,15 @@ void shy_guts :: request_mesh_creation ( )
 
 void shy_guts :: mesh_created ( )
 {
+    shy_guts :: fill_mesh_contents ( ) ;
+    shy_guts :: transform_mesh ( ) ;
+    shy_guts :: reply_mesh_creation_finished ( ) ;
 }
 
 void shy_guts :: fill_mesh_contents ( )
 {
+    shy_guts :: add_cube_sides ( ) ;
+    shy_guts :: finalize_mesh ( ) ;
 }
 
 void shy_guts :: transform_mesh ( )
@@ -103,10 +108,74 @@ void shy_guts :: reply_mesh_creation_finished ( )
 
 void shy_guts :: add_cube_sides ( )
 {
+    shy_guts :: logic_room_mesh_create_state :: current_index = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: add_near_side ( ) ;
+    shy_guts :: add_right_side ( ) ;
+    shy_guts :: add_far_side ( ) ;
+    shy_guts :: add_left_side ( ) ;
+    shy_guts :: add_top_side ( ) ;
+    shy_guts :: add_bottom_side ( ) ;
 }
 
 void shy_guts :: add_near_side ( )
 {
+    so_called_type_platform_math_num_fract x_left ;
+    so_called_type_platform_math_num_fract x_right ;
+    so_called_type_platform_math_num_fract y_top ;
+    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_type_platform_math_num_fract near_side_u_left ;
+    so_called_type_platform_math_num_fract near_side_u_right ;
+    so_called_type_platform_math_num_fract near_side_v_top ;
+    so_called_type_platform_math_num_fract near_side_v_bottom ;
+    so_called_type_platform_math_num_fract z_near ;
+    so_called_type_platform_math_num_fract color_near_r ;
+    so_called_type_platform_math_num_fract color_near_g ;
+    so_called_type_platform_math_num_fract color_near_b ;
+    so_called_type_platform_math_num_fract color_near_a ; 
+    so_called_type_platform_math_num_whole current_index ;
+    
+    x_left = so_called_common_logic_room_consts :: mesh_x_left ;
+    x_right = so_called_common_logic_room_consts :: mesh_x_right ;
+    y_top = so_called_common_logic_room_consts :: mesh_y_top ; 
+    y_bottom = so_called_common_logic_room_consts :: mesh_y_bottom ; 
+    near_side_u_left = so_called_common_logic_room_consts :: mesh_near_side_u_left ;
+    near_side_u_right = so_called_common_logic_room_consts :: mesh_near_side_u_right ;
+    near_side_v_top = so_called_common_logic_room_consts :: mesh_near_side_v_top ;
+    near_side_v_bottom = so_called_common_logic_room_consts :: mesh_near_side_v_bottom ;
+    z_near = so_called_common_logic_room_consts :: mesh_z_near ;
+
+    color_near_r = so_called_common_logic_room_consts :: mesh_color_near_r ;
+    color_near_g = so_called_common_logic_room_consts :: mesh_color_near_g ;
+    color_near_b = so_called_common_logic_room_consts :: mesh_color_near_b ;
+    color_near_a = so_called_common_logic_room_consts :: mesh_color_near_a ;
+
+    current_index = shy_guts :: logic_room_mesh_create_state :: current_index ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_left , y_bottom , z_near ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , near_side_u_left , near_side_v_bottom ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_left , y_top , z_near ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , near_side_u_left , near_side_v_top ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_right , y_bottom , z_near ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , near_side_u_right , near_side_v_bottom ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: mesh_set_vertex_position            ( current_index , x_right , y_top , z_near ) ;
+    shy_guts :: mesh_set_vertex_color               ( current_index , color_near_r , color_near_g , color_near_b , color_near_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( current_index , near_side_u_right , near_side_v_top ) ;
+    shy_guts :: mesh_set_triangle_strip_index_value ( current_index , current_index ) ;
+    so_called_platform_math :: inc_whole            ( current_index ) ;
+
+    shy_guts :: logic_room_mesh_create_state :: current_index = current_index ;
 }
 
 void shy_guts :: add_far_side ( )
