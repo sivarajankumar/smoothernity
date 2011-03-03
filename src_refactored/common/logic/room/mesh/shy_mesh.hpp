@@ -155,10 +155,6 @@ void _shy_common_logic_room_mesh :: receive ( so_called_message_common_engine_re
 {
 }
 
-void _shy_common_logic_room_mesh :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_room_mesh :: receive ( so_called_message_common_logic_room_mesh_create )
 {
 }
