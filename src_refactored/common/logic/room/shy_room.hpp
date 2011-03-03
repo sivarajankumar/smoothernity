@@ -17,6 +17,10 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_mes
 {
 }
 
+void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_texture_creation_finished )
+{
+}
+
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_update )
 {
 }
