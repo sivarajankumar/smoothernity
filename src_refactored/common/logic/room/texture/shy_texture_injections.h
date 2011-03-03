@@ -2,6 +2,7 @@
 #define _shy_common_logic_room_texture_injections_included
 
 #include "../message/texture_create/shy_texture_create_injections.h"
+#include "../message/texture_select_request/shy_texture_select_request_injections.h"
 
 #include "../../../engine/rasterizer/message/finalize_reply/shy_finalize_reply_injections.h"
 #include "../../../engine/render/message/texture_create_reply/shy_texture_create_reply_injections.h"
