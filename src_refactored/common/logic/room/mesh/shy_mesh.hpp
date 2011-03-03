@@ -120,6 +120,7 @@ void shy_guts :: transform_mesh ( )
 
 void shy_guts :: reply_mesh_creation_finished ( )
 {
+    so_called_sender_common_logic_room_mesh_creation_finished :: send ( so_called_message_common_logic_room_mesh_creation_finished ( ) ) ;
 }
 
 void shy_guts :: add_cube_sides ( )
