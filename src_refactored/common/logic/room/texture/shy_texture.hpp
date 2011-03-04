@@ -90,6 +90,8 @@ void _shy_common_logic_room_texture :: receive ( so_called_message_common_engine
 
 void _shy_common_logic_room_texture :: receive ( so_called_message_common_logic_room_texture_create )
 {
+    shy_guts :: logic_room_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_creation ( ) ;
 }
 
 void _shy_common_logic_room_texture :: receive ( so_called_message_common_logic_room_texture_select_request )
