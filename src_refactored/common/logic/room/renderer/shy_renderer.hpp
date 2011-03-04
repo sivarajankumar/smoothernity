@@ -75,6 +75,7 @@ void shy_guts :: prepare_render_state ( )
 
 void shy_guts :: reply_room_render ( )
 {
+    so_called_sender_common_logic_room_render_reply :: send ( so_called_message_common_logic_room_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_mesh_render_reply )
