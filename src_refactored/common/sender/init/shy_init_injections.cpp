@@ -50,7 +50,6 @@
 #include "../../logic/main_menu/selection/tracking_director/shy_tracking_director_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
 #include "../../logic/observer/animation/flight/shy_flight_injections.h"
-#include "../../logic/room/shy_room_injections.h"
 #include "../../logic/room/texture/shy_texture_injections.h"
 #include "../../logic/sound/shy_sound_injections.h"
 #include "../../logic/text/shy_text_injections.h"

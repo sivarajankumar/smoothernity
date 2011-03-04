@@ -48,10 +48,6 @@ void shy_guts :: texture_created ( )
 {
 }
 
-void _shy_common_logic_room :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_creation_permit )
 {
 }
