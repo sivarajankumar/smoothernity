@@ -53,10 +53,6 @@ void shy_guts :: reply_room_render ( )
 {
 }
 
-void _shy_common_logic_room_renderer :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_mesh_render_reply )
 {
 }
