@@ -130,6 +130,11 @@ void shy_guts :: texture_received ( )
 
 void shy_guts :: rasterizer_finalized ( )
 {
+    so_called_message_common_engine_render_texture_finalize msg ;
+    msg . texture = shy_guts :: engine_render_texture_create_state :: texture ;
+    so_called_sender_common_engine_render_texture_finalize :: send ( msg ) ;
+
+    so_called_sender_common_logic_room_texture_creation_finished :: send ( so_called_message_common_logic_room_texture_creation_finished ( ) ) ;
 }
 
 void shy_guts :: use_texel ( so_called_type_platform_render_texel_data )
