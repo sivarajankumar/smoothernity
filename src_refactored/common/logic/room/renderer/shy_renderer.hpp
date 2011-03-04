@@ -31,10 +31,27 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_render ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_render_state :: requested ) )
+    {
+        shy_guts :: logic_room_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_requested ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_texture_select_state :: replied ) )
+    {
+        shy_guts :: logic_room_texture_select_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_mesh_render ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_mesh_render_state :: replied ) )
+    {
+        shy_guts :: logic_room_mesh_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: reply_room_render ( ) ;
+    }
 }
 
 void shy_guts :: render_requested ( )
 {
+    shy_guts :: prepare_render_state ( ) ;
+    shy_guts :: request_texture_select ( ) ;
 }
 
 void shy_guts :: request_texture_select ( )
@@ -43,6 +60,8 @@ void shy_guts :: request_texture_select ( )
 
 void shy_guts :: request_mesh_render ( )
 {
+    shy_guts :: logic_room_mesh_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_room_mesh_render_request :: send ( so_called_message_common_logic_room_mesh_render_request ( ) ) ;
 }
 
 void shy_guts :: prepare_render_state ( )
@@ -55,10 +74,17 @@ void shy_guts :: reply_room_render ( )
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_mesh_render_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_mesh_render_state :: requested ) )
+    {
+        shy_guts :: logic_room_mesh_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_room_mesh_render_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_render_permit )
 {
+    shy_guts :: logic_room_render_state :: render_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_render_request )
@@ -72,4 +98,10 @@ void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_texture_select_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_texture_select_state :: requested ) )
+    {
+        shy_guts :: logic_room_texture_select_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_room_texture_select_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
