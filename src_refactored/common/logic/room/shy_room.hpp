@@ -34,10 +34,27 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_creation ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_creation_permit_state :: creation_permitted ) )
+    {
+        shy_guts :: logic_room_creation_permit_state :: creation_permitted = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_mesh_create ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_mesh_create_state :: replied ) )
+    {
+        shy_guts :: logic_room_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_texture_create ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_texture_create_state :: replied ) )
+    {
+        shy_guts :: logic_room_texture_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: texture_created ( ) ;
+    }
 }
 
 void shy_guts :: request_mesh_create ( )
 {
+    shy_guts :: logic_room_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_room_mesh_create :: send ( so_called_message_common_logic_room_mesh_create ( ) ) ;
 }
 
 void shy_guts :: request_texture_create ( )
