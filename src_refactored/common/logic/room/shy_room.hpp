@@ -65,6 +65,8 @@ void shy_guts :: request_texture_create ( )
 
 void shy_guts :: texture_created ( )
 {
+    so_called_sender_common_logic_room_creation_finished :: send ( so_called_message_common_logic_room_creation_finished ( ) ) ;
+    so_called_sender_common_logic_room_render_permit :: send ( so_called_message_common_logic_room_render_permit ( ) ) ;
 }
 
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_creation_permit )
