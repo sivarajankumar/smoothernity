@@ -8,3 +8,7 @@ void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_in
 void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_logic_controls_state_reply )
 {
 }
+
+void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_logic_main_menu_choice_row_selected )
+{
+}
