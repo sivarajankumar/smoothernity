@@ -2,6 +2,7 @@
 
 #include "../sender/texture_select_reply/shy_texture_select_reply_injections.h"
 
+#include "../../../engine/render/sender/texture_create_request/shy_texture_create_request_injections.h"
 #include "../../../engine/render/sender/texture_select/shy_texture_select_injections.h"
 
 #include "../../../../injections/platform/conditions/shy_conditions.h"
