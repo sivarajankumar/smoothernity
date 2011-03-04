@@ -3,6 +3,7 @@
 #include "./consts/shy_consts_injections.h"
 #include "./sender/finished/shy_finished_injections.h"
 #include "./sender/mesh_create/shy_mesh_create_injections.h"
+#include "./sender/texture_create/shy_texture_create_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/consts/shy_consts.h"

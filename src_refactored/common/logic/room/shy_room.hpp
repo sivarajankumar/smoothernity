@@ -59,6 +59,8 @@ void shy_guts :: request_mesh_create ( )
 
 void shy_guts :: request_texture_create ( )
 {
+    shy_guts :: logic_room_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_room_texture_create :: send ( so_called_message_common_logic_room_texture_create ( ) ) ;
 }
 
 void shy_guts :: texture_created ( )
