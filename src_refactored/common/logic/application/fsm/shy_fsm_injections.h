@@ -6,6 +6,7 @@
 
 #include "../../amusement/message/created/shy_created_injections.h"
 #include "../../amusement/message/finished/shy_finished_injections.h"
+#include "../../main_menu/message/created/shy_created_injections.h"
 #include "../../text/message/prepared/shy_prepared_injections.h"
 #include "../../title/message/created/shy_created_injections.h"
 #include "../../title/message/finished/shy_finished_injections.h"
