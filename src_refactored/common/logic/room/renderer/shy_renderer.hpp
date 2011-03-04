@@ -63,6 +63,11 @@ void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_render_request )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_render_state :: render_permitted ) )
+    {        
+        shy_guts :: logic_room_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_logic_room_texture_select_reply )
