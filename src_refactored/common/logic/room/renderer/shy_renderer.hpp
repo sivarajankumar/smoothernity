@@ -68,6 +68,9 @@ void shy_guts :: request_mesh_render ( )
 
 void shy_guts :: prepare_render_state ( )
 {
+    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
+    so_called_sender_common_engine_render_disable_depth_test :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
 }
 
 void shy_guts :: reply_room_render ( )
