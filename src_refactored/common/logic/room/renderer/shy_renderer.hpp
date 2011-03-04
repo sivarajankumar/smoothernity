@@ -56,6 +56,8 @@ void shy_guts :: render_requested ( )
 
 void shy_guts :: request_texture_select ( )
 {
+    shy_guts :: logic_room_texture_select_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_room_texture_select_request :: send ( so_called_message_common_logic_room_texture_select_request ( ) ) ;
 }
 
 void shy_guts :: request_mesh_render ( )
