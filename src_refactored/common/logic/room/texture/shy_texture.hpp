@@ -148,6 +148,31 @@ void shy_guts :: draw_cell
     , so_called_type_platform_math_num_whole y_top
     )
 {
+    so_called_type_platform_math_num_whole x_center ;
+    so_called_type_platform_math_num_whole y_center ;
+    so_called_type_platform_math_num_fract pen_intensity ;
+    so_called_type_platform_math_num_fract paper_intensity ;
+    so_called_type_platform_math_num_fract alpha ;
+    so_called_type_platform_render_texel_data pen ;
+    so_called_type_platform_render_texel_data paper ;
+
+    pen_intensity = so_called_common_logic_room_consts :: texture_pen_intensity ;
+    paper_intensity = so_called_common_logic_room_consts :: texture_paper_intensity ;
+    alpha = so_called_common_logic_room_consts :: texture_alpha ;
+
+    so_called_common_engine_render_stateless :: set_texel_color ( pen , pen_intensity , pen_intensity , pen_intensity , alpha ) ;
+    so_called_common_engine_render_stateless :: set_texel_color ( paper , paper_intensity , paper_intensity , paper_intensity , alpha ) ;
+
+    so_called_platform_math :: add_wholes ( x_center , x_left , x_right ) ;
+    so_called_platform_math :: add_wholes ( y_center , y_bottom , y_top ) ;
+    so_called_platform_math :: div_whole_by ( x_center , so_called_platform_math_consts :: whole_2 ) ;
+    so_called_platform_math :: div_whole_by ( y_center , so_called_platform_math_consts :: whole_2 ) ;
+
+    shy_guts :: use_texel ( pen ) ;
+    shy_guts :: draw_rect ( x_left , y_bottom , x_right , y_top ) ;
+    shy_guts :: use_texel ( paper ) ;
+    shy_guts :: draw_rect ( x_left , y_bottom , x_center , y_center ) ;
+    shy_guts :: draw_rect ( x_center , y_center , x_right , y_top ) ;
 }
 
 void shy_guts :: draw_rect 
