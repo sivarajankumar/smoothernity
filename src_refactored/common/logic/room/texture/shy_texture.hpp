@@ -137,8 +137,11 @@ void shy_guts :: rasterizer_finalized ( )
     so_called_sender_common_logic_room_texture_creation_finished :: send ( so_called_message_common_logic_room_texture_creation_finished ( ) ) ;
 }
 
-void shy_guts :: use_texel ( so_called_type_platform_render_texel_data )
+void shy_guts :: use_texel ( so_called_type_platform_render_texel_data texel )
 {
+    so_called_message_common_engine_rasterizer_use_texel msg ;
+    msg . texel = texel ;
+    so_called_sender_common_engine_rasterizer_use_texel :: send ( msg ) ;
 }
 
 void shy_guts :: draw_cell 
