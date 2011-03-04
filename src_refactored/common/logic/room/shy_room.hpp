@@ -72,8 +72,33 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_mes
 
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_texture_creation_finished )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_texture_create_state :: requested ) )
+    {
+        shy_guts :: logic_room_texture_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_room_texture_create_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_creation ( ) ;
+    }
 }
 
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_update_state :: launch_permitted ) )
+    {
+        so_called_type_platform_math_num_fract time ;
+        so_called_type_platform_math_num_fract time_step ;
+        so_called_type_platform_math_num_fract show_time ;
+
+        time = shy_guts :: logic_room_update_state :: time ;
+        show_time = so_called_common_logic_room_consts :: room_show_time ;
+        so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
+
+        so_called_platform_math :: add_to_fract ( time , time_step ) ;
+        if ( so_called_platform_conditions :: fract_greater_than_fract ( time , show_time ) )
+        {
+            shy_guts :: logic_room_update_state :: launch_permitted = so_called_platform_math_consts :: whole_false ;
+            so_called_sender_common_logic_room_finished :: send ( so_called_message_common_logic_room_finished ( ) ) ;
+        }
+
+        shy_guts :: logic_room_update_state :: time = time ;
+    }
 }
