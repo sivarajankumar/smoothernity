@@ -182,6 +182,12 @@ void shy_guts :: draw_rect
     , so_called_type_platform_math_num_whole y2
     )
 {
+    so_called_message_common_engine_rasterizer_draw_rect msg ;
+    msg . x1 = x1 ;
+    msg . y1 = y1 ;
+    msg . x2 = x2 ;
+    msg . y2 = y2 ;
+    so_called_sender_common_engine_rasterizer_draw_rect :: send ( msg ) ;
 }
 
 void _shy_common_logic_room_texture :: receive ( so_called_message_common_engine_rasterizer_finalize_reply )
