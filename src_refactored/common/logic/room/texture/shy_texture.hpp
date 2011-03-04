@@ -69,6 +69,63 @@ void shy_guts :: request_texture_create ( )
 
 void shy_guts :: texture_received ( )
 {
+    so_called_type_platform_math_num_whole texture_width ;
+    so_called_type_platform_math_num_whole texture_height ;
+    so_called_type_platform_math_num_whole grid_size ;
+    so_called_type_common_engine_render_texture_id texture ;
+
+    texture_width = so_called_common_engine_render_consts :: texture_width ;
+    texture_height = so_called_common_engine_render_consts :: texture_height ;
+    texture = shy_guts :: engine_render_texture_create_state :: texture ;
+    grid_size = so_called_common_logic_room_consts :: texture_grid_size ;
+
+    so_called_message_common_engine_rasterizer_use_texture texture_msg ;
+    texture_msg . texture = texture ;
+    texture_msg . origin_x = so_called_platform_math_consts :: whole_0 ;
+    texture_msg . origin_y = so_called_platform_math_consts :: whole_0 ;
+    so_called_sender_common_engine_rasterizer_use_texture :: send ( texture_msg ) ;
+
+    for ( so_called_type_platform_math_num_whole grid_y = so_called_platform_math_consts :: whole_0
+        ; so_called_platform_conditions :: whole_less_than_whole ( grid_y , grid_size )
+        ; so_called_platform_math :: inc_whole ( grid_y )
+        )
+    {
+        for ( so_called_type_platform_math_num_whole grid_x = so_called_platform_math_consts :: whole_0
+            ; so_called_platform_conditions :: whole_less_than_whole ( grid_x , grid_size )
+            ; so_called_platform_math :: inc_whole ( grid_x )
+            )
+        {
+            so_called_type_platform_math_num_whole next_grid_x ;
+            so_called_type_platform_math_num_whole next_grid_y ;
+            so_called_type_platform_math_num_whole x_left ;
+            so_called_type_platform_math_num_whole x_right ;
+            so_called_type_platform_math_num_whole y_top ;
+            so_called_type_platform_math_num_whole y_bottom ;
+
+            so_called_platform_math :: add_wholes ( next_grid_x , grid_x , so_called_platform_math_consts :: whole_1 ) ;
+            so_called_platform_math :: add_wholes ( next_grid_y , grid_y , so_called_platform_math_consts :: whole_1 ) ;
+
+            so_called_platform_math :: mul_wholes ( x_left , texture_width , grid_x ) ;
+            so_called_platform_math :: div_whole_by ( x_left , grid_size ) ;
+
+            so_called_platform_math :: mul_wholes ( x_right , texture_width , next_grid_x ) ;
+            so_called_platform_math :: div_whole_by ( x_right , grid_size ) ;
+
+            so_called_platform_math :: mul_wholes ( y_bottom , texture_height , grid_y ) ;
+            so_called_platform_math :: div_whole_by ( y_bottom , grid_size ) ;
+
+            so_called_platform_math :: mul_wholes ( y_top , texture_height , next_grid_y ) ;
+            so_called_platform_math :: div_whole_by ( y_top , grid_size ) ;
+
+            so_called_platform_math :: dec_whole ( x_right ) ;
+            so_called_platform_math :: dec_whole ( y_top ) ;
+
+            shy_guts :: draw_cell ( x_left , y_bottom , x_right , y_top ) ;
+        }
+    }
+
+    shy_guts :: engine_rasterizer_finalize_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_engine_rasterizer_finalize_request :: send ( so_called_message_common_engine_rasterizer_finalize_request ( ) ) ;
 }
 
 void shy_guts :: rasterizer_finalized ( )
