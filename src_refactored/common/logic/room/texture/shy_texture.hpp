@@ -84,8 +84,15 @@ void _shy_common_logic_room_texture :: receive ( so_called_message_common_engine
 {
 }
 
-void _shy_common_logic_room_texture :: receive ( so_called_message_common_engine_render_texture_create_reply )
+void _shy_common_logic_room_texture :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_texture_create_state :: requested ) )
+    {
+        shy_guts :: engine_render_texture_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: engine_render_texture_create_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: engine_render_texture_create_state :: texture = msg . texture ;
+        shy_guts :: proceed_with_creation ( ) ;
+    }
 }
 
 void _shy_common_logic_room_texture :: receive ( so_called_message_common_logic_room_texture_create )
