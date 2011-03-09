@@ -8,3 +8,7 @@ void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive (
 void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive ( so_called_message_common_logic_main_menu_launch_permit )
 {
 }
+
+void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive ( so_called_message_common_logic_main_menu_update )
+{
+}

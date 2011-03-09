@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_selection_animation_idle_attention_injections_included
 
 #include "../../../message/launch_permit/shy_launch_permit_injections.h"
+#include "../../../message/update/shy_update_injections.h"
 
 #include "../../../../../message/init/shy_init_injections.h"
 

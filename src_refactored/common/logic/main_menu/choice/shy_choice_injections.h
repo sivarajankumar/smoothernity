@@ -3,6 +3,7 @@
 
 #include "../message/choice_row_selected/shy_choice_row_selected_injections.h"
 #include "../message/choice_void_selected/shy_choice_void_selected_injections.h"
+#include "../message/update/shy_update_injections.h"
 
 #include "../../controls/message/state_reply/shy_state_reply_injections.h"
 
