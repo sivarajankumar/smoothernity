@@ -12,3 +12,7 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_launch_permit )
 {
 }
+
+void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_row_chosen )
+{
+}
