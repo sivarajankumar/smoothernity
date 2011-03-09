@@ -60,6 +60,12 @@ const so_called_type_platform_math_num_fract so_called_common_logic_door_animati
 const so_called_type_platform_math_num_fract so_called_common_logic_door_animation_consts :: appear_scale_end = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_door_animation_consts :: appear_time_from_begin_to_end = so_called_platform_math :: init_num_fract ( 2 , 1 ) ;
 
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_animation_consts :: shake_shift_x_amplitude_begin = so_called_platform_math :: init_num_fract ( 20 , 1000 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_animation_consts :: shake_shift_x_amplitude_end = so_called_platform_math :: init_num_fract ( 5 , 1000 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_animation_consts :: shake_shift_x_period_in_seconds = so_called_platform_math :: init_num_fract ( 2 , 10 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_animation_consts :: shake_time_from_begin_to_end = so_called_platform_math :: init_num_fract ( 6 , 10 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_animation_consts :: shake_time_to_begin = so_called_platform_math :: init_num_fract ( 0 , 10 ) ;
+
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_amplitude = so_called_platform_math :: init_num_fract ( 1 , 3 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_period = so_called_platform_math :: init_num_fract ( 11 , 10 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_target_z = so_called_platform_math :: init_num_fract ( - 1 , 1 ) ;

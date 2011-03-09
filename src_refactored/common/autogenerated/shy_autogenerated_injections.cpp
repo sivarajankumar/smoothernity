@@ -3,6 +3,7 @@
 #include "../logic/blanket/consts/shy_consts_injections.h"
 #include "../logic/door/animation/consts/shy_consts_injections.h"
 #include "../logic/door/consts/shy_consts_injections.h"
+#include "../logic/main_menu/animation/consts/shy_consts_injections.h"
 #include "../logic/observer/animation/consts/shy_consts_injections.h"
 #include "../logic/ortho/consts/shy_consts_injections.h"
 #include "../logic/perspective/consts/shy_consts_injections.h"
