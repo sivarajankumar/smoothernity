@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_selection_animation_push_injections_included
 
 #include "../../../message/update/shy_update_injections.h"
+#include "../../../message/void_chosen/shy_void_chosen_injections.h"
 
 #include "../../../../controls/message/state_reply/shy_state_reply_injections.h"
 

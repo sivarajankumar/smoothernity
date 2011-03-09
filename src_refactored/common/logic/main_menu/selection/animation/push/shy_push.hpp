@@ -12,3 +12,7 @@ void _shy_common_logic_main_menu_selection_animation_push :: receive ( so_called
 void _shy_common_logic_main_menu_selection_animation_push :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
+
+void _shy_common_logic_main_menu_selection_animation_push :: receive ( so_called_message_common_logic_main_menu_void_chosen )
+{
+}

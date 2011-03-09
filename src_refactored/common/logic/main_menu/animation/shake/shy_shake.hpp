@@ -8,3 +8,7 @@ void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_
 void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
+
+void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_common_logic_main_menu_void_chosen )
+{
+}
