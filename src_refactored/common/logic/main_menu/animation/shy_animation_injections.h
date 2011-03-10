@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_animation_injections_included
 
 #include "./message/shake_transform_reply/shy_shake_transform_reply_injections.h"
+#include "./message/transform_request/shy_transform_request_injections.h"
 
 #include "../../../message/init/shy_init_injections.h"
 
