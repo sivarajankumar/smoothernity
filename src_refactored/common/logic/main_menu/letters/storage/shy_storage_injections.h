@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_letters_storage_injections_included
 
 #include "../message/letter_add/shy_letter_add_injections.h"
+#include "../message/letter_request/shy_letter_request_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 
