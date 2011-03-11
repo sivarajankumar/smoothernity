@@ -12,3 +12,7 @@ void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_
 void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_reply )
 {
 }
+
+void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_logic_main_menu_letters_cols_reply )
+{
+}
