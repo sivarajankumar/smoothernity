@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_letters_boundaries_request_injections_included
+#define _shy_sender_common_logic_main_menu_letters_boundaries_request_injections_included
+
+#include "../../message/boundaries_request/shy_boundaries_request_injections.h"
+
+#include "./shy_boundaries_request.h"
+
+typedef shy_sender_common_logic_main_menu_letters_boundaries_request so_called_sender_common_logic_main_menu_letters_boundaries_request ;
+
+#endif
