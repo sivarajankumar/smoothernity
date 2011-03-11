@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_letters_create_finished_injections_included
+#define _shy_sender_common_logic_main_menu_letters_create_finished_injections_included
+
+#include "../../message/create_finished/shy_create_finished_injections.h"
+
+#include "./shy_create_finished.h"
+
+typedef shy_sender_common_logic_main_menu_letters_create_finished so_called_sender_common_logic_main_menu_letters_create_finished ;
+
+#endif
