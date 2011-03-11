@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_letters_rows_request_injections_included
+#define _shy_sender_common_logic_main_menu_letters_rows_request_injections_included
+
+#include "../../message/rows_request/shy_rows_request_injections.h"
+
+#include "./shy_rows_request.h"
+
+typedef shy_sender_common_logic_main_menu_letters_rows_request so_called_sender_common_logic_main_menu_letters_rows_request ;
+
+#endif
