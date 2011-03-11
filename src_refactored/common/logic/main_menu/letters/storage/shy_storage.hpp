@@ -9,6 +9,10 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
 {
 }
 
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_cols_request )
+{
+}
+
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_add )
 {
 }
