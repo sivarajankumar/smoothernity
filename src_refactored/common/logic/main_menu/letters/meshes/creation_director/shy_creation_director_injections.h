@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_main_menu_letters_meshes_creation_director_injections_included
 #define _shy_common_logic_main_menu_letters_meshes_creation_director_injections_included
 
+#include "../../message/create/shy_create_injections.h"
+
 #include "../../../message/update/shy_update_injections.h"
 
 #include "../../../../../message/init/shy_init_injections.h"
