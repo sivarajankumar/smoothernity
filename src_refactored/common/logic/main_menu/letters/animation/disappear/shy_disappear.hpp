@@ -9,6 +9,10 @@ void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_cal
 {
 }
 
+void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_start )
+{
+}
+
 void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
