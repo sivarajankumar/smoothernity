@@ -3,6 +3,7 @@
 
 #include "../../message/cols_reply/shy_cols_reply_injections.h"
 #include "../../message/letter_reply/shy_letter_reply_injections.h"
+#include "../../message/rows_reply/shy_rows_reply_injections.h"
 
 #include "../../../../text/message/letter_big_tex_coords_reply/shy_letter_big_tex_coords_reply_injections.h"
 
