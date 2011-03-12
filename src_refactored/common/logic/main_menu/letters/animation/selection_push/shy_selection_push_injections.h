@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_main_menu_letters_animation_selection_push_injections_included
 #define _shy_common_logic_main_menu_letters_animation_selection_push_injections_included
 
+#include "../message/selection_push_transform_request/shy_selection_push_transform_request_injections.h"
+
 #include "../../../message/update/shy_update_injections.h"
 #include "../../../message/void_chosen/shy_void_chosen_injections.h"
 
