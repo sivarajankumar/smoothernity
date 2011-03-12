@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_letters_animation_selection_weight_unselect_row_injections_included
+#define _shy_sender_common_logic_main_menu_letters_animation_selection_weight_unselect_row_injections_included
+
+#include "../../message/selection_weight_unselect_row/shy_selection_weight_unselect_row_injections.h"
+
+#include "./shy_selection_weight_unselect_row.h"
+
+typedef shy_sender_common_logic_main_menu_letters_animation_selection_weight_unselect_row so_called_sender_common_logic_main_menu_letters_animation_selection_weight_unselect_row ;
+
+#endif
