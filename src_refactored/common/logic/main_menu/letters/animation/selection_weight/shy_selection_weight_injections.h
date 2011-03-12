@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_main_menu_letters_animation_selection_weight_injections_included
 #define _shy_common_logic_main_menu_letters_animation_selection_weight_injections_included
 
+#include "../message/selection_weight_request/shy_selection_weight_request_injections.h"
+
 #include "../../../message/update/shy_update_injections.h"
 
 #include "../../../../../message/init/shy_init_injections.h"
