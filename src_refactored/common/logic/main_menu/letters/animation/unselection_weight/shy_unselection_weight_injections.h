@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_letters_animation_unselection_weight_injections_included
 
 #include "../message/unselection_weight_request/shy_unselection_weight_request_injections.h"
+#include "../message/unselection_weight_select_row/shy_unselection_weight_select_row_injections.h"
 
 #include "../../../message/update/shy_update_injections.h"
 
