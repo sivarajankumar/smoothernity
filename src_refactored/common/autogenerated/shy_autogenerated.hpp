@@ -100,6 +100,12 @@ const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_le
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_from_begin_to_end = so_called_platform_math :: init_num_fract ( 7 , 100 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_to_begin = so_called_platform_math :: init_num_fract ( 0 , 100 ) ;
 
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_border = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_spacing = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_border = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_spacing = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_layout_consts :: menu_position_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
+
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_amplitude = so_called_platform_math :: init_num_fract ( 1 , 3 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_period = so_called_platform_math :: init_num_fract ( 11 , 10 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_target_z = so_called_platform_math :: init_num_fract ( - 1 , 1 ) ;

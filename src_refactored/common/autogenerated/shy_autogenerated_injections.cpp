@@ -5,6 +5,7 @@
 #include "../logic/door/consts/shy_consts_injections.h"
 #include "../logic/main_menu/animation/consts/shy_consts_injections.h"
 #include "../logic/main_menu/letters/animation/consts/shy_consts_injections.h"
+#include "../logic/main_menu/letters/layout/consts/shy_consts_injections.h"
 #include "../logic/observer/animation/consts/shy_consts_injections.h"
 #include "../logic/ortho/consts/shy_consts_injections.h"
 #include "../logic/perspective/consts/shy_consts_injections.h"
