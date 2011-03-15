@@ -3,6 +3,7 @@
 
 #include "../message/unselection_weight_request/shy_unselection_weight_request_injections.h"
 #include "../message/unselection_weight_select_row/shy_unselection_weight_select_row_injections.h"
+#include "../message/unselection_weight_unselect_row/shy_unselection_weight_unselect_row_injections.h"
 
 #include "../../../message/update/shy_update_injections.h"
 

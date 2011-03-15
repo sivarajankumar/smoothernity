@@ -13,6 +13,10 @@ void _shy_common_logic_main_menu_letters_animation_unselection_weight :: receive
 {
 }
 
+void _shy_common_logic_main_menu_letters_animation_unselection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_unselection_weight_unselect_row )
+{
+}
+
 void _shy_common_logic_main_menu_letters_animation_unselection_weight :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
