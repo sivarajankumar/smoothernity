@@ -13,6 +13,10 @@ void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_m
 {
 }
 
+void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_position_reply )
+{
+}
+
 void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
