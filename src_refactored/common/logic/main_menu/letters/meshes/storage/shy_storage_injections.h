@@ -3,6 +3,7 @@
 
 #include "../message/mesh_has_been_created/shy_mesh_has_been_created_injections.h"
 #include "../message/mesh_id_request/shy_mesh_id_request_injections.h"
+#include "../message/mesh_row_col_request/shy_mesh_row_col_request_injections.h"
 
 #include "../../../../../message/init/shy_init_injections.h"
 
