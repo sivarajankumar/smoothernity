@@ -9,6 +9,10 @@ void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called
 {
 }
 
+void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_logic_main_menu_letters_meshes_count_reply )
+{
+}
+
 void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_id_reply )
 {
 }
