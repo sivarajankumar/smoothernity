@@ -106,6 +106,13 @@ const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_le
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_spacing = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_layout_consts :: menu_position_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
 
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_a = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_b = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_g = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_r = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_meshes_consts :: time_between_creation = so_called_platform_math :: init_num_fract ( 50 , 1000 ) ;
+
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_amplitude = so_called_platform_math :: init_num_fract ( 1 , 3 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_period = so_called_platform_math :: init_num_fract ( 11 , 10 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_observer_animation_consts :: flight_target_z = so_called_platform_math :: init_num_fract ( - 1 , 1 ) ;
