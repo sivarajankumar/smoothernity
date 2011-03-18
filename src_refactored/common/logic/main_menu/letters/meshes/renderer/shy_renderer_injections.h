@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_letters_meshes_renderer_injections_included
 
 #include "../message/iterate_finished/shy_iterate_finished_injections.h"
+#include "../message/iteration/shy_iteration_injections.h"
 
 #include "../../../../../message/init/shy_init_injections.h"
 

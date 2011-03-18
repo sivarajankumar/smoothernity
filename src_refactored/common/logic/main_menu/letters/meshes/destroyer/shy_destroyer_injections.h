@@ -3,6 +3,7 @@
 
 #include "../message/destroy_request/shy_destroy_request_injections.h"
 #include "../message/iterate_finished/shy_iterate_finished_injections.h"
+#include "../message/iteration/shy_iteration_injections.h"
 
 #include "../../../../../message/init/shy_init_injections.h"
 
