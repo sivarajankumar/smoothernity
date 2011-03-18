@@ -3,6 +3,7 @@
 
 #include "./letters/animation/message/disappear_finished/shy_disappear_finished_injections.h"
 #include "./letters/meshes/message/creation_finished/shy_creation_finished_injections.h"
+#include "./letters/meshes/message/destroy_reply/shy_destroy_reply_injections.h"
 #include "./letters/message/create_finished/shy_create_finished_injections.h"
 #include "./message/creation_permit/shy_creation_permit_injections.h"
 #include "./message/launch_permit/shy_launch_permit_injections.h"

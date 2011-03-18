@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_letters_meshes_destroy_reply_injections_included
+#define _shy_sender_common_logic_main_menu_letters_meshes_destroy_reply_injections_included
+
+#include "../../message/destroy_reply/shy_destroy_reply_injections.h"
+
+#include "./shy_destroy_reply.h"
+
+typedef shy_sender_common_logic_main_menu_letters_meshes_destroy_reply so_called_sender_common_logic_main_menu_letters_meshes_destroy_reply ;
+
+#endif
