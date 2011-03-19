@@ -12,3 +12,7 @@ void _shy_common_logic_main_menu_letters_meshes_renderer :: receive ( so_called_
 void _shy_common_logic_main_menu_letters_meshes_renderer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iteration )
 {
 }
+
+void _shy_common_logic_main_menu_letters_meshes_renderer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_render_request )
+{
+}
