@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_renderer_injections_included
 
 #include "../animation/message/transform_reply/shy_transform_reply_injections.h"
+#include "../letters/meshes/message/render_reply/shy_render_reply_injections.h"
 #include "../message/render/shy_render_injections.h"
 #include "../message/render_permit/shy_render_permit_injections.h"
 
