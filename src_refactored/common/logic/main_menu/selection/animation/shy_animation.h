@@ -5,6 +5,7 @@ public :
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_appear_transform_reply ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_disappear_transform_reply ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_idle_attention_transform_reply ) ;
+    static void receive ( so_called_message_common_logic_main_menu_selection_animation_idle_transform_reply ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_main_menu_selection_animation > :: module shy_common_logic_main_menu_selection_animation_scheduled ;
