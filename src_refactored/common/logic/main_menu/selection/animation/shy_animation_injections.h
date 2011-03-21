@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_selection_animation_injections_included
 
 #include "./message/appear_transform_reply/shy_appear_transform_reply_injections.h"
+#include "./message/disappear_transform_reply/shy_disappear_transform_reply_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 
