@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_selection_animation_disappear_start_injections_included
+#define _shy_sender_common_logic_main_menu_selection_animation_disappear_start_injections_included
+
+#include "../../message/disappear_start/shy_disappear_start_injections.h"
+
+#include "./shy_disappear_start.h"
+
+typedef shy_sender_common_logic_main_menu_selection_animation_disappear_start so_called_sender_common_logic_main_menu_selection_animation_disappear_start ;
+
+#endif
