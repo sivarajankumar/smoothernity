@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_selection_tracking_director_injections_included
 
 #include "../animation/message/appear_finished/shy_appear_finished_injections.h"
+#include "../animation/message/select_finished/shy_select_finished_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 
