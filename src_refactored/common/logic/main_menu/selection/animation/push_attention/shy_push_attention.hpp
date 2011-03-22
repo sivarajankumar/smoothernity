@@ -9,6 +9,10 @@ void _shy_common_logic_main_menu_selection_animation_push_attention :: receive (
 {
 }
 
+void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_message_common_logic_main_menu_selection_animation_push_attention_transform_request )
+{
+}
+
 void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
