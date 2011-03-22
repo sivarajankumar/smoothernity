@@ -5,6 +5,7 @@
 #include "./message/disappear_transform_reply/shy_disappear_transform_reply_injections.h"
 #include "./message/idle_attention_transform_reply/shy_idle_attention_transform_reply_injections.h"
 #include "./message/idle_transform_reply/shy_idle_transform_reply_injections.h"
+#include "./message/push_attention_transform_reply/shy_push_attention_transform_reply_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 
