@@ -12,3 +12,7 @@ void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called
 void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_row_selected )
 {
 }
+
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_transform_request )
+{
+}
