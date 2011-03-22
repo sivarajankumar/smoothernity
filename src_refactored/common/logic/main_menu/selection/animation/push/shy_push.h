@@ -3,6 +3,7 @@ class _shy_common_logic_main_menu_selection_animation_push
 public :
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_controls_state_reply ) ;
+    static void receive ( so_called_message_common_logic_main_menu_selection_animation_push_transform_request ) ;
     static void receive ( so_called_message_common_logic_main_menu_update ) ;
     static void receive ( so_called_message_common_logic_main_menu_void_chosen ) ;
 } ;
