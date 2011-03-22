@@ -7,6 +7,7 @@
 #include "./message/idle_transform_reply/shy_idle_transform_reply_injections.h"
 #include "./message/push_attention_transform_reply/shy_push_attention_transform_reply_injections.h"
 #include "./message/push_transform_reply/shy_push_transform_reply_injections.h"
+#include "./message/push_weight_reply/shy_push_weight_reply_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 

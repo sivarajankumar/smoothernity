@@ -28,3 +28,7 @@ void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_mess
 void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_push_transform_reply )
 {
 }
+
+void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_push_weight_reply )
+{
+}
