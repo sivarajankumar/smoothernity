@@ -9,6 +9,7 @@
 #include "./message/push_transform_reply/shy_push_transform_reply_injections.h"
 #include "./message/push_weight_reply/shy_push_weight_reply_injections.h"
 #include "./message/select_transform_reply/shy_select_transform_reply_injections.h"
+#include "./message/transform_request/shy_transform_request_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 
