@@ -3,6 +3,7 @@
 
 #include "../animation/message/appear_finished/shy_appear_finished_injections.h"
 #include "../animation/message/select_finished/shy_select_finished_injections.h"
+#include "../animation/message/unselect_finished/shy_unselect_finished_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 
