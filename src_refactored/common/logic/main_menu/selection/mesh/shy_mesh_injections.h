@@ -1,6 +1,8 @@
 #ifndef _shy_common_logic_main_menu_selection_mesh_injections_included
 #define _shy_common_logic_main_menu_selection_mesh_injections_included
 
+#include "../animation/message/transform_reply/shy_transform_reply_injections.h"
+
 #include "../../../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
