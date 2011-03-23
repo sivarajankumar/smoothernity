@@ -2,6 +2,7 @@
 #define _shy_common_logic_main_menu_selection_animation_select_injections_included
 
 #include "../message/select_start/shy_select_start_injections.h"
+#include "../message/select_transform_request/shy_select_transform_request_injections.h"
 
 #include "../../../message/update/shy_update_injections.h"
 
