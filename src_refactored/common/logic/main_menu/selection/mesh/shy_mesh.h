@@ -5,6 +5,7 @@ public :
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_transform_reply ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_mesh_create ) ;
+    static void receive ( so_called_message_common_logic_main_menu_selection_mesh_destroy_request ) ;
 } ;
 
 typedef so_called_platform_scheduler 
