@@ -33,6 +33,10 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 {
 }
 
+void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_selection_mesh_create_finished )
+{
+}
+
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
