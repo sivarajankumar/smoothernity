@@ -5,6 +5,10 @@ void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_ca
 {
 }
 
+void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_message_common_logic_main_menu_selection_animation_unselect_start )
+{
+}
+
 void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_message_common_logic_main_menu_update )
 {
 }
