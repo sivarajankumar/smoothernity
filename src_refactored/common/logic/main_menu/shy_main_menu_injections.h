@@ -10,6 +10,7 @@
 #include "./message/row_chosen/shy_row_chosen_injections.h"
 #include "./message/update/shy_update_injections.h"
 #include "./selection/message/mesh_create_finished/shy_mesh_create_finished_injections.h"
+#include "./selection/message/mesh_destroy_reply/shy_mesh_destroy_reply_injections.h"
 
 #include "../../message/init/shy_init_injections.h"
 
