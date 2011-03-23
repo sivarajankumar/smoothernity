@@ -8,6 +8,7 @@
 #include "../logic/main_menu/letters/layout/consts/shy_consts_injections.h"
 #include "../logic/main_menu/letters/meshes/consts/shy_consts_injections.h"
 #include "../logic/main_menu/selection/animation/consts/shy_consts_injections.h"
+#include "../logic/main_menu/selection/consts/shy_consts_injections.h"
 #include "../logic/observer/animation/consts/shy_consts_injections.h"
 #include "../logic/ortho/consts/shy_consts_injections.h"
 #include "../logic/perspective/consts/shy_consts_injections.h"
