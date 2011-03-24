@@ -7,6 +7,7 @@ public :
     static void receive ( so_called_message_common_logic_main_menu_letters_meshes_render_reply ) ;
     static void receive ( so_called_message_common_logic_main_menu_render ) ;
     static void receive ( so_called_message_common_logic_main_menu_render_permit ) ;
+    static void receive ( so_called_message_common_logic_main_menu_selection_mesh_render_reply ) ;
     static void receive ( so_called_message_common_logic_ortho_planes_reply ) ;
     static void receive ( so_called_message_common_logic_text_use_text_texture_reply ) ;
 } ;
