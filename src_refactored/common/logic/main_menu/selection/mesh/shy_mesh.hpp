@@ -24,3 +24,7 @@ void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_c
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_place )
 {
 }
+
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_render_request )
+{
+}
