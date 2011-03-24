@@ -16,3 +16,7 @@ void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_messag
 void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_main_menu_letters_rows_reply )
 {
 }
+
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_main_menu_selection_track_request )
+{
+}

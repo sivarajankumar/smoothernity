@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_selection_track_request_injections_included
+#define _shy_sender_common_logic_main_menu_selection_track_request_injections_included
+
+#include "../../message/track_request/shy_track_request_injections.h"
+
+#include "./shy_track_request.h"
+
+typedef shy_sender_common_logic_main_menu_selection_track_request so_called_sender_common_logic_main_menu_selection_track_request ;
+
+#endif
