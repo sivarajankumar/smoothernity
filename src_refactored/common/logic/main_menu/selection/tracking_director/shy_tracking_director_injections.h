@@ -7,6 +7,7 @@
 #include "../message/track_reply/shy_track_reply_injections.h"
 #include "../message/track_row_selected/shy_track_row_selected_injections.h"
 #include "../message/track_void_selected/shy_track_void_selected_injections.h"
+#include "../message/tracking_director_update/shy_tracking_director_update_injections.h"
 
 #include "../../../../message/init/shy_init_injections.h"
 
