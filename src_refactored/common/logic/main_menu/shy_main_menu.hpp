@@ -37,6 +37,7 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_create_finished )
 {
+    so_called_sender_common_logic_main_menu_letters_meshes_create :: send ( so_called_message_common_logic_main_menu_letters_meshes_create ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_meshes_creation_finished )
