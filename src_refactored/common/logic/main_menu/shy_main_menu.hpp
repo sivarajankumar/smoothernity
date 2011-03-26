@@ -31,6 +31,8 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_finished )
 {
+    shy_guts :: disappearing = so_called_platform_math_consts :: whole_false ;
+    so_called_sender_common_logic_main_menu_letters_meshes_destroy_request :: send ( so_called_message_common_logic_main_menu_letters_meshes_destroy_request ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_create_finished )

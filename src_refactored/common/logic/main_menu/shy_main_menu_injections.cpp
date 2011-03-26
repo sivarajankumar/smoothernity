@@ -2,6 +2,7 @@
 
 #include "./letters/animation/sender/disappear_start/shy_disappear_start_injections.h"
 #include "./letters/meshes/sender/create/shy_create_injections.h"
+#include "./letters/meshes/sender/destroy_request/shy_destroy_request_injections.h"
 #include "./letters/meshes/sender/place/shy_place_injections.h"
 #include "./letters/sender/create/shy_create_injections.h"
 #include "./selection/animation/sender/disappear_start/shy_disappear_start_injections.h"
