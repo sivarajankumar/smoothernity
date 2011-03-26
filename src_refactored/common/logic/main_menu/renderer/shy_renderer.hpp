@@ -163,6 +163,8 @@ void shy_guts :: request_animation_transform ( )
 
 void shy_guts :: request_fidget_render ( )
 {
+    shy_guts :: logic_fidget_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_fidget_render_request :: send ( so_called_message_common_logic_fidget_render_request ( ) ) ;
 }
 
 void shy_guts :: animation_transform_received ( )
