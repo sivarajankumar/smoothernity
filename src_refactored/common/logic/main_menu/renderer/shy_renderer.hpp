@@ -133,6 +133,11 @@ void shy_guts :: restore_render_state ( )
 
 void shy_guts :: clear_screen ( )
 {
+    so_called_message_common_engine_render_clear_screen msg ;
+    msg . r = so_called_platform_math_consts :: fract_0 ;
+    msg . g = so_called_platform_math_consts :: fract_0 ;
+    msg . b = so_called_platform_math_consts :: fract_0 ;
+    so_called_sender_common_engine_render_clear_screen :: send ( msg ) ;
 }
 
 void shy_guts :: blue_screen ( )
