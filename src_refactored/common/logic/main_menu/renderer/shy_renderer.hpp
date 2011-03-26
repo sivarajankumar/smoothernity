@@ -188,6 +188,8 @@ void shy_guts :: select_text_texture ( )
 
 void shy_guts :: render_selection_mesh ( )
 {
+    shy_guts :: logic_main_menu_selection_mesh_render_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_mesh_render_request :: send ( so_called_message_common_logic_main_menu_selection_mesh_render_request ( ) ) ;
 }
 
 void shy_guts :: render_letters_meshes ( )
