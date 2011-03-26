@@ -112,6 +112,10 @@ void shy_guts :: proceed_with_render ( )
 
 void shy_guts :: render_started ( )
 {
+    shy_guts :: prepare_render_state ( ) ;
+    shy_guts :: clear_screen ( ) ;
+    shy_guts :: use_ortho_projection ( ) ;
+    shy_guts :: request_animation_transform ( ) ;
 }
 
 void shy_guts :: prepare_render_state ( )
@@ -144,10 +148,15 @@ void shy_guts :: request_fidget_render ( )
 
 void shy_guts :: animation_transform_received ( )
 {
+    shy_guts :: apply_animation_transform ( ) ;
+    shy_guts :: request_fidget_render ( ) ;
 }
 
 void shy_guts :: apply_animation_transform ( )
 {
+    so_called_message_common_engine_render_matrix_load msg ;
+    msg . matrix = shy_guts :: logic_main_menu_animation_transform_state :: view ;
+    so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
 }
 
 void shy_guts :: select_text_texture ( )
