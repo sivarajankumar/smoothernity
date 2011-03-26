@@ -120,6 +120,10 @@ void shy_guts :: render_started ( )
 
 void shy_guts :: prepare_render_state ( )
 {
+    so_called_sender_common_engine_render_disable_depth_test :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
+    so_called_sender_common_engine_render_fog_disable :: send ( so_called_message_common_engine_render_fog_disable ( ) ) ;
+    so_called_sender_common_engine_render_blend_src_alpha_dst_one_minus_alpha :: send ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
+    so_called_sender_common_engine_render_matrix_identity :: send ( so_called_message_common_engine_render_matrix_identity ( ) ) ;
 }
 
 void shy_guts :: restore_render_state ( )
@@ -173,6 +177,7 @@ void shy_guts :: render_letters_meshes ( )
 
 void shy_guts :: render_finished ( )
 {
+    shy_guts :: restore_render_state ( ) ;
 }
 
 void shy_guts :: use_ortho_projection ( )
