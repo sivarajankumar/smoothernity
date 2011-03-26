@@ -1,5 +1,6 @@
 #include "./shy_renderer_injections.h"
 
+#include "../../../engine/render/sender/blend_disable/shy_blend_disable_injections.h"
 #include "../../../engine/render/sender/blend_src_alpha_dst_one_minus_alpha/shy_blend_src_alpha_dst_one_minus_alpha_injections.h"
 #include "../../../engine/render/sender/disable_depth_test/shy_disable_depth_test_injections.h"
 #include "../../../engine/render/sender/fog_disable/shy_fog_disable_injections.h"

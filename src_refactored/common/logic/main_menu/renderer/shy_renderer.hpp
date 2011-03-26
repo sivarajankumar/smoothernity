@@ -128,6 +128,7 @@ void shy_guts :: prepare_render_state ( )
 
 void shy_guts :: restore_render_state ( )
 {
+    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
 }
 
 void shy_guts :: clear_screen ( )
