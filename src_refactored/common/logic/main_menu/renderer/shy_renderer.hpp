@@ -135,10 +135,6 @@ void shy_guts :: use_ortho_projection ( )
 {
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_fidget_render_reply )
 {
 }

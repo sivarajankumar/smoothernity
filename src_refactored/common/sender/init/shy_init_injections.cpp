@@ -34,7 +34,6 @@
 #include "../../logic/main_menu/letters/meshes/renderer/shy_renderer_injections.h"
 #include "../../logic/main_menu/letters/meshes/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/letters/storage/shy_storage_injections.h"
-#include "../../logic/main_menu/renderer/shy_renderer_injections.h"
 #include "../../logic/main_menu/selection/animation/appear/shy_appear_injections.h"
 #include "../../logic/main_menu/selection/animation/disappear/shy_disappear_injections.h"
 #include "../../logic/main_menu/selection/animation/idle/shy_idle_injections.h"
