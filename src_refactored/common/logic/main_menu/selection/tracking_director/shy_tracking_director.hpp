@@ -24,3 +24,7 @@ void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_cal
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_track_row_selected )
 {
 }
+
+void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_track_void_selected )
+{
+}

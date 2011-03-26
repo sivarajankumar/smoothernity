@@ -7,6 +7,7 @@ public :
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_unselect_finished ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_track_reply ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_track_row_selected ) ;
+    static void receive ( so_called_message_common_logic_main_menu_selection_track_void_selected ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_main_menu_selection_tracking_director > :: module
