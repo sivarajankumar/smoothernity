@@ -47,6 +47,10 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_row_chosen )
 {
+    shy_guts :: launched = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: disappearing = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_letters_animation_disappear_start :: send ( so_called_message_common_logic_main_menu_letters_animation_disappear_start ( ) ) ;
+    so_called_sender_common_logic_main_menu_selection_animation_disappear_start :: send ( so_called_message_common_logic_main_menu_selection_animation_disappear_start ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_selection_mesh_create_finished )
