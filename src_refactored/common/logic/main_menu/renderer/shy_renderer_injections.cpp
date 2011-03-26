@@ -4,6 +4,7 @@
 
 #include "../../fidget/sender/render_request/shy_render_request_injections.h"
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
+#include "../../text/sender/use_text_texture_request/shy_use_text_texture_request_injections.h"
 
 #include "../../../engine/render/sender/blend_disable/shy_blend_disable_injections.h"
 #include "../../../engine/render/sender/blend_src_alpha_dst_one_minus_alpha/shy_blend_src_alpha_dst_one_minus_alpha_injections.h"

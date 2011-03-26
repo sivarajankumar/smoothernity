@@ -182,6 +182,8 @@ void shy_guts :: apply_animation_transform ( )
 
 void shy_guts :: select_text_texture ( )
 {
+    shy_guts :: logic_text_use_text_texture_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_text_use_text_texture_request :: send ( so_called_message_common_logic_text_use_text_texture_request ( ) ) ;
 }
 
 void shy_guts :: render_selection_mesh ( )
