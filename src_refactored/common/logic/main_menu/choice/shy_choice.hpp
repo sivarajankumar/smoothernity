@@ -44,6 +44,26 @@ void shy_guts :: obtain_controls_state ( )
 
 void shy_guts :: controls_state_received ( )
 {
+    so_called_type_platform_math_num_whole row_selected ;
+    so_called_type_platform_math_num_whole primary_button_down ;
+    so_called_type_platform_math_num_whole prev_primary_button_down ;
+
+    row_selected = shy_guts :: logic_main_menu_update_state :: row_selected ;
+    primary_button_down = shy_guts :: logic_controls_state :: primary_button_down ;
+    prev_primary_button_down = shy_guts :: logic_main_menu_update_state :: prev_primary_button_down ;    
+
+    if ( so_called_platform_conditions :: whole_is_false ( primary_button_down ) 
+      && so_called_platform_conditions :: whole_is_true ( prev_primary_button_down )
+       )
+    {
+        if ( so_called_platform_conditions :: whole_is_true ( row_selected ) )
+            so_called_sender_common_logic_main_menu_row_chosen :: send ( so_called_message_common_logic_main_menu_row_chosen ( ) ) ;
+        else
+            so_called_sender_common_logic_main_menu_void_chosen :: send ( so_called_message_common_logic_main_menu_void_chosen ( ) ) ;
+    }
+
+    prev_primary_button_down = primary_button_down ;
+    shy_guts :: logic_main_menu_update_state :: prev_primary_button_down = prev_primary_button_down ;
 }
 
 void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_init )
