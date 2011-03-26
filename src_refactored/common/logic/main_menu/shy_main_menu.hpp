@@ -21,10 +21,12 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_creation_permit )
 {
+    shy_guts :: creation_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_launch_permit )
 {
+    shy_guts :: launch_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_finished )
@@ -57,4 +59,30 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: creation_permitted ) )
+    {
+        shy_guts :: creation_permitted = so_called_platform_math_consts :: whole_false ;
+        so_called_sender_common_logic_main_menu_letters_create :: send ( so_called_message_common_logic_main_menu_letters_create ( ) ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: created ) 
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: launch_permitted )
+       )
+    {
+        shy_guts :: launch_permitted = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: launched = so_called_platform_math_consts :: whole_true ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: created ) 
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: launched )
+       )
+    {
+        so_called_sender_common_logic_main_menu_letters_meshes_place :: send ( so_called_message_common_logic_main_menu_letters_meshes_place ( ) ) ;
+        so_called_sender_common_logic_main_menu_selection_tracking_director_update :: send ( so_called_message_common_logic_main_menu_selection_tracking_director_update ( ) ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: created )
+      && so_called_platform_conditions :: whole_is_true ( shy_guts :: disappearing )
+       )
+    {
+        so_called_sender_common_logic_main_menu_letters_meshes_place :: send ( so_called_message_common_logic_main_menu_letters_meshes_place ( ) ) ;
+        so_called_sender_common_logic_main_menu_selection_mesh_place :: send ( so_called_message_common_logic_main_menu_selection_mesh_place ( ) ) ;
+    }
 }
