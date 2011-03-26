@@ -73,6 +73,41 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_render ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_render_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: request_ortho_planes ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_ortho_planes_state :: replied ) )
+    {
+        shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_started ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_animation_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: animation_transform_received ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_fidget_render_state :: replied ) )
+    {
+        shy_guts :: logic_fidget_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_selection_mesh ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_mesh_render_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_mesh_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: select_text_texture ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_use_text_texture_state :: replied ) )
+    {
+        shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_letters_meshes ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_meshes_render_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_meshes_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: render_finished ( ) ;
+    }
 }
 
 void shy_guts :: render_started ( )
@@ -184,6 +219,12 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
 
 void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_main_menu_selection_mesh_render_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_mesh_render_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_selection_mesh_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_main_menu_selection_mesh_render_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_ortho_planes_reply msg )
@@ -204,4 +245,10 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
 
 void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_text_use_text_texture_reply )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_use_text_texture_state :: requested ) )
+    {
+        shy_guts :: logic_text_use_text_texture_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: proceed_with_render ( ) ;
+    }
 }
