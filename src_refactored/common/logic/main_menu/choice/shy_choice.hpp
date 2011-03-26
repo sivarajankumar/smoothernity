@@ -39,18 +39,29 @@ void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_in
     shy_guts :: logic_main_menu_update_state :: prev_primary_button_down = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_logic_controls_state_reply )
+void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_logic_controls_state_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: requested ) )
+    {
+        shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_controls_state :: primary_button_down = msg . primary_button_down ;
+        shy_guts :: proceed_with_update ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_logic_main_menu_choice_row_selected )
 {
+    shy_guts :: logic_main_menu_update_state :: row_selected = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_logic_main_menu_choice_void_selected )
 {
+    shy_guts :: logic_main_menu_update_state :: row_selected = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_main_menu_choice :: receive ( so_called_message_common_logic_main_menu_update )
 {
+    shy_guts :: logic_main_menu_update_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_update ( ) ;
 }
