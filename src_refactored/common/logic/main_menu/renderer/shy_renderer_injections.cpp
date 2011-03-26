@@ -1,5 +1,7 @@
 #include "./shy_renderer_injections.h"
 
+#include "../animation/sender/transform_request/shy_transform_request_injections.h"
+
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
 
 #include "../../../engine/render/sender/blend_disable/shy_blend_disable_injections.h"
