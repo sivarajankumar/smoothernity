@@ -7,6 +7,7 @@
 #include "../../../engine/render/sender/fog_disable/shy_fog_disable_injections.h"
 #include "../../../engine/render/sender/matrix_identity/shy_matrix_identity_injections.h"
 #include "../../../engine/render/sender/matrix_load/shy_matrix_load_injections.h"
+#include "../../../engine/render/sender/projection_ortho/shy_projection_ortho_injections.h"
 
 #include "../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../injections/platform/math/consts/shy_consts.h"
