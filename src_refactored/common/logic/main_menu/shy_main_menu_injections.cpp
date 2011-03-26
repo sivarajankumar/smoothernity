@@ -10,7 +10,9 @@
 #include "./selection/sender/mesh_destroy_request/shy_mesh_destroy_request_injections.h"
 #include "./selection/sender/mesh_place/shy_mesh_place_injections.h"
 #include "./selection/sender/tracking_director_update/shy_tracking_director_update_injections.h"
+#include "./sender/created/shy_created_injections.h"
 #include "./sender/finished/shy_finished_injections.h"
+#include "./sender/render_permit/shy_render_permit_injections.h"
 
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"

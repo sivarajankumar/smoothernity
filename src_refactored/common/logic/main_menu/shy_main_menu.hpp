@@ -61,6 +61,9 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_selection_mesh_create_finished )
 {
+    shy_guts :: created = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_render_permit :: send ( so_called_message_common_logic_main_menu_render_permit ( ) ) ;
+    so_called_sender_common_logic_main_menu_created :: send ( so_called_message_common_logic_main_menu_created ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_selection_mesh_destroy_reply )
