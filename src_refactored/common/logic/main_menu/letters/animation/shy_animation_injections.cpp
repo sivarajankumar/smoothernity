@@ -2,6 +2,7 @@
 
 #include "./sender/appear_transform_request/shy_appear_transform_request_injections.h"
 #include "./sender/disappear_transform_request/shy_disappear_transform_request_injections.h"
+#include "./sender/idle_transform_request/shy_idle_transform_request_injections.h"
 #include "./sender/selection_push_transform_request/shy_selection_push_transform_request_injections.h"
 #include "./sender/selection_transform_request/shy_selection_transform_request_injections.h"
 #include "./sender/selection_weight_request/shy_selection_weight_request_injections.h"
