@@ -33,6 +33,9 @@ void shy_guts :: next_row ( )
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_init )
 {
+    shy_guts :: max_cols = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: rows_state :: rows_count = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: next_row ( ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_request )
