@@ -5,6 +5,7 @@
 #include "./sender/selection_push_transform_request/shy_selection_push_transform_request_injections.h"
 #include "./sender/selection_transform_request/shy_selection_transform_request_injections.h"
 #include "./sender/selection_weight_request/shy_selection_weight_request_injections.h"
+#include "./sender/unselection_weight_request/shy_unselection_weight_request_injections.h"
 
 #include "../../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../../injections/platform/math/consts/shy_consts.h"
