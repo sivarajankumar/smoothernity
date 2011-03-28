@@ -22,4 +22,43 @@ void shy_guts :: text_create_finished ( )
 
 void _shy_common_logic_main_menu_letters_creation_director :: receive ( so_called_message_common_logic_main_menu_letters_create )
 {
+    typedef so_called_common_logic_text_consts :: alphabet_english eng ;
+    so_called_type_common_logic_text_letter_id whitespace = so_called_common_logic_text_consts :: whitespace ;
+
+    shy_guts :: add_letter ( eng :: N ) ;
+    shy_guts :: add_letter ( eng :: E ) ;
+    shy_guts :: add_letter ( eng :: W ) ;
+    shy_guts :: add_letter ( whitespace ) ;
+    shy_guts :: add_letter ( eng :: G ) ;
+    shy_guts :: add_letter ( eng :: A ) ;
+    shy_guts :: add_letter ( eng :: M ) ;
+    shy_guts :: add_letter ( eng :: E ) ;
+    
+    shy_guts :: next_row ( ) ;
+    shy_guts :: add_letter ( eng :: L ) ;
+    shy_guts :: add_letter ( eng :: O ) ;
+    shy_guts :: add_letter ( eng :: A ) ;
+    shy_guts :: add_letter ( eng :: D ) ;
+    shy_guts :: add_letter ( whitespace ) ;
+    shy_guts :: add_letter ( eng :: G ) ;
+    shy_guts :: add_letter ( eng :: A ) ;
+    shy_guts :: add_letter ( eng :: M ) ;
+    shy_guts :: add_letter ( eng :: E ) ;
+
+    shy_guts :: next_row ( ) ;
+    shy_guts :: add_letter ( eng :: O ) ;
+    shy_guts :: add_letter ( eng :: P ) ;
+    shy_guts :: add_letter ( eng :: T ) ;
+    shy_guts :: add_letter ( eng :: I ) ;
+    shy_guts :: add_letter ( eng :: O ) ;
+    shy_guts :: add_letter ( eng :: N ) ;
+    shy_guts :: add_letter ( eng :: S ) ;
+
+    shy_guts :: next_row ( ) ;
+    shy_guts :: add_letter ( eng :: E ) ;
+    shy_guts :: add_letter ( eng :: X ) ;
+    shy_guts :: add_letter ( eng :: I ) ;
+    shy_guts :: add_letter ( eng :: T ) ;
+    
+    shy_guts :: text_create_finished ( ) ;
 }
