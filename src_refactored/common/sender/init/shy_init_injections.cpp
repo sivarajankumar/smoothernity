@@ -15,7 +15,6 @@
 #include "../../logic/image/shy_image_injections.h"
 #include "../../logic/land/shy_land_injections.h"
 #include "../../logic/main_menu/animation/shake/shy_shake_injections.h"
-#include "../../logic/main_menu/animation/shy_animation_injections.h"
 #include "../../logic/main_menu/choice/shy_choice_injections.h"
 #include "../../logic/main_menu/letters/animation/appear/shy_appear_injections.h"
 #include "../../logic/main_menu/letters/animation/disappear/shy_disappear_injections.h"
