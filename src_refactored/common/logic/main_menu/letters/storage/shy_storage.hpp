@@ -46,8 +46,18 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
 {
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_add )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_add msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: row_state_type > row_state ;
+    so_called_type_platform_pointer_data < shy_guts :: col_state_type > col_state ;
+    so_called_type_platform_math_num_whole last_row ;
+
+    so_called_platform_math :: sub_wholes ( last_row , shy_guts :: rows_state :: rows_count , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_static_array :: element_ptr ( row_state , shy_guts :: rows_state :: rows , last_row ) ;
+    so_called_platform_static_array :: element_ptr ( col_state , row_state . get ( ) . cols , row_state . get ( ) . cols_count ) ;
+    col_state . get ( ) . letter = msg . letter ;
+
+    so_called_platform_math :: inc_whole ( row_state . get ( ) . cols_count ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_request )
