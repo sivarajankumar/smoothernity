@@ -1,5 +1,7 @@
 #include "./shy_storage_injections.h"
 
+#include "../sender/boundaries_reply/shy_boundaries_reply_injections.h"
+
 #include "../../consts/shy_consts_injections.h"
 
 #include "../../../../../injections/platform/math/consts/shy_consts.h"

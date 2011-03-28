@@ -40,6 +40,10 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_request )
 {
+    so_called_message_common_logic_main_menu_letters_boundaries_reply reply_msg ;
+    reply_msg . rows = shy_guts :: rows_state :: rows_count ;
+    reply_msg . cols = shy_guts :: max_cols ;
+    so_called_sender_common_logic_main_menu_letters_boundaries_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_cols_request )
