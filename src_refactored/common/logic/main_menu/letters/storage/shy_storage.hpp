@@ -46,8 +46,15 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
     so_called_sender_common_logic_main_menu_letters_boundaries_reply :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_cols_request )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_cols_request msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: row_state_type > row_state ;
+    so_called_platform_static_array :: element_ptr ( row_state , shy_guts :: rows_state :: rows , msg . row ) ;
+    
+    so_called_message_common_logic_main_menu_letters_cols_reply reply_msg ;
+    reply_msg . row = msg . row ;
+    reply_msg . cols = row_state . get ( ) . cols_count ;
+    so_called_sender_common_logic_main_menu_letters_cols_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_add msg )

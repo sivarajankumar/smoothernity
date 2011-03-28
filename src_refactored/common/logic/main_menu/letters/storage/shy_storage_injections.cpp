@@ -1,6 +1,7 @@
 #include "./shy_storage_injections.h"
 
 #include "../sender/boundaries_reply/shy_boundaries_reply_injections.h"
+#include "../sender/cols_reply/shy_cols_reply_injections.h"
 
 #include "../../consts/shy_consts_injections.h"
 
