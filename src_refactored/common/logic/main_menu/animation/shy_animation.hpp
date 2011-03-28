@@ -45,14 +45,37 @@ void shy_guts :: obtain_shake_transform ( )
 
 void shy_guts :: compute_and_reply_transform ( )
 {
+    shy_guts :: compute_transform ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_matrix_data view ;
+    so_called_type_platform_math_num_fract shake_shift_x ;
+    so_called_type_platform_math_num_fract origin_x ;
+    so_called_type_platform_math_num_fract origin_y ;
+    so_called_type_platform_math_num_fract origin_z ;
+
+    shake_shift_x = shy_guts :: logic_main_menu_animation_shake_transform_state :: shift_x ;
+
+    origin_x = so_called_platform_math_consts :: fract_0 ;
+    origin_y = so_called_platform_math_consts :: fract_0 ;
+    origin_z = so_called_platform_math_consts :: fract_0 ;
+
+    so_called_platform_math :: add_to_fract ( origin_x , shake_shift_x ) ;
+
+    so_called_platform_matrix :: identity ( view ) ;
+    so_called_platform_matrix :: set_origin ( view , origin_x , origin_y , origin_z ) ;
+
+    shy_guts :: logic_main_menu_animation_transform_state :: view = view ;
 }
 
 void shy_guts :: reply_transform ( )
 {
+    so_called_message_common_logic_main_menu_animation_transform_reply msg ;
+    msg . view = shy_guts :: logic_main_menu_animation_transform_state :: view ;
+    so_called_sender_common_logic_main_menu_animation_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_animation :: receive ( so_called_message_common_logic_main_menu_animation_shake_transform_reply msg )
