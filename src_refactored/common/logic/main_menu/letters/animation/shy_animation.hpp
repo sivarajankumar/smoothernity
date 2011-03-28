@@ -218,10 +218,59 @@ void shy_guts :: obtain_idle_transform ( )
 
 void shy_guts :: all_transforms_received ( )
 {
+    shy_guts :: compute_transform ( ) ;
+    shy_guts :: reply_animated_transform ( ) ;
 }
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_matrix_data transform ;
+    so_called_type_platform_vector_data position ;
+    so_called_type_platform_math_num_fract scale_appear ;
+    so_called_type_platform_math_num_fract scale_disappear ;
+    so_called_type_platform_math_num_fract scale_selection ;
+    so_called_type_platform_math_num_fract scale_selection_push ;
+    so_called_type_platform_math_num_fract scale_selection_weighted ;
+    so_called_type_platform_math_num_fract scale_idle ;
+    so_called_type_platform_math_num_fract scale ;
+    so_called_type_platform_math_num_fract weight_selection ;
+    so_called_type_platform_math_num_fract weight_unselection ;
+    so_called_type_platform_math_num_fract weight ;
+    so_called_type_platform_math_num_fract zero ;
+    so_called_type_platform_math_num_fract final_selection_scale ;
+    
+    position = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: position ;
+    scale_appear = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: scale ;
+    scale_disappear = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: scale ;
+    scale_idle = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: scale ;
+    scale_selection = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: scale ;
+    scale_selection_push = shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: scale ;
+    weight_selection = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: weight ;
+    weight_unselection = shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: weight ;
+    zero = so_called_platform_math_consts :: fract_0 ;
+    
+    so_called_platform_math :: mul_fracts ( weight , weight_selection , weight_unselection ) ;
+    so_called_platform_math :: mul_fracts ( final_selection_scale , scale_selection , scale_selection_push ) ;
+    
+    so_called_common_engine_math_stateless :: lerp
+        ( scale_selection_weighted
+        , weight
+        , so_called_platform_math_consts :: fract_1
+        , so_called_platform_math_consts :: fract_0
+        , final_selection_scale
+        , so_called_platform_math_consts :: fract_1
+        ) ;
+    
+    so_called_platform_math :: mul_fracts ( scale , scale_idle , scale_appear ) ;
+    so_called_platform_math :: mul_fract_by ( scale , scale_disappear ) ;
+    so_called_platform_math :: mul_fract_by ( scale , scale_selection_weighted ) ;
+    
+    so_called_platform_matrix :: set_origin ( transform , position ) ;
+    so_called_platform_matrix :: set_axis_x ( transform , scale , zero , zero ) ;
+    so_called_platform_matrix :: set_axis_y ( transform , zero , scale , zero ) ;
+    so_called_platform_matrix :: set_axis_z ( transform , zero , zero , scale ) ;
+    
+    shy_guts :: logic_main_menu_letters_animation_transform_state :: transform = transform ;
 }
 
 void shy_guts :: reply_animated_transform ( )
