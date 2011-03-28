@@ -2,6 +2,7 @@
 
 #include "../sender/boundaries_reply/shy_boundaries_reply_injections.h"
 #include "../sender/cols_reply/shy_cols_reply_injections.h"
+#include "../sender/letter_reply/shy_letter_reply_injections.h"
 #include "../sender/rows_reply/shy_rows_reply_injections.h"
 
 #include "../../consts/shy_consts_injections.h"
