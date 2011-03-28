@@ -29,6 +29,17 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: next_row ( )
 {
+    so_called_type_platform_pointer_data < shy_guts :: row_state_type > row_state ;
+    if ( so_called_platform_conditions :: whole_greater_than_zero ( shy_guts :: rows_state :: rows_count ) )
+    {
+        so_called_type_platform_math_num_whole last_row ;
+        so_called_platform_math :: sub_wholes ( last_row , shy_guts :: rows_state :: rows_count , so_called_platform_math_consts :: whole_1 ) ;
+        so_called_platform_static_array :: element_ptr ( row_state , shy_guts :: rows_state :: rows , last_row ) ;
+        so_called_common_engine_math_stateless :: max_whole ( shy_guts :: max_cols , shy_guts :: max_cols , row_state . get ( ) . cols_count ) ;
+    }
+    so_called_platform_static_array :: element_ptr ( row_state , shy_guts :: rows_state :: rows , shy_guts :: rows_state :: rows_count ) ;
+    row_state . get ( ) . cols_count = so_called_platform_math_consts :: whole_0 ;
+    so_called_platform_math :: inc_whole ( shy_guts :: rows_state :: rows_count ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_init )
