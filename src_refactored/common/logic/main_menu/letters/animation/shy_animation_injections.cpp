@@ -6,6 +6,7 @@
 #include "./sender/selection_push_transform_request/shy_selection_push_transform_request_injections.h"
 #include "./sender/selection_transform_request/shy_selection_transform_request_injections.h"
 #include "./sender/selection_weight_request/shy_selection_weight_request_injections.h"
+#include "./sender/transform_reply/shy_transform_reply_injections.h"
 #include "./sender/unselection_weight_request/shy_unselection_weight_request_injections.h"
 
 #include "../../../../engine/math/stateless/shy_stateless_injections.h"

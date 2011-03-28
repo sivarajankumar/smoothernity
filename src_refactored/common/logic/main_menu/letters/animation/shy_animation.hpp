@@ -275,6 +275,11 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_animated_transform ( )
 {
+    so_called_message_common_logic_main_menu_letters_animation_transform_reply msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
+    msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
+    msg . transform = shy_guts :: logic_main_menu_letters_animation_transform_state :: transform ;
+    so_called_sender_common_logic_main_menu_letters_animation_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation :: receive ( so_called_message_common_logic_main_menu_letters_animation_appear_transform_reply msg )
