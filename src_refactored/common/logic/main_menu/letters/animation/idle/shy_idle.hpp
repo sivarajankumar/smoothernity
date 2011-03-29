@@ -163,6 +163,12 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_animated_transform ( )
 {
+    so_called_message_common_logic_main_menu_letters_animation_idle_transform_reply msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ;
+    msg . col = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ;
+    msg . position = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: position ;
+    msg . scale = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: scale ;
+    so_called_sender_common_logic_main_menu_letters_animation_idle_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_logic_main_menu_launch_permit )

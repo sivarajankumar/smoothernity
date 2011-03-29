@@ -1,6 +1,7 @@
 #include "./shy_idle_injections.h"
 
 #include "../consts/shy_consts_injections.h"
+#include "../sender/idle_transform_reply/shy_idle_transform_reply_injections.h"
 
 #include "../../layout/sender/position_request/shy_position_request_injections.h"
 #include "../../meshes/consts/shy_consts_injections.h"
