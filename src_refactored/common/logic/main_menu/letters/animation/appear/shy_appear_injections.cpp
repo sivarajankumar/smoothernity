@@ -1,6 +1,7 @@
 #include "./shy_appear_injections.h"
 
 #include "../consts/shy_consts_injections.h"
+#include "../sender/appear_transform_reply/shy_appear_transform_reply_injections.h"
 
 #include "../../../../../engine/math/stateless/shy_stateless_injections.h"
 
