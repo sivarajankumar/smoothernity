@@ -69,6 +69,18 @@ void shy_guts :: compute_delay ( )
 
 void shy_guts :: compute_time ( )
 {
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract delay ;
+    so_called_type_platform_math_num_fract time_from_begin_to_end_in_seconds ;
+    
+    delay = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: delay ;
+    time_from_begin_to_end_in_seconds = so_called_common_logic_main_menu_letters_animation_consts :: disappear_time_from_begin_to_end_in_seconds ;
+    time_begin = delay ;
+    so_called_platform_math :: add_fracts ( time_end , time_begin , time_from_begin_to_end_in_seconds ) ;
+    
+    shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: time_begin = time_begin ;
+    shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: time_end = time_end ;
 }
 
 void shy_guts :: compute_transform ( )
