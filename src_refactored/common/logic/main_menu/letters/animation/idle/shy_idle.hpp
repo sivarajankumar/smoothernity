@@ -41,10 +41,28 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_transform ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_layout_position ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_position_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_layout_position_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: layout_position_received ( ) ;
+    }
 }
 
 void shy_guts :: obtain_layout_position ( )
 {
+    shy_guts :: logic_main_menu_letters_layout_position_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ;
+    shy_guts :: logic_main_menu_letters_layout_position_state :: requested_col = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ;
+
+    so_called_message_common_logic_main_menu_letters_layout_position_request msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ;
+    msg . col = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ;
+    so_called_sender_common_logic_main_menu_letters_layout_position_request :: send ( msg ) ;
 }
 
 void shy_guts :: layout_position_received ( )
