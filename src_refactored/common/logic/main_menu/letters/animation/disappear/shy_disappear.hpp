@@ -59,10 +59,12 @@ void shy_guts :: update_request_received ( )
 
 void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_launch_permit )
 {
+    shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_start )
 {
+    shy_guts :: logic_main_menu_update_state :: started = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_transform_request )
@@ -71,4 +73,6 @@ void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_cal
 
 void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: started ) )
+        shy_guts :: update_request_received ( ) ;
 }
