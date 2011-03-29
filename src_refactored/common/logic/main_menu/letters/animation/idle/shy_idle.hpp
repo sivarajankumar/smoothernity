@@ -106,6 +106,39 @@ void shy_guts :: compute_horizontal_position_delta ( )
 
 void shy_guts :: compute_vertical_position_delta ( )
 {
+    so_called_type_platform_vector_data vertical_position_delta ;
+    so_called_type_platform_math_num_fract zero ;
+    so_called_type_platform_math_num_fract col ;
+    so_called_type_platform_math_num_fract row ;
+    so_called_type_platform_math_num_fract phase_shift_col ;
+    so_called_type_platform_math_num_fract phase_shift_row ;
+    so_called_type_platform_math_num_fract phase ;
+    so_called_type_platform_math_num_fract delta ;
+    
+    zero = so_called_platform_math_consts :: fract_0 ;
+    so_called_platform_math :: make_fract_from_whole ( col , shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ) ;
+    so_called_platform_math :: make_fract_from_whole ( row , shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ) ;
+    
+    so_called_platform_math :: mul_fracts ( phase_shift_col , col , so_called_common_logic_main_menu_letters_animation_consts :: idle_vertical_shift_phase_per_col ) ;
+    so_called_platform_math :: mul_fracts ( phase_shift_row , row , so_called_common_logic_main_menu_letters_animation_consts :: idle_vertical_shift_phase_per_row ) ;
+    
+    so_called_platform_math :: div_fracts 
+        ( phase 
+        , shy_guts :: logic_main_menu_update_state :: time 
+        , so_called_common_logic_main_menu_letters_animation_consts :: idle_vertical_shift_period_in_seconds 
+        ) ;
+    so_called_platform_math :: add_to_fract ( phase , phase_shift_col ) ;
+    so_called_platform_math :: add_to_fract ( phase , phase_shift_row ) ;
+    so_called_platform_math :: mul_fract_by ( phase , so_called_platform_math_consts :: fract_2pi ) ;
+    
+    so_called_platform_math :: sin ( delta , phase ) ;
+    so_called_platform_math :: mul_fract_by ( delta , so_called_common_logic_main_menu_letters_animation_consts :: idle_vertical_shift_amplitude ) ;
+    so_called_platform_math :: mul_fract_by ( delta , shy_guts :: logic_main_menu_letters_layout_position_state :: scale ) ;
+    so_called_platform_math :: mul_fract_by ( delta , so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size ) ;
+    
+    so_called_platform_vector :: xyz ( vertical_position_delta , zero , delta , zero ) ;
+    
+    shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: vertical_position_delta = vertical_position_delta ;
 }
 
 void shy_guts :: compute_transform ( )
