@@ -90,6 +90,35 @@ void shy_guts :: compute_time ( )
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_middle ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract scale_begin ;
+    so_called_type_platform_math_num_fract scale_middle ;
+    so_called_type_platform_math_num_fract scale_end ;
+    so_called_type_platform_math_num_fract scale ;
+    
+    time_begin = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: time_begin ;
+    time_middle = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: time_middle ;
+    time_end = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: time_end ;
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    scale_begin = so_called_common_logic_main_menu_letters_animation_consts :: appear_scale_begin ;
+    scale_middle = so_called_common_logic_main_menu_letters_animation_consts :: appear_scale_middle ;
+    scale_end = so_called_common_logic_main_menu_letters_animation_consts :: appear_scale_end ;
+    
+    so_called_common_engine_math_stateless :: hard_attack_easy_decay
+        ( scale
+        , time
+        , scale_begin
+        , time_begin
+        , scale_middle
+        , time_middle
+        , scale_end
+        , time_end
+        ) ;
+        
+    shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: scale = scale ;
 }
 
 void shy_guts :: reply_transform ( )
