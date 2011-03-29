@@ -143,6 +143,22 @@ void shy_guts :: compute_vertical_position_delta ( )
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_vector_data vertical_position_delta ;
+    so_called_type_platform_vector_data horizontal_position_delta ;
+    so_called_type_platform_vector_data layout_position ;
+    so_called_type_platform_vector_data position ;
+    so_called_type_platform_math_num_fract scale ;
+    
+    vertical_position_delta = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: vertical_position_delta ;
+    horizontal_position_delta = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: horizontal_position_delta ;
+    layout_position = shy_guts :: logic_main_menu_letters_layout_position_state :: position ;
+    scale = shy_guts :: logic_main_menu_letters_layout_position_state :: scale ;
+    
+    so_called_platform_vector :: add ( position , vertical_position_delta , horizontal_position_delta ) ;
+    so_called_platform_vector :: add_to ( position , layout_position ) ;
+        
+    shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: position = position ;
+    shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: scale = scale ;
 }
 
 void shy_guts :: reply_animated_transform ( )
