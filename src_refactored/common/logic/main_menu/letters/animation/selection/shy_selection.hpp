@@ -88,6 +88,23 @@ void shy_guts :: compute_weight ( )
 
 void shy_guts :: invert_even_weight ( )
 {
+    so_called_type_platform_math_num_whole requested_row ;
+    so_called_type_platform_math_num_whole requested_col ;
+    so_called_type_platform_math_num_whole index ;
+    so_called_type_platform_math_num_fract weight ;
+    
+    requested_row = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_row ;
+    requested_col = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_col ;
+    weight = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: weight ;
+    
+    so_called_platform_math :: add_wholes ( index , requested_row , requested_col ) ;
+    so_called_platform_math :: mod_whole_by ( index , so_called_platform_math_consts :: whole_2 ) ;
+    
+    if ( so_called_platform_conditions :: whole_is_zero ( index ) )
+    {
+        so_called_platform_math :: sub_fracts ( weight , so_called_platform_math_consts :: fract_1 , weight ) ;
+        shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: weight = weight ;
+    }
 }
 
 void shy_guts :: compute_transform ( )
