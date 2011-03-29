@@ -109,6 +109,29 @@ void shy_guts :: invert_even_weight ( )
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_math_num_fract scale_min ;
+    so_called_type_platform_math_num_fract scale_max ;
+    so_called_type_platform_math_num_fract scale ;
+    so_called_type_platform_math_num_fract weight_min ;
+    so_called_type_platform_math_num_fract weight_max ;
+    so_called_type_platform_math_num_fract weight ;
+    
+    scale_min = so_called_common_logic_main_menu_letters_animation_consts :: selection_scale_min ;
+    scale_max = so_called_common_logic_main_menu_letters_animation_consts :: selection_scale_max ;
+    weight_min = so_called_platform_math_consts :: fract_0 ;
+    weight_max = so_called_platform_math_consts :: fract_1 ;
+    weight = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: weight ;
+    
+    so_called_common_engine_math_stateless :: lerp
+        ( scale
+        , weight
+        , scale_min
+        , weight_min
+        , scale_max
+        , weight_max
+        ) ;
+    
+    shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: scale = scale ;
 }
 
 void shy_guts :: reply_transform ( )
