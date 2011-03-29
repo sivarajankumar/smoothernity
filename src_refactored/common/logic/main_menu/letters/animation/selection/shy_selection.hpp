@@ -26,10 +26,64 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_transform ( )
 {
+    shy_guts :: compute_weight ( ) ;
+    shy_guts :: invert_even_weight ( ) ;
+    shy_guts :: compute_transform ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void shy_guts :: compute_weight ( )
 {
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract time_stable ;
+    so_called_type_platform_math_num_fract time_transition ;
+    so_called_type_platform_math_num_fract time_raise_begin ;
+    so_called_type_platform_math_num_fract time_raise_end ;
+    so_called_type_platform_math_num_fract time_fall_begin ;
+    so_called_type_platform_math_num_fract time_fall_end ;
+    so_called_type_platform_math_num_fract weight_low ;
+    so_called_type_platform_math_num_fract weight_high ;
+    so_called_type_platform_math_num_fract weight ;
+    
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    time_stable = so_called_common_logic_main_menu_letters_animation_consts :: selection_time_stable ;
+    time_transition = so_called_common_logic_main_menu_letters_animation_consts :: selection_time_transition ;
+    weight_low = so_called_platform_math_consts :: fract_0 ;
+    weight_high = so_called_platform_math_consts :: fract_1 ;
+
+    time_raise_begin = time_stable ;
+    so_called_platform_math :: add_fracts ( time_raise_end , time_raise_begin , time_transition ) ;
+    so_called_platform_math :: add_fracts ( time_fall_begin , time_raise_end , time_stable ) ;
+    so_called_platform_math :: add_fracts ( time_fall_end , time_fall_begin , time_transition ) ;
+    
+    while ( so_called_platform_conditions :: fract_greater_than_fract ( time , time_fall_end ) )
+        so_called_platform_math :: sub_from_fract ( time , time_fall_end ) ;
+
+    if ( so_called_platform_conditions :: fract_less_than_fract ( time , time_raise_end ) )
+    {
+        so_called_common_engine_math_stateless :: easy_in_easy_out
+            ( weight
+            , time
+            , weight_low
+            , time_raise_begin
+            , weight_high
+            , time_raise_end
+            ) ;
+    }
+    else
+    {
+        so_called_common_engine_math_stateless :: easy_in_easy_out
+            ( weight
+            , time
+            , weight_high
+            , time_fall_begin
+            , weight_low
+            , time_fall_end
+            ) ;
+    }
+
+    shy_guts :: logic_main_menu_update_state :: time = time ;
+    shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: weight = weight ;
 }
 
 void shy_guts :: invert_even_weight ( )
@@ -50,8 +104,11 @@ void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_cal
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_transform_request )
+void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_transform_request msg )
 {
+    shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_row = msg . row ;
+    shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_col = msg . col ;
+    shy_guts :: proceed_with_transform ( ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_logic_main_menu_update )
