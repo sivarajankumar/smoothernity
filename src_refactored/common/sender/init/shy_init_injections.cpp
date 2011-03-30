@@ -17,7 +17,6 @@
 #include "../../logic/main_menu/animation/shake/shy_shake_injections.h"
 #include "../../logic/main_menu/choice/shy_choice_injections.h"
 #include "../../logic/main_menu/letters/animation/selection_push/shy_selection_push_injections.h"
-#include "../../logic/main_menu/letters/animation/selection_weight/shy_selection_weight_injections.h"
 #include "../../logic/main_menu/letters/animation/unselection_weight/shy_unselection_weight_injections.h"
 #include "../../logic/main_menu/letters/layout/position/shy_position_injections.h"
 #include "../../logic/main_menu/letters/layout/row_rect/shy_row_rect_injections.h"

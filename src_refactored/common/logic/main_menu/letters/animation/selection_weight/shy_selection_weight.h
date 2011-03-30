@@ -1,7 +1,6 @@
 class _shy_common_logic_main_menu_letters_animation_selection_weight
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_request ) ;
     static void receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_select_row ) ;
     static void receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_unselect_row ) ;
