@@ -62,8 +62,15 @@ void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( s
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_controls_state_reply )
+void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_controls_state_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: requested ) )
+    {
+        shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_controls_state :: primary_button_down = msg . primary_button_down ;
+        shy_guts :: proceed_with_update ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_push_transform_request )
@@ -72,8 +79,12 @@ void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( s
 
 void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_main_menu_update )
 {
+    shy_guts :: logic_main_menu_update_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_update ( ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_main_menu_void_chosen )
 {
+    shy_guts :: logic_main_menu_update_state :: clicked = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
