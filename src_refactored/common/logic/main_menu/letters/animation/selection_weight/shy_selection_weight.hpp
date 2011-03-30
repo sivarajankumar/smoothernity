@@ -25,6 +25,20 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_weight ( )
 {
+    so_called_type_platform_math_num_whole row_selected ;
+    so_called_type_platform_math_num_whole selected_row_index ;
+    so_called_type_platform_math_num_whole requested_row ;
+    
+    row_selected = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: row_selected ;
+    selected_row_index = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: selected_row_index ;
+    requested_row = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_row ;
+    
+    if ( so_called_platform_conditions :: wholes_are_equal ( selected_row_index , requested_row ) )
+        shy_guts :: compute_weight ( ) ;
+    else
+        shy_guts :: compute_identity_weight ( ) ;
+
+    shy_guts :: reply_weight ( ) ;
 }
 
 void shy_guts :: compute_weight ( )
@@ -46,12 +60,17 @@ void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive (
     shy_guts :: proceed_with_weight ( ) ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_select_row )
+void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_select_row msg )
 {
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: row_selected = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: selected_row_index = msg . row ;
+    shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_unselect_row )
+void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_unselect_row msg )
 {
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: row_selected = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: selected_row_index = msg . row ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_update )
