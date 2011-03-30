@@ -39,8 +39,11 @@ void shy_guts :: reply_weight ( )
 {
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_request )
+void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_request msg )
 {
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_row = msg . row ;
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_col = msg . col ;
+    shy_guts :: proceed_with_weight ( ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_select_row )
