@@ -7,8 +7,6 @@
 
 #include "../../../message/update/shy_update_injections.h"
 
-#include "../../../../../message/init/shy_init_injections.h"
-
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_unselection_weight.h"
