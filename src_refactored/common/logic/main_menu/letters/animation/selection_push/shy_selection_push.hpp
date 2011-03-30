@@ -34,10 +34,22 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_transform ( )
 {
+    shy_guts :: compute_transform ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void shy_guts :: proceed_with_update ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_update_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_controls_state ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: replied ) )
+    {
+        shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: controls_state_received ( ) ;
+    }
 }
 
 void shy_guts :: compute_transform ( )
@@ -50,6 +62,8 @@ void shy_guts :: reply_transform ( )
 
 void shy_guts :: obtain_controls_state ( )
 {
+    shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_controls_state_request :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
 }
 
 void shy_guts :: controls_state_received ( )
@@ -73,8 +87,11 @@ void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( s
     }
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_push_transform_request )
+void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_push_transform_request msg )
 {
+    shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: requested_row = msg . row ;
+    shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: requested_col = msg . col ;
+    shy_guts :: proceed_with_transform ( ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection_push :: receive ( so_called_message_common_logic_main_menu_update )
