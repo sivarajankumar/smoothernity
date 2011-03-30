@@ -54,6 +54,40 @@ void shy_guts :: proceed_with_update ( )
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_math_num_fract time_from_begin_to_middle ;
+    so_called_type_platform_math_num_fract time_from_middle_to_end ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_middle ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract scale_begin ;
+    so_called_type_platform_math_num_fract scale_middle ;
+    so_called_type_platform_math_num_fract scale_end ;
+    so_called_type_platform_math_num_fract scale ;
+    
+    time_from_begin_to_middle = so_called_common_logic_main_menu_letters_animation_consts :: selection_push_time_from_begin_to_middle ;
+    time_from_middle_to_end = so_called_common_logic_main_menu_letters_animation_consts :: selection_push_time_from_middle_to_end ;
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    scale_begin = so_called_common_logic_main_menu_letters_animation_consts :: selection_push_scale_begin ;
+    scale_middle = so_called_common_logic_main_menu_letters_animation_consts :: selection_push_scale_middle ;
+    scale_end = so_called_common_logic_main_menu_letters_animation_consts :: selection_push_scale_end ;
+    
+    time_begin = so_called_platform_math_consts :: fract_0 ;
+    time_middle = time_from_begin_to_middle ;
+    so_called_platform_math :: add_fracts ( time_end , time_middle , time_from_middle_to_end ) ;
+    
+    so_called_common_engine_math_stateless :: hard_attack_easy_decay
+        ( scale
+        , time
+        , scale_begin
+        , time_begin
+        , scale_middle
+        , time_middle
+        , scale_end
+        , time_end
+        ) ;
+        
+    shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: scale = scale ;
 }
 
 void shy_guts :: reply_transform ( )
