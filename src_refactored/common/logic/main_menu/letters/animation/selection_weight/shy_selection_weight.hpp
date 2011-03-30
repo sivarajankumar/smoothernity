@@ -75,10 +75,16 @@ void shy_guts :: compute_weight ( )
 
 void shy_guts :: compute_identity_weight ( )
 {
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: weight = so_called_platform_math_consts :: fract_0 ;
 }
 
 void shy_guts :: reply_weight ( )
 {
+    so_called_message_common_logic_main_menu_letters_animation_selection_weight_reply msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_row ;
+    msg . col = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_col ;
+    msg . weight = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: weight ;
+    so_called_sender_common_logic_main_menu_letters_animation_selection_weight_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_weight_request msg )

@@ -1,6 +1,7 @@
 #include "./shy_selection_weight_injections.h"
 
 #include "../consts/shy_consts_injections.h"
+#include "../sender/selection_weight_reply/shy_selection_weight_reply_injections.h"
 
 #include "../../../../../engine/math/stateless/shy_stateless_injections.h"
 
