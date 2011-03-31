@@ -120,6 +120,24 @@ void shy_guts :: compute_row_rect ( )
 
 void shy_guts :: decorate_row_rect ( )
 {
+    so_called_type_common_engine_rect row_rect ;
+    so_called_type_platform_math_num_fract horizontal_border ;
+    so_called_type_platform_math_num_fract letter_mesh_scale ;
+    so_called_type_platform_math_num_fract menu_scale ;
+    so_called_type_platform_math_num_fract scaled_horizontal_border ;
+    so_called_type_platform_math_num_fract final_scale ;
+    
+    row_rect = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect ;
+    horizontal_border = so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_border ;
+    letter_mesh_scale = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size ;
+    menu_scale = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: menu_scale ;
+    
+    so_called_platform_math :: mul_fracts ( final_scale , menu_scale , letter_mesh_scale ) ;
+    so_called_platform_math :: mul_fracts ( scaled_horizontal_border , horizontal_border , final_scale ) ;
+    so_called_platform_math :: sub_from_fract ( row_rect . left , scaled_horizontal_border ) ;
+    so_called_platform_math :: add_to_fract ( row_rect . right , scaled_horizontal_border ) ;
+    
+    shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect = row_rect ;
 }
 
 void shy_guts :: reply_row_rect ( )
