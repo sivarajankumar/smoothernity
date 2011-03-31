@@ -10,8 +10,14 @@ void _shy_common_logic_main_menu_letters_meshes_renderer :: receive ( so_called_
 {
 }
 
-void _shy_common_logic_main_menu_letters_meshes_renderer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iteration )
+void _shy_common_logic_main_menu_letters_meshes_renderer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iteration msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: iteration_in_progress ) )
+    {
+        so_called_message_common_engine_render_mesh_render render_msg ;
+        render_msg . mesh = msg . mesh ;
+        so_called_sender_common_engine_render_mesh_render :: send ( render_msg ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_letters_meshes_renderer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_render_request )
