@@ -116,6 +116,54 @@ void shy_guts :: reply_computed_layout ( )
 
 void shy_guts :: compute_layout ( )
 {
+    so_called_common_logic_main_menu_letters_layout_stateless :: compute_unscaled_menu_size 
+        ( shy_guts :: logic_main_menu_letters_layout_position_state :: unscaled_menu_width
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: unscaled_menu_height
+        , shy_guts :: logic_main_menu_letters_boundaries_state :: cols
+        , shy_guts :: logic_main_menu_letters_boundaries_state :: rows
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_spacing
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_spacing
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_border
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_border
+        , so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size
+        ) ;
+    so_called_common_logic_main_menu_letters_layout_stateless :: compute_menu_scale 
+        ( shy_guts :: logic_main_menu_letters_layout_position_state :: menu_scale
+        , shy_guts :: engine_render_aspect_state :: width
+        , shy_guts :: engine_render_aspect_state :: height
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: unscaled_menu_width
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: unscaled_menu_height
+        ) ;
+    so_called_common_logic_main_menu_letters_layout_stateless :: compute_menu_rect 
+        ( shy_guts :: logic_main_menu_letters_layout_position_state :: menu_rect
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: menu_scale
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: unscaled_menu_width
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: unscaled_menu_height
+        ) ;
+    so_called_common_logic_main_menu_letters_layout_stateless :: compute_row_rect 
+        ( shy_guts :: logic_main_menu_letters_layout_position_state :: row_rect
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row
+        , shy_guts :: logic_main_menu_letters_cols_state :: cols
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: menu_scale
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: menu_rect
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_border
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_spacing
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_spacing
+        , so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size
+        ) ;
+    so_called_common_logic_main_menu_letters_layout_stateless :: compute_letter_rect 
+        ( shy_guts :: logic_main_menu_letters_layout_position_state :: letter_rect
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: requested_col
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: menu_scale
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: row_rect
+        , so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size
+        , so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_spacing
+        ) ;
+    so_called_common_logic_main_menu_letters_layout_stateless :: compute_letter_position 
+        ( shy_guts :: logic_main_menu_letters_layout_position_state :: letter_position
+        , shy_guts :: logic_main_menu_letters_layout_position_state :: letter_rect
+        , so_called_common_logic_main_menu_letters_layout_consts :: menu_position_z
+        ) ;
 }
 
 void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_engine_render_aspect_reply msg )

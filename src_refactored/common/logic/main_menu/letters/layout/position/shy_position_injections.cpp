@@ -1,8 +1,10 @@
 #include "./shy_position_injections.h"
 
+#include "../consts/shy_consts_injections.h"
 #include "../sender/position_reply/shy_position_reply_injections.h"
 #include "../stateless/shy_stateless_injections.h"
 
+#include "../../meshes/consts/shy_consts_injections.h"
 #include "../../sender/boundaries_request/shy_boundaries_request_injections.h"
 #include "../../sender/cols_request/shy_cols_request_injections.h"
 
