@@ -25,6 +25,23 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_weight ( )
 {
+    so_called_type_platform_math_num_whole row_unselected ;
+    so_called_type_platform_math_num_whole unselected_row_index ;
+    so_called_type_platform_math_num_whole requested_row ;
+    
+    row_unselected = shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: row_unselected ;
+    unselected_row_index = shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: unselected_row_index ;
+    requested_row = shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: requested_row ;
+    
+    if ( so_called_platform_conditions :: whole_is_true ( row_unselected )
+      && so_called_platform_conditions :: wholes_are_equal ( unselected_row_index , requested_row )
+       )
+    {
+        shy_guts :: compute_weight ( ) ;
+    }
+    else
+        shy_guts :: compute_identity_weight ( ) ;
+    shy_guts :: reply_weight ( ) ;
 }
 
 void shy_guts :: compute_weight ( )
