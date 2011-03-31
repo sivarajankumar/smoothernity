@@ -46,6 +46,34 @@ void shy_guts :: proceed_with_weight ( )
 
 void shy_guts :: compute_weight ( )
 {
+    so_called_type_platform_math_num_fract time_to_begin ;
+    so_called_type_platform_math_num_fract time_from_begin_to_end ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract weight_begin ;
+    so_called_type_platform_math_num_fract weight_end ;
+    so_called_type_platform_math_num_fract weight ;
+    
+    time_to_begin = so_called_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_to_begin ;
+    time_from_begin_to_end = so_called_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_from_begin_to_end ;
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    weight_begin = so_called_platform_math_consts :: fract_1 ;
+    weight_end = so_called_platform_math_consts :: fract_0 ;
+    
+    time_begin = time_to_begin ;
+    so_called_platform_math :: add_fracts ( time_end , time_begin , time_from_begin_to_end ) ;
+    
+    so_called_common_engine_math_stateless :: hard_in_easy_out 
+        ( weight
+        , time
+        , weight_begin
+        , time_begin
+        , weight_end
+        , time_end
+        ) ;
+        
+    shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: weight = weight ;
 }
 
 void shy_guts :: compute_identity_weight ( )
