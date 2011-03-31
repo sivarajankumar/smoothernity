@@ -242,6 +242,20 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
     }
 }
 
-void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply )
+void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply msg )
 {
+    so_called_type_platform_math_num_whole letters_are_equal ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( letters_are_equal , shy_guts :: logic_text_letter_big_tex_coords_state :: requested_letter , msg . letter ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_big_tex_coords_state :: requested )
+      && so_called_platform_conditions :: whole_is_true ( letters_are_equal )
+       )
+    {
+        shy_guts :: logic_text_letter_big_tex_coords_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_text_letter_big_tex_coords_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_text_letter_big_tex_coords_state :: bottom = msg . bottom ;
+        shy_guts :: logic_text_letter_big_tex_coords_state :: left = msg . left ;
+        shy_guts :: logic_text_letter_big_tex_coords_state :: top = msg . top ;
+        shy_guts :: logic_text_letter_big_tex_coords_state :: right = msg . right ;
+        shy_guts :: proceed_with_creation ( ) ;
+    }
 }
