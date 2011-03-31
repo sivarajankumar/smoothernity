@@ -8,13 +8,15 @@ namespace shy_guts
             ;
     }
 
-    namespace mesh_state
+    class mesh_state
     {
-        static so_called_type_common_engine_render_mesh_id mesh ;
-        static so_called_type_platform_math_num_whole row ;
-        static so_called_type_platform_math_num_whole col ;
-    }
+    public :
+        so_called_type_common_engine_render_mesh_id mesh ;
+        so_called_type_platform_math_num_whole row ;
+        so_called_type_platform_math_num_whole col ;
+    } ;
 
+    static so_called_type_platform_static_array_data < shy_guts :: mesh_state , shy_guts :: logic_main_menu_letters_meshes_storage_consts :: max_meshes > meshes ;
     static so_called_type_platform_math_num_whole meshes_count ;
 }
 
@@ -34,8 +36,14 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
 {
 }
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_has_been_created )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_has_been_created msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_state > mesh_state ;
+    so_called_platform_static_array :: element_ptr ( mesh_state , shy_guts :: meshes , shy_guts :: meshes_count ) ;
+    mesh_state . get ( ) . mesh = msg . mesh ;
+    mesh_state . get ( ) . row = msg . row ;
+    mesh_state . get ( ) . col = msg . col ;
+    so_called_platform_math :: inc_whole ( shy_guts :: meshes_count ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_id_request )
