@@ -1,5 +1,6 @@
 #include "./shy_position_injections.h"
 
+#include "../sender/position_reply/shy_position_reply_injections.h"
 #include "../stateless/shy_stateless_injections.h"
 
 #include "../../sender/boundaries_request/shy_boundaries_request_injections.h"

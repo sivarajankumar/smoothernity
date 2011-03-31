@@ -100,10 +100,18 @@ void shy_guts :: obtain_aspect_ratio ( )
 
 void shy_guts :: reply_layout ( )
 {
+    shy_guts :: compute_layout ( ) ;
+    shy_guts :: reply_computed_layout ( ) ;
 }
 
 void shy_guts :: reply_computed_layout ( )
 {
+    so_called_message_common_logic_main_menu_letters_layout_position_reply msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row ;
+    msg . col = shy_guts :: logic_main_menu_letters_layout_position_state :: requested_col ;
+    msg . position = shy_guts :: logic_main_menu_letters_layout_position_state :: letter_position ;
+    msg . scale = shy_guts :: logic_main_menu_letters_layout_position_state :: menu_scale ;
+    so_called_sender_common_logic_main_menu_letters_layout_position_reply :: send ( msg ) ;
 }
 
 void shy_guts :: compute_layout ( )
