@@ -55,6 +55,31 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_placement ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_meshes_place_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_letters_meshes_place_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_meshes_count ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_meshes_count_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_meshes_count_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_first_mesh_row_col ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_mesh_row_col_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_mesh_row_col_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_current_mesh_id ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_mesh_id_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_mesh_id_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_animated_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_animation_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: animated_transform_received ( ) ;
+    }
 }
 
 void shy_guts :: obtain_meshes_count ( )
