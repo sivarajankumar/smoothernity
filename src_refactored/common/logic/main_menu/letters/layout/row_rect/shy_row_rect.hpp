@@ -73,8 +73,16 @@ void _shy_common_logic_main_menu_letters_layout_row_rect :: receive ( so_called_
 {
 }
 
-void _shy_common_logic_main_menu_letters_layout_row_rect :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_reply )
+void _shy_common_logic_main_menu_letters_layout_row_rect :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_boundaries_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_letters_boundaries_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_main_menu_letters_boundaries_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_main_menu_letters_boundaries_state :: rows = msg . rows ;
+        shy_guts :: logic_main_menu_letters_boundaries_state :: cols = msg . cols ;
+        shy_guts :: proceed_with_row_rect ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_letters_layout_row_rect :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_request msg )
