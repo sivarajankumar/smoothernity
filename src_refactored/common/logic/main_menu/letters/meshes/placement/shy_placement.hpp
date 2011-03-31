@@ -116,6 +116,14 @@ void shy_guts :: obtain_current_mesh_id ( )
 
 void shy_guts :: obtain_animated_transform ( )
 {
+    shy_guts :: logic_main_menu_letters_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_main_menu_letters_animation_transform_state :: requested_row = shy_guts :: logic_main_menu_letters_mesh_row_col_state :: row ;
+    shy_guts :: logic_main_menu_letters_animation_transform_state :: requested_col = shy_guts :: logic_main_menu_letters_mesh_row_col_state :: col ;
+
+    so_called_message_common_logic_main_menu_letters_animation_transform_request msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_mesh_row_col_state :: row ;
+    msg . col = shy_guts :: logic_main_menu_letters_mesh_row_col_state :: col ;
+    so_called_sender_common_logic_main_menu_letters_animation_transform_request :: send ( msg ) ;
 }
 
 void shy_guts :: animated_transform_received ( )
