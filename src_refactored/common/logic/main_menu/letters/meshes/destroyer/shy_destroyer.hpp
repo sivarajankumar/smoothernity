@@ -8,6 +8,8 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_destroy_request )
 {
+    shy_guts :: iteration_in_progress = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_letters_meshes_iterate_start :: send ( so_called_message_common_logic_main_menu_letters_meshes_iterate_start ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iterate_finished )
