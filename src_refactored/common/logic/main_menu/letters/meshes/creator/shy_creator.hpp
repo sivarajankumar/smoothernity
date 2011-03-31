@@ -216,6 +216,73 @@ void shy_guts :: letter_tex_coords_received ( )
 
 void shy_guts :: fill_mesh_content ( )
 {
+    so_called_type_common_engine_render_mesh_id mesh ;
+    so_called_type_platform_math_num_fract half_size ;
+    so_called_type_platform_math_num_fract x_left ;
+    so_called_type_platform_math_num_fract x_right ;
+    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_type_platform_math_num_fract y_top ;
+    so_called_type_platform_math_num_fract u_left ;
+    so_called_type_platform_math_num_fract u_right ;
+    so_called_type_platform_math_num_fract v_bottom ;
+    so_called_type_platform_math_num_fract v_top ;
+    so_called_type_platform_math_num_fract z ;
+    so_called_type_platform_math_num_fract color_r ;
+    so_called_type_platform_math_num_fract color_g ;
+    so_called_type_platform_math_num_fract color_b ;
+    so_called_type_platform_math_num_fract color_a ;
+    so_called_type_platform_math_num_whole index_left_top ;
+    so_called_type_platform_math_num_whole index_left_bottom ;
+    so_called_type_platform_math_num_whole index_right_top ;
+    so_called_type_platform_math_num_whole index_right_bottom ;
+    
+    mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    
+    so_called_platform_math :: div_fracts ( half_size , so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size , so_called_platform_math_consts :: fract_2 ) ;
+    so_called_platform_math :: mul_fracts ( x_left , half_size , so_called_platform_math_consts :: fract_minus_1 ) ;
+    so_called_platform_math :: mul_fracts ( y_bottom , half_size , so_called_platform_math_consts :: fract_minus_1 ) ;
+    so_called_platform_math :: mul_fracts ( x_right , half_size , so_called_platform_math_consts :: fract_1 ) ;
+    so_called_platform_math :: mul_fracts ( y_top , half_size , so_called_platform_math_consts :: fract_1 ) ;
+    z = so_called_platform_math_consts :: fract_0 ;
+    
+    u_left = shy_guts :: logic_text_letter_big_tex_coords_state :: left ;
+    u_right = shy_guts :: logic_text_letter_big_tex_coords_state :: right ;
+    v_bottom = shy_guts :: logic_text_letter_big_tex_coords_state :: bottom ;
+    v_top = shy_guts :: logic_text_letter_big_tex_coords_state :: top ;
+    
+    color_r = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_r ;
+    color_g = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_g ;
+    color_b = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_b ;
+    color_a = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_a ;
+
+    index_left_top = so_called_platform_math_consts :: whole_0 ;
+    index_left_bottom = so_called_platform_math_consts :: whole_1 ;
+    index_right_top = so_called_platform_math_consts :: whole_2 ;
+    index_right_bottom = so_called_platform_math_consts :: whole_3 ;
+    
+    shy_guts :: mesh_set_triangle_strip_index_value ( mesh , index_left_top , index_left_top ) ;
+    shy_guts :: mesh_set_vertex_color               ( mesh , index_left_top , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( mesh , index_left_top , u_left , v_top ) ;
+    shy_guts :: mesh_set_vertex_position            ( mesh , index_left_top , x_left , y_top , z ) ;
+
+    shy_guts :: mesh_set_triangle_strip_index_value ( mesh , index_left_bottom , index_left_bottom ) ;
+    shy_guts :: mesh_set_vertex_color               ( mesh , index_left_bottom , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( mesh , index_left_bottom , u_left , v_bottom ) ;
+    shy_guts :: mesh_set_vertex_position            ( mesh , index_left_bottom , x_left , y_bottom , z ) ;
+
+    shy_guts :: mesh_set_triangle_strip_index_value ( mesh , index_right_top , index_right_top ) ;
+    shy_guts :: mesh_set_vertex_color               ( mesh , index_right_top , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( mesh , index_right_top , u_right , v_top ) ;
+    shy_guts :: mesh_set_vertex_position            ( mesh , index_right_top , x_right , y_top , z ) ;
+
+    shy_guts :: mesh_set_triangle_strip_index_value ( mesh , index_right_bottom , index_right_bottom ) ;
+    shy_guts :: mesh_set_vertex_color               ( mesh , index_right_bottom , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_tex_coord           ( mesh , index_right_bottom , u_right , v_bottom ) ;
+    shy_guts :: mesh_set_vertex_position            ( mesh , index_right_bottom , x_right , y_bottom , z ) ;
+    
+    so_called_message_common_engine_render_mesh_finalize finalize_msg ;
+    finalize_msg . mesh = mesh ;
+    so_called_sender_common_engine_render_mesh_finalize :: send ( finalize_msg ) ;
 }
 
 void shy_guts :: send_mesh_created_notification ( )
