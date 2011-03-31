@@ -14,6 +14,11 @@ void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called
 
 void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iterate_finished )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: iteration_in_progress ) )
+    {
+        shy_guts :: iteration_in_progress = so_called_platform_math_consts :: whole_false ;
+        so_called_sender_common_logic_main_menu_letters_meshes_destroy_reply :: send ( so_called_message_common_logic_main_menu_letters_meshes_destroy_reply ( ) ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iteration msg )
