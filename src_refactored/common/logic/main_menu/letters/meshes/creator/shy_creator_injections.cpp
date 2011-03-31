@@ -7,6 +7,7 @@
 #include "../../sender/rows_request/shy_rows_request_injections.h"
 
 #include "../../../../text/consts/shy_consts_injections.h"
+#include "../../../../text/sender/letter_big_tex_coords_request/shy_letter_big_tex_coords_request_injections.h"
 #include "../../../../text/stateless/shy_stateless_injections.h"
 
 #include "../../../../../engine/render/sender/mesh_create_request/shy_mesh_create_request_injections.h"

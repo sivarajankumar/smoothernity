@@ -200,6 +200,12 @@ void shy_guts :: create_mesh ( )
 
 void shy_guts :: obtain_tex_coords ( )
 {
+    shy_guts :: logic_text_letter_big_tex_coords_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_text_letter_big_tex_coords_state :: requested_letter = shy_guts :: logic_main_menu_letter_state :: letter ;
+
+    so_called_message_common_logic_text_letter_big_tex_coords_request msg ;
+    msg . letter = shy_guts :: logic_main_menu_letter_state :: letter ;
+    so_called_sender_common_logic_text_letter_big_tex_coords_request :: send ( msg ) ;
 }
 
 void shy_guts :: letter_tex_coords_received ( )
