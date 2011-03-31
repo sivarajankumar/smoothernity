@@ -3,6 +3,7 @@
 #include "../stateless/shy_stateless_injections.h"
 
 #include "../../sender/boundaries_request/shy_boundaries_request_injections.h"
+#include "../../sender/cols_request/shy_cols_request_injections.h"
 
 #include "../../../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../../../injections/platform/math/consts/shy_consts.h"

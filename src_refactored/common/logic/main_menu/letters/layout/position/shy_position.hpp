@@ -84,6 +84,12 @@ void shy_guts :: obtain_boundaries ( )
 
 void shy_guts :: obtain_cols_count ( )
 {
+    shy_guts :: logic_main_menu_letters_cols_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_main_menu_letters_cols_state :: requested_row = shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row ;
+
+    so_called_message_common_logic_main_menu_letters_cols_request msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row ;
+    so_called_sender_common_logic_main_menu_letters_cols_request :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_aspect_ratio ( )
