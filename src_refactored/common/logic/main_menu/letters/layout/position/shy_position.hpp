@@ -54,6 +54,26 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_layout ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_position_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_letters_layout_position_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_boundaries ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_boundaries_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_boundaries_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_cols_count ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_cols_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_cols_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_aspect_ratio ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_aspect_state :: replied ) )
+    {
+        shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: reply_layout ( ) ;
+    }
 }
 
 void shy_guts :: obtain_boundaries ( )
@@ -80,8 +100,16 @@ void shy_guts :: compute_layout ( )
 {
 }
 
-void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_engine_render_aspect_reply )
+void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_engine_render_aspect_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_aspect_state :: requested ) )
+    {
+        shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: engine_render_aspect_state :: width = msg . width ;
+        shy_guts :: engine_render_aspect_state :: height = msg . height ;
+        shy_guts :: proceed_with_layout ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_reply msg )
