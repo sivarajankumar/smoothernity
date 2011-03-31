@@ -128,10 +128,16 @@ void shy_guts :: obtain_animated_transform ( )
 
 void shy_guts :: animated_transform_received ( )
 {
+    shy_guts :: place_current_mesh ( ) ;
+    shy_guts :: move_to_next_mesh ( ) ;
 }
 
 void shy_guts :: place_current_mesh ( )
 {
+    so_called_message_common_engine_render_mesh_set_transform msg ;
+    msg . transform = shy_guts :: logic_main_menu_letters_animation_transform_state :: transform ;
+    msg . mesh = shy_guts :: logic_main_menu_letters_mesh_id_state :: mesh ;
+    so_called_sender_common_engine_render_mesh_set_transform :: send ( msg ) ;
 }
 
 void shy_guts :: move_to_next_mesh ( )
