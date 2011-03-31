@@ -351,6 +351,11 @@ void shy_guts :: mesh_set_triangle_strip_index_value
     , so_called_type_platform_math_num_whole index 
     )
 {
+    so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . index = index ;
+    so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
