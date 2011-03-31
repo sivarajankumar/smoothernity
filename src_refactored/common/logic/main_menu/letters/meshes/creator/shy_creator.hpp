@@ -196,6 +196,13 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_create_next )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: first_mesh ) )
+    {
+        shy_guts :: first_mesh = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_rows_count ( ) ;
+    }
+    else
+        shy_guts :: move_to_next_col ( ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_main_menu_letters_rows_reply )
