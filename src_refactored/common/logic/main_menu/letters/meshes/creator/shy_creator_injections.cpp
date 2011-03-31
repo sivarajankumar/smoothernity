@@ -3,6 +3,7 @@
 #include "../sender/creation_finished/shy_creation_finished_injections.h"
 
 #include "../../sender/cols_request/shy_cols_request_injections.h"
+#include "../../sender/letter_request/shy_letter_request_injections.h"
 #include "../../sender/rows_request/shy_rows_request_injections.h"
 
 #include "../../../../text/stateless/shy_stateless_injections.h"

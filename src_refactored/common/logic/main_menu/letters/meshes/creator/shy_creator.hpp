@@ -157,6 +157,20 @@ void shy_guts :: move_to_next_row ( )
 
 void shy_guts :: move_to_next_col ( )
 {
+    so_called_platform_math :: inc_whole ( shy_guts :: current_col ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: current_col , shy_guts :: logic_main_menu_letters_cols_state :: cols ) )
+    {
+        shy_guts :: logic_main_menu_letter_state :: requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_main_menu_letter_state :: requested_row = shy_guts :: current_row ;
+        shy_guts :: logic_main_menu_letter_state :: requested_col = shy_guts :: current_col ;
+
+        so_called_message_common_logic_main_menu_letters_letter_request msg ;
+        msg . row = shy_guts :: current_row ;
+        msg . col = shy_guts :: current_col ;
+        so_called_sender_common_logic_main_menu_letters_letter_request :: send ( msg ) ;
+    }
+    else
+        shy_guts :: move_to_next_row ( ) ;
 }
 
 void shy_guts :: letter_state_received ( )
