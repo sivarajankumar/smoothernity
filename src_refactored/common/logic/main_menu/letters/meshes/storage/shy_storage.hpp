@@ -57,6 +57,6 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
     so_called_sender_common_logic_main_menu_letters_meshes_mesh_id_reply :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_request )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_request msg )
 {
 }
