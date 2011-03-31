@@ -19,7 +19,6 @@
 #include "../../logic/main_menu/letters/animation/selection_push/shy_selection_push_injections.h"
 #include "../../logic/main_menu/letters/meshes/creation_director/shy_creation_director_injections.h"
 #include "../../logic/main_menu/letters/meshes/creator/shy_creator_injections.h"
-#include "../../logic/main_menu/letters/meshes/renderer/shy_renderer_injections.h"
 #include "../../logic/main_menu/letters/meshes/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/letters/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/selection/animation/appear/shy_appear_injections.h"

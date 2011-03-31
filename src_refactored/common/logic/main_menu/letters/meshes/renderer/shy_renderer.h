@@ -1,7 +1,6 @@
 class _shy_common_logic_main_menu_letters_meshes_renderer
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_main_menu_letters_meshes_iterate_finished ) ;
     static void receive ( so_called_message_common_logic_main_menu_letters_meshes_iteration ) ;
     static void receive ( so_called_message_common_logic_main_menu_letters_meshes_render_request ) ;
