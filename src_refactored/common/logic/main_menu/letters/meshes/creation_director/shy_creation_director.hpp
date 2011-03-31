@@ -15,10 +15,12 @@ void _shy_common_logic_main_menu_letters_meshes_creation_director :: receive ( s
 
 void _shy_common_logic_main_menu_letters_meshes_creation_director :: receive ( so_called_message_common_logic_main_menu_letters_meshes_create )
 {
+    shy_guts :: creation_in_progress = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creation_director :: receive ( so_called_message_common_logic_main_menu_letters_meshes_creation_finished )
 {
+    shy_guts :: creation_in_progress = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creation_director :: receive ( so_called_message_common_logic_main_menu_update )
