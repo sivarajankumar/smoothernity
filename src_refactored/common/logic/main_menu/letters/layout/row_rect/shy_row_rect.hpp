@@ -43,6 +43,21 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_row_rect ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_boundaries ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_boundaries_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_boundaries_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_aspect_ratio ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_aspect_state :: replied ) )
+    {
+        shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: received_aspect_ratio ( ) ;
+    }
 }
 
 void shy_guts :: obtain_boundaries ( )
