@@ -302,6 +302,13 @@ void shy_guts :: mesh_set_vertex_position
     , so_called_type_platform_math_num_fract z 
     )
 {
+    so_called_message_common_engine_render_mesh_set_vertex_position msg ;
+    msg . mesh = mesh ;
+    msg . offset = offset ;
+    msg . x = x ;
+    msg . y = y ;
+    msg . z = z ;
+    so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_tex_coord 
