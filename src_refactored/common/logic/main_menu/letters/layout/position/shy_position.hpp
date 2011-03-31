@@ -94,6 +94,8 @@ void shy_guts :: obtain_cols_count ( )
 
 void shy_guts :: obtain_aspect_ratio ( )
 {
+    shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void shy_guts :: reply_layout ( )
