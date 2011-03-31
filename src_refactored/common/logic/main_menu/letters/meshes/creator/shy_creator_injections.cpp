@@ -15,6 +15,7 @@
 #include "../../../../../engine/render/sender/mesh_create_request/shy_mesh_create_request_injections.h"
 #include "../../../../../engine/render/sender/mesh_finalize/shy_mesh_finalize_injections.h"
 #include "../../../../../engine/render/sender/mesh_set_vertex_position/shy_mesh_set_vertex_position_injections.h"
+#include "../../../../../engine/render/sender/mesh_set_vertex_tex_coord/shy_mesh_set_vertex_tex_coord_injections.h"
 
 #include "../../../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../../../injections/platform/math/consts/shy_consts.h"
