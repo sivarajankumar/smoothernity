@@ -91,6 +91,31 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_creation ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_rows_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_rows_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: start_first_row ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_cols_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_cols_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: start_first_col ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letter_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letter_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: letter_state_received ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: replied ) )
+    {
+        shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_tex_coords ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_big_tex_coords_state :: replied ) )
+    {
+        shy_guts :: logic_text_letter_big_tex_coords_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: letter_tex_coords_received ( ) ;
+    }
 }
 
 void shy_guts :: obtain_rows_count ( )
