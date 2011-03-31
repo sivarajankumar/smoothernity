@@ -181,6 +181,9 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_init )
 {
+    shy_guts :: current_row = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: current_col = so_called_platform_math_consts :: whole_0 ;
+    shy_guts :: first_mesh = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_main_menu_letters_cols_reply )
