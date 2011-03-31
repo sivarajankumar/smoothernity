@@ -210,6 +210,8 @@ void shy_guts :: obtain_tex_coords ( )
 
 void shy_guts :: letter_tex_coords_received ( )
 {
+    shy_guts :: fill_mesh_content ( ) ;
+    shy_guts :: send_mesh_created_notification ( ) ;
 }
 
 void shy_guts :: fill_mesh_content ( )
@@ -218,6 +220,11 @@ void shy_guts :: fill_mesh_content ( )
 
 void shy_guts :: send_mesh_created_notification ( )
 {
+    so_called_message_common_logic_main_menu_letters_meshes_mesh_has_been_created msg ;
+    msg . row = shy_guts :: current_row ;
+    msg . col = shy_guts :: current_col ;
+    msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    so_called_sender_common_logic_main_menu_letters_meshes_mesh_has_been_created :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 

@@ -1,6 +1,7 @@
 #include "./shy_creator_injections.h"
 
 #include "../sender/creation_finished/shy_creation_finished_injections.h"
+#include "../sender/mesh_has_been_created/shy_mesh_has_been_created_injections.h"
 
 #include "../../sender/cols_request/shy_cols_request_injections.h"
 #include "../../sender/letter_request/shy_letter_request_injections.h"
