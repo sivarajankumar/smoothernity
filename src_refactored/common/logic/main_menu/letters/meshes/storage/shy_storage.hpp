@@ -59,4 +59,12 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
 
 void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_request msg )
 {
+    so_called_type_platform_pointer_data < shy_guts :: mesh_state > mesh_state ;
+    so_called_platform_static_array :: element_ptr ( mesh_state , shy_guts :: meshes , msg . index ) ;
+
+    so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_reply reply_msg ;
+    reply_msg . index = msg . index ;
+    reply_msg . row = mesh_state . get ( ) . row ;
+    reply_msg . col = mesh_state . get ( ) . col ;
+    so_called_sender_common_logic_main_menu_letters_meshes_mesh_row_col_reply :: send ( reply_msg ) ;
 }
