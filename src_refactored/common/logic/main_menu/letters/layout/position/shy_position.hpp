@@ -78,6 +78,8 @@ void shy_guts :: proceed_with_layout ( )
 
 void shy_guts :: obtain_boundaries ( )
 {
+    shy_guts :: logic_main_menu_letters_boundaries_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_letters_boundaries_request :: send ( so_called_message_common_logic_main_menu_letters_boundaries_request ( ) ) ;
 }
 
 void shy_guts :: obtain_cols_count ( )
