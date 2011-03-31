@@ -104,8 +104,17 @@ void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called
     }
 }
 
-void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_id_reply )
+void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_id_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_mesh_id_state :: requested )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_main_menu_letters_mesh_id_state :: requested_index , msg . index )
+       )
+    {
+        shy_guts :: logic_main_menu_letters_mesh_id_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_main_menu_letters_mesh_id_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_main_menu_letters_mesh_id_state :: mesh = msg . mesh ;
+        shy_guts :: proceed_with_placement ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_reply msg )
