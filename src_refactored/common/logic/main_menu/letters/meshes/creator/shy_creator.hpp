@@ -189,6 +189,13 @@ void shy_guts :: letter_state_received ( )
 
 void shy_guts :: create_mesh ( )
 {
+    shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+
+    so_called_message_common_engine_render_mesh_create_request msg ;
+    msg . vertices = so_called_platform_math_consts :: whole_4 ;
+    msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
+    msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
+    so_called_sender_common_engine_render_mesh_create_request :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_tex_coords ( )
