@@ -126,14 +126,33 @@ void shy_guts :: obtain_rows_count ( )
 
 void shy_guts :: start_first_row ( )
 {
+    shy_guts :: current_row = so_called_platform_math_consts :: whole_minus_1 ;
+    shy_guts :: move_to_next_row ( ) ;
 }
 
 void shy_guts :: start_first_col ( )
 {
+    shy_guts :: current_col = so_called_platform_math_consts :: whole_minus_1 ;
+    shy_guts :: move_to_next_col ( ) ;
 }
 
 void shy_guts :: move_to_next_row ( )
 {
+    so_called_platform_math :: inc_whole ( shy_guts :: current_row ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: current_row , shy_guts :: logic_main_menu_letters_rows_state :: rows ) )
+    {
+        shy_guts :: logic_main_menu_letters_cols_state :: requested = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_main_menu_letters_cols_state :: requested_row = shy_guts :: current_row ;
+
+        so_called_message_common_logic_main_menu_letters_cols_request msg ;
+        msg . row = shy_guts :: current_row ;
+        so_called_sender_common_logic_main_menu_letters_cols_request :: send ( msg ) ;
+    }
+    else
+    {
+        shy_guts :: logic_main_menu_letters_cols_state :: cols = so_called_platform_math_consts :: whole_0 ;
+        so_called_sender_common_logic_main_menu_letters_meshes_creation_finished :: send ( so_called_message_common_logic_main_menu_letters_meshes_creation_finished ( ) ) ;
+    }
 }
 
 void shy_guts :: move_to_next_col ( )
