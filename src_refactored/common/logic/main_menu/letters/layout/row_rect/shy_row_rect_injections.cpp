@@ -1,6 +1,7 @@
 #include "./shy_row_rect_injections.h"
 
 #include "../consts/shy_consts_injections.h"
+#include "../sender/row_rect_reply/shy_row_rect_reply_injections.h"
 #include "../stateless/shy_stateless_injections.h"
 
 #include "../../meshes/consts/shy_consts_injections.h"
