@@ -142,6 +142,15 @@ void shy_guts :: place_current_mesh ( )
 
 void shy_guts :: move_to_next_mesh ( )
 {
+    so_called_platform_math :: inc_whole ( shy_guts :: logic_main_menu_letters_meshes_place_state :: current_mesh_index ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole 
+        ( shy_guts :: logic_main_menu_letters_meshes_place_state :: current_mesh_index 
+        , shy_guts :: logic_main_menu_letters_meshes_count_state :: meshes 
+        ) 
+    )
+    {
+        shy_guts :: obtain_current_mesh_row_col ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_logic_main_menu_letters_animation_transform_reply msg )
