@@ -1,5 +1,6 @@
 #include "./shy_storage_injections.h"
 
+#include "../sender/count_reply/shy_count_reply_injections.h"
 #include "../sender/mesh_id_reply/shy_mesh_id_reply_injections.h"
 #include "../sender/mesh_row_col_reply/shy_mesh_row_col_reply_injections.h"
 
