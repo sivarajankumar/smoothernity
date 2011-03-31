@@ -175,6 +175,16 @@ void shy_guts :: move_to_next_col ( )
 
 void shy_guts :: letter_state_received ( )
 {
+    so_called_type_platform_math_num_whole letter_is_whitespace ;
+    so_called_type_common_logic_text_letter_id whitespace ;
+    
+    whitespace = so_called_common_logic_text_consts :: whitespace ;
+    
+    so_called_common_logic_text_stateless :: are_letters_equal ( letter_is_whitespace , shy_guts :: logic_main_menu_letter_state :: letter , whitespace ) ;
+    if ( so_called_platform_conditions :: whole_is_false ( letter_is_whitespace ) )
+        shy_guts :: create_mesh ( ) ;
+    else
+        shy_guts :: move_to_next_col ( ) ;
 }
 
 void shy_guts :: create_mesh ( )

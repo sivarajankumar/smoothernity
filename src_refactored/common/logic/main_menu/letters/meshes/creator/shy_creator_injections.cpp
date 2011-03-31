@@ -6,6 +6,7 @@
 #include "../../sender/letter_request/shy_letter_request_injections.h"
 #include "../../sender/rows_request/shy_rows_request_injections.h"
 
+#include "../../../../text/consts/shy_consts_injections.h"
 #include "../../../../text/stateless/shy_stateless_injections.h"
 
 #include "../../../../../../injections/platform/conditions/shy_conditions.h"
