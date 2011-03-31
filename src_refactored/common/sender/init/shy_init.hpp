@@ -18,7 +18,6 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_main_menu_animation_shake :: receive ( msg ) ;
     so_called_common_logic_main_menu_choice :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_animation_selection_push :: receive ( msg ) ;
-    so_called_common_logic_main_menu_letters_layout_position :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_layout_row_rect :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_storage :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_meshes_creation_director :: receive ( msg ) ;

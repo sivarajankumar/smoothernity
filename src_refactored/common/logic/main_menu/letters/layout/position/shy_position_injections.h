@@ -8,8 +8,6 @@
 
 #include "../../../../../engine/render/message/aspect_reply/shy_aspect_reply_injections.h"
 
-#include "../../../../../message/init/shy_init_injections.h"
-
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_position.h"
