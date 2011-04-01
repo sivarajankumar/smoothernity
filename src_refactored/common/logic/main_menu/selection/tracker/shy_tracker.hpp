@@ -249,6 +249,11 @@ void shy_guts :: send_row_selected ( )
 
 void shy_guts :: send_void_selected ( )
 {
+    if ( ! so_called_platform_conditions :: whole_is_false ( shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected ) )
+    {
+        shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected = so_called_platform_math_consts :: whole_false ;
+        so_called_sender_common_logic_main_menu_selection_track_void_selected :: send ( so_called_message_common_logic_main_menu_selection_track_void_selected ( ) ) ;
+    }
 }
 
 void shy_guts :: send_reply ( )
