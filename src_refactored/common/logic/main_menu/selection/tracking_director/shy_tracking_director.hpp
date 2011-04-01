@@ -98,8 +98,22 @@ void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_cal
     }
 }
 
-void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_track_row_selected )
+void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_track_row_selected msg )
 {
+    so_called_type_platform_math_num_whole first_selection ;
+    so_called_type_platform_math_num_whole prev_row_selected ;
+    
+    first_selection = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: first_selection ;
+    prev_row_selected = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected ;
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selected_row_index = msg . row ;
+    
+    if ( so_called_platform_conditions :: whole_is_true ( first_selection ) )
+        shy_guts :: first_selection ( ) ;
+    else if ( so_called_platform_conditions :: whole_is_true ( prev_row_selected ) )
+        shy_guts :: start_unselection ( ) ;
+    else
+        shy_guts :: start_selection ( ) ;
 }
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_track_void_selected )
