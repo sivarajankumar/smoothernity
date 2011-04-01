@@ -87,6 +87,17 @@ void shy_guts :: start_selection ( )
 
 void shy_guts :: continue_selection ( )
 {
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selection_animation_in_progress = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_animation_select_start :: send ( so_called_message_common_logic_main_menu_selection_animation_select_start ( ) ) ;
+    
+    so_called_type_platform_math_num_whole selected_row_index ;    
+    selected_row_index = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selected_row_index ;
+
+    so_called_message_common_logic_main_menu_selection_animation_idle_row_selected idle_row_selected_msg ;
+    idle_row_selected_msg . row = selected_row_index ;
+    so_called_sender_common_logic_main_menu_selection_animation_idle_row_selected :: send ( idle_row_selected_msg ) ;
+    
+    so_called_sender_common_logic_main_menu_choice_row_selected :: send ( so_called_message_common_logic_main_menu_choice_row_selected ( ) ) ;
 }
 
 void shy_guts :: letters_selection ( )
