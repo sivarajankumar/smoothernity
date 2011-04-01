@@ -125,6 +125,8 @@ void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_c
 
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_place )
 {
+    shy_guts :: animation_transform_requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_animation_transform_request :: send ( so_called_message_common_logic_main_menu_selection_animation_transform_request ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_render_request )
