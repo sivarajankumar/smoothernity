@@ -57,6 +57,26 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_track ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_track_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_controls_state ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: replied ) )
+    {
+        shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: controls_state_received ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_rows_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_rows_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_first_row_rect ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_letters_layout_row_rect_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: received_row_rect ( ) ;
+    }
 }
 
 void shy_guts :: obtain_controls_state ( )
