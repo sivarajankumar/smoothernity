@@ -118,6 +118,13 @@ void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_cal
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_track_void_selected )
 {
+    so_called_type_platform_math_num_whole prev_row_selected ;
+    
+    prev_row_selected = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected ;
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected = so_called_platform_math_consts :: whole_false ;
+    
+    if ( so_called_platform_conditions :: whole_is_true ( prev_row_selected ) )
+        shy_guts :: start_unselection ( ) ;
 }
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_tracking_director_update )
