@@ -60,6 +60,8 @@ void shy_guts :: update_received ( )
 
 void shy_guts :: request_track ( )
 {
+    shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_track_request :: send ( so_called_message_common_logic_main_menu_selection_track_request ( ) ) ;
 }
 
 void shy_guts :: place_mesh ( )
