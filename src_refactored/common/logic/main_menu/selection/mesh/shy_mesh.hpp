@@ -115,6 +115,9 @@ void shy_guts :: place_mesh ( )
 
 void shy_guts :: finalize_mesh ( )
 {
+    so_called_message_common_engine_render_mesh_finalize msg ;
+    msg . mesh = shy_guts :: mesh ;
+    so_called_sender_common_engine_render_mesh_finalize :: send ( msg ) ;
 }
 
 void shy_guts :: render_mesh ( )
