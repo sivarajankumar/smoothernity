@@ -81,6 +81,8 @@ void shy_guts :: first_selection ( )
 
 void shy_guts :: start_selection ( )
 {
+    shy_guts :: letters_selection ( ) ;
+    shy_guts :: continue_selection ( ) ;
 }
 
 void shy_guts :: continue_selection ( )
