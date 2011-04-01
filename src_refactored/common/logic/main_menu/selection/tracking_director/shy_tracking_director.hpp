@@ -66,6 +66,7 @@ void shy_guts :: request_track ( )
 
 void shy_guts :: place_mesh ( )
 {
+    so_called_sender_common_logic_main_menu_selection_mesh_place :: send ( so_called_message_common_logic_main_menu_selection_mesh_place ( ) ) ;
 }
 
 void shy_guts :: first_selection ( )
