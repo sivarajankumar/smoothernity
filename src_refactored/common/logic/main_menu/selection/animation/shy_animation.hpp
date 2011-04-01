@@ -98,6 +98,56 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_transform ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_transform_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_idle_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_idle_attention_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_appear_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_appear_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_appear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_disappear_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_disappear_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_disappear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_select_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_select_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_select_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_unselect_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_unselect_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_unselect_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_push_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_push_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_push_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_push_attention_transform ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_push_attention_transform_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_push_attention_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_push_weight ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_push_weight_state :: replied ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_push_weight_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: reply_transform ( ) ;
+    }
 }
 
 void shy_guts :: obtain_idle_transform ( )
