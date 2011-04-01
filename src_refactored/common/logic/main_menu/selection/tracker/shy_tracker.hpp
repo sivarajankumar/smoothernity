@@ -111,10 +111,6 @@ void shy_guts :: send_reply ( )
 {
 }
 
-void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_controls_state_reply )
 {
 }
