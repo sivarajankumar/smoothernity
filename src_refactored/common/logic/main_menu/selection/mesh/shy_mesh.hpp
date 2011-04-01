@@ -92,6 +92,13 @@ void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_c
 
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_create )
 {
+    shy_guts :: creation_requested = so_called_platform_math_consts :: whole_true ;
+
+    so_called_message_common_engine_render_mesh_create_request msg ;
+    msg . vertices = so_called_platform_math_consts :: whole_4 ;
+    msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
+    msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
+    so_called_sender_common_engine_render_mesh_create_request :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_destroy_request )
