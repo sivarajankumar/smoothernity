@@ -156,10 +156,19 @@ void shy_guts :: received_row_rect ( )
 
 void shy_guts :: determine_cursor_in_selection_rect ( )
 {
+    shy_guts :: determine_cursor_in_rect
+        ( shy_guts :: logic_main_menu_selection_track_state :: cursor_in_selection_rect
+        , shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect
+        ) ;
 }
 
 void shy_guts :: determine_cursor_in_prev_selection_rect ( )
 {
+    shy_guts :: scale_prev_selection_rect ( ) ;
+    shy_guts :: determine_cursor_in_rect
+        ( shy_guts :: logic_main_menu_selection_track_state :: cursor_in_prev_selection_rect
+        , shy_guts :: logic_main_menu_selection_track_state :: scaled_prev_selection_rect
+        ) ;
 }
 
 void shy_guts :: determine_cursor_in_rect ( so_called_type_platform_math_num_whole & result , so_called_type_common_engine_rect row_rect )
