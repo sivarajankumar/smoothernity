@@ -153,11 +153,17 @@ void shy_guts :: proceed_with_transform ( )
 void shy_guts :: obtain_idle_transform ( )
 {
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_selection_animation_idle_transform_request :: send ( so_called_message_common_logic_main_menu_selection_animation_idle_transform_request ( ) ) ;
+    so_called_sender_common_logic_main_menu_selection_animation_idle_transform_request :: send 
+        ( so_called_message_common_logic_main_menu_selection_animation_idle_transform_request ( ) 
+        ) ;
 }
 
 void shy_guts :: obtain_idle_attention_transform ( )
 {
+    shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_animation_idle_attention_transform_request :: send 
+        ( so_called_message_common_logic_main_menu_selection_animation_idle_attention_transform_request ( ) 
+        ) ;
 }
 
 void shy_guts :: obtain_appear_transform ( )
