@@ -10,8 +10,11 @@
 #include "./sender/select_transform_request/shy_select_transform_request_injections.h"
 #include "./sender/unselect_transform_request/shy_unselect_transform_request_injections.h"
 
+#include "../../../../engine/math/stateless/shy_stateless_injections.h"
+
 #include "../../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../../injections/platform/math/consts/shy_consts.h"
+#include "../../../../../injections/platform/math/shy_math.h"
 #include "../../../../../injections/platform/matrix/shy_matrix.h"
 
 #include "./shy_animation.hpp"

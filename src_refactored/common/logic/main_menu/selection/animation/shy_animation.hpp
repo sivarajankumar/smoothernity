@@ -224,6 +224,8 @@ void shy_guts :: obtain_push_weight ( )
 
 void shy_guts :: reply_transform ( )
 {
+    shy_guts :: compute_transform ( ) ;
+    shy_guts :: reply_computed_transform ( ) ;
 }
 
 void shy_guts :: reply_computed_transform ( )
@@ -232,6 +234,81 @@ void shy_guts :: reply_computed_transform ( )
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_math_num_fract zero ;
+    so_called_type_platform_vector_data idle_position ;
+    so_called_type_platform_math_num_fract idle_scale_x ;
+    so_called_type_platform_math_num_fract idle_scale_y ;
+    so_called_type_platform_math_num_fract idle_attention_scale_x ;
+    so_called_type_platform_math_num_fract idle_attention_scale_y ;
+    so_called_type_platform_math_num_fract appear_scale_x ;
+    so_called_type_platform_math_num_fract appear_scale_y ;
+    so_called_type_platform_math_num_fract disappear_scale_x ;
+    so_called_type_platform_math_num_fract disappear_scale_y ;
+    so_called_type_platform_math_num_fract select_scale_x ;
+    so_called_type_platform_math_num_fract select_scale_y ;
+    so_called_type_platform_math_num_fract unselect_scale_x ;
+    so_called_type_platform_math_num_fract unselect_scale_y ;
+    so_called_type_platform_math_num_fract push_scale_x ;
+    so_called_type_platform_math_num_fract push_scale_y ;
+    so_called_type_platform_math_num_fract push_attention_scale_x ;
+    so_called_type_platform_math_num_fract push_attention_scale_y ;
+    so_called_type_platform_math_num_fract push_weight ;
+    so_called_type_platform_math_num_fract weighted_scale_x ;
+    so_called_type_platform_math_num_fract weighted_scale_y ;
+    so_called_type_platform_math_num_fract weight_0 ;
+    so_called_type_platform_math_num_fract weight_1 ;
+    so_called_type_platform_math_num_fract scale_x ;
+    so_called_type_platform_math_num_fract scale_y ;
+    so_called_type_platform_math_num_fract scale_z ;
+    so_called_type_platform_vector_data position ;
+    so_called_type_platform_matrix_data transform ;
+    
+    zero = so_called_platform_math_consts :: fract_0 ;
+    idle_position = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: position ;
+    idle_scale_x = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_x ;
+    idle_scale_y = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y ;
+    idle_attention_scale_x = shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: scale_x ;
+    idle_attention_scale_y = shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: scale_y ;
+    appear_scale_x = shy_guts :: logic_main_menu_selection_animation_appear_transform_state :: scale_x ;
+    appear_scale_y = shy_guts :: logic_main_menu_selection_animation_appear_transform_state :: scale_y ;
+    disappear_scale_x = shy_guts :: logic_main_menu_selection_animation_disappear_transform_state :: scale_x ;
+    disappear_scale_y = shy_guts :: logic_main_menu_selection_animation_disappear_transform_state :: scale_y ;
+    select_scale_x = shy_guts :: logic_main_menu_selection_animation_select_transform_state :: scale_x ;
+    select_scale_y = shy_guts :: logic_main_menu_selection_animation_select_transform_state :: scale_y ;
+    unselect_scale_x = shy_guts :: logic_main_menu_selection_animation_unselect_transform_state :: scale_x ;
+    unselect_scale_y = shy_guts :: logic_main_menu_selection_animation_unselect_transform_state :: scale_y ;
+    push_scale_x = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: scale_x ;
+    push_scale_y = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: scale_y ;
+    push_attention_scale_x = shy_guts :: logic_main_menu_selection_animation_push_attention_transform_state :: scale_x ;
+    push_attention_scale_y = shy_guts :: logic_main_menu_selection_animation_push_attention_transform_state :: scale_y ;
+    push_weight = shy_guts :: logic_main_menu_selection_animation_push_weight_state :: weight ;
+    weight_0 = so_called_platform_math_consts :: fract_0 ;
+    weight_1 = so_called_platform_math_consts :: fract_1 ;
+
+    so_called_common_engine_math_stateless :: lerp ( weighted_scale_x , push_weight , idle_attention_scale_x , weight_0 , push_attention_scale_x , weight_1 ) ;
+    so_called_common_engine_math_stateless :: lerp ( weighted_scale_y , push_weight , idle_attention_scale_y , weight_0 , push_attention_scale_y , weight_1 ) ;
+    
+    position = idle_position ;
+    so_called_platform_math :: mul_fracts ( scale_x , idle_scale_x , appear_scale_x ) ;
+    so_called_platform_math :: mul_fracts ( scale_y , idle_scale_y , appear_scale_y ) ;
+    so_called_platform_math :: mul_fract_by ( scale_x , disappear_scale_x ) ;
+    so_called_platform_math :: mul_fract_by ( scale_y , disappear_scale_y ) ;
+    so_called_platform_math :: mul_fract_by ( scale_x , select_scale_x ) ;
+    so_called_platform_math :: mul_fract_by ( scale_y , select_scale_y ) ;
+    so_called_platform_math :: mul_fract_by ( scale_x , unselect_scale_x ) ;
+    so_called_platform_math :: mul_fract_by ( scale_y , unselect_scale_y ) ;
+    so_called_platform_math :: mul_fract_by ( scale_x , push_scale_x ) ;
+    so_called_platform_math :: mul_fract_by ( scale_y , push_scale_y ) ;
+    so_called_platform_math :: mul_fract_by ( scale_x , weighted_scale_x ) ;
+    so_called_platform_math :: mul_fract_by ( scale_y , weighted_scale_y ) ;
+    scale_z = so_called_platform_math_consts :: fract_1 ;
+    
+    so_called_platform_matrix :: set_origin ( transform , position ) ;
+    so_called_platform_matrix :: set_axis_x ( transform , scale_x , zero , zero ) ;
+    so_called_platform_matrix :: set_axis_y ( transform , zero , scale_y , zero ) ;
+    so_called_platform_matrix :: set_axis_z ( transform , zero , zero , scale_z ) ;
+    
+    shy_guts :: logic_main_menu_selection_animation_transform_state :: transform = transform ;
 }
 
 void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_appear_transform_reply msg )
