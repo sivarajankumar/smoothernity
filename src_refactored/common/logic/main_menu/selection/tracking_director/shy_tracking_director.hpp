@@ -71,6 +71,12 @@ void shy_guts :: place_mesh ( )
 
 void shy_guts :: first_selection ( )
 {
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: first_selection = so_called_platform_math_consts :: whole_false ;
+    
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: appear_animation_in_progress = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_animation_appear_start :: send ( so_called_message_common_logic_main_menu_selection_animation_appear_start ( ) ) ;
+
+    shy_guts :: continue_selection ( ) ;
 }
 
 void shy_guts :: start_selection ( )

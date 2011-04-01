@@ -1,5 +1,6 @@
 #include "./shy_tracking_director_injections.h"
 
+#include "../animation/sender/appear_start/shy_appear_start_injections.h"
 #include "../animation/sender/idle_void_selected/shy_idle_void_selected_injections.h"
 #include "../sender/mesh_place/shy_mesh_place_injections.h"
 #include "../sender/track_request/shy_track_request_injections.h"
