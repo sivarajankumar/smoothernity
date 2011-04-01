@@ -1,7 +1,6 @@
 class _shy_common_logic_main_menu_selection_animation
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_appear_transform_reply ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_disappear_transform_reply ) ;
     static void receive ( so_called_message_common_logic_main_menu_selection_animation_idle_attention_transform_reply ) ;
