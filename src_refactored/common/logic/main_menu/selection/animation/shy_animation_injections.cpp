@@ -4,6 +4,7 @@
 #include "./sender/disappear_transform_request/shy_disappear_transform_request_injections.h"
 #include "./sender/idle_attention_transform_request/shy_idle_attention_transform_request_injections.h"
 #include "./sender/idle_transform_request/shy_idle_transform_request_injections.h"
+#include "./sender/push_transform_request/shy_push_transform_request_injections.h"
 #include "./sender/select_transform_request/shy_select_transform_request_injections.h"
 #include "./sender/unselect_transform_request/shy_unselect_transform_request_injections.h"
 
