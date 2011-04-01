@@ -40,6 +40,9 @@ void _shy_common_logic_main_menu_selection_animation_appear :: receive ( so_call
 
 void _shy_common_logic_main_menu_selection_animation_appear :: receive ( so_called_message_common_logic_main_menu_selection_animation_appear_transform_request )
 {
+    shy_guts :: compute_horizontal_scale ( ) ;
+    shy_guts :: compute_vertical_scale ( ) ;
+    shy_guts :: reply_computed_transform ( ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_appear :: receive ( so_called_message_common_logic_main_menu_update )
