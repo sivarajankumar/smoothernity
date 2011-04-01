@@ -91,6 +91,16 @@ void shy_guts :: continue_selection ( )
 
 void shy_guts :: letters_selection ( )
 {
+    so_called_type_platform_math_num_whole selected_row_index ;    
+    selected_row_index = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selected_row_index ;
+
+    so_called_message_common_logic_main_menu_letters_animation_selection_weight_select_row letter_selection_row_select_msg ;
+    letter_selection_row_select_msg . row = selected_row_index ;
+    so_called_sender_common_logic_main_menu_letters_animation_selection_weight_select_row :: send ( letter_selection_row_select_msg ) ;
+
+    so_called_message_common_logic_main_menu_letters_animation_unselection_weight_select_row letter_unselection_row_select_msg ;
+    letter_unselection_row_select_msg . row = selected_row_index ;
+    so_called_sender_common_logic_main_menu_letters_animation_unselection_weight_select_row :: send ( letter_unselection_row_select_msg ) ;
 }
 
 void shy_guts :: start_unselection ( )
