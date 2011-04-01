@@ -131,6 +131,9 @@ void shy_guts :: render_mesh ( )
 
 void shy_guts :: destroy_mesh ( )
 {
+    so_called_message_common_engine_render_mesh_delete msg ;
+    msg . mesh = shy_guts :: mesh ;
+    so_called_sender_common_engine_render_mesh_delete :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 
