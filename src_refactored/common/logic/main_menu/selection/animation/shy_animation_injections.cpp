@@ -6,6 +6,7 @@
 #include "./sender/idle_transform_request/shy_idle_transform_request_injections.h"
 #include "./sender/push_attention_transform_request/shy_push_attention_transform_request_injections.h"
 #include "./sender/push_transform_request/shy_push_transform_request_injections.h"
+#include "./sender/push_weight_request/shy_push_weight_request_injections.h"
 #include "./sender/select_transform_request/shy_select_transform_request_injections.h"
 #include "./sender/unselect_transform_request/shy_unselect_transform_request_injections.h"
 

@@ -216,6 +216,10 @@ void shy_guts :: obtain_push_attention_transform ( )
 
 void shy_guts :: obtain_push_weight ( )
 {
+    shy_guts :: logic_main_menu_selection_animation_push_weight_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_animation_push_weight_request :: send
+        ( so_called_message_common_logic_main_menu_selection_animation_push_weight_request ( ) 
+        ) ;
 }
 
 void shy_guts :: reply_transform ( )
