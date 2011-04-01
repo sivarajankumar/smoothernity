@@ -160,6 +160,14 @@ void shy_guts :: mesh_set_vertex_color
     , so_called_type_platform_math_num_fract a
     )
 {
+    so_called_message_common_engine_render_mesh_set_vertex_color msg ;
+    msg . mesh = shy_guts :: mesh ;
+    msg . offset = offset ;
+    msg . r = r ;
+    msg . g = g ;
+    msg . b = b ;
+    msg . a = a ;
+    so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value
