@@ -34,10 +34,64 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: bake_mesh ( )
 {
+    shy_guts :: fill_mesh_content ( ) ;
+    shy_guts :: finalize_mesh ( ) ;
+    shy_guts :: place_mesh ( ) ;
 }
 
 void shy_guts :: fill_mesh_content ( )
 {
+    so_called_type_platform_math_num_fract half_size ;
+    so_called_type_platform_math_num_fract x_left ;
+    so_called_type_platform_math_num_fract x_right ;
+    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_type_platform_math_num_fract y_top ;
+    so_called_type_platform_math_num_fract u_left ;
+    so_called_type_platform_math_num_fract u_right ;
+    so_called_type_platform_math_num_fract v_bottom ;
+    so_called_type_platform_math_num_fract v_top ;
+    so_called_type_platform_math_num_fract z ;
+    so_called_type_platform_math_num_fract color_r ;
+    so_called_type_platform_math_num_fract color_g ;
+    so_called_type_platform_math_num_fract color_b ;
+    so_called_type_platform_math_num_fract color_a ;
+    so_called_type_platform_math_num_whole index_left_top ;
+    so_called_type_platform_math_num_whole index_left_bottom ;
+    so_called_type_platform_math_num_whole index_right_top ;
+    so_called_type_platform_math_num_whole index_right_bottom ;
+    
+    so_called_platform_math :: div_fracts ( half_size , so_called_common_logic_main_menu_selection_consts :: mesh_size , so_called_platform_math_consts :: fract_2 ) ;
+    so_called_platform_math :: mul_fracts ( x_left , half_size , so_called_platform_math_consts :: fract_minus_1 ) ;
+    so_called_platform_math :: mul_fracts ( y_bottom , half_size , so_called_platform_math_consts :: fract_minus_1 ) ;
+    so_called_platform_math :: mul_fracts ( x_right , half_size , so_called_platform_math_consts :: fract_1 ) ;
+    so_called_platform_math :: mul_fracts ( y_top , half_size , so_called_platform_math_consts :: fract_1 ) ;
+    z = so_called_platform_math_consts :: fract_0 ;
+    
+    color_r = so_called_common_logic_main_menu_selection_consts :: mesh_color_r ;
+    color_g = so_called_common_logic_main_menu_selection_consts :: mesh_color_g ;
+    color_b = so_called_common_logic_main_menu_selection_consts :: mesh_color_b ;
+    color_a = so_called_common_logic_main_menu_selection_consts :: mesh_color_a ;
+
+    index_left_top = so_called_platform_math_consts :: whole_0 ;
+    index_left_bottom = so_called_platform_math_consts :: whole_1 ;
+    index_right_top = so_called_platform_math_consts :: whole_2 ;
+    index_right_bottom = so_called_platform_math_consts :: whole_3 ;
+    
+    shy_guts :: mesh_set_triangle_strip_index_value ( index_left_top , index_left_top ) ;
+    shy_guts :: mesh_set_vertex_color               ( index_left_top , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_position            ( index_left_top , x_left , y_top , z ) ;
+
+    shy_guts :: mesh_set_triangle_strip_index_value ( index_left_bottom , index_left_bottom ) ;
+    shy_guts :: mesh_set_vertex_color               ( index_left_bottom , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_position            ( index_left_bottom , x_left , y_bottom , z ) ;
+
+    shy_guts :: mesh_set_triangle_strip_index_value ( index_right_top , index_right_top ) ;
+    shy_guts :: mesh_set_vertex_color               ( index_right_top , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_position            ( index_right_top , x_right , y_top , z ) ;
+
+    shy_guts :: mesh_set_triangle_strip_index_value ( index_right_bottom , index_right_bottom ) ;
+    shy_guts :: mesh_set_vertex_color               ( index_right_bottom , color_r , color_g , color_b , color_a ) ;
+    shy_guts :: mesh_set_vertex_position            ( index_right_bottom , x_right , y_bottom , z ) ;    
 }
 
 void shy_guts :: place_mesh ( )
