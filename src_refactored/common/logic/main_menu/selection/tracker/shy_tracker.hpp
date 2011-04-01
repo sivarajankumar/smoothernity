@@ -123,6 +123,35 @@ void shy_guts :: obtain_current_row_rect ( )
 
 void shy_guts :: received_row_rect ( )
 {
+    so_called_type_platform_math_num_whole cursor_in_selection_rect ;
+    so_called_type_platform_math_num_whole current_row ;
+    so_called_type_platform_math_num_whole rows_count ;
+    
+    shy_guts :: determine_cursor_in_selection_rect ( ) ;
+    
+    cursor_in_selection_rect = shy_guts :: logic_main_menu_selection_track_state :: cursor_in_selection_rect ;
+    current_row = shy_guts :: logic_main_menu_selection_track_state :: current_row ;
+    rows_count = shy_guts :: logic_main_menu_letters_rows_state :: rows ;
+    
+    if ( so_called_platform_conditions :: whole_is_true ( cursor_in_selection_rect ) )
+    {
+        shy_guts :: send_row_selected ( ) ;
+        shy_guts :: send_reply ( ) ;
+    }
+    else
+    {
+        so_called_platform_math :: inc_whole ( current_row ) ;
+        if ( so_called_platform_conditions :: whole_less_than_whole ( current_row , rows_count ) )
+        {
+            shy_guts :: logic_main_menu_selection_track_state :: current_row = current_row ;
+            shy_guts :: obtain_current_row_rect ( ) ;
+        }
+        else
+        {
+            shy_guts :: send_void_selected ( ) ;
+            shy_guts :: send_reply ( ) ;
+        }
+    }
 }
 
 void shy_guts :: determine_cursor_in_selection_rect ( )
