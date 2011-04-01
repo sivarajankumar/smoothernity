@@ -110,6 +110,8 @@ void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_c
 
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_destroy_request )
 {
+    shy_guts :: destroy_mesh ( ) ;
+    so_called_sender_common_logic_main_menu_selection_mesh_destroy_reply :: send ( so_called_message_common_logic_main_menu_selection_mesh_destroy_reply ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_place )
