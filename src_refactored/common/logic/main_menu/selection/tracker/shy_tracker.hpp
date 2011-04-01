@@ -173,6 +173,22 @@ void shy_guts :: determine_cursor_in_prev_selection_rect ( )
 
 void shy_guts :: determine_cursor_in_rect ( so_called_type_platform_math_num_whole & result , so_called_type_common_engine_rect row_rect )
 {
+    so_called_type_platform_math_num_fract cursor_x ;
+    so_called_type_platform_math_num_fract cursor_y ;
+    
+    cursor_x = shy_guts :: logic_controls_state :: cursor_x ;
+    cursor_y = shy_guts :: logic_controls_state :: cursor_y ;
+    
+    if ( so_called_platform_conditions :: fract_less_than_fract ( cursor_x , row_rect . left ) 
+      || so_called_platform_conditions :: fract_less_than_fract ( cursor_y , row_rect . bottom ) 
+      || so_called_platform_conditions :: fract_greater_than_fract ( cursor_x , row_rect . right ) 
+      || so_called_platform_conditions :: fract_greater_than_fract ( cursor_y , row_rect . top ) 
+       )
+    {
+        result = so_called_platform_math_consts :: whole_false ;
+    }
+    else
+        result = so_called_platform_math_consts :: whole_true ;
 }
 
 void shy_guts :: scale_prev_selection_rect ( )
