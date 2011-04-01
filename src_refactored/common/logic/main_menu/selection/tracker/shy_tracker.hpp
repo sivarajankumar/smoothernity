@@ -111,8 +111,16 @@ void shy_guts :: send_reply ( )
 {
 }
 
-void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_controls_state_reply )
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_controls_state_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: requested ) )
+    {
+        shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_controls_state :: cursor_x = msg . cursor_x ;
+        shy_guts :: logic_controls_state :: cursor_y = msg . cursor_y ;
+        shy_guts :: proceed_with_track ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply msg )
