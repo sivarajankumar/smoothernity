@@ -93,8 +93,17 @@ void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_c
     }
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_animation_transform_reply )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_animation_transform_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: animation_transform_requested ) )
+    {
+        shy_guts :: animation_transform_requested = so_called_platform_math_consts :: whole_false ;
+
+        so_called_message_common_engine_render_mesh_set_transform transform_msg ;
+        transform_msg . mesh = shy_guts :: mesh ;
+        transform_msg . transform = msg . transform ;
+        so_called_sender_common_engine_render_mesh_set_transform :: send ( transform_msg ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_create )
