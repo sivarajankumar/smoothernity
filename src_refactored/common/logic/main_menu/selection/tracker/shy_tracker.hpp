@@ -193,6 +193,29 @@ void shy_guts :: determine_cursor_in_rect ( so_called_type_platform_math_num_who
 
 void shy_guts :: scale_prev_selection_rect ( )
 {
+    so_called_type_platform_math_num_fract selected_rect_vertical_scale ;
+    so_called_type_platform_math_num_fract rect_height ;
+    so_called_type_platform_math_num_fract scaled_rect_height ;
+    so_called_type_platform_math_num_fract half_scaled_rect_height ;
+    so_called_type_platform_math_num_fract y_center ;
+    so_called_type_common_engine_rect prev_selection_rect ;
+    so_called_type_common_engine_rect scaled_prev_selection_rect ;
+    
+    selected_rect_vertical_scale = so_called_common_logic_main_menu_selection_consts :: selected_rect_vertical_scale ;
+    prev_selection_rect = shy_guts :: logic_main_menu_selection_track_state :: prev_selection_rect ;
+    
+    so_called_platform_math :: add_fracts ( y_center , prev_selection_rect . top , prev_selection_rect . bottom ) ;
+    so_called_platform_math :: div_fract_by ( y_center , so_called_platform_math_consts :: fract_2 ) ;
+    
+    so_called_platform_math :: sub_fracts ( rect_height , prev_selection_rect . top , prev_selection_rect . bottom ) ;
+    so_called_platform_math :: mul_fracts ( scaled_rect_height , rect_height , selected_rect_vertical_scale ) ;
+    so_called_platform_math :: div_fracts ( half_scaled_rect_height , scaled_rect_height , so_called_platform_math_consts :: fract_2 ) ;
+    
+    scaled_prev_selection_rect = prev_selection_rect ;
+    so_called_platform_math :: add_fracts ( scaled_prev_selection_rect . top , y_center , half_scaled_rect_height ) ;
+    so_called_platform_math :: sub_fracts ( scaled_prev_selection_rect . bottom , y_center , half_scaled_rect_height ) ;
+    
+    shy_guts :: logic_main_menu_selection_track_state :: scaled_prev_selection_rect = scaled_prev_selection_rect ;
 }
 
 void shy_guts :: send_row_selected ( )
