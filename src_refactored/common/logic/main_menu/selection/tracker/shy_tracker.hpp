@@ -220,6 +220,31 @@ void shy_guts :: scale_prev_selection_rect ( )
 
 void shy_guts :: send_row_selected ( )
 {
+    so_called_type_platform_math_num_whole prev_row_is_selected ;
+    so_called_type_platform_math_num_whole prev_selected_row_index ;
+    so_called_type_platform_math_num_whole current_row ;
+    so_called_type_common_engine_rect row_rect ;
+    
+    prev_row_is_selected = shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected ;
+    prev_selected_row_index = shy_guts :: logic_main_menu_selection_track_state :: prev_selected_row_index ;
+    current_row = shy_guts :: logic_main_menu_selection_track_state :: current_row ;
+    row_rect = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect ;
+    
+    if ( ! so_called_platform_conditions :: whole_is_true ( prev_row_is_selected ) 
+      || ! so_called_platform_conditions :: wholes_are_equal ( prev_selected_row_index , current_row )
+       )
+    {
+        prev_row_is_selected = so_called_platform_math_consts :: whole_true ;
+        prev_selected_row_index = current_row ;
+        
+        shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected = prev_row_is_selected ;
+        shy_guts :: logic_main_menu_selection_track_state :: prev_selected_row_index = prev_selected_row_index ;
+        shy_guts :: logic_main_menu_selection_track_state :: prev_selection_rect = row_rect ;
+
+        so_called_message_common_logic_main_menu_selection_track_row_selected msg ;
+        msg . row = shy_guts :: logic_main_menu_selection_track_state :: current_row ;
+        so_called_sender_common_logic_main_menu_selection_track_row_selected :: send ( msg ) ;        
+    }
 }
 
 void shy_guts :: send_void_selected ( )
