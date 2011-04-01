@@ -87,6 +87,16 @@ void shy_guts :: obtain_controls_state ( )
 
 void shy_guts :: controls_state_received ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected ) )
+    {
+        shy_guts :: determine_cursor_in_prev_selection_rect ( ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_track_state :: cursor_in_prev_selection_rect ) )
+            shy_guts :: send_reply ( ) ;
+        else
+            shy_guts :: obtain_rows_count ( ) ;
+    }
+    else
+        shy_guts :: obtain_rows_count ( ) ;
 }
 
 void shy_guts :: obtain_rows_count ( )
