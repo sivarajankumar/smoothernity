@@ -160,8 +160,17 @@ void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_mess
 {
 }
 
-void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_transform_reply )
+void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_transform_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: requested ) )
+    {
+        shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: position = msg . position ;
+        shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_x = msg . scale_x ;
+        shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y = msg . scale_y ;
+        shy_guts :: proceed_with_transform ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_push_attention_transform_reply )
@@ -182,6 +191,8 @@ void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_mess
 
 void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_transform_request )
 {
+    shy_guts :: logic_main_menu_selection_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: proceed_with_transform ( ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_message_common_logic_main_menu_selection_animation_unselect_transform_reply )
