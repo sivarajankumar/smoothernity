@@ -230,6 +230,9 @@ void shy_guts :: reply_transform ( )
 
 void shy_guts :: reply_computed_transform ( )
 {
+    so_called_message_common_logic_main_menu_selection_animation_transform_reply reply_msg ;
+    reply_msg . transform = shy_guts :: logic_main_menu_selection_animation_transform_state :: transform ;
+    so_called_sender_common_logic_main_menu_selection_animation_transform_reply :: send ( reply_msg ) ;
 }
 
 void shy_guts :: compute_transform ( )
