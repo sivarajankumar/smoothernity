@@ -122,6 +122,11 @@ void shy_guts :: finalize_mesh ( )
 
 void shy_guts :: render_mesh ( )
 {
+    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+
+    so_called_message_common_engine_render_mesh_render msg ;
+    msg . mesh = shy_guts :: mesh ;
+    so_called_sender_common_engine_render_mesh_render :: send ( msg ) ;
 }
 
 void shy_guts :: destroy_mesh ( )
