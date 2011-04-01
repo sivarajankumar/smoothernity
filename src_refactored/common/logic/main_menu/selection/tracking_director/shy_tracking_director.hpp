@@ -116,6 +116,21 @@ void shy_guts :: letters_selection ( )
 
 void shy_guts :: start_unselection ( )
 {
+    so_called_type_platform_math_num_whole selected_row_index ;    
+    selected_row_index = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selected_row_index ;
+
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: unselection_animation_in_progress = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_main_menu_selection_animation_unselect_start :: send ( so_called_message_common_logic_main_menu_selection_animation_unselect_start ( ) ) ;
+
+    so_called_message_common_logic_main_menu_letters_animation_selection_weight_unselect_row letter_selection_row_unselect_msg ;
+    letter_selection_row_unselect_msg . row = selected_row_index ;
+    so_called_sender_common_logic_main_menu_letters_animation_selection_weight_unselect_row :: send ( letter_selection_row_unselect_msg ) ;
+
+    so_called_message_common_logic_main_menu_letters_animation_unselection_weight_unselect_row letter_unselection_row_unselect_msg ;
+    letter_unselection_row_unselect_msg . row = selected_row_index ;
+    so_called_sender_common_logic_main_menu_letters_animation_unselection_weight_unselect_row :: send ( letter_unselection_row_unselect_msg ) ;
+
+    so_called_sender_common_logic_main_menu_choice_void_selected :: send ( so_called_message_common_logic_main_menu_choice_void_selected ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_init )
