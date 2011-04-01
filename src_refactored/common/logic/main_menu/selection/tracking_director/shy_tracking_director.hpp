@@ -47,6 +47,15 @@ void shy_guts :: proceed_with_tracking ( )
 
 void shy_guts :: update_received ( )
 {
+    if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: logic_main_menu_selection_tracking_director_update_state :: appear_animation_in_progress ) 
+      && so_called_platform_conditions :: whole_is_false ( shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selection_animation_in_progress ) 
+      && so_called_platform_conditions :: whole_is_false ( shy_guts :: logic_main_menu_selection_tracking_director_update_state :: unselection_animation_in_progress )
+       )
+    {
+        shy_guts :: request_track ( ) ;
+    }
+    else
+        shy_guts :: place_mesh ( ) ;
 }
 
 void shy_guts :: request_track ( )
