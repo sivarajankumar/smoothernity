@@ -258,6 +258,7 @@ void shy_guts :: send_void_selected ( )
 
 void shy_guts :: send_reply ( )
 {
+    so_called_sender_common_logic_main_menu_selection_track_reply :: send ( so_called_message_common_logic_main_menu_selection_track_reply ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_controls_state_reply msg )

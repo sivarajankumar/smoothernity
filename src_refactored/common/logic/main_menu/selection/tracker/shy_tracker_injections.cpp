@@ -1,6 +1,7 @@
 #include "./shy_tracker_injections.h"
 
 #include "../consts/shy_consts_injections.h"
+#include "../sender/track_reply/shy_track_reply_injections.h"
 #include "../sender/track_row_selected/shy_track_row_selected_injections.h"
 #include "../sender/track_void_selected/shy_track_void_selected_injections.h"
 
