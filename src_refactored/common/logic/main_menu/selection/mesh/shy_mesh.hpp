@@ -96,6 +96,21 @@ void shy_guts :: fill_mesh_content ( )
 
 void shy_guts :: place_mesh ( )
 {
+    so_called_type_platform_matrix_data transform ;
+    so_called_type_platform_math_num_fract origin_x ;
+    so_called_type_platform_math_num_fract origin_y ;
+    so_called_type_platform_math_num_fract origin_z ;
+    
+    origin_x = so_called_platform_math_consts :: fract_0 ;
+    origin_y = so_called_platform_math_consts :: fract_0 ;
+    origin_z = so_called_platform_math_consts :: fract_0 ;
+    so_called_platform_matrix :: identity ( transform ) ;
+    so_called_platform_matrix :: set_origin ( transform , origin_x , origin_y , origin_z ) ;
+
+    so_called_message_common_engine_render_mesh_set_transform msg ;
+    msg . mesh = shy_guts :: mesh ;
+    msg . transform = transform ;
+    so_called_sender_common_engine_render_mesh_set_transform :: send ( msg ) ;
 }
 
 void shy_guts :: finalize_mesh ( )
