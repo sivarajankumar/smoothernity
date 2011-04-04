@@ -68,6 +68,10 @@ void shy_guts :: compute_vertical_scale ( )
 
 void shy_guts :: reply_computed_transform ( )
 {
+    so_called_message_common_logic_main_menu_selection_animation_disappear_transform_reply msg ;
+    msg . scale_x = shy_guts :: logic_main_menu_selection_animation_disappear_transform_state :: horizontal_scale ;
+    msg . scale_y = shy_guts :: logic_main_menu_selection_animation_disappear_transform_state :: vertical_scale ;
+    so_called_sender_common_logic_main_menu_selection_animation_disappear_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_disappear :: receive ( so_called_message_common_init )
