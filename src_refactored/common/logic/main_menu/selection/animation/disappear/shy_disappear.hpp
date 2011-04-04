@@ -45,6 +45,25 @@ void shy_guts :: compute_horizontal_scale ( )
 
 void shy_guts :: compute_vertical_scale ( )
 {
+    so_called_type_platform_math_num_fract vertical_scale_time_to_begin ;
+    so_called_type_platform_math_num_fract vertical_scale_time_from_begin_to_end ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_end ;
+    
+    vertical_scale_time_to_begin = so_called_common_logic_main_menu_selection_animation_consts :: disappear_vertical_scale_time_to_begin ;
+    vertical_scale_time_from_begin_to_end = so_called_common_logic_main_menu_selection_animation_consts :: disappear_vertical_scale_time_from_begin_to_end ;
+    
+    time_begin = vertical_scale_time_to_begin ;
+    so_called_platform_math :: add_fracts ( time_end , time_begin , vertical_scale_time_from_begin_to_end ) ;
+    
+    so_called_common_engine_math_stateless :: hard_in_easy_out
+        ( shy_guts :: logic_main_menu_selection_animation_disappear_transform_state :: vertical_scale
+        , shy_guts :: logic_main_menu_update_state :: time
+        , so_called_common_logic_main_menu_selection_animation_consts :: disappear_vertical_scale_value_begin
+        , time_begin
+        , so_called_common_logic_main_menu_selection_animation_consts :: disappear_vertical_scale_value_end
+        , time_end
+        ) ;
 }
 
 void shy_guts :: reply_computed_transform ( )
