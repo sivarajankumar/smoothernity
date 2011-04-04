@@ -1,5 +1,6 @@
 #include "./shy_idle_attention_injections.h"
 
+#include "../consts/shy_consts_injections.h"
 #include "../sender/idle_attention_transform_reply/shy_idle_attention_transform_reply_injections.h"
 
 #include "../../../../../../injections/platform/conditions/shy_conditions.h"

@@ -36,6 +36,12 @@ void shy_guts :: reply_transform ( )
 
 void shy_guts :: compute_horizontal_scale ( )
 {
+    shy_guts :: compute_animation_scale
+        ( shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: horizontal_scale
+        , so_called_common_logic_main_menu_selection_animation_consts :: idle_attention_horizontal_scale_min
+        , so_called_common_logic_main_menu_selection_animation_consts :: idle_attention_horizontal_scale_max
+        , so_called_common_logic_main_menu_selection_animation_consts :: idle_attention_horizontal_scale_period_in_seconds
+        ) ;
 }
 
 void shy_guts :: compute_vertical_scale ( )
