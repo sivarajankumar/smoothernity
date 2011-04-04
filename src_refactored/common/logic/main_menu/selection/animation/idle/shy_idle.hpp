@@ -53,10 +53,6 @@ void shy_guts :: compute_empty_mesh_transform ( )
 {
 }
 
-void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply )
 {
 }

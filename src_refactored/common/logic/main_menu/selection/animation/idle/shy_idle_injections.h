@@ -7,8 +7,6 @@
 
 #include "../../../letters/layout/message/row_rect_reply/shy_row_rect_reply_injections.h"
 
-#include "../../../../../message/init/shy_init_injections.h"
-
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_idle.h"
