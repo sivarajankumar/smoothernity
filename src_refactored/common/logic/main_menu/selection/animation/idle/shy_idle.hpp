@@ -73,6 +73,40 @@ void shy_guts :: reply_transform ( )
 
 void shy_guts :: compute_row_rect_mesh_transform ( )
 {
+    so_called_type_platform_math_num_fract zero ;
+    so_called_type_platform_math_num_fract half ;
+    so_called_type_platform_math_num_fract scale_x ;
+    so_called_type_platform_math_num_fract scale_y ;
+    so_called_type_platform_math_num_fract pos_x ;
+    so_called_type_platform_math_num_fract pos_y ;
+    so_called_type_platform_math_num_fract pos_z ;
+    so_called_type_platform_math_num_fract width ;
+    so_called_type_platform_math_num_fract height ;
+    so_called_type_platform_math_num_fract mesh_size ;
+    so_called_type_common_engine_rect row_rect ;
+    so_called_type_platform_vector_data position ;
+    
+    row_rect = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect ;
+    mesh_size = so_called_common_logic_main_menu_selection_consts :: mesh_size ;
+    zero = so_called_platform_math_consts :: fract_0 ;
+    
+    so_called_platform_math :: sub_fracts ( width , row_rect . right , row_rect . left ) ;
+    so_called_platform_math :: sub_fracts ( height , row_rect . top , row_rect . bottom ) ;
+    
+    so_called_platform_math :: div_fracts ( scale_x , width , mesh_size ) ;
+    so_called_platform_math :: div_fracts ( scale_y , height , mesh_size ) ;
+
+    so_called_platform_math :: add_fracts ( pos_x , row_rect . right , row_rect . left ) ;
+    so_called_platform_math :: add_fracts ( pos_y , row_rect . top , row_rect . bottom ) ;
+    so_called_platform_math :: div_fract_by ( pos_x , so_called_platform_math_consts :: fract_2 ) ;
+    so_called_platform_math :: div_fract_by ( pos_y , so_called_platform_math_consts :: fract_2 ) ;
+    pos_z = so_called_common_logic_main_menu_selection_animation_consts :: idle_position_z ;
+    
+    so_called_platform_vector :: xyz ( position , pos_x , pos_y , pos_z ) ;
+    
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: position = position ;
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_x = scale_x ;
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y = scale_y ;
 }
 
 void shy_guts :: compute_empty_mesh_transform ( )
