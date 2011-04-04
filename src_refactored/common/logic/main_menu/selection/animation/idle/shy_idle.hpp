@@ -77,6 +77,16 @@ void shy_guts :: compute_row_rect_mesh_transform ( )
 
 void shy_guts :: compute_empty_mesh_transform ( )
 {
+    so_called_type_platform_math_num_fract zero ;
+    so_called_type_platform_vector_data position ;
+    
+    zero = so_called_platform_math_consts :: fract_0 ;
+    
+    so_called_platform_vector :: xyz ( position , zero , zero , zero ) ;
+    
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: position = position ;
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_x = zero ;
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y = zero ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply msg )
