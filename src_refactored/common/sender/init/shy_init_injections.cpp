@@ -22,7 +22,6 @@
 #include "../../logic/main_menu/letters/meshes/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/letters/storage/shy_storage_injections.h"
 #include "../../logic/main_menu/selection/animation/disappear/shy_disappear_injections.h"
-#include "../../logic/main_menu/selection/animation/idle_attention/shy_idle_attention_injections.h"
 #include "../../logic/main_menu/selection/animation/push/shy_push_injections.h"
 #include "../../logic/main_menu/selection/animation/push_attention/shy_push_attention_injections.h"
 #include "../../logic/main_menu/selection/animation/push_weight/shy_push_weight_injections.h"
