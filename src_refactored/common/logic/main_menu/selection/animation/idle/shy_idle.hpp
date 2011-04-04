@@ -55,6 +55,11 @@ void shy_guts :: obtain_row_rect ( )
 
 void shy_guts :: received_row_rect ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: row_is_selected ) )
+        shy_guts :: compute_row_rect_mesh_transform ( ) ;
+    else
+        shy_guts :: compute_empty_mesh_transform ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void shy_guts :: reply_transform ( )
