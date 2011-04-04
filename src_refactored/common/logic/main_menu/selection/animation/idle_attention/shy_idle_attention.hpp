@@ -28,6 +28,10 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: reply_transform ( )
 {
+    so_called_message_common_logic_main_menu_selection_animation_idle_attention_transform_reply msg ;
+    msg . scale_x = shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: horizontal_scale ;
+    msg . scale_y = shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: vertical_scale ;
+    so_called_sender_common_logic_main_menu_selection_animation_idle_attention_transform_reply :: send ( msg ) ;
 }
 
 void shy_guts :: compute_horizontal_scale ( )
@@ -55,6 +59,9 @@ void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive (
 
 void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_attention_transform_request )
 {
+    shy_guts :: compute_horizontal_scale ( ) ;
+    shy_guts :: compute_vertical_scale ( ) ;
+    shy_guts :: reply_transform ( ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive ( so_called_message_common_logic_main_menu_update )
