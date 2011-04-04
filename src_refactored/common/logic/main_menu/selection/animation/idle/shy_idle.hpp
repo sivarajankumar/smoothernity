@@ -45,6 +45,12 @@ void shy_guts :: proceed_with_transform ( )
 
 void shy_guts :: obtain_row_rect ( )
 {
+    shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: selected_row_index ;
+
+    so_called_message_common_logic_main_menu_letters_layout_row_rect_request msg ;
+    msg . row = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row ;
+    so_called_sender_common_logic_main_menu_letters_layout_row_rect_request :: send ( msg ) ;
 }
 
 void shy_guts :: received_row_rect ( )
