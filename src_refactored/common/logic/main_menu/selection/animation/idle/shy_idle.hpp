@@ -53,8 +53,17 @@ void shy_guts :: compute_empty_mesh_transform ( )
 {
 }
 
-void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply )
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row , msg . row )
+       )
+    {
+        shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_main_menu_letters_layout_row_rect_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect = msg . row_rect ;
+        shy_guts :: proceed_with_transform ( ) ;
+    }
 }
 
 void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_row_selected msg )
@@ -71,4 +80,5 @@ void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called
 
 void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_void_selected )
 {
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: row_is_selected = so_called_platform_math_consts :: whole_false ;
 }
