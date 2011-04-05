@@ -165,6 +165,10 @@ void shy_guts :: calculate_vertical_scale ( )
 
 void shy_guts :: reply_transform ( )
 {
+    so_called_message_common_logic_main_menu_selection_animation_push_transform_reply msg ;
+    msg . scale_x = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: horizontal_scale ;
+    msg . scale_y = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: vertical_scale ;
+    so_called_sender_common_logic_main_menu_selection_animation_push_transform_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_push :: receive ( so_called_message_common_init )

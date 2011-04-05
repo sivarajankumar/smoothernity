@@ -1,6 +1,7 @@
 #include "./shy_push_injections.h"
 
 #include "../consts/shy_consts_injections.h"
+#include "../sender/push_transform_reply/shy_push_transform_reply_injections.h"
 
 #include "../../../../controls/sender/state_request/shy_state_request_injections.h"
 
