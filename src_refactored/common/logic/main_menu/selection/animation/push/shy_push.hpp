@@ -132,6 +132,35 @@ void shy_guts :: calculate_horizontal_scale ( )
 
 void shy_guts :: calculate_vertical_scale ( )
 {
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_middle ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract vertical_scale_begin ;
+    so_called_type_platform_math_num_fract vertical_scale_middle ;
+    so_called_type_platform_math_num_fract vertical_scale_end ;
+    so_called_type_platform_math_num_fract vertical_scale ;
+
+    time_begin = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: time_begin ;
+    time_middle = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: time_middle ;
+    time_end = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: time_end ;
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    vertical_scale_begin = so_called_common_logic_main_menu_selection_animation_consts :: push_vertical_scale_begin ;
+    vertical_scale_middle = so_called_common_logic_main_menu_selection_animation_consts :: push_vertical_scale_middle ;
+    vertical_scale_end = so_called_common_logic_main_menu_selection_animation_consts :: push_vertical_scale_end ;
+
+    so_called_common_engine_math_stateless :: hard_attack_easy_decay
+        ( vertical_scale
+        , time
+        , vertical_scale_begin
+        , time_begin
+        , vertical_scale_middle
+        , time_middle
+        , vertical_scale_end
+        , time_end
+        ) ;
+
+    shy_guts :: logic_main_menu_selection_animation_push_transform_state :: vertical_scale = vertical_scale ;
 }
 
 void shy_guts :: reply_transform ( )
