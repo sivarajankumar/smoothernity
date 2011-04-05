@@ -57,6 +57,24 @@ void shy_guts :: obtain_controls_state ( )
 
 void shy_guts :: controls_state_received ( )
 {
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract time_step ;
+    so_called_type_platform_math_num_whole clicked ;
+    so_called_type_platform_math_num_whole primary_button_down ;
+
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    clicked = shy_guts :: logic_main_menu_update_state :: clicked ;
+    primary_button_down = shy_guts :: logic_controls_state :: primary_button_down ;
+    so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
+
+    if ( so_called_platform_conditions :: whole_is_true ( primary_button_down ) )
+        clicked = so_called_platform_math_consts :: whole_true ;
+
+    if ( so_called_platform_conditions :: whole_is_true ( clicked ) )
+        so_called_platform_math :: add_to_fract ( time , time_step ) ;
+
+    shy_guts :: logic_main_menu_update_state :: time = time ;
+    shy_guts :: logic_main_menu_update_state :: clicked = clicked ;
 }
 
 void shy_guts :: calculate_time ( )
