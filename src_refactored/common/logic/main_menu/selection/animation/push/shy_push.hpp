@@ -79,6 +79,22 @@ void shy_guts :: controls_state_received ( )
 
 void shy_guts :: calculate_time ( )
 {
+    so_called_type_platform_math_num_fract time_from_begin_to_middle ;
+    so_called_type_platform_math_num_fract time_from_middle_to_end ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time_middle ;
+    so_called_type_platform_math_num_fract time_end ;
+    
+    time_from_begin_to_middle = so_called_common_logic_main_menu_selection_animation_consts :: push_time_from_begin_to_middle ;
+    time_from_middle_to_end = so_called_common_logic_main_menu_selection_animation_consts :: push_time_from_middle_to_end ;
+
+    time_begin = so_called_platform_math_consts :: fract_0 ;
+    time_middle = time_from_begin_to_middle ;
+    so_called_platform_math :: add_fracts ( time_end , time_middle , time_from_middle_to_end ) ;
+    
+    shy_guts :: logic_main_menu_selection_animation_push_transform_state :: time_begin = time_begin ;
+    shy_guts :: logic_main_menu_selection_animation_push_transform_state :: time_middle = time_middle ;
+    shy_guts :: logic_main_menu_selection_animation_push_transform_state :: time_end = time_end ;
 }
 
 void shy_guts :: calculate_horizontal_scale ( )
