@@ -45,6 +45,14 @@ void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_call
 
 void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_logic_main_menu_selection_animation_select_transform_request )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: select_started ) )
+    {
+        shy_guts :: compute_horizontal_scale ( ) ;
+        shy_guts :: compute_vertical_scale ( ) ;
+    }
+    else
+        shy_guts :: compute_identity_scale ( ) ;
+    shy_guts :: reply_computed_transform ( ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_logic_main_menu_update )
