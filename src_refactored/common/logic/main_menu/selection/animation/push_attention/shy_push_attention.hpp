@@ -46,6 +46,12 @@ void shy_guts :: compute_horizontal_scale ( )
 
 void shy_guts :: compute_vertical_scale ( )
 {
+    shy_guts :: compute_animation_scale
+        ( shy_guts :: logic_main_menu_selection_animation_push_attention_transform_state :: vertical_scale
+        , so_called_common_logic_main_menu_selection_animation_consts :: push_attention_vertical_scale_min
+        , so_called_common_logic_main_menu_selection_animation_consts :: push_attention_vertical_scale_max
+        , so_called_common_logic_main_menu_selection_animation_consts :: push_attention_period_in_seconds
+        ) ;
 }
 
 void shy_guts :: compute_animation_scale
