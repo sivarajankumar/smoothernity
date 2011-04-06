@@ -49,4 +49,24 @@ void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_call
 
 void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_logic_main_menu_update )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: select_started ) )
+    {
+        so_called_type_platform_math_num_fract time_step ;
+        so_called_type_platform_math_num_fract time ;
+        so_called_type_platform_math_num_fract total_animation_time ;
+        
+        time = shy_guts :: logic_main_menu_update_state :: time ;
+        total_animation_time = so_called_common_logic_main_menu_selection_animation_consts :: select_total_animation_time ;
+        
+        so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
+        so_called_platform_math :: add_to_fract ( time , time_step ) ;
+        
+        if ( so_called_platform_conditions :: fract_greater_than_fract ( time , total_animation_time ) )
+        {
+            shy_guts :: logic_main_menu_update_state :: select_started = so_called_platform_math_consts :: whole_false ;
+            so_called_sender_common_logic_main_menu_selection_animation_select_finished :: send ( so_called_message_common_logic_main_menu_selection_animation_select_finished ( ) ) ;
+        }
+
+        shy_guts :: logic_main_menu_update_state :: time = time ;
+    }
 }
