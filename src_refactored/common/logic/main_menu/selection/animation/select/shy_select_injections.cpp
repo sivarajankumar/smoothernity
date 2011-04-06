@@ -2,6 +2,7 @@
 
 #include "../consts/shy_consts_injections.h"
 #include "../sender/select_finished/shy_select_finished_injections.h"
+#include "../sender/select_transform_reply/shy_select_transform_reply_injections.h"
 
 #include "../../../../../engine/math/stateless/shy_stateless_injections.h"
 
