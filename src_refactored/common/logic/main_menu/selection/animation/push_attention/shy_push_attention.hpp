@@ -61,6 +61,25 @@ void shy_guts :: compute_animation_scale
     , so_called_type_platform_math_num_fract period_in_seconds
     )
 {
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract phase ;
+    so_called_type_platform_math_num_fract amplitude ;
+    so_called_type_platform_math_num_fract offset ;
+    
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    
+    so_called_platform_math :: div_fracts ( phase , time , period_in_seconds ) ;
+    so_called_platform_math :: mul_fract_by ( phase , so_called_platform_math_consts :: fract_2pi ) ;
+    
+    so_called_platform_math :: sub_fracts ( amplitude , scale_max , scale_min ) ;
+    so_called_platform_math :: div_fract_by ( amplitude , so_called_platform_math_consts :: fract_2 ) ;
+    
+    so_called_platform_math :: add_fracts ( offset , scale_max , scale_min ) ;
+    so_called_platform_math :: div_fract_by ( offset , so_called_platform_math_consts :: fract_2 ) ;
+    
+    so_called_platform_math :: sin ( scale , phase ) ;
+    so_called_platform_math :: mul_fract_by ( scale , amplitude ) ;
+    so_called_platform_math :: add_to_fract ( scale , offset ) ;        
 }
 
 void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_message_common_logic_main_menu_launch_permit )
