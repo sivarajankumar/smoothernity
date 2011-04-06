@@ -73,10 +73,41 @@ void shy_guts :: controls_state_received ( )
 
 void shy_guts :: compute_weight ( )
 {
+    so_called_type_platform_math_num_fract time_to_begin ;
+    so_called_type_platform_math_num_fract time_from_begin_to_end ;
+    so_called_type_platform_math_num_fract time_end ;
+    so_called_type_platform_math_num_fract time_begin ;
+    so_called_type_platform_math_num_fract time ;
+    so_called_type_platform_math_num_fract weight ;
+    so_called_type_platform_math_num_fract weight_min ;
+    so_called_type_platform_math_num_fract weight_max ;
+    
+    time = shy_guts :: logic_main_menu_update_state :: time ;
+    time_to_begin = so_called_common_logic_main_menu_selection_animation_consts :: push_weight_time_to_begin ;
+    time_from_begin_to_end = so_called_common_logic_main_menu_selection_animation_consts :: push_weight_time_from_begin_to_end ;
+    weight_min = so_called_common_logic_main_menu_selection_animation_consts :: push_weight_min ;
+    weight_max = so_called_common_logic_main_menu_selection_animation_consts :: push_weight_max ;
+    
+    time_begin = time_to_begin ;
+    so_called_platform_math :: add_fracts ( time_end , time_begin , time_from_begin_to_end ) ;
+
+    so_called_common_engine_math_stateless :: easy_in_easy_out
+        ( weight
+        , time
+        , weight_min
+        , time_begin
+        , weight_max
+        , time_end
+        ) ;
+    
+    shy_guts :: logic_main_menu_selection_animation_push_weight_state :: weight = weight ;
 }
 
 void shy_guts :: reply_weight ( )
 {
+    so_called_message_common_logic_main_menu_selection_animation_push_weight_reply msg ;
+    msg . weight = shy_guts :: logic_main_menu_selection_animation_push_weight_state :: weight ;
+    so_called_sender_common_logic_main_menu_selection_animation_push_weight_reply :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_init )
