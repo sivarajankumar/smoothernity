@@ -37,10 +37,6 @@ void shy_guts :: reply_computed_transform ( )
 {
 }
 
-void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_init )
-{
-}
-
 void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_logic_main_menu_selection_animation_select_start )
 {
 }
