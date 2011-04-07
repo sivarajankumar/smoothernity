@@ -1,4 +1,4 @@
-class logic_application_fsm_inputs_type
+class shy_type_common_logic_application_fsm_inputs
 {
 public :
     so_called_type_platform_math_num_whole logic_amusement_created ;

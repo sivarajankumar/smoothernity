@@ -1,5 +1,6 @@
 #include "../logic/amusement/consts/shy_consts_injections.h"
 #include "../logic/application/consts/shy_consts_injections.h"
+#include "../logic/application/fsm/behaviour/shy_behaviour_injections.h"
 #include "../logic/blanket/animation/consts/shy_consts_injections.h"
 #include "../logic/blanket/consts/shy_consts_injections.h"
 #include "../logic/door/animation/consts/shy_consts_injections.h"
