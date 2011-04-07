@@ -273,11 +273,43 @@ const so_called_type_platform_math_num_fract so_called_common_logic_title_consts
 const so_called_type_platform_math_num_fract so_called_common_logic_title_consts :: scene_scale_min = so_called_platform_math :: init_num_fract ( 7 , 10 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_title_consts :: spin_radius_in_letters = so_called_platform_math :: init_num_fract ( 2 , 1 ) ;
 
+void so_called_common_logic_application_fsm_behaviour :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & )
+{
+}
+
 void so_called_common_logic_application_fsm_behaviour :: init ( )
 {
 }
 
+void so_called_common_logic_application_fsm_behaviour :: is_fsm_running ( so_called_type_platform_math_num_whole & )
+{
+}
+
+void so_called_common_logic_application_fsm_behaviour :: recalc_current_behaviour_inputs ( )
+{
+}
+
+void so_called_common_logic_application_fsm_behaviour :: reset_behaviour_input_events ( )
+{
+}
+
+void so_called_common_logic_application_fsm_behaviour :: run_fsm_begin ( )
+{
+}
+
+void so_called_common_logic_application_fsm_behaviour :: run_fsm_end ( )
+{
+}
+
 void so_called_common_logic_application_fsm_behaviour :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > )
+{
+}
+
+void so_called_common_logic_application_fsm_behaviour :: tick_all_fsms ( )
+{
+}
+
+void so_called_common_logic_application_fsm_behaviour :: update_fixed_behaviour_inputs ( )
 {
 }
 
