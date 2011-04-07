@@ -1,6 +1,10 @@
 class _shy_common_logic_application_fsm
 {
 public :
+    static void reset_input_events ( ) ;
+    static void recalc_current_inputs ( ) ;
+    static void determine_inputs_change ( so_called_type_platform_math_num_whole & ) ;
+    static void update_fixed_inputs ( ) ;
     static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_amusement_created ) ;
     static void receive ( so_called_message_common_logic_amusement_finished ) ;

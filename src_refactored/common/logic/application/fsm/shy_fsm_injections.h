@@ -14,6 +14,7 @@
 
 #include "../../../message/init/shy_init_injections.h"
 
+#include "../../../../injections/platform/math/type/num_whole/shy_num_whole.h"
 #include "../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_fsm.h"
