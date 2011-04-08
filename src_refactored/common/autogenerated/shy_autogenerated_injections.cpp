@@ -1,6 +1,7 @@
 #include "../engine/fsm/stateless/shy_stateless_injections.h"
 #include "../logic/amusement/consts/shy_consts_injections.h"
 #include "../logic/application/consts/shy_consts_injections.h"
+#include "../logic/application/fsm/actions/shy_actions_injections.h"
 #include "../logic/application/fsm/behaviour/shy_behaviour_injections.h"
 #include "../logic/blanket/animation/consts/shy_consts_injections.h"
 #include "../logic/blanket/consts/shy_consts_injections.h"
