@@ -273,6 +273,79 @@ const so_called_type_platform_math_num_fract so_called_common_logic_title_consts
 const so_called_type_platform_math_num_fract so_called_common_logic_title_consts :: scene_scale_min = so_called_platform_math :: init_num_fract ( 7 , 10 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_title_consts :: spin_radius_in_letters = so_called_platform_math :: init_num_fract ( 2 , 1 ) ;
 
+namespace shy_common_logic_application_fsm_behaviour_guts
+{
+    class type_behaviour_inputs
+    {
+    public :
+        so_called_type_platform_math_num_whole machine_amusement_generator_command_start ;
+        so_called_type_platform_math_num_whole machine_amusement_generator_state_is_finished ;
+        so_called_type_platform_math_num_whole machine_amusement_performer_command_start ;
+        so_called_type_platform_math_num_whole machine_amusement_performer_state_is_finished ;
+        so_called_type_platform_math_num_whole machine_game_performer_command_start ;
+        so_called_type_platform_math_num_whole machine_main_menu_generator_command_start ;
+        so_called_type_platform_math_num_whole machine_main_menu_generator_state_is_finished ;
+        so_called_type_platform_math_num_whole machine_main_menu_performer_command_start ;
+        so_called_type_platform_math_num_whole machine_main_menu_performer_state_is_finished ;
+        so_called_type_platform_math_num_whole machine_text_generator_command_start ;
+        so_called_type_platform_math_num_whole machine_text_generator_state_is_finished ;
+        so_called_type_platform_math_num_whole machine_title_generator_command_start ;
+        so_called_type_platform_math_num_whole machine_title_generator_state_is_finished ;
+        so_called_type_platform_math_num_whole machine_title_performer_command_start ;
+        so_called_type_platform_math_num_whole machine_title_performer_state_is_finished ;
+    } ;
+
+    namespace behaviour_actions
+    {
+        static void amusement_generator_command_start ( ) ;
+        static void amusement_performer_command_start ( ) ;
+        static void game_performer_command_start ( ) ;
+        static void main_menu_generator_command_start ( ) ;
+        static void main_menu_performer_command_start ( ) ;
+        static void text_generator_command_start ( ) ;
+        static void title_generator_command_start ( ) ;
+        static void title_performer_command_start ( ) ;
+    }
+
+    namespace state_environment
+    {
+        static so_called_type_platform_pointer_data < shy_common_logic_application_fsm_behaviour_guts :: type_behaviour_inputs > behaviour_inputs ;
+        static so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs ;
+    }
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: amusement_generator_command_start ( )
+{
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: amusement_performer_command_start ( )
+{
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: game_performer_command_start ( )
+{
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: main_menu_generator_command_start ( )
+{
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: main_menu_performer_command_start ( )
+{
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: text_generator_command_start ( )
+{
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: title_generator_command_start ( )
+{
+}
+
+void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: title_performer_command_start ( )
+{
+}
+
 void so_called_common_logic_application_fsm_behaviour :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & )
 {
 }
