@@ -312,6 +312,11 @@ namespace shy_common_logic_application_fsm_behaviour_guts
         static so_called_type_platform_pointer_data < shy_common_logic_application_fsm_behaviour_guts :: type_behaviour_inputs > behaviour_inputs ;
         static so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs ;
     }
+
+    class type_machine_amusement_generator_state_finished
+    : public so_called_type_common_engine_fsm_state
+    {
+    } ;
 }
 
 void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: amusement_generator_command_start ( )
