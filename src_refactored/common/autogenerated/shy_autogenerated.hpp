@@ -593,6 +593,21 @@ namespace shy_common_logic_application_fsm_behaviour_guts
         static so_called_type_platform_pointer_data < shy_common_logic_application_fsm_behaviour_guts :: type_behaviour_inputs > behaviour_inputs ;
         static so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs ;
     }
+
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_amusement_generator_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_amusement_performer_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_game_performer_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_generator_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_main_menu_generator_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_main_menu_performer_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_performer_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_text_generator_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_title_generator_state ;
+    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_title_performer_state ;
+
+    static so_called_type_platform_math_num_whole fsm_running ;
+    static type_behaviour_inputs current_behaviour_inputs ;
+    static type_behaviour_inputs fixed_behaviour_inputs ;
 }
 
 void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: amusement_generator_command_start ( )
