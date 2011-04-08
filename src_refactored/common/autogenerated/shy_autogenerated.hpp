@@ -725,8 +725,9 @@ void so_called_common_logic_application_fsm_behaviour :: run_fsm_end ( )
 {
 }
 
-void so_called_common_logic_application_fsm_behaviour :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > )
+void so_called_common_logic_application_fsm_behaviour :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs )
 {
+    shy_common_logic_application_fsm_behaviour_guts :: state_environment :: inputs = inputs ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: tick_all_fsms ( )
