@@ -24,8 +24,29 @@ void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
 {
 }
 
-void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_type_platform_math_num_whole & )
+void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )
 {
+    if ( so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_amusement_created , shy_guts :: fixed_inputs . logic_amusement_created )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_amusement_finished , shy_guts :: fixed_inputs . logic_amusement_finished )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_application_render , shy_guts :: fixed_inputs . logic_application_render )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_application_update , shy_guts :: fixed_inputs . logic_application_update )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_main_menu_created , shy_guts :: fixed_inputs . logic_main_menu_created )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_main_menu_finished , shy_guts :: fixed_inputs . logic_main_menu_finished )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_text_prepared , shy_guts :: fixed_inputs . logic_text_prepared )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_title_created , shy_guts :: fixed_inputs . logic_title_created )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . logic_title_finished , shy_guts :: fixed_inputs . logic_title_finished )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_amusement_disabled , shy_guts :: fixed_inputs . stage_amusement_disabled )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_amusement_enabled , shy_guts :: fixed_inputs . stage_amusement_enabled )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_main_menu_disabled , shy_guts :: fixed_inputs . stage_main_menu_disabled )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_main_menu_enabled , shy_guts :: fixed_inputs . stage_main_menu_enabled )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_title_disabled , shy_guts :: fixed_inputs . stage_title_disabled )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_title_enabled , shy_guts :: fixed_inputs . stage_title_enabled )
+       )
+    {
+        inputs_changed = so_called_platform_math_consts :: whole_false ;
+    }
+    else
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_application_fsm :: update_fixed_inputs ( )
