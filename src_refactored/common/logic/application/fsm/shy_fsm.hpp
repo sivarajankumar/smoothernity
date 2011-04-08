@@ -22,6 +22,36 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
 
 void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_amusement ) )
+    {
+        shy_guts :: current_inputs . stage_amusement_disabled = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: current_inputs . stage_amusement_enabled = so_called_platform_math_consts :: whole_false ;
+    }
+    else
+    {
+        shy_guts :: current_inputs . stage_amusement_disabled = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: current_inputs . stage_amusement_enabled = so_called_platform_math_consts :: whole_true ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_main_menu ) )
+    {
+        shy_guts :: current_inputs . stage_main_menu_disabled = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: current_inputs . stage_main_menu_enabled = so_called_platform_math_consts :: whole_false ;
+    }
+    else
+    {
+        shy_guts :: current_inputs . stage_main_menu_disabled = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: current_inputs . stage_main_menu_enabled = so_called_platform_math_consts :: whole_true ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_title ) )
+    {
+        shy_guts :: current_inputs . stage_title_disabled = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: current_inputs . stage_title_enabled = so_called_platform_math_consts :: whole_false ;
+    }
+    else
+    {
+        shy_guts :: current_inputs . stage_title_disabled = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: current_inputs . stage_title_enabled = so_called_platform_math_consts :: whole_true ;
+    }
 }
 
 void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )
@@ -51,6 +81,7 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_ty
 
 void _shy_common_logic_application_fsm :: update_fixed_inputs ( )
 {
+    shy_guts :: fixed_inputs = shy_guts :: current_inputs ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_message_common_init )
