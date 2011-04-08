@@ -650,8 +650,74 @@ void shy_common_logic_application_fsm_behaviour_guts :: behaviour_actions :: tit
     so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_performer_command_start , true ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & )
+void so_called_common_logic_application_fsm_behaviour :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )
 {
+    if ( so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_generator_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_amusement_generator_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_generator_state_is_finished 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_amusement_generator_state_is_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_performer_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_amusement_performer_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_performer_state_is_finished 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_amusement_performer_state_is_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_game_performer_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_game_performer_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_generator_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_main_menu_generator_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_generator_state_is_finished 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_main_menu_generator_state_is_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_performer_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_main_menu_performer_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_performer_state_is_finished 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_main_menu_performer_state_is_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_text_generator_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_text_generator_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_text_generator_state_is_finished 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_text_generator_state_is_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_generator_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_title_generator_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_generator_state_is_finished 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_title_generator_state_is_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_performer_command_start 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_title_performer_command_start 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_performer_state_is_finished 
+            , shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs . machine_title_performer_state_is_finished 
+            )
+       )
+    {
+        so_called_platform_math :: make_num_whole ( inputs_changed , false ) ;
+    }
+    else
+        so_called_platform_math :: make_num_whole ( inputs_changed , true ) ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: init ( )
