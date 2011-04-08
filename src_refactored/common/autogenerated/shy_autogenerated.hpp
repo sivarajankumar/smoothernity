@@ -715,6 +715,14 @@ void so_called_common_logic_application_fsm_behaviour :: recalc_current_behaviou
 
 void so_called_common_logic_application_fsm_behaviour :: reset_behaviour_input_events ( )
 {
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_generator_command_start , false ) ;
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_performer_command_start , false ) ;
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_game_performer_command_start , false ) ;
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_generator_command_start , false ) ;
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_performer_command_start , false ) ;
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_text_generator_command_start , false ) ;
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_generator_command_start , false ) ;
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_performer_command_start , false ) ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: run_fsm_begin ( )
