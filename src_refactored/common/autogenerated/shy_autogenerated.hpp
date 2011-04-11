@@ -777,6 +777,41 @@ void so_called_common_logic_application_fsm_behaviour :: is_fsm_running ( so_cal
 
 void so_called_common_logic_application_fsm_behaviour :: recalc_current_behaviour_inputs ( )
 {
+    so_called_platform_pointer :: is_bound_to 
+        ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_generator_state_is_finished 
+        , shy_common_logic_application_fsm_behaviour_guts :: machine_amusement_generator_state 
+        , shy_common_logic_application_fsm_behaviour_guts :: states :: amusement_generator_state_finished 
+        ) ;
+    so_called_platform_pointer :: is_bound_to 
+        ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_amusement_performer_state_is_finished 
+        , shy_common_logic_application_fsm_behaviour_guts :: machine_amusement_performer_state 
+        , shy_common_logic_application_fsm_behaviour_guts :: states :: amusement_performer_state_finished 
+        ) ;
+    so_called_platform_pointer :: is_bound_to 
+        ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_generator_state_is_finished 
+        , shy_common_logic_application_fsm_behaviour_guts :: machine_main_menu_generator_state 
+        , shy_common_logic_application_fsm_behaviour_guts :: states :: main_menu_generator_state_finished 
+        ) ;
+    so_called_platform_pointer :: is_bound_to 
+        ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_main_menu_performer_state_is_finished 
+        , shy_common_logic_application_fsm_behaviour_guts :: machine_main_menu_performer_state 
+        , shy_common_logic_application_fsm_behaviour_guts :: states :: main_menu_performer_state_finished 
+        ) ;
+    so_called_platform_pointer :: is_bound_to 
+        ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_text_generator_state_is_finished 
+        , shy_common_logic_application_fsm_behaviour_guts :: machine_text_generator_state 
+        , shy_common_logic_application_fsm_behaviour_guts :: states :: text_generator_state_finished 
+        ) ;
+    so_called_platform_pointer :: is_bound_to 
+        ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_generator_state_is_finished 
+        , shy_common_logic_application_fsm_behaviour_guts :: machine_title_generator_state 
+        , shy_common_logic_application_fsm_behaviour_guts :: states :: title_generator_state_finished 
+        ) ;
+    so_called_platform_pointer :: is_bound_to 
+        ( shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs . machine_title_performer_state_is_finished 
+        , shy_common_logic_application_fsm_behaviour_guts :: machine_title_performer_state 
+        , shy_common_logic_application_fsm_behaviour_guts :: states :: title_performer_state_finished 
+        ) ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: reset_behaviour_input_events ( )
