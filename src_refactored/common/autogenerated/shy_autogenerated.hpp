@@ -771,8 +771,9 @@ void so_called_common_logic_application_fsm_behaviour :: init ( )
         ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: is_fsm_running ( so_called_type_platform_math_num_whole & )
+void so_called_common_logic_application_fsm_behaviour :: is_fsm_running ( so_called_type_platform_math_num_whole & result )
 {
+    result = shy_common_logic_application_fsm_behaviour_guts :: fsm_running ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: recalc_current_behaviour_inputs ( )
@@ -828,10 +829,12 @@ void so_called_common_logic_application_fsm_behaviour :: reset_behaviour_input_e
 
 void so_called_common_logic_application_fsm_behaviour :: run_fsm_begin ( )
 {
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: fsm_running , true ) ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: run_fsm_end ( )
 {
+    so_called_platform_math :: make_num_whole ( shy_common_logic_application_fsm_behaviour_guts :: fsm_running , false ) ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs )
@@ -841,10 +844,21 @@ void so_called_common_logic_application_fsm_behaviour :: set_inputs ( so_called_
 
 void so_called_common_logic_application_fsm_behaviour :: tick_all_fsms ( )
 {
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_amusement_generator_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_amusement_performer_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_game_performer_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_generator_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_main_menu_generator_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_main_menu_performer_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_performer_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_text_generator_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_title_generator_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_common_logic_application_fsm_behaviour_guts :: machine_title_performer_state ) ;
 }
 
 void so_called_common_logic_application_fsm_behaviour :: update_fixed_behaviour_inputs ( )
 {
+    shy_common_logic_application_fsm_behaviour_guts :: fixed_behaviour_inputs = shy_common_logic_application_fsm_behaviour_guts :: current_behaviour_inputs ;
 }
 
 void shy_common_logic_application_fsm_behaviour_guts :: type_machine_amusement_generator_state_generating :: on_entry ( )
