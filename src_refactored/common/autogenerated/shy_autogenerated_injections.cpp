@@ -2,7 +2,6 @@
 #include "../logic/application/fsm/actions/shy_actions_injections.h"
 #include "../logic/application/fsm/behaviour/shy_behaviour_injections.h"
 #include "../logic/door/animation/consts/shy_consts_injections.h"
-#include "../logic/door/consts/shy_consts_injections.h"
 #include "../logic/main_menu/animation/consts/shy_consts_injections.h"
 #include "../logic/main_menu/letters/animation/consts/shy_consts_injections.h"
 #include "../logic/main_menu/letters/layout/consts/shy_consts_injections.h"
