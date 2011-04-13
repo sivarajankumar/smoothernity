@@ -1,10 +1,3 @@
-const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_consts :: mesh_color_a = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
-const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_consts :: mesh_color_b = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_consts :: mesh_color_g = so_called_platform_math :: init_num_fract ( 1 , 4 ) ;
-const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_consts :: mesh_color_r = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_consts :: mesh_size = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
-const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_consts :: selected_rect_vertical_scale = so_called_platform_math :: init_num_fract ( 20 , 10 ) ;
-
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_animation_consts :: appear_horizontal_scale_time_from_begin_to_end = so_called_platform_math :: init_num_fract ( 1 , 10 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_animation_consts :: appear_horizontal_scale_time_to_begin = so_called_platform_math :: init_num_fract ( 0 , 10 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_selection_animation_consts :: appear_horizontal_scale_value_begin = so_called_platform_math :: init_num_fract ( 8 , 10 ) ;
