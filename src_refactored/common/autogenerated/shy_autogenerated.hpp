@@ -1,4 +1,3 @@
-const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_animation_consts :: shake_shift_x_amplitude_begin = so_called_platform_math :: init_num_fract ( 20 , 1000 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_animation_consts :: appear_delay_per_col_in_seconds = so_called_platform_math :: init_num_fract ( 2 , 100 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_animation_consts :: appear_delay_per_row_in_seconds = so_called_platform_math :: init_num_fract ( 5 , 100 ) ;
 const so_called_type_platform_math_num_fract so_called_common_logic_main_menu_letters_animation_consts :: appear_scale_begin = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
