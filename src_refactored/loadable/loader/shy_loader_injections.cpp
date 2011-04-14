@@ -1,5 +1,10 @@
-#include "./shy_loader_injections.h"
+#ifdef shy_build_loadable_way
 
-#include "../consts_binder/shy_consts_binder_injections.h"
+    #include "./shy_loader_injections.h"
 
-#include "./shy_loader.hpp"
+    #include "../consts_binder/shy_consts_binder_injections.h"
+
+    #include "./shy_loader.hpp"
+
+#endif
+
