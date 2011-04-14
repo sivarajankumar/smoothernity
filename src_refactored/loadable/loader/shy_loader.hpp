@@ -18,9 +18,9 @@ void shy_guts :: read_input ( )
     {
         so_called_std_string line ;
         so_called_std_getline ( so_called_std_cin , line ) ;
-//        so_called_loadable_parser :: parse ( line ) ;
+        so_called_loadable_parser :: parse ( line ) ;
     }
-//    so_called_loadable_parser :: terminate ( ) ;
+    so_called_loadable_parser :: terminate ( ) ;
 }
 
 void shy_guts :: write_output ( )
@@ -30,7 +30,7 @@ void shy_guts :: write_output ( )
     if ( error . empty ( ) )
     {
         so_called_std_string generated ;
-//        so_called_loadable_generator :: generate ( generated ) ;
+        so_called_loadable_generator :: generate ( generated ) ;
         so_called_std_cout << generated << so_called_std_endl ;
     }
     else
@@ -39,7 +39,7 @@ void shy_guts :: write_output ( )
 
 void shy_guts :: use_loaded_data ( )
 {
-//    so_called_loadable_consts_assigner :: assign ( ) ;
+    so_called_loadable_consts_assigner :: assign ( ) ;
 }
 
 void shy_guts :: get_error ( so_called_std_string & error )
@@ -47,8 +47,8 @@ void shy_guts :: get_error ( so_called_std_string & error )
     so_called_std_string parser_error ;
     so_called_std_string consts_assigner_error ;
 
-//    so_called_loadable_parser :: get_error ( parser_error ) ;
-//    so_called_loadable_consts_assigner :: get_error ( consts_assigner_error ) ;
+    so_called_loadable_parser :: get_error ( parser_error ) ;
+    so_called_loadable_consts_assigner :: get_error ( consts_assigner_error ) ;
 
     if ( ! parser_error . empty ( ) )
         error = parser_error ;
