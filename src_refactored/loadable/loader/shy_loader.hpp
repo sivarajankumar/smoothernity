@@ -9,7 +9,7 @@ namespace shy_guts
 
 void shy_guts :: prepare ( )
 {
-    so_called_loadable_consts_binder :: bind_all ( ) ;
+    so_called_loadable_consts_reflection :: prepare ( ) ;
 }
 
 void shy_guts :: read_input ( )

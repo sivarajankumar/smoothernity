@@ -3,7 +3,7 @@
     #include "./shy_loader_injections.h"
 
     #include "../consts/assigner/shy_assigner_injections.h"
-    #include "../consts/binder/shy_binder_injections.h"
+    #include "../consts/reflection/shy_reflection_injections.h"
     #include "../generator/shy_generator_injections.h"
     #include "../parser/shy_parser_injections.h"
 
