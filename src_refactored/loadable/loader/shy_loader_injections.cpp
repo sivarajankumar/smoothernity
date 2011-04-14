@@ -4,6 +4,8 @@
 
     #include "../consts_binder/shy_consts_binder_injections.h"
 
+    #include "../../injections/std/shy_std.h"
+
     #include "./shy_loader.hpp"
 
 #endif
