@@ -1,5 +1,6 @@
 void shy_facade_loadable :: init ( )
 {
+    so_called_loadable_loader :: load ( ) ;
     so_called_platform_scheduler :: init ( ) ;
     so_called_sender_common_init :: send ( so_called_message_common_init ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
