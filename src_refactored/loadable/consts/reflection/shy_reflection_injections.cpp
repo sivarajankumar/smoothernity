@@ -15,6 +15,7 @@
     #include "./logic_main_menu_selection_animation/shy_logic_main_menu_selection_animation_injections.h"
     #include "./logic_observer_animation/shy_logic_observer_animation_injections.h"
     #include "./logic_ortho/shy_logic_ortho_injections.h"
+    #include "./logic_perspective/shy_logic_perspective_injections.h"
 
     #include "./shy_reflection_injections.h"
     #include "./shy_reflection.hpp"
