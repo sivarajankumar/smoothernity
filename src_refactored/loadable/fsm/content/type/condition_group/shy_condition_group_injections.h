@@ -1,0 +1,8 @@
+#ifndef _shy_type_loadable_fsm_content_condition_group_injections_included
+#define _shy_type_loadable_fsm_content_condition_group_injections_included
+
+#include "./shy_condition_group.h"
+
+typedef shy_type_loadable_fsm_content_condition_group so_called_type_loadable_fsm_content_condition_group ;
+
+#endif
