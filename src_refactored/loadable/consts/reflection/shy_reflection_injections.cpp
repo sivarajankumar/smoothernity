@@ -6,6 +6,7 @@
     #include "./logic_blanket_animation/shy_logic_blanket_animation_injections.h"
     #include "./logic_door/shy_logic_door_injections.h"
     #include "./logic_door_animation/shy_logic_door_animation_injections.h"
+    #include "./logic_fidget/shy_logic_fidget_injections.h"
 
     #include "./shy_reflection_injections.h"
     #include "./shy_reflection.hpp"
