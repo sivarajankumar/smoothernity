@@ -10,6 +10,7 @@
     #include "./logic_main_menu_animation/shy_logic_main_menu_animation_injections.h"
     #include "./logic_main_menu_letters_animation/shy_logic_main_menu_letters_animation_injections.h"
     #include "./logic_main_menu_letters_layout/shy_logic_main_menu_letters_layout_injections.h"
+    #include "./logic_main_menu_letters_meshes/shy_logic_main_menu_letters_meshes_injections.h"
 
     #include "./shy_reflection_injections.h"
     #include "./shy_reflection.hpp"
