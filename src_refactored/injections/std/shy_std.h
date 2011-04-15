@@ -5,6 +5,7 @@
 
     #include <iostream>
     #include <map>
+    #include <set>
     #include <string>
 
     #define so_called_std_cerr std :: cerr
@@ -13,6 +14,7 @@
     #define so_called_std_endl std :: endl
     #define so_called_std_getline std :: getline
     #define so_called_std_map std :: map
+    #define so_called_std_set std :: set
 
     typedef std :: string so_called_std_string ;
 
