@@ -1,0 +1,8 @@
+#ifndef _shy_type_loadable_consts_content_value_whole_injections_included
+#define _shy_type_loadable_consts_content_value_whole_injections_included
+
+#include "./shy_value_whole.h"
+
+typedef shy_type_loadable_consts_content_value_whole so_called_type_loadable_consts_content_value_whole ;
+
+#endif
