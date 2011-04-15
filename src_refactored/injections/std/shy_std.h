@@ -7,6 +7,7 @@
     #include <map>
     #include <set>
     #include <string>
+    #include <vector>
 
     #define so_called_std_cerr std :: cerr
     #define so_called_std_cin std :: cin
@@ -15,6 +16,7 @@
     #define so_called_std_getline std :: getline
     #define so_called_std_map std :: map
     #define so_called_std_set std :: set
+    #define so_called_std_vector std :: vector
 
     typedef std :: string so_called_std_string ;
 
