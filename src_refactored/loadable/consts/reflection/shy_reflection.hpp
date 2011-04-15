@@ -2,7 +2,7 @@ void shy_loadable_consts_reflection :: prepare ( )
 {
     so_called_loadable_consts_reflection_logic_amusement :: prepare ( ) ;
     so_called_loadable_consts_reflection_logic_application :: prepare ( ) ;
-//    so_called_loadable_consts_reflection_logic_blanket_animation :: prepare ( ) ;
+    so_called_loadable_consts_reflection_logic_blanket_animation :: prepare ( ) ;
 //    so_called_loadable_consts_reflection_logic_blanket :: prepare ( ) ;
 //    so_called_loadable_consts_reflection_logic_door_animation :: prepare ( ) ;
 //    so_called_loadable_consts_reflection_logic_door :: prepare ( ) ;
