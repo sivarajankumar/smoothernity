@@ -84,6 +84,98 @@
 		8812CF3B117DE80B008F67D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
 		8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
 		8812CF52117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */; };
+		882229631358639400BBDC77 /* shy_assigner.h in Headers */ = {isa = PBXBuildFile; fileRef = 882228F11358639400BBDC77 /* shy_assigner.h */; };
+		882229641358639400BBDC77 /* shy_assigner.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882228F21358639400BBDC77 /* shy_assigner.hpp */; };
+		882229651358639400BBDC77 /* shy_assigner_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882228F31358639400BBDC77 /* shy_assigner_injections.cpp */; };
+		882229661358639400BBDC77 /* shy_assigner_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882228F41358639400BBDC77 /* shy_assigner_injections.h */; };
+		882229671358639400BBDC77 /* shy_binder.h in Headers */ = {isa = PBXBuildFile; fileRef = 882228F61358639400BBDC77 /* shy_binder.h */; };
+		882229681358639400BBDC77 /* shy_binder.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882228F71358639400BBDC77 /* shy_binder.hpp */; };
+		882229691358639400BBDC77 /* shy_binder_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882228F81358639400BBDC77 /* shy_binder_injections.cpp */; };
+		8822296A1358639400BBDC77 /* shy_binder_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882228F91358639400BBDC77 /* shy_binder_injections.h */; };
+		8822296B1358639400BBDC77 /* shy_logic_amusement.h in Headers */ = {isa = PBXBuildFile; fileRef = 882228FC1358639400BBDC77 /* shy_logic_amusement.h */; };
+		8822296C1358639400BBDC77 /* shy_logic_amusement.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882228FD1358639400BBDC77 /* shy_logic_amusement.hpp */; };
+		8822296D1358639400BBDC77 /* shy_logic_amusement_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882228FE1358639400BBDC77 /* shy_logic_amusement_injections.cpp */; };
+		8822296E1358639400BBDC77 /* shy_logic_amusement_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882228FF1358639400BBDC77 /* shy_logic_amusement_injections.h */; };
+		8822296F1358639400BBDC77 /* shy_logic_application.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229011358639400BBDC77 /* shy_logic_application.h */; };
+		882229701358639400BBDC77 /* shy_logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229021358639400BBDC77 /* shy_logic_application.hpp */; };
+		882229711358639400BBDC77 /* shy_logic_application_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229031358639400BBDC77 /* shy_logic_application_injections.cpp */; };
+		882229721358639400BBDC77 /* shy_logic_application_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229041358639400BBDC77 /* shy_logic_application_injections.h */; };
+		882229731358639400BBDC77 /* shy_logic_blanket.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229061358639400BBDC77 /* shy_logic_blanket.h */; };
+		882229741358639400BBDC77 /* shy_logic_blanket.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229071358639400BBDC77 /* shy_logic_blanket.hpp */; };
+		882229751358639400BBDC77 /* shy_logic_blanket_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229081358639400BBDC77 /* shy_logic_blanket_injections.cpp */; };
+		882229761358639400BBDC77 /* shy_logic_blanket_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229091358639400BBDC77 /* shy_logic_blanket_injections.h */; };
+		882229771358639400BBDC77 /* shy_logic_blanket_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822290B1358639400BBDC77 /* shy_logic_blanket_animation.h */; };
+		882229781358639400BBDC77 /* shy_logic_blanket_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8822290C1358639400BBDC77 /* shy_logic_blanket_animation.hpp */; };
+		882229791358639400BBDC77 /* shy_logic_blanket_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822290D1358639400BBDC77 /* shy_logic_blanket_animation_injections.h */; };
+		8822297A1358639400BBDC77 /* shy_logic_blanket_animation_injections_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8822290E1358639400BBDC77 /* shy_logic_blanket_animation_injections_injections.cpp */; };
+		8822297B1358639400BBDC77 /* shy_logic_door.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229101358639400BBDC77 /* shy_logic_door.h */; };
+		8822297C1358639400BBDC77 /* shy_logic_door.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229111358639400BBDC77 /* shy_logic_door.hpp */; };
+		8822297D1358639400BBDC77 /* shy_logic_door_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229121358639400BBDC77 /* shy_logic_door_injections.cpp */; };
+		8822297E1358639400BBDC77 /* shy_logic_door_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229131358639400BBDC77 /* shy_logic_door_injections.h */; };
+		8822297F1358639400BBDC77 /* shy_logic_door_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229151358639400BBDC77 /* shy_logic_door_animation.h */; };
+		882229801358639400BBDC77 /* shy_logic_door_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229161358639400BBDC77 /* shy_logic_door_animation.hpp */; };
+		882229811358639400BBDC77 /* shy_logic_door_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229171358639400BBDC77 /* shy_logic_door_animation_injections.cpp */; };
+		882229821358639400BBDC77 /* shy_logic_door_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229181358639400BBDC77 /* shy_logic_door_animation_injections.h */; };
+		882229831358639400BBDC77 /* shy_logic_fidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822291A1358639400BBDC77 /* shy_logic_fidget.h */; };
+		882229841358639400BBDC77 /* shy_logic_fidget.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8822291B1358639400BBDC77 /* shy_logic_fidget.hpp */; };
+		882229851358639400BBDC77 /* shy_logic_fidget_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8822291C1358639400BBDC77 /* shy_logic_fidget_injections.cpp */; };
+		882229861358639400BBDC77 /* shy_logic_fidget_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822291D1358639400BBDC77 /* shy_logic_fidget_injections.h */; };
+		882229871358639400BBDC77 /* shy_logic_main_menu_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822291F1358639400BBDC77 /* shy_logic_main_menu_animation.h */; };
+		882229881358639400BBDC77 /* shy_logic_main_menu_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229201358639400BBDC77 /* shy_logic_main_menu_animation.hpp */; };
+		882229891358639400BBDC77 /* shy_logic_main_menu_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229211358639400BBDC77 /* shy_logic_main_menu_animation_injections.cpp */; };
+		8822298A1358639400BBDC77 /* shy_logic_main_menu_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229221358639400BBDC77 /* shy_logic_main_menu_animation_injections.h */; };
+		8822298B1358639400BBDC77 /* shy_logic_main_menu_letters_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229241358639400BBDC77 /* shy_logic_main_menu_letters_animation.h */; };
+		8822298C1358639400BBDC77 /* shy_logic_main_menu_letters_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229251358639400BBDC77 /* shy_logic_main_menu_letters_animation.hpp */; };
+		8822298D1358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229261358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.cpp */; };
+		8822298E1358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229271358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.h */; };
+		8822298F1358639400BBDC77 /* shy_logic_main_menu_letters_layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229291358639400BBDC77 /* shy_logic_main_menu_letters_layout.h */; };
+		882229901358639400BBDC77 /* shy_logic_main_menu_letters_layout.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8822292A1358639400BBDC77 /* shy_logic_main_menu_letters_layout.hpp */; };
+		882229911358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8822292B1358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.cpp */; };
+		882229921358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822292C1358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.h */; };
+		882229931358639400BBDC77 /* shy_logic_main_menu_letters_meshes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822292E1358639400BBDC77 /* shy_logic_main_menu_letters_meshes.h */; };
+		882229941358639400BBDC77 /* shy_logic_main_menu_letters_meshes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8822292F1358639400BBDC77 /* shy_logic_main_menu_letters_meshes.hpp */; };
+		882229951358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229301358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.cpp */; };
+		882229961358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229311358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.h */; };
+		882229971358639400BBDC77 /* shy_logic_main_menu_selection.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229331358639400BBDC77 /* shy_logic_main_menu_selection.h */; };
+		882229981358639400BBDC77 /* shy_logic_main_menu_selection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229341358639400BBDC77 /* shy_logic_main_menu_selection.hpp */; };
+		882229991358639400BBDC77 /* shy_logic_main_menu_selection_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229351358639400BBDC77 /* shy_logic_main_menu_selection_injections.cpp */; };
+		8822299A1358639400BBDC77 /* shy_logic_main_menu_selection_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229361358639400BBDC77 /* shy_logic_main_menu_selection_injections.h */; };
+		8822299B1358639400BBDC77 /* shy_logic_main_menu_selection_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229381358639400BBDC77 /* shy_logic_main_menu_selection_animation.h */; };
+		8822299C1358639400BBDC77 /* shy_logic_main_menu_selection_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229391358639400BBDC77 /* shy_logic_main_menu_selection_animation.hpp */; };
+		8822299D1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8822293A1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.cpp */; };
+		8822299E1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822293B1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.h */; };
+		8822299F1358639400BBDC77 /* shy_logic_observer_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822293D1358639400BBDC77 /* shy_logic_observer_animation.h */; };
+		882229A01358639400BBDC77 /* shy_logic_observer_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8822293E1358639400BBDC77 /* shy_logic_observer_animation.hpp */; };
+		882229A11358639400BBDC77 /* shy_logic_observer_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8822293F1358639400BBDC77 /* shy_logic_observer_animation_injections.cpp */; };
+		882229A21358639400BBDC77 /* shy_logic_observer_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229401358639400BBDC77 /* shy_logic_observer_animation_injections.h */; };
+		882229A31358639400BBDC77 /* shy_logic_ortho.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229421358639400BBDC77 /* shy_logic_ortho.h */; };
+		882229A41358639400BBDC77 /* shy_logic_ortho.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229431358639400BBDC77 /* shy_logic_ortho.hpp */; };
+		882229A51358639400BBDC77 /* shy_logic_ortho_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229441358639400BBDC77 /* shy_logic_ortho_injections.cpp */; };
+		882229A61358639400BBDC77 /* shy_logic_ortho_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229451358639400BBDC77 /* shy_logic_ortho_injections.h */; };
+		882229A71358639400BBDC77 /* shy_logic_perspective.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229471358639400BBDC77 /* shy_logic_perspective.h */; };
+		882229A81358639400BBDC77 /* shy_logic_perspective.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229481358639400BBDC77 /* shy_logic_perspective.hpp */; };
+		882229A91358639400BBDC77 /* shy_logic_perspective_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229491358639400BBDC77 /* shy_logic_perspective_injections.cpp */; };
+		882229AA1358639400BBDC77 /* shy_logic_perspective_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822294A1358639400BBDC77 /* shy_logic_perspective_injections.h */; };
+		882229AB1358639400BBDC77 /* shy_logic_room.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822294C1358639400BBDC77 /* shy_logic_room.h */; };
+		882229AC1358639400BBDC77 /* shy_logic_room.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8822294D1358639400BBDC77 /* shy_logic_room.hpp */; };
+		882229AD1358639400BBDC77 /* shy_logic_room_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8822294E1358639400BBDC77 /* shy_logic_room_injections.cpp */; };
+		882229AE1358639400BBDC77 /* shy_logic_room_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822294F1358639400BBDC77 /* shy_logic_room_injections.h */; };
+		882229AF1358639400BBDC77 /* shy_reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229501358639400BBDC77 /* shy_reflection.h */; };
+		882229B01358639400BBDC77 /* shy_reflection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229511358639400BBDC77 /* shy_reflection.hpp */; };
+		882229B11358639400BBDC77 /* shy_reflection_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229521358639400BBDC77 /* shy_reflection_injections.cpp */; };
+		882229B21358639400BBDC77 /* shy_reflection_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229531358639400BBDC77 /* shy_reflection_injections.h */; };
+		882229B31358639400BBDC77 /* shy_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229551358639400BBDC77 /* shy_generator.h */; };
+		882229B41358639400BBDC77 /* shy_generator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229561358639400BBDC77 /* shy_generator.hpp */; };
+		882229B51358639400BBDC77 /* shy_generator_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229571358639400BBDC77 /* shy_generator_injections.cpp */; };
+		882229B61358639400BBDC77 /* shy_generator_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229581358639400BBDC77 /* shy_generator_injections.h */; };
+		882229B71358639400BBDC77 /* shy_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822295A1358639400BBDC77 /* shy_loader.h */; };
+		882229B81358639400BBDC77 /* shy_loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8822295B1358639400BBDC77 /* shy_loader.hpp */; };
+		882229B91358639400BBDC77 /* shy_loader_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8822295C1358639400BBDC77 /* shy_loader_injections.cpp */; };
+		882229BA1358639400BBDC77 /* shy_loader_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822295D1358639400BBDC77 /* shy_loader_injections.h */; };
+		882229BB1358639400BBDC77 /* shy_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 8822295F1358639400BBDC77 /* shy_parser.h */; };
+		882229BC1358639400BBDC77 /* shy_parser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 882229601358639400BBDC77 /* shy_parser.hpp */; };
+		882229BD1358639400BBDC77 /* shy_parser_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882229611358639400BBDC77 /* shy_parser_injections.cpp */; };
+		882229BE1358639400BBDC77 /* shy_parser_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882229621358639400BBDC77 /* shy_parser_injections.h */; };
 		882EC11312E774C200B57BB7 /* shy_conditions_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882EC07412E774C200B57BB7 /* shy_conditions_injections.h */; };
 		882EC11412E774C200B57BB7 /* shy_conditions_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 882EC07512E774C200B57BB7 /* shy_conditions_injections.mm */; };
 		882EC11512E774C200B57BB7 /* shy_insider_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 882EC07812E774C200B57BB7 /* shy_insider_injections.h */; };
@@ -284,94 +376,6 @@
 		888ECF5D12E8811A007E37C0 /* shy_data.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 888ECF0712E8811A007E37C0 /* shy_data.hpp */; };
 		888ECF5E12E8811A007E37C0 /* shy_data_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 888ECF0812E8811A007E37C0 /* shy_data_injections.h */; };
 		888ECF5F12E8811A007E37C0 /* shy_data_injections.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 888ECF0912E8811A007E37C0 /* shy_data_injections.hpp */; };
-		889B1B621358627100042EB6 /* shy_assigner.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1AF51358627000042EB6 /* shy_assigner.h */; };
-		889B1B631358627100042EB6 /* shy_assigner.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1AF61358627000042EB6 /* shy_assigner.hpp */; };
-		889B1B641358627100042EB6 /* shy_assigner_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1AF71358627000042EB6 /* shy_assigner_injections.cpp */; };
-		889B1B651358627100042EB6 /* shy_assigner_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1AF81358627000042EB6 /* shy_assigner_injections.h */; };
-		889B1B661358627100042EB6 /* shy_binder.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1AFA1358627000042EB6 /* shy_binder.h */; };
-		889B1B671358627100042EB6 /* shy_binder.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1AFB1358627000042EB6 /* shy_binder.hpp */; };
-		889B1B681358627100042EB6 /* shy_binder_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1AFC1358627000042EB6 /* shy_binder_injections.cpp */; };
-		889B1B691358627100042EB6 /* shy_binder_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1AFD1358627000042EB6 /* shy_binder_injections.h */; };
-		889B1B6A1358627100042EB6 /* shy_logic_amusement.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B001358627000042EB6 /* shy_logic_amusement.h */; };
-		889B1B6B1358627100042EB6 /* shy_logic_amusement.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B011358627000042EB6 /* shy_logic_amusement.hpp */; };
-		889B1B6C1358627100042EB6 /* shy_logic_amusement_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B021358627000042EB6 /* shy_logic_amusement_injections.cpp */; };
-		889B1B6D1358627100042EB6 /* shy_logic_amusement_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B031358627000042EB6 /* shy_logic_amusement_injections.h */; };
-		889B1B6E1358627100042EB6 /* shy_logic_application.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B051358627000042EB6 /* shy_logic_application.h */; };
-		889B1B6F1358627100042EB6 /* shy_logic_application.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B061358627000042EB6 /* shy_logic_application.hpp */; };
-		889B1B701358627100042EB6 /* shy_logic_application_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B071358627000042EB6 /* shy_logic_application_injections.cpp */; };
-		889B1B711358627100042EB6 /* shy_logic_application_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B081358627000042EB6 /* shy_logic_application_injections.h */; };
-		889B1B721358627100042EB6 /* shy_logic_blanket.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B0A1358627000042EB6 /* shy_logic_blanket.h */; };
-		889B1B731358627100042EB6 /* shy_logic_blanket.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B0B1358627000042EB6 /* shy_logic_blanket.hpp */; };
-		889B1B741358627100042EB6 /* shy_logic_blanket_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B0C1358627000042EB6 /* shy_logic_blanket_injections.cpp */; };
-		889B1B751358627100042EB6 /* shy_logic_blanket_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B0D1358627000042EB6 /* shy_logic_blanket_injections.h */; };
-		889B1B761358627100042EB6 /* shy_logic_blanket_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B0F1358627000042EB6 /* shy_logic_blanket_animation.h */; };
-		889B1B771358627100042EB6 /* shy_logic_blanket_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B101358627000042EB6 /* shy_logic_blanket_animation.hpp */; };
-		889B1B781358627100042EB6 /* shy_logic_blanket_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B111358627000042EB6 /* shy_logic_blanket_animation_injections.h */; };
-		889B1B791358627100042EB6 /* shy_logic_blanket_animation_injections_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B121358627000042EB6 /* shy_logic_blanket_animation_injections_injections.cpp */; };
-		889B1B7A1358627100042EB6 /* shy_logic_door.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B141358627000042EB6 /* shy_logic_door.h */; };
-		889B1B7B1358627100042EB6 /* shy_logic_door.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B151358627000042EB6 /* shy_logic_door.hpp */; };
-		889B1B7C1358627100042EB6 /* shy_logic_door_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B161358627000042EB6 /* shy_logic_door_injections.cpp */; };
-		889B1B7D1358627100042EB6 /* shy_logic_door_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B171358627000042EB6 /* shy_logic_door_injections.h */; };
-		889B1B7E1358627100042EB6 /* shy_logic_door_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B191358627000042EB6 /* shy_logic_door_animation.h */; };
-		889B1B7F1358627100042EB6 /* shy_logic_door_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B1A1358627000042EB6 /* shy_logic_door_animation.hpp */; };
-		889B1B801358627100042EB6 /* shy_logic_door_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B1B1358627000042EB6 /* shy_logic_door_animation_injections.cpp */; };
-		889B1B811358627100042EB6 /* shy_logic_door_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B1C1358627000042EB6 /* shy_logic_door_animation_injections.h */; };
-		889B1B821358627100042EB6 /* shy_logic_fidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B1E1358627000042EB6 /* shy_logic_fidget.h */; };
-		889B1B831358627100042EB6 /* shy_logic_fidget.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B1F1358627000042EB6 /* shy_logic_fidget.hpp */; };
-		889B1B841358627100042EB6 /* shy_logic_fidget_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B201358627000042EB6 /* shy_logic_fidget_injections.cpp */; };
-		889B1B851358627100042EB6 /* shy_logic_fidget_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B211358627000042EB6 /* shy_logic_fidget_injections.h */; };
-		889B1B861358627100042EB6 /* shy_logic_main_menu_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B231358627000042EB6 /* shy_logic_main_menu_animation.h */; };
-		889B1B871358627100042EB6 /* shy_logic_main_menu_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B241358627000042EB6 /* shy_logic_main_menu_animation.hpp */; };
-		889B1B881358627100042EB6 /* shy_logic_main_menu_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B251358627000042EB6 /* shy_logic_main_menu_animation_injections.cpp */; };
-		889B1B891358627100042EB6 /* shy_logic_main_menu_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B261358627000042EB6 /* shy_logic_main_menu_animation_injections.h */; };
-		889B1B8A1358627100042EB6 /* shy_logic_main_menu_letters_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B281358627000042EB6 /* shy_logic_main_menu_letters_animation.h */; };
-		889B1B8B1358627100042EB6 /* shy_logic_main_menu_letters_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B291358627000042EB6 /* shy_logic_main_menu_letters_animation.hpp */; };
-		889B1B8C1358627100042EB6 /* shy_logic_main_menu_letters_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B2A1358627000042EB6 /* shy_logic_main_menu_letters_animation_injections.cpp */; };
-		889B1B8D1358627100042EB6 /* shy_logic_main_menu_letters_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B2B1358627000042EB6 /* shy_logic_main_menu_letters_animation_injections.h */; };
-		889B1B8E1358627100042EB6 /* shy_logic_main_menu_letters_layout.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B2D1358627000042EB6 /* shy_logic_main_menu_letters_layout.h */; };
-		889B1B8F1358627100042EB6 /* shy_logic_main_menu_letters_layout.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B2E1358627000042EB6 /* shy_logic_main_menu_letters_layout.hpp */; };
-		889B1B901358627100042EB6 /* shy_logic_main_menu_letters_layout_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B2F1358627000042EB6 /* shy_logic_main_menu_letters_layout_injections.cpp */; };
-		889B1B911358627100042EB6 /* shy_logic_main_menu_letters_layout_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B301358627000042EB6 /* shy_logic_main_menu_letters_layout_injections.h */; };
-		889B1B921358627100042EB6 /* shy_logic_main_menu_letters_meshes.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B321358627000042EB6 /* shy_logic_main_menu_letters_meshes.h */; };
-		889B1B931358627100042EB6 /* shy_logic_main_menu_letters_meshes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B331358627000042EB6 /* shy_logic_main_menu_letters_meshes.hpp */; };
-		889B1B941358627100042EB6 /* shy_logic_main_menu_letters_meshes_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B341358627000042EB6 /* shy_logic_main_menu_letters_meshes_injections.cpp */; };
-		889B1B951358627100042EB6 /* shy_logic_main_menu_letters_meshes_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B351358627000042EB6 /* shy_logic_main_menu_letters_meshes_injections.h */; };
-		889B1B961358627100042EB6 /* shy_logic_main_menu_selection.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B371358627000042EB6 /* shy_logic_main_menu_selection.h */; };
-		889B1B971358627100042EB6 /* shy_logic_main_menu_selection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B381358627000042EB6 /* shy_logic_main_menu_selection.hpp */; };
-		889B1B981358627100042EB6 /* shy_logic_main_menu_selection_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B391358627000042EB6 /* shy_logic_main_menu_selection_injections.cpp */; };
-		889B1B991358627100042EB6 /* shy_logic_main_menu_selection_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B3A1358627000042EB6 /* shy_logic_main_menu_selection_injections.h */; };
-		889B1B9A1358627100042EB6 /* shy_logic_main_menu_selection_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B3C1358627000042EB6 /* shy_logic_main_menu_selection_animation.h */; };
-		889B1B9B1358627100042EB6 /* shy_logic_main_menu_selection_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B3D1358627000042EB6 /* shy_logic_main_menu_selection_animation.hpp */; };
-		889B1B9C1358627100042EB6 /* shy_logic_main_menu_selection_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B3E1358627000042EB6 /* shy_logic_main_menu_selection_animation_injections.cpp */; };
-		889B1B9D1358627100042EB6 /* shy_logic_main_menu_selection_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B3F1358627000042EB6 /* shy_logic_main_menu_selection_animation_injections.h */; };
-		889B1B9E1358627100042EB6 /* shy_logic_observer_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B411358627000042EB6 /* shy_logic_observer_animation.h */; };
-		889B1B9F1358627100042EB6 /* shy_logic_observer_animation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B421358627000042EB6 /* shy_logic_observer_animation.hpp */; };
-		889B1BA01358627100042EB6 /* shy_logic_observer_animation_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B431358627000042EB6 /* shy_logic_observer_animation_injections.cpp */; };
-		889B1BA11358627100042EB6 /* shy_logic_observer_animation_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B441358627000042EB6 /* shy_logic_observer_animation_injections.h */; };
-		889B1BA21358627100042EB6 /* shy_logic_ortho.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B461358627000042EB6 /* shy_logic_ortho.h */; };
-		889B1BA31358627100042EB6 /* shy_logic_ortho.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B471358627000042EB6 /* shy_logic_ortho.hpp */; };
-		889B1BA41358627100042EB6 /* shy_logic_ortho_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B481358627000042EB6 /* shy_logic_ortho_injections.cpp */; };
-		889B1BA51358627100042EB6 /* shy_logic_ortho_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B491358627000042EB6 /* shy_logic_ortho_injections.h */; };
-		889B1BA61358627100042EB6 /* shy_logic_perspective.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B4B1358627000042EB6 /* shy_logic_perspective.h */; };
-		889B1BA71358627100042EB6 /* shy_logic_perspective.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B4C1358627000042EB6 /* shy_logic_perspective.hpp */; };
-		889B1BA81358627100042EB6 /* shy_logic_perspective_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B4D1358627000042EB6 /* shy_logic_perspective_injections.cpp */; };
-		889B1BA91358627100042EB6 /* shy_logic_perspective_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B4E1358627000042EB6 /* shy_logic_perspective_injections.h */; };
-		889B1BAA1358627100042EB6 /* shy_reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B4F1358627000042EB6 /* shy_reflection.h */; };
-		889B1BAB1358627100042EB6 /* shy_reflection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B501358627000042EB6 /* shy_reflection.hpp */; };
-		889B1BAC1358627100042EB6 /* shy_reflection_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B511358627000042EB6 /* shy_reflection_injections.cpp */; };
-		889B1BAD1358627100042EB6 /* shy_reflection_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B521358627000042EB6 /* shy_reflection_injections.h */; };
-		889B1BAE1358627100042EB6 /* shy_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B541358627000042EB6 /* shy_generator.h */; };
-		889B1BAF1358627100042EB6 /* shy_generator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B551358627000042EB6 /* shy_generator.hpp */; };
-		889B1BB01358627100042EB6 /* shy_generator_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B561358627000042EB6 /* shy_generator_injections.cpp */; };
-		889B1BB11358627100042EB6 /* shy_generator_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B571358627000042EB6 /* shy_generator_injections.h */; };
-		889B1BB21358627100042EB6 /* shy_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B591358627000042EB6 /* shy_loader.h */; };
-		889B1BB31358627100042EB6 /* shy_loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B5A1358627100042EB6 /* shy_loader.hpp */; };
-		889B1BB41358627100042EB6 /* shy_loader_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B5B1358627100042EB6 /* shy_loader_injections.cpp */; };
-		889B1BB51358627100042EB6 /* shy_loader_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B5C1358627100042EB6 /* shy_loader_injections.h */; };
-		889B1BB61358627100042EB6 /* shy_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B5E1358627100042EB6 /* shy_parser.h */; };
-		889B1BB71358627100042EB6 /* shy_parser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B5F1358627100042EB6 /* shy_parser.hpp */; };
-		889B1BB81358627100042EB6 /* shy_parser_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 889B1B601358627100042EB6 /* shy_parser_injections.cpp */; };
-		889B1BB91358627100042EB6 /* shy_parser_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 889B1B611358627100042EB6 /* shy_parser_injections.h */; };
 		88E4AC3212DDE8E200D799A3 /* shy_loadable.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E4AC2712DDE8E200D799A3 /* shy_loadable.h */; };
 		88E4AC3312DDE8E200D799A3 /* shy_loadable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E4AC2812DDE8E200D799A3 /* shy_loadable.hpp */; };
 		88E4AC3412DDE8E200D799A3 /* shy_loadable_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E4AC2912DDE8E200D799A3 /* shy_loadable_injections.h */; };
@@ -2740,6 +2744,98 @@
 		8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		8812CF3E117DE82C008F67D9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		8812CF51117DEA4F008F67D9 /* stereo_sound_resource_1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stereo_sound_resource_1.mp3; path = ../../resources/stereo_sound_resource_1.mp3; sourceTree = SOURCE_ROOT; };
+		882228F11358639400BBDC77 /* shy_assigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_assigner.h; sourceTree = "<group>"; };
+		882228F21358639400BBDC77 /* shy_assigner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_assigner.hpp; sourceTree = "<group>"; };
+		882228F31358639400BBDC77 /* shy_assigner_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_assigner_injections.cpp; sourceTree = "<group>"; };
+		882228F41358639400BBDC77 /* shy_assigner_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_assigner_injections.h; sourceTree = "<group>"; };
+		882228F61358639400BBDC77 /* shy_binder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_binder.h; sourceTree = "<group>"; };
+		882228F71358639400BBDC77 /* shy_binder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_binder.hpp; sourceTree = "<group>"; };
+		882228F81358639400BBDC77 /* shy_binder_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_binder_injections.cpp; sourceTree = "<group>"; };
+		882228F91358639400BBDC77 /* shy_binder_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_binder_injections.h; sourceTree = "<group>"; };
+		882228FC1358639400BBDC77 /* shy_logic_amusement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_amusement.h; sourceTree = "<group>"; };
+		882228FD1358639400BBDC77 /* shy_logic_amusement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_amusement.hpp; sourceTree = "<group>"; };
+		882228FE1358639400BBDC77 /* shy_logic_amusement_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_amusement_injections.cpp; sourceTree = "<group>"; };
+		882228FF1358639400BBDC77 /* shy_logic_amusement_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_amusement_injections.h; sourceTree = "<group>"; };
+		882229011358639400BBDC77 /* shy_logic_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_application.h; sourceTree = "<group>"; };
+		882229021358639400BBDC77 /* shy_logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_application.hpp; sourceTree = "<group>"; };
+		882229031358639400BBDC77 /* shy_logic_application_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_application_injections.cpp; sourceTree = "<group>"; };
+		882229041358639400BBDC77 /* shy_logic_application_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_application_injections.h; sourceTree = "<group>"; };
+		882229061358639400BBDC77 /* shy_logic_blanket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket.h; sourceTree = "<group>"; };
+		882229071358639400BBDC77 /* shy_logic_blanket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_blanket.hpp; sourceTree = "<group>"; };
+		882229081358639400BBDC77 /* shy_logic_blanket_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_blanket_injections.cpp; sourceTree = "<group>"; };
+		882229091358639400BBDC77 /* shy_logic_blanket_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket_injections.h; sourceTree = "<group>"; };
+		8822290B1358639400BBDC77 /* shy_logic_blanket_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket_animation.h; sourceTree = "<group>"; };
+		8822290C1358639400BBDC77 /* shy_logic_blanket_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_blanket_animation.hpp; sourceTree = "<group>"; };
+		8822290D1358639400BBDC77 /* shy_logic_blanket_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket_animation_injections.h; sourceTree = "<group>"; };
+		8822290E1358639400BBDC77 /* shy_logic_blanket_animation_injections_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_blanket_animation_injections_injections.cpp; sourceTree = "<group>"; };
+		882229101358639400BBDC77 /* shy_logic_door.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door.h; sourceTree = "<group>"; };
+		882229111358639400BBDC77 /* shy_logic_door.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_door.hpp; sourceTree = "<group>"; };
+		882229121358639400BBDC77 /* shy_logic_door_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_door_injections.cpp; sourceTree = "<group>"; };
+		882229131358639400BBDC77 /* shy_logic_door_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door_injections.h; sourceTree = "<group>"; };
+		882229151358639400BBDC77 /* shy_logic_door_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door_animation.h; sourceTree = "<group>"; };
+		882229161358639400BBDC77 /* shy_logic_door_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_door_animation.hpp; sourceTree = "<group>"; };
+		882229171358639400BBDC77 /* shy_logic_door_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_door_animation_injections.cpp; sourceTree = "<group>"; };
+		882229181358639400BBDC77 /* shy_logic_door_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door_animation_injections.h; sourceTree = "<group>"; };
+		8822291A1358639400BBDC77 /* shy_logic_fidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_fidget.h; sourceTree = "<group>"; };
+		8822291B1358639400BBDC77 /* shy_logic_fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_fidget.hpp; sourceTree = "<group>"; };
+		8822291C1358639400BBDC77 /* shy_logic_fidget_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_fidget_injections.cpp; sourceTree = "<group>"; };
+		8822291D1358639400BBDC77 /* shy_logic_fidget_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_fidget_injections.h; sourceTree = "<group>"; };
+		8822291F1358639400BBDC77 /* shy_logic_main_menu_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_animation.h; sourceTree = "<group>"; };
+		882229201358639400BBDC77 /* shy_logic_main_menu_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_animation.hpp; sourceTree = "<group>"; };
+		882229211358639400BBDC77 /* shy_logic_main_menu_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_animation_injections.cpp; sourceTree = "<group>"; };
+		882229221358639400BBDC77 /* shy_logic_main_menu_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_animation_injections.h; sourceTree = "<group>"; };
+		882229241358639400BBDC77 /* shy_logic_main_menu_letters_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_animation.h; sourceTree = "<group>"; };
+		882229251358639400BBDC77 /* shy_logic_main_menu_letters_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_letters_animation.hpp; sourceTree = "<group>"; };
+		882229261358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_letters_animation_injections.cpp; sourceTree = "<group>"; };
+		882229271358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_animation_injections.h; sourceTree = "<group>"; };
+		882229291358639400BBDC77 /* shy_logic_main_menu_letters_layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_layout.h; sourceTree = "<group>"; };
+		8822292A1358639400BBDC77 /* shy_logic_main_menu_letters_layout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_letters_layout.hpp; sourceTree = "<group>"; };
+		8822292B1358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_letters_layout_injections.cpp; sourceTree = "<group>"; };
+		8822292C1358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_layout_injections.h; sourceTree = "<group>"; };
+		8822292E1358639400BBDC77 /* shy_logic_main_menu_letters_meshes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_meshes.h; sourceTree = "<group>"; };
+		8822292F1358639400BBDC77 /* shy_logic_main_menu_letters_meshes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_letters_meshes.hpp; sourceTree = "<group>"; };
+		882229301358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_letters_meshes_injections.cpp; sourceTree = "<group>"; };
+		882229311358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_meshes_injections.h; sourceTree = "<group>"; };
+		882229331358639400BBDC77 /* shy_logic_main_menu_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection.h; sourceTree = "<group>"; };
+		882229341358639400BBDC77 /* shy_logic_main_menu_selection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_selection.hpp; sourceTree = "<group>"; };
+		882229351358639400BBDC77 /* shy_logic_main_menu_selection_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_selection_injections.cpp; sourceTree = "<group>"; };
+		882229361358639400BBDC77 /* shy_logic_main_menu_selection_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection_injections.h; sourceTree = "<group>"; };
+		882229381358639400BBDC77 /* shy_logic_main_menu_selection_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection_animation.h; sourceTree = "<group>"; };
+		882229391358639400BBDC77 /* shy_logic_main_menu_selection_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_selection_animation.hpp; sourceTree = "<group>"; };
+		8822293A1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_selection_animation_injections.cpp; sourceTree = "<group>"; };
+		8822293B1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection_animation_injections.h; sourceTree = "<group>"; };
+		8822293D1358639400BBDC77 /* shy_logic_observer_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_observer_animation.h; sourceTree = "<group>"; };
+		8822293E1358639400BBDC77 /* shy_logic_observer_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_observer_animation.hpp; sourceTree = "<group>"; };
+		8822293F1358639400BBDC77 /* shy_logic_observer_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_observer_animation_injections.cpp; sourceTree = "<group>"; };
+		882229401358639400BBDC77 /* shy_logic_observer_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_observer_animation_injections.h; sourceTree = "<group>"; };
+		882229421358639400BBDC77 /* shy_logic_ortho.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_ortho.h; sourceTree = "<group>"; };
+		882229431358639400BBDC77 /* shy_logic_ortho.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_ortho.hpp; sourceTree = "<group>"; };
+		882229441358639400BBDC77 /* shy_logic_ortho_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_ortho_injections.cpp; sourceTree = "<group>"; };
+		882229451358639400BBDC77 /* shy_logic_ortho_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_ortho_injections.h; sourceTree = "<group>"; };
+		882229471358639400BBDC77 /* shy_logic_perspective.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_perspective.h; sourceTree = "<group>"; };
+		882229481358639400BBDC77 /* shy_logic_perspective.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_perspective.hpp; sourceTree = "<group>"; };
+		882229491358639400BBDC77 /* shy_logic_perspective_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_perspective_injections.cpp; sourceTree = "<group>"; };
+		8822294A1358639400BBDC77 /* shy_logic_perspective_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_perspective_injections.h; sourceTree = "<group>"; };
+		8822294C1358639400BBDC77 /* shy_logic_room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_room.h; sourceTree = "<group>"; };
+		8822294D1358639400BBDC77 /* shy_logic_room.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_room.hpp; sourceTree = "<group>"; };
+		8822294E1358639400BBDC77 /* shy_logic_room_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_room_injections.cpp; sourceTree = "<group>"; };
+		8822294F1358639400BBDC77 /* shy_logic_room_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_room_injections.h; sourceTree = "<group>"; };
+		882229501358639400BBDC77 /* shy_reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_reflection.h; sourceTree = "<group>"; };
+		882229511358639400BBDC77 /* shy_reflection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_reflection.hpp; sourceTree = "<group>"; };
+		882229521358639400BBDC77 /* shy_reflection_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_reflection_injections.cpp; sourceTree = "<group>"; };
+		882229531358639400BBDC77 /* shy_reflection_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_reflection_injections.h; sourceTree = "<group>"; };
+		882229551358639400BBDC77 /* shy_generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_generator.h; sourceTree = "<group>"; };
+		882229561358639400BBDC77 /* shy_generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_generator.hpp; sourceTree = "<group>"; };
+		882229571358639400BBDC77 /* shy_generator_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_generator_injections.cpp; sourceTree = "<group>"; };
+		882229581358639400BBDC77 /* shy_generator_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_generator_injections.h; sourceTree = "<group>"; };
+		8822295A1358639400BBDC77 /* shy_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader.h; sourceTree = "<group>"; };
+		8822295B1358639400BBDC77 /* shy_loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loader.hpp; sourceTree = "<group>"; };
+		8822295C1358639400BBDC77 /* shy_loader_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_loader_injections.cpp; sourceTree = "<group>"; };
+		8822295D1358639400BBDC77 /* shy_loader_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader_injections.h; sourceTree = "<group>"; };
+		8822295F1358639400BBDC77 /* shy_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_parser.h; sourceTree = "<group>"; };
+		882229601358639400BBDC77 /* shy_parser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_parser.hpp; sourceTree = "<group>"; };
+		882229611358639400BBDC77 /* shy_parser_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_parser_injections.cpp; sourceTree = "<group>"; };
+		882229621358639400BBDC77 /* shy_parser_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_parser_injections.h; sourceTree = "<group>"; };
 		882EC07412E774C200B57BB7 /* shy_conditions_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_conditions_injections.h; sourceTree = "<group>"; };
 		882EC07512E774C200B57BB7 /* shy_conditions_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_conditions_injections.mm; sourceTree = "<group>"; };
 		882EC07812E774C200B57BB7 /* shy_insider_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_insider_injections.h; sourceTree = "<group>"; };
@@ -2940,94 +3036,6 @@
 		888ECF0712E8811A007E37C0 /* shy_data.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_data.hpp; sourceTree = "<group>"; };
 		888ECF0812E8811A007E37C0 /* shy_data_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_data_injections.h; sourceTree = "<group>"; };
 		888ECF0912E8811A007E37C0 /* shy_data_injections.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_data_injections.hpp; sourceTree = "<group>"; };
-		889B1AF51358627000042EB6 /* shy_assigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_assigner.h; sourceTree = "<group>"; };
-		889B1AF61358627000042EB6 /* shy_assigner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_assigner.hpp; sourceTree = "<group>"; };
-		889B1AF71358627000042EB6 /* shy_assigner_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_assigner_injections.cpp; sourceTree = "<group>"; };
-		889B1AF81358627000042EB6 /* shy_assigner_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_assigner_injections.h; sourceTree = "<group>"; };
-		889B1AFA1358627000042EB6 /* shy_binder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_binder.h; sourceTree = "<group>"; };
-		889B1AFB1358627000042EB6 /* shy_binder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_binder.hpp; sourceTree = "<group>"; };
-		889B1AFC1358627000042EB6 /* shy_binder_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_binder_injections.cpp; sourceTree = "<group>"; };
-		889B1AFD1358627000042EB6 /* shy_binder_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_binder_injections.h; sourceTree = "<group>"; };
-		889B1B001358627000042EB6 /* shy_logic_amusement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_amusement.h; sourceTree = "<group>"; };
-		889B1B011358627000042EB6 /* shy_logic_amusement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_amusement.hpp; sourceTree = "<group>"; };
-		889B1B021358627000042EB6 /* shy_logic_amusement_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_amusement_injections.cpp; sourceTree = "<group>"; };
-		889B1B031358627000042EB6 /* shy_logic_amusement_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_amusement_injections.h; sourceTree = "<group>"; };
-		889B1B051358627000042EB6 /* shy_logic_application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_application.h; sourceTree = "<group>"; };
-		889B1B061358627000042EB6 /* shy_logic_application.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_application.hpp; sourceTree = "<group>"; };
-		889B1B071358627000042EB6 /* shy_logic_application_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_application_injections.cpp; sourceTree = "<group>"; };
-		889B1B081358627000042EB6 /* shy_logic_application_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_application_injections.h; sourceTree = "<group>"; };
-		889B1B0A1358627000042EB6 /* shy_logic_blanket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket.h; sourceTree = "<group>"; };
-		889B1B0B1358627000042EB6 /* shy_logic_blanket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_blanket.hpp; sourceTree = "<group>"; };
-		889B1B0C1358627000042EB6 /* shy_logic_blanket_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_blanket_injections.cpp; sourceTree = "<group>"; };
-		889B1B0D1358627000042EB6 /* shy_logic_blanket_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket_injections.h; sourceTree = "<group>"; };
-		889B1B0F1358627000042EB6 /* shy_logic_blanket_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket_animation.h; sourceTree = "<group>"; };
-		889B1B101358627000042EB6 /* shy_logic_blanket_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_blanket_animation.hpp; sourceTree = "<group>"; };
-		889B1B111358627000042EB6 /* shy_logic_blanket_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_blanket_animation_injections.h; sourceTree = "<group>"; };
-		889B1B121358627000042EB6 /* shy_logic_blanket_animation_injections_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_blanket_animation_injections_injections.cpp; sourceTree = "<group>"; };
-		889B1B141358627000042EB6 /* shy_logic_door.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door.h; sourceTree = "<group>"; };
-		889B1B151358627000042EB6 /* shy_logic_door.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_door.hpp; sourceTree = "<group>"; };
-		889B1B161358627000042EB6 /* shy_logic_door_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_door_injections.cpp; sourceTree = "<group>"; };
-		889B1B171358627000042EB6 /* shy_logic_door_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door_injections.h; sourceTree = "<group>"; };
-		889B1B191358627000042EB6 /* shy_logic_door_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door_animation.h; sourceTree = "<group>"; };
-		889B1B1A1358627000042EB6 /* shy_logic_door_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_door_animation.hpp; sourceTree = "<group>"; };
-		889B1B1B1358627000042EB6 /* shy_logic_door_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_door_animation_injections.cpp; sourceTree = "<group>"; };
-		889B1B1C1358627000042EB6 /* shy_logic_door_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_door_animation_injections.h; sourceTree = "<group>"; };
-		889B1B1E1358627000042EB6 /* shy_logic_fidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_fidget.h; sourceTree = "<group>"; };
-		889B1B1F1358627000042EB6 /* shy_logic_fidget.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_fidget.hpp; sourceTree = "<group>"; };
-		889B1B201358627000042EB6 /* shy_logic_fidget_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_fidget_injections.cpp; sourceTree = "<group>"; };
-		889B1B211358627000042EB6 /* shy_logic_fidget_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_fidget_injections.h; sourceTree = "<group>"; };
-		889B1B231358627000042EB6 /* shy_logic_main_menu_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_animation.h; sourceTree = "<group>"; };
-		889B1B241358627000042EB6 /* shy_logic_main_menu_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_animation.hpp; sourceTree = "<group>"; };
-		889B1B251358627000042EB6 /* shy_logic_main_menu_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_animation_injections.cpp; sourceTree = "<group>"; };
-		889B1B261358627000042EB6 /* shy_logic_main_menu_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_animation_injections.h; sourceTree = "<group>"; };
-		889B1B281358627000042EB6 /* shy_logic_main_menu_letters_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_animation.h; sourceTree = "<group>"; };
-		889B1B291358627000042EB6 /* shy_logic_main_menu_letters_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_letters_animation.hpp; sourceTree = "<group>"; };
-		889B1B2A1358627000042EB6 /* shy_logic_main_menu_letters_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_letters_animation_injections.cpp; sourceTree = "<group>"; };
-		889B1B2B1358627000042EB6 /* shy_logic_main_menu_letters_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_animation_injections.h; sourceTree = "<group>"; };
-		889B1B2D1358627000042EB6 /* shy_logic_main_menu_letters_layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_layout.h; sourceTree = "<group>"; };
-		889B1B2E1358627000042EB6 /* shy_logic_main_menu_letters_layout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_letters_layout.hpp; sourceTree = "<group>"; };
-		889B1B2F1358627000042EB6 /* shy_logic_main_menu_letters_layout_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_letters_layout_injections.cpp; sourceTree = "<group>"; };
-		889B1B301358627000042EB6 /* shy_logic_main_menu_letters_layout_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_layout_injections.h; sourceTree = "<group>"; };
-		889B1B321358627000042EB6 /* shy_logic_main_menu_letters_meshes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_meshes.h; sourceTree = "<group>"; };
-		889B1B331358627000042EB6 /* shy_logic_main_menu_letters_meshes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_letters_meshes.hpp; sourceTree = "<group>"; };
-		889B1B341358627000042EB6 /* shy_logic_main_menu_letters_meshes_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_letters_meshes_injections.cpp; sourceTree = "<group>"; };
-		889B1B351358627000042EB6 /* shy_logic_main_menu_letters_meshes_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_letters_meshes_injections.h; sourceTree = "<group>"; };
-		889B1B371358627000042EB6 /* shy_logic_main_menu_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection.h; sourceTree = "<group>"; };
-		889B1B381358627000042EB6 /* shy_logic_main_menu_selection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_selection.hpp; sourceTree = "<group>"; };
-		889B1B391358627000042EB6 /* shy_logic_main_menu_selection_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_selection_injections.cpp; sourceTree = "<group>"; };
-		889B1B3A1358627000042EB6 /* shy_logic_main_menu_selection_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection_injections.h; sourceTree = "<group>"; };
-		889B1B3C1358627000042EB6 /* shy_logic_main_menu_selection_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection_animation.h; sourceTree = "<group>"; };
-		889B1B3D1358627000042EB6 /* shy_logic_main_menu_selection_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_main_menu_selection_animation.hpp; sourceTree = "<group>"; };
-		889B1B3E1358627000042EB6 /* shy_logic_main_menu_selection_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_main_menu_selection_animation_injections.cpp; sourceTree = "<group>"; };
-		889B1B3F1358627000042EB6 /* shy_logic_main_menu_selection_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_main_menu_selection_animation_injections.h; sourceTree = "<group>"; };
-		889B1B411358627000042EB6 /* shy_logic_observer_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_observer_animation.h; sourceTree = "<group>"; };
-		889B1B421358627000042EB6 /* shy_logic_observer_animation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_observer_animation.hpp; sourceTree = "<group>"; };
-		889B1B431358627000042EB6 /* shy_logic_observer_animation_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_observer_animation_injections.cpp; sourceTree = "<group>"; };
-		889B1B441358627000042EB6 /* shy_logic_observer_animation_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_observer_animation_injections.h; sourceTree = "<group>"; };
-		889B1B461358627000042EB6 /* shy_logic_ortho.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_ortho.h; sourceTree = "<group>"; };
-		889B1B471358627000042EB6 /* shy_logic_ortho.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_ortho.hpp; sourceTree = "<group>"; };
-		889B1B481358627000042EB6 /* shy_logic_ortho_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_ortho_injections.cpp; sourceTree = "<group>"; };
-		889B1B491358627000042EB6 /* shy_logic_ortho_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_ortho_injections.h; sourceTree = "<group>"; };
-		889B1B4B1358627000042EB6 /* shy_logic_perspective.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_perspective.h; sourceTree = "<group>"; };
-		889B1B4C1358627000042EB6 /* shy_logic_perspective.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_logic_perspective.hpp; sourceTree = "<group>"; };
-		889B1B4D1358627000042EB6 /* shy_logic_perspective_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_logic_perspective_injections.cpp; sourceTree = "<group>"; };
-		889B1B4E1358627000042EB6 /* shy_logic_perspective_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_logic_perspective_injections.h; sourceTree = "<group>"; };
-		889B1B4F1358627000042EB6 /* shy_reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_reflection.h; sourceTree = "<group>"; };
-		889B1B501358627000042EB6 /* shy_reflection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_reflection.hpp; sourceTree = "<group>"; };
-		889B1B511358627000042EB6 /* shy_reflection_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_reflection_injections.cpp; sourceTree = "<group>"; };
-		889B1B521358627000042EB6 /* shy_reflection_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_reflection_injections.h; sourceTree = "<group>"; };
-		889B1B541358627000042EB6 /* shy_generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_generator.h; sourceTree = "<group>"; };
-		889B1B551358627000042EB6 /* shy_generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_generator.hpp; sourceTree = "<group>"; };
-		889B1B561358627000042EB6 /* shy_generator_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_generator_injections.cpp; sourceTree = "<group>"; };
-		889B1B571358627000042EB6 /* shy_generator_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_generator_injections.h; sourceTree = "<group>"; };
-		889B1B591358627000042EB6 /* shy_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader.h; sourceTree = "<group>"; };
-		889B1B5A1358627100042EB6 /* shy_loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loader.hpp; sourceTree = "<group>"; };
-		889B1B5B1358627100042EB6 /* shy_loader_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_loader_injections.cpp; sourceTree = "<group>"; };
-		889B1B5C1358627100042EB6 /* shy_loader_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader_injections.h; sourceTree = "<group>"; };
-		889B1B5E1358627100042EB6 /* shy_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_parser.h; sourceTree = "<group>"; };
-		889B1B5F1358627100042EB6 /* shy_parser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_parser.hpp; sourceTree = "<group>"; };
-		889B1B601358627100042EB6 /* shy_parser_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_parser_injections.cpp; sourceTree = "<group>"; };
-		889B1B611358627100042EB6 /* shy_parser_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_parser_injections.h; sourceTree = "<group>"; };
 		88E4AC2712DDE8E200D799A3 /* shy_loadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loadable.h; sourceTree = "<group>"; };
 		88E4AC2812DDE8E200D799A3 /* shy_loadable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loadable.hpp; sourceTree = "<group>"; };
 		88E4AC2912DDE8E200D799A3 /* shy_loadable_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loadable_injections.h; sourceTree = "<group>"; };
@@ -5400,7 +5408,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				889B1AF21358627000042EB6 /* loadable */,
+				882228EE1358639400BBDC77 /* loadable */,
 				88F7E7A6135739DA0055143E /* common */,
 				888ECE9312E88119007E37C0 /* platform */,
 				882EC07212E774C200B57BB7 /* macosx_platform */,
@@ -5491,6 +5499,298 @@
 			children = (
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		882228EE1358639400BBDC77 /* loadable */ = {
+			isa = PBXGroup;
+			children = (
+				882228EF1358639400BBDC77 /* consts */,
+				882229541358639400BBDC77 /* generator */,
+				882229591358639400BBDC77 /* loader */,
+				8822295E1358639400BBDC77 /* parser */,
+			);
+			name = loadable;
+			path = ../loadable;
+			sourceTree = SOURCE_ROOT;
+		};
+		882228EF1358639400BBDC77 /* consts */ = {
+			isa = PBXGroup;
+			children = (
+				882228F01358639400BBDC77 /* assigner */,
+				882228F51358639400BBDC77 /* binder */,
+				882228FA1358639400BBDC77 /* reflection */,
+			);
+			path = consts;
+			sourceTree = "<group>";
+		};
+		882228F01358639400BBDC77 /* assigner */ = {
+			isa = PBXGroup;
+			children = (
+				882228F11358639400BBDC77 /* shy_assigner.h */,
+				882228F21358639400BBDC77 /* shy_assigner.hpp */,
+				882228F31358639400BBDC77 /* shy_assigner_injections.cpp */,
+				882228F41358639400BBDC77 /* shy_assigner_injections.h */,
+			);
+			path = assigner;
+			sourceTree = "<group>";
+		};
+		882228F51358639400BBDC77 /* binder */ = {
+			isa = PBXGroup;
+			children = (
+				882228F61358639400BBDC77 /* shy_binder.h */,
+				882228F71358639400BBDC77 /* shy_binder.hpp */,
+				882228F81358639400BBDC77 /* shy_binder_injections.cpp */,
+				882228F91358639400BBDC77 /* shy_binder_injections.h */,
+			);
+			path = binder;
+			sourceTree = "<group>";
+		};
+		882228FA1358639400BBDC77 /* reflection */ = {
+			isa = PBXGroup;
+			children = (
+				882228FB1358639400BBDC77 /* logic_amusement */,
+				882229001358639400BBDC77 /* logic_application */,
+				882229051358639400BBDC77 /* logic_blanket */,
+				8822290A1358639400BBDC77 /* logic_blanket_animation */,
+				8822290F1358639400BBDC77 /* logic_door */,
+				882229141358639400BBDC77 /* logic_door_animation */,
+				882229191358639400BBDC77 /* logic_fidget */,
+				8822291E1358639400BBDC77 /* logic_main_menu_animation */,
+				882229231358639400BBDC77 /* logic_main_menu_letters_animation */,
+				882229281358639400BBDC77 /* logic_main_menu_letters_layout */,
+				8822292D1358639400BBDC77 /* logic_main_menu_letters_meshes */,
+				882229321358639400BBDC77 /* logic_main_menu_selection */,
+				882229371358639400BBDC77 /* logic_main_menu_selection_animation */,
+				8822293C1358639400BBDC77 /* logic_observer_animation */,
+				882229411358639400BBDC77 /* logic_ortho */,
+				882229461358639400BBDC77 /* logic_perspective */,
+				8822294B1358639400BBDC77 /* logic_room */,
+				882229501358639400BBDC77 /* shy_reflection.h */,
+				882229511358639400BBDC77 /* shy_reflection.hpp */,
+				882229521358639400BBDC77 /* shy_reflection_injections.cpp */,
+				882229531358639400BBDC77 /* shy_reflection_injections.h */,
+			);
+			path = reflection;
+			sourceTree = "<group>";
+		};
+		882228FB1358639400BBDC77 /* logic_amusement */ = {
+			isa = PBXGroup;
+			children = (
+				882228FC1358639400BBDC77 /* shy_logic_amusement.h */,
+				882228FD1358639400BBDC77 /* shy_logic_amusement.hpp */,
+				882228FE1358639400BBDC77 /* shy_logic_amusement_injections.cpp */,
+				882228FF1358639400BBDC77 /* shy_logic_amusement_injections.h */,
+			);
+			path = logic_amusement;
+			sourceTree = "<group>";
+		};
+		882229001358639400BBDC77 /* logic_application */ = {
+			isa = PBXGroup;
+			children = (
+				882229011358639400BBDC77 /* shy_logic_application.h */,
+				882229021358639400BBDC77 /* shy_logic_application.hpp */,
+				882229031358639400BBDC77 /* shy_logic_application_injections.cpp */,
+				882229041358639400BBDC77 /* shy_logic_application_injections.h */,
+			);
+			path = logic_application;
+			sourceTree = "<group>";
+		};
+		882229051358639400BBDC77 /* logic_blanket */ = {
+			isa = PBXGroup;
+			children = (
+				882229061358639400BBDC77 /* shy_logic_blanket.h */,
+				882229071358639400BBDC77 /* shy_logic_blanket.hpp */,
+				882229081358639400BBDC77 /* shy_logic_blanket_injections.cpp */,
+				882229091358639400BBDC77 /* shy_logic_blanket_injections.h */,
+			);
+			path = logic_blanket;
+			sourceTree = "<group>";
+		};
+		8822290A1358639400BBDC77 /* logic_blanket_animation */ = {
+			isa = PBXGroup;
+			children = (
+				8822290B1358639400BBDC77 /* shy_logic_blanket_animation.h */,
+				8822290C1358639400BBDC77 /* shy_logic_blanket_animation.hpp */,
+				8822290D1358639400BBDC77 /* shy_logic_blanket_animation_injections.h */,
+				8822290E1358639400BBDC77 /* shy_logic_blanket_animation_injections_injections.cpp */,
+			);
+			path = logic_blanket_animation;
+			sourceTree = "<group>";
+		};
+		8822290F1358639400BBDC77 /* logic_door */ = {
+			isa = PBXGroup;
+			children = (
+				882229101358639400BBDC77 /* shy_logic_door.h */,
+				882229111358639400BBDC77 /* shy_logic_door.hpp */,
+				882229121358639400BBDC77 /* shy_logic_door_injections.cpp */,
+				882229131358639400BBDC77 /* shy_logic_door_injections.h */,
+			);
+			path = logic_door;
+			sourceTree = "<group>";
+		};
+		882229141358639400BBDC77 /* logic_door_animation */ = {
+			isa = PBXGroup;
+			children = (
+				882229151358639400BBDC77 /* shy_logic_door_animation.h */,
+				882229161358639400BBDC77 /* shy_logic_door_animation.hpp */,
+				882229171358639400BBDC77 /* shy_logic_door_animation_injections.cpp */,
+				882229181358639400BBDC77 /* shy_logic_door_animation_injections.h */,
+			);
+			path = logic_door_animation;
+			sourceTree = "<group>";
+		};
+		882229191358639400BBDC77 /* logic_fidget */ = {
+			isa = PBXGroup;
+			children = (
+				8822291A1358639400BBDC77 /* shy_logic_fidget.h */,
+				8822291B1358639400BBDC77 /* shy_logic_fidget.hpp */,
+				8822291C1358639400BBDC77 /* shy_logic_fidget_injections.cpp */,
+				8822291D1358639400BBDC77 /* shy_logic_fidget_injections.h */,
+			);
+			path = logic_fidget;
+			sourceTree = "<group>";
+		};
+		8822291E1358639400BBDC77 /* logic_main_menu_animation */ = {
+			isa = PBXGroup;
+			children = (
+				8822291F1358639400BBDC77 /* shy_logic_main_menu_animation.h */,
+				882229201358639400BBDC77 /* shy_logic_main_menu_animation.hpp */,
+				882229211358639400BBDC77 /* shy_logic_main_menu_animation_injections.cpp */,
+				882229221358639400BBDC77 /* shy_logic_main_menu_animation_injections.h */,
+			);
+			path = logic_main_menu_animation;
+			sourceTree = "<group>";
+		};
+		882229231358639400BBDC77 /* logic_main_menu_letters_animation */ = {
+			isa = PBXGroup;
+			children = (
+				882229241358639400BBDC77 /* shy_logic_main_menu_letters_animation.h */,
+				882229251358639400BBDC77 /* shy_logic_main_menu_letters_animation.hpp */,
+				882229261358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.cpp */,
+				882229271358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.h */,
+			);
+			path = logic_main_menu_letters_animation;
+			sourceTree = "<group>";
+		};
+		882229281358639400BBDC77 /* logic_main_menu_letters_layout */ = {
+			isa = PBXGroup;
+			children = (
+				882229291358639400BBDC77 /* shy_logic_main_menu_letters_layout.h */,
+				8822292A1358639400BBDC77 /* shy_logic_main_menu_letters_layout.hpp */,
+				8822292B1358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.cpp */,
+				8822292C1358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.h */,
+			);
+			path = logic_main_menu_letters_layout;
+			sourceTree = "<group>";
+		};
+		8822292D1358639400BBDC77 /* logic_main_menu_letters_meshes */ = {
+			isa = PBXGroup;
+			children = (
+				8822292E1358639400BBDC77 /* shy_logic_main_menu_letters_meshes.h */,
+				8822292F1358639400BBDC77 /* shy_logic_main_menu_letters_meshes.hpp */,
+				882229301358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.cpp */,
+				882229311358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.h */,
+			);
+			path = logic_main_menu_letters_meshes;
+			sourceTree = "<group>";
+		};
+		882229321358639400BBDC77 /* logic_main_menu_selection */ = {
+			isa = PBXGroup;
+			children = (
+				882229331358639400BBDC77 /* shy_logic_main_menu_selection.h */,
+				882229341358639400BBDC77 /* shy_logic_main_menu_selection.hpp */,
+				882229351358639400BBDC77 /* shy_logic_main_menu_selection_injections.cpp */,
+				882229361358639400BBDC77 /* shy_logic_main_menu_selection_injections.h */,
+			);
+			path = logic_main_menu_selection;
+			sourceTree = "<group>";
+		};
+		882229371358639400BBDC77 /* logic_main_menu_selection_animation */ = {
+			isa = PBXGroup;
+			children = (
+				882229381358639400BBDC77 /* shy_logic_main_menu_selection_animation.h */,
+				882229391358639400BBDC77 /* shy_logic_main_menu_selection_animation.hpp */,
+				8822293A1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.cpp */,
+				8822293B1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.h */,
+			);
+			path = logic_main_menu_selection_animation;
+			sourceTree = "<group>";
+		};
+		8822293C1358639400BBDC77 /* logic_observer_animation */ = {
+			isa = PBXGroup;
+			children = (
+				8822293D1358639400BBDC77 /* shy_logic_observer_animation.h */,
+				8822293E1358639400BBDC77 /* shy_logic_observer_animation.hpp */,
+				8822293F1358639400BBDC77 /* shy_logic_observer_animation_injections.cpp */,
+				882229401358639400BBDC77 /* shy_logic_observer_animation_injections.h */,
+			);
+			path = logic_observer_animation;
+			sourceTree = "<group>";
+		};
+		882229411358639400BBDC77 /* logic_ortho */ = {
+			isa = PBXGroup;
+			children = (
+				882229421358639400BBDC77 /* shy_logic_ortho.h */,
+				882229431358639400BBDC77 /* shy_logic_ortho.hpp */,
+				882229441358639400BBDC77 /* shy_logic_ortho_injections.cpp */,
+				882229451358639400BBDC77 /* shy_logic_ortho_injections.h */,
+			);
+			path = logic_ortho;
+			sourceTree = "<group>";
+		};
+		882229461358639400BBDC77 /* logic_perspective */ = {
+			isa = PBXGroup;
+			children = (
+				882229471358639400BBDC77 /* shy_logic_perspective.h */,
+				882229481358639400BBDC77 /* shy_logic_perspective.hpp */,
+				882229491358639400BBDC77 /* shy_logic_perspective_injections.cpp */,
+				8822294A1358639400BBDC77 /* shy_logic_perspective_injections.h */,
+			);
+			path = logic_perspective;
+			sourceTree = "<group>";
+		};
+		8822294B1358639400BBDC77 /* logic_room */ = {
+			isa = PBXGroup;
+			children = (
+				8822294C1358639400BBDC77 /* shy_logic_room.h */,
+				8822294D1358639400BBDC77 /* shy_logic_room.hpp */,
+				8822294E1358639400BBDC77 /* shy_logic_room_injections.cpp */,
+				8822294F1358639400BBDC77 /* shy_logic_room_injections.h */,
+			);
+			path = logic_room;
+			sourceTree = "<group>";
+		};
+		882229541358639400BBDC77 /* generator */ = {
+			isa = PBXGroup;
+			children = (
+				882229551358639400BBDC77 /* shy_generator.h */,
+				882229561358639400BBDC77 /* shy_generator.hpp */,
+				882229571358639400BBDC77 /* shy_generator_injections.cpp */,
+				882229581358639400BBDC77 /* shy_generator_injections.h */,
+			);
+			path = generator;
+			sourceTree = "<group>";
+		};
+		882229591358639400BBDC77 /* loader */ = {
+			isa = PBXGroup;
+			children = (
+				8822295A1358639400BBDC77 /* shy_loader.h */,
+				8822295B1358639400BBDC77 /* shy_loader.hpp */,
+				8822295C1358639400BBDC77 /* shy_loader_injections.cpp */,
+				8822295D1358639400BBDC77 /* shy_loader_injections.h */,
+			);
+			path = loader;
+			sourceTree = "<group>";
+		};
+		8822295E1358639400BBDC77 /* parser */ = {
+			isa = PBXGroup;
+			children = (
+				8822295F1358639400BBDC77 /* shy_parser.h */,
+				882229601358639400BBDC77 /* shy_parser.hpp */,
+				882229611358639400BBDC77 /* shy_parser_injections.cpp */,
+				882229621358639400BBDC77 /* shy_parser_injections.h */,
+			);
+			path = parser;
 			sourceTree = "<group>";
 		};
 		882EC07212E774C200B57BB7 /* macosx_platform */ = {
@@ -6338,286 +6638,6 @@
 				888ECF0912E8811A007E37C0 /* shy_data_injections.hpp */,
 			);
 			path = data;
-			sourceTree = "<group>";
-		};
-		889B1AF21358627000042EB6 /* loadable */ = {
-			isa = PBXGroup;
-			children = (
-				889B1AF31358627000042EB6 /* consts */,
-				889B1B531358627000042EB6 /* generator */,
-				889B1B581358627000042EB6 /* loader */,
-				889B1B5D1358627100042EB6 /* parser */,
-			);
-			name = loadable;
-			path = ../loadable;
-			sourceTree = SOURCE_ROOT;
-		};
-		889B1AF31358627000042EB6 /* consts */ = {
-			isa = PBXGroup;
-			children = (
-				889B1AF41358627000042EB6 /* assigner */,
-				889B1AF91358627000042EB6 /* binder */,
-				889B1AFE1358627000042EB6 /* reflection */,
-			);
-			path = consts;
-			sourceTree = "<group>";
-		};
-		889B1AF41358627000042EB6 /* assigner */ = {
-			isa = PBXGroup;
-			children = (
-				889B1AF51358627000042EB6 /* shy_assigner.h */,
-				889B1AF61358627000042EB6 /* shy_assigner.hpp */,
-				889B1AF71358627000042EB6 /* shy_assigner_injections.cpp */,
-				889B1AF81358627000042EB6 /* shy_assigner_injections.h */,
-			);
-			path = assigner;
-			sourceTree = "<group>";
-		};
-		889B1AF91358627000042EB6 /* binder */ = {
-			isa = PBXGroup;
-			children = (
-				889B1AFA1358627000042EB6 /* shy_binder.h */,
-				889B1AFB1358627000042EB6 /* shy_binder.hpp */,
-				889B1AFC1358627000042EB6 /* shy_binder_injections.cpp */,
-				889B1AFD1358627000042EB6 /* shy_binder_injections.h */,
-			);
-			path = binder;
-			sourceTree = "<group>";
-		};
-		889B1AFE1358627000042EB6 /* reflection */ = {
-			isa = PBXGroup;
-			children = (
-				889B1AFF1358627000042EB6 /* logic_amusement */,
-				889B1B041358627000042EB6 /* logic_application */,
-				889B1B091358627000042EB6 /* logic_blanket */,
-				889B1B0E1358627000042EB6 /* logic_blanket_animation */,
-				889B1B131358627000042EB6 /* logic_door */,
-				889B1B181358627000042EB6 /* logic_door_animation */,
-				889B1B1D1358627000042EB6 /* logic_fidget */,
-				889B1B221358627000042EB6 /* logic_main_menu_animation */,
-				889B1B271358627000042EB6 /* logic_main_menu_letters_animation */,
-				889B1B2C1358627000042EB6 /* logic_main_menu_letters_layout */,
-				889B1B311358627000042EB6 /* logic_main_menu_letters_meshes */,
-				889B1B361358627000042EB6 /* logic_main_menu_selection */,
-				889B1B3B1358627000042EB6 /* logic_main_menu_selection_animation */,
-				889B1B401358627000042EB6 /* logic_observer_animation */,
-				889B1B451358627000042EB6 /* logic_ortho */,
-				889B1B4A1358627000042EB6 /* logic_perspective */,
-				889B1B4F1358627000042EB6 /* shy_reflection.h */,
-				889B1B501358627000042EB6 /* shy_reflection.hpp */,
-				889B1B511358627000042EB6 /* shy_reflection_injections.cpp */,
-				889B1B521358627000042EB6 /* shy_reflection_injections.h */,
-			);
-			path = reflection;
-			sourceTree = "<group>";
-		};
-		889B1AFF1358627000042EB6 /* logic_amusement */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B001358627000042EB6 /* shy_logic_amusement.h */,
-				889B1B011358627000042EB6 /* shy_logic_amusement.hpp */,
-				889B1B021358627000042EB6 /* shy_logic_amusement_injections.cpp */,
-				889B1B031358627000042EB6 /* shy_logic_amusement_injections.h */,
-			);
-			path = logic_amusement;
-			sourceTree = "<group>";
-		};
-		889B1B041358627000042EB6 /* logic_application */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B051358627000042EB6 /* shy_logic_application.h */,
-				889B1B061358627000042EB6 /* shy_logic_application.hpp */,
-				889B1B071358627000042EB6 /* shy_logic_application_injections.cpp */,
-				889B1B081358627000042EB6 /* shy_logic_application_injections.h */,
-			);
-			path = logic_application;
-			sourceTree = "<group>";
-		};
-		889B1B091358627000042EB6 /* logic_blanket */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B0A1358627000042EB6 /* shy_logic_blanket.h */,
-				889B1B0B1358627000042EB6 /* shy_logic_blanket.hpp */,
-				889B1B0C1358627000042EB6 /* shy_logic_blanket_injections.cpp */,
-				889B1B0D1358627000042EB6 /* shy_logic_blanket_injections.h */,
-			);
-			path = logic_blanket;
-			sourceTree = "<group>";
-		};
-		889B1B0E1358627000042EB6 /* logic_blanket_animation */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B0F1358627000042EB6 /* shy_logic_blanket_animation.h */,
-				889B1B101358627000042EB6 /* shy_logic_blanket_animation.hpp */,
-				889B1B111358627000042EB6 /* shy_logic_blanket_animation_injections.h */,
-				889B1B121358627000042EB6 /* shy_logic_blanket_animation_injections_injections.cpp */,
-			);
-			path = logic_blanket_animation;
-			sourceTree = "<group>";
-		};
-		889B1B131358627000042EB6 /* logic_door */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B141358627000042EB6 /* shy_logic_door.h */,
-				889B1B151358627000042EB6 /* shy_logic_door.hpp */,
-				889B1B161358627000042EB6 /* shy_logic_door_injections.cpp */,
-				889B1B171358627000042EB6 /* shy_logic_door_injections.h */,
-			);
-			path = logic_door;
-			sourceTree = "<group>";
-		};
-		889B1B181358627000042EB6 /* logic_door_animation */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B191358627000042EB6 /* shy_logic_door_animation.h */,
-				889B1B1A1358627000042EB6 /* shy_logic_door_animation.hpp */,
-				889B1B1B1358627000042EB6 /* shy_logic_door_animation_injections.cpp */,
-				889B1B1C1358627000042EB6 /* shy_logic_door_animation_injections.h */,
-			);
-			path = logic_door_animation;
-			sourceTree = "<group>";
-		};
-		889B1B1D1358627000042EB6 /* logic_fidget */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B1E1358627000042EB6 /* shy_logic_fidget.h */,
-				889B1B1F1358627000042EB6 /* shy_logic_fidget.hpp */,
-				889B1B201358627000042EB6 /* shy_logic_fidget_injections.cpp */,
-				889B1B211358627000042EB6 /* shy_logic_fidget_injections.h */,
-			);
-			path = logic_fidget;
-			sourceTree = "<group>";
-		};
-		889B1B221358627000042EB6 /* logic_main_menu_animation */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B231358627000042EB6 /* shy_logic_main_menu_animation.h */,
-				889B1B241358627000042EB6 /* shy_logic_main_menu_animation.hpp */,
-				889B1B251358627000042EB6 /* shy_logic_main_menu_animation_injections.cpp */,
-				889B1B261358627000042EB6 /* shy_logic_main_menu_animation_injections.h */,
-			);
-			path = logic_main_menu_animation;
-			sourceTree = "<group>";
-		};
-		889B1B271358627000042EB6 /* logic_main_menu_letters_animation */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B281358627000042EB6 /* shy_logic_main_menu_letters_animation.h */,
-				889B1B291358627000042EB6 /* shy_logic_main_menu_letters_animation.hpp */,
-				889B1B2A1358627000042EB6 /* shy_logic_main_menu_letters_animation_injections.cpp */,
-				889B1B2B1358627000042EB6 /* shy_logic_main_menu_letters_animation_injections.h */,
-			);
-			path = logic_main_menu_letters_animation;
-			sourceTree = "<group>";
-		};
-		889B1B2C1358627000042EB6 /* logic_main_menu_letters_layout */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B2D1358627000042EB6 /* shy_logic_main_menu_letters_layout.h */,
-				889B1B2E1358627000042EB6 /* shy_logic_main_menu_letters_layout.hpp */,
-				889B1B2F1358627000042EB6 /* shy_logic_main_menu_letters_layout_injections.cpp */,
-				889B1B301358627000042EB6 /* shy_logic_main_menu_letters_layout_injections.h */,
-			);
-			path = logic_main_menu_letters_layout;
-			sourceTree = "<group>";
-		};
-		889B1B311358627000042EB6 /* logic_main_menu_letters_meshes */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B321358627000042EB6 /* shy_logic_main_menu_letters_meshes.h */,
-				889B1B331358627000042EB6 /* shy_logic_main_menu_letters_meshes.hpp */,
-				889B1B341358627000042EB6 /* shy_logic_main_menu_letters_meshes_injections.cpp */,
-				889B1B351358627000042EB6 /* shy_logic_main_menu_letters_meshes_injections.h */,
-			);
-			path = logic_main_menu_letters_meshes;
-			sourceTree = "<group>";
-		};
-		889B1B361358627000042EB6 /* logic_main_menu_selection */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B371358627000042EB6 /* shy_logic_main_menu_selection.h */,
-				889B1B381358627000042EB6 /* shy_logic_main_menu_selection.hpp */,
-				889B1B391358627000042EB6 /* shy_logic_main_menu_selection_injections.cpp */,
-				889B1B3A1358627000042EB6 /* shy_logic_main_menu_selection_injections.h */,
-			);
-			path = logic_main_menu_selection;
-			sourceTree = "<group>";
-		};
-		889B1B3B1358627000042EB6 /* logic_main_menu_selection_animation */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B3C1358627000042EB6 /* shy_logic_main_menu_selection_animation.h */,
-				889B1B3D1358627000042EB6 /* shy_logic_main_menu_selection_animation.hpp */,
-				889B1B3E1358627000042EB6 /* shy_logic_main_menu_selection_animation_injections.cpp */,
-				889B1B3F1358627000042EB6 /* shy_logic_main_menu_selection_animation_injections.h */,
-			);
-			path = logic_main_menu_selection_animation;
-			sourceTree = "<group>";
-		};
-		889B1B401358627000042EB6 /* logic_observer_animation */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B411358627000042EB6 /* shy_logic_observer_animation.h */,
-				889B1B421358627000042EB6 /* shy_logic_observer_animation.hpp */,
-				889B1B431358627000042EB6 /* shy_logic_observer_animation_injections.cpp */,
-				889B1B441358627000042EB6 /* shy_logic_observer_animation_injections.h */,
-			);
-			path = logic_observer_animation;
-			sourceTree = "<group>";
-		};
-		889B1B451358627000042EB6 /* logic_ortho */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B461358627000042EB6 /* shy_logic_ortho.h */,
-				889B1B471358627000042EB6 /* shy_logic_ortho.hpp */,
-				889B1B481358627000042EB6 /* shy_logic_ortho_injections.cpp */,
-				889B1B491358627000042EB6 /* shy_logic_ortho_injections.h */,
-			);
-			path = logic_ortho;
-			sourceTree = "<group>";
-		};
-		889B1B4A1358627000042EB6 /* logic_perspective */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B4B1358627000042EB6 /* shy_logic_perspective.h */,
-				889B1B4C1358627000042EB6 /* shy_logic_perspective.hpp */,
-				889B1B4D1358627000042EB6 /* shy_logic_perspective_injections.cpp */,
-				889B1B4E1358627000042EB6 /* shy_logic_perspective_injections.h */,
-			);
-			path = logic_perspective;
-			sourceTree = "<group>";
-		};
-		889B1B531358627000042EB6 /* generator */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B541358627000042EB6 /* shy_generator.h */,
-				889B1B551358627000042EB6 /* shy_generator.hpp */,
-				889B1B561358627000042EB6 /* shy_generator_injections.cpp */,
-				889B1B571358627000042EB6 /* shy_generator_injections.h */,
-			);
-			path = generator;
-			sourceTree = "<group>";
-		};
-		889B1B581358627000042EB6 /* loader */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B591358627000042EB6 /* shy_loader.h */,
-				889B1B5A1358627100042EB6 /* shy_loader.hpp */,
-				889B1B5B1358627100042EB6 /* shy_loader_injections.cpp */,
-				889B1B5C1358627100042EB6 /* shy_loader_injections.h */,
-			);
-			path = loader;
-			sourceTree = "<group>";
-		};
-		889B1B5D1358627100042EB6 /* parser */ = {
-			isa = PBXGroup;
-			children = (
-				889B1B5E1358627100042EB6 /* shy_parser.h */,
-				889B1B5F1358627100042EB6 /* shy_parser.hpp */,
-				889B1B601358627100042EB6 /* shy_parser_injections.cpp */,
-				889B1B611358627100042EB6 /* shy_parser_injections.h */,
-			);
-			path = parser;
 			sourceTree = "<group>";
 		};
 		88E4AC2512DDE8E200D799A3 /* facade */ = {
@@ -18078,72 +18098,75 @@
 				88F7FCC1135739DD0055143E /* shy_video_mode_changed.h in Headers */,
 				88F7FCC2135739DD0055143E /* shy_video_mode_changed.hpp in Headers */,
 				88F7FCC4135739DD0055143E /* shy_video_mode_changed_injections.h in Headers */,
-				889B1B621358627100042EB6 /* shy_assigner.h in Headers */,
-				889B1B631358627100042EB6 /* shy_assigner.hpp in Headers */,
-				889B1B651358627100042EB6 /* shy_assigner_injections.h in Headers */,
-				889B1B661358627100042EB6 /* shy_binder.h in Headers */,
-				889B1B671358627100042EB6 /* shy_binder.hpp in Headers */,
-				889B1B691358627100042EB6 /* shy_binder_injections.h in Headers */,
-				889B1B6A1358627100042EB6 /* shy_logic_amusement.h in Headers */,
-				889B1B6B1358627100042EB6 /* shy_logic_amusement.hpp in Headers */,
-				889B1B6D1358627100042EB6 /* shy_logic_amusement_injections.h in Headers */,
-				889B1B6E1358627100042EB6 /* shy_logic_application.h in Headers */,
-				889B1B6F1358627100042EB6 /* shy_logic_application.hpp in Headers */,
-				889B1B711358627100042EB6 /* shy_logic_application_injections.h in Headers */,
-				889B1B721358627100042EB6 /* shy_logic_blanket.h in Headers */,
-				889B1B731358627100042EB6 /* shy_logic_blanket.hpp in Headers */,
-				889B1B751358627100042EB6 /* shy_logic_blanket_injections.h in Headers */,
-				889B1B761358627100042EB6 /* shy_logic_blanket_animation.h in Headers */,
-				889B1B771358627100042EB6 /* shy_logic_blanket_animation.hpp in Headers */,
-				889B1B781358627100042EB6 /* shy_logic_blanket_animation_injections.h in Headers */,
-				889B1B7A1358627100042EB6 /* shy_logic_door.h in Headers */,
-				889B1B7B1358627100042EB6 /* shy_logic_door.hpp in Headers */,
-				889B1B7D1358627100042EB6 /* shy_logic_door_injections.h in Headers */,
-				889B1B7E1358627100042EB6 /* shy_logic_door_animation.h in Headers */,
-				889B1B7F1358627100042EB6 /* shy_logic_door_animation.hpp in Headers */,
-				889B1B811358627100042EB6 /* shy_logic_door_animation_injections.h in Headers */,
-				889B1B821358627100042EB6 /* shy_logic_fidget.h in Headers */,
-				889B1B831358627100042EB6 /* shy_logic_fidget.hpp in Headers */,
-				889B1B851358627100042EB6 /* shy_logic_fidget_injections.h in Headers */,
-				889B1B861358627100042EB6 /* shy_logic_main_menu_animation.h in Headers */,
-				889B1B871358627100042EB6 /* shy_logic_main_menu_animation.hpp in Headers */,
-				889B1B891358627100042EB6 /* shy_logic_main_menu_animation_injections.h in Headers */,
-				889B1B8A1358627100042EB6 /* shy_logic_main_menu_letters_animation.h in Headers */,
-				889B1B8B1358627100042EB6 /* shy_logic_main_menu_letters_animation.hpp in Headers */,
-				889B1B8D1358627100042EB6 /* shy_logic_main_menu_letters_animation_injections.h in Headers */,
-				889B1B8E1358627100042EB6 /* shy_logic_main_menu_letters_layout.h in Headers */,
-				889B1B8F1358627100042EB6 /* shy_logic_main_menu_letters_layout.hpp in Headers */,
-				889B1B911358627100042EB6 /* shy_logic_main_menu_letters_layout_injections.h in Headers */,
-				889B1B921358627100042EB6 /* shy_logic_main_menu_letters_meshes.h in Headers */,
-				889B1B931358627100042EB6 /* shy_logic_main_menu_letters_meshes.hpp in Headers */,
-				889B1B951358627100042EB6 /* shy_logic_main_menu_letters_meshes_injections.h in Headers */,
-				889B1B961358627100042EB6 /* shy_logic_main_menu_selection.h in Headers */,
-				889B1B971358627100042EB6 /* shy_logic_main_menu_selection.hpp in Headers */,
-				889B1B991358627100042EB6 /* shy_logic_main_menu_selection_injections.h in Headers */,
-				889B1B9A1358627100042EB6 /* shy_logic_main_menu_selection_animation.h in Headers */,
-				889B1B9B1358627100042EB6 /* shy_logic_main_menu_selection_animation.hpp in Headers */,
-				889B1B9D1358627100042EB6 /* shy_logic_main_menu_selection_animation_injections.h in Headers */,
-				889B1B9E1358627100042EB6 /* shy_logic_observer_animation.h in Headers */,
-				889B1B9F1358627100042EB6 /* shy_logic_observer_animation.hpp in Headers */,
-				889B1BA11358627100042EB6 /* shy_logic_observer_animation_injections.h in Headers */,
-				889B1BA21358627100042EB6 /* shy_logic_ortho.h in Headers */,
-				889B1BA31358627100042EB6 /* shy_logic_ortho.hpp in Headers */,
-				889B1BA51358627100042EB6 /* shy_logic_ortho_injections.h in Headers */,
-				889B1BA61358627100042EB6 /* shy_logic_perspective.h in Headers */,
-				889B1BA71358627100042EB6 /* shy_logic_perspective.hpp in Headers */,
-				889B1BA91358627100042EB6 /* shy_logic_perspective_injections.h in Headers */,
-				889B1BAA1358627100042EB6 /* shy_reflection.h in Headers */,
-				889B1BAB1358627100042EB6 /* shy_reflection.hpp in Headers */,
-				889B1BAD1358627100042EB6 /* shy_reflection_injections.h in Headers */,
-				889B1BAE1358627100042EB6 /* shy_generator.h in Headers */,
-				889B1BAF1358627100042EB6 /* shy_generator.hpp in Headers */,
-				889B1BB11358627100042EB6 /* shy_generator_injections.h in Headers */,
-				889B1BB21358627100042EB6 /* shy_loader.h in Headers */,
-				889B1BB31358627100042EB6 /* shy_loader.hpp in Headers */,
-				889B1BB51358627100042EB6 /* shy_loader_injections.h in Headers */,
-				889B1BB61358627100042EB6 /* shy_parser.h in Headers */,
-				889B1BB71358627100042EB6 /* shy_parser.hpp in Headers */,
-				889B1BB91358627100042EB6 /* shy_parser_injections.h in Headers */,
+				882229631358639400BBDC77 /* shy_assigner.h in Headers */,
+				882229641358639400BBDC77 /* shy_assigner.hpp in Headers */,
+				882229661358639400BBDC77 /* shy_assigner_injections.h in Headers */,
+				882229671358639400BBDC77 /* shy_binder.h in Headers */,
+				882229681358639400BBDC77 /* shy_binder.hpp in Headers */,
+				8822296A1358639400BBDC77 /* shy_binder_injections.h in Headers */,
+				8822296B1358639400BBDC77 /* shy_logic_amusement.h in Headers */,
+				8822296C1358639400BBDC77 /* shy_logic_amusement.hpp in Headers */,
+				8822296E1358639400BBDC77 /* shy_logic_amusement_injections.h in Headers */,
+				8822296F1358639400BBDC77 /* shy_logic_application.h in Headers */,
+				882229701358639400BBDC77 /* shy_logic_application.hpp in Headers */,
+				882229721358639400BBDC77 /* shy_logic_application_injections.h in Headers */,
+				882229731358639400BBDC77 /* shy_logic_blanket.h in Headers */,
+				882229741358639400BBDC77 /* shy_logic_blanket.hpp in Headers */,
+				882229761358639400BBDC77 /* shy_logic_blanket_injections.h in Headers */,
+				882229771358639400BBDC77 /* shy_logic_blanket_animation.h in Headers */,
+				882229781358639400BBDC77 /* shy_logic_blanket_animation.hpp in Headers */,
+				882229791358639400BBDC77 /* shy_logic_blanket_animation_injections.h in Headers */,
+				8822297B1358639400BBDC77 /* shy_logic_door.h in Headers */,
+				8822297C1358639400BBDC77 /* shy_logic_door.hpp in Headers */,
+				8822297E1358639400BBDC77 /* shy_logic_door_injections.h in Headers */,
+				8822297F1358639400BBDC77 /* shy_logic_door_animation.h in Headers */,
+				882229801358639400BBDC77 /* shy_logic_door_animation.hpp in Headers */,
+				882229821358639400BBDC77 /* shy_logic_door_animation_injections.h in Headers */,
+				882229831358639400BBDC77 /* shy_logic_fidget.h in Headers */,
+				882229841358639400BBDC77 /* shy_logic_fidget.hpp in Headers */,
+				882229861358639400BBDC77 /* shy_logic_fidget_injections.h in Headers */,
+				882229871358639400BBDC77 /* shy_logic_main_menu_animation.h in Headers */,
+				882229881358639400BBDC77 /* shy_logic_main_menu_animation.hpp in Headers */,
+				8822298A1358639400BBDC77 /* shy_logic_main_menu_animation_injections.h in Headers */,
+				8822298B1358639400BBDC77 /* shy_logic_main_menu_letters_animation.h in Headers */,
+				8822298C1358639400BBDC77 /* shy_logic_main_menu_letters_animation.hpp in Headers */,
+				8822298E1358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.h in Headers */,
+				8822298F1358639400BBDC77 /* shy_logic_main_menu_letters_layout.h in Headers */,
+				882229901358639400BBDC77 /* shy_logic_main_menu_letters_layout.hpp in Headers */,
+				882229921358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.h in Headers */,
+				882229931358639400BBDC77 /* shy_logic_main_menu_letters_meshes.h in Headers */,
+				882229941358639400BBDC77 /* shy_logic_main_menu_letters_meshes.hpp in Headers */,
+				882229961358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.h in Headers */,
+				882229971358639400BBDC77 /* shy_logic_main_menu_selection.h in Headers */,
+				882229981358639400BBDC77 /* shy_logic_main_menu_selection.hpp in Headers */,
+				8822299A1358639400BBDC77 /* shy_logic_main_menu_selection_injections.h in Headers */,
+				8822299B1358639400BBDC77 /* shy_logic_main_menu_selection_animation.h in Headers */,
+				8822299C1358639400BBDC77 /* shy_logic_main_menu_selection_animation.hpp in Headers */,
+				8822299E1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.h in Headers */,
+				8822299F1358639400BBDC77 /* shy_logic_observer_animation.h in Headers */,
+				882229A01358639400BBDC77 /* shy_logic_observer_animation.hpp in Headers */,
+				882229A21358639400BBDC77 /* shy_logic_observer_animation_injections.h in Headers */,
+				882229A31358639400BBDC77 /* shy_logic_ortho.h in Headers */,
+				882229A41358639400BBDC77 /* shy_logic_ortho.hpp in Headers */,
+				882229A61358639400BBDC77 /* shy_logic_ortho_injections.h in Headers */,
+				882229A71358639400BBDC77 /* shy_logic_perspective.h in Headers */,
+				882229A81358639400BBDC77 /* shy_logic_perspective.hpp in Headers */,
+				882229AA1358639400BBDC77 /* shy_logic_perspective_injections.h in Headers */,
+				882229AB1358639400BBDC77 /* shy_logic_room.h in Headers */,
+				882229AC1358639400BBDC77 /* shy_logic_room.hpp in Headers */,
+				882229AE1358639400BBDC77 /* shy_logic_room_injections.h in Headers */,
+				882229AF1358639400BBDC77 /* shy_reflection.h in Headers */,
+				882229B01358639400BBDC77 /* shy_reflection.hpp in Headers */,
+				882229B21358639400BBDC77 /* shy_reflection_injections.h in Headers */,
+				882229B31358639400BBDC77 /* shy_generator.h in Headers */,
+				882229B41358639400BBDC77 /* shy_generator.hpp in Headers */,
+				882229B61358639400BBDC77 /* shy_generator_injections.h in Headers */,
+				882229B71358639400BBDC77 /* shy_loader.h in Headers */,
+				882229B81358639400BBDC77 /* shy_loader.hpp in Headers */,
+				882229BA1358639400BBDC77 /* shy_loader_injections.h in Headers */,
+				882229BB1358639400BBDC77 /* shy_parser.h in Headers */,
+				882229BC1358639400BBDC77 /* shy_parser.hpp in Headers */,
+				882229BE1358639400BBDC77 /* shy_parser_injections.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18681,28 +18704,29 @@
 				88F7FCBB135739DD0055143E /* shy_render_injections.cpp in Sources */,
 				88F7FCBF135739DD0055143E /* shy_update_injections.cpp in Sources */,
 				88F7FCC3135739DD0055143E /* shy_video_mode_changed_injections.cpp in Sources */,
-				889B1B641358627100042EB6 /* shy_assigner_injections.cpp in Sources */,
-				889B1B681358627100042EB6 /* shy_binder_injections.cpp in Sources */,
-				889B1B6C1358627100042EB6 /* shy_logic_amusement_injections.cpp in Sources */,
-				889B1B701358627100042EB6 /* shy_logic_application_injections.cpp in Sources */,
-				889B1B741358627100042EB6 /* shy_logic_blanket_injections.cpp in Sources */,
-				889B1B791358627100042EB6 /* shy_logic_blanket_animation_injections_injections.cpp in Sources */,
-				889B1B7C1358627100042EB6 /* shy_logic_door_injections.cpp in Sources */,
-				889B1B801358627100042EB6 /* shy_logic_door_animation_injections.cpp in Sources */,
-				889B1B841358627100042EB6 /* shy_logic_fidget_injections.cpp in Sources */,
-				889B1B881358627100042EB6 /* shy_logic_main_menu_animation_injections.cpp in Sources */,
-				889B1B8C1358627100042EB6 /* shy_logic_main_menu_letters_animation_injections.cpp in Sources */,
-				889B1B901358627100042EB6 /* shy_logic_main_menu_letters_layout_injections.cpp in Sources */,
-				889B1B941358627100042EB6 /* shy_logic_main_menu_letters_meshes_injections.cpp in Sources */,
-				889B1B981358627100042EB6 /* shy_logic_main_menu_selection_injections.cpp in Sources */,
-				889B1B9C1358627100042EB6 /* shy_logic_main_menu_selection_animation_injections.cpp in Sources */,
-				889B1BA01358627100042EB6 /* shy_logic_observer_animation_injections.cpp in Sources */,
-				889B1BA41358627100042EB6 /* shy_logic_ortho_injections.cpp in Sources */,
-				889B1BA81358627100042EB6 /* shy_logic_perspective_injections.cpp in Sources */,
-				889B1BAC1358627100042EB6 /* shy_reflection_injections.cpp in Sources */,
-				889B1BB01358627100042EB6 /* shy_generator_injections.cpp in Sources */,
-				889B1BB41358627100042EB6 /* shy_loader_injections.cpp in Sources */,
-				889B1BB81358627100042EB6 /* shy_parser_injections.cpp in Sources */,
+				882229651358639400BBDC77 /* shy_assigner_injections.cpp in Sources */,
+				882229691358639400BBDC77 /* shy_binder_injections.cpp in Sources */,
+				8822296D1358639400BBDC77 /* shy_logic_amusement_injections.cpp in Sources */,
+				882229711358639400BBDC77 /* shy_logic_application_injections.cpp in Sources */,
+				882229751358639400BBDC77 /* shy_logic_blanket_injections.cpp in Sources */,
+				8822297A1358639400BBDC77 /* shy_logic_blanket_animation_injections_injections.cpp in Sources */,
+				8822297D1358639400BBDC77 /* shy_logic_door_injections.cpp in Sources */,
+				882229811358639400BBDC77 /* shy_logic_door_animation_injections.cpp in Sources */,
+				882229851358639400BBDC77 /* shy_logic_fidget_injections.cpp in Sources */,
+				882229891358639400BBDC77 /* shy_logic_main_menu_animation_injections.cpp in Sources */,
+				8822298D1358639400BBDC77 /* shy_logic_main_menu_letters_animation_injections.cpp in Sources */,
+				882229911358639400BBDC77 /* shy_logic_main_menu_letters_layout_injections.cpp in Sources */,
+				882229951358639400BBDC77 /* shy_logic_main_menu_letters_meshes_injections.cpp in Sources */,
+				882229991358639400BBDC77 /* shy_logic_main_menu_selection_injections.cpp in Sources */,
+				8822299D1358639400BBDC77 /* shy_logic_main_menu_selection_animation_injections.cpp in Sources */,
+				882229A11358639400BBDC77 /* shy_logic_observer_animation_injections.cpp in Sources */,
+				882229A51358639400BBDC77 /* shy_logic_ortho_injections.cpp in Sources */,
+				882229A91358639400BBDC77 /* shy_logic_perspective_injections.cpp in Sources */,
+				882229AD1358639400BBDC77 /* shy_logic_room_injections.cpp in Sources */,
+				882229B11358639400BBDC77 /* shy_reflection_injections.cpp in Sources */,
+				882229B51358639400BBDC77 /* shy_generator_injections.cpp in Sources */,
+				882229B91358639400BBDC77 /* shy_loader_injections.cpp in Sources */,
+				882229BD1358639400BBDC77 /* shy_parser_injections.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

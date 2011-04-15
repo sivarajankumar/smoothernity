@@ -16,6 +16,6 @@ void shy_loadable_consts_reflection :: prepare ( )
     so_called_loadable_consts_reflection_logic_observer_animation :: prepare ( ) ;
     so_called_loadable_consts_reflection_logic_ortho :: prepare ( ) ;
     so_called_loadable_consts_reflection_logic_perspective :: prepare ( ) ;
-//    so_called_loadable_consts_reflection_logic_room :: prepare ( ) ;
+    so_called_loadable_consts_reflection_logic_room :: prepare ( ) ;
 //    so_called_loadable_consts_reflection_logic_title :: prepare ( ) ;
 }
