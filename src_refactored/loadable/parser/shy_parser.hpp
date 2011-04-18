@@ -548,6 +548,20 @@ void shy_guts :: handle_state_reading_attribute_denominator_sign ( )
 
 void shy_guts :: handle_state_reading_attribute_denominator_value ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_number )
+    {
+        shy_guts :: store_attribute_denominator_value ( shy_guts :: token ) ;
+        shy_guts :: set_fract_value ( ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_attribute_name ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_denominator_instead_of ( error , token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_determining_value_format ( )
