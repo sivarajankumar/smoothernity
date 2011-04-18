@@ -1,6 +1,10 @@
 #ifndef _shy_type_loadable_fsm_content_condition_group_injections_included
 #define _shy_type_loadable_fsm_content_condition_group_injections_included
 
+#include "../condition_command_container/shy_condition_command_container_injections.h"
+#include "../condition_input_container/shy_condition_input_container_injections.h"
+#include "../condition_state_container/shy_condition_state_container_injections.h"
+
 #include "./shy_condition_group.h"
 
 typedef shy_type_loadable_fsm_content_condition_group so_called_type_loadable_fsm_content_condition_group ;
