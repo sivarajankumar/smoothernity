@@ -945,6 +945,28 @@ void shy_guts :: handle_state_reading_first_condition_in_group ( )
 
 void shy_guts :: handle_state_reading_next_condition_in_group ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_parenthesis_open )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_parametric_condition_token ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier )
+    {
+        shy_guts :: store_input_condition ( shy_guts :: token ) ;
+        shy_guts :: read_next_token ( ) ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_brace_close )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_next_condition_group ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_input_name_or_parenthesis_open_or_brace_close_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_parametric_condition_token ( )
