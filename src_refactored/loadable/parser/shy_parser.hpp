@@ -386,6 +386,28 @@ void shy_guts :: errors :: unknown_whole_attribute_in_module ( so_called_std_str
 
 void shy_guts :: handle_token_class_none ( )
 {
+    so_called_std_char ch ;
+    shy_guts :: first_char ( ch ) ;
+    if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
+        shy_guts :: token_class = shy_guts :: token_class_number ;
+    else if ( so_called_std_isalpha ( ch , shy_guts :: locale ) )
+        shy_guts :: token_class = shy_guts :: token_class_identifier ;
+    else if ( ch == shy_guts :: consts :: terminator )
+        shy_guts :: token_class = shy_guts :: token_class_terminator ;
+    else if ( ch == shy_guts :: consts :: divide )
+        shy_guts :: token_class = shy_guts :: token_class_divide ;
+    else if ( ch == shy_guts :: consts :: minus )
+        shy_guts :: token_class = shy_guts :: token_class_minus ;
+    else if ( ch == shy_guts :: consts :: brace_open )
+        shy_guts :: token_class = shy_guts :: token_class_brace_open ;
+    else if ( ch == shy_guts :: consts :: brace_close )
+        shy_guts :: token_class = shy_guts :: token_class_brace_close ;
+    else if ( ch == shy_guts :: consts :: parenthesis_open )
+        shy_guts :: token_class = shy_guts :: token_class_parenthesis_open ;
+    else if ( ch == shy_guts :: consts :: parenthesis_close )
+        shy_guts :: token_class = shy_guts :: token_class_parenthesis_close ;
+    else
+        shy_guts :: token_class = shy_guts :: token_class_unknown ;
 }
 
 void shy_guts :: handle_token_class_identifier ( )
