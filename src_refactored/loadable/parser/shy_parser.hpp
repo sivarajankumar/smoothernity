@@ -451,6 +451,7 @@ void shy_guts :: handle_state_none ( )
 
 void shy_guts :: handle_state_error ( )
 {
+    shy_guts :: continue_parsing = so_called_std_false ;
 }
 
 void shy_guts :: handle_state_reading_module_name ( )
@@ -1250,6 +1251,40 @@ void shy_guts :: set_fract_value ( )
 
 void shy_guts :: read_next_token ( )
 {
+    shy_guts :: token = so_called_std_string ( ) ;
+    shy_guts :: token_class = shy_guts :: token_class_none ;
+    shy_guts :: trim_whitespaces ( ) ;
+    shy_guts :: continue_reading_next_token = so_called_std_true ;
+    
+    so_called_std_bool any_chars = so_called_std_false ;
+    shy_guts :: any_chars_in_line ( any_chars ) ;
+    while ( any_chars && shy_guts :: continue_reading_next_token )
+    {
+        if ( shy_guts :: token_class == shy_guts :: token_class_none )
+            shy_guts :: handle_token_class_none ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
+            shy_guts :: handle_token_class_terminator ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_number )
+            shy_guts :: handle_token_class_number ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_identifier )
+            shy_guts :: handle_token_class_identifier ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_divide )
+            shy_guts :: handle_token_class_divide ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_minus )
+            shy_guts :: handle_token_class_minus ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_brace_open )
+            shy_guts :: handle_token_class_brace_open ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_brace_close )
+            shy_guts :: handle_token_class_brace_close ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_parenthesis_open )
+            shy_guts :: handle_token_class_parenthesis_open ( ) ;
+        else if ( shy_guts :: token_class == shy_guts :: token_class_parenthesis_close )
+            shy_guts :: handle_token_class_parenthesis_close ( ) ;
+        else
+            shy_guts :: handle_token_class_unknown ( ) ;
+
+        shy_guts :: any_chars_in_line ( any_chars ) ;
+    }
 }
 
 void shy_guts :: trim_first_char ( )
