@@ -720,8 +720,83 @@ void shy_guts :: any_chars_in_line ( so_called_std_bool & )
 {
 }
 
-void shy_loadable_parser :: parse ( so_called_std_string )
+void shy_loadable_parser :: parse ( so_called_std_string line )
 {
+    shy_guts :: whole_line = line ;
+    shy_guts :: remaining_line = line ;
+    shy_guts :: continue_parsing = so_called_std_true ;
+    shy_guts :: read_next_token ( ) ;
+    while ( shy_guts :: continue_parsing && shy_guts :: token_class != shy_guts :: token_class_none )
+    {
+        if ( shy_guts :: state == shy_guts :: state_none )
+            shy_guts :: handle_state_none ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_module_name )
+            shy_guts :: handle_state_reading_module_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_attribute_name )
+            shy_guts :: handle_state_reading_attribute_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_attribute_numerator_sign )
+            shy_guts :: handle_state_reading_attribute_numerator_sign ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_attribute_numerator_value )
+            shy_guts :: handle_state_reading_attribute_numerator_value ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_determining_value_format )
+            shy_guts :: handle_state_determining_value_format ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_attribute_denominator_sign )
+            shy_guts :: handle_state_reading_attribute_denominator_sign ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_attribute_denominator_value )
+            shy_guts :: handle_state_reading_attribute_denominator_value ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_system_name )
+            shy_guts :: handle_state_reading_system_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_machine_token )
+            shy_guts :: handle_state_reading_machine_token ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_machine_name )
+            shy_guts :: handle_state_reading_machine_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_state_token )
+            shy_guts :: handle_state_reading_state_token ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_state_name )
+            shy_guts :: handle_state_reading_state_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_state_content )
+            shy_guts :: handle_state_reading_state_content ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_event_type )
+            shy_guts :: handle_state_reading_event_type ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_action_token )
+            shy_guts :: handle_state_reading_action_token ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_action_name )
+            shy_guts :: handle_state_reading_action_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_action_command_name )
+            shy_guts :: handle_state_reading_action_command_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_action_command_to_token )
+            shy_guts :: handle_state_reading_action_command_to_token ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_action_command_machine_name )
+            shy_guts :: handle_state_reading_action_command_machine_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_first_condition_group )
+            shy_guts :: handle_state_reading_first_condition_group ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_next_condition_group )
+            shy_guts :: handle_state_reading_next_condition_group ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_first_condition_in_group )
+            shy_guts :: handle_state_reading_first_condition_in_group ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_next_condition_in_group )
+            shy_guts :: handle_state_reading_next_condition_in_group ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_parametric_condition_token )
+            shy_guts :: handle_state_reading_parametric_condition_token ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_state_condition_machine_name )
+            shy_guts :: handle_state_reading_state_condition_machine_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_state_condition_is_token )
+            shy_guts :: handle_state_reading_state_condition_is_token ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_state_condition_state_name )
+            shy_guts :: handle_state_reading_state_condition_state_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_state_condition_parenthesis_close )
+            shy_guts :: handle_state_reading_state_condition_parenthesis_close ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_command_condition_command_name )
+            shy_guts :: handle_state_reading_command_condition_command_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_command_condition_parenthesis_close )
+            shy_guts :: handle_state_reading_command_condition_parenthesis_close ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_transition_state_name )
+            shy_guts :: handle_state_reading_transition_state_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_transition_if_token )
+            shy_guts :: handle_state_reading_transition_if_token ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_error )
+            shy_guts :: handle_state_error ( ) ;
+    }
 }
 
 void shy_loadable_parser :: get_error ( so_called_std_string & arg_error )
@@ -733,3 +808,4 @@ void shy_loadable_parser :: terminate ( )
 {
     parse ( so_called_std_string ( 1 , shy_guts :: consts :: terminator ) ) ;
 }
+

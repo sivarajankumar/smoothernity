@@ -20,6 +20,7 @@
     #define so_called_std_getline std :: getline
     #define so_called_std_map std :: map
     #define so_called_std_set std :: set
+    #define so_called_std_true true
     #define so_called_std_vector std :: vector
 
     typedef bool so_called_std_bool ;
