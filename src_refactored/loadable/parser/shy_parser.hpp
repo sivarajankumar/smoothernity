@@ -1109,6 +1109,15 @@ void shy_guts :: handle_state_reading_transition_state_name ( )
 
 void shy_guts :: handle_state_reading_transition_if_token ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: if_token )
+    {
+        shy_guts :: select_transition_conditions ( ) ;
+        shy_guts :: select_transition_condition_group_container ( ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_first_condition_group ;
+    }
+    else
+        shy_guts :: state = shy_guts :: state_reading_state_content ;
 }
 
 void shy_guts :: store_error ( std :: string )
