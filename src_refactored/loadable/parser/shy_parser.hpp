@@ -682,6 +682,19 @@ void shy_guts :: handle_state_reading_state_token ( )
 
 void shy_guts :: handle_state_reading_state_name ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier )
+    {
+        shy_guts :: store_state_name ( shy_guts :: token ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_state_content ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_state_name_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_state_content ( )
