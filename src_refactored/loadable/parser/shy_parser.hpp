@@ -430,6 +430,23 @@ void shy_guts :: handle_token_class_unknown ( )
 
 void shy_guts :: handle_state_none ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_module_name ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: system )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_system_name ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_consts_or_system_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_error ( )
