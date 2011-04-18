@@ -971,6 +971,23 @@ void shy_guts :: handle_state_reading_next_condition_in_group ( )
 
 void shy_guts :: handle_state_reading_parametric_condition_token ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: machine )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_state_condition_machine_name ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: command )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_command_condition_command_name ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_machine_or_command_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_state_condition_machine_name ( )
