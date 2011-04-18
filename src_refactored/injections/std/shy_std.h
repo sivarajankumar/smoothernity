@@ -4,6 +4,7 @@
 #ifdef shy_build_loadable_way
 
     #include <iostream>
+    #include <locale>
     #include <map>
     #include <set>
     #include <sstream>
@@ -15,13 +16,17 @@
     #define so_called_std_cin std :: cin
     #define so_called_std_cout std :: cout
     #define so_called_std_endl std :: endl
+    #define so_called_std_false false
     #define so_called_std_getline std :: getline
     #define so_called_std_map std :: map
     #define so_called_std_set std :: set
     #define so_called_std_vector std :: vector
 
+    typedef bool so_called_std_bool ;
+    typedef char so_called_std_char ;
     typedef int32_t so_called_std_int32_t ;
     typedef std :: istringstream so_called_std_istringstream ;
+    typedef std :: locale so_called_std_locale ;
     typedef std :: string so_called_std_string ;
 
 #endif
