@@ -743,6 +743,33 @@ void shy_guts :: handle_state_reading_state_content ( )
 
 void shy_guts :: handle_state_reading_event_type ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: entry )
+    {
+        shy_guts :: select_entry_actions_container ( ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_action_token ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: exit )
+    {
+        shy_guts :: select_exit_actions_container ( ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_action_token ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_brace_open )
+    {
+        shy_guts :: add_on_input_event ( ) ;
+        shy_guts :: select_input_actions_container ( ) ;
+        shy_guts :: select_input_actions_conditions ( ) ;
+        shy_guts :: select_input_actions_condition_group_container ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_first_condition_group ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_entry_or_exit_or_brace_open_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_action_token ( )
