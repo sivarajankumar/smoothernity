@@ -878,14 +878,54 @@ void shy_guts :: handle_state_reading_action_command_to_token ( )
 
 void shy_guts :: handle_state_reading_action_command_machine_name ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier )
+    {
+        shy_guts :: store_action_command_machine_name ( shy_guts :: token ) ;
+        shy_guts :: store_action_command ( ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_action_token ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_machine_name_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_first_condition_group ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_brace_open )
+        shy_guts :: state = shy_guts :: state_reading_next_condition_group ;
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_brace_open_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_next_condition_group ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_brace_open )
+    {
+        shy_guts :: add_condition_group ( ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_first_condition_in_group ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: input_actions_conditions_selected )
+        shy_guts :: state = shy_guts :: state_reading_action_token ;
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: transition_conditions_selected )
+        shy_guts :: state = shy_guts :: state_reading_state_content ;
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_brace_open_or_identifier_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_first_condition_in_group ( )
