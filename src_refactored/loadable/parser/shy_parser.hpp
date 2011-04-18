@@ -724,10 +724,12 @@ void shy_loadable_parser :: parse ( so_called_std_string )
 {
 }
 
-void shy_loadable_parser :: get_error ( so_called_std_string & )
+void shy_loadable_parser :: get_error ( so_called_std_string & arg_error )
 {
+    arg_error = shy_guts :: error ;
 }
 
 void shy_loadable_parser :: terminate ( )
 {
+    parse ( so_called_std_string ( 1 , shy_guts :: consts :: terminator ) ) ;
 }
