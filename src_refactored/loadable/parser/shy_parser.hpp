@@ -501,6 +501,17 @@ void shy_guts :: handle_state_reading_attribute_name ( )
 
 void shy_guts :: handle_state_reading_attribute_numerator_sign ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_minus )
+    {
+        shy_guts :: store_attribute_numerator_sign ( shy_guts :: token ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_attribute_numerator_value ;
+    }
+    else
+    {
+        shy_guts :: store_attribute_numerator_sign ( so_called_std_string ( ) ) ;
+        shy_guts :: state = shy_guts :: state_reading_attribute_numerator_value ;
+    }
 }
 
 void shy_guts :: handle_state_reading_attribute_numerator_value ( )
