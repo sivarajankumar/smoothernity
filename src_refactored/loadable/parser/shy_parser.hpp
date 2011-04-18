@@ -541,6 +541,23 @@ void shy_guts :: handle_state_reading_attribute_denominator_value ( )
 
 void shy_guts :: handle_state_determining_value_format ( )
 {
+    if ( shy_guts :: token_class == shy_guts :: token_class_divide )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_attribute_denominator_sign ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier || shy_guts :: token_class == shy_guts :: token_class_terminator )
+    {
+        shy_guts :: set_whole_value ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_attribute_name ;
+    }
+    else
+    {
+        so_called_std_string error ;
+        shy_guts :: errors :: expected_divide_or_identifier_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
 }
 
 void shy_guts :: handle_state_reading_system_name ( )
