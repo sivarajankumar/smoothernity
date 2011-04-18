@@ -6,6 +6,8 @@
     #include <iostream>
     #include <map>
     #include <set>
+    #include <sstream>
+    #include <stdint.h>
     #include <string>
     #include <vector>
 
@@ -18,6 +20,8 @@
     #define so_called_std_set std :: set
     #define so_called_std_vector std :: vector
 
+    typedef int32_t so_called_std_int32_t ;
+    typedef std :: istringstream so_called_std_istringstream ;
     typedef std :: string so_called_std_string ;
 
 #endif
