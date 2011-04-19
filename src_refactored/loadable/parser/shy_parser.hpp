@@ -1348,6 +1348,22 @@ void shy_guts :: trim_first_char ( )
 
 void shy_guts :: trim_whitespaces ( )
 {
+    for ( ; ; )
+    {
+        so_called_std_bool any_chars ;
+        shy_guts :: any_chars_in_line ( any_chars ) ;
+        if ( any_chars )
+        {
+            so_called_std_char ch ;
+            shy_guts :: first_char ( ch ) ; 
+            if ( so_called_std_isspace ( ch , shy_guts :: locale ) )
+            {
+                shy_guts :: trim_first_char ( ) ;
+                continue ;
+            }
+        }
+        break ;
+    }
 }
 
 void shy_guts :: append_first_char_to_token ( )
