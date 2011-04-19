@@ -437,6 +437,8 @@ void shy_guts :: handle_token_class_number ( )
 
 void shy_guts :: handle_token_class_terminator ( )
 {
+    shy_guts :: move_first_char_to_token ( ) ;
+    shy_guts :: continue_reading_next_token = so_called_std_false ;
 }
 
 void shy_guts :: handle_token_class_divide ( )
