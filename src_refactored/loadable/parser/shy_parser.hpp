@@ -416,6 +416,12 @@ void shy_guts :: handle_token_class_identifier ( )
 
 void shy_guts :: handle_token_class_number ( )
 {
+    so_called_std_char ch ;
+    shy_guts :: first_char ( ch ) ;
+    if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
+        shy_guts :: move_first_char_to_token ( ) ;
+    else
+        shy_guts :: continue_reading_next_token = so_called_std_false ;
 }
 
 void shy_guts :: handle_token_class_terminator ( )
