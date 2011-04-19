@@ -1356,6 +1356,8 @@ void shy_guts :: append_first_char_to_token ( )
 
 void shy_guts :: move_first_char_to_token ( )
 {
+    shy_guts :: append_first_char_to_token ( ) ;
+    shy_guts :: trim_first_char ( ) ;
 }
 
 void shy_guts :: first_char ( so_called_std_char & )
