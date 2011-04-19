@@ -1344,6 +1344,7 @@ void shy_guts :: read_next_token ( )
 
 void shy_guts :: trim_first_char ( )
 {
+    shy_guts :: remaining_line . erase ( shy_guts :: remaining_line . begin ( ) ) ;
 }
 
 void shy_guts :: trim_whitespaces ( )
