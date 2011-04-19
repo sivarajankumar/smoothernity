@@ -1385,8 +1385,9 @@ void shy_guts :: first_char ( so_called_std_char & ch )
     ch = shy_guts :: remaining_line . at ( 0 ) ;
 }
 
-void shy_guts :: any_chars_in_line ( so_called_std_bool & )
+void shy_guts :: any_chars_in_line ( so_called_std_bool & any_chars )
 {
+    any_chars = ! shy_guts :: remaining_line . empty ( ) ;
 }
 
 void shy_loadable_parser :: parse ( so_called_std_string line )
