@@ -1369,6 +1369,9 @@ void shy_guts :: trim_whitespaces ( )
 
 void shy_guts :: append_first_char_to_token ( )
 {
+    so_called_std_char ch ;
+    shy_guts :: first_char ( ch ) ;
+    shy_guts :: token += so_called_std_string ( 1 , ch ) ;
 }
 
 void shy_guts :: move_first_char_to_token ( )
