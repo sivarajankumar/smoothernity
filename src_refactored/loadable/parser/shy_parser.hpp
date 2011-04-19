@@ -1377,8 +1377,9 @@ void shy_guts :: move_first_char_to_token ( )
     shy_guts :: trim_first_char ( ) ;
 }
 
-void shy_guts :: first_char ( so_called_std_char & )
+void shy_guts :: first_char ( so_called_std_char & ch )
 {
+    ch = shy_guts :: remaining_line . at ( 0 ) ;
 }
 
 void shy_guts :: any_chars_in_line ( so_called_std_bool & )
