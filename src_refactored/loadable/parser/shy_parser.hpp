@@ -188,26 +188,26 @@ namespace shy_guts
     static void handle_state_reading_command_condition_parenthesis_close ( ) ;
     static void handle_state_reading_transition_state_name ( ) ;
     static void handle_state_reading_transition_if_token ( ) ;
-    static void store_error ( std :: string ) ;
-    static void store_module_name ( std :: string ) ;
-    static void store_attribute_name ( std :: string ) ;
-    static void store_attribute_numerator_sign ( std :: string ) ;
-    static void store_attribute_numerator_value ( std :: string ) ;
-    static void store_attribute_denominator_sign ( std :: string ) ;
-    static void store_attribute_denominator_value ( std :: string ) ;
-    static void store_system_name ( std :: string ) ;
-    static void store_machine_name ( std :: string ) ;
-    static void store_state_name ( std :: string ) ;
-    static void store_action_name ( std :: string ) ;
-    static void store_action_command_name ( std :: string ) ;
-    static void store_action_command_machine_name ( std :: string ) ;
+    static void store_error ( so_called_std_string ) ;
+    static void store_module_name ( so_called_std_string ) ;
+    static void store_attribute_name ( so_called_std_string ) ;
+    static void store_attribute_numerator_sign ( so_called_std_string ) ;
+    static void store_attribute_numerator_value ( so_called_std_string ) ;
+    static void store_attribute_denominator_sign ( so_called_std_string ) ;
+    static void store_attribute_denominator_value ( so_called_std_string ) ;
+    static void store_system_name ( so_called_std_string ) ;
+    static void store_machine_name ( so_called_std_string ) ;
+    static void store_state_name ( so_called_std_string ) ;
+    static void store_action_name ( so_called_std_string ) ;
+    static void store_action_command_name ( so_called_std_string ) ;
+    static void store_action_command_machine_name ( so_called_std_string ) ;
     static void store_action_command ( ) ;
-    static void store_transition_state_name ( std :: string ) ;
-    static void store_input_condition ( std :: string ) ;
-    static void store_state_condition_machine_name ( std :: string ) ;
-    static void store_state_condition_state_name ( std :: string ) ;
+    static void store_transition_state_name ( so_called_std_string ) ;
+    static void store_input_condition ( so_called_std_string ) ;
+    static void store_state_condition_machine_name ( so_called_std_string ) ;
+    static void store_state_condition_state_name ( so_called_std_string ) ;
     static void store_state_condition ( ) ;
-    static void store_command_condition_command_name ( std :: string ) ;
+    static void store_command_condition_command_name ( so_called_std_string ) ;
     static void select_entry_actions_container ( ) ;
     static void select_exit_actions_container ( ) ;
     static void select_input_actions_container ( ) ;
@@ -1176,55 +1176,60 @@ void shy_guts :: handle_state_reading_transition_if_token ( )
         shy_guts :: state = shy_guts :: state_reading_state_content ;
 }
 
-void shy_guts :: store_error ( std :: string )
+void shy_guts :: store_error ( so_called_std_string arg_error )
+{
+    shy_guts :: error = so_called_std_string ( ) ;
+    shy_guts :: error += arg_error ;
+    shy_guts :: error += shy_guts :: consts :: next_line ;
+    shy_guts :: error += shy_guts :: consts :: error_whole_line ;
+    shy_guts :: error += shy_guts :: whole_line ;
+}
+
+void shy_guts :: store_module_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_module_name ( std :: string )
+void shy_guts :: store_attribute_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_attribute_name ( std :: string )
+void shy_guts :: store_attribute_numerator_sign ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_attribute_numerator_sign ( std :: string )
+void shy_guts :: store_attribute_numerator_value ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_attribute_numerator_value ( std :: string )
+void shy_guts :: store_attribute_denominator_sign ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_attribute_denominator_sign ( std :: string )
+void shy_guts :: store_attribute_denominator_value ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_attribute_denominator_value ( std :: string )
+void shy_guts :: store_system_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_system_name ( std :: string )
+void shy_guts :: store_machine_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_machine_name ( std :: string )
+void shy_guts :: store_state_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_state_name ( std :: string )
+void shy_guts :: store_action_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_action_name ( std :: string )
+void shy_guts :: store_action_command_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_action_command_name ( std :: string )
-{
-}
-
-void shy_guts :: store_action_command_machine_name ( std :: string )
+void shy_guts :: store_action_command_machine_name ( so_called_std_string )
 {
 }
 
@@ -1232,19 +1237,19 @@ void shy_guts :: store_action_command ( )
 {
 }
 
-void shy_guts :: store_transition_state_name ( std :: string )
+void shy_guts :: store_transition_state_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_input_condition ( std :: string )
+void shy_guts :: store_input_condition ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_state_condition_machine_name ( std :: string )
+void shy_guts :: store_state_condition_machine_name ( so_called_std_string )
 {
 }
 
-void shy_guts :: store_state_condition_state_name ( std :: string )
+void shy_guts :: store_state_condition_state_name ( so_called_std_string )
 {
 }
 
@@ -1252,7 +1257,7 @@ void shy_guts :: store_state_condition ( )
 {
 }
 
-void shy_guts :: store_command_condition_command_name ( std :: string )
+void shy_guts :: store_command_condition_command_name ( so_called_std_string )
 {
 }
 
