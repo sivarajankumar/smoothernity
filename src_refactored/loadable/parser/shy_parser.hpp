@@ -1344,6 +1344,8 @@ void shy_guts :: select_input_actions_container ( )
 
 void shy_guts :: select_input_actions_conditions ( )
 {
+    shy_guts :: input_actions_conditions_selected = so_called_std_true ;
+    shy_guts :: transition_conditions_selected = so_called_std_false ;
 }
 
 void shy_guts :: select_input_actions_condition_group_container ( )
@@ -1354,6 +1356,8 @@ void shy_guts :: select_input_actions_condition_group_container ( )
 
 void shy_guts :: select_transition_conditions ( )
 {
+    shy_guts :: input_actions_conditions_selected = so_called_std_false ;
+    shy_guts :: transition_conditions_selected = so_called_std_true ;
 }
 
 void shy_guts :: select_transition_condition_group_container ( )
@@ -1364,10 +1368,20 @@ void shy_guts :: select_transition_condition_group_container ( )
 
 void shy_guts :: add_on_input_event ( )
 {
+    if ( shy_guts :: current_fsm_state )
+    {
+        shy_guts :: current_fsm_state -> on_input . push_back ( so_called_type_loadable_fsm_content_on_input ( ) ) ;
+        shy_guts :: current_fsm_on_input = & shy_guts :: current_fsm_state -> on_input . back ( ) ;
+    }
 }
 
 void shy_guts :: add_transition ( )
 {
+    if ( shy_guts :: current_fsm_state )
+    {
+        shy_guts :: current_fsm_state -> transitions . push_back ( so_called_type_loadable_fsm_content_transition ( ) ) ;
+        shy_guts :: current_fsm_transition = & shy_guts :: current_fsm_state -> transitions . back ( ) ;
+    }
 }
 
 void shy_guts :: add_condition_group ( )
