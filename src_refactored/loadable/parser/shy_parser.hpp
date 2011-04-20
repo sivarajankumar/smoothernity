@@ -1326,14 +1326,20 @@ void shy_guts :: store_command_condition_command_name ( so_called_std_string nam
 
 void shy_guts :: select_entry_actions_container ( )
 {
+    if ( shy_guts :: current_fsm_state )
+        shy_guts :: current_fsm_actions = & shy_guts :: current_fsm_state -> on_entry ;
 }
 
 void shy_guts :: select_exit_actions_container ( )
 {
+    if ( shy_guts :: current_fsm_state )
+        shy_guts :: current_fsm_actions = & shy_guts :: current_fsm_state -> on_exit ;
 }
 
 void shy_guts :: select_input_actions_container ( )
 {
+    if ( shy_guts :: current_fsm_on_input )
+        shy_guts :: current_fsm_actions = & shy_guts :: current_fsm_on_input -> actions ;
 }
 
 void shy_guts :: select_input_actions_conditions ( )
@@ -1342,6 +1348,8 @@ void shy_guts :: select_input_actions_conditions ( )
 
 void shy_guts :: select_input_actions_condition_group_container ( )
 {
+    if ( shy_guts :: current_fsm_on_input )
+        shy_guts :: current_fsm_condition_group_container = & shy_guts :: current_fsm_on_input -> condition_groups ;
 }
 
 void shy_guts :: select_transition_conditions ( )
@@ -1350,6 +1358,8 @@ void shy_guts :: select_transition_conditions ( )
 
 void shy_guts :: select_transition_condition_group_container ( )
 {
+    if ( shy_guts :: current_fsm_transition )
+        shy_guts :: current_fsm_condition_group_container = & shy_guts :: current_fsm_transition -> condition_groups ;
 }
 
 void shy_guts :: add_on_input_event ( )
