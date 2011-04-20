@@ -1298,16 +1298,20 @@ void shy_guts :: store_input_condition ( so_called_std_string input )
     }
 }
 
-void shy_guts :: store_state_condition_machine_name ( so_called_std_string )
+void shy_guts :: store_state_condition_machine_name ( so_called_std_string name )
 {
+    shy_guts :: current_fsm_condition_state . machine = name ;
 }
 
-void shy_guts :: store_state_condition_state_name ( so_called_std_string )
+void shy_guts :: store_state_condition_state_name ( so_called_std_string name )
 {
+    shy_guts :: current_fsm_condition_state . state = name ;
 }
 
 void shy_guts :: store_state_condition ( )
 {
+    if ( shy_guts :: current_fsm_condition_group )
+        shy_guts :: current_fsm_condition_group -> states . push_back ( shy_guts :: current_fsm_condition_state ) ;
 }
 
 void shy_guts :: store_command_condition_command_name ( so_called_std_string )
