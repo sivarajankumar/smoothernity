@@ -1314,8 +1314,14 @@ void shy_guts :: store_state_condition ( )
         shy_guts :: current_fsm_condition_group -> states . push_back ( shy_guts :: current_fsm_condition_state ) ;
 }
 
-void shy_guts :: store_command_condition_command_name ( so_called_std_string )
+void shy_guts :: store_command_condition_command_name ( so_called_std_string name )
 {
+    if ( shy_guts :: current_fsm_condition_group )
+    {
+        so_called_type_loadable_fsm_content_condition_command condition ;
+        condition . command = name ;
+        shy_guts :: current_fsm_condition_group -> commands . push_back ( condition ) ;
+    }
 }
 
 void shy_guts :: select_entry_actions_container ( )
