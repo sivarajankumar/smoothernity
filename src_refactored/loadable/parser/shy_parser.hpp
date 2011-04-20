@@ -1252,8 +1252,16 @@ void shy_guts :: store_state_name ( so_called_std_string name )
     }
 }
 
-void shy_guts :: store_action_name ( so_called_std_string )
+void shy_guts :: store_action_name ( so_called_std_string name )
 {
+    if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> actions . count ( name ) == 0 )
+        shy_guts :: errors :: unknown_fsm_action ( shy_guts :: error , name , shy_guts :: current_fsm_system_name ) ;
+    else if ( shy_guts :: current_fsm_actions )
+    {
+        so_called_type_loadable_fsm_content_action_do action_do ;
+        action_do . action = name ;
+        shy_guts :: current_fsm_actions -> actions . push_back ( action_do ) ;
+    }
 }
 
 void shy_guts :: store_action_command_name ( so_called_std_string )
