@@ -1286,8 +1286,16 @@ void shy_guts :: store_transition_state_name ( so_called_std_string name )
         shy_guts :: current_fsm_transition -> state = name ;
 }
 
-void shy_guts :: store_input_condition ( so_called_std_string )
+void shy_guts :: store_input_condition ( so_called_std_string input )
 {
+    if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> inputs . count ( input ) == 0 )
+        shy_guts :: errors :: unknown_fsm_input ( shy_guts :: error , input , shy_guts :: current_fsm_system_name ) ;
+    else if ( shy_guts :: current_fsm_condition_group )
+    {
+        so_called_type_loadable_fsm_content_condition_input condition ;
+        condition . input = input ;
+        shy_guts :: current_fsm_condition_group -> inputs . push_back ( condition ) ;
+    }
 }
 
 void shy_guts :: store_state_condition_machine_name ( so_called_std_string )
