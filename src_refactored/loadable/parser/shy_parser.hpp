@@ -1185,28 +1185,34 @@ void shy_guts :: store_error ( so_called_std_string arg_error )
     shy_guts :: error += shy_guts :: whole_line ;
 }
 
-void shy_guts :: store_module_name ( so_called_std_string )
+void shy_guts :: store_module_name ( so_called_std_string name )
 {
+    shy_guts :: module_name = name ;
 }
 
-void shy_guts :: store_attribute_name ( so_called_std_string )
+void shy_guts :: store_attribute_name ( so_called_std_string name )
 {
+    shy_guts :: attribute_name = name ;
 }
 
-void shy_guts :: store_attribute_numerator_sign ( so_called_std_string )
+void shy_guts :: store_attribute_numerator_sign ( so_called_std_string sign )
 {
+    shy_guts :: attribute_numerator_sign = sign ;
 }
 
-void shy_guts :: store_attribute_numerator_value ( so_called_std_string )
+void shy_guts :: store_attribute_numerator_value ( so_called_std_string value )
 {
+    shy_guts :: attribute_numerator_value = value ;
 }
 
-void shy_guts :: store_attribute_denominator_sign ( so_called_std_string )
+void shy_guts :: store_attribute_denominator_sign ( so_called_std_string sign )
 {
+    shy_guts :: attribute_denominator_sign = sign ;
 }
 
-void shy_guts :: store_attribute_denominator_value ( so_called_std_string )
+void shy_guts :: store_attribute_denominator_value ( so_called_std_string value )
 {
+    shy_guts :: attribute_denominator_value = value ;
 }
 
 void shy_guts :: store_system_name ( so_called_std_string )
