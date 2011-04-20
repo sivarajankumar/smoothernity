@@ -1215,8 +1215,21 @@ void shy_guts :: store_attribute_denominator_value ( so_called_std_string value 
     shy_guts :: attribute_denominator_value = value ;
 }
 
-void shy_guts :: store_system_name ( so_called_std_string )
+void shy_guts :: store_system_name ( so_called_std_string name )
 {
+    so_called_type_loadable_fsm_content_system_container * system_container = 0 ;
+    so_called_loadable_fsm_content :: get_system_container ( system_container ) ;
+    if ( system_container -> find ( name ) == system_container -> end ( ) )
+    {
+        shy_guts :: errors :: unknown_fsm_system ( shy_guts :: error , name ) ;
+        shy_guts :: current_fsm_system_name = so_called_std_string ( ) ;
+        shy_guts :: current_fsm_system = 0 ;
+    }
+    else
+    {
+        shy_guts :: current_fsm_system_name = name ;
+        shy_guts :: current_fsm_system = & ( ( * system_container ) [ name ] ) ;
+    }
 }
 
 void shy_guts :: store_machine_name ( so_called_std_string )
