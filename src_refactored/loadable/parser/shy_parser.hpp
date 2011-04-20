@@ -91,7 +91,6 @@ namespace shy_guts
         static void expected_divide_or_identifier_instead_of ( so_called_std_string & , so_called_std_string ) ;
         static void expected_do_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of ( so_called_std_string & , so_called_std_string ) ;
         static void expected_entry_or_exit_or_brace_open_instead_of ( so_called_std_string & , so_called_std_string ) ;
-        static void expected_if_instead_of ( so_called_std_string & , so_called_std_string ) ;
         static void expected_input_name_or_parenthesis_open_instead_of ( so_called_std_string & , so_called_std_string ) ;
         static void expected_input_name_or_parenthesis_open_or_brace_close_instead_of ( so_called_std_string & , so_called_std_string ) ;
         static void expected_is_instead_of ( so_called_std_string & , so_called_std_string ) ;
@@ -277,11 +276,6 @@ void shy_guts :: errors :: expected_do_or_command_or_on_or_to_or_state_or_machin
 void shy_guts :: errors :: expected_entry_or_exit_or_brace_open_instead_of ( so_called_std_string & error , so_called_std_string token )
 {
     error = so_called_std_string ( "expected 'entry' or 'exit' or '{', but got '" ) + token + so_called_std_string ( "'" ) ;
-}
-
-void shy_guts :: errors :: expected_if_instead_of ( so_called_std_string & error , so_called_std_string token )
-{
-    error = so_called_std_string ( "expected 'if', but got '" ) + token + so_called_std_string ( "'" ) ;
 }
 
 void shy_guts :: errors :: expected_input_name_or_parenthesis_open_instead_of ( so_called_std_string & error , so_called_std_string token )
@@ -1420,6 +1414,29 @@ void shy_guts :: set_whole_value ( )
 
 void shy_guts :: set_fract_value ( )
 {
+    so_called_type_loadable_consts_content_module_container * module_container = 0 ;
+    so_called_type_loadable_consts_content_module_container :: iterator module_i ;
+
+    so_called_loadable_consts_content :: get_module_container ( module_container ) ;
+    module_i = module_container -> find ( shy_guts :: module_name ) ;
+    if ( module_i == module_container -> end ( ) )
+        shy_guts :: errors :: unknown_module ( shy_guts :: error , shy_guts :: module_name ) ;
+    else
+    {
+        so_called_type_loadable_consts_content_module & module = module_i -> second ;
+        so_called_type_loadable_consts_content_value_fract_container :: iterator fract_i ;
+        fract_i = module . name_to_fract . find ( shy_guts :: attribute_name ) ;
+        if ( fract_i == module . name_to_fract . end ( ) )
+            shy_guts :: errors :: unknown_fract_attribute_in_module ( shy_guts :: error , shy_guts :: attribute_name , shy_guts :: module_name ) ;
+        else
+        {
+            so_called_type_loadable_consts_content_value_fract & fract = fract_i -> second ;
+            fract . numerator_sign = shy_guts :: attribute_numerator_sign ;
+            fract . numerator_value = shy_guts :: attribute_numerator_value ;
+            fract . denominator_sign = shy_guts :: attribute_denominator_sign ;
+            fract . denominator_value = shy_guts :: attribute_denominator_value ;
+        }
+    }
 }
 
 void shy_guts :: read_next_token ( )
