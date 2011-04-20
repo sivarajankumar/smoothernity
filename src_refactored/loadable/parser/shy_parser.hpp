@@ -1395,6 +1395,27 @@ void shy_guts :: add_condition_group ( )
 
 void shy_guts :: set_whole_value ( )
 {
+    so_called_type_loadable_consts_content_module_container * module_container = 0 ;
+    so_called_type_loadable_consts_content_module_container :: iterator module_i ;
+
+    so_called_loadable_consts_content :: get_module_container ( module_container ) ;
+    module_i = module_container -> find ( shy_guts :: module_name ) ;
+    if ( module_i == module_container -> end ( ) )
+        shy_guts :: errors :: unknown_module ( shy_guts :: error , shy_guts :: module_name ) ;
+    else
+    {
+        so_called_type_loadable_consts_content_module & module = module_i -> second ;
+        so_called_type_loadable_consts_content_value_whole_container :: iterator whole_i ;
+        whole_i = module . name_to_whole . find ( shy_guts :: attribute_name ) ;
+        if ( whole_i == module . name_to_whole . end ( ) )
+            shy_guts :: errors :: unknown_whole_attribute_in_module ( shy_guts :: error , shy_guts :: attribute_name , shy_guts :: module_name ) ;
+        else
+        {
+            so_called_type_loadable_consts_content_value_whole & whole = whole_i -> second ;
+            whole . sign = shy_guts :: attribute_numerator_sign ;
+            whole . value = shy_guts :: attribute_numerator_value ;
+        }
+    }
 }
 
 void shy_guts :: set_fract_value ( )
