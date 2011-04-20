@@ -1232,8 +1232,14 @@ void shy_guts :: store_system_name ( so_called_std_string name )
     }
 }
 
-void shy_guts :: store_machine_name ( so_called_std_string )
+void shy_guts :: store_machine_name ( so_called_std_string name )
 {
+    if ( shy_guts :: current_fsm_system )
+    {
+        if ( shy_guts :: current_fsm_system -> machines . find ( name ) == shy_guts :: current_fsm_system -> machines . end ( ) )
+            shy_guts :: current_fsm_system -> machines [ name ] = so_called_type_loadable_fsm_content_machine ( ) ;
+        shy_guts :: current_fsm_machine = & ( shy_guts :: current_fsm_system -> machines [ name ] ) ;
+    }
 }
 
 void shy_guts :: store_state_name ( so_called_std_string )
