@@ -1386,6 +1386,11 @@ void shy_guts :: add_transition ( )
 
 void shy_guts :: add_condition_group ( )
 {
+    if ( shy_guts :: current_fsm_condition_group_container )
+    {
+        shy_guts :: current_fsm_condition_group_container -> push_back ( so_called_type_loadable_fsm_content_condition_group ( ) ) ;
+        shy_guts :: current_fsm_condition_group = & shy_guts :: current_fsm_condition_group_container -> back ( ) ;
+    }
 }
 
 void shy_guts :: set_whole_value ( )
