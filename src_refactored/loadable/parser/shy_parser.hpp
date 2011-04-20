@@ -1264,20 +1264,26 @@ void shy_guts :: store_action_name ( so_called_std_string name )
     }
 }
 
-void shy_guts :: store_action_command_name ( so_called_std_string )
+void shy_guts :: store_action_command_name ( so_called_std_string name )
 {
+    shy_guts :: current_fsm_action_command . command = name ;
 }
 
-void shy_guts :: store_action_command_machine_name ( so_called_std_string )
+void shy_guts :: store_action_command_machine_name ( so_called_std_string name )
 {
+    shy_guts :: current_fsm_action_command . machine = name ;
 }
 
 void shy_guts :: store_action_command ( )
 {
+    if ( shy_guts :: current_fsm_actions )
+        shy_guts :: current_fsm_actions -> commands . push_back ( shy_guts :: current_fsm_action_command ) ;
 }
 
-void shy_guts :: store_transition_state_name ( so_called_std_string )
+void shy_guts :: store_transition_state_name ( so_called_std_string name )
 {
+    if ( shy_guts :: current_fsm_transition )
+        shy_guts :: current_fsm_transition -> state = name ;
 }
 
 void shy_guts :: store_input_condition ( so_called_std_string )
