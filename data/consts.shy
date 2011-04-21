@@ -1,14 +1,14 @@
-consts logic_amusement_stateless
+consts logic_amusement
     renderer_clear_color_r 0 / 1
     renderer_clear_color_g 0 / 1
     renderer_clear_color_b 1 / 3
 
-consts logic_application_stateless
+consts logic_application
     skip_title 0
     skip_main_menu 0
     skip_amusement 0
 
-consts logic_blanket_animation_stateless
+consts logic_blanket_animation
     animation_origin_x 0 / 1
     animation_origin_y 0 / 1
     animation_origin_z - 3 / 1
@@ -23,7 +23,7 @@ consts logic_blanket_animation_stateless
     disappear_rotation_end 10 / 1
     disappear_time_from_begin_to_end 1 / 1
 
-consts logic_blanket_stateless
+consts logic_blanket
     mesh_vertex_x_left - 1 / 2
     mesh_vertex_x_right 1 / 2
     mesh_vertex_y_bottom - 1 / 2
@@ -34,7 +34,7 @@ consts logic_blanket_stateless
     mesh_color_b 0 / 1
     mesh_color_a 1 / 1
 
-consts logic_door_animation_stateless
+consts logic_door_animation
     animation_origin_x 0 / 1
     animation_origin_y 0 / 1
     animation_origin_z - 3 / 1
@@ -42,7 +42,7 @@ consts logic_door_animation_stateless
     appear_scale_end 1 / 1
     appear_time_from_begin_to_end 2 / 1
 
-consts logic_door_stateless
+consts logic_door
     mesh_color_r 1 / 1
     mesh_color_g 1 / 1
     mesh_color_b 1 / 1
@@ -70,7 +70,7 @@ consts logic_door_stateless
     texture_paper_a 1 / 1
     texture_stripes 9
 
-consts logic_fidget_stateless
+consts logic_fidget
     fidget_size 3 / 10
     fidget_r 1 / 1
     fidget_g 1 / 2
@@ -83,14 +83,14 @@ consts logic_fidget_stateless
     scale_in_frames 60
     should_render_fidget 0
 
-consts logic_main_menu_animation_stateless
+consts logic_main_menu_animation
     shake_time_to_begin 0 / 10
     shake_time_from_begin_to_end 6 / 10
     shake_shift_x_amplitude_begin 20 / 1000
     shake_shift_x_amplitude_end 5 / 1000
     shake_shift_x_period_in_seconds 2 / 10
 
-consts logic_main_menu_letters_animation_stateless
+consts logic_main_menu_letters_animation
     appear_time_from_begin_to_middle_in_seconds 1 / 10
     appear_time_from_middle_to_end_in_seconds 7 / 10
     appear_delay_per_col_in_seconds 2 / 100
@@ -125,14 +125,14 @@ consts logic_main_menu_letters_animation_stateless
     unselection_weight_time_to_begin 0 / 100
     unselection_weight_time_from_begin_to_end 7 / 100
 
-consts logic_main_menu_letters_layout_stateless
+consts logic_main_menu_letters_layout
     letter_size_fract_horizontal_spacing 0 / 1
     letter_size_fract_vertical_spacing 1 / 1
     letter_size_fract_horizontal_border 1 / 1
     letter_size_fract_vertical_border 1 / 1
     menu_position_z - 3 / 1
 
-consts logic_main_menu_letters_meshes_stateless
+consts logic_main_menu_letters_meshes
     letter_mesh_size 1 / 1
     letter_mesh_color_r 0 / 1
     letter_mesh_color_g 1 / 1
@@ -140,7 +140,7 @@ consts logic_main_menu_letters_meshes_stateless
     letter_mesh_color_a 1 / 1
     time_between_creation 50 / 1000
 
-consts logic_main_menu_selection_animation_stateless
+consts logic_main_menu_selection_animation
     appear_horizontal_scale_time_to_begin 0 / 10
     appear_horizontal_scale_time_from_begin_to_end 1 / 10
     appear_horizontal_scale_value_begin 8 / 10
@@ -203,7 +203,7 @@ consts logic_main_menu_selection_animation_stateless
     unselect_vertical_scale_value_end 5 / 10
     unselect_total_animation_time 7 / 100
 
-consts logic_main_menu_selection_stateless
+consts logic_main_menu_selection
     mesh_size 1 / 1
     mesh_color_r 0 / 1
     mesh_color_g 1 / 4
@@ -211,21 +211,21 @@ consts logic_main_menu_selection_stateless
     mesh_color_a 1 / 1
     selected_rect_vertical_scale 20 / 10
 
-consts logic_observer_animation_stateless
+consts logic_observer_animation
     flight_target_z - 1 / 1
     flight_horizontal_offset_period 11 / 10
     flight_horizontal_offset_amplitude 1 / 3
     flight_vertical_offset_period 17 / 10
     flight_vertical_offset_amplitude 1 / 3
 
-consts logic_ortho_stateless
+consts logic_ortho
     z_near 1 / 1
     z_far 50 / 1
 
-consts logic_perspective_stateless
+consts logic_perspective
     z_far_unscaled 50 / 1
 
-consts logic_room_stateless
+consts logic_room
     mesh_color_left_r 1 / 1
     mesh_color_left_g 0 / 1
     mesh_color_left_b 0 / 1
@@ -289,7 +289,7 @@ consts logic_room_stateless
     texture_alpha 1 / 1
     texture_grid_size 10
 
-consts logic_title_stateless
+consts logic_title
     appear_pos_angle_periods 11 / 2
     appear_rubber_first 19 / 20
     appear_rubber_last 19 / 20
