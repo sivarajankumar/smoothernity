@@ -34,7 +34,7 @@ namespace shy_guts
     static so_called_type_platform_math_num_whole origin_y ;
 }
 
-typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_rasterizer > _scheduled_context_type ;
+typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_rasterizer , 1000 > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
 void shy_guts :: rasterize_horizontal_line 
