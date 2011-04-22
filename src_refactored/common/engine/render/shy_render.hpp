@@ -464,3 +464,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     so_called_platform_render :: disable_texturing ( ) ;
 }
 
+void _shy_common_engine_render :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
