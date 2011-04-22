@@ -73,3 +73,9 @@ void _shy_common_logic_blanket_renderer :: receive ( so_called_message_common_lo
     shy_guts :: logic_blanket_render_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_render ( ) ;
 }
+
+void _shy_common_logic_blanket_renderer :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+

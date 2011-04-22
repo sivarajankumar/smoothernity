@@ -11,7 +11,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_blanket_animation_fit :: register_in_scheduler ( ) ;
     so_called_common_logic_blanket_mesh :: register_in_scheduler ( ) ;
     so_called_common_logic_blanket_placement :: register_in_scheduler ( ) ;
-//    so_called_common_logic_blanket_renderer :: register_in_scheduler ( ) ;
+    so_called_common_logic_blanket_renderer :: register_in_scheduler ( ) ;
 //    so_called_common_logic_blanket :: register_in_scheduler ( ) ;
 //    so_called_common_logic_camera :: register_in_scheduler ( ) ;
 //    so_called_common_logic_controls :: register_in_scheduler ( ) ;
