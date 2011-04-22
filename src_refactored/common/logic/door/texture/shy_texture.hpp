@@ -231,3 +231,9 @@ void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_
     so_called_sender_common_engine_render_texture_select :: send ( msg ) ;
     so_called_sender_common_logic_door_texture_select_reply :: send ( so_called_message_common_logic_door_texture_select_reply ( ) ) ;
 }
+
+void _shy_common_logic_door_texture :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
