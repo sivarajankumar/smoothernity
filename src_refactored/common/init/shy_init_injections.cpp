@@ -3,7 +3,9 @@
 #include "../logic/amusement/renderer/shy_renderer_injections.h"
 #include "../logic/amusement/shy_amusement_injections.h"
 #include "../logic/application/fsm/shy_fsm_injections.h"
+#include "../logic/blanket/animation/appear/shy_appear_injections.h"
 #include "../logic/blanket/animation/disappear/shy_disappear_injections.h"
+#include "../logic/blanket/animation/fit/shy_fit_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"

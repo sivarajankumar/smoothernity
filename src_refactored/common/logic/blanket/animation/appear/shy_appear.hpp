@@ -118,3 +118,8 @@ void _shy_common_logic_blanket_animation_appear :: receive ( so_called_message_c
         shy_guts :: logic_blanket_update_state :: time = time ;
     }
 }
+
+void _shy_common_logic_blanket_animation_appear :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
