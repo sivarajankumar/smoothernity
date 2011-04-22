@@ -50,3 +50,8 @@ void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_roo
 {
     so_called_sender_common_logic_blanket_animation_appear_start :: send ( so_called_message_common_logic_blanket_animation_appear_start ( ) ) ;
 }
+
+void _shy_common_logic_amusement :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
