@@ -375,3 +375,9 @@ void _shy_common_logic_land :: receive ( so_called_message_common_logic_land_upd
         }
     }
 }
+
+void _shy_common_logic_land :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
