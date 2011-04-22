@@ -119,3 +119,8 @@ void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_messag
         shy_guts :: logic_blanket_update_state :: started = started ;
     }
 }
+
+void _shy_common_logic_blanket_animation_disappear :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
