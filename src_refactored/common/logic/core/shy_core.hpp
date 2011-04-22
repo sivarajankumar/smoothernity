@@ -154,3 +154,9 @@ void _shy_common_logic_core :: receive ( so_called_message_common_video_mode_cha
 {
     shy_guts :: init_render ( ) ;
 }
+
+void _shy_common_logic_core :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+

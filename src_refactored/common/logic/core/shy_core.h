@@ -10,6 +10,7 @@ public :
     static void receive ( so_called_message_common_render ) ;
     static void receive ( so_called_message_common_update ) ;
     static void receive ( so_called_message_common_video_mode_changed ) ;
+    static void register_in_scheduler ( ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_core > :: module shy_common_logic_core_scheduled ;
