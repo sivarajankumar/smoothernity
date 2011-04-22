@@ -20,7 +20,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_door_animation_appear :: register_in_scheduler ( ) ;
     so_called_common_logic_door_mesh :: register_in_scheduler ( ) ;
     so_called_common_logic_door_placement :: register_in_scheduler ( ) ;
-//    so_called_common_logic_door_renderer :: register_in_scheduler ( ) ;
+    so_called_common_logic_door_renderer :: register_in_scheduler ( ) ;
 //    so_called_common_logic_door :: register_in_scheduler ( ) ;
 //    so_called_common_logic_door_texture :: register_in_scheduler ( ) ;
 //    so_called_common_logic_entities :: register_in_scheduler ( ) ;
