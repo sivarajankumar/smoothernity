@@ -259,3 +259,8 @@ void _shy_common_logic_door_mesh :: receive ( so_called_message_common_logic_doo
     mesh_msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_msg ) ;
 }
+
+void _shy_common_logic_door_mesh :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
