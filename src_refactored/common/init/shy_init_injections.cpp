@@ -12,6 +12,7 @@
 #include "../logic/blanket/renderer/shy_renderer_injections.h"
 #include "../logic/blanket/shy_blanket_injections.h"
 #include "../logic/camera/shy_camera_injections.h"
+#include "../logic/controls/shy_controls_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"

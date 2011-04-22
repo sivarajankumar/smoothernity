@@ -83,3 +83,8 @@ void _shy_common_logic_controls :: receive ( so_called_message_common_logic_cont
     shy_guts :: compute_touch_state ( ) ;
     shy_guts :: reply_controls_state ( ) ;
 }
+
+void _shy_common_logic_controls :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
