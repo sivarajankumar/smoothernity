@@ -145,3 +145,8 @@ void _shy_common_logic_application_fsm :: receive ( so_called_message_common_log
     shy_guts :: current_inputs . logic_title_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
+
+void _shy_common_logic_application_fsm :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
