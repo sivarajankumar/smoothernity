@@ -22,3 +22,8 @@ void _shy_common_logic_blanket :: receive ( so_called_message_common_logic_blank
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: created ) )
         so_called_sender_common_logic_blanket_place :: send ( so_called_message_common_logic_blanket_place ( ) ) ;
 }
+
+void _shy_common_logic_blanket :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}

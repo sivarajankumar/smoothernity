@@ -5,6 +5,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_amusement :: register_in_scheduler ( ) ;
     so_called_common_logic_amusement_renderer :: register_in_scheduler ( ) ;
     so_called_common_logic_application_fsm :: register_in_scheduler ( ) ;
+    so_called_common_logic_blanket :: register_in_scheduler ( ) ;
     so_called_common_logic_blanket_animation :: register_in_scheduler ( ) ;
     so_called_common_logic_blanket_animation_appear :: register_in_scheduler ( ) ;
     so_called_common_logic_blanket_animation_disappear :: register_in_scheduler ( ) ;
@@ -12,7 +13,6 @@ void so_called_common_init :: init ( )
     so_called_common_logic_blanket_mesh :: register_in_scheduler ( ) ;
     so_called_common_logic_blanket_placement :: register_in_scheduler ( ) ;
     so_called_common_logic_blanket_renderer :: register_in_scheduler ( ) ;
-//    so_called_common_logic_blanket :: register_in_scheduler ( ) ;
 //    so_called_common_logic_camera :: register_in_scheduler ( ) ;
 //    so_called_common_logic_controls :: register_in_scheduler ( ) ;
 //    so_called_common_logic_core :: register_in_scheduler ( ) ;
