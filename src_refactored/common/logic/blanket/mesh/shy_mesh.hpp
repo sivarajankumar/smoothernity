@@ -223,3 +223,9 @@ void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_
         so_called_sender_common_engine_render_mesh_set_transform :: send ( transform_msg ) ;
     }
 }
+
+void _shy_common_logic_blanket_mesh :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
