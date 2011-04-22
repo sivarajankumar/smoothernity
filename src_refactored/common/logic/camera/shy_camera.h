@@ -10,6 +10,7 @@ public :
     static void receive ( so_called_message_common_logic_entities_height_reply ) ;
     static void receive ( so_called_message_common_logic_entities_mesh_grid_reply ) ;
     static void receive ( so_called_message_common_logic_entities_origin_reply ) ;
+    static void register_in_scheduler ( ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_camera > :: module shy_common_logic_camera_scheduled ;
