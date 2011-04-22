@@ -17,6 +17,7 @@
 #include "../logic/door/animation/appear/shy_appear_injections.h"
 #include "../logic/door/animation/shy_animation_injections.h"
 #include "../logic/door/mesh/shy_mesh_injections.h"
+#include "../logic/door/placement/shy_placement_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"

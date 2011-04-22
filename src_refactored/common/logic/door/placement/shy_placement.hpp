@@ -12,3 +12,8 @@ void _shy_common_logic_door_placement :: receive ( so_called_message_common_logi
 {
     so_called_sender_common_logic_door_animation_transform_request :: send ( so_called_message_common_logic_door_animation_transform_request ( ) ) ;
 }
+
+void _shy_common_logic_door_placement :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
