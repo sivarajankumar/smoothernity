@@ -96,3 +96,8 @@ void _shy_common_logic_door_animation :: receive ( so_called_message_common_logi
     shy_guts :: logic_door_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_transform ( ) ;
 }
+
+void _shy_common_logic_door_animation :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
