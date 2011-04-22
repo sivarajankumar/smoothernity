@@ -1,5 +1,4 @@
-#include "./shy_loadable_injections.h"
-
+#include "../../common/init/shy_init_injections.h"
 #include "../../common/sender/done/shy_done_injections.h"
 #include "../../common/sender/init/shy_init_injections.h"
 #include "../../common/sender/render/shy_render_injections.h"
@@ -9,4 +8,5 @@
 #include "../../injections/platform/scheduler/shy_scheduler.h"
 #include "../../loadable/loader/shy_loader_injections.h"
 
+#include "./shy_loadable_injections.h"
 #include "./shy_loadable.hpp"

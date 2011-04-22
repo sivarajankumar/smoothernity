@@ -406,3 +406,8 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     shy_guts :: origin_x = msg . origin_x ;
     shy_guts :: origin_y = msg . origin_y ;
 }
+
+void _shy_common_engine_rasterizer :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ;
+}

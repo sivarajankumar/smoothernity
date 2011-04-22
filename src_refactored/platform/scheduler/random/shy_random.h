@@ -76,6 +76,7 @@ public :
         public :
             template < typename _message >
             static void receive ( _message ) ;
+            static void register_in_scheduler ( ) ;
         } ;
     public :
         scheduled_context ( ) ;
@@ -145,6 +146,15 @@ void shy_platform_scheduler_random
     :: receive ( _message msg )
 {
     _scheduled_receive ( msg ) ;
+}
+
+template < typename _module , int _max_messages_count , int _max_message_size >
+void shy_platform_scheduler_random 
+    :: scheduled_context < _module , _max_messages_count , _max_message_size > 
+    :: module
+    :: register_in_scheduler ( )
+{
+    _module :: register_in_scheduler ( ) ;
 }
 
 template < typename _module , int _max_messages_count , int _max_message_size >
