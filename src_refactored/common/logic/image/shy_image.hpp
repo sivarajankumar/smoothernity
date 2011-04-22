@@ -327,3 +327,9 @@ void _shy_common_logic_image :: receive ( so_called_message_common_logic_image_u
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: image_mesh_created ) && so_called_platform_conditions :: whole_is_true ( shy_guts :: image_texture_loaded ) )
         shy_guts :: update_image_mesh ( ) ;
 }
+
+void _shy_common_logic_image :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+

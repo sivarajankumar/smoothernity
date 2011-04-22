@@ -24,6 +24,7 @@
 #include "../logic/entities/shy_entities_injections.h"
 #include "../logic/fidget/shy_fidget_injections.h"
 #include "../logic/game/shy_game_injections.h"
+#include "../logic/image/shy_image_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"
