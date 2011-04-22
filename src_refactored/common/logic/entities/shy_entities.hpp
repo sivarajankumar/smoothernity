@@ -535,3 +535,9 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
             shy_guts :: update_entity_grid ( ) ;
     }
 }
+
+void _shy_common_logic_entities :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
