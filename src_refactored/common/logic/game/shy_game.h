@@ -20,6 +20,7 @@ public :
     static void receive ( so_called_message_common_logic_sound_prepared ) ;
     static void receive ( so_called_message_common_logic_text_render_reply ) ;
     static void receive ( so_called_message_common_logic_touch_prepared ) ;
+    static void register_in_scheduler ( ) ;
 } ;
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_game > :: module shy_common_logic_game_scheduled ;
