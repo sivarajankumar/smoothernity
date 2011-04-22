@@ -227,3 +227,9 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget
         }
     }
 }
+
+void _shy_common_logic_fidget :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
