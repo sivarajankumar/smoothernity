@@ -81,3 +81,9 @@ void _shy_common_logic_door_animation_appear :: receive ( so_called_message_comm
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_door_update_state :: time , time_step ) ;
     }
 }
+
+void _shy_common_logic_door_animation_appear :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
