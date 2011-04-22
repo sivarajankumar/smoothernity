@@ -39,3 +39,9 @@ void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_tex
     so_called_sender_common_logic_door_creation_finished :: send ( so_called_message_common_logic_door_creation_finished ( ) ) ;
     so_called_sender_common_logic_door_place :: send ( so_called_message_common_logic_door_place ( ) ) ;
 }
+
+void _shy_common_logic_door :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
