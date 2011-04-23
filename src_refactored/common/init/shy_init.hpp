@@ -60,7 +60,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_main_menu_selection_animation_push_attention :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_selection_animation_push_weight :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_selection_animation_select :: register_in_scheduler ( ) ;
-//    so_called_common_logic_main_menu_selection_animation_unselect :: register_in_scheduler ( ) ;
+    so_called_common_logic_main_menu_selection_animation_unselect :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_selection_mesh :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_selection_tracker :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_selection_tracking_director :: register_in_scheduler ( ) ;

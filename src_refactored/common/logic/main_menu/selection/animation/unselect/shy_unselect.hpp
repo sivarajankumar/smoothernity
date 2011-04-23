@@ -122,3 +122,9 @@ void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_ca
         shy_guts :: logic_main_menu_update_state :: time = time ;
     }
 }
+
+void _shy_common_logic_main_menu_selection_animation_unselect :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
