@@ -35,7 +35,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_main_menu_letters_animation_appear :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_letters_animation_disappear :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_letters_animation_idle :: register_in_scheduler ( ) ;
-//    so_called_common_logic_main_menu_letters_animation_selection :: register_in_scheduler ( ) ;
+    so_called_common_logic_main_menu_letters_animation_selection :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_animation_selection_push :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_animation_selection_weight :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_animation_unselection_weight :: register_in_scheduler ( ) ;

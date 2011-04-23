@@ -165,3 +165,9 @@ void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_cal
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_main_menu_update_state :: time , time_step ) ;
     }
 }
+
+void _shy_common_logic_main_menu_letters_animation_selection :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
