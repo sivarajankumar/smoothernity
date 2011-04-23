@@ -156,3 +156,9 @@ void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_cal
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: started ) )
         shy_guts :: update_request_received ( ) ;
 }
+
+void _shy_common_logic_main_menu_letters_animation_disappear :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
