@@ -302,3 +302,9 @@ void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_messag
     shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_track ( ) ;
 }
+
+void _shy_common_logic_main_menu_selection_tracker :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
