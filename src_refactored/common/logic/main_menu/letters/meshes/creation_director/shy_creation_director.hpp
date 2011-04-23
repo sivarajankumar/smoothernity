@@ -44,3 +44,8 @@ void _shy_common_logic_main_menu_letters_meshes_creation_director :: receive ( s
         }
     }
 }
+
+void _shy_common_logic_main_menu_letters_meshes_creation_director :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
