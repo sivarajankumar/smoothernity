@@ -52,6 +52,7 @@
 #include "../logic/main_menu/selection/animation/appear/shy_appear_injections.h"
 #include "../logic/main_menu/selection/animation/disappear/shy_disappear_injections.h"
 #include "../logic/main_menu/selection/animation/idle/shy_idle_injections.h"
+#include "../logic/main_menu/selection/animation/idle_attention/shy_idle_attention_injections.h"
 #include "../logic/main_menu/shy_main_menu_injections.h"
 
 #include "./shy_init_injections.h"
