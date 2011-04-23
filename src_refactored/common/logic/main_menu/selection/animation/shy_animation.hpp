@@ -427,3 +427,9 @@ void _shy_common_logic_main_menu_selection_animation :: receive ( so_called_mess
         shy_guts :: proceed_with_transform ( ) ;
     }
 }
+
+void _shy_common_logic_main_menu_selection_animation :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
