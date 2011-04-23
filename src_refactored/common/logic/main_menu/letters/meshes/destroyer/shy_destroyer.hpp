@@ -30,3 +30,9 @@ void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called
         so_called_sender_common_engine_render_mesh_delete :: send ( delete_msg ) ;
     }
 }
+
+void _shy_common_logic_main_menu_letters_meshes_destroyer :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
