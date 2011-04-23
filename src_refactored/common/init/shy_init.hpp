@@ -29,7 +29,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_image :: register_in_scheduler ( ) ;
     so_called_common_logic_land :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_animation :: register_in_scheduler ( ) ;
-//    so_called_common_logic_main_menu_animation_shake :: register_in_scheduler ( ) ;
+    so_called_common_logic_main_menu_animation_shake :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_choice :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_animation :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_animation_appear :: register_in_scheduler ( ) ;

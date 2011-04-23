@@ -26,6 +26,7 @@
 #include "../logic/game/shy_game_injections.h"
 #include "../logic/image/shy_image_injections.h"
 #include "../logic/land/shy_land_injections.h"
+#include "../logic/main_menu/animation/shake/shy_shake_injections.h"
 #include "../logic/main_menu/animation/shy_animation_injections.h"
 
 #include "./shy_init_injections.h"
