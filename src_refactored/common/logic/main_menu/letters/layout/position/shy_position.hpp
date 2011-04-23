@@ -210,3 +210,8 @@ void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_
     shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row = msg . row ;
     shy_guts :: proceed_with_layout ( ) ;
 }
+
+void _shy_common_logic_main_menu_letters_layout_position :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}

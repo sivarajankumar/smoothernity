@@ -40,7 +40,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_main_menu_letters_animation_selection_weight :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_letters_animation_unselection_weight :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_letters_creation_director :: register_in_scheduler ( ) ;
-//    so_called_common_logic_main_menu_letters_layout_position :: register_in_scheduler ( ) ;
+    so_called_common_logic_main_menu_letters_layout_position :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_layout_row_rect :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_meshes_creation_director :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_letters_meshes_creator :: register_in_scheduler ( ) ;
