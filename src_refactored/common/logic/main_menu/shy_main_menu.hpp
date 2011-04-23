@@ -100,3 +100,8 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
         so_called_sender_common_logic_main_menu_selection_mesh_place :: send ( so_called_message_common_logic_main_menu_selection_mesh_place ( ) ) ;
     }
 }
+
+void _shy_common_logic_main_menu :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}

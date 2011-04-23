@@ -44,6 +44,7 @@
 #include "../logic/main_menu/letters/meshes/creator/shy_creator_injections.h"
 #include "../logic/main_menu/letters/meshes/destroyer/shy_destroyer_injections.h"
 #include "../logic/main_menu/letters/meshes/placement/shy_placement_injections.h"
+#include "../logic/main_menu/shy_main_menu_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"

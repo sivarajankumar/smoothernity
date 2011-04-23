@@ -28,6 +28,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_game :: register_in_scheduler ( ) ;
     so_called_common_logic_image :: register_in_scheduler ( ) ;
     so_called_common_logic_land :: register_in_scheduler ( ) ;
+    so_called_common_logic_main_menu :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_animation :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_animation_shake :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_choice :: register_in_scheduler ( ) ;
@@ -63,7 +64,6 @@ void so_called_common_init :: init ( )
 //    so_called_common_logic_main_menu_selection_mesh :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_selection_tracker :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_selection_tracking_director :: register_in_scheduler ( ) ;
-//    so_called_common_logic_main_menu :: register_in_scheduler ( ) ;
 //    so_called_common_logic_observer :: register_in_scheduler ( ) ;
 //    so_called_common_logic_observer_animation :: register_in_scheduler ( ) ;
 //    so_called_common_logic_observer_animation_flight :: register_in_scheduler ( ) ;
