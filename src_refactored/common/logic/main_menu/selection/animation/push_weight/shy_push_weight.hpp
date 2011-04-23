@@ -150,3 +150,9 @@ void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so
     shy_guts :: logic_main_menu_update_state :: clicked = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
+
+void _shy_common_logic_main_menu_selection_animation_push_weight :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
