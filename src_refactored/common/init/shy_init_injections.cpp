@@ -56,6 +56,7 @@
 #include "../logic/main_menu/selection/animation/push/shy_push_injections.h"
 #include "../logic/main_menu/selection/animation/push_attention/shy_push_attention_injections.h"
 #include "../logic/main_menu/selection/animation/push_weight/shy_push_weight_injections.h"
+#include "../logic/main_menu/selection/animation/select/shy_select_injections.h"
 #include "../logic/main_menu/shy_main_menu_injections.h"
 
 #include "./shy_init_injections.h"
