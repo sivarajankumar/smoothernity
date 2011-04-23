@@ -67,3 +67,8 @@ void _shy_common_logic_main_menu_letters_creation_director :: receive ( so_calle
     
     shy_guts :: text_create_finished ( ) ;
 }
+
+void _shy_common_logic_main_menu_letters_creation_director :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
