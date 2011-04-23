@@ -86,3 +86,9 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
     reply_msg . col = mesh_state . get ( ) . col ;
     so_called_sender_common_logic_main_menu_letters_meshes_mesh_row_col_reply :: send ( reply_msg ) ;
 }
+
+void _shy_common_logic_main_menu_letters_meshes_storage :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
