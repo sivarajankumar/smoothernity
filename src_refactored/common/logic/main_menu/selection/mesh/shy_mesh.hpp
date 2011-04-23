@@ -234,3 +234,9 @@ void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_c
     shy_guts :: render_mesh ( ) ;
     so_called_sender_common_logic_main_menu_selection_mesh_render_reply :: send ( so_called_message_common_logic_main_menu_selection_mesh_render_reply ( ) ) ;
 }
+
+void _shy_common_logic_main_menu_selection_mesh :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
