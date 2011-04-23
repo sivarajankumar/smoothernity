@@ -116,3 +116,9 @@ void _shy_common_logic_main_menu_selection_animation_appear :: receive ( so_call
         shy_guts :: logic_main_menu_update_state :: time = time ;
     }
 }
+
+void _shy_common_logic_main_menu_selection_animation_appear :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
