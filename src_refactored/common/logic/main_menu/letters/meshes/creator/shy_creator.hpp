@@ -442,3 +442,9 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
         shy_guts :: proceed_with_creation ( ) ;
     }
 }
+
+void _shy_common_logic_main_menu_letters_meshes_creator :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
