@@ -94,3 +94,8 @@ void _shy_common_logic_main_menu_animation :: receive ( so_called_message_common
     shy_guts :: logic_main_menu_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_transform ( ) ;
 }
+
+void _shy_common_logic_main_menu_animation :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
