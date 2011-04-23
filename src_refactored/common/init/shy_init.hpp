@@ -49,7 +49,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_main_menu_letters_meshes_placement :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_letters_meshes_renderer :: register_in_scheduler ( ) ;
     so_called_common_logic_main_menu_letters_meshes_storage :: register_in_scheduler ( ) ;
-//    so_called_common_logic_main_menu_letters_storage :: register_in_scheduler ( ) ;
+    so_called_common_logic_main_menu_letters_storage :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_renderer :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_selection_animation :: register_in_scheduler ( ) ;
 //    so_called_common_logic_main_menu_selection_animation_appear :: register_in_scheduler ( ) ;

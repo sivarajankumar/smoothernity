@@ -107,3 +107,9 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
     reply_msg . rows = shy_guts :: rows_state :: rows_count ;
     so_called_sender_common_logic_main_menu_letters_rows_reply :: send ( reply_msg ) ;
 }
+
+void _shy_common_logic_main_menu_letters_storage :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
