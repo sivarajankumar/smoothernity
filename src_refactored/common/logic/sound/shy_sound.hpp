@@ -276,3 +276,9 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_u
         }
     }
 }
+
+void _shy_common_logic_sound :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+

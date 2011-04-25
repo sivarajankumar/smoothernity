@@ -70,6 +70,8 @@
 #include "../logic/room/shy_room_injections.h"
 #include "../logic/room/mesh/shy_mesh_injections.h"
 #include "../logic/room/renderer/shy_renderer_injections.h"
+#include "../logic/room/texture/shy_texture_injections.h"
+#include "../logic/sound/shy_sound_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"

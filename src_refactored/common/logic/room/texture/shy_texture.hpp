@@ -228,3 +228,9 @@ void _shy_common_logic_room_texture :: receive ( so_called_message_common_logic_
 
     so_called_sender_common_logic_room_texture_select_reply :: send ( so_called_message_common_logic_room_texture_select_reply ( ) ) ;
 }
+
+void _shy_common_logic_room_texture :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
