@@ -1769,3 +1769,9 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_use
     }
     so_called_sender_common_logic_text_use_text_texture_reply :: send ( so_called_message_common_logic_text_use_text_texture_reply ( ) ) ;
 }
+
+void _shy_common_logic_text :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+

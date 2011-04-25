@@ -74,7 +74,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_room_renderer :: register_in_scheduler ( ) ;
     so_called_common_logic_room_texture :: register_in_scheduler ( ) ;
     so_called_common_logic_sound :: register_in_scheduler ( ) ;
-//    so_called_common_logic_text :: register_in_scheduler ( ) ;
+    so_called_common_logic_text :: register_in_scheduler ( ) ;
 //    so_called_common_logic_title :: register_in_scheduler ( ) ;
 //    so_called_common_logic_touch :: register_in_scheduler ( ) ;
 }
