@@ -195,3 +195,9 @@ void _shy_common_logic_perspective :: receive ( so_called_message_common_logic_p
     shy_guts :: logic_perspective_planes_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_planes ( ) ;
 }
+
+void _shy_common_logic_perspective :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
