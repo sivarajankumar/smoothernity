@@ -152,3 +152,9 @@ void _shy_common_logic_ortho :: receive ( so_called_message_common_logic_ortho_p
     shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_planes ( ) ;
 }
+
+void _shy_common_logic_ortho :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
