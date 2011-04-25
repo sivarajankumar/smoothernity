@@ -409,5 +409,5 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
 
 void _shy_common_engine_rasterizer :: register_in_scheduler ( )
 {
-    _scheduled_context_type :: register_in_scheduler ;
+    _scheduled_context_type :: register_in_scheduler ( ) ;
 }
