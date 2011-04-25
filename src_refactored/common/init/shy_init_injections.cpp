@@ -64,6 +64,7 @@
 #include "../logic/main_menu/shy_main_menu_injections.h"
 #include "../logic/observer/shy_observer_injections.h"
 #include "../logic/observer/animation/shy_animation_injections.h"
+#include "../logic/observer/animation/flight/shy_flight_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"

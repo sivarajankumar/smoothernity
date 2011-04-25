@@ -66,7 +66,7 @@ void so_called_common_init :: init ( )
     so_called_common_logic_main_menu_selection_tracking_director :: register_in_scheduler ( ) ;
     so_called_common_logic_observer :: register_in_scheduler ( ) ;
     so_called_common_logic_observer_animation :: register_in_scheduler ( ) ;
-//    so_called_common_logic_observer_animation_flight :: register_in_scheduler ( ) ;
+    so_called_common_logic_observer_animation_flight :: register_in_scheduler ( ) ;
 //    so_called_common_logic_ortho :: register_in_scheduler ( ) ;
 //    so_called_common_logic_perspective :: register_in_scheduler ( ) ;
 //    so_called_common_logic_room :: register_in_scheduler ( ) ;
