@@ -123,3 +123,9 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_upd
         shy_guts :: logic_room_update_state :: time = time ;
     }
 }
+
+void _shy_common_logic_room :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
