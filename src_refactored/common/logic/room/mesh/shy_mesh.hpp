@@ -622,3 +622,9 @@ void _shy_common_logic_room_mesh :: receive ( so_called_message_common_logic_roo
     }
     so_called_sender_common_logic_room_mesh_render_reply :: send ( so_called_message_common_logic_room_mesh_render_reply ( ) ) ;
 }
+
+void _shy_common_logic_room_mesh :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
