@@ -681,3 +681,9 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_u
         so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
     }
 }
+
+void _shy_common_logic_title :: register_in_scheduler ( )
+{
+    _scheduled_context_type :: register_in_scheduler ( ) ;
+}
+
