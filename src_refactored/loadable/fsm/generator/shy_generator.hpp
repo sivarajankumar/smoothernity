@@ -1,6 +1,8 @@
 namespace shy_guts
 {
     typedef so_called_std_set < so_called_std_string > type_action_command_name_container ;
+    typedef so_called_std_map < so_called_std_string , type_action_command_name_container > type_machine_action_command_name_container ;
+    typedef so_called_std_map < so_called_std_string , type_machine_action_command_name_container > type_system_machine_action_command_name_container ;
 
     namespace consts
     {
@@ -14,6 +16,8 @@ namespace shy_guts
         static void injections_hpp_contents ( so_called_std_string & , so_called_std_string ) ;
         static void injections_hpp_path ( so_called_std_string & , so_called_std_string ) ;
     }
+
+    static type_system_machine_action_command_name_container system_machine_action_command_name_container ;
 
     static void hpp_contents 
         ( so_called_std_string & 
@@ -30,6 +34,42 @@ namespace shy_guts
     static void get_machine_action_command_names 
         ( shy_guts :: type_action_command_name_container & 
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        ) ;
+    static void prepare ( ) ;
+    static void prepare_system
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        ) ;
+    static void prepare_system_machine
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        ) ;
+    static void prepare_system_machine_state
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator
+        ) ;
+    static void prepare_system_machine_state_actions
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator
+        , const so_called_type_loadable_fsm_content_actions &
+        ) ;
+    static void prepare_system_machine_state_on_input
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator
+        , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
+        ) ;
+    static void prepare_system_machine_state_transition
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator
+        , so_called_type_loadable_fsm_content_transition_container :: const_iterator
+        ) ;
+    static void save_system_machine_action_command
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_std_string
+        , so_called_std_string
         ) ;
 }
 
@@ -227,8 +267,112 @@ void shy_guts :: get_machine_action_command_names
 {
 }
 
+void shy_guts :: prepare ( )
+{
+    so_called_type_loadable_fsm_content_system_container * system_container = 0 ;
+    so_called_loadable_fsm_content :: get_system_container ( system_container ) ;
+    for ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i = system_container -> begin ( )
+        ; system_i != system_container -> end ( )
+        ; ++ system_i
+        )
+    {
+        shy_guts :: prepare_system ( system_i ) ;
+    }
+}
+
+void shy_guts :: prepare_system
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    )
+{
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        shy_guts :: prepare_system_machine ( system_i , machine_i ) ;
+    }
+}
+
+void shy_guts :: prepare_system_machine
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    )
+{
+    for ( so_called_type_loadable_fsm_content_state_container :: const_iterator state_i = machine_i -> second . states . begin ( )
+        ; state_i != machine_i -> second . states . end ( )
+        ; ++ state_i
+        )
+    {
+        shy_guts :: prepare_system_machine_state ( system_i , machine_i , state_i ) ;
+    }
+}
+
+void shy_guts :: prepare_system_machine_state
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
+{
+    shy_guts :: prepare_system_machine_state_actions ( system_i , machine_i , state_i , state_i -> second . on_entry ) ;
+    shy_guts :: prepare_system_machine_state_actions ( system_i , machine_i , state_i , state_i -> second . on_exit ) ;
+
+    for ( so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i = state_i -> second . on_input . begin ( )
+        ; on_input_i != state_i -> second . on_input . end ( )
+        ; ++ on_input_i
+        )
+    {
+        shy_guts :: prepare_system_machine_state_on_input ( system_i , machine_i , state_i , on_input_i ) ;
+    }
+
+    for ( so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i = state_i -> second . transitions . begin ( )
+        ; transition_i != state_i -> second . transitions . end ( )
+        ; ++ transition_i
+        )
+    {
+        shy_guts :: prepare_system_machine_state_transition ( system_i , machine_i , state_i , transition_i ) ;
+    }
+}
+
+void shy_guts :: prepare_system_machine_state_actions
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , const so_called_type_loadable_fsm_content_actions & actions
+    )
+{
+}
+
+void shy_guts :: prepare_system_machine_state_on_input
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i
+    )
+{
+}
+
+void shy_guts :: prepare_system_machine_state_transition
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i
+    )
+{
+}
+
+void shy_guts :: save_system_machine_action_command
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_std_string machine
+    , so_called_std_string command
+    )
+{
+    shy_guts :: system_machine_action_command_name_container [ system_i -> first ] [ machine ] . insert ( command ) ;
+}
+
 void shy_loadable_fsm_generator :: generate ( so_called_std_string & result )
 {
+    shy_guts :: prepare ( ) ;
+
     result . clear ( ) ;
     so_called_type_loadable_fsm_content_system_container * system_container = 0 ;
     so_called_loadable_fsm_content :: get_system_container ( system_container ) ;
