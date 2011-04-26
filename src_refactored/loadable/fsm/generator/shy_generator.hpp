@@ -48,6 +48,18 @@ namespace shy_guts
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator
         , so_called_type_loadable_fsm_content_state_container :: const_iterator
         ) ;
+    static void prepare_system_machine_state_action_do
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator
+        , so_called_type_loadable_fsm_content_action_do_container :: const_iterator
+        ) ;
+    static void prepare_system_machine_state_action_command
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator
+        , so_called_type_loadable_fsm_content_action_command_container :: const_iterator
+        ) ;
     static void prepare_system_machine_state_actions
         ( so_called_type_loadable_fsm_content_system_container :: const_iterator
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator
@@ -67,7 +79,7 @@ namespace shy_guts
         , so_called_type_loadable_fsm_content_transition_container :: const_iterator
         ) ;
     static void save_system_machine_action_command
-        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        ( so_called_std_string
         , so_called_std_string
         , so_called_std_string
         ) ;
@@ -340,6 +352,40 @@ void shy_guts :: prepare_system_machine_state_actions
     , const so_called_type_loadable_fsm_content_actions & actions
     )
 {
+    for ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i = actions . actions . begin ( )
+        ; action_do_i != actions . actions . end ( )
+        ; ++ action_do_i
+        )
+    {
+        shy_guts :: prepare_system_machine_state_action_do ( system_i , machine_i , state_i , action_do_i ) ;
+    }
+
+    for ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator action_command_i = actions . commands . begin ( )
+        ; action_command_i != actions . commands . end ( )
+        ; ++ action_command_i
+        )
+    {
+        shy_guts :: prepare_system_machine_state_action_command ( system_i , machine_i , state_i , action_command_i ) ;
+    }
+}
+
+void shy_guts :: prepare_system_machine_state_action_do
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i
+    )
+{
+}
+
+void shy_guts :: prepare_system_machine_state_action_command
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_action_command_container :: const_iterator action_command_i
+    )
+{
+    shy_guts :: save_system_machine_action_command ( system_i -> first , action_command_i -> machine , action_command_i -> command ) ;
 }
 
 void shy_guts :: prepare_system_machine_state_on_input
@@ -361,12 +407,12 @@ void shy_guts :: prepare_system_machine_state_transition
 }
 
 void shy_guts :: save_system_machine_action_command
-    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    ( so_called_std_string system
     , so_called_std_string machine
     , so_called_std_string command
     )
 {
-    shy_guts :: system_machine_action_command_name_container [ system_i -> first ] [ machine ] . insert ( command ) ;
+    shy_guts :: system_machine_action_command_name_container [ system ] [ machine ] . insert ( command ) ;
 }
 
 void shy_loadable_fsm_generator :: generate ( so_called_std_string & result )
