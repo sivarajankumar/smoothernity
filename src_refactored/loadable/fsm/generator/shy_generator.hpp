@@ -206,6 +206,7 @@ void shy_guts :: consts :: hpp_guts_class_type_machine_state
     result += "\n" ;
     result += "    : public so_called_type_common_engine_fsm_state\n" ;
     result += "    {\n" ;
+    result += methods ;
     result += "    } ;\n" ;
 }
 
