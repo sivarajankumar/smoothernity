@@ -44,6 +44,7 @@ namespace shy_guts
             ) ;
         static void get_machine_action_command_names 
             ( shy_guts :: type_action_command_name_container & 
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
             ) ;
     }
@@ -268,7 +269,7 @@ void shy_guts :: hpp :: guts_namespace_behaviour_actions
         )
     {
         shy_guts :: type_action_command_name_container command_action_names ;
-        shy_guts :: lookup :: get_machine_action_command_names ( command_action_names , machine_i ) ;
+        shy_guts :: lookup :: get_machine_action_command_names ( command_action_names , system_i , machine_i ) ;
 
         for ( shy_guts :: type_action_command_name_container :: const_iterator command_i = command_action_names . begin ( )
             ; command_i != command_action_names . end ( )
@@ -309,9 +310,11 @@ void shy_guts :: hpp :: guts_variables_machines
 
 void shy_guts :: lookup :: get_machine_action_command_names 
     ( shy_guts :: type_action_command_name_container & command_names
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
     )
 {
+    command_names = shy_guts :: lookup :: system_machine_action_command_name_container [ system_i -> first ] [ machine_i -> first ] ;
 }
 
 void shy_guts :: prepare :: prepare ( )
