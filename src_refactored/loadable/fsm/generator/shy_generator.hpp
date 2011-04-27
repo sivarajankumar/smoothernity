@@ -38,6 +38,10 @@ namespace shy_guts
             ( so_called_std_string & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
             ) ;
+        static void every_guts_behaviour_actions_action_command_implement
+            ( so_called_std_string & 
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
+            ) ;
         static void every_guts_machine_variable 
             ( so_called_std_string & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
@@ -411,12 +415,16 @@ void shy_guts :: hpp :: contents
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     )
 {
+    so_called_std_string every_guts_behaviour_actions_action_command_implement ;
     so_called_std_string guts ;
 
+    shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement ( every_guts_behaviour_actions_action_command_implement , system_i ) ;
     shy_guts :: hpp :: guts ( guts , system_i ) ;
 
     result . clear ( ) ;
     result += guts ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += every_guts_behaviour_actions_action_command_implement ;
 }
 
 void shy_guts :: hpp :: guts 
@@ -647,6 +655,37 @@ void shy_guts :: hpp :: guts_behaviour_actions
         }
     }
     shy_guts :: consts :: hpp_guts_behaviour_actions ( result , actions ) ;
+}
+
+void shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    )
+{
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        shy_guts :: type_action_command_name_container command_action_names ;
+        shy_guts :: lookup :: get_machine_action_command_names ( command_action_names , system_i , machine_i ) ;
+
+        for ( shy_guts :: type_action_command_name_container :: const_iterator command_i = command_action_names . begin ( )
+            ; command_i != command_action_names . end ( )
+            ; ++ command_i
+            )
+        {
+            so_called_std_string action_command ;
+            shy_guts :: consts :: hpp_guts_behaviour_actions_action_command_implement
+                ( action_command
+                , machine_i -> first
+                , * command_i
+                ) ;
+            if ( machine_i != system_i -> second . machines . begin ( ) || command_i != command_action_names . begin ( ) )
+                result += so_called_loadable_generator_consts :: new_line ;
+            result += action_command ;
+        }
+    }
 }
 
 void shy_guts :: hpp :: every_guts_machine_variable
