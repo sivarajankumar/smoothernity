@@ -20,7 +20,8 @@ namespace shy_guts
         static void hpp_guts_class_type_behaviour_inputs_action_command_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_class_type_behaviour_inputs_condition_state_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_namespace_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
-        static void hpp_guts_namespace_behaviour_actions_action_command ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_namespace_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_namespace_behaviour_actions_action_command_implement ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_namespace_state_environment ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_namespace_states ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_namespace_states_state_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -289,7 +290,7 @@ void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions ( so_called_std_
     result += "    }\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command 
+void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_declare
     ( so_called_std_string & result 
     , so_called_std_string machine 
     , so_called_std_string command
@@ -301,6 +302,27 @@ void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command
     result += "_command_" ;
     result += command ;
     result += " ( ) ;\n" ;
+}
+
+void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_implement
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    , so_called_std_string command
+    )
+{
+    result . clear ( ) ;
+    result += "void shy_guts :: behaviour_actions :: " ;
+    result += machine ;
+    result += "_command_" ;
+    result += command ;
+    result += " ( )\n" ;
+    result += "{\n" ;
+    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += machine ;
+    result += "_command_" ;
+    result += command ;
+    result += " , true ) ;\n" ;
+    result += "}\n" ;
 }
 
 void shy_guts :: consts :: hpp_guts_namespace_state_environment ( so_called_std_string & result , so_called_std_string system )
@@ -390,6 +412,7 @@ void shy_guts :: hpp :: contents
     )
 {
     so_called_std_string guts ;
+
     shy_guts :: hpp :: guts ( guts , system_i ) ;
 
     result . clear ( ) ;
@@ -615,7 +638,7 @@ void shy_guts :: hpp :: guts_namespace_behaviour_actions
             )
         {
             so_called_std_string action_command ;
-            shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command
+            shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_declare
                 ( action_command
                 , machine_i -> first
                 , * command_i
