@@ -10,22 +10,22 @@ namespace shy_guts
     namespace consts
     {
         static void hpp_guts ( so_called_std_string & , so_called_std_string ) ;
-        static void hpp_guts_class_type_machine_state ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
-        static void hpp_guts_class_type_machine_state_method_on_entry ( so_called_std_string & ) ;
-        static void hpp_guts_class_type_machine_state_method_on_exit ( so_called_std_string & ) ;
-        static void hpp_guts_class_type_machine_state_method_on_input ( so_called_std_string & ) ;
-        static void hpp_guts_class_type_machine_state_method_transition ( so_called_std_string & ) ;
-        static void hpp_guts_class_type_machine_state_public ( so_called_std_string & ) ;
-        static void hpp_guts_class_type_behaviour_inputs ( so_called_std_string & , so_called_std_string ) ;
-        static void hpp_guts_class_type_behaviour_inputs_action_command_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
-        static void hpp_guts_class_type_behaviour_inputs_condition_state_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
-        static void hpp_guts_namespace_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
-        static void hpp_guts_namespace_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
-        static void hpp_guts_namespace_behaviour_actions_action_command_implement ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
-        static void hpp_guts_namespace_state_environment ( so_called_std_string & , so_called_std_string ) ;
-        static void hpp_guts_namespace_states ( so_called_std_string & , so_called_std_string ) ;
-        static void hpp_guts_namespace_states_state_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
-        static void hpp_guts_variable_machine ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_behaviour_actions_action_command_implement ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_machine_variable ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_state_environment ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_states ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_states_state_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_behaviour_inputs ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_type_behaviour_inputs_action_command_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_behaviour_inputs_condition_state_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_method_on_entry ( so_called_std_string & ) ;
+        static void hpp_guts_type_machine_state_method_on_exit ( so_called_std_string & ) ;
+        static void hpp_guts_type_machine_state_method_on_input ( so_called_std_string & ) ;
+        static void hpp_guts_type_machine_state_method_transition ( so_called_std_string & ) ;
+        static void hpp_guts_type_machine_state_public ( so_called_std_string & ) ;
         static void hpp_guts_variables ( so_called_std_string & ) ;
         static void hpp_path ( so_called_std_string & , so_called_std_string ) ;
         static void injections_hpp_contents ( so_called_std_string & , so_called_std_string ) ;
@@ -42,46 +42,46 @@ namespace shy_guts
             ( so_called_std_string & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
             ) ;
-        static void guts_class_type_behaviour_inputs
+        static void guts_behaviour_actions 
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
+            ) ;
+        static void guts_every_machine_variable 
+            ( so_called_std_string & 
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
+            ) ;
+        static void guts_every_type_machine_state
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
-        static void guts_class_type_machine_state
+        static void guts_states
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator
+            ) ;
+        static void guts_type_behaviour_inputs
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_class_type_machine_state_method_on_entry
+        static void guts_type_machine_state_method_on_entry
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_class_type_machine_state_method_on_exit
+        static void guts_type_machine_state_method_on_exit
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_class_type_machine_state_method_on_input
+        static void guts_type_machine_state_method_on_input
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_class_type_machine_state_method_transition
+        static void guts_type_machine_state_method_transition
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
-            ) ;
-        static void guts_classes_type_machine_state
-            ( so_called_std_string &
-            , so_called_type_loadable_fsm_content_system_container :: const_iterator
-            ) ;
-        static void guts_namespace_behaviour_actions 
-            ( so_called_std_string &
-            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
-            ) ;
-        static void guts_namespace_states
-            ( so_called_std_string &
-            , so_called_type_loadable_fsm_content_system_container :: const_iterator
-            ) ;
-        static void guts_variables_machines 
-            ( so_called_std_string & 
-            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
             ) ;
     }
 
@@ -196,7 +196,7 @@ void shy_guts :: consts :: hpp_guts
     result += "}\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_machine_state 
+void shy_guts :: consts :: hpp_guts_type_machine_state 
     ( so_called_std_string & result
     , so_called_std_string machine
     , so_called_std_string state
@@ -215,32 +215,32 @@ void shy_guts :: consts :: hpp_guts_class_type_machine_state
     result += "    } ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_machine_state_method_on_entry ( so_called_std_string & result )
+void shy_guts :: consts :: hpp_guts_type_machine_state_method_on_entry ( so_called_std_string & result )
 {
     result = "        virtual void on_entry ( ) ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_machine_state_method_on_exit ( so_called_std_string & result )
+void shy_guts :: consts :: hpp_guts_type_machine_state_method_on_exit ( so_called_std_string & result )
 {
     result = "        virtual void on_exit ( ) ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_machine_state_method_on_input ( so_called_std_string & result )
+void shy_guts :: consts :: hpp_guts_type_machine_state_method_on_input ( so_called_std_string & result )
 {
     result = "        virtual void on_input ( ) ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_machine_state_method_transition ( so_called_std_string & result )
+void shy_guts :: consts :: hpp_guts_type_machine_state_method_transition ( so_called_std_string & result )
 {
     result = "        virtual so_called_type_common_engine_fsm_state & transition ( ) ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_machine_state_public ( so_called_std_string & result )
+void shy_guts :: consts :: hpp_guts_type_machine_state_public ( so_called_std_string & result )
 {
     result = "    public :\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs 
+void shy_guts :: consts :: hpp_guts_type_behaviour_inputs 
     ( so_called_std_string & result 
     , so_called_std_string inputs
     )
@@ -253,7 +253,7 @@ void shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs
     result += "    } ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs_action_command_variable
+void shy_guts :: consts :: hpp_guts_type_behaviour_inputs_action_command_variable
     ( so_called_std_string & result 
     , so_called_std_string machine
     , so_called_std_string command
@@ -267,7 +267,7 @@ void shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs_action_command_v
     result += " ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs_condition_state_variable
+void shy_guts :: consts :: hpp_guts_type_behaviour_inputs_condition_state_variable
     ( so_called_std_string & result
     , so_called_std_string machine
     , so_called_std_string state
@@ -281,7 +281,7 @@ void shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs_condition_state_
     result += " ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions ( so_called_std_string & result , so_called_std_string actions )
+void shy_guts :: consts :: hpp_guts_behaviour_actions ( so_called_std_string & result , so_called_std_string actions )
 {
     result . clear ( ) ;
     result += "    namespace behaviour_actions\n" ;
@@ -290,7 +290,7 @@ void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions ( so_called_std_
     result += "    }\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_declare
+void shy_guts :: consts :: hpp_guts_behaviour_actions_action_command_declare
     ( so_called_std_string & result 
     , so_called_std_string machine 
     , so_called_std_string command
@@ -304,7 +304,7 @@ void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_d
     result += " ( ) ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_implement
+void shy_guts :: consts :: hpp_guts_behaviour_actions_action_command_implement
     ( so_called_std_string & result
     , so_called_std_string machine
     , so_called_std_string command
@@ -325,7 +325,7 @@ void shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_i
     result += "}\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_namespace_state_environment ( so_called_std_string & result , so_called_std_string system )
+void shy_guts :: consts :: hpp_guts_state_environment ( so_called_std_string & result , so_called_std_string system )
 {
     result . clear ( ) ;
     result += "    namespace state_environment\n" ;
@@ -337,7 +337,7 @@ void shy_guts :: consts :: hpp_guts_namespace_state_environment ( so_called_std_
     result += "    }\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_namespace_states ( so_called_std_string & result , so_called_std_string states )
+void shy_guts :: consts :: hpp_guts_states ( so_called_std_string & result , so_called_std_string states )
 {
     result . clear ( ) ;
     result += "    namespace states\n" ;
@@ -346,7 +346,7 @@ void shy_guts :: consts :: hpp_guts_namespace_states ( so_called_std_string & re
     result += "    }\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_namespace_states_state_variable ( so_called_std_string & result , so_called_std_string machine , so_called_std_string state )
+void shy_guts :: consts :: hpp_guts_states_state_variable ( so_called_std_string & result , so_called_std_string machine , so_called_std_string state )
 {
     result . clear ( ) ;
     result += "       static type_machine_" ;
@@ -360,7 +360,7 @@ void shy_guts :: consts :: hpp_guts_namespace_states_state_variable ( so_called_
     result += " ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_variable_machine ( so_called_std_string & result , so_called_std_string machine )
+void shy_guts :: consts :: hpp_guts_machine_variable ( so_called_std_string & result , so_called_std_string machine )
 {
     result . clear ( ) ;
     result += "    static so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > machine_" ;
@@ -424,41 +424,41 @@ void shy_guts :: hpp :: guts
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     )
 {
-    so_called_std_string guts_class_type_behaviour_inputs ;
-    so_called_std_string guts_classes_type_machine_state ;
-    so_called_std_string guts_namespace_behaviour_actions ;
+    so_called_std_string guts_behaviour_actions ;
+    so_called_std_string guts_every_machine_variable ;
+    so_called_std_string guts_every_type_machine_state ;
     so_called_std_string guts_namespace_state_environment ;
-    so_called_std_string guts_namespace_states ;
+    so_called_std_string guts_states ;
+    so_called_std_string guts_type_behaviour_inputs ;
     so_called_std_string guts_variables ;
-    so_called_std_string guts_variables_machines ;
 
-    shy_guts :: hpp :: guts_class_type_behaviour_inputs ( guts_class_type_behaviour_inputs , system_i ) ;
-    shy_guts :: hpp :: guts_classes_type_machine_state ( guts_classes_type_machine_state , system_i ) ;
-    shy_guts :: hpp :: guts_namespace_states ( guts_namespace_states , system_i ) ;
-    shy_guts :: hpp :: guts_namespace_behaviour_actions ( guts_namespace_behaviour_actions , system_i ) ;
-    shy_guts :: consts :: hpp_guts_namespace_state_environment ( guts_namespace_state_environment , system_i -> first ) ;
+    shy_guts :: hpp :: guts_behaviour_actions ( guts_behaviour_actions , system_i ) ;
+    shy_guts :: hpp :: guts_every_machine_variable ( guts_every_machine_variable , system_i ) ;
+    shy_guts :: hpp :: guts_every_type_machine_state ( guts_every_type_machine_state , system_i ) ;
+    shy_guts :: hpp :: guts_states ( guts_states , system_i ) ;
+    shy_guts :: hpp :: guts_type_behaviour_inputs ( guts_type_behaviour_inputs , system_i ) ;
+    shy_guts :: consts :: hpp_guts_state_environment ( guts_namespace_state_environment , system_i -> first ) ;
     shy_guts :: consts :: hpp_guts_variables ( guts_variables ) ;
-    shy_guts :: hpp :: guts_variables_machines ( guts_variables_machines , system_i ) ;
 
     shy_guts :: consts :: hpp_guts
         ( result
-        , guts_classes_type_machine_state
+        , guts_every_type_machine_state
         + so_called_loadable_generator_consts :: new_line
-        + guts_class_type_behaviour_inputs
+        + guts_type_behaviour_inputs
         + so_called_loadable_generator_consts :: new_line
-        + guts_namespace_states
+        + guts_states
         + so_called_loadable_generator_consts :: new_line
-        + guts_namespace_behaviour_actions
+        + guts_behaviour_actions
         + so_called_loadable_generator_consts :: new_line
         + guts_namespace_state_environment
         + so_called_loadable_generator_consts :: new_line
-        + guts_variables_machines
+        + guts_every_machine_variable
         + so_called_loadable_generator_consts :: new_line
         + guts_variables
         ) ;
 }
 
-void shy_guts :: hpp :: guts_classes_type_machine_state
+void shy_guts :: hpp :: guts_every_type_machine_state
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i 
     )
@@ -477,13 +477,13 @@ void shy_guts :: hpp :: guts_classes_type_machine_state
             if ( machine_i != system_i -> second . machines . begin ( ) || state_i != machine_i -> second . states . begin ( ) )
                 result += so_called_loadable_generator_consts :: new_line ;
             so_called_std_string state_type ;
-            shy_guts :: hpp :: guts_class_type_machine_state ( state_type , machine_i , state_i ) ;
+            shy_guts :: hpp :: guts_type_machine_state ( state_type , machine_i , state_i ) ;
             result += state_type ;
         }
     }
 }
 
-void shy_guts :: hpp :: guts_class_type_machine_state
+void shy_guts :: hpp :: guts_type_machine_state
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
@@ -494,10 +494,10 @@ void shy_guts :: hpp :: guts_class_type_machine_state
     so_called_std_string on_input ;
     so_called_std_string transition ;
 
-    shy_guts :: hpp :: guts_class_type_machine_state_method_on_entry ( on_entry , state_i ) ;
-    shy_guts :: hpp :: guts_class_type_machine_state_method_on_exit ( on_exit , state_i ) ;
-    shy_guts :: hpp :: guts_class_type_machine_state_method_on_input ( on_input , state_i ) ;
-    shy_guts :: hpp :: guts_class_type_machine_state_method_transition ( transition , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_method_on_entry ( on_entry , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_method_on_exit ( on_exit , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_method_on_input ( on_input , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_method_transition ( transition , state_i ) ;
 
     so_called_std_string methods ;
     methods = on_entry + on_exit + on_input + transition ;
@@ -505,11 +505,11 @@ void shy_guts :: hpp :: guts_class_type_machine_state
     if ( ! methods . empty ( ) )
     {
         so_called_std_string public_area ;
-        shy_guts :: consts :: hpp_guts_class_type_machine_state_public ( public_area ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_public ( public_area ) ;
         methods = public_area + methods ;
     }
 
-    shy_guts :: consts :: hpp_guts_class_type_machine_state 
+    shy_guts :: consts :: hpp_guts_type_machine_state 
         ( result 
         , machine_i -> first
         , state_i -> first
@@ -517,43 +517,43 @@ void shy_guts :: hpp :: guts_class_type_machine_state
         ) ;
 }
 
-void shy_guts :: hpp :: guts_class_type_machine_state_method_on_entry
+void shy_guts :: hpp :: guts_type_machine_state_method_on_entry
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
     if ( ! state_i -> second . on_entry . actions . empty ( ) || ! state_i -> second . on_entry . commands . empty ( ) )
-        shy_guts :: consts :: hpp_guts_class_type_machine_state_method_on_entry ( result ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_method_on_entry ( result ) ;
 }
 
-void shy_guts :: hpp :: guts_class_type_machine_state_method_on_exit
+void shy_guts :: hpp :: guts_type_machine_state_method_on_exit
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
     if ( ! state_i -> second . on_exit . actions . empty ( ) || ! state_i -> second . on_exit . commands . empty ( ) )
-        shy_guts :: consts :: hpp_guts_class_type_machine_state_method_on_exit ( result ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_method_on_exit ( result ) ;
 }
 
-void shy_guts :: hpp :: guts_class_type_machine_state_method_on_input
+void shy_guts :: hpp :: guts_type_machine_state_method_on_input
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
     if ( ! state_i -> second . on_input . empty ( ) )
-        shy_guts :: consts :: hpp_guts_class_type_machine_state_method_on_input ( result ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_method_on_input ( result ) ;
 }
 
-void shy_guts :: hpp :: guts_class_type_machine_state_method_transition
+void shy_guts :: hpp :: guts_type_machine_state_method_transition
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
     if ( ! state_i -> second . transitions . empty ( ) )
-        shy_guts :: consts :: hpp_guts_class_type_machine_state_method_transition ( result ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_method_transition ( result ) ;
 }
 
-void shy_guts :: hpp :: guts_class_type_behaviour_inputs
+void shy_guts :: hpp :: guts_type_behaviour_inputs
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i 
     )
@@ -576,7 +576,7 @@ void shy_guts :: hpp :: guts_class_type_behaviour_inputs
             )
         {
             so_called_std_string input_variable ;
-            shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs_action_command_variable ( input_variable , machine_i -> first , * action_command_name_i ) ;
+            shy_guts :: consts :: hpp_guts_type_behaviour_inputs_action_command_variable ( input_variable , machine_i -> first , * action_command_name_i ) ;
             inputs += input_variable ;
         }
 
@@ -586,15 +586,15 @@ void shy_guts :: hpp :: guts_class_type_behaviour_inputs
             )
         {
             so_called_std_string input_variable ;
-            shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs_condition_state_variable ( input_variable , machine_i -> first , * condition_state_name_i ) ;
+            shy_guts :: consts :: hpp_guts_type_behaviour_inputs_condition_state_variable ( input_variable , machine_i -> first , * condition_state_name_i ) ;
             inputs += input_variable ;
         }
     }
 
-    shy_guts :: consts :: hpp_guts_class_type_behaviour_inputs ( result , inputs ) ;
+    shy_guts :: consts :: hpp_guts_type_behaviour_inputs ( result , inputs ) ;
 }
 
-void shy_guts :: hpp :: guts_namespace_states
+void shy_guts :: hpp :: guts_states
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i 
     )
@@ -611,14 +611,14 @@ void shy_guts :: hpp :: guts_namespace_states
             )
         {
             so_called_std_string state_variable ;
-            shy_guts :: consts :: hpp_guts_namespace_states_state_variable ( state_variable , machine_i -> first , state_i -> first ) ;
+            shy_guts :: consts :: hpp_guts_states_state_variable ( state_variable , machine_i -> first , state_i -> first ) ;
             states += state_variable ;
         }
     }
-    shy_guts :: consts :: hpp_guts_namespace_states ( result , states ) ;
+    shy_guts :: consts :: hpp_guts_states ( result , states ) ;
 }
 
-void shy_guts :: hpp :: guts_namespace_behaviour_actions
+void shy_guts :: hpp :: guts_behaviour_actions
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i 
     )
@@ -638,7 +638,7 @@ void shy_guts :: hpp :: guts_namespace_behaviour_actions
             )
         {
             so_called_std_string action_command ;
-            shy_guts :: consts :: hpp_guts_namespace_behaviour_actions_action_command_declare
+            shy_guts :: consts :: hpp_guts_behaviour_actions_action_command_declare
                 ( action_command
                 , machine_i -> first
                 , * command_i
@@ -646,10 +646,10 @@ void shy_guts :: hpp :: guts_namespace_behaviour_actions
             actions += action_command ;
         }
     }
-    shy_guts :: consts :: hpp_guts_namespace_behaviour_actions ( result , actions ) ;
+    shy_guts :: consts :: hpp_guts_behaviour_actions ( result , actions ) ;
 }
 
-void shy_guts :: hpp :: guts_variables_machines
+void shy_guts :: hpp :: guts_every_machine_variable
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i 
     )
@@ -661,7 +661,7 @@ void shy_guts :: hpp :: guts_variables_machines
         )
     {
         so_called_std_string variable_machine ;
-        shy_guts :: consts :: hpp_guts_variable_machine ( variable_machine , machine_i -> first ) ;
+        shy_guts :: consts :: hpp_guts_machine_variable ( variable_machine , machine_i -> first ) ;
         result += variable_machine ;
     }
 }
