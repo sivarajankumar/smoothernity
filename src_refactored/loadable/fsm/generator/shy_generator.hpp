@@ -20,6 +20,12 @@ namespace shy_guts
         static void hpp_behaviour_recalc_current_behaviour_inputs_check_machine_state ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_reset_behaviour_input_events ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_reset_behaviour_input_events_reset_machine_command ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_run_fsm_begin ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_behaviour_run_fsm_end ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_behaviour_set_inputs ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_behaviour_tick_all_fsms ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_tick_all_fsms_tick_machine ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_behaviour_update_fixed_behaviour_inputs ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -58,6 +64,10 @@ namespace shy_guts
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
         static void behaviour_reset_behaviour_input_events
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator
+            ) ;
+        static void behaviour_tick_all_fsms
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
@@ -404,6 +414,90 @@ void shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events_reset_mach
     result += " , false ) ;\n" ;
 }
 
+void shy_guts :: consts :: hpp_behaviour_run_fsm_begin 
+    ( so_called_std_string & result
+    , so_called_std_string system
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: run_fsm_begin ( )\n" ;
+    result += "{\n" ;
+    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , true ) ;\n" ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_run_fsm_end 
+    ( so_called_std_string & result
+    , so_called_std_string system
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: run_fsm_end ( )\n" ;
+    result += "{\n" ;
+    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , false ) ;\n" ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_set_inputs
+    ( so_called_std_string & result
+    , so_called_std_string system
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += system ;
+    result += "_fsm_inputs > inputs )\n" ;
+    result += "{\n" ;
+    result += "    shy_guts :: state_environment :: inputs = inputs ;\n" ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_tick_all_fsms
+    ( so_called_std_string & result
+    , so_called_std_string system
+    , so_called_std_string tickers
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: tick_all_fsms ( )\n" ;
+    result += "{\n" ;
+    result += tickers ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_tick_all_fsms_tick_machine 
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    )
+{
+    result . clear ( ) ;
+    result += "    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_" ;
+    result += machine ;
+    result += "_state ) ;\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_update_fixed_behaviour_inputs 
+    ( so_called_std_string & result
+    , so_called_std_string system
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: update_fixed_behaviour_inputs ( )\n" ;
+    result += "{\n" ;
+    result += "    shy_guts :: fixed_behaviour_inputs = shy_guts :: current_behaviour_inputs ;\n" ;
+    result += "}\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts
     ( so_called_std_string & result
     , so_called_std_string contents
@@ -636,14 +730,24 @@ void shy_guts :: hpp :: contents
     so_called_std_string behaviour_is_fsm_running ;
     so_called_std_string behaviour_recalc_current_behaviour_inputs ;
     so_called_std_string behaviour_reset_behaviour_input_events ;
+    so_called_std_string behaviour_run_fsm_begin ;
+    so_called_std_string behaviour_run_fsm_end ;
+    so_called_std_string behaviour_set_inputs ;
+    so_called_std_string behaviour_tick_all_fsms ;
+    so_called_std_string behaviour_update_fixed_behaviour_inputs ;
     so_called_std_string every_guts_behaviour_actions_action_command_implement ;
     so_called_std_string guts ;
 
     shy_guts :: consts :: hpp_behaviour_is_fsm_running ( behaviour_is_fsm_running , system_i -> first ) ;
+    shy_guts :: consts :: hpp_behaviour_run_fsm_begin ( behaviour_run_fsm_begin , system_i -> first ) ;
+    shy_guts :: consts :: hpp_behaviour_run_fsm_end ( behaviour_run_fsm_end , system_i -> first ) ;
+    shy_guts :: consts :: hpp_behaviour_set_inputs ( behaviour_set_inputs , system_i -> first ) ;
+    shy_guts :: consts :: hpp_behaviour_update_fixed_behaviour_inputs ( behaviour_update_fixed_behaviour_inputs , system_i -> first ) ;
     shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change ( behaviour_determine_behaviour_inputs_change , system_i ) ;
     shy_guts :: hpp :: behaviour_init ( behaviour_init , system_i ) ;
     shy_guts :: hpp :: behaviour_recalc_current_behaviour_inputs ( behaviour_recalc_current_behaviour_inputs , system_i ) ;
     shy_guts :: hpp :: behaviour_reset_behaviour_input_events ( behaviour_reset_behaviour_input_events , system_i ) ;
+    shy_guts :: hpp :: behaviour_tick_all_fsms ( behaviour_tick_all_fsms , system_i ) ;
     shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement ( every_guts_behaviour_actions_action_command_implement , system_i ) ;
     shy_guts :: hpp :: guts ( guts , system_i ) ;
 
@@ -661,6 +765,40 @@ void shy_guts :: hpp :: contents
     result += behaviour_recalc_current_behaviour_inputs ;
     result += so_called_loadable_generator_consts :: new_line ;
     result += behaviour_reset_behaviour_input_events ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_run_fsm_begin ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_run_fsm_end ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_set_inputs ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_tick_all_fsms ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_update_fixed_behaviour_inputs ;
+}
+
+void shy_guts :: hpp :: behaviour_tick_all_fsms
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    )
+{
+    so_called_std_string tickers ;
+
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        so_called_std_string tick_machine ;
+        shy_guts :: consts :: hpp_behaviour_tick_all_fsms_tick_machine ( tick_machine , machine_i -> first ) ;
+        tickers += tick_machine ;
+    }
+
+    shy_guts :: consts :: hpp_behaviour_tick_all_fsms
+        ( result
+        , system_i -> first
+        , tickers
+        ) ;
 }
 
 void shy_guts :: hpp :: behaviour_reset_behaviour_input_events
