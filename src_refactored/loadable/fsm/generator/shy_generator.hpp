@@ -15,6 +15,7 @@ namespace shy_guts
         static void hpp_behaviour_determine_behaviour_inputs_change_condition_state ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_init ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_init_bind_initial_state ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_behaviour_is_fsm_running ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -309,6 +310,20 @@ void shy_guts :: consts :: hpp_behaviour_init_bind_initial_state
     result += "        ) ;\n" ;
 }
 
+void shy_guts :: consts :: hpp_behaviour_is_fsm_running
+    ( so_called_std_string & result
+    , so_called_std_string system
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: is_fsm_running ( so_called_type_platform_math_num_whole & result )\n" ;
+    result += "{\n" ;
+    result += "    result = shy_guts :: fsm_running ;\n" ;
+    result += "}\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts
     ( so_called_std_string & result
     , so_called_std_string contents
@@ -538,9 +553,11 @@ void shy_guts :: hpp :: contents
 {
     so_called_std_string behaviour_determine_behaviour_inputs_change ;
     so_called_std_string behaviour_init ;
+    so_called_std_string behaviour_is_fsm_running ;
     so_called_std_string every_guts_behaviour_actions_action_command_implement ;
     so_called_std_string guts ;
 
+    shy_guts :: consts :: hpp_behaviour_is_fsm_running ( behaviour_is_fsm_running , system_i -> first ) ;
     shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change ( behaviour_determine_behaviour_inputs_change , system_i ) ;
     shy_guts :: hpp :: behaviour_init ( behaviour_init , system_i ) ;
     shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement ( every_guts_behaviour_actions_action_command_implement , system_i ) ;
@@ -554,6 +571,8 @@ void shy_guts :: hpp :: contents
     result += behaviour_determine_behaviour_inputs_change ;
     result += so_called_loadable_generator_consts :: new_line ;
     result += behaviour_init ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_is_fsm_running ;
 }
 
 void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
