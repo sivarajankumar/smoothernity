@@ -18,6 +18,8 @@ namespace shy_guts
         static void hpp_behaviour_is_fsm_running ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_behaviour_recalc_current_behaviour_inputs ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_recalc_current_behaviour_inputs_check_machine_state ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_reset_behaviour_input_events ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_reset_behaviour_input_events_reset_machine_command ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -52,6 +54,10 @@ namespace shy_guts
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
             ) ;
         static void behaviour_recalc_current_behaviour_inputs
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator
+            ) ;
+        static void behaviour_reset_behaviour_input_events
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
@@ -369,6 +375,35 @@ void shy_guts :: consts :: hpp_behaviour_recalc_current_behaviour_inputs_check_m
     result += "        ) ;\n" ;
 }
 
+void shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events
+    ( so_called_std_string & result
+    , so_called_std_string system
+    , so_called_std_string resetters
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: reset_behaviour_input_events ( )\n" ;
+    result += "{\n" ;
+    result += resetters ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events_reset_machine_command
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    , so_called_std_string command
+    )
+{
+    result . clear ( ) ;
+    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += machine ;
+    result += "_command_" ;
+    result += command ;
+    result += " , false ) ;\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts
     ( so_called_std_string & result
     , so_called_std_string contents
@@ -600,6 +635,7 @@ void shy_guts :: hpp :: contents
     so_called_std_string behaviour_init ;
     so_called_std_string behaviour_is_fsm_running ;
     so_called_std_string behaviour_recalc_current_behaviour_inputs ;
+    so_called_std_string behaviour_reset_behaviour_input_events ;
     so_called_std_string every_guts_behaviour_actions_action_command_implement ;
     so_called_std_string guts ;
 
@@ -607,6 +643,7 @@ void shy_guts :: hpp :: contents
     shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change ( behaviour_determine_behaviour_inputs_change , system_i ) ;
     shy_guts :: hpp :: behaviour_init ( behaviour_init , system_i ) ;
     shy_guts :: hpp :: behaviour_recalc_current_behaviour_inputs ( behaviour_recalc_current_behaviour_inputs , system_i ) ;
+    shy_guts :: hpp :: behaviour_reset_behaviour_input_events ( behaviour_reset_behaviour_input_events , system_i ) ;
     shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement ( every_guts_behaviour_actions_action_command_implement , system_i ) ;
     shy_guts :: hpp :: guts ( guts , system_i ) ;
 
@@ -622,6 +659,41 @@ void shy_guts :: hpp :: contents
     result += behaviour_is_fsm_running ;
     result += so_called_loadable_generator_consts :: new_line ;
     result += behaviour_recalc_current_behaviour_inputs ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_reset_behaviour_input_events ;
+}
+
+void shy_guts :: hpp :: behaviour_reset_behaviour_input_events
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    )
+{
+    so_called_std_string resetters ;
+
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        shy_guts :: type_action_command_name_container action_command_names ;
+        shy_guts :: lookup :: get_machine_action_command_names ( action_command_names , system_i , machine_i ) ;
+
+        for ( shy_guts :: type_action_command_name_container :: const_iterator action_command_name_i = action_command_names . begin ( )
+            ; action_command_name_i != action_command_names . end ( )
+            ; ++ action_command_name_i
+            )
+        {
+            so_called_std_string input_command_reset ;
+            shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events_reset_machine_command ( input_command_reset , machine_i -> first , * action_command_name_i ) ;
+            resetters += input_command_reset ;
+        }
+    }
+
+    shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events
+        ( result
+        , system_i -> first
+        , resetters
+        ) ;
 }
 
 void shy_guts :: hpp :: behaviour_recalc_current_behaviour_inputs
@@ -637,7 +709,6 @@ void shy_guts :: hpp :: behaviour_recalc_current_behaviour_inputs
         )
     {
         shy_guts :: type_condition_state_name_container condition_state_names ;
-
         shy_guts :: lookup :: get_machine_condition_state_names ( condition_state_names , system_i , machine_i ) ;
 
         for ( shy_guts :: type_condition_state_name_container :: const_iterator condition_state_name_i = condition_state_names . begin ( )
