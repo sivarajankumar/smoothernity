@@ -13,6 +13,8 @@ namespace shy_guts
         static void hpp_behaviour_determine_behaviour_inputs_change_and ( so_called_std_string & ) ;
         static void hpp_behaviour_determine_behaviour_inputs_change_condition_command ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_determine_behaviour_inputs_change_condition_state ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_init ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_init_bind_initial_state ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -39,6 +41,10 @@ namespace shy_guts
     namespace hpp
     {
         static void behaviour_determine_behaviour_inputs_change
+            ( so_called_std_string & 
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
+            ) ;
+        static void behaviour_init
             ( so_called_std_string & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
             ) ;
@@ -263,6 +269,44 @@ void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_condi
     result += state ;
     result += "\n" ;
     result += "            )\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_init 
+    ( so_called_std_string & result
+    , so_called_std_string system
+    , so_called_std_string bindings
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: init ( )\n" ;
+    result += "{\n" ;
+    result += "    so_called_platform_pointer :: bind\n" ;
+    result += "        ( shy_guts :: state_environment :: behaviour_inputs\n" ;
+    result += "        , shy_guts :: fixed_behaviour_inputs\n" ;
+    result += "        ) ;\n" ;
+    result += "\n" ;
+    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , false ) ;\n" ;
+    result += "\n" ;
+    result += bindings ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_init_bind_initial_state 
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    )
+{
+    result . clear ( ) ;
+    result += "    so_called_platform_pointer :: bind\n" ;
+    result += "        ( shy_guts :: machine_" ;
+    result += machine ;
+    result += "_state\n" ;
+    result += "        , shy_guts :: states :: " ;
+    result += machine ;
+    result += "_state_initial\n" ;
+    result += "        ) ;\n" ;
 }
 
 void shy_guts :: consts :: hpp_guts
@@ -493,10 +537,12 @@ void shy_guts :: hpp :: contents
     )
 {
     so_called_std_string behaviour_determine_behaviour_inputs_change ;
+    so_called_std_string behaviour_init ;
     so_called_std_string every_guts_behaviour_actions_action_command_implement ;
     so_called_std_string guts ;
 
     shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change ( behaviour_determine_behaviour_inputs_change , system_i ) ;
+    shy_guts :: hpp :: behaviour_init ( behaviour_init , system_i ) ;
     shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement ( every_guts_behaviour_actions_action_command_implement , system_i ) ;
     shy_guts :: hpp :: guts ( guts , system_i ) ;
 
@@ -506,6 +552,8 @@ void shy_guts :: hpp :: contents
     result += every_guts_behaviour_actions_action_command_implement ;
     result += so_called_loadable_generator_consts :: new_line ;
     result += behaviour_determine_behaviour_inputs_change ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_init ;
 }
 
 void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
@@ -570,6 +618,30 @@ void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
         ( result
         , system_i -> first
         , conditions
+        ) ;
+}
+
+void shy_guts :: hpp :: behaviour_init
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    )
+{
+    so_called_std_string states ;
+
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        so_called_std_string state_binding ;
+        shy_guts :: consts :: hpp_behaviour_init_bind_initial_state ( state_binding , machine_i -> first ) ;
+        states += state_binding ;
+    }
+
+    shy_guts :: consts :: hpp_behaviour_init
+        ( result
+        , system_i -> first
+        , states
         ) ;
 }
 
