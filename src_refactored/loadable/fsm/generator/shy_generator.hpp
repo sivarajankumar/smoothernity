@@ -9,6 +9,10 @@ namespace shy_guts
 
     namespace consts
     {
+        static void hpp_behaviour_determine_behaviour_inputs_change ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_determine_behaviour_inputs_change_and ( so_called_std_string & ) ;
+        static void hpp_behaviour_determine_behaviour_inputs_change_condition_command ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_determine_behaviour_inputs_change_condition_state ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -34,6 +38,10 @@ namespace shy_guts
 
     namespace hpp
     {
+        static void behaviour_determine_behaviour_inputs_change
+            ( so_called_std_string & 
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator 
+            ) ;
         static void contents 
             ( so_called_std_string & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
@@ -186,6 +194,75 @@ namespace shy_guts
             , so_called_type_loadable_fsm_content_transition_container :: const_iterator
             ) ;
     }
+}
+
+void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change 
+    ( so_called_std_string & result
+    , so_called_std_string system
+    , so_called_std_string conditions
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )\n" ;
+    result += "{\n" ;
+    result += "    if ( " ;
+    result += conditions ;
+    result += "       )\n" ;
+    result += "    {\n" ;
+    result += "        so_called_platform_math :: make_num_whole ( inputs_changed , false ) ;\n" ;
+    result += "    }\n" ;
+    result += "    else\n" ;
+    result += "        so_called_platform_math :: make_num_whole ( inputs_changed , true ) ;\n" ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_and ( so_called_std_string & result )
+{
+    result = "      && " ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_condition_command
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    , so_called_std_string command
+    )
+{
+    result . clear ( ) ;
+    result += "so_called_platform_conditions :: wholes_are_equal\n" ;
+    result += "            ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += machine ;
+    result += "_command_" ;
+    result += command ;
+    result += "\n" ;
+    result += "            , shy_guts :: fixed_behaviour_inputs . machine_" ;
+    result += machine ;
+    result += "_command_" ;
+    result += command ;
+    result += "\n" ;
+    result += "            )\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_condition_state
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    , so_called_std_string state
+    )
+{
+    result . clear ( ) ;
+    result += "so_called_platform_conditions :: wholes_are_equal\n" ;
+    result += "            ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += machine ;
+    result += "_state_is_" ;
+    result += state ;
+    result += "\n" ;
+    result += "            , shy_guts :: fixed_behaviour_inputs . machine_" ;
+    result += machine ;
+    result += "_state_is_" ;
+    result += state ;
+    result += "\n" ;
+    result += "            )\n" ;
 }
 
 void shy_guts :: consts :: hpp_guts
@@ -415,9 +492,11 @@ void shy_guts :: hpp :: contents
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     )
 {
+    so_called_std_string behaviour_determine_behaviour_inputs_change ;
     so_called_std_string every_guts_behaviour_actions_action_command_implement ;
     so_called_std_string guts ;
 
+    shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change ( behaviour_determine_behaviour_inputs_change , system_i ) ;
     shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement ( every_guts_behaviour_actions_action_command_implement , system_i ) ;
     shy_guts :: hpp :: guts ( guts , system_i ) ;
 
@@ -425,6 +504,73 @@ void shy_guts :: hpp :: contents
     result += guts ;
     result += so_called_loadable_generator_consts :: new_line ;
     result += every_guts_behaviour_actions_action_command_implement ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_determine_behaviour_inputs_change ;
+}
+
+void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    )
+{
+    so_called_std_bool first_condition = so_called_std_true ;
+    so_called_std_string conditions ;
+
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        shy_guts :: type_action_command_name_container action_command_names ;
+        shy_guts :: type_condition_state_name_container condition_state_names ;
+
+        shy_guts :: lookup :: get_machine_action_command_names ( action_command_names , system_i , machine_i ) ;
+        shy_guts :: lookup :: get_machine_condition_state_names ( condition_state_names , system_i , machine_i ) ;
+
+        for ( shy_guts :: type_action_command_name_container :: const_iterator action_command_name_i = action_command_names . begin ( )
+            ; action_command_name_i != action_command_names . end ( )
+            ; ++ action_command_name_i
+            )
+        {
+            if ( first_condition )
+                first_condition = so_called_std_false ;
+            else
+            {
+                so_called_std_string condition_and ;
+                shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_and ( condition_and ) ;
+                conditions += condition_and ;
+            }
+
+            so_called_std_string condition ;
+            shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_condition_command ( condition , machine_i -> first , * action_command_name_i ) ;
+            conditions += condition ;
+        }
+
+        for ( shy_guts :: type_condition_state_name_container :: const_iterator condition_state_name_i = condition_state_names . begin ( )
+            ; condition_state_name_i != condition_state_names . end ( )
+            ; ++ condition_state_name_i
+            )
+        {
+            if ( first_condition )
+                first_condition = so_called_std_false ;
+            else
+            {
+                so_called_std_string condition_and ;
+                shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_and ( condition_and ) ;
+                conditions += condition_and ;
+            }
+
+            so_called_std_string condition ;
+            shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_condition_state ( condition , machine_i -> first , * condition_state_name_i ) ;
+            conditions += condition ;
+        }
+    }
+
+    shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change
+        ( result
+        , system_i -> first
+        , conditions
+        ) ;
 }
 
 void shy_guts :: hpp :: guts 
