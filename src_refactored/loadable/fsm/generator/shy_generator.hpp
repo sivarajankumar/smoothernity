@@ -16,6 +16,8 @@ namespace shy_guts
         static void hpp_behaviour_init ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_init_bind_initial_state ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_behaviour_is_fsm_running ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_behaviour_recalc_current_behaviour_inputs ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_behaviour_recalc_current_behaviour_inputs_check_machine_state ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_behaviour_actions_action_command_declare ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -48,6 +50,10 @@ namespace shy_guts
         static void behaviour_init
             ( so_called_std_string & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
+            ) ;
+        static void behaviour_recalc_current_behaviour_inputs
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
         static void contents 
             ( so_called_std_string & 
@@ -324,6 +330,45 @@ void shy_guts :: consts :: hpp_behaviour_is_fsm_running
     result += "}\n" ;
 }
 
+void shy_guts :: consts :: hpp_behaviour_recalc_current_behaviour_inputs
+    ( so_called_std_string & result
+    , so_called_std_string system
+    , so_called_std_string checkers
+    )
+{
+    result . clear ( ) ;
+    result += "void so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour :: recalc_current_behaviour_inputs ( )\n" ;
+    result += "{\n" ;
+    result += checkers ;
+    result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_behaviour_recalc_current_behaviour_inputs_check_machine_state
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    , so_called_std_string state
+    )
+{
+    result . clear ( ) ;
+    result += "    so_called_platform_pointer :: is_bound_to\n" ;
+    result += "        ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += machine ;
+    result += "_state_is_" ;
+    result += state ;
+    result += "\n" ;
+    result += "        , shy_guts :: machine_" ;
+    result += machine ;
+    result += "_state\n" ;
+    result += "        , shy_guts :: states :: " ;
+    result += machine ;
+    result += "_state_" ;
+    result += state ;
+    result += "\n" ;
+    result += "        ) ;\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts
     ( so_called_std_string & result
     , so_called_std_string contents
@@ -554,12 +599,14 @@ void shy_guts :: hpp :: contents
     so_called_std_string behaviour_determine_behaviour_inputs_change ;
     so_called_std_string behaviour_init ;
     so_called_std_string behaviour_is_fsm_running ;
+    so_called_std_string behaviour_recalc_current_behaviour_inputs ;
     so_called_std_string every_guts_behaviour_actions_action_command_implement ;
     so_called_std_string guts ;
 
     shy_guts :: consts :: hpp_behaviour_is_fsm_running ( behaviour_is_fsm_running , system_i -> first ) ;
     shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change ( behaviour_determine_behaviour_inputs_change , system_i ) ;
     shy_guts :: hpp :: behaviour_init ( behaviour_init , system_i ) ;
+    shy_guts :: hpp :: behaviour_recalc_current_behaviour_inputs ( behaviour_recalc_current_behaviour_inputs , system_i ) ;
     shy_guts :: hpp :: every_guts_behaviour_actions_action_command_implement ( every_guts_behaviour_actions_action_command_implement , system_i ) ;
     shy_guts :: hpp :: guts ( guts , system_i ) ;
 
@@ -573,6 +620,42 @@ void shy_guts :: hpp :: contents
     result += behaviour_init ;
     result += so_called_loadable_generator_consts :: new_line ;
     result += behaviour_is_fsm_running ;
+    result += so_called_loadable_generator_consts :: new_line ;
+    result += behaviour_recalc_current_behaviour_inputs ;
+}
+
+void shy_guts :: hpp :: behaviour_recalc_current_behaviour_inputs
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    )
+{
+    so_called_std_string checkers ;
+
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        shy_guts :: type_condition_state_name_container condition_state_names ;
+
+        shy_guts :: lookup :: get_machine_condition_state_names ( condition_state_names , system_i , machine_i ) ;
+
+        for ( shy_guts :: type_condition_state_name_container :: const_iterator condition_state_name_i = condition_state_names . begin ( )
+            ; condition_state_name_i != condition_state_names . end ( )
+            ; ++ condition_state_name_i
+            )
+        {
+            so_called_std_string state_checker ;
+            shy_guts :: consts :: hpp_behaviour_recalc_current_behaviour_inputs_check_machine_state ( state_checker , machine_i -> first , * condition_state_name_i ) ;
+            checkers += state_checker ;
+        }
+    }
+
+    shy_guts :: consts :: hpp_behaviour_recalc_current_behaviour_inputs
+        ( result
+        , system_i -> first
+        , checkers
+        ) ;
 }
 
 void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
