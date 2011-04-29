@@ -38,10 +38,15 @@ namespace shy_guts
         static void hpp_guts_type_behaviour_inputs_action_command_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_behaviour_inputs_condition_state_variable ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_action_command_implement ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_action_do_implement ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_on_entry_action_implement ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_entry_declare ( so_called_std_string & ) ;
         static void hpp_guts_type_machine_state_on_entry_implement ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_on_exit_action_implement ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_exit_declare ( so_called_std_string & ) ;
         static void hpp_guts_type_machine_state_on_exit_implement ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_on_input_action_implement ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_input_declare ( so_called_std_string & ) ;
         static void hpp_guts_type_machine_state_on_input_implement ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_transition_declare ( so_called_std_string & ) ;
@@ -587,6 +592,34 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_public ( so_called_std_st
     result = "    public :\n" ;
 }
 
+void shy_guts :: consts :: hpp_guts_type_machine_state_action_command_implement
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    , so_called_std_string command
+    )
+{
+    result . clear ( ) ;
+    result += "shy_guts :: behaviour_actions :: " ;
+    result += machine ;
+    result += "_command_" ;
+    result += command ;
+    result += " ( ) ;\n" ;
+}
+
+void shy_guts :: consts :: hpp_guts_type_machine_state_action_do_implement
+    ( so_called_std_string & result
+    , so_called_std_string system
+    , so_called_std_string action
+    )
+{
+    result . clear ( ) ;
+    result += "so_called_common_" ;
+    result += system ;
+    result += "_fsm_actions :: " ;
+    result += action ;
+    result += " ( ) ;\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_implement
     ( so_called_std_string & result
     , so_called_std_string machine
@@ -603,6 +636,16 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_implement
     result += "{\n" ;
     result += contents ;
     result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_action_implement
+    ( so_called_std_string & result
+    , so_called_std_string action
+    )
+{
+    result . clear ( ) ;
+    result += "    " ;
+    result += action ;
 }
 
 void shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_implement
@@ -623,6 +666,16 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_implement
     result += "}\n" ;
 }
 
+void shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_action_implement
+    ( so_called_std_string & result
+    , so_called_std_string action
+    )
+{
+    result . clear ( ) ;
+    result += "    " ;
+    result += action ;
+}
+
 void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_implement
     ( so_called_std_string & result
     , so_called_std_string machine
@@ -639,6 +692,16 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_implement
     result += "{\n" ;
     result += contents ;
     result += "}\n" ;
+}
+
+void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_action_implement
+    ( so_called_std_string & result
+    , so_called_std_string action
+    )
+{
+    result . clear ( ) ;
+    result += "        " ;
+    result += action ;
 }
 
 void shy_guts :: consts :: hpp_guts_type_machine_state_transition_implement
