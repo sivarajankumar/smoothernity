@@ -111,7 +111,12 @@ namespace shy_guts
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
-        static void guts_type_machine_state
+        static void guts_type_machine_state_declare
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+            , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_implement
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
@@ -866,6 +871,32 @@ void shy_guts :: hpp :: every_guts_type_machine_state_implement
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     )
 {
+    result . clear ( ) ;
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        for ( so_called_type_loadable_fsm_content_state_container :: const_iterator state_i = machine_i -> second . states . begin ( )
+            ; state_i != machine_i -> second . states . end ( )
+            ; ++ state_i
+            )
+        {
+            if ( machine_i != system_i -> second . machines . begin ( ) || state_i != machine_i -> second . states . begin ( ) )
+                result += so_called_loadable_generator_consts :: new_line ;
+            so_called_std_string state_implement ;
+            shy_guts :: hpp :: guts_type_machine_state_implement ( state_implement , machine_i , state_i ) ;
+            result += state_implement ;
+        }
+    }
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
+{
 }
 
 void shy_guts :: hpp :: behaviour_tick_all_fsms
@@ -1105,13 +1136,13 @@ void shy_guts :: hpp :: every_guts_type_machine_state_declare
             if ( machine_i != system_i -> second . machines . begin ( ) || state_i != machine_i -> second . states . begin ( ) )
                 result += so_called_loadable_generator_consts :: new_line ;
             so_called_std_string state_type ;
-            shy_guts :: hpp :: guts_type_machine_state ( state_type , machine_i , state_i ) ;
+            shy_guts :: hpp :: guts_type_machine_state_declare ( state_type , machine_i , state_i ) ;
             result += state_type ;
         }
     }
 }
 
-void shy_guts :: hpp :: guts_type_machine_state
+void shy_guts :: hpp :: guts_type_machine_state_declare
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
