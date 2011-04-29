@@ -121,20 +121,40 @@ namespace shy_guts
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_type_machine_state_method_on_entry
+        static void guts_type_machine_state_on_entry_declare
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_type_machine_state_method_on_exit
+        static void guts_type_machine_state_on_entry_implement
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+            , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_on_exit_declare
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_type_machine_state_method_on_input
+        static void guts_type_machine_state_on_exit_implement
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+            , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_on_input_declare
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void guts_type_machine_state_method_transition
+        static void guts_type_machine_state_on_input_implement
             ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+            , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_transition_declare
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_transition_implement
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
     }
@@ -897,6 +917,77 @@ void shy_guts :: hpp :: guts_type_machine_state_implement
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
+    so_called_std_string guts_type_machine_state_on_entry_implement ;
+    so_called_std_string guts_type_machine_state_on_exit_implement ;
+    so_called_std_string guts_type_machine_state_on_input_implement ;
+    so_called_std_string guts_type_machine_state_transition_implement ;
+
+    shy_guts :: hpp :: guts_type_machine_state_on_entry_implement ( guts_type_machine_state_on_entry_implement , machine_i , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_on_exit_implement ( guts_type_machine_state_on_exit_implement , machine_i , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_on_input_implement ( guts_type_machine_state_on_input_implement , machine_i , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_transition_implement ( guts_type_machine_state_transition_implement , machine_i , state_i ) ;
+
+    result . clear ( ) ;
+
+    if ( ! guts_type_machine_state_on_entry_implement . empty ( ) )
+    {
+        if ( ! result . empty ( ) )
+            result += so_called_loadable_generator_consts :: new_line ;
+        result += guts_type_machine_state_on_entry_implement ;
+    }
+
+    if ( ! guts_type_machine_state_on_exit_implement . empty ( ) )
+    {
+        if ( ! result . empty ( ) )
+            result += so_called_loadable_generator_consts :: new_line ;
+        result += guts_type_machine_state_on_exit_implement ;
+    }
+
+    if ( ! guts_type_machine_state_on_input_implement . empty ( ) )
+    {
+        if ( ! result . empty ( ) )
+            result += so_called_loadable_generator_consts :: new_line ;
+        result += guts_type_machine_state_on_input_implement ;
+    }
+
+    if ( ! guts_type_machine_state_transition_implement . empty ( ) )
+    {
+        if ( ! result . empty ( ) )
+            result += so_called_loadable_generator_consts :: new_line ;
+        result += guts_type_machine_state_transition_implement ;
+    }
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_on_entry_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
+{
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_on_exit_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
+{
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_on_input_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
+{
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_transition_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
+{
 }
 
 void shy_guts :: hpp :: behaviour_tick_all_fsms
@@ -1153,10 +1244,10 @@ void shy_guts :: hpp :: guts_type_machine_state_declare
     so_called_std_string on_input ;
     so_called_std_string transition ;
 
-    shy_guts :: hpp :: guts_type_machine_state_method_on_entry ( on_entry , state_i ) ;
-    shy_guts :: hpp :: guts_type_machine_state_method_on_exit ( on_exit , state_i ) ;
-    shy_guts :: hpp :: guts_type_machine_state_method_on_input ( on_input , state_i ) ;
-    shy_guts :: hpp :: guts_type_machine_state_method_transition ( transition , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_on_entry_declare ( on_entry , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_on_exit_declare ( on_exit , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_on_input_declare ( on_input , state_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_transition_declare ( transition , state_i ) ;
 
     so_called_std_string methods ;
     methods = on_entry + on_exit + on_input + transition ;
@@ -1176,7 +1267,7 @@ void shy_guts :: hpp :: guts_type_machine_state_declare
         ) ;
 }
 
-void shy_guts :: hpp :: guts_type_machine_state_method_on_entry
+void shy_guts :: hpp :: guts_type_machine_state_on_entry_declare
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
@@ -1185,7 +1276,7 @@ void shy_guts :: hpp :: guts_type_machine_state_method_on_entry
         shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_declare ( result ) ;
 }
 
-void shy_guts :: hpp :: guts_type_machine_state_method_on_exit
+void shy_guts :: hpp :: guts_type_machine_state_on_exit_declare
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
@@ -1194,7 +1285,7 @@ void shy_guts :: hpp :: guts_type_machine_state_method_on_exit
         shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_declare ( result ) ;
 }
 
-void shy_guts :: hpp :: guts_type_machine_state_method_on_input
+void shy_guts :: hpp :: guts_type_machine_state_on_input_declare
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
@@ -1203,7 +1294,7 @@ void shy_guts :: hpp :: guts_type_machine_state_method_on_input
         shy_guts :: consts :: hpp_guts_type_machine_state_on_input_declare ( result ) ;
 }
 
-void shy_guts :: hpp :: guts_type_machine_state_method_transition
+void shy_guts :: hpp :: guts_type_machine_state_transition_declare
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
