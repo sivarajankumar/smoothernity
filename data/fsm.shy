@@ -146,7 +146,7 @@ system logic_application
         state performing
             on entry
                 do logic_amusement_launch_permit
-            on { logic_application_render } { logic_application_render }
+            on { logic_application_render } { logic_application_render logic_application_render }
                 do logic_amusement_render
                 do logic_amusement_render
             on { logic_application_update }

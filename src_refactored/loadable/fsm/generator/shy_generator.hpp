@@ -1339,6 +1339,71 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
     , const so_called_type_loadable_fsm_content_condition_group_container & condition_group_container
     )
 {
+    for ( so_called_type_loadable_fsm_content_condition_group_container :: const_iterator condition_group_i = condition_group_container . begin ( )
+        ; condition_group_i != condition_group_container . end ( )
+        ; ++ condition_group_i
+        )
+    {
+        so_called_std_bool group_first = true ;
+        so_called_std_bool group_last = true ;
+        so_called_std_bool group_single = true ;
+
+        group_first &= condition_group_i == condition_group_container . begin ( ) ;
+        group_last &= condition_group_i == condition_group_container . end ( ) - 1 ;
+        group_single &= group_first ;
+        group_single &= group_last ;
+
+        for ( so_called_type_loadable_fsm_content_condition_input_container :: const_iterator condition_input_i = condition_group_i -> inputs . begin ( )
+            ; condition_input_i != condition_group_i -> inputs . end ( )
+            ; ++ condition_input_i
+            )
+        {
+            so_called_std_bool condition_first = true ;
+            so_called_std_bool condition_last = true ;
+            so_called_std_bool condition_single = true ;
+
+            condition_first &= condition_input_i == condition_group_i -> inputs . begin ( ) ;
+            condition_last &= condition_input_i == condition_group_i -> inputs . end ( ) - 1 ;
+            condition_last &= condition_group_i -> states . empty ( ) ;
+            condition_last &= condition_group_i -> commands . empty ( ) ;
+            condition_single &= condition_first ;
+            condition_single &= condition_last ;
+        }
+
+        for ( so_called_type_loadable_fsm_content_condition_state_container :: const_iterator condition_state_i = condition_group_i -> states . begin ( )
+            ; condition_state_i != condition_group_i -> states . end ( )
+            ; ++ condition_state_i
+            )
+        {
+            so_called_std_bool condition_first = true ;
+            so_called_std_bool condition_last = true ;
+            so_called_std_bool condition_single = true ;
+
+            condition_first &= condition_group_i -> inputs . empty ( ) ;
+            condition_first &= condition_state_i == condition_group_i -> states . begin ( ) ;
+            condition_last &= condition_state_i == condition_group_i -> states . end ( ) - 1 ;
+            condition_last &= condition_group_i -> commands . empty ( ) ;
+            condition_single &= condition_first ;
+            condition_single &= condition_last ;
+        }
+
+        for ( so_called_type_loadable_fsm_content_condition_command_container :: const_iterator condition_command_i = condition_group_i -> commands . begin ( )
+            ; condition_command_i != condition_group_i -> commands . end ( )
+            ; ++ condition_command_i
+            )
+        {
+            so_called_std_bool condition_first = true ;
+            so_called_std_bool condition_last = true ;
+            so_called_std_bool condition_single = true ;
+
+            condition_first &= condition_group_i -> inputs . empty ( ) ;
+            condition_first &= condition_group_i -> states . empty ( ) ;
+            condition_first &= condition_command_i == condition_group_i -> commands . begin ( ) ;
+            condition_last &= condition_command_i == condition_group_i -> commands . end ( ) - 1 ;
+            condition_single &= condition_first ;
+            condition_single &= condition_last ;
+        }
+    }
 }
 
 void shy_guts :: hpp :: guts_type_machine_state_on_input_if_implement
