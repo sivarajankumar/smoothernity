@@ -205,16 +205,6 @@ namespace shy_guts
         static type_system_machine_action_command_name_container system_machine_action_command_name_container ;
         static type_system_machine_condition_state_name_container system_machine_condition_state_name_container ;
 
-        static void save_system_machine_action_command
-            ( so_called_std_string
-            , so_called_std_string
-            , so_called_std_string
-            ) ;
-        static void save_system_machine_condition_state
-            ( so_called_std_string
-            , so_called_std_string
-            , so_called_std_string
-            ) ;
         static void get_machine_action_command_names 
             ( shy_guts :: type_action_command_name_container & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
@@ -224,6 +214,16 @@ namespace shy_guts
             ( shy_guts :: type_condition_state_name_container & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+            ) ;
+        static void save_system_machine_action_command
+            ( so_called_std_string
+            , so_called_std_string
+            , so_called_std_string
+            ) ;
+        static void save_system_machine_condition_state
+            ( so_called_std_string
+            , so_called_std_string
+            , so_called_std_string
             ) ;
     }
 
@@ -1298,7 +1298,6 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_on_input_implement
 
     shy_guts :: hpp :: guts_type_machine_state_on_input_actions_implement ( actions , system_i , on_input_i ) ;
     shy_guts :: hpp :: guts_type_machine_state_on_input_conditions_implement ( conditions , on_input_i ) ;
- 
     shy_guts :: hpp :: guts_type_machine_state_on_input_if_implement ( result , on_input_i , conditions , actions ) ;
 }
 
@@ -1349,6 +1348,19 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_if_implement
     , so_called_std_string actions
     )
 {
+    if ( on_input_i -> condition_groups . size ( ) == 1 )
+    {
+        so_called_std_int32_t count = 0 ;
+        count += so_called_std_int32_t ( on_input_i -> condition_groups . begin ( ) -> inputs . size ( ) ) ;
+        count += so_called_std_int32_t ( on_input_i -> condition_groups . begin ( ) -> states . size ( ) ) ;
+        count += so_called_std_int32_t ( on_input_i -> condition_groups . begin ( ) -> commands . size ( ) ) ;
+        if ( count == 1 )
+            shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim_implement ( result , conditions , actions ) ;
+        else
+            shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_fat_implement ( result , conditions , actions ) ;
+    }
+    else
+        shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_fat_implement ( result , conditions , actions ) ;
 }
 
 void shy_guts :: hpp :: guts_type_machine_state_transition_implement
