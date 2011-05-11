@@ -350,13 +350,8 @@ void shy_guts :: type_machine_amusement_generator_state_generating :: on_input (
 
 so_called_type_common_engine_fsm_state & shy_guts :: type_machine_amusement_generator_state_generating :: transition ( )
 {
-    if
-    (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_amusement_created )
-    || so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_amusement_created )
-    )
-    {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_amusement_created ) )
         return shy_guts :: states :: amusement_generator_state_finished ;
-    }
     else
         return so_called_type_common_engine_fsm_state :: transition ( ) ;
 }
@@ -364,13 +359,8 @@ so_called_type_common_engine_fsm_state & shy_guts :: type_machine_amusement_gene
 so_called_type_common_engine_fsm_state & shy_guts :: type_machine_amusement_generator_state_initial :: transition ( )
 {
     if
-    (  (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . stage_amusement_enabled )
-       && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_amusement_generator_command_start )
-       && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_amusement_generator_command_start )
-       )
-    || (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . stage_amusement_enabled )
-       && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_amusement_generator_command_start )
-       )
+    (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . stage_amusement_enabled )
+    && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_amusement_generator_command_start )
     )
     {
         return shy_guts :: states :: amusement_generator_state_generating ;
@@ -413,21 +403,10 @@ void shy_guts :: type_machine_amusement_performer_state_performing :: on_entry (
 
 void shy_guts :: type_machine_amusement_performer_state_performing :: on_input ( )
 {
-    if
-    (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_render )
-    || (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_render )
-       && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_render )
-       )
-    )
-    {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_render ) )
         so_called_common_logic_application_fsm_actions :: logic_amusement_render ( ) ;
-        so_called_common_logic_application_fsm_actions :: logic_amusement_render ( ) ;
-    }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_update ) )
-    {
         so_called_common_logic_application_fsm_actions :: logic_amusement_update ( ) ;
-        so_called_common_logic_application_fsm_actions :: logic_amusement_update ( ) ;
-    }
 }
 
 so_called_type_common_engine_fsm_state & shy_guts :: type_machine_amusement_performer_state_performing :: transition ( )

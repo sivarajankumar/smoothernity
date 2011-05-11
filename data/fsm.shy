@@ -125,7 +125,7 @@ system logic_application
     machine amusement_generator
         state initial
             to generating
-                if { ( command start ) ( command start ) stage_amusement_enabled } { ( command start ) stage_amusement_enabled }
+                if { ( command start ) stage_amusement_enabled }
             to finished
                 if { ( command start ) stage_amusement_disabled }
         state generating
@@ -134,7 +134,7 @@ system logic_application
             on { logic_application_update }
                 do logic_amusement_update
             to finished
-                if { logic_amusement_created } { logic_amusement_created }
+                if { logic_amusement_created }
         state finished
 
     machine amusement_performer
@@ -146,11 +146,9 @@ system logic_application
         state performing
             on entry
                 do logic_amusement_launch_permit
-            on { logic_application_render } { logic_application_render logic_application_render }
-                do logic_amusement_render
+            on { logic_application_render }
                 do logic_amusement_render
             on { logic_application_update }
-                do logic_amusement_update
                 do logic_amusement_update
             to finished
                 if { logic_amusement_finished }
