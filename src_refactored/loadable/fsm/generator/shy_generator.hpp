@@ -1750,7 +1750,7 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
                     ( transition
                     , conditions
                     , machine_i -> first
-                    , state_i -> first
+                    , transition_i -> state
                     ) ;
             }
             else
@@ -1759,7 +1759,7 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
                     ( transition
                     , conditions
                     , machine_i -> first
-                    , state_i -> first
+                    , transition_i -> state
                     ) ;
             }
         }
@@ -1771,7 +1771,7 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
                     ( transition
                     , conditions
                     , machine_i -> first
-                    , state_i -> first
+                    , transition_i -> state
                     ) ;
             }
             else
@@ -1780,7 +1780,7 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
                     ( transition
                     , conditions
                     , machine_i -> first
-                    , state_i -> first
+                    , transition_i -> state
                     ) ;
             }
         }
