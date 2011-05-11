@@ -66,6 +66,7 @@ namespace shy_guts
         static void hpp_guts_type_machine_state_on_input_if_slim_multi_actions ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_input_if_slim_single_action ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_input_implement ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_transition_conditionless ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_transition_declare ( so_called_std_string & ) ;
         static void hpp_guts_type_machine_state_transition_else ( so_called_std_string & result ) ;
         static void hpp_guts_type_machine_state_transition_if_fat_first ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
@@ -1071,6 +1072,20 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_slim_next
     result += " ;\n" ;
 }
 
+void shy_guts :: consts :: hpp_guts_type_machine_state_transition_conditionless 
+    ( so_called_std_string & result
+    , so_called_std_string machine
+    , so_called_std_string state
+    )
+{
+    result . clear ( ) ;
+    result += "    return shy_guts :: states :: " ;
+    result += machine ;
+    result += "_state_" ;
+    result += state ;
+    result += " ;\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts_type_machine_state_transition_else ( so_called_std_string & result )
 {
     result . clear ( ) ;
@@ -1728,73 +1743,90 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
 {
     so_called_std_string all_transitions ;
 
-    for ( so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i = state_i -> second . transitions . begin ( )
-        ; transition_i != state_i -> second . transitions . end ( )
-        ; ++ transition_i
-        )
+    bool conditionless = true ;
+    conditionless &= state_i -> second . transitions . size ( ) == 1 ;
+    conditionless &= state_i -> second . transitions . begin ( ) -> condition_groups . empty ( ) ;
+    
+    if ( conditionless )
     {
-        so_called_std_string conditions ;
-        so_called_std_string transition ;
-        so_called_std_bool single_condition = false ;
-        so_called_std_bool first_transition = false ;
-
-        first_transition = transition_i == state_i -> second . transitions . begin ( ) ;
-        shy_guts :: lookup :: single_condition_single_group ( single_condition , transition_i -> condition_groups ) ;
-        shy_guts :: hpp :: guts_type_machine_state_conditions ( conditions , machine_i , transition_i -> condition_groups ) ;
-
-        if ( single_condition )
+        shy_guts :: consts :: hpp_guts_type_machine_state_transition_conditionless
+            ( all_transitions
+            , machine_i -> first
+            , state_i -> second . transitions . begin ( ) -> state
+            ) ;
+    }
+    else
+    {
+        for ( so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i = state_i -> second . transitions . begin ( )
+            ; transition_i != state_i -> second . transitions . end ( )
+            ; ++ transition_i
+            )
         {
-            if ( first_transition )
+            so_called_std_string conditions ;
+            so_called_std_string transition ;
+            so_called_std_bool single_condition = false ;
+            so_called_std_bool first_transition = false ;
+
+            first_transition = transition_i == state_i -> second . transitions . begin ( ) ;
+            shy_guts :: lookup :: single_condition_single_group ( single_condition , transition_i -> condition_groups ) ;
+            shy_guts :: hpp :: guts_type_machine_state_conditions ( conditions , machine_i , transition_i -> condition_groups ) ;
+
+            if ( single_condition )
             {
-                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_slim_first
-                    ( transition
-                    , conditions
-                    , machine_i -> first
-                    , transition_i -> state
-                    ) ;
+                if ( first_transition )
+                {
+                    shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_slim_first
+                        ( transition
+                        , conditions
+                        , machine_i -> first
+                        , transition_i -> state
+                        ) ;
+                }
+                else
+                {
+                    shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_slim_next
+                        ( transition
+                        , conditions
+                        , machine_i -> first
+                        , transition_i -> state
+                        ) ;
+                }
             }
             else
             {
-                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_slim_next
-                    ( transition
-                    , conditions
-                    , machine_i -> first
-                    , transition_i -> state
-                    ) ;
+                if ( first_transition )
+                {
+                    shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_fat_first
+                        ( transition
+                        , conditions
+                        , machine_i -> first
+                        , transition_i -> state
+                        ) ;
+                }
+                else
+                {
+                    shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_fat_next
+                        ( transition
+                        , conditions
+                        , machine_i -> first
+                        , transition_i -> state
+                        ) ;
+                }
             }
-        }
-        else
-        {
-            if ( first_transition )
-            {
-                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_fat_first
-                    ( transition
-                    , conditions
-                    , machine_i -> first
-                    , transition_i -> state
-                    ) ;
-            }
-            else
-            {
-                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_fat_next
-                    ( transition
-                    , conditions
-                    , machine_i -> first
-                    , transition_i -> state
-                    ) ;
-            }
+
+            all_transitions += transition ;
         }
 
-        all_transitions += transition ;
+        if ( ! all_transitions . empty ( ) )
+        {
+            so_called_std_string else_part ;
+            shy_guts :: consts :: hpp_guts_type_machine_state_transition_else ( else_part ) ;
+            all_transitions += else_part ;
+        }
     }
 
     if ( ! all_transitions . empty ( ) )
-    {
-        so_called_std_string else_part ;
-        shy_guts :: consts :: hpp_guts_type_machine_state_transition_else ( else_part ) ;
-        all_transitions += else_part ;
         shy_guts :: consts :: hpp_guts_type_machine_state_transition_implement ( result , machine_i -> first , state_i -> first , all_transitions ) ;
-    }
 }
 
 void shy_guts :: hpp :: behaviour_tick_all_fsms
