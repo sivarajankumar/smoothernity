@@ -158,15 +158,35 @@ namespace shy_guts
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
+        static void guts_type_machine_state_on_input_actions_implement
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator
+            , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_on_input_conditions_implement
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
+            ) ;
         static void guts_type_machine_state_on_input_declare
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_on_input_if_implement
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
+            , so_called_std_string
+            , so_called_std_string
             ) ;
         static void guts_type_machine_state_on_input_implement
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            ) ;
+        static void guts_type_machine_state_on_input_on_input_implement 
+            ( so_called_std_string &
+            , so_called_type_loadable_fsm_content_system_container :: const_iterator
+            , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
             ) ;
         static void guts_type_machine_state_transition_declare
             ( so_called_std_string &
@@ -1249,6 +1269,84 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_implement
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
+{
+    so_called_std_string all_inputs ;
+
+    for ( so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i = state_i -> second . on_input . begin ( )
+        ; on_input_i != state_i -> second . on_input . end ( )
+        ; ++ on_input_i
+        )
+    {
+        so_called_std_string single_input ;
+        shy_guts :: hpp :: guts_type_machine_state_on_input_on_input_implement ( single_input , system_i , on_input_i ) ;
+        all_inputs += single_input ;
+    }
+
+    if ( ! all_inputs . empty ( ) )
+        shy_guts :: consts :: hpp_guts_type_machine_state_on_input_implement ( result , machine_i -> first , state_i -> first , all_inputs ) ;
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_on_input_on_input_implement 
+    ( so_called_std_string & result 
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i 
+    )
+{
+    so_called_std_string actions ;
+    so_called_std_string conditions ;
+
+    shy_guts :: hpp :: guts_type_machine_state_on_input_actions_implement ( actions , system_i , on_input_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_on_input_conditions_implement ( conditions , on_input_i ) ;
+ 
+    shy_guts :: hpp :: guts_type_machine_state_on_input_if_implement ( result , on_input_i , conditions , actions ) ;
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_on_input_actions_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i
+    )
+{
+    result . clear ( ) ;
+
+    for ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i = on_input_i -> actions . actions . begin ( )
+        ; action_do_i != on_input_i -> actions . actions . end ( )
+        ; ++ action_do_i
+        )
+    {
+        so_called_std_string action_do ;
+        so_called_std_string on_input_action_do ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_action_do_implement ( action_do , system_i -> first , action_do_i -> action ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_on_input_action_implement ( on_input_action_do , action_do ) ;
+        result += on_input_action_do ;
+    }
+
+    for ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator action_command_i = on_input_i -> actions . commands . begin ( )
+        ; action_command_i != on_input_i -> actions . commands . end ( )
+        ; ++ action_command_i
+        )
+    {
+        so_called_std_string action_command ;
+        so_called_std_string on_input_action_command ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_action_command_implement ( action_command , action_command_i -> machine , action_command_i -> command ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_on_input_action_implement ( on_input_action_command , action_command ) ;
+        result += on_input_action_command ;
+    }
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_on_input_conditions_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i
+    )
+{
+}
+
+void shy_guts :: hpp :: guts_type_machine_state_on_input_if_implement
+    ( so_called_std_string & result
+    , so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i
+    , so_called_std_string conditions
+    , so_called_std_string actions
     )
 {
 }
