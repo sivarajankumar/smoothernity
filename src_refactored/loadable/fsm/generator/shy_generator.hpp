@@ -130,6 +130,16 @@ namespace shy_guts
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
+        static void guts_type_machine_state_condition_line_implement
+            ( so_called_std_string &
+            , so_called_std_string
+            , so_called_std_bool
+            , so_called_std_bool
+            , so_called_std_bool
+            , so_called_std_bool
+            , so_called_std_bool
+            , so_called_std_bool
+            ) ;
         static void guts_type_machine_state_conditions_implement
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
@@ -1379,12 +1389,53 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_actions_implement
     }
 }
 
+void shy_guts :: hpp :: guts_type_machine_state_condition_line_implement
+    ( so_called_std_string & result
+    , so_called_std_string condition
+    , so_called_std_bool group_first
+    , so_called_std_bool group_last
+    , so_called_std_bool group_single
+    , so_called_std_bool condition_first
+    , so_called_std_bool condition_last
+    , so_called_std_bool condition_single
+    )
+{
+    if ( group_single )
+    {
+        if ( condition_single )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_single_group_single ( result , condition ) ;
+        else if ( condition_first )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_first_group_single ( result , condition ) ;
+        else
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_next_group_single ( result , condition ) ;
+    }
+    else if ( group_first )
+    {
+        if ( condition_first )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_first_group_first ( result , condition ) ;
+        else if ( condition_last )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_last_group_first ( result , condition ) ;
+        else
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_next_group_first ( result , condition ) ;
+    }
+    else
+    {
+        if ( condition_first )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_first_group_next ( result , condition ) ;
+        else if ( condition_last )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_last_group_next ( result , condition ) ;
+        else
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_next_group_next ( result , condition ) ;
+    }
+}
+
 void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
     ( so_called_std_string & result
     , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
     , const so_called_type_loadable_fsm_content_condition_group_container & condition_group_container
     )
 {
+    result . clear ( ) ;
     for ( so_called_type_loadable_fsm_content_condition_group_container :: const_iterator condition_group_i = condition_group_container . begin ( )
         ; condition_group_i != condition_group_container . end ( )
         ; ++ condition_group_i
@@ -1404,6 +1455,7 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
             ; ++ condition_input_i
             )
         {
+            so_called_std_string condition_line ;
             so_called_std_string condition_input ;
             so_called_std_bool condition_first = true ;
             so_called_std_bool condition_last = true ;
@@ -1417,6 +1469,19 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
             condition_last &= condition_group_i -> commands . empty ( ) ;
             condition_single &= condition_first ;
             condition_single &= condition_last ;
+
+            shy_guts :: hpp :: guts_type_machine_state_condition_line_implement
+                ( condition_line
+                , condition_input
+                , group_first
+                , group_last
+                , group_single
+                , condition_first
+                , condition_last
+                , condition_single
+                ) ;
+
+            result += condition_line ;
         }
 
         for ( so_called_type_loadable_fsm_content_condition_state_container :: const_iterator condition_state_i = condition_group_i -> states . begin ( )
@@ -1424,6 +1489,7 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
             ; ++ condition_state_i
             )
         {
+            so_called_std_string condition_line ;
             so_called_std_string condition_state ;
             so_called_std_bool condition_first = true ;
             so_called_std_bool condition_last = true ;
@@ -1437,6 +1503,19 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
             condition_last &= condition_group_i -> commands . empty ( ) ;
             condition_single &= condition_first ;
             condition_single &= condition_last ;
+
+            shy_guts :: hpp :: guts_type_machine_state_condition_line_implement
+                ( condition_line
+                , condition_state
+                , group_first
+                , group_last
+                , group_single
+                , condition_first
+                , condition_last
+                , condition_single
+                ) ;
+
+            result += condition_line ;
         }
 
         for ( so_called_type_loadable_fsm_content_condition_command_container :: const_iterator condition_command_i = condition_group_i -> commands . begin ( )
@@ -1444,6 +1523,7 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
             ; ++ condition_command_i
             )
         {
+            so_called_std_string condition_line ;
             so_called_std_string condition_command ;
             so_called_std_bool condition_first = true ;
             so_called_std_bool condition_last = true ;
@@ -1457,6 +1537,19 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
             condition_last &= condition_command_i == condition_group_i -> commands . end ( ) - 1 ;
             condition_single &= condition_first ;
             condition_single &= condition_last ;
+
+            shy_guts :: hpp :: guts_type_machine_state_condition_line_implement
+                ( condition_line
+                , condition_command
+                , group_first
+                , group_last
+                , group_single
+                , condition_first
+                , condition_last
+                , condition_single
+                ) ;
+
+            result += condition_line ;
         }
     }
 }
