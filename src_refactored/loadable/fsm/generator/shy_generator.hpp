@@ -50,6 +50,8 @@ namespace shy_guts
         static void hpp_guts_type_machine_state_condition_next_group_first ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_condition_next_group_next ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_condition_next_group_single ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_condition_single_group_first ( so_called_std_string & , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_condition_single_group_next ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_condition_single_group_single ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_condition_state ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_entry_action_implement ( so_called_std_string & , so_called_std_string ) ;
@@ -732,6 +734,17 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_condition_next_group_firs
     result += "\n" ;
 }
 
+void shy_guts :: consts :: hpp_guts_type_machine_state_condition_single_group_first
+    ( so_called_std_string & result
+    , so_called_std_string condition
+    )
+{
+    result . clear ( ) ;
+    result += " " ;
+    result += condition ;
+    result += "\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts_type_machine_state_condition_last_group_first
     ( so_called_std_string & result
     , so_called_std_string condition
@@ -776,6 +789,17 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_condition_last_group_next
     result += condition ;
     result += "\n" ;
     result += "       )\n" ;
+}
+
+void shy_guts :: consts :: hpp_guts_type_machine_state_condition_single_group_next
+    ( so_called_std_string & result
+    , so_called_std_string condition
+    )
+{
+    result . clear ( ) ;
+    result += "    || " ;
+    result += condition ;
+    result += "\n" ;
 }
 
 void shy_guts :: consts :: hpp_guts_type_machine_state_condition_first_group_single
@@ -920,7 +944,6 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim_implemen
     result += condition ;
     result += " )\n" ;
     result += action ;
-    result += "\n" ;
 }
 
 void shy_guts :: consts :: hpp_guts_type_machine_state_transition_implement
@@ -1411,7 +1434,9 @@ void shy_guts :: hpp :: guts_type_machine_state_condition_line_implement
     }
     else if ( group_first )
     {
-        if ( condition_first )
+        if ( condition_single )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_single_group_first ( result , condition ) ;
+        else if ( condition_first )
             shy_guts :: consts :: hpp_guts_type_machine_state_condition_first_group_first ( result , condition ) ;
         else if ( condition_last )
             shy_guts :: consts :: hpp_guts_type_machine_state_condition_last_group_first ( result , condition ) ;
@@ -1420,7 +1445,9 @@ void shy_guts :: hpp :: guts_type_machine_state_condition_line_implement
     }
     else
     {
-        if ( condition_first )
+        if ( condition_single )
+            shy_guts :: consts :: hpp_guts_type_machine_state_condition_single_group_next ( result , condition ) ;
+        else if ( condition_first )
             shy_guts :: consts :: hpp_guts_type_machine_state_condition_first_group_next ( result , condition ) ;
         else if ( condition_last )
             shy_guts :: consts :: hpp_guts_type_machine_state_condition_last_group_next ( result , condition ) ;
