@@ -373,7 +373,7 @@ so_called_type_common_engine_fsm_state & shy_guts :: type_machine_amusement_gene
     {
         return shy_guts :: states :: amusement_generator_state_generating ;
     }
-    else if 
+    else if
     (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . stage_amusement_disabled )
     && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_amusement_generator_command_start )
     )
@@ -555,14 +555,14 @@ so_called_type_common_engine_fsm_state & shy_guts :: type_machine_main_menu_gene
 
 so_called_type_common_engine_fsm_state & shy_guts :: type_machine_main_menu_performer_state_initial :: transition ( )
 {
-    if 
+    if
     (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . stage_main_menu_enabled )
     && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_main_menu_performer_command_start )
     )
     {
         return shy_guts :: states :: main_menu_performer_state_performing ;
     }
-    else if 
+    else if
     (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . stage_main_menu_disabled )
     && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_main_menu_performer_command_start )
     )
