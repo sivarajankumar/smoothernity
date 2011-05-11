@@ -1733,7 +1733,59 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
         ; ++ transition_i
         )
     {
-        so_called_std_string single_transition ;
+        so_called_std_string conditions ;
+        so_called_std_string transition ;
+        so_called_std_bool single_condition = false ;
+        so_called_std_bool first_transition = false ;
+
+        first_transition = transition_i == state_i -> second . transitions . begin ( ) ;
+        shy_guts :: lookup :: single_condition_single_group ( single_condition , transition_i -> condition_groups ) ;
+        shy_guts :: hpp :: guts_type_machine_state_conditions ( conditions , machine_i , transition_i -> condition_groups ) ;
+
+        if ( single_condition )
+        {
+            if ( first_transition )
+            {
+                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_slim_first
+                    ( transition
+                    , conditions
+                    , machine_i -> first
+                    , state_i -> first
+                    ) ;
+            }
+            else
+            {
+                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_slim_next
+                    ( transition
+                    , conditions
+                    , machine_i -> first
+                    , state_i -> first
+                    ) ;
+            }
+        }
+        else
+        {
+            if ( first_transition )
+            {
+                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_fat_first
+                    ( transition
+                    , conditions
+                    , machine_i -> first
+                    , state_i -> first
+                    ) ;
+            }
+            else
+            {
+                shy_guts :: consts :: hpp_guts_type_machine_state_transition_if_fat_next
+                    ( transition
+                    , conditions
+                    , machine_i -> first
+                    , state_i -> first
+                    ) ;
+            }
+        }
+
+        all_transitions += transition ;
     }
 
     if ( ! all_transitions . empty ( ) )
