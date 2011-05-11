@@ -63,7 +63,8 @@ namespace shy_guts
         static void hpp_guts_type_machine_state_on_input_action ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_input_declare ( so_called_std_string & ) ;
         static void hpp_guts_type_machine_state_on_input_if_fat ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
-        static void hpp_guts_type_machine_state_on_input_if_slim ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_on_input_if_slim_multi_actions ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
+        static void hpp_guts_type_machine_state_on_input_if_slim_single_action ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_on_input_implement ( so_called_std_string & , so_called_std_string , so_called_std_string , so_called_std_string ) ;
         static void hpp_guts_type_machine_state_transition_declare ( so_called_std_string & ) ;
         static void hpp_guts_type_machine_state_transition_else ( so_called_std_string & result ) ;
@@ -227,6 +228,14 @@ namespace shy_guts
         static type_system_machine_action_command_name_container system_machine_action_command_name_container ;
         static type_system_machine_condition_state_name_container system_machine_condition_state_name_container ;
 
+        static void single_action 
+            ( so_called_std_bool &
+            , const so_called_type_loadable_fsm_content_actions &
+            ) ;
+        static void single_condition_single_group
+            ( so_called_std_bool &
+            , const so_called_type_loadable_fsm_content_condition_group_container &
+            ) ;
         static void get_machine_action_command_names 
             ( shy_guts :: type_action_command_name_container & 
             , so_called_type_loadable_fsm_content_system_container :: const_iterator 
@@ -938,7 +947,7 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_fat
     result += "    }\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim
+void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim_single_action
     ( so_called_std_string & result
     , so_called_std_string condition
     , so_called_std_string action
@@ -949,6 +958,21 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim
     result += condition ;
     result += " )\n" ;
     result += action ;
+}
+
+void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim_multi_actions
+    ( so_called_std_string & result
+    , so_called_std_string condition
+    , so_called_std_string actions
+    )
+{
+    result . clear ( ) ;
+    result += "    if ( " ;
+    result += condition ;
+    result += " )\n" ;
+    result += "    {\n" ;
+    result += actions ;
+    result += "    }\n" ;
 }
 
 void shy_guts :: consts :: hpp_guts_type_machine_state_transition_implement
@@ -1678,16 +1702,18 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_if
     , so_called_std_string actions
     )
 {
-    if ( on_input_i -> condition_groups . size ( ) == 1 )
+    so_called_std_bool single_condition = false ;
+    so_called_std_bool single_action = false ;
+
+    shy_guts :: lookup :: single_condition_single_group ( single_condition , on_input_i -> condition_groups ) ;
+    shy_guts :: lookup :: single_action ( single_action , on_input_i -> actions ) ;
+
+    if ( single_condition )
     {
-        so_called_std_int32_t count = 0 ;
-        count += so_called_std_int32_t ( on_input_i -> condition_groups . begin ( ) -> inputs . size ( ) ) ;
-        count += so_called_std_int32_t ( on_input_i -> condition_groups . begin ( ) -> states . size ( ) ) ;
-        count += so_called_std_int32_t ( on_input_i -> condition_groups . begin ( ) -> commands . size ( ) ) ;
-        if ( count == 1 )
-            shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim ( result , conditions , actions ) ;
+        if ( single_action )
+            shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim_single_action ( result , conditions , actions ) ;
         else
-            shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_fat ( result , conditions , actions ) ;
+            shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_slim_multi_actions ( result , conditions , actions ) ;
     }
     else
         shy_guts :: consts :: hpp_guts_type_machine_state_on_input_if_fat ( result , conditions , actions ) ;
@@ -1700,6 +1726,23 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
+    so_called_std_string all_transitions ;
+
+    for ( so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i = state_i -> second . transitions . begin ( )
+        ; transition_i != state_i -> second . transitions . end ( )
+        ; ++ transition_i
+        )
+    {
+        so_called_std_string single_transition ;
+    }
+
+    if ( ! all_transitions . empty ( ) )
+    {
+        so_called_std_string else_part ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_transition_else ( else_part ) ;
+        all_transitions += else_part ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_transition_implement ( result , machine_i -> first , state_i -> first , all_transitions ) ;
+    }
 }
 
 void shy_guts :: hpp :: behaviour_tick_all_fsms
@@ -2359,6 +2402,37 @@ void shy_guts :: prepare :: system_machine_state_transition
         )
     {
         shy_guts :: prepare :: system_machine_state_condition_group ( system_i , machine_i , state_i , condition_group_i ) ;
+    }
+}
+
+void shy_guts :: lookup :: single_action
+    ( so_called_std_bool & result
+    , const so_called_type_loadable_fsm_content_actions & actions
+    )
+{
+    so_called_std_int32_t count = 0;
+    count += so_called_std_int32_t ( actions . actions . size ( ) ) ;
+    count += so_called_std_int32_t ( actions . commands . size ( ) ) ;
+    if ( count == 1 )
+        result = so_called_std_true ;
+    else
+        result = so_called_std_false ;
+}
+
+void shy_guts :: lookup :: single_condition_single_group
+    ( so_called_std_bool & result
+    , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
+    )
+{
+    result = so_called_std_false ;
+    if ( condition_groups . size ( ) == 1 )
+    {
+        so_called_std_int32_t count = 0 ;
+        count += so_called_std_int32_t ( condition_groups . begin ( ) -> inputs . size ( ) ) ;
+        count += so_called_std_int32_t ( condition_groups . begin ( ) -> states . size ( ) ) ;
+        count += so_called_std_int32_t ( condition_groups . begin ( ) -> commands . size ( ) ) ;
+        if ( count == 1 )
+            result = so_called_std_true ;
     }
 }
 

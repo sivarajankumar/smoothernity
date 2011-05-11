@@ -422,7 +422,10 @@ void shy_guts :: type_machine_amusement_performer_state_performing :: on_input (
         so_called_common_logic_application_fsm_actions :: logic_amusement_render ( ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_update ) )
+    {
         so_called_common_logic_application_fsm_actions :: logic_amusement_update ( ) ;
+        so_called_common_logic_application_fsm_actions :: logic_amusement_update ( ) ;
+    }
 }
 
 so_called_type_common_engine_fsm_state & shy_guts :: type_machine_amusement_performer_state_performing :: transition ( )
