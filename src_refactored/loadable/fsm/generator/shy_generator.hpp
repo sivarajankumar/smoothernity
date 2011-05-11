@@ -127,6 +127,10 @@ namespace shy_guts
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
             ) ;
+        static void guts_type_machine_state_conditions_implement
+            ( so_called_std_string &
+            , const so_called_type_loadable_fsm_content_condition_group_container &
+            ) ;
         static void guts_type_machine_state_declare
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
@@ -161,10 +165,6 @@ namespace shy_guts
         static void guts_type_machine_state_on_input_actions_implement
             ( so_called_std_string &
             , so_called_type_loadable_fsm_content_system_container :: const_iterator
-            , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
-            ) ;
-        static void guts_type_machine_state_on_input_conditions_implement
-            ( so_called_std_string &
             , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
             ) ;
         static void guts_type_machine_state_on_input_declare
@@ -1297,7 +1297,7 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_on_input_implement
     so_called_std_string conditions ;
 
     shy_guts :: hpp :: guts_type_machine_state_on_input_actions_implement ( actions , system_i , on_input_i ) ;
-    shy_guts :: hpp :: guts_type_machine_state_on_input_conditions_implement ( conditions , on_input_i ) ;
+    shy_guts :: hpp :: guts_type_machine_state_conditions_implement ( conditions , on_input_i -> condition_groups ) ;
     shy_guts :: hpp :: guts_type_machine_state_on_input_if_implement ( result , on_input_i , conditions , actions ) ;
 }
 
@@ -1334,9 +1334,9 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_actions_implement
     }
 }
 
-void shy_guts :: hpp :: guts_type_machine_state_on_input_conditions_implement
+void shy_guts :: hpp :: guts_type_machine_state_conditions_implement
     ( so_called_std_string & result
-    , so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i
+    , const so_called_type_loadable_fsm_content_condition_group_container & condition_group_container
     )
 {
 }
