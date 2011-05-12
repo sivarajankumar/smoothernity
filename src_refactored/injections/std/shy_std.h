@@ -9,7 +9,6 @@
     #include <string>
     #include <vector>
 
-    #define so_called_std_true true
     #define so_called_std_vector std :: vector
 
     typedef bool so_called_std_bool ;

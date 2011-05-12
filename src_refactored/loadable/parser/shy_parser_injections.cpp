@@ -9,6 +9,7 @@
     #include "../../injections/std/isalpha/shy_isalpha.h"
     #include "../../injections/std/isdigit/shy_isdigit.h"
     #include "../../injections/std/isspace/shy_isspace.h"
+    #include "../../injections/std/true/shy_true.h"
 
     #include "./shy_parser.hpp"
 
