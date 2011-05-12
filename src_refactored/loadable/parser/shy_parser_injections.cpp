@@ -5,6 +5,7 @@
 
     #include "./shy_parser_injections.h"
 
+    #include "../../injections/std/bool/shy_bool.h"
     #include "../../injections/std/false/shy_false.h"
     #include "../../injections/std/isalpha/shy_isalpha.h"
     #include "../../injections/std/isdigit/shy_isdigit.h"

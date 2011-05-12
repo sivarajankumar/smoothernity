@@ -7,6 +7,7 @@
 
     #include "./shy_generator_injections.h"
 
+    #include "../../../injections/std/bool/shy_bool.h"
     #include "../../../injections/std/false/shy_false.h"
     #include "../../../injections/std/true/shy_true.h"
 

@@ -8,7 +8,6 @@
     #include <stdint.h>
     #include <string>
 
-    typedef bool so_called_std_bool ;
     typedef char so_called_std_char ;
     typedef int32_t so_called_std_int32_t ;
     typedef std :: istringstream so_called_std_istringstream ;
