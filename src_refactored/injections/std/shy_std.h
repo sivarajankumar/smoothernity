@@ -11,7 +11,6 @@
     #include <string>
     #include <vector>
 
-    #define so_called_std_isspace std :: isspace
     #define so_called_std_map std :: map
     #define so_called_std_set std :: set
     #define so_called_std_true true
