@@ -12,7 +12,6 @@
     #include <string>
     #include <vector>
 
-    #define so_called_std_cout std :: cout
     #define so_called_std_endl std :: endl
     #define so_called_std_false false
     #define so_called_std_getline std :: getline
