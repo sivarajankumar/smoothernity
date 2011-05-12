@@ -12,6 +12,7 @@
     #include "../../injections/std/cerr/shy_cerr.h"
     #include "../../injections/std/cin/shy_cin.h"
     #include "../../injections/std/cout/shy_cout.h"
+    #include "../../injections/std/endl/shy_endl.h"
 
     #include "./shy_loader.hpp"
 

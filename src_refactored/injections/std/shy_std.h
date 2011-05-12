@@ -3,7 +3,6 @@
 
 #ifdef shy_build_loadable_way
 
-    #include <iostream>
     #include <locale>
     #include <map>
     #include <set>
@@ -12,7 +11,6 @@
     #include <string>
     #include <vector>
 
-    #define so_called_std_endl std :: endl
     #define so_called_std_false false
     #define so_called_std_getline std :: getline
     #define so_called_std_isalpha std :: isalpha
