@@ -9,6 +9,8 @@
     #include "../generator/shy_generator_injections.h"
     #include "../parser/shy_parser_injections.h"
 
+    #include "../../injections/std/cerr/shy_cerr.h"
+
     #include "./shy_loader.hpp"
 
 #endif
