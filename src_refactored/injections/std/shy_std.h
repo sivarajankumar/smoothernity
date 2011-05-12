@@ -11,7 +11,6 @@
     #include <string>
     #include <vector>
 
-    #define so_called_std_isalpha std :: isalpha
     #define so_called_std_isdigit std :: isdigit
     #define so_called_std_isspace std :: isspace
     #define so_called_std_map std :: map
