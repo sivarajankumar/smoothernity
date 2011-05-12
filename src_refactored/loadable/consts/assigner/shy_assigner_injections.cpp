@@ -5,6 +5,9 @@
     #include "../../../injections/platform/math/shy_math.h"
 
     #include "./shy_assigner_injections.h"
+
+    #include "../../../injections/std/int32_t/shy_int32_t.h"
+
     #include "./shy_assigner.hpp"
 
 #endif
