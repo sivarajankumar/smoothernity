@@ -10,6 +10,7 @@
     #include "../parser/shy_parser_injections.h"
 
     #include "../../injections/std/cerr/shy_cerr.h"
+    #include "../../injections/std/cin/shy_cin.h"
 
     #include "./shy_loader.hpp"
 
