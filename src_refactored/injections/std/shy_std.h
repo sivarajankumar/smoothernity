@@ -4,13 +4,11 @@
 #ifdef shy_build_loadable_way
 
     #include <locale>
-    #include <set>
     #include <sstream>
     #include <stdint.h>
     #include <string>
     #include <vector>
 
-    #define so_called_std_set std :: set
     #define so_called_std_true true
     #define so_called_std_vector std :: vector
 
