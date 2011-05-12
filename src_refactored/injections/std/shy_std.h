@@ -11,7 +11,6 @@
     #include <string>
     #include <vector>
 
-    #define so_called_std_false false
     #define so_called_std_getline std :: getline
     #define so_called_std_isalpha std :: isalpha
     #define so_called_std_isdigit std :: isdigit

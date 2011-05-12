@@ -6,6 +6,9 @@
     #include "../../generator/python/shy_python_injections.h"
 
     #include "./shy_generator_injections.h"
+
+    #include "../../../injections/std/false/shy_false.h"
+
     #include "./shy_generator.hpp"
 
 #endif
