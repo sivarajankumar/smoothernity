@@ -7,9 +7,6 @@
     #include <sstream>
     #include <stdint.h>
     #include <string>
-    #include <vector>
-
-    #define so_called_std_vector std :: vector
 
     typedef bool so_called_std_bool ;
     typedef char so_called_std_char ;
