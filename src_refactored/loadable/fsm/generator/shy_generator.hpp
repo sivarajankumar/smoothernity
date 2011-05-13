@@ -9,6 +9,8 @@ namespace shy_guts
 
     namespace consts
     {
+        static void h_contents ( so_called_std_string & , so_called_std_string ) ;
+        static void h_path ( so_called_std_string & , so_called_std_string ) ;
         static void hpp_behaviour_determine_behaviour_inputs_change ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
         static void hpp_behaviour_determine_behaviour_inputs_change_and ( so_called_std_string & ) ;
         static void hpp_behaviour_determine_behaviour_inputs_change_condition_command ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
@@ -77,6 +79,8 @@ namespace shy_guts
         static void hpp_guts_type_machine_state_public ( so_called_std_string & ) ;
         static void hpp_guts_variables ( so_called_std_string & ) ;
         static void hpp_path ( so_called_std_string & , so_called_std_string ) ;
+        static void injections_h_contents ( so_called_std_string & , so_called_std_string ) ;
+        static void injections_h_path ( so_called_std_string & , so_called_std_string ) ;
         static void injections_hpp_contents ( so_called_std_string & , so_called_std_string ) ;
         static void injections_hpp_path ( so_called_std_string & , so_called_std_string ) ;
     }
@@ -340,7 +344,7 @@ void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )\n" ;
+    result += "_fsm_behaviour_static :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )\n" ;
     result += "{\n" ;
     result += "    if ( " ;
     result += conditions ;
@@ -409,7 +413,7 @@ void shy_guts :: consts :: hpp_behaviour_init
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: init ( )\n" ;
+    result += "_fsm_behaviour_static :: init ( )\n" ;
     result += "{\n" ;
     result += "    so_called_platform_pointer :: bind\n" ;
     result += "        ( shy_guts :: state_environment :: behaviour_inputs\n" ;
@@ -446,7 +450,7 @@ void shy_guts :: consts :: hpp_behaviour_is_fsm_running
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: is_fsm_running ( so_called_type_platform_math_num_whole & result )\n" ;
+    result += "_fsm_behaviour_static :: is_fsm_running ( so_called_type_platform_math_num_whole & result )\n" ;
     result += "{\n" ;
     result += "    result = shy_guts :: fsm_running ;\n" ;
     result += "}\n" ;
@@ -461,7 +465,7 @@ void shy_guts :: consts :: hpp_behaviour_recalc_current_behaviour_inputs
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: recalc_current_behaviour_inputs ( )\n" ;
+    result += "_fsm_behaviour_static :: recalc_current_behaviour_inputs ( )\n" ;
     result += "{\n" ;
     result += checkers ;
     result += "}\n" ;
@@ -500,7 +504,7 @@ void shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: reset_behaviour_input_events ( )\n" ;
+    result += "_fsm_behaviour_static :: reset_behaviour_input_events ( )\n" ;
     result += "{\n" ;
     result += resetters ;
     result += "}\n" ;
@@ -528,7 +532,7 @@ void shy_guts :: consts :: hpp_behaviour_run_fsm_begin
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: run_fsm_begin ( )\n" ;
+    result += "_fsm_behaviour_static :: run_fsm_begin ( )\n" ;
     result += "{\n" ;
     result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , true ) ;\n" ;
     result += "}\n" ;
@@ -542,7 +546,7 @@ void shy_guts :: consts :: hpp_behaviour_run_fsm_end
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: run_fsm_end ( )\n" ;
+    result += "_fsm_behaviour_static :: run_fsm_end ( )\n" ;
     result += "{\n" ;
     result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , false ) ;\n" ;
     result += "}\n" ;
@@ -556,7 +560,7 @@ void shy_guts :: consts :: hpp_behaviour_set_inputs
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += "_fsm_behaviour_static :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_" ;
     result += system ;
     result += "_fsm_inputs > inputs )\n" ;
     result += "{\n" ;
@@ -573,7 +577,7 @@ void shy_guts :: consts :: hpp_behaviour_tick_all_fsms
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: tick_all_fsms ( )\n" ;
+    result += "_fsm_behaviour_static :: tick_all_fsms ( )\n" ;
     result += "{\n" ;
     result += tickers ;
     result += "}\n" ;
@@ -598,7 +602,7 @@ void shy_guts :: consts :: hpp_behaviour_update_fixed_behaviour_inputs
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour :: update_fixed_behaviour_inputs ( )\n" ;
+    result += "_fsm_behaviour_static :: update_fixed_behaviour_inputs ( )\n" ;
     result += "{\n" ;
     result += "    shy_guts :: fixed_behaviour_inputs = shy_guts :: current_behaviour_inputs ;\n" ;
     result += "}\n" ;
@@ -1229,22 +1233,88 @@ void shy_guts :: consts :: hpp_guts_variables ( so_called_std_string & result )
     result += "    static type_behaviour_inputs fixed_behaviour_inputs ;\n" ;
 }
 
+void shy_guts :: consts :: injections_h_path ( so_called_std_string & path , so_called_std_string system )
+{
+    path . clear ( ) ;
+    path += system ;
+    path += "_fsm_behaviour_static/shy_" ;
+    path += system ;
+    path += "_fsm_behaviour_static_injections.h" ;
+}
+
 void shy_guts :: consts :: injections_hpp_path ( so_called_std_string & path , so_called_std_string system )
 {
     path . clear ( ) ;
     path += system ;
-    path += "_fsm_behaviour/shy_" ;
+    path += "_fsm_behaviour_static/shy_" ;
     path += system ;
-    path += "_fsm_behaviour_injections.hpp" ;
+    path += "_fsm_behaviour_static_injections.hpp" ;
+}
+
+void shy_guts :: consts :: h_path ( so_called_std_string & path , so_called_std_string system )
+{
+    path . clear ( ) ;
+    path += system ;
+    path += "_fsm_behaviour_static/shy_" ;
+    path += system ;
+    path += "_fsm_behaviour_static.h" ;
 }
 
 void shy_guts :: consts :: hpp_path ( so_called_std_string & path , so_called_std_string system )
 {
     path . clear ( ) ;
     path += system ;
-    path += "_fsm_behaviour/shy_" ;
+    path += "_fsm_behaviour_static/shy_" ;
     path += system ;
-    path += "_fsm_behaviour.hpp" ;
+    path += "_fsm_behaviour_static.hpp" ;
+}
+
+void shy_guts :: consts :: h_contents ( so_called_std_string & result , so_called_std_string system )
+{
+    result . clear ( ) ;
+    result += "class shy_common_" ;
+    result += system ;
+    result += "_fsm_behaviour_static\n" ;
+    result += "{\n" ;
+    result += "public :\n" ;
+    result += "    static void determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & ) ;\n" ;
+    result += "    static void init ( ) ;\n" ;
+    result += "    static void is_fsm_running ( so_called_type_platform_math_num_whole & ) ;\n" ;
+    result += "    static void recalc_current_behaviour_inputs ( ) ;\n" ;
+    result += "    static void reset_behaviour_input_events ( ) ;\n" ;
+    result += "    static void run_fsm_begin ( ) ;\n" ;
+    result += "    static void run_fsm_end ( ) ;\n" ;
+    result += "    static void set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += system ;
+    result += "_fsm_inputs > ) ;\n" ;
+    result += "    static void tick_all_fsms ( ) ;\n" ;
+    result += "    static void update_fixed_behaviour_inputs ( ) ;\n" ;
+    result += "} ;\n" ;
+}
+
+void shy_guts :: consts :: injections_h_contents ( so_called_std_string & result , so_called_std_string system )
+{
+    result . clear ( ) ;
+    result += "#ifndef _shy_common_autogenerated_" ;
+    result += system ;
+    result += "_fsm_behaviour_static_injections_included\n" ;
+    result += "#define _shy_common_autogenerated_" ;
+    result += system ;
+    result += "_fsm_behaviour_static_injections_included\n" ;
+    result += "\n" ;
+    result += "#include \"../../../injections/platform/pointer/type/data/shy_data.h\"\n" ;
+    result += "\n" ;
+    result += "#include \"./shy_" ;
+    result += system ;
+    result += "_fsm_behaviour_static.h\"\n" ;
+    result += "\n" ;
+    result += "typedef shy_common_" ;
+    result += system ;
+    result += "_fsm_behaviour_static so_called_common_" ;
+    result += system ;
+    result += "_fsm_behaviour_static ;\n" ;
+    result += "\n" ;
+    result += "#endif\n" ;
 }
 
 void shy_guts :: consts :: injections_hpp_contents ( so_called_std_string & result , so_called_std_string system )
@@ -1256,7 +1326,7 @@ void shy_guts :: consts :: injections_hpp_contents ( so_called_std_string & resu
     result += "\n" ;
     result += "#include \"./shy_" ;
     result += system ;
-    result += "_fsm_behaviour.hpp\"\n" ;
+    result += "_fsm_behaviour_static.hpp\"\n" ;
 }
 
 void shy_guts :: hpp :: contents 
@@ -2569,27 +2639,49 @@ void shy_loadable_fsm_generator :: generate ( so_called_std_string & result )
         )
     {
         so_called_std_string system_name ;
+        so_called_std_string fsm_h_path ;
         so_called_std_string fsm_hpp_path ;
+        so_called_std_string fsm_injections_h_path ;
         so_called_std_string fsm_injections_hpp_path ;
+        so_called_std_string generate_fsm_h ;
         so_called_std_string generate_fsm_hpp ;
+        so_called_std_string generate_fsm_injections_h ;
         so_called_std_string generate_fsm_injections_hpp ;
+        so_called_std_string fsm_h_contents ;
         so_called_std_string fsm_hpp_contents ;
+        so_called_std_string fsm_injections_h_contents ;
         so_called_std_string fsm_injections_hpp_contents ;
 
         system_name = system_i -> first ;
 
+        shy_guts :: consts :: h_path
+            ( fsm_h_path
+            , system_name
+            ) ;
         shy_guts :: consts :: hpp_path
             ( fsm_hpp_path 
             , system_name 
+            ) ;
+        shy_guts :: consts :: injections_h_path
+            ( fsm_injections_h_path
+            , system_name
             ) ;
         shy_guts :: consts :: injections_hpp_path
             ( fsm_injections_hpp_path 
             , system_name 
             ) ;
 
+        shy_guts :: consts :: h_contents
+            ( fsm_h_contents
+            , system_name
+            ) ;
         shy_guts :: hpp :: contents
             ( fsm_hpp_contents
             , system_i
+            ) ;
+        shy_guts :: consts :: injections_h_contents
+            ( fsm_injections_h_contents
+            , system_name
             ) ;
         shy_guts :: consts :: injections_hpp_contents
             ( fsm_injections_hpp_contents
@@ -2597,9 +2689,19 @@ void shy_loadable_fsm_generator :: generate ( so_called_std_string & result )
             ) ;
 
         so_called_loadable_generator_python :: generate_file 
+            ( generate_fsm_h 
+            , so_called_loadable_generator_consts :: autogenerated_folder_path + fsm_h_path 
+            , fsm_h_contents 
+            ) ;
+        so_called_loadable_generator_python :: generate_file 
             ( generate_fsm_hpp 
             , so_called_loadable_generator_consts :: autogenerated_folder_path + fsm_hpp_path 
             , fsm_hpp_contents 
+            ) ;
+        so_called_loadable_generator_python :: generate_file 
+            ( generate_fsm_injections_h 
+            , so_called_loadable_generator_consts :: autogenerated_folder_path + fsm_injections_h_path 
+            , fsm_injections_h_contents 
             ) ;
         so_called_loadable_generator_python :: generate_file 
             ( generate_fsm_injections_hpp 
@@ -2607,7 +2709,9 @@ void shy_loadable_fsm_generator :: generate ( so_called_std_string & result )
             , fsm_injections_hpp_contents 
             ) ;
 
+        result += generate_fsm_h ;
         result += generate_fsm_hpp ;
+        result += generate_fsm_injections_h ;
         result += generate_fsm_injections_hpp ;
     }
 }
