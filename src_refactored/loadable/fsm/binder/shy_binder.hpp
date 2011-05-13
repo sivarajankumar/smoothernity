@@ -11,10 +11,10 @@ void shy_loadable_fsm_binder :: bind_system ( const so_called_std_char * name )
     shy_guts :: current_system = & ( ( * system_container ) [ name ] ) ;
 }
 
-void shy_loadable_fsm_binder :: bind_input ( const so_called_std_char * name )
+void shy_loadable_fsm_binder :: bind_input ( const so_called_std_char * name , so_called_type_loadable_fsm_content_input_binding binding )
 {
     if ( shy_guts :: current_system )
-        shy_guts :: current_system -> inputs . insert ( name ) ;
+        shy_guts :: current_system -> inputs [ name ] = binding ;
 }
 
 void shy_loadable_fsm_binder :: bind_action ( const so_called_std_char * name )

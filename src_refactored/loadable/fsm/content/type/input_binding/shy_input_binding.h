@@ -1,0 +1,2 @@
+typedef so_called_type_platform_math_num_whole so_called_type_loadable_fsm_content_arbitrary_inputs :: * shy_type_loadable_fsm_content_input_binding ;
+

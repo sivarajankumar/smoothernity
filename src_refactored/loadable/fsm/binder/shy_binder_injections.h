@@ -1,6 +1,7 @@
 #ifndef _shy_loadable_fsm_binder_injections_included
 #define _shy_loadable_fsm_binder_injections_included
 
+#include "../content/type/input_binding/shy_input_binding_injections.h"
 #include "../../../injections/std/char/shy_char.h"
 
 #include "./shy_binder.h"
