@@ -1,4 +1,4 @@
-class shy_common_logic_application_fsm_behaviour
+class shy_common_logic_application_fsm_behaviour_static
 {
 public :
     static void determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & ) ;
@@ -12,3 +12,4 @@ public :
     static void tick_all_fsms ( ) ;
     static void update_fixed_behaviour_inputs ( ) ;
 } ;
+

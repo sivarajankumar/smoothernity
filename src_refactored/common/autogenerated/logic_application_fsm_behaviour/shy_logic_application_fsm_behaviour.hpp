@@ -766,7 +766,7 @@ void shy_guts :: behaviour_actions :: title_performer_command_start ( )
     so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_title_performer_command_start , true ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )
+void so_called_common_logic_application_fsm_behaviour_static :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )
 {
     if ( so_called_platform_conditions :: wholes_are_equal
             ( shy_guts :: current_behaviour_inputs . machine_amusement_generator_command_start
@@ -836,7 +836,7 @@ void so_called_common_logic_application_fsm_behaviour :: determine_behaviour_inp
         so_called_platform_math :: make_num_whole ( inputs_changed , true ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: init ( )
+void so_called_common_logic_application_fsm_behaviour_static :: init ( )
 {
     so_called_platform_pointer :: bind
         ( shy_guts :: state_environment :: behaviour_inputs
@@ -887,12 +887,12 @@ void so_called_common_logic_application_fsm_behaviour :: init ( )
         ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: is_fsm_running ( so_called_type_platform_math_num_whole & result )
+void so_called_common_logic_application_fsm_behaviour_static :: is_fsm_running ( so_called_type_platform_math_num_whole & result )
 {
     result = shy_guts :: fsm_running ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: recalc_current_behaviour_inputs ( )
+void so_called_common_logic_application_fsm_behaviour_static :: recalc_current_behaviour_inputs ( )
 {
     so_called_platform_pointer :: is_bound_to
         ( shy_guts :: current_behaviour_inputs . machine_amusement_generator_state_is_finished
@@ -931,7 +931,7 @@ void so_called_common_logic_application_fsm_behaviour :: recalc_current_behaviou
         ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: reset_behaviour_input_events ( )
+void so_called_common_logic_application_fsm_behaviour_static :: reset_behaviour_input_events ( )
 {
     so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_amusement_generator_command_start , false ) ;
     so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_amusement_performer_command_start , false ) ;
@@ -943,22 +943,22 @@ void so_called_common_logic_application_fsm_behaviour :: reset_behaviour_input_e
     so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_title_performer_command_start , false ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: run_fsm_begin ( )
+void so_called_common_logic_application_fsm_behaviour_static :: run_fsm_begin ( )
 {
     so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , true ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: run_fsm_end ( )
+void so_called_common_logic_application_fsm_behaviour_static :: run_fsm_end ( )
 {
     so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , false ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs )
+void so_called_common_logic_application_fsm_behaviour_static :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs )
 {
     shy_guts :: state_environment :: inputs = inputs ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: tick_all_fsms ( )
+void so_called_common_logic_application_fsm_behaviour_static :: tick_all_fsms ( )
 {
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_amusement_generator_state ) ;
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_amusement_performer_state ) ;
@@ -972,7 +972,7 @@ void so_called_common_logic_application_fsm_behaviour :: tick_all_fsms ( )
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_title_performer_state ) ;
 }
 
-void so_called_common_logic_application_fsm_behaviour :: update_fixed_behaviour_inputs ( )
+void so_called_common_logic_application_fsm_behaviour_static :: update_fixed_behaviour_inputs ( )
 {
     shy_guts :: fixed_behaviour_inputs = shy_guts :: current_behaviour_inputs ;
 }

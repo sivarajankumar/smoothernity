@@ -1,12 +1,14 @@
 #ifndef _shy_common_logic_application_fsm_behaviour_injections_included
 #define _shy_common_logic_application_fsm_behaviour_injections_included
 
-#include "../type/inputs/shy_inputs_injections.h"
+#ifdef shy_build_loadable_way
+    #include "./loadable/shy_loadable_injections.h"
+    typedef so_called_common_logic_application_fsm_behaviour_loadable so_called_common_logic_application_fsm_behaviour ;
+#endif
 
-#include "../../../../../injections/platform/pointer/type/data/shy_data.h"
-
-#include "./shy_behaviour.h"
-
-typedef shy_common_logic_application_fsm_behaviour so_called_common_logic_application_fsm_behaviour ;
+#ifdef shy_build_static_way
+    #include "./static/shy_static_injections.h"
+    typedef so_called_common_logic_application_fsm_behaviour_static so_called_common_logic_application_fsm_behaviour ;
+#endif
 
 #endif
