@@ -3,8 +3,6 @@
 
 #include "../system/shy_system_injections.h"
 
-#include "../../../../../injections/std/shy_std.h"
-
 #include "./shy_system_container.h"
 
 typedef shy_type_loadable_fsm_content_system_container so_called_type_loadable_fsm_content_system_container ;
