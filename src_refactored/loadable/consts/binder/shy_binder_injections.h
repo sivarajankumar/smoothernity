@@ -3,7 +3,7 @@
 
 #include "../../../injections/platform/math/type/num_fract/shy_num_fract.h"
 #include "../../../injections/platform/math/type/num_whole/shy_num_whole.h"
-#include "../../../injections/std/shy_std.h"
+#include "../../../injections/std/string/shy_string.h"
 
 #include "./shy_binder.h"
 
