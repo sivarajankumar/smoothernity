@@ -3,7 +3,7 @@
 
 #include "../../type/inputs/shy_inputs_injections.h"
 
-#include "../../../../../../injections/platform/pointer/type/data/shy_data.h"
+#include "../../../../../../loadable/fsm/behaviour/shy_behaviour_injections.h"
 
 #include "./shy_loadable.h"
 
