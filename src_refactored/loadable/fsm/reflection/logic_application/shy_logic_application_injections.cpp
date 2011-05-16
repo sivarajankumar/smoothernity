@@ -2,6 +2,7 @@
 
     #include "../../binder/shy_binder_injections.h"
     #include "../../../../common/logic/application/fsm/actions/shy_actions_injections.h"
+    #include "../../../../common/logic/application/fsm/binding/shy_binding_injections.h"
     #include "../../../../common/logic/application/fsm/type/inputs/shy_inputs_injections.h"
 
     #include "./shy_logic_application_injections.h"

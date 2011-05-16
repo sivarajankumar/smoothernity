@@ -1,3 +1,9 @@
+#define shy_bind_system_helper(system) \
+    so_called_loadable_fsm_binder :: bind_system \
+        ( #system \
+        , & so_called_common_##system##_fsm_binding \
+        )
+
 #define shy_bind_action_helper(action) \
     so_called_loadable_fsm_binder :: bind_action \
         ( #action \
@@ -12,7 +18,7 @@
 
 void shy_loadable_fsm_reflection_logic_application :: prepare ( )
 {
-    so_called_loadable_fsm_binder :: bind_system ( "logic_application" ) ;
+    shy_bind_system_helper ( logic_application ) ;
 
     shy_bind_action_helper ( logic_amusement_creation_permit ) ;
     shy_bind_action_helper ( logic_amusement_launch_permit ) ;
@@ -48,6 +54,7 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_bind_input_helper ( stage_title_enabled ) ;
 }
 
+#undef shy_bind_system_helper
 #undef shy_bind_action_helper
 #undef shy_bind_input_helper
 
