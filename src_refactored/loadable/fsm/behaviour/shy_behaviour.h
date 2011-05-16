@@ -14,6 +14,7 @@ public :
     void update_fixed_behaviour_inputs ( ) ;
 private :
     so_called_type_platform_math_num_whole _fsm_running ;
+    so_called_type_platform_pointer_data < type_fsm_inputs > _inputs ;
 } ;
 
 template < typename type_fsm_inputs >
@@ -24,7 +25,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: init ( )
 {
-    so_called_platform_math :: make_num_whole ( _fsm_running , false ) ;
+    so_called_platform_math :: make_num_whole ( _fsm_running , so_called_std_false ) ;
 }
 
 template < typename type_fsm_inputs >
@@ -56,8 +57,9 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: run_fsm_end ( )
 }
 
 template < typename type_fsm_inputs >
-void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_inputs ( so_called_type_platform_pointer_data < type_fsm_inputs > )
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_inputs ( so_called_type_platform_pointer_data < type_fsm_inputs > inputs )
 {
+    _inputs = inputs ;
 }
 
 template < typename type_fsm_inputs >
