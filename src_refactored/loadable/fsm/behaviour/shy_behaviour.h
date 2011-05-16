@@ -1,6 +1,23 @@
 template < typename type_fsm_inputs >
 class shy_loadable_fsm_behaviour
 {
+private :
+    class type_fsm_state
+    : public so_called_type_common_engine_fsm_state
+    {
+    public :
+        virtual void on_entry ( ) ;
+        virtual void on_exit ( ) ;
+        virtual void on_input ( ) ;
+        virtual so_called_type_common_engine_fsm_state & transition ( ) ;
+    } ;
+
+    class type_fsm_machine
+    {
+    public :
+        so_called_std_map < so_called_std_string , type_fsm_state > states ;
+    } ;
+
 public :
     void determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & ) ;
     void init ( ) ;
@@ -13,19 +30,11 @@ public :
     void tick_all_fsms ( ) ;
     void update_fixed_behaviour_inputs ( ) ;
 private :
-    class type_fsm_state
-    : public so_called_type_common_engine_fsm_state
-    {
-    public :
-        virtual void on_entry ( ) ;
-        virtual void on_exit ( ) ;
-        virtual void on_input ( ) ;
-        virtual so_called_type_common_engine_fsm_state & transition ( ) ;
-    } ;
-
+    void _init_machines ( ) ;
+private :
     so_called_type_platform_math_num_whole _fsm_running ;
     so_called_type_platform_pointer_data < type_fsm_inputs > _inputs ;
-    so_called_std_vector < type_fsm_state > _states ;
+    so_called_std_map < so_called_std_string , type_fsm_machine > _machines ;
 } ;
 
 template < typename type_fsm_inputs >
@@ -58,6 +67,7 @@ template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: init ( )
 {
     so_called_platform_math :: make_num_whole ( _fsm_running , so_called_std_false ) ;
+    _init_machines ( ) ;
 }
 
 template < typename type_fsm_inputs >
@@ -101,6 +111,11 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: tick_all_fsms ( )
 
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: update_fixed_behaviour_inputs ( )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_machines ( )
 {
 }
 
