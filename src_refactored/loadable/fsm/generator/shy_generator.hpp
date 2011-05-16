@@ -1814,8 +1814,10 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
     so_called_std_string all_transitions ;
 
     bool conditionless = true ;
-    conditionless &= state_i -> second . transitions . size ( ) == 1 ;
-    conditionless &= state_i -> second . transitions . begin ( ) -> condition_groups . empty ( ) ;
+    if ( conditionless )
+        conditionless &= state_i -> second . transitions . size ( ) == 1 ;
+    if ( conditionless )
+        conditionless &= state_i -> second . transitions . begin ( ) -> condition_groups . empty ( ) ;
     
     if ( conditionless )
     {
