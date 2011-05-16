@@ -10,6 +10,7 @@ void shy_common_logic_application_fsm_behaviour_loadable :: determine_behaviour_
 
 void shy_common_logic_application_fsm_behaviour_loadable :: init ( )
 {
+    shy_guts :: behaviour . set_system_binding ( so_called_common_logic_application_fsm_binding ) ;
     shy_guts :: behaviour . init ( ) ;
 }
 

@@ -26,6 +26,7 @@ public :
     void reset_behaviour_input_events ( ) ;
     void run_fsm_begin ( ) ;
     void run_fsm_end ( ) ;
+    void set_system_binding ( so_called_type_loadable_fsm_content_system_binding ) ;
     void set_inputs ( so_called_type_platform_pointer_data < type_fsm_inputs > ) ;
     void tick_all_fsms ( ) ;
     void update_fixed_behaviour_inputs ( ) ;
@@ -35,6 +36,7 @@ private :
     so_called_type_platform_math_num_whole _fsm_running ;
     so_called_type_platform_pointer_data < type_fsm_inputs > _inputs ;
     so_called_std_map < so_called_std_string , type_fsm_machine > _machines ;
+    so_called_type_loadable_fsm_content_system_binding _system_binding ;
 } ;
 
 template < typename type_fsm_inputs >
@@ -96,6 +98,12 @@ template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: run_fsm_end ( )
 {
     so_called_platform_math :: make_num_whole ( _fsm_running , so_called_std_false ) ;
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_system_binding ( so_called_type_loadable_fsm_content_system_binding binding )
+{
+    _system_binding = binding ;
 }
 
 template < typename type_fsm_inputs >
