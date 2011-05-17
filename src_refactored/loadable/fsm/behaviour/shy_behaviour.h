@@ -483,7 +483,6 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: init ( )
 {
     so_called_platform_math :: make_num_whole ( _fsm_running , so_called_std_false ) ;
     _init_system ( ) ;
-    _behaviour_inputs_fixed = _behaviour_inputs_current ;
 }
 
 template < typename type_fsm_inputs >
@@ -606,6 +605,8 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system ( )
     {
         _init_system_machine ( system_i , machine_i ) ;
     }
+
+    _behaviour_inputs_fixed = _behaviour_inputs_current ;
 }
 
 template < typename type_fsm_inputs >
