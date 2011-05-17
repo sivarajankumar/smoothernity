@@ -12,9 +12,21 @@ private :
         virtual void on_input ( ) ;
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
     private :
+        void _calculate_condition_commands 
+            ( so_called_std_bool & 
+            , const so_called_type_loadable_fsm_content_condition_command_container &
+            ) ;
         void _calculate_condition_groups 
             ( so_called_std_bool & 
             , const so_called_type_loadable_fsm_content_condition_group_container & 
+            ) ;
+        void _calculate_condition_inputs 
+            ( so_called_std_bool & 
+            , const so_called_type_loadable_fsm_content_condition_input_container &
+            ) ;
+        void _calculate_condition_states 
+            ( so_called_std_bool & 
+            , const so_called_type_loadable_fsm_content_condition_state_container &
             ) ;
         void _execute_action_command ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator ) ;
         void _execute_action_do ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator ) ;
@@ -148,6 +160,62 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 :: _calculate_condition_groups 
     ( so_called_std_bool & result 
     , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
+    )
+{
+    result = condition_groups . empty ( ) ;
+    for ( so_called_type_loadable_fsm_content_condition_group_container :: const_iterator condition_group_i = condition_groups . begin ( )
+        ; condition_group_i != condition_groups . end ( )
+        ; ++ condition_group_i
+        )
+    {
+        so_called_std_bool result_commands ;
+        so_called_std_bool result_group ;
+        so_called_std_bool result_inputs ;
+        so_called_std_bool result_states ;
+
+        _calculate_condition_commands ( result_commands , condition_group_i -> commands ) ;
+        _calculate_condition_inputs ( result_inputs , condition_group_i -> inputs ) ;
+        _calculate_condition_states ( result_states , condition_group_i -> states ) ;
+
+        result_group = so_called_std_true ;
+        result_group &= result_commands ;
+        result_group &= result_inputs ;
+        result_group &= result_states ;
+
+        if ( result_group )
+        {
+            result = so_called_std_true ;
+            break ;
+        }
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _calculate_condition_commands 
+    ( so_called_std_bool & result 
+    , const so_called_type_loadable_fsm_content_condition_command_container & condition_commands
+    )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _calculate_condition_inputs 
+    ( so_called_std_bool & result 
+    , const so_called_type_loadable_fsm_content_condition_input_container & condition_inputs
+    )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _calculate_condition_states 
+    ( so_called_std_bool & result 
+    , const so_called_type_loadable_fsm_content_condition_state_container & condition_states
     )
 {
 }
