@@ -11,7 +11,9 @@ private :
         virtual void on_exit ( ) ;
         virtual void on_input ( ) ;
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
-
+    private :
+        void _calculate_condition_groups ( so_called_std_bool & , const so_called_type_loadable_fsm_content_condition_group_container & ) ;
+        void _execute_actions ( const so_called_type_loadable_fsm_content_actions & ) ;
     public :
         shy_loadable_fsm_behaviour < type_fsm_inputs > * _behaviour ;
         so_called_type_loadable_fsm_content_machine_container :: const_iterator _machine_i ;
@@ -84,32 +86,82 @@ shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: type_fsm_sta
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_entry ( )
 {
+    _execute_actions ( _state_i -> second . on_entry ) ;
 }
 
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_exit ( )
 {
+    _execute_actions ( _state_i -> second . on_exit ) ;
 }
 
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_input ( )
+{
+    for ( so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i = _state_i -> second . on_input . begin ( )
+        ; on_input_i != _state_i -> second . on_input . end ( )
+        ; ++ on_input_i
+        )
+    {
+        so_called_std_bool conditions = so_called_std_false ;
+        _calculate_condition_groups ( conditions , on_input_i -> condition_groups ) ;
+        if ( conditions )
+            _execute_actions ( on_input_i -> actions ) ;
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _calculate_condition_groups 
+    ( so_called_std_bool & result 
+    , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
+    )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _execute_actions 
+    ( const so_called_type_loadable_fsm_content_actions & actions
+    )
 {
 }
 
 template < typename type_fsm_inputs >
 so_called_type_common_engine_fsm_state & shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: transition ( )
 {
-    return so_called_type_common_engine_fsm_state :: transition ( ) ;
-}
+    for ( so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i = _state_i -> second . transitions . begin ( )
+        ; transition_i != _state_i -> second . transitions . end ( )
+        ; ++ transition_i
+        )
+    {
+        so_called_std_bool conditions = so_called_std_false ;
+        _calculate_condition_groups ( conditions , transition_i -> condition_groups ) ;
 
-template < typename type_fsm_inputs >
-void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & )
-{
+        if ( conditions )
+        {
+            typename type_fsm_machine_container :: iterator fsm_machine_i ;
+            typename type_fsm_state_container :: iterator fsm_state_i ;
+
+            fsm_machine_i = _behaviour -> _machines . find ( _machine_i -> first ) ;
+            fsm_state_i = fsm_machine_i -> second . states . find ( transition_i -> state ) ;
+
+            return fsm_state_i -> second ;
+        }
+    }
+    return so_called_type_common_engine_fsm_state :: transition ( ) ;
 }
 
 template < typename type_fsm_inputs >
 shy_loadable_fsm_behaviour < type_fsm_inputs > :: shy_loadable_fsm_behaviour ( )
 : _system_binding ( 0 )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & )
 {
 }
 

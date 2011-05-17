@@ -8,6 +8,7 @@
 #include "../../../injections/platform/math/shy_math.h"
 #include "../../../injections/platform/pointer/shy_pointer.h"
 #include "../../../injections/platform/pointer/type/data/shy_data.h"
+#include "../../../injections/std/bool/shy_bool.h"
 #include "../../../injections/std/false/shy_false.h"
 #include "../../../injections/std/map/shy_map.h"
 #include "../../../injections/std/string/shy_string.h"
