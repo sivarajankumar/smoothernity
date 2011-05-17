@@ -12,8 +12,15 @@ private :
         virtual void on_input ( ) ;
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
     private :
-        void _calculate_condition_groups ( so_called_std_bool & , const so_called_type_loadable_fsm_content_condition_group_container & ) ;
+        void _calculate_condition_groups 
+            ( so_called_std_bool & 
+            , const so_called_type_loadable_fsm_content_condition_group_container & 
+            ) ;
+        void _execute_action_command ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator ) ;
+        void _execute_action_do ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator ) ;
         void _execute_actions ( const so_called_type_loadable_fsm_content_actions & ) ;
+        void _execute_actions_commands ( const so_called_type_loadable_fsm_content_action_command_container & ) ;
+        void _execute_actions_do ( const so_called_type_loadable_fsm_content_action_do_container & ) ;
     public :
         shy_loadable_fsm_behaviour < type_fsm_inputs > * _behaviour ;
         so_called_type_loadable_fsm_content_machine_container :: const_iterator _machine_i ;
@@ -111,25 +118,6 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_inpu
 }
 
 template < typename type_fsm_inputs >
-void shy_loadable_fsm_behaviour < type_fsm_inputs > 
-:: type_fsm_state 
-:: _calculate_condition_groups 
-    ( so_called_std_bool & result 
-    , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
-    )
-{
-}
-
-template < typename type_fsm_inputs >
-void shy_loadable_fsm_behaviour < type_fsm_inputs > 
-:: type_fsm_state 
-:: _execute_actions 
-    ( const so_called_type_loadable_fsm_content_actions & actions
-    )
-{
-}
-
-template < typename type_fsm_inputs >
 so_called_type_common_engine_fsm_state & shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: transition ( )
 {
     for ( so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i = _state_i -> second . transitions . begin ( )
@@ -152,6 +140,67 @@ so_called_type_common_engine_fsm_state & shy_loadable_fsm_behaviour < type_fsm_i
         }
     }
     return so_called_type_common_engine_fsm_state :: transition ( ) ;
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _calculate_condition_groups 
+    ( so_called_std_bool & result 
+    , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
+    )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _execute_actions ( const so_called_type_loadable_fsm_content_actions & actions )
+{
+    _execute_actions_commands ( actions . commands ) ;
+    _execute_actions_do ( actions . actions ) ;
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _execute_actions_commands ( const so_called_type_loadable_fsm_content_action_command_container & command_container )
+{
+    for ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator command_i = command_container . begin ( )
+        ; command_i != command_container . end ( )
+        ; ++ command_i
+        )
+    {
+        _execute_action_command ( command_i ) ;
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _execute_actions_do ( const so_called_type_loadable_fsm_content_action_do_container & action_do_container )
+{
+    for ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i = action_do_container . begin ( )
+        ; action_do_i != action_do_container . end ( )
+        ; ++ action_do_i
+        )
+    {
+        _execute_action_do ( action_do_i ) ;
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _execute_action_command ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator command_i )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _execute_action_do ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i )
+{
 }
 
 template < typename type_fsm_inputs >
