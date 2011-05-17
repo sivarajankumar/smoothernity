@@ -409,6 +409,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 :: type_fsm_state 
 :: _execute_action_command ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator command_i )
 {
+    typename type_fsm_behaviour_input_command_container :: iterator fsm_behaviour_input_command_i ;
+    typename type_fsm_behaviour_input_machine_container :: iterator fsm_behaviour_input_machine_i ;
+
+    fsm_behaviour_input_machine_i = _behaviour -> _behaviour_inputs_current . machines . find ( command_i -> machine ) ;
+    fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( command_i -> command ) ;
+
+    fsm_behaviour_input_command_i -> second . active = so_called_std_true ;
 }
 
 template < typename type_fsm_inputs >
