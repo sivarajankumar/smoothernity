@@ -53,6 +53,15 @@ private :
 
     typedef so_called_std_map < so_called_std_string , type_fsm_machine > type_fsm_machine_container ;
 
+    class type_fsm_behaviour_input_command
+    {
+    public :
+        type_fsm_behaviour_input_command ( ) ;
+        so_called_std_bool active ;
+    } ;
+
+    typedef so_called_std_map < so_called_std_string , type_fsm_behaviour_input_command > type_fsm_behaviour_input_command_container ;
+
     class type_fsm_behaviour_input_state
     {
     public :
@@ -65,6 +74,7 @@ private :
     class type_fsm_behaviour_input_machine
     {
     public :
+        type_fsm_behaviour_input_command_container commands ;
         type_fsm_behaviour_input_state_container states ;
     } ;
 
@@ -149,6 +159,12 @@ private :
 
 template < typename type_fsm_inputs >
 shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_behaviour_input_state :: type_fsm_behaviour_input_state ( )
+: active ( so_called_std_false )
+{
+}
+
+template < typename type_fsm_inputs >
+shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_behaviour_input_command :: type_fsm_behaviour_input_command ( )
 : active ( so_called_std_false )
 {
 }
@@ -386,6 +402,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
     {
         typename type_fsm_behaviour_input_machine_container :: const_iterator input_fixed_machine_i ;
         input_fixed_machine_i = _behaviour_inputs_fixed . machines . find ( input_current_machine_i -> first ) ;
+
         for ( typename type_fsm_behaviour_input_state_container :: const_iterator input_current_state_i = input_current_machine_i -> second . states . begin ( )
             ; input_current_state_i != input_current_machine_i -> second . states . end ( )
             ; ++ input_current_state_i
@@ -395,6 +412,21 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
             input_fixed_state_i = input_fixed_machine_i -> second . states . find ( input_current_state_i -> first ) ;
 
             if ( input_current_state_i -> second . active != input_fixed_state_i -> second . active )
+            {
+                so_called_platform_math :: make_num_whole ( result , so_called_std_true ) ;
+                return ;
+            }
+        }
+
+        for ( typename type_fsm_behaviour_input_command_container :: const_iterator input_current_command_i = input_current_machine_i -> second . commands . begin ( )
+            ; input_current_command_i != input_current_machine_i -> second . commands . end ( )
+            ; ++ input_current_command_i
+            )
+        {
+            typename type_fsm_behaviour_input_command_container :: const_iterator input_fixed_command_i ;
+            input_fixed_command_i = input_fixed_machine_i -> second . commands . find ( input_current_command_i -> first ) ;
+
+            if ( input_current_command_i -> second . active != input_fixed_command_i -> second . active )
             {
                 so_called_platform_math :: make_num_whole ( result , so_called_std_true ) ;
                 return ;
