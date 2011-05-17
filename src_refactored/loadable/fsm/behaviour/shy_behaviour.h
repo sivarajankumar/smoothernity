@@ -168,10 +168,10 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
         ; ++ condition_group_i
         )
     {
-        so_called_std_bool result_commands ;
-        so_called_std_bool result_group ;
-        so_called_std_bool result_inputs ;
-        so_called_std_bool result_states ;
+        so_called_std_bool result_commands = so_called_std_false ;
+        so_called_std_bool result_group = so_called_std_false ;
+        so_called_std_bool result_inputs = so_called_std_false ;
+        so_called_std_bool result_states = so_called_std_false ;
 
         _calculate_condition_commands ( result_commands , condition_group_i -> commands ) ;
         _calculate_condition_inputs ( result_inputs , condition_group_i -> inputs ) ;
@@ -269,6 +269,9 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 :: type_fsm_state 
 :: _execute_action_do ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i )
 {
+    so_called_type_loadable_fsm_content_action_binding_container :: const_iterator action_binding_i ;
+    action_binding_i = _system_i -> second . actions . find ( action_do_i -> action ) ;
+    ( * action_binding_i -> second ) ( ) ;
 }
 
 template < typename type_fsm_inputs >
