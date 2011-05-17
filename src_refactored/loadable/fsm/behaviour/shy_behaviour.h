@@ -32,13 +32,20 @@ public :
     void tick_all_fsms ( ) ;
     void update_fixed_behaviour_inputs ( ) ;
 private :
-    void _init_machines ( ) ;
     void _init_system ( ) ;
+    void _init_system_machine 
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        ) ;
+    void _init_system_machine_state
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator 
+        ) ;
 private :
     so_called_type_platform_math_num_whole _fsm_running ;
     so_called_type_platform_pointer_data < type_fsm_inputs > _inputs ;
     so_called_std_map < so_called_std_string , type_fsm_machine > _machines ;
-    so_called_type_loadable_fsm_content_system * _system ;
     so_called_type_loadable_fsm_content_system_binding _system_binding ;
 } ;
 
@@ -70,8 +77,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 
 template < typename type_fsm_inputs >
 shy_loadable_fsm_behaviour < type_fsm_inputs > :: shy_loadable_fsm_behaviour ( )
-: _system ( 0 )
-, _system_binding ( 0 )
+: _system_binding ( 0 )
 {
 }
 
@@ -80,7 +86,6 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: init ( )
 {
     so_called_platform_math :: make_num_whole ( _fsm_running , so_called_std_false ) ;
     _init_system ( ) ;
-    _init_machines ( ) ;
 }
 
 template < typename type_fsm_inputs >
@@ -138,17 +143,45 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system ( )
 {
     so_called_type_loadable_fsm_content_system_binding_container * system_binding_container = 0 ;
     so_called_type_loadable_fsm_content_system_container * system_container = 0 ;
+    so_called_type_loadable_fsm_content_system_container :: const_iterator system_i ;
     so_called_std_string system_name ;
 
     so_called_loadable_fsm_content :: get_system_binding_container ( system_binding_container ) ;
     so_called_loadable_fsm_content :: get_system_container ( system_container ) ;
 
     system_name = ( * system_binding_container ) [ _system_binding ] ;
-    _system = & ( ( * system_container ) [ system_name ] ) ;
+    system_i = system_container -> find ( system_name ) ;
+
+    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+        ; machine_i != system_i -> second . machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        _init_system_machine ( system_i , machine_i ) ;
+    }
 }
 
 template < typename type_fsm_inputs >
-void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_machines ( )
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine 
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    )
+{
+    for ( so_called_type_loadable_fsm_content_state_container :: const_iterator state_i = machine_i -> second . states . begin ( )
+        ; state_i != machine_i -> second . states . end ( )
+        ; ++ state_i
+        )
+    {
+        _init_system_machine_state ( system_i , machine_i , state_i ) ;
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_state
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    )
 {
 }
 
