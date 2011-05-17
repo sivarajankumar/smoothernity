@@ -21,6 +21,7 @@ private :
     {
     public :
         so_called_std_map < so_called_std_string , type_fsm_state > states ;
+        so_called_std_string state_current ;
     } ;
 
 public :
@@ -172,6 +173,10 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine
     , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
     )
 {
+    type_fsm_machine machine ;
+    machine . state_current = so_called_loadable_fsm_consts :: state_initial ;
+    _machines [ machine_i -> first ] = machine ;
+
     for ( so_called_type_loadable_fsm_content_state_container :: const_iterator state_i = machine_i -> second . states . begin ( )
         ; state_i != machine_i -> second . states . end ( )
         ; ++ state_i
