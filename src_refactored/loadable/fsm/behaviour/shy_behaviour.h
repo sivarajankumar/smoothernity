@@ -23,7 +23,7 @@ private :
     {
     public :
         type_fsm_state_container states ;
-        so_called_type_platform_pointer_data < type_fsm_state > state_current ;
+        so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > state_current ;
     } ;
 
     typedef so_called_std_map < so_called_std_string , type_fsm_machine > type_fsm_machine_container ;
@@ -63,8 +63,7 @@ private :
 private :
     so_called_type_platform_math_num_whole _fsm_running ;
     so_called_type_platform_pointer_data < type_fsm_inputs > _inputs ;
-    type_fsm_machine_container _machine_container ;
-    so_called_std_map < so_called_std_string , type_fsm_machine > _machines ;
+    type_fsm_machine_container _machines ;
     so_called_type_loadable_fsm_content_system_binding _system_binding ;
 } ;
 
@@ -150,6 +149,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_inputs ( so_called_ty
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: tick_all_fsms ( )
 {
+    for ( typename type_fsm_machine_container :: iterator machine_i = _machines . begin ( )
+        ; machine_i != _machines . end ( )
+        ; ++ machine_i
+        )
+    {
+        so_called_common_engine_fsm_stateless :: tick_single_fsm ( machine_i -> second . state_current ) ;
+    }
 }
 
 template < typename type_fsm_inputs >
