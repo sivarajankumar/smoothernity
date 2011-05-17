@@ -53,8 +53,27 @@ private :
 
     typedef so_called_std_map < so_called_std_string , type_fsm_machine > type_fsm_machine_container ;
 
+    class type_fsm_behaviour_input_state
+    {
+    public :
+        type_fsm_behaviour_input_state ( ) ;
+        so_called_std_bool active ;
+    } ;
+
+    typedef so_called_std_map < so_called_std_string , type_fsm_behaviour_input_state > type_fsm_behaviour_input_state_container ;
+
+    class type_fsm_behaviour_input_machine
+    {
+    public :
+        type_fsm_behaviour_input_state_container states ;
+    } ;
+
+    typedef so_called_std_map < so_called_std_string , type_fsm_behaviour_input_machine > type_fsm_behaviour_input_machine_container ;
+
     class type_fsm_behaviour_inputs
     {
+    public :
+        type_fsm_behaviour_input_machine_container machines ;
     } ;
 
 public :
@@ -97,6 +116,12 @@ private :
     type_fsm_machine_container _machines ;
     so_called_type_loadable_fsm_content_system_binding _system_binding ;
 } ;
+
+template < typename type_fsm_inputs >
+shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_behaviour_input_state :: type_fsm_behaviour_input_state ( )
+: active ( so_called_std_false )
+{
+}
 
 template < typename type_fsm_inputs >
 shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: type_fsm_state ( )
