@@ -100,11 +100,23 @@ private :
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
         , so_called_type_loadable_fsm_content_state_container :: const_iterator 
         ) ;
+    void _init_system_machine_state_condition_command
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_condition_command_container :: const_iterator
+        ) ;
     void _init_system_machine_state_condition_group
         ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
         , so_called_type_loadable_fsm_content_state_container :: const_iterator 
         , so_called_type_loadable_fsm_content_condition_group_container :: const_iterator
+        ) ;
+    void _init_system_machine_state_condition_state
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_condition_state_container :: const_iterator
         ) ;
     void _init_system_machine_state_initial
         ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
@@ -552,5 +564,44 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_stat
     , so_called_type_loadable_fsm_content_condition_group_container :: const_iterator condition_group_i
     )
 {
+    for ( so_called_type_loadable_fsm_content_condition_command_container :: const_iterator condition_command_i = condition_group_i -> commands . begin ( )
+        ; condition_command_i != condition_group_i -> commands . end ( )
+        ; ++ condition_command_i
+        )
+    {
+        _init_system_machine_state_condition_command ( system_i , machine_i , state_i , condition_command_i ) ;
+    }
+
+    for ( so_called_type_loadable_fsm_content_condition_state_container :: const_iterator condition_state_i = condition_group_i -> states . begin ( )
+        ; condition_state_i != condition_group_i -> states . end ( )
+        ; ++ condition_state_i
+        )
+    {
+        _init_system_machine_state_condition_state ( system_i , machine_i , state_i , condition_state_i ) ;
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_state_condition_command
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_condition_command_container :: const_iterator condition_command_i
+    )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_state_condition_state
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_condition_state_container :: const_iterator condition_state_i
+    )
+{
+    _behaviour_inputs_current 
+        . machines [ condition_state_i -> machine ] 
+        . states [ condition_state_i -> state ] 
+        . active = so_called_std_false ;
 }
 
