@@ -419,6 +419,34 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: is_fsm_running ( so_calle
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: recalc_current_behaviour_inputs ( )
 {
+    for ( typename type_fsm_behaviour_input_machine_container :: iterator input_current_machine_i = _behaviour_inputs_current . machines . begin ( )
+        ; input_current_machine_i != _behaviour_inputs_current . machines . end ( )
+        ; ++ input_current_machine_i
+        )
+    {
+        typename type_fsm_machine_container :: iterator fsm_machine_i ;
+        fsm_machine_i = _machines . find ( input_current_machine_i -> first ) ;
+        for ( typename type_fsm_behaviour_input_state_container :: iterator input_current_state_i = input_current_machine_i -> second . states . begin ( )
+            ; input_current_state_i != input_current_machine_i -> second . states . end ( )
+            ; ++ input_current_state_i
+            )
+        {
+            typename type_fsm_state_container :: iterator fsm_state_i ;
+            fsm_state_i = fsm_machine_i -> second . states . find ( input_current_state_i -> first ) ;
+
+            so_called_type_platform_math_num_whole state_active ;
+            so_called_platform_pointer :: is_bound_to
+                ( state_active
+                , fsm_machine_i -> second . state_current
+                , fsm_state_i -> second
+                ) ;
+
+            if ( so_called_platform_conditions :: whole_is_true ( state_active ) )
+                input_current_state_i -> second . active = so_called_std_true ;
+            else
+                input_current_state_i -> second . active = so_called_std_false ;
+        }
+    }
 }
 
 template < typename type_fsm_inputs >
