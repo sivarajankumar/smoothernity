@@ -484,6 +484,19 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: recalc_current_behaviour_
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: reset_behaviour_input_events ( )
 {
+    for ( typename type_fsm_behaviour_input_machine_container :: iterator input_current_machine_i = _behaviour_inputs_current . machines . begin ( )
+        ; input_current_machine_i != _behaviour_inputs_current . machines . end ( )
+        ; ++ input_current_machine_i
+        )
+    {
+        for ( typename type_fsm_behaviour_input_command_container :: iterator input_current_command_i = input_current_machine_i -> second . commands . begin ( )
+            ; input_current_command_i != input_current_machine_i -> second . commands . end ( )
+            ; ++ input_current_command_i
+            )
+        {
+            input_current_command_i -> second . active = so_called_std_false ;
+        }
+    }
 }
 
 template < typename type_fsm_inputs >
