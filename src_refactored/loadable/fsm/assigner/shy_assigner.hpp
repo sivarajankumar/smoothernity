@@ -3,7 +3,6 @@ namespace shy_guts
     namespace consts
     {
         static void error_no_initial_state_in_machine_of_system ( so_called_std_string & , so_called_std_string , so_called_std_string ) ;
-        static const so_called_std_string state_initial ( "initial" ) ;
     }
 
     static so_called_std_string error ;
@@ -11,7 +10,14 @@ namespace shy_guts
 
 void shy_guts :: consts :: error_no_initial_state_in_machine_of_system ( so_called_std_string & error , so_called_std_string fsm_machine , so_called_std_string fsm_system )
 {
-    error = so_called_std_string ( "no state 'initial' in fsm machine '" ) + fsm_machine + so_called_std_string ( "' of fsm system '" ) + fsm_system + so_called_std_string ( "'" ) ;
+    error . clear ( ) ;
+    error += so_called_std_string ( "no state '" ) ;
+    error += so_called_loadable_fsm_consts :: state_initial ;
+    error += so_called_std_string ( "' in fsm machine '" ) ;
+    error += fsm_machine ;
+    error += so_called_std_string ( "' of fsm system '" ) ;
+    error += fsm_system ;
+    error += so_called_std_string ( "'" ) ;
 }
 
 void shy_loadable_fsm_assigner :: assign ( )
@@ -32,7 +38,7 @@ void shy_loadable_fsm_assigner :: assign ( )
         {
             so_called_std_string fsm_machine_name = fsm_machine_i -> first ;
             const so_called_type_loadable_fsm_content_machine & fsm_machine = fsm_machine_i -> second ;
-            if ( fsm_machine . states . find ( shy_guts :: consts :: state_initial ) == fsm_machine . states . end ( ) )
+            if ( fsm_machine . states . find ( so_called_loadable_fsm_consts :: state_initial ) == fsm_machine . states . end ( ) )
                 shy_guts :: consts :: error_no_initial_state_in_machine_of_system ( shy_guts :: error , fsm_machine_name , fsm_system_name ) ;
         }
     }
