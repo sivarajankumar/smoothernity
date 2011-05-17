@@ -5,6 +5,7 @@
 #include "../content/shy_content_injections.h"
 #include "../../../common/engine/fsm/type/state/shy_state_injections.h"
 #include "../../../injections/platform/math/shy_math.h"
+#include "../../../injections/platform/pointer/shy_pointer.h"
 #include "../../../injections/platform/pointer/type/data/shy_data.h"
 #include "../../../injections/std/false/shy_false.h"
 #include "../../../injections/std/map/shy_map.h"
