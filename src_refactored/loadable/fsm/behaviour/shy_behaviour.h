@@ -6,12 +6,14 @@ private :
     : public so_called_type_common_engine_fsm_state
     {
     public :
+        type_fsm_state ( ) ;
         virtual void on_entry ( ) ;
         virtual void on_exit ( ) ;
         virtual void on_input ( ) ;
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
 
     public :
+        shy_loadable_fsm_behaviour < type_fsm_inputs > * _behaviour ;
         so_called_type_loadable_fsm_content_machine_container :: const_iterator _machine_i ;
         so_called_type_loadable_fsm_content_state_container :: const_iterator _state_i ;
         so_called_type_loadable_fsm_content_system_container :: const_iterator _system_i ;
@@ -27,6 +29,10 @@ private :
     } ;
 
     typedef so_called_std_map < so_called_std_string , type_fsm_machine > type_fsm_machine_container ;
+
+    class type_fsm_behaviour_inputs
+    {
+    } ;
 
 public :
     shy_loadable_fsm_behaviour ( ) ;
@@ -61,11 +67,19 @@ private :
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
         ) ;
 private :
+    type_fsm_behaviour_inputs _behaviour_inputs_current ;
+    type_fsm_behaviour_inputs _behaviour_inputs_fixed ;
     so_called_type_platform_math_num_whole _fsm_running ;
     so_called_type_platform_pointer_data < type_fsm_inputs > _inputs ;
     type_fsm_machine_container _machines ;
     so_called_type_loadable_fsm_content_system_binding _system_binding ;
 } ;
+
+template < typename type_fsm_inputs >
+shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: type_fsm_state ( )
+: _behaviour ( 0 )
+{
+}
 
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_entry ( )
@@ -161,6 +175,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: tick_all_fsms ( )
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: update_fixed_behaviour_inputs ( )
 {
+    _behaviour_inputs_fixed = _behaviour_inputs_current ;
 }
 
 template < typename type_fsm_inputs >
@@ -234,6 +249,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_stat
 {
     type_fsm_state state ;
 
+    state . _behaviour = this ;
     state . _machine_i = machine_i ;
     state . _state_i = state_i ;
     state . _system_i = system_i ;
