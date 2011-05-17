@@ -10,6 +10,11 @@ private :
         virtual void on_exit ( ) ;
         virtual void on_input ( ) ;
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
+
+    public :
+        so_called_type_loadable_fsm_content_machine_container :: const_iterator _machine_i ;
+        so_called_type_loadable_fsm_content_state_container :: const_iterator _state_i ;
+        so_called_type_loadable_fsm_content_system_container :: const_iterator _system_i ;
     } ;
 
     class type_fsm_machine
@@ -183,5 +188,12 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_stat
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
+    type_fsm_state state ;
+
+    state . _machine_i = machine_i ;
+    state . _state_i = state_i ;
+    state . _system_i = system_i ;
+
+    _machines [ machine_i -> first ] . states [ state_i -> first ] = state ;
 }
 
