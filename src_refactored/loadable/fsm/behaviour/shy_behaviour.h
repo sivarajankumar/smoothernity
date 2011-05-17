@@ -289,6 +289,24 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     , const so_called_type_loadable_fsm_content_condition_command_container & condition_commands
     )
 {
+    result = so_called_std_true ;
+    for ( so_called_type_loadable_fsm_content_condition_command_container :: const_iterator condition_command_i = condition_commands . begin ( )
+        ; condition_command_i != condition_commands . end ( )
+        ; ++ condition_command_i
+        )
+    {
+        typename type_fsm_behaviour_input_machine_container :: const_iterator fsm_behaviour_input_machine_i ;
+        typename type_fsm_behaviour_input_command_container :: const_iterator fsm_behaviour_input_command_i ;
+
+        fsm_behaviour_input_machine_i = _behaviour -> _behaviour_inputs_fixed . machines . find ( _machine_i -> first ) ;
+        fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( condition_command_i -> command ) ;
+
+        if ( ! fsm_behaviour_input_command_i -> second . active )
+        {
+            result = so_called_std_false ;
+            break ;
+        }
+    }
 }
 
 template < typename type_fsm_inputs >
