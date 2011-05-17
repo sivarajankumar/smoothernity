@@ -110,6 +110,12 @@ private :
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
         , so_called_type_loadable_fsm_content_state_container :: const_iterator 
         ) ;
+    void _init_system_machine_state_action_command
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_action_command_container :: const_iterator
+        ) ;
     void _init_system_machine_state_actions
         ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
@@ -682,6 +688,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_stat
     , const so_called_type_loadable_fsm_content_actions & actions
     )
 {
+    for ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator action_command_i = actions . commands . begin ( )
+        ; action_command_i != actions . commands . end ( )
+        ; ++ action_command_i
+        )
+    {
+        _init_system_machine_state_action_command ( system_i , machine_i , state_i , action_command_i ) ;
+    }
 }
 
 template < typename type_fsm_inputs >
@@ -724,6 +737,20 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_stat
     {
         _init_system_machine_state_condition_state ( system_i , machine_i , state_i , condition_state_i ) ;
     }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_state_action_command
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_action_command_container :: const_iterator action_command_i
+    )
+{
+    _behaviour_inputs_current
+        . machines [ action_command_i -> machine ]
+        . commands [ action_command_i -> command ]
+        . active = so_called_std_false ;
 }
 
 template < typename type_fsm_inputs >
