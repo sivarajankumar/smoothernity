@@ -2,6 +2,8 @@ template < typename type_fsm_inputs >
 class shy_loadable_fsm_behaviour
 {
 private :
+    typedef so_called_type_platform_math_num_whole type_fsm_inputs :: * type_fsm_input_binding ;
+
     class type_fsm_state
     : public so_called_type_common_engine_fsm_state
     {
@@ -208,6 +210,26 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     , const so_called_type_loadable_fsm_content_condition_input_container & condition_inputs
     )
 {
+    result = so_called_std_true ;
+    for ( so_called_type_loadable_fsm_content_condition_input_container :: const_iterator condition_input_i = condition_inputs . begin ( )
+        ; condition_input_i != condition_inputs . end ( )
+        ; ++ condition_input_i
+        )
+    {
+        so_called_type_loadable_fsm_content_input_binding_container :: const_iterator input_binding_i ;
+        so_called_type_platform_math_num_whole condition ;
+        type_fsm_input_binding input_binding ;
+
+        input_binding_i = _system_i -> second . inputs . find ( condition_input_i -> input ) ;
+        input_binding = reinterpret_cast < type_fsm_input_binding > ( input_binding_i -> second ) ;
+        condition = _behaviour -> _inputs . get ( ) .* input_binding ;
+
+        if ( so_called_platform_conditions :: whole_is_false ( condition ) )
+        {
+            result = so_called_std_false ;
+            break ;
+        }
+    }
 }
 
 template < typename type_fsm_inputs >
@@ -218,31 +240,6 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     , const so_called_type_loadable_fsm_content_condition_state_container & condition_states
     )
 {
-    result = so_called_std_true ;
-    for ( so_called_type_loadable_fsm_content_condition_state_container :: const_iterator condition_state_i = condition_states . begin ( )
-        ; condition_state_i != condition_states . end ( )
-        ; ++ condition_state_i
-        )
-    {
-        typename type_fsm_machine_container :: iterator fsm_machine_i ;
-        typename type_fsm_state_container :: iterator fsm_state_i ;
-        so_called_type_platform_math_num_whole state_matches ;
-
-        fsm_machine_i = _behaviour -> _machines . find ( condition_state_i -> machine ) ;
-        fsm_state_i = fsm_machine_i -> second . states . find ( condition_state_i -> state ) ;
-
-        so_called_platform_pointer :: is_bound_to
-            ( state_matches
-            , fsm_machine_i -> second . state_current
-            , fsm_state_i -> second
-            ) ;
-
-        if ( so_called_platform_conditions :: whole_is_false ( state_matches ) )
-        {
-            result = so_called_std_false ;
-            break ;
-        }
-    }
 }
 
 template < typename type_fsm_inputs >
