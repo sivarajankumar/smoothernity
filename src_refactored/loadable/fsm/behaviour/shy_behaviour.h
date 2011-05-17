@@ -104,6 +104,18 @@ private :
         ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
         ) ;
+    void _init_system_machine_state_on_input
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_on_input_container :: const_iterator
+        ) ;
+    void _init_system_machine_state_transition
+        ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_state_container :: const_iterator 
+        , so_called_type_loadable_fsm_content_transition_container :: const_iterator
+        ) ;
     void _init_system_machine_states
         ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
@@ -474,5 +486,41 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_stat
     state . _system_i = system_i ;
 
     _machines [ machine_i -> first ] . states [ state_i -> first ] = state ;
+
+    for ( so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i = state_i -> second . on_input . begin ( )
+        ; on_input_i != state_i -> second . on_input . end ( )
+        ; ++ on_input_i
+        )
+    {
+        _init_system_machine_state_on_input ( system_i , machine_i , state_i , on_input_i ) ;
+    }
+
+    for ( so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i = state_i -> second . transitions . begin ( )
+        ; transition_i != state_i -> second . transitions . end ( )
+        ; ++ transition_i
+        )
+    {
+        _init_system_machine_state_transition ( system_i , machine_i , state_i , transition_i ) ;
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_state_on_input
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i
+    )
+{
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_state_transition
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_transition_container :: const_iterator transition_i
+    )
+{
 }
 
