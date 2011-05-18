@@ -1,6 +1,8 @@
 #ifndef _shy_loadable_fsm_behaviour_injections_included
 #define _shy_loadable_fsm_behaviour_injections_included
 
+#include "./consts/shy_consts_injections.h"
+#include "./trace/shy_trace_injections.h"
 #include "../consts/shy_consts_injections.h"
 #include "../content/shy_content_injections.h"
 #include "../../../common/engine/fsm/stateless/shy_stateless_injections.h"

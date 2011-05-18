@@ -166,6 +166,7 @@ private :
         ( so_called_type_loadable_fsm_content_system_container :: const_iterator 
         , so_called_type_loadable_fsm_content_machine_container :: const_iterator 
         ) ;
+    void _copy_current_behaviour_inputs_to_fixed ( ) ;
 private :
     type_fsm_behaviour_inputs _behaviour_inputs_current ;
     type_fsm_behaviour_inputs _behaviour_inputs_fixed ;
@@ -196,18 +197,24 @@ shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: type_fsm_sta
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_entry ( )
 {
+    if ( so_called_loadable_fsm_behaviour_consts :: trace_fsm )
+        so_called_loadable_fsm_behaviour_trace :: machine_state_on_entry ( _machine_i -> first , _state_i -> first ) ;
     _execute_actions ( _state_i -> second . on_entry ) ;
 }
 
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_exit ( )
 {
+    if ( so_called_loadable_fsm_behaviour_consts :: trace_fsm )
+        so_called_loadable_fsm_behaviour_trace :: machine_state_on_exit ( _machine_i -> first , _state_i -> first ) ;
     _execute_actions ( _state_i -> second . on_exit ) ;
 }
 
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_input ( )
 {
+    if ( so_called_loadable_fsm_behaviour_consts :: trace_fsm )
+        so_called_loadable_fsm_behaviour_trace :: machine_state_on_input ( _machine_i -> first , _state_i -> first ) ;
     for ( so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i = _state_i -> second . on_input . begin ( )
         ; on_input_i != _state_i -> second . on_input . end ( )
         ; ++ on_input_i
@@ -409,6 +416,16 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 :: type_fsm_state 
 :: _execute_action_command ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator command_i )
 {
+    if ( so_called_loadable_fsm_behaviour_consts :: trace_fsm )
+    {
+        so_called_loadable_fsm_behaviour_trace :: machine_state_action_command 
+            ( _machine_i -> first 
+            , _state_i -> first 
+            , command_i -> command 
+            , command_i -> machine 
+            ) ;
+    }
+
     typename type_fsm_behaviour_input_command_container :: iterator fsm_behaviour_input_command_i ;
     typename type_fsm_behaviour_input_machine_container :: iterator fsm_behaviour_input_machine_i ;
 
@@ -423,6 +440,15 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 :: type_fsm_state 
 :: _execute_action_do ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i )
 {
+    if ( so_called_loadable_fsm_behaviour_consts :: trace_fsm )
+    {
+        so_called_loadable_fsm_behaviour_trace :: machine_state_action_do
+            ( _machine_i -> first 
+            , _state_i -> first
+            , action_do_i -> action
+            ) ;
+    }
+
     so_called_type_loadable_fsm_content_action_binding_container :: const_iterator action_binding_i ;
     action_binding_i = _system_i -> second . actions . find ( action_do_i -> action ) ;
     ( * action_binding_i -> second ) ( ) ;
@@ -569,6 +595,8 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_inputs ( so_called_ty
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: tick_all_fsms ( )
 {
+    if ( so_called_loadable_fsm_behaviour_consts :: trace_fsm )
+        so_called_loadable_fsm_behaviour_trace :: tick_all_fsms ( ) ;
     for ( typename type_fsm_machine_container :: iterator machine_i = _machines . begin ( )
         ; machine_i != _machines . end ( )
         ; ++ machine_i
@@ -581,7 +609,33 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: tick_all_fsms ( )
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: update_fixed_behaviour_inputs ( )
 {
-    _behaviour_inputs_fixed = _behaviour_inputs_current ;
+    _copy_current_behaviour_inputs_to_fixed ( ) ;
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _copy_current_behaviour_inputs_to_fixed ( )
+{
+    for ( typename type_fsm_behaviour_input_machine_container :: const_iterator input_current_machine_i = _behaviour_inputs_current . machines . begin ( )
+        ; input_current_machine_i != _behaviour_inputs_current . machines . end ( )
+        ; ++ input_current_machine_i
+        )
+    {
+        for ( typename type_fsm_behaviour_input_state_container :: const_iterator input_current_state_i = input_current_machine_i -> second . states . begin ( )
+            ; input_current_state_i != input_current_machine_i -> second . states . end ( )
+            ; ++ input_current_state_i
+            )
+        {
+            _behaviour_inputs_fixed . machines [ input_current_machine_i -> first ] . states [ input_current_state_i -> first ] = input_current_state_i -> second ;
+        }
+
+        for ( typename type_fsm_behaviour_input_command_container :: const_iterator input_current_command_i = input_current_machine_i -> second . commands . begin ( )
+            ; input_current_command_i != input_current_machine_i -> second . commands . end ( )
+            ; ++ input_current_command_i
+            )
+        {
+            _behaviour_inputs_fixed . machines [ input_current_machine_i -> first ] . commands [ input_current_command_i -> first ] = input_current_command_i -> second ;
+        }
+    }
 }
 
 template < typename type_fsm_inputs >
@@ -606,7 +660,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system ( )
         _init_system_machine ( system_i , machine_i ) ;
     }
 
-    _behaviour_inputs_fixed = _behaviour_inputs_current ;
+    _copy_current_behaviour_inputs_to_fixed ( ) ;
 }
 
 template < typename type_fsm_inputs >

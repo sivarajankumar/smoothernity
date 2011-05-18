@@ -86,6 +86,7 @@ void _shy_common_logic_application_fsm :: update_fixed_inputs ( )
 
 void _shy_common_logic_application_fsm :: receive ( so_called_message_common_init )
 {
+    reset_input_events ( ) ;
     so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs ;
     so_called_platform_pointer :: bind ( inputs , shy_guts :: fixed_inputs ) ;
     so_called_common_logic_application_fsm_behaviour :: set_inputs ( inputs ) ;
