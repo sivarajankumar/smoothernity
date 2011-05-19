@@ -6,4 +6,6 @@
 
 #include "./shy_consts.h"
 
+typedef shy_common_logic_room_consts so_called_common_logic_room_consts ;
+
 #endif

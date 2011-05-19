@@ -1,4 +1,4 @@
-class so_called_common_logic_room_consts
+class shy_common_logic_room_consts
 {
 public :
     static const so_called_type_platform_math_num_fract mesh_color_right_r ;
