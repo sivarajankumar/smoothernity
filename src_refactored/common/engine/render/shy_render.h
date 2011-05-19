@@ -41,4 +41,8 @@ public :
     static void register_in_scheduler ( ) ;
 } ;
 
-typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_render , 3000 > :: module shy_common_engine_render_scheduled ;
+typedef so_called_platform_scheduler :: scheduled_context 
+    < _shy_common_engine_render 
+    , so_called_common_engine_render_consts :: max_messages
+    > :: module
+    shy_common_engine_render_scheduled ;
