@@ -1,6 +1,7 @@
 #ifndef _shy_common_engine_rasterizer_injections_included
 #define _shy_common_engine_rasterizer_injections_included
 
+#include "./consts/shy_consts_injections.h"
 #include "./message/draw_ellipse_in_rect/shy_draw_ellipse_in_rect_injections.h"
 #include "./message/draw_rect/shy_draw_rect_injections.h"
 #include "./message/draw_triangle/shy_draw_triangle_injections.h"

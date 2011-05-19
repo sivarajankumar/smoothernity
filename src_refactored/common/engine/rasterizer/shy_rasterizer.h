@@ -11,4 +11,8 @@ public :
     static void register_in_scheduler ( ) ;
 } ;
 
-typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_rasterizer , 1000 > :: module shy_common_engine_rasterizer_scheduled ;  
+typedef so_called_platform_scheduler :: scheduled_context 
+    < _shy_common_engine_rasterizer 
+    , so_called_common_engine_rasterizer_consts :: max_messages 
+    > :: module
+    shy_common_engine_rasterizer_scheduled ;  
