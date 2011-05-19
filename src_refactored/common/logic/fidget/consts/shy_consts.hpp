@@ -1,0 +1,12 @@
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: angle_delta ;
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: fidget_b ;
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: fidget_g ;
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: fidget_r ;
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: fidget_size ;
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: mesh_x ;
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: mesh_y_from_top ;
+const so_called_type_platform_math_num_fract shy_common_logic_fidget_consts :: mesh_z ;
+const so_called_type_platform_math_num_whole shy_common_logic_fidget_consts :: fidget_edges ;
+const so_called_type_platform_math_num_whole shy_common_logic_fidget_consts :: scale_in_frames ;
+const so_called_type_platform_math_num_whole shy_common_logic_fidget_consts :: should_render_fidget ;
+
