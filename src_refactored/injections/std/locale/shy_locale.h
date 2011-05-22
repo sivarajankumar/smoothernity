@@ -1,9 +1,8 @@
 #ifndef _shy_injections_std_locale_included
 #define _shy_injections_std_locale_included
 
-#ifdef shy_build_loadable_way
-    #include <locale>
-    typedef std :: locale so_called_std_locale ;
+#ifdef shy_build_for_macosx
+    #include "../../../macosx/std/locale/shy_locale_injections.h"
 #endif
 
 #endif
