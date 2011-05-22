@@ -1,9 +1,8 @@
 #ifndef _shy_injections_std_istringstream_included
 #define _shy_injections_std_istringstream_included
 
-#ifdef shy_build_loadable_way
-    #include <sstream>
-    typedef std :: istringstream so_called_std_istringstream ;
+#ifdef shy_build_for_macosx
+    #include "../../../macosx/std/istringstream/shy_istringstream_injections.h"
 #endif
 
 #endif
