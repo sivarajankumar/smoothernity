@@ -1,9 +1,8 @@
 #ifndef _shy_injections_std_isdigit_included
 #define _shy_injections_std_isdigit_included
 
-#ifdef shy_build_loadable_way
-    #include <locale>
-    #define so_called_std_isdigit std :: isdigit
+#ifdef shy_build_for_macosx
+    #include "../../../macosx/std/isdigit/shy_isdigit_injections.h"
 #endif
 
 #endif
