@@ -2,7 +2,7 @@
 #define _shy_injections_std_cerr_included
 
 #ifdef shy_build_for_macosx
-    #include "../../../macosx/std/cerr/shy_cerr_injections.h"
+    #include "../../../main/macosx/std/cerr/shy_cerr_injections.h"
 #endif
 
 #endif

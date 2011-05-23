@@ -2,7 +2,7 @@
 #include "./platform/mouse/insider/shy_insider_injections.h"
 #include "./platform/render/insider/shy_insider_injections.h"
 #include "./platform/sound/insider/shy_insider_injections.h"
-#include "../facade/shy_facade_injections.h"
+#include "../../facade/shy_facade_injections.h"
 
 @implementation shy_macosx_scene
 
