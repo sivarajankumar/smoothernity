@@ -3,7 +3,7 @@
 
 #include "../state/shy_state_injections.h"
 
-#include "../../../../../injections/std/map/shy_map.h"
+#include "../../../../../injections/lib/std/map/shy_map.h"
 
 #include "./shy_state_container.h"
 

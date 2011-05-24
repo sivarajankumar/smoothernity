@@ -2,8 +2,8 @@
 
     #include "./shy_trace_injections.h"
 
-    #include "../../../../injections/std/cerr/shy_cerr.h"
-    #include "../../../../injections/std/endl/shy_endl.h"
+    #include "../../../../injections/lib/std/cerr/shy_cerr.h"
+    #include "../../../../injections/lib/std/endl/shy_endl.h"
 
     #include "./shy_trace.hpp"
 

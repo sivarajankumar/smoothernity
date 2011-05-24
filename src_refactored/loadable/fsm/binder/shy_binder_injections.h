@@ -4,7 +4,7 @@
 #include "../content/type/action_binding/shy_action_binding_injections.h"
 #include "../content/type/input_binding/shy_input_binding_injections.h"
 #include "../content/type/system_binding/shy_system_binding_injections.h"
-#include "../../../injections/std/char/shy_char.h"
+#include "../../../injections/lib/std/char/shy_char.h"
 
 #include "./shy_binder.h"
 

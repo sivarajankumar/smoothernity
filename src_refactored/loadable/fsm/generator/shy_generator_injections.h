@@ -1,7 +1,7 @@
 #ifndef _shy_loadable_fsm_generator_injections_included
 #define _shy_loadable_fsm_generator_injections_included
 
-#include "../../../injections/std/string/shy_string.h"
+#include "../../../injections/lib/std/string/shy_string.h"
 
 #include "./shy_generator.h"
 

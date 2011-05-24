@@ -1,7 +1,7 @@
 #ifndef _shy_loadable_generator_python_injections_included
 #define _shy_loadable_generator_python_injections_included
 
-#include "../../../injections/std/string/shy_string.h"
+#include "../../../injections/lib/std/string/shy_string.h"
 
 #include "./shy_python.h"
 
