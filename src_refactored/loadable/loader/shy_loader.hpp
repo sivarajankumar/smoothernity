@@ -32,7 +32,7 @@ void shy_guts :: write_output ( )
     {
         so_called_std_string generated ;
         so_called_loadable_generator :: generate ( generated ) ;
-        so_called_std_cout << generated << so_called_std_endl ;
+        so_called_lib_std_cout << generated << so_called_std_endl ;
     }
     else
         so_called_lib_std_cerr << error << so_called_std_endl ;
