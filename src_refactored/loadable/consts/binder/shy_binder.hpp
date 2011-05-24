@@ -3,7 +3,7 @@ namespace shy_guts
     static so_called_type_loadable_consts_content_module * current_module = 0 ;
 }
 
-void shy_loadable_consts_binder :: module ( const so_called_std_char * name )
+void shy_loadable_consts_binder :: module ( const so_called_lib_std_char * name )
 {
     so_called_type_loadable_consts_content_module_container * module_container = 0 ;
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
@@ -11,7 +11,7 @@ void shy_loadable_consts_binder :: module ( const so_called_std_char * name )
     shy_guts :: current_module = & ( ( * module_container ) [ name ] ) ;
 }
 
-void shy_loadable_consts_binder :: bind ( const so_called_std_char * name , const so_called_type_platform_math_num_fract & value )
+void shy_loadable_consts_binder :: bind ( const so_called_lib_std_char * name , const so_called_type_platform_math_num_fract & value )
 {
     if ( shy_guts :: current_module )
     {
@@ -20,7 +20,7 @@ void shy_loadable_consts_binder :: bind ( const so_called_std_char * name , cons
     }
 }
 
-void shy_loadable_consts_binder :: bind ( const so_called_std_char * name , const so_called_type_platform_math_num_whole & value )
+void shy_loadable_consts_binder :: bind ( const so_called_lib_std_char * name , const so_called_type_platform_math_num_whole & value )
 {
     if ( shy_guts :: current_module )
     {

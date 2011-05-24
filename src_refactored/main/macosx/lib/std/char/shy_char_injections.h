@@ -3,7 +3,7 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/char/shy_char_injections.h"
-    typedef shy_std_char so_called_std_char ;
+    typedef shy_lib_std_char so_called_lib_std_char ;
 #endif
 
 #endif

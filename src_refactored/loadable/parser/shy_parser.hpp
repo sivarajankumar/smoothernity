@@ -55,11 +55,11 @@ namespace shy_guts
 
     namespace consts
     {
-        static const so_called_std_char brace_close = '}' ;
-        static const so_called_std_char brace_open = '{' ;
+        static const so_called_lib_std_char brace_close = '}' ;
+        static const so_called_lib_std_char brace_open = '{' ;
         static const so_called_std_string command = "command" ;
         static const so_called_std_string consts = "consts" ;
-        static const so_called_std_char divide = '/' ;
+        static const so_called_lib_std_char divide = '/' ;
         static const so_called_std_string do_token = "do" ;
         static const so_called_std_string entry = "entry" ;
         static const so_called_std_string error_whole_line = "whole line: " ;
@@ -67,16 +67,16 @@ namespace shy_guts
         static const so_called_std_string if_token = "if" ;
         static const so_called_std_string is = "is" ;
         static const so_called_std_string machine = "machine" ;
-        static const so_called_std_char minus = '-' ;
+        static const so_called_lib_std_char minus = '-' ;
         static const so_called_std_string next_line = "\n" ;
         static const so_called_std_string on = "on" ;
-        static const so_called_std_char parenthesis_close = ')' ;
-        static const so_called_std_char parenthesis_open = '(' ;
+        static const so_called_lib_std_char parenthesis_close = ')' ;
+        static const so_called_lib_std_char parenthesis_open = '(' ;
         static const so_called_std_string state = "state" ;
         static const so_called_std_string system = "system" ;
-        static const so_called_std_char terminator = '#' ;
+        static const so_called_lib_std_char terminator = '#' ;
         static const so_called_std_string to = "to" ;
-        static const so_called_std_char underscore = '_' ;
+        static const so_called_lib_std_char underscore = '_' ;
     }
 
     namespace errors
@@ -224,7 +224,7 @@ namespace shy_guts
     static void trim_whitespaces ( ) ;
     static void append_first_char_to_token ( ) ;
     static void move_first_char_to_token ( ) ;
-    static void first_char ( so_called_std_char & ) ;
+    static void first_char ( so_called_lib_std_char & ) ;
     static void any_chars_in_line ( so_called_lib_std_bool & ) ;
 }
 
@@ -380,7 +380,7 @@ void shy_guts :: errors :: unknown_whole_attribute_in_module ( so_called_std_str
 
 void shy_guts :: handle_token_class_none ( )
 {
-    so_called_std_char ch ;
+    so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
     if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
         shy_guts :: token_class = shy_guts :: token_class_number ;
@@ -406,7 +406,7 @@ void shy_guts :: handle_token_class_none ( )
 
 void shy_guts :: handle_token_class_identifier ( )
 {
-    so_called_std_char ch ;
+    so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
     if ( so_called_std_isalpha ( ch , shy_guts :: locale ) 
       || so_called_std_isdigit ( ch , shy_guts :: locale )
@@ -421,7 +421,7 @@ void shy_guts :: handle_token_class_identifier ( )
 
 void shy_guts :: handle_token_class_number ( )
 {
-    so_called_std_char ch ;
+    so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
     if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
         shy_guts :: move_first_char_to_token ( ) ;
@@ -1490,7 +1490,7 @@ void shy_guts :: trim_whitespaces ( )
         shy_guts :: any_chars_in_line ( any_chars ) ;
         if ( any_chars )
         {
-            so_called_std_char ch ;
+            so_called_lib_std_char ch ;
             shy_guts :: first_char ( ch ) ; 
             if ( so_called_std_isspace ( ch , shy_guts :: locale ) )
             {
@@ -1504,7 +1504,7 @@ void shy_guts :: trim_whitespaces ( )
 
 void shy_guts :: append_first_char_to_token ( )
 {
-    so_called_std_char ch ;
+    so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
     shy_guts :: token += so_called_std_string ( 1 , ch ) ;
 }
@@ -1515,7 +1515,7 @@ void shy_guts :: move_first_char_to_token ( )
     shy_guts :: trim_first_char ( ) ;
 }
 
-void shy_guts :: first_char ( so_called_std_char & ch )
+void shy_guts :: first_char ( so_called_lib_std_char & ch )
 {
     ch = shy_guts :: remaining_line . at ( 0 ) ;
 }
