@@ -3,7 +3,7 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/istringstream/shy_istringstream_injections.h"
-    typedef shy_std_istringstream so_called_std_istringstream ;
+    typedef shy_lib_std_istringstream so_called_lib_std_istringstream ;
 #endif
 
 #endif
