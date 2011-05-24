@@ -463,7 +463,7 @@ shy_loadable_fsm_behaviour < type_fsm_inputs > :: shy_loadable_fsm_behaviour ( )
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & result )
 {
-    so_called_platform_math :: make_num_whole ( result , so_called_lib_std_false ) ;
+    result = so_called_platform_math_consts :: whole_false ;
     for ( typename type_fsm_behaviour_input_machine_container :: const_iterator input_current_machine_i = _behaviour_inputs_current . machines . begin ( )
         ; input_current_machine_i != _behaviour_inputs_current . machines . end ( )
         ; ++ input_current_machine_i
@@ -482,7 +482,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 
             if ( input_current_state_i -> second . active != input_fixed_state_i -> second . active )
             {
-                so_called_platform_math :: make_num_whole ( result , so_called_lib_std_true ) ;
+                result = so_called_platform_math_consts :: whole_true ;
                 return ;
             }
         }
@@ -497,7 +497,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 
             if ( input_current_command_i -> second . active != input_fixed_command_i -> second . active )
             {
-                so_called_platform_math :: make_num_whole ( result , so_called_lib_std_true ) ;
+                result = so_called_platform_math_consts :: whole_true ;
                 return ;
             }
         }
@@ -507,7 +507,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: init ( )
 {
-    so_called_platform_math :: make_num_whole ( _fsm_running , so_called_lib_std_false ) ;
+    _fsm_running = so_called_platform_math_consts :: whole_false ;
     _init_system ( ) ;
 }
 
@@ -571,13 +571,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: reset_behaviour_input_eve
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: run_fsm_begin ( )
 {
-    so_called_platform_math :: make_num_whole ( _fsm_running , so_called_lib_std_true ) ;
+    _fsm_running = so_called_platform_math_consts :: whole_true ;
 }
 
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: run_fsm_end ( )
 {
-    so_called_platform_math :: make_num_whole ( _fsm_running , so_called_lib_std_false ) ;
+    _fsm_running = so_called_platform_math_consts :: whole_false ;
 }
 
 template < typename type_fsm_inputs >

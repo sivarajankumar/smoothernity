@@ -13,7 +13,7 @@
 #include "../../../injections/lib/std/string/shy_string.h"
 #include "../../../injections/lib/std/true/shy_true.h"
 #include "../../../injections/platform/conditions/shy_conditions.h"
-#include "../../../injections/platform/math/shy_math.h"
+#include "../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../injections/platform/pointer/shy_pointer.h"
 #include "../../../injections/platform/pointer/type/data/shy_data.h"
 
