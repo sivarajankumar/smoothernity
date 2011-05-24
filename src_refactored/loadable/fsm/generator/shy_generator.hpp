@@ -350,10 +350,10 @@ void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change
     result += conditions ;
     result += "       )\n" ;
     result += "    {\n" ;
-    result += "        so_called_platform_math :: make_num_whole ( inputs_changed , false ) ;\n" ;
+    result += "        inputs_changed = so_called_platform_math_consts :: whole_false ;\n" ;
     result += "    }\n" ;
     result += "    else\n" ;
-    result += "        so_called_platform_math :: make_num_whole ( inputs_changed , true ) ;\n" ;
+    result += "        inputs_changed = so_called_platform_math_consts :: whole_true ;\n" ;
     result += "}\n" ;
 }
 
@@ -420,7 +420,7 @@ void shy_guts :: consts :: hpp_behaviour_init
     result += "        , shy_guts :: fixed_behaviour_inputs\n" ;
     result += "        ) ;\n" ;
     result += "\n" ;
-    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , false ) ;\n" ;
+    result += "    shy_guts :: fsm_running = so_called_platform_math_consts :: whole_false ;\n" ;
     result += "\n" ;
     result += bindings ;
     result += "}\n" ;
@@ -517,11 +517,11 @@ void shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events_reset_mach
     )
 {
     result . clear ( ) ;
-    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += "    shy_guts :: current_behaviour_inputs . machine_" ;
     result += machine ;
     result += "_command_" ;
     result += command ;
-    result += " , false ) ;\n" ;
+    result += " = so_called_platform_math_consts :: whole_false ;\n" ;
 }
 
 void shy_guts :: consts :: hpp_behaviour_run_fsm_begin 
@@ -534,7 +534,7 @@ void shy_guts :: consts :: hpp_behaviour_run_fsm_begin
     result += system ;
     result += "_fsm_behaviour_static :: run_fsm_begin ( )\n" ;
     result += "{\n" ;
-    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , true ) ;\n" ;
+    result += "    shy_guts :: fsm_running = so_called_platform_math_consts :: whole_true ;\n" ;
     result += "}\n" ;
 }
 
@@ -548,7 +548,7 @@ void shy_guts :: consts :: hpp_behaviour_run_fsm_end
     result += system ;
     result += "_fsm_behaviour_static :: run_fsm_end ( )\n" ;
     result += "{\n" ;
-    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: fsm_running , false ) ;\n" ;
+    result += "    shy_guts :: fsm_running = so_called_platform_math_consts :: whole_false ;\n" ;
     result += "}\n" ;
 }
 
@@ -1174,11 +1174,11 @@ void shy_guts :: consts :: hpp_guts_behaviour_actions_action_command_implement
     result += command ;
     result += " ( )\n" ;
     result += "{\n" ;
-    result += "    so_called_platform_math :: make_num_whole ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += "    shy_guts :: current_behaviour_inputs . machine_" ;
     result += machine ;
     result += "_command_" ;
     result += command ;
-    result += " , true ) ;\n" ;
+    result += " = so_called_platform_math_consts :: whole_true ;\n" ;
     result += "}\n" ;
 }
 
@@ -1322,7 +1322,7 @@ void shy_guts :: consts :: injections_hpp_contents ( so_called_lib_std_string & 
     result . clear ( ) ;
     result += "#include \"../../engine/fsm/stateless/shy_stateless_injections.h\"\n" ;
     result += "\n" ;
-    result += "#include \"../../../injections/platform/math/shy_math.h\"\n" ;
+    result += "#include \"../../../injections/platform/math/consts/shy_consts.h\"\n" ;
     result += "\n" ;
     result += "#include \"./shy_" ;
     result += system ;
