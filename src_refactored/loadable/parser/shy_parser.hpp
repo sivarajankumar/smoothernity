@@ -1338,7 +1338,7 @@ void shy_guts :: select_input_actions_container ( )
 
 void shy_guts :: select_input_actions_conditions ( )
 {
-    shy_guts :: input_actions_conditions_selected = so_called_std_true ;
+    shy_guts :: input_actions_conditions_selected = so_called_lib_std_true ;
     shy_guts :: transition_conditions_selected = so_called_lib_std_false ;
 }
 
@@ -1351,7 +1351,7 @@ void shy_guts :: select_input_actions_condition_group_container ( )
 void shy_guts :: select_transition_conditions ( )
 {
     shy_guts :: input_actions_conditions_selected = so_called_lib_std_false ;
-    shy_guts :: transition_conditions_selected = so_called_std_true ;
+    shy_guts :: transition_conditions_selected = so_called_lib_std_true ;
 }
 
 void shy_guts :: select_transition_condition_group_container ( )
@@ -1444,7 +1444,7 @@ void shy_guts :: read_next_token ( )
     shy_guts :: token = so_called_lib_std_string ( ) ;
     shy_guts :: token_class = shy_guts :: token_class_none ;
     shy_guts :: trim_whitespaces ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_true ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_true ;
     
     so_called_lib_std_bool any_chars = so_called_lib_std_false ;
     shy_guts :: any_chars_in_line ( any_chars ) ;
@@ -1529,7 +1529,7 @@ void shy_loadable_parser :: parse ( so_called_lib_std_string line )
 {
     shy_guts :: whole_line = line ;
     shy_guts :: remaining_line = line ;
-    shy_guts :: continue_parsing = so_called_std_true ;
+    shy_guts :: continue_parsing = so_called_lib_std_true ;
     shy_guts :: read_next_token ( ) ;
     while ( shy_guts :: continue_parsing && shy_guts :: token_class != shy_guts :: token_class_none )
     {

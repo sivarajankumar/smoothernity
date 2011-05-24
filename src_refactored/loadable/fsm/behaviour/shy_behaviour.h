@@ -275,14 +275,14 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
         _calculate_condition_inputs ( result_inputs , condition_group_i -> inputs ) ;
         _calculate_condition_states ( result_states , condition_group_i -> states ) ;
 
-        result_group = so_called_std_true ;
+        result_group = so_called_lib_std_true ;
         result_group &= result_commands ;
         result_group &= result_inputs ;
         result_group &= result_states ;
 
         if ( result_group )
         {
-            result = so_called_std_true ;
+            result = so_called_lib_std_true ;
             break ;
         }
     }
@@ -296,7 +296,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     , const so_called_type_loadable_fsm_content_condition_command_container & condition_commands
     )
 {
-    result = so_called_std_true ;
+    result = so_called_lib_std_true ;
     for ( so_called_type_loadable_fsm_content_condition_command_container :: const_iterator condition_command_i = condition_commands . begin ( )
         ; condition_command_i != condition_commands . end ( )
         ; ++ condition_command_i
@@ -324,7 +324,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     , const so_called_type_loadable_fsm_content_condition_input_container & condition_inputs
     )
 {
-    result = so_called_std_true ;
+    result = so_called_lib_std_true ;
     for ( so_called_type_loadable_fsm_content_condition_input_container :: const_iterator condition_input_i = condition_inputs . begin ( )
         ; condition_input_i != condition_inputs . end ( )
         ; ++ condition_input_i
@@ -354,7 +354,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     , const so_called_type_loadable_fsm_content_condition_state_container & condition_states
     )
 {
-    result = so_called_std_true ;
+    result = so_called_lib_std_true ;
     for ( so_called_type_loadable_fsm_content_condition_state_container :: const_iterator condition_state_i = condition_states . begin ( )
         ; condition_state_i != condition_states . end ( )
         ; ++ condition_state_i 
@@ -432,7 +432,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     fsm_behaviour_input_machine_i = _behaviour -> _behaviour_inputs_current . machines . find ( command_i -> machine ) ;
     fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( command_i -> command ) ;
 
-    fsm_behaviour_input_command_i -> second . active = so_called_std_true ;
+    fsm_behaviour_input_command_i -> second . active = so_called_lib_std_true ;
 }
 
 template < typename type_fsm_inputs >
@@ -482,7 +482,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 
             if ( input_current_state_i -> second . active != input_fixed_state_i -> second . active )
             {
-                so_called_platform_math :: make_num_whole ( result , so_called_std_true ) ;
+                so_called_platform_math :: make_num_whole ( result , so_called_lib_std_true ) ;
                 return ;
             }
         }
@@ -497,7 +497,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 
             if ( input_current_command_i -> second . active != input_fixed_command_i -> second . active )
             {
-                so_called_platform_math :: make_num_whole ( result , so_called_std_true ) ;
+                so_called_platform_math :: make_num_whole ( result , so_called_lib_std_true ) ;
                 return ;
             }
         }
@@ -543,7 +543,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: recalc_current_behaviour_
                 ) ;
 
             if ( so_called_platform_conditions :: whole_is_true ( state_active ) )
-                input_current_state_i -> second . active = so_called_std_true ;
+                input_current_state_i -> second . active = so_called_lib_std_true ;
             else
                 input_current_state_i -> second . active = so_called_lib_std_false ;
         }
@@ -571,7 +571,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: reset_behaviour_input_eve
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: run_fsm_begin ( )
 {
-    so_called_platform_math :: make_num_whole ( _fsm_running , so_called_std_true ) ;
+    so_called_platform_math :: make_num_whole ( _fsm_running , so_called_lib_std_true ) ;
 }
 
 template < typename type_fsm_inputs >

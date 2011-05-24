@@ -1996,7 +1996,7 @@ void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     )
 {
-    so_called_lib_std_bool first_condition = so_called_std_true ;
+    so_called_lib_std_bool first_condition = so_called_lib_std_true ;
     so_called_lib_std_string conditions ;
 
     for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
@@ -2570,7 +2570,7 @@ void shy_guts :: lookup :: single_action
     count += so_called_lib_std_int32_t ( actions . actions . size ( ) ) ;
     count += so_called_lib_std_int32_t ( actions . commands . size ( ) ) ;
     if ( count == 1 )
-        result = so_called_std_true ;
+        result = so_called_lib_std_true ;
     else
         result = so_called_lib_std_false ;
 }
@@ -2588,7 +2588,7 @@ void shy_guts :: lookup :: single_condition_single_group
         count += so_called_lib_std_int32_t ( condition_groups . begin ( ) -> states . size ( ) ) ;
         count += so_called_lib_std_int32_t ( condition_groups . begin ( ) -> commands . size ( ) ) ;
         if ( count == 1 )
-            result = so_called_std_true ;
+            result = so_called_lib_std_true ;
     }
 }
 

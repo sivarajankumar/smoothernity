@@ -3,7 +3,7 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/true/shy_true_injections.h"
-    #define so_called_std_true shy_std_true
+    #define so_called_lib_std_true shy_lib_std_true
 #endif
 
 #endif
