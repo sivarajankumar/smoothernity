@@ -1,7 +1,7 @@
 namespace shy_guts
 {
-    typedef so_called_std_set < so_called_std_string > type_action_command_name_container ;
-    typedef so_called_std_set < so_called_std_string > type_condition_state_name_container ;
+    typedef so_called_lib_std_set < so_called_std_string > type_action_command_name_container ;
+    typedef so_called_lib_std_set < so_called_std_string > type_condition_state_name_container ;
     typedef so_called_lib_std_map < so_called_std_string , type_action_command_name_container > type_machine_action_command_name_container ;
     typedef so_called_lib_std_map < so_called_std_string , type_condition_state_name_container > type_machine_condition_state_name_container ;
     typedef so_called_lib_std_map < so_called_std_string , type_machine_action_command_name_container > type_system_machine_action_command_name_container ;
