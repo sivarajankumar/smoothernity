@@ -133,7 +133,7 @@ namespace shy_guts
     static so_called_type_loadable_fsm_content_transition * current_fsm_transition = 0 ;
     static so_called_std_string error ;
     static so_called_lib_std_bool input_actions_conditions_selected = so_called_lib_std_false ;
-    static so_called_std_locale locale ;
+    static so_called_lib_std_locale locale ;
     static so_called_std_string module_name ;
     static so_called_std_string remaining_line ;
     static type_state state = state_none ;
