@@ -37,7 +37,7 @@ void shy_loadable_consts_assigner :: assign ( )
                 shy_guts :: consts :: error_no_value_assigned_to_module_attribute ( shy_guts :: error , module_name , whole_name ) ;
             else
             {
-                so_called_std_int32_t int_value = 0 ;
+                so_called_lib_std_int32_t int_value = 0 ;
                 so_called_std_istringstream ( string_value ) >> int_value ;
                 so_called_platform_math :: make_num_whole ( * whole . binding , int_value ) ;
             }
@@ -56,8 +56,8 @@ void shy_loadable_consts_assigner :: assign ( )
                 shy_guts :: consts :: error_no_value_assigned_to_module_attribute ( shy_guts :: error , module_name , fract_name ) ;
             else
             {
-                so_called_std_int32_t int_numerator = 0 ;
-                so_called_std_int32_t int_denominator = 0 ;
+                so_called_lib_std_int32_t int_numerator = 0 ;
+                so_called_lib_std_int32_t int_denominator = 0 ;
                 so_called_std_istringstream ( string_numerator ) >> int_numerator ;
                 so_called_std_istringstream ( string_denominator ) >> int_denominator ;
                 so_called_platform_math :: make_num_fract ( * fract . binding , int_numerator , int_denominator ) ;

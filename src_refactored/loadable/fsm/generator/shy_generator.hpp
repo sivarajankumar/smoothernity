@@ -2566,9 +2566,9 @@ void shy_guts :: lookup :: single_action
     , const so_called_type_loadable_fsm_content_actions & actions
     )
 {
-    so_called_std_int32_t count = 0;
-    count += so_called_std_int32_t ( actions . actions . size ( ) ) ;
-    count += so_called_std_int32_t ( actions . commands . size ( ) ) ;
+    so_called_lib_std_int32_t count = 0;
+    count += so_called_lib_std_int32_t ( actions . actions . size ( ) ) ;
+    count += so_called_lib_std_int32_t ( actions . commands . size ( ) ) ;
     if ( count == 1 )
         result = so_called_std_true ;
     else
@@ -2583,10 +2583,10 @@ void shy_guts :: lookup :: single_condition_single_group
     result = so_called_lib_std_false ;
     if ( condition_groups . size ( ) == 1 )
     {
-        so_called_std_int32_t count = 0 ;
-        count += so_called_std_int32_t ( condition_groups . begin ( ) -> inputs . size ( ) ) ;
-        count += so_called_std_int32_t ( condition_groups . begin ( ) -> states . size ( ) ) ;
-        count += so_called_std_int32_t ( condition_groups . begin ( ) -> commands . size ( ) ) ;
+        so_called_lib_std_int32_t count = 0 ;
+        count += so_called_lib_std_int32_t ( condition_groups . begin ( ) -> inputs . size ( ) ) ;
+        count += so_called_lib_std_int32_t ( condition_groups . begin ( ) -> states . size ( ) ) ;
+        count += so_called_lib_std_int32_t ( condition_groups . begin ( ) -> commands . size ( ) ) ;
         if ( count == 1 )
             result = so_called_std_true ;
     }
