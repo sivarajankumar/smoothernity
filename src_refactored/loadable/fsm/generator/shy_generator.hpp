@@ -2016,7 +2016,7 @@ void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
             )
         {
             if ( first_condition )
-                first_condition = so_called_std_false ;
+                first_condition = so_called_lib_std_false ;
             else
             {
                 so_called_std_string condition_and ;
@@ -2035,7 +2035,7 @@ void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
             )
         {
             if ( first_condition )
-                first_condition = so_called_std_false ;
+                first_condition = so_called_lib_std_false ;
             else
             {
                 so_called_std_string condition_and ;
@@ -2572,7 +2572,7 @@ void shy_guts :: lookup :: single_action
     if ( count == 1 )
         result = so_called_std_true ;
     else
-        result = so_called_std_false ;
+        result = so_called_lib_std_false ;
 }
 
 void shy_guts :: lookup :: single_condition_single_group
@@ -2580,7 +2580,7 @@ void shy_guts :: lookup :: single_condition_single_group
     , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
     )
 {
-    result = so_called_std_false ;
+    result = so_called_lib_std_false ;
     if ( condition_groups . size ( ) == 1 )
     {
         so_called_std_int32_t count = 0 ;

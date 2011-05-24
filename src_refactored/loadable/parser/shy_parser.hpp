@@ -118,8 +118,8 @@ namespace shy_guts
     static so_called_std_string attribute_name ;
     static so_called_std_string attribute_numerator_sign ;
     static so_called_std_string attribute_numerator_value ;
-    static so_called_lib_std_bool continue_parsing = so_called_std_false ;
-    static so_called_lib_std_bool continue_reading_next_token = so_called_std_false ;
+    static so_called_lib_std_bool continue_parsing = so_called_lib_std_false ;
+    static so_called_lib_std_bool continue_reading_next_token = so_called_lib_std_false ;
     static so_called_type_loadable_fsm_content_action_command current_fsm_action_command ;
     static so_called_type_loadable_fsm_content_actions * current_fsm_actions = 0 ;
     static so_called_type_loadable_fsm_content_condition_group * current_fsm_condition_group = 0 ;
@@ -132,14 +132,14 @@ namespace shy_guts
     static so_called_std_string current_fsm_system_name ;
     static so_called_type_loadable_fsm_content_transition * current_fsm_transition = 0 ;
     static so_called_std_string error ;
-    static so_called_lib_std_bool input_actions_conditions_selected = so_called_std_false ;
+    static so_called_lib_std_bool input_actions_conditions_selected = so_called_lib_std_false ;
     static so_called_std_locale locale ;
     static so_called_std_string module_name ;
     static so_called_std_string remaining_line ;
     static type_state state = state_none ;
     static so_called_std_string token ;
     static type_token_class token_class = token_class_none ;
-    static so_called_lib_std_bool transition_conditions_selected = so_called_std_false ;
+    static so_called_lib_std_bool transition_conditions_selected = so_called_lib_std_false ;
     static so_called_std_string whole_line ;
 
     static void handle_token_class_none ( ) ;
@@ -416,7 +416,7 @@ void shy_guts :: handle_token_class_identifier ( )
         shy_guts :: move_first_char_to_token ( ) ;
     }
     else
-        shy_guts :: continue_reading_next_token = so_called_std_false ;
+        shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_number ( )
@@ -426,55 +426,55 @@ void shy_guts :: handle_token_class_number ( )
     if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
         shy_guts :: move_first_char_to_token ( ) ;
     else
-        shy_guts :: continue_reading_next_token = so_called_std_false ;
+        shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_terminator ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_divide ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_minus ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_brace_open ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_brace_close ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_parenthesis_open ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_parenthesis_close ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_token_class_unknown ( )
 {
     shy_guts :: move_first_char_to_token ( ) ;
-    shy_guts :: continue_reading_next_token = so_called_std_false ;
+    shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_state_none ( )
@@ -500,7 +500,7 @@ void shy_guts :: handle_state_none ( )
 
 void shy_guts :: handle_state_error ( )
 {
-    shy_guts :: continue_parsing = so_called_std_false ;
+    shy_guts :: continue_parsing = so_called_lib_std_false ;
 }
 
 void shy_guts :: handle_state_reading_module_name ( )
@@ -523,7 +523,7 @@ void shy_guts :: handle_state_reading_module_name ( )
 void shy_guts :: handle_state_reading_attribute_name ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
-        shy_guts :: continue_parsing = so_called_std_false ;
+        shy_guts :: continue_parsing = so_called_lib_std_false ;
     else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
     {
         shy_guts :: read_next_token ( ) ;
@@ -655,7 +655,7 @@ void shy_guts :: handle_state_reading_system_name ( )
 void shy_guts :: handle_state_reading_machine_token ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
-        shy_guts :: continue_parsing = so_called_std_false ;
+        shy_guts :: continue_parsing = so_called_lib_std_false ;
     else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: machine )
     {
         shy_guts :: read_next_token ( ) ;
@@ -700,7 +700,7 @@ void shy_guts :: handle_state_reading_machine_name ( )
 void shy_guts :: handle_state_reading_state_token ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
-        shy_guts :: continue_parsing = so_called_std_false ;
+        shy_guts :: continue_parsing = so_called_lib_std_false ;
     else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: state )
     {
         shy_guts :: read_next_token ( ) ;
@@ -750,7 +750,7 @@ void shy_guts :: handle_state_reading_state_name ( )
 void shy_guts :: handle_state_reading_state_content ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
-        shy_guts :: continue_parsing = so_called_std_false ;
+        shy_guts :: continue_parsing = so_called_lib_std_false ;
     else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: on )
     {
         shy_guts :: read_next_token ( ) ;
@@ -825,7 +825,7 @@ void shy_guts :: handle_state_reading_event_type ( )
 void shy_guts :: handle_state_reading_action_token ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
-        shy_guts :: continue_parsing = so_called_std_false ;
+        shy_guts :: continue_parsing = so_called_lib_std_false ;
     else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: do_token )
     {
         shy_guts :: read_next_token ( ) ;
@@ -1339,7 +1339,7 @@ void shy_guts :: select_input_actions_container ( )
 void shy_guts :: select_input_actions_conditions ( )
 {
     shy_guts :: input_actions_conditions_selected = so_called_std_true ;
-    shy_guts :: transition_conditions_selected = so_called_std_false ;
+    shy_guts :: transition_conditions_selected = so_called_lib_std_false ;
 }
 
 void shy_guts :: select_input_actions_condition_group_container ( )
@@ -1350,7 +1350,7 @@ void shy_guts :: select_input_actions_condition_group_container ( )
 
 void shy_guts :: select_transition_conditions ( )
 {
-    shy_guts :: input_actions_conditions_selected = so_called_std_false ;
+    shy_guts :: input_actions_conditions_selected = so_called_lib_std_false ;
     shy_guts :: transition_conditions_selected = so_called_std_true ;
 }
 
@@ -1446,7 +1446,7 @@ void shy_guts :: read_next_token ( )
     shy_guts :: trim_whitespaces ( ) ;
     shy_guts :: continue_reading_next_token = so_called_std_true ;
     
-    so_called_lib_std_bool any_chars = so_called_std_false ;
+    so_called_lib_std_bool any_chars = so_called_lib_std_false ;
     shy_guts :: any_chars_in_line ( any_chars ) ;
     while ( any_chars && shy_guts :: continue_reading_next_token )
     {
