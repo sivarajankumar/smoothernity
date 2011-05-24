@@ -15,10 +15,10 @@ void shy_guts :: prepare ( )
 
 void shy_guts :: read_input ( )
 {
-    while ( ! so_called_std_cin . eof ( ) )
+    while ( ! so_called_lib_std_cin . eof ( ) )
     {
         so_called_std_string line ;
-        so_called_std_getline ( so_called_std_cin , line ) ;
+        so_called_std_getline ( so_called_lib_std_cin , line ) ;
         so_called_loadable_parser :: parse ( line ) ;
     }
     so_called_loadable_parser :: terminate ( ) ;
