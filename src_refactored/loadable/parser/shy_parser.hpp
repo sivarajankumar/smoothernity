@@ -1492,7 +1492,7 @@ void shy_guts :: trim_whitespaces ( )
         {
             so_called_lib_std_char ch ;
             shy_guts :: first_char ( ch ) ; 
-            if ( so_called_std_isspace ( ch , shy_guts :: locale ) )
+            if ( so_called_lib_std_isspace ( ch , shy_guts :: locale ) )
             {
                 shy_guts :: trim_first_char ( ) ;
                 continue ;

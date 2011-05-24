@@ -3,7 +3,7 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/isspace/shy_isspace_injections.h"
-    #define so_called_std_isspace shy_std_isspace
+    #define so_called_lib_std_isspace shy_lib_std_isspace
 #endif
 
 #endif
