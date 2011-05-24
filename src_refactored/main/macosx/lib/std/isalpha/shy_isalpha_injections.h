@@ -3,7 +3,7 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/isalpha/shy_isalpha_injections.h"
-    #define so_called_std_isalpha shy_std_isalpha
+    #define so_called_lib_std_isalpha shy_lib_std_isalpha
 #endif
 
 #endif

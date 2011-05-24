@@ -384,7 +384,7 @@ void shy_guts :: handle_token_class_none ( )
     shy_guts :: first_char ( ch ) ;
     if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
         shy_guts :: token_class = shy_guts :: token_class_number ;
-    else if ( so_called_std_isalpha ( ch , shy_guts :: locale ) )
+    else if ( so_called_lib_std_isalpha ( ch , shy_guts :: locale ) )
         shy_guts :: token_class = shy_guts :: token_class_identifier ;
     else if ( ch == shy_guts :: consts :: terminator )
         shy_guts :: token_class = shy_guts :: token_class_terminator ;
@@ -408,7 +408,7 @@ void shy_guts :: handle_token_class_identifier ( )
 {
     so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
-    if ( so_called_std_isalpha ( ch , shy_guts :: locale ) 
+    if ( so_called_lib_std_isalpha ( ch , shy_guts :: locale ) 
       || so_called_std_isdigit ( ch , shy_guts :: locale )
       || ch == shy_guts :: consts :: underscore
        )
