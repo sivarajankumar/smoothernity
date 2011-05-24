@@ -118,8 +118,8 @@ namespace shy_guts
     static so_called_std_string attribute_name ;
     static so_called_std_string attribute_numerator_sign ;
     static so_called_std_string attribute_numerator_value ;
-    static so_called_std_bool continue_parsing = so_called_std_false ;
-    static so_called_std_bool continue_reading_next_token = so_called_std_false ;
+    static so_called_lib_std_bool continue_parsing = so_called_std_false ;
+    static so_called_lib_std_bool continue_reading_next_token = so_called_std_false ;
     static so_called_type_loadable_fsm_content_action_command current_fsm_action_command ;
     static so_called_type_loadable_fsm_content_actions * current_fsm_actions = 0 ;
     static so_called_type_loadable_fsm_content_condition_group * current_fsm_condition_group = 0 ;
@@ -132,14 +132,14 @@ namespace shy_guts
     static so_called_std_string current_fsm_system_name ;
     static so_called_type_loadable_fsm_content_transition * current_fsm_transition = 0 ;
     static so_called_std_string error ;
-    static so_called_std_bool input_actions_conditions_selected = so_called_std_false ;
+    static so_called_lib_std_bool input_actions_conditions_selected = so_called_std_false ;
     static so_called_std_locale locale ;
     static so_called_std_string module_name ;
     static so_called_std_string remaining_line ;
     static type_state state = state_none ;
     static so_called_std_string token ;
     static type_token_class token_class = token_class_none ;
-    static so_called_std_bool transition_conditions_selected = so_called_std_false ;
+    static so_called_lib_std_bool transition_conditions_selected = so_called_std_false ;
     static so_called_std_string whole_line ;
 
     static void handle_token_class_none ( ) ;
@@ -225,7 +225,7 @@ namespace shy_guts
     static void append_first_char_to_token ( ) ;
     static void move_first_char_to_token ( ) ;
     static void first_char ( so_called_std_char & ) ;
-    static void any_chars_in_line ( so_called_std_bool & ) ;
+    static void any_chars_in_line ( so_called_lib_std_bool & ) ;
 }
 
 void shy_guts :: errors :: expected_action_name_instead_of ( so_called_std_string & error , so_called_std_string token )
@@ -1446,7 +1446,7 @@ void shy_guts :: read_next_token ( )
     shy_guts :: trim_whitespaces ( ) ;
     shy_guts :: continue_reading_next_token = so_called_std_true ;
     
-    so_called_std_bool any_chars = so_called_std_false ;
+    so_called_lib_std_bool any_chars = so_called_std_false ;
     shy_guts :: any_chars_in_line ( any_chars ) ;
     while ( any_chars && shy_guts :: continue_reading_next_token )
     {
@@ -1486,7 +1486,7 @@ void shy_guts :: trim_whitespaces ( )
 {
     for ( ; ; )
     {
-        so_called_std_bool any_chars ;
+        so_called_lib_std_bool any_chars ;
         shy_guts :: any_chars_in_line ( any_chars ) ;
         if ( any_chars )
         {
@@ -1520,7 +1520,7 @@ void shy_guts :: first_char ( so_called_std_char & ch )
     ch = shy_guts :: remaining_line . at ( 0 ) ;
 }
 
-void shy_guts :: any_chars_in_line ( so_called_std_bool & any_chars )
+void shy_guts :: any_chars_in_line ( so_called_lib_std_bool & any_chars )
 {
     any_chars = ! shy_guts :: remaining_line . empty ( ) ;
 }

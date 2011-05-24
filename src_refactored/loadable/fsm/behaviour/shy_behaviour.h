@@ -15,19 +15,19 @@ private :
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
     private :
         void _calculate_condition_commands 
-            ( so_called_std_bool & 
+            ( so_called_lib_std_bool & 
             , const so_called_type_loadable_fsm_content_condition_command_container &
             ) ;
         void _calculate_condition_groups 
-            ( so_called_std_bool & 
+            ( so_called_lib_std_bool & 
             , const so_called_type_loadable_fsm_content_condition_group_container & 
             ) ;
         void _calculate_condition_inputs 
-            ( so_called_std_bool & 
+            ( so_called_lib_std_bool & 
             , const so_called_type_loadable_fsm_content_condition_input_container &
             ) ;
         void _calculate_condition_states 
-            ( so_called_std_bool & 
+            ( so_called_lib_std_bool & 
             , const so_called_type_loadable_fsm_content_condition_state_container &
             ) ;
         void _execute_action_command ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator ) ;
@@ -57,7 +57,7 @@ private :
     {
     public :
         type_fsm_behaviour_input_command ( ) ;
-        so_called_std_bool active ;
+        so_called_lib_std_bool active ;
     } ;
 
     typedef so_called_std_map < so_called_std_string , type_fsm_behaviour_input_command > type_fsm_behaviour_input_command_container ;
@@ -66,7 +66,7 @@ private :
     {
     public :
         type_fsm_behaviour_input_state ( ) ;
-        so_called_std_bool active ;
+        so_called_lib_std_bool active ;
     } ;
 
     typedef so_called_std_map < so_called_std_string , type_fsm_behaviour_input_state > type_fsm_behaviour_input_state_container ;
@@ -220,7 +220,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_inpu
         ; ++ on_input_i
         )
     {
-        so_called_std_bool conditions = so_called_std_false ;
+        so_called_lib_std_bool conditions = so_called_std_false ;
         _calculate_condition_groups ( conditions , on_input_i -> condition_groups ) ;
         if ( conditions )
             _execute_actions ( on_input_i -> actions ) ;
@@ -235,7 +235,7 @@ so_called_type_common_engine_fsm_state & shy_loadable_fsm_behaviour < type_fsm_i
         ; ++ transition_i
         )
     {
-        so_called_std_bool conditions = so_called_std_false ;
+        so_called_lib_std_bool conditions = so_called_std_false ;
         _calculate_condition_groups ( conditions , transition_i -> condition_groups ) ;
 
         if ( conditions )
@@ -256,7 +256,7 @@ template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > 
 :: type_fsm_state 
 :: _calculate_condition_groups 
-    ( so_called_std_bool & result 
+    ( so_called_lib_std_bool & result 
     , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
     )
 {
@@ -266,10 +266,10 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
         ; ++ condition_group_i
         )
     {
-        so_called_std_bool result_commands = so_called_std_false ;
-        so_called_std_bool result_group = so_called_std_false ;
-        so_called_std_bool result_inputs = so_called_std_false ;
-        so_called_std_bool result_states = so_called_std_false ;
+        so_called_lib_std_bool result_commands = so_called_std_false ;
+        so_called_lib_std_bool result_group = so_called_std_false ;
+        so_called_lib_std_bool result_inputs = so_called_std_false ;
+        so_called_lib_std_bool result_states = so_called_std_false ;
 
         _calculate_condition_commands ( result_commands , condition_group_i -> commands ) ;
         _calculate_condition_inputs ( result_inputs , condition_group_i -> inputs ) ;
@@ -292,7 +292,7 @@ template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > 
 :: type_fsm_state 
 :: _calculate_condition_commands 
-    ( so_called_std_bool & result 
+    ( so_called_lib_std_bool & result 
     , const so_called_type_loadable_fsm_content_condition_command_container & condition_commands
     )
 {
@@ -320,7 +320,7 @@ template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > 
 :: type_fsm_state 
 :: _calculate_condition_inputs 
-    ( so_called_std_bool & result 
+    ( so_called_lib_std_bool & result 
     , const so_called_type_loadable_fsm_content_condition_input_container & condition_inputs
     )
 {
@@ -350,7 +350,7 @@ template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > 
 :: type_fsm_state 
 :: _calculate_condition_states 
-    ( so_called_std_bool & result 
+    ( so_called_lib_std_bool & result 
     , const so_called_type_loadable_fsm_content_condition_state_container & condition_states
     )
 {

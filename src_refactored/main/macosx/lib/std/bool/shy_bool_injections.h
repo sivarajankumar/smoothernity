@@ -3,7 +3,7 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/bool/shy_bool_injections.h"
-    typedef shy_std_bool so_called_std_bool ;
+    typedef shy_lib_std_bool so_called_lib_std_bool ;
 #endif
 
 #endif

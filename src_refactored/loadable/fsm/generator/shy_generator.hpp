@@ -146,12 +146,12 @@ namespace shy_guts
         static void guts_type_machine_state_condition_line
             ( so_called_std_string &
             , so_called_std_string
-            , so_called_std_bool
-            , so_called_std_bool
-            , so_called_std_bool
-            , so_called_std_bool
-            , so_called_std_bool
-            , so_called_std_bool
+            , so_called_lib_std_bool
+            , so_called_lib_std_bool
+            , so_called_lib_std_bool
+            , so_called_lib_std_bool
+            , so_called_lib_std_bool
+            , so_called_lib_std_bool
             ) ;
         static void guts_type_machine_state_conditions
             ( so_called_std_string &
@@ -234,11 +234,11 @@ namespace shy_guts
         static type_system_machine_condition_state_name_container system_machine_condition_state_name_container ;
 
         static void single_action 
-            ( so_called_std_bool &
+            ( so_called_lib_std_bool &
             , const so_called_type_loadable_fsm_content_actions &
             ) ;
         static void single_condition_single_group
-            ( so_called_std_bool &
+            ( so_called_lib_std_bool &
             , const so_called_type_loadable_fsm_content_condition_group_container &
             ) ;
         static void get_machine_action_command_names 
@@ -1614,12 +1614,12 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_actions
 void shy_guts :: hpp :: guts_type_machine_state_condition_line
     ( so_called_std_string & result
     , so_called_std_string condition
-    , so_called_std_bool group_first
-    , so_called_std_bool group_last
-    , so_called_std_bool group_single
-    , so_called_std_bool condition_first
-    , so_called_std_bool condition_last
-    , so_called_std_bool condition_single
+    , so_called_lib_std_bool group_first
+    , so_called_lib_std_bool group_last
+    , so_called_lib_std_bool group_single
+    , so_called_lib_std_bool condition_first
+    , so_called_lib_std_bool condition_last
+    , so_called_lib_std_bool condition_single
     )
 {
     if ( group_single )
@@ -1667,9 +1667,9 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions
         ; ++ condition_group_i
         )
     {
-        so_called_std_bool group_first = true ;
-        so_called_std_bool group_last = true ;
-        so_called_std_bool group_single = true ;
+        so_called_lib_std_bool group_first = true ;
+        so_called_lib_std_bool group_last = true ;
+        so_called_lib_std_bool group_single = true ;
 
         group_first &= condition_group_i == condition_group_container . begin ( ) ;
         group_last &= condition_group_i == condition_group_container . end ( ) - 1 ;
@@ -1683,9 +1683,9 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions
         {
             so_called_std_string condition_line ;
             so_called_std_string condition_input ;
-            so_called_std_bool condition_first = true ;
-            so_called_std_bool condition_last = true ;
-            so_called_std_bool condition_single = true ;
+            so_called_lib_std_bool condition_first = true ;
+            so_called_lib_std_bool condition_last = true ;
+            so_called_lib_std_bool condition_single = true ;
 
             shy_guts :: consts :: hpp_guts_type_machine_state_condition_input ( condition_input , condition_input_i -> input ) ;
 
@@ -1717,9 +1717,9 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions
         {
             so_called_std_string condition_line ;
             so_called_std_string condition_state ;
-            so_called_std_bool condition_first = true ;
-            so_called_std_bool condition_last = true ;
-            so_called_std_bool condition_single = true ;
+            so_called_lib_std_bool condition_first = true ;
+            so_called_lib_std_bool condition_last = true ;
+            so_called_lib_std_bool condition_single = true ;
 
             shy_guts :: consts :: hpp_guts_type_machine_state_condition_state ( condition_state , condition_state_i -> machine , condition_state_i -> state ) ;
 
@@ -1751,9 +1751,9 @@ void shy_guts :: hpp :: guts_type_machine_state_conditions
         {
             so_called_std_string condition_line ;
             so_called_std_string condition_command ;
-            so_called_std_bool condition_first = true ;
-            so_called_std_bool condition_last = true ;
-            so_called_std_bool condition_single = true ;
+            so_called_lib_std_bool condition_first = true ;
+            so_called_lib_std_bool condition_last = true ;
+            so_called_lib_std_bool condition_single = true ;
 
             shy_guts :: consts :: hpp_guts_type_machine_state_condition_command ( condition_command , machine_i -> first , condition_command_i -> command ) ;
 
@@ -1787,8 +1787,8 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_if
     , so_called_std_string actions
     )
 {
-    so_called_std_bool single_condition = false ;
-    so_called_std_bool single_action = false ;
+    so_called_lib_std_bool single_condition = false ;
+    so_called_lib_std_bool single_action = false ;
 
     shy_guts :: lookup :: single_condition_single_group ( single_condition , on_input_i -> condition_groups ) ;
     shy_guts :: lookup :: single_action ( single_action , on_input_i -> actions ) ;
@@ -1836,8 +1836,8 @@ void shy_guts :: hpp :: guts_type_machine_state_transition_implement
         {
             so_called_std_string conditions ;
             so_called_std_string transition ;
-            so_called_std_bool single_condition = false ;
-            so_called_std_bool first_transition = false ;
+            so_called_lib_std_bool single_condition = false ;
+            so_called_lib_std_bool first_transition = false ;
 
             first_transition = transition_i == state_i -> second . transitions . begin ( ) ;
             shy_guts :: lookup :: single_condition_single_group ( single_condition , transition_i -> condition_groups ) ;
@@ -1996,7 +1996,7 @@ void shy_guts :: hpp :: behaviour_determine_behaviour_inputs_change
     , so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
     )
 {
-    so_called_std_bool first_condition = so_called_std_true ;
+    so_called_lib_std_bool first_condition = so_called_std_true ;
     so_called_std_string conditions ;
 
     for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
@@ -2562,7 +2562,7 @@ void shy_guts :: prepare :: system_machine_state_transition
 }
 
 void shy_guts :: lookup :: single_action
-    ( so_called_std_bool & result
+    ( so_called_lib_std_bool & result
     , const so_called_type_loadable_fsm_content_actions & actions
     )
 {
@@ -2576,7 +2576,7 @@ void shy_guts :: lookup :: single_action
 }
 
 void shy_guts :: lookup :: single_condition_single_group
-    ( so_called_std_bool & result
+    ( so_called_lib_std_bool & result
     , const so_called_type_loadable_fsm_content_condition_group_container & condition_groups
     )
 {
