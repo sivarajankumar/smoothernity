@@ -382,7 +382,7 @@ void shy_guts :: handle_token_class_none ( )
 {
     so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
-    if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
+    if ( so_called_lib_std_isdigit ( ch , shy_guts :: locale ) )
         shy_guts :: token_class = shy_guts :: token_class_number ;
     else if ( so_called_lib_std_isalpha ( ch , shy_guts :: locale ) )
         shy_guts :: token_class = shy_guts :: token_class_identifier ;
@@ -409,7 +409,7 @@ void shy_guts :: handle_token_class_identifier ( )
     so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
     if ( so_called_lib_std_isalpha ( ch , shy_guts :: locale ) 
-      || so_called_std_isdigit ( ch , shy_guts :: locale )
+      || so_called_lib_std_isdigit ( ch , shy_guts :: locale )
       || ch == shy_guts :: consts :: underscore
        )
     {
@@ -423,7 +423,7 @@ void shy_guts :: handle_token_class_number ( )
 {
     so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
-    if ( so_called_std_isdigit ( ch , shy_guts :: locale ) )
+    if ( so_called_lib_std_isdigit ( ch , shy_guts :: locale ) )
         shy_guts :: move_first_char_to_token ( ) ;
     else
         shy_guts :: continue_reading_next_token = so_called_lib_std_false ;
