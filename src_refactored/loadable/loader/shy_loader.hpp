@@ -1,6 +1,6 @@
 namespace shy_guts
 {
-    static void get_error ( so_called_std_string & ) ;
+    static void get_error ( so_called_lib_std_string & ) ;
     static void prepare ( ) ;
     static void read_input ( ) ;
     static void write_output ( ) ;
@@ -17,7 +17,7 @@ void shy_guts :: read_input ( )
 {
     while ( ! so_called_lib_std_cin . eof ( ) )
     {
-        so_called_std_string line ;
+        so_called_lib_std_string line ;
         so_called_lib_std_getline ( so_called_lib_std_cin , line ) ;
         so_called_loadable_parser :: parse ( line ) ;
     }
@@ -26,11 +26,11 @@ void shy_guts :: read_input ( )
 
 void shy_guts :: write_output ( )
 {
-    so_called_std_string error ;
+    so_called_lib_std_string error ;
     shy_guts :: get_error ( error ) ;
     if ( error . empty ( ) )
     {
-        so_called_std_string generated ;
+        so_called_lib_std_string generated ;
         so_called_loadable_generator :: generate ( generated ) ;
         so_called_lib_std_cout << generated << so_called_lib_std_endl ;
     }
@@ -44,11 +44,11 @@ void shy_guts :: use_loaded_data ( )
     so_called_loadable_fsm_assigner :: assign ( ) ;
 }
 
-void shy_guts :: get_error ( so_called_std_string & error )
+void shy_guts :: get_error ( so_called_lib_std_string & error )
 {
-    so_called_std_string parser_error ;
-    so_called_std_string consts_assigner_error ;
-    so_called_std_string fsm_assigner_error ;
+    so_called_lib_std_string parser_error ;
+    so_called_lib_std_string consts_assigner_error ;
+    so_called_lib_std_string fsm_assigner_error ;
 
     so_called_loadable_parser :: get_error ( parser_error ) ;
     so_called_loadable_consts_assigner :: get_error ( consts_assigner_error ) ;

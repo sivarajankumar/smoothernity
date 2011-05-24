@@ -1,8 +1,8 @@
 void shy_loadable_fsm_behaviour_trace :: machine_state_action_command 
-    ( so_called_std_string machine 
-    , so_called_std_string state
-    , so_called_std_string command_name
-    , so_called_std_string command_machine
+    ( so_called_lib_std_string machine 
+    , so_called_lib_std_string state
+    , so_called_lib_std_string command_name
+    , so_called_lib_std_string command_machine
     )
 {
     so_called_lib_std_cerr << "machine " ;
@@ -17,9 +17,9 @@ void shy_loadable_fsm_behaviour_trace :: machine_state_action_command
 }
 
 void shy_loadable_fsm_behaviour_trace :: machine_state_action_do 
-    ( so_called_std_string machine
-    , so_called_std_string state
-    , so_called_std_string action
+    ( so_called_lib_std_string machine
+    , so_called_lib_std_string state
+    , so_called_lib_std_string action
     )
 {
     so_called_lib_std_cerr << "machine " ;
@@ -31,7 +31,7 @@ void shy_loadable_fsm_behaviour_trace :: machine_state_action_do
     so_called_lib_std_cerr << so_called_lib_std_endl ;
 }
 
-void shy_loadable_fsm_behaviour_trace :: machine_state_on_entry ( so_called_std_string machine , so_called_std_string state )
+void shy_loadable_fsm_behaviour_trace :: machine_state_on_entry ( so_called_lib_std_string machine , so_called_lib_std_string state )
 {
     so_called_lib_std_cerr << "machine " ;
     so_called_lib_std_cerr << machine ;
@@ -41,7 +41,7 @@ void shy_loadable_fsm_behaviour_trace :: machine_state_on_entry ( so_called_std_
     so_called_lib_std_cerr << so_called_lib_std_endl ;
 }
 
-void shy_loadable_fsm_behaviour_trace :: machine_state_on_exit ( so_called_std_string machine , so_called_std_string state )
+void shy_loadable_fsm_behaviour_trace :: machine_state_on_exit ( so_called_lib_std_string machine , so_called_lib_std_string state )
 {
     so_called_lib_std_cerr << "machine " ;
     so_called_lib_std_cerr << machine ;
@@ -51,7 +51,7 @@ void shy_loadable_fsm_behaviour_trace :: machine_state_on_exit ( so_called_std_s
     so_called_lib_std_cerr << so_called_lib_std_endl ;
 }
 
-void shy_loadable_fsm_behaviour_trace :: machine_state_on_input ( so_called_std_string machine , so_called_std_string state )
+void shy_loadable_fsm_behaviour_trace :: machine_state_on_input ( so_called_lib_std_string machine , so_called_lib_std_string state )
 {
     so_called_lib_std_cerr << "machine " ;
     so_called_lib_std_cerr << machine ;

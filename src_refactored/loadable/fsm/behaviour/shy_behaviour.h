@@ -42,7 +42,7 @@ private :
         so_called_type_loadable_fsm_content_system_container :: const_iterator _system_i ;
     } ;
 
-    typedef so_called_lib_std_map < so_called_std_string , type_fsm_state > type_fsm_state_container ;
+    typedef so_called_lib_std_map < so_called_lib_std_string , type_fsm_state > type_fsm_state_container ;
 
     class type_fsm_machine
     {
@@ -51,7 +51,7 @@ private :
         so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > state_current ;
     } ;
 
-    typedef so_called_lib_std_map < so_called_std_string , type_fsm_machine > type_fsm_machine_container ;
+    typedef so_called_lib_std_map < so_called_lib_std_string , type_fsm_machine > type_fsm_machine_container ;
 
     class type_fsm_behaviour_input_command
     {
@@ -60,7 +60,7 @@ private :
         so_called_lib_std_bool active ;
     } ;
 
-    typedef so_called_lib_std_map < so_called_std_string , type_fsm_behaviour_input_command > type_fsm_behaviour_input_command_container ;
+    typedef so_called_lib_std_map < so_called_lib_std_string , type_fsm_behaviour_input_command > type_fsm_behaviour_input_command_container ;
 
     class type_fsm_behaviour_input_state
     {
@@ -69,7 +69,7 @@ private :
         so_called_lib_std_bool active ;
     } ;
 
-    typedef so_called_lib_std_map < so_called_std_string , type_fsm_behaviour_input_state > type_fsm_behaviour_input_state_container ;
+    typedef so_called_lib_std_map < so_called_lib_std_string , type_fsm_behaviour_input_state > type_fsm_behaviour_input_state_container ;
 
     class type_fsm_behaviour_input_machine
     {
@@ -78,7 +78,7 @@ private :
         type_fsm_behaviour_input_state_container states ;
     } ;
 
-    typedef so_called_lib_std_map < so_called_std_string , type_fsm_behaviour_input_machine > type_fsm_behaviour_input_machine_container ;
+    typedef so_called_lib_std_map < so_called_lib_std_string , type_fsm_behaviour_input_machine > type_fsm_behaviour_input_machine_container ;
 
     class type_fsm_behaviour_inputs
     {
@@ -644,7 +644,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system ( )
     so_called_type_loadable_fsm_content_system_binding_container * system_binding_container = 0 ;
     so_called_type_loadable_fsm_content_system_container * system_container = 0 ;
     so_called_type_loadable_fsm_content_system_container :: const_iterator system_i ;
-    so_called_std_string system_name ;
+    so_called_lib_std_string system_name ;
 
     so_called_loadable_fsm_content :: get_system_binding_container ( system_binding_container ) ;
     so_called_loadable_fsm_content :: get_system_container ( system_container ) ;

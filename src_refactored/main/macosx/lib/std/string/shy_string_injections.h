@@ -3,7 +3,7 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/string/shy_string_injections.h"
-    typedef shy_std_string so_called_std_string ;
+    typedef shy_lib_std_string so_called_lib_std_string ;
 #endif
 
 #endif

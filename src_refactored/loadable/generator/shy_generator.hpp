@@ -1,7 +1,7 @@
-void shy_loadable_generator :: generate ( so_called_std_string & result )
+void shy_loadable_generator :: generate ( so_called_lib_std_string & result )
 {
-    so_called_std_string consts_logic ;
-    so_called_std_string fsm_logic ;
+    so_called_lib_std_string consts_logic ;
+    so_called_lib_std_string fsm_logic ;
 
     so_called_loadable_consts_generator :: generate ( consts_logic ) ;
     so_called_loadable_fsm_generator :: generate ( fsm_logic ) ;
