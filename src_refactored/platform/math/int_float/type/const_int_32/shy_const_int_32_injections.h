@@ -5,4 +5,6 @@
 
 #include "./shy_const_int_32.h"
 
+typedef shy_type_platform_math_int_float_const_int_32 so_called_type_platform_math_int_float_const_int_32 ;
+
 #endif

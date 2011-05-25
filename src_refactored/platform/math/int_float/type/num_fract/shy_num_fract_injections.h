@@ -5,4 +5,6 @@
 
 #include "./shy_num_fract.h"
 
+typedef shy_type_platform_math_int_float_num_fract so_called_type_platform_math_int_float_num_fract ;
+
 #endif

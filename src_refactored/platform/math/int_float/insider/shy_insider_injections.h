@@ -8,4 +8,6 @@
 
 #include "./shy_insider.h"
 
+typedef shy_platform_math_int_float_insider so_called_platform_math_int_float_insider ;
+
 #endif

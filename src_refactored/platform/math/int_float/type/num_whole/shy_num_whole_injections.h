@@ -5,4 +5,6 @@
 
 #include "./shy_num_whole.h"
 
+typedef shy_type_platform_math_int_float_num_whole so_called_type_platform_math_int_float_num_whole ;
+
 #endif
