@@ -6,4 +6,6 @@
 
 #include "./shy_insider.h"
 
+typedef shy_platform_touch_insider so_called_platform_touch_insider ;
+
 #endif
