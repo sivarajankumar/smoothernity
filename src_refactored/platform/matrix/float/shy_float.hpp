@@ -12,7 +12,7 @@ void shy_platform_matrix_float_guts :: swap_values ( so_called_lib_std_float & a
 }
 
 void shy_platform_matrix_float :: set_axis_x 
-    ( so_called_type_platform_matrix_data & matrix 
+    ( so_called_type_platform_matrix_float_data & matrix 
     , so_called_type_platform_math_num_fract x 
     , so_called_type_platform_math_num_fract y 
     , so_called_type_platform_math_num_fract z 
@@ -25,7 +25,7 @@ void shy_platform_matrix_float :: set_axis_x
 }
 
 void shy_platform_matrix_float :: set_axis_y 
-    ( so_called_type_platform_matrix_data & matrix 
+    ( so_called_type_platform_matrix_float_data & matrix 
     , so_called_type_platform_math_num_fract x 
     , so_called_type_platform_math_num_fract y 
     , so_called_type_platform_math_num_fract z 
@@ -38,7 +38,7 @@ void shy_platform_matrix_float :: set_axis_y
 }
 
 void shy_platform_matrix_float :: set_axis_z 
-    ( so_called_type_platform_matrix_data & matrix 
+    ( so_called_type_platform_matrix_float_data & matrix 
     , so_called_type_platform_math_num_fract x 
     , so_called_type_platform_math_num_fract y 
     , so_called_type_platform_math_num_fract z 
@@ -51,7 +51,7 @@ void shy_platform_matrix_float :: set_axis_z
 }
 
 void shy_platform_matrix_float :: set_origin 
-    ( so_called_type_platform_matrix_data & matrix 
+    ( so_called_type_platform_matrix_float_data & matrix 
     , so_called_type_platform_math_num_fract x 
     , so_called_type_platform_math_num_fract y 
     , so_called_type_platform_math_num_fract z 
@@ -63,7 +63,7 @@ void shy_platform_matrix_float :: set_origin
     matrix . _elements [ 15 ] = 1 ;
 }
 
-void shy_platform_matrix_float :: set_axis_x ( so_called_type_platform_matrix_data & matrix , so_called_type_platform_vector_data v )
+void shy_platform_matrix_float :: set_axis_x ( so_called_type_platform_matrix_float_data & matrix , so_called_type_platform_vector_data v )
 {
     so_called_platform_vector_insider :: x_get ( matrix . _elements [ 0 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [ 1 ] , v ) ;
@@ -71,7 +71,7 @@ void shy_platform_matrix_float :: set_axis_x ( so_called_type_platform_matrix_da
     matrix . _elements [ 3 ] = 0 ;
 }
 
-void shy_platform_matrix_float :: set_axis_y ( so_called_type_platform_matrix_data & matrix , so_called_type_platform_vector_data v )
+void shy_platform_matrix_float :: set_axis_y ( so_called_type_platform_matrix_float_data & matrix , so_called_type_platform_vector_data v )
 {
     so_called_platform_vector_insider :: x_get ( matrix . _elements [ 4 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [ 5 ] , v ) ;
@@ -79,7 +79,7 @@ void shy_platform_matrix_float :: set_axis_y ( so_called_type_platform_matrix_da
     matrix . _elements [ 7 ] = 0 ;
 }
 
-void shy_platform_matrix_float :: set_axis_z ( so_called_type_platform_matrix_data & matrix , so_called_type_platform_vector_data v )
+void shy_platform_matrix_float :: set_axis_z ( so_called_type_platform_matrix_float_data & matrix , so_called_type_platform_vector_data v )
 {
     so_called_platform_vector_insider :: x_get ( matrix . _elements [  8 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [  9 ] , v ) ;
@@ -87,7 +87,7 @@ void shy_platform_matrix_float :: set_axis_z ( so_called_type_platform_matrix_da
     matrix . _elements [ 11 ] = 0 ;
 }
 
-void shy_platform_matrix_float :: set_origin ( so_called_type_platform_matrix_data & matrix , so_called_type_platform_vector_data v )
+void shy_platform_matrix_float :: set_origin ( so_called_type_platform_matrix_float_data & matrix , so_called_type_platform_vector_data v )
 {
     so_called_platform_vector_insider :: x_get ( matrix . _elements [ 12 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [ 13 ] , v ) ;
@@ -95,35 +95,35 @@ void shy_platform_matrix_float :: set_origin ( so_called_type_platform_matrix_da
     matrix . _elements [ 15 ] = 1 ;
 }
 
-void shy_platform_matrix_float :: get_axis_x ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_data & matrix )
+void shy_platform_matrix_float :: get_axis_x ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_float_data & matrix )
 {
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 0 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 1 ] ) ;
     so_called_platform_vector_insider :: z_set ( result , matrix . _elements [ 2 ] ) ;
 }
 
-void shy_platform_matrix_float :: get_axis_y ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_data & matrix )
+void shy_platform_matrix_float :: get_axis_y ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_float_data & matrix )
 {
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 4 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 5 ] ) ;
     so_called_platform_vector_insider :: z_set ( result , matrix . _elements [ 6 ] ) ;
 }
 
-void shy_platform_matrix_float :: get_axis_z ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_data & matrix )
+void shy_platform_matrix_float :: get_axis_z ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_float_data & matrix )
 {
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 8 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 9 ] ) ;
     so_called_platform_vector_insider :: z_set ( result , matrix . _elements [ 10 ] ) ;
 }
 
-void shy_platform_matrix_float :: get_origin ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_data & matrix )
+void shy_platform_matrix_float :: get_origin ( so_called_type_platform_vector_data & result , const so_called_type_platform_matrix_float_data & matrix )
 {
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 12 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 13 ] ) ;
     so_called_platform_vector_insider :: z_set ( result , matrix . _elements [ 14 ] ) ;
 }
 
-void shy_platform_matrix_float :: identity ( so_called_type_platform_matrix_data & matrix )
+void shy_platform_matrix_float :: identity ( so_called_type_platform_matrix_float_data & matrix )
 {
     for ( so_called_lib_std_int32_t i = 0 ; i < 16 ; i ++ )
     {
@@ -134,7 +134,7 @@ void shy_platform_matrix_float :: identity ( so_called_type_platform_matrix_data
     }
 }
 
-void shy_platform_matrix_float :: inverse_rotation_translation ( so_called_type_platform_matrix_data & matrix )
+void shy_platform_matrix_float :: inverse_rotation_translation ( so_called_type_platform_matrix_float_data & matrix )
 {
     so_called_type_platform_vector_data axis_x ;
     so_called_type_platform_vector_data axis_y ;

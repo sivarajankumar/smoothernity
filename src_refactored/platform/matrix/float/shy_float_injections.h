@@ -7,4 +7,6 @@
 
 #include "./shy_float.h"
 
+typedef shy_platform_matrix_float so_called_platform_matrix_float ;
+
 #endif

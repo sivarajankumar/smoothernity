@@ -2,7 +2,7 @@
 #define _shy_macosx_platform_matrix_injections_included
 
 #include "../../../../platform/matrix/float/shy_float_injections.h"
-typedef shy_platform_matrix_float so_called_platform_matrix ;
+typedef so_called_platform_matrix_float so_called_platform_matrix ;
 
 #endif
 
