@@ -1,6 +1,6 @@
-float shy_macosx_platform_render :: _aspect_width = 1.0f ;
-float shy_macosx_platform_render :: _aspect_height = 1.0f ;
-bool shy_macosx_platform_render :: _frame_loss = false ;
+so_called_lib_std_float shy_macosx_platform_render :: _aspect_width = 1 ;
+so_called_lib_std_float shy_macosx_platform_render :: _aspect_height = 1 ;
+so_called_lib_std_bool shy_macosx_platform_render :: _frame_loss = so_called_lib_std_false ;
 
 so_called_type_platform_render_vertex_data shy_macosx_platform_render :: _reference_vertex ;
 void * shy_macosx_platform_render :: _vertex_position_offset = reinterpret_cast < void * >
@@ -25,73 +25,73 @@ void shy_macosx_platform_render :: _load_texture_subdata
     , const so_called_type_platform_render_texel_data * texels
     )
 {
-    int x_offset_int = 0 ;
-    int y_offset_int = 0 ;
-    int width_int = 0 ;
-    int height_int = 0 ;
+    so_called_lib_std_int32_t x_offset_int = 0 ;
+    so_called_lib_std_int32_t y_offset_int = 0 ;
+    so_called_lib_std_int32_t width_int = 0 ;
+    so_called_lib_std_int32_t height_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( x_offset_int , x_offset ) ;
     so_called_platform_math_insider :: num_whole_value_get ( y_offset_int , y_offset ) ;
     so_called_platform_math_insider :: num_whole_value_get ( width_int , width ) ;
     so_called_platform_math_insider :: num_whole_value_get ( height_int , height ) ;
     
-    glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
-    glTexSubImage2D 
-        ( GL_TEXTURE_2D                         // target
+    so_called_lib_opengl_glBindTexture ( so_called_lib_opengl_GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
+    so_called_lib_opengl_glTexSubImage2D 
+        ( so_called_lib_opengl_GL_TEXTURE_2D    // target
         , 0                                     // level
         , x_offset_int                          // x offset
         , y_offset_int                          // y offset
         , width_int                             // width
         , height_int                            // height
-        , GL_BGRA                               // format
-        , GL_UNSIGNED_BYTE                      // type
+        , so_called_lib_opengl_GL_BGRA          // format
+        , so_called_lib_opengl_GL_UNSIGNED_BYTE // type
         , texels                                // data
         ) ;
 }
 
 void shy_macosx_platform_render :: enable_face_culling ( )
 {
-    glEnable ( GL_CULL_FACE ) ;
+    so_called_lib_opengl_glEnable ( so_called_lib_opengl_GL_CULL_FACE ) ;
 }
 
 void shy_macosx_platform_render :: enable_depth_test ( )
 {
-    glEnable ( GL_DEPTH_TEST ) ;
+    so_called_lib_opengl_glEnable ( so_called_lib_opengl_GL_DEPTH_TEST ) ;
 }
 
 void shy_macosx_platform_render :: disable_depth_test ( )
 {
-    glDisable ( GL_DEPTH_TEST ) ;
+    so_called_lib_opengl_glDisable ( so_called_lib_opengl_GL_DEPTH_TEST ) ;
 }
 
 void shy_macosx_platform_render :: blend_disable ( )
 {
-    glDisable ( GL_BLEND ) ;
+    so_called_lib_opengl_glDisable ( so_called_lib_opengl_GL_BLEND ) ;
 }
 
 void shy_macosx_platform_render :: blend_src_alpha_dst_one_minus_alpha ( )
 {
-    glEnable ( GL_BLEND ) ;
-    glBlendFunc ( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA ) ;
+    so_called_lib_opengl_glEnable ( so_called_lib_opengl_GL_BLEND ) ;
+    so_called_lib_opengl_glBlendFunc ( so_called_lib_opengl_GL_SRC_ALPHA , so_called_lib_opengl_GL_ONE_MINUS_SRC_ALPHA ) ;
 }
 
 void shy_macosx_platform_render :: enable_texturing ( )
 {
-    glEnable ( GL_TEXTURE_2D ) ;
+    so_called_lib_opengl_glEnable ( so_called_lib_opengl_GL_TEXTURE_2D ) ;
 }
 
 void shy_macosx_platform_render :: disable_texturing ( )
 {
-    glDisable ( GL_TEXTURE_2D ) ;
+    so_called_lib_opengl_glDisable ( so_called_lib_opengl_GL_TEXTURE_2D ) ;
 }
 
 void shy_macosx_platform_render :: texture_mode_modulate ( )
 {
-    glTexEnvf ( GL_TEXTURE_ENV , GL_TEXTURE_ENV_MODE , GL_MODULATE ) ;
+    so_called_lib_opengl_glTexEnvf ( so_called_lib_opengl_GL_TEXTURE_ENV , so_called_lib_opengl_GL_TEXTURE_ENV_MODE , so_called_lib_opengl_GL_MODULATE ) ;
 }
 
 void shy_macosx_platform_render :: fog_disable ( )
 {
-    glDisable ( GL_FOG ) ;
+    so_called_lib_opengl_glDisable ( so_called_lib_opengl_GL_FOG ) ;
 }
 
 void shy_macosx_platform_render :: fog_linear 
@@ -103,12 +103,13 @@ void shy_macosx_platform_render :: fog_linear
     , so_called_type_platform_math_num_fract a 
     )
 {
-    float r_float ;
-    float g_float ;
-    float b_float ;
-    float a_float ;
-    float near_float ;
-    float far_float ;
+    so_called_lib_std_float r_float ;
+    so_called_lib_std_float g_float ;
+    so_called_lib_std_float b_float ;
+    so_called_lib_std_float a_float ;
+    so_called_lib_std_float near_float ;
+    so_called_lib_std_float far_float ;
+
     so_called_platform_math_insider :: num_fract_value_get ( r_float , r ) ;
     so_called_platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     so_called_platform_math_insider :: num_fract_value_get ( b_float , b ) ;
@@ -116,12 +117,12 @@ void shy_macosx_platform_render :: fog_linear
     so_called_platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
     so_called_platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
 
-    GLfloat color [ ] = { r_float , g_float , b_float , a_float } ;
-    glEnable ( GL_FOG ) ;
-    glFogf ( GL_FOG_MODE , GL_LINEAR ) ;
-    glFogf ( GL_FOG_START , ( GLfloat ) near_float ) ;
-    glFogf ( GL_FOG_END , ( GLfloat ) far_float ) ;
-    glFogfv ( GL_FOG_COLOR , color ) ;
+    so_called_lib_opengl_GLfloat color [ ] = { r_float , g_float , b_float , a_float } ;
+    so_called_lib_opengl_glEnable ( so_called_lib_opengl_GL_FOG ) ;
+    so_called_lib_opengl_glFogf ( so_called_lib_opengl_GL_FOG_MODE , so_called_lib_opengl_GL_LINEAR ) ;
+    so_called_lib_opengl_glFogf ( so_called_lib_opengl_GL_FOG_START , ( so_called_lib_opengl_GLfloat ) near_float ) ;
+    so_called_lib_opengl_glFogf ( so_called_lib_opengl_GL_FOG_END , ( so_called_lib_opengl_GLfloat ) far_float ) ;
+    so_called_lib_opengl_glFogfv ( so_called_lib_opengl_GL_FOG_COLOR , color ) ;
 }
 
 void shy_macosx_platform_render :: create_texture_id 
@@ -129,32 +130,32 @@ void shy_macosx_platform_render :: create_texture_id
     , so_called_type_platform_math_num_whole size_pow2_base 
     )
 {
-    glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
-    int size_pow2_base_int = 0 ;
+    so_called_lib_opengl_glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
+    so_called_lib_std_int32_t size_pow2_base_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
-    GLsizei size = 1 << size_pow2_base_int ;
-    glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 ) ;
-    glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR ) ;
-    glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR ) ;
-    glTexImage2D
-        ( GL_TEXTURE_2D                     // target
-        , 0                                 // level
-        , GL_RGBA                           // internal format
-        , size                              // width
-        , size                              // height
-        , 0                                 // border
-        , GL_BGRA                           // format
-        , GL_UNSIGNED_BYTE                  // type
-        , 0                                 // data
+    so_called_lib_opengl_GLsizei size = 1 << size_pow2_base_int ;
+    so_called_lib_opengl_glPixelStorei ( so_called_lib_opengl_GL_UNPACK_ALIGNMENT , 1 ) ;
+    so_called_lib_opengl_glBindTexture ( so_called_lib_opengl_GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
+    so_called_lib_opengl_glTexParameteri ( so_called_lib_opengl_GL_TEXTURE_2D , so_called_lib_opengl_GL_TEXTURE_WRAP_S , so_called_lib_opengl_GL_REPEAT ) ;
+    so_called_lib_opengl_glTexParameteri ( so_called_lib_opengl_GL_TEXTURE_2D , so_called_lib_opengl_GL_TEXTURE_WRAP_T , so_called_lib_opengl_GL_REPEAT ) ;
+    so_called_lib_opengl_glTexParameteri ( so_called_lib_opengl_GL_TEXTURE_2D , so_called_lib_opengl_GL_TEXTURE_MAG_FILTER , so_called_lib_opengl_GL_LINEAR ) ;
+    so_called_lib_opengl_glTexParameteri ( so_called_lib_opengl_GL_TEXTURE_2D , so_called_lib_opengl_GL_TEXTURE_MIN_FILTER , so_called_lib_opengl_GL_LINEAR ) ;
+    so_called_lib_opengl_glTexImage2D
+        ( so_called_lib_opengl_GL_TEXTURE_2D    // target
+        , 0                                     // level
+        , so_called_lib_opengl_GL_RGBA          // internal format
+        , size                                  // width
+        , size                                  // height
+        , 0                                     // border
+        , so_called_lib_opengl_GL_BGRA          // format
+        , so_called_lib_opengl_GL_UNSIGNED_BYTE // type
+        , 0                                     // data
         ) ;
 }
 
 void shy_macosx_platform_render :: use_texture ( so_called_type_platform_render_texture_id arg_texture_id )
 {
-    glBindTexture ( GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
+    so_called_lib_opengl_glBindTexture ( so_called_lib_opengl_GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
 }
 
 void shy_macosx_platform_render :: set_texel_color 
@@ -165,18 +166,18 @@ void shy_macosx_platform_render :: set_texel_color
     , so_called_type_platform_math_num_fract a 
     )
 {
-    float r_float ;
-    float g_float ;
-    float b_float ;
-    float a_float ;
+    so_called_lib_std_float r_float ;
+    so_called_lib_std_float g_float ;
+    so_called_lib_std_float b_float ;
+    so_called_lib_std_float a_float ;
     so_called_platform_math_insider :: num_fract_value_get ( r_float , r ) ;
     so_called_platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     so_called_platform_math_insider :: num_fract_value_get ( b_float , b ) ;
     so_called_platform_math_insider :: num_fract_value_get ( a_float , a ) ;
-    texel . _color [ 0 ] = ( GLubyte ) ( b_float * 255.0f ) ;
-    texel . _color [ 1 ] = ( GLubyte ) ( g_float * 255.0f ) ;
-    texel . _color [ 2 ] = ( GLubyte ) ( r_float * 255.0f ) ;
-    texel . _color [ 3 ] = ( GLubyte ) ( a_float * 255.0f ) ;
+    texel . _color [ 0 ] = ( so_called_lib_opengl_GLubyte ) ( b_float * so_called_lib_std_float ( 255 ) ) ;
+    texel . _color [ 1 ] = ( so_called_lib_opengl_GLubyte ) ( g_float * so_called_lib_std_float ( 255 ) ) ;
+    texel . _color [ 2 ] = ( so_called_lib_opengl_GLubyte ) ( r_float * so_called_lib_std_float ( 255 ) ) ;
+    texel . _color [ 3 ] = ( so_called_lib_opengl_GLubyte ) ( a_float * so_called_lib_std_float ( 255 ) ) ;
 }
 
 void shy_macosx_platform_render :: clear_screen 
@@ -185,15 +186,15 @@ void shy_macosx_platform_render :: clear_screen
     , so_called_type_platform_math_num_fract b 
     )
 {
-    float r_float ;
-    float g_float ;
-    float b_float ;
+    so_called_lib_std_float r_float ;
+    so_called_lib_std_float g_float ;
+    so_called_lib_std_float b_float ;
     so_called_platform_math_insider :: num_fract_value_get ( r_float , r ) ;
     so_called_platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     so_called_platform_math_insider :: num_fract_value_get ( b_float , b ) ;
-    glClearColor ( r_float , g_float , b_float , 0 ) ;
-    glClearDepth ( 1 ) ;
-    glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ) ;
+    so_called_lib_opengl_glClearColor ( r_float , g_float , b_float , 0 ) ;
+    so_called_lib_opengl_glClearDepth ( 1 ) ;
+    so_called_lib_opengl_glClear ( so_called_lib_opengl_GL_COLOR_BUFFER_BIT | so_called_lib_opengl_GL_DEPTH_BUFFER_BIT ) ;
 }
 
 void shy_macosx_platform_render :: projection_frustum 
