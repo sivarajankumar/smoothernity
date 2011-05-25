@@ -7,4 +7,6 @@
 
 #include "./shy_conditions.h"
 
+typedef shy_platform_conditions so_called_platform_conditions ;
+
 #endif
