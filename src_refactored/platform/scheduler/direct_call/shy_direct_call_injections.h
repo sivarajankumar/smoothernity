@@ -5,4 +5,6 @@
 
 #include "./shy_direct_call.h"
 
+typedef shy_platform_scheduler_direct_call so_called_platform_scheduler_direct_call ;
+
 #endif

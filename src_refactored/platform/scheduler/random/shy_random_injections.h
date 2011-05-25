@@ -9,4 +9,6 @@
 
 #include "./shy_random.h"
 
+typedef shy_platform_scheduler_random so_called_platform_scheduler_random ;
+
 #endif
