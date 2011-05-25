@@ -8,7 +8,7 @@ public :
         , so_called_type_platform_math_num_fract b
         , so_called_type_platform_math_num_fract a ) ;
     static void create_texture_resource_id 
-        ( so_called_type_platform_render_texture_resource_id & resource_id
+        ( so_called_type_platform_render_texture_loader_resource_id & resource_id
         , so_called_type_platform_math_num_whole resource_index
         ) ;
 } ;

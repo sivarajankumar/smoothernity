@@ -3,8 +3,8 @@
 
 #include "../../../../injections/platform/math/type/num_fract/shy_num_fract.h"
 #include "../../../../injections/platform/math/type/num_whole/shy_num_whole.h"
+#include "../../../../injections/platform/render/texture_loader/type/resource_id/shy_resource_id.h"
 #include "../../../../injections/platform/render/type/texel_data/shy_texel_data.h"
-#include "../../../../injections/platform/render/type/texture_resource_id/shy_texture_resource_id.h"
 
 #include "./shy_stateless.h"
 

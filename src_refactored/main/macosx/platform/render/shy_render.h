@@ -37,10 +37,6 @@ public :
         , so_called_type_platform_render_index_buffer_mapped_data data 
         , so_called_type_platform_math_num_whole index 
         ) ;
-    static void create_texture_resource_id 
-        ( so_called_type_platform_render_texture_resource_id & resource_id 
-        , so_called_type_platform_math_num_whole resource_index 
-        ) ;
     static void set_index_value 
         ( so_called_type_platform_render_index_data & data 
         , so_called_type_platform_math_num_whole index 
@@ -69,7 +65,6 @@ public :
     static void texture_mode_modulate ( ) ;
     static void use_texture ( so_called_type_platform_render_texture_id arg_texture_id ) ;
     static void create_texture_id ( so_called_type_platform_render_texture_id & arg_texture_id , so_called_type_platform_math_num_whole size_pow2_base ) ;
-    static void texture_loader_ready ( so_called_type_platform_math_num_whole & is_ready ) ;
 
     static void clear_screen 
         ( so_called_type_platform_math_num_fract r 
@@ -117,13 +112,6 @@ public :
         , const texels_array & data 
         ) ;
     
-    template < typename texels_array >
-    static void load_texture_resource 
-        ( so_called_type_platform_render_texture_resource_id resource_id 
-        , so_called_type_platform_math_num_whole size_pow2_base 
-        , texels_array & data 
-        ) ;
-    
     static void create_vertex_buffer 
         ( so_called_type_platform_render_vertex_buffer_id & arg_buffer_id 
         , so_called_type_platform_math_num_whole elements 
@@ -156,11 +144,6 @@ public :
         ) ;
 
 private :
-    static void _load_texture_resource 
-        ( so_called_type_platform_render_texture_resource_id resource_id 
-        , so_called_type_platform_math_num_whole size_pow2_base 
-        , so_called_type_platform_render_texel_data * texels 
-        ) ;
     static void _load_texture_subdata 
         ( so_called_type_platform_render_texture_id arg_texture_id 
         , so_called_type_platform_math_num_whole x_offset 
@@ -171,7 +154,6 @@ private :
         ) ;
 
 private :
-    static void * _texture_loader ;
     static float _aspect_width ;
     static float _aspect_height ;
     static so_called_type_platform_render_vertex_data _reference_vertex ;
@@ -194,16 +176,4 @@ void shy_macosx_platform_render :: load_texture_subdata
     so_called_platform_static_array_insider :: elements_ptr ( texels , data ) ;
 
     _load_texture_subdata ( arg_texture_id , x_offset , y_offset , width , height , texels ) ;
-}
-
-template < typename texels_array >
-void shy_macosx_platform_render :: load_texture_resource
-    ( so_called_type_platform_render_texture_resource_id resource_id 
-    , so_called_type_platform_math_num_whole size_pow2_base 
-    , texels_array & data 
-    )
-{
-    so_called_type_platform_render_texel_data * texels = 0 ;
-    so_called_platform_static_array_insider :: elements_ptr ( texels , data ) ;
-    _load_texture_resource ( resource_id , size_pow2_base , texels ) ;
 }

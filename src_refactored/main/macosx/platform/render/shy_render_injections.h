@@ -10,7 +10,6 @@
 #include "../../../../injections/platform/render/type/index_data/shy_index_data.h"
 #include "../../../../injections/platform/render/type/texel_data/shy_texel_data.h"
 #include "../../../../injections/platform/render/type/texture_id/shy_texture_id.h"
-#include "../../../../injections/platform/render/type/texture_resource_id/shy_texture_resource_id.h"
 #include "../../../../injections/platform/render/type/vertex_buffer_id/shy_vertex_buffer_id.h"
 #include "../../../../injections/platform/render/type/vertex_buffer_mapped_data/shy_vertex_buffer_mapped_data.h"
 #include "../../../../injections/platform/render/type/vertex_data/shy_vertex_data.h"

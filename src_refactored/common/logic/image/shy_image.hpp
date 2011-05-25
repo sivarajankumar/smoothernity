@@ -161,7 +161,7 @@ void shy_guts :: create_image_mesh ( )
 
 void shy_guts :: create_image_texture ( )
 {
-    so_called_type_platform_render_texture_resource_id logo_resource_id ;
+    so_called_type_platform_render_texture_loader_resource_id logo_resource_id ;
     so_called_common_engine_render_stateless :: create_texture_resource_id ( logo_resource_id , shy_guts :: consts :: logo_resource_index ) ;
     {
         so_called_message_common_engine_render_texture_load_from_resource texture_load_from_resource_msg ;
