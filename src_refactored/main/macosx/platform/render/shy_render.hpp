@@ -1,5 +1,6 @@
 float shy_macosx_platform_render :: _aspect_width = 1.0f ;
 float shy_macosx_platform_render :: _aspect_height = 1.0f ;
+bool shy_macosx_platform_render :: _frame_loss = false ;
 
 so_called_type_platform_render_vertex_data shy_macosx_platform_render :: _reference_vertex ;
 void * shy_macosx_platform_render :: _vertex_position_offset = reinterpret_cast < void * >
@@ -479,7 +480,7 @@ void shy_macosx_platform_render :: get_aspect_height ( so_called_type_platform_m
 
 void shy_macosx_platform_render :: get_frame_loss ( so_called_type_platform_math_num_whole & result )
 {
-    so_called_platform_math_insider :: num_whole_value_set ( result , ( int ) false ) ;
+    so_called_platform_math_insider :: num_whole_value_set ( result , _frame_loss ) ;
 }
 
 void shy_macosx_platform_render :: delete_vertex_buffer ( so_called_type_platform_render_vertex_buffer_id & arg_buffer_id )

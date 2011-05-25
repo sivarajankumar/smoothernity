@@ -17,6 +17,7 @@
         [ _sound_loader thread_run ] ;
         [ _texture_loader thread_run ] ;
 
+        so_called_platform_render_insider :: set_frame_loss ( false ) ;
         so_called_platform_render_texture_loader_insider :: set_texture_loader ( _texture_loader ) ;
         so_called_platform_sound_insider :: set_sound_loader ( _sound_loader ) ;
         so_called_platform_mouse_insider :: set_left_button_down ( false ) ;

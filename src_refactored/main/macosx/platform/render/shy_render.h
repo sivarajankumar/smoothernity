@@ -156,6 +156,7 @@ private :
 private :
     static float _aspect_width ;
     static float _aspect_height ;
+    static bool _frame_loss ;
     static so_called_type_platform_render_vertex_data _reference_vertex ;
     static void * _vertex_position_offset ;
     static void * _vertex_tex_coord_offset ;
