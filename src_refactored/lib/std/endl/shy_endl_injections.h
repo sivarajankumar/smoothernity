@@ -2,7 +2,7 @@
 #define _shy_lib_std_endl_injections_included
 
 #include <ostream>
-#define shy_lib_std_endl std :: endl
+#define so_called_lib_std_endl std :: endl
 
 #endif
 

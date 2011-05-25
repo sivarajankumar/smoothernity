@@ -3,7 +3,6 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/endl/shy_endl_injections.h"
-    #define so_called_lib_std_endl shy_lib_std_endl
 #endif
 
 #endif
