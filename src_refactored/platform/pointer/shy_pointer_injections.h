@@ -5,4 +5,6 @@
 
 #include "./shy_pointer.h"
 
+typedef shy_platform_pointer so_called_platform_pointer ;
+
 #endif
