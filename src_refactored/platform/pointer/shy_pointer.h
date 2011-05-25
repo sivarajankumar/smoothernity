@@ -24,7 +24,7 @@ void shy_platform_pointer :: are_equal
     , pointer_type pointer2 
     )
 {
-    so_called_platform_math_insider :: num_whole_value_set ( result , pointer1 . _data_ptr == pointer2 . _data_ptr ) ;
+    so_called_platform_math_insider :: num_whole_value_set ( result , so_called_lib_std_int32_t ( pointer1 . _data_ptr == pointer2 . _data_ptr ) ) ;
 }
 
 template < typename pointer_type >
@@ -34,5 +34,5 @@ void shy_platform_pointer :: is_bound_to
     , typename pointer_type :: _data_type & data 
     )
 {
-    so_called_platform_math_insider :: num_whole_value_set ( result , pointer . _data_ptr == & data ) ;
+    so_called_platform_math_insider :: num_whole_value_set ( result , so_called_lib_std_int32_t ( pointer . _data_ptr == & data ) ) ;
 }
