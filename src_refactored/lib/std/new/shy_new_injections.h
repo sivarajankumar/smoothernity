@@ -3,7 +3,7 @@
 
 #include <new>
 
-#define shy_lib_std_new new
+#define so_called_lib_std_new new
 
 #endif
 
