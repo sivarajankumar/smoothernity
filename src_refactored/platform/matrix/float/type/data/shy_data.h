@@ -5,5 +5,5 @@ class shy_type_platform_matrix_float_data
 public :
     shy_type_platform_matrix_float_data ( ) ;
 private :
-    float _elements [ 16 ] ;
+    so_called_lib_std_float _elements [ 16 ] ;
 } ;
