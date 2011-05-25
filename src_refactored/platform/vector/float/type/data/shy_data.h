@@ -5,7 +5,7 @@ class shy_type_platform_vector_float_data
 public :
     shy_type_platform_vector_float_data ( ) ;
 private :
-    float _x ;
-    float _y ;
-    float _z ;
+    so_called_lib_std_float _x ;
+    so_called_lib_std_float _y ;
+    so_called_lib_std_float _z ;
 } ;
