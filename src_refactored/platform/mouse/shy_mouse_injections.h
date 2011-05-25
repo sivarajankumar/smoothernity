@@ -6,4 +6,6 @@
 
 #include "./shy_mouse.h"
 
+typedef shy_platform_mouse so_called_platform_mouse ;
+
 #endif
