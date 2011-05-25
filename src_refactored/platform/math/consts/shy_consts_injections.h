@@ -6,4 +6,6 @@
 
 #include "./shy_consts.h"
 
+typedef shy_platform_math_consts so_called_platform_math_consts ;
+
 #endif
