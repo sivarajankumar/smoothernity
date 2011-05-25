@@ -6,4 +6,6 @@
 
 #include "./shy_float.h"
 
+typedef shy_platform_vector_float so_called_platform_vector_float ;
+
 #endif

@@ -6,4 +6,6 @@
 
 #include "./shy_insider.h"
 
+typedef shy_platform_vector_float_insider so_called_platform_vector_float_insider ;
+
 #endif

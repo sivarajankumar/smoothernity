@@ -5,4 +5,6 @@
 
 #include "./shy_data.h"
 
+typedef shy_type_platform_vector_float_data so_called_type_platform_vector_float_data ;
+
 #endif
