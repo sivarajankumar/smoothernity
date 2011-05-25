@@ -1,12 +1,12 @@
 class shy_platform_matrix_float_guts
 {
 public :
-    static void swap_values ( float & , float & ) ;
+    static void swap_values ( so_called_lib_std_float & , so_called_lib_std_float & ) ;
 } ;
 
-void shy_platform_matrix_float_guts :: swap_values ( float & a , float & b )
+void shy_platform_matrix_float_guts :: swap_values ( so_called_lib_std_float & a , so_called_lib_std_float & b )
 {
-    float c = b ;
+    so_called_lib_std_float c = b ;
     b = a ;
     a = c ;
 }
@@ -125,7 +125,7 @@ void shy_platform_matrix_float :: get_origin ( so_called_type_platform_vector_da
 
 void shy_platform_matrix_float :: identity ( so_called_type_platform_matrix_data & matrix )
 {
-    for ( int i = 0 ; i < 16 ; i ++ )
+    for ( so_called_lib_std_int32_t i = 0 ; i < 16 ; i ++ )
     {
         if ( i == 0 || i == 5 || i == 10 || i == 15 )
             matrix . _elements [ i ] = 1 ;
@@ -152,9 +152,9 @@ void shy_platform_matrix_float :: inverse_rotation_translation ( so_called_type_
     so_called_platform_vector :: dot_product ( dot_y , origin , axis_y ) ;
     so_called_platform_vector :: dot_product ( dot_z , origin , axis_z ) ;
     
-    float dot_x_float = 0 ;
-    float dot_y_float = 0 ;
-    float dot_z_float = 0 ;
+    so_called_lib_std_float dot_x_float = 0 ;
+    so_called_lib_std_float dot_y_float = 0 ;
+    so_called_lib_std_float dot_z_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( dot_x_float , dot_x ) ;
     so_called_platform_math_insider :: num_fract_value_get ( dot_y_float , dot_y ) ;
     so_called_platform_math_insider :: num_fract_value_get ( dot_z_float , dot_z ) ;
