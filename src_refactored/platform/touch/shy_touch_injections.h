@@ -6,4 +6,6 @@
 
 #include "./shy_touch.h"
 
+typedef shy_platform_touch so_called_platform_touch ;
+
 #endif
