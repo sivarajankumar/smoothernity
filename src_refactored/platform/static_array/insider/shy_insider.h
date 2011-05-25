@@ -8,7 +8,7 @@ public :
     static void elements_ptr ( const typename static_array :: _data_type * & , const static_array & ) ;
     
     template < typename static_array >
-    static void elements_count ( int & ) ;
+    static void elements_count ( so_called_lib_std_int32_t & ) ;
 } ;
 
 template < typename static_array >
@@ -24,7 +24,7 @@ void shy_platform_static_array_insider :: elements_ptr ( const typename static_a
 }
 
 template < typename static_array >
-void shy_platform_static_array_insider :: elements_count ( int & count )
+void shy_platform_static_array_insider :: elements_count ( so_called_lib_std_int32_t & count )
 {
-    count = int ( static_array :: _array_size ) ;
+    count = so_called_lib_std_int32_t ( static_array :: _array_size ) ;
 }
