@@ -2,6 +2,6 @@
 #define _shy_lib_std_set_injections_included
 
 #include <set>
-#define shy_lib_std_set std :: set
+#define so_called_lib_std_set std :: set
 
 #endif
