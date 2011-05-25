@@ -2,7 +2,7 @@
 #define _shy_lib_std_cout_injections_included
 
 #include <iostream>
-#define shy_lib_std_cout std :: cout
+#define so_called_lib_std_cout std :: cout
 
 #endif
 
