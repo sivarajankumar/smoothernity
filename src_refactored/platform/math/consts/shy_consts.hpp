@@ -21,8 +21,8 @@ const so_called_type_platform_math_num_fract shy_platform_math_consts :: fract_m
 const so_called_type_platform_math_num_fract shy_platform_math_consts :: fract_minus_8 = so_called_platform_math_insider :: init_num_fract ( - 8 ) ;
 const so_called_type_platform_math_num_fract shy_platform_math_consts :: fract_minus_9 = so_called_platform_math_insider :: init_num_fract ( - 9 ) ;
 
-const so_called_type_platform_math_num_whole shy_platform_math_consts :: whole_true = so_called_platform_math_insider :: init_num_whole ( true ) ;
-const so_called_type_platform_math_num_whole shy_platform_math_consts :: whole_false = so_called_platform_math_insider :: init_num_whole ( false ) ;
+const so_called_type_platform_math_num_whole shy_platform_math_consts :: whole_true = so_called_platform_math_insider :: init_num_whole ( so_called_lib_std_true ) ;
+const so_called_type_platform_math_num_whole shy_platform_math_consts :: whole_false = so_called_platform_math_insider :: init_num_whole ( so_called_lib_std_false ) ;
 const so_called_type_platform_math_num_whole shy_platform_math_consts :: whole_0 = so_called_platform_math_insider :: init_num_whole ( 0 ) ;
 const so_called_type_platform_math_num_whole shy_platform_math_consts :: whole_1 = so_called_platform_math_insider :: init_num_whole ( 1 ) ;
 const so_called_type_platform_math_num_whole shy_platform_math_consts :: whole_2 = so_called_platform_math_insider :: init_num_whole ( 2 ) ;
