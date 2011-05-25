@@ -7,4 +7,6 @@
 
 #include "./shy_int_float.h"
 
+typedef shy_platform_math_int_float so_called_platform_math_int_float ;
+
 #endif
