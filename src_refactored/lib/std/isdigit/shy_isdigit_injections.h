@@ -2,6 +2,6 @@
 #define _shy_lib_std_isdigit_injections_included
 
 #include <locale>
-#define shy_lib_std_isdigit std :: isdigit
+#define so_called_lib_std_isdigit std :: isdigit
 
 #endif
