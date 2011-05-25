@@ -6,4 +6,6 @@
 
 #include "./shy_static_assert.h"
 
+typedef shy_platform_static_assert so_called_platform_static_assert ;
+
 #endif
