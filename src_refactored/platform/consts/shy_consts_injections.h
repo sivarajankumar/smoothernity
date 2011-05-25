@@ -5,4 +5,6 @@
 
 #include "./shy_consts.h"
 
+typedef shy_platform_consts so_called_platform_consts ;
+
 #endif

@@ -5,4 +5,6 @@
 
 #include "./shy_insider.h"
 
+typedef shy_platform_consts_insider so_called_platform_consts_insider ;
+
 #endif
