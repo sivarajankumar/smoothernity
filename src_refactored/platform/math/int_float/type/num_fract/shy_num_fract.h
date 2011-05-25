@@ -5,7 +5,7 @@ class shy_type_platform_math_int_float_num_fract
 public :
     shy_type_platform_math_int_float_num_fract ( ) ;
 private :
-    shy_type_platform_math_int_float_num_fract ( float arg_value ) ;
+    shy_type_platform_math_int_float_num_fract ( so_called_lib_std_float arg_value ) ;
 private :
-    float _value ;
+    so_called_lib_std_float _value ;
 } ;

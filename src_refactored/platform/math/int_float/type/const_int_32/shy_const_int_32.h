@@ -1,1 +1,1 @@
-typedef const int shy_type_platform_math_int_float_const_int_32 ;
+typedef const so_called_lib_std_int32_t shy_type_platform_math_int_float_const_int_32 ;
