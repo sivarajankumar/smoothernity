@@ -3,7 +3,6 @@
 
 #ifdef shy_build_development
     #include "../../../../../lib/std/cin/shy_cin_injections.h"
-    #define so_called_lib_std_cin shy_lib_std_cin
 #endif
 
 #endif
