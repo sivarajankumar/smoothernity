@@ -5,4 +5,6 @@
 
 #include "./shy_data.h"
 
+#define so_called_type_platform_static_array_data shy_type_platform_static_array_data
+
 #endif
