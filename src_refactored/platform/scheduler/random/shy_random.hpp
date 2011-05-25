@@ -1,5 +1,5 @@
 shy_platform_scheduler_random :: _abstract_scheduled_context * shy_platform_scheduler_random :: _contexts [ _max_scheduled_modules ] ;
-int shy_platform_scheduler_random :: _contexts_count = 0 ;
+so_called_lib_std_int32_t shy_platform_scheduler_random :: _contexts_count = 0 ;
 
 shy_platform_scheduler_random :: _abstract_scheduled_context :: ~ _abstract_scheduled_context ( )
 {
@@ -16,7 +16,7 @@ void shy_platform_scheduler_random :: init ( )
     my_invoker . invoke ( ) ;
 
     _contexts_count = 0 ;
-    for ( int i = 0 ; i < _max_scheduled_modules ; i ++ )
+    for ( so_called_lib_std_int32_t i = 0 ; i < _max_scheduled_modules ; i ++ )
         _contexts [ i ] = 0 ;
 }
 
@@ -28,24 +28,24 @@ void shy_platform_scheduler_random :: _register_context ( _abstract_scheduled_co
 
 void shy_platform_scheduler_random :: run ( )
 {
-    bool keep_running = false ;
-    int calls_performed = 0 ;
+    so_called_lib_std_bool keep_running = so_called_lib_std_false ;
+    so_called_lib_std_int32_t calls_performed = 0 ;
     do
     {
-        for ( int i = 0 ; i < _contexts_count ; i ++ )
+        for ( so_called_lib_std_int32_t i = 0 ; i < _contexts_count ; i ++ )
         {
-            int first_index = rand ( ) % _contexts_count ;
-            int second_index = rand ( ) % _contexts_count ;
+            so_called_lib_std_int32_t first_index = rand ( ) % _contexts_count ;
+            so_called_lib_std_int32_t second_index = rand ( ) % _contexts_count ;
             _abstract_scheduled_context * first_context = _contexts [ first_index ] ;
             _contexts [ first_index ] = _contexts [ second_index ] ;
             _contexts [ second_index ] = first_context ;
         }
-        for ( int i = 0 ; i < _contexts_count ; i ++ )
+        for ( so_called_lib_std_int32_t i = 0 ; i < _contexts_count ; i ++ )
             _contexts [ i ] -> run ( ) ;
-        keep_running = false ;
-        for ( int i = 0 ; i < _contexts_count ; i ++ )
+        keep_running = so_called_lib_std_false ;
+        for ( so_called_lib_std_int32_t i = 0 ; i < _contexts_count ; i ++ )
         {
-            bool have_messages_to_run = false ;
+            so_called_lib_std_bool have_messages_to_run = so_called_lib_std_false ;
             _contexts [ i ] -> have_messages_to_run ( have_messages_to_run ) ;
             keep_running |= have_messages_to_run ;
         }
