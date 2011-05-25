@@ -6,4 +6,6 @@
 
 #include "./shy_insider.h"
 
+typedef shy_platform_mouse_insider so_called_platform_mouse_insider ;
+
 #endif
