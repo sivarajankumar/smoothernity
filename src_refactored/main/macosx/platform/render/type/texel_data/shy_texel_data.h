@@ -4,5 +4,5 @@ class shy_type_macosx_platform_render_texel_data
 public :
     shy_type_macosx_platform_render_texel_data ( ) ;
 private :
-    GLubyte _color [ 4 ] ;
+    so_called_lib_opengl_GLubyte _color [ 4 ] ;
 } ;

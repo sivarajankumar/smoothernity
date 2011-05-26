@@ -4,5 +4,5 @@ class shy_type_macosx_platform_render_index_data
 public :
     shy_type_macosx_platform_render_index_data ( ) ;
 private :
-    GLushort _index ;
+    so_called_lib_opengl_GLushort _index ;
 } ;

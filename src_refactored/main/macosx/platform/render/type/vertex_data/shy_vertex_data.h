@@ -4,7 +4,7 @@ class shy_type_macosx_platform_render_vertex_data
 public :
     shy_type_macosx_platform_render_vertex_data ( ) ;
 private :
-    GLfloat _position [ 3 ] ;
-    GLfloat _tex_coord [ 2 ] ;
-    GLubyte _color [ 4 ] ;
+    so_called_lib_opengl_GLfloat _position [ 3 ] ;
+    so_called_lib_opengl_GLfloat _tex_coord [ 2 ] ;
+    so_called_lib_opengl_GLubyte _color [ 4 ] ;
 } ;

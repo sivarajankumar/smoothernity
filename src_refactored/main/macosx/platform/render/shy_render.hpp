@@ -4,16 +4,16 @@ so_called_lib_std_bool shy_macosx_platform_render :: _frame_loss = so_called_lib
 
 so_called_type_platform_render_vertex_data shy_macosx_platform_render :: _reference_vertex ;
 void * shy_macosx_platform_render :: _vertex_position_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_macosx_platform_render :: _reference_vertex . _position ) 
-    - reinterpret_cast < char * > ( & shy_macosx_platform_render :: _reference_vertex )
+    ( reinterpret_cast < so_called_lib_std_char * > ( & shy_macosx_platform_render :: _reference_vertex . _position ) 
+    - reinterpret_cast < so_called_lib_std_char * > ( & shy_macosx_platform_render :: _reference_vertex )
     ) ;
 void * shy_macosx_platform_render :: _vertex_tex_coord_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_macosx_platform_render :: _reference_vertex . _tex_coord ) 
-    - reinterpret_cast < char * > ( & shy_macosx_platform_render :: _reference_vertex )
+    ( reinterpret_cast < so_called_lib_std_char * > ( & shy_macosx_platform_render :: _reference_vertex . _tex_coord ) 
+    - reinterpret_cast < so_called_lib_std_char * > ( & shy_macosx_platform_render :: _reference_vertex )
     ) ;
 void * shy_macosx_platform_render :: _vertex_color_offset = reinterpret_cast < void * >
-    ( reinterpret_cast < char * > ( & shy_macosx_platform_render :: _reference_vertex . _color ) 
-    - reinterpret_cast < char * > ( & shy_macosx_platform_render :: _reference_vertex )
+    ( reinterpret_cast < so_called_lib_std_char * > ( & shy_macosx_platform_render :: _reference_vertex . _color ) 
+    - reinterpret_cast < so_called_lib_std_char * > ( & shy_macosx_platform_render :: _reference_vertex )
     ) ;
 
 void shy_macosx_platform_render :: _load_texture_subdata 
@@ -206,12 +206,13 @@ void shy_macosx_platform_render :: projection_frustum
     , so_called_type_platform_math_num_fract zfar 
     )
 {
-    float left_float ;
-    float right_float ;
-    float bottom_float ;
-    float top_float ;
-    float near_float ;
-    float far_float ;
+    so_called_lib_std_float left_float ;
+    so_called_lib_std_float right_float ;
+    so_called_lib_std_float bottom_float ;
+    so_called_lib_std_float top_float ;
+    so_called_lib_std_float near_float ;
+    so_called_lib_std_float far_float ;
+
     so_called_platform_math_insider :: num_fract_value_get ( left_float , left ) ;
     so_called_platform_math_insider :: num_fract_value_get ( right_float , right ) ;
     so_called_platform_math_insider :: num_fract_value_get ( bottom_float , bottom ) ;
@@ -219,10 +220,10 @@ void shy_macosx_platform_render :: projection_frustum
     so_called_platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
     so_called_platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
     
-    glMatrixMode ( GL_PROJECTION ) ;
-    glLoadIdentity ( ) ;
-    glFrustum ( left_float , right_float , bottom_float , top_float , near_float , far_float ) ;
-    glMatrixMode ( GL_MODELVIEW ) ;
+    so_called_lib_opengl_glMatrixMode ( so_called_lib_opengl_GL_PROJECTION ) ;
+    so_called_lib_opengl_glLoadIdentity ( ) ;
+    so_called_lib_opengl_glFrustum ( left_float , right_float , bottom_float , top_float , near_float , far_float ) ;
+    so_called_lib_opengl_glMatrixMode ( so_called_lib_opengl_GL_MODELVIEW ) ;
 }
 
 void shy_macosx_platform_render :: projection_ortho 
@@ -234,12 +235,13 @@ void shy_macosx_platform_render :: projection_ortho
     , so_called_type_platform_math_num_fract zfar 
     )
 {
-    float left_float ;
-    float right_float ;
-    float bottom_float ;
-    float top_float ;
-    float near_float ;
-    float far_float ;
+    so_called_lib_std_float left_float ;
+    so_called_lib_std_float right_float ;
+    so_called_lib_std_float bottom_float ;
+    so_called_lib_std_float top_float ;
+    so_called_lib_std_float near_float ;
+    so_called_lib_std_float far_float ;
+
     so_called_platform_math_insider :: num_fract_value_get ( left_float , left ) ;
     so_called_platform_math_insider :: num_fract_value_get ( right_float , right ) ;
     so_called_platform_math_insider :: num_fract_value_get ( bottom_float , bottom ) ;
@@ -247,10 +249,10 @@ void shy_macosx_platform_render :: projection_ortho
     so_called_platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
     so_called_platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
     
-    glMatrixMode ( GL_PROJECTION ) ;
-    glLoadIdentity ( ) ;
-    glOrtho ( left_float , right_float , bottom_float , top_float , near_float , far_float ) ;
-    glMatrixMode ( GL_MODELVIEW ) ;
+    so_called_lib_opengl_glMatrixMode ( so_called_lib_opengl_GL_PROJECTION ) ;
+    so_called_lib_opengl_glLoadIdentity ( ) ;
+    so_called_lib_opengl_glOrtho ( left_float , right_float , bottom_float , top_float , near_float , far_float ) ;
+    so_called_lib_opengl_glMatrixMode ( so_called_lib_opengl_GL_MODELVIEW ) ;
 }
 
 void shy_macosx_platform_render :: create_vertex_buffer 
@@ -258,15 +260,17 @@ void shy_macosx_platform_render :: create_vertex_buffer
     , so_called_type_platform_math_num_whole elements 
     )
 {
-    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
-    glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    int elements_int = 0 ;
+    so_called_lib_opengl_glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+
+    so_called_lib_std_int32_t elements_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
-    glBufferData
-        ( GL_ARRAY_BUFFER 
-        , ( GLsizeiptr ) ( sizeof ( so_called_type_platform_render_vertex_data ) * ( unsigned int ) elements_int ) 
+
+    so_called_lib_opengl_glBufferData
+        ( so_called_lib_opengl_GL_ARRAY_BUFFER 
+        , ( so_called_lib_opengl_GLsizeiptr ) ( so_called_lib_std_int32_t ( sizeof ( so_called_type_platform_render_vertex_data ) ) * elements_int ) 
         , 0
-        , GL_STATIC_DRAW 
+        , so_called_lib_opengl_GL_STATIC_DRAW 
         ) ;
 }
 
@@ -275,14 +279,14 @@ void shy_macosx_platform_render :: map_vertex_buffer
     , so_called_type_platform_render_vertex_buffer_id arg_buffer_id 
     )
 {
-    glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    data . _data = glMapBuffer ( GL_ARRAY_BUFFER , GL_READ_WRITE ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , so_called_lib_opengl_GL_READ_WRITE ) ;
 }
 
 void shy_macosx_platform_render :: unmap_vertex_buffer ( so_called_type_platform_render_vertex_buffer_id arg_buffer_id )
 {
-    glBindBuffer ( GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    glUnmapBuffer ( GL_ARRAY_BUFFER ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    so_called_lib_opengl_glUnmapBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER ) ;
 }
 
 void shy_macosx_platform_render :: mapped_vertex_buffer_element
@@ -292,7 +296,7 @@ void shy_macosx_platform_render :: mapped_vertex_buffer_element
     )
 {
     so_called_type_platform_render_vertex_data * mapped_vertices = ( so_called_type_platform_render_vertex_data * ) data . _data ;
-    int index_int = 0 ;
+    so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
     so_called_platform_pointer :: bind ( ptr , mapped_vertices [ index_int ] ) ;
 }
@@ -327,18 +331,20 @@ void shy_macosx_platform_render :: set_vertex_color
     , so_called_type_platform_math_num_fract a 
     )
 {
-    float r_float ;
-    float g_float ;
-    float b_float ;
-    float a_float ;
+    so_called_lib_std_float r_float ;
+    so_called_lib_std_float g_float ;
+    so_called_lib_std_float b_float ;
+    so_called_lib_std_float a_float ;
+
     so_called_platform_math_insider :: num_fract_value_get ( r_float , r ) ;
     so_called_platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     so_called_platform_math_insider :: num_fract_value_get ( b_float , b ) ;
     so_called_platform_math_insider :: num_fract_value_get ( a_float , a ) ;
-    vertex . _color [ 0 ] = ( GLubyte ) ( r_float * 255.0f ) ;
-    vertex . _color [ 1 ] = ( GLubyte ) ( g_float * 255.0f ) ;
-    vertex . _color [ 2 ] = ( GLubyte ) ( b_float * 255.0f ) ;
-    vertex . _color [ 3 ] = ( GLubyte ) ( a_float * 255.0f ) ;
+
+    vertex . _color [ 0 ] = ( so_called_lib_opengl_GLubyte ) ( r_float * so_called_lib_std_float ( 255 ) ) ;
+    vertex . _color [ 1 ] = ( so_called_lib_opengl_GLubyte ) ( g_float * so_called_lib_std_float ( 255 ) ) ;
+    vertex . _color [ 2 ] = ( so_called_lib_opengl_GLubyte ) ( b_float * so_called_lib_std_float ( 255 ) ) ;
+    vertex . _color [ 3 ] = ( so_called_lib_opengl_GLubyte ) ( a_float * so_called_lib_std_float ( 255 ) ) ;
 }
 
 void shy_macosx_platform_render :: create_index_buffer 
@@ -346,15 +352,17 @@ void shy_macosx_platform_render :: create_index_buffer
     , so_called_type_platform_math_num_whole elements 
     )
 {
-    glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    int elements_int = 0 ;
+    so_called_lib_opengl_glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+
+    so_called_lib_std_int32_t elements_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
-    glBufferData
-        ( GL_ELEMENT_ARRAY_BUFFER 
-        , ( GLsizeiptr ) ( sizeof ( so_called_type_platform_render_index_data ) * ( unsigned int ) elements_int ) 
+
+    so_called_lib_opengl_glBufferData
+        ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER 
+        , ( so_called_lib_opengl_GLsizeiptr ) ( so_called_lib_std_int32_t ( sizeof ( so_called_type_platform_render_index_data ) ) * elements_int ) 
         , 0
-        , GL_STATIC_DRAW 
+        , so_called_lib_opengl_GL_STATIC_DRAW 
         ) ;
 }
 
@@ -363,14 +371,14 @@ void shy_macosx_platform_render :: map_index_buffer
     , so_called_type_platform_render_index_buffer_id arg_buffer_id 
     )
 {
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    data . _data = glMapBuffer ( GL_ELEMENT_ARRAY_BUFFER , GL_READ_WRITE ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , so_called_lib_opengl_GL_READ_WRITE ) ;
 }
 
 void shy_macosx_platform_render :: unmap_index_buffer ( so_called_type_platform_render_index_buffer_id arg_buffer_id )
 {
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    glUnmapBuffer ( GL_ELEMENT_ARRAY_BUFFER ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
+    so_called_lib_opengl_glUnmapBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER ) ;
 }
 
 void shy_macosx_platform_render :: mapped_index_buffer_element
@@ -380,45 +388,45 @@ void shy_macosx_platform_render :: mapped_index_buffer_element
     )
 {
     so_called_type_platform_render_index_data * mapped_indices = ( so_called_type_platform_render_index_data * ) data . _data ;
-    int index_int = 0 ;
+    so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
     so_called_platform_pointer :: bind ( ptr , mapped_indices [ index_int ] ) ;
 }
 
 void shy_macosx_platform_render :: set_index_value ( so_called_type_platform_render_index_data & data , so_called_type_platform_math_num_whole index )
 {
-    int index_int = 0 ;
+    so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
     data . _index = ( GLushort ) index_int ;
 }
 
 void shy_macosx_platform_render :: matrix_identity ( )
 {
-    glLoadIdentity ( ) ;
+    so_called_lib_opengl_glLoadIdentity ( ) ;
 }
 
 void shy_macosx_platform_render :: matrix_load ( const so_called_type_platform_matrix_data & matrix )
 {
-    const float * elements = 0 ;
+    const so_called_lib_std_float * elements = 0 ;
     so_called_platform_matrix_insider :: elements_ptr ( elements , matrix ) ;
-    glLoadMatrixf ( elements ) ;
+    so_called_lib_opengl_glLoadMatrixf ( elements ) ;
 }
 
 void shy_macosx_platform_render :: matrix_mult ( const so_called_type_platform_matrix_data & matrix )
 {
-    const float * elements = 0 ;
+    const so_called_lib_std_float * elements = 0 ;
     so_called_platform_matrix_insider :: elements_ptr ( elements , matrix ) ;
-    glMultMatrixf ( elements ) ;
+    so_called_lib_opengl_glMultMatrixf ( elements ) ;
 }
 
 void shy_macosx_platform_render :: matrix_push ( )
 {
-    glPushMatrix ( ) ;
+    so_called_lib_opengl_glPushMatrix ( ) ;
 }
 
 void shy_macosx_platform_render :: matrix_pop ( )
 {
-    glPopMatrix ( ) ;
+    so_called_lib_opengl_glPopMatrix ( ) ;
 }
 
 void shy_macosx_platform_render :: draw_triangle_strip 
@@ -427,20 +435,21 @@ void shy_macosx_platform_render :: draw_triangle_strip
     , so_called_type_platform_math_num_whole indices_count 
     )
 {
-    int indices_count_int = 0 ;
+    so_called_lib_std_int32_t indices_count_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
-    glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
-    glEnableClientState ( GL_VERTEX_ARRAY ) ;
-    glVertexPointer ( 3 , GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_position_offset ) ;
-    glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
-    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_tex_coord_offset ) ;
-    glEnableClientState ( GL_COLOR_ARRAY ) ;
-    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_color_offset ) ;
-    glDrawElements 
-        ( GL_TRIANGLE_STRIP 
-        , ( GLsizei ) indices_count_int
-        , GL_UNSIGNED_SHORT 
+
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
+    so_called_lib_opengl_glEnableClientState ( so_called_lib_opengl_GL_VERTEX_ARRAY ) ;
+    so_called_lib_opengl_glVertexPointer ( 3 , so_called_lib_opengl_GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_position_offset ) ;
+    so_called_lib_opengl_glEnableClientState ( so_called_lib_opengl_GL_TEXTURE_COORD_ARRAY ) ;
+    so_called_lib_opengl_glTexCoordPointer ( 2 , so_called_lib_opengl_GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_tex_coord_offset ) ;
+    so_called_lib_opengl_glEnableClientState ( so_called_lib_opengl_GL_COLOR_ARRAY ) ;
+    so_called_lib_opengl_glColorPointer ( 4 , so_called_lib_opengl_GL_UNSIGNED_BYTE , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_color_offset ) ;
+    so_called_lib_opengl_glDrawElements 
+        ( so_called_lib_opengl_GL_TRIANGLE_STRIP 
+        , ( so_called_lib_opengl_GLsizei ) indices_count_int
+        , so_called_lib_opengl_GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
 }
@@ -451,20 +460,21 @@ void shy_macosx_platform_render :: draw_triangle_fan
     , so_called_type_platform_math_num_whole indices_count 
     )
 {
-    int indices_count_int = 0 ;
+    so_called_lib_std_int32_t indices_count_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
-    glBindBuffer ( GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
-    glEnableClientState ( GL_VERTEX_ARRAY ) ;
-    glVertexPointer ( 3 , GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_position_offset ) ;
-    glEnableClientState ( GL_TEXTURE_COORD_ARRAY ) ;
-    glTexCoordPointer ( 2 , GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_tex_coord_offset ) ;
-    glEnableClientState ( GL_COLOR_ARRAY ) ;
-    glColorPointer ( 4 , GL_UNSIGNED_BYTE , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_color_offset ) ;
-    glDrawElements 
-        ( GL_TRIANGLE_FAN 
-        , ( GLsizei ) indices_count_int
-        , GL_UNSIGNED_SHORT 
+
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , vertices_buffer . _buffer_id ) ;
+    so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , indices_buffer . _buffer_id ) ;
+    so_called_lib_opengl_glEnableClientState ( so_called_lib_opengl_GL_VERTEX_ARRAY ) ;
+    so_called_lib_opengl_glVertexPointer ( 3 , so_called_lib_opengl_GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_position_offset ) ;
+    so_called_lib_opengl_glEnableClientState ( so_called_lib_opengl_GL_TEXTURE_COORD_ARRAY ) ;
+    so_called_lib_opengl_glTexCoordPointer ( 2 , so_called_lib_opengl_GL_FLOAT , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_tex_coord_offset ) ;
+    so_called_lib_opengl_glEnableClientState ( so_called_lib_opengl_GL_COLOR_ARRAY ) ;
+    so_called_lib_opengl_glColorPointer ( 4 , so_called_lib_opengl_GL_UNSIGNED_BYTE , sizeof ( so_called_type_platform_render_vertex_data ) , _vertex_color_offset ) ;
+    so_called_lib_opengl_glDrawElements 
+        ( so_called_lib_opengl_GL_TRIANGLE_FAN 
+        , ( so_called_lib_opengl_GLsizei ) indices_count_int
+        , so_called_lib_opengl_GL_UNSIGNED_SHORT 
         , ( void * ) 0 
         ) ;
 }

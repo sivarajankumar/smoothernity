@@ -1,6 +1,7 @@
 #ifndef _shy_macosx_platform_render_injections_included
 #define _shy_macosx_platform_render_injections_included
 
+#include "../../../../injections/lib/std/bool/shy_bool.h"
 #include "../../../../injections/platform/math/type/num_fract/shy_num_fract.h"
 #include "../../../../injections/platform/math/type/num_whole/shy_num_whole.h"
 #include "../../../../injections/platform/matrix/type/data/shy_data.h"

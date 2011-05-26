@@ -4,5 +4,5 @@ class shy_type_macosx_platform_render_texture_id
 public :
     shy_type_macosx_platform_render_texture_id ( ) ;
 private :
-    GLuint _texture_id ;
+    so_called_lib_opengl_GLuint _texture_id ;
 } ;

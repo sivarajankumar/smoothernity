@@ -1,7 +1,7 @@
 #ifndef _shy_type_macosx_platform_render_texel_data_injections_included
 #define _shy_type_macosx_platform_render_texel_data_injections_included
 
-#include <OpenGL/gl.h>
+#include "../../../../../../injections/lib/opengl/shy_opengl.h"
 
 #include "./shy_texel_data.h"
 
