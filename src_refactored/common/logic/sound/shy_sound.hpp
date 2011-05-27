@@ -39,8 +39,8 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 void shy_guts :: load_sound ( )
 {
     so_called_type_platform_sound_stereo_resource_id music_resource_id ;
-    so_called_platform_sound :: create_stereo_resource_id ( music_resource_id , shy_guts :: consts :: music_rough_and_heavy_resource_index ) ;
-    so_called_platform_sound :: load_stereo_sample_data ( shy_guts :: stereo_sound_data , music_resource_id ) ;
+    so_called_platform_sound_loader :: create_stereo_resource_id ( music_resource_id , shy_guts :: consts :: music_rough_and_heavy_resource_index ) ;
+    so_called_platform_sound_loader :: load_stereo_sample_data ( shy_guts :: stereo_sound_data , music_resource_id ) ;
 }
 
 void shy_guts :: int_to_sample ( so_called_type_platform_math_num_fract & result , so_called_type_platform_math_num_whole i )
@@ -78,7 +78,7 @@ void shy_guts :: create_stereo_sound ( )
     so_called_platform_vector :: xyz ( source_pos , pos_x , pos_y , pos_z ) ;
     so_called_platform_vector :: xyz ( source_vel , vel_x , vel_y , vel_z ) ;
     
-    so_called_platform_sound :: loaded_samples_count ( loaded_samples_count ) ;
+    so_called_platform_sound_loader :: loaded_samples_count ( loaded_samples_count ) ;
     so_called_platform_math :: sub_from_whole ( loaded_samples_count , shy_guts :: consts :: music_tail_cut ) ;
     
     so_called_type_platform_math_num_whole max_music_samples ;
@@ -236,7 +236,7 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_u
         if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: stereo_sound_loaded ) )
         {
             so_called_type_platform_math_num_whole ready ;
-            so_called_platform_sound :: loader_ready ( ready ) ;
+            so_called_platform_sound_loader :: loader_ready ( ready ) ;
             if ( so_called_platform_conditions :: whole_is_true ( ready ) )
             {
                 shy_guts :: load_sound ( ) ;
@@ -246,7 +246,7 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_u
         else
         {
             so_called_type_platform_math_num_whole ready ;
-            so_called_platform_sound :: loader_ready ( ready ) ;
+            so_called_platform_sound_loader :: loader_ready ( ready ) ;
             if ( so_called_platform_conditions :: whole_is_true ( ready ) )
             {
                 if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: stereo_sound_created ) )
