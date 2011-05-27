@@ -4,5 +4,5 @@ class shy_type_macosx_platform_sound_sample_mono
 public :
     shy_type_macosx_platform_sound_sample_mono ( ) ;
 private :
-    ALubyte _value ;
+    so_called_lib_openal_ALubyte _value ;
 } ;
