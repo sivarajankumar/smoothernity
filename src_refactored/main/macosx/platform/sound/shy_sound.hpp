@@ -30,19 +30,21 @@ void shy_macosx_platform_sound :: set_listener_velocity ( so_called_type_platfor
 
 void shy_macosx_platform_sound :: set_listener_orientation ( so_called_type_platform_vector_data look_at , so_called_type_platform_vector_data up )
 {
-    float look_at_x ;
-    float look_at_y ;
-    float look_at_z ;
-    float up_x ;
-    float up_y ;
-    float up_z ;
+    so_called_lib_std_float look_at_x ;
+    so_called_lib_std_float look_at_y ;
+    so_called_lib_std_float look_at_z ;
+    so_called_lib_std_float up_x ;
+    so_called_lib_std_float up_y ;
+    so_called_lib_std_float up_z ;
+
     so_called_platform_vector_insider :: x_get ( look_at_x , look_at ) ;
     so_called_platform_vector_insider :: y_get ( look_at_y , look_at ) ;
     so_called_platform_vector_insider :: z_get ( look_at_z , look_at ) ;
     so_called_platform_vector_insider :: x_get ( up_x , up ) ;
     so_called_platform_vector_insider :: y_get ( up_y , up ) ;
     so_called_platform_vector_insider :: z_get ( up_z , up ) ;
-    ALfloat al_orientation [ ] = 
+
+    so_called_lib_openal_ALfloat al_orientation [ ] = 
         { look_at_x
         , look_at_y
         , look_at_z
@@ -50,7 +52,7 @@ void shy_macosx_platform_sound :: set_listener_orientation ( so_called_type_plat
         , up_y
         , up_z
         } ;
-    alListenerfv ( AL_ORIENTATION , al_orientation ) ;
+    so_called_lib_openal_alListenerfv ( so_called_lib_openal_AL_ORIENTATION , al_orientation ) ;
 }
 
 void shy_macosx_platform_sound :: set_sample_value ( so_called_type_platform_sound_sample_mono & sample , so_called_type_platform_math_num_fract value )
