@@ -98,21 +98,21 @@ void shy_macosx_platform_sound :: set_source_pitch ( const so_called_type_platfo
 
 void shy_macosx_platform_sound :: set_source_gain ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_math_num_fract gain )
 {
-    float gain_float = 0 ;
+    so_called_lib_std_float gain_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( gain_float , gain ) ;
-    alSourcef ( source_id . _source_id , AL_GAIN , gain_float ) ;
+    so_called_lib_openal_alSourcef ( source_id . _source_id , so_called_lib_openal_AL_GAIN , gain_float ) ;
 }
 
 void shy_macosx_platform_sound :: set_source_position ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_vector_data position )
 {
-    float x ;
-    float y ;
-    float z ;
+    so_called_lib_std_float x ;
+    so_called_lib_std_float y ;
+    so_called_lib_std_float z ;
     so_called_platform_vector_insider :: x_get ( x , position ) ;
     so_called_platform_vector_insider :: y_get ( y , position ) ;
     so_called_platform_vector_insider :: z_get ( z , position ) ;
-    ALfloat al_position [ ] = { x , y , z } ;
-    alSourcefv ( source_id . _source_id , AL_POSITION , al_position ) ;
+    so_called_lib_openal_ALfloat al_position [ ] = { x , y , z } ;
+    so_called_lib_openal_alSourcefv ( source_id . _source_id , so_called_lib_openal_AL_POSITION , al_position ) ;
 }
 
 void shy_macosx_platform_sound :: set_source_velocity ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_vector_data velocity )

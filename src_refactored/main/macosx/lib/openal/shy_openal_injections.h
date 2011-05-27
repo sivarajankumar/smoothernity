@@ -7,6 +7,8 @@
 #define so_called_lib_openal_alGenSources alGenSources
 #define so_called_lib_openal_alListenerfv alListenerfv
 #define so_called_lib_openal_alSourcef alSourcef
+#define so_called_lib_openal_alSourcefv alSourcefv
+#define so_called_lib_openal_AL_GAIN AL_GAIN
 #define so_called_lib_openal_AL_ORIENTATION AL_ORIENTATION
 #define so_called_lib_openal_AL_PITCH AL_PITCH
 #define so_called_lib_openal_AL_POSITION AL_POSITION
