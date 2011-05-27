@@ -91,9 +91,9 @@ void shy_macosx_platform_sound :: create_source ( so_called_type_platform_sound_
 
 void shy_macosx_platform_sound :: set_source_pitch ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_math_num_fract pitch )
 {
-    float pitch_float = 0 ;
+    so_called_lib_std_float pitch_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( pitch_float , pitch ) ;
-    alSourcef ( source_id . _source_id , AL_PITCH , pitch_float ) ;
+    so_called_lib_openal_alSourcef ( source_id . _source_id , so_called_lib_openal_AL_PITCH , pitch_float ) ;
 }
 
 void shy_macosx_platform_sound :: set_source_gain ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_math_num_fract gain )

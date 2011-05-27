@@ -6,7 +6,9 @@
 
 #define so_called_lib_openal_alGenSources alGenSources
 #define so_called_lib_openal_alListenerfv alListenerfv
+#define so_called_lib_openal_alSourcef alSourcef
 #define so_called_lib_openal_AL_ORIENTATION AL_ORIENTATION
+#define so_called_lib_openal_AL_PITCH AL_PITCH
 #define so_called_lib_openal_AL_POSITION AL_POSITION
 #define so_called_lib_openal_AL_VELOCITY AL_VELOCITY
 typedef ALfloat so_called_lib_openal_ALfloat ;
