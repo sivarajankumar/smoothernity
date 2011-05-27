@@ -134,12 +134,12 @@ void shy_macosx_platform_sound :: set_source_buffer ( const so_called_type_platf
 
 void shy_macosx_platform_sound :: set_source_playback_looping ( const so_called_type_platform_sound_source_id & source_id )
 {
-    alSourcei ( source_id . _source_id , AL_LOOPING , AL_TRUE ) ;
+    so_called_lib_openal_alSourcei ( source_id . _source_id , so_called_lib_openal_AL_LOOPING , so_called_lib_openal_AL_TRUE ) ;
 }
 
 void shy_macosx_platform_sound :: set_source_playback_once ( const so_called_type_platform_sound_source_id & source_id )
 {
-    alSourcei ( source_id . _source_id , AL_LOOPING , AL_FALSE ) ;
+    so_called_lib_openal_alSourcei ( source_id . _source_id , so_called_lib_openal_AL_LOOPING , so_called_lib_openal_AL_FALSE ) ;
 }
 
 void shy_macosx_platform_sound :: source_play ( const so_called_type_platform_sound_source_id & source_id )
