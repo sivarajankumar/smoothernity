@@ -19,8 +19,6 @@ private :
         , so_called_type_platform_math_num_whole size_pow2_base 
         , so_called_type_platform_render_texel_data * texels 
         ) ;
-private :
-    static void * _texture_loader ;
 } ;
 
 template < typename texels_array >
