@@ -67,7 +67,7 @@ void shy_macosx_platform_sound :: create_stereo_resource_id
     , so_called_type_platform_math_num_whole resource_index
     )
 {
-    int resource_index_int = 0 ;
+    so_called_lib_std_int32_t resource_index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( resource_index_int , resource_index ) ;
     result . _resource_id = resource_index_int ;
 }
@@ -86,7 +86,7 @@ void shy_macosx_platform_sound :: loaded_samples_count ( so_called_type_platform
 
 void shy_macosx_platform_sound :: create_source ( so_called_type_platform_sound_source_id & result )
 {
-    alGenSources ( 1 , & result . _source_id ) ;
+    so_called_lib_openal_alGenSources ( 1 , & result . _source_id ) ;
 }
 
 void shy_macosx_platform_sound :: set_source_pitch ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_math_num_fract pitch )

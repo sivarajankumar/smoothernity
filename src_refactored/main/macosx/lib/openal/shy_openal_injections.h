@@ -4,6 +4,7 @@
 #include <OpenAL/alc.h>
 #include <OpenAL/MacOSX_OALExtensions.h>
 
+#define so_called_lib_openal_alGenSources alGenSources
 #define so_called_lib_openal_alListenerfv alListenerfv
 #define so_called_lib_openal_AL_ORIENTATION AL_ORIENTATION
 #define so_called_lib_openal_AL_POSITION AL_POSITION
