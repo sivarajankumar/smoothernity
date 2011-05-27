@@ -4,5 +4,5 @@ class shy_type_macosx_platform_sound_buffer_id
 public :
     shy_type_macosx_platform_sound_buffer_id ( ) ;
 private :
-    ALuint _buffer_id ;
+    so_called_lib_openal_ALuint _buffer_id ;
 } ;

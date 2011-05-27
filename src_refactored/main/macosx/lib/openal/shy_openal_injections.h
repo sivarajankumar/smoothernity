@@ -1,6 +1,7 @@
 #ifndef _shy_macosx_lib_openal_injections_included
 #define _shy_macosx_lib_openal_injections_included
 
+#include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #include <OpenAL/MacOSX_OALExtensions.h>
 
@@ -27,6 +28,7 @@ typedef alBufferDataStaticProcPtr so_called_lib_openal_alBufferDataStaticProcPtr
 #define so_called_lib_openal_AL_VELOCITY AL_VELOCITY
 typedef ALfloat so_called_lib_openal_ALfloat ;
 typedef ALubyte so_called_lib_openal_ALubyte ;
+typedef ALuint so_called_lib_openal_ALuint ;
 typedef ALvoid so_called_lib_openal_ALvoid ;
 typedef ALCchar so_called_lib_openal_ALCchar ;
 
