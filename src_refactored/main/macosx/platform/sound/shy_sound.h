@@ -60,7 +60,7 @@ void shy_macosx_platform_sound :: load_stereo_sample_data
     )
 {
     const so_called_type_platform_sound_sample_stereo * samples_ptr = 0 ;
-    int samples_count = 0 ;
+    so_called_lib_std_int32_t samples_count = 0 ;
     so_called_platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
     so_called_platform_static_array_insider :: template elements_count < samples_array > ( samples_count ) ;
 
