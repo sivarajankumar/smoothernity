@@ -6,7 +6,6 @@
 #include <OpenAL/MacOSX_OALExtensions.h>
 
 #define so_called_lib_openal_alcGetProcAddress alcGetProcAddress
-typedef alBufferDataStaticProcPtr so_called_lib_openal_alBufferDataStaticProcPtr ;
 #define so_called_lib_openal_alGenBuffers alGenBuffers
 #define so_called_lib_openal_alGenSources alGenSources
 #define so_called_lib_openal_alListenerfv alListenerfv
@@ -26,6 +25,8 @@ typedef alBufferDataStaticProcPtr so_called_lib_openal_alBufferDataStaticProcPtr
 #define so_called_lib_openal_AL_POSITION AL_POSITION
 #define so_called_lib_openal_AL_TRUE AL_TRUE
 #define so_called_lib_openal_AL_VELOCITY AL_VELOCITY
+
+typedef alBufferDataStaticProcPtr so_called_lib_openal_alBufferDataStaticProcPtr ;
 typedef ALfloat so_called_lib_openal_ALfloat ;
 typedef ALubyte so_called_lib_openal_ALubyte ;
 typedef ALuint so_called_lib_openal_ALuint ;
