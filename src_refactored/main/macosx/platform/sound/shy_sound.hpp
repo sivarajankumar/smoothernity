@@ -2,14 +2,16 @@ void * shy_macosx_platform_sound :: _sound_loader = 0 ;
 
 void shy_macosx_platform_sound :: set_listener_position ( so_called_type_platform_vector_data position )
 {
-    float x ;
-    float y ;
-    float z ;
+    so_called_lib_std_float x ;
+    so_called_lib_std_float y ;
+    so_called_lib_std_float z ;
+
     so_called_platform_vector_insider :: x_get ( x , position ) ;
     so_called_platform_vector_insider :: y_get ( y , position ) ;
     so_called_platform_vector_insider :: z_get ( z , position ) ;
-    ALfloat al_position [ ] = { x , y , z } ;
-    alListenerfv ( AL_POSITION , al_position ) ;
+
+    so_called_lib_openal_ALfloat al_position [ ] = { x , y , z } ;
+    so_called_lib_openal_alListenerfv ( so_called_lib_openal_AL_POSITION , al_position ) ;
 }
 
 void shy_macosx_platform_sound :: set_listener_velocity ( so_called_type_platform_vector_data velocity )
