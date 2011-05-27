@@ -4,5 +4,5 @@ class shy_type_macosx_platform_sound_source_id
 public :
     shy_type_macosx_platform_sound_source_id ( ) ;
 private :
-    ALuint _source_id ;
+    so_called_lib_openal_ALuint _source_id ;
 } ;

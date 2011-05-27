@@ -1,7 +1,7 @@
 #ifndef _shy_type_macosx_platform_sound_source_id_injections_included
 #define _shy_type_macosx_platform_sound_source_id_injections_included
 
-#include <OpenAL/al.h>
+#include "../../../../../../injections/lib/openal/shy_openal.h"
 
 #include "./shy_source_id.h"
 
