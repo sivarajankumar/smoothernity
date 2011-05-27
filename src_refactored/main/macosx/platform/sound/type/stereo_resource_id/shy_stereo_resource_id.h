@@ -4,5 +4,5 @@ class shy_type_macosx_platform_sound_stereo_resource_id
 public :
     shy_type_macosx_platform_sound_stereo_resource_id ( ) ;
 private :
-    int _resource_id ;
+    so_called_lib_std_int32_t _resource_id ;
 } ;
