@@ -144,12 +144,12 @@ void shy_macosx_platform_sound :: set_source_playback_once ( const so_called_typ
 
 void shy_macosx_platform_sound :: source_play ( const so_called_type_platform_sound_source_id & source_id )
 {
-    alSourcePlay ( source_id . _source_id ) ;
+    so_called_lib_openal_alSourcePlay ( source_id . _source_id ) ;
 }
 
 void shy_macosx_platform_sound :: source_stop ( const so_called_type_platform_sound_source_id & source_id )
 {
-    alSourceStop ( source_id . _source_id ) ;
+    so_called_lib_openal_alSourceStop ( source_id . _source_id ) ;
 }
 
 void shy_macosx_platform_sound :: _load_stereo_sample_data
