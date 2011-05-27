@@ -57,9 +57,9 @@ void shy_macosx_platform_sound :: set_listener_orientation ( so_called_type_plat
 
 void shy_macosx_platform_sound :: set_sample_value ( so_called_type_platform_sound_sample_mono & sample , so_called_type_platform_math_num_fract value )
 {
-    float value_float = 0 ;
+    so_called_lib_std_float value_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( value_float , value ) ;
-    sample . _value = ( ALubyte ) ( ( value_float * 127.0f ) + 127.0f ) ;
+    sample . _value = ( so_called_lib_openal_ALubyte ) ( ( value_float * so_called_lib_std_float ( 127 ) ) + so_called_lib_std_float ( 127 ) ) ;
 }
 
 void shy_macosx_platform_sound :: create_stereo_resource_id 
