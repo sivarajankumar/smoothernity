@@ -203,20 +203,20 @@ void shy_macosx_platform_sound :: _create_stereo_buffer
     union al_buffer_data_static_proc_type
     {
         void * void_ptr ;
-        alBufferDataStaticProcPtr func_ptr ;
+        so_called_lib_openal_alBufferDataStaticProcPtr func_ptr ;
     } ;
     al_buffer_data_static_proc_type al_buffer_data_static_proc ;
-    al_buffer_data_static_proc . void_ptr = alcGetProcAddress ( nil , ( const ALCchar * ) "alBufferDataStatic" ) ;
+    al_buffer_data_static_proc . void_ptr = so_called_lib_openal_alcGetProcAddress ( nil , ( const so_called_lib_openal_ALCchar * ) "alBufferDataStatic" ) ;
     
-    alGenBuffers ( 1 , & result . _buffer_id ) ;
+    so_called_lib_openal_alGenBuffers ( 1 , & result . _buffer_id ) ;
     
-    int samples_count_int = 0 ;
+    so_called_lib_std_int32_t samples_count_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( samples_count_int , samples_count ) ;
     
     al_buffer_data_static_proc . func_ptr
         ( result . _buffer_id 
-        , AL_FORMAT_STEREO16 
-        , ( ALvoid * ) samples_ptr
+        , so_called_lib_openal_AL_FORMAT_STEREO16 
+        , ( so_called_lib_openal_ALvoid * ) samples_ptr
         , samples_count_int * sizeof ( so_called_type_platform_sound_sample_stereo )
         , stereo_sound_samples_per_second
         ) ;
