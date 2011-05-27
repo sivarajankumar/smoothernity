@@ -117,19 +117,19 @@ void shy_macosx_platform_sound :: set_source_position ( const so_called_type_pla
 
 void shy_macosx_platform_sound :: set_source_velocity ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_vector_data velocity )
 {
-    float x ;
-    float y ;
-    float z ;
+    so_called_lib_std_float x ;
+    so_called_lib_std_float y ;
+    so_called_lib_std_float z ;
     so_called_platform_vector_insider :: x_get ( x , velocity ) ;
     so_called_platform_vector_insider :: y_get ( y , velocity ) ;
     so_called_platform_vector_insider :: z_get ( z , velocity ) ;
-    ALfloat al_velocity [ ] = { x , y , z } ;
-    alSourcefv ( source_id . _source_id , AL_VELOCITY , al_velocity ) ;
+    so_called_lib_openal_ALfloat al_velocity [ ] = { x , y , z } ;
+    so_called_lib_openal_alSourcefv ( source_id . _source_id , so_called_lib_openal_AL_VELOCITY , al_velocity ) ;
 }
 
 void shy_macosx_platform_sound :: set_source_buffer ( const so_called_type_platform_sound_source_id & source_id , so_called_type_platform_sound_buffer_id & buffer_id )
 {
-    alSourcei ( source_id . _source_id , AL_BUFFER , buffer_id . _buffer_id ) ;
+    so_called_lib_openal_alSourcei ( source_id . _source_id , so_called_lib_openal_AL_BUFFER , buffer_id . _buffer_id ) ;
 }
 
 void shy_macosx_platform_sound :: set_source_playback_looping ( const so_called_type_platform_sound_source_id & source_id )
