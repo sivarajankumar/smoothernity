@@ -38,7 +38,7 @@ public :
 private :
     static void _load_stereo_sample_data 
         ( const so_called_type_platform_sound_sample_stereo * samples_ptr 
-        , int samples_count 
+        , so_called_lib_std_int32_t samples_count 
         , const so_called_type_platform_sound_stereo_resource_id & resource_id 
         ) ;
     static void _create_mono_buffer 
