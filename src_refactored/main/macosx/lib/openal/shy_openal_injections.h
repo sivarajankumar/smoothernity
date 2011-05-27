@@ -29,6 +29,7 @@ typedef alBufferDataStaticProcPtr so_called_lib_openal_alBufferDataStaticProcPtr
 typedef ALfloat so_called_lib_openal_ALfloat ;
 typedef ALubyte so_called_lib_openal_ALubyte ;
 typedef ALuint so_called_lib_openal_ALuint ;
+typedef ALushort so_called_lib_openal_ALushort ;
 typedef ALvoid so_called_lib_openal_ALvoid ;
 typedef ALCchar so_called_lib_openal_ALCchar ;
 
