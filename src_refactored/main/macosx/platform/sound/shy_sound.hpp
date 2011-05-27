@@ -1,5 +1,3 @@
-void * shy_macosx_platform_sound :: _sound_loader = 0 ;
-
 void shy_macosx_platform_sound :: set_listener_position ( so_called_type_platform_vector_data position )
 {
     so_called_lib_std_float x ;
@@ -74,13 +72,17 @@ void shy_macosx_platform_sound :: create_stereo_resource_id
 
 void shy_macosx_platform_sound :: loader_ready ( so_called_type_platform_math_num_whole & result )
 {
-    shy_macosx_sound_loader * loader = reinterpret_cast < shy_macosx_sound_loader * > ( _sound_loader ) ;
+    void * void_loader = 0 ;
+    so_called_platform_sound_loader_insider :: get_sound_loader ( void_loader ) ;
+    shy_macosx_sound_loader * loader = reinterpret_cast < shy_macosx_sound_loader * > ( void_loader ) ;
     so_called_platform_math_insider :: num_whole_value_set ( result , [ loader loader_ready ] ) ;
 }
 
 void shy_macosx_platform_sound :: loaded_samples_count ( so_called_type_platform_math_num_whole & result )
 {
-    shy_macosx_sound_loader * loader = reinterpret_cast < shy_macosx_sound_loader * > ( _sound_loader ) ;
+    void * void_loader = 0 ;
+    so_called_platform_sound_loader_insider :: get_sound_loader ( void_loader ) ;
+    shy_macosx_sound_loader * loader = reinterpret_cast < shy_macosx_sound_loader * > ( void_loader ) ;
     so_called_platform_math_insider :: num_whole_value_set ( result , [ loader loaded_samples_count ] ) ;
 }
 
@@ -158,7 +160,9 @@ void shy_macosx_platform_sound :: _load_stereo_sample_data
     , const so_called_type_platform_sound_stereo_resource_id & resource_id 
     )
 {
-    shy_macosx_sound_loader * loader = reinterpret_cast < shy_macosx_sound_loader * > ( _sound_loader ) ;
+    void * void_loader = 0 ;
+    so_called_platform_sound_loader_insider :: get_sound_loader ( void_loader ) ;
+    shy_macosx_sound_loader * loader = reinterpret_cast < shy_macosx_sound_loader * > ( void_loader ) ;
     [ loader 
         load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
         to_buffer : ( void * ) samples_ptr

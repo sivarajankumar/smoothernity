@@ -1,8 +1,8 @@
 #include "./shy_macosx_scene.h"
-#include "./platform/mouse/insider/shy_insider_injections.h"
-#include "./platform/render/insider/shy_insider_injections.h"
-#include "./platform/render/texture_loader/insider/shy_insider_injections.h"
-#include "./platform/sound/insider/shy_insider_injections.h"
+#include "../../injections/platform/mouse/insider/shy_insider.h"
+#include "../../injections/platform/render/insider/shy_insider.h"
+#include "../../injections/platform/render/texture_loader/insider/shy_insider.h"
+#include "../../injections/platform/sound/loader/insider/shy_insider.h"
 #include "../../facade/shy_facade_injections.h"
 
 @implementation shy_macosx_scene
@@ -19,7 +19,7 @@
 
         so_called_platform_render_insider :: set_frame_loss ( false ) ;
         so_called_platform_render_texture_loader_insider :: set_texture_loader ( _texture_loader ) ;
-        so_called_platform_sound_insider :: set_sound_loader ( _sound_loader ) ;
+        so_called_platform_sound_loader_insider :: set_sound_loader ( _sound_loader ) ;
         so_called_platform_mouse_insider :: set_left_button_down ( false ) ;
         so_called_platform_mouse_insider :: set_enabled ( true ) ;
         
@@ -34,7 +34,7 @@
     so_called_facade :: done ( ) ;
 
     so_called_platform_render_texture_loader_insider :: set_texture_loader ( 0 ) ;
-    so_called_platform_sound_insider :: set_sound_loader ( 0 ) ;
+    so_called_platform_sound_loader_insider :: set_sound_loader ( 0 ) ;
 
     [ _sound_loader thread_stop ] ;
     [ _texture_loader thread_stop ] ;

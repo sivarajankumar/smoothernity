@@ -51,8 +51,6 @@ private :
         , const so_called_type_platform_sound_sample_stereo * samples_ptr 
         , so_called_type_platform_math_num_whole samples_count 
         ) ;
-private :
-    static void * _sound_loader ;
 } ;
 
 template < typename samples_array >

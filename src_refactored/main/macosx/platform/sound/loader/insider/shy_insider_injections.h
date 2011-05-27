@@ -1,0 +1,9 @@
+#ifndef _shy_macosx_platform_sound_loader_insider_injections_included
+#define _shy_macosx_platform_sound_loader_insider_injections_included
+
+#include "./shy_insider.h"
+
+typedef shy_macosx_platform_sound_loader_insider so_called_platform_sound_loader_insider ;
+
+#endif
+
