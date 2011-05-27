@@ -1,6 +1,1 @@
-#include "./shy_vertex_data_injections.h"
-
-#include "../../../../../../injections/platform/consts/insider/shy_insider.h"
-
-#include "./shy_vertex_data.hpp"
-
+#include "../../../../../../platform/render/opengl/type/vertex_data/shy_vertex_data_injections.hpp"

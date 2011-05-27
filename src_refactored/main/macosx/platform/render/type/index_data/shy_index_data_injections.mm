@@ -1,6 +1,1 @@
-#include "./shy_index_data_injections.h"
-
-#include "../../../../../../injections/platform/consts/insider/shy_insider.h"
-
-#include "./shy_index_data.hpp"
-
+#include "../../../../../../platform/render/opengl/type/index_data/shy_index_data_injections.hpp"

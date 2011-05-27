@@ -5,6 +5,7 @@
 #include "../../common/sender/update/shy_update_injections.h"
 #include "../../common/sender/video_mode_changed/shy_video_mode_changed_injections.h"
 #include "../../injections/platform/math/consts/shy_consts.h"
+#include "../../injections/platform/render/shy_render.h"
 #include "../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_static_injections.h"

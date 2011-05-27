@@ -1,6 +1,1 @@
-#include "./shy_texel_data_injections.h"
-
-#include "../../../../../../injections/platform/consts/insider/shy_insider.h"
-
-#include "./shy_texel_data.hpp"
-
+#include "../../../../../../platform/render/opengl/type/texel_data/shy_texel_data_injections.hpp"

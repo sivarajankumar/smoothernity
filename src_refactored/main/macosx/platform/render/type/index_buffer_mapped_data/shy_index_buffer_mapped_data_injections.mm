@@ -1,6 +1,1 @@
-#include "./shy_index_buffer_mapped_data_injections.h"
-
-#include "../../../../../../injections/platform/consts/insider/shy_insider.h"
-
-#include "./shy_index_buffer_mapped_data.hpp"
-
+#include "../../../../../../platform/render/opengl/type/index_buffer_mapped_data/shy_index_buffer_mapped_data_injections.hpp"
