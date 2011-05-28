@@ -1,6 +1,1 @@
-#include "./shy_buffer_id_injections.h"
-
-#include "../../../../../../injections/platform/consts/insider/shy_insider.h"
-
-#include "./shy_buffer_id.hpp"
-
+#include "../../../../../../platform/sound/openal/type/buffer_id/shy_buffer_id_injections.hpp"
