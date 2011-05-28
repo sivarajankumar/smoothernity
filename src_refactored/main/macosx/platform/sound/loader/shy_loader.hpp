@@ -1,5 +1,5 @@
 void shy_macosx_platform_sound_loader :: create_stereo_resource_id 
-    ( so_called_type_platform_sound_stereo_resource_id & result 
+    ( so_called_type_platform_sound_loader_stereo_resource_id & result 
     , so_called_type_platform_math_num_whole resource_index
     )
 {
@@ -27,7 +27,7 @@ void shy_macosx_platform_sound_loader :: loaded_samples_count ( so_called_type_p
 void shy_macosx_platform_sound_loader :: _load_stereo_sample_data
     ( const so_called_type_platform_sound_sample_stereo * samples_ptr
     , so_called_lib_std_int32_t samples_count
-    , const so_called_type_platform_sound_stereo_resource_id & resource_id 
+    , const so_called_type_platform_sound_loader_stereo_resource_id & resource_id 
     )
 {
     void * void_loader = 0 ;
