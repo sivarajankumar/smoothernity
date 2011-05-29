@@ -425,14 +425,14 @@
 		1910EDEB1392AE5100E55470 /* shy_video_mode_changed_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1910EC4C1392AE5000E55470 /* shy_video_mode_changed_injections.cpp */; };
 		1910EDF91392AE6D00E55470 /* shy_facade_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1910EDF21392AE6D00E55470 /* shy_facade_injections.cpp */; };
 		1910EDFB1392AEE400E55470 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1910EDFA1392AEE400E55470 /* Default.png */; };
+		194E47E21392B57D003D1A15 /* shy_iphone_app_delegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194E47DB1392B57D003D1A15 /* shy_iphone_app_delegate.mm */; };
+		194E47E31392B57D003D1A15 /* shy_iphone_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194E47DD1392B57D003D1A15 /* shy_iphone_sound_loader.mm */; };
+		194E47E41392B57D003D1A15 /* shy_iphone_texture_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194E47DF1392B57D003D1A15 /* shy_iphone_texture_loader.mm */; };
+		194E47E51392B57D003D1A15 /* shy_iphone_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194E47E11392B57D003D1A15 /* shy_iphone_view.mm */; };
 		19A8DDC8115E122F0062EAB6 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19A8DDC7115E122F0062EAB6 /* OpenAL.framework */; };
 		19B3CD04119EAA350075357E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B3CD03119EAA350075357E /* CoreGraphics.framework */; };
 		19BA211B11676CA4007398AF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19BA211A11676CA4007398AF /* AudioToolbox.framework */; };
 		19BFEEB5111DD0FA00424782 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 19BFEEB4111DD0FA00424782 /* Icon.png */; };
-		19C3656911F0D4E5008BCA86 /* iphone_app_delegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19C3655911F0D4E5008BCA86 /* iphone_app_delegate.mm */; };
-		19C3656B11F0D4E5008BCA86 /* iphone_sound_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3656411F0D4E5008BCA86 /* iphone_sound_loader.m */; };
-		19C3656C11F0D4E5008BCA86 /* iphone_texture_loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3656611F0D4E5008BCA86 /* iphone_texture_loader.m */; };
-		19C3656D11F0D4E5008BCA86 /* iphone_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19C3656811F0D4E5008BCA86 /* iphone_view.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -2781,18 +2781,18 @@
 		1910EDF71392AE6D00E55470 /* shy_static_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_static_injections.h; sourceTree = "<group>"; };
 		1910EDF81392AE6D00E55470 /* shy_static_injections.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_static_injections.hpp; sourceTree = "<group>"; };
 		1910EDFA1392AEE400E55470 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		194E47DA1392B57D003D1A15 /* shy_iphone_app_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_iphone_app_delegate.h; sourceTree = "<group>"; };
+		194E47DB1392B57D003D1A15 /* shy_iphone_app_delegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_iphone_app_delegate.mm; sourceTree = "<group>"; };
+		194E47DC1392B57D003D1A15 /* shy_iphone_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_iphone_sound_loader.h; sourceTree = "<group>"; };
+		194E47DD1392B57D003D1A15 /* shy_iphone_sound_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_iphone_sound_loader.mm; sourceTree = "<group>"; };
+		194E47DE1392B57D003D1A15 /* shy_iphone_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_iphone_texture_loader.h; sourceTree = "<group>"; };
+		194E47DF1392B57D003D1A15 /* shy_iphone_texture_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_iphone_texture_loader.mm; sourceTree = "<group>"; };
+		194E47E01392B57D003D1A15 /* shy_iphone_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_iphone_view.h; sourceTree = "<group>"; };
+		194E47E11392B57D003D1A15 /* shy_iphone_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_iphone_view.mm; sourceTree = "<group>"; };
 		19A8DDC7115E122F0062EAB6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		19B3CD03119EAA350075357E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		19BA211A11676CA4007398AF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		19BFEEB4111DD0FA00424782 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		19C3655811F0D4E5008BCA86 /* iphone_app_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_app_delegate.h; sourceTree = "<group>"; };
-		19C3655911F0D4E5008BCA86 /* iphone_app_delegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iphone_app_delegate.mm; sourceTree = "<group>"; };
-		19C3656311F0D4E5008BCA86 /* iphone_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_sound_loader.h; sourceTree = "<group>"; };
-		19C3656411F0D4E5008BCA86 /* iphone_sound_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_sound_loader.m; sourceTree = "<group>"; };
-		19C3656511F0D4E5008BCA86 /* iphone_texture_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_texture_loader.h; sourceTree = "<group>"; };
-		19C3656611F0D4E5008BCA86 /* iphone_texture_loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iphone_texture_loader.m; sourceTree = "<group>"; };
-		19C3656711F0D4E5008BCA86 /* iphone_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iphone_view.h; sourceTree = "<group>"; };
-		19C3656811F0D4E5008BCA86 /* iphone_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iphone_view.mm; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -11857,18 +11857,17 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				1910EDFA1392AEE400E55470 /* Default.png */,
 				1910EDEC1392AE6D00E55470 /* facade */,
 				1910DFF71392AE4D00E55470 /* common */,
-				19C3655811F0D4E5008BCA86 /* iphone_app_delegate.h */,
-				19C3655911F0D4E5008BCA86 /* iphone_app_delegate.mm */,
-				19C3656311F0D4E5008BCA86 /* iphone_sound_loader.h */,
-				19C3656411F0D4E5008BCA86 /* iphone_sound_loader.m */,
-				19C3656511F0D4E5008BCA86 /* iphone_texture_loader.h */,
-				19C3656611F0D4E5008BCA86 /* iphone_texture_loader.m */,
-				19C3656711F0D4E5008BCA86 /* iphone_view.h */,
-				19C3656811F0D4E5008BCA86 /* iphone_view.mm */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				194E47DA1392B57D003D1A15 /* shy_iphone_app_delegate.h */,
+				194E47DB1392B57D003D1A15 /* shy_iphone_app_delegate.mm */,
+				194E47DC1392B57D003D1A15 /* shy_iphone_sound_loader.h */,
+				194E47DD1392B57D003D1A15 /* shy_iphone_sound_loader.mm */,
+				194E47DE1392B57D003D1A15 /* shy_iphone_texture_loader.h */,
+				194E47DF1392B57D003D1A15 /* shy_iphone_texture_loader.mm */,
+				194E47E01392B57D003D1A15 /* shy_iphone_view.h */,
+				194E47E11392B57D003D1A15 /* shy_iphone_view.mm */,
 				32CA4F630368D1EE00C91783 /* smoothernity_Prefix.pch */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -11880,6 +11879,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1910EDFA1392AEE400E55470 /* Default.png */,
 				1910DFF31392AE3700E55470 /* stereo_sound_resource_1.mp3 */,
 				1910DFF41392AE3700E55470 /* texture_resource_1.png */,
 				19BFEEB4111DD0FA00424782 /* Icon.png */,
@@ -11965,10 +11965,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				19C3656911F0D4E5008BCA86 /* iphone_app_delegate.mm in Sources */,
-				19C3656B11F0D4E5008BCA86 /* iphone_sound_loader.m in Sources */,
-				19C3656C11F0D4E5008BCA86 /* iphone_texture_loader.m in Sources */,
-				19C3656D11F0D4E5008BCA86 /* iphone_view.mm in Sources */,
 				1910EC4E1392AE5100E55470 /* shy_stateless_injections.cpp in Sources */,
 				1910EC4F1392AE5100E55470 /* shy_stateless_injections.cpp in Sources */,
 				1910EC501392AE5100E55470 /* shy_state_injections.cpp in Sources */,
@@ -12384,6 +12380,10 @@
 				1910EDEA1392AE5100E55470 /* shy_update_injections.cpp in Sources */,
 				1910EDEB1392AE5100E55470 /* shy_video_mode_changed_injections.cpp in Sources */,
 				1910EDF91392AE6D00E55470 /* shy_facade_injections.cpp in Sources */,
+				194E47E21392B57D003D1A15 /* shy_iphone_app_delegate.mm in Sources */,
+				194E47E31392B57D003D1A15 /* shy_iphone_sound_loader.mm in Sources */,
+				194E47E41392B57D003D1A15 /* shy_iphone_texture_loader.mm in Sources */,
+				194E47E51392B57D003D1A15 /* shy_iphone_view.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
