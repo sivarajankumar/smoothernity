@@ -1,9 +1,11 @@
 #include "./shy_macosx_scene.h"
+#include "../../facade/shy_facade_injections.h"
+#include "../../injections/lib/std/true/shy_true.h"
+#include "../../injections/lib/std/false/shy_false.h"
 #include "../../injections/platform/mouse/insider/shy_insider.h"
 #include "../../injections/platform/render/insider/shy_insider.h"
 #include "../../injections/platform/render/texture_loader/insider/shy_insider.h"
 #include "../../injections/platform/sound/loader/insider/shy_insider.h"
-#include "../../facade/shy_facade_injections.h"
 
 @implementation shy_macosx_scene
 
@@ -17,11 +19,11 @@
         [ _sound_loader thread_run ] ;
         [ _texture_loader thread_run ] ;
 
-        so_called_platform_render_insider :: set_frame_loss ( false ) ;
+        so_called_platform_render_insider :: set_frame_loss ( so_called_lib_std_false ) ;
         so_called_platform_render_texture_loader_insider :: set_texture_loader ( _texture_loader ) ;
         so_called_platform_sound_loader_insider :: set_sound_loader ( _sound_loader ) ;
-        so_called_platform_mouse_insider :: set_left_button_down ( false ) ;
-        so_called_platform_mouse_insider :: set_enabled ( true ) ;
+        so_called_platform_mouse_insider :: set_left_button_down ( so_called_lib_std_false ) ;
+        so_called_platform_mouse_insider :: set_enabled ( so_called_lib_std_true ) ;
         
         so_called_facade :: init ( ) ;
         NSLog ( @"facade initialized" ) ;
@@ -85,12 +87,12 @@
 
 - ( void ) mouse_left_button_down
 {
-    so_called_platform_mouse_insider :: set_left_button_down ( true ) ;
+    so_called_platform_mouse_insider :: set_left_button_down ( so_called_lib_std_true ) ;
 }
 
 - ( void ) mouse_left_button_up
 {
-    so_called_platform_mouse_insider :: set_left_button_down ( false ) ;
+    so_called_platform_mouse_insider :: set_left_button_down ( so_called_lib_std_false ) ;
 }
 
 - ( void ) render
