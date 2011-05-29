@@ -3,7 +3,7 @@
 
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
-#include <OpenAL/MacOSX_OALExtensions.h>
+#include <OpenAL/oalStaticBufferExtension.h>
 
 #define so_called_lib_openal_alcGetProcAddress alcGetProcAddress
 #define so_called_lib_openal_alGenBuffers alGenBuffers

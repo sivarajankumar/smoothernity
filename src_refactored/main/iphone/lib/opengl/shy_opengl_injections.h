@@ -1,8 +1,8 @@
 #ifndef _shy_iphone_lib_opengl_injections_included
 #define _shy_iphone_lib_opengl_injections_included
 
-#include <OpenGL/gl.h>
-#include <OpenGL/glext.h>
+#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES1/glext.h>
 
 #define so_called_lib_opengl_glBindBuffer glBindBuffer
 #define so_called_lib_opengl_glBindTexture glBindTexture
@@ -10,7 +10,7 @@
 #define so_called_lib_opengl_glBufferData glBufferData
 #define so_called_lib_opengl_glClear glClear
 #define so_called_lib_opengl_glClearColor glClearColor
-#define so_called_lib_opengl_glClearDepth glClearDepth
+#define so_called_lib_opengl_glClearDepth glClearDepthf
 #define so_called_lib_opengl_glColorPointer glColorPointer
 #define so_called_lib_opengl_glDisable glDisable
 #define so_called_lib_opengl_glDrawElements glDrawElements
@@ -18,15 +18,15 @@
 #define so_called_lib_opengl_glEnableClientState glEnableClientState
 #define so_called_lib_opengl_glFogf glFogf
 #define so_called_lib_opengl_glFogfv glFogfv
-#define so_called_lib_opengl_glFrustum glFrustum
+#define so_called_lib_opengl_glFrustum glFrustumf
 #define so_called_lib_opengl_glGenBuffers glGenBuffers
 #define so_called_lib_opengl_glGenTextures glGenTextures
 #define so_called_lib_opengl_glLoadIdentity glLoadIdentity
 #define so_called_lib_opengl_glLoadMatrixf glLoadMatrixf
-#define so_called_lib_opengl_glMapBuffer glMapBuffer
+#define so_called_lib_opengl_glMapBuffer glMapBufferOES
 #define so_called_lib_opengl_glMatrixMode glMatrixMode
 #define so_called_lib_opengl_glMultMatrixf glMultMatrixf
-#define so_called_lib_opengl_glOrtho glOrtho
+#define so_called_lib_opengl_glOrtho glOrthof
 #define so_called_lib_opengl_glPixelStorei glPixelStorei
 #define so_called_lib_opengl_glPopMatrix glPopMatrix
 #define so_called_lib_opengl_glPushMatrix glPushMatrix
@@ -35,7 +35,7 @@
 #define so_called_lib_opengl_glTexImage2D glTexImage2D
 #define so_called_lib_opengl_glTexParameteri glTexParameteri
 #define so_called_lib_opengl_glTexSubImage2D glTexSubImage2D 
-#define so_called_lib_opengl_glUnmapBuffer glUnmapBuffer
+#define so_called_lib_opengl_glUnmapBuffer glUnmapBufferOES
 #define so_called_lib_opengl_glVertexPointer glVertexPointer
 #define so_called_lib_opengl_GL_ARRAY_BUFFER GL_ARRAY_BUFFER
 #define so_called_lib_opengl_GL_BGRA GL_BGRA
@@ -57,7 +57,6 @@
 #define so_called_lib_opengl_GL_MODULATE GL_MODULATE
 #define so_called_lib_opengl_GL_ONE_MINUS_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 #define so_called_lib_opengl_GL_PROJECTION GL_PROJECTION
-#define so_called_lib_opengl_GL_READ_WRITE GL_READ_WRITE
 #define so_called_lib_opengl_GL_RGBA GL_RGBA
 #define so_called_lib_opengl_GL_REPEAT GL_REPEAT
 #define so_called_lib_opengl_GL_SRC_ALPHA GL_SRC_ALPHA
@@ -76,6 +75,7 @@
 #define so_called_lib_opengl_GL_UNSIGNED_BYTE GL_UNSIGNED_BYTE
 #define so_called_lib_opengl_GL_UNSIGNED_SHORT GL_UNSIGNED_SHORT 
 #define so_called_lib_opengl_GL_VERTEX_ARRAY GL_VERTEX_ARRAY
+#define so_called_lib_opengl_GL_WRITE_ONLY GL_WRITE_ONLY_OES
 typedef GLfloat so_called_lib_opengl_GLfloat ;
 typedef GLsizei so_called_lib_opengl_GLsizei ;
 typedef GLsizeiptr so_called_lib_opengl_GLsizeiptr ;

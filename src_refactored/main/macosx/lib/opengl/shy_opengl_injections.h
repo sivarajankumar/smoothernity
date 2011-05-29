@@ -57,7 +57,6 @@
 #define so_called_lib_opengl_GL_MODULATE GL_MODULATE
 #define so_called_lib_opengl_GL_ONE_MINUS_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 #define so_called_lib_opengl_GL_PROJECTION GL_PROJECTION
-#define so_called_lib_opengl_GL_READ_WRITE GL_READ_WRITE
 #define so_called_lib_opengl_GL_RGBA GL_RGBA
 #define so_called_lib_opengl_GL_REPEAT GL_REPEAT
 #define so_called_lib_opengl_GL_SRC_ALPHA GL_SRC_ALPHA
@@ -76,6 +75,7 @@
 #define so_called_lib_opengl_GL_UNSIGNED_BYTE GL_UNSIGNED_BYTE
 #define so_called_lib_opengl_GL_UNSIGNED_SHORT GL_UNSIGNED_SHORT 
 #define so_called_lib_opengl_GL_VERTEX_ARRAY GL_VERTEX_ARRAY
+#define so_called_lib_opengl_GL_WRITE_ONLY GL_WRITE_ONLY
 typedef GLfloat so_called_lib_opengl_GLfloat ;
 typedef GLsizei so_called_lib_opengl_GLsizei ;
 typedef GLsizeiptr so_called_lib_opengl_GLsizeiptr ;

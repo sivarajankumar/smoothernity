@@ -286,7 +286,7 @@ void shy_platform_render_opengl :: map_vertex_buffer
     )
 {
     so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , so_called_lib_opengl_GL_READ_WRITE ) ;
+    data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , so_called_lib_opengl_GL_WRITE_ONLY ) ;
 }
 
 void shy_platform_render_opengl :: unmap_vertex_buffer ( so_called_type_platform_render_opengl_vertex_buffer_id arg_buffer_id )
@@ -378,7 +378,7 @@ void shy_platform_render_opengl :: map_index_buffer
     )
 {
     so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
-    data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , so_called_lib_opengl_GL_READ_WRITE ) ;
+    data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , so_called_lib_opengl_GL_WRITE_ONLY ) ;
 }
 
 void shy_platform_render_opengl :: unmap_index_buffer ( so_called_type_platform_render_opengl_index_buffer_id arg_buffer_id )
