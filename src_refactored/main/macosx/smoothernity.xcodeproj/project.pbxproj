@@ -6,55 +6,7 @@
 	objectVersion = 42;
 	objects = {
 
-/* Begin PBXApplicationTarget section */
-		29B97326FDCFA39411CA2CEA /* smoothernity */ = {
-			isa = PBXApplicationTarget;
-			buildConfigurationList = 88CE0EE6117C860F00A1BF42 /* Build configuration list for PBXApplicationTarget "smoothernity" */;
-			buildPhases = (
-				29B97327FDCFA39411CA2CEA /* Headers */,
-				29B97328FDCFA39411CA2CEA /* Resources */,
-				29B9732BFDCFA39411CA2CEA /* Sources */,
-				29B9732DFDCFA39411CA2CEA /* Frameworks */,
-			);
-			dependencies = (
-			);
-			name = smoothernity;
-			productInstallPath = "$(HOME)/Applications";
-			productName = NSOpenGLFullScreen;
-			productReference = 17587328FF379C6511CA2CBB /* Smoothernity.app */;
-			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
-<plist version=\"1.0\">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
-	<key>CFBundleExecutable</key>
-	<string>Smoothernity</string>
-	<key>CFBundleIconFile</key>
-	<string>AppIcon</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
-	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
-</dict>
-</plist>
-";
-		};
-/* End PBXApplicationTarget section */
-
 /* Begin PBXBuildFile section */
-		0568922A046B142600000102 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05689229046B142600000102 /* OpenGL.framework */; };
-		080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
-		089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		194C630912CB94E80071A5BD /* shy_macosx_main_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62E612CB94E80071A5BD /* shy_macosx_main_controller.h */; };
 		194C630A12CB94E80071A5BD /* shy_macosx_main_controller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C62E712CB94E80071A5BD /* shy_macosx_main_controller.mm */; };
 		194C630B12CB94E80071A5BD /* shy_macosx_opengl_view.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C62E812CB94E80071A5BD /* shy_macosx_opengl_view.h */; };
@@ -75,12 +27,6 @@
 		19AE102111B269A300A5B332 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
 		19AE102211B269A300A5B332 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
 		19AE102311B269A300A5B332 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
-		29B9732CFDCFA39411CA2CEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
-		4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
-		8812CF37117DE7F9008F67D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
-		8812CF3B117DE80B008F67D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
-		8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
 		8823384F138AAB33004077E7 /* stereo_sound_resource_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8823384D138AAB33004077E7 /* stereo_sound_resource_1.mp3 */; };
 		88233850138AAB33004077E7 /* texture_resource_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8823384E138AAB33004077E7 /* texture_resource_1.png */; };
 		883F55AF138D54BE001F342B /* shy_conditions_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 883F54FE138D54BE001F342B /* shy_conditions_injections.h */; };
@@ -2748,7 +2694,6 @@
 		05689229046B142600000102 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		17587328FF379C6511CA2CBB /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		194C62E612CB94E80071A5BD /* shy_macosx_main_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_main_controller.h; sourceTree = "<group>"; };
 		194C62E712CB94E80071A5BD /* shy_macosx_main_controller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_main_controller.mm; sourceTree = "<group>"; };
 		194C62E812CB94E80071A5BD /* shy_macosx_opengl_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_opengl_view.h; sourceTree = "<group>"; };
@@ -5446,18 +5391,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		29B9732DFDCFA39411CA2CEA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1058C7A3FEA54F0111CA2CBB /* Cocoa.framework in Frameworks */,
-				0568922A046B142600000102 /* OpenGL.framework in Frameworks */,
-				8812CF37117DE7F9008F67D9 /* OpenAL.framework in Frameworks */,
-				8812CF3B117DE80B008F67D9 /* AudioToolbox.framework in Frameworks */,
-				8812CF3F117DE82C008F67D9 /* QuartzCore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -5508,7 +5441,6 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17587328FF379C6511CA2CBB /* Smoothernity.app */,
 				19AE102911B269A300A5B332 /* Smoothernity.app */,
 			);
 			name = Products;
@@ -18173,14 +18105,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		29B97327FDCFA39411CA2CEA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				32CA4F650368D2AA00C91783 /* NSOpenGLFullScreen_Prefix.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -18210,13 +18134,16 @@
 			isa = PBXProject;
 			buildConfigurationList = 88CE0EE5117C860F00A1BF42 /* Build configuration list for PBXProject "smoothernity" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* NSOpenGLFullScreen */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				19AE0FEA11B269A300A5B332 /* smoothernity (Upgraded) */,
-				29B97326FDCFA39411CA2CEA /* smoothernity */,
 			);
 		};
 /* End PBXProject section */
@@ -18231,16 +18158,6 @@
 				19AE101311B269A300A5B332 /* AppIcon.icns in Resources */,
 				8823384F138AAB33004077E7 /* stereo_sound_resource_1.mp3 in Resources */,
 				88233850138AAB33004077E7 /* texture_resource_1.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		29B97328FDCFA39411CA2CEA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				080E96DCFE201CFB7F000001 /* MainMenu.nib in Resources */,
-				089C165EFE840E0CC02AAC07 /* InfoPlist.strings in Resources */,
-				4CC8EAF604A26E0D00CA0E34 /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18752,14 +18669,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		29B9732BFDCFA39411CA2CEA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				29B9732CFDCFA39411CA2CEA /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -18979,81 +18888,6 @@
 			};
 			name = Default;
 		};
-		88CE0EE2117C860E00A1BF42 /* Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = "";
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRECOMPILE_PREFIX_HEADER = YES;
-				PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
-				PRODUCT_NAME = Smoothernity;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
-			};
-			name = Development;
-		};
-		88CE0EE3117C860E00A1BF42 /* Deployment */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				HEADER_SEARCH_PATHS = "";
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRECOMPILE_PREFIX_HEADER = YES;
-				PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
-				PRODUCT_NAME = Smoothernity;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
-			};
-			name = Deployment;
-		};
-		88CE0EE4117C860E00A1BF42 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "";
-				HEADER_SEARCH_PATHS = "";
-				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRECOMPILE_PREFIX_HEADER = YES;
-				PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
-				PRODUCT_NAME = NSOpenGLFullScreen;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = app;
-			};
-			name = Default;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -19073,16 +18907,6 @@
 				88CE0EDF117C860E00A1BF42 /* Development */,
 				88CE0EE0117C860E00A1BF42 /* Deployment */,
 				88CE0EE1117C860E00A1BF42 /* Default */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
-		};
-		88CE0EE6117C860F00A1BF42 /* Build configuration list for PBXApplicationTarget "smoothernity" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88CE0EE2117C860E00A1BF42 /* Development */,
-				88CE0EE3117C860E00A1BF42 /* Deployment */,
-				88CE0EE4117C860E00A1BF42 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;
