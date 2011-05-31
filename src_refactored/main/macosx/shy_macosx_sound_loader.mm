@@ -90,12 +90,12 @@
             ] retain 
         ] ;
         
-    SInt64 file_length_in_frames = 0 ;
-    AudioStreamBasicDescription file_format ;
-    UInt32 property_size = sizeof ( file_format ) ;
-    ExtAudioFileRef ext_ref = 0 ;
-    AudioStreamBasicDescription output_format ;
-    AudioBufferList data_buffer ;
+    so_called_lib_cocoa_SInt64 file_length_in_frames = 0 ;
+    so_called_lib_cocoa_AudioStreamBasicDescription file_format ;
+    so_called_lib_cocoa_AudioStreamBasicDescription output_format ;
+    so_called_lib_cocoa_UInt32 property_size = sizeof ( file_format ) ;
+    so_called_lib_cocoa_ExtAudioFileRef ext_ref = 0 ;
+    so_called_lib_cocoa_AudioBufferList data_buffer ;
                  
     ExtAudioFileOpenURL ( file_url , & ext_ref ) ;
     ExtAudioFileGetProperty ( ext_ref , kExtAudioFileProperty_FileDataFormat , & property_size , & file_format ) ;
