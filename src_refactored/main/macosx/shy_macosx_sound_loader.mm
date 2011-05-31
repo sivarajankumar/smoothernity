@@ -97,31 +97,54 @@
     so_called_lib_cocoa_ExtAudioFileRef ext_ref = 0 ;
     so_called_lib_cocoa_AudioBufferList data_buffer ;
                  
-    ExtAudioFileOpenURL ( file_url , & ext_ref ) ;
-    ExtAudioFileGetProperty ( ext_ref , kExtAudioFileProperty_FileDataFormat , & property_size , & file_format ) ;
+    so_called_lib_cocoa_ExtAudioFileOpenURL ( file_url , & ext_ref ) ;
+    so_called_lib_cocoa_ExtAudioFileGetProperty 
+        ( ext_ref 
+        , so_called_lib_cocoa_kExtAudioFileProperty_FileDataFormat 
+        , & property_size 
+        , & file_format 
+        ) ;
 
     output_format . mSampleRate = 44100 ;
     output_format . mChannelsPerFrame = 2 ;
-    output_format . mFormatID = kAudioFormatLinearPCM ;
+    output_format . mFormatID = so_called_lib_cocoa_kAudioFormatLinearPCM ;
     output_format . mBytesPerPacket = 2 * output_format . mChannelsPerFrame ;
     output_format . mFramesPerPacket = 1 ;
     output_format . mBytesPerFrame = 2 * output_format . mChannelsPerFrame ;
     output_format . mBitsPerChannel = 16 ;
-    output_format . mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger ;
-                    
-    ExtAudioFileSetProperty ( ext_ref , kExtAudioFileProperty_ClientDataFormat , sizeof ( output_format ) , & output_format ) ;
+    output_format . mFormatFlags 
+        = so_called_lib_cocoa_kAudioFormatFlagsNativeEndian
+        | so_called_lib_cocoa_kAudioFormatFlagIsPacked
+        | so_called_lib_cocoa_kAudioFormatFlagIsSignedInteger
+        ;
+    so_called_lib_cocoa_ExtAudioFileSetProperty
+        ( ext_ref 
+        , so_called_lib_cocoa_kExtAudioFileProperty_ClientDataFormat 
+        , sizeof ( output_format ) 
+        , & output_format 
+        ) ;
+
     property_size = sizeof ( file_length_in_frames ) ;
-    ExtAudioFileGetProperty ( ext_ref , kExtAudioFileProperty_FileLengthFrames , & property_size , & file_length_in_frames ) ;
+    so_called_lib_cocoa_ExtAudioFileGetProperty 
+        ( ext_ref 
+        , so_called_lib_cocoa_kExtAudioFileProperty_FileLengthFrames
+        , & property_size
+        , & file_length_in_frames
+        ) ;
     
     data_buffer . mNumberBuffers = 1 ;
-    data_buffer . mBuffers [ 0 ] . mDataByteSize = ( int ) ( file_length_in_frames ) * output_format . mBytesPerFrame ;
+    data_buffer . mBuffers [ 0 ] . mDataByteSize = ( so_called_lib_std_int32_t ) ( file_length_in_frames ) * output_format . mBytesPerFrame ;
     data_buffer . mBuffers [ 0 ] . mNumberChannels = output_format . mChannelsPerFrame ;
     data_buffer . mBuffers [ 0 ] . mData = _buffer ;
     
-    ExtAudioFileRead ( ext_ref , ( UInt32 * ) & file_length_in_frames , & data_buffer ) ;
+    so_called_lib_cocoa_ExtAudioFileRead 
+        ( ext_ref 
+        , ( so_called_lib_cocoa_UInt32 * ) & file_length_in_frames 
+        , & data_buffer 
+        ) ;
     _loaded_samples_count = ( so_called_lib_std_int32_t ) file_length_in_frames ;
-    ExtAudioFileDispose ( ext_ref ) ;
-    CFRelease ( file_url ) ;
+    so_called_lib_cocoa_ExtAudioFileDispose ( ext_ref ) ;
+    so_called_lib_cocoa_CFRelease ( file_url ) ;
 }
 
 @end
