@@ -3,7 +3,10 @@ void shy_facade_static :: init ( )
     so_called_platform_render :: init ( ) ;
     so_called_platform_render_texture_loader :: init ( ) ;
     so_called_platform_scheduler :: init ( ) ;
+    so_called_platform_sound_loader :: init ( ) ;
+
     so_called_common_init :: init ( ) ;
+
     so_called_sender_common_init :: send ( so_called_message_common_init ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
@@ -12,7 +15,9 @@ void shy_facade_static :: done ( )
 {
     so_called_sender_common_done :: send ( so_called_message_common_done ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
+
     so_called_platform_render_texture_loader :: done ( ) ;
+    so_called_platform_sound_loader :: done ( ) ;
 }
 
 void shy_facade_static :: update ( )

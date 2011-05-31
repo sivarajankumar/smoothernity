@@ -8,6 +8,7 @@
 #include "../../injections/platform/render/shy_render.h"
 #include "../../injections/platform/render/texture_loader/shy_texture_loader.h"
 #include "../../injections/platform/scheduler/shy_scheduler.h"
+#include "../../injections/platform/sound/loader/shy_loader.h"
 #include "../../loadable/loader/shy_loader_injections.h"
 
 #include "./shy_loadable_injections.h"

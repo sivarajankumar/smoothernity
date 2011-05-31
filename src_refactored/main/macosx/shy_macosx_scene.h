@@ -1,9 +1,6 @@
-#include "./shy_macosx_sound_loader.h"
-
 @interface shy_macosx_scene : NSObject
 {
 @private
-    shy_macosx_sound_loader * _sound_loader ;
     NSRect _bounds ;
 }
 

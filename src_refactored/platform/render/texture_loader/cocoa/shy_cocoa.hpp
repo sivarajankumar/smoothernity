@@ -1,4 +1,4 @@
-@interface shy_type_guts_loader : so_called_lib_cocoa_NSObject
+@interface shy_type_guts_platform_render_texture_loader_cocoa : so_called_lib_cocoa_NSObject
 {
 @private
     so_called_lib_std_bool _is_ready ;
@@ -28,10 +28,10 @@ namespace shy_guts
         static const so_called_lib_std_char resource_name_prefix [ ] = "texture_resource_" ;
         static const so_called_lib_std_float sleep_delay = 0.1f ;
     }
-    static shy_type_guts_loader * loader = 0 ;
+    static shy_type_guts_platform_render_texture_loader_cocoa * loader = 0 ;
 }
 
-@implementation shy_type_guts_loader
+@implementation shy_type_guts_platform_render_texture_loader_cocoa
 
 - ( id ) init
 {
@@ -157,7 +157,7 @@ namespace shy_guts
 
 void shy_platform_render_texture_loader_cocoa :: init ( )
 {
-    shy_guts :: loader = [ [ shy_type_guts_loader alloc ] init ] ;
+    shy_guts :: loader = [ [ shy_type_guts_platform_render_texture_loader_cocoa alloc ] init ] ;
     [ shy_guts :: loader thread_run ] ;
 }
 

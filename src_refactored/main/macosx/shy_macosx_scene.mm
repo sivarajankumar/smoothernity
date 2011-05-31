@@ -4,7 +4,6 @@
 #include "../../injections/lib/std/false/shy_false.h"
 #include "../../injections/platform/mouse/insider/shy_insider.h"
 #include "../../injections/platform/render/insider/shy_insider.h"
-#include "../../injections/platform/sound/loader/insider/shy_insider.h"
 
 @implementation shy_macosx_scene
 
@@ -13,11 +12,7 @@
     self = [ super init ] ;
     if ( self )
     {
-        _sound_loader = [ [ shy_macosx_sound_loader alloc ] init ] ;
-        [ _sound_loader thread_run ] ;
-
         so_called_platform_render_insider :: set_frame_loss ( so_called_lib_std_false ) ;
-        so_called_platform_sound_loader_insider :: set_sound_loader ( _sound_loader ) ;
         so_called_platform_mouse_insider :: set_left_button_down ( so_called_lib_std_false ) ;
         so_called_platform_mouse_insider :: set_enabled ( so_called_lib_std_true ) ;
         
@@ -30,11 +25,6 @@
 - ( void ) dealloc
 {
     so_called_facade :: done ( ) ;
-
-    so_called_platform_sound_loader_insider :: set_sound_loader ( 0 ) ;
-    [ _sound_loader thread_stop ] ;
-    _sound_loader = nil ;
-    
     [ super dealloc ] ;
 }
 

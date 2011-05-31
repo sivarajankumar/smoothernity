@@ -13,8 +13,6 @@
 		194C630C12CB94E80071A5BD /* shy_macosx_opengl_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */; };
 		194C632612CB94E80071A5BD /* shy_macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630312CB94E80071A5BD /* shy_macosx_scene.h */; };
 		194C632712CB94E80071A5BD /* shy_macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630412CB94E80071A5BD /* shy_macosx_scene.mm */; };
-		194C632812CB94E80071A5BD /* shy_macosx_sound_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630512CB94E80071A5BD /* shy_macosx_sound_loader.h */; };
-		194C632912CB94E80071A5BD /* shy_macosx_sound_loader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */; };
 		19AE0FEC11B269A300A5B332 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
 		19AE101111B269A300A5B332 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		19AE101211B269A300A5B332 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -2656,28 +2654,20 @@
 		88F1715B138AAA8F003208CC /* shy_static.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F17151138AAA8F003208CC /* shy_static.hpp */; };
 		88F1715C138AAA8F003208CC /* shy_static_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F17152138AAA8F003208CC /* shy_static_injections.h */; };
 		88F1715D138AAA8F003208CC /* shy_static_injections.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88F17153138AAA8F003208CC /* shy_static_injections.hpp */; };
-		DB08F6671390DDBF00DB3134 /* shy_insider.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F64A1390DDBF00DB3134 /* shy_insider.h */; };
-		DB08F6681390DDBF00DB3134 /* shy_insider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DB08F64B1390DDBF00DB3134 /* shy_insider.hpp */; };
-		DB08F6691390DDBF00DB3134 /* shy_insider_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F64C1390DDBF00DB3134 /* shy_insider_injections.h */; };
-		DB08F66A1390DDBF00DB3134 /* shy_insider_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F64D1390DDBF00DB3134 /* shy_insider_injections.mm */; };
-		DB08F66B1390DDBF00DB3134 /* shy_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F64E1390DDBF00DB3134 /* shy_loader.h */; };
-		DB08F66C1390DDBF00DB3134 /* shy_loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DB08F64F1390DDBF00DB3134 /* shy_loader.hpp */; };
-		DB08F66D1390DDBF00DB3134 /* shy_loader_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F6501390DDBF00DB3134 /* shy_loader_injections.h */; };
-		DB08F66E1390DDBF00DB3134 /* shy_loader_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F6511390DDBF00DB3134 /* shy_loader_injections.mm */; };
-		DB08F66F1390DDBF00DB3134 /* shy_stereo_resource_id.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F6541390DDBF00DB3134 /* shy_stereo_resource_id.h */; };
-		DB08F6701390DDBF00DB3134 /* shy_stereo_resource_id.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DB08F6551390DDBF00DB3134 /* shy_stereo_resource_id.hpp */; };
-		DB08F6711390DDBF00DB3134 /* shy_stereo_resource_id_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F6561390DDBF00DB3134 /* shy_stereo_resource_id_injections.h */; };
-		DB08F6721390DDBF00DB3134 /* shy_stereo_resource_id_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F6571390DDBF00DB3134 /* shy_stereo_resource_id_injections.mm */; };
-		DB08F6731390DDBF00DB3134 /* shy_sound_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F6581390DDBF00DB3134 /* shy_sound_injections.h */; };
-		DB08F6741390DDBF00DB3134 /* shy_sound_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F6591390DDBF00DB3134 /* shy_sound_injections.mm */; };
-		DB08F6751390DDBF00DB3134 /* shy_buffer_id_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F65C1390DDBF00DB3134 /* shy_buffer_id_injections.h */; };
-		DB08F6761390DDBF00DB3134 /* shy_buffer_id_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F65D1390DDBF00DB3134 /* shy_buffer_id_injections.mm */; };
-		DB08F6771390DDBF00DB3134 /* shy_sample_mono_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F65F1390DDBF00DB3134 /* shy_sample_mono_injections.h */; };
-		DB08F6781390DDBF00DB3134 /* shy_sample_mono_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F6601390DDBF00DB3134 /* shy_sample_mono_injections.mm */; };
-		DB08F6791390DDBF00DB3134 /* shy_sample_stereo_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F6621390DDBF00DB3134 /* shy_sample_stereo_injections.h */; };
-		DB08F67A1390DDBF00DB3134 /* shy_sample_stereo_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F6631390DDBF00DB3134 /* shy_sample_stereo_injections.mm */; };
-		DB08F67B1390DDBF00DB3134 /* shy_source_id_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = DB08F6651390DDBF00DB3134 /* shy_source_id_injections.h */; };
-		DB08F67C1390DDBF00DB3134 /* shy_source_id_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB08F6661390DDBF00DB3134 /* shy_source_id_injections.mm */; };
+		88F68DFA139539F300D5B4E4 /* shy_loader_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F68DE5139539F300D5B4E4 /* shy_loader_injections.h */; };
+		88F68DFB139539F300D5B4E4 /* shy_loader_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88F68DE6139539F300D5B4E4 /* shy_loader_injections.mm */; };
+		88F68DFC139539F300D5B4E4 /* shy_stereo_resource_id_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F68DE9139539F300D5B4E4 /* shy_stereo_resource_id_injections.h */; };
+		88F68DFD139539F300D5B4E4 /* shy_stereo_resource_id_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88F68DEA139539F300D5B4E4 /* shy_stereo_resource_id_injections.mm */; };
+		88F68DFE139539F300D5B4E4 /* shy_sound_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F68DEB139539F300D5B4E4 /* shy_sound_injections.h */; };
+		88F68DFF139539F300D5B4E4 /* shy_sound_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88F68DEC139539F300D5B4E4 /* shy_sound_injections.mm */; };
+		88F68E00139539F300D5B4E4 /* shy_buffer_id_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F68DEF139539F300D5B4E4 /* shy_buffer_id_injections.h */; };
+		88F68E01139539F300D5B4E4 /* shy_buffer_id_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88F68DF0139539F300D5B4E4 /* shy_buffer_id_injections.mm */; };
+		88F68E02139539F300D5B4E4 /* shy_sample_mono_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F68DF2139539F300D5B4E4 /* shy_sample_mono_injections.h */; };
+		88F68E03139539F300D5B4E4 /* shy_sample_mono_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88F68DF3139539F300D5B4E4 /* shy_sample_mono_injections.mm */; };
+		88F68E04139539F300D5B4E4 /* shy_sample_stereo_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F68DF5139539F300D5B4E4 /* shy_sample_stereo_injections.h */; };
+		88F68E05139539F300D5B4E4 /* shy_sample_stereo_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88F68DF6139539F300D5B4E4 /* shy_sample_stereo_injections.mm */; };
+		88F68E06139539F300D5B4E4 /* shy_source_id_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88F68DF8139539F300D5B4E4 /* shy_source_id_injections.h */; };
+		88F68E07139539F300D5B4E4 /* shy_source_id_injections.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88F68DF9139539F300D5B4E4 /* shy_source_id_injections.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2690,8 +2680,6 @@
 		194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_opengl_view.mm; sourceTree = "<group>"; };
 		194C630312CB94E80071A5BD /* shy_macosx_scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_scene.h; sourceTree = "<group>"; };
 		194C630412CB94E80071A5BD /* shy_macosx_scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_scene.mm; sourceTree = "<group>"; };
-		194C630512CB94E80071A5BD /* shy_macosx_sound_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_sound_loader.h; sourceTree = "<group>"; };
-		194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_sound_loader.mm; sourceTree = "<group>"; };
 		19AE102811B269A300A5B332 /* Info-smoothernity__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-smoothernity__Upgraded_.plist"; sourceTree = "<group>"; };
 		19AE102911B269A300A5B332 /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -5334,28 +5322,20 @@
 		88F17151138AAA8F003208CC /* shy_static.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_static.hpp; sourceTree = "<group>"; };
 		88F17152138AAA8F003208CC /* shy_static_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_static_injections.h; sourceTree = "<group>"; };
 		88F17153138AAA8F003208CC /* shy_static_injections.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_static_injections.hpp; sourceTree = "<group>"; };
-		DB08F64A1390DDBF00DB3134 /* shy_insider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_insider.h; sourceTree = "<group>"; };
-		DB08F64B1390DDBF00DB3134 /* shy_insider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_insider.hpp; sourceTree = "<group>"; };
-		DB08F64C1390DDBF00DB3134 /* shy_insider_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_insider_injections.h; sourceTree = "<group>"; };
-		DB08F64D1390DDBF00DB3134 /* shy_insider_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_insider_injections.mm; sourceTree = "<group>"; };
-		DB08F64E1390DDBF00DB3134 /* shy_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader.h; sourceTree = "<group>"; };
-		DB08F64F1390DDBF00DB3134 /* shy_loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loader.hpp; sourceTree = "<group>"; };
-		DB08F6501390DDBF00DB3134 /* shy_loader_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader_injections.h; sourceTree = "<group>"; };
-		DB08F6511390DDBF00DB3134 /* shy_loader_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_loader_injections.mm; sourceTree = "<group>"; };
-		DB08F6541390DDBF00DB3134 /* shy_stereo_resource_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_stereo_resource_id.h; sourceTree = "<group>"; };
-		DB08F6551390DDBF00DB3134 /* shy_stereo_resource_id.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_stereo_resource_id.hpp; sourceTree = "<group>"; };
-		DB08F6561390DDBF00DB3134 /* shy_stereo_resource_id_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_stereo_resource_id_injections.h; sourceTree = "<group>"; };
-		DB08F6571390DDBF00DB3134 /* shy_stereo_resource_id_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_stereo_resource_id_injections.mm; sourceTree = "<group>"; };
-		DB08F6581390DDBF00DB3134 /* shy_sound_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sound_injections.h; sourceTree = "<group>"; };
-		DB08F6591390DDBF00DB3134 /* shy_sound_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_sound_injections.mm; sourceTree = "<group>"; };
-		DB08F65C1390DDBF00DB3134 /* shy_buffer_id_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_buffer_id_injections.h; sourceTree = "<group>"; };
-		DB08F65D1390DDBF00DB3134 /* shy_buffer_id_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_buffer_id_injections.mm; sourceTree = "<group>"; };
-		DB08F65F1390DDBF00DB3134 /* shy_sample_mono_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sample_mono_injections.h; sourceTree = "<group>"; };
-		DB08F6601390DDBF00DB3134 /* shy_sample_mono_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_sample_mono_injections.mm; sourceTree = "<group>"; };
-		DB08F6621390DDBF00DB3134 /* shy_sample_stereo_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sample_stereo_injections.h; sourceTree = "<group>"; };
-		DB08F6631390DDBF00DB3134 /* shy_sample_stereo_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_sample_stereo_injections.mm; sourceTree = "<group>"; };
-		DB08F6651390DDBF00DB3134 /* shy_source_id_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_source_id_injections.h; sourceTree = "<group>"; };
-		DB08F6661390DDBF00DB3134 /* shy_source_id_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_source_id_injections.mm; sourceTree = "<group>"; };
+		88F68DE5139539F300D5B4E4 /* shy_loader_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader_injections.h; sourceTree = "<group>"; };
+		88F68DE6139539F300D5B4E4 /* shy_loader_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_loader_injections.mm; sourceTree = "<group>"; };
+		88F68DE9139539F300D5B4E4 /* shy_stereo_resource_id_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_stereo_resource_id_injections.h; sourceTree = "<group>"; };
+		88F68DEA139539F300D5B4E4 /* shy_stereo_resource_id_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_stereo_resource_id_injections.mm; sourceTree = "<group>"; };
+		88F68DEB139539F300D5B4E4 /* shy_sound_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sound_injections.h; sourceTree = "<group>"; };
+		88F68DEC139539F300D5B4E4 /* shy_sound_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_sound_injections.mm; sourceTree = "<group>"; };
+		88F68DEF139539F300D5B4E4 /* shy_buffer_id_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_buffer_id_injections.h; sourceTree = "<group>"; };
+		88F68DF0139539F300D5B4E4 /* shy_buffer_id_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_buffer_id_injections.mm; sourceTree = "<group>"; };
+		88F68DF2139539F300D5B4E4 /* shy_sample_mono_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sample_mono_injections.h; sourceTree = "<group>"; };
+		88F68DF3139539F300D5B4E4 /* shy_sample_mono_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_sample_mono_injections.mm; sourceTree = "<group>"; };
+		88F68DF5139539F300D5B4E4 /* shy_sample_stereo_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sample_stereo_injections.h; sourceTree = "<group>"; };
+		88F68DF6139539F300D5B4E4 /* shy_sample_stereo_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_sample_stereo_injections.mm; sourceTree = "<group>"; };
+		88F68DF8139539F300D5B4E4 /* shy_source_id_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_source_id_injections.h; sourceTree = "<group>"; };
+		88F68DF9139539F300D5B4E4 /* shy_source_id_injections.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_source_id_injections.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5387,8 +5367,6 @@
 				194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */,
 				194C630312CB94E80071A5BD /* shy_macosx_scene.h */,
 				194C630412CB94E80071A5BD /* shy_macosx_scene.mm */,
-				194C630512CB94E80071A5BD /* shy_macosx_sound_loader.h */,
-				194C630612CB94E80071A5BD /* shy_macosx_sound_loader.mm */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */,
 			);
@@ -5468,8 +5446,8 @@
 		882EC07212E774C200B57BB7 /* macosx_platform */ = {
 			isa = PBXGroup;
 			children = (
+				88F68DE2139539F300D5B4E4 /* sound */,
 				8860A3FD139517EF00DD0DE0 /* render */,
-				DB08F6471390DDBF00DB3134 /* sound */,
 				883F54FD138D54BE001F342B /* conditions */,
 				883F5500138D54BE001F342B /* consts */,
 				883F5504138D54BE001F342B /* math */,
@@ -15791,103 +15769,95 @@
 			path = static;
 			sourceTree = "<group>";
 		};
-		DB08F6471390DDBF00DB3134 /* sound */ = {
+		88F68DE2139539F300D5B4E4 /* sound */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F6481390DDBF00DB3134 /* loader */,
-				DB08F6581390DDBF00DB3134 /* shy_sound_injections.h */,
-				DB08F6591390DDBF00DB3134 /* shy_sound_injections.mm */,
-				DB08F65A1390DDBF00DB3134 /* type */,
+				88F68DE3139539F300D5B4E4 /* loader */,
+				88F68DEB139539F300D5B4E4 /* shy_sound_injections.h */,
+				88F68DEC139539F300D5B4E4 /* shy_sound_injections.mm */,
+				88F68DED139539F300D5B4E4 /* type */,
 			);
 			path = sound;
 			sourceTree = "<group>";
 		};
-		DB08F6481390DDBF00DB3134 /* loader */ = {
+		88F68DE3139539F300D5B4E4 /* loader */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F6491390DDBF00DB3134 /* insider */,
-				DB08F64E1390DDBF00DB3134 /* shy_loader.h */,
-				DB08F64F1390DDBF00DB3134 /* shy_loader.hpp */,
-				DB08F6501390DDBF00DB3134 /* shy_loader_injections.h */,
-				DB08F6511390DDBF00DB3134 /* shy_loader_injections.mm */,
-				DB08F6521390DDBF00DB3134 /* type */,
+				88F68DE4139539F300D5B4E4 /* insider */,
+				88F68DE5139539F300D5B4E4 /* shy_loader_injections.h */,
+				88F68DE6139539F300D5B4E4 /* shy_loader_injections.mm */,
+				88F68DE7139539F300D5B4E4 /* type */,
 			);
 			path = loader;
 			sourceTree = "<group>";
 		};
-		DB08F6491390DDBF00DB3134 /* insider */ = {
+		88F68DE4139539F300D5B4E4 /* insider */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F64A1390DDBF00DB3134 /* shy_insider.h */,
-				DB08F64B1390DDBF00DB3134 /* shy_insider.hpp */,
-				DB08F64C1390DDBF00DB3134 /* shy_insider_injections.h */,
-				DB08F64D1390DDBF00DB3134 /* shy_insider_injections.mm */,
 			);
 			path = insider;
 			sourceTree = "<group>";
 		};
-		DB08F6521390DDBF00DB3134 /* type */ = {
+		88F68DE7139539F300D5B4E4 /* type */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F6531390DDBF00DB3134 /* stereo_resource_id */,
+				88F68DE8139539F300D5B4E4 /* stereo_resource_id */,
 			);
 			path = type;
 			sourceTree = "<group>";
 		};
-		DB08F6531390DDBF00DB3134 /* stereo_resource_id */ = {
+		88F68DE8139539F300D5B4E4 /* stereo_resource_id */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F6541390DDBF00DB3134 /* shy_stereo_resource_id.h */,
-				DB08F6551390DDBF00DB3134 /* shy_stereo_resource_id.hpp */,
-				DB08F6561390DDBF00DB3134 /* shy_stereo_resource_id_injections.h */,
-				DB08F6571390DDBF00DB3134 /* shy_stereo_resource_id_injections.mm */,
+				88F68DE9139539F300D5B4E4 /* shy_stereo_resource_id_injections.h */,
+				88F68DEA139539F300D5B4E4 /* shy_stereo_resource_id_injections.mm */,
 			);
 			path = stereo_resource_id;
 			sourceTree = "<group>";
 		};
-		DB08F65A1390DDBF00DB3134 /* type */ = {
+		88F68DED139539F300D5B4E4 /* type */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F65B1390DDBF00DB3134 /* buffer_id */,
-				DB08F65E1390DDBF00DB3134 /* sample_mono */,
-				DB08F6611390DDBF00DB3134 /* sample_stereo */,
-				DB08F6641390DDBF00DB3134 /* source_id */,
+				88F68DEE139539F300D5B4E4 /* buffer_id */,
+				88F68DF1139539F300D5B4E4 /* sample_mono */,
+				88F68DF4139539F300D5B4E4 /* sample_stereo */,
+				88F68DF7139539F300D5B4E4 /* source_id */,
 			);
 			path = type;
 			sourceTree = "<group>";
 		};
-		DB08F65B1390DDBF00DB3134 /* buffer_id */ = {
+		88F68DEE139539F300D5B4E4 /* buffer_id */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F65C1390DDBF00DB3134 /* shy_buffer_id_injections.h */,
-				DB08F65D1390DDBF00DB3134 /* shy_buffer_id_injections.mm */,
+				88F68DEF139539F300D5B4E4 /* shy_buffer_id_injections.h */,
+				88F68DF0139539F300D5B4E4 /* shy_buffer_id_injections.mm */,
 			);
 			path = buffer_id;
 			sourceTree = "<group>";
 		};
-		DB08F65E1390DDBF00DB3134 /* sample_mono */ = {
+		88F68DF1139539F300D5B4E4 /* sample_mono */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F65F1390DDBF00DB3134 /* shy_sample_mono_injections.h */,
-				DB08F6601390DDBF00DB3134 /* shy_sample_mono_injections.mm */,
+				88F68DF2139539F300D5B4E4 /* shy_sample_mono_injections.h */,
+				88F68DF3139539F300D5B4E4 /* shy_sample_mono_injections.mm */,
 			);
 			path = sample_mono;
 			sourceTree = "<group>";
 		};
-		DB08F6611390DDBF00DB3134 /* sample_stereo */ = {
+		88F68DF4139539F300D5B4E4 /* sample_stereo */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F6621390DDBF00DB3134 /* shy_sample_stereo_injections.h */,
-				DB08F6631390DDBF00DB3134 /* shy_sample_stereo_injections.mm */,
+				88F68DF5139539F300D5B4E4 /* shy_sample_stereo_injections.h */,
+				88F68DF6139539F300D5B4E4 /* shy_sample_stereo_injections.mm */,
 			);
 			path = sample_stereo;
 			sourceTree = "<group>";
 		};
-		DB08F6641390DDBF00DB3134 /* source_id */ = {
+		88F68DF7139539F300D5B4E4 /* source_id */ = {
 			isa = PBXGroup;
 			children = (
-				DB08F6651390DDBF00DB3134 /* shy_source_id_injections.h */,
-				DB08F6661390DDBF00DB3134 /* shy_source_id_injections.mm */,
+				88F68DF8139539F300D5B4E4 /* shy_source_id_injections.h */,
+				88F68DF9139539F300D5B4E4 /* shy_source_id_injections.mm */,
 			);
 			path = source_id;
 			sourceTree = "<group>";
@@ -15903,7 +15873,6 @@
 				194C630912CB94E80071A5BD /* shy_macosx_main_controller.h in Headers */,
 				194C630B12CB94E80071A5BD /* shy_macosx_opengl_view.h in Headers */,
 				194C632612CB94E80071A5BD /* shy_macosx_scene.h in Headers */,
-				194C632812CB94E80071A5BD /* shy_macosx_sound_loader.h in Headers */,
 				88F1595C138AAA39003208CC /* shy_assigner.h in Headers */,
 				88F1595D138AAA39003208CC /* shy_assigner.hpp in Headers */,
 				88F1595F138AAA39003208CC /* shy_assigner_injections.h in Headers */,
@@ -18038,20 +18007,6 @@
 				883F5624138D54BE001F342B /* shy_insider_injections.h in Headers */,
 				883F5626138D54BE001F342B /* shy_vector_injections.h in Headers */,
 				883F5628138D54BE001F342B /* shy_data_injections.h in Headers */,
-				DB08F6671390DDBF00DB3134 /* shy_insider.h in Headers */,
-				DB08F6681390DDBF00DB3134 /* shy_insider.hpp in Headers */,
-				DB08F6691390DDBF00DB3134 /* shy_insider_injections.h in Headers */,
-				DB08F66B1390DDBF00DB3134 /* shy_loader.h in Headers */,
-				DB08F66C1390DDBF00DB3134 /* shy_loader.hpp in Headers */,
-				DB08F66D1390DDBF00DB3134 /* shy_loader_injections.h in Headers */,
-				DB08F66F1390DDBF00DB3134 /* shy_stereo_resource_id.h in Headers */,
-				DB08F6701390DDBF00DB3134 /* shy_stereo_resource_id.hpp in Headers */,
-				DB08F6711390DDBF00DB3134 /* shy_stereo_resource_id_injections.h in Headers */,
-				DB08F6731390DDBF00DB3134 /* shy_sound_injections.h in Headers */,
-				DB08F6751390DDBF00DB3134 /* shy_buffer_id_injections.h in Headers */,
-				DB08F6771390DDBF00DB3134 /* shy_sample_mono_injections.h in Headers */,
-				DB08F6791390DDBF00DB3134 /* shy_sample_stereo_injections.h in Headers */,
-				DB08F67B1390DDBF00DB3134 /* shy_source_id_injections.h in Headers */,
 				8860A424139517F000DD0DE0 /* shy_insider_injections.h in Headers */,
 				8860A426139517F000DD0DE0 /* shy_render_injections.h in Headers */,
 				8860A428139517F000DD0DE0 /* shy_texture_loader_injections.h in Headers */,
@@ -18064,6 +18019,13 @@
 				8860A436139517F000DD0DE0 /* shy_vertex_buffer_id_injections.h in Headers */,
 				8860A438139517F000DD0DE0 /* shy_vertex_buffer_mapped_data_injections.h in Headers */,
 				8860A43A139517F000DD0DE0 /* shy_vertex_data_injections.h in Headers */,
+				88F68DFA139539F300D5B4E4 /* shy_loader_injections.h in Headers */,
+				88F68DFC139539F300D5B4E4 /* shy_stereo_resource_id_injections.h in Headers */,
+				88F68DFE139539F300D5B4E4 /* shy_sound_injections.h in Headers */,
+				88F68E00139539F300D5B4E4 /* shy_buffer_id_injections.h in Headers */,
+				88F68E02139539F300D5B4E4 /* shy_sample_mono_injections.h in Headers */,
+				88F68E04139539F300D5B4E4 /* shy_sample_stereo_injections.h in Headers */,
+				88F68E06139539F300D5B4E4 /* shy_source_id_injections.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18133,7 +18095,6 @@
 				194C630A12CB94E80071A5BD /* shy_macosx_main_controller.mm in Sources */,
 				194C630C12CB94E80071A5BD /* shy_macosx_opengl_view.mm in Sources */,
 				194C632712CB94E80071A5BD /* shy_macosx_scene.mm in Sources */,
-				194C632912CB94E80071A5BD /* shy_macosx_sound_loader.mm in Sources */,
 				88F1595E138AAA39003208CC /* shy_assigner_injections.cpp in Sources */,
 				88F15962138AAA39003208CC /* shy_binder_injections.cpp in Sources */,
 				88F15966138AAA39003208CC /* shy_content_injections.cpp in Sources */,
@@ -18605,14 +18566,6 @@
 				883F5625138D54BE001F342B /* shy_insider_injections.mm in Sources */,
 				883F5627138D54BE001F342B /* shy_vector_injections.mm in Sources */,
 				883F5629138D54BE001F342B /* shy_data_injections.mm in Sources */,
-				DB08F66A1390DDBF00DB3134 /* shy_insider_injections.mm in Sources */,
-				DB08F66E1390DDBF00DB3134 /* shy_loader_injections.mm in Sources */,
-				DB08F6721390DDBF00DB3134 /* shy_stereo_resource_id_injections.mm in Sources */,
-				DB08F6741390DDBF00DB3134 /* shy_sound_injections.mm in Sources */,
-				DB08F6761390DDBF00DB3134 /* shy_buffer_id_injections.mm in Sources */,
-				DB08F6781390DDBF00DB3134 /* shy_sample_mono_injections.mm in Sources */,
-				DB08F67A1390DDBF00DB3134 /* shy_sample_stereo_injections.mm in Sources */,
-				DB08F67C1390DDBF00DB3134 /* shy_source_id_injections.mm in Sources */,
 				8860A425139517F000DD0DE0 /* shy_insider_injections.mm in Sources */,
 				8860A427139517F000DD0DE0 /* shy_render_injections.mm in Sources */,
 				8860A429139517F000DD0DE0 /* shy_texture_loader_injections.mm in Sources */,
@@ -18625,6 +18578,13 @@
 				8860A437139517F000DD0DE0 /* shy_vertex_buffer_id_injections.mm in Sources */,
 				8860A439139517F000DD0DE0 /* shy_vertex_buffer_mapped_data_injections.mm in Sources */,
 				8860A43B139517F000DD0DE0 /* shy_vertex_data_injections.mm in Sources */,
+				88F68DFB139539F300D5B4E4 /* shy_loader_injections.mm in Sources */,
+				88F68DFD139539F300D5B4E4 /* shy_stereo_resource_id_injections.mm in Sources */,
+				88F68DFF139539F300D5B4E4 /* shy_sound_injections.mm in Sources */,
+				88F68E01139539F300D5B4E4 /* shy_buffer_id_injections.mm in Sources */,
+				88F68E03139539F300D5B4E4 /* shy_sample_mono_injections.mm in Sources */,
+				88F68E05139539F300D5B4E4 /* shy_sample_stereo_injections.mm in Sources */,
+				88F68E07139539F300D5B4E4 /* shy_source_id_injections.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

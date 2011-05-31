@@ -1,10 +1,24 @@
-#include "./shy_macosx_sound_loader.h"
-
-#include "../../injections/lib/cocoa/shy_cocoa.h"
-#include "../../injections/lib/std/char/shy_char.h"
-#include "../../injections/lib/std/false/shy_false.h"
-#include "../../injections/lib/std/float/shy_float.h"
-#include "../../injections/lib/std/true/shy_true.h"
+@interface shy_type_guts_platform_sound_loader_cocoa : so_called_lib_cocoa_NSObject
+{
+@private
+    so_called_lib_std_bool _is_ready ;
+    so_called_lib_std_bool _should_quit ;
+    so_called_lib_std_int32_t _resource_index ;
+    void * _buffer ;
+    so_called_lib_std_int32_t _max_samples_count ;
+    so_called_lib_std_int32_t _loaded_samples_count ;
+}
+- ( void ) thread_run ;
+- ( void ) thread_stop ;
+- ( so_called_lib_std_bool ) loader_ready ;
+- ( so_called_lib_std_int32_t ) loaded_samples_count ;
+- ( void ) load_16_bit_44100_khz_stereo_samples_from_resource : ( so_called_lib_std_int32_t ) resource_index
+    to_buffer : ( void * ) buffer
+    with_max_samples_count_of : ( so_called_lib_std_int32_t ) max_samples_count
+    ;
+- ( void ) _thread_main_method ;
+- ( void ) _perform_load ;
+@end
 
 namespace shy_guts
 {
@@ -19,9 +33,10 @@ namespace shy_guts
         static const so_called_lib_std_int32_t sound_frames_per_packet = 1 ;
         static const so_called_lib_std_int32_t sound_sample_rate = 44100 ;
     }
+    static shy_type_guts_platform_sound_loader_cocoa * loader = 0 ;
 }
 
-@implementation shy_macosx_sound_loader
+@implementation shy_type_guts_platform_sound_loader_cocoa
 
 - ( id ) init
 {
@@ -169,3 +184,48 @@ namespace shy_guts
 }
 
 @end
+
+void shy_platform_sound_loader_cocoa :: init ( )
+{
+    shy_guts :: loader = [ [ shy_type_guts_platform_sound_loader_cocoa alloc ] init ] ;
+    [ shy_guts :: loader thread_run ] ;
+}
+
+void shy_platform_sound_loader_cocoa :: done ( )
+{
+    [ shy_guts :: loader thread_stop ] ;
+    shy_guts :: loader = nil ;
+}
+
+void shy_platform_sound_loader_cocoa :: create_stereo_resource_id 
+    ( so_called_type_platform_sound_loader_cocoa_stereo_resource_id & result 
+    , so_called_type_platform_math_num_whole resource_index
+    )
+{
+    so_called_lib_std_int32_t resource_index_int = 0 ;
+    so_called_platform_math_insider :: num_whole_value_get ( resource_index_int , resource_index ) ;
+    result . _resource_id = resource_index_int ;
+}
+
+void shy_platform_sound_loader_cocoa :: loader_ready ( so_called_type_platform_math_num_whole & result )
+{
+    so_called_platform_math_insider :: num_whole_value_set ( result , [ shy_guts :: loader loader_ready ] ) ;
+}
+
+void shy_platform_sound_loader_cocoa :: loaded_samples_count ( so_called_type_platform_math_num_whole & result )
+{
+    so_called_platform_math_insider :: num_whole_value_set ( result , [ shy_guts :: loader loaded_samples_count ] ) ;
+}
+
+void shy_platform_sound_loader_cocoa :: _load_stereo_sample_data
+    ( const so_called_type_platform_sound_sample_stereo * samples_ptr
+    , so_called_lib_std_int32_t samples_count
+    , const so_called_type_platform_sound_loader_cocoa_stereo_resource_id & resource_id 
+    )
+{
+    [ shy_guts :: loader 
+        load_16_bit_44100_khz_stereo_samples_from_resource : resource_id . _resource_id 
+        to_buffer : ( void * ) samples_ptr
+        with_max_samples_count_of : samples_count
+    ] ;
+}

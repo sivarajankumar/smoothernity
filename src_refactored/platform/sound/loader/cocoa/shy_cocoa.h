@@ -1,25 +1,25 @@
-class shy_macosx_platform_sound_loader
+class shy_platform_sound_loader_cocoa
 {
 public :
-    static void create_stereo_resource_id ( so_called_type_platform_sound_loader_stereo_resource_id & , so_called_type_platform_math_num_whole ) ;
-
     template < typename samples_array >
-    static void load_stereo_sample_data ( const samples_array & , const so_called_type_platform_sound_loader_stereo_resource_id & ) ;
-
+    static void load_stereo_sample_data ( const samples_array & , const so_called_type_platform_sound_loader_cocoa_stereo_resource_id & ) ;
+    static void create_stereo_resource_id ( so_called_type_platform_sound_loader_cocoa_stereo_resource_id & , so_called_type_platform_math_num_whole ) ;
     static void loader_ready ( so_called_type_platform_math_num_whole & ) ;
     static void loaded_samples_count ( so_called_type_platform_math_num_whole & ) ;    
+    static void init ( ) ;
+    static void done ( ) ;
 private :
     static void _load_stereo_sample_data 
         ( const so_called_type_platform_sound_sample_stereo *
         , so_called_lib_std_int32_t
-        , const so_called_type_platform_sound_loader_stereo_resource_id &
+        , const so_called_type_platform_sound_loader_cocoa_stereo_resource_id &
         ) ;
 } ;
 
 template < typename samples_array >
-void shy_macosx_platform_sound_loader :: load_stereo_sample_data
+void shy_platform_sound_loader_cocoa :: load_stereo_sample_data
     ( const samples_array & samples 
-    , const so_called_type_platform_sound_loader_stereo_resource_id & resource_id 
+    , const so_called_type_platform_sound_loader_cocoa_stereo_resource_id & resource_id 
     )
 {
     const so_called_type_platform_sound_sample_stereo * samples_ptr = 0 ;
@@ -29,3 +29,4 @@ void shy_macosx_platform_sound_loader :: load_stereo_sample_data
 
     _load_stereo_sample_data ( samples_ptr , samples_count , resource_id ) ;
 }
+
