@@ -1,12 +1,15 @@
-#import "iphone_texture_loader.h"
+#include "./iphone_texture_loader.h"
+
+#include "../../injections/lib/std/false/shy_false.h"
+#include "../../injections/lib/std/true/shy_true.h"
 
 @implementation shy_iphone_texture_loader
 
 - ( id ) init
 {
    	self = [ super init ] ;
-    _is_ready = true ;
-    _should_quit = false ;
+    _is_ready = so_called_lib_std_true ;
+    _should_quit = so_called_lib_std_false ;
     _resource_index = 0 ;
     _buffer = 0 ;
     _side_size = 0 ;
@@ -18,7 +21,7 @@
 	[ super dealloc ] ;
 }
 
-- ( bool ) loader_ready
+- ( so_called_lib_std_bool ) loader_ready
 {
     return _is_ready ;
 }
@@ -30,19 +33,19 @@
 
 - ( void ) thread_stop
 {
-    _should_quit = true ;
+    _should_quit = so_called_lib_std_true ;
 }
 
-- ( void ) load_texture_from_png_resource : ( int ) resource_index
+- ( void ) load_texture_from_png_resource : ( so_called_lib_std_int32_t ) resource_index
     to_buffer : ( void * ) buffer
-    with_side_size_of : ( int ) side_size
+    with_side_size_of : ( so_called_lib_std_int32_t ) side_size
 {
     if ( _is_ready )
     {
         _resource_index = resource_index ;
         _buffer = buffer ;
         _side_size = side_size ;
-        _is_ready = false ;
+        _is_ready = so_called_lib_std_false ;
     }
 }
 
@@ -56,7 +59,7 @@
         if ( ! _is_ready )
         {
             [ self _perform_load ] ;
-            _is_ready = true ;
+            _is_ready = so_called_lib_std_true ;
         }
     }
     [ pool release ] ;
@@ -73,7 +76,7 @@
     CGContextRef context = nil ;
     CGColorSpaceRef color_space ;
     url = [ NSURL fileURLWithPath : [ [ NSBundle mainBundle ] pathForResource : 
-        [ NSString stringWithFormat : @"texture_resource_%i" , _resource_index ] 
+        [ NSString stringWithFormat : @"texture_resource_%i" , ( int ) _resource_index ] 
         ofType : @"png"
         ] ] ;
     src = CGDataProviderCreateWithURL ( ( CFURLRef ) url ) ;
@@ -83,7 +86,7 @@
         CGDataProviderRelease ( src ) ;
         width = CGImageGetWidth ( image ) ;
         height = CGImageGetHeight ( image ) ;
-        if ( width == _side_size && height == _side_size )
+        if ( width == ( NSUInteger ) _side_size && height == ( NSUInteger ) _side_size )
         {
             color_space = CGColorSpaceCreateDeviceRGB ( ) ;
             context = CGBitmapContextCreate 

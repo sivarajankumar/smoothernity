@@ -70,7 +70,7 @@
     NSUInteger width ;
     NSUInteger height ;
     NSURL * url = nil ;
-    CGImageSourceRef src ;
+    CGDataProviderRef src ;
     CGImageRef image ;
     CGContextRef context = nil ;
     CGColorSpaceRef color_space ;
@@ -79,11 +79,11 @@
         [ NSString stringWithFormat : @"texture_resource_%i" , ( int ) _resource_index ] 
         ofType : @"png"
         ] ] ;
-    src = CGImageSourceCreateWithURL ( ( CFURLRef ) url , 0 ) ;
+    src = CGDataProviderCreateWithURL ( ( CFURLRef ) url ) ;
     if ( src )
     {
-        image = CGImageSourceCreateImageAtIndex ( src , 0 , 0 ) ;
-        CFRelease ( src ) ;
+        image = CGImageCreateWithPNGDataProvider ( src , 0 , false , kCGRenderingIntentDefault ) ;
+        CGDataProviderRelease ( src ) ;
         width = CGImageGetWidth ( image ) ;
         height = CGImageGetHeight ( image ) ;
         if ( width == ( NSUInteger ) _side_size && height == ( NSUInteger ) _side_size )
