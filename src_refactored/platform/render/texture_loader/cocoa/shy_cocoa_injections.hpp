@@ -1,5 +1,6 @@
 #include "./shy_cocoa_injections.h"
 
+#include "../../../../injections/lib/cocoa/shy_cocoa.h"
 #include "../../../../injections/lib/std/bool/shy_bool.h"
 #include "../../../../injections/lib/std/false/shy_false.h"
 #include "../../../../injections/lib/std/true/shy_true.h"

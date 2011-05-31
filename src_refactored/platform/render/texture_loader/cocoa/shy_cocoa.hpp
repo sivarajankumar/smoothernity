@@ -1,6 +1,4 @@
-#include <Cocoa/Cocoa.h>
-
-@interface shy_guts_loader : NSObject
+@interface shy_guts_loader : so_called_lib_cocoa_NSObject
 {
 @private
     so_called_lib_std_bool _is_ready ;
@@ -9,7 +7,6 @@
     void * _buffer ;
     so_called_lib_std_int32_t _side_size ;
 }
-
 - ( void ) thread_run ;
 - ( void ) thread_stop ;
 - ( so_called_lib_std_bool ) loader_ready ;
@@ -69,10 +66,10 @@
 
 - ( void ) _thread_main_method
 {
-    NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
+    so_called_lib_cocoa_NSAutoreleasePool * pool = [ [ so_called_lib_cocoa_NSAutoreleasePool alloc ] init ] ;
     while ( ! _should_quit )
     {
-        [ NSThread sleepForTimeInterval : 0.1 ] ;
+        [ so_called_lib_cocoa_NSThread sleepForTimeInterval : 0.1 ] ;
         if ( ! _is_ready )
         {
             [ self _perform_load ] ;
