@@ -1,3 +1,21 @@
+@class shy_type_guts_platform_sound_loader_cocoa ;
+
+namespace shy_guts
+{
+    namespace consts
+    {
+        static const so_called_lib_std_char resource_name_extension [ ] = "mp3" ;
+        static const so_called_lib_std_char resource_name_prefix [ ] = "stereo_sound_resource_" ;
+        static const so_called_lib_std_float sleep_delay = 0.1f ;
+        static const so_called_lib_std_int32_t sound_bits_per_channel = 16 ;
+        static const so_called_lib_std_int32_t sound_bytes_per_channel = 2 ;
+        static const so_called_lib_std_int32_t sound_channels_per_frame = 2 ;
+        static const so_called_lib_std_int32_t sound_frames_per_packet = 1 ;
+        static const so_called_lib_std_int32_t sound_sample_rate = 44100 ;
+    }
+    static shy_type_guts_platform_sound_loader_cocoa * loader = 0 ;
+}
+
 @interface shy_type_guts_platform_sound_loader_cocoa : so_called_lib_cocoa_NSObject
 {
 @private
@@ -19,22 +37,6 @@
 - ( void ) _thread_main_method ;
 - ( void ) _perform_load ;
 @end
-
-namespace shy_guts
-{
-    namespace consts
-    {
-        static const so_called_lib_std_char resource_name_extension [ ] = "mp3" ;
-        static const so_called_lib_std_char resource_name_prefix [ ] = "stereo_sound_resource_" ;
-        static const so_called_lib_std_float sleep_delay = 0.1f ;
-        static const so_called_lib_std_int32_t sound_bits_per_channel = 16 ;
-        static const so_called_lib_std_int32_t sound_bytes_per_channel = 2 ;
-        static const so_called_lib_std_int32_t sound_channels_per_frame = 2 ;
-        static const so_called_lib_std_int32_t sound_frames_per_packet = 1 ;
-        static const so_called_lib_std_int32_t sound_sample_rate = 44100 ;
-    }
-    static shy_type_guts_platform_sound_loader_cocoa * loader = 0 ;
-}
 
 @implementation shy_type_guts_platform_sound_loader_cocoa
 
