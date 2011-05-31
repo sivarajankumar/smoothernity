@@ -4,7 +4,7 @@
 
 @class shy_macosx_scene ;
 
-@interface MyOpenGLView : NSOpenGLView
+@interface shy_macosx_opengl_view : NSOpenGLView
 {
     shy_macosx_scene * scene ;
     IBOutlet NSResponder * controller ;

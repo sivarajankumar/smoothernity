@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>MyOpenGLView</string>
+			<string>shy_macosx_opengl_view</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>OUTLETS</key>
@@ -38,7 +38,7 @@
 			<key>OUTLETS</key>
 			<dict>
 				<key>openGLView</key>
-				<string>MyOpenGLView</string>
+				<string>shy_macosx_opengl_view</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSResponder</string>

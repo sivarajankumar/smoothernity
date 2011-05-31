@@ -2684,7 +2684,7 @@
 		194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_opengl_view.mm; sourceTree = "<group>"; };
 		194C630312CB94E80071A5BD /* shy_macosx_scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_scene.h; sourceTree = "<group>"; };
 		194C630412CB94E80071A5BD /* shy_macosx_scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_scene.mm; sourceTree = "<group>"; };
-		19AE102811B269A300A5B332 /* smoothernity.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "smoothernity.plist"; sourceTree = "<group>"; };
+		19AE102811B269A300A5B332 /* smoothernity.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = smoothernity.plist; sourceTree = "<group>"; };
 		19AE102911B269A300A5B332 /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
@@ -18068,7 +18068,7 @@
 			);
 			dependencies = (
 			);
-			name = "smoothernity";
+			name = smoothernity;
 			productInstallPath = "$(HOME)/Applications";
 			productName = NSOpenGLFullScreen;
 			productReference = 19AE102911B269A300A5B332 /* Smoothernity.app */;
@@ -18647,7 +18647,7 @@
 				GCC_PREFIX_HEADER = shy_pch.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "smoothernity.plist";
+				INFOPLIST_FILE = smoothernity.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
@@ -18674,7 +18674,7 @@
 				GCC_PREFIX_HEADER = shy_pch.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "smoothernity.plist";
+				INFOPLIST_FILE = smoothernity.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
@@ -18699,7 +18699,7 @@
 				GCC_PREFIX_HEADER = shy_pch.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "smoothernity.plist";
+				INFOPLIST_FILE = smoothernity.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
