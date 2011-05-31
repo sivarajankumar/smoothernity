@@ -4,7 +4,7 @@
 
 #include <OpenGL/OpenGL.h>
 
-@interface MainController ( AnimationMethods )
+@interface shy_macosx_main_controller ( AnimationMethods )
 - ( BOOL ) is_animating ;
 - ( void ) start_animation ;
 - ( void ) stop_animation ;
@@ -13,7 +13,7 @@
 - ( void ) animation_timer_fired : ( NSTimer * ) timer ;
 @end
 
-@implementation MainController
+@implementation shy_macosx_main_controller
 
 - ( void ) awakeFromNib
 {
@@ -178,7 +178,7 @@
 
 @end
 
-@implementation MainController ( AnimationMethods )
+@implementation shy_macosx_main_controller ( AnimationMethods )
 
 - ( BOOL ) is_animating
 {

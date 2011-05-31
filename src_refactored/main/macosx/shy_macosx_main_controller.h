@@ -2,7 +2,7 @@
 
 @class shy_macosx_opengl_view ;
 
-@interface MainController : NSResponder
+@interface shy_macosx_main_controller : NSResponder
 {
     BOOL is_animating ;
     NSTimer * animation_timer ;
