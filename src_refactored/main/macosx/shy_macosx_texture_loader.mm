@@ -74,7 +74,6 @@
     CGImageRef image ;
     CGContextRef context = nil ;
     CGColorSpaceRef color_space ;
-    GLubyte * data = ( GLubyte * ) _buffer ;
     url = [ NSURL fileURLWithPath : [ [ NSBundle mainBundle ] pathForResource : 
         [ NSString stringWithFormat : @"texture_resource_%i" , ( int ) _resource_index ] 
         ofType : @"png"
@@ -90,7 +89,7 @@
         {
             color_space = CGColorSpaceCreateDeviceRGB ( ) ;
             context = CGBitmapContextCreate 
-                ( data 
+                ( _buffer
                 , width 
                 , height 
                 , 8 
