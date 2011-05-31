@@ -1,3 +1,18 @@
+@class shy_type_guts_platform_render_texture_loader_cocoa ;
+
+namespace shy_guts
+{
+    namespace consts
+    {
+        static const so_called_lib_std_int32_t bitmap_bits_per_component = 8 ;
+        static const so_called_lib_std_int32_t bitmap_bytes_per_pixel = 4 ;
+        static const so_called_lib_std_char resource_name_extension [ ] = "png" ;
+        static const so_called_lib_std_char resource_name_prefix [ ] = "texture_resource_" ;
+        static const so_called_lib_std_float sleep_delay = 0.1f ;
+    }
+    static shy_type_guts_platform_render_texture_loader_cocoa * loader = 0 ;
+}
+
 @interface shy_type_guts_platform_render_texture_loader_cocoa : so_called_lib_cocoa_NSObject
 {
 @private
@@ -17,19 +32,6 @@
 - ( void ) _thread_main_method ;
 - ( void ) _perform_load ;
 @end
-
-namespace shy_guts
-{
-    namespace consts
-    {
-        static const so_called_lib_std_int32_t bitmap_bits_per_component = 8 ;
-        static const so_called_lib_std_int32_t bitmap_bytes_per_pixel = 4 ;
-        static const so_called_lib_std_char resource_name_extension [ ] = "png" ;
-        static const so_called_lib_std_char resource_name_prefix [ ] = "texture_resource_" ;
-        static const so_called_lib_std_float sleep_delay = 0.1f ;
-    }
-    static shy_type_guts_platform_render_texture_loader_cocoa * loader = 0 ;
-}
 
 @implementation shy_type_guts_platform_render_texture_loader_cocoa
 
