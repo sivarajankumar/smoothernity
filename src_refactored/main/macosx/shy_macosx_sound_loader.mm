@@ -1,6 +1,7 @@
 #include "./shy_macosx_sound_loader.h"
 
 #include "../../injections/lib/cocoa/shy_cocoa.h"
+#include "../../injections/lib/std/char/shy_char.h"
 #include "../../injections/lib/std/false/shy_false.h"
 #include "../../injections/lib/std/float/shy_float.h"
 #include "../../injections/lib/std/true/shy_true.h"
@@ -9,7 +10,14 @@ namespace shy_guts
 {
     namespace consts
     {
+        static const so_called_lib_std_char resource_name_extension [ ] = "mp3" ;
+        static const so_called_lib_std_char resource_name_prefix [ ] = "stereo_sound_resource_" ;
         static const so_called_lib_std_float sleep_delay = 0.1f ;
+        static const so_called_lib_std_int32_t sound_bits_per_channel = 16 ;
+        static const so_called_lib_std_int32_t sound_bytes_per_channel = 2 ;
+        static const so_called_lib_std_int32_t sound_channels_per_frame = 2 ;
+        static const so_called_lib_std_int32_t sound_frames_per_packet = 1 ;
+        static const so_called_lib_std_int32_t sound_sample_rate = 44100 ;
     }
 }
 
@@ -91,10 +99,14 @@ namespace shy_guts
                 fileURLWithPath : 
                     [ bundle 
                         pathForResource : 
-                            [ so_called_lib_cocoa_NSString stringWithFormat : @"stereo_sound_resource_%i" 
+                            [ so_called_lib_cocoa_NSString stringWithFormat : @"%s%i"
+                                , shy_guts :: consts :: resource_name_prefix 
                                 , ( so_called_lib_std_int32_t ) _resource_index 
                             ] 
-                        ofType : @"mp3" 
+                        ofType : 
+                            [ so_called_lib_cocoa_NSString stringWithFormat : @"%s"
+                                , shy_guts :: consts :: resource_name_extension
+                            ]
                     ] 
             ] retain 
         ] ;
@@ -114,13 +126,13 @@ namespace shy_guts
         , & file_format 
         ) ;
 
-    output_format . mSampleRate = 44100 ;
-    output_format . mChannelsPerFrame = 2 ;
+    output_format . mSampleRate = shy_guts :: consts :: sound_sample_rate ;
+    output_format . mChannelsPerFrame = shy_guts :: consts :: sound_channels_per_frame ;
     output_format . mFormatID = so_called_lib_cocoa_kAudioFormatLinearPCM ;
-    output_format . mBytesPerPacket = 2 * output_format . mChannelsPerFrame ;
-    output_format . mFramesPerPacket = 1 ;
-    output_format . mBytesPerFrame = 2 * output_format . mChannelsPerFrame ;
-    output_format . mBitsPerChannel = 16 ;
+    output_format . mBytesPerPacket = shy_guts :: consts :: sound_bytes_per_channel * output_format . mChannelsPerFrame ;
+    output_format . mFramesPerPacket = shy_guts :: consts :: sound_frames_per_packet ;
+    output_format . mBytesPerFrame = shy_guts :: consts :: sound_bytes_per_channel * output_format . mChannelsPerFrame ;
+    output_format . mBitsPerChannel = shy_guts :: consts :: sound_bits_per_channel ;
     output_format . mFormatFlags 
         = so_called_lib_cocoa_kAudioFormatFlagsNativeEndian
         | so_called_lib_cocoa_kAudioFormatFlagIsPacked
