@@ -2,7 +2,16 @@
 
 #include "../../injections/lib/cocoa/shy_cocoa.h"
 #include "../../injections/lib/std/false/shy_false.h"
+#include "../../injections/lib/std/float/shy_float.h"
 #include "../../injections/lib/std/true/shy_true.h"
+
+namespace shy_guts
+{
+    namespace consts
+    {
+        static const so_called_lib_std_float sleep_delay = 0.1f ;
+    }
+}
 
 @implementation shy_macosx_sound_loader
 
@@ -62,7 +71,7 @@
     so_called_lib_cocoa_NSAutoreleasePool * pool = [ [ so_called_lib_cocoa_NSAutoreleasePool alloc ] init ] ;
     while ( ! _should_quit )
     {
-        [ so_called_lib_cocoa_NSThread sleepForTimeInterval : 0.1 ] ;
+        [ so_called_lib_cocoa_NSThread sleepForTimeInterval : shy_guts :: consts :: sleep_delay ] ;
         if ( ! _is_ready )
         {
             [ self _perform_load ] ;
