@@ -1,9 +1,27 @@
-#include "./shy_macosx_texture_loader.h"
+#include <Cocoa/Cocoa.h>
 
-#include "../../injections/lib/std/false/shy_false.h"
-#include "../../injections/lib/std/true/shy_true.h"
+@interface shy_guts_loader : NSObject
+{
+@private
+    so_called_lib_std_bool _is_ready ;
+    so_called_lib_std_bool _should_quit ;
+    so_called_lib_std_int32_t _resource_index ;
+    void * _buffer ;
+    so_called_lib_std_int32_t _side_size ;
+}
 
-@implementation shy_macosx_texture_loader
+- ( void ) thread_run ;
+- ( void ) thread_stop ;
+- ( so_called_lib_std_bool ) loader_ready ;
+- ( void ) load_texture_from_png_resource : ( so_called_lib_std_int32_t ) resource_index
+    to_buffer : ( void * ) buffer
+    with_side_size_of : ( so_called_lib_std_int32_t ) max_samples_count
+    ;
+- ( void ) _thread_main_method ;
+- ( void ) _perform_load ;
+@end
+
+@implementation shy_guts_loader
 
 - ( id ) init
 {
@@ -109,3 +127,53 @@
 }
 
 @end
+
+namespace shy_guts
+{
+    static shy_guts_loader * loader = 0 ;
+}
+
+void shy_platform_render_texture_loader_cocoa :: init ( )
+{
+    shy_guts_loader * loader = [ [ shy_guts_loader alloc ] init ] ;
+    [ loader thread_run ] ;
+    shy_guts :: loader = loader ;
+}
+
+void shy_platform_render_texture_loader_cocoa :: done ( )
+{
+    shy_guts_loader * loader = shy_guts :: loader ;
+    [ loader thread_stop ] ;
+    shy_guts :: loader = nil ;
+}
+
+void shy_platform_render_texture_loader_cocoa :: _load_resource
+    ( so_called_type_platform_render_texture_loader_cocoa_resource_id resource_id 
+    , so_called_type_platform_math_num_whole size_pow2_base 
+    , so_called_type_platform_render_texel_data * texels 
+    )
+{
+    so_called_lib_std_int32_t size_pow2_base_int = 0 ;
+    so_called_platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
+    shy_guts_loader * loader = shy_guts :: loader ;
+    [ loader 
+        load_texture_from_png_resource : resource_id . _resource_id 
+        to_buffer : ( void * ) texels
+        with_side_size_of : 1 << size_pow2_base_int
+    ] ;
+}
+
+void shy_platform_render_texture_loader_cocoa :: create_resource_id 
+    ( so_called_type_platform_render_texture_loader_cocoa_resource_id & resource_id 
+    , so_called_type_platform_math_num_whole resource_index 
+    )
+{
+    so_called_platform_math_insider :: num_whole_value_get ( resource_id . _resource_id , resource_index ) ;
+}
+
+void shy_platform_render_texture_loader_cocoa :: ready ( so_called_type_platform_math_num_whole & is_ready )
+{
+    shy_guts_loader * loader = shy_guts :: loader ;
+    so_called_platform_math_insider :: num_whole_value_set ( is_ready , [ loader loader_ready ] ) ;
+}
+

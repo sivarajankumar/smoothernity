@@ -3,6 +3,7 @@ void shy_facade_loadable :: init ( )
     so_called_loadable_loader :: load ( ) ;
 
     so_called_platform_render :: init ( ) ;
+    so_called_platform_render_texture_loader :: init ( ) ;
     so_called_platform_scheduler :: init ( ) ;
     so_called_common_init :: init ( ) ;
     so_called_sender_common_init :: send ( so_called_message_common_init ( ) ) ;
@@ -13,6 +14,7 @@ void shy_facade_loadable :: done ( )
 {
     so_called_sender_common_done :: send ( so_called_message_common_done ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
+    so_called_platform_render_texture_loader :: done ( ) ;
 }
 
 void shy_facade_loadable :: render ( )
