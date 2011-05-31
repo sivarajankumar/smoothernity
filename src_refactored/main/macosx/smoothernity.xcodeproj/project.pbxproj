@@ -13,7 +13,7 @@
 		194C630C12CB94E80071A5BD /* shy_macosx_opengl_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */; };
 		194C632612CB94E80071A5BD /* shy_macosx_scene.h in Headers */ = {isa = PBXBuildFile; fileRef = 194C630312CB94E80071A5BD /* shy_macosx_scene.h */; };
 		194C632712CB94E80071A5BD /* shy_macosx_scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 194C630412CB94E80071A5BD /* shy_macosx_scene.mm */; };
-		19AE0FEC11B269A300A5B332 /* NSOpenGLFullScreen_Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */; };
+		19AE0FEC11B269A300A5B332 /* shy_pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CA4F630368D1EE00C91783 /* shy_pch.h */; };
 		19AE101111B269A300A5B332 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		19AE101211B269A300A5B332 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		19AE101311B269A300A5B332 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */; };
@@ -2690,7 +2690,7 @@
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOpenGLFullScreen_Prefix.h; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* shy_pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_pch.h; sourceTree = "<group>"; };
 		4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		8812CF36117DE7F9008F67D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = /System/Library/Frameworks/OpenAL.framework; sourceTree = "<absolute>"; };
 		8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
@@ -5376,7 +5376,7 @@
 				194C630312CB94E80071A5BD /* shy_macosx_scene.h */,
 				194C630412CB94E80071A5BD /* shy_macosx_scene.mm */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
-				32CA4F630368D1EE00C91783 /* NSOpenGLFullScreen_Prefix.h */,
+				32CA4F630368D1EE00C91783 /* shy_pch.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -15889,7 +15889,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19AE0FEC11B269A300A5B332 /* NSOpenGLFullScreen_Prefix.h in Headers */,
+				19AE0FEC11B269A300A5B332 /* shy_pch.h in Headers */,
 				194C630912CB94E80071A5BD /* shy_macosx_main_controller.h in Headers */,
 				194C630B12CB94E80071A5BD /* shy_macosx_opengl_view.h in Headers */,
 				194C632612CB94E80071A5BD /* shy_macosx_scene.h in Headers */,
@@ -18644,7 +18644,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
+				GCC_PREFIX_HEADER = shy_pch.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "smoothernity.plist";
@@ -18671,7 +18671,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
+				GCC_PREFIX_HEADER = shy_pch.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "smoothernity.plist";
@@ -18696,7 +18696,7 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
+				GCC_PREFIX_HEADER = shy_pch.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "smoothernity.plist";
