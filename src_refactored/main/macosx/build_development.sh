@@ -1,2 +1,2 @@
-xcodebuild -project smoothernity.xcodeproj -target "smoothernity (Upgraded)" -configuration Development build
+xcodebuild -project smoothernity.xcodeproj -target "smoothernity" -configuration Development build
 

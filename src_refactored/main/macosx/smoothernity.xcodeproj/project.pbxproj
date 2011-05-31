@@ -2684,7 +2684,7 @@
 		194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_opengl_view.mm; sourceTree = "<group>"; };
 		194C630312CB94E80071A5BD /* shy_macosx_scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_macosx_scene.h; sourceTree = "<group>"; };
 		194C630412CB94E80071A5BD /* shy_macosx_scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_macosx_scene.mm; sourceTree = "<group>"; };
-		19AE102811B269A300A5B332 /* Info-smoothernity__Upgraded_.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-smoothernity__Upgraded_.plist"; sourceTree = "<group>"; };
+		19AE102811B269A300A5B332 /* smoothernity.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "smoothernity.plist"; sourceTree = "<group>"; };
 		19AE102911B269A300A5B332 /* Smoothernity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoothernity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
@@ -5418,7 +5418,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				19AE102811B269A300A5B332 /* Info-smoothernity__Upgraded_.plist */,
+				19AE102811B269A300A5B332 /* smoothernity.plist */,
 			);
 			name = NSOpenGLFullScreen;
 			sourceTree = "<group>";
@@ -18055,9 +18055,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		19AE0FEA11B269A300A5B332 /* smoothernity (Upgraded) */ = {
+		19AE0FEA11B269A300A5B332 /* smoothernity */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 19AE102411B269A300A5B332 /* Build configuration list for PBXNativeTarget "smoothernity (Upgraded)" */;
+			buildConfigurationList = 19AE102411B269A300A5B332 /* Build configuration list for PBXNativeTarget "smoothernity" */;
 			buildPhases = (
 				19AE0FEB11B269A300A5B332 /* Headers */,
 				19AE101011B269A300A5B332 /* Resources */,
@@ -18068,7 +18068,7 @@
 			);
 			dependencies = (
 			);
-			name = "smoothernity (Upgraded)";
+			name = "smoothernity";
 			productInstallPath = "$(HOME)/Applications";
 			productName = NSOpenGLFullScreen;
 			productReference = 19AE102911B269A300A5B332 /* Smoothernity.app */;
@@ -18089,7 +18089,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				19AE0FEA11B269A300A5B332 /* smoothernity (Upgraded) */,
+				19AE0FEA11B269A300A5B332 /* smoothernity */,
 			);
 		};
 /* End PBXProject section */
@@ -18647,7 +18647,7 @@
 				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Info-smoothernity__Upgraded_.plist";
+				INFOPLIST_FILE = "smoothernity.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
@@ -18674,7 +18674,7 @@
 				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Info-smoothernity__Upgraded_.plist";
+				INFOPLIST_FILE = "smoothernity.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
@@ -18699,7 +18699,7 @@
 				GCC_PREFIX_HEADER = NSOpenGLFullScreen_Prefix.h;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = "Info-smoothernity__Upgraded_.plist";
+				INFOPLIST_FILE = "smoothernity.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
@@ -18834,7 +18834,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		19AE102411B269A300A5B332 /* Build configuration list for PBXNativeTarget "smoothernity (Upgraded)" */ = {
+		19AE102411B269A300A5B332 /* Build configuration list for PBXNativeTarget "smoothernity" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				19AE102511B269A300A5B332 /* Development */,
