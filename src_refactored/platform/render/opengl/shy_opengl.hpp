@@ -22,6 +22,10 @@ void shy_platform_render_opengl :: init ( )
         ) ;
 }
 
+void shy_platform_render_opengl :: done ( )
+{
+}
+
 void shy_platform_render_opengl :: _load_texture_subdata 
     ( so_called_type_platform_render_opengl_texture_id arg_texture_id 
     , so_called_type_platform_math_num_whole x_offset 

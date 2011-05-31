@@ -18,7 +18,11 @@ void shy_facade_loadable :: done ( )
     so_called_sender_common_done :: send ( so_called_message_common_done ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 
+    so_called_common_done :: done ( ) ;
+
+    so_called_platform_render :: done ( ) ;
     so_called_platform_render_texture_loader :: done ( ) ;
+    so_called_platform_scheduler :: done ( ) ;
     so_called_platform_sound_loader :: done ( ) ;
 }
 

@@ -1,3 +1,4 @@
+#include "../../common/done/shy_done_injections.h"
 #include "../../common/init/shy_init_injections.h"
 #include "../../common/sender/done/shy_done_injections.h"
 #include "../../common/sender/init/shy_init_injections.h"

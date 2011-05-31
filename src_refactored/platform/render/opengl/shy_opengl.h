@@ -2,6 +2,7 @@ class shy_platform_render_opengl
 {
 public :
     static void init ( ) ;
+    static void done ( ) ;
 
     static void set_texel_color 
         ( so_called_type_platform_render_opengl_texel_data & texel 

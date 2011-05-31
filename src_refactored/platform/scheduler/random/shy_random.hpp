@@ -20,6 +20,10 @@ void shy_platform_scheduler_random :: init ( )
         _contexts [ i ] = 0 ;
 }
 
+void shy_platform_scheduler_random :: done ( )
+{
+}
+
 void shy_platform_scheduler_random :: _register_context ( _abstract_scheduled_context & context )
 {
     if ( _contexts_count < _max_scheduled_modules )

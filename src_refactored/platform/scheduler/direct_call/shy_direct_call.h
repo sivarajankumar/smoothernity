@@ -17,6 +17,7 @@ public :
     } ;
 public :
     static void init ( ) ;
+    static void done ( ) ;
     static void run ( ) ;
 } ;
 

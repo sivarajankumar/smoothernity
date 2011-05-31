@@ -98,6 +98,7 @@ public :
     
 public :
     static void init ( ) ;
+    static void done ( ) ;
     static void run ( ) ;
 private :
     static void _register_context ( _abstract_scheduled_context & context ) ;
