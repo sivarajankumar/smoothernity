@@ -141,15 +141,13 @@ namespace shy_guts
 
 void shy_platform_render_texture_loader_cocoa :: init ( )
 {
-    shy_type_guts_loader * loader = [ [ shy_type_guts_loader alloc ] init ] ;
-    [ loader thread_run ] ;
-    shy_guts :: loader = loader ;
+    shy_guts :: loader = [ [ shy_type_guts_loader alloc ] init ] ;
+    [ shy_guts :: loader thread_run ] ;
 }
 
 void shy_platform_render_texture_loader_cocoa :: done ( )
 {
-    shy_type_guts_loader * loader = shy_guts :: loader ;
-    [ loader thread_stop ] ;
+    [ shy_guts :: loader thread_stop ] ;
     shy_guts :: loader = nil ;
 }
 
@@ -161,8 +159,7 @@ void shy_platform_render_texture_loader_cocoa :: _load_resource
 {
     so_called_lib_std_int32_t size_pow2_base_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
-    shy_type_guts_loader * loader = shy_guts :: loader ;
-    [ loader 
+    [ shy_guts :: loader 
         load_texture_from_png_resource : resource_id . _resource_id 
         to_buffer : ( void * ) texels
         with_side_size_of : 1 << size_pow2_base_int
@@ -179,7 +176,6 @@ void shy_platform_render_texture_loader_cocoa :: create_resource_id
 
 void shy_platform_render_texture_loader_cocoa :: ready ( so_called_type_platform_math_num_whole & is_ready )
 {
-    shy_type_guts_loader * loader = shy_guts :: loader ;
-    so_called_platform_math_insider :: num_whole_value_set ( is_ready , [ loader loader_ready ] ) ;
+    so_called_platform_math_insider :: num_whole_value_set ( is_ready , [ shy_guts :: loader loader_ready ] ) ;
 }
 
