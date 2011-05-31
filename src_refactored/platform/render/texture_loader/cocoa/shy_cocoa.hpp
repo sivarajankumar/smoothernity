@@ -22,6 +22,10 @@ namespace shy_guts
 {
     namespace consts
     {
+        static const so_called_lib_std_int32_t bitmap_bits_per_component = 8 ;
+        static const so_called_lib_std_int32_t bitmap_bytes_per_pixel = 4 ;
+        static const so_called_lib_std_char resource_name_extension [ ] = "png" ;
+        static const so_called_lib_std_char resource_name_prefix [ ] = "texture_resource_" ;
         static const so_called_lib_std_float sleep_delay = 0.1f ;
     }
     static shy_type_guts_loader * loader = 0 ;
@@ -98,10 +102,22 @@ namespace shy_guts
     so_called_lib_cocoa_CGImageRef image ;
     so_called_lib_cocoa_CGContextRef context = nil ;
     so_called_lib_cocoa_CGColorSpaceRef color_space ;
-    url = [ so_called_lib_cocoa_NSURL fileURLWithPath : [ [ so_called_lib_cocoa_NSBundle mainBundle ] pathForResource : 
-        [ so_called_lib_cocoa_NSString stringWithFormat : @"texture_resource_%i" , ( so_called_lib_std_int32_t ) _resource_index ] 
-        ofType : @"png"
-        ] ] ;
+    url = 
+        [ so_called_lib_cocoa_NSURL fileURLWithPath : 
+            [ [ so_called_lib_cocoa_NSBundle mainBundle ] 
+                pathForResource : 
+                    [ so_called_lib_cocoa_NSString 
+                        stringWithFormat : @"%s%i" 
+                            , shy_guts :: consts :: resource_name_prefix 
+                            , ( so_called_lib_std_int32_t ) _resource_index 
+                    ] 
+                ofType : 
+                    [ so_called_lib_cocoa_NSString
+                        stringWithFormat : @"%s"
+                            , shy_guts :: consts :: resource_name_extension
+                    ]
+            ] 
+        ] ;
     src = so_called_lib_cocoa_CGDataProviderCreateWithURL ( ( so_called_lib_cocoa_CFURLRef ) url ) ;
     if ( src )
     {
@@ -121,8 +137,8 @@ namespace shy_guts
                 ( _buffer
                 , width 
                 , height 
-                , 8 
-                , 4 * width 
+                , shy_guts :: consts :: bitmap_bits_per_component 
+                , shy_guts :: consts :: bitmap_bytes_per_pixel * width 
                 , color_space 
                 , so_called_lib_cocoa_kCGImageAlphaPremultipliedFirst | so_called_lib_cocoa_kCGBitmapByteOrder32Host 
                 ) ;

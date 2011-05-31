@@ -2,6 +2,7 @@
 
 #include "../../../../injections/lib/cocoa/shy_cocoa.h"
 #include "../../../../injections/lib/std/bool/shy_bool.h"
+#include "../../../../injections/lib/std/char/shy_char.h"
 #include "../../../../injections/lib/std/false/shy_false.h"
 #include "../../../../injections/lib/std/float/shy_float.h"
 #include "../../../../injections/lib/std/true/shy_true.h"
