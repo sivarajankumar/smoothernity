@@ -1,7 +1,3 @@
-#include <AudioToolbox/AudioToolbox.h>
-#include <AudioToolbox/ExtendedAudioFile.h>
-#include <Foundation/NSBundle.h>
-
 #include "../../injections/lib/std/bool/shy_bool.h"
 #include "../../injections/lib/std/int32_t/shy_int32_t.h"
 

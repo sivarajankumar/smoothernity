@@ -1,5 +1,6 @@
 #include "./shy_macosx_sound_loader.h"
 
+#include "../../injections/lib/cocoa/shy_cocoa.h"
 #include "../../injections/lib/std/false/shy_false.h"
 #include "../../injections/lib/std/true/shy_true.h"
 
@@ -58,10 +59,10 @@
 
 - ( void ) _thread_main_method
 {
-    NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
+    so_called_lib_cocoa_NSAutoreleasePool * pool = [ [ so_called_lib_cocoa_NSAutoreleasePool alloc ] init ] ;
     while ( ! _should_quit )
     {
-        [ NSThread sleepForTimeInterval : 0.1 ] ;
+        [ so_called_lib_cocoa_NSThread sleepForTimeInterval : 0.1 ] ;
         if ( ! _is_ready )
         {
             [ self _perform_load ] ;
@@ -74,11 +75,20 @@
 
 - ( void ) _perform_load
 {
-    NSBundle * bundle = [ NSBundle mainBundle ] ;
-    CFURLRef file_url = ( CFURLRef ) [ [ NSURL fileURLWithPath : [ bundle 
-        pathForResource : [ NSString stringWithFormat : @"stereo_sound_resource_%i" , ( int ) _resource_index ] 
-        ofType : @"mp3" 
-        ] ] retain ] ;
+    so_called_lib_cocoa_NSBundle * bundle = [ so_called_lib_cocoa_NSBundle mainBundle ] ;
+    so_called_lib_cocoa_CFURLRef file_url = ( so_called_lib_cocoa_CFURLRef ) 
+        [ 
+            [ so_called_lib_cocoa_NSURL 
+                fileURLWithPath : 
+                    [ bundle 
+                        pathForResource : 
+                            [ so_called_lib_cocoa_NSString stringWithFormat : @"stereo_sound_resource_%i" 
+                                , ( so_called_lib_std_int32_t ) _resource_index 
+                            ] 
+                        ofType : @"mp3" 
+                    ] 
+            ] retain 
+        ] ;
         
     SInt64 file_length_in_frames = 0 ;
     AudioStreamBasicDescription file_format ;
