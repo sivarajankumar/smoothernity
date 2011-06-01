@@ -6,4 +6,5 @@ public :
     static const so_called_type_platform_math_num_fract shake_shift_x_amplitude_begin ;
     static const so_called_type_platform_math_num_fract shake_shift_x_amplitude_end ;
     static const so_called_type_platform_math_num_fract shake_shift_x_period_in_seconds ;
+    static void binding ( ) ;
 } ;
