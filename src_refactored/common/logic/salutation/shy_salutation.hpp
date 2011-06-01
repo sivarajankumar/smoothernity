@@ -11,10 +11,12 @@ void _shy_common_logic_salutation :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_salutation :: receive ( so_called_message_common_logic_salutation_creation_permit )
 {
+    so_called_sender_common_logic_salutation_created :: send ( so_called_message_common_logic_salutation_created ( ) ) ;
 }
 
 void _shy_common_logic_salutation :: receive ( so_called_message_common_logic_salutation_launch_permit )
 {
+    so_called_sender_common_logic_salutation_finished :: send ( so_called_message_common_logic_salutation_finished ( ) ) ;
 }
 
 void _shy_common_logic_salutation :: receive ( so_called_message_common_logic_salutation_render )
