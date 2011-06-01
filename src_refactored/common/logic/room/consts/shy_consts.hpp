@@ -61,3 +61,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_room_consts :: tex
 const so_called_type_platform_math_num_fract shy_common_logic_room_consts :: texture_pen_intensity ;
 const so_called_type_platform_math_num_whole shy_common_logic_room_consts :: texture_grid_size ;
 
+void shy_common_logic_room_consts :: binding ( )
+{
+}

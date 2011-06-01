@@ -63,4 +63,5 @@ public :
     static const so_called_type_platform_math_num_fract texture_paper_intensity ;
     static const so_called_type_platform_math_num_fract texture_alpha ;
     static const so_called_type_platform_math_num_whole texture_grid_size ;
+    static void binding ( ) ;
 } ;

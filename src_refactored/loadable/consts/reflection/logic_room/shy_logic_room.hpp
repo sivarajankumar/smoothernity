@@ -1,66 +1,81 @@
+#define shy_bind_module_helper(module) \
+    so_called_loadable_consts_binder :: bind_module \
+        ( #module \
+        , & so_called_common_##module##_consts :: binding \
+        )
+
+#define shy_bind_value_helper(value) \
+    so_called_loadable_consts_binder :: bind_value \
+        ( #value \
+        , so_called_common_logic_room_consts :: value \
+        )
+
 void shy_loadable_consts_reflection_logic_room :: prepare ( )
 {
-    so_called_loadable_consts_binder :: module ( "logic_room" ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_right_r" , so_called_common_logic_room_consts :: mesh_color_right_r ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_right_g" , so_called_common_logic_room_consts :: mesh_color_right_g ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_right_b" , so_called_common_logic_room_consts :: mesh_color_right_b ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_right_a" , so_called_common_logic_room_consts :: mesh_color_right_a ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_left_r" , so_called_common_logic_room_consts :: mesh_color_left_r ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_left_g" , so_called_common_logic_room_consts :: mesh_color_left_g ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_left_b" , so_called_common_logic_room_consts :: mesh_color_left_b ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_left_a" , so_called_common_logic_room_consts :: mesh_color_left_a ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_near_r" , so_called_common_logic_room_consts :: mesh_color_near_r ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_near_g" , so_called_common_logic_room_consts :: mesh_color_near_g ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_near_b" , so_called_common_logic_room_consts :: mesh_color_near_b ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_near_a" , so_called_common_logic_room_consts :: mesh_color_near_a ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_far_r" , so_called_common_logic_room_consts :: mesh_color_far_r ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_far_g" , so_called_common_logic_room_consts :: mesh_color_far_g ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_far_b" , so_called_common_logic_room_consts :: mesh_color_far_b ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_far_a" , so_called_common_logic_room_consts :: mesh_color_far_a ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_top_r" , so_called_common_logic_room_consts :: mesh_color_top_r ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_top_g" , so_called_common_logic_room_consts :: mesh_color_top_g ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_top_b" , so_called_common_logic_room_consts :: mesh_color_top_b ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_top_a" , so_called_common_logic_room_consts :: mesh_color_top_a ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_bottom_r" , so_called_common_logic_room_consts :: mesh_color_bottom_r ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_bottom_g" , so_called_common_logic_room_consts :: mesh_color_bottom_g ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_bottom_b" , so_called_common_logic_room_consts :: mesh_color_bottom_b ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_color_bottom_a" , so_called_common_logic_room_consts :: mesh_color_bottom_a ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_position_x" , so_called_common_logic_room_consts :: mesh_position_x ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_position_y" , so_called_common_logic_room_consts :: mesh_position_y ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_position_z" , so_called_common_logic_room_consts :: mesh_position_z ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_x_left" , so_called_common_logic_room_consts :: mesh_x_left ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_x_right" , so_called_common_logic_room_consts :: mesh_x_right ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_y_top" , so_called_common_logic_room_consts :: mesh_y_top ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_y_bottom" , so_called_common_logic_room_consts :: mesh_y_bottom ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_z_near" , so_called_common_logic_room_consts :: mesh_z_near ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_z_far" , so_called_common_logic_room_consts :: mesh_z_far ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_right_side_u_left" , so_called_common_logic_room_consts :: mesh_right_side_u_left ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_right_side_u_right" , so_called_common_logic_room_consts :: mesh_right_side_u_right ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_right_side_v_top" , so_called_common_logic_room_consts :: mesh_right_side_v_top ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_right_side_v_bottom" , so_called_common_logic_room_consts :: mesh_right_side_v_bottom ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_left_side_u_left" , so_called_common_logic_room_consts :: mesh_left_side_u_left ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_left_side_u_right" , so_called_common_logic_room_consts :: mesh_left_side_u_right ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_left_side_v_top" , so_called_common_logic_room_consts :: mesh_left_side_v_top ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_left_side_v_bottom" , so_called_common_logic_room_consts :: mesh_left_side_v_bottom ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_near_side_u_left" , so_called_common_logic_room_consts :: mesh_near_side_u_left ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_near_side_u_right" , so_called_common_logic_room_consts :: mesh_near_side_u_right ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_near_side_v_top" , so_called_common_logic_room_consts :: mesh_near_side_v_top ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_near_side_v_bottom" , so_called_common_logic_room_consts :: mesh_near_side_v_bottom ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_far_side_u_left" , so_called_common_logic_room_consts :: mesh_far_side_u_left ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_far_side_u_right" , so_called_common_logic_room_consts :: mesh_far_side_u_right ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_far_side_v_top" , so_called_common_logic_room_consts :: mesh_far_side_v_top ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_far_side_v_bottom" , so_called_common_logic_room_consts :: mesh_far_side_v_bottom ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_top_side_u_left" , so_called_common_logic_room_consts :: mesh_top_side_u_left ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_top_side_u_right" , so_called_common_logic_room_consts :: mesh_top_side_u_right ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_top_side_v_top" , so_called_common_logic_room_consts :: mesh_top_side_v_top ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_top_side_v_bottom" , so_called_common_logic_room_consts :: mesh_top_side_v_bottom ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_bottom_side_u_left" , so_called_common_logic_room_consts :: mesh_bottom_side_u_left ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_bottom_side_u_right" , so_called_common_logic_room_consts :: mesh_bottom_side_u_right ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_bottom_side_v_top" , so_called_common_logic_room_consts :: mesh_bottom_side_v_top ) ;
-    so_called_loadable_consts_binder :: bind ( "mesh_bottom_side_v_bottom" , so_called_common_logic_room_consts :: mesh_bottom_side_v_bottom ) ;
-    so_called_loadable_consts_binder :: bind ( "room_show_time" , so_called_common_logic_room_consts :: room_show_time ) ;
-    so_called_loadable_consts_binder :: bind ( "texture_pen_intensity" , so_called_common_logic_room_consts :: texture_pen_intensity ) ;
-    so_called_loadable_consts_binder :: bind ( "texture_paper_intensity" , so_called_common_logic_room_consts :: texture_paper_intensity ) ;
-    so_called_loadable_consts_binder :: bind ( "texture_alpha" , so_called_common_logic_room_consts :: texture_alpha ) ;
-    so_called_loadable_consts_binder :: bind ( "texture_grid_size" , so_called_common_logic_room_consts :: texture_grid_size ) ;
+    shy_bind_module_helper ( logic_room ) ;
+    shy_bind_value_helper ( mesh_color_right_r ) ;
+    shy_bind_value_helper ( mesh_color_right_g ) ;
+    shy_bind_value_helper ( mesh_color_right_b ) ;
+    shy_bind_value_helper ( mesh_color_right_a ) ;
+    shy_bind_value_helper ( mesh_color_left_r ) ;
+    shy_bind_value_helper ( mesh_color_left_g ) ;
+    shy_bind_value_helper ( mesh_color_left_b ) ;
+    shy_bind_value_helper ( mesh_color_left_a ) ;
+    shy_bind_value_helper ( mesh_color_near_r ) ;
+    shy_bind_value_helper ( mesh_color_near_g ) ;
+    shy_bind_value_helper ( mesh_color_near_b ) ;
+    shy_bind_value_helper ( mesh_color_near_a ) ;
+    shy_bind_value_helper ( mesh_color_far_r ) ;
+    shy_bind_value_helper ( mesh_color_far_g ) ;
+    shy_bind_value_helper ( mesh_color_far_b ) ;
+    shy_bind_value_helper ( mesh_color_far_a ) ;
+    shy_bind_value_helper ( mesh_color_top_r ) ;
+    shy_bind_value_helper ( mesh_color_top_g ) ;
+    shy_bind_value_helper ( mesh_color_top_b ) ;
+    shy_bind_value_helper ( mesh_color_top_a ) ;
+    shy_bind_value_helper ( mesh_color_bottom_r ) ;
+    shy_bind_value_helper ( mesh_color_bottom_g ) ;
+    shy_bind_value_helper ( mesh_color_bottom_b ) ;
+    shy_bind_value_helper ( mesh_color_bottom_a ) ;
+    shy_bind_value_helper ( mesh_position_x ) ;
+    shy_bind_value_helper ( mesh_position_y ) ;
+    shy_bind_value_helper ( mesh_position_z ) ;
+    shy_bind_value_helper ( mesh_x_left ) ;
+    shy_bind_value_helper ( mesh_x_right ) ;
+    shy_bind_value_helper ( mesh_y_top ) ;
+    shy_bind_value_helper ( mesh_y_bottom ) ;
+    shy_bind_value_helper ( mesh_z_near ) ;
+    shy_bind_value_helper ( mesh_z_far ) ;
+    shy_bind_value_helper ( mesh_right_side_u_left ) ;
+    shy_bind_value_helper ( mesh_right_side_u_right ) ;
+    shy_bind_value_helper ( mesh_right_side_v_top ) ;
+    shy_bind_value_helper ( mesh_right_side_v_bottom ) ;
+    shy_bind_value_helper ( mesh_left_side_u_left ) ;
+    shy_bind_value_helper ( mesh_left_side_u_right ) ;
+    shy_bind_value_helper ( mesh_left_side_v_top ) ;
+    shy_bind_value_helper ( mesh_left_side_v_bottom ) ;
+    shy_bind_value_helper ( mesh_near_side_u_left ) ;
+    shy_bind_value_helper ( mesh_near_side_u_right ) ;
+    shy_bind_value_helper ( mesh_near_side_v_top ) ;
+    shy_bind_value_helper ( mesh_near_side_v_bottom ) ;
+    shy_bind_value_helper ( mesh_far_side_u_left ) ;
+    shy_bind_value_helper ( mesh_far_side_u_right ) ;
+    shy_bind_value_helper ( mesh_far_side_v_top ) ;
+    shy_bind_value_helper ( mesh_far_side_v_bottom ) ;
+    shy_bind_value_helper ( mesh_top_side_u_left ) ;
+    shy_bind_value_helper ( mesh_top_side_u_right ) ;
+    shy_bind_value_helper ( mesh_top_side_v_top ) ;
+    shy_bind_value_helper ( mesh_top_side_v_bottom ) ;
+    shy_bind_value_helper ( mesh_bottom_side_u_left ) ;
+    shy_bind_value_helper ( mesh_bottom_side_u_right ) ;
+    shy_bind_value_helper ( mesh_bottom_side_v_top ) ;
+    shy_bind_value_helper ( mesh_bottom_side_v_bottom ) ;
+    shy_bind_value_helper ( room_show_time ) ;
+    shy_bind_value_helper ( texture_pen_intensity ) ;
+    shy_bind_value_helper ( texture_paper_intensity ) ;
+    shy_bind_value_helper ( texture_alpha ) ;
+    shy_bind_value_helper ( texture_grid_size ) ;
 }
+
+#undef shy_bind_module_helper
+#undef shy_bind_value_helper
