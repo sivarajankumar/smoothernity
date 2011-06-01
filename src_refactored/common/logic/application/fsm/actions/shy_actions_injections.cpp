@@ -11,6 +11,7 @@
 #include "../../../main_menu/sender/launch_permit/shy_launch_permit_injections.h"
 #include "../../../main_menu/sender/render/shy_render_injections.h"
 #include "../../../main_menu/sender/update/shy_update_injections.h"
+#include "../../../salutation/sender/creation_permit/shy_creation_permit_injections.h"
 #include "../../../salutation/sender/launch_permit/shy_launch_permit_injections.h"
 #include "../../../salutation/sender/render/shy_render_injections.h"
 #include "../../../salutation/sender/update/shy_update_injections.h"

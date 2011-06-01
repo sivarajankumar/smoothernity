@@ -1,6 +1,7 @@
 #ifndef _shy_common_logic_salutation_injections_included
 #define _shy_common_logic_salutation_injections_included
 
+#include "./message/creation_permit/shy_creation_permit_injections.h"
 #include "./message/launch_permit/shy_launch_permit_injections.h"
 #include "./message/render/shy_render_injections.h"
 #include "./message/update/shy_update_injections.h"

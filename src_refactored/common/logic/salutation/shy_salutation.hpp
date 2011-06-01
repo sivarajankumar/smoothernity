@@ -9,6 +9,10 @@ void _shy_common_logic_salutation :: receive ( so_called_message_common_init )
 {
 }
 
+void _shy_common_logic_salutation :: receive ( so_called_message_common_logic_salutation_creation_permit )
+{
+}
+
 void _shy_common_logic_salutation :: receive ( so_called_message_common_logic_salutation_launch_permit )
 {
 }
