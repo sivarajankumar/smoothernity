@@ -2,6 +2,7 @@ class _shy_common_logic_salutation
 {
 public :
     static void receive ( so_called_message_common_init ) ;
+    static void receive ( so_called_message_common_logic_salutation_render ) ;
     static void receive ( so_called_message_common_logic_salutation_update ) ;
     static void register_in_scheduler ( ) ;
 } ;
