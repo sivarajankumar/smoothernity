@@ -27,4 +27,5 @@ public :
     static const so_called_type_platform_math_num_fract texture_paper_b ;
     static const so_called_type_platform_math_num_fract texture_paper_a ;
     static const so_called_type_platform_math_num_whole texture_stripes ;
+    static void binding ( ) ;
 } ;

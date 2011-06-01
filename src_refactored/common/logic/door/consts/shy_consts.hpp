@@ -25,3 +25,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_door_consts :: tex
 const so_called_type_platform_math_num_fract shy_common_logic_door_consts :: texture_pen_r ;
 const so_called_type_platform_math_num_whole shy_common_logic_door_consts :: texture_stripes ;
 
+void shy_common_logic_door_consts :: binding ( )
+{
+}
