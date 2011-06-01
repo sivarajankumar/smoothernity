@@ -5,3 +5,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size ;
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_meshes_consts :: time_between_creation ;
 
+void shy_common_logic_main_menu_letters_meshes_consts :: binding ( )
+{
+}
