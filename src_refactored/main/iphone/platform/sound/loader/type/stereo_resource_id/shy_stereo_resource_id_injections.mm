@@ -1,5 +1,1 @@
-#include "./shy_stereo_resource_id_injections.h"
-
-#include "../../../../../../../injections/platform/consts/insider/shy_insider.h"
-
-#include "./shy_stereo_resource_id.hpp"
+#include "../../../../../../../platform/sound/loader/cocoa/type/stereo_resource_id/shy_stereo_resource_id_injections.hpp"
