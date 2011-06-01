@@ -12,4 +12,5 @@ public :
     static const so_called_type_platform_math_num_whole fidget_edges ;
     static const so_called_type_platform_math_num_whole scale_in_frames ;
     static const so_called_type_platform_math_num_whole should_render_fidget ;
+    static void binding ( ) ;
 } ;

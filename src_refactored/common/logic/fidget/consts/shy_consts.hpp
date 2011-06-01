@@ -10,3 +10,6 @@ const so_called_type_platform_math_num_whole shy_common_logic_fidget_consts :: f
 const so_called_type_platform_math_num_whole shy_common_logic_fidget_consts :: scale_in_frames ;
 const so_called_type_platform_math_num_whole shy_common_logic_fidget_consts :: should_render_fidget ;
 
+void shy_common_logic_fidget_consts :: binding ( )
+{
+}
