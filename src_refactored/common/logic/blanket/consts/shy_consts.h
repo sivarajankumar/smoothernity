@@ -10,4 +10,5 @@ public :
     static const so_called_type_platform_math_num_fract mesh_color_g ;
     static const so_called_type_platform_math_num_fract mesh_color_b ;
     static const so_called_type_platform_math_num_fract mesh_color_a ;
+    static void binding ( ) ;
 } ;

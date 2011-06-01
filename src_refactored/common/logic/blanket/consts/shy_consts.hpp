@@ -8,3 +8,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_blanket_consts :: 
 const so_called_type_platform_math_num_fract shy_common_logic_blanket_consts :: mesh_vertex_y_top ;
 const so_called_type_platform_math_num_fract shy_common_logic_blanket_consts :: mesh_vertex_z ;
 
+void shy_common_logic_blanket_consts :: binding ( )
+{
+}
