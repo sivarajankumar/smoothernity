@@ -15,6 +15,7 @@ public :
     so_called_type_platform_math_num_whole stage_amusement_enabled ;
     so_called_type_platform_math_num_whole stage_main_menu_disabled ;
     so_called_type_platform_math_num_whole stage_main_menu_enabled ;
+    so_called_type_platform_math_num_whole stage_salutation_disabled ;
     so_called_type_platform_math_num_whole stage_title_disabled ;
     so_called_type_platform_math_num_whole stage_title_enabled ;
 } ;

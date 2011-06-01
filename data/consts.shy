@@ -4,6 +4,7 @@ consts logic_amusement
     renderer_clear_color_b 1 / 3
 
 consts logic_application
+    skip_salutation 0
     skip_title 0
     skip_main_menu 0
     skip_amusement 0
