@@ -7,4 +7,5 @@ public :
     static const so_called_type_platform_math_num_fract mesh_color_b ;
     static const so_called_type_platform_math_num_fract mesh_color_a ;
     static const so_called_type_platform_math_num_fract selected_rect_vertical_scale ;
+    static void binding ( ) ;
 } ;

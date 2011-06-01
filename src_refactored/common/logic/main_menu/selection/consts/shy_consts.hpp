@@ -5,3 +5,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_main_menu_selectio
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_selection_consts :: mesh_size ;
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_selection_consts :: selected_rect_vertical_scale ;
 
+void shy_common_logic_main_menu_selection_consts :: binding ( )
+{
+}
