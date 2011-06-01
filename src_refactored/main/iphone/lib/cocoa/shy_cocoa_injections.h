@@ -2,7 +2,7 @@
 #define _shy_iphone_lib_cocoa_injections_included
 
 #include <AudioToolbox/ExtendedAudioFile.h>
-#include <Cocoa/Cocoa.h>
+#include <QuartzCore/QuartzCore.h>
 
 #define so_called_lib_cocoa_CFRelease CFRelease
 #define so_called_lib_cocoa_CGBitmapContextCreate CGBitmapContextCreate
