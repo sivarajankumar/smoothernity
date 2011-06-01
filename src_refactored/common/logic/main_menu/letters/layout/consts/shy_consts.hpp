@@ -4,3 +4,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_spacing ;
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_layout_consts :: menu_position_z ;
 
+void shy_common_logic_main_menu_letters_layout_consts :: binding ( )
+{
+}

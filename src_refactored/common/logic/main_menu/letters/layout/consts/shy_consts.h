@@ -6,4 +6,5 @@ public :
     static const so_called_type_platform_math_num_fract letter_size_fract_horizontal_border ;
     static const so_called_type_platform_math_num_fract letter_size_fract_vertical_border ;
     static const so_called_type_platform_math_num_fract menu_position_z ;
+    static void binding ( ) ;
 } ;
