@@ -32,3 +32,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_from_begin_to_end ;
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_to_begin ;
 
+void shy_common_logic_main_menu_letters_animation_consts :: binding ( )
+{
+}

@@ -34,5 +34,6 @@ public :
     static const so_called_type_platform_math_num_fract selection_weight_time_from_begin_to_end ;
     static const so_called_type_platform_math_num_fract unselection_weight_time_to_begin ;
     static const so_called_type_platform_math_num_fract unselection_weight_time_from_begin_to_end ;
+    static void binding ( ) ;
 } ;
 
