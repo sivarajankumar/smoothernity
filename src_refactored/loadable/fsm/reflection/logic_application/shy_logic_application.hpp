@@ -46,6 +46,7 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_bind_input_helper ( logic_title_finished ) ;
     shy_bind_input_helper ( logic_main_menu_created ) ;
     shy_bind_input_helper ( logic_main_menu_finished ) ;
+    shy_bind_input_helper ( logic_salutation_finished ) ;
     shy_bind_input_helper ( stage_amusement_disabled ) ;
     shy_bind_input_helper ( stage_amusement_enabled ) ;
     shy_bind_input_helper ( stage_main_menu_disabled ) ;
