@@ -11,3 +11,6 @@ const so_called_type_platform_math_num_whole shy_common_logic_title_consts :: ap
 const so_called_type_platform_math_num_whole shy_common_logic_title_consts :: disappear_duration_in_frames ;
 const so_called_type_platform_math_num_whole shy_common_logic_title_consts :: frames_between_letters ;
 
+void shy_common_logic_title_consts :: binding ( )
+{
+}
