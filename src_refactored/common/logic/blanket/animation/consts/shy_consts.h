@@ -14,4 +14,5 @@ public :
     static const so_called_type_platform_math_num_fract disappear_rotation_begin ;
     static const so_called_type_platform_math_num_fract disappear_rotation_end ;
     static const so_called_type_platform_math_num_fract disappear_time_from_begin_to_end ;
+    static void binding ( ) ;
 } ;

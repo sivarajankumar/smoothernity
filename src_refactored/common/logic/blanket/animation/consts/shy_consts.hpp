@@ -12,3 +12,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_
 const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: disappear_scale_end ;
 const so_called_type_platform_math_num_fract shy_common_logic_blanket_animation_consts :: disappear_time_from_begin_to_end ;
 
+void shy_common_logic_blanket_animation_consts :: binding ( )
+{
+}
