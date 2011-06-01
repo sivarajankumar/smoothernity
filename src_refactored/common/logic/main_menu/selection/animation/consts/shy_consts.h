@@ -62,5 +62,6 @@ public :
     static const so_called_type_platform_math_num_fract unselect_vertical_scale_value_begin ;
     static const so_called_type_platform_math_num_fract unselect_vertical_scale_value_end ;
     static const so_called_type_platform_math_num_fract unselect_total_animation_time ;
+    static void binding ( ) ;
 } ;
 

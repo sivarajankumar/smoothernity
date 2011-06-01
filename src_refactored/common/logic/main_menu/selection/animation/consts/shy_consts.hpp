@@ -60,3 +60,6 @@ const so_called_type_platform_math_num_fract shy_common_logic_main_menu_selectio
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_selection_animation_consts :: unselect_vertical_scale_value_begin ;
 const so_called_type_platform_math_num_fract shy_common_logic_main_menu_selection_animation_consts :: unselect_vertical_scale_value_end ;
 
+void shy_common_logic_main_menu_selection_animation_consts :: binding ( )
+{
+}
