@@ -46,12 +46,12 @@ void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
     if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_salutation ) )
     {
         shy_guts :: current_inputs . stage_salutation_disabled = so_called_platform_math_consts :: whole_true ;
-        // shy_guts :: current_inputs . stage_salutation_enabled = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: current_inputs . stage_salutation_enabled = so_called_platform_math_consts :: whole_false ;
     }
     else
     {
         shy_guts :: current_inputs . stage_salutation_disabled = so_called_platform_math_consts :: whole_false ;
-        // shy_guts :: current_inputs . stage_salutation_enabled = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: current_inputs . stage_salutation_enabled = so_called_platform_math_consts :: whole_true ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_title ) )
     {
@@ -82,6 +82,7 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_ty
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_main_menu_disabled , shy_guts :: fixed_inputs . stage_main_menu_disabled )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_main_menu_enabled , shy_guts :: fixed_inputs . stage_main_menu_enabled )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_salutation_disabled , shy_guts :: fixed_inputs . stage_salutation_disabled )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_salutation_enabled , shy_guts :: fixed_inputs . stage_salutation_enabled )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_title_disabled , shy_guts :: fixed_inputs . stage_title_disabled )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: current_inputs . stage_title_enabled , shy_guts :: fixed_inputs . stage_title_enabled )
        )
