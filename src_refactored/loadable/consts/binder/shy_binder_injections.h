@@ -1,9 +1,9 @@
 #ifndef _shy_loadable_consts_binder_injections_included
 #define _shy_loadable_consts_binder_injections_included
 
+#include "../content/type/value_fract_binding/shy_value_fract_binding_injections.h"
+#include "../content/type/value_whole_binding/shy_value_whole_binding_injections.h"
 #include "../../../injections/lib/std/char/shy_char.h"
-#include "../../../injections/platform/math/type/num_fract/shy_num_fract.h"
-#include "../../../injections/platform/math/type/num_whole/shy_num_whole.h"
 
 #include "./shy_binder.h"
 
