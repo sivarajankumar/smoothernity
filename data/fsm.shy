@@ -2,7 +2,12 @@ system logic_application
 
     machine performer
         state initial
+            to salutation
+        state salutation
+            on entry
+                command start to salutation_performer
             to title
+                if { ( machine salutation_performer is finished ) }
         state title
             on entry
                 command start to title_performer
@@ -28,8 +33,13 @@ system logic_application
         state text
             on entry
                 command start to text_generator
-            to title
+            to salutation
                 if { ( machine text_generator is finished ) }
+        state salutation
+            on entry
+                command start to salutation_generator
+            to title
+                if { ( machine salutation_generator is finished ) }
         state title
             on entry
                 command start to title_generator
@@ -88,6 +98,38 @@ system logic_application
                 do logic_title_update
             to finished
                 if { logic_title_finished }
+        state finished
+
+    machine salutation_generator
+        state initial
+            to generating
+                if { ( command start ) stage_salutation_enabled }
+            to finished
+                if { ( command start ) stage_salutation_disabled }
+        state generating
+            on entry
+                do logic_salutation_creation_permit
+            on { logic_application_update }
+                do logic_salutation_update
+            to finished
+                if { logic_salutation_created }
+        state finished
+
+    machine salutation_performer
+        state initial
+            to performing
+                if { ( command start ) stage_salutation_enabled }
+            to finished
+                if { ( command start ) stage_salutation_disabled }
+        state performing
+            on entry
+                do logic_salutation_launch_permit
+            on { logic_application_render }
+                do logic_salutation_render
+            on { logic_application_update }
+                do logic_salutation_update
+            to finished
+                if { logic_salutation_finished }
         state finished
 
     machine main_menu_generator
