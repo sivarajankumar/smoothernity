@@ -8,6 +8,7 @@
 #include "../../amusement/message/finished/shy_finished_injections.h"
 #include "../../main_menu/message/created/shy_created_injections.h"
 #include "../../main_menu/message/finished/shy_finished_injections.h"
+#include "../../salutation/message/created/shy_created_injections.h"
 #include "../../salutation/message/finished/shy_finished_injections.h"
 #include "../../text/message/prepared/shy_prepared_injections.h"
 #include "../../title/message/created/shy_created_injections.h"

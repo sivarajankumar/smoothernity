@@ -10,6 +10,7 @@ public :
     so_called_type_platform_math_num_whole logic_title_finished ;
     so_called_type_platform_math_num_whole logic_main_menu_created ;
     so_called_type_platform_math_num_whole logic_main_menu_finished ;
+    so_called_type_platform_math_num_whole logic_salutation_created ;
     so_called_type_platform_math_num_whole logic_salutation_finished ;
     so_called_type_platform_math_num_whole stage_amusement_disabled ;
     so_called_type_platform_math_num_whole stage_amusement_enabled ;
