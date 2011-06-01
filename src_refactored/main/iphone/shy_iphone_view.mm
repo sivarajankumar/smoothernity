@@ -1,4 +1,9 @@
-#import "iphone_view.h"
+#include "./iphone_view.h"
+#include "../../facade/shy_facade_injections.h"
+#include "../../injections/lib/std/true/shy_true.h"
+#include "../../injections/lib/std/false/shy_false.h"
+#include "../../injections/platform/mouse/insider/shy_insider.h"
+#include "../../injections/platform/render/insider/shy_insider.h"
 
 @implementation EAGLView
 
@@ -42,33 +47,17 @@
     _al_context = alcCreateContext ( _al_device , NULL ) ;
     alcMakeContextCurrent ( _al_context ) ;
     
-    _sound_loader = [ [ shy_iphone_sound_loader alloc ] init ] ;
-    _texture_loader = [ [ shy_iphone_texture_loader alloc ] init ] ;
-    [ _sound_loader thread_run ] ;
-    [ _texture_loader thread_run ] ;
-    _platform_insider = new shy_iphone_platform_insider ( ) ;
-    _platform_insider -> render_insider . set_texture_loader ( _texture_loader ) ;
-    _platform_insider -> sound_insider . set_sound_loader ( _sound_loader ) ;
-
-	_platform_insider -> render_insider . set_aspect_width ( 1.0f ) ;
-	_platform_insider -> render_insider . set_aspect_height ( 1.5f ) ;
-    
-    _platform_insider -> touch_insider . set_enabled ( true ) ;
-    _platform_insider -> touch_insider . set_occured ( false ) ;
+    so_called_platform_render_insider :: set_frame_loss ( so_called_lib_std_false ) ;
+    so_called_platform_render_insider :: set_aspect_width ( 1.0f ) ;
+    so_called_platform_render_insider :: set_aspect_height ( 1.5f ) ;
+    so_called_platform_touch_insider :: set_enabled ( so_called_lib_std_true ) ;
+    so_called_platform_touch_insider :: set_occured ( so_called_lib_std_false ) ;
 
     _frame_time = 0 ;
 }
 
 - ( void ) _done_platform
 {
-    [ _sound_loader thread_stop ] ;
-    [ _texture_loader thread_stop ] ;
-    _sound_loader = nil ;
-    _texture_loader = nil ;
-    
-    delete _platform_insider ;
-    _platform_insider = 0 ;	
-	
 	if ( _gl_default_framebuffer )
 	{
 		glDeleteFramebuffersOES ( 1 , & _gl_default_framebuffer ) ;
@@ -101,17 +90,12 @@
 
 - ( void ) _init_game
 {
-    shy_iphone_platform_insider :: platform_pointer :: pointer < const shy_platform < shy_iphone_platform_insider > > platform_ptr ;
-    shy_iphone_platform_insider :: platform_pointer :: bind ( platform_ptr , _platform_insider -> platform ) ;
-    _facade = new shy_facade < shy_platform < shy_iphone_platform_insider > > ( platform_ptr ) ;
-    _facade -> init ( ) ;
+    so_called_facade :: init ( ) ;
 }
 
 - ( void ) _done_game
 {
-	_facade -> done ( ) ;
-	delete _facade ;
-	_facade = 0 ;
+    so_called_facade :: done ( ) ;
 }
 
 + ( Class ) layerClass
@@ -122,7 +106,7 @@
 - ( void ) touchesBegan : ( NSSet * ) touches withEvent : ( UIEvent * ) event
 {
     [ self _update_touch_position : touches ] ;
-    _platform_insider -> touch_insider . set_occured ( true ) ;
+    so_called_platform_touch_insider :: set_occured ( so_called_lib_std_true ) ;
 }
 
 - ( void ) touchesMoved : ( NSSet * ) touches withEvent : ( UIEvent * ) event
@@ -133,33 +117,33 @@
 - ( void ) touchesEnded : ( NSSet * ) touches withEvent : ( UIEvent * ) event
 {
     [ self _update_touch_position : touches ] ;
-    _platform_insider -> touch_insider . set_occured ( false ) ;
+    so_called_platform_touch_insider :: set_occured ( so_called_lib_std_false ) ;
 }
 
 - ( void ) touchesCancelled : ( NSSet * ) touches withEvent : ( UIEvent * ) event
 {
     [ self _update_touch_position : touches ] ;
-    _platform_insider -> touch_insider . set_occured ( false ) ;
+    so_called_platform_touch_insider :: set_occured ( so_called_lib_std_false ) ;
 }
 
 - ( void ) _update_touch_position : ( NSSet * ) touches
 {
     UITouch * touch = [ touches anyObject ] ;
     CGPoint point = [ touch locationInView : [ touch view ] ] ;
-    _platform_insider -> touch_insider . set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
-    _platform_insider -> touch_insider . set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
+    so_called_platform_touch_insider :: set_x (   2.0f * ( float ) ( point . x - _gl_backing_width  / 2 ) / ( float ) _gl_backing_width ) ;
+    so_called_platform_touch_insider :: set_y ( - 2.0f * ( float ) ( point . y - _gl_backing_height / 2 ) / ( float ) _gl_backing_width ) ;
 }
 
 - ( void ) draw_view : ( id ) sender
 {
     [ EAGLContext setCurrentContext : _gl_context ] ;
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
-	_facade -> render ( ) ;
-	_facade -> update ( ) ;
+    so_called_facade :: update ( ) ;
+    so_called_facade :: render ( ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
     CFAbsoluteTime finish_time = CFAbsoluteTimeGetCurrent ( ) ;
-    _platform_insider -> render_insider . set_frame_loss ( finish_time - _frame_time > 1.4 / 60.0 ) ;
+    so_called_platform_render_insider :: set_frame_loss ( finish_time - _frame_time > 1.4 / 60.0 ) ;
     _frame_time = finish_time ;
     [ self _schedule_draw ] ;
 }

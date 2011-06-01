@@ -1,5 +1,5 @@
-#import "iphone_app_delegate.h"
-#import "iphone_view.h"
+#include "./iphone_app_delegate.h"
+#include "./iphone_view.h"
 
 @implementation shy_iphone_app_delegate
 

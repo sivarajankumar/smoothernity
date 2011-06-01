@@ -1,21 +1,13 @@
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
-#import <OpenAL/al.h>
-#import <OpenAL/alc.h>
-#import <QuartzCore/QuartzCore.h>
-#import <UIKit/UIKit.h>
-
-#include "iphone_platform.hpp"
-#include "../common/facade.hpp"
+#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES1/glext.h>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#include <QuartzCore/QuartzCore.h>
+#include <UIKit/UIKit.h>
 
 @interface EAGLView : UIView
 {    
 @private	
-    shy_iphone_sound_loader * _sound_loader ;
-    shy_iphone_texture_loader * _texture_loader ;
-    shy_iphone_platform_insider * _platform_insider ;
-	shy_facade < shy_platform < shy_iphone_platform_insider > > * _facade ;
-	
 	EAGLContext * _gl_context ;
 	GLint _gl_backing_width;
 	GLint _gl_backing_height;

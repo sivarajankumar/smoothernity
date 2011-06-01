@@ -1,17 +1,9 @@
-//
-//  main.m
-//  measurer
-//
-//  Created by Oleg Plakhotnyuk on 23.12.09.
-//  Copyright __MyCompanyName__ 2009. All rights reserved.
-//
+#include <UIKit/UIKit.h>
 
-#import <UIKit/UIKit.h>
-
-int main(int argc, char *argv[]) {
-    
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
-    return retVal;
+int main ( int argc , char * argv [ ] )
+{
+    NSAutoreleasePool * pool = [ [ NSAutoreleasePool alloc ] init ] ;
+    int ret_val = UIApplicationMain ( argc , argv , nil , nil ) ;
+    [ pool release ] ;
+    return ret_val ;
 }
