@@ -31,6 +31,7 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_bind_action_helper ( logic_main_menu_launch_permit ) ;
     shy_bind_action_helper ( logic_main_menu_render ) ;
     shy_bind_action_helper ( logic_main_menu_update ) ;
+    shy_bind_action_helper ( logic_salutation_update ) ;
     shy_bind_action_helper ( logic_text_prepare_permit ) ;
     shy_bind_action_helper ( logic_text_update ) ;
     shy_bind_action_helper ( logic_title_launch_permit ) ;
