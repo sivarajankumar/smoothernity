@@ -9,5 +9,9 @@
     #include "../../../../main/macosx/platform/render/texture_loader/shy_texture_loader_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/platform/render/texture_loader/shy_texture_loader_injections.h"
+#endif
+
 #endif
 

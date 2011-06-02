@@ -1,1 +1,1 @@
-#include "../../../../../../platform/render/opengl/type/index_buffer_mapped_data/shy_index_buffer_mapped_data_injections.hpp"
+#include "../../../../../../platform/render/directx/type/index_buffer_mapped_data/shy_index_buffer_mapped_data_injections.hpp"

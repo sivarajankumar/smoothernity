@@ -9,4 +9,8 @@
     #include "../../../../../main/macosx/platform/render/type/texture_id/shy_texture_id_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../main/win/platform/render/type/texture_id/shy_texture_id_injections.h"
+#endif
+
 #endif

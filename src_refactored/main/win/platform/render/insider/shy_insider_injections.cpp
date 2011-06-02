@@ -1,1 +1,1 @@
-#include "../../../../../platform/render/opengl/insider/shy_insider_injections.hpp"
+#include "../../../../../platform/render/directx/insider/shy_insider_injections.hpp"

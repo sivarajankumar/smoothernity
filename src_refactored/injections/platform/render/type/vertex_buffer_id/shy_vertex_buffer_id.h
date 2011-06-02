@@ -9,4 +9,8 @@
     #include "../../../../../main/macosx/platform/render/type/vertex_buffer_id/shy_vertex_buffer_id_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../main/win/platform/render/type/vertex_buffer_id/shy_vertex_buffer_id_injections.h"
+#endif
+
 #endif
