@@ -1,49 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: map_index_buffer ( render_index_buffer_mapped_data & data , render_index_buffer_id arg_buffer_id )
-{
-	HRESULT hr ;
-	V ( arg_buffer_id . _buffer -> Lock ( 0 , 0 , & data . _data , 0 ) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: unmap_index_buffer ( render_index_buffer_id arg_buffer_id )
-{
-	HRESULT hr ;
-	V ( arg_buffer_id . _buffer -> Unlock ( ) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: mapped_index_buffer_element
-    ( typename platform_pointer :: template pointer < index_data > & ptr 
-    , render_index_buffer_mapped_data data
-    , num_whole index
-    )
-{
-    index_data * mapped_indices = ( index_data * ) data . _data ;
-    int index_int = 0 ;
-    platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    platform_pointer :: bind ( ptr , mapped_indices [ index_int ] ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: set_index_value ( index_data & data , num_whole index )
-{
-    int int_index = 0 ;
-    platform_math_insider :: num_whole_value_get ( int_index , index ) ;
-	data . _index = ( UINT ) int_index ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: matrix_identity ( )
-{
-    HRESULT hr ;
-	V ( _platform_insider -> render_insider . matrix_stack -> LoadIdentity ( ) ) ;
-    D3DXMATRIX d3d_matrix ;
-    platform_render_insider :: convert_from_opengl ( d3d_matrix , * _platform_insider -> render_insider . matrix_stack -> GetTop ( ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_VIEW , & d3d_matrix ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: matrix_load ( const matrix_data & matrix )
 {
     HRESULT hr ;
@@ -157,14 +112,76 @@ inline void shy_win_platform_render < platform_insider > :: get_frame_loss ( num
 
 namespace shy_guts
 {
+	static so_called_lib_directx_LPD3DXMATRIXSTACK matrix_stack = 0 ;
+    static void convert_from_opengl ( so_called_lib_directx_D3DXMATRIX & , so_called_lib_directx_D3DXMATRIX ) ;
+}
+
+void shy_guts :: convert_from_opengl ( so_called_lib_directx_D3DXMATRIX & d3d_matrix , so_called_lib_directx_D3DXMATRIX ogl_matrix )
+{
+	d3d_matrix = ogl_matrix ;
+	d3d_matrix . _31 = - d3d_matrix . _31 ;
+	d3d_matrix . _32 = - d3d_matrix . _32 ;
+	d3d_matrix . _33 = - d3d_matrix . _33 ;
+	d3d_matrix . _34 = - d3d_matrix . _34 ;
 }
 
 void shy_platform_render_directx :: init ( )
 {
+	so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_D3DXCreateMatrixStack 
+            ( 0 
+            , & matrix_stack 
+            ) 
+        ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetRenderState 
+            ( so_called_lib_directx_D3DRS_LIGHTING 
+            , so_called_lib_directx_FALSE 
+            ) 
+        ) ;
+    so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetSamplerState 
+            ( 0 
+            , so_called_lib_directx_D3DSAMP_MINFILTER 
+            , so_called_lib_directx_D3DTEXF_POINT 
+            ) 
+        ) ;
+    so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetSamplerState 
+            ( 0 
+            , so_called_lib_directx_D3DSAMP_MAGFILTER 
+            , so_called_lib_directx_D3DTEXF_LINEAR 
+            ) 
+        ) ;
+    so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetSamplerState 
+            ( 0 
+            , so_called_lib_directx_D3DSAMP_MIPFILTER 
+            , so_called_lib_directx_D3DTEXF_NONE 
+            ) 
+        ) ;
+
+    so_called_lib_directx_D3DVIEWPORT9 viewport ;
+    so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> GetViewport ( & viewport ) 
+        ) ;
+    if ( viewport . Width > viewport . Height )
+    {
+        so_called_platform_render_directx_insider :: set_aspect_height ( 1 ) ;
+        so_called_platform_render_directx_insider :: set_aspect_width ( so_called_lib_std_float ( viewport . Width ) / so_called_lib_std_float ( viewport . Height ) ) ;
+    }
+    else
+    {
+        so_called_platform_render_directx_insider :: set_aspect_height ( so_called_lib_std_float ( viewport . Height ) / so_called_lib_std_float ( viewport . Width ) ) ;
+        so_called_platform_render_directx_insider :: set_aspect_width ( 1 ) ;
+    }
 }
 
 void shy_platform_render_directx :: done ( )
 {
+    so_called_lib_directx_HRESULT hr ;
+    so_called_lib_directx_V ( matrix_stack -> Release ( ) ) ;
 }
 
 void shy_platform_render_directx :: _load_texture_subdata 
@@ -694,10 +711,23 @@ void shy_platform_render_directx :: map_index_buffer
     , so_called_type_platform_render_directx_index_buffer_id arg_buffer_id 
     )
 {
+	so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_V 
+        ( arg_buffer_id . _buffer -> Lock 
+            ( 0 
+            , 0 
+            , & data . _data 
+            , 0 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: unmap_index_buffer ( so_called_type_platform_render_directx_index_buffer_id arg_buffer_id )
 {
+	so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_V 
+        ( arg_buffer_id . _buffer -> Unlock ( ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: mapped_index_buffer_element
@@ -706,7 +736,8 @@ void shy_platform_render_directx :: mapped_index_buffer_element
     , so_called_type_platform_math_num_whole index
     )
 {
-    so_called_type_platform_render_directx_index_data * mapped_indices = ( so_called_type_platform_render_directx_index_data * ) data . _data ;
+    so_called_type_platform_render_directx_index_data * mapped_indices = 0 ;
+    mapped_indices = ( so_called_type_platform_render_directx_index_data * ) data . _data ;
     so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
     so_called_platform_pointer :: bind ( ptr , mapped_indices [ index_int ] ) ;
@@ -714,12 +745,25 @@ void shy_platform_render_directx :: mapped_index_buffer_element
 
 void shy_platform_render_directx :: set_index_value ( so_called_type_platform_render_directx_index_data & data , so_called_type_platform_math_num_whole index )
 {
-    so_called_lib_std_int32_t index_int = 0 ;
-    so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
+    so_called_lib_std_int32_t int_index = 0 ;
+    so_called_platform_math_insider :: num_whole_value_get ( int_index , index ) ;
+	data . _index = ( so_called_lib_directx_UINT ) int_index ;
 }
 
 void shy_platform_render_directx :: matrix_identity ( )
 {
+    so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_V 
+        ( shy_guts :: matrix_stack -> LoadIdentity ( ) 
+        ) ;
+    so_called_lib_directx_D3DXMATRIX d3d_matrix ;
+    shy_guts :: convert_from_opengl ( d3d_matrix , * shy_guts :: matrix_stack -> GetTop ( ) ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetTransform 
+            ( D3DTS_VIEW 
+            , & d3d_matrix 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: matrix_load ( const so_called_type_platform_matrix_data & matrix )
