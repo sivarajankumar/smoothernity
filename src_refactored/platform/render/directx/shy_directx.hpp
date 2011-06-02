@@ -1,78 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: projection_frustum 
-    ( num_fract left 
-    , num_fract right 
-    , num_fract bottom 
-    , num_fract top 
-    , num_fract znear 
-    , num_fract zfar 
-    )
-{
-    float float_left = 0.0f ;
-    float float_right = 0.0f ;
-    float float_bottom = 0.0f ;
-    float float_top = 0.0f ;
-    float float_znear = 0.0f ;
-    float float_zfar = 0.0f ;
-    platform_math_insider :: num_fract_value_get ( float_left , left ) ;
-    platform_math_insider :: num_fract_value_get ( float_right , right ) ;
-    platform_math_insider :: num_fract_value_get ( float_bottom , bottom ) ;
-    platform_math_insider :: num_fract_value_get ( float_top , top ) ;
-    platform_math_insider :: num_fract_value_get ( float_znear , znear ) ;
-    platform_math_insider :: num_fract_value_get ( float_zfar , zfar ) ;
-
-    HRESULT hr ;
-	D3DXMATRIX matrix ;
-	D3DXMatrixPerspectiveOffCenterRH 
-        ( & matrix 
-        , float_left
-        , float_right
-        , float_bottom
-        , float_top
-        , float_znear
-        , float_zfar
-        ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_PROJECTION , & matrix ) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: projection_ortho 
-    ( num_fract left 
-    , num_fract right 
-    , num_fract bottom 
-    , num_fract top 
-    , num_fract znear 
-    , num_fract zfar 
-    )
-{
-    float float_left = 0.0f ;
-    float float_right = 0.0f ;
-    float float_bottom = 0.0f ;
-    float float_top = 0.0f ;
-    float float_znear = 0.0f ;
-    float float_zfar = 0.0f ;
-    platform_math_insider :: num_fract_value_get ( float_left , left ) ;
-    platform_math_insider :: num_fract_value_get ( float_right , right ) ;
-    platform_math_insider :: num_fract_value_get ( float_bottom , bottom ) ;
-    platform_math_insider :: num_fract_value_get ( float_top , top ) ;
-    platform_math_insider :: num_fract_value_get ( float_znear , znear ) ;
-    platform_math_insider :: num_fract_value_get ( float_zfar , zfar ) ;
-
-    HRESULT hr ;
-	D3DXMATRIX matrix ;
-	D3DXMatrixOrthoOffCenterRH 
-        ( & matrix 
-        , float_left
-        , float_right
-        , float_bottom
-        , float_top
-        , float_znear
-        , float_zfar
-        ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_PROJECTION , & matrix ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: create_vertex_buffer 
     ( render_vertex_buffer_id & arg_buffer_id , num_whole elements )
 {
@@ -702,19 +628,36 @@ void shy_platform_render_directx :: projection_ortho
     , so_called_type_platform_math_num_fract zfar 
     )
 {
-    so_called_lib_std_float left_float ;
-    so_called_lib_std_float right_float ;
-    so_called_lib_std_float bottom_float ;
-    so_called_lib_std_float top_float ;
-    so_called_lib_std_float near_float ;
-    so_called_lib_std_float far_float ;
+    so_called_lib_std_float float_left = 0 ;
+    so_called_lib_std_float float_right = 0 ;
+    so_called_lib_std_float float_bottom = 0 ;
+    so_called_lib_std_float float_top = 0 ;
+    so_called_lib_std_float float_znear = 0 ;
+    so_called_lib_std_float float_zfar = 0 ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_left , left ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_right , right ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_bottom , bottom ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_top , top ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_znear , znear ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_zfar , zfar ) ;
 
-    so_called_platform_math_insider :: num_fract_value_get ( left_float , left ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( right_float , right ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( bottom_float , bottom ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( top_float , top ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
+    so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_D3DXMATRIX matrix ;
+	so_called_lib_directx_D3DXMatrixOrthoOffCenterRH 
+        ( & matrix 
+        , float_left
+        , float_right
+        , float_bottom
+        , float_top
+        , float_znear
+        , float_zfar
+        ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetTransform 
+            ( so_called_lib_directx_D3DTS_PROJECTION 
+            , & matrix 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: create_vertex_buffer 

@@ -21,6 +21,7 @@
 #define so_called_lib_directx_D3DRS_SRCBLEND D3DRS_SRCBLEND 
 #define so_called_lib_directx_D3DRS_ZENABLE D3DRS_ZENABLE
 #define so_called_lib_directx_D3DTS_PROJECTION D3DTS_PROJECTION 
+#define so_called_lib_directx_D3DXMatrixOrthoOffCenterRH D3DXMatrixOrthoOffCenterRH 
 #define so_called_lib_directx_D3DXMatrixPerspectiveOffCenterRH D3DXMatrixPerspectiveOffCenterRH 
 #define so_called_lib_directx_D3DZB_FALSE D3DZB_FALSE
 #define so_called_lib_directx_D3DZB_TRUE D3DZB_TRUE
