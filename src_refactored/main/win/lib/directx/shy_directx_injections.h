@@ -14,6 +14,7 @@
 #define so_called_lib_directx_D3DFVF_TEX1 D3DFVF_TEX1
 #define so_called_lib_directx_D3DFVF_XYZ D3DFVF_XYZ
 #define so_called_lib_directx_D3DPOOL_MANAGED D3DPOOL_MANAGED
+#define so_called_lib_directx_D3DPT_TRIANGLESTRIP D3DPT_TRIANGLESTRIP
 #define so_called_lib_directx_D3DRS_ALPHABLENDENABLE D3DRS_ALPHABLENDENABLE
 #define so_called_lib_directx_D3DRS_CULLMODE D3DRS_CULLMODE
 #define so_called_lib_directx_D3DRS_DESTBLEND D3DRS_DESTBLEND 
