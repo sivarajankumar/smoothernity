@@ -1,11 +1,2 @@
-#include "./shy_cocoa_injections.h"
-
-#include "../../../../injections/lib/cocoa/shy_cocoa.h"
-#include "../../../../injections/lib/openal/shy_openal.h"
-#include "../../../../injections/lib/std/bool/shy_bool.h"
-#include "../../../../injections/lib/std/char/shy_char.h"
-#include "../../../../injections/lib/std/false/shy_false.h"
-#include "../../../../injections/lib/std/true/shy_true.h"
-#include "../../../../injections/platform/math/insider/shy_insider.h"
-
-#include "./shy_cocoa.hpp"
+#include "./shy_winapi_injections.h"
+#include "./shy_winapi.hpp"
