@@ -9,4 +9,8 @@
     #include "../../../main/macosx/platform/mouse/shy_mouse_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../main/win/platform/mouse/shy_mouse_injections.h"
+#endif
+
 #endif
