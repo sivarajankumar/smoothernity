@@ -25,8 +25,11 @@
 #define so_called_lib_directx_TRUE TRUE 
 #define so_called_lib_directx_V V
 
+typedef BYTE so_called_lib_directx_BYTE ;
 typedef D3DCOLOR so_called_lib_directx_D3DCOLOR ;
+typedef D3DLOCKED_RECT so_called_lib_directx_D3DLOCKED_RECT ;
 typedef DWORD so_called_lib_directx_DWORD ; 
 typedef HRESULT so_called_lib_directx_HRESULT ;
+typedef RECT so_called_lib_directx_RECT ;
 
 #endif
