@@ -1,27 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: create_texture_id ( render_texture_id & arg_texture_id , num_whole size_pow2_base )
-{
-    HRESULT hr ;
-    int size_pow2_base_int = 0 ;
-    DWORD size = 0 ;
-
-    platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
-    arg_texture_id . _size = 1 << size_pow2_base_int ;
-    size = ( DWORD ) arg_texture_id . _size ;
-
-    V ( DXUTGetD3D9Device ( ) -> CreateTexture
-        ( size
-        , size
-        , 0
-        , 0
-        , D3DFMT_A8R8G8B8
-        , D3DPOOL_MANAGED
-        , & arg_texture_id . _texture
-        , 0
-        ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: use_texture ( render_texture_id arg_texture_id )
 {
     HRESULT hr ;
@@ -662,8 +639,26 @@ void shy_platform_render_directx :: create_texture_id
     , so_called_type_platform_math_num_whole size_pow2_base 
     )
 {
+    so_called_lib_directx_HRESULT hr ;
     so_called_lib_std_int32_t size_pow2_base_int = 0 ;
+    so_called_lib_directx_DWORD size = 0 ;
+
     so_called_platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
+    arg_texture_id . _size = 1 << size_pow2_base_int ;
+    size = ( so_called_lib_directx_DWORD ) arg_texture_id . _size ;
+
+    so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> CreateTexture
+            ( size
+            , size
+            , 0
+            , 0
+            , so_called_lib_directx_D3DFMT_A8R8G8B8
+            , so_called_lib_directx_D3DPOOL_MANAGED
+            , & arg_texture_id . _texture
+            , 0
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: use_texture ( so_called_type_platform_render_directx_texture_id arg_texture_id )
