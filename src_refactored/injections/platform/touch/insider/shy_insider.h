@@ -9,6 +9,8 @@
     #include "../../../../main/macosx/platform/touch/insider/shy_insider_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/platform/touch/insider/shy_insider_injections.h"
 #endif
 
-
+#endif
