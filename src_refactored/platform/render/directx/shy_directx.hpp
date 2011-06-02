@@ -1,42 +1,3 @@
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: get_aspect_width ( num_fract & result )
-{
-    platform_math_insider :: num_fract_value_set ( result , _platform_insider -> render_insider . aspect_width ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: get_aspect_height ( num_fract & result )
-{
-    platform_math_insider :: num_fract_value_set ( result , _platform_insider -> render_insider . aspect_height ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: delete_vertex_buffer ( render_vertex_buffer_id & arg_buffer_id )
-{
-    arg_buffer_id . _buffer -> Release ( ) ;
-    arg_buffer_id . _buffer = 0 ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: delete_index_buffer ( render_index_buffer_id & arg_buffer_id )
-{
-    arg_buffer_id . _buffer -> Release ( ) ;
-    arg_buffer_id . _buffer = 0 ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: delete_texture_id ( render_texture_id & arg_texture_id )
-{
-    arg_texture_id . _texture -> Release ( ) ;
-    arg_texture_id . _texture = 0 ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: get_frame_loss ( num_whole & result )
-{
-    platform_math_insider :: num_whole_value_set ( result , ( int ) false ) ;
-}
-
 namespace shy_guts
 {
 	static so_called_lib_directx_LPD3DXMATRIXSTACK matrix_stack = 0 ;
@@ -852,12 +813,18 @@ void shy_platform_render_directx :: get_frame_loss ( so_called_type_platform_mat
 
 void shy_platform_render_directx :: delete_vertex_buffer ( so_called_type_platform_render_directx_vertex_buffer_id & arg_buffer_id )
 {
+    arg_buffer_id . _buffer -> Release ( ) ;
+    arg_buffer_id . _buffer = 0 ;
 }
 
 void shy_platform_render_directx :: delete_index_buffer ( so_called_type_platform_render_directx_index_buffer_id & arg_buffer_id )
 {
+    arg_buffer_id . _buffer -> Release ( ) ;
+    arg_buffer_id . _buffer = 0 ;
 }
 
 void shy_platform_render_directx :: delete_texture_id ( so_called_type_platform_render_directx_texture_id & arg_texture_id )
 {
+    arg_texture_id . _texture -> Release ( ) ;
+    arg_texture_id . _texture = 0 ;
 }
