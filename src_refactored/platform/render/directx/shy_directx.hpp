@@ -1,16 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: matrix_load ( const matrix_data & matrix )
-{
-    HRESULT hr ;
-    const float * matrix_elements = 0 ;
-    platform_matrix_insider :: elements_ptr ( matrix_elements , matrix ) ;
-    V ( _platform_insider -> render_insider . matrix_stack -> LoadMatrix ( ( const D3DXMATRIX * ) matrix_elements ) ) ;
-    D3DXMATRIX d3d_matrix ;
-    platform_render_insider :: convert_from_opengl ( d3d_matrix , * _platform_insider -> render_insider . matrix_stack -> GetTop ( ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_VIEW , & d3d_matrix ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: matrix_mult ( const matrix_data & matrix )
 {
     HRESULT hr ;
@@ -768,8 +756,20 @@ void shy_platform_render_directx :: matrix_identity ( )
 
 void shy_platform_render_directx :: matrix_load ( const so_called_type_platform_matrix_data & matrix )
 {
-    const so_called_lib_std_float * elements = 0 ;
-    so_called_platform_matrix_insider :: elements_ptr ( elements , matrix ) ;
+    so_called_lib_directx_HRESULT hr ;
+    const so_called_lib_std_float * matrix_elements = 0 ;
+    so_called_platform_matrix_insider :: elements_ptr ( matrix_elements , matrix ) ;
+    so_called_lib_directx_V 
+        ( shy_guts :: matrix_stack -> LoadMatrix ( ( const so_called_lib_directx_D3DXMATRIX * ) matrix_elements ) 
+        ) ;
+    so_called_lib_directx_D3DXMATRIX d3d_matrix ;
+    shy_guts :: convert_from_opengl ( d3d_matrix , * shy_guts :: matrix_stack -> GetTop ( ) ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetTransform 
+            ( so_called_lib_directx_D3DTS_VIEW 
+            , & d3d_matrix 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: matrix_mult ( const so_called_type_platform_matrix_data & matrix )
