@@ -9,5 +9,9 @@
     #include "../../../../../main/macosx/platform/sound/type/source_id/shy_source_id_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../main/win/platform/sound/type/source_id/shy_source_id_injections.h"
+#endif
+
 #endif
 

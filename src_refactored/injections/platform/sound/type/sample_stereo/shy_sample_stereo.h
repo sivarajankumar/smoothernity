@@ -9,5 +9,9 @@
     #include "../../../../../main/macosx/platform/sound/type/sample_stereo/shy_sample_stereo_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../main/win/platform/sound/type/sample_stereo/shy_sample_stereo_injections.h"
+#endif
+
 #endif
 

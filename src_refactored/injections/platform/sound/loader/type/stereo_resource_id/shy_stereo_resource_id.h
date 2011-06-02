@@ -9,6 +9,10 @@
     #include "../../../../../../main/macosx/platform/sound/loader/type/stereo_resource_id/shy_stereo_resource_id_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../../main/win/platform/sound/loader/type/stereo_resource_id/shy_stereo_resource_id_injections.h"
+#endif
+
 #endif
 
 
