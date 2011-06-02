@@ -1,35 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: create_vertex_buffer 
-    ( render_vertex_buffer_id & arg_buffer_id , num_whole elements )
-{
-	HRESULT hr ;
-    int int_elements = 0 ;
-    platform_math_insider :: num_whole_value_get ( int_elements , elements ) ;
-	V ( DXUTGetD3D9Device ( ) -> CreateVertexBuffer 
-		( sizeof ( vertex_data ) * int_elements
-		, D3DUSAGE_WRITEONLY
-		, D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1
-		, D3DPOOL_MANAGED
-		, & arg_buffer_id . _buffer
-		, 0
-		) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: map_vertex_buffer ( render_vertex_buffer_mapped_data & data , render_vertex_buffer_id arg_buffer_id )
-{
-	HRESULT hr ;
-	V ( arg_buffer_id . _buffer -> Lock ( 0 , 0 , & data . _data , 0 ) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: unmap_vertex_buffer ( render_vertex_buffer_id arg_buffer_id )
-{
-	HRESULT hr ;
-	V ( arg_buffer_id . _buffer -> Unlock ( ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: mapped_vertex_buffer_element
     ( typename platform_pointer :: template pointer < vertex_data > & ptr 
     , render_vertex_buffer_mapped_data data
@@ -665,8 +634,21 @@ void shy_platform_render_directx :: create_vertex_buffer
     , so_called_type_platform_math_num_whole elements 
     )
 {
-    so_called_lib_std_int32_t elements_int = 0 ;
-    so_called_platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
+	so_called_lib_directx_HRESULT hr ;
+    so_called_lib_std_int32_t int_elements = 0 ;
+    so_called_platform_math_insider :: num_whole_value_get ( int_elements , elements ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> CreateVertexBuffer 
+		    ( sizeof ( vertex_data ) * int_elements
+		    , so_called_lib_directx_D3DUSAGE_WRITEONLY
+		    , so_called_lib_directx_D3DFVF_XYZ 
+                | so_called_lib_directx_D3DFVF_DIFFUSE 
+                | so_called_lib_directx_D3DFVF_TEX1
+            , so_called_lib_directx_D3DPOOL_MANAGED
+            , & arg_buffer_id . _buffer
+            , 0
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: map_vertex_buffer
@@ -674,10 +656,23 @@ void shy_platform_render_directx :: map_vertex_buffer
     , so_called_type_platform_render_directx_vertex_buffer_id arg_buffer_id 
     )
 {
+	so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_V 
+        ( arg_buffer_id . _buffer -> Lock 
+            ( 0 
+            , 0 
+            , & data . _data 
+            , 0 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: unmap_vertex_buffer ( so_called_type_platform_render_directx_vertex_buffer_id arg_buffer_id )
 {
+	so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_V 
+        ( arg_buffer_id . _buffer -> Unlock ( ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: mapped_vertex_buffer_element
