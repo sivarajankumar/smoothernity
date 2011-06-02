@@ -1,32 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: mapped_vertex_buffer_element
-    ( typename platform_pointer :: template pointer < vertex_data > & ptr 
-    , render_vertex_buffer_mapped_data data
-    , num_whole index
-    )
-{
-    vertex_data * mapped_vertices = ( vertex_data * ) data . _data ;
-    int index_int = 0 ;
-    platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    platform_pointer :: bind ( ptr , mapped_vertices [ index_int ] ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: set_vertex_position ( vertex_data & vertex , num_fract x , num_fract y , num_fract z )
-{
-	platform_math_insider :: num_fract_value_get ( vertex . _x , x ) ;
-	platform_math_insider :: num_fract_value_get ( vertex . _y , y ) ;
-	platform_math_insider :: num_fract_value_get ( vertex . _z , z ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: set_vertex_tex_coord ( vertex_data & vertex , num_fract u , num_fract v )
-{
-	platform_math_insider :: num_fract_value_get ( vertex . _u , u ) ;
-	platform_math_insider :: num_fract_value_get ( vertex . _v , v ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: set_vertex_color 
     ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a )
 {
@@ -681,8 +653,11 @@ void shy_platform_render_directx :: mapped_vertex_buffer_element
     , so_called_type_platform_math_num_whole index
     )
 {
+    so_called_type_platform_render_directx_vertex_data * mapped_vertices = 0 ;
+    mapped_vertices = ( so_called_type_platform_render_directx_vertex_data * ) data . _data ;
     so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
+    so_called_platform_pointer :: bind ( ptr , mapped_vertices [ index_int ] ) ;
 }
 
 void shy_platform_render_directx :: set_vertex_position 
@@ -692,9 +667,9 @@ void shy_platform_render_directx :: set_vertex_position
     , so_called_type_platform_math_num_fract z 
     )
 {
-    so_called_platform_math_insider :: num_fract_value_get ( vertex . _position [ 0 ] , x ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( vertex . _position [ 1 ] , y ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( vertex . _position [ 2 ] , z ) ;
+	so_called_platform_math_insider :: num_fract_value_get ( vertex . _x , x ) ;
+	so_called_platform_math_insider :: num_fract_value_get ( vertex . _y , y ) ;
+	so_called_platform_math_insider :: num_fract_value_get ( vertex . _z , z ) ;
 }
 
 void shy_platform_render_directx :: set_vertex_tex_coord 
@@ -703,8 +678,8 @@ void shy_platform_render_directx :: set_vertex_tex_coord
     , so_called_type_platform_math_num_fract v 
     )
 {
-    so_called_platform_math_insider :: num_fract_value_get ( vertex . _tex_coord [ 0 ] , u ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( vertex . _tex_coord [ 1 ] , v ) ;
+	so_called_platform_math_insider :: num_fract_value_get ( vertex . _u , u ) ;
+	so_called_platform_math_insider :: num_fract_value_get ( vertex . _v , v ) ;
 }
 
 void shy_platform_render_directx :: set_vertex_color 
