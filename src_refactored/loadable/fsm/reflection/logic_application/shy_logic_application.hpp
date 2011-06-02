@@ -4,17 +4,20 @@
         , & so_called_common_##system##_fsm_binding \
         )
 
-#define shy_bind_action_helper(action) \
+#define shy_bind_system_action_helper(system,action) \
     so_called_loadable_fsm_binder :: bind_action \
         ( #action \
-        , & so_called_common_logic_application_fsm_actions :: action \
+        , & so_called_common_##system##_fsm_actions :: action \
         )
 
-#define shy_bind_input_helper(input) \
+#define shy_bind_system_input_helper(system,input) \
     so_called_loadable_fsm_binder :: bind_input \
         ( #input \
-        , reinterpret_cast < so_called_type_loadable_fsm_content_input_binding > ( & so_called_type_common_logic_application_fsm_inputs :: input ) \
+        , reinterpret_cast < so_called_type_loadable_fsm_content_input_binding > ( & so_called_type_common_##system##_fsm_inputs :: input ) \
         )
+
+#define shy_bind_action_helper(action) shy_bind_system_action_helper ( logic_application , action )
+#define shy_bind_input_helper(input) shy_bind_system_input_helper ( logic_application , input )
 
 void shy_loadable_fsm_reflection_logic_application :: prepare ( )
 {
@@ -61,8 +64,3 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_bind_input_helper ( stage_title_disabled ) ;
     shy_bind_input_helper ( stage_title_enabled ) ;
 }
-
-#undef shy_bind_system_helper
-#undef shy_bind_action_helper
-#undef shy_bind_input_helper
-
