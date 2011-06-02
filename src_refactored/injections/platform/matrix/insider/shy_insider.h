@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/platform/matrix/insider/shy_insider_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/platform/matrix/insider/shy_insider_injections.h"
+#endif
+
 #endif
