@@ -3,6 +3,8 @@
 
 #define so_called_lib_directx_D3DBLEND_INVSRCALPHA D3DBLEND_INVSRCALPHA
 #define so_called_lib_directx_D3DBLEND_SRCALPHA D3DBLEND_SRCALPHA
+#define so_called_lib_directx_D3DCLEAR_TARGET D3DCLEAR_TARGET
+#define so_called_lib_directx_D3DCLEAR_ZBUFFER D3DCLEAR_ZBUFFER
 #define so_called_lib_directx_D3DCOLOR_ARGB D3DCOLOR_ARGB
 #define so_called_lib_directx_D3DCULL_NONE
 #define so_called_lib_directx_D3DFMT_A8R8G8B8 D3DFMT_A8R8G8B8

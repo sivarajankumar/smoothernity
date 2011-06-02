@@ -1,97 +1,4 @@
 template < typename platform_insider >
-template < typename texels_array >
-inline void shy_win_platform_render < platform_insider > :: load_texture_subdata 
-    ( render_texture_id arg_texture_id 
-    , num_whole x_offset 
-    , num_whole y_offset 
-    , num_whole width
-    , num_whole height
-    , const texels_array & data 
-    )
-{
-    HRESULT hr ;
-    D3DLOCKED_RECT locked_rect ;
-    RECT d3d_rect ;
-    int x_offset_int = 0 ;
-    int y_offset_int = 0 ;
-    int width_int = 0 ;
-    int height_int = 0 ;
-    int ogl_left = 0 ;
-    int ogl_right = 0 ;
-    int ogl_bottom = 0 ;
-    int ogl_top = 0 ;
-    const texel_data * data_ptr = 0 ;
-
-    platform_math_insider :: num_whole_value_get ( x_offset_int , x_offset ) ;
-    platform_math_insider :: num_whole_value_get ( y_offset_int , y_offset ) ;
-    platform_math_insider :: num_whole_value_get ( width_int , width ) ;
-    platform_math_insider :: num_whole_value_get ( height_int , height ) ;
-    platform_static_array_insider :: elements_ptr ( data_ptr , data ) ;
-
-    ogl_left = x_offset_int ;
-    ogl_bottom = y_offset_int ;
-    ogl_right = x_offset_int + width_int - 1 ;
-    ogl_top = y_offset_int + height_int - 1 ;
-
-    d3d_rect . left = x_offset_int ;
-    d3d_rect . right = x_offset_int + width_int - 1 ;
-    d3d_rect . top = y_offset_int ;
-    d3d_rect . bottom = y_offset_int + height_int - 1 ;
-
-    V ( arg_texture_id . _texture -> LockRect ( 0 , & locked_rect , & d3d_rect , 0 ) ) ;
-    for ( int y = 0 ; y < height_int ; y ++ )
-    {
-        int d3d_y = y + y_offset_int ;
-        char * dst_data_ptr = 0 ;
-        const texel_data * src_data_ptr = 0 ;
-        dst_data_ptr = ( char * ) locked_rect . pBits ;
-        dst_data_ptr += locked_rect . Pitch * d3d_y ;
-        dst_data_ptr += x_offset_int * sizeof ( texel_data ) ;
-        src_data_ptr = data_ptr ;
-        src_data_ptr += width_int * y ;
-        memcpy ( dst_data_ptr , src_data_ptr , width_int * sizeof ( texel_data ) ) ;
-    }
-    V ( arg_texture_id . _texture -> UnlockRect ( 0 ) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: create_texture_resource_id ( texture_resource_id & resource_id , num_whole resource_index )
-{
-}
-
-template < typename platform_insider >
-template < typename texels_array >
-inline void shy_win_platform_render < platform_insider > :: load_texture_resource
-    ( texture_resource_id resource_id , num_whole size_pow2_base , texels_array & data )
-{
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: texture_loader_ready ( num_whole & is_ready )
-{
-    platform_math_insider :: num_whole_value_set ( is_ready , true ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: clear_screen ( num_fract r , num_fract g , num_fract b )
-{
-    HRESULT hr ;
-    float r_float = 0.0f ;
-    float g_float = 0.0f ;
-    float b_float = 0.0f ;
-    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
-    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
-    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
-	D3DCOLOR color = D3DCOLOR_ARGB \
-        ( 0 
-        , int ( r_float * 255.0f ) 
-        , int ( g_float * 255.0f ) 
-        , int ( b_float * 255.0f ) 
-        ) ;
-	V ( DXUTGetD3D9Device ( ) -> Clear ( 0 , NULL , D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER , color , 1.0f , 0 ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: projection_frustum 
     ( num_fract left 
     , num_fract right 
@@ -720,12 +627,29 @@ void shy_platform_render_directx :: clear_screen
     , so_called_type_platform_math_num_fract b 
     )
 {
-    so_called_lib_std_float r_float ;
-    so_called_lib_std_float g_float ;
-    so_called_lib_std_float b_float ;
+    so_called_lib_directx_HRESULT hr ;
+    so_called_lib_std_float r_float = 0 ;
+    so_called_lib_std_float g_float = 0 ;
+    so_called_lib_std_float b_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( r_float , r ) ;
     so_called_platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     so_called_platform_math_insider :: num_fract_value_get ( b_float , b ) ;
+	so_called_lib_directx_D3DCOLOR color = so_called_lib_directx_D3DCOLOR_ARGB \
+        ( 0 
+        , so_called_lib_std_int32_t ( r_float * so_called_lib_std_float ( 255 ) ) 
+        , so_called_lib_std_int32_t ( g_float * so_called_lib_std_float ( 255 ) ) 
+        , so_called_lib_std_int32_t ( b_float * so_called_lib_std_float ( 255 ) ) 
+        ) ;
+	so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> Clear 
+            ( 0 
+            , 0 
+            , so_called_lib_directx_D3DCLEAR_TARGET | so_called_lib_directx_D3DCLEAR_ZBUFFER 
+            , color 
+            , 1
+            , 0 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: projection_frustum 
