@@ -1,20 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: draw_triangle_fan
-    ( render_vertex_buffer_id vertices_buffer 
-    , render_index_buffer_id indices_buffer
-    , num_whole indices_count
-    )
-{
-	HRESULT hr ;
-    int int_indices_count = 0 ;
-    platform_math_insider :: num_whole_value_get ( int_indices_count , indices_count ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetStreamSource ( 0 , vertices_buffer . _buffer , 0 , sizeof ( vertex_data ) ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetFVF ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetIndices ( indices_buffer . _buffer ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> DrawIndexedPrimitive ( D3DPT_TRIANGLEFAN , 0 , 0 , int_indices_count , 0 , int_indices_count - 2 ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: get_aspect_width ( num_fract & result )
 {
     platform_math_insider :: num_fract_value_set ( result , _platform_insider -> render_insider . aspect_width ) ;
@@ -812,8 +796,37 @@ void shy_platform_render_directx :: draw_triangle_fan
     , so_called_type_platform_math_num_whole indices_count 
     )
 {
-    so_called_lib_std_int32_t indices_count_int = 0 ;
-    so_called_platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
+	so_called_lib_directx_HRESULT hr ;
+    so_called_lib_std_int32_t int_indices_count = 0 ;
+    so_called_platform_math_insider :: num_whole_value_get ( int_indices_count , indices_count ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetStreamSource 
+            ( 0 
+            , vertices_buffer . _buffer 
+            , 0 
+            , sizeof ( so_called_type_platform_render_directx_vertex_data ) 
+            ) 
+        ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetFVF 
+            ( so_called_lib_directx_D3DFVF_XYZ 
+            | so_called_lib_directx_D3DFVF_DIFFUSE 
+            | so_called_lib_directx_D3DFVF_TEX1 
+            ) 
+        ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetIndices ( indices_buffer . _buffer ) 
+        ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> DrawIndexedPrimitive 
+            ( so_called_lib_directx_D3DPT_TRIANGLEFAN 
+            , 0 
+            , 0 
+            , int_indices_count 
+            , 0 
+            , int_indices_count - 2 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: get_aspect_width ( so_called_type_platform_math_num_fract & result )
