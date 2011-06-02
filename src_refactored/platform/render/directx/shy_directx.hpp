@@ -1,24 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: set_vertex_color 
-    ( vertex_data & vertex , num_fract r , num_fract g , num_fract b , num_fract a )
-{
-    float float_r = 0.0f ;
-    float float_g = 0.0f ;
-    float float_b = 0.0f ;
-    float float_a = 0.0f ;
-    platform_math_insider :: num_fract_value_get ( float_r , r ) ;
-    platform_math_insider :: num_fract_value_get ( float_g , g ) ;
-    platform_math_insider :: num_fract_value_get ( float_b , b ) ;
-    platform_math_insider :: num_fract_value_get ( float_a , a ) ;
-	vertex . _color = D3DCOLOR_ARGB \
-        ( int ( float_a * 255.0f ) 
-        , int ( float_r * 255.0f ) 
-        , int ( float_g * 255.0f )
-        , int ( float_b * 255.0f )
-        ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: create_index_buffer 
     ( render_index_buffer_id & arg_buffer_id , num_whole elements )
 {
@@ -690,15 +670,20 @@ void shy_platform_render_directx :: set_vertex_color
     , so_called_type_platform_math_num_fract a 
     )
 {
-    so_called_lib_std_float r_float ;
-    so_called_lib_std_float g_float ;
-    so_called_lib_std_float b_float ;
-    so_called_lib_std_float a_float ;
-
-    so_called_platform_math_insider :: num_fract_value_get ( r_float , r ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( g_float , g ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( b_float , b ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( a_float , a ) ;
+    so_called_lib_std_float float_r = 0 ;
+    so_called_lib_std_float float_g = 0 ;
+    so_called_lib_std_float float_b = 0 ;
+    so_called_lib_std_float float_a = 0 ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_r , r ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_g , g ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_b , b ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( float_a , a ) ;
+	vertex . _color = so_called_lib_directx_D3DCOLOR_ARGB \
+        ( so_called_lib_std_int32_t ( float_a * so_called_lib_std_float ( 255 ) ) 
+        , so_called_lib_std_int32_t ( float_r * so_called_lib_std_float ( 255 ) ) 
+        , so_called_lib_std_int32_t ( float_g * so_called_lib_std_float ( 255 ) )
+        , so_called_lib_std_int32_t ( float_b * so_called_lib_std_float ( 255 ) )
+        ) ;
 }
 
 void shy_platform_render_directx :: create_index_buffer 
