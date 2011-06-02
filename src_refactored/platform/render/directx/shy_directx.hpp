@@ -1,21 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: create_index_buffer 
-    ( render_index_buffer_id & arg_buffer_id , num_whole elements )
-{
-	HRESULT hr ;
-    int int_elements = 0 ;
-    platform_math_insider :: num_whole_value_get ( int_elements , elements ) ;
-	V ( DXUTGetD3D9Device ( ) -> CreateIndexBuffer
-		( sizeof ( index_data ) * int_elements
-		, D3DUSAGE_WRITEONLY
-		, D3DFMT_INDEX32
-		, D3DPOOL_MANAGED
-		, & arg_buffer_id . _buffer 
-		, 0
-		) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: map_index_buffer ( render_index_buffer_mapped_data & data , render_index_buffer_id arg_buffer_id )
 {
 	HRESULT hr ;
@@ -691,8 +674,19 @@ void shy_platform_render_directx :: create_index_buffer
     , so_called_type_platform_math_num_whole elements 
     )
 {
-    so_called_lib_std_int32_t elements_int = 0 ;
-    so_called_platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
+	so_called_lib_directx_HRESULT hr ;
+    so_called_lib_std_int32_t int_elements = 0 ;
+    so_called_platform_math_insider :: num_whole_value_get ( int_elements , elements ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> CreateIndexBuffer
+            ( sizeof ( index_data ) * int_elements
+            , so_called_lib_directx_D3DUSAGE_WRITEONLY
+            , so_called_lib_directx_D3DFMT_INDEX32
+            , so_called_lib_directx_D3DPOOL_MANAGED
+            , & arg_buffer_id . _buffer 
+            , 0
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: map_index_buffer

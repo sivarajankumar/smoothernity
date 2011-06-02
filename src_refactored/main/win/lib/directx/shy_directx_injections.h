@@ -8,6 +8,7 @@
 #define so_called_lib_directx_D3DCOLOR_ARGB D3DCOLOR_ARGB
 #define so_called_lib_directx_D3DCULL_NONE
 #define so_called_lib_directx_D3DFMT_A8R8G8B8 D3DFMT_A8R8G8B8
+#define so_called_lib_directx_D3DFMT_INDEX32 D3DFMT_INDEX32
 #define so_called_lib_directx_D3DFOG_LINEAR D3DFOG_LINEAR
 #define so_called_lib_directx_D3DFVF_DIFFUSE D3DFVF_DIFFUSE
 #define so_called_lib_directx_D3DFVF_TEX1 D3DFVF_TEX1
