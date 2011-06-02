@@ -1,62 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: disable_texturing ( )
-{
-    HRESULT hr ;
-    V ( DXUTGetD3D9Device ( ) ->SetTexture ( 0 , 0 ) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: texture_mode_modulate ( )
-{
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: fog_disable ( )
-{
-	HRESULT hr ;
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGENABLE , FALSE ) ) ;
-}
-
-template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: fog_linear 
-    ( num_fract znear 
-    , num_fract zfar 
-    , num_fract r 
-    , num_fract g 
-    , num_fract b 
-    , num_fract a 
-    )
-{
-	HRESULT hr ;
-    D3DCOLOR color ;
-    float r_float = 0.0f ;
-    float g_float = 0.0f ;
-    float b_float = 0.0f ;
-    float a_float = 0.0f ;
-    float znear_float = 0.0f ;
-    float zfar_float = 0.0f ;
-
-    platform_math_insider :: num_fract_value_get ( r_float , r ) ;
-    platform_math_insider :: num_fract_value_get ( g_float , g ) ;
-    platform_math_insider :: num_fract_value_get ( b_float , b ) ;
-    platform_math_insider :: num_fract_value_get ( a_float , a ) ;
-    platform_math_insider :: num_fract_value_get ( znear_float , znear ) ;
-    platform_math_insider :: num_fract_value_get ( zfar_float , zfar ) ;
-	color = D3DCOLOR_ARGB \
-        ( int ( a_float * 255.0f )
-        , int ( r_float * 255.0f ) 
-        , int ( g_float * 255.0f ) 
-        , int ( b_float * 255.0f ) 
-        ) ;
-
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGENABLE , TRUE ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGCOLOR , color ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGVERTEXMODE , D3DFOG_LINEAR ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGSTART , * ( DWORD * ) ( & znear_float ) ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetRenderState ( D3DRS_FOGEND , * ( DWORD * ) ( & zfar_float ) ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: create_texture_id ( render_texture_id & arg_texture_id , num_whole size_pow2_base )
 {
     HRESULT hr ;
@@ -630,6 +572,10 @@ void shy_platform_render_directx :: enable_texturing ( )
 
 void shy_platform_render_directx :: disable_texturing ( )
 {
+    so_called_lib_directx_HRESULT hr ;
+    so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetTexture ( 0 , 0 ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: texture_mode_modulate ( )
@@ -638,6 +584,13 @@ void shy_platform_render_directx :: texture_mode_modulate ( )
 
 void shy_platform_render_directx :: fog_disable ( )
 {
+	so_called_lib_directx_HRESULT hr ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetRenderState
+            ( so_called_lib_directx_D3DRS_FOGENABLE 
+            , so_called_lib_directx_FALSE 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: fog_linear 
@@ -662,6 +615,46 @@ void shy_platform_render_directx :: fog_linear
     so_called_platform_math_insider :: num_fract_value_get ( a_float , a ) ;
     so_called_platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
     so_called_platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
+
+	so_called_lib_directx_HRESULT hr ;
+    so_called_lib_directx_D3DCOLOR color ;
+	color = so_called_lib_directx_D3DCOLOR_ARGB \
+        ( so_called_lib_int32_t ( a_float * so_called_lib_float ( 255 ) )
+        , so_called_lib_int32_t ( r_float * so_called_lib_float ( 255 ) ) 
+        , so_called_lib_int32_t ( g_float * so_called_lib_float ( 255 ) ) 
+        , so_called_lib_int32_t ( b_float * so_called_lib_float ( 255 ) ) 
+        ) ;
+
+	so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetRenderState
+            ( so_called_lib_directx_D3DRS_FOGENABLE
+            , so_called_lib_directx_TRUE
+            )
+        ) ;
+	so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetRenderState
+            ( so_called_lib_directx_D3DRS_FOGCOLOR 
+            , color 
+            ) 
+        ) ;
+	so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetRenderState
+            ( so_called_lib_directx_D3DRS_FOGVERTEXMODE
+            , so_called_lib_directx_D3DFOG_LINEAR
+            )
+        ) ;
+	so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetRenderState
+            ( so_called_lib_directx_D3DRS_FOGSTART 
+            , * ( so_called_lib_directx_DWORD * ) ( & znear_float ) 
+            ) 
+        ) ;
+	so_called_lib_directx_V
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetRenderState
+            ( so_called_lib_directx_D3DRS_FOGEND 
+            , * ( so_called_lib_directx_DWORD * ) ( & zfar_float ) 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: create_texture_id 
