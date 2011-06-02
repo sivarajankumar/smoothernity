@@ -1,10 +1,8 @@
-#ifndef _shy_type_platform_sound_openal_source_id_injections_included
-#define _shy_type_platform_sound_openal_source_id_injections_included
-
-#include "../../../../../injections/lib/openal/shy_openal.h"
+#ifndef _shy_type_platform_sound_directx_source_id_injections_included
+#define _shy_type_platform_sound_directx_source_id_injections_included
 
 #include "./shy_source_id.h"
 
-typedef shy_type_platform_sound_openal_source_id so_called_type_platform_sound_openal_source_id ;
+typedef shy_type_platform_sound_directx_source_id so_called_type_platform_sound_directx_source_id ;
 
 #endif

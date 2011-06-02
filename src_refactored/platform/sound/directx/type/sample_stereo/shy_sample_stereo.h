@@ -1,9 +1,8 @@
-class shy_type_platform_sound_openal_sample_stereo
+class shy_type_platform_sound_directx_sample_stereo
 {
-    friend class shy_platform_sound_openal ;
+    friend class shy_platform_sound_directx ;
 public :
-    shy_type_platform_sound_openal_sample_stereo ( ) ;
+    shy_type_platform_sound_directx_sample_stereo ( ) ;
 private :
-    so_called_lib_openal_ALushort _left_channel_value ;
-    so_called_lib_openal_ALushort _right_channel_value ; 
+    so_called_lib_std_int32_t _dummy ;
 } ;

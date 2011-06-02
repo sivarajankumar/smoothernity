@@ -1,6 +1,6 @@
-class shy_platform_sound_openal
+class shy_platform_sound_directx
 {
-    friend class shy_platform_sound_openal_insider ;
+    friend class shy_platform_sound_directx_insider ;
 
 public :
     static so_called_type_platform_math_const_int_32 mono_sound_samples_per_second = 22050 ;
@@ -43,7 +43,7 @@ private :
 } ;
 
 template < typename samples_array >
-void shy_platform_sound_openal :: create_mono_buffer 
+void shy_platform_sound_directx :: create_mono_buffer 
     ( so_called_type_platform_sound_buffer_id & result
     , const samples_array & samples 
     , so_called_type_platform_math_num_whole samples_count 
@@ -56,7 +56,7 @@ void shy_platform_sound_openal :: create_mono_buffer
 }
     
 template < typename samples_array >
-void shy_platform_sound_openal :: create_stereo_buffer 
+void shy_platform_sound_directx :: create_stereo_buffer 
     ( so_called_type_platform_sound_buffer_id & result
     , const samples_array & samples 
     , so_called_type_platform_math_num_whole samples_count 

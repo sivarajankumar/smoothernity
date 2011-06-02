@@ -1,8 +1,8 @@
-class shy_type_platform_sound_openal_source_id
+class shy_type_platform_sound_directx_source_id
 {
-    friend class shy_platform_sound_openal ;
+    friend class shy_platform_sound_directx ;
 public :
-    shy_type_platform_sound_openal_source_id ( ) ;
+    shy_type_platform_sound_directx_source_id ( ) ;
 private :
-    so_called_lib_openal_ALuint _source_id ;
+    so_called_lib_std_int32_t _dummy ;
 } ;
