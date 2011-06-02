@@ -1,5 +1,5 @@
-#ifndef _shy_macosx_platform_scheduler_injections_included
-#define _shy_macosx_platform_scheduler_injections_included
+#ifndef _shy_win_platform_scheduler_injections_included
+#define _shy_win_platform_scheduler_injections_included
 
 #ifdef shy_scheduling_mode_random
     #include "../../../../platform/scheduler/random/shy_random_injections.h"

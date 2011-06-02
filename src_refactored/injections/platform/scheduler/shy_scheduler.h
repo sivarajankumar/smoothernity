@@ -9,4 +9,8 @@
     #include "../../../main/macosx/platform/scheduler/shy_scheduler_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../main/win/platform/scheduler/shy_scheduler_injections.h"
+#endif
+
 #endif
