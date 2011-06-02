@@ -1,8 +1,8 @@
-class shy_type_platform_render_opengl_vertex_buffer_id
+class shy_type_platform_render_directx_vertex_buffer_id
 {
-    friend class shy_platform_render_opengl ;
+    friend class shy_platform_render_directx ;
 public :
-    shy_type_platform_render_opengl_vertex_buffer_id ( ) ;
+    shy_type_platform_render_directx_vertex_buffer_id ( ) ;
 private :
-    so_called_lib_opengl_GLuint _buffer_id ;
+	so_called_lib_directx_IDirect3DVertexBuffer9 * _buffer ;
 } ;

@@ -55,6 +55,7 @@ typedef DWORD so_called_lib_directx_DWORD ;
 typedef HRESULT so_called_lib_directx_HRESULT ;
 typedef IDirect3DIndexBuffer9 so_called_lib_directx_IDirect3DIndexBuffer9 ;
 typedef IDirect3DTexture9 so_called_lib_directx_IDirect3DTexture9 ; 
+typedef IDirect3DVertexBuffer9 so_called_lib_directx_IDirect3DVertexBuffer9 ;
 typedef LPD3DXMATRIXSTACK so_called_lib_directx_LPD3DXMATRIXSTACK ;
 typedef RECT so_called_lib_directx_RECT ;
 typedef UINT so_called_lib_directx_UINT ;
