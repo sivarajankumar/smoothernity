@@ -20,6 +20,8 @@
 #define so_called_lib_directx_D3DRS_FOGVERTEXMODE D3DRS_FOGVERTEXMODE
 #define so_called_lib_directx_D3DRS_SRCBLEND D3DRS_SRCBLEND 
 #define so_called_lib_directx_D3DRS_ZENABLE D3DRS_ZENABLE
+#define so_called_lib_directx_D3DTS_PROJECTION D3DTS_PROJECTION 
+#define so_called_lib_directx_D3DXMatrixPerspectiveOffCenterRH D3DXMatrixPerspectiveOffCenterRH 
 #define so_called_lib_directx_D3DZB_FALSE D3DZB_FALSE
 #define so_called_lib_directx_D3DZB_TRUE D3DZB_TRUE
 #define so_called_lib_directx_DXUTGetD3D9Device D3DUTGetD3D9Device
@@ -30,6 +32,7 @@
 typedef BYTE so_called_lib_directx_BYTE ;
 typedef D3DCOLOR so_called_lib_directx_D3DCOLOR ;
 typedef D3DLOCKED_RECT so_called_lib_directx_D3DLOCKED_RECT ;
+typedef D3DXMATRIX so_called_lib_directx_D3DXMATRIX ;
 typedef DWORD so_called_lib_directx_DWORD ; 
 typedef HRESULT so_called_lib_directx_HRESULT ;
 typedef RECT so_called_lib_directx_RECT ;
