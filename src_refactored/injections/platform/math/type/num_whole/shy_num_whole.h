@@ -9,4 +9,8 @@
     #include "../../../../../main/macosx/platform/math/type/num_whole/shy_num_whole_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../main/win/platform/math/type/num_whole/shy_num_whole_injections.h"
+#endif
+
 #endif

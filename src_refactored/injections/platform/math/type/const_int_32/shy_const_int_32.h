@@ -9,5 +9,9 @@
     #include "../../../../../main/macosx/platform/math/type/const_int_32/shy_const_int_32_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../main/win/platform/math/type/const_int_32/shy_const_int_32_injections.h"
+#endif
+
 #endif
 
