@@ -9,4 +9,8 @@
     #include "../../../main/macosx/platform/static_assert/shy_static_assert_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../main/win/platform/static_assert/shy_static_assert_injections.h"
+#endif
+
 #endif
