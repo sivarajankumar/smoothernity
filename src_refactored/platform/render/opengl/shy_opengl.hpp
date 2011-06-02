@@ -407,7 +407,7 @@ void shy_platform_render_opengl :: set_index_value ( so_called_type_platform_ren
 {
     so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
-    data . _index = ( GLushort ) index_int ;
+    data . _index = ( so_called_lib_opengl_GLushort ) index_int ;
 }
 
 void shy_platform_render_opengl :: matrix_identity ( )

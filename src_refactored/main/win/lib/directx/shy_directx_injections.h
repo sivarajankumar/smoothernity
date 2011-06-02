@@ -1,0 +1,21 @@
+#ifndef _shy_win_lib_directx_injections_included
+#define _shy_win_lib_directx_injections_included
+
+#define so_called_lib_directx_D3DBLEND_INVSRCALPHA D3DBLEND_INVSRCALPHA
+#define so_called_lib_directx_D3DBLEND_SRCALPHA D3DBLEND_SRCALPHA
+#define so_called_lib_directx_D3DCULL_NONE
+#define so_called_lib_directx_D3DRS_ALPHABLENDENABLE D3DRS_ALPHABLENDENABLE
+#define so_called_lib_directx_D3DRS_CULLMODE D3DRS_CULLMODE
+#define so_called_lib_directx_D3DRS_DESTBLEND D3DRS_DESTBLEND 
+#define so_called_lib_directx_D3DRS_SRCBLEND D3DRS_SRCBLEND 
+#define so_called_lib_directx_D3DRS_ZENABLE D3DRS_ZENABLE
+#define so_called_lib_directx_D3DZB_FALSE D3DZB_FALSE
+#define so_called_lib_directx_D3DZB_TRUE D3DZB_TRUE
+#define so_called_lib_directx_DXUTGetD3D9Device D3DUTGetD3D9Device
+#define so_called_lib_directx_FALSE FALSE
+#define so_called_lib_directx_TRUE TRUE 
+#define so_called_lib_directx_V V
+
+typedef HRESULT so_called_lib_directx_HRESULT ;
+
+#endif
