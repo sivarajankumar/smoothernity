@@ -1,14 +1,4 @@
 template < typename platform_insider >
-inline void shy_win_platform_render < platform_insider > :: matrix_pop ( )
-{
-	HRESULT hr ;
-    V ( _platform_insider -> render_insider . matrix_stack -> Pop ( ) ) ;
-    D3DXMATRIX d3d_matrix ;
-    platform_render_insider :: convert_from_opengl ( d3d_matrix , * _platform_insider -> render_insider . matrix_stack -> GetTop ( ) ) ;
-	V ( DXUTGetD3D9Device ( ) -> SetTransform ( D3DTS_VIEW , & d3d_matrix ) ) ;
-}
-
-template < typename platform_insider >
 inline void shy_win_platform_render < platform_insider > :: draw_triangle_strip 
     ( render_vertex_buffer_id vertices_buffer 
     , render_index_buffer_id indices_buffer
@@ -779,6 +769,18 @@ void shy_platform_render_directx :: matrix_push ( )
 
 void shy_platform_render_directx :: matrix_pop ( )
 {
+	so_called_lib_directx_HRESULT hr ;
+    so_called_lib_directx_V 
+        ( shy_guts :: matrix_stack -> Pop ( ) 
+        ) ;
+    so_called_lib_directx_D3DXMATRIX d3d_matrix ;
+    shy_guts :: convert_from_opengl ( d3d_matrix , * shy_guts :: matrix_stack -> GetTop ( ) ) ;
+	so_called_lib_directx_V 
+        ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> SetTransform 
+            ( so_called_lib_directx_D3DTS_VIEW 
+            , & d3d_matrix 
+            ) 
+        ) ;
 }
 
 void shy_platform_render_directx :: draw_triangle_strip 
