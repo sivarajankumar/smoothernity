@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/lib/std/isspace/shy_isspace_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/lib/std/isspace/shy_isspace_injections.h"
+#endif
+
 #endif

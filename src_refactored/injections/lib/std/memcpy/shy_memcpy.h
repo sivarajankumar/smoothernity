@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/lib/std/memcpy/shy_memcpy_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/lib/std/memcpy/shy_memcpy_injections.h"
+#endif
+
 #endif

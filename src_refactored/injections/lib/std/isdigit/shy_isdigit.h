@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/lib/std/isdigit/shy_isdigit_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/lib/std/isdigit/shy_isdigit_injections.h"
+#endif
+
 #endif

@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/lib/std/map/shy_map_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/lib/std/map/shy_map_injections.h"
+#endif
+
 #endif

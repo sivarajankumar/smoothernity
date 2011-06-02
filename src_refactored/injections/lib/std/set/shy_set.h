@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/lib/std/set/shy_set_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/lib/std/set/shy_set_injections.h"
+#endif
+
 #endif

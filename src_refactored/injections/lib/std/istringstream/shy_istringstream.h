@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/lib/std/istringstream/shy_istringstream_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/lib/std/istringstream/shy_istringstream_injections.h"
+#endif
+
 #endif

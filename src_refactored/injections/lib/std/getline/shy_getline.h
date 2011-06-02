@@ -9,4 +9,8 @@
     #include "../../../../main/macosx/lib/std/getline/shy_getline_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../main/win/lib/std/getline/shy_getline_injections.h"
+#endif
+
 #endif
