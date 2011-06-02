@@ -9,4 +9,8 @@
     #include "../../../main/macosx/platform/conditions/shy_conditions_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../main/win/platform/conditions/shy_conditions_injections.h"
+#endif
+
 #endif
