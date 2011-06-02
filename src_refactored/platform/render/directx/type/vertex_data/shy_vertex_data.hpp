@@ -1,9 +1,9 @@
-shy_type_platform_render_opengl_vertex_data :: shy_type_platform_render_opengl_vertex_data ( )
+shy_type_platform_render_directx_vertex_data :: shy_type_platform_render_directx_vertex_data ( )
+: _x ( so_called_lib_directx_FLOAT ( so_called_platform_consts_insider :: uninitialized_value ) )
+, _y ( so_called_lib_directx_FLOAT ( so_called_platform_consts_insider :: uninitialized_value ) )
+, _z ( so_called_lib_directx_FLOAT ( so_called_platform_consts_insider :: uninitialized_value ) )
+, _color ( so_called_lib_directx_DWORD ( so_called_platform_consts_insider :: uninitialized_value ) )
+, _u ( so_called_lib_directx_FLOAT ( so_called_platform_consts_insider :: uninitialized_value ) )
+, _v ( so_called_lib_directx_FLOAT ( so_called_platform_consts_insider :: uninitialized_value ) )
 {
-    for ( so_called_lib_std_int32_t i = 0 ; i < 3 ; i ++ )
-        _position [ i ] = so_called_platform_consts_insider :: uninitialized_value ;
-    for ( so_called_lib_std_int32_t i = 0 ; i < 2 ; i ++ )
-        _tex_coord [ i ] = so_called_platform_consts_insider :: uninitialized_value ;
-    for ( so_called_lib_std_int32_t i = 0 ; i < 4 ; i ++ )
-        _color [ i ] = ( so_called_lib_opengl_GLubyte ) so_called_platform_consts_insider :: uninitialized_value ;
 }

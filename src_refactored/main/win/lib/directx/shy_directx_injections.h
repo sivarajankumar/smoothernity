@@ -52,6 +52,7 @@ typedef D3DLOCKED_RECT so_called_lib_directx_D3DLOCKED_RECT ;
 typedef D3DVIEWPORT9 so_called_lib_directx_D3DVIEWPORT9 ;
 typedef D3DXMATRIX so_called_lib_directx_D3DXMATRIX ;
 typedef DWORD so_called_lib_directx_DWORD ; 
+typedef FLOAT so_called_lib_directx_FLOAT ;
 typedef HRESULT so_called_lib_directx_HRESULT ;
 typedef IDirect3DIndexBuffer9 so_called_lib_directx_IDirect3DIndexBuffer9 ;
 typedef IDirect3DTexture9 so_called_lib_directx_IDirect3DTexture9 ; 
