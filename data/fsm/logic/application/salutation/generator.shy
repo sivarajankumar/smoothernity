@@ -6,10 +6,19 @@ system logic_application
             to finished
                 if { ( command start ) stage_salutation_disabled }
         state generating
+            to generating_letters
+        state generating_letters
             on entry
-                do logic_salutation_creation_permit
+                do logic_salutation_letters_generate
+            on { logic_application_update }
+                do logic_salutation_update
+            to generating_letters_meshes
+                if { logic_salutation_letters_generate_finished }
+        state generating_letters_meshes
+            on entry
+                do logic_salutation_letters_meshes_generate
             on { logic_application_update }
                 do logic_salutation_update
             to finished
-                if { logic_salutation_created }
+                if { logic_salutation_letters_meshes_generate_finished }
         state finished
