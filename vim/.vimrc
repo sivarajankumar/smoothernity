@@ -7,4 +7,4 @@ set softtabstop=4
 set ruler
 set history=100
 set backspace=indent,eol,start
-
+set laststatus=2
