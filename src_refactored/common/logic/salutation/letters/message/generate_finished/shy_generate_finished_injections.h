@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_salutation_letters_generate_finished_injections_included
+#define _shy_message_common_logic_salutation_letters_generate_finished_injections_included
+
+#include "./shy_generate_finished.h"
+
+typedef shy_message_common_logic_salutation_letters_generate_finished so_called_message_common_logic_salutation_letters_generate_finished ;
+
+#endif

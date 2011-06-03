@@ -39,6 +39,7 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_input ( logic_main_menu_finished ) ;
     shy_guts_bind_input ( logic_salutation_created ) ;
     shy_guts_bind_input ( logic_salutation_finished ) ;
+    shy_guts_bind_input ( logic_salutation_letters_generate_finished ) ;
     shy_guts_bind_input ( logic_salutation_letters_meshes_generate_finished ) ;
     shy_guts_bind_input ( stage_amusement_disabled ) ;
     shy_guts_bind_input ( stage_amusement_enabled ) ;
