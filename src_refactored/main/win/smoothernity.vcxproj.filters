@@ -14,6 +14,9 @@
     <Filter Include="common">
       <UniqueIdentifier>{0789382a-aaf8-4cac-9b73-2100f895f648}</UniqueIdentifier>
     </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{28bbf3e7-8192-4ca2-8f0d-4b3f978b5a78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -5957,6 +5960,141 @@
     <ClInclude Include="..\..\common\sender\video_mode_changed\shy_video_mode_changed_injections.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="platform\conditions\shy_conditions_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\consts\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\consts\shy_consts_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\consts\shy_consts_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\shy_math_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\type\const_int_32\shy_const_int_32_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\type\num_fract\shy_num_fract_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\type\num_whole\shy_num_whole_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\matrix\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\matrix\shy_matrix_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\matrix\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\mouse\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\mouse\shy_mouse_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\pointer\shy_pointer_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\pointer\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\shy_render_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\texture_loader\shy_texture_loader_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\index_data\shy_index_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\texel_data\shy_texel_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\texture_id\shy_texture_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\vertex_data\shy_vertex_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\scheduler\shy_scheduler_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\loader\shy_loader_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\shy_sound_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\buffer_id\shy_buffer_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\sample_mono\shy_sample_mono_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\source_id\shy_source_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_array\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_array\shy_static_array_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_array\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_assert\shy_static_assert_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\touch\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\touch\shy_touch_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\vector\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\vector\shy_vector_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\vector\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="smoothernity.rc">
@@ -7254,6 +7392,114 @@
     </ClCompile>
     <ClCompile Include="..\..\common\sender\video_mode_changed\shy_video_mode_changed_injections.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\conditions\shy_conditions_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\consts\shy_consts_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\shy_math_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\type\num_fract\shy_num_fract_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\type\num_whole\shy_num_whole_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\matrix\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\matrix\shy_matrix_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\matrix\type\data\shy_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\mouse\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\mouse\shy_mouse_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\shy_render_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\texture_loader\shy_texture_loader_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\index_data\shy_index_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\texel_data\shy_texel_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\texture_id\shy_texture_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\vertex_data\shy_vertex_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\scheduler\shy_scheduler_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\loader\shy_loader_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\shy_sound_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\buffer_id\shy_buffer_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\sample_mono\shy_sample_mono_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\source_id\shy_source_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\touch\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\touch\shy_touch_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\vector\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\vector\shy_vector_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\vector\type\data\shy_data_injections.cpp">
+      <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

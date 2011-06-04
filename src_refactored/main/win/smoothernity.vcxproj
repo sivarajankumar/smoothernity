@@ -77,7 +77,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>shy_build_development;shy_build_loadable_way;shy_build_for_win;shy_scheduling_mode_random;WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -105,7 +105,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>shy_build_static_way;shy_build_for_win;shy_scheduling_mode_direct_call;WIN32;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -113,7 +113,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>DXUT.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -2143,6 +2143,51 @@
     <ClInclude Include="..\..\facade\static\shy_static.hpp" />
     <ClInclude Include="..\..\facade\static\shy_static_injections.h" />
     <ClInclude Include="..\..\facade\static\shy_static_injections.hpp" />
+    <ClInclude Include="platform\conditions\shy_conditions_injections.h" />
+    <ClInclude Include="platform\consts\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\consts\shy_consts_injections.h" />
+    <ClInclude Include="platform\math\consts\shy_consts_injections.h" />
+    <ClInclude Include="platform\math\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\math\shy_math_injections.h" />
+    <ClInclude Include="platform\math\type\const_int_32\shy_const_int_32_injections.h" />
+    <ClInclude Include="platform\math\type\num_fract\shy_num_fract_injections.h" />
+    <ClInclude Include="platform\math\type\num_whole\shy_num_whole_injections.h" />
+    <ClInclude Include="platform\matrix\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\matrix\shy_matrix_injections.h" />
+    <ClInclude Include="platform\matrix\type\data\shy_data_injections.h" />
+    <ClInclude Include="platform\mouse\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\mouse\shy_mouse_injections.h" />
+    <ClInclude Include="platform\pointer\shy_pointer_injections.h" />
+    <ClInclude Include="platform\pointer\type\data\shy_data_injections.h" />
+    <ClInclude Include="platform\render\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\render\shy_render_injections.h" />
+    <ClInclude Include="platform\render\texture_loader\shy_texture_loader_injections.h" />
+    <ClInclude Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.h" />
+    <ClInclude Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.h" />
+    <ClInclude Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.h" />
+    <ClInclude Include="platform\render\type\index_data\shy_index_data_injections.h" />
+    <ClInclude Include="platform\render\type\texel_data\shy_texel_data_injections.h" />
+    <ClInclude Include="platform\render\type\texture_id\shy_texture_id_injections.h" />
+    <ClInclude Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.h" />
+    <ClInclude Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.h" />
+    <ClInclude Include="platform\render\type\vertex_data\shy_vertex_data_injections.h" />
+    <ClInclude Include="platform\scheduler\shy_scheduler_injections.h" />
+    <ClInclude Include="platform\sound\loader\shy_loader_injections.h" />
+    <ClInclude Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.h" />
+    <ClInclude Include="platform\sound\shy_sound_injections.h" />
+    <ClInclude Include="platform\sound\type\buffer_id\shy_buffer_id_injections.h" />
+    <ClInclude Include="platform\sound\type\sample_mono\shy_sample_mono_injections.h" />
+    <ClInclude Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.h" />
+    <ClInclude Include="platform\sound\type\source_id\shy_source_id_injections.h" />
+    <ClInclude Include="platform\static_array\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\static_array\shy_static_array_injections.h" />
+    <ClInclude Include="platform\static_array\type\data\shy_data_injections.h" />
+    <ClInclude Include="platform\static_assert\shy_static_assert_injections.h" />
+    <ClInclude Include="platform\touch\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\touch\shy_touch_injections.h" />
+    <ClInclude Include="platform\vector\insider\shy_insider_injections.h" />
+    <ClInclude Include="platform\vector\shy_vector_injections.h" />
+    <ClInclude Include="platform\vector\type\data\shy_data_injections.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTDevice11.h" />
@@ -2583,6 +2628,42 @@
     <ClCompile Include="DXUT\Core\DXUTDevice11.cpp" />
     <ClCompile Include="DXUT\Core\DXUTDevice9.cpp" />
     <ClCompile Include="DXUT\Core\DXUTmisc.cpp" />
+    <ClCompile Include="platform\conditions\shy_conditions_injections.cpp" />
+    <ClCompile Include="platform\math\consts\shy_consts_injections.cpp" />
+    <ClCompile Include="platform\math\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\math\shy_math_injections.cpp" />
+    <ClCompile Include="platform\math\type\num_fract\shy_num_fract_injections.cpp" />
+    <ClCompile Include="platform\math\type\num_whole\shy_num_whole_injections.cpp" />
+    <ClCompile Include="platform\matrix\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\matrix\shy_matrix_injections.cpp" />
+    <ClCompile Include="platform\matrix\type\data\shy_data_injections.cpp" />
+    <ClCompile Include="platform\mouse\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\mouse\shy_mouse_injections.cpp" />
+    <ClCompile Include="platform\render\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\render\shy_render_injections.cpp" />
+    <ClCompile Include="platform\render\texture_loader\shy_texture_loader_injections.cpp" />
+    <ClCompile Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.cpp" />
+    <ClCompile Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.cpp" />
+    <ClCompile Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.cpp" />
+    <ClCompile Include="platform\render\type\index_data\shy_index_data_injections.cpp" />
+    <ClCompile Include="platform\render\type\texel_data\shy_texel_data_injections.cpp" />
+    <ClCompile Include="platform\render\type\texture_id\shy_texture_id_injections.cpp" />
+    <ClCompile Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.cpp" />
+    <ClCompile Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.cpp" />
+    <ClCompile Include="platform\render\type\vertex_data\shy_vertex_data_injections.cpp" />
+    <ClCompile Include="platform\scheduler\shy_scheduler_injections.cpp" />
+    <ClCompile Include="platform\sound\loader\shy_loader_injections.cpp" />
+    <ClCompile Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.cpp" />
+    <ClCompile Include="platform\sound\shy_sound_injections.cpp" />
+    <ClCompile Include="platform\sound\type\buffer_id\shy_buffer_id_injections.cpp" />
+    <ClCompile Include="platform\sound\type\sample_mono\shy_sample_mono_injections.cpp" />
+    <ClCompile Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.cpp" />
+    <ClCompile Include="platform\sound\type\source_id\shy_source_id_injections.cpp" />
+    <ClCompile Include="platform\touch\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\touch\shy_touch_injections.cpp" />
+    <ClCompile Include="platform\vector\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\vector\shy_vector_injections.cpp" />
+    <ClCompile Include="platform\vector\type\data\shy_data_injections.cpp" />
     <ClCompile Include="shy_win_application.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
