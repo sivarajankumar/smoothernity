@@ -19,7 +19,7 @@ void shy_platform_render_directx :: init ( )
 	so_called_lib_directx_V 
         ( so_called_lib_directx_D3DXCreateMatrixStack 
             ( 0 
-            , & matrix_stack 
+            , & shy_guts :: matrix_stack 
             ) 
         ) ;
 	so_called_lib_directx_V 
