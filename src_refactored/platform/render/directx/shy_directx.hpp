@@ -69,7 +69,7 @@ void shy_platform_render_directx :: init ( )
 void shy_platform_render_directx :: done ( )
 {
     so_called_lib_directx_HRESULT hr ;
-    so_called_lib_directx_V ( matrix_stack -> Release ( ) ) ;
+    so_called_lib_directx_V ( shy_guts :: matrix_stack -> Release ( ) ) ;
 }
 
 void shy_platform_render_directx :: _load_texture_subdata 
@@ -93,11 +93,10 @@ void shy_platform_render_directx :: _load_texture_subdata
     so_called_lib_std_int32_t ogl_bottom = 0 ;
     so_called_lib_std_int32_t ogl_top = 0 ;
 
-    platform_math_insider :: num_whole_value_get ( x_offset_int , x_offset ) ;
-    platform_math_insider :: num_whole_value_get ( y_offset_int , y_offset ) ;
-    platform_math_insider :: num_whole_value_get ( width_int , width ) ;
-    platform_math_insider :: num_whole_value_get ( height_int , height ) ;
-    platform_static_array_insider :: elements_ptr ( data_ptr , data ) ;
+    so_called_platform_math_insider :: num_whole_value_get ( x_offset_int , x_offset ) ;
+    so_called_platform_math_insider :: num_whole_value_get ( y_offset_int , y_offset ) ;
+    so_called_platform_math_insider :: num_whole_value_get ( width_int , width ) ;
+    so_called_platform_math_insider :: num_whole_value_get ( height_int , height ) ;
 
     ogl_left = x_offset_int ;
     ogl_bottom = y_offset_int ;
@@ -245,23 +244,23 @@ void shy_platform_render_directx :: fog_linear
     so_called_lib_std_float g_float ;
     so_called_lib_std_float b_float ;
     so_called_lib_std_float a_float ;
-    so_called_lib_std_float near_float ;
-    so_called_lib_std_float far_float ;
+    so_called_lib_std_float znear_float ;
+    so_called_lib_std_float zfar_float ;
 
     so_called_platform_math_insider :: num_fract_value_get ( r_float , r ) ;
     so_called_platform_math_insider :: num_fract_value_get ( g_float , g ) ;
     so_called_platform_math_insider :: num_fract_value_get ( b_float , b ) ;
     so_called_platform_math_insider :: num_fract_value_get ( a_float , a ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
-    so_called_platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( znear_float , znear ) ;
+    so_called_platform_math_insider :: num_fract_value_get ( zfar_float , zfar ) ;
 
 	so_called_lib_directx_HRESULT hr ;
     so_called_lib_directx_D3DCOLOR color ;
 	color = so_called_lib_directx_D3DCOLOR_ARGB \
-        ( so_called_lib_int32_t ( a_float * so_called_lib_float ( 255 ) )
-        , so_called_lib_int32_t ( r_float * so_called_lib_float ( 255 ) ) 
-        , so_called_lib_int32_t ( g_float * so_called_lib_float ( 255 ) ) 
-        , so_called_lib_int32_t ( b_float * so_called_lib_float ( 255 ) ) 
+        ( so_called_lib_std_int32_t ( a_float * so_called_lib_std_float ( 255 ) )
+        , so_called_lib_std_int32_t ( r_float * so_called_lib_std_float ( 255 ) ) 
+        , so_called_lib_std_int32_t ( g_float * so_called_lib_std_float ( 255 ) ) 
+        , so_called_lib_std_int32_t ( b_float * so_called_lib_std_float ( 255 ) ) 
         ) ;
 
 	so_called_lib_directx_V

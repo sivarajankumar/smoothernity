@@ -8,7 +8,7 @@
 #define so_called_lib_directx_D3DCLEAR_TARGET D3DCLEAR_TARGET
 #define so_called_lib_directx_D3DCLEAR_ZBUFFER D3DCLEAR_ZBUFFER
 #define so_called_lib_directx_D3DCOLOR_ARGB D3DCOLOR_ARGB
-#define so_called_lib_directx_D3DCULL_NONE
+#define so_called_lib_directx_D3DCULL_NONE D3DCULL_NONE
 #define so_called_lib_directx_D3DFMT_A8R8G8B8 D3DFMT_A8R8G8B8
 #define so_called_lib_directx_D3DFMT_INDEX32 D3DFMT_INDEX32
 #define so_called_lib_directx_D3DFOG_LINEAR D3DFOG_LINEAR
@@ -43,7 +43,7 @@
 #define so_called_lib_directx_D3DXMatrixPerspectiveOffCenterRH D3DXMatrixPerspectiveOffCenterRH 
 #define so_called_lib_directx_D3DZB_FALSE D3DZB_FALSE
 #define so_called_lib_directx_D3DZB_TRUE D3DZB_TRUE
-#define so_called_lib_directx_DXUTGetD3D9Device D3DUTGetD3D9Device
+#define so_called_lib_directx_DXUTGetD3D9Device DXUTGetD3D9Device
 #define so_called_lib_directx_FALSE FALSE
 #define so_called_lib_directx_TRUE TRUE 
 #define so_called_lib_directx_V V
