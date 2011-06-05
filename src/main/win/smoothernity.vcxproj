@@ -127,7 +127,6 @@
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
       <TreatWarningAsError>true</TreatWarningAsError>
       <ForcedIncludeFiles>DXUT.h</ForcedIncludeFiles>
-      <AdditionalOptions>/MP10 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
