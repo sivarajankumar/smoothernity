@@ -2,7 +2,7 @@
 #define _shy_injections_lib_std_cosf_included
 
 #ifdef shy_build_for_iphone
-    #include "../../../../main/iphone/lib/std/char/shy_cosf_injections.h"
+    #include "../../../../main/iphone/lib/std/cosf/shy_cosf_injections.h"
 #endif
 
 #ifdef shy_build_for_macosx
