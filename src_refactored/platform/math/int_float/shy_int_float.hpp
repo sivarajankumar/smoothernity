@@ -1,11 +1,11 @@
 void shy_platform_math_int_float :: sin ( so_called_type_platform_math_int_float_num_fract & result , so_called_type_platform_math_int_float_num_fract a )
 {
-    result . _value = sinf ( a . _value ) ;
+    result . _value = so_called_lib_std_sinf ( a . _value ) ;
 }
 
 void shy_platform_math_int_float :: cos ( so_called_type_platform_math_int_float_num_fract & result , so_called_type_platform_math_int_float_num_fract a )
 {
-    result . _value = cosf ( a . _value ) ;
+    result . _value = so_called_lib_std_cosf ( a . _value ) ;
 }
 
 void shy_platform_math_int_float :: add_to_whole ( so_called_type_platform_math_int_float_num_whole & a , so_called_type_platform_math_int_float_num_whole b )

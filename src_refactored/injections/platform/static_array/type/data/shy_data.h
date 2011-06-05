@@ -9,4 +9,8 @@
     #include "../../../../../main/macosx/platform/static_array/type/data/shy_data_injections.h"
 #endif
 
+#ifdef shy_build_for_win
+    #include "../../../../../main/win/platform/static_array/type/data/shy_data_injections.h"
+#endif
+
 #endif
