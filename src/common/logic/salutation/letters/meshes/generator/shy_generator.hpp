@@ -10,6 +10,10 @@ void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_calle
     so_called_sender_common_logic_salutation_letters_meshes_generator_generate_finished :: send ( so_called_message_common_logic_salutation_letters_meshes_generator_generate_finished ( ) ) ;
 }
 
+void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_logic_salutation_letters_meshes_generator_update )
+{
+}
+
 void _shy_common_logic_salutation_letters_meshes_generator :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;

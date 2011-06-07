@@ -15,6 +15,7 @@ public :
     static void logic_salutation_creation_permit ( ) ;
     static void logic_salutation_launch_permit ( ) ;
     static void logic_salutation_letters_meshes_generator_generate ( ) ;
+    static void logic_salutation_letters_meshes_generator_update ( ) ;
     static void logic_salutation_letters_text_generator_generate ( ) ;
     static void logic_salutation_render ( ) ;
     static void logic_salutation_update ( ) ;
