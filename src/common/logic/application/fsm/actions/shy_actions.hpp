@@ -113,3 +113,13 @@ void shy_common_logic_application_fsm_actions :: logic_title_update ( )
     so_called_sender_common_logic_title_update :: send ( so_called_message_common_logic_title_update ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_vacuum_render ( )
+{
+    so_called_sender_common_logic_vacuum_render :: send ( so_called_message_common_logic_vacuum_render ( ) ) ;
+}
+
+void shy_common_logic_application_fsm_actions :: logic_vacuum_update ( )
+{
+    so_called_sender_common_logic_vacuum_update :: send ( so_called_message_common_logic_vacuum_update ( ) ) ;
+}
+
