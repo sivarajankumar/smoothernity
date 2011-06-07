@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_salutation_letters_meshes_generator_injections_included
 #define _shy_common_logic_salutation_letters_meshes_generator_injections_included
 
-#include "../message/generate/shy_generate_injections.h"
+#include "./message/generate/shy_generate_injections.h"
 #include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
