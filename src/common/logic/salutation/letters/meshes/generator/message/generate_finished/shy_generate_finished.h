@@ -1,0 +1,3 @@
+class shy_message_common_logic_salutation_letters_meshes_generator_generate_finished
+{
+} ;
