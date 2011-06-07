@@ -78,6 +78,7 @@
 #include "../logic/text/shy_text_injections.h"
 #include "../logic/title/shy_title_injections.h"
 #include "../logic/touch/shy_touch_injections.h"
+#include "../logic/vacuum/shy_vacuum_injections.h"
 
 #include "./shy_init_injections.h"
 #include "./shy_init.hpp"

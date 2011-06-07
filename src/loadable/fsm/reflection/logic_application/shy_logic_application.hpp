@@ -29,6 +29,8 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_title_launch_permit ) ;
     shy_guts_bind_action ( logic_title_render ) ;
     shy_guts_bind_action ( logic_title_update ) ;
+    shy_guts_bind_action ( logic_vacuum_render ) ;
+    shy_guts_bind_action ( logic_vacuum_update ) ;
 
     shy_guts_bind_input ( logic_amusement_created ) ;
     shy_guts_bind_input ( logic_amusement_finished ) ;

@@ -80,4 +80,5 @@ void shy_common_init :: init ( )
     so_called_common_logic_text :: register_in_scheduler ( ) ;
     so_called_common_logic_title :: register_in_scheduler ( ) ;
     so_called_common_logic_touch :: register_in_scheduler ( ) ;
+    so_called_common_logic_vacuum :: register_in_scheduler ( ) ;
 }

@@ -24,4 +24,6 @@ public :
     static void logic_title_launch_permit ( ) ;
     static void logic_title_render ( ) ;
     static void logic_title_update ( ) ;
+    static void logic_vacuum_render ( ) ;
+    static void logic_vacuum_update ( ) ;
 } ;

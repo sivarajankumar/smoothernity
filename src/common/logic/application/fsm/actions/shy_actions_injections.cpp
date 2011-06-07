@@ -23,5 +23,7 @@
 #include "../../../title/sender/launch_permit/shy_launch_permit_injections.h"
 #include "../../../title/sender/render/shy_render_injections.h"
 #include "../../../title/sender/update/shy_update_injections.h"
+#include "../../../vacuum/sender/render/shy_render_injections.h"
+#include "../../../vacuum/sender/update/shy_update_injections.h"
 
 #include "./shy_actions.hpp"

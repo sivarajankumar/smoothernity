@@ -256,6 +256,14 @@ namespace shy_guts
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
     } ;
 
+    class type_machine_salutation_performer_state_waiting
+    : public so_called_type_common_engine_fsm_state
+    {
+    public :
+        virtual void on_input ( ) ;
+        virtual so_called_type_common_engine_fsm_state & transition ( ) ;
+    } ;
+
     class type_machine_text_generator_state_finished
     : public so_called_type_common_engine_fsm_state
     {
@@ -379,6 +387,7 @@ namespace shy_guts
        static type_machine_salutation_performer_state_finished salutation_performer_state_finished ;
        static type_machine_salutation_performer_state_initial salutation_performer_state_initial ;
        static type_machine_salutation_performer_state_performing salutation_performer_state_performing ;
+       static type_machine_salutation_performer_state_waiting salutation_performer_state_waiting ;
        static type_machine_text_generator_state_finished text_generator_state_finished ;
        static type_machine_text_generator_state_generating text_generator_state_generating ;
        static type_machine_text_generator_state_initial text_generator_state_initial ;
@@ -805,7 +814,7 @@ so_called_type_common_engine_fsm_state & shy_guts :: type_machine_salutation_per
     && so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_salutation_performer_command_start )
     )
     {
-        return shy_guts :: states :: salutation_performer_state_performing ;
+        return shy_guts :: states :: salutation_performer_state_waiting ;
     }
     else if
     (  so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . stage_salutation_disabled )
@@ -835,6 +844,22 @@ so_called_type_common_engine_fsm_state & shy_guts :: type_machine_salutation_per
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_salutation_finished ) )
         return shy_guts :: states :: salutation_performer_state_finished ;
+    else
+        return so_called_type_common_engine_fsm_state :: transition ( ) ;
+}
+
+void shy_guts :: type_machine_salutation_performer_state_waiting :: on_input ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_render ) )
+        so_called_common_logic_application_fsm_actions :: logic_vacuum_render ( ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_update ) )
+        so_called_common_logic_application_fsm_actions :: logic_vacuum_update ( ) ;
+}
+
+so_called_type_common_engine_fsm_state & shy_guts :: type_machine_salutation_performer_state_waiting :: transition ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_salutation_generator_state_is_finished ) )
+        return shy_guts :: states :: salutation_performer_state_performing ;
     else
         return so_called_type_common_engine_fsm_state :: transition ( ) ;
 }
