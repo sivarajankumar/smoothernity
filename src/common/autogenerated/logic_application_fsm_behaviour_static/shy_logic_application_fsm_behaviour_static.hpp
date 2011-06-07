@@ -208,6 +208,22 @@ namespace shy_guts
     : public so_called_type_common_engine_fsm_state
     {
     public :
+        virtual so_called_type_common_engine_fsm_state & transition ( ) ;
+    } ;
+
+    class type_machine_salutation_generator_state_generating_letters
+    : public so_called_type_common_engine_fsm_state
+    {
+    public :
+        virtual void on_entry ( ) ;
+        virtual void on_input ( ) ;
+        virtual so_called_type_common_engine_fsm_state & transition ( ) ;
+    } ;
+
+    class type_machine_salutation_generator_state_generating_letters_meshes
+    : public so_called_type_common_engine_fsm_state
+    {
+    public :
         virtual void on_entry ( ) ;
         virtual void on_input ( ) ;
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
@@ -358,6 +374,8 @@ namespace shy_guts
        static type_machine_performer_state_title performer_state_title ;
        static type_machine_salutation_generator_state_finished salutation_generator_state_finished ;
        static type_machine_salutation_generator_state_generating salutation_generator_state_generating ;
+       static type_machine_salutation_generator_state_generating_letters salutation_generator_state_generating_letters ;
+       static type_machine_salutation_generator_state_generating_letters_meshes salutation_generator_state_generating_letters_meshes ;
        static type_machine_salutation_generator_state_initial salutation_generator_state_initial ;
        static type_machine_salutation_performer_state_finished salutation_performer_state_finished ;
        static type_machine_salutation_performer_state_initial salutation_performer_state_initial ;
@@ -724,20 +742,44 @@ so_called_type_common_engine_fsm_state & shy_guts :: type_machine_performer_stat
         return so_called_type_common_engine_fsm_state :: transition ( ) ;
 }
 
-void shy_guts :: type_machine_salutation_generator_state_generating :: on_entry ( )
+so_called_type_common_engine_fsm_state & shy_guts :: type_machine_salutation_generator_state_generating :: transition ( )
 {
-    so_called_common_logic_application_fsm_actions :: logic_salutation_creation_permit ( ) ;
+    return shy_guts :: states :: salutation_generator_state_generating_letters ;
 }
 
-void shy_guts :: type_machine_salutation_generator_state_generating :: on_input ( )
+void shy_guts :: type_machine_salutation_generator_state_generating_letters :: on_entry ( )
+{
+    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_generate ( ) ;
+}
+
+void shy_guts :: type_machine_salutation_generator_state_generating_letters :: on_input ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_update ) )
         so_called_common_logic_application_fsm_actions :: logic_salutation_update ( ) ;
 }
 
-so_called_type_common_engine_fsm_state & shy_guts :: type_machine_salutation_generator_state_generating :: transition ( )
+so_called_type_common_engine_fsm_state & shy_guts :: type_machine_salutation_generator_state_generating_letters :: transition ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_salutation_created ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_salutation_letters_generate_finished ) )
+        return shy_guts :: states :: salutation_generator_state_generating_letters_meshes ;
+    else
+        return so_called_type_common_engine_fsm_state :: transition ( ) ;
+}
+
+void shy_guts :: type_machine_salutation_generator_state_generating_letters_meshes :: on_entry ( )
+{
+    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_meshes_generate ( ) ;
+}
+
+void shy_guts :: type_machine_salutation_generator_state_generating_letters_meshes :: on_input ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_update ) )
+        so_called_common_logic_application_fsm_actions :: logic_salutation_update ( ) ;
+}
+
+so_called_type_common_engine_fsm_state & shy_guts :: type_machine_salutation_generator_state_generating_letters_meshes :: transition ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_salutation_letters_meshes_generate_finished ) )
         return shy_guts :: states :: salutation_generator_state_finished ;
     else
         return so_called_type_common_engine_fsm_state :: transition ( ) ;
