@@ -63,6 +63,11 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_launch_permit 
     so_called_sender_common_logic_salutation_launch_permit :: send ( so_called_message_common_logic_salutation_launch_permit ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_update ( )
+{
+    so_called_sender_common_logic_salutation_letters_animation_update :: send ( so_called_message_common_logic_salutation_letters_animation_update ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_meshes_generator_generate ( )
 {
     so_called_sender_common_logic_salutation_letters_meshes_generator_generate :: send ( so_called_message_common_logic_salutation_letters_meshes_generator_generate ( ) ) ;
