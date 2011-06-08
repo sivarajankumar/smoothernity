@@ -12,6 +12,7 @@
 #include "../../salutation/message/finished/shy_finished_injections.h"
 #include "../../salutation/letters/meshes/generator/message/generate_finished/shy_generate_finished_injections.h"
 #include "../../salutation/letters/text/generator/message/generate_finished/shy_generate_finished_injections.h"
+#include "../../salutation/timer/disappear/message/run_finished/shy_run_finished_injections.h"
 #include "../../text/message/prepared/shy_prepared_injections.h"
 #include "../../title/message/created/shy_created_injections.h"
 #include "../../title/message/finished/shy_finished_injections.h"

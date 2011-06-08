@@ -16,6 +16,7 @@ public :
     static void receive ( so_called_message_common_logic_salutation_finished ) ;
     static void receive ( so_called_message_common_logic_salutation_letters_meshes_generator_generate_finished ) ;
     static void receive ( so_called_message_common_logic_salutation_letters_text_generator_generate_finished ) ;
+    static void receive ( so_called_message_common_logic_salutation_timer_disappear_run_finished ) ;
     static void receive ( so_called_message_common_logic_text_prepared ) ;
     static void receive ( so_called_message_common_logic_title_created ) ;
     static void receive ( so_called_message_common_logic_title_finished ) ;
