@@ -6,20 +6,38 @@ system logic_application
             to finished
                 if { ( command start ) stage_salutation_disabled }
         state waiting
-            to performing
-                if { ( machine salutation_generator is finished ) }
             on { logic_application_render }
                 do logic_vacuum_render
             on { logic_application_update }
                 do logic_vacuum_update
-        state performing
+            to appearing
+                if { ( machine salutation_generator is finished ) }
+        state appearing
             on entry
-                do logic_salutation_launch_permit
+                do logic_salutation_animation_zoom_play
+                do logic_salutation_letters_animation_appear_play
+                do logic_salutation_letters_animation_roll_in_play
+                do logic_salutation_timer_appear_run
             on { logic_application_render }
-                do logic_salutation_render
+                do logic_salutation_renderer_render
             on { logic_application_update }
-                do logic_salutation_update
+                do logic_salutation_animation_update
+                do logic_salutation_letters_animation_update
+                do logic_salutation_timer_update
+            to disappearing
+                if { logic_salutation_timer_appear_run_finished }
+        state disappearing
+            on entry
+                do logic_salutation_letters_animation_disappear_play
+                do logic_salutation_letters_animation_roll_out_play
+                do logic_salutation_timer_disappear_run
+            on { logic_application_render }
+                do logic_salutation_renderer_render
+            on { logic_application_update }
+                do logic_salutation_animation_update
+                do logic_salutation_letters_animation_update
+                do logic_salutation_timer_update
             to finished
-                if { logic_salutation_finished }
+                if { logic_salutation_timer_disappear_run_finished }
         state finished
 
