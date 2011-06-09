@@ -73,6 +73,11 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animat
     so_called_sender_common_logic_salutation_letters_animation_disappear_play :: send ( so_called_message_common_logic_salutation_letters_animation_disappear_play ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_in_play ( )
+{
+    so_called_sender_common_logic_salutation_letters_animation_roll_in_play :: send ( so_called_message_common_logic_salutation_letters_animation_roll_in_play ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_out_play ( )
 {
     so_called_sender_common_logic_salutation_letters_animation_roll_out_play :: send ( so_called_message_common_logic_salutation_letters_animation_roll_out_play ( ) ) ;
