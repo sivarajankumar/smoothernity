@@ -8,4 +8,3 @@
 typedef shy_sender_common_logic_salutation_animation_update so_called_sender_common_logic_salutation_animation_update ;
 
 #endif
-
