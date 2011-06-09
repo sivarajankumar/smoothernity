@@ -98,6 +98,11 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_renderer_rende
     so_called_sender_common_logic_salutation_renderer_render :: send ( so_called_message_common_logic_salutation_renderer_render ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_run ( )
+{
+    so_called_sender_common_logic_salutation_timer_disappear_run :: send ( so_called_message_common_logic_salutation_timer_disappear_run ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_salutation_timer_update ( )
 {
     so_called_sender_common_logic_salutation_timer_update :: send ( so_called_message_common_logic_salutation_timer_update ( ) ) ;

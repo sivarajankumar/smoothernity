@@ -1,6 +1,7 @@
 #ifndef _shy_common_logic_salutation_timer_disappear_injections_included
 #define _shy_common_logic_salutation_timer_disappear_injections_included
 
+#include "./message/run/shy_run_injections.h"
 #include "../message/update/shy_update_injections.h"
 #include "../../../../../injections/platform/scheduler/shy_scheduler.h"
 
