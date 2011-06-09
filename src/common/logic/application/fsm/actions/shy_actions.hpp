@@ -53,6 +53,11 @@ void shy_common_logic_application_fsm_actions :: logic_main_menu_update ( )
     so_called_sender_common_logic_main_menu_update :: send ( so_called_message_common_logic_main_menu_update ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_salutation_animation_update ( )
+{
+    so_called_sender_common_logic_salutation_animation_update :: send ( so_called_message_common_logic_salutation_animation_update ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_salutation_creation_permit ( )
 {
     so_called_sender_common_logic_salutation_creation_permit :: send ( so_called_message_common_logic_salutation_creation_permit ( ) ) ;
