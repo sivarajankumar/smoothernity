@@ -12,6 +12,7 @@ public :
     static void logic_main_menu_launch_permit ( ) ;
     static void logic_main_menu_render ( ) ;
     static void logic_main_menu_update ( ) ;
+    static void logic_salutation_animation_update ( ) ;
     static void logic_salutation_creation_permit ( ) ;
     static void logic_salutation_launch_permit ( ) ;
     static void logic_salutation_letters_animation_update ( ) ;

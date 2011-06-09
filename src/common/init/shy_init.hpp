@@ -74,6 +74,7 @@ void shy_common_init :: init ( )
     so_called_common_logic_room_renderer :: register_in_scheduler ( ) ;
     so_called_common_logic_room_texture :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation :: register_in_scheduler ( ) ;
+    so_called_common_logic_salutation_animation_zoom :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_animation_appear :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_animation_disappear :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_animation_roll_in :: register_in_scheduler ( ) ;

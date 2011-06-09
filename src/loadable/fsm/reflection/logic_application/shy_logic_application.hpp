@@ -17,6 +17,7 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_main_menu_launch_permit ) ;
     shy_guts_bind_action ( logic_main_menu_render ) ;
     shy_guts_bind_action ( logic_main_menu_update ) ;
+    shy_guts_bind_action ( logic_salutation_animation_update ) ;
     shy_guts_bind_action ( logic_salutation_creation_permit ) ;
     shy_guts_bind_action ( logic_salutation_launch_permit ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_update ) ;
