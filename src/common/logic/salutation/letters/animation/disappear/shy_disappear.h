@@ -1,6 +1,7 @@
 class _shy_common_logic_salutation_letters_animation_disappear
 {
 public :
+    static void receive ( so_called_message_common_logic_salutation_letters_animation_disappear_play ) ;
     static void receive ( so_called_message_common_logic_salutation_letters_animation_update ) ;
     static void register_in_scheduler ( ) ;
 } ;
