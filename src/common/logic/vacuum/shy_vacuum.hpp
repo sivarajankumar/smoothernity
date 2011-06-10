@@ -11,6 +11,11 @@ void _shy_common_logic_vacuum :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_vacuum :: receive ( so_called_message_common_logic_vacuum_render )
 {
+    so_called_message_common_engine_render_clear_screen msg ;
+    msg . r = so_called_common_logic_vacuum_consts :: color_r ;
+    msg . g = so_called_common_logic_vacuum_consts :: color_g ;
+    msg . b = so_called_common_logic_vacuum_consts :: color_b ;
+    so_called_sender_common_engine_render_clear_screen :: send ( msg ) ;
 }
 
 void _shy_common_logic_vacuum :: receive ( so_called_message_common_logic_vacuum_update )
