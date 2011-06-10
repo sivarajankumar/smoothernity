@@ -63,16 +63,6 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_animation_zoom
     so_called_sender_common_logic_salutation_animation_zoom_play :: send ( so_called_message_common_logic_salutation_animation_zoom_play ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_salutation_creation_permit ( )
-{
-    so_called_sender_common_logic_salutation_creation_permit :: send ( so_called_message_common_logic_salutation_creation_permit ( ) ) ;
-}
-
-void shy_common_logic_application_fsm_actions :: logic_salutation_launch_permit ( )
-{
-    so_called_sender_common_logic_salutation_launch_permit :: send ( so_called_message_common_logic_salutation_launch_permit ( ) ) ;
-}
-
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_appear_play ( )
 {
     so_called_sender_common_logic_salutation_letters_animation_appear_play :: send ( so_called_message_common_logic_salutation_letters_animation_appear_play ( ) ) ;
@@ -113,11 +103,6 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_letters_text_g
     so_called_sender_common_logic_salutation_letters_text_generator_generate :: send ( so_called_message_common_logic_salutation_letters_text_generator_generate ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_salutation_render ( )
-{
-    so_called_sender_common_logic_salutation_render :: send ( so_called_message_common_logic_salutation_render ( ) ) ;
-}
-
 void shy_common_logic_application_fsm_actions :: logic_salutation_renderer_render ( )
 {
     so_called_sender_common_logic_salutation_renderer_render :: send ( so_called_message_common_logic_salutation_renderer_render ( ) ) ;
@@ -136,11 +121,6 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_timer_disappea
 void shy_common_logic_application_fsm_actions :: logic_salutation_timer_update ( )
 {
     so_called_sender_common_logic_salutation_timer_update :: send ( so_called_message_common_logic_salutation_timer_update ( ) ) ;
-}
-
-void shy_common_logic_application_fsm_actions :: logic_salutation_update ( )
-{
-    so_called_sender_common_logic_salutation_update :: send ( so_called_message_common_logic_salutation_update ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_text_prepare_permit ( )

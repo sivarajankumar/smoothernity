@@ -14,8 +14,6 @@ public :
     static void logic_main_menu_update ( ) ;
     static void logic_salutation_animation_update ( ) ;
     static void logic_salutation_animation_zoom_play ( ) ;
-    static void logic_salutation_creation_permit ( ) ;
-    static void logic_salutation_launch_permit ( ) ;
     static void logic_salutation_letters_animation_appear_play ( ) ;
     static void logic_salutation_letters_animation_disappear_play ( ) ;
     static void logic_salutation_letters_animation_roll_in_play ( ) ;
@@ -24,12 +22,10 @@ public :
     static void logic_salutation_letters_meshes_generator_generate ( ) ;
     static void logic_salutation_letters_meshes_generator_update ( ) ;
     static void logic_salutation_letters_text_generator_generate ( ) ;
-    static void logic_salutation_render ( ) ;
     static void logic_salutation_renderer_render ( ) ;
     static void logic_salutation_timer_appear_run ( ) ;
     static void logic_salutation_timer_disappear_run ( ) ;
     static void logic_salutation_timer_update ( ) ;
-    static void logic_salutation_update ( ) ;
     static void logic_text_prepare_permit ( ) ;
     static void logic_text_update ( ) ;
     static void logic_title_launch_permit ( ) ;

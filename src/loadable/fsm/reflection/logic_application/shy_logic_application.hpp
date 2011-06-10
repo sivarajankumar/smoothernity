@@ -19,8 +19,6 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_main_menu_update ) ;
     shy_guts_bind_action ( logic_salutation_animation_update ) ;
     shy_guts_bind_action ( logic_salutation_animation_zoom_play ) ;
-    shy_guts_bind_action ( logic_salutation_creation_permit ) ;
-    shy_guts_bind_action ( logic_salutation_launch_permit ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_appear_play ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_disappear_play ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_roll_in_play ) ;
@@ -29,12 +27,10 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_salutation_letters_meshes_generator_generate ) ;
     shy_guts_bind_action ( logic_salutation_letters_meshes_generator_update ) ;
     shy_guts_bind_action ( logic_salutation_letters_text_generator_generate ) ;
-    shy_guts_bind_action ( logic_salutation_render ) ;
     shy_guts_bind_action ( logic_salutation_renderer_render ) ;
     shy_guts_bind_action ( logic_salutation_timer_appear_run ) ;
     shy_guts_bind_action ( logic_salutation_timer_disappear_run ) ;
     shy_guts_bind_action ( logic_salutation_timer_update ) ;
-    shy_guts_bind_action ( logic_salutation_update ) ;
     shy_guts_bind_action ( logic_text_prepare_permit ) ;
     shy_guts_bind_action ( logic_text_update ) ;
     shy_guts_bind_action ( logic_title_launch_permit ) ;
@@ -52,8 +48,6 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_input ( logic_title_finished ) ;
     shy_guts_bind_input ( logic_main_menu_created ) ;
     shy_guts_bind_input ( logic_main_menu_finished ) ;
-    shy_guts_bind_input ( logic_salutation_created ) ;
-    shy_guts_bind_input ( logic_salutation_finished ) ;
     shy_guts_bind_input ( logic_salutation_letters_meshes_generator_generate_finished ) ;
     shy_guts_bind_input ( logic_salutation_letters_text_generator_generate_finished ) ;
     shy_guts_bind_input ( logic_salutation_timer_appear_run_finished ) ;

@@ -15,8 +15,6 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
     shy_guts :: current_inputs . logic_application_update = so_called_platform_math_consts :: whole_false ;
     shy_guts :: current_inputs . logic_main_menu_created = so_called_platform_math_consts :: whole_false ;
     shy_guts :: current_inputs . logic_main_menu_finished = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: current_inputs . logic_salutation_created = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: current_inputs . logic_salutation_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: current_inputs . logic_salutation_letters_meshes_generator_generate_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: current_inputs . logic_salutation_letters_text_generator_generate_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: current_inputs . logic_salutation_timer_appear_run_finished = so_called_platform_math_consts :: whole_false ;
@@ -95,14 +93,6 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_ty
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: current_inputs . logic_main_menu_finished 
             , shy_guts :: fixed_inputs . logic_main_menu_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: current_inputs . logic_salutation_created 
-            , shy_guts :: fixed_inputs . logic_salutation_created 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: current_inputs . logic_salutation_finished 
-            , shy_guts :: fixed_inputs . logic_salutation_finished 
             )
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: current_inputs . logic_salutation_letters_meshes_generator_generate_finished 
@@ -219,18 +209,6 @@ void _shy_common_logic_application_fsm :: receive ( so_called_message_common_log
 void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_main_menu_finished )
 {
     shy_guts :: current_inputs . logic_main_menu_finished = so_called_platform_math_consts :: whole_true ;
-    so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
-}
-
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_created )
-{
-    shy_guts :: current_inputs . logic_salutation_created = so_called_platform_math_consts :: whole_true ;
-    so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
-}
-
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_finished )
-{
-    shy_guts :: current_inputs . logic_salutation_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
