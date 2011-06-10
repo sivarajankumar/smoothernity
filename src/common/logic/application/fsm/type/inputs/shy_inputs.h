@@ -10,8 +10,6 @@ public :
     so_called_type_platform_math_num_whole logic_title_finished ;
     so_called_type_platform_math_num_whole logic_main_menu_created ;
     so_called_type_platform_math_num_whole logic_main_menu_finished ;
-    so_called_type_platform_math_num_whole logic_salutation_created ;
-    so_called_type_platform_math_num_whole logic_salutation_finished ;
     so_called_type_platform_math_num_whole logic_salutation_letters_meshes_generator_generate_finished ;
     so_called_type_platform_math_num_whole logic_salutation_letters_text_generator_generate_finished ;
     so_called_type_platform_math_num_whole logic_salutation_timer_appear_run_finished ;
