@@ -17,6 +17,9 @@
     <Filter Include="platform">
       <UniqueIdentifier>{28bbf3e7-8192-4ca2-8f0d-4b3f978b5a78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="loadable">
+      <UniqueIdentifier>{62500838-e725-4c76-b10b-bca7145154c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -70,6 +73,759 @@
     </ClInclude>
     <ClInclude Include="..\..\facade\static\shy_static_injections.hpp">
       <Filter>facade</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\conditions\shy_conditions_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\consts\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\consts\shy_consts_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\consts\shy_consts_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\shy_math_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\type\const_int_32\shy_const_int_32_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\type\num_fract\shy_num_fract_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\math\type\num_whole\shy_num_whole_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\matrix\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\matrix\shy_matrix_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\matrix\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\mouse\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\mouse\shy_mouse_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\pointer\shy_pointer_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\pointer\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\shy_render_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\texture_loader\shy_texture_loader_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\index_data\shy_index_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\texel_data\shy_texel_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\texture_id\shy_texture_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\render\type\vertex_data\shy_vertex_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\scheduler\shy_scheduler_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\loader\shy_loader_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\shy_sound_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\buffer_id\shy_buffer_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\sample_mono\shy_sample_mono_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\sound\type\source_id\shy_source_id_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_array\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_array\shy_static_array_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_array\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\static_assert\shy_static_assert_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\touch\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\touch\shy_touch_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\vector\insider\shy_insider_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\vector\shy_vector_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\vector\type\data\shy_data_injections.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\assigner\shy_assigner.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\assigner\shy_assigner.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\assigner\shy_assigner_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\binder\helper\module\shy_module.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\binder\helper\module\shy_module_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\binder\helper\value\shy_value.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\binder\helper\value\shy_value_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\binder\shy_binder.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\binder\shy_binder.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\binder\shy_binder_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\shy_content.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\shy_content.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\shy_content_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\module\shy_module.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\module\shy_module_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\module_binding\shy_module_binding.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\module_binding\shy_module_binding_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\module_container\shy_module_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\module_container\shy_module_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_fract\shy_value_fract.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_fract\shy_value_fract.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_fract\shy_value_fract_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_fract_binding\shy_value_fract_binding.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_fract_binding\shy_value_fract_binding_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_fract_container\shy_value_fract_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_fract_container\shy_value_fract_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_whole\shy_value_whole.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_whole\shy_value_whole.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_whole\shy_value_whole_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_whole_binding\shy_value_whole_binding.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_whole_binding\shy_value_whole_binding_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_whole_container\shy_value_whole_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\content\type\value_whole_container\shy_value_whole_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\generator\shy_generator.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\generator\shy_generator.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\generator\shy_generator_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_amusement\shy_logic_amusement.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_amusement\shy_logic_amusement.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_amusement\shy_logic_amusement_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_application\shy_logic_application.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_application\shy_logic_application.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_application\shy_logic_application_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_blanket\shy_logic_blanket.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_blanket\shy_logic_blanket.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_blanket\shy_logic_blanket_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_blanket_animation\shy_logic_blanket_animation.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_blanket_animation\shy_logic_blanket_animation.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_blanket_animation\shy_logic_blanket_animation_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_door\shy_logic_door.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_door\shy_logic_door.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_door\shy_logic_door_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_door_animation\shy_logic_door_animation.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_door_animation\shy_logic_door_animation.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_door_animation\shy_logic_door_animation_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_fidget\shy_logic_fidget.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_fidget\shy_logic_fidget.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_fidget\shy_logic_fidget_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_animation\shy_logic_main_menu_animation.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_animation\shy_logic_main_menu_animation.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_animation\shy_logic_main_menu_animation_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_animation\shy_logic_main_menu_letters_animation.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_animation\shy_logic_main_menu_letters_animation.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_animation\shy_logic_main_menu_letters_animation_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_layout\shy_logic_main_menu_letters_layout.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_layout\shy_logic_main_menu_letters_layout.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_layout\shy_logic_main_menu_letters_layout_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_meshes\shy_logic_main_menu_letters_meshes.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_meshes\shy_logic_main_menu_letters_meshes.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_letters_meshes\shy_logic_main_menu_letters_meshes_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_selection\shy_logic_main_menu_selection.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_selection\shy_logic_main_menu_selection.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_selection\shy_logic_main_menu_selection_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_selection_animation\shy_logic_main_menu_selection_animation.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_selection_animation\shy_logic_main_menu_selection_animation.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_main_menu_selection_animation\shy_logic_main_menu_selection_animation_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_observer_animation\shy_logic_observer_animation.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_observer_animation\shy_logic_observer_animation.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_observer_animation\shy_logic_observer_animation_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_ortho\shy_logic_ortho.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_ortho\shy_logic_ortho.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_ortho\shy_logic_ortho_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_perspective\shy_logic_perspective.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_perspective\shy_logic_perspective.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_perspective\shy_logic_perspective_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_room\shy_logic_room.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_room\shy_logic_room.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_room\shy_logic_room_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_title\shy_logic_title.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_title\shy_logic_title.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_title\shy_logic_title_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_vacuum\shy_logic_vacuum.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_vacuum\shy_logic_vacuum.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\logic_vacuum\shy_logic_vacuum_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\shy_reflection.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\shy_reflection.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\consts\reflection\shy_reflection_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\assigner\shy_assigner.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\assigner\shy_assigner.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\assigner\shy_assigner_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\consts\shy_consts.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\consts\shy_consts.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\consts\shy_consts_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\shy_behaviour.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\shy_behaviour_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\trace\shy_trace.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\trace\shy_trace.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\behaviour\trace\shy_trace_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\helper\action\shy_action.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\helper\action\shy_action_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\helper\input\shy_input.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\helper\input\shy_input_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\helper\system\shy_system.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\helper\system\shy_system_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\shy_binder.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\shy_binder.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\binder\shy_binder_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\consts\shy_consts.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\consts\shy_consts.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\consts\shy_consts_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\shy_content.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\shy_content.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\shy_content_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\actions\shy_actions.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\actions\shy_actions_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_binding\shy_action_binding.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_binding\shy_action_binding_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_binding_container\shy_action_binding_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_binding_container\shy_action_binding_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_command\shy_action_command.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_command\shy_action_command_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_command_container\shy_action_command_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_command_container\shy_action_command_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_do\shy_action_do.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_do\shy_action_do_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_do_container\shy_action_do_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\action_do_container\shy_action_do_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\arbitrary_inputs\shy_arbitrary_inputs.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\arbitrary_inputs\shy_arbitrary_inputs_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_command\shy_condition_command.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_command\shy_condition_command_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_command_container\shy_condition_command_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_command_container\shy_condition_command_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_group\shy_condition_group.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_group\shy_condition_group_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_group_container\shy_condition_group_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_group_container\shy_condition_group_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_input\shy_condition_input.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_input\shy_condition_input_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_input_container\shy_condition_input_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_input_container\shy_condition_input_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_state\shy_condition_state.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_state\shy_condition_state_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_state_container\shy_condition_state_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\condition_state_container\shy_condition_state_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\input_binding\shy_input_binding.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\input_binding\shy_input_binding_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\input_binding_container\shy_input_binding_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\input_binding_container\shy_input_binding_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\machine\shy_machine.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\machine\shy_machine_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\machine_container\shy_machine_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\machine_container\shy_machine_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\on_input\shy_on_input.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\on_input\shy_on_input_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\on_input_container\shy_on_input_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\on_input_container\shy_on_input_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\state\shy_state.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\state\shy_state_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\state_container\shy_state_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\state_container\shy_state_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system\shy_system.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system\shy_system_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system_binding\shy_system_binding.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system_binding\shy_system_binding_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system_binding_container\shy_system_binding_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system_binding_container\shy_system_binding_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system_container\shy_system_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\system_container\shy_system_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\transition\shy_transition.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\transition\shy_transition_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\transition_container\shy_transition_container.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\content\type\transition_container\shy_transition_container_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\generator\shy_generator.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\generator\shy_generator.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\generator\shy_generator_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\reflection\logic_application\shy_logic_application.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\reflection\logic_application\shy_logic_application.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\reflection\logic_application\shy_logic_application_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\reflection\shy_reflection.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\reflection\shy_reflection.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\fsm\reflection\shy_reflection_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\consts\shy_consts.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\consts\shy_consts.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\consts\shy_consts_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\python\shy_python.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\python\shy_python.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\python\shy_python_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\shy_generator.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\shy_generator.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\generator\shy_generator_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\loader\shy_loader.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\loader\shy_loader.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\loader\shy_loader_injections.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\parser\shy_parser.h">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\parser\shy_parser.hpp">
+      <Filter>loadable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\loadable\parser\shy_parser_injections.h">
+      <Filter>loadable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\autogenerated\logic_amusement_consts\shy_logic_amusement_consts.hpp">
       <Filter>common</Filter>
@@ -189,6 +945,12 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\autogenerated\logic_title_consts\shy_logic_title_consts_injections.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\autogenerated\logic_vacuum_consts\shy_logic_vacuum_consts.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\autogenerated\logic_vacuum_consts\shy_logic_vacuum_consts_injections.hpp">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\done\shy_done.h">
@@ -5327,148 +6089,364 @@
     <ClInclude Include="..\..\common\logic\room\texture\shy_texture_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\message\generate\shy_generate.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\message\update\shy_update.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\message\generate\shy_generate_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\message\update\shy_update_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\message\generate_finished\shy_generate_finished.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\sender\update\shy_update.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\message\generate_finished\shy_generate_finished_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\sender\update\shy_update.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\sender\generate\shy_generate.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\sender\update\shy_update_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\sender\generate\shy_generate.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\message\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\sender\generate\shy_generate_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\message\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\sender\generate_finished\shy_generate_finished.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\sender\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\sender\generate_finished\shy_generate_finished.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\sender\play\shy_play.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\sender\generate_finished\shy_generate_finished_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\sender\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\message\generate_finished\shy_generate_finished.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\shy_zoom.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\message\generate_finished\shy_generate_finished_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\shy_zoom.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\sender\generate_finished\shy_generate_finished.h">
+    <ClInclude Include="..\..\common\logic\salutation\animation\zoom\shy_zoom_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\sender\generate_finished\shy_generate_finished.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\message\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\letters\sender\generate_finished\shy_generate_finished_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\message\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\created\shy_created.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\sender\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\created\shy_created_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\sender\play\shy_play.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\creation_permit\shy_creation_permit.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\sender\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\creation_permit\shy_creation_permit_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\shy_appear.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\finished\shy_finished.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\shy_appear.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\finished\shy_finished_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\appear\shy_appear_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\launch_permit\shy_launch_permit.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\message\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\launch_permit\shy_launch_permit_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\message\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\render\shy_render.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\sender\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\render\shy_render_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\sender\play\shy_play.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\update\shy_update.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\sender\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\message\update\shy_update_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\shy_disappear.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\created\shy_created.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\shy_disappear.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\created\shy_created.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\disappear\shy_disappear_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\created\shy_created_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\message\update\shy_update.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\creation_permit\shy_creation_permit.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\message\update\shy_update_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\creation_permit\shy_creation_permit.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\message\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\creation_permit\shy_creation_permit_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\message\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\finished\shy_finished.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\sender\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\finished\shy_finished.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\sender\play\shy_play.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\finished\shy_finished_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\sender\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\launch_permit\shy_launch_permit.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\shy_roll_in.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\launch_permit\shy_launch_permit.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\shy_roll_in.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\launch_permit\shy_launch_permit_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_in\shy_roll_in_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\render\shy_render.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\message\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\render\shy_render.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\message\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\render\shy_render_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\sender\play\shy_play.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\update\shy_update.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\sender\play\shy_play.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\update\shy_update.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\sender\play\shy_play_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\sender\update\shy_update_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\shy_roll_out.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\shy_salutation.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\shy_roll_out.hpp">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\shy_salutation.hpp">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\roll_out\shy_roll_out_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\logic\salutation\shy_salutation_injections.h">
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\sender\update\shy_update.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\sender\update\shy_update.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\animation\sender\update\shy_update_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\message\generate\shy_generate.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\message\generate\shy_generate_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\message\generate_finished\shy_generate_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\message\generate_finished\shy_generate_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\message\update\shy_update.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\message\update\shy_update_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate\shy_generate.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate\shy_generate.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate\shy_generate_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate_finished\shy_generate_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate_finished\shy_generate_finished.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate_finished\shy_generate_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\update\shy_update.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\update\shy_update.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\sender\update\shy_update_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\shy_generator.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\shy_generator.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\meshes\generator\shy_generator_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\message\generate\shy_generate.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\message\generate\shy_generate_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\message\generate_finished\shy_generate_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\message\generate_finished\shy_generate_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\sender\generate\shy_generate.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\sender\generate\shy_generate.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\sender\generate\shy_generate_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\sender\generate_finished\shy_generate_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\sender\generate_finished\shy_generate_finished.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\sender\generate_finished\shy_generate_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\shy_generator.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\shy_generator.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\letters\text\generator\shy_generator_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\message\render\shy_render.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\message\render\shy_render_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\sender\render\shy_render.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\sender\render\shy_render.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\sender\render\shy_render_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\shy_renderer.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\shy_renderer.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\renderer\shy_renderer_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\message\run\shy_run.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\message\run\shy_run_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\message\run_finished\shy_run_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\message\run_finished\shy_run_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\sender\run\shy_run.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\sender\run\shy_run.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\sender\run\shy_run_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\sender\run_finished\shy_run_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\sender\run_finished\shy_run_finished.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\sender\run_finished\shy_run_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\shy_appear.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\shy_appear.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\appear\shy_appear_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\message\run\shy_run.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\message\run\shy_run_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\message\run_finished\shy_run_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\message\run_finished\shy_run_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\sender\run\shy_run.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\sender\run\shy_run.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\sender\run\shy_run_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\sender\run_finished\shy_run_finished.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\sender\run_finished\shy_run_finished.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\sender\run_finished\shy_run_finished_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\shy_disappear.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\shy_disappear.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\disappear\shy_disappear_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\message\update\shy_update.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\message\update\shy_update_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\sender\update\shy_update.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\sender\update\shy_update.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\salutation\timer\sender\update\shy_update_injections.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\logic\sound\message\prepared\shy_prepared.h">
@@ -5885,6 +6863,54 @@
     <ClInclude Include="..\..\common\logic\touch\shy_touch_injections.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\consts\shy_consts.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\consts\shy_consts.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\consts\shy_consts_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\message\render\shy_render.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\message\render\shy_render_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\message\update\shy_update.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\message\update\shy_update_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\sender\render\shy_render.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\sender\render\shy_render.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\sender\render\shy_render_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\sender\update\shy_update.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\sender\update\shy_update.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\sender\update\shy_update_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\shy_vacuum.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\shy_vacuum.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\logic\vacuum\shy_vacuum_injections.h">
+      <Filter>common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\common\message\done\shy_done.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -5960,141 +6986,6 @@
     <ClInclude Include="..\..\common\sender\video_mode_changed\shy_video_mode_changed_injections.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="platform\conditions\shy_conditions_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\consts\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\consts\shy_consts_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\math\consts\shy_consts_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\math\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\math\shy_math_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\math\type\const_int_32\shy_const_int_32_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\math\type\num_fract\shy_num_fract_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\math\type\num_whole\shy_num_whole_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\matrix\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\matrix\shy_matrix_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\matrix\type\data\shy_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\mouse\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\mouse\shy_mouse_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\pointer\shy_pointer_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\pointer\type\data\shy_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\shy_render_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\texture_loader\shy_texture_loader_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\index_data\shy_index_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\texel_data\shy_texel_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\texture_id\shy_texture_id_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\render\type\vertex_data\shy_vertex_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\scheduler\shy_scheduler_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\sound\loader\shy_loader_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\sound\shy_sound_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\sound\type\buffer_id\shy_buffer_id_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\sound\type\sample_mono\shy_sample_mono_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\sound\type\source_id\shy_source_id_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\static_array\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\static_array\shy_static_array_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\static_array\type\data\shy_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\static_assert\shy_static_assert_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\touch\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\touch\shy_touch_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\vector\insider\shy_insider_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\vector\shy_vector_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\vector\type\data\shy_data_injections.h">
-      <Filter>platform</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="smoothernity.rc">
@@ -6117,6 +7008,234 @@
     <ClCompile Include="shy_win_application.cpp" />
     <ClCompile Include="..\..\facade\shy_facade_injections.cpp">
       <Filter>facade</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\conditions\shy_conditions_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\consts\shy_consts_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\shy_math_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\type\num_fract\shy_num_fract_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\math\type\num_whole\shy_num_whole_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\matrix\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\matrix\shy_matrix_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\matrix\type\data\shy_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\mouse\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\mouse\shy_mouse_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\shy_render_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\texture_loader\shy_texture_loader_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\index_data\shy_index_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\texel_data\shy_texel_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\texture_id\shy_texture_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\render\type\vertex_data\shy_vertex_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\scheduler\shy_scheduler_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\loader\shy_loader_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\shy_sound_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\buffer_id\shy_buffer_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\sample_mono\shy_sample_mono_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\sound\type\source_id\shy_source_id_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\touch\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\touch\shy_touch_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\vector\insider\shy_insider_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\vector\shy_vector_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\vector\type\data\shy_data_injections.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\assigner\shy_assigner_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\binder\shy_binder_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\content\shy_content_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\content\type\value_fract\shy_value_fract_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\content\type\value_whole\shy_value_whole_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\generator\shy_generator_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_amusement\shy_logic_amusement_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_application\shy_logic_application_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_blanket\shy_logic_blanket_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_blanket_animation\shy_logic_blanket_animation_injections_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_door\shy_logic_door_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_door_animation\shy_logic_door_animation_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_fidget\shy_logic_fidget_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_main_menu_animation\shy_logic_main_menu_animation_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_main_menu_letters_animation\shy_logic_main_menu_letters_animation_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_main_menu_letters_layout\shy_logic_main_menu_letters_layout_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_main_menu_letters_meshes\shy_logic_main_menu_letters_meshes_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_main_menu_selection\shy_logic_main_menu_selection_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_main_menu_selection_animation\shy_logic_main_menu_selection_animation_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_observer_animation\shy_logic_observer_animation_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_ortho\shy_logic_ortho_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_perspective\shy_logic_perspective_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_room\shy_logic_room_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_title\shy_logic_title_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\logic_vacuum\shy_logic_vacuum_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\consts\reflection\shy_reflection_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\assigner\shy_assigner_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\behaviour\consts\shy_consts_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\behaviour\trace\shy_trace_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\binder\shy_binder_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\consts\shy_consts_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\content\shy_content_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\generator\shy_generator_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\reflection\logic_application\shy_logic_application_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\fsm\reflection\shy_reflection_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\generator\consts\shy_consts_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\generator\python\shy_python_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\generator\shy_generator_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\loader\shy_loader_injections.cpp">
+      <Filter>loadable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\loadable\parser\shy_parser_injections.cpp">
+      <Filter>loadable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\common\done\shy_done_injections.cpp">
       <Filter>common</Filter>
@@ -7258,34 +8377,88 @@
     <ClCompile Include="..\..\common\logic\room\texture\shy_texture_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\letters\meshes\sender\generate\shy_generate_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\animation\sender\update\shy_update_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\letters\meshes\sender\generate_finished\shy_generate_finished_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\animation\zoom\sender\play\shy_play_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\letters\sender\generate_finished\shy_generate_finished_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\animation\zoom\shy_zoom_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\sender\created\shy_created_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\appear\sender\play\shy_play_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\sender\creation_permit\shy_creation_permit_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\appear\shy_appear_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\sender\finished\shy_finished_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\disappear\sender\play\shy_play_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\sender\launch_permit\shy_launch_permit_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\disappear\shy_disappear_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\sender\render\shy_render_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\roll_in\sender\play\shy_play_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\sender\update\shy_update_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\roll_in\shy_roll_in_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\common\logic\salutation\shy_salutation_injections.cpp">
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\roll_out\sender\play\shy_play_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\roll_out\shy_roll_out_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\animation\sender\update\shy_update_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate\shy_generate_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\meshes\generator\sender\generate_finished\shy_generate_finished_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\meshes\generator\sender\update\shy_update_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\meshes\generator\shy_generator_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\text\generator\sender\generate\shy_generate_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\text\generator\sender\generate_finished\shy_generate_finished_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\letters\text\generator\shy_generator_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\renderer\sender\render\shy_render_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\renderer\shy_renderer_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\timer\appear\sender\run\shy_run_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\timer\appear\sender\run_finished\shy_run_finished_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\timer\appear\shy_appear_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\timer\disappear\sender\run\shy_run_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\timer\disappear\sender\run_finished\shy_run_finished_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\timer\disappear\shy_disappear_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\salutation\timer\sender\update\shy_update_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\common\logic\sound\sender\prepared\shy_prepared_injections.cpp">
@@ -7378,6 +8551,18 @@
     <ClCompile Include="..\..\common\logic\touch\shy_touch_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\common\logic\vacuum\consts\shy_consts_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\vacuum\sender\render\shy_render_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\vacuum\sender\update\shy_update_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\logic\vacuum\shy_vacuum_injections.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\common\sender\done\shy_done_injections.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -7392,114 +8577,6 @@
     </ClCompile>
     <ClCompile Include="..\..\common\sender\video_mode_changed\shy_video_mode_changed_injections.cpp">
       <Filter>common</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\conditions\shy_conditions_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\math\consts\shy_consts_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\math\insider\shy_insider_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\math\shy_math_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\math\type\num_fract\shy_num_fract_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\math\type\num_whole\shy_num_whole_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\matrix\insider\shy_insider_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\matrix\shy_matrix_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\matrix\type\data\shy_data_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\mouse\insider\shy_insider_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\mouse\shy_mouse_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\insider\shy_insider_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\shy_render_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\texture_loader\shy_texture_loader_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\texture_loader\type\resource_id\shy_resource_id_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\index_buffer_id\shy_index_buffer_id_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\index_buffer_mapped_data\shy_index_buffer_mapped_data_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\index_data\shy_index_data_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\texel_data\shy_texel_data_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\texture_id\shy_texture_id_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\vertex_buffer_id\shy_vertex_buffer_id_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\vertex_buffer_mapped_data\shy_vertex_buffer_mapped_data_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\render\type\vertex_data\shy_vertex_data_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\scheduler\shy_scheduler_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\sound\loader\shy_loader_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\sound\loader\type\stereo_resource_id\shy_stereo_resource_id_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\sound\shy_sound_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\sound\type\buffer_id\shy_buffer_id_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\sound\type\sample_mono\shy_sample_mono_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\sound\type\sample_stereo\shy_sample_stereo_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\sound\type\source_id\shy_source_id_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\touch\insider\shy_insider_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\touch\shy_touch_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\vector\insider\shy_insider_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\vector\shy_vector_injections.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\vector\type\data\shy_data_injections.cpp">
-      <Filter>platform</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
