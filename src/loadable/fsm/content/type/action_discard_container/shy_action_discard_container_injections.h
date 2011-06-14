@@ -1,0 +1,10 @@
+#ifndef _shy_type_loadable_fsm_content_action_discard_container_injections_included
+#define _shy_type_loadable_fsm_content_action_discard_container_injections_included
+
+#include "../action_discard/shy_action_discard_injections.h"
+
+#include "./shy_action_discard_container.h"
+
+typedef shy_type_loadable_fsm_content_action_discard_container so_called_type_loadable_fsm_content_action_discard_container ;
+
+#endif
