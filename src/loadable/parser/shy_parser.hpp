@@ -34,7 +34,8 @@ namespace shy_guts
         state_reading_state_content ,
         state_reading_event_type ,
         state_reading_action_token ,
-        state_reading_action_name ,
+        state_reading_action_do_name ,
+        state_reading_action_discard_input_name ,
         state_reading_action_command_name ,
         state_reading_action_command_to_token ,
         state_reading_action_command_machine_name ,
@@ -59,6 +60,7 @@ namespace shy_guts
         static const so_called_lib_std_char brace_open = '{' ;
         static const so_called_lib_std_string command = "command" ;
         static const so_called_lib_std_string consts = "consts" ;
+        static const so_called_lib_std_string discard = "discard" ;
         static const so_called_lib_std_char divide = '/' ;
         static const so_called_lib_std_string do_token = "do" ;
         static const so_called_lib_std_string entry = "entry" ;
@@ -81,7 +83,8 @@ namespace shy_guts
 
     namespace errors
     {
-        static void expected_action_name_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
+        static void expected_action_do_name_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
+        static void expected_action_discard_input_name_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void expected_attribute_name_or_consts_or_system_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void expected_brace_open_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void expected_brace_open_or_identifier_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
@@ -170,7 +173,8 @@ namespace shy_guts
     static void handle_state_reading_state_content ( ) ;
     static void handle_state_reading_event_type ( ) ;
     static void handle_state_reading_action_token ( ) ;
-    static void handle_state_reading_action_name ( ) ;
+    static void handle_state_reading_action_do_name ( ) ;
+    static void handle_state_reading_action_discard_input_name ( ) ;
     static void handle_state_reading_action_command_name ( ) ;
     static void handle_state_reading_action_command_to_token ( ) ;
     static void handle_state_reading_action_command_machine_name ( ) ;
@@ -197,7 +201,8 @@ namespace shy_guts
     static void store_system_name ( so_called_lib_std_string ) ;
     static void store_machine_name ( so_called_lib_std_string ) ;
     static void store_state_name ( so_called_lib_std_string ) ;
-    static void store_action_name ( so_called_lib_std_string ) ;
+    static void store_action_do_name ( so_called_lib_std_string ) ;
+    static void store_action_discard_input_name ( so_called_lib_std_string ) ;
     static void store_action_command_name ( so_called_lib_std_string ) ;
     static void store_action_command_machine_name ( so_called_lib_std_string ) ;
     static void store_action_command ( ) ;
@@ -228,9 +233,14 @@ namespace shy_guts
     static void any_chars_in_line ( so_called_lib_std_bool & ) ;
 }
 
-void shy_guts :: errors :: expected_action_name_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
+void shy_guts :: errors :: expected_action_do_name_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
 {
     error = so_called_lib_std_string ( "expected action name, but got '" ) + token + so_called_lib_std_string ( "'" ) ;
+}
+
+void shy_guts :: errors :: expected_action_discard_input_name_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
+{
+    error = so_called_lib_std_string ( "expected input name, but got '" ) + token + so_called_lib_std_string ( "'" ) ;
 }
 
 void shy_guts :: errors :: expected_attribute_name_or_consts_or_system_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
@@ -829,7 +839,12 @@ void shy_guts :: handle_state_reading_action_token ( )
     else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: do_token )
     {
         shy_guts :: read_next_token ( ) ;
-        shy_guts :: state = shy_guts :: state_reading_action_name ;
+        shy_guts :: state = shy_guts :: state_reading_action_do_name ;
+    }
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: discard )
+    {
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_action_discard_input_name ;
     }
     else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: command )
     {
@@ -876,18 +891,35 @@ void shy_guts :: handle_state_reading_action_token ( )
     }
 }
 
-void shy_guts :: handle_state_reading_action_name ( )
+void shy_guts :: handle_state_reading_action_do_name ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_identifier )
     {
-        shy_guts :: store_action_name ( shy_guts :: token ) ;
+        shy_guts :: store_action_do_name ( shy_guts :: token ) ;
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_action_token ;
     }
     else
     {
         so_called_lib_std_string error ;
-        shy_guts :: errors :: expected_action_name_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: errors :: expected_action_do_name_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: store_error ( error ) ;
+        shy_guts :: state = shy_guts :: state_error ;
+    }
+}
+
+void shy_guts :: handle_state_reading_action_discard_input_name ( )
+{
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier )
+    {
+        shy_guts :: store_action_discard_input_name ( shy_guts :: token ) ;
+        shy_guts :: read_next_token ( ) ;
+        shy_guts :: state = shy_guts :: state_reading_action_token ;
+    }
+    else
+    {
+        so_called_lib_std_string error ;
+        shy_guts :: errors :: expected_action_discard_input_name_instead_of ( error , shy_guts :: token ) ;
         shy_guts :: store_error ( error ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -1246,7 +1278,7 @@ void shy_guts :: store_state_name ( so_called_lib_std_string name )
     }
 }
 
-void shy_guts :: store_action_name ( so_called_lib_std_string name )
+void shy_guts :: store_action_do_name ( so_called_lib_std_string name )
 {
     if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> actions . count ( name ) == 0 )
         shy_guts :: errors :: unknown_fsm_action ( shy_guts :: error , name , shy_guts :: current_fsm_system_name ) ;
@@ -1255,6 +1287,18 @@ void shy_guts :: store_action_name ( so_called_lib_std_string name )
         so_called_type_loadable_fsm_content_action_do action_do ;
         action_do . action = name ;
         shy_guts :: current_fsm_actions -> actions . push_back ( action_do ) ;
+    }
+}
+
+void shy_guts :: store_action_discard_input_name ( so_called_lib_std_string name )
+{
+    if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> inputs . count ( name ) == 0 )
+        shy_guts :: errors :: unknown_fsm_input ( shy_guts :: error , name , shy_guts :: current_fsm_system_name ) ;
+    else if ( shy_guts :: current_fsm_actions )
+    {
+        so_called_type_loadable_fsm_content_action_discard action_discard ;
+        action_discard . input = name ;
+        shy_guts :: current_fsm_actions -> discards . push_back ( action_discard ) ;
     }
 }
 
@@ -1565,8 +1609,10 @@ void shy_loadable_parser :: parse ( so_called_lib_std_string line )
             shy_guts :: handle_state_reading_event_type ( ) ;
         else if ( shy_guts :: state == shy_guts :: state_reading_action_token )
             shy_guts :: handle_state_reading_action_token ( ) ;
-        else if ( shy_guts :: state == shy_guts :: state_reading_action_name )
-            shy_guts :: handle_state_reading_action_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_action_do_name )
+            shy_guts :: handle_state_reading_action_do_name ( ) ;
+        else if ( shy_guts :: state == shy_guts :: state_reading_action_discard_input_name )
+            shy_guts :: handle_state_reading_action_discard_input_name ( ) ;
         else if ( shy_guts :: state == shy_guts :: state_reading_action_command_name )
             shy_guts :: handle_state_reading_action_command_name ( ) ;
         else if ( shy_guts :: state == shy_guts :: state_reading_action_command_to_token )
