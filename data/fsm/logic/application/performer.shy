@@ -5,8 +5,6 @@ system logic_application
         state salutation
             on entry
                 command start to salutation_performer
-            on { logic_application_render }
-                do logic_vacuum_render
             to title
                 if { ( machine salutation_performer is finished ) }
         state title

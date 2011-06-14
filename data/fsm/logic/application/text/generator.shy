@@ -7,6 +7,7 @@ system logic_application
             on entry
                 do logic_text_prepare_permit
             on { logic_application_update }
+                discard logic_application_update
                 do logic_text_update
             to finished
                 if { logic_text_prepared }

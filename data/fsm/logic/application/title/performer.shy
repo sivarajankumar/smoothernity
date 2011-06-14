@@ -7,8 +7,10 @@ system logic_application
                 if { ( command start ) stage_title_disabled }
         state performing
             on { logic_application_render }
+                discard logic_application_render
                 do logic_title_render
             on { logic_application_update }
+                discard logic_application_update
                 do logic_title_update
             to finished
                 if { logic_title_finished }

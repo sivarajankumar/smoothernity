@@ -16,6 +16,7 @@ system logic_application
             on entry
                 do logic_salutation_letters_meshes_generator_generate
             on { logic_application_update }
+                discard logic_application_update
                 do logic_salutation_letters_meshes_generator_update
             to finished
                 if { logic_salutation_letters_meshes_generator_generate_finished }

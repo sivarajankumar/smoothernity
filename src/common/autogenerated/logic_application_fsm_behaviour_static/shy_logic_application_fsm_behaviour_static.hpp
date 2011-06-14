@@ -188,7 +188,6 @@ namespace shy_guts
     {
     public :
         virtual void on_entry ( ) ;
-        virtual void on_input ( ) ;
         virtual so_called_type_common_engine_fsm_state & transition ( ) ;
     } ;
 
@@ -738,12 +737,6 @@ so_called_type_common_engine_fsm_state & shy_guts :: type_machine_performer_stat
 void shy_guts :: type_machine_performer_state_salutation :: on_entry ( )
 {
     shy_guts :: behaviour_actions :: salutation_performer_command_start ( ) ;
-}
-
-void shy_guts :: type_machine_performer_state_salutation :: on_input ( )
-{
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . logic_application_render ) )
-        so_called_common_logic_application_fsm_actions :: logic_vacuum_render ( ) ;
 }
 
 so_called_type_common_engine_fsm_state & shy_guts :: type_machine_performer_state_salutation :: transition ( )

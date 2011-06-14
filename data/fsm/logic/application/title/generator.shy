@@ -9,6 +9,7 @@ system logic_application
             on entry
                 do logic_title_launch_permit
             on { logic_application_update }
+                discard logic_application_update
                 do logic_title_update
             to finished
                 if { logic_title_created }
