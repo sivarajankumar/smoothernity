@@ -7,8 +7,10 @@ system logic_application
                 if { ( command start ) stage_salutation_disabled }
         state waiting
             on { logic_application_render }
+                discard logic_application_render
                 do logic_vacuum_render
             on { logic_application_update }
+                discard logic_application_update
                 do logic_vacuum_update
             to appearing
                 if { ( machine salutation_generator is finished ) }
@@ -19,8 +21,10 @@ system logic_application
                 do logic_salutation_letters_animation_roll_in_play
                 do logic_salutation_timer_appear_run
             on { logic_application_render }
+                discard logic_application_render
                 do logic_salutation_renderer_render
             on { logic_application_update }
+                discard logic_application_update
                 do logic_salutation_animation_update
                 do logic_salutation_letters_animation_update
                 do logic_salutation_timer_update
@@ -32,8 +36,10 @@ system logic_application
                 do logic_salutation_letters_animation_roll_out_play
                 do logic_salutation_timer_disappear_run
             on { logic_application_render }
+                discard logic_application_render
                 do logic_salutation_renderer_render
             on { logic_application_update }
+                discard logic_application_update
                 do logic_salutation_animation_update
                 do logic_salutation_letters_animation_update
                 do logic_salutation_timer_update

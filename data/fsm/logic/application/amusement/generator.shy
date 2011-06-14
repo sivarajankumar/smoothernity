@@ -9,6 +9,7 @@ system logic_application
             on entry
                 do logic_amusement_creation_permit
             on { logic_application_update }
+                discard logic_application_update
                 do logic_amusement_update
             to finished
                 if { logic_amusement_created }
