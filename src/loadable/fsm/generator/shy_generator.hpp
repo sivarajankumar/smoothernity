@@ -68,7 +68,6 @@ namespace shy_guts
         static void hpp_guts_behaviour_actions_action_command_declare ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_behaviour_actions_action_command_implement ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_machine_variable ( so_called_lib_std_string & , so_called_lib_std_string ) ;
-        static void hpp_guts_state_environment ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void hpp_guts_states ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void hpp_guts_states_state_variable ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_type_behaviour_inputs ( so_called_lib_std_string & , so_called_lib_std_string ) ;
@@ -76,6 +75,7 @@ namespace shy_guts
         static void hpp_guts_type_behaviour_inputs_condition_state_variable ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_type_machine_state ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_type_machine_state_action_command ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
+        static void hpp_guts_type_machine_state_action_discard ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void hpp_guts_type_machine_state_action_do ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_type_machine_state_condition_command ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_type_machine_state_condition_first_group_first ( so_called_lib_std_string & , so_called_lib_std_string ) ;
@@ -112,7 +112,7 @@ namespace shy_guts
         static void hpp_guts_type_machine_state_transition_if_slim_next ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_type_machine_state_transition_implement ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void hpp_guts_type_machine_state_public ( so_called_lib_std_string & ) ;
-        static void hpp_guts_variables ( so_called_lib_std_string & ) ;
+        static void hpp_guts_variables ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void hpp_path ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void injections_h_contents ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void injections_h_path ( so_called_lib_std_string & , so_called_lib_std_string ) ;
@@ -450,11 +450,6 @@ void shy_guts :: consts :: hpp_behaviour_init
     result += system ;
     result += "_fsm_behaviour_static :: init ( )\n" ;
     result += "{\n" ;
-    result += "    so_called_platform_pointer :: bind\n" ;
-    result += "        ( shy_guts :: state_environment :: behaviour_inputs\n" ;
-    result += "        , shy_guts :: fixed_behaviour_inputs\n" ;
-    result += "        ) ;\n" ;
-    result += "\n" ;
     result += "    shy_guts :: fsm_running = so_called_platform_math_consts :: whole_false ;\n" ;
     result += "\n" ;
     result += bindings ;
@@ -595,11 +590,17 @@ void shy_guts :: consts :: hpp_behaviour_set_inputs
     result . clear ( ) ;
     result += "void so_called_common_" ;
     result += system ;
-    result += "_fsm_behaviour_static :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += "_fsm_behaviour_static :: set_inputs\n" ;
+    result += "    ( so_called_type_platform_pointer_data < so_called_type_common_" ;
     result += system ;
-    result += "_fsm_inputs > inputs )\n" ;
+    result += "_fsm_inputs > inputs_current\n" ;
+    result += "    ( so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += system ;
+    result += "_fsm_inputs > inputs_fixed\n" ;
+    result += "    )\n" ;
     result += "{\n" ;
-    result += "    shy_guts :: state_environment :: inputs = inputs ;\n" ;
+    result += "    shy_guts :: inputs_current = inputs_current ;\n" ;
+    result += "    shy_guts :: inputs_fixed = inputs_fixed ;\n" ;
     result += "}\n" ;
 }
 
@@ -713,6 +714,17 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_action_command
     result += " ( ) ;\n" ;
 }
 
+void shy_guts :: consts :: hpp_guts_type_machine_state_action_discard
+    ( so_called_lib_std_string & result
+    , so_called_lib_std_string input
+    )
+{
+    result . clear ( ) ;
+    result += "shy_guts :: inputs_current . get ( ) . " ;
+    result += input ;
+    result += " = so_called_platform_math_consts :: whole_false ;\n" ;
+}
+
 void shy_guts :: consts :: hpp_guts_type_machine_state_action_do
     ( so_called_lib_std_string & result
     , so_called_lib_std_string system
@@ -733,7 +745,7 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_condition_input
     )
 {
     result . clear ( ) ;
-    result += "so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: inputs . get ( ) . " ;
+    result += "so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . " ;
     result += input ;
     result += " )" ;
 }
@@ -745,7 +757,7 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_condition_state
     )
 {
     result . clear ( ) ;
-    result += "so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_" ;
+    result += "so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_" ;
     result += machine ;
     result += "_state_is_" ;
     result += state ;
@@ -759,7 +771,7 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_condition_command
     )
 {
     result . clear ( ) ;
-    result += "so_called_platform_conditions :: whole_is_true ( shy_guts :: state_environment :: behaviour_inputs . get ( ) . machine_" ;
+    result += "so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_" ;
     result += machine ;
     result += "_command_" ;
     result += command ;
@@ -1217,18 +1229,6 @@ void shy_guts :: consts :: hpp_guts_behaviour_actions_action_command_implement
     result += "}\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_state_environment ( so_called_lib_std_string & result , so_called_lib_std_string system )
-{
-    result . clear ( ) ;
-    result += "    namespace state_environment\n" ;
-    result += "    {\n" ;
-    result += "        static so_called_type_platform_pointer_data < shy_guts :: type_behaviour_inputs > behaviour_inputs ;\n" ;
-    result += "        static so_called_type_platform_pointer_data < so_called_type_common_" ;
-    result += system ;
-    result += "_fsm_inputs > inputs ;\n" ;
-    result += "    }\n" ;
-}
-
 void shy_guts :: consts :: hpp_guts_states ( so_called_lib_std_string & result , so_called_lib_std_string states )
 {
     result . clear ( ) ;
@@ -1260,12 +1260,18 @@ void shy_guts :: consts :: hpp_guts_machine_variable ( so_called_lib_std_string 
     result += "_state ;\n" ;
 }
 
-void shy_guts :: consts :: hpp_guts_variables ( so_called_lib_std_string & result )
+void shy_guts :: consts :: hpp_guts_variables ( so_called_lib_std_string & result , so_called_lib_std_string system )
 {
     result . clear ( ) ;
     result += "    static so_called_type_platform_math_num_whole fsm_running ;\n" ;
-    result += "    static type_behaviour_inputs current_behaviour_inputs ;\n" ;
-    result += "    static type_behaviour_inputs fixed_behaviour_inputs ;\n" ;
+    result += "    static type_behaviour_inputs behaviour_inputs_current ;\n" ;
+    result += "    static type_behaviour_inputs behaviour_inputs_fixed ;\n" ;
+    result += "    static so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += system ;
+    result += "_fsm_inputs > inputs_current ;\n" ;
+    result += "    static so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += system ;
+    result += "_fsm_inputs > inputs_fixed ;\n" ;
 }
 
 void shy_guts :: consts :: injections_h_path ( so_called_lib_std_string & path , so_called_lib_std_string system )
@@ -1319,9 +1325,14 @@ void shy_guts :: consts :: h_contents ( so_called_lib_std_string & result , so_c
     result += "    static void reset_behaviour_input_events ( ) ;\n" ;
     result += "    static void run_fsm_begin ( ) ;\n" ;
     result += "    static void run_fsm_end ( ) ;\n" ;
-    result += "    static void set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += "    static void set_inputs\n" ;
+    result += "        ( so_called_type_platform_pointer_data < so_called_type_common_" ;
     result += system ;
-    result += "_fsm_inputs > ) ;\n" ;
+    result += "_fsm_inputs >\n" ;
+    result += "        , so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += system ;
+    result += "_fsm_inputs >\n" ;
+    result += "        ) ;\n" ;
     result += "    static void tick_all_fsms ( ) ;\n" ;
     result += "    static void update_fixed_behaviour_inputs ( ) ;\n" ;
     result += "} ;\n" ;
@@ -1534,6 +1545,18 @@ void shy_guts :: hpp :: guts_type_machine_state_on_entry_implement
         actions += on_entry_action_command ;
     }
 
+    for ( so_called_type_loadable_fsm_content_action_discard_container :: const_iterator action_discard_i = state_i -> second . on_entry . discards . begin ( )
+        ; action_discard_i != state_i -> second . on_entry . discards . end ( )
+        ; ++ action_discard_i
+        )
+    {
+        so_called_lib_std_string action_discard ;
+        so_called_lib_std_string on_entry_action_discard ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_action_discard ( action_discard , action_discard_i -> input ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_action ( on_entry_action_discard , action_discard ) ;
+        actions += on_entry_action_discard ;
+    }
+
     if ( ! actions . empty ( ) )
         shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_implement ( result , machine_i -> first , state_i -> first , actions ) ;
 }
@@ -1569,6 +1592,18 @@ void shy_guts :: hpp :: guts_type_machine_state_on_exit_implement
         shy_guts :: consts :: hpp_guts_type_machine_state_action_command ( action_command , action_command_i -> machine , action_command_i -> command ) ;
         shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_action ( on_exit_action_command , action_command ) ;
         actions += on_exit_action_command ;
+    }
+
+    for ( so_called_type_loadable_fsm_content_action_discard_container :: const_iterator action_discard_i = state_i -> second . on_exit . discards . begin ( )
+        ; action_discard_i != state_i -> second . on_exit . discards . end ( )
+        ; ++ action_discard_i
+        )
+    {
+        so_called_lib_std_string action_discard ;
+        so_called_lib_std_string on_exit_action_discard ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_action_discard ( action_discard , action_discard_i -> input ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_action ( on_exit_action_discard , action_discard ) ;
+        actions += on_exit_action_discard ;
     }
 
     if ( ! actions . empty ( ) )
@@ -1643,6 +1678,18 @@ void shy_guts :: hpp :: guts_type_machine_state_on_input_actions
         shy_guts :: consts :: hpp_guts_type_machine_state_action_command ( action_command , action_command_i -> machine , action_command_i -> command ) ;
         shy_guts :: consts :: hpp_guts_type_machine_state_on_input_action ( on_input_action_command , action_command ) ;
         result += on_input_action_command ;
+    }
+
+    for ( so_called_type_loadable_fsm_content_action_discard_container :: const_iterator action_discard_i = on_input_i -> actions . discards . begin ( )
+        ; action_discard_i != on_input_i -> actions . discards . end ( )
+        ; ++ action_discard_i
+        )
+    {
+        so_called_lib_std_string action_discard ;
+        so_called_lib_std_string on_input_action_discard ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_action_discard ( action_discard , action_discard_i -> input ) ;
+        shy_guts :: consts :: hpp_guts_type_machine_state_on_input_action ( on_input_action_discard , action_discard ) ;
+        result += on_input_action_discard ;
     }
 }
 
@@ -2123,7 +2170,6 @@ void shy_guts :: hpp :: guts
     so_called_lib_std_string every_guts_machine_variable ;
     so_called_lib_std_string every_guts_type_machine_state_declare ;
     so_called_lib_std_string guts_behaviour_actions ;
-    so_called_lib_std_string guts_namespace_state_environment ;
     so_called_lib_std_string guts_states ;
     so_called_lib_std_string guts_type_behaviour_inputs ;
     so_called_lib_std_string guts_variables ;
@@ -2133,8 +2179,7 @@ void shy_guts :: hpp :: guts
     shy_guts :: hpp :: guts_behaviour_actions ( guts_behaviour_actions , system_i ) ;
     shy_guts :: hpp :: guts_states ( guts_states , system_i ) ;
     shy_guts :: hpp :: guts_type_behaviour_inputs ( guts_type_behaviour_inputs , system_i ) ;
-    shy_guts :: consts :: hpp_guts_state_environment ( guts_namespace_state_environment , system_i -> first ) ;
-    shy_guts :: consts :: hpp_guts_variables ( guts_variables ) ;
+    shy_guts :: consts :: hpp_guts_variables ( guts_variables , system_i -> first ) ;
 
     shy_guts :: consts :: hpp_guts
         ( result
@@ -2145,8 +2190,6 @@ void shy_guts :: hpp :: guts
         + guts_states
         + so_called_loadable_generator_consts :: new_line
         + guts_behaviour_actions
-        + so_called_loadable_generator_consts :: new_line
-        + guts_namespace_state_environment
         + so_called_loadable_generator_consts :: new_line
         + every_guts_machine_variable
         + so_called_loadable_generator_consts :: new_line
