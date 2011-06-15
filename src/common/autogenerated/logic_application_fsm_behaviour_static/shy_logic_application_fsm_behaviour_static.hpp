@@ -1327,7 +1327,7 @@ void so_called_common_logic_application_fsm_behaviour_static :: run_fsm_end ( )
     shy_guts :: fsm_running = so_called_platform_math_consts :: whole_false ;
 }
 
-void so_called_common_logic_application_fsm_behaviour_static :: set_inputs 
+void so_called_common_logic_application_fsm_behaviour_static :: set_inputs
     ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_current
     , so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_fixed
     )
