@@ -600,7 +600,7 @@ void shy_guts :: consts :: hpp_behaviour_set_inputs
     result += "    ( so_called_type_platform_pointer_data < so_called_type_common_" ;
     result += system ;
     result += "_fsm_inputs > inputs_current\n" ;
-    result += "    ( so_called_type_platform_pointer_data < so_called_type_common_" ;
+    result += "    , so_called_type_platform_pointer_data < so_called_type_common_" ;
     result += system ;
     result += "_fsm_inputs > inputs_fixed\n" ;
     result += "    )\n" ;
