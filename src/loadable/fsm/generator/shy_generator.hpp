@@ -313,17 +313,23 @@ namespace shy_guts
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             ) ;
-        static void system_machine_state_action_do
-            ( so_called_type_loadable_fsm_content_system_container :: const_iterator
-            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
-            , so_called_type_loadable_fsm_content_state_container :: const_iterator
-            , so_called_type_loadable_fsm_content_action_do_container :: const_iterator
-            ) ;
         static void system_machine_state_action_command
             ( so_called_type_loadable_fsm_content_system_container :: const_iterator
             , so_called_type_loadable_fsm_content_machine_container :: const_iterator
             , so_called_type_loadable_fsm_content_state_container :: const_iterator
             , so_called_type_loadable_fsm_content_action_command_container :: const_iterator
+            ) ;
+        static void system_machine_state_action_discard
+            ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+            , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            , so_called_type_loadable_fsm_content_action_discard_container :: const_iterator
+            ) ;
+        static void system_machine_state_action_do
+            ( so_called_type_loadable_fsm_content_system_container :: const_iterator
+            , so_called_type_loadable_fsm_content_machine_container :: const_iterator
+            , so_called_type_loadable_fsm_content_state_container :: const_iterator
+            , so_called_type_loadable_fsm_content_action_do_container :: const_iterator
             ) ;
         static void system_machine_state_actions
             ( so_called_type_loadable_fsm_content_system_container :: const_iterator
@@ -405,12 +411,12 @@ void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_condi
 {
     result . clear ( ) ;
     result += "so_called_platform_conditions :: wholes_are_equal\n" ;
-    result += "            ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += "            ( shy_guts :: behaviour_inputs_current . machine_" ;
     result += machine ;
     result += "_command_" ;
     result += command ;
     result += "\n" ;
-    result += "            , shy_guts :: fixed_behaviour_inputs . machine_" ;
+    result += "            , shy_guts :: behaviour_inputs_fixed . machine_" ;
     result += machine ;
     result += "_command_" ;
     result += command ;
@@ -426,12 +432,12 @@ void shy_guts :: consts :: hpp_behaviour_determine_behaviour_inputs_change_condi
 {
     result . clear ( ) ;
     result += "so_called_platform_conditions :: wholes_are_equal\n" ;
-    result += "            ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += "            ( shy_guts :: behaviour_inputs_current . machine_" ;
     result += machine ;
     result += "_state_is_" ;
     result += state ;
     result += "\n" ;
-    result += "            , shy_guts :: fixed_behaviour_inputs . machine_" ;
+    result += "            , shy_guts :: behaviour_inputs_fixed . machine_" ;
     result += machine ;
     result += "_state_is_" ;
     result += state ;
@@ -509,7 +515,7 @@ void shy_guts :: consts :: hpp_behaviour_recalc_current_behaviour_inputs_check_m
 {
     result . clear ( ) ;
     result += "    so_called_platform_pointer :: is_bound_to\n" ;
-    result += "        ( shy_guts :: current_behaviour_inputs . machine_" ;
+    result += "        ( shy_guts :: behaviour_inputs_current . machine_" ;
     result += machine ;
     result += "_state_is_" ;
     result += state ;
@@ -547,7 +553,7 @@ void shy_guts :: consts :: hpp_behaviour_reset_behaviour_input_events_reset_mach
     )
 {
     result . clear ( ) ;
-    result += "    shy_guts :: current_behaviour_inputs . machine_" ;
+    result += "    shy_guts :: behaviour_inputs_current . machine_" ;
     result += machine ;
     result += "_command_" ;
     result += command ;
@@ -640,7 +646,7 @@ void shy_guts :: consts :: hpp_behaviour_update_fixed_behaviour_inputs
     result += system ;
     result += "_fsm_behaviour_static :: update_fixed_behaviour_inputs ( )\n" ;
     result += "{\n" ;
-    result += "    shy_guts :: fixed_behaviour_inputs = shy_guts :: current_behaviour_inputs ;\n" ;
+    result += "    shy_guts :: behaviour_inputs_fixed = shy_guts :: behaviour_inputs_current ;\n" ;
     result += "}\n" ;
 }
 
@@ -1221,7 +1227,7 @@ void shy_guts :: consts :: hpp_guts_behaviour_actions_action_command_implement
     result += command ;
     result += " ( )\n" ;
     result += "{\n" ;
-    result += "    shy_guts :: current_behaviour_inputs . machine_" ;
+    result += "    shy_guts :: behaviour_inputs_current . machine_" ;
     result += machine ;
     result += "_command_" ;
     result += command ;
@@ -2261,8 +2267,13 @@ void shy_guts :: hpp :: guts_type_machine_state_on_entry_declare
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
-    if ( ! state_i -> second . on_entry . actions . empty ( ) || ! state_i -> second . on_entry . commands . empty ( ) )
+    if ( ! state_i -> second . on_entry . actions . empty ( )
+      || ! state_i -> second . on_entry . commands . empty ( )
+      || ! state_i -> second . on_entry . discards . empty ( )
+       )
+    {
         shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_declare ( result ) ;
+    }
 }
 
 void shy_guts :: hpp :: guts_type_machine_state_on_exit_declare
@@ -2270,8 +2281,13 @@ void shy_guts :: hpp :: guts_type_machine_state_on_exit_declare
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     )
 {
-    if ( ! state_i -> second . on_exit . actions . empty ( ) || ! state_i -> second . on_exit . commands . empty ( ) )
+    if ( ! state_i -> second . on_exit . actions . empty ( ) 
+      || ! state_i -> second . on_exit . commands . empty ( ) 
+      || ! state_i -> second . on_exit . discards . empty ( ) 
+       )
+    {
         shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_declare ( result ) ;
+    }
 }
 
 void shy_guts :: hpp :: guts_type_machine_state_on_input_declare
@@ -2524,6 +2540,14 @@ void shy_guts :: prepare :: system_machine_state_actions
     {
         shy_guts :: prepare :: system_machine_state_action_command ( system_i , machine_i , state_i , action_command_i ) ;
     }
+
+    for ( so_called_type_loadable_fsm_content_action_discard_container :: const_iterator action_discard_i = actions . discards . begin ( )
+        ; action_discard_i != actions . discards . end ( )
+        ; ++ action_discard_i
+        )
+    {
+        shy_guts :: prepare :: system_machine_state_action_discard ( system_i , machine_i , state_i , action_discard_i ) ;
+    }
 }
 
 void shy_guts :: prepare :: system_machine_state_action_do
@@ -2531,6 +2555,15 @@ void shy_guts :: prepare :: system_machine_state_action_do
     , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
     , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
     , so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i
+    )
+{
+}
+
+void shy_guts :: prepare :: system_machine_state_action_discard
+    ( so_called_type_loadable_fsm_content_system_container :: const_iterator system_i
+    , so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i
+    , so_called_type_loadable_fsm_content_state_container :: const_iterator state_i
+    , so_called_type_loadable_fsm_content_action_discard_container :: const_iterator action_discard_i
     )
 {
 }
@@ -2647,6 +2680,7 @@ void shy_guts :: lookup :: single_action
     so_called_lib_std_int32_t count = 0;
     count += so_called_lib_std_int32_t ( actions . actions . size ( ) ) ;
     count += so_called_lib_std_int32_t ( actions . commands . size ( ) ) ;
+    count += so_called_lib_std_int32_t ( actions . discards . size ( ) ) ;
     if ( count == 1 )
         result = so_called_lib_std_true ;
     else
