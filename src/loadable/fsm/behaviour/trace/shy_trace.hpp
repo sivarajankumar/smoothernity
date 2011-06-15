@@ -16,6 +16,21 @@ void shy_loadable_fsm_behaviour_trace :: machine_state_action_command
     so_called_lib_std_cerr << so_called_lib_std_endl ;
 }
 
+void shy_loadable_fsm_behaviour_trace :: machine_state_action_discard
+    ( so_called_lib_std_string machine
+    , so_called_lib_std_string state
+    , so_called_lib_std_string input
+    )
+{
+    so_called_lib_std_cerr << "machine " ;
+    so_called_lib_std_cerr << machine ;
+    so_called_lib_std_cerr << " state " ;
+    so_called_lib_std_cerr << state ;
+    so_called_lib_std_cerr << " action discard " ;
+    so_called_lib_std_cerr << input ;
+    so_called_lib_std_cerr << so_called_lib_std_endl ;
+}
+
 void shy_loadable_fsm_behaviour_trace :: machine_state_action_do 
     ( so_called_lib_std_string machine
     , so_called_lib_std_string state

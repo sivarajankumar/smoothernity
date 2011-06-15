@@ -31,9 +31,11 @@ private :
             , const so_called_type_loadable_fsm_content_condition_state_container &
             ) ;
         void _execute_action_command ( so_called_type_loadable_fsm_content_action_command_container :: const_iterator ) ;
+        void _execute_action_discard ( so_called_type_loadable_fsm_content_action_discard_container :: const_iterator ) ;
         void _execute_action_do ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator ) ;
         void _execute_actions ( const so_called_type_loadable_fsm_content_actions & ) ;
         void _execute_actions_commands ( const so_called_type_loadable_fsm_content_action_command_container & ) ;
+        void _execute_actions_discard ( const so_called_type_loadable_fsm_content_action_discard_container & ) ;
         void _execute_actions_do ( const so_called_type_loadable_fsm_content_action_do_container & ) ;
     public :
         shy_loadable_fsm_behaviour < type_fsm_inputs > * _behaviour ;
@@ -404,6 +406,20 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > 
 :: type_fsm_state 
+:: _execute_actions_discard ( const so_called_type_loadable_fsm_content_action_discard_container & action_discard_container )
+{
+    for ( so_called_type_loadable_fsm_content_action_discard_container :: const_iterator action_discard_i = action_discard_container . begin ( )
+        ; action_discard_i != action_discard_container . end ( )
+        ; ++ action_discard_i
+        )
+    {
+        _execute_action_discard ( action_discard_i ) ;
+    }
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
 :: _execute_actions_do ( const so_called_type_loadable_fsm_content_action_do_container & action_do_container )
 {
     for ( so_called_type_loadable_fsm_content_action_do_container :: const_iterator action_do_i = action_do_container . begin ( )
@@ -437,6 +453,28 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( command_i -> command ) ;
 
     fsm_behaviour_input_command_i -> second . active = so_called_lib_std_true ;
+}
+
+template < typename type_fsm_inputs >
+void shy_loadable_fsm_behaviour < type_fsm_inputs > 
+:: type_fsm_state 
+:: _execute_action_discard ( so_called_type_loadable_fsm_content_action_discard_container :: const_iterator action_discard_i )
+{
+    if ( so_called_loadable_fsm_behaviour_consts :: trace_fsm )
+    {
+        so_called_loadable_fsm_behaviour_trace :: machine_state_action_discard
+            ( _machine_i -> first 
+            , _state_i -> first
+            , action_discard_i -> input
+            ) ;
+    }
+
+    so_called_type_loadable_fsm_content_input_binding_container :: const_iterator input_binding_i ;
+    type_fsm_input_binding input_binding ;
+
+    input_binding_i = _system_i -> second . inputs . find ( action_discard_i -> input ) ;
+    input_binding = reinterpret_cast < type_fsm_input_binding > ( input_binding_i -> second ) ;
+    _behaviour -> _inputs_current . get ( ) .* input_binding = so_called_platform_math_consts :: whole_false ;
 }
 
 template < typename type_fsm_inputs >
