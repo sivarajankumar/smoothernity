@@ -39,9 +39,12 @@ void shy_common_logic_application_fsm_behaviour_loadable :: run_fsm_end ( )
     shy_guts :: behaviour . run_fsm_end ( ) ;
 }
 
-void shy_common_logic_application_fsm_behaviour_loadable :: set_inputs ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs )
+void shy_common_logic_application_fsm_behaviour_loadable :: set_inputs 
+    ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_current
+    , so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_fixed
+    )
 {
-    shy_guts :: behaviour . set_inputs ( inputs ) ;
+    shy_guts :: behaviour . set_inputs ( inputs_current , inputs_fixed ) ;
 }
 
 void shy_common_logic_application_fsm_behaviour_loadable :: tick_all_fsms ( )
