@@ -95,7 +95,10 @@ public :
     void reset_behaviour_input_events ( ) ;
     void run_fsm_begin ( ) ;
     void run_fsm_end ( ) ;
-    void set_inputs ( so_called_type_platform_pointer_data < type_fsm_inputs > ) ;
+    void set_inputs 
+        ( so_called_type_platform_pointer_data < type_fsm_inputs > 
+        , so_called_type_platform_pointer_data < type_fsm_inputs > 
+        ) ;
     void set_system_binding ( so_called_type_loadable_fsm_content_system_binding ) ;
     void tick_all_fsms ( ) ;
     void update_fixed_behaviour_inputs ( ) ;
@@ -171,7 +174,8 @@ private :
     type_fsm_behaviour_inputs _behaviour_inputs_current ;
     type_fsm_behaviour_inputs _behaviour_inputs_fixed ;
     so_called_type_platform_math_num_whole _fsm_running ;
-    so_called_type_platform_pointer_data < type_fsm_inputs > _inputs ;
+    so_called_type_platform_pointer_data < type_fsm_inputs > _inputs_current ;
+    so_called_type_platform_pointer_data < type_fsm_inputs > _inputs_fixed ;
     type_fsm_machine_container _machines ;
     so_called_type_loadable_fsm_content_system_binding _system_binding ;
 } ;
@@ -336,7 +340,7 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 
         input_binding_i = _system_i -> second . inputs . find ( condition_input_i -> input ) ;
         input_binding = reinterpret_cast < type_fsm_input_binding > ( input_binding_i -> second ) ;
-        condition = _behaviour -> _inputs . get ( ) .* input_binding ;
+        condition = _behaviour -> _inputs_fixed . get ( ) .* input_binding ;
 
         if ( so_called_platform_conditions :: whole_is_false ( condition ) )
         {
@@ -587,9 +591,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_system_binding ( so_c
 }
 
 template < typename type_fsm_inputs >
-void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_inputs ( so_called_type_platform_pointer_data < type_fsm_inputs > inputs )
+void shy_loadable_fsm_behaviour < type_fsm_inputs > :: set_inputs 
+    ( so_called_type_platform_pointer_data < type_fsm_inputs > inputs_current
+    , so_called_type_platform_pointer_data < type_fsm_inputs > inputs_fixed
+    )
 {
-    _inputs = inputs ;
+    _inputs_current = inputs_current ;
+    _inputs_fixed = inputs_fixed ;
 }
 
 template < typename type_fsm_inputs >
