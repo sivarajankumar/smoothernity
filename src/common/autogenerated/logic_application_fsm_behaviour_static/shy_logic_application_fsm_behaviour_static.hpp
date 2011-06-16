@@ -1197,6 +1197,8 @@ void so_called_common_logic_application_fsm_behaviour_static :: determine_behavi
 
 void so_called_common_logic_application_fsm_behaviour_static :: init ( )
 {
+    reset_behaviour_input_events ( ) ;
+
     shy_guts :: fsm_running = so_called_platform_math_consts :: whole_false ;
 
     so_called_platform_pointer :: bind

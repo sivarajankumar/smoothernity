@@ -549,6 +549,9 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
 template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: init ( )
 {
+    _behaviour_inputs_current = type_fsm_behaviour_inputs ( ) ;
+    _behaviour_inputs_fixed = type_fsm_behaviour_inputs ( ) ;
+    _machines = type_fsm_machine_container ( ) ;
     _fsm_running = so_called_platform_math_consts :: whole_false ;
     _init_system ( ) ;
 }

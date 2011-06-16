@@ -456,6 +456,8 @@ void shy_guts :: consts :: hpp_behaviour_init
     result += system ;
     result += "_fsm_behaviour_static :: init ( )\n" ;
     result += "{\n" ;
+    result += "    reset_behaviour_input_events ( ) ;\n" ;
+    result += "\n" ;
     result += "    shy_guts :: fsm_running = so_called_platform_math_consts :: whole_false ;\n" ;
     result += "\n" ;
     result += bindings ;
