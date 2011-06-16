@@ -194,6 +194,10 @@ void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_engine
 
 void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_init )
 {
+    shy_guts :: engine_render_mesh_create_state :: finalized = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_blanket_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_create )
