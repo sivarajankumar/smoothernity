@@ -18,6 +18,7 @@
 #include "../../logic/door/animation/shy_animation_injections.h"
 #include "../../logic/door/mesh/shy_mesh_injections.h"
 #include "../../logic/door/renderer/shy_renderer_injections.h"
+#include "../../logic/door/texture/shy_texture_injections.h"
 #include "../../logic/entities/shy_entities_injections.h"
 #include "../../logic/fidget/shy_fidget_injections.h"
 #include "../../logic/game/shy_game_injections.h"
