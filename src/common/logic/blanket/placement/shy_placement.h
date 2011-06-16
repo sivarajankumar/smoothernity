@@ -1,6 +1,7 @@
 class _shy_common_logic_blanket_placement
 {
 public :
+    static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_blanket_animation_transform_reply ) ;
     static void receive ( so_called_message_common_logic_blanket_place ) ;
     static void register_in_scheduler ( ) ;
