@@ -4,6 +4,7 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_engine_render :: receive ( msg ) ;
     so_called_common_logic_amusement_renderer :: receive ( msg ) ;
     so_called_common_logic_application_fsm :: receive ( msg ) ;
+    so_called_common_logic_blanket_animation :: receive ( msg ) ;
     so_called_common_logic_blanket_animation_appear :: receive ( msg ) ;
     so_called_common_logic_blanket_animation_disappear :: receive ( msg ) ;
     so_called_common_logic_blanket_animation_fit :: receive ( msg ) ;
