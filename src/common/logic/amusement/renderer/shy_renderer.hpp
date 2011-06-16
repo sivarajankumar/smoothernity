@@ -237,6 +237,23 @@ void shy_guts :: use_observer_size ( )
     so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
 }
 
+void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_amusement_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_blanket_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_blanket_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_door_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_door_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_observer_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_observer_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_perspective_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_perspective_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_amusement_renderer :: receive ( so_called_message_common_logic_amusement_render )
 {
     shy_guts :: logic_amusement_render_state :: requested = so_called_platform_math_consts :: whole_true ;
