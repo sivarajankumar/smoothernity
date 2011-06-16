@@ -84,6 +84,13 @@ void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_comm
     }
 }
 
+void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_common_init )
+{
+    shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_blanket_animation_fit_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_blanket_animation_fit :: receive ( so_called_message_common_logic_blanket_animation_fit_transform_request )
 {
     shy_guts :: logic_blanket_animation_fit_transform_state :: requested = so_called_platform_math_consts :: whole_true ;

@@ -2,6 +2,7 @@ class _shy_common_logic_blanket_animation_fit
 {
 public :
     static void receive ( so_called_message_common_engine_render_aspect_reply ) ;
+    static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_blanket_animation_fit_transform_request ) ;
     static void register_in_scheduler ( ) ;
 } ;
