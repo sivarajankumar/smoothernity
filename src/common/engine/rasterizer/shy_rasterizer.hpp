@@ -391,6 +391,8 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_init )
 {
+    shy_guts :: texture_id = so_called_type_common_engine_render_texture_id ( ) ;
+    shy_guts :: texel = so_called_type_platform_render_texel_data ( ) ;
     shy_guts :: origin_x = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: origin_y = so_called_platform_math_consts :: whole_0 ;
 }
