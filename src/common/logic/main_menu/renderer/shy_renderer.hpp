@@ -215,6 +215,24 @@ void shy_guts :: use_ortho_projection ( )
     so_called_sender_common_engine_render_projection_ortho :: send ( msg ) ;
 }
 
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_main_menu_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_meshes_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_meshes_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_mesh_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_mesh_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_fidget_render_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_fidget_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_text_use_text_texture_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: permitted = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_fidget_render_reply )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_fidget_render_state :: requested ) )
