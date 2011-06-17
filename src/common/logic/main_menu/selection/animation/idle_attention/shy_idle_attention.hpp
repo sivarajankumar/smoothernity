@@ -82,6 +82,12 @@ void shy_guts :: compute_animation_scale
     so_called_platform_math :: add_to_fract ( scale , offset ) ;        
 }
 
+void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_main_menu_update_state :: launch_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
+}
+
 void _shy_common_logic_main_menu_selection_animation_idle_attention :: receive ( so_called_message_common_logic_main_menu_launch_permit )
 {
     shy_guts :: logic_main_menu_update_state :: launch_permitted = so_called_platform_math_consts :: whole_true ;
