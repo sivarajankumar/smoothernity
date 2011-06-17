@@ -69,6 +69,17 @@ void shy_guts :: texture_created ( )
     so_called_sender_common_logic_room_render_permit :: send ( so_called_message_common_logic_room_render_permit ( ) ) ;
 }
 
+void _shy_common_logic_room :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_room_creation_permit_state :: creation_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_texture_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_texture_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_update_state :: launch_permitted = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_room_update_state :: time = so_called_platform_math_consts :: fract_0 ;
+}
+
 void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_creation_permit )
 {
     shy_guts :: logic_room_creation_permit_state :: creation_permitted = so_called_platform_math_consts :: whole_true ;
