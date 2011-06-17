@@ -178,6 +178,17 @@ void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_
     }
 }
 
+void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_init )
+{
+    shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_boundaries_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_boundaries_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_cols_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_cols_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_layout_position_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_main_menu_letters_layout_position :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_boundaries_state :: requested ) )
