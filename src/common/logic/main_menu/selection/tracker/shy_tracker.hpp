@@ -261,6 +261,17 @@ void shy_guts :: send_reply ( )
     so_called_sender_common_logic_main_menu_selection_track_reply :: send ( so_called_message_common_logic_main_menu_selection_track_reply ( ) ) ;
 }
 
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_layout_row_rect_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_rows_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_rows_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_controls_state_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: requested ) )
