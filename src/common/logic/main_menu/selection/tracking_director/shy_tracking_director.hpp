@@ -135,11 +135,14 @@ void shy_guts :: start_unselection ( )
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_init )
 {
+    shy_guts :: logic_main_menu_selection_track_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_selection_tracking_director_update_state :: appear_animation_in_progress = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: first_selection = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selection_animation_in_progress = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_selection_tracking_director_update_state :: unselection_animation_in_progress = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_main_menu_selection_tracking_director_update_state :: first_selection = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_message_common_logic_main_menu_selection_animation_appear_finished )
