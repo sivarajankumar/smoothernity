@@ -182,6 +182,12 @@ void shy_guts :: mesh_set_triangle_strip_index_value
     so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
 }
 
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_init )
+{
+    shy_guts :: animation_transform_requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: creation_requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: creation_requested ) )
