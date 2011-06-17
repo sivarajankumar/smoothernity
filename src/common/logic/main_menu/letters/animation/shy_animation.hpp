@@ -282,6 +282,24 @@ void shy_guts :: reply_animated_transform ( )
     so_called_sender_common_logic_main_menu_letters_animation_transform_reply :: send ( msg ) ;
 }
 
+void _shy_common_logic_main_menu_letters_animation :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_main_menu_letters_animation :: receive ( so_called_message_common_logic_main_menu_letters_animation_appear_transform_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: requested )
