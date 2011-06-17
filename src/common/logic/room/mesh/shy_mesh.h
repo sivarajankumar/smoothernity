@@ -2,6 +2,7 @@ class _shy_common_logic_room_mesh
 {
 public :
     static void receive ( so_called_message_common_engine_render_mesh_create_reply ) ;
+    static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_room_mesh_create ) ;
     static void receive ( so_called_message_common_logic_room_mesh_render_request ) ;
     static void register_in_scheduler ( ) ;

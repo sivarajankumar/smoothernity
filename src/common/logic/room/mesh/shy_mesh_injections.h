@@ -3,9 +3,8 @@
 
 #include "../message/mesh_create/shy_mesh_create_injections.h"
 #include "../message/mesh_render_request/shy_mesh_render_request_injections.h"
-
 #include "../../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
-
+#include "../../../message/init/shy_init_injections.h"
 #include "../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_mesh.h"
