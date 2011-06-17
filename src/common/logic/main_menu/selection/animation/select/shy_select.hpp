@@ -81,6 +81,12 @@ void shy_guts :: reply_computed_transform ( )
     so_called_sender_common_logic_main_menu_selection_animation_select_transform_reply :: send ( msg ) ;
 }
 
+void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_main_menu_update_state :: select_started = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
+}
+
 void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_logic_main_menu_selection_animation_select_start )
 {
     shy_guts :: logic_main_menu_update_state :: select_started = so_called_platform_math_consts :: whole_true ;

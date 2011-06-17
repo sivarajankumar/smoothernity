@@ -3,9 +3,8 @@
 
 #include "../message/select_start/shy_select_start_injections.h"
 #include "../message/select_transform_request/shy_select_transform_request_injections.h"
-
 #include "../../../message/update/shy_update_injections.h"
-
+#include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_select.h"
