@@ -33,6 +33,8 @@
 #include "../../logic/main_menu/letters/animation/idle/shy_idle_injections.h"
 #include "../../logic/main_menu/letters/animation/selection/shy_selection_injections.h"
 #include "../../logic/main_menu/letters/animation/selection_push/shy_selection_push_injections.h"
+#include "../../logic/main_menu/letters/animation/selection_weight/shy_selection_weight_injections.h"
+#include "../../logic/main_menu/letters/animation/unselection_weight/shy_unselection_weight_injections.h"
 #include "../../logic/main_menu/letters/meshes/creation_director/shy_creation_director_injections.h"
 #include "../../logic/main_menu/letters/meshes/creator/shy_creator_injections.h"
 #include "../../logic/main_menu/letters/meshes/storage/shy_storage_injections.h"

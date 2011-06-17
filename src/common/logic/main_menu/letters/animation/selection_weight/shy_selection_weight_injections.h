@@ -4,9 +4,8 @@
 #include "../message/selection_weight_request/shy_selection_weight_request_injections.h"
 #include "../message/selection_weight_select_row/shy_selection_weight_select_row_injections.h"
 #include "../message/selection_weight_unselect_row/shy_selection_weight_unselect_row_injections.h"
-
 #include "../../../message/update/shy_update_injections.h"
-
+#include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_selection_weight.h"
