@@ -29,6 +29,7 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_main_menu_animation :: receive ( msg ) ;
     so_called_common_logic_main_menu_animation_shake :: receive ( msg ) ;
     so_called_common_logic_main_menu_choice :: receive ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_animation_appear :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_animation_disappear :: receive ( msg ) ;
     so_called_common_logic_main_menu_letters_animation_idle :: receive ( msg ) ;
