@@ -76,6 +76,7 @@ void shy_guts :: reply_computed_transform ( )
 
 void _shy_common_logic_main_menu_selection_animation_disappear :: receive ( so_called_message_common_init )
 {
+    shy_guts :: logic_main_menu_update_state :: disappear_started = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
