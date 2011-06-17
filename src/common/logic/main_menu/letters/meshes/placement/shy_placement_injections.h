@@ -5,9 +5,8 @@
 #include "../message/mesh_id_reply/shy_mesh_id_reply_injections.h"
 #include "../message/mesh_row_col_reply/shy_mesh_row_col_reply_injections.h"
 #include "../message/place/shy_place_injections.h"
-
 #include "../../animation/message/transform_reply/shy_transform_reply_injections.h"
-
+#include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_placement.h"

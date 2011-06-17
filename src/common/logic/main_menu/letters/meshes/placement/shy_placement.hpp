@@ -153,6 +153,19 @@ void shy_guts :: move_to_next_mesh ( )
     }
 }
 
+void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_main_menu_letters_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_mesh_id_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_mesh_id_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_mesh_row_col_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_mesh_row_col_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_meshes_count_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_meshes_count_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_meshes_place_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_main_menu_letters_meshes_placement :: receive ( so_called_message_common_logic_main_menu_letters_animation_transform_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_animation_transform_state :: requested )
