@@ -57,6 +57,7 @@
 #include "../../logic/main_menu/selection/animation/shy_animation_injections.h"
 #include "../../logic/main_menu/selection/animation/unselect/shy_unselect_injections.h"
 #include "../../logic/main_menu/selection/mesh/shy_mesh_injections.h"
+#include "../../logic/main_menu/selection/tracker/shy_tracker_injections.h"
 #include "../../logic/main_menu/selection/tracking_director/shy_tracking_director_injections.h"
 #include "../../logic/main_menu/shy_main_menu_injections.h"
 #include "../../logic/observer/animation/flight/shy_flight_injections.h"
