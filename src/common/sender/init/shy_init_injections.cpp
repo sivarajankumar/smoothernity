@@ -48,6 +48,7 @@
 #include "../../logic/main_menu/renderer/shy_renderer_injections.h"
 #include "../../logic/main_menu/selection/animation/appear/shy_appear_injections.h"
 #include "../../logic/main_menu/selection/animation/disappear/shy_disappear_injections.h"
+#include "../../logic/main_menu/selection/animation/idle/shy_idle_injections.h"
 #include "../../logic/main_menu/selection/animation/push/shy_push_injections.h"
 #include "../../logic/main_menu/selection/animation/push_weight/shy_push_weight_injections.h"
 #include "../../logic/main_menu/selection/tracking_director/shy_tracking_director_injections.h"

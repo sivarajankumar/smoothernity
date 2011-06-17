@@ -123,6 +123,13 @@ void shy_guts :: compute_empty_mesh_transform ( )
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y = zero ;
 }
 
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_main_menu_letters_layout_row_rect_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested )

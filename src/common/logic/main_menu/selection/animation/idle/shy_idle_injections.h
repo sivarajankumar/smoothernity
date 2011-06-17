@@ -4,9 +4,8 @@
 #include "../message/idle_row_selected/shy_idle_row_selected_injections.h"
 #include "../message/idle_transform_request/shy_idle_transform_request_injections.h"
 #include "../message/idle_void_selected/shy_idle_void_selected_injections.h"
-
 #include "../../../letters/layout/message/row_rect_reply/shy_row_rect_reply_injections.h"
-
+#include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_idle.h"
