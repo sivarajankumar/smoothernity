@@ -112,7 +112,10 @@ void shy_guts :: reply_weight ( )
 
 void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_init )
 {
+    shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: clicked = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_update_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
