@@ -178,6 +178,13 @@ void shy_guts :: z_near ( so_called_type_platform_math_num_fract & arg_z_near )
     so_called_platform_math :: add_fracts ( arg_z_near , aspect_width , aspect_height ) ;
 }
 
+void _shy_common_logic_perspective :: receive ( so_called_message_common_init )
+{
+    shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_perspective_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_perspective :: receive ( so_called_message_common_engine_render_aspect_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_aspect_state :: requested ) )
