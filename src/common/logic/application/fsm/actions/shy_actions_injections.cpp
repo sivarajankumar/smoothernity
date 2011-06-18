@@ -18,6 +18,7 @@
 #include "../../../salutation/letters/animation/roll_in/sender/play/shy_play_injections.h"
 #include "../../../salutation/letters/animation/roll_out/sender/play/shy_play_injections.h"
 #include "../../../salutation/letters/animation/sender/update/shy_update_injections.h"
+#include "../../../salutation/letters/meshes/cleaner/sender/clean/shy_clean_injections.h"
 #include "../../../salutation/letters/meshes/cleaner/sender/update/shy_update_injections.h"
 #include "../../../salutation/letters/meshes/generator/sender/generate/shy_generate_injections.h"
 #include "../../../salutation/letters/meshes/generator/sender/update/shy_update_injections.h"
