@@ -19,6 +19,7 @@ public :
     static void logic_salutation_letters_animation_roll_in_play ( ) ;
     static void logic_salutation_letters_animation_roll_out_play ( ) ;
     static void logic_salutation_letters_animation_update ( ) ;
+    static void logic_salutation_letters_meshes_cleaner_update ( ) ;
     static void logic_salutation_letters_meshes_generator_generate ( ) ;
     static void logic_salutation_letters_meshes_generator_update ( ) ;
     static void logic_salutation_letters_text_generator_generate ( ) ;
