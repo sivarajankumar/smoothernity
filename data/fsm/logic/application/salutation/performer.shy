@@ -46,4 +46,3 @@ system logic_application
             to finished
                 if { logic_salutation_timer_disappear_run_finished }
         state finished
-
