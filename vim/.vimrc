@@ -8,7 +8,17 @@ set ruler
 set history=100
 set backspace=indent,eol,start
 set laststatus=2
+mapclear
+
 nnoremap j gj
 nnoremap k gk
-nnoremap $ g$
-nnoremap ^ g^
+nnoremap <down> gj
+nnoremap <up> gk
+
+vnoremap j gj
+vnoremap k gk
+vnoremap <down> gj
+vnoremap <up> gk
+
+inoremap <up> <c-o>gk
+inoremap <down> <c-o>gj
