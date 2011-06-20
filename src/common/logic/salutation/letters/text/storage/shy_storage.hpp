@@ -1,8 +1,38 @@
+namespace shy_guts
+{
+    class type_entry
+    {
+    public :
+        so_called_type_common_logic_text_letter_id letter ;
+    } ;
+
+    namespace consts
+    {
+        static so_called_type_platform_math_const_int_32 max_entries_int = 32 ;
+        static so_called_type_platform_math_num_whole max_entries = so_called_platform_math :: init_num_whole ( max_entries_int ) ;
+    }
+
+    static so_called_type_platform_static_array_data < type_entry , shy_guts :: consts :: max_entries_int > entries_data ;
+    so_called_type_platform_math_num_whole entries_count ;
+}
+
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_text_storage > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
-void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_add_letter )
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_init )
 {
+    shy_guts :: entries_count = so_called_platform_math_consts :: whole_0 ;
+}
+
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_add_letter msg )
+{
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: entries_count , shy_guts :: consts :: max_entries ) )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: type_entry > entry ;
+        so_called_platform_static_array :: element_ptr ( entry , shy_guts :: entries_data , shy_guts :: entries_count ) ;
+        entry . get ( ) . letter = msg . letter ;
+        so_called_platform_math :: inc_whole ( shy_guts :: entries_count ) ;
+    }
 }
 
 void _shy_common_logic_salutation_letters_text_storage :: register_in_scheduler ( )
