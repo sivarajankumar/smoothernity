@@ -66,7 +66,7 @@ void shy_loadable_loader :: load ( )
 {
     shy_guts :: prepare ( ) ;
     shy_guts :: read_input ( ) ;
-    shy_guts :: write_output ( ) ;
     shy_guts :: use_loaded_data ( ) ;
+    shy_guts :: write_output ( ) ;
 }
 

@@ -1,0 +1,2 @@
+consts logic_salutation_letters_meshes
+    time_between_creation 50 / 1000
