@@ -78,6 +78,7 @@
 #include "../logic/salutation/letters/animation/roll_out/shy_roll_out_injections.h"
 #include "../logic/salutation/letters/meshes/cleaner/shy_cleaner_injections.h"
 #include "../logic/salutation/letters/meshes/generator/shy_generator_injections.h"
+#include "../logic/salutation/letters/meshes/shaper/shy_shaper_injections.h"
 #include "../logic/salutation/letters/text/generator/shy_generator_injections.h"
 #include "../logic/salutation/letters/text/storage/shy_storage_injections.h"
 #include "../logic/salutation/renderer/shy_renderer_injections.h"
