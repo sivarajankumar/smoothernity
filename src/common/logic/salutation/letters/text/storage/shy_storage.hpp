@@ -31,6 +31,13 @@ void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_me
     }
 }
 
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_size_request )
+{
+    so_called_message_common_logic_salutation_letters_text_storage_size_reply msg ;
+    msg . size = shy_guts :: entries_count ;
+    so_called_sender_common_logic_salutation_letters_text_storage_size_reply :: send ( msg ) ;
+}
+
 void _shy_common_logic_salutation_letters_text_storage :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;
