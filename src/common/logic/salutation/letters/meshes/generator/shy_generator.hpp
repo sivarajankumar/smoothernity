@@ -9,6 +9,7 @@ namespace shy_guts
     {
         static so_called_type_platform_math_num_whole requested ;
         static so_called_type_platform_math_num_whole enabled ;
+        static so_called_type_platform_math_num_fract time ;
     }
 
     namespace logic_salutation_letters_text_storage_size_state
@@ -51,6 +52,20 @@ void shy_guts :: handle_update ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_generator_update_state :: enabled ) )
     {
+        so_called_type_platform_math_num_fract time ;
+        so_called_type_platform_math_num_fract time_step ;
+        so_called_type_platform_math_num_fract time_to_create ;
+
+        time = shy_guts :: logic_salutation_letters_meshes_generator_update_state :: time ;
+        time_to_create = so_called_common_logic_salutation_letters_meshes_consts :: time_between_creation ;
+        so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
+        so_called_platform_math :: add_to_fract ( time , time_step ) ;
+        while ( so_called_platform_conditions :: fract_greater_than_fract ( time , time_to_create ) )
+        {
+            so_called_platform_math :: sub_from_fract ( time , time_to_create ) ;
+        }
+
+        shy_guts :: logic_salutation_letters_meshes_generator_update_state :: time = time ;
         shy_guts :: send_generate_finished ( ) ;
     }
 }
@@ -73,6 +88,7 @@ void shy_guts :: send_generate_finished ( )
 void shy_guts :: start_generation ( )
 {
     shy_guts :: logic_salutation_letters_meshes_generator_update_state :: enabled = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_salutation_letters_meshes_generator_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_init )
