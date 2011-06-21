@@ -3,12 +3,12 @@ namespace shy_guts
     namespace logic_salutation_letters_meshes_generator_generate_state
     {
         static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole started ;
     }
 
     namespace logic_salutation_letters_meshes_generator_update_state
     {
         static so_called_type_platform_math_num_whole requested ;
+        static so_called_type_platform_math_num_whole enabled ;
     }
 
     namespace logic_salutation_letters_text_storage_size_state
@@ -49,7 +49,7 @@ void shy_guts :: proceed_with_generation ( )
 
 void shy_guts :: handle_update ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: started ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_generator_update_state :: enabled ) )
     {
         shy_guts :: send_generate_finished ( ) ;
     }
@@ -72,13 +72,13 @@ void shy_guts :: send_generate_finished ( )
 
 void shy_guts :: start_generation ( )
 {
-    shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: started = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_salutation_letters_meshes_generator_update_state :: enabled = so_called_platform_math_consts :: whole_true ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_init )
 {
     shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: requested = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: started = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_salutation_letters_meshes_generator_update_state :: enabled = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_meshes_generator_update_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_text_storage_size_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_text_storage_size_state :: requested = so_called_platform_math_consts :: whole_false ;
