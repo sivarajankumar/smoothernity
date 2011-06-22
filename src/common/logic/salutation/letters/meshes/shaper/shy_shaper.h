@@ -1,6 +1,7 @@
 class _shy_common_logic_salutation_letters_meshes_shaper
 {
 public :
+    static void receive ( so_called_message_common_init ) ;
     static void receive ( so_called_message_common_logic_salutation_letters_meshes_shaper_shape_request ) ;
     static void register_in_scheduler ( ) ;
 } ;
