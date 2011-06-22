@@ -453,6 +453,10 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
     }
 }
 
+void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_mesh_create_reply )
+{
+}
+
 void _shy_common_logic_main_menu_letters_meshes_creator :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;

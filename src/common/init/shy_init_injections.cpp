@@ -85,6 +85,7 @@
 #include "../logic/salutation/timer/appear/shy_appear_injections.h"
 #include "../logic/salutation/timer/disappear/shy_disappear_injections.h"
 #include "../logic/sound/shy_sound_injections.h"
+#include "../logic/text/letter/mesh/shy_mesh_injections.h"
 #include "../logic/text/shy_text_injections.h"
 #include "../logic/title/shy_title_injections.h"
 #include "../logic/touch/shy_touch_injections.h"

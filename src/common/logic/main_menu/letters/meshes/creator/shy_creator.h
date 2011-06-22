@@ -8,6 +8,7 @@ public :
     static void receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_create_next ) ;
     static void receive ( so_called_message_common_logic_main_menu_letters_rows_reply ) ;
     static void receive ( so_called_message_common_logic_text_letter_big_tex_coords_reply ) ;
+    static void receive ( so_called_message_common_logic_text_letter_mesh_create_reply ) ;
     static void register_in_scheduler ( ) ;
 } ;
 
