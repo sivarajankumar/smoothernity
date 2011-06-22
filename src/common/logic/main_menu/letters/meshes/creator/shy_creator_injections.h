@@ -6,7 +6,6 @@
 #include "../../message/letter_reply/shy_letter_reply_injections.h"
 #include "../../message/rows_reply/shy_rows_reply_injections.h"
 #include "../../../../text/letter/mesh/message/create_reply/shy_create_reply_injections.h"
-#include "../../../../text/message/letter_big_tex_coords_reply/shy_letter_big_tex_coords_reply_injections.h"
 #include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
