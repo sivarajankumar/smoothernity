@@ -73,6 +73,7 @@ void shy_sender_common_init :: send ( so_called_message_common_init msg )
     so_called_common_logic_salutation_letters_text_storage :: receive ( msg ) ;
     so_called_common_logic_sound :: receive ( msg ) ;
     so_called_common_logic_text :: receive ( msg ) ;
+    so_called_common_logic_text_letter_mesh :: receive ( msg ) ;
     so_called_common_logic_title :: receive ( msg ) ;
     so_called_common_logic_touch :: receive ( msg ) ;
     so_called_common_logic_vacuum :: receive ( msg ) ;
