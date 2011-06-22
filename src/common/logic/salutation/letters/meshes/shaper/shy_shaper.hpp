@@ -1,11 +1,44 @@
+namespace shy_guts
+{
+    namespace logic_salutation_letters_meshes_shaper_shape_state
+    {
+        static so_called_type_platform_math_num_whole requested ;
+        static so_called_type_platform_math_num_whole letter_index ;
+    }
+
+    static void proceed_with_shaping ( ) ;
+    static void send_shape_reply ( ) ;
+}
+
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_meshes_shaper > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
+void shy_guts :: proceed_with_shaping ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_shaper_shape_state :: requested ) )
+    {
+        shy_guts :: logic_salutation_letters_meshes_shaper_shape_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: send_shape_reply ( ) ;
+    }
+}
+
+void shy_guts :: send_shape_reply ( )
+{
+    so_called_message_common_logic_salutation_letters_meshes_shaper_shape_reply msg ;
+    msg . letter_index = shy_guts :: logic_salutation_letters_meshes_shaper_shape_state :: letter_index ;
+    so_called_sender_common_logic_salutation_letters_meshes_shaper_shape_reply :: send ( msg ) ;
+}
+
+void _shy_common_logic_salutation_letters_meshes_shaper :: receive ( so_called_message_common_init )
+{
+    shy_guts :: logic_salutation_letters_meshes_shaper_shape_state :: requested = so_called_platform_math_consts :: whole_false ;
+}
+
 void _shy_common_logic_salutation_letters_meshes_shaper :: receive ( so_called_message_common_logic_salutation_letters_meshes_shaper_shape_request msg )
 {
-    so_called_message_common_logic_salutation_letters_meshes_shaper_shape_reply reply_msg ;
-    reply_msg . letter_index = msg . letter_index ;
-    so_called_sender_common_logic_salutation_letters_meshes_shaper_shape_reply :: send ( reply_msg ) ;
+    shy_guts :: logic_salutation_letters_meshes_shaper_shape_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_salutation_letters_meshes_shaper_shape_state :: letter_index = msg . letter_index ;
+    shy_guts :: proceed_with_shaping ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_shaper :: register_in_scheduler ( )
