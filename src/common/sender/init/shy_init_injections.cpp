@@ -73,6 +73,7 @@
 #include "../../logic/salutation/letters/text/storage/shy_storage_injections.h"
 #include "../../logic/sound/shy_sound_injections.h"
 #include "../../logic/text/shy_text_injections.h"
+#include "../../logic/text/letter/mesh/shy_mesh_injections.h"
 #include "../../logic/title/shy_title_injections.h"
 #include "../../logic/touch/shy_touch_injections.h"
 #include "../../logic/vacuum/shy_vacuum_injections.h"
