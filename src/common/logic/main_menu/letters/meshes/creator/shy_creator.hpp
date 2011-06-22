@@ -24,7 +24,7 @@ namespace shy_guts
         static so_called_type_common_logic_text_letter_id letter ;
     }
 
-    namespace engine_render_mesh_create_state
+    namespace logic_text_letter_mesh_create_state
     {
         static so_called_type_platform_math_num_whole requested ;
         static so_called_type_platform_math_num_whole replied ;
@@ -106,9 +106,9 @@ void shy_guts :: proceed_with_creation ( )
         shy_guts :: logic_main_menu_letter_state :: replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: letter_state_received ( ) ;
     }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: replied ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_mesh_create_state :: replied ) )
     {
-        shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_text_letter_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: obtain_tex_coords ( ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_big_tex_coords_state :: replied ) )
@@ -189,13 +189,16 @@ void shy_guts :: letter_state_received ( )
 
 void shy_guts :: create_mesh ( )
 {
-    shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
 
-    so_called_message_common_engine_render_mesh_create_request msg ;
-    msg . vertices = so_called_platform_math_consts :: whole_4 ;
-    msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
-    msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
-    so_called_sender_common_engine_render_mesh_create_request :: send ( msg ) ;
+    so_called_message_common_logic_text_letter_mesh_create_request msg ;
+    msg . letter = shy_guts :: logic_main_menu_letter_state :: letter ;
+    msg . size = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size ;
+    msg . color_r = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_r ;
+    msg . color_g = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_g ;
+    msg . color_b = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_b ;
+    msg . color_a = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_a ;
+    so_called_sender_common_logic_text_letter_mesh_create_request :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_tex_coords ( )
@@ -236,7 +239,7 @@ void shy_guts :: fill_mesh_content ( )
     so_called_type_platform_math_num_whole index_right_top ;
     so_called_type_platform_math_num_whole index_right_bottom ;
     
-    mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    mesh = shy_guts :: logic_text_letter_mesh_create_state :: mesh ;
     
     so_called_platform_math :: div_fracts ( half_size , so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_size , so_called_platform_math_consts :: fract_2 ) ;
     so_called_platform_math :: mul_fracts ( x_left , half_size , so_called_platform_math_consts :: fract_minus_1 ) ;
@@ -290,7 +293,7 @@ void shy_guts :: send_mesh_created_notification ( )
     so_called_message_common_logic_main_menu_letters_meshes_mesh_has_been_created msg ;
     msg . row = shy_guts :: current_row ;
     msg . col = shy_guts :: current_col ;
-    msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    msg . mesh = shy_guts :: logic_text_letter_mesh_create_state :: mesh ;
     so_called_sender_common_logic_main_menu_letters_meshes_mesh_has_been_created :: send ( msg ) ;
 }
 
@@ -358,13 +361,13 @@ void shy_guts :: mesh_set_triangle_strip_index_value
     so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
+void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_mesh_create_reply msg )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: requested ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_mesh_create_state :: requested ) )
     {
-        shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: engine_render_mesh_create_state :: mesh = msg . mesh ;
+        shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_text_letter_mesh_create_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_text_letter_mesh_create_state :: mesh = msg . mesh ;
         shy_guts :: proceed_with_creation ( ) ;
     }
 }
@@ -373,8 +376,6 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
 {
     shy_guts :: current_col = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: current_row = so_called_platform_math_consts :: whole_0 ;
-    shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: first_mesh = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_letter_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_letter_state :: requested = so_called_platform_math_consts :: whole_false ;
@@ -384,6 +385,8 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
     shy_guts :: logic_main_menu_letters_rows_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_text_letter_big_tex_coords_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_text_letter_big_tex_coords_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_text_letter_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_main_menu_letters_cols_reply msg )
@@ -451,10 +454,6 @@ void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_m
         shy_guts :: logic_text_letter_big_tex_coords_state :: right = msg . right ;
         shy_guts :: proceed_with_creation ( ) ;
     }
-}
-
-void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_mesh_create_reply )
-{
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: register_in_scheduler ( )

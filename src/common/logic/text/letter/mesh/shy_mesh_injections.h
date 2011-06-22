@@ -2,6 +2,7 @@
 #define _shy_common_logic_text_letter_mesh_injections_included
 
 #include "./message/create_request/shy_create_request_injections.h"
+#include "../../../../engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
 #include "../../../../message/init/shy_init_injections.h"
 #include "../../../../../injections/platform/scheduler/shy_scheduler.h"
 
