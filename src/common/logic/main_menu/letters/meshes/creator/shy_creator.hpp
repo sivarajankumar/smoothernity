@@ -106,14 +106,14 @@ void shy_guts :: proceed_with_creation ( )
         shy_guts :: logic_main_menu_letter_state :: replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: letter_state_received ( ) ;
     }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_big_tex_coords_state :: replied ) )
-    {
-        shy_guts :: logic_text_letter_big_tex_coords_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: create_mesh ( ) ;
-    }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: replied ) )
     {
         shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: obtain_tex_coords ( ) ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_big_tex_coords_state :: replied ) )
+    {
+        shy_guts :: logic_text_letter_big_tex_coords_state :: replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: letter_tex_coords_received ( ) ;
     }
 }
@@ -182,7 +182,7 @@ void shy_guts :: letter_state_received ( )
     
     so_called_common_logic_text_stateless :: are_letters_equal ( letter_is_whitespace , shy_guts :: logic_main_menu_letter_state :: letter , whitespace ) ;
     if ( so_called_platform_conditions :: whole_is_false ( letter_is_whitespace ) )
-        shy_guts :: obtain_tex_coords ( ) ;
+        shy_guts :: create_mesh ( ) ;
     else
         shy_guts :: move_to_next_col ( ) ;
 }
