@@ -88,6 +88,7 @@ void shy_common_init :: init ( )
     so_called_common_logic_salutation_timer_disappear :: register_in_scheduler ( ) ;
     so_called_common_logic_sound :: register_in_scheduler ( ) ;
     so_called_common_logic_text :: register_in_scheduler ( ) ;
+    so_called_common_logic_text_letter_mesh :: register_in_scheduler ( ) ;
     so_called_common_logic_title :: register_in_scheduler ( ) ;
     so_called_common_logic_touch :: register_in_scheduler ( ) ;
     so_called_common_logic_vacuum :: register_in_scheduler ( ) ;
