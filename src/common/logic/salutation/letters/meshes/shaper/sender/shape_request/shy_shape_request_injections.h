@@ -1,9 +1,0 @@
-#ifndef _shy_sender_common_logic_salutation_letters_meshes_shaper_shape_request_injections_included
-#define _shy_sender_common_logic_salutation_letters_meshes_shaper_shape_request_injections_included
-
-#include "../../message/shape_request/shy_shape_request_injections.h"
-#include "./shy_shape_request.h"
-
-typedef shy_sender_common_logic_salutation_letters_meshes_shaper_shape_request so_called_sender_common_logic_salutation_letters_meshes_shaper_shape_request ;
-
-#endif
