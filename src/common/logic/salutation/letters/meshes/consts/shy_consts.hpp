@@ -4,6 +4,7 @@ const so_called_type_platform_math_num_fract shy_common_logic_salutation_letters
 const so_called_type_platform_math_num_fract shy_common_logic_salutation_letters_meshes_consts :: color_r ;
 const so_called_type_platform_math_num_fract shy_common_logic_salutation_letters_meshes_consts :: mesh_size ;
 const so_called_type_platform_math_num_fract shy_common_logic_salutation_letters_meshes_consts :: time_between_creation ;
+const so_called_type_platform_math_num_fract shy_common_logic_salutation_letters_meshes_consts :: time_between_destruction ;
 
 void shy_common_logic_salutation_letters_meshes_consts :: binding ( )
 {
