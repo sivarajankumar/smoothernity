@@ -171,6 +171,7 @@ void shy_guts :: send_letter_mesh_create_reply ( )
 {
     so_called_message_common_logic_text_letter_mesh_create_reply msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
+    msg . letter = shy_guts :: logic_text_letter_mesh_create_state :: letter ;
     so_called_sender_common_logic_text_letter_mesh_create_reply :: send ( msg ) ;
 }
 
