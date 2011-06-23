@@ -70,6 +70,7 @@
 #include "../../logic/room/texture/shy_texture_injections.h"
 #include "../../logic/salutation/letters/meshes/creator/shy_creator_injections.h"
 #include "../../logic/salutation/letters/meshes/generator/shy_generator_injections.h"
+#include "../../logic/salutation/letters/meshes/storage/shy_storage_injections.h"
 #include "../../logic/salutation/letters/text/storage/shy_storage_injections.h"
 #include "../../logic/sound/shy_sound_injections.h"
 #include "../../logic/text/shy_text_injections.h"

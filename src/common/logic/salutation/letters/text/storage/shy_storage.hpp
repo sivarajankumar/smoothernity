@@ -7,7 +7,7 @@ namespace shy_guts
     } ;
 
     static so_called_type_platform_static_array_data < type_entry , so_called_common_logic_salutation_letters_consts :: max_letters > entries_data ;
-    so_called_type_platform_math_num_whole entries_count ;
+    static so_called_type_platform_math_num_whole entries_count ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_text_storage > _scheduled_context_type ;
