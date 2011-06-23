@@ -402,36 +402,56 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_create_request )
 {
-    so_called_message_common_engine_render_texture_create_reply texture_create_reply_msg ;
-    texture_create_reply_msg . texture . _texture_id = shy_guts :: next_texture_id ;
-    so_called_platform_math :: inc_whole ( shy_guts :: next_texture_id ) ;
-    so_called_sender_common_engine_render_texture_create_reply :: send ( texture_create_reply_msg ) ;
+    so_called_type_common_engine_render_texture_id created_texture ;
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: next_texture_id , whole_max_textures ) )
+    {
+        created_texture . _texture_id = shy_guts :: next_texture_id ;
+        so_called_platform_math :: inc_whole ( shy_guts :: next_texture_id ) ;
+    }
+    else
+        created_texture . _texture_id = whole_max_textures ;
+
+    so_called_message_common_engine_render_texture_create_reply reply_msg ;
+    reply_msg . texture = created_texture ;
+    so_called_sender_common_engine_render_texture_create_reply :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_finalize msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
-    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
-    so_called_platform_render :: load_texture_subdata 
-        ( texture . get ( ) . render_id 
-        , so_called_platform_math_consts :: whole_0
-        , so_called_platform_math_consts :: whole_0
-        , so_called_common_engine_render_consts :: texture_width
-        , so_called_common_engine_render_consts :: texture_height
-        , texture . get ( ) . texels 
-        ) ;
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . texture . _texture_id , whole_max_textures ) )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+        so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+        so_called_platform_render :: load_texture_subdata 
+            ( texture . get ( ) . render_id 
+            , so_called_platform_math_consts :: whole_0
+            , so_called_platform_math_consts :: whole_0
+            , so_called_common_engine_render_consts :: texture_width
+            , so_called_common_engine_render_consts :: texture_height
+            , texture . get ( ) . texels 
+            ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_load_from_resource msg )
 {
-    so_called_type_platform_math_num_whole size_pow2_base ;
-    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
-    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
-    so_called_platform_render_texture_loader :: load_resource 
-        ( msg . resource 
-        , shy_guts :: consts :: texture_size_pow2_base 
-        , texture . get ( ) . texels 
-        ) ;
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . texture . _texture_id , whole_max_textures ) )
+    {
+        so_called_type_platform_math_num_whole size_pow2_base ;
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+        so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+        so_called_platform_render_texture_loader :: load_resource 
+            ( msg . resource 
+            , shy_guts :: consts :: texture_size_pow2_base 
+            , texture . get ( ) . texels 
+            ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_loader_ready_request msg )
@@ -448,58 +468,78 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_select msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
-    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
-    so_called_platform_render :: enable_texturing ( ) ;
-    so_called_platform_render :: use_texture ( texture . get ( ) . render_id ) ;
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . texture . _texture_id , whole_max_textures ) )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+        so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+        so_called_platform_render :: enable_texturing ( ) ;
+        so_called_platform_render :: use_texture ( texture . get ( ) . render_id ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel msg )
 {
-    so_called_type_platform_math_num_whole texel_offset ;
-    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
-    so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
-    
-    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
-    so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , msg . y ) ;
-    so_called_platform_math :: add_to_whole ( texel_offset , msg . x ) ;
-    so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
-    texel . get ( ) = msg . texel ;
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . texture . _texture_id , whole_max_textures ) )
+    {
+        so_called_type_platform_math_num_whole texel_offset ;
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+        so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
+        
+        so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+        so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , msg . y ) ;
+        so_called_platform_math :: add_to_whole ( texel_offset , msg . x ) ;
+        so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+        texel . get ( ) = msg . texel ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel_rgba msg )
 {
-    so_called_type_platform_math_num_whole texel_offset ;
-    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
-    so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . texture . _texture_id , whole_max_textures ) )
+    {
+        so_called_type_platform_math_num_whole texel_offset ;
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+        so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
 
-    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
-    so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , msg . y ) ;
-    so_called_platform_math :: add_to_whole ( texel_offset , msg . x ) ;
-    so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
-    so_called_platform_render :: set_texel_color ( texel . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
+        so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+        so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , msg . y ) ;
+        so_called_platform_math :: add_to_whole ( texel_offset , msg . x ) ;
+        so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+        so_called_platform_render :: set_texel_color ( texel . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texels_rect msg )
 {
-    so_called_type_platform_math_num_whole texel_offset ;
-    so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
-    so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
-    for ( so_called_type_platform_math_num_whole y = msg . bottom
-        ; so_called_platform_conditions :: whole_less_or_equal_to_whole ( y , msg . top )
-        ; so_called_platform_math :: inc_whole ( y )
-        )
+    so_called_type_platform_math_num_whole whole_max_textures ;
+    so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . texture . _texture_id , whole_max_textures ) )
     {
-        for ( so_called_type_platform_math_num_whole x = msg . left
-            ; so_called_platform_conditions :: whole_less_or_equal_to_whole ( x , msg . right )
-            ; so_called_platform_math :: inc_whole ( x )
+        so_called_type_platform_math_num_whole texel_offset ;
+        so_called_type_platform_pointer_data < shy_guts :: texture_data > texture ;
+        so_called_platform_static_array :: element_ptr ( texture , shy_guts :: textures_datas , msg . texture . _texture_id ) ;
+        for ( so_called_type_platform_math_num_whole y = msg . bottom
+            ; so_called_platform_conditions :: whole_less_or_equal_to_whole ( y , msg . top )
+            ; so_called_platform_math :: inc_whole ( y )
             )
         {
-            so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
-            so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , y ) ;
-            so_called_platform_math :: add_to_whole ( texel_offset , x ) ;
-            so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
-            texel . get ( ) = msg . texel ;
+            for ( so_called_type_platform_math_num_whole x = msg . left
+                ; so_called_platform_conditions :: whole_less_or_equal_to_whole ( x , msg . right )
+                ; so_called_platform_math :: inc_whole ( x )
+                )
+            {
+                so_called_type_platform_pointer_data < so_called_type_platform_render_texel_data > texel ;
+                so_called_platform_math :: mul_wholes ( texel_offset , so_called_common_engine_render_consts :: texture_width , y ) ;
+                so_called_platform_math :: add_to_whole ( texel_offset , x ) ;
+                so_called_platform_static_array :: element_ptr ( texel , texture . get ( ) . texels , texel_offset ) ;
+                texel . get ( ) = msg . texel ;
+            }
         }
     }
 }
