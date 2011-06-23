@@ -3,6 +3,7 @@
 
 #include "./message/create_request/shy_create_request_injections.h"
 #include "../../text/storage/message/letter_reply/shy_letter_reply_injections.h"
+#include "../../../../text/letter/mesh/message/create_reply/shy_create_reply_injections.h"
 #include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
