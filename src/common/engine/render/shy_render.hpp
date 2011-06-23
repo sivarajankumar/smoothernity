@@ -192,6 +192,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_create_request msg )
 {
+    so_called_type_common_engine_render_mesh_id created_mesh ;
     so_called_type_platform_math_num_whole whole_max_meshes ;
     so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
     if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: next_vacant_mesh_id_index , whole_max_meshes ) )
@@ -212,11 +213,15 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         so_called_platform_render :: map_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_mapped_data , mesh . get ( ) . triangle_strip_index_buffer_id ) ;
         so_called_platform_render :: map_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_mapped_data , mesh . get ( ) . triangle_fan_index_buffer_id ) ;
         
-        so_called_message_common_engine_render_mesh_create_reply reply_msg ;
-        reply_msg . mesh . _mesh_id = vacant_mesh_id . get ( ) ;
+        created_mesh . _mesh_id = vacant_mesh_id . get ( ) ;
         so_called_platform_math :: inc_whole ( shy_guts :: next_vacant_mesh_id_index ) ;
-        so_called_sender_common_engine_render_mesh_create_reply :: send ( reply_msg ) ;    
     }
+    else
+        created_mesh . _mesh_id = whole_max_meshes ;
+
+    so_called_message_common_engine_render_mesh_create_reply reply_msg ;
+    reply_msg . mesh = created_mesh ;
+    so_called_sender_common_engine_render_mesh_create_reply :: send ( reply_msg ) ;    
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_delete msg )
@@ -232,116 +237,156 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_finalize msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    mesh . get ( ) . finalized = so_called_platform_math_consts :: whole_true ;
-    so_called_platform_render :: unmap_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
-    so_called_platform_render :: unmap_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
-    so_called_platform_render :: unmap_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        mesh . get ( ) . finalized = so_called_platform_math_consts :: whole_true ;
+        so_called_platform_render :: unmap_vertex_buffer ( mesh . get ( ) . vertex_buffer_id ) ;
+        so_called_platform_render :: unmap_index_buffer ( mesh . get ( ) . triangle_strip_index_buffer_id ) ;
+        so_called_platform_render :: unmap_index_buffer ( mesh . get ( ) . triangle_fan_index_buffer_id ) ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_render msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    if ( so_called_platform_conditions :: whole_is_true ( mesh . get ( ) . finalized ) )
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
     {
-        so_called_platform_render :: matrix_push ( ) ;
-        so_called_platform_render :: matrix_mult ( mesh . get ( ) . transform ) ;
-        if ( so_called_platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( mesh . get ( ) . finalized ) )
         {
-            so_called_platform_render :: draw_triangle_strip 
-                ( mesh . get ( ) . vertex_buffer_id 
-                , mesh . get ( ) . triangle_strip_index_buffer_id 
-                , mesh . get ( ) . triangle_strip_indices_count
-                ) ;
+            so_called_platform_render :: matrix_push ( ) ;
+            so_called_platform_render :: matrix_mult ( mesh . get ( ) . transform ) ;
+            if ( so_called_platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_strip_indices_count ) )
+            {
+                so_called_platform_render :: draw_triangle_strip 
+                    ( mesh . get ( ) . vertex_buffer_id 
+                    , mesh . get ( ) . triangle_strip_index_buffer_id 
+                    , mesh . get ( ) . triangle_strip_indices_count
+                    ) ;
+            }
+            if ( so_called_platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
+            {
+                so_called_platform_render :: draw_triangle_fan 
+                    ( mesh . get ( ) . vertex_buffer_id 
+                    , mesh . get ( ) . triangle_fan_index_buffer_id 
+                    , mesh . get ( ) . triangle_fan_indices_count
+                    ) ;
+            }
+            so_called_platform_render :: matrix_pop ( ) ;
         }
-        if ( so_called_platform_conditions :: whole_greater_than_zero ( mesh . get ( ) . triangle_fan_indices_count ) )
-        {
-            so_called_platform_render :: draw_triangle_fan 
-                ( mesh . get ( ) . vertex_buffer_id 
-                , mesh . get ( ) . triangle_fan_index_buffer_id 
-                , mesh . get ( ) . triangle_fan_indices_count
-                ) ;
-        }
-        so_called_platform_render :: matrix_pop ( ) ;
     }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_transform msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    mesh . get ( ) . transform = msg . transform ;
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
+    {
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        mesh . get ( ) . transform = msg . transform ;
+    }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_fan_index_value msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_type_platform_pointer_data < so_called_type_platform_render_index_data > index ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized )
-      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_fan_indices_count )
-       )
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
     {
-        so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_fan_index_buffer_mapped_data , msg . offset ) ;
-        so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_type_platform_pointer_data < so_called_type_platform_render_index_data > index ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized )
+          && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_fan_indices_count )
+           )
+        {
+            so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_fan_index_buffer_mapped_data , msg . offset ) ;
+            so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+        }
     }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_type_platform_pointer_data < so_called_type_platform_render_index_data > index ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
-      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_strip_indices_count )
-       )
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
     {
-        so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_strip_index_buffer_mapped_data , msg . offset ) ;
-        so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_type_platform_pointer_data < so_called_type_platform_render_index_data > index ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+          && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_strip_indices_count )
+           )
+        {
+            so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_strip_index_buffer_mapped_data , msg . offset ) ;
+            so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+        }
     }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_color msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
-      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
-       )
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
     {
-        so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
-        so_called_platform_render :: set_vertex_color ( vertex . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+          && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+           )
+        {
+            so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
+            so_called_platform_render :: set_vertex_color ( vertex . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
+        }
     }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_position msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
-      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
-       )
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
     {
-        so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
-        so_called_platform_render :: set_vertex_position ( vertex . get ( ) , msg . x , msg . y , msg . z ) ;
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+          && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+           )
+        {
+            so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
+            so_called_platform_render :: set_vertex_position ( vertex . get ( ) , msg . x , msg . y , msg . z ) ;
+        }
     }
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_tex_coord msg )
 {
-    so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
-    so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
-    so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
-    if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
-      && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
-       )
+    so_called_type_platform_math_num_whole whole_max_meshes ;
+    so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , whole_max_meshes ) )
     {
-        so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
-        so_called_platform_render :: set_vertex_tex_coord ( vertex . get ( ) , msg . u , msg . v ) ;
+        so_called_type_platform_pointer_data < shy_guts :: mesh_data > mesh ;
+        so_called_type_platform_pointer_data < so_called_type_platform_render_vertex_data > vertex ;
+        so_called_platform_static_array :: element_ptr ( mesh , shy_guts :: meshes_datas , msg . mesh . _mesh_id ) ;
+        if ( so_called_platform_conditions :: whole_is_false ( mesh . get ( ) . finalized ) 
+          && so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . vertices_count )
+           )
+        {
+            so_called_platform_render :: mapped_vertex_buffer_element ( vertex , mesh . get ( ) . vertex_buffer_mapped_data , msg . offset ) ;
+            so_called_platform_render :: set_vertex_tex_coord ( vertex . get ( ) , msg . u , msg . v ) ;
+        }
     }
 }
 
