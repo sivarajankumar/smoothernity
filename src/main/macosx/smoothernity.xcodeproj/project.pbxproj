@@ -21163,7 +21163,7 @@
 					shy_scheduling_mode_random,
 					shy_build_loadable_way,
 					shy_build_for_macosx,
-					shy_build_development,
+					shy_build_with_stl,
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = NO;
