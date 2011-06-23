@@ -1,14 +1,5 @@
 namespace shy_guts
 {
-    namespace consts
-    {
-        static so_called_type_platform_math_num_fract mesh_size = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
-        static so_called_type_platform_math_num_fract color_r = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
-        static so_called_type_platform_math_num_fract color_g = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
-        static so_called_type_platform_math_num_fract color_b = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
-        static so_called_type_platform_math_num_fract color_a = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
-    }
-
     namespace logic_salutation_letters_meshes_creator_create_state
     {
         static so_called_type_platform_math_num_whole letter_index ;
@@ -72,11 +63,11 @@ void shy_guts :: request_text_letter_mesh_create ( )
 
     so_called_message_common_logic_text_letter_mesh_create_request msg ;
     msg . letter = letter ;
-    msg . size = shy_guts :: consts :: mesh_size ;
-    msg . color_r = shy_guts :: consts :: color_r ;
-    msg . color_g = shy_guts :: consts :: color_g ;
-    msg . color_b = shy_guts :: consts :: color_b ;
-    msg . color_a = shy_guts :: consts :: color_a ;
+    msg . size = so_called_common_logic_salutation_letters_meshes_consts :: mesh_size ;
+    msg . color_r = so_called_common_logic_salutation_letters_meshes_consts :: color_r ;
+    msg . color_g = so_called_common_logic_salutation_letters_meshes_consts :: color_g ;
+    msg . color_b = so_called_common_logic_salutation_letters_meshes_consts :: color_b ;
+    msg . color_a = so_called_common_logic_salutation_letters_meshes_consts :: color_a ;
     so_called_sender_common_logic_text_letter_mesh_create_request :: send ( msg ) ;
 }
 
