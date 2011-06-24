@@ -6,7 +6,7 @@ namespace shy_guts
     }
 }
 
-void shy_trace_common_engine_render :: meshes_in_use 
+void shy_trace_common_engine_render_tracer :: meshes_in_use 
     ( so_called_type_platform_math_num_whole current 
     , so_called_type_platform_math_num_whole total
     )
@@ -20,21 +20,21 @@ void shy_trace_common_engine_render :: meshes_in_use
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render :: meshes_overflow ( )
+void shy_trace_common_engine_render_tracer :: meshes_overflow ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string ( "Meshes overflow." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render :: meshes_underflow ( )
+void shy_trace_common_engine_render_tracer :: meshes_underflow ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string ( "Meshes underflow." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render :: textures_in_use
+void shy_trace_common_engine_render_tracer :: textures_in_use
     ( so_called_type_platform_math_num_whole current 
     , so_called_type_platform_math_num_whole total
     )
@@ -48,7 +48,7 @@ void shy_trace_common_engine_render :: textures_in_use
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render :: textures_overflow ( )
+void shy_trace_common_engine_render_tracer :: textures_overflow ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string ( "Textures overflow." ) ;
