@@ -2,6 +2,7 @@ namespace shy_guts
 {
     namespace consts
     {
+        static const so_called_lib_std_int32_t digits_per_frame = 4 ;
         static void trace_finished ( so_called_lib_std_string & ) ;
         static void trace_stamp ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void trace_started ( so_called_lib_std_string & ) ;
@@ -55,6 +56,7 @@ void shy_platform_trace_cerr :: trace_begin ( const so_called_lib_std_char * mod
     so_called_lib_std_string stamp ;
 
     so_called_platform_trace_insider :: get_current_frame ( current_frame ) ;
+    current_frame_stream . width ( shy_guts :: consts :: digits_per_frame ) ;
     current_frame_stream << current_frame ;
     shy_guts :: consts :: trace_stamp ( stamp , current_frame_stream . str ( ) , module ) ;
     so_called_lib_std_cerr << stamp ;
