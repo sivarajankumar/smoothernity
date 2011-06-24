@@ -2,7 +2,6 @@
 #define _shy_loadable_fsm_behaviour_injections_included
 
 #include "./consts/shy_consts_injections.h"
-#include "./trace/shy_trace_injections.h"
 #include "../consts/shy_consts_injections.h"
 #include "../content/shy_content_injections.h"
 #include "../../../common/engine/fsm/stateless/shy_stateless_injections.h"
@@ -16,6 +15,7 @@
 #include "../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../injections/platform/pointer/shy_pointer.h"
 #include "../../../injections/platform/pointer/type/data/shy_data.h"
+#include "../../../trace/loadable/fsm/behaviour/shy_behaviour_injections.h"
 
 #include "./shy_behaviour.h"
 
