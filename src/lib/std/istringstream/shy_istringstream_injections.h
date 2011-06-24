@@ -5,4 +5,3 @@
 typedef std :: istringstream so_called_lib_std_istringstream ;
 
 #endif
-
