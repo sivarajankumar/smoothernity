@@ -6,6 +6,7 @@ void shy_facade_loadable :: init ( )
     so_called_platform_render_texture_loader :: init ( ) ;
     so_called_platform_scheduler :: init ( ) ;
     so_called_platform_sound_loader :: init ( ) ;
+    so_called_platform_trace :: init ( ) ;
 
     so_called_common_init :: init ( ) ;
 
@@ -24,6 +25,7 @@ void shy_facade_loadable :: done ( )
     so_called_platform_render_texture_loader :: done ( ) ;
     so_called_platform_scheduler :: done ( ) ;
     so_called_platform_sound_loader :: done ( ) ;
+    so_called_platform_trace :: done ( ) ;
 }
 
 void shy_facade_loadable :: render ( )

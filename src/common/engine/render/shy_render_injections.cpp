@@ -6,7 +6,6 @@
 #include "./sender/mesh_create_reply/shy_mesh_create_reply_injections.h"
 #include "./sender/texture_create_reply/shy_texture_create_reply_injections.h"
 #include "./sender/texture_loader_ready_reply/shy_texture_loader_ready_reply_injections.h"
-
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../injections/platform/math/shy_math.h"
@@ -21,6 +20,7 @@
 #include "../../../injections/platform/render/type/vertex_buffer_mapped_data/shy_vertex_buffer_mapped_data.h"
 #include "../../../injections/platform/static_array/shy_static_array.h"
 #include "../../../injections/platform/static_array/type/data/shy_data.h"
+#include "../../../trace/common/engine/render/shy_render_injections.h"
 
 #include "./shy_render.hpp"
 

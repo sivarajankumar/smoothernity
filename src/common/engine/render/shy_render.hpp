@@ -10,6 +10,7 @@ namespace shy_guts
             = so_called_platform_math :: init_num_whole ( 300 ) ;
         static so_called_type_platform_math_const_int_32 max_meshes = 100 ;
         static so_called_type_platform_math_const_int_32 max_textures = 10 ;
+        static const so_called_type_platform_math_num_whole trace_enabled = so_called_platform_math_consts :: whole_true ;
     }
 
     class texture_data
@@ -215,9 +216,15 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         
         created_mesh . _mesh_id = vacant_mesh_id . get ( ) ;
         so_called_platform_math :: inc_whole ( shy_guts :: next_vacant_mesh_id_index ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+            so_called_trace_common_engine_render :: meshes_in_use ( shy_guts :: next_vacant_mesh_id_index , whole_max_meshes ) ;
     }
     else
+    {
         created_mesh . _mesh_id = whole_max_meshes ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+            so_called_trace_common_engine_render :: meshes_overflow ( ) ;
+    }
 
     so_called_message_common_engine_render_mesh_create_reply reply_msg ;
     reply_msg . mesh = created_mesh ;
@@ -229,9 +236,20 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     if ( so_called_platform_conditions :: whole_greater_than_zero ( shy_guts :: next_vacant_mesh_id_index ) )
     {
         so_called_platform_math :: dec_whole ( shy_guts :: next_vacant_mesh_id_index ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+        {
+            so_called_type_platform_math_num_whole whole_max_meshes ;
+            so_called_platform_math :: make_num_whole ( whole_max_meshes , shy_guts :: consts :: max_meshes ) ;
+            so_called_trace_common_engine_render :: meshes_in_use ( shy_guts :: next_vacant_mesh_id_index , whole_max_meshes ) ;
+        }
         so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > vacant_mesh_id ;
         so_called_platform_static_array :: element_ptr ( vacant_mesh_id , shy_guts :: vacant_mesh_ids , shy_guts :: next_vacant_mesh_id_index ) ;
         vacant_mesh_id . get ( ) = msg . mesh . _mesh_id ;
+    }
+    else
+    {
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+            so_called_trace_common_engine_render :: meshes_underflow ( ) ;
     }
 }
 
@@ -409,9 +427,15 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     {
         created_texture . _texture_id = shy_guts :: next_texture_id ;
         so_called_platform_math :: inc_whole ( shy_guts :: next_texture_id ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+            so_called_trace_common_engine_render :: textures_in_use ( shy_guts :: next_texture_id , whole_max_textures ) ;
     }
     else
+    {
         created_texture . _texture_id = whole_max_textures ;
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+            so_called_trace_common_engine_render :: textures_overflow ( ) ;
+    }
 
     so_called_message_common_engine_render_texture_create_reply reply_msg ;
     reply_msg . texture = created_texture ;
