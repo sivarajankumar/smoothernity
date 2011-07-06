@@ -10,6 +10,7 @@
 #include "../../main_menu/message/finished/shy_finished_injections.h"
 #include "../../salutation/letters/meshes/cleaner/message/clean_finished/shy_clean_finished_injections.h"
 #include "../../salutation/letters/meshes/generator/message/generate_finished/shy_generate_finished_injections.h"
+#include "../../salutation/letters/text/cleaner/message/clean_finished/shy_clean_finished_injections.h"
 #include "../../salutation/letters/text/generator/message/generate_finished/shy_generate_finished_injections.h"
 #include "../../salutation/timer/appear/message/run_finished/shy_run_finished_injections.h"
 #include "../../salutation/timer/disappear/message/run_finished/shy_run_finished_injections.h"

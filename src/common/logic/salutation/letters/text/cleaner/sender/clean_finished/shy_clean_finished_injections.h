@@ -1,0 +1,9 @@
+#ifndef _shy_sender_common_logic_salutation_letters_text_cleaner_clean_finished_injections_included
+#define _shy_sender_common_logic_salutation_letters_text_cleaner_clean_finished_injections_included
+
+#include "../../message/clean_finished/shy_clean_finished_injections.h"
+#include "./shy_clean_finished.h"
+
+typedef shy_sender_common_logic_salutation_letters_text_cleaner_clean_finished so_called_sender_common_logic_salutation_letters_text_cleaner_clean_finished ;
+
+#endif
