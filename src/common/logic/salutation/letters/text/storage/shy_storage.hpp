@@ -11,12 +11,12 @@ namespace shy_guts
         static const so_called_type_platform_math_num_whole trace_enabled = so_called_platform_math_consts :: whole_true ;
     }
 
+    static so_called_type_platform_static_array_data < type_entry , so_called_common_logic_salutation_letters_consts :: max_letters_int > entries_data ;
+    static so_called_type_platform_math_num_whole entries_count ;
+
     static void trace_entries_in_use ( ) ;
     static void trace_entries_overflow_error ( ) ;
     static void trace_entry_index_is_out_of_range_error ( so_called_type_platform_math_num_whole ) ;
-
-    static so_called_type_platform_static_array_data < type_entry , so_called_common_logic_salutation_letters_consts :: max_letters_int > entries_data ;
-    static so_called_type_platform_math_num_whole entries_count ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_text_storage > _scheduled_context_type ;
