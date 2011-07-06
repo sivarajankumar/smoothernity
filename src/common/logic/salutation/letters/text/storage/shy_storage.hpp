@@ -31,6 +31,11 @@ void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_me
     }
 }
 
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_clean msg )
+{
+    shy_guts :: entries_count = so_called_platform_math_consts :: whole_0 ;
+}
+
 void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_letter_request msg )
 {
     so_called_type_common_logic_text_letter_id letter_id ;
