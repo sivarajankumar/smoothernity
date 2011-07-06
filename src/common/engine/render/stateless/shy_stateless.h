@@ -1,6 +1,9 @@
 class shy_common_engine_render_stateless
 {
 public :
+    static so_called_type_common_engine_render_mesh_id init_mesh_id
+        ( so_called_type_platform_math_const_int_32
+        ) ;
     static void create_texture_resource_id 
         ( so_called_type_platform_render_texture_loader_resource_id & resource_id
         , so_called_type_platform_math_num_whole resource_index
