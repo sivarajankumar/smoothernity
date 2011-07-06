@@ -1,4 +1,4 @@
-#include "./shy_active_injections.h"
+#include "./shy_worker_injections.h"
 
 #include "../../consts/assigner/shy_assigner_injections.h"
 #include "../../consts/reflection/shy_reflection_injections.h"
@@ -13,4 +13,4 @@
 #include "../../../injections/lib/std/endl/shy_endl.h"
 #include "../../../injections/lib/std/getline/shy_getline.h"
 
-#include "./shy_active.hpp"
+#include "./shy_worker.hpp"

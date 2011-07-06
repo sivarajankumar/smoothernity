@@ -62,7 +62,7 @@ void shy_guts :: get_error ( so_called_lib_std_string & error )
         error = fsm_assigner_error ;
 }
 
-void shy_loadable_loader_active :: load ( )
+void shy_loadable_loader_worker :: load ( )
 {
     shy_guts :: prepare ( ) ;
     shy_guts :: read_input ( ) ;
