@@ -1,4 +1,4 @@
-class shy_trace_common_engine_render_tracer
+class shy_trace_common_engine_render_fribble
 {
 public :
     static void meshes_in_use ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
