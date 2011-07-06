@@ -1,7 +1,7 @@
 #ifdef shy_build_loadable_way
-    #include "./active/shy_active_injections.hpp"
+    #include "./worker/shy_worker_injections.hpp"
 #endif
 
 #ifdef shy_build_static_way
-    #include "./stub/shy_stub_injections.hpp"
+    #include "./fribble/shy_fribble_injections.hpp"
 #endif
