@@ -20,17 +20,17 @@ void shy_trace_common_engine_render_tracer :: meshes_in_use
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_tracer :: meshes_overflow ( )
+void shy_trace_common_engine_render_tracer :: meshes_overflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Meshes overflow." ) ;
+    so_called_platform_trace :: trace_string ( "Meshes overflow error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_tracer :: meshes_underflow ( )
+void shy_trace_common_engine_render_tracer :: meshes_underflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Meshes underflow." ) ;
+    so_called_platform_trace :: trace_string ( "Meshes underflow error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
@@ -48,9 +48,9 @@ void shy_trace_common_engine_render_tracer :: textures_in_use
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_tracer :: textures_overflow ( )
+void shy_trace_common_engine_render_tracer :: textures_overflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Textures overflow." ) ;
+    so_called_platform_trace :: trace_string ( "Textures overflow error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }

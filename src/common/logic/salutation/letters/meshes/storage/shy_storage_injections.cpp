@@ -1,7 +1,9 @@
 #include "./shy_storage_injections.h"
 
+#include "./sender/mesh_reply/shy_mesh_reply_injections.h"
 #include "./sender/size_reply/shy_size_reply_injections.h"
 #include "../../consts/shy_consts_injections.h"
+#include "../../../../../engine/render/consts/shy_consts_injections.h"
 #include "../../../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../../../../injections/platform/math/shy_math.h"

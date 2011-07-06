@@ -1,3 +1,12 @@
+so_called_type_common_engine_render_mesh_id shy_common_engine_render_stateless :: init_mesh_id
+    ( so_called_type_platform_math_const_int_32 arg_mesh_id 
+    )
+{
+    so_called_type_common_engine_render_mesh_id mesh ;
+    so_called_platform_math :: make_num_whole ( mesh . _mesh_id , arg_mesh_id ) ;
+    return mesh ;
+}
+
 void shy_common_engine_render_stateless :: create_texture_resource_id
     ( so_called_type_platform_render_texture_loader_resource_id & resource_id
     , so_called_type_platform_math_num_whole resource_index

@@ -23,4 +23,3 @@
 #include "../../../trace/common/engine/render/shy_render_injections.h"
 
 #include "./shy_render.hpp"
-

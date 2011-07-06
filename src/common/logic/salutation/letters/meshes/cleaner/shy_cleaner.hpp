@@ -106,6 +106,10 @@ void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_
 {
 }
 
+void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_mesh_reply )
+{
+}
+
 void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_size_reply )
 {
 }

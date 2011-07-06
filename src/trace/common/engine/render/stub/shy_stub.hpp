@@ -2,11 +2,11 @@ void shy_trace_common_engine_render_stub :: meshes_in_use ( so_called_type_platf
 {
 }
 
-void shy_trace_common_engine_render_stub :: meshes_overflow ( )
+void shy_trace_common_engine_render_stub :: meshes_overflow_error ( )
 {
 }
 
-void shy_trace_common_engine_render_stub :: meshes_underflow ( )
+void shy_trace_common_engine_render_stub :: meshes_underflow_error ( )
 {
 }
 
@@ -14,6 +14,6 @@ void shy_trace_common_engine_render_stub :: textures_in_use ( so_called_type_pla
 {
 }
 
-void shy_trace_common_engine_render_stub :: textures_overflow ( )
+void shy_trace_common_engine_render_stub :: textures_overflow_error ( )
 {
 }
