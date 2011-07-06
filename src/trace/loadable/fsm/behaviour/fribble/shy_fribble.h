@@ -1,4 +1,4 @@
-class shy_trace_loadable_fsm_behaviour_tracer
+class shy_trace_loadable_fsm_behaviour_fribble
 {
 public :
     static void machine_state_action_command 
