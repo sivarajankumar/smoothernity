@@ -6,7 +6,12 @@ system logic_application
             to finished
                 if { ( machine salutation_performer is finished ) stage_salutation_disabled }
         state cleaning
+            to cleaning_letters_text
+        state cleaning_letters_text
+            on entry
+                do logic_salutation_letters_text_cleaner_clean
             to cleaning_letters_meshes
+                if { logic_salutation_letters_text_cleaner_clean_finished }
         state cleaning_letters_meshes
             on entry
                 do logic_salutation_letters_meshes_cleaner_clean

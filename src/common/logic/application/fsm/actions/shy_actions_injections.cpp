@@ -22,6 +22,7 @@
 #include "../../../salutation/letters/meshes/cleaner/sender/update/shy_update_injections.h"
 #include "../../../salutation/letters/meshes/generator/sender/generate/shy_generate_injections.h"
 #include "../../../salutation/letters/meshes/generator/sender/update/shy_update_injections.h"
+#include "../../../salutation/letters/text/cleaner/sender/clean/shy_clean_injections.h"
 #include "../../../salutation/letters/text/generator/sender/generate/shy_generate_injections.h"
 #include "../../../salutation/renderer/sender/render/shy_render_injections.h"
 #include "../../../salutation/timer/appear/sender/run/shy_run_injections.h"
