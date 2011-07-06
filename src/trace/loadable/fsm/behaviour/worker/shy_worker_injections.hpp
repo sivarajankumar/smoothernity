@@ -1,5 +1,5 @@
-#include "./shy_tracer_injections.h"
+#include "./shy_worker_injections.h"
 
 #include "../../../../../injections/platform/trace/shy_trace.h"
 
-#include "./shy_tracer.hpp"
+#include "./shy_worker.hpp"
