@@ -4,27 +4,29 @@ namespace shy_guts
     {
         static const so_called_lib_std_int32_t digits_per_frame = 4 ;
         static void trace_finished ( so_called_lib_std_string & ) ;
+        static void trace_number_begin ( so_called_lib_std_string & ) ;
+        static void trace_number_end ( so_called_lib_std_string & ) ;
         static void trace_number_error_begin ( so_called_lib_std_string & ) ;
         static void trace_number_error_end ( so_called_lib_std_string & ) ;
-        static void trace_number_normal_begin ( so_called_lib_std_string & ) ;
-        static void trace_number_normal_end ( so_called_lib_std_string & ) ;
         static void trace_stamp ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void trace_started ( so_called_lib_std_string & ) ;
         static void trace_string_error_begin ( so_called_lib_std_string & ) ;
         static void trace_string_error_end ( so_called_lib_std_string & ) ;
         static void trace_string_name_begin ( so_called_lib_std_string & ) ;
         static void trace_string_name_end ( so_called_lib_std_string & ) ;
+        static void trace_string_name_error_begin ( so_called_lib_std_string & ) ;
+        static void trace_string_name_error_end ( so_called_lib_std_string & ) ;
     }
 }
 
-void shy_guts :: consts :: trace_number_normal_begin ( so_called_lib_std_string & result )
+void shy_guts :: consts :: trace_number_begin ( so_called_lib_std_string & result )
 {
     result . clear ( ) ;
     result += so_called_platform_terminal_consts :: background_color_default ;
     result += so_called_platform_terminal_consts :: text_color_blue ;
 }
 
-void shy_guts :: consts :: trace_number_normal_end ( so_called_lib_std_string & result )
+void shy_guts :: consts :: trace_number_end ( so_called_lib_std_string & result )
 {
     result = so_called_platform_terminal_consts :: reset_to_default ;
 }
@@ -34,10 +36,23 @@ void shy_guts :: consts :: trace_number_error_begin ( so_called_lib_std_string &
     result . clear ( ) ;
     result += so_called_platform_terminal_consts :: bright ;
     result += so_called_platform_terminal_consts :: background_color_red ;
-    result += so_called_platform_terminal_consts :: text_color_cyan ;
+    result += so_called_platform_terminal_consts :: text_color_yellow ;
 }
 
 void shy_guts :: consts :: trace_number_error_end ( so_called_lib_std_string & result )
+{
+    result = so_called_platform_terminal_consts :: reset_to_default ;
+}
+
+void shy_guts :: consts :: trace_string_name_error_begin ( so_called_lib_std_string & result )
+{
+    result . clear ( ) ;
+    result += so_called_platform_terminal_consts :: bright ;
+    result += so_called_platform_terminal_consts :: background_color_red ;
+    result += so_called_platform_terminal_consts :: text_color_green ;
+}
+
+void shy_guts :: consts :: trace_string_name_error_end ( so_called_lib_std_string & result )
 {
     result = so_called_platform_terminal_consts :: reset_to_default ;
 }
@@ -85,8 +100,8 @@ void shy_guts :: consts :: trace_stamp
 
     shy_guts :: consts :: trace_string_name_begin ( name_begin ) ;
     shy_guts :: consts :: trace_string_name_end ( name_end ) ;
-    shy_guts :: consts :: trace_number_normal_begin ( number_begin ) ;
-    shy_guts :: consts :: trace_number_normal_end ( number_end ) ;
+    shy_guts :: consts :: trace_number_begin ( number_begin ) ;
+    shy_guts :: consts :: trace_number_end ( number_end ) ;
 
     result . clear ( ) ;
     result += "Frame " ;
@@ -150,8 +165,8 @@ void shy_platform_trace_cerr :: trace_num_whole ( so_called_type_platform_math_n
     so_called_lib_std_int32_t num_int = 0 ;
 
     so_called_platform_math_insider :: num_whole_value_get ( num_int , num ) ;
-    shy_guts :: consts :: trace_number_normal_begin ( str_begin ) ;
-    shy_guts :: consts :: trace_number_normal_end ( str_end ) ;
+    shy_guts :: consts :: trace_number_begin ( str_begin ) ;
+    shy_guts :: consts :: trace_number_end ( str_end ) ;
 
     so_called_lib_std_cerr << str_begin ;
     so_called_lib_std_cerr << num_int ;
@@ -185,6 +200,19 @@ void shy_platform_trace_cerr :: trace_string_name ( const so_called_lib_std_char
 
     shy_guts :: consts :: trace_string_name_begin ( str_begin ) ;
     shy_guts :: consts :: trace_string_name_end ( str_end ) ;
+
+    so_called_lib_std_cerr << str_begin ;
+    so_called_lib_std_cerr << s ;
+    so_called_lib_std_cerr << str_end ;
+}
+
+void shy_platform_trace_cerr :: trace_string_name_error ( const so_called_lib_std_char * s )
+{
+    so_called_lib_std_string str_begin ;
+    so_called_lib_std_string str_end ;
+
+    shy_guts :: consts :: trace_string_name_error_begin ( str_begin ) ;
+    shy_guts :: consts :: trace_string_name_error_end ( str_end ) ;
 
     so_called_lib_std_cerr << str_begin ;
     so_called_lib_std_cerr << s ;

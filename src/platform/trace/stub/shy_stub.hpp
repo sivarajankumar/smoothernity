@@ -30,6 +30,10 @@ void shy_platform_trace_stub :: trace_string_name ( const so_called_lib_std_char
 {
 }
 
+void shy_platform_trace_stub :: trace_string_name_error ( const so_called_lib_std_char * )
+{
+}
+
 void shy_platform_trace_stub :: trace_string_error ( const so_called_lib_std_char * )
 {
 }
