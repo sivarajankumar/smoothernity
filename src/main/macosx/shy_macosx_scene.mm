@@ -18,7 +18,6 @@
         so_called_platform_mouse_insider :: set_enabled ( so_called_lib_std_true ) ;
         
         so_called_facade :: init ( ) ;
-        NSLog ( @"facade initialized" ) ;
     }
     return self ;
 }
