@@ -10,5 +10,6 @@ public :
     static void expected_consts_or_system_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_denominator_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_divide_or_identifier_instead_of_token_error ( const so_called_lib_std_char * ) ;
+    static void expected_do_or_discard_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void whole_line_containing_error ( const so_called_lib_std_char * ) ;
 } ;
