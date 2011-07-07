@@ -4,6 +4,8 @@ namespace shy_guts
     {
         static const so_called_lib_std_int32_t digits_per_frame = 4 ;
         static void trace_finished ( so_called_lib_std_string & ) ;
+        static void trace_module_name_begin ( so_called_lib_std_string & ) ;
+        static void trace_module_name_end ( so_called_lib_std_string & ) ;
         static void trace_number_begin ( so_called_lib_std_string & ) ;
         static void trace_number_end ( so_called_lib_std_string & ) ;
         static void trace_number_error_begin ( so_called_lib_std_string & ) ;
@@ -17,6 +19,18 @@ namespace shy_guts
         static void trace_string_name_error_begin ( so_called_lib_std_string & ) ;
         static void trace_string_name_error_end ( so_called_lib_std_string & ) ;
     }
+}
+
+void shy_guts :: consts :: trace_module_name_begin ( so_called_lib_std_string & result )
+{
+    result . clear ( ) ;
+    result += so_called_platform_terminal_consts :: background_color_default ;
+    result += so_called_platform_terminal_consts :: text_color_cyan ;
+}
+
+void shy_guts :: consts :: trace_module_name_end ( so_called_lib_std_string & result )
+{
+    result = so_called_platform_terminal_consts :: reset_to_default ;
 }
 
 void shy_guts :: consts :: trace_number_begin ( so_called_lib_std_string & result )
@@ -98,8 +112,8 @@ void shy_guts :: consts :: trace_stamp
     so_called_lib_std_string number_begin ;
     so_called_lib_std_string number_end ;
 
-    shy_guts :: consts :: trace_string_name_begin ( name_begin ) ;
-    shy_guts :: consts :: trace_string_name_end ( name_end ) ;
+    shy_guts :: consts :: trace_module_name_begin ( name_begin ) ;
+    shy_guts :: consts :: trace_module_name_end ( name_end ) ;
     shy_guts :: consts :: trace_number_begin ( number_begin ) ;
     shy_guts :: consts :: trace_number_end ( number_end ) ;
 
