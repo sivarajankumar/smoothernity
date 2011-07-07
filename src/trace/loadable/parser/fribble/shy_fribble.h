@@ -26,5 +26,6 @@ public :
     static void expected_state_or_machine_or_system_or_consts_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_system_name_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_to_instead_of_token_error ( const so_called_lib_std_char * ) ;
+    static void unknown_fract_attribute_in_module_error ( const so_called_lib_std_char * , const so_called_lib_std_char * ) ;
     static void whole_line_containing_error ( const so_called_lib_std_char * ) ;
 } ;

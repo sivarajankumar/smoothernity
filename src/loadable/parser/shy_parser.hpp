@@ -85,7 +85,6 @@ namespace shy_guts
     namespace errors
     {
         static void remove_me_after_refactoring ( so_called_lib_std_string & ) ;
-        static void unknown_fract_attribute_in_module ( so_called_lib_std_string & , so_called_lib_std_string attribute , so_called_lib_std_string ) ;
         static void unknown_fsm_action ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void unknown_fsm_input ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void unknown_fsm_system ( so_called_lib_std_string & , so_called_lib_std_string ) ;
@@ -213,11 +212,6 @@ namespace shy_guts
 void shy_guts :: errors :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
     error = so_called_lib_std_string ( "dummy error" ) ;
-}
-
-void shy_guts :: errors :: unknown_fract_attribute_in_module ( so_called_lib_std_string & error , so_called_lib_std_string attribute , so_called_lib_std_string module )
-{
-    error = so_called_lib_std_string ( "unknown fract attribute '" ) + attribute + so_called_lib_std_string ( "' in module '" ) + module + so_called_lib_std_string ( "'" ) ;
 }
 
 void shy_guts :: errors :: unknown_fsm_action ( so_called_lib_std_string & error , so_called_lib_std_string fsm_action , so_called_lib_std_string fsm_system ) 
@@ -1451,7 +1445,11 @@ void shy_guts :: set_fract_value ( )
         so_called_type_loadable_consts_content_value_fract_container :: iterator fract_i ;
         fract_i = module . name_to_fract . find ( shy_guts :: attribute_name ) ;
         if ( fract_i == module . name_to_fract . end ( ) )
-            shy_guts :: errors :: unknown_fract_attribute_in_module ( shy_guts :: error , shy_guts :: attribute_name , shy_guts :: module_name ) ;
+        {
+            if ( shy_guts :: consts :: trace_errors )
+                so_called_trace_loadable_parser :: unknown_fract_attribute_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ;
+            shy_guts :: errors :: remove_me_after_refactoring ( shy_guts :: error ) ;
+        }
         else
         {
             so_called_type_loadable_consts_content_value_fract & fract = fract_i -> second ;
