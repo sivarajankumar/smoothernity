@@ -85,7 +85,6 @@ namespace shy_guts
     namespace errors
     {
         static void remove_me_after_refactoring ( so_called_lib_std_string & ) ;
-        static void unknown_fsm_action ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void unknown_fsm_input ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void unknown_fsm_system ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void unknown_module ( so_called_lib_std_string & , so_called_lib_std_string ) ;
@@ -212,11 +211,6 @@ namespace shy_guts
 void shy_guts :: errors :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
     error = so_called_lib_std_string ( "dummy error" ) ;
-}
-
-void shy_guts :: errors :: unknown_fsm_action ( so_called_lib_std_string & error , so_called_lib_std_string fsm_action , so_called_lib_std_string fsm_system ) 
-{
-    error = so_called_lib_std_string ( "unknown fsm action '" ) + fsm_action + so_called_lib_std_string ( "' in fsm system '" ) + fsm_system + so_called_lib_std_string ( "'" ) ;
 }
 
 void shy_guts :: errors :: unknown_fsm_input ( so_called_lib_std_string & error , so_called_lib_std_string fsm_input , so_called_lib_std_string fsm_system ) 
@@ -1255,7 +1249,11 @@ void shy_guts :: store_state_name ( so_called_lib_std_string name )
 void shy_guts :: store_action_do_name ( so_called_lib_std_string name )
 {
     if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> actions . count ( name ) == 0 )
-        shy_guts :: errors :: unknown_fsm_action ( shy_guts :: error , name , shy_guts :: current_fsm_system_name ) ;
+    {
+        if ( shy_guts :: consts :: trace_errors )
+            so_called_trace_loadable_parser :: unknown_fsm_action_error ( name . c_str ( ) , shy_guts :: current_fsm_system_name . c_str ( ) ) ;
+        shy_guts :: errors :: remove_me_after_refactoring ( shy_guts :: error ) ;
+    }
     else if ( shy_guts :: current_fsm_actions )
     {
         so_called_type_loadable_fsm_content_action_do action_do ;

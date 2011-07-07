@@ -102,6 +102,10 @@ void shy_trace_loadable_parser_fribble :: unknown_fract_attribute_in_module_erro
 {
 }
 
+void shy_trace_loadable_parser_fribble :: unknown_fsm_action_error ( const so_called_lib_std_char * , const so_called_lib_std_char * )
+{
+}
+
 void shy_trace_loadable_parser_fribble :: whole_line_containing_error ( const so_called_lib_std_char * )
 {
 }
