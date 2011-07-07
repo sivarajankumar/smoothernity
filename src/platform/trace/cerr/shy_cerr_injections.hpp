@@ -5,6 +5,7 @@
 #include "../../../injections/lib/std/ostringstream/shy_ostringstream.h"
 #include "../../../injections/lib/std/string/shy_string.h"
 #include "../../../injections/platform/math/insider/shy_insider.h"
+#include "../../../injections/platform/terminal/consts/shy_consts.h"
 #include "../../../injections/platform/trace/insider/shy_insider.h"
 
 #include "./shy_cerr.hpp"

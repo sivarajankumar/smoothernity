@@ -3,10 +3,24 @@ namespace shy_guts
     namespace consts
     {
         static const so_called_lib_std_int32_t digits_per_frame = 4 ;
+        static void trace_number_begin ( so_called_lib_std_string & ) ;
+        static void trace_number_end ( so_called_lib_std_string & ) ;
         static void trace_finished ( so_called_lib_std_string & ) ;
         static void trace_stamp ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
         static void trace_started ( so_called_lib_std_string & ) ;
     }
+}
+
+void shy_guts :: consts :: trace_number_begin ( so_called_lib_std_string & result )
+{
+    result . clear ( ) ;
+    result += so_called_platform_terminal_consts :: background_color_default ;
+    result += so_called_platform_terminal_consts :: text_color_blue ;
+}
+
+void shy_guts :: consts :: trace_number_end ( so_called_lib_std_string & result )
+{
+    result = so_called_platform_terminal_consts :: text_color_default ;
 }
 
 void shy_guts :: consts :: trace_finished ( so_called_lib_std_string & result )
@@ -69,9 +83,17 @@ void shy_platform_trace_cerr :: trace_end ( )
 
 void shy_platform_trace_cerr :: trace_num_whole ( so_called_type_platform_math_num_whole num )
 {
+    so_called_lib_std_string str_begin ;
+    so_called_lib_std_string str_end ;
     so_called_lib_std_int32_t num_int = 0 ;
+
     so_called_platform_math_insider :: num_whole_value_get ( num_int , num ) ;
+    shy_guts :: consts :: trace_number_begin ( str_begin ) ;
+    shy_guts :: consts :: trace_number_end ( str_end ) ;
+
+    so_called_lib_std_cerr << str_begin ;
     so_called_lib_std_cerr << num_int ;
+    so_called_lib_std_cerr << str_end ;
 }
 
 void shy_platform_trace_cerr :: trace_string ( const so_called_lib_std_char * s )
