@@ -46,6 +46,10 @@ void shy_trace_loadable_parser_fribble :: expected_input_name_or_parenthesis_ope
 {
 }
 
+void shy_trace_loadable_parser_fribble :: expected_input_name_or_parenthesis_open_or_brace_close_instead_of_token_error ( const so_called_lib_std_char * )
+{
+}
+
 void shy_trace_loadable_parser_fribble :: whole_line_containing_error ( const so_called_lib_std_char * )
 {
 }
