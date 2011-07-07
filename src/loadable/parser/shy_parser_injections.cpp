@@ -12,6 +12,7 @@
     #include "../../injections/lib/std/isspace/shy_isspace.h"
     #include "../../injections/lib/std/locale/shy_locale.h"
     #include "../../injections/lib/std/true/shy_true.h"
+    #include "../../trace/loadable/parser/shy_parser_injections.h"
 
     #include "./shy_parser.hpp"
 
