@@ -18,6 +18,10 @@ void shy_trace_loadable_parser_fribble :: expected_brace_open_or_identifier_inst
 {
 }
 
+void shy_trace_loadable_parser_fribble :: expected_command_name_instead_of_token_error ( const so_called_lib_std_char * )
+{
+}
+
 void shy_trace_loadable_parser_fribble :: whole_line_containing_error ( const so_called_lib_std_char * )
 {
 }
