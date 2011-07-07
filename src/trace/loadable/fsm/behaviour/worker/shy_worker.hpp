@@ -14,15 +14,23 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_command
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Machine \"" ) ;
-    so_called_platform_trace :: trace_string ( machine ) ;
-    so_called_platform_trace :: trace_string ( "\" in state \"" ) ;
-    so_called_platform_trace :: trace_string ( state ) ;
-    so_called_platform_trace :: trace_string ( "\" issues command \"" ) ;
-    so_called_platform_trace :: trace_string ( command_name ) ;
-    so_called_platform_trace :: trace_string ( "\" to machine \"" ) ;
-    so_called_platform_trace :: trace_string ( command_machine ) ;
-    so_called_platform_trace :: trace_string ( "\"." ) ;
+    so_called_platform_trace :: trace_string ( "Machine " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( machine ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " in state " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( state ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " issues command " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( command_name ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " to machine " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( command_machine ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( "." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
@@ -33,13 +41,19 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_discard
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Machine \"" ) ;
-    so_called_platform_trace :: trace_string ( machine ) ;
-    so_called_platform_trace :: trace_string ( "\" in state \"" ) ;
-    so_called_platform_trace :: trace_string ( state ) ;
-    so_called_platform_trace :: trace_string ( "\" discards input \"" ) ;
-    so_called_platform_trace :: trace_string ( input ) ;
-    so_called_platform_trace :: trace_string ( "\"." ) ;
+    so_called_platform_trace :: trace_string ( "Machine " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( machine ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " in state " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( state ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " discards input " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( input ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( "." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
@@ -50,13 +64,19 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_do
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Machine \"" ) ;
-    so_called_platform_trace :: trace_string ( machine ) ;
-    so_called_platform_trace :: trace_string ( "\" in state \"" ) ;
-    so_called_platform_trace :: trace_string ( state ) ;
-    so_called_platform_trace :: trace_string ( "\" sends message \"" ) ;
-    so_called_platform_trace :: trace_string ( action ) ;
-    so_called_platform_trace :: trace_string ( "\"." ) ;
+    so_called_platform_trace :: trace_string ( "Machine " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( machine ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " in state " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( state ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " sends message " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( action ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( "." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
@@ -66,11 +86,15 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_entry
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Machine \"" ) ;
-    so_called_platform_trace :: trace_string ( machine ) ;
-    so_called_platform_trace :: trace_string ( "\" enters state \"" ) ;
-    so_called_platform_trace :: trace_string ( state ) ;
-    so_called_platform_trace :: trace_string ( "\"." ) ;
+    so_called_platform_trace :: trace_string ( "Machine " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( machine ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " enters state " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( state ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( "." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
@@ -80,11 +104,15 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_exit
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Machine \"" ) ;
-    so_called_platform_trace :: trace_string ( machine ) ;
-    so_called_platform_trace :: trace_string ( "\" leaves state \"" ) ;
-    so_called_platform_trace :: trace_string ( state ) ;
-    so_called_platform_trace :: trace_string ( "\"." ) ;
+    so_called_platform_trace :: trace_string ( "Machine " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( machine ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " leaves state " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( state ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( "." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
@@ -94,11 +122,15 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_input
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Machine \"" ) ;
-    so_called_platform_trace :: trace_string ( machine ) ;
-    so_called_platform_trace :: trace_string ( "\" handles input in state \"" ) ;
-    so_called_platform_trace :: trace_string ( state ) ;
-    so_called_platform_trace :: trace_string ( "\"." ) ;
+    so_called_platform_trace :: trace_string ( "Machine " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( machine ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( " handles input in state " ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name ( state ) ;
+    so_called_platform_trace :: trace_string_name ( "\"" ) ;
+    so_called_platform_trace :: trace_string ( "." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
