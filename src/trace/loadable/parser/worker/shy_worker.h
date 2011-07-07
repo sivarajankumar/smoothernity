@@ -8,5 +8,6 @@ public :
     static void expected_brace_open_or_identifier_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_command_name_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_consts_or_system_instead_of_token_error ( const so_called_lib_std_char * ) ;
+    static void expected_denominator_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void whole_line_containing_error ( const so_called_lib_std_char * ) ;
 } ;
