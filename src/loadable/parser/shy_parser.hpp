@@ -85,9 +85,6 @@ namespace shy_guts
     namespace errors
     {
         static void remove_me_after_refactoring ( so_called_lib_std_string & ) ;
-        static void expected_attribute_name_or_consts_or_system_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
-        static void expected_brace_open_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
-        static void expected_brace_open_or_identifier_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void expected_command_name_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void expected_consts_or_system_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void expected_denominator_instead_of ( so_called_lib_std_string & , so_called_lib_std_string ) ;
@@ -236,21 +233,6 @@ namespace shy_guts
 void shy_guts :: errors :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
     error = so_called_lib_std_string ( "dummy error" ) ;
-}
-
-void shy_guts :: errors :: expected_attribute_name_or_consts_or_system_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
-{
-    error = so_called_lib_std_string ( "expected attribute name or 'consts' or 'system', but got '" ) + token + so_called_lib_std_string ( "'" ) ;
-}
-
-void shy_guts :: errors :: expected_brace_open_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
-{
-    error = so_called_lib_std_string ( "expected '{', but got '" ) + token + ( "'" ) ;
-}
-
-void shy_guts :: errors :: expected_brace_open_or_identifier_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
-{
-    error = so_called_lib_std_string ( "expected '{' or identifier, but got '" ) + token + so_called_lib_std_string ( "'" ) ;
 }
 
 void shy_guts :: errors :: expected_command_name_instead_of ( so_called_lib_std_string & error , so_called_lib_std_string token )
@@ -547,9 +529,13 @@ void shy_guts :: handle_state_reading_attribute_name ( )
     }
     else
     {
+        if ( shy_guts :: consts :: trace_errors )
+            so_called_trace_loadable_parser :: expected_attribute_name_or_consts_or_system_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+
         so_called_lib_std_string error ;
-        shy_guts :: errors :: expected_attribute_name_or_consts_or_system_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: errors :: remove_me_after_refactoring ( error ) ;
         shy_guts :: store_error ( error ) ;
+
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -985,9 +971,13 @@ void shy_guts :: handle_state_reading_first_condition_group ( )
         shy_guts :: state = shy_guts :: state_reading_next_condition_group ;
     else
     {
+        if ( shy_guts :: consts :: trace_errors )
+            so_called_trace_loadable_parser :: expected_brace_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+
         so_called_lib_std_string error ;
-        shy_guts :: errors :: expected_brace_open_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: errors :: remove_me_after_refactoring ( error ) ;
         shy_guts :: store_error ( error ) ;
+
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -1006,9 +996,13 @@ void shy_guts :: handle_state_reading_next_condition_group ( )
         shy_guts :: state = shy_guts :: state_reading_state_content ;
     else
     {
+        if ( shy_guts :: consts :: trace_errors )
+            so_called_trace_loadable_parser :: expected_brace_open_or_identifier_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+
         so_called_lib_std_string error ;
-        shy_guts :: errors :: expected_brace_open_or_identifier_instead_of ( error , shy_guts :: token ) ;
+        shy_guts :: errors :: remove_me_after_refactoring ( error ) ;
         shy_guts :: store_error ( error ) ;
+
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
