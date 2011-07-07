@@ -23,7 +23,7 @@ void shy_trace_common_logic_salutation_letters_meshes_storage_worker :: entries_
 void shy_trace_common_logic_salutation_letters_meshes_storage_worker :: entries_overflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Entries overflow error." ) ;
+    so_called_platform_trace :: trace_string_error ( "Entries overflow error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
@@ -33,10 +33,10 @@ void shy_trace_common_logic_salutation_letters_meshes_storage_worker :: entry_in
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string ( "Entry index " ) ;
-    so_called_platform_trace :: trace_num_whole ( index ) ;
-    so_called_platform_trace :: trace_string ( " exceeds container size of " ) ;
-    so_called_platform_trace :: trace_num_whole ( max_index ) ;
-    so_called_platform_trace :: trace_string ( " elements error." ) ;
+    so_called_platform_trace :: trace_string_error ( "Entry index " ) ;
+    so_called_platform_trace :: trace_num_whole_error ( index ) ;
+    so_called_platform_trace :: trace_string_error ( " exceeds container size of " ) ;
+    so_called_platform_trace :: trace_num_whole_error ( max_index ) ;
+    so_called_platform_trace :: trace_string_error ( " elements error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
