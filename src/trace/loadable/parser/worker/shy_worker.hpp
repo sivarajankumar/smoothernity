@@ -137,6 +137,37 @@ void shy_trace_loadable_parser_worker :: expected_divide_or_identifier_instead_o
     so_called_platform_trace :: trace_end ( ) ;
 }
 
+void shy_trace_loadable_parser_worker :: expected_do_or_discard_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error
+    ( const so_called_lib_std_char * token
+    )
+{
+    so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+    so_called_platform_trace :: trace_string_error ( "Error. Expected " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"do\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"discard\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"command\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"on\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"to\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"state\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"machine\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"system\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " or " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"consts\"" ) ;
+    so_called_platform_trace :: trace_string_error ( ", but got " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( token ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " instead." ) ;
+    so_called_platform_trace :: trace_end ( ) ;
+}
+
 void shy_trace_loadable_parser_worker :: whole_line_containing_error
     ( const so_called_lib_std_char * line
     )
