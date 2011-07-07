@@ -70,6 +70,10 @@ void shy_trace_loadable_parser_fribble :: expected_module_name_instead_of_token_
 {
 }
 
+void shy_trace_loadable_parser_fribble :: expected_numerator_instead_of_token_error ( const so_called_lib_std_char * )
+{
+}
+
 void shy_trace_loadable_parser_fribble :: whole_line_containing_error ( const so_called_lib_std_char * )
 {
 }
