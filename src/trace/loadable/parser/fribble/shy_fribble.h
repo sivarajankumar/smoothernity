@@ -18,5 +18,6 @@ public :
     static void expected_machine_name_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_machine_or_command_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_machine_or_system_or_consts_instead_of_token_error ( const so_called_lib_std_char * ) ;
+    static void expected_module_name_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void whole_line_containing_error ( const so_called_lib_std_char * ) ;
 } ;
