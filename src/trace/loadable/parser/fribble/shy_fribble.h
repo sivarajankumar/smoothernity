@@ -15,5 +15,6 @@ public :
     static void expected_input_name_or_parenthesis_open_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_input_name_or_parenthesis_open_or_brace_close_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void expected_is_instead_of_token_error ( const so_called_lib_std_char * ) ;
+    static void expected_machine_name_instead_of_token_error ( const so_called_lib_std_char * ) ;
     static void whole_line_containing_error ( const so_called_lib_std_char * ) ;
 } ;
