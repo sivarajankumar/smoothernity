@@ -173,6 +173,7 @@ namespace shy_guts
     static void move_first_char_to_token ( ) ;
     static void first_char ( so_called_lib_std_char & ) ;
     static void any_chars_in_line ( so_called_lib_std_bool & ) ;
+    static void process_syntax_error ( ) ;
 }
 
 void shy_guts :: handle_token_class_none ( )
@@ -290,15 +291,13 @@ void shy_guts :: handle_state_none ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_consts_or_system_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
 
 void shy_guts :: handle_state_error ( )
 {
-    if ( shy_guts :: consts :: trace_errors )
-        so_called_trace_loadable_parser :: whole_line_containing_error ( shy_guts :: whole_line . c_str ( ) ) ;
-    shy_guts :: error = so_called_lib_std_true ;
     shy_guts :: continue_parsing = so_called_lib_std_false ;
 }
 
@@ -314,6 +313,7 @@ void shy_guts :: handle_state_reading_module_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_module_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -342,6 +342,7 @@ void shy_guts :: handle_state_reading_attribute_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_attribute_name_or_consts_or_system_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -373,6 +374,7 @@ void shy_guts :: handle_state_reading_attribute_numerator_value ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_numerator_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -405,6 +407,7 @@ void shy_guts :: handle_state_reading_attribute_denominator_value ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_denominator_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -425,6 +428,7 @@ void shy_guts :: handle_state_determining_value_format ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_divide_or_identifier_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -441,6 +445,7 @@ void shy_guts :: handle_state_reading_system_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_system_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -468,6 +473,7 @@ void shy_guts :: handle_state_reading_machine_token ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -484,6 +490,7 @@ void shy_guts :: handle_state_reading_machine_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -516,6 +523,7 @@ void shy_guts :: handle_state_reading_state_token ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -532,6 +540,7 @@ void shy_guts :: handle_state_reading_state_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -575,6 +584,7 @@ void shy_guts :: handle_state_reading_state_content ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -605,6 +615,7 @@ void shy_guts :: handle_state_reading_event_type ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_entry_or_exit_or_brace_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -663,6 +674,7 @@ void shy_guts :: handle_state_reading_action_token ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_do_or_discard_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -679,6 +691,7 @@ void shy_guts :: handle_state_reading_action_do_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_action_do_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -695,6 +708,7 @@ void shy_guts :: handle_state_reading_action_discard_input_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_action_discard_input_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -711,6 +725,7 @@ void shy_guts :: handle_state_reading_action_command_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_command_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -726,6 +741,7 @@ void shy_guts :: handle_state_reading_action_command_to_token ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_to_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -743,6 +759,7 @@ void shy_guts :: handle_state_reading_action_command_machine_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -755,6 +772,7 @@ void shy_guts :: handle_state_reading_first_condition_group ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_brace_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -775,6 +793,7 @@ void shy_guts :: handle_state_reading_next_condition_group ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_brace_open_or_identifier_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -789,6 +808,7 @@ void shy_guts :: handle_state_reading_first_condition_in_group ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_input_name_or_parenthesis_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -814,6 +834,7 @@ void shy_guts :: handle_state_reading_next_condition_in_group ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_input_name_or_parenthesis_open_or_brace_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -834,6 +855,7 @@ void shy_guts :: handle_state_reading_parametric_condition_token ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_machine_or_command_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -850,6 +872,7 @@ void shy_guts :: handle_state_reading_state_condition_machine_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -865,6 +888,7 @@ void shy_guts :: handle_state_reading_state_condition_is_token ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_is_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -881,6 +905,7 @@ void shy_guts :: handle_state_reading_state_condition_state_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -897,6 +922,7 @@ void shy_guts :: handle_state_reading_state_condition_parenthesis_close ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_parenthesis_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -913,6 +939,7 @@ void shy_guts :: handle_state_reading_command_condition_command_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_command_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -928,6 +955,7 @@ void shy_guts :: handle_state_reading_command_condition_parenthesis_close ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_parenthesis_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -944,6 +972,7 @@ void shy_guts :: handle_state_reading_transition_state_name ( )
     {
         if ( shy_guts :: consts :: trace_errors )
             so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
 }
@@ -1193,6 +1222,13 @@ void shy_guts :: add_condition_group ( )
         shy_guts :: current_fsm_condition_group_container -> push_back ( so_called_type_loadable_fsm_content_condition_group ( ) ) ;
         shy_guts :: current_fsm_condition_group = & shy_guts :: current_fsm_condition_group_container -> back ( ) ;
     }
+}
+
+void shy_guts :: process_syntax_error ( )
+{
+    if ( shy_guts :: consts :: trace_errors )
+        so_called_trace_loadable_parser :: whole_line_containing_error ( shy_guts :: whole_line . c_str ( ) ) ;
+    shy_guts :: error = so_called_lib_std_true ;
 }
 
 void shy_guts :: set_whole_value ( )
