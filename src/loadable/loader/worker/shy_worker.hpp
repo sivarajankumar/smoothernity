@@ -9,6 +9,7 @@ namespace shy_guts
 
 void shy_guts :: prepare ( )
 {
+    so_called_loadable_consts_assigner :: prepare ( ) ;
     so_called_loadable_consts_reflection :: prepare ( ) ;
     so_called_loadable_fsm_reflection :: prepare ( ) ;
     so_called_loadable_parser :: prepare ( ) ;
@@ -48,7 +49,7 @@ void shy_guts :: use_loaded_data ( )
 void shy_guts :: get_error ( so_called_lib_std_string & error )
 {
     so_called_lib_std_bool parser_error = so_called_lib_std_false ;
-    so_called_lib_std_string consts_assigner_error ;
+    so_called_lib_std_bool consts_assigner_error = so_called_lib_std_false ;
     so_called_lib_std_string fsm_assigner_error ;
 
     so_called_loadable_parser :: get_error ( parser_error ) ;
@@ -57,8 +58,8 @@ void shy_guts :: get_error ( so_called_lib_std_string & error )
 
     if ( parser_error )
         error = "parser_error remove me after refactoring" ;
-    else if ( ! consts_assigner_error . empty ( ) )
-        error = consts_assigner_error ;
+    else if ( consts_assigner_error )
+        error = "consts_assigner_error remove me after refactoring" ;
     else if ( ! fsm_assigner_error . empty ( ) )
         error = fsm_assigner_error ;
 }
