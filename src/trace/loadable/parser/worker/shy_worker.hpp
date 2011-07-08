@@ -447,6 +447,24 @@ void shy_trace_loadable_parser_worker :: unknown_fsm_action_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
+void shy_trace_loadable_parser_worker :: unknown_fsm_input_error
+    ( const so_called_lib_std_char * input
+    , const so_called_lib_std_char * system
+    )
+{
+    so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+    so_called_platform_trace :: trace_string_error ( "Error. There is no input " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( input ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " in FSM system " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( system ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_error ( "." ) ;
+    so_called_platform_trace :: trace_end ( ) ;
+}
+
 void shy_trace_loadable_parser_worker :: whole_line_containing_error
     ( const so_called_lib_std_char * line
     )
