@@ -241,9 +241,14 @@ void shy_trace_loadable_parser_worker :: expected_input_name_or_parenthesis_open
     ( const so_called_lib_std_char * token
     )
 {
+    so_called_lib_std_string parenthesis_open ;
+    parenthesis_open = so_called_loadable_parser_consts :: parenthesis_open ;
+
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Expected input name or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"(\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( parenthesis_open . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( ", but got " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( token ) ;
@@ -256,11 +261,21 @@ void shy_trace_loadable_parser_worker :: expected_input_name_or_parenthesis_open
     ( const so_called_lib_std_char * token
     )
 {
+    so_called_lib_std_string brace_close ;
+    so_called_lib_std_string parenthesis_open ;
+
+    brace_close = so_called_loadable_parser_consts :: brace_close ;
+    parenthesis_open = so_called_loadable_parser_consts :: parenthesis_open ;
+
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Expected input name or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"(\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( parenthesis_open . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( " or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"}\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( brace_close . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( ", but got " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( token ) ;
@@ -275,7 +290,9 @@ void shy_trace_loadable_parser_worker :: expected_is_instead_of_token_error
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Expected " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"is\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: is . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( ", but got " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( token ) ;
@@ -303,9 +320,13 @@ void shy_trace_loadable_parser_worker :: expected_machine_or_command_instead_of_
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Expected " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"machine\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: machine . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( " or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"command\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: command . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( ", but got " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( token ) ;
@@ -320,11 +341,17 @@ void shy_trace_loadable_parser_worker :: expected_machine_or_system_or_consts_in
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Expected " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"machine\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: machine . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( " or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"system\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: system . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( " or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"consts\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: consts . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( ", but got " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( token ) ;
