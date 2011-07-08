@@ -85,7 +85,6 @@ namespace shy_guts
     namespace errors
     {
         static void remove_me_after_refactoring ( so_called_lib_std_string & ) ;
-        static void unknown_module ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void unknown_whole_attribute_in_module ( so_called_lib_std_string & , so_called_lib_std_string attribute , so_called_lib_std_string ) ;
     }
 
@@ -209,11 +208,6 @@ namespace shy_guts
 void shy_guts :: errors :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
     error = so_called_lib_std_string ( "dummy error" ) ;
-}
-
-void shy_guts :: errors :: unknown_module ( so_called_lib_std_string & error , so_called_lib_std_string module )
-{
-    error = so_called_lib_std_string ( "unknown module '" ) + module + so_called_lib_std_string ( "'" ) ;
 }
 
 void shy_guts :: errors :: unknown_whole_attribute_in_module ( so_called_lib_std_string & error , so_called_lib_std_string attribute , so_called_lib_std_string module ) 
@@ -1409,7 +1403,11 @@ void shy_guts :: set_whole_value ( )
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
     module_i = module_container -> find ( shy_guts :: module_name ) ;
     if ( module_i == module_container -> end ( ) )
-        shy_guts :: errors :: unknown_module ( shy_guts :: error , shy_guts :: module_name ) ;
+    {
+        if ( shy_guts :: consts :: trace_errors )
+            so_called_trace_loadable_parser :: unknown_module_error ( shy_guts :: module_name . c_str ( ) ) ;
+        shy_guts :: errors :: remove_me_after_refactoring ( shy_guts :: error ) ;
+    }
     else
     {
         so_called_type_loadable_consts_content_module & module = module_i -> second ;
@@ -1434,7 +1432,11 @@ void shy_guts :: set_fract_value ( )
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
     module_i = module_container -> find ( shy_guts :: module_name ) ;
     if ( module_i == module_container -> end ( ) )
-        shy_guts :: errors :: unknown_module ( shy_guts :: error , shy_guts :: module_name ) ;
+    {
+        if ( shy_guts :: consts :: trace_errors )
+            so_called_trace_loadable_parser :: unknown_module_error ( shy_guts :: module_name . c_str ( ) ) ;
+        shy_guts :: errors :: remove_me_after_refactoring ( shy_guts :: error ) ;
+    }
     else
     {
         so_called_type_loadable_consts_content_module & module = module_i -> second ;
