@@ -64,13 +64,11 @@ namespace shy_guts
         static const so_called_lib_std_char divide = '/' ;
         static const so_called_lib_std_string do_token = "do" ;
         static const so_called_lib_std_string entry = "entry" ;
-        static const so_called_lib_std_string error_whole_line = "whole line: " ;
         static const so_called_lib_std_string exit = "exit" ;
         static const so_called_lib_std_string if_token = "if" ;
         static const so_called_lib_std_string is = "is" ;
         static const so_called_lib_std_string machine = "machine" ;
         static const so_called_lib_std_char minus = '-' ;
-        static const so_called_lib_std_string next_line = "\n" ;
         static const so_called_lib_std_string on = "on" ;
         static const so_called_lib_std_char parenthesis_close = ')' ;
         static const so_called_lib_std_char parenthesis_open = '(' ;
