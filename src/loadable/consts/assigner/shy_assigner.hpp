@@ -2,16 +2,15 @@ namespace shy_guts
 {
     namespace consts
     {
-        static void remove_me_after_refactoring ( so_called_lib_std_string & error ) ;
         static const so_called_lib_std_bool trace_errors = so_called_lib_std_true ;
     }
 
-    static so_called_lib_std_string error ;
+    static so_called_lib_std_bool error = so_called_lib_std_false ;
 }
 
-void shy_guts :: consts :: remove_me_after_refactoring ( so_called_lib_std_string & error )
+void shy_loadable_consts_assigner :: prepare ( )
 {
-    error = so_called_lib_std_string ( "dummy error" ) ;
+    shy_guts :: error = so_called_lib_std_false ;
 }
 
 void shy_loadable_consts_assigner :: assign ( )
@@ -38,7 +37,7 @@ void shy_loadable_consts_assigner :: assign ( )
             {
                 if ( shy_guts :: consts :: trace_errors )
                     so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error ( module_name . c_str ( ) , whole_name . c_str ( ) ) ;
-                shy_guts :: consts :: remove_me_after_refactoring ( shy_guts :: error ) ;
+                shy_guts :: error = so_called_lib_std_true ;
             }
             else
             {
@@ -61,7 +60,7 @@ void shy_loadable_consts_assigner :: assign ( )
             {
                 if ( shy_guts :: consts :: trace_errors )
                     so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ;
-                shy_guts :: consts :: remove_me_after_refactoring ( shy_guts :: error ) ;
+                shy_guts :: error = so_called_lib_std_true ;
             }
             else
             {
@@ -75,7 +74,7 @@ void shy_loadable_consts_assigner :: assign ( )
     }
 }
 
-void shy_loadable_consts_assigner :: get_error ( so_called_lib_std_string & arg_error )
+void shy_loadable_consts_assigner :: get_error ( so_called_lib_std_bool & arg_error )
 {
     arg_error = shy_guts :: error ;
 }
