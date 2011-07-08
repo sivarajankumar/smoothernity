@@ -11,6 +11,7 @@ void shy_guts :: prepare ( )
 {
     so_called_loadable_consts_reflection :: prepare ( ) ;
     so_called_loadable_fsm_reflection :: prepare ( ) ;
+    so_called_loadable_parser :: prepare ( ) ;
 }
 
 void shy_guts :: read_input ( )
@@ -46,7 +47,7 @@ void shy_guts :: use_loaded_data ( )
 
 void shy_guts :: get_error ( so_called_lib_std_string & error )
 {
-    so_called_lib_std_string parser_error ;
+    so_called_lib_std_bool parser_error = so_called_lib_std_false ;
     so_called_lib_std_string consts_assigner_error ;
     so_called_lib_std_string fsm_assigner_error ;
 
@@ -54,8 +55,8 @@ void shy_guts :: get_error ( so_called_lib_std_string & error )
     so_called_loadable_consts_assigner :: get_error ( consts_assigner_error ) ;
     so_called_loadable_fsm_assigner :: get_error ( fsm_assigner_error ) ;
 
-    if ( ! parser_error . empty ( ) )
-        error = parser_error ;
+    if ( parser_error )
+        error = "parser_error remove me after refactoring" ;
     else if ( ! consts_assigner_error . empty ( ) )
         error = consts_assigner_error ;
     else if ( ! fsm_assigner_error . empty ( ) )
