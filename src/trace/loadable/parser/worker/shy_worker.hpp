@@ -213,13 +213,22 @@ void shy_trace_loadable_parser_worker :: expected_entry_or_exit_or_brace_open_in
     ( const so_called_lib_std_char * token
     )
 {
+    so_called_lib_std_string brace_open ;
+    brace_open = so_called_loadable_parser_consts :: brace_open ;
+
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Expected " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"entry\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: entry . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( " or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"exit\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: exit . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( " or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"{\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( brace_open . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( ", but got " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( token ) ;
