@@ -478,6 +478,19 @@ void shy_trace_loadable_parser_worker :: unknown_fsm_system_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
+void shy_trace_loadable_parser_worker :: unknown_module_error
+    ( const so_called_lib_std_char * module
+    )
+{
+    so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+    so_called_platform_trace :: trace_string_error ( "Error. There is no consts module " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( module ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_error ( "." ) ;
+    so_called_platform_trace :: trace_end ( ) ;
+}
+
 void shy_trace_loadable_parser_worker :: whole_line_containing_error
     ( const so_called_lib_std_char * line
     )
