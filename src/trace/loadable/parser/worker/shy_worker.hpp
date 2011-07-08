@@ -38,9 +38,13 @@ void shy_trace_loadable_parser_worker :: expected_attribute_name_or_consts_or_sy
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Expected attribute name or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"consts\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: consts . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( " or " ) ;
-    so_called_platform_trace :: trace_string_name_error ( "\"system\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( so_called_loadable_parser_consts :: system . c_str ( ) ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_error ( ", but got " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( token ) ;
