@@ -102,6 +102,7 @@ public :
     static void run ( ) ;
 private :
     static void _register_context ( _abstract_scheduled_context & context ) ;
+    static void _trace_messages_queue_size_exceeds_maximum_size_error ( so_called_lib_std_int32_t current , so_called_lib_std_int32_t total ) ;
 private :
     static _abstract_scheduled_context * _contexts [ _max_scheduled_modules ] ;
     static so_called_lib_std_int32_t _contexts_count ;
@@ -180,13 +181,20 @@ void shy_platform_scheduler_random
     :: scheduled_context < _module , _max_messages_count , _max_message_size > 
     :: _scheduled_receive ( _message msg )
 {
+    _singleton . _queues [ _singleton . _accumulation_queue ] . total_count ++ ;
     if ( _singleton . _queues [ _singleton . _accumulation_queue ] . count < _max_messages_count )
     {
         so_called_lib_std_int32_t index = _singleton . _queues [ _singleton . _accumulation_queue ] . count ++ ;
         void * place = _singleton . _queues [ _singleton . _accumulation_queue ] . queue + index ;
         so_called_lib_std_new ( place ) _message_invoker < _module , _message , _max_message_size > ( msg ) ;
     }
-    _singleton . _queues [ _singleton . _accumulation_queue ] . total_count ++ ;
+    else
+    {
+        shy_platform_scheduler_random :: _trace_messages_queue_size_exceeds_maximum_size_error
+            ( _singleton . _queues [ _singleton . _accumulation_queue ] . total_count
+            , _max_messages_count
+            ) ;
+    }
 }
 
 template < typename _module , so_called_lib_std_int32_t _max_messages_count , so_called_lib_std_int32_t _max_message_size >

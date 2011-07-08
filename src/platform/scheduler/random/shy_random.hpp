@@ -1,3 +1,11 @@
+namespace shy_guts
+{
+    namespace consts
+    {
+        static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
+    }
+}
+
 shy_platform_scheduler_random :: _abstract_scheduled_context * shy_platform_scheduler_random :: _contexts [ _max_scheduled_modules ] ;
 so_called_lib_std_int32_t shy_platform_scheduler_random :: _contexts_count = 0 ;
 
@@ -28,6 +36,20 @@ void shy_platform_scheduler_random :: _register_context ( _abstract_scheduled_co
 {
     if ( _contexts_count < _max_scheduled_modules )
         _contexts [ _contexts_count ++ ] = & context ;
+}
+
+void shy_platform_scheduler_random :: _trace_messages_queue_size_exceeds_maximum_size_error
+    ( so_called_lib_std_int32_t current
+    , so_called_lib_std_int32_t total
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_scheduler_random :: messages_queue_size_exceeds_maximum_size_error
+            ( current
+            , total
+            ) ;
+    }
 }
 
 void shy_platform_scheduler_random :: run ( )

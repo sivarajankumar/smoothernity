@@ -14,6 +14,14 @@ void shy_platform_trace_stub :: trace_end ( )
 {
 }
 
+void shy_platform_trace_stub :: trace_const_int_32 ( so_called_type_platform_math_const_int_32 )
+{
+}
+
+void shy_platform_trace_stub :: trace_const_int_32_error ( so_called_type_platform_math_const_int_32 )
+{
+}
+
 void shy_platform_trace_stub :: trace_num_whole ( so_called_type_platform_math_num_whole )
 {
 }
