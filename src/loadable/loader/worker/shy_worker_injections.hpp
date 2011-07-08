@@ -11,6 +11,7 @@
 #include "../../../injections/lib/std/cin/shy_cin.h"
 #include "../../../injections/lib/std/cout/shy_cout.h"
 #include "../../../injections/lib/std/endl/shy_endl.h"
+#include "../../../injections/lib/std/false/shy_false.h"
 #include "../../../injections/lib/std/getline/shy_getline.h"
 
 #include "./shy_worker.hpp"
