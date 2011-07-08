@@ -85,7 +85,6 @@ namespace shy_guts
     namespace errors
     {
         static void remove_me_after_refactoring ( so_called_lib_std_string & ) ;
-        static void unknown_fsm_system ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void unknown_module ( so_called_lib_std_string & , so_called_lib_std_string ) ;
         static void unknown_whole_attribute_in_module ( so_called_lib_std_string & , so_called_lib_std_string attribute , so_called_lib_std_string ) ;
     }
@@ -210,11 +209,6 @@ namespace shy_guts
 void shy_guts :: errors :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
     error = so_called_lib_std_string ( "dummy error" ) ;
-}
-
-void shy_guts :: errors :: unknown_fsm_system ( so_called_lib_std_string & error , so_called_lib_std_string fsm_system )
-{
-    error = so_called_lib_std_string ( "unknown fsm system '" ) + fsm_system + so_called_lib_std_string ( "'" ) ;
 }
 
 void shy_guts :: errors :: unknown_module ( so_called_lib_std_string & error , so_called_lib_std_string module )
@@ -1209,7 +1203,9 @@ void shy_guts :: store_system_name ( so_called_lib_std_string name )
     so_called_loadable_fsm_content :: get_system_container ( system_container ) ;
     if ( system_container -> find ( name ) == system_container -> end ( ) )
     {
-        shy_guts :: errors :: unknown_fsm_system ( shy_guts :: error , name ) ;
+        if ( shy_guts :: consts :: trace_errors )
+            so_called_trace_loadable_parser :: unknown_fsm_system_error ( name . c_str ( ) ) ;
+        shy_guts :: errors :: remove_me_after_refactoring ( shy_guts :: error ) ;
         shy_guts :: current_fsm_system_name = so_called_lib_std_string ( ) ;
         shy_guts :: current_fsm_system = 0 ;
     }
