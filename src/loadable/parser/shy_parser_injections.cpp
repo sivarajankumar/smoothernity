@@ -2,6 +2,7 @@
 
     #include "./shy_parser_injections.h"
 
+    #include "./consts/shy_consts_injections.h"
     #include "../consts/content/shy_content_injections.h"
     #include "../fsm/content/shy_content_injections.h"
     #include "../../injections/lib/std/bool/shy_bool.h"

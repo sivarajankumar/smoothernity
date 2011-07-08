@@ -56,28 +56,7 @@ namespace shy_guts
 
     namespace consts
     {
-        static const so_called_lib_std_char brace_close = '}' ;
-        static const so_called_lib_std_char brace_open = '{' ;
-        static const so_called_lib_std_string command = "command" ;
-        static const so_called_lib_std_string consts = "consts" ;
-        static const so_called_lib_std_string discard = "discard" ;
-        static const so_called_lib_std_char divide = '/' ;
-        static const so_called_lib_std_string do_token = "do" ;
-        static const so_called_lib_std_string entry = "entry" ;
-        static const so_called_lib_std_string exit = "exit" ;
-        static const so_called_lib_std_string if_token = "if" ;
-        static const so_called_lib_std_string is = "is" ;
-        static const so_called_lib_std_string machine = "machine" ;
-        static const so_called_lib_std_char minus = '-' ;
-        static const so_called_lib_std_string on = "on" ;
-        static const so_called_lib_std_char parenthesis_close = ')' ;
-        static const so_called_lib_std_char parenthesis_open = '(' ;
-        static const so_called_lib_std_string state = "state" ;
-        static const so_called_lib_std_string system = "system" ;
-        static const so_called_lib_std_char terminator = '#' ;
-        static const so_called_lib_std_string to = "to" ;
         static const so_called_lib_std_bool trace_errors = so_called_lib_std_true ;
-        static const so_called_lib_std_char underscore = '_' ;
     }
 
     static so_called_lib_std_string attribute_denominator_sign ;
@@ -204,19 +183,19 @@ void shy_guts :: handle_token_class_none ( )
         shy_guts :: token_class = shy_guts :: token_class_number ;
     else if ( so_called_lib_std_isalpha ( ch , shy_guts :: locale ) )
         shy_guts :: token_class = shy_guts :: token_class_identifier ;
-    else if ( ch == shy_guts :: consts :: terminator )
+    else if ( ch == so_called_loadable_parser_consts :: terminator )
         shy_guts :: token_class = shy_guts :: token_class_terminator ;
-    else if ( ch == shy_guts :: consts :: divide )
+    else if ( ch == so_called_loadable_parser_consts :: divide )
         shy_guts :: token_class = shy_guts :: token_class_divide ;
-    else if ( ch == shy_guts :: consts :: minus )
+    else if ( ch == so_called_loadable_parser_consts :: minus )
         shy_guts :: token_class = shy_guts :: token_class_minus ;
-    else if ( ch == shy_guts :: consts :: brace_open )
+    else if ( ch == so_called_loadable_parser_consts :: brace_open )
         shy_guts :: token_class = shy_guts :: token_class_brace_open ;
-    else if ( ch == shy_guts :: consts :: brace_close )
+    else if ( ch == so_called_loadable_parser_consts :: brace_close )
         shy_guts :: token_class = shy_guts :: token_class_brace_close ;
-    else if ( ch == shy_guts :: consts :: parenthesis_open )
+    else if ( ch == so_called_loadable_parser_consts :: parenthesis_open )
         shy_guts :: token_class = shy_guts :: token_class_parenthesis_open ;
-    else if ( ch == shy_guts :: consts :: parenthesis_close )
+    else if ( ch == so_called_loadable_parser_consts :: parenthesis_close )
         shy_guts :: token_class = shy_guts :: token_class_parenthesis_close ;
     else
         shy_guts :: token_class = shy_guts :: token_class_unknown ;
@@ -228,7 +207,7 @@ void shy_guts :: handle_token_class_identifier ( )
     shy_guts :: first_char ( ch ) ;
     if ( so_called_lib_std_isalpha ( ch , shy_guts :: locale ) 
       || so_called_lib_std_isdigit ( ch , shy_guts :: locale )
-      || ch == shy_guts :: consts :: underscore
+      || ch == so_called_loadable_parser_consts :: underscore
        )
     {
         shy_guts :: move_first_char_to_token ( ) ;
@@ -297,12 +276,12 @@ void shy_guts :: handle_token_class_unknown ( )
 
 void shy_guts :: handle_state_none ( )
 {
-    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: consts )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_module_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: system )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: system )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_system_name ;
@@ -343,12 +322,12 @@ void shy_guts :: handle_state_reading_attribute_name ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
         shy_guts :: continue_parsing = so_called_lib_std_false ;
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: consts )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_module_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: system )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: system )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_system_name ;
@@ -470,17 +449,17 @@ void shy_guts :: handle_state_reading_machine_token ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
         shy_guts :: continue_parsing = so_called_lib_std_false ;
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: machine )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: machine )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_machine_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: system )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: system )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_system_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: consts )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_module_name ;
@@ -513,22 +492,22 @@ void shy_guts :: handle_state_reading_state_token ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
         shy_guts :: continue_parsing = so_called_lib_std_false ;
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: state )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: state )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_state_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: machine )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: machine )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_machine_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: system )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: system )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_system_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: consts )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_module_name ;
@@ -561,33 +540,33 @@ void shy_guts :: handle_state_reading_state_content ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
         shy_guts :: continue_parsing = so_called_lib_std_false ;
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: on )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: on )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_event_type ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: to )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: to )
     {
         shy_guts :: add_transition ( ) ;
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_transition_state_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: state )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: state )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_state_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: machine )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: machine )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_machine_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: system )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: system )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_system_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: consts )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_module_name ;
@@ -602,13 +581,13 @@ void shy_guts :: handle_state_reading_state_content ( )
 
 void shy_guts :: handle_state_reading_event_type ( )
 {
-    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: entry )
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: entry )
     {
         shy_guts :: select_entry_actions_container ( ) ;
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_action_token ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: exit )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: exit )
     {
         shy_guts :: select_exit_actions_container ( ) ;
         shy_guts :: read_next_token ( ) ;
@@ -634,48 +613,48 @@ void shy_guts :: handle_state_reading_action_token ( )
 {
     if ( shy_guts :: token_class == shy_guts :: token_class_terminator )
         shy_guts :: continue_parsing = so_called_lib_std_false ;
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: do_token )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: do_token )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_action_do_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: discard )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: discard )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_action_discard_input_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: command )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: command )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_action_command_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: on )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: on )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_event_type ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: to )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: to )
     {
         shy_guts :: add_transition ( ) ;
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_transition_state_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: state )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: state )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_state_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: machine )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: machine )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_machine_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: system )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: system )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_system_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: consts )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: consts )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_module_name ;
@@ -738,7 +717,7 @@ void shy_guts :: handle_state_reading_action_command_name ( )
 
 void shy_guts :: handle_state_reading_action_command_to_token ( )
 {
-    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: to )
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: to )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_action_command_machine_name ;
@@ -841,12 +820,12 @@ void shy_guts :: handle_state_reading_next_condition_in_group ( )
 
 void shy_guts :: handle_state_reading_parametric_condition_token ( )
 {
-    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: machine )
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: machine )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_state_condition_machine_name ;
     }
-    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: command )
+    else if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: command )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_command_condition_command_name ;
@@ -877,7 +856,7 @@ void shy_guts :: handle_state_reading_state_condition_machine_name ( )
 
 void shy_guts :: handle_state_reading_state_condition_is_token ( )
 {
-    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: is )
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: is )
     {
         shy_guts :: read_next_token ( ) ;
         shy_guts :: state = shy_guts :: state_reading_state_condition_state_name ;
@@ -971,7 +950,7 @@ void shy_guts :: handle_state_reading_transition_state_name ( )
 
 void shy_guts :: handle_state_reading_transition_if_token ( )
 {
-    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == shy_guts :: consts :: if_token )
+    if ( shy_guts :: token_class == shy_guts :: token_class_identifier && shy_guts :: token == so_called_loadable_parser_consts :: if_token )
     {
         shy_guts :: select_transition_conditions ( ) ;
         shy_guts :: select_transition_condition_group_container ( ) ;
@@ -1351,7 +1330,7 @@ void shy_guts :: append_first_char_to_token ( )
 {
     so_called_lib_std_char ch ;
     shy_guts :: first_char ( ch ) ;
-    shy_guts :: token += so_called_lib_std_string ( 1 , ch ) ;
+    shy_guts :: token += ch ;
 }
 
 void shy_guts :: move_first_char_to_token ( )
@@ -1463,6 +1442,6 @@ void shy_loadable_parser :: get_error ( so_called_lib_std_bool & arg_error )
 
 void shy_loadable_parser :: terminate ( )
 {
-    parse ( so_called_lib_std_string ( 1 , shy_guts :: consts :: terminator ) ) ;
+    parse ( so_called_lib_std_string ( 1 , so_called_loadable_parser_consts :: terminator ) ) ;
 }
 
