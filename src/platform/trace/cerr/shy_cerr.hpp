@@ -202,6 +202,32 @@ void shy_platform_trace_cerr :: trace_num_whole_error ( so_called_type_platform_
     so_called_lib_std_cerr << str_end ;
 }
 
+void shy_platform_trace_cerr :: trace_const_int_32 ( so_called_type_platform_math_const_int_32 num )
+{
+    so_called_lib_std_string str_begin ;
+    so_called_lib_std_string str_end ;
+
+    shy_guts :: consts :: trace_number_begin ( str_begin ) ;
+    shy_guts :: consts :: trace_number_end ( str_end ) ;
+
+    so_called_lib_std_cerr << str_begin ;
+    so_called_lib_std_cerr << num ;
+    so_called_lib_std_cerr << str_end ;
+}
+
+void shy_platform_trace_cerr :: trace_const_int_32_error ( so_called_type_platform_math_const_int_32 num )
+{
+    so_called_lib_std_string str_begin ;
+    so_called_lib_std_string str_end ;
+
+    shy_guts :: consts :: trace_number_error_begin ( str_begin ) ;
+    shy_guts :: consts :: trace_number_error_end ( str_end ) ;
+
+    so_called_lib_std_cerr << str_begin ;
+    so_called_lib_std_cerr << num ;
+    so_called_lib_std_cerr << str_end ;
+}
+
 void shy_platform_trace_cerr :: trace_string ( const so_called_lib_std_char * s )
 {
     so_called_lib_std_cerr << s ;

@@ -2,7 +2,7 @@ namespace shy_guts
 {
     namespace consts
     {
-        static const so_called_lib_std_bool trace_errors = so_called_lib_std_true ;
+        static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
     }
 
     static so_called_lib_std_bool error = so_called_lib_std_false ;
@@ -35,7 +35,7 @@ void shy_loadable_consts_assigner :: assign ( )
             so_called_lib_std_string string_value = whole . sign + whole . value ;
             if ( string_value . empty ( ) )
             {
-                if ( shy_guts :: consts :: trace_errors )
+                if ( shy_guts :: consts :: trace_enabled )
                     so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error ( module_name . c_str ( ) , whole_name . c_str ( ) ) ;
                 shy_guts :: error = so_called_lib_std_true ;
             }
@@ -58,7 +58,7 @@ void shy_loadable_consts_assigner :: assign ( )
             so_called_lib_std_string string_denominator = fract . denominator_sign + fract . denominator_value ;
             if ( string_numerator . empty ( ) || string_denominator . empty ( ) )
             {
-                if ( shy_guts :: consts :: trace_errors )
+                if ( shy_guts :: consts :: trace_enabled )
                     so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ;
                 shy_guts :: error = so_called_lib_std_true ;
             }
