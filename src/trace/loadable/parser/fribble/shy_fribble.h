@@ -29,5 +29,6 @@ public :
     static void unknown_fract_attribute_in_module_error ( const so_called_lib_std_char * , const so_called_lib_std_char * ) ;
     static void unknown_fsm_action_error ( const so_called_lib_std_char * , const so_called_lib_std_char * ) ;
     static void unknown_fsm_input_error ( const so_called_lib_std_char * , const so_called_lib_std_char * ) ;
+    static void unknown_fsm_system_error ( const so_called_lib_std_char * ) ;
     static void whole_line_containing_error ( const so_called_lib_std_char * ) ;
 } ;
