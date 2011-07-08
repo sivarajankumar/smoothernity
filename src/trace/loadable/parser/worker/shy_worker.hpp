@@ -411,13 +411,31 @@ void shy_trace_loadable_parser_worker :: expected_to_instead_of_token_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: unknown_fract_attribute_in_module_error
+void shy_trace_loadable_parser_worker :: unknown_attribute_fract_in_module_error
     ( const so_called_lib_std_char * attribute
     , const so_called_lib_std_char * module
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-    so_called_platform_trace :: trace_string_error ( "Error. There is no attribute " ) ;
+    so_called_platform_trace :: trace_string_error ( "Error. There is no fract attribute " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( attribute ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_error ( " in module " ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_name_error ( module ) ;
+    so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
+    so_called_platform_trace :: trace_string_error ( "." ) ;
+    so_called_platform_trace :: trace_end ( ) ;
+}
+
+void shy_trace_loadable_parser_worker :: unknown_attribute_whole_in_module_error
+    ( const so_called_lib_std_char * attribute
+    , const so_called_lib_std_char * module
+    )
+{
+    so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+    so_called_platform_trace :: trace_string_error ( "Error. There is no whole attribute " ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;
     so_called_platform_trace :: trace_string_name_error ( attribute ) ;
     so_called_platform_trace :: trace_string_name_error ( "\"" ) ;

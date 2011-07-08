@@ -85,7 +85,6 @@ namespace shy_guts
     namespace errors
     {
         static void remove_me_after_refactoring ( so_called_lib_std_string & ) ;
-        static void unknown_whole_attribute_in_module ( so_called_lib_std_string & , so_called_lib_std_string attribute , so_called_lib_std_string ) ;
     }
 
     static so_called_lib_std_string attribute_denominator_sign ;
@@ -208,11 +207,6 @@ namespace shy_guts
 void shy_guts :: errors :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
     error = so_called_lib_std_string ( "dummy error" ) ;
-}
-
-void shy_guts :: errors :: unknown_whole_attribute_in_module ( so_called_lib_std_string & error , so_called_lib_std_string attribute , so_called_lib_std_string module ) 
-{
-    error = so_called_lib_std_string ( "unknown whole attribute '" ) + attribute + so_called_lib_std_string ( "' in module '" ) + module + so_called_lib_std_string ( "'" ) ;
 }
 
 void shy_guts :: handle_token_class_none ( )
@@ -1414,7 +1408,11 @@ void shy_guts :: set_whole_value ( )
         so_called_type_loadable_consts_content_value_whole_container :: iterator whole_i ;
         whole_i = module . name_to_whole . find ( shy_guts :: attribute_name ) ;
         if ( whole_i == module . name_to_whole . end ( ) )
-            shy_guts :: errors :: unknown_whole_attribute_in_module ( shy_guts :: error , shy_guts :: attribute_name , shy_guts :: module_name ) ;
+        {
+            if ( shy_guts :: consts :: trace_errors )
+                so_called_trace_loadable_parser :: unknown_attribute_whole_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ;
+            shy_guts :: errors :: remove_me_after_refactoring ( shy_guts :: error ) ;
+        }
         else
         {
             so_called_type_loadable_consts_content_value_whole & whole = whole_i -> second ;
@@ -1445,7 +1443,7 @@ void shy_guts :: set_fract_value ( )
         if ( fract_i == module . name_to_fract . end ( ) )
         {
             if ( shy_guts :: consts :: trace_errors )
-                so_called_trace_loadable_parser :: unknown_fract_attribute_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ;
+                so_called_trace_loadable_parser :: unknown_attribute_fract_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ;
             shy_guts :: errors :: remove_me_after_refactoring ( shy_guts :: error ) ;
         }
         else
