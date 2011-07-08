@@ -2,22 +2,16 @@ namespace shy_guts
 {
     namespace consts
     {
-        static void error_no_initial_state_in_machine_of_system ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
+        static void remove_me_after_refactoring ( so_called_lib_std_string & ) ;
+        static const so_called_lib_std_bool trace_errors = so_called_lib_std_true ;
     }
 
     static so_called_lib_std_string error ;
 }
 
-void shy_guts :: consts :: error_no_initial_state_in_machine_of_system ( so_called_lib_std_string & error , so_called_lib_std_string fsm_machine , so_called_lib_std_string fsm_system )
+void shy_guts :: consts :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
-    error . clear ( ) ;
-    error += so_called_lib_std_string ( "no state '" ) ;
-    error += so_called_loadable_fsm_consts :: state_initial ;
-    error += so_called_lib_std_string ( "' in fsm machine '" ) ;
-    error += fsm_machine ;
-    error += so_called_lib_std_string ( "' of fsm system '" ) ;
-    error += fsm_system ;
-    error += so_called_lib_std_string ( "'" ) ;
+    error = "dummy error" ;
 }
 
 void shy_loadable_fsm_assigner :: assign ( )
@@ -39,7 +33,11 @@ void shy_loadable_fsm_assigner :: assign ( )
             so_called_lib_std_string fsm_machine_name = fsm_machine_i -> first ;
             const so_called_type_loadable_fsm_content_machine & fsm_machine = fsm_machine_i -> second ;
             if ( fsm_machine . states . find ( so_called_loadable_fsm_consts :: state_initial ) == fsm_machine . states . end ( ) )
-                shy_guts :: consts :: error_no_initial_state_in_machine_of_system ( shy_guts :: error , fsm_machine_name , fsm_system_name ) ;
+            {
+                if ( shy_guts :: consts :: trace_errors )
+                    so_called_trace_loadable_fsm_assigner :: no_initial_state_in_machine_of_system_error ( fsm_machine_name . c_str ( ) , fsm_system_name . c_str ( ) ) ;
+                shy_guts :: consts :: remove_me_after_refactoring ( shy_guts :: error ) ;
+            }
         }
     }
 }
