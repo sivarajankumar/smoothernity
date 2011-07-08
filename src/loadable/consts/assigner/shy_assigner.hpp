@@ -2,15 +2,16 @@ namespace shy_guts
 {
     namespace consts
     {
-        static void error_no_value_assigned_to_module_attribute ( so_called_lib_std_string & error , so_called_lib_std_string module , so_called_lib_std_string attribute ) ;
+        static void remove_me_after_refactoring ( so_called_lib_std_string & error ) ;
+        static const so_called_lib_std_bool trace_errors = so_called_lib_std_true ;
     }
 
     static so_called_lib_std_string error ;
 }
 
-void shy_guts :: consts :: error_no_value_assigned_to_module_attribute ( so_called_lib_std_string & error , so_called_lib_std_string module , so_called_lib_std_string attribute )
+void shy_guts :: consts :: remove_me_after_refactoring ( so_called_lib_std_string & error )
 {
-    error = so_called_lib_std_string ( "no value assigned to module '" ) + module + so_called_lib_std_string ( "' attribute '" ) + attribute + so_called_lib_std_string ( "'" ) ;
+    error = so_called_lib_std_string ( "dummy error" ) ;
 }
 
 void shy_loadable_consts_assigner :: assign ( )
@@ -34,7 +35,11 @@ void shy_loadable_consts_assigner :: assign ( )
             
             so_called_lib_std_string string_value = whole . sign + whole . value ;
             if ( string_value . empty ( ) )
-                shy_guts :: consts :: error_no_value_assigned_to_module_attribute ( shy_guts :: error , module_name , whole_name ) ;
+            {
+                if ( shy_guts :: consts :: trace_errors )
+                    so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error ( module_name . c_str ( ) , whole_name . c_str ( ) ) ;
+                shy_guts :: consts :: remove_me_after_refactoring ( shy_guts :: error ) ;
+            }
             else
             {
                 so_called_lib_std_int32_t int_value = 0 ;
@@ -53,7 +58,11 @@ void shy_loadable_consts_assigner :: assign ( )
             so_called_lib_std_string string_numerator = fract . numerator_sign + fract . numerator_value ;
             so_called_lib_std_string string_denominator = fract . denominator_sign + fract . denominator_value ;
             if ( string_numerator . empty ( ) || string_denominator . empty ( ) )
-                shy_guts :: consts :: error_no_value_assigned_to_module_attribute ( shy_guts :: error , module_name , fract_name ) ;
+            {
+                if ( shy_guts :: consts :: trace_errors )
+                    so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ;
+                shy_guts :: consts :: remove_me_after_refactoring ( shy_guts :: error ) ;
+            }
             else
             {
                 so_called_lib_std_int32_t int_numerator = 0 ;
