@@ -6,7 +6,7 @@ namespace shy_guts
     }
 }
 
-void shy_trace_common_engine_render_worker :: meshes_in_use 
+void shy_trace_common_engine_render :: meshes_in_use 
     ( so_called_type_platform_math_num_whole current 
     , so_called_type_platform_math_num_whole total
     )
@@ -20,21 +20,21 @@ void shy_trace_common_engine_render_worker :: meshes_in_use
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: meshes_overflow_error ( )
+void shy_trace_common_engine_render :: meshes_overflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Meshes overflow error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: meshes_underflow_error ( )
+void shy_trace_common_engine_render :: meshes_underflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Meshes underflow error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: mesh_index_out_of_range_error
+void shy_trace_common_engine_render :: mesh_index_out_of_range_error
     ( so_called_type_platform_math_num_whole current
     , so_called_type_platform_math_num_whole total
     )
@@ -48,7 +48,7 @@ void shy_trace_common_engine_render_worker :: mesh_index_out_of_range_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: mesh_vertex_out_of_range_error
+void shy_trace_common_engine_render :: mesh_vertex_out_of_range_error
     ( so_called_type_platform_math_num_whole current
     , so_called_type_platform_math_num_whole total
     )
@@ -62,7 +62,7 @@ void shy_trace_common_engine_render_worker :: mesh_vertex_out_of_range_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: mesh_too_many_indices_error
+void shy_trace_common_engine_render :: mesh_too_many_indices_error
     ( so_called_type_platform_math_num_whole current
     , so_called_type_platform_math_num_whole total
     )
@@ -76,7 +76,7 @@ void shy_trace_common_engine_render_worker :: mesh_too_many_indices_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: mesh_too_many_vertices_error
+void shy_trace_common_engine_render :: mesh_too_many_vertices_error
     ( so_called_type_platform_math_num_whole current
     , so_called_type_platform_math_num_whole total
     )
@@ -90,14 +90,14 @@ void shy_trace_common_engine_render_worker :: mesh_too_many_vertices_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: trying_to_modify_finalized_mesh_error ( )
+void shy_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Error. Trying to modify mesh that has been already finalized." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: textures_in_use
+void shy_trace_common_engine_render :: textures_in_use
     ( so_called_type_platform_math_num_whole current 
     , so_called_type_platform_math_num_whole total
     )
@@ -111,7 +111,7 @@ void shy_trace_common_engine_render_worker :: textures_in_use
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_engine_render_worker :: textures_overflow_error ( )
+void shy_trace_common_engine_render :: textures_overflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Textures overflow error." ) ;
