@@ -21,5 +21,6 @@
 #include "../../../injections/platform/static_array/shy_static_array.h"
 #include "../../../injections/platform/static_array/type/data/shy_data.h"
 #include "../../../trace/common/engine/render/shy_render_injections.h"
+#include "../../../trace/shy_trace_injections.h"
 
 #include "./shy_render.hpp"
