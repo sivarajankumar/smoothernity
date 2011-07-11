@@ -207,21 +207,21 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         {
             mesh . get ( ) . vertices_count = shy_guts :: consts :: max_vertices ;
             if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_too_many_vertices_error ( msg . vertices , shy_guts :: consts :: max_vertices ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_too_many_vertices_error ( msg . vertices , shy_guts :: consts :: max_vertices ) ) ;
         }
 
         if ( so_called_platform_conditions :: whole_greater_than_whole ( msg . triangle_strip_indices , shy_guts :: consts :: max_indices ) )
         {
             mesh . get ( ) . triangle_strip_indices_count = shy_guts :: consts :: max_indices ;
             if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_too_many_indices_error ( msg . triangle_strip_indices , shy_guts :: consts :: max_indices ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_too_many_indices_error ( msg . triangle_strip_indices , shy_guts :: consts :: max_indices ) ) ;
         }
 
         if ( so_called_platform_conditions :: whole_greater_than_whole ( msg . triangle_fan_indices , shy_guts :: consts :: max_indices ) )
         {
             mesh . get ( ) . triangle_fan_indices_count = shy_guts :: consts :: max_indices ;
             if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_too_many_indices_error ( msg . triangle_fan_indices , shy_guts :: consts :: max_indices ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_too_many_indices_error ( msg . triangle_fan_indices , shy_guts :: consts :: max_indices ) ) ;
         }
           
         so_called_platform_render :: map_vertex_buffer ( mesh . get ( ) . vertex_buffer_mapped_data , mesh . get ( ) . vertex_buffer_id ) ;
@@ -231,13 +231,13 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         created_mesh . _mesh_id = vacant_mesh_id . get ( ) ;
         so_called_platform_math :: inc_whole ( shy_guts :: next_vacant_mesh_id_index ) ;
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: meshes_in_use ( shy_guts :: next_vacant_mesh_id_index , so_called_common_engine_render_consts :: max_meshes ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: meshes_in_use ( shy_guts :: next_vacant_mesh_id_index , so_called_common_engine_render_consts :: max_meshes ) ) ;
     }
     else
     {
         created_mesh = so_called_common_engine_render_consts :: null_mesh ;
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: meshes_overflow_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: meshes_overflow_error ( ) ) ;
     }
 
     so_called_message_common_engine_render_mesh_create_reply reply_msg ;
@@ -253,13 +253,13 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         {
             so_called_platform_math :: dec_whole ( shy_guts :: next_vacant_mesh_id_index ) ;
             if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: meshes_in_use ( shy_guts :: next_vacant_mesh_id_index , so_called_common_engine_render_consts :: max_meshes ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: meshes_in_use ( shy_guts :: next_vacant_mesh_id_index , so_called_common_engine_render_consts :: max_meshes ) ) ;
             so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > vacant_mesh_id ;
             so_called_platform_static_array :: element_ptr ( vacant_mesh_id , shy_guts :: vacant_mesh_ids , shy_guts :: next_vacant_mesh_id_index ) ;
             vacant_mesh_id . get ( ) = msg . mesh . _mesh_id ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: meshes_underflow_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: meshes_underflow_error ( ) ) ;
     }
 }
 
@@ -332,10 +332,10 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
                 so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_index_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_fan_indices_count ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_index_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_fan_indices_count ) ) ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ) ;
     }
 }
 
@@ -354,10 +354,10 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
                 so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_index_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_strip_indices_count ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_index_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_strip_indices_count ) ) ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ) ;
     }
 }
 
@@ -376,10 +376,10 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
                 so_called_platform_render :: set_vertex_color ( vertex . get ( ) , msg . r , msg . g , msg . b , msg . a ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_vertex_out_of_range_error ( msg . offset , mesh . get ( ) . vertices_count ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_vertex_out_of_range_error ( msg . offset , mesh . get ( ) . vertices_count ) ) ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ) ;
     }
 }
 
@@ -398,10 +398,10 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
                 so_called_platform_render :: set_vertex_position ( vertex . get ( ) , msg . x , msg . y , msg . z ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_vertex_out_of_range_error ( msg . offset , mesh . get ( ) . vertices_count ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_vertex_out_of_range_error ( msg . offset , mesh . get ( ) . vertices_count ) ) ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ) ;
     }
 }
 
@@ -420,10 +420,10 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
                 so_called_platform_render :: set_vertex_tex_coord ( vertex . get ( ) , msg . u , msg . v ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace_common_engine_render :: mesh_vertex_out_of_range_error ( msg . offset , mesh . get ( ) . vertices_count ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_vertex_out_of_range_error ( msg . offset , mesh . get ( ) . vertices_count ) ) ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ) ;
     }
 }
 
@@ -447,13 +447,13 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         created_texture . _texture_id = shy_guts :: next_texture_id ;
         so_called_platform_math :: inc_whole ( shy_guts :: next_texture_id ) ;
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: textures_in_use ( shy_guts :: next_texture_id , whole_max_textures ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: textures_in_use ( shy_guts :: next_texture_id , whole_max_textures ) ) ;
     }
     else
     {
         created_texture . _texture_id = whole_max_textures ;
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-            so_called_trace_common_engine_render :: textures_overflow_error ( ) ;
+            so_called_trace ( so_called_trace_common_engine_render :: textures_overflow_error ( ) ) ;
     }
 
     so_called_message_common_engine_render_texture_create_reply reply_msg ;
