@@ -1,11 +1,8 @@
-#ifdef shy_build_loadable_way
-
-    #ifdef shy_build_with_trace
-        #include "./worker/shy_worker_injections.hpp"
+#ifdef shy_build_with_trace
+    #ifdef shy_build_loadable_way
+        #include "./shy_parser_injections.h"
+        #include "../../../injections/platform/trace/shy_trace.h"
+        #include "../../../loadable/parser/consts/shy_consts_injections.h"
+        #include "./shy_parser.hpp"
     #endif
-
-    #ifdef shy_build_without_trace
-        #include "./fribble/shy_fribble_injections.hpp"
-    #endif
-
 #endif
