@@ -294,6 +294,21 @@ void shy_common_engine_math_stateless :: clamp_fract
         num = to ;
 }
 
+void shy_common_engine_math_stateless :: clamp_whole
+    ( so_called_type_platform_math_num_whole & result 
+    , so_called_type_platform_math_num_whole num 
+    , so_called_type_platform_math_num_whole from 
+    , so_called_type_platform_math_num_whole to 
+    )
+{
+    if ( so_called_platform_conditions :: whole_less_than_whole ( num , from ) )
+        result = from ;
+    else if ( so_called_platform_conditions :: whole_greater_than_whole ( num , to ) )
+        result = to ;
+    else
+        result = num ;
+}
+
 void shy_common_engine_math_stateless :: min_whole 
     ( so_called_type_platform_math_num_whole & result 
     , so_called_type_platform_math_num_whole a 

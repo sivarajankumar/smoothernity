@@ -8,7 +8,7 @@ namespace shy_guts
 
     namespace consts
     {
-        static const so_called_type_platform_math_num_whole trace_enabled = so_called_platform_math_consts :: whole_true ;
+        static const so_called_type_platform_math_num_whole trace_enabled = so_called_platform_math :: init_num_whole ( so_called_lib_std_true ) ;
     }
 
     static so_called_type_platform_static_array_data < type_entry , so_called_common_logic_salutation_letters_consts :: max_letters_int > entries_data ;
