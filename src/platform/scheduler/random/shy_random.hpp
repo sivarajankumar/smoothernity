@@ -45,10 +45,12 @@ void shy_platform_scheduler_random :: _trace_messages_queue_size_exceeds_maximum
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
-        so_called_trace_platform_scheduler_random :: messages_queue_size_exceeds_maximum_size_error
-            ( current
-            , total
-            ) ;
+        so_called_trace 
+            ( so_called_trace_platform_scheduler_random :: messages_queue_size_exceeds_maximum_size_error
+                ( current
+                , total
+            ) 
+        ) ;
     }
 }
 
