@@ -26,9 +26,11 @@ void shy_guts :: trace_entries_in_use ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
     {
-        so_called_trace_common_logic_salutation_letters_text_storage :: entries_in_use
-            ( shy_guts :: entries_count
-            , so_called_common_logic_salutation_letters_consts :: max_letters
+        so_called_trace
+            ( so_called_trace_common_logic_salutation_letters_text_storage :: entries_in_use
+                ( shy_guts :: entries_count
+                , so_called_common_logic_salutation_letters_consts :: max_letters
+                )
             ) ;
     }
 }
@@ -36,16 +38,18 @@ void shy_guts :: trace_entries_in_use ( )
 void shy_guts :: trace_entries_overflow_error ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace_common_logic_salutation_letters_text_storage :: entries_overflow_error ( ) ;
+        so_called_trace ( so_called_trace_common_logic_salutation_letters_text_storage :: entries_overflow_error ( ) ) ;
 }
 
 void shy_guts :: trace_entry_index_is_out_of_range_error ( so_called_type_platform_math_num_whole index )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
     {
-        so_called_trace_common_logic_salutation_letters_text_storage :: entry_index_is_out_of_range_error
-            ( index
-            , shy_guts :: entries_count
+        so_called_trace
+            ( so_called_trace_common_logic_salutation_letters_text_storage :: entry_index_is_out_of_range_error
+                ( index
+                , shy_guts :: entries_count
+                )
             ) ;
     }
 }

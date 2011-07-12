@@ -6,7 +6,7 @@ namespace shy_guts
     }
 }
 
-void shy_trace_common_logic_salutation_letters_text_storage_worker :: entries_in_use 
+void shy_trace_common_logic_salutation_letters_text_storage :: entries_in_use 
     ( so_called_type_platform_math_num_whole current 
     , so_called_type_platform_math_num_whole total
     )
@@ -20,14 +20,14 @@ void shy_trace_common_logic_salutation_letters_text_storage_worker :: entries_in
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_logic_salutation_letters_text_storage_worker :: entries_overflow_error ( )
+void shy_trace_common_logic_salutation_letters_text_storage :: entries_overflow_error ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string_error ( "Entries overflow error." ) ;
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_common_logic_salutation_letters_text_storage_worker :: entry_index_is_out_of_range_error
+void shy_trace_common_logic_salutation_letters_text_storage :: entry_index_is_out_of_range_error
     ( so_called_type_platform_math_num_whole index 
     , so_called_type_platform_math_num_whole max_index
     )
