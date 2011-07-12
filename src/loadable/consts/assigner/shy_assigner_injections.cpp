@@ -10,6 +10,7 @@
     #include "../../../injections/lib/std/true/shy_true.h"
     #include "../../../injections/platform/math/shy_math.h"
     #include "../../../trace/loadable/consts/assigner/shy_assigner_injections.h"
+    #include "../../../trace/shy_trace_injections.h"
 
     #include "./shy_assigner.hpp"
 

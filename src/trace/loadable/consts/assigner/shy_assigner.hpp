@@ -6,7 +6,7 @@ namespace shy_guts
     }
 }
 
-void shy_trace_loadable_consts_assigner_worker :: no_value_assigned_to_module_attribute_fract_error
+void shy_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error
     ( const so_called_lib_std_char * module
     , const so_called_lib_std_char * attribute 
     )
@@ -24,7 +24,7 @@ void shy_trace_loadable_consts_assigner_worker :: no_value_assigned_to_module_at
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_consts_assigner_worker :: no_value_assigned_to_module_attribute_whole_error
+void shy_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error
     ( const so_called_lib_std_char * module
     , const so_called_lib_std_char * attribute 
     )

@@ -36,7 +36,7 @@ void shy_loadable_consts_assigner :: assign ( )
             if ( string_value . empty ( ) )
             {
                 if ( shy_guts :: consts :: trace_enabled )
-                    so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error ( module_name . c_str ( ) , whole_name . c_str ( ) ) ;
+                    so_called_trace ( so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error ( module_name . c_str ( ) , whole_name . c_str ( ) ) ) ;
                 shy_guts :: error = so_called_lib_std_true ;
             }
             else
@@ -59,7 +59,7 @@ void shy_loadable_consts_assigner :: assign ( )
             if ( string_numerator . empty ( ) || string_denominator . empty ( ) )
             {
                 if ( shy_guts :: consts :: trace_enabled )
-                    so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ;
+                    so_called_trace ( so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ) ;
                 shy_guts :: error = so_called_lib_std_true ;
             }
             else
