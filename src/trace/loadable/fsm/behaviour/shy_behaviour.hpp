@@ -6,7 +6,7 @@ namespace shy_guts
     }
 }
 
-void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_command 
+void shy_trace_loadable_fsm_behaviour :: machine_state_action_command 
     ( const so_called_lib_std_char * machine 
     , const so_called_lib_std_char * state
     , const so_called_lib_std_char * command_name
@@ -34,7 +34,7 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_command
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_discard
+void shy_trace_loadable_fsm_behaviour :: machine_state_action_discard
     ( const so_called_lib_std_char * machine
     , const so_called_lib_std_char * state
     , const so_called_lib_std_char * input
@@ -57,7 +57,7 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_discard
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_do 
+void shy_trace_loadable_fsm_behaviour :: machine_state_action_do 
     ( const so_called_lib_std_char * machine
     , const so_called_lib_std_char * state
     , const so_called_lib_std_char * action
@@ -80,7 +80,7 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_action_do
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_entry
+void shy_trace_loadable_fsm_behaviour :: machine_state_on_entry
     ( const so_called_lib_std_char * machine
     , const so_called_lib_std_char * state
     )
@@ -98,7 +98,7 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_entry
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_exit
+void shy_trace_loadable_fsm_behaviour :: machine_state_on_exit
     ( const so_called_lib_std_char * machine
     , const so_called_lib_std_char * state
     )
@@ -116,7 +116,7 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_exit
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_input
+void shy_trace_loadable_fsm_behaviour :: machine_state_on_input
     ( const so_called_lib_std_char * machine
     , const so_called_lib_std_char * state
     )
@@ -134,7 +134,7 @@ void shy_trace_loadable_fsm_behaviour_worker :: machine_state_on_input
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_fsm_behaviour_worker :: tick_all_fsms ( )
+void shy_trace_loadable_fsm_behaviour :: tick_all_fsms ( )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
     so_called_platform_trace :: trace_string ( "All machines do tick." ) ;
