@@ -1,8 +1,17 @@
 namespace shy_guts
 {
+    namespace consts
+    {
+        static const so_called_type_platform_math_num_whole fidget_edges_max = so_called_platform_math :: init_num_whole ( 100 ) ;
+        static const so_called_type_platform_math_num_whole fidget_edges_min = so_called_platform_math :: init_num_whole ( 3 ) ;
+        static const so_called_type_platform_math_num_whole trace_enabled = so_called_platform_math :: init_num_whole ( so_called_lib_std_true ) ;
+    }
+
     static void update_fidget ( ) ;
     static void render_fidget_mesh ( ) ;
     static void create_fidget_mesh ( ) ;
+    static void get_clamped_fidget_edges ( so_called_type_platform_math_num_whole & ) ;
+    static void check_fidget_edges ( ) ;
 
     static so_called_type_platform_math_num_fract fidget_angle ;
     static so_called_type_platform_math_num_whole fidget_prepare_permitted ;
@@ -20,6 +29,37 @@ namespace shy_guts
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_fidget > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
+
+void shy_guts :: get_clamped_fidget_edges ( so_called_type_platform_math_num_whole & result )
+{
+    so_called_common_engine_math_stateless :: clamp_whole
+        ( result
+        , so_called_common_logic_fidget_consts :: fidget_edges
+        , shy_guts :: consts :: fidget_edges_min
+        , shy_guts :: consts :: fidget_edges_max
+        ) ;
+}
+
+void shy_guts :: check_fidget_edges ( )
+{
+    so_called_type_platform_math_num_whole fidget_edges ;
+    fidget_edges = so_called_common_logic_fidget_consts :: fidget_edges ;
+    if ( so_called_platform_conditions :: whole_less_than_whole ( fidget_edges , shy_guts :: consts :: fidget_edges_min )
+      || so_called_platform_conditions :: whole_greater_than_whole ( fidget_edges , shy_guts :: consts :: fidget_edges_max )
+       )
+    {
+        if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+        {
+            so_called_trace 
+                ( so_called_trace_common_logic_fidget :: edges_out_of_range_error
+                    ( fidget_edges
+                    , shy_guts :: consts :: fidget_edges_min
+                    , shy_guts :: consts :: fidget_edges_max
+                    )
+                ) ;
+        }
+    }
+}
 
 void shy_guts :: update_fidget ( )
 {
@@ -80,12 +120,14 @@ void shy_guts :: render_fidget_mesh ( )
 
 void shy_guts :: create_fidget_mesh ( )
 {
+    so_called_type_platform_math_num_whole whole_fidget_edges ;
     so_called_type_platform_math_num_fract fract_fidget_edges ;
-    
-    so_called_platform_math :: make_fract_from_whole ( fract_fidget_edges , so_called_common_logic_fidget_consts :: fidget_edges ) ;
+
+    shy_guts :: get_clamped_fidget_edges ( whole_fidget_edges ) ;
+    so_called_platform_math :: make_fract_from_whole ( fract_fidget_edges , whole_fidget_edges ) ;
     
     for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
-        ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_common_logic_fidget_consts :: fidget_edges )
+        ; so_called_platform_conditions :: whole_less_than_whole ( i , whole_fidget_edges )
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
@@ -187,6 +229,8 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_init )
     shy_guts :: render_aspect_replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: render_frame_loss_requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: render_frame_loss_replied = so_called_platform_math_consts :: whole_false ;
+
+    shy_guts :: check_fidget_edges ( ) ;    
 }
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget_prepare_permit )
@@ -211,10 +255,13 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget
         if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: fidget_mesh_created ) )
         {
             shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
-            
+
+            so_called_type_platform_math_num_whole fidget_edges ;
+            shy_guts :: get_clamped_fidget_edges ( fidget_edges ) ;            
+
             so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
-            mesh_create_msg . vertices = so_called_common_logic_fidget_consts :: fidget_edges ;
-            mesh_create_msg . triangle_fan_indices = so_called_common_logic_fidget_consts :: fidget_edges ;
+            mesh_create_msg . vertices = fidget_edges ;
+            mesh_create_msg . triangle_fan_indices = fidget_edges ;
             mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_0 ;
             so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
         }

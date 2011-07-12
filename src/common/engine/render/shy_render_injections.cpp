@@ -6,6 +6,7 @@
 #include "./sender/mesh_create_reply/shy_mesh_create_reply_injections.h"
 #include "./sender/texture_create_reply/shy_texture_create_reply_injections.h"
 #include "./sender/texture_loader_ready_reply/shy_texture_loader_ready_reply_injections.h"
+#include "../../../injections/lib/std/true/shy_true.h"
 #include "../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../injections/platform/math/shy_math.h"

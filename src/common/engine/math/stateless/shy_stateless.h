@@ -70,6 +70,12 @@ public :
         , so_called_type_platform_math_num_fract from 
         , so_called_type_platform_math_num_fract to 
         ) ;
+    static void clamp_whole
+        ( so_called_type_platform_math_num_whole & result 
+        , so_called_type_platform_math_num_whole num 
+        , so_called_type_platform_math_num_whole from 
+        , so_called_type_platform_math_num_whole to 
+        ) ;
     static void min_whole 
         ( so_called_type_platform_math_num_whole & result 
         , so_called_type_platform_math_num_whole a 

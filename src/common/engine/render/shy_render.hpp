@@ -9,7 +9,7 @@ namespace shy_guts
         static const so_called_type_platform_math_num_whole max_indices
             = so_called_platform_math :: init_num_whole ( 300 ) ;
         static so_called_type_platform_math_const_int_32 max_textures = 10 ;
-        static const so_called_type_platform_math_num_whole trace_enabled = so_called_platform_math_consts :: whole_true ;
+        static const so_called_type_platform_math_num_whole trace_enabled = so_called_platform_math :: init_num_whole ( so_called_lib_std_true ) ;
     }
 
     class texture_data
