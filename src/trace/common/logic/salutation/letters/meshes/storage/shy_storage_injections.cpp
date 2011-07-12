@@ -1,7 +1,5 @@
 #ifdef shy_build_with_trace
-    #include "./worker/shy_worker_injections.hpp"
-#endif
-
-#ifdef shy_build_without_trace
-    #include "./fribble/shy_fribble_injections.hpp"
+    #include "./shy_storage_injections.h"
+    #include "../../../../../../../injections/platform/trace/shy_trace.h"
+    #include "./shy_storage.hpp"
 #endif

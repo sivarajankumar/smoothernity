@@ -1,4 +1,4 @@
-class shy_trace_common_logic_salutation_letters_meshes_storage_fribble
+class shy_trace_common_logic_salutation_letters_meshes_storage
 {
 public :
     static void entries_in_use ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
