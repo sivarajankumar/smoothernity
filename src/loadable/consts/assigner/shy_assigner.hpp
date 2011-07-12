@@ -68,7 +68,14 @@ void shy_loadable_consts_assigner :: assign ( )
                 so_called_lib_std_int32_t int_denominator = 0 ;
                 so_called_lib_std_istringstream ( string_numerator ) >> int_numerator ;
                 so_called_lib_std_istringstream ( string_denominator ) >> int_denominator ;
-                so_called_platform_math :: make_num_fract ( * fract . binding , int_numerator , int_denominator ) ;
+                if ( int_denominator == 0 )
+                {
+                    if ( shy_guts :: consts :: trace_enabled )
+                        so_called_trace ( so_called_trace_loadable_consts_assigner :: zero_denominator_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ) ;
+                    shy_guts :: error = so_called_lib_std_true ;
+                }
+                else
+                    so_called_platform_math :: make_num_fract ( * fract . binding , int_numerator , int_denominator ) ;
             }
         }
     }
