@@ -6,7 +6,7 @@ namespace shy_guts
     }
 }
 
-void shy_trace_loadable_fsm_assigner_worker :: no_initial_state_in_machine_of_system_error
+void shy_trace_loadable_fsm_assigner :: no_initial_state_in_machine_of_system_error
     ( const so_called_lib_std_char * machine
     , const so_called_lib_std_char * system 
     )
