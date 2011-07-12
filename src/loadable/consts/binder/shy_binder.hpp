@@ -29,3 +29,18 @@ void shy_loadable_consts_binder :: bind_value ( const so_called_lib_std_char * n
     }
 }
 
+void shy_loadable_consts_binder :: bind_value_min ( so_called_lib_std_int32_t )
+{
+}
+
+void shy_loadable_consts_binder :: bind_value_max ( so_called_lib_std_int32_t )
+{
+}
+
+void shy_loadable_consts_binder :: bind_value_min ( so_called_lib_std_int32_t , so_called_lib_std_int32_t )
+{
+}
+
+void shy_loadable_consts_binder :: bind_value_max ( so_called_lib_std_int32_t , so_called_lib_std_int32_t )
+{
+}
