@@ -1,8 +1,6 @@
 class shy_platform_trace_cerr
 {
 public :
-    static void init ( ) ;
-    static void done ( ) ;
     static void trace_begin ( const so_called_lib_std_char * ) ;
     static void trace_end ( ) ;
     static void trace_const_int_32 ( so_called_type_platform_math_const_int_32 ) ;
