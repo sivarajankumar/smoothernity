@@ -290,7 +290,7 @@ void shy_guts :: handle_state_none ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_consts_or_system_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_consts_or_system_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -312,7 +312,7 @@ void shy_guts :: handle_state_reading_module_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_module_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_module_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -341,7 +341,7 @@ void shy_guts :: handle_state_reading_attribute_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_attribute_name_or_consts_or_system_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_attribute_name_or_consts_or_system_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -373,7 +373,7 @@ void shy_guts :: handle_state_reading_attribute_numerator_value ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_numerator_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_numerator_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -406,7 +406,7 @@ void shy_guts :: handle_state_reading_attribute_denominator_value ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_denominator_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_denominator_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -427,7 +427,7 @@ void shy_guts :: handle_state_determining_value_format ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_divide_or_identifier_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_divide_or_identifier_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -444,7 +444,7 @@ void shy_guts :: handle_state_reading_system_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_system_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_system_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -472,7 +472,7 @@ void shy_guts :: handle_state_reading_machine_token ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -489,7 +489,7 @@ void shy_guts :: handle_state_reading_machine_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -522,7 +522,7 @@ void shy_guts :: handle_state_reading_state_token ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -539,7 +539,7 @@ void shy_guts :: handle_state_reading_state_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -583,7 +583,7 @@ void shy_guts :: handle_state_reading_state_content ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -614,7 +614,7 @@ void shy_guts :: handle_state_reading_event_type ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_entry_or_exit_or_brace_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_entry_or_exit_or_brace_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -673,7 +673,13 @@ void shy_guts :: handle_state_reading_action_token ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_do_or_discard_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+        {
+            so_called_trace
+                ( so_called_trace_loadable_parser :: expected_do_or_discard_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error
+                    ( shy_guts :: token . c_str ( ) 
+                    ) 
+                ) ;
+        }
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -690,7 +696,7 @@ void shy_guts :: handle_state_reading_action_do_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_action_do_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_action_do_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -707,7 +713,7 @@ void shy_guts :: handle_state_reading_action_discard_input_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_action_discard_input_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_action_discard_input_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -724,7 +730,7 @@ void shy_guts :: handle_state_reading_action_command_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_command_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_command_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -740,7 +746,7 @@ void shy_guts :: handle_state_reading_action_command_to_token ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_to_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_to_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -758,7 +764,7 @@ void shy_guts :: handle_state_reading_action_command_machine_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -771,7 +777,7 @@ void shy_guts :: handle_state_reading_first_condition_group ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_brace_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_brace_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -792,7 +798,7 @@ void shy_guts :: handle_state_reading_next_condition_group ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_brace_open_or_identifier_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_brace_open_or_identifier_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -807,7 +813,7 @@ void shy_guts :: handle_state_reading_first_condition_in_group ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_input_name_or_parenthesis_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_input_name_or_parenthesis_open_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -833,7 +839,7 @@ void shy_guts :: handle_state_reading_next_condition_in_group ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_input_name_or_parenthesis_open_or_brace_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_input_name_or_parenthesis_open_or_brace_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -854,7 +860,7 @@ void shy_guts :: handle_state_reading_parametric_condition_token ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_machine_or_command_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_machine_or_command_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -871,7 +877,7 @@ void shy_guts :: handle_state_reading_state_condition_machine_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_machine_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -887,7 +893,7 @@ void shy_guts :: handle_state_reading_state_condition_is_token ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_is_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_is_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -904,7 +910,7 @@ void shy_guts :: handle_state_reading_state_condition_state_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -921,7 +927,7 @@ void shy_guts :: handle_state_reading_state_condition_parenthesis_close ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_parenthesis_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_parenthesis_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -938,7 +944,7 @@ void shy_guts :: handle_state_reading_command_condition_command_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_command_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_command_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -954,7 +960,7 @@ void shy_guts :: handle_state_reading_command_condition_parenthesis_close ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_parenthesis_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_parenthesis_close_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -971,7 +977,7 @@ void shy_guts :: handle_state_reading_transition_state_name ( )
     else
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: expected_state_name_instead_of_token_error ( shy_guts :: token . c_str ( ) ) ) ;
         shy_guts :: process_syntax_error ( ) ;
         shy_guts :: state = shy_guts :: state_error ;
     }
@@ -1027,7 +1033,7 @@ void shy_guts :: store_system_name ( so_called_lib_std_string name )
     if ( system_container -> find ( name ) == system_container -> end ( ) )
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: unknown_fsm_system_error ( name . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: unknown_fsm_system_error ( name . c_str ( ) ) ) ;
         shy_guts :: error = so_called_lib_std_true ;
         shy_guts :: current_fsm_system_name = so_called_lib_std_string ( ) ;
         shy_guts :: current_fsm_system = 0 ;
@@ -1064,7 +1070,7 @@ void shy_guts :: store_action_do_name ( so_called_lib_std_string name )
     if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> actions . count ( name ) == 0 )
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: unknown_fsm_action_error ( name . c_str ( ) , shy_guts :: current_fsm_system_name . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: unknown_fsm_action_error ( name . c_str ( ) , shy_guts :: current_fsm_system_name . c_str ( ) ) ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
     else if ( shy_guts :: current_fsm_actions )
@@ -1080,7 +1086,7 @@ void shy_guts :: store_action_discard_input_name ( so_called_lib_std_string name
     if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> inputs . count ( name ) == 0 )
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: unknown_fsm_input_error ( name . c_str ( ) , shy_guts :: current_fsm_system_name . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: unknown_fsm_input_error ( name . c_str ( ) , shy_guts :: current_fsm_system_name . c_str ( ) ) ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
     else if ( shy_guts :: current_fsm_actions )
@@ -1118,7 +1124,7 @@ void shy_guts :: store_input_condition ( so_called_lib_std_string input )
     if ( shy_guts :: current_fsm_system && shy_guts :: current_fsm_system -> inputs . count ( input ) == 0 )
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: unknown_fsm_input_error ( input . c_str ( ) , shy_guts :: current_fsm_system_name . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: unknown_fsm_input_error ( input . c_str ( ) , shy_guts :: current_fsm_system_name . c_str ( ) ) ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
     else if ( shy_guts :: current_fsm_condition_group )
@@ -1227,7 +1233,7 @@ void shy_guts :: add_condition_group ( )
 void shy_guts :: process_syntax_error ( )
 {
     if ( shy_guts :: consts :: trace_enabled )
-        so_called_trace_loadable_parser :: whole_line_containing_error ( shy_guts :: whole_line . c_str ( ) ) ;
+        so_called_trace ( so_called_trace_loadable_parser :: whole_line_containing_error ( shy_guts :: whole_line . c_str ( ) ) ) ;
     shy_guts :: error = so_called_lib_std_true ;
 }
 
@@ -1241,7 +1247,7 @@ void shy_guts :: set_whole_value ( )
     if ( module_i == module_container -> end ( ) )
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: unknown_module_error ( shy_guts :: module_name . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: unknown_module_error ( shy_guts :: module_name . c_str ( ) ) ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
     else
@@ -1252,7 +1258,7 @@ void shy_guts :: set_whole_value ( )
         if ( whole_i == module . name_to_whole . end ( ) )
         {
             if ( shy_guts :: consts :: trace_enabled )
-                so_called_trace_loadable_parser :: unknown_attribute_whole_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ;
+                so_called_trace ( so_called_trace_loadable_parser :: unknown_attribute_whole_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ) ;
             shy_guts :: error = so_called_lib_std_true ;
         }
         else
@@ -1274,7 +1280,7 @@ void shy_guts :: set_fract_value ( )
     if ( module_i == module_container -> end ( ) )
     {
         if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace_loadable_parser :: unknown_module_error ( shy_guts :: module_name . c_str ( ) ) ;
+            so_called_trace ( so_called_trace_loadable_parser :: unknown_module_error ( shy_guts :: module_name . c_str ( ) ) ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
     else
@@ -1285,7 +1291,7 @@ void shy_guts :: set_fract_value ( )
         if ( fract_i == module . name_to_fract . end ( ) )
         {
             if ( shy_guts :: consts :: trace_enabled )
-                so_called_trace_loadable_parser :: unknown_attribute_fract_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ;
+                so_called_trace ( so_called_trace_loadable_parser :: unknown_attribute_fract_in_module_error ( shy_guts :: attribute_name . c_str ( ) , shy_guts :: module_name . c_str ( ) ) ) ;
             shy_guts :: error = so_called_lib_std_true ;
         }
         else

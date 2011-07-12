@@ -205,9 +205,11 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_entr
 {
     if ( so_called_loadable_fsm_behaviour_consts :: trace_entry )
     {
-        so_called_trace_loadable_fsm_behaviour :: machine_state_on_entry
-            ( _machine_i -> first . c_str ( )
-            , _state_i -> first . c_str ( )
+        so_called_trace
+            ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_entry
+                ( _machine_i -> first . c_str ( )
+                , _state_i -> first . c_str ( )
+                )
             ) ;
     }
     _execute_actions ( _state_i -> second . on_entry ) ;
@@ -218,9 +220,11 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_exit
 {
     if ( so_called_loadable_fsm_behaviour_consts :: trace_exit )
     {
-        so_called_trace_loadable_fsm_behaviour :: machine_state_on_exit
-            ( _machine_i -> first . c_str ( )
-            , _state_i -> first . c_str ( )
+        so_called_trace
+            ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_exit
+                ( _machine_i -> first . c_str ( )
+                , _state_i -> first . c_str ( )
+                )
             ) ;
     }
     _execute_actions ( _state_i -> second . on_exit ) ;
@@ -231,9 +235,11 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: type_fsm_state :: on_inpu
 {
     if ( so_called_loadable_fsm_behaviour_consts :: trace_input )
     {
-        so_called_trace_loadable_fsm_behaviour :: machine_state_on_input
-            ( _machine_i -> first . c_str ( )
-            , _state_i -> first . c_str ( )
+        so_called_trace
+            ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_input
+                ( _machine_i -> first . c_str ( )
+                , _state_i -> first . c_str ( )
+                )
             ) ;
     }
     for ( so_called_type_loadable_fsm_content_on_input_container :: const_iterator on_input_i = _state_i -> second . on_input . begin ( )
@@ -453,11 +459,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 {
     if ( so_called_loadable_fsm_behaviour_consts :: trace_action )
     {
-        so_called_trace_loadable_fsm_behaviour :: machine_state_action_command 
-            ( _machine_i -> first . c_str ( )
-            , _state_i -> first . c_str ( )
-            , command_i -> command . c_str ( )
-            , command_i -> machine . c_str ( )
+        so_called_trace
+            ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_command 
+                ( _machine_i -> first . c_str ( )
+                , _state_i -> first . c_str ( )
+                , command_i -> command . c_str ( )
+                , command_i -> machine . c_str ( )
+                )
             ) ;
     }
 
@@ -477,10 +485,12 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 {
     if ( so_called_loadable_fsm_behaviour_consts :: trace_action )
     {
-        so_called_trace_loadable_fsm_behaviour :: machine_state_action_discard
-            ( _machine_i -> first . c_str ( )
-            , _state_i -> first . c_str ( )
-            , action_discard_i -> input . c_str ( )
+        so_called_trace
+            ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_discard
+                ( _machine_i -> first . c_str ( )
+                , _state_i -> first . c_str ( )
+                , action_discard_i -> input . c_str ( )
+                )
             ) ;
     }
 
@@ -499,10 +509,12 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 {
     if ( so_called_loadable_fsm_behaviour_consts :: trace_action )
     {
-        so_called_trace_loadable_fsm_behaviour :: machine_state_action_do
-            ( _machine_i -> first . c_str ( )
-            , _state_i -> first . c_str ( )
-            , action_do_i -> action . c_str ( )
+        so_called_trace
+            ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_do
+                ( _machine_i -> first . c_str ( )
+                , _state_i -> first . c_str ( )
+                , action_do_i -> action . c_str ( )
+                )
             ) ;
     }
 
@@ -660,7 +672,7 @@ template < typename type_fsm_inputs >
 void shy_loadable_fsm_behaviour < type_fsm_inputs > :: tick_all_fsms ( )
 {
     if ( so_called_loadable_fsm_behaviour_consts :: trace_tick )
-        so_called_trace_loadable_fsm_behaviour :: tick_all_fsms ( ) ;
+        so_called_trace ( so_called_trace_loadable_fsm_behaviour :: tick_all_fsms ( ) ) ;
     for ( typename type_fsm_machine_container :: iterator machine_i = _machines . begin ( )
         ; machine_i != _machines . end ( )
         ; ++ machine_i

@@ -16,6 +16,7 @@
 #include "../../../injections/platform/pointer/shy_pointer.h"
 #include "../../../injections/platform/pointer/type/data/shy_data.h"
 #include "../../../trace/loadable/fsm/behaviour/shy_behaviour_injections.h"
+#include "../../../trace/shy_trace_injections.h"
 
 #include "./shy_behaviour.h"
 
