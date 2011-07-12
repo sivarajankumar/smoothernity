@@ -6,9 +6,4 @@
     typedef so_called_platform_trace_cerr so_called_platform_trace ;
 #endif
 
-#ifdef shy_build_without_trace
-    #include "../../../../platform/trace/stub/shy_stub_injections.h"
-    typedef so_called_platform_trace_stub so_called_platform_trace ;
-#endif
-
 #endif

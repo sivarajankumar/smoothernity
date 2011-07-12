@@ -138,22 +138,6 @@ void shy_guts :: consts :: trace_started ( so_called_lib_std_string & result )
     result += "Trace started." ;
 }
 
-void shy_platform_trace_cerr :: init ( )
-{
-    so_called_lib_std_string str ;
-    shy_guts :: consts :: trace_started ( str ) ;
-    so_called_lib_std_cerr << str ;
-    so_called_lib_std_cerr << so_called_lib_std_endl ;
-}
-
-void shy_platform_trace_cerr :: done ( )
-{
-    so_called_lib_std_string str ;
-    shy_guts :: consts :: trace_finished ( str ) ;
-    so_called_lib_std_cerr << str ;
-    so_called_lib_std_cerr << so_called_lib_std_endl ;
-}
-
 void shy_platform_trace_cerr :: trace_begin ( const so_called_lib_std_char * module )
 {
     so_called_lib_std_int32_t current_frame ;

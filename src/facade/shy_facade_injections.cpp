@@ -12,7 +12,6 @@
 #include "../injections/platform/render/texture_loader/shy_texture_loader.h"
 #include "../injections/platform/scheduler/shy_scheduler.h"
 #include "../injections/platform/sound/loader/shy_loader.h"
-#include "../injections/platform/trace/shy_trace.h"
 #include "../loadable/loader/shy_loader_injections.h"
 
 #include "./shy_facade.hpp"
