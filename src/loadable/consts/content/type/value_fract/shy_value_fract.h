@@ -8,4 +8,10 @@ public :
     so_called_lib_std_string numerator_value ;
     so_called_lib_std_string denominator_sign ;
     so_called_lib_std_string denominator_value ;
+    so_called_lib_std_int32_t min_numerator ;
+    so_called_lib_std_int32_t min_denominator ;
+    so_called_lib_std_bool min_set ;
+    so_called_lib_std_int32_t max_numerator ;
+    so_called_lib_std_int32_t max_denominator ;
+    so_called_lib_std_bool max_set ;
 } ;
