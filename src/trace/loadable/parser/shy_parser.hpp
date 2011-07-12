@@ -6,7 +6,7 @@ namespace shy_guts
     }
 }
 
-void shy_trace_loadable_parser_worker :: expected_action_discard_input_name_instead_of_token_error
+void shy_trace_loadable_parser :: expected_action_discard_input_name_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -19,7 +19,7 @@ void shy_trace_loadable_parser_worker :: expected_action_discard_input_name_inst
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_action_do_name_instead_of_token_error
+void shy_trace_loadable_parser :: expected_action_do_name_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -32,7 +32,7 @@ void shy_trace_loadable_parser_worker :: expected_action_do_name_instead_of_toke
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_attribute_name_or_consts_or_system_instead_of_token_error
+void shy_trace_loadable_parser :: expected_attribute_name_or_consts_or_system_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -53,7 +53,7 @@ void shy_trace_loadable_parser_worker :: expected_attribute_name_or_consts_or_sy
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_brace_open_instead_of_token_error
+void shy_trace_loadable_parser :: expected_brace_open_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -73,7 +73,7 @@ void shy_trace_loadable_parser_worker :: expected_brace_open_instead_of_token_er
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_brace_open_or_identifier_instead_of_token_error
+void shy_trace_loadable_parser :: expected_brace_open_or_identifier_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -93,7 +93,7 @@ void shy_trace_loadable_parser_worker :: expected_brace_open_or_identifier_inste
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_command_name_instead_of_token_error
+void shy_trace_loadable_parser :: expected_command_name_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -106,7 +106,7 @@ void shy_trace_loadable_parser_worker :: expected_command_name_instead_of_token_
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_consts_or_system_instead_of_token_error
+void shy_trace_loadable_parser :: expected_consts_or_system_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -127,7 +127,7 @@ void shy_trace_loadable_parser_worker :: expected_consts_or_system_instead_of_to
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_denominator_instead_of_token_error
+void shy_trace_loadable_parser :: expected_denominator_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -140,7 +140,7 @@ void shy_trace_loadable_parser_worker :: expected_denominator_instead_of_token_e
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_divide_or_identifier_instead_of_token_error
+void shy_trace_loadable_parser :: expected_divide_or_identifier_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -160,7 +160,7 @@ void shy_trace_loadable_parser_worker :: expected_divide_or_identifier_instead_o
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_do_or_discard_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error
+void shy_trace_loadable_parser :: expected_do_or_discard_or_command_or_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -209,7 +209,7 @@ void shy_trace_loadable_parser_worker :: expected_do_or_discard_or_command_or_on
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_entry_or_exit_or_brace_open_instead_of_token_error
+void shy_trace_loadable_parser :: expected_entry_or_exit_or_brace_open_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -237,7 +237,7 @@ void shy_trace_loadable_parser_worker :: expected_entry_or_exit_or_brace_open_in
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_input_name_or_parenthesis_open_instead_of_token_error
+void shy_trace_loadable_parser :: expected_input_name_or_parenthesis_open_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -257,7 +257,7 @@ void shy_trace_loadable_parser_worker :: expected_input_name_or_parenthesis_open
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_input_name_or_parenthesis_open_or_brace_close_instead_of_token_error
+void shy_trace_loadable_parser :: expected_input_name_or_parenthesis_open_or_brace_close_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -284,7 +284,7 @@ void shy_trace_loadable_parser_worker :: expected_input_name_or_parenthesis_open
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_is_instead_of_token_error
+void shy_trace_loadable_parser :: expected_is_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -301,7 +301,7 @@ void shy_trace_loadable_parser_worker :: expected_is_instead_of_token_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_machine_name_instead_of_token_error
+void shy_trace_loadable_parser :: expected_machine_name_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -314,7 +314,7 @@ void shy_trace_loadable_parser_worker :: expected_machine_name_instead_of_token_
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_machine_or_command_instead_of_token_error
+void shy_trace_loadable_parser :: expected_machine_or_command_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -335,7 +335,7 @@ void shy_trace_loadable_parser_worker :: expected_machine_or_command_instead_of_
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_machine_or_system_or_consts_instead_of_token_error
+void shy_trace_loadable_parser :: expected_machine_or_system_or_consts_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -360,7 +360,7 @@ void shy_trace_loadable_parser_worker :: expected_machine_or_system_or_consts_in
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_module_name_instead_of_token_error
+void shy_trace_loadable_parser :: expected_module_name_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -373,7 +373,7 @@ void shy_trace_loadable_parser_worker :: expected_module_name_instead_of_token_e
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_numerator_instead_of_token_error
+void shy_trace_loadable_parser :: expected_numerator_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -386,7 +386,7 @@ void shy_trace_loadable_parser_worker :: expected_numerator_instead_of_token_err
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error
+void shy_trace_loadable_parser :: expected_on_or_to_or_state_or_machine_or_system_or_consts_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -423,7 +423,7 @@ void shy_trace_loadable_parser_worker :: expected_on_or_to_or_state_or_machine_o
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_parenthesis_close_instead_of_token_error
+void shy_trace_loadable_parser :: expected_parenthesis_close_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -443,7 +443,7 @@ void shy_trace_loadable_parser_worker :: expected_parenthesis_close_instead_of_t
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_state_name_instead_of_token_error
+void shy_trace_loadable_parser :: expected_state_name_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -456,7 +456,7 @@ void shy_trace_loadable_parser_worker :: expected_state_name_instead_of_token_er
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_state_or_machine_or_system_or_consts_instead_of_token_error
+void shy_trace_loadable_parser :: expected_state_or_machine_or_system_or_consts_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -485,7 +485,7 @@ void shy_trace_loadable_parser_worker :: expected_state_or_machine_or_system_or_
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_system_name_instead_of_token_error
+void shy_trace_loadable_parser :: expected_system_name_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -498,7 +498,7 @@ void shy_trace_loadable_parser_worker :: expected_system_name_instead_of_token_e
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: expected_to_instead_of_token_error
+void shy_trace_loadable_parser :: expected_to_instead_of_token_error
     ( const so_called_lib_std_char * token
     )
 {
@@ -515,7 +515,7 @@ void shy_trace_loadable_parser_worker :: expected_to_instead_of_token_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: unknown_attribute_fract_in_module_error
+void shy_trace_loadable_parser :: unknown_attribute_fract_in_module_error
     ( const so_called_lib_std_char * attribute
     , const so_called_lib_std_char * module
     )
@@ -533,7 +533,7 @@ void shy_trace_loadable_parser_worker :: unknown_attribute_fract_in_module_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: unknown_attribute_whole_in_module_error
+void shy_trace_loadable_parser :: unknown_attribute_whole_in_module_error
     ( const so_called_lib_std_char * attribute
     , const so_called_lib_std_char * module
     )
@@ -551,7 +551,7 @@ void shy_trace_loadable_parser_worker :: unknown_attribute_whole_in_module_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: unknown_fsm_action_error
+void shy_trace_loadable_parser :: unknown_fsm_action_error
     ( const so_called_lib_std_char * action
     , const so_called_lib_std_char * system
     )
@@ -569,7 +569,7 @@ void shy_trace_loadable_parser_worker :: unknown_fsm_action_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: unknown_fsm_input_error
+void shy_trace_loadable_parser :: unknown_fsm_input_error
     ( const so_called_lib_std_char * input
     , const so_called_lib_std_char * system
     )
@@ -587,7 +587,7 @@ void shy_trace_loadable_parser_worker :: unknown_fsm_input_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: unknown_fsm_system_error
+void shy_trace_loadable_parser :: unknown_fsm_system_error
     ( const so_called_lib_std_char * system
     )
 {
@@ -600,7 +600,7 @@ void shy_trace_loadable_parser_worker :: unknown_fsm_system_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: unknown_module_error
+void shy_trace_loadable_parser :: unknown_module_error
     ( const so_called_lib_std_char * module
     )
 {
@@ -613,7 +613,7 @@ void shy_trace_loadable_parser_worker :: unknown_module_error
     so_called_platform_trace :: trace_end ( ) ;
 }
 
-void shy_trace_loadable_parser_worker :: whole_line_containing_error
+void shy_trace_loadable_parser :: whole_line_containing_error
     ( const so_called_lib_std_char * line
     )
 {
