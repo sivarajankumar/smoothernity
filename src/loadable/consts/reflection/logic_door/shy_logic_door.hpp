@@ -108,4 +108,6 @@ void shy_loadable_consts_reflection_logic_door :: prepare ( )
     shy_guts_bind_value_max ( 1 , 1 ) ;
 
     shy_guts_bind_value ( texture_stripes ) ;
+    shy_guts_bind_value_min ( 2 ) ;
+    shy_guts_bind_value_max ( 100 ) ;
 }
