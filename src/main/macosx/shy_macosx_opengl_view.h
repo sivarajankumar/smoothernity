@@ -6,8 +6,8 @@
 
 @interface shy_macosx_opengl_view : NSOpenGLView
 {
-    shy_macosx_scene * _scene ;
-    IBOutlet NSResponder * _controller ;
+    shy_macosx_scene * scene ;
+    IBOutlet NSResponder * controller ;
     ALCcontext * _al_context;
     ALCdevice * _al_device;
 }

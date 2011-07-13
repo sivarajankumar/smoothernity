@@ -27,15 +27,14 @@
         _al_context = alcCreateContext ( _al_device , NULL ) ;
         alcMakeContextCurrent ( _al_context ) ;
         
-        _scene = [ [ shy_macosx_scene alloc ] init ] ;
+        scene = [ [ shy_macosx_scene alloc ] init ] ;
     }
     return self ;
 }
 
 - ( void ) dealloc
 {
-    [ _scene release ] ;
-    _scene = nil ;
+    [ scene release ] ;
     alcDestroyContext ( _al_context ) ;
     alcCloseDevice ( _al_device ) ;
     _al_context = nil ;
@@ -45,7 +44,7 @@
 
 - ( shy_macosx_scene * ) scene
 {
-    return _scene ;
+    return scene ;
 }
 
 - ( void ) drawRect : ( NSRect ) aRect
@@ -57,15 +56,15 @@
 {
     NSPoint window_point = [ [ self window ] mouseLocationOutsideOfEventStream ] ;
     NSPoint view_point = [ self convertPoint : window_point fromView : nil ] ;
-    [ _scene set_mouse_position : view_point ] ;
+    [ scene set_mouse_position : view_point ] ;
     
-    [ _scene render ] ;
+    [ scene render ] ;
     [ [ self openGLContext ] flushBuffer ] ;
 }
 
 - ( void ) reshape
 {
-    [ _scene set_viewport_rect : [ self bounds ] ] ;
+    [ scene set_viewport_rect : [ self bounds ] ] ;
 }
 
 - ( BOOL ) acceptsFirstResponder
@@ -75,17 +74,17 @@
 
 - ( void ) keyDown : ( NSEvent * ) theEvent
 {
-    [ _controller keyDown : theEvent ] ;
+    [ controller keyDown : theEvent ] ;
 }
 
 - ( void ) mouseDown : ( NSEvent * ) theEvent
 {
-    [ _controller mouseDown : theEvent ] ;
+    [ controller mouseDown : theEvent ] ;
 }
 
 - ( void ) mouseUp : ( NSEvent * ) theEvent
 {
-    [ _controller mouseUp : theEvent ] ;
+    [ controller mouseUp : theEvent ] ;
 }
 
 @end
