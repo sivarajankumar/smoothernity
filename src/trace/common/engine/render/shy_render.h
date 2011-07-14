@@ -1,7 +1,8 @@
 class shy_trace_common_engine_render
 {
 public :
-    static void mesh_index_out_of_range_error ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
+    static void mesh_index_offset_out_of_range_error ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
+    static void mesh_index_value_out_of_range_error ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
     static void mesh_vertex_out_of_range_error ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
     static void mesh_too_many_indices_error ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
     static void mesh_too_many_vertices_error ( so_called_type_platform_math_num_whole , so_called_type_platform_math_num_whole ) ;
