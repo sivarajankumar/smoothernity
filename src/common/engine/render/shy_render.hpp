@@ -328,11 +328,16 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         {
             if ( so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_fan_indices_count ) )
             {
-                so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_fan_index_buffer_mapped_data , msg . offset ) ;
-                so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+                if ( so_called_platform_conditions :: whole_less_than_whole ( msg . index , mesh . get ( ) . vertices_count ) )
+                {
+                    so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_fan_index_buffer_mapped_data , msg . offset ) ;
+                    so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+                }
+                else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+                    so_called_trace ( so_called_trace_common_engine_render :: mesh_index_value_out_of_range_error ( msg . index , mesh . get ( ) . vertices_count ) ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace ( so_called_trace_common_engine_render :: mesh_index_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_fan_indices_count ) ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_index_offset_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_fan_indices_count ) ) ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
             so_called_trace ( so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ) ;
@@ -350,11 +355,16 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
         {
             if ( so_called_platform_conditions :: whole_less_than_whole ( msg . offset , mesh . get ( ) . triangle_strip_indices_count ) )
             {
-                so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_strip_index_buffer_mapped_data , msg . offset ) ;
-                so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+                if ( so_called_platform_conditions :: whole_less_than_whole ( msg . index , mesh . get ( ) . vertices_count ) )
+                {
+                    so_called_platform_render :: mapped_index_buffer_element ( index , mesh . get ( ) . triangle_strip_index_buffer_mapped_data , msg . offset ) ;
+                    so_called_platform_render :: set_index_value ( index . get ( ) , msg . index ) ;
+                }
+                else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+                    so_called_trace ( so_called_trace_common_engine_render :: mesh_index_value_out_of_range_error ( msg . index , mesh . get ( ) . vertices_count ) ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace ( so_called_trace_common_engine_render :: mesh_index_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_strip_indices_count ) ) ;
+                so_called_trace ( so_called_trace_common_engine_render :: mesh_index_offset_out_of_range_error ( msg . offset , mesh . get ( ) . triangle_strip_indices_count ) ) ;
         }
         else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
             so_called_trace ( so_called_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( ) ) ;
