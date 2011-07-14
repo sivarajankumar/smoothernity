@@ -271,9 +271,12 @@ so_called_type_common_engine_fsm_state & shy_loadable_fsm_behaviour < type_fsm_i
             typename type_fsm_state_container :: iterator fsm_state_i ;
 
             fsm_machine_i = _behaviour -> _machines . find ( _machine_i -> first ) ;
-            fsm_state_i = fsm_machine_i -> second . states . find ( transition_i -> state ) ;
-
-            return fsm_state_i -> second ;
+            if ( fsm_machine_i != _behaviour -> _machines . end ( ) )
+            {
+                fsm_state_i = fsm_machine_i -> second . states . find ( transition_i -> state ) ;
+                if ( fsm_state_i != fsm_machine_i -> second . states . end ( ) )
+                    return fsm_state_i -> second ;
+            }
         }
     }
     return so_called_type_common_engine_fsm_state :: transition ( ) ;
@@ -333,12 +336,17 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
         typename type_fsm_behaviour_input_command_container :: const_iterator fsm_behaviour_input_command_i ;
 
         fsm_behaviour_input_machine_i = _behaviour -> _behaviour_inputs_fixed . machines . find ( _machine_i -> first ) ;
-        fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( condition_command_i -> command ) ;
-
-        if ( ! fsm_behaviour_input_command_i -> second . active )
+        if ( fsm_behaviour_input_machine_i != _behaviour -> _behaviour_inputs_fixed . machines . end ( ) )
         {
-            result = so_called_lib_std_false ;
-            break ;
+            fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( condition_command_i -> command ) ;
+            if ( fsm_behaviour_input_command_i != fsm_behaviour_input_machine_i -> second . commands . end ( ) )
+            {
+                if ( ! fsm_behaviour_input_command_i -> second . active )
+                {
+                    result = so_called_lib_std_false ;
+                    break ;
+                }
+            }
         }
     }
 }
@@ -362,13 +370,15 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
         type_fsm_input_binding input_binding ;
 
         input_binding_i = _system_i -> second . inputs . find ( condition_input_i -> input ) ;
-        input_binding = reinterpret_cast < type_fsm_input_binding > ( input_binding_i -> second ) ;
-        condition = _behaviour -> _inputs_fixed . get ( ) .* input_binding ;
-
-        if ( so_called_platform_conditions :: whole_is_false ( condition ) )
+        if ( input_binding_i != _system_i -> second . inputs . end ( ) )
         {
-            result = so_called_lib_std_false ;
-            break ;
+            input_binding = reinterpret_cast < type_fsm_input_binding > ( input_binding_i -> second ) ;
+            condition = _behaviour -> _inputs_fixed . get ( ) .* input_binding ;
+            if ( so_called_platform_conditions :: whole_is_false ( condition ) )
+            {
+                result = so_called_lib_std_false ;
+                break ;
+            }
         }
     }
 }
@@ -391,12 +401,17 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
         typename type_fsm_behaviour_input_state_container :: const_iterator fsm_behaviour_input_state_i ;
 
         fsm_behaviour_input_machine_i = _behaviour -> _behaviour_inputs_fixed . machines . find ( condition_state_i -> machine ) ;
-        fsm_behaviour_input_state_i = fsm_behaviour_input_machine_i -> second . states . find ( condition_state_i -> state ) ;
-
-        if ( ! fsm_behaviour_input_state_i -> second . active )
+        if ( fsm_behaviour_input_machine_i != _behaviour -> _behaviour_inputs_fixed . machines . end ( ) )
         {
-            result = so_called_lib_std_false ;
-            break ;
+            fsm_behaviour_input_state_i = fsm_behaviour_input_machine_i -> second . states . find ( condition_state_i -> state ) ;
+            if ( fsm_behaviour_input_state_i != fsm_behaviour_input_machine_i -> second . states . end ( ) )
+            {
+                if ( ! fsm_behaviour_input_state_i -> second . active )
+                {
+                    result = so_called_lib_std_false ;
+                    break ;
+                }
+            }
         }
     }
 }
@@ -473,9 +488,12 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     typename type_fsm_behaviour_input_machine_container :: iterator fsm_behaviour_input_machine_i ;
 
     fsm_behaviour_input_machine_i = _behaviour -> _behaviour_inputs_current . machines . find ( command_i -> machine ) ;
-    fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( command_i -> command ) ;
-
-    fsm_behaviour_input_command_i -> second . active = so_called_lib_std_true ;
+    if ( fsm_behaviour_input_machine_i != _behaviour -> _behaviour_inputs_current . machines . end ( ) )
+    {
+        fsm_behaviour_input_command_i = fsm_behaviour_input_machine_i -> second . commands . find ( command_i -> command ) ;
+        if ( fsm_behaviour_input_command_i != fsm_behaviour_input_machine_i -> second . commands . end ( ) )
+            fsm_behaviour_input_command_i -> second . active = so_called_lib_std_true ;
+    }
 }
 
 template < typename type_fsm_inputs >
@@ -498,8 +516,11 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
     type_fsm_input_binding input_binding ;
 
     input_binding_i = _system_i -> second . inputs . find ( action_discard_i -> input ) ;
-    input_binding = reinterpret_cast < type_fsm_input_binding > ( input_binding_i -> second ) ;
-    _behaviour -> _inputs_current . get ( ) .* input_binding = so_called_platform_math_consts :: whole_false ;
+    if ( input_binding_i != _system_i -> second . inputs . end ( ) )
+    {
+        input_binding = reinterpret_cast < type_fsm_input_binding > ( input_binding_i -> second ) ;
+        _behaviour -> _inputs_current . get ( ) .* input_binding = so_called_platform_math_consts :: whole_false ;
+    }
 }
 
 template < typename type_fsm_inputs >
@@ -520,7 +541,8 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs >
 
     so_called_type_loadable_fsm_content_action_binding_container :: const_iterator action_binding_i ;
     action_binding_i = _system_i -> second . actions . find ( action_do_i -> action ) ;
-    ( * action_binding_i -> second ) ( ) ;
+    if ( action_binding_i != _system_i -> second . actions . end ( ) )
+        ( * action_binding_i -> second ) ( ) ;
 }
 
 template < typename type_fsm_inputs >
@@ -540,6 +562,8 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
     {
         typename type_fsm_behaviour_input_machine_container :: const_iterator input_fixed_machine_i ;
         input_fixed_machine_i = _behaviour_inputs_fixed . machines . find ( input_current_machine_i -> first ) ;
+        if ( input_fixed_machine_i == _behaviour_inputs_fixed . machines . end ( ) )
+            continue ;
 
         for ( typename type_fsm_behaviour_input_state_container :: const_iterator input_current_state_i = input_current_machine_i -> second . states . begin ( )
             ; input_current_state_i != input_current_machine_i -> second . states . end ( )
@@ -549,10 +573,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
             typename type_fsm_behaviour_input_state_container :: const_iterator input_fixed_state_i ;
             input_fixed_state_i = input_fixed_machine_i -> second . states . find ( input_current_state_i -> first ) ;
 
-            if ( input_current_state_i -> second . active != input_fixed_state_i -> second . active )
+            if ( input_fixed_state_i != input_fixed_machine_i -> second . states . end ( ) )
             {
-                result = so_called_platform_math_consts :: whole_true ;
-                return ;
+                if ( input_current_state_i -> second . active != input_fixed_state_i -> second . active )
+                {
+                    result = so_called_platform_math_consts :: whole_true ;
+                    return ;
+                }
             }
         }
 
@@ -563,11 +590,13 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: determine_behaviour_input
         {
             typename type_fsm_behaviour_input_command_container :: const_iterator input_fixed_command_i ;
             input_fixed_command_i = input_fixed_machine_i -> second . commands . find ( input_current_command_i -> first ) ;
-
-            if ( input_current_command_i -> second . active != input_fixed_command_i -> second . active )
+            if ( input_fixed_command_i != input_fixed_machine_i -> second . commands . end ( ) )
             {
-                result = so_called_platform_math_consts :: whole_true ;
-                return ;
+                if ( input_current_command_i -> second . active != input_fixed_command_i -> second . active )
+                {
+                    result = so_called_platform_math_consts :: whole_true ;
+                    return ;
+                }
             }
         }
     }
@@ -599,6 +628,8 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: recalc_current_behaviour_
     {
         typename type_fsm_machine_container :: iterator fsm_machine_i ;
         fsm_machine_i = _machines . find ( input_current_machine_i -> first ) ;
+        if ( fsm_machine_i == _machines . end ( ) )
+            continue ;
         for ( typename type_fsm_behaviour_input_state_container :: iterator input_current_state_i = input_current_machine_i -> second . states . begin ( )
             ; input_current_state_i != input_current_machine_i -> second . states . end ( )
             ; ++ input_current_state_i
@@ -606,6 +637,8 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: recalc_current_behaviour_
         {
             typename type_fsm_state_container :: iterator fsm_state_i ;
             fsm_state_i = fsm_machine_i -> second . states . find ( input_current_state_i -> first ) ;
+            if ( fsm_state_i == fsm_machine_i -> second . states . end ( ) )
+                continue ;
 
             so_called_type_platform_math_num_whole state_active ;
             so_called_platform_pointer :: is_bound_to
@@ -727,13 +760,15 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system ( )
 
     system_name = ( * system_binding_container ) [ _system_binding ] ;
     system_i = system_container -> find ( system_name ) ;
-
-    for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
-        ; machine_i != system_i -> second . machines . end ( )
-        ; ++ machine_i
-        )
+    if ( system_i != system_container -> end ( ) )
     {
-        _init_system_machine ( system_i , machine_i ) ;
+        for ( so_called_type_loadable_fsm_content_machine_container :: const_iterator machine_i = system_i -> second . machines . begin ( )
+            ; machine_i != system_i -> second . machines . end ( )
+            ; ++ machine_i
+            )
+        {
+            _init_system_machine ( system_i , machine_i ) ;
+        }
     }
 
     _copy_current_behaviour_inputs_to_fixed ( ) ;
@@ -774,8 +809,12 @@ void shy_loadable_fsm_behaviour < type_fsm_inputs > :: _init_system_machine_stat
     typename type_fsm_state_container :: iterator fsm_state_i ;
 
     fsm_machine_i = _machines . find ( machine_i -> first ) ;
-    fsm_state_i = fsm_machine_i -> second . states . find ( so_called_loadable_fsm_consts :: state_initial ) ;
-    so_called_platform_pointer :: bind ( fsm_machine_i -> second . state_current , fsm_state_i -> second ) ;
+    if ( fsm_machine_i != _machines . end ( ) )
+    {
+        fsm_state_i = fsm_machine_i -> second . states . find ( so_called_loadable_fsm_consts :: state_initial ) ;
+        if ( fsm_state_i != fsm_machine_i -> second . states . end ( ) )
+            so_called_platform_pointer :: bind ( fsm_machine_i -> second . state_current , fsm_state_i -> second ) ;
+    }
 }
 
 template < typename type_fsm_inputs >
