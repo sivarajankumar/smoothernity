@@ -37,18 +37,26 @@ void shy_guts :: consts :: error_writing_to_file ( so_called_lib_std_string & re
 
 void shy_guts :: consts :: file_generated ( so_called_lib_std_string & result )
 {
+    so_called_lib_std_string string_highlight_begin ;
+    so_called_lib_std_string string_highlight_end ;
+    so_called_lib_std_string string_name_highlight_begin ;
+    so_called_lib_std_string string_name_highlight_end ;
+
+    so_called_platform_trace_consts :: string_highlight_begin ( string_highlight_begin ) ;
+    so_called_platform_trace_consts :: string_highlight_end ( string_highlight_end ) ;
+    so_called_platform_trace_consts :: string_name_highlight_begin ( string_name_highlight_begin ) ;
+    so_called_platform_trace_consts :: string_name_highlight_end ( string_name_highlight_end ) ;
+
     result . clear ( ) ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: background_color_green ;
+    result += string_highlight_begin ;
     result += "File " ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: background_color_green ;
-    result += so_called_platform_terminal_consts :: text_color_magenta ;
+    result += string_highlight_end ;
+    result += string_name_highlight_begin ;
     result += "\"%s\"" ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: background_color_green ;
+    result += string_name_highlight_end ;
+    result += string_highlight_begin ;
     result += " generated." ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
+    result += string_highlight_end ;
 }
 
 void shy_guts :: consts :: file_up_to_date ( so_called_lib_std_string & result )
@@ -69,18 +77,26 @@ void shy_guts :: consts :: file_up_to_date ( so_called_lib_std_string & result )
 
 void shy_guts :: consts :: path_created ( so_called_lib_std_string & result )
 {
+    so_called_lib_std_string string_highlight_begin ;
+    so_called_lib_std_string string_highlight_end ;
+    so_called_lib_std_string string_name_highlight_begin ;
+    so_called_lib_std_string string_name_highlight_end ;
+
+    so_called_platform_trace_consts :: string_highlight_begin ( string_highlight_begin ) ;
+    so_called_platform_trace_consts :: string_highlight_end ( string_highlight_end ) ;
+    so_called_platform_trace_consts :: string_name_highlight_begin ( string_name_highlight_begin ) ;
+    so_called_platform_trace_consts :: string_name_highlight_end ( string_name_highlight_end ) ;
+
     result . clear ( ) ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: background_color_green ;
+    result += string_highlight_begin ;
     result += "Path " ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: background_color_green ;
-    result += so_called_platform_terminal_consts :: text_color_magenta ;
+    result += string_highlight_end ;
+    result += string_name_highlight_begin ;
     result += "\"%s\"" ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: background_color_green ;
+    result += string_name_highlight_end ;
+    result += string_highlight_begin ;
     result += " created." ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
+    result += string_highlight_end ;
 }
 
 void shy_guts :: consts :: script_finished ( so_called_lib_std_string & result )
