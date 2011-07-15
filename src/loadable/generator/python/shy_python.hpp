@@ -13,23 +13,26 @@ namespace shy_guts
 
 void shy_guts :: consts :: error_writing_to_file ( so_called_lib_std_string & result )
 {
+    so_called_lib_std_string string_error_begin ;
+    so_called_lib_std_string string_error_end ;
+    so_called_lib_std_string string_name_error_begin ;
+    so_called_lib_std_string string_name_error_end ;
+
+    so_called_platform_trace_consts :: string_error_begin ( string_error_begin ) ;
+    so_called_platform_trace_consts :: string_error_end ( string_error_end ) ;
+    so_called_platform_trace_consts :: string_name_error_begin ( string_name_error_begin ) ;
+    so_called_platform_trace_consts :: string_name_error_end ( string_name_error_end ) ;
+
     result . clear ( ) ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: bright ;
-    result += so_called_platform_terminal_consts :: background_color_red ;
-    result += so_called_platform_terminal_consts :: text_color_white ;
+    result += string_error_begin ;
     result += "Error occured while writing to file " ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: bright ;
-    result += so_called_platform_terminal_consts :: background_color_red ;
-    result += so_called_platform_terminal_consts :: text_color_green ;
+    result += string_error_end ;
+    result += string_name_error_begin ;
     result += "\"%s\"" ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
-    result += so_called_platform_terminal_consts :: bright ;
-    result += so_called_platform_terminal_consts :: background_color_red ;
-    result += so_called_platform_terminal_consts :: text_color_white ;
+    result += string_name_error_end ;
+    result += string_error_begin ;
     result += "." ;
-    result += so_called_platform_terminal_consts :: reset_to_default ;
+    result += string_error_end ;
 }
 
 void shy_guts :: consts :: file_generated ( so_called_lib_std_string & result )
@@ -50,14 +53,34 @@ void shy_guts :: consts :: file_generated ( so_called_lib_std_string & result )
 
 void shy_guts :: consts :: file_up_to_date ( so_called_lib_std_string & result )
 {
+    so_called_lib_std_string string_name_begin ;
+    so_called_lib_std_string string_name_end ;
+
+    so_called_platform_trace_consts :: string_name_begin ( string_name_begin ) ;
+    so_called_platform_trace_consts :: string_name_end ( string_name_end ) ;
+
     result . clear ( ) ;
-    result += "File \"%s\" is up to date." ;
+    result += "File " ;
+    result += string_name_begin ;
+    result += "\"%s\"" ;
+    result += string_name_end ;
+    result += " is up to date." ;
 }
 
 void shy_guts :: consts :: path_created ( so_called_lib_std_string & result )
 {
     result . clear ( ) ;
-    result += "Path \"%s\" created." ;
+    result += so_called_platform_terminal_consts :: reset_to_default ;
+    result += so_called_platform_terminal_consts :: background_color_green ;
+    result += "Path " ;
+    result += so_called_platform_terminal_consts :: reset_to_default ;
+    result += so_called_platform_terminal_consts :: background_color_green ;
+    result += so_called_platform_terminal_consts :: text_color_magenta ;
+    result += "\"%s\"" ;
+    result += so_called_platform_terminal_consts :: reset_to_default ;
+    result += so_called_platform_terminal_consts :: background_color_green ;
+    result += " created." ;
+    result += so_called_platform_terminal_consts :: reset_to_default ;
 }
 
 void shy_guts :: consts :: script_finished ( so_called_lib_std_string & result )
