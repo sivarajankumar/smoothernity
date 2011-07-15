@@ -1,5 +1,5 @@
-#ifndef _shy_iphone_platform_terminal_consts_injections_included
-#define _shy_iphone_platform_terminal_consts_injections_included
+#ifndef _shy_win_platform_terminal_consts_injections_included
+#define _shy_win_platform_terminal_consts_injections_included
 
 #ifdef shy_build_with_trace
     #include "../../../../../platform/terminal/consts/stub/shy_stub_injections.h"
