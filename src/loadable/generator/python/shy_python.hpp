@@ -153,7 +153,7 @@ void shy_loadable_generator_python :: main_script ( so_called_lib_std_string & r
     result += "            open ( path , 'w' ) . write ( contents )\n" ;
     result += "            print '" + file_generated + "' % path\n" ;
     result += "        except IOError :\n" ;
-    result += "            print '" + error_writing_to_file + "' % ( path )\n" ;
+    result += "            print '" + error_writing_to_file + "' % path\n" ;
     result += "    else :\n " ;
     result += "        print '" + file_up_to_date + "' % path\n" ;
     result += "\n" ;
