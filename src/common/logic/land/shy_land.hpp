@@ -167,7 +167,7 @@ void shy_guts :: create_land_mesh ( )
         }
     }
     for ( iz = so_called_platform_math_consts :: whole_0
-        , iz_max = land_grid_plus_1
+        , iz_max = shy_guts :: consts :: land_grid
         ; so_called_platform_conditions :: whole_less_than_whole ( iz , iz_max )
         ; so_called_platform_math :: inc_whole ( iz )
         )
