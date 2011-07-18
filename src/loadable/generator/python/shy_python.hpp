@@ -2,12 +2,15 @@ namespace shy_guts
 {
     namespace consts
     {
-        static void error_writing_to_file ( so_called_lib_std_string & result ) ;
-        static void file_generated ( so_called_lib_std_string & result ) ;
-        static void file_up_to_date ( so_called_lib_std_string & result ) ;
-        static void path_created ( so_called_lib_std_string & result ) ;
-        static void script_finished ( so_called_lib_std_string & result ) ;
-        static void script_started ( so_called_lib_std_string & result ) ;
+        static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
+        static void error_writing_to_file ( so_called_lib_std_string & ) ;
+        static void file_generated ( so_called_lib_std_string & ) ;
+        static void file_up_to_date ( so_called_lib_std_string & ) ;
+        static void path_created ( so_called_lib_std_string & ) ;
+        static void script_finished ( so_called_lib_std_string & ) ;
+        static void script_started ( so_called_lib_std_string & ) ;
+        static void trace_function ( so_called_lib_std_string & ) ;
+        static void trace_null_function ( so_called_lib_std_string & ) ;
     }
 }
 
@@ -18,10 +21,10 @@ void shy_guts :: consts :: error_writing_to_file ( so_called_lib_std_string & re
     so_called_lib_std_string string_name_error_begin ;
     so_called_lib_std_string string_name_error_end ;
 
-    so_called_platform_trace_consts :: string_error_begin ( string_error_begin ) ;
-    so_called_platform_trace_consts :: string_error_end ( string_error_end ) ;
-    so_called_platform_trace_consts :: string_name_error_begin ( string_name_error_begin ) ;
-    so_called_platform_trace_consts :: string_name_error_end ( string_name_error_end ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_error_begin ( string_error_begin ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_error_end ( string_error_end ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_error_begin ( string_name_error_begin ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_error_end ( string_name_error_end ) ) ;
 
     result . clear ( ) ;
     result += string_error_begin ;
@@ -42,10 +45,10 @@ void shy_guts :: consts :: file_generated ( so_called_lib_std_string & result )
     so_called_lib_std_string string_name_highlight_begin ;
     so_called_lib_std_string string_name_highlight_end ;
 
-    so_called_platform_trace_consts :: string_highlight_begin ( string_highlight_begin ) ;
-    so_called_platform_trace_consts :: string_highlight_end ( string_highlight_end ) ;
-    so_called_platform_trace_consts :: string_name_highlight_begin ( string_name_highlight_begin ) ;
-    so_called_platform_trace_consts :: string_name_highlight_end ( string_name_highlight_end ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_highlight_begin ( string_highlight_begin ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_highlight_end ( string_highlight_end ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_highlight_begin ( string_name_highlight_begin ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_highlight_end ( string_name_highlight_end ) ) ;
 
     result . clear ( ) ;
     result += string_highlight_begin ;
@@ -64,8 +67,8 @@ void shy_guts :: consts :: file_up_to_date ( so_called_lib_std_string & result )
     so_called_lib_std_string string_name_begin ;
     so_called_lib_std_string string_name_end ;
 
-    so_called_platform_trace_consts :: string_name_begin ( string_name_begin ) ;
-    so_called_platform_trace_consts :: string_name_end ( string_name_end ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_begin ( string_name_begin ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_end ( string_name_end ) ) ;
 
     result . clear ( ) ;
     result += "File " ;
@@ -82,10 +85,10 @@ void shy_guts :: consts :: path_created ( so_called_lib_std_string & result )
     so_called_lib_std_string string_name_highlight_begin ;
     so_called_lib_std_string string_name_highlight_end ;
 
-    so_called_platform_trace_consts :: string_highlight_begin ( string_highlight_begin ) ;
-    so_called_platform_trace_consts :: string_highlight_end ( string_highlight_end ) ;
-    so_called_platform_trace_consts :: string_name_highlight_begin ( string_name_highlight_begin ) ;
-    so_called_platform_trace_consts :: string_name_highlight_end ( string_name_highlight_end ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_highlight_begin ( string_highlight_begin ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_highlight_end ( string_highlight_end ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_highlight_begin ( string_name_highlight_begin ) ) ;
+    so_called_trace ( so_called_platform_trace_consts :: string_name_highlight_end ( string_name_highlight_end ) ) ;
 
     result . clear ( ) ;
     result += string_highlight_begin ;
@@ -111,6 +114,22 @@ void shy_guts :: consts :: script_started ( so_called_lib_std_string & result )
     result += "Generating script started." ;
 }
 
+void shy_guts :: consts :: trace_function ( so_called_lib_std_string & result )
+{
+    result . clear ( ) ;
+    result += "def trace ( something ) :\n" ;
+    result += "    print something\n" ;
+    result += "\n" ;
+}
+
+void shy_guts :: consts :: trace_null_function ( so_called_lib_std_string & result )
+{
+    result . clear ( ) ;
+    result += "def trace ( something ) :\n" ;
+    result += "    pass\n" ;
+    result += "\n" ;
+}
+
 void shy_loadable_generator_python :: main_script ( so_called_lib_std_string & result , so_called_lib_std_string logic )
 {
     so_called_lib_std_string error_writing_to_file ;
@@ -119,6 +138,7 @@ void shy_loadable_generator_python :: main_script ( so_called_lib_std_string & r
     so_called_lib_std_string path_created ;
     so_called_lib_std_string script_finished ;
     so_called_lib_std_string script_started ;
+    so_called_lib_std_string trace_function ;
 
     shy_guts :: consts :: error_writing_to_file ( error_writing_to_file ) ;
     shy_guts :: consts :: file_generated ( file_generated ) ;
@@ -126,6 +146,10 @@ void shy_loadable_generator_python :: main_script ( so_called_lib_std_string & r
     shy_guts :: consts :: path_created ( path_created ) ;
     shy_guts :: consts :: script_finished ( script_finished ) ;
     shy_guts :: consts :: script_started ( script_started ) ;
+
+    shy_guts :: consts :: trace_null_function ( trace_function ) ;
+    if ( shy_guts :: consts :: trace_enabled )
+        so_called_trace ( shy_guts :: consts :: trace_function ( trace_function ) ) ;
 
     result . clear ( ) ;
     result += "# autogenerated file begin\n" ;
@@ -135,11 +159,12 @@ void shy_loadable_generator_python :: main_script ( so_called_lib_std_string & r
     result += "import os\n" ;
     result += "import os . path\n" ;
     result += "\n" ;
+    result += trace_function ;
     result += "def generate_file ( path , contents ) :\n" ;
     result += "    dir = os . path . dirname ( path )\n" ;
     result += "    try :\n" ;
     result += "        os . makedirs ( dir )\n" ;
-    result += "        print '" + path_created + "' % dir\n" ;
+    result += "        trace ( '" + path_created + "' % dir )\n" ;
     result += "    except :\n" ;
     result += "        pass\n" ;
     result += "    old_md5 = str ( )\n" ;
@@ -151,18 +176,18 @@ void shy_loadable_generator_python :: main_script ( so_called_lib_std_string & r
     result += "    if old_md5 != new_md5 :\n" ;
     result += "        try :\n" ;
     result += "            open ( path , 'w' ) . write ( contents )\n" ;
-    result += "            print '" + file_generated + "' % path\n" ;
+    result += "            trace ( '" + file_generated + "' % path )\n" ;
     result += "        except IOError :\n" ;
-    result += "            print '" + error_writing_to_file + "' % path\n" ;
+    result += "            trace ( '" + error_writing_to_file + "' % path )\n" ;
     result += "    else :\n " ;
-    result += "        print '" + file_up_to_date + "' % path\n" ;
+    result += "        trace ( '" + file_up_to_date + "' % path )\n" ;
     result += "\n" ;
-    result += "print '" + script_started + "'\n" ;
-    result += "print str ( )\n" ;
+    result += "trace ( '" + script_started + "' )\n" ;
+    result += "trace ( str ( ) )\n" ;
     result += "\n" ;
     result += logic ;
-    result += "print str ( )\n" ;
-    result += "print '" + script_finished + "'\n" ;
+    result += "trace ( str ( ) )\n" ;
+    result += "trace ( '" + script_finished + "' )\n" ;
     result += "\n" ;
     result += "# autogenerated file end\n" ;
 }
