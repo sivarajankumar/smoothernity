@@ -36,4 +36,3 @@ void _shy_common_logic_salutation_timer_appear :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;
 }
-
