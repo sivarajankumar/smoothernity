@@ -1,1 +1,1 @@
-./build/Deployment/Smoothernity.app/Contents/MacOS/Smoothernity
+../../../../build/macosx/Deployment/Smoothernity.app/Contents/MacOS/Smoothernity
