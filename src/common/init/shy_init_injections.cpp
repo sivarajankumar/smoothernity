@@ -81,7 +81,6 @@
 #include "../logic/salutation/letters/meshes/creator/shy_creator_injections.h"
 #include "../logic/salutation/letters/meshes/generator/shy_generator_injections.h"
 #include "../logic/salutation/letters/meshes/storage/shy_storage_injections.h"
-#include "../logic/salutation/letters/placement/shy_placement_injections.h"
 #include "../logic/salutation/letters/text/cleaner/shy_cleaner_injections.h"
 #include "../logic/salutation/letters/text/generator/shy_generator_injections.h"
 #include "../logic/salutation/letters/text/storage/shy_storage_injections.h"
