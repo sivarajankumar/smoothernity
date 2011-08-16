@@ -1,0 +1,2 @@
+typedef so_called_lib_std_map < so_called_lib_std_string , so_called_type_loadable_consts_content_value_fract > shy_type_loadable_consts_content_value_fract_container ;
+

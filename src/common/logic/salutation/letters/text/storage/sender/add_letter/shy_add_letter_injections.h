@@ -1,0 +1,9 @@
+#ifndef _shy_sender_common_logic_salutation_letters_text_storage_add_letter_injections_included
+#define _shy_sender_common_logic_salutation_letters_text_storage_add_letter_injections_included
+
+#include "../../message/add_letter/shy_add_letter_injections.h"
+#include "./shy_add_letter.h"
+
+typedef shy_sender_common_logic_salutation_letters_text_storage_add_letter so_called_sender_common_logic_salutation_letters_text_storage_add_letter ;
+
+#endif

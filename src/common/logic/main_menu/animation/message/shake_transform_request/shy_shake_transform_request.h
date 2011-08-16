@@ -1,0 +1,3 @@
+class shy_message_common_logic_main_menu_animation_shake_transform_request
+{
+} ;

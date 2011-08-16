@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_main_menu_letters_meshes_iterate_start_injections_included
+#define _shy_message_common_logic_main_menu_letters_meshes_iterate_start_injections_included
+
+#include "./shy_iterate_start.h"
+
+typedef shy_message_common_logic_main_menu_letters_meshes_iterate_start so_called_message_common_logic_main_menu_letters_meshes_iterate_start ;
+
+#endif

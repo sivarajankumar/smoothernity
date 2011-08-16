@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_main_menu_letters_meshes_iterate_finished_injections_included
+#define _shy_message_common_logic_main_menu_letters_meshes_iterate_finished_injections_included
+
+#include "./shy_iterate_finished.h"
+
+typedef shy_message_common_logic_main_menu_letters_meshes_iterate_finished so_called_message_common_logic_main_menu_letters_meshes_iterate_finished ;
+
+#endif

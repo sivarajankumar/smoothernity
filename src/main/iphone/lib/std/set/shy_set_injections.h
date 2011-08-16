@@ -1,0 +1,6 @@
+#ifndef _shy_iphone_lib_std_set_injections_included
+#define _shy_iphone_lib_std_set_injections_included 
+
+no_set_for_iphone
+
+#endif

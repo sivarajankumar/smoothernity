@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_selection_track_row_selected_injections_included
+#define _shy_sender_common_logic_main_menu_selection_track_row_selected_injections_included
+
+#include "../../message/track_row_selected/shy_track_row_selected_injections.h"
+
+#include "./shy_track_row_selected.h"
+
+typedef shy_sender_common_logic_main_menu_selection_track_row_selected so_called_sender_common_logic_main_menu_selection_track_row_selected ;
+
+#endif

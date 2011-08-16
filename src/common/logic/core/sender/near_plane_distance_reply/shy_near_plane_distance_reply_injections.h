@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_core_near_plane_distance_reply_injections_included
+#define _shy_sender_common_logic_core_near_plane_distance_reply_injections_included
+
+#include "../../message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
+
+#include "./shy_near_plane_distance_reply.h"
+
+typedef shy_sender_common_logic_core_near_plane_distance_reply so_called_sender_common_logic_core_near_plane_distance_reply ;
+
+#endif

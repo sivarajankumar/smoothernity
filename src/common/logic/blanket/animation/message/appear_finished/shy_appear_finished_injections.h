@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_blanket_animation_appear_finished_injections_included
+#define _shy_message_common_logic_blanket_animation_appear_finished_injections_included
+
+#include "./shy_appear_finished.h"
+
+typedef shy_message_common_logic_blanket_animation_appear_finished so_called_message_common_logic_blanket_animation_appear_finished ;
+
+#endif

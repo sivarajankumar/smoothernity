@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_main_menu_update_injections_included
+#define _shy_message_common_logic_main_menu_update_injections_included
+
+#include "./shy_update.h"
+
+typedef shy_message_common_logic_main_menu_update so_called_message_common_logic_main_menu_update ;
+
+#endif

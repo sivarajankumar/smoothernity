@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_entities_mesh_grid_reply_injections_included
+#define _shy_sender_common_logic_entities_mesh_grid_reply_injections_included
+
+#include "../../message/mesh_grid_reply/shy_mesh_grid_reply_injections.h"
+
+#include "./shy_mesh_grid_reply.h"
+
+typedef shy_sender_common_logic_entities_mesh_grid_reply so_called_sender_common_logic_entities_mesh_grid_reply ;
+
+#endif

@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_text_letter_big_tex_coords_request_injections_included
+#define _shy_sender_common_logic_text_letter_big_tex_coords_request_injections_included
+
+#include "../../message/letter_big_tex_coords_request/shy_letter_big_tex_coords_request_injections.h"
+
+#include "./shy_letter_big_tex_coords_request.h"
+
+typedef shy_sender_common_logic_text_letter_big_tex_coords_request so_called_sender_common_logic_text_letter_big_tex_coords_request ;
+
+#endif

@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_main_menu_selection_mesh_place_injections_included
+#define _shy_message_common_logic_main_menu_selection_mesh_place_injections_included
+
+#include "./shy_mesh_place.h"
+
+typedef shy_message_common_logic_main_menu_selection_mesh_place so_called_message_common_logic_main_menu_selection_mesh_place ;
+
+#endif

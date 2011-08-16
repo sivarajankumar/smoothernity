@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_title_launch_permit_injections_included
+#define _shy_message_common_logic_title_launch_permit_injections_included
+
+#include "./shy_launch_permit.h"
+
+typedef shy_message_common_logic_title_launch_permit so_called_message_common_logic_title_launch_permit ;
+
+#endif

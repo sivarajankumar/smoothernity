@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_salutation_letters_text_generator_generate_injections_included
+#define _shy_message_common_logic_salutation_letters_text_generator_generate_injections_included
+
+#include "./shy_generate.h"
+
+typedef shy_message_common_logic_salutation_letters_text_generator_generate so_called_message_common_logic_salutation_letters_text_generator_generate ;
+
+#endif

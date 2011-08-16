@@ -1,0 +1,8 @@
+#ifndef _shy_type_loadable_fsm_content_action_command_injections_included
+#define _shy_type_loadable_fsm_content_action_command_injections_included
+
+#include "./shy_action_command.h"
+
+typedef shy_type_loadable_fsm_content_action_command so_called_type_loadable_fsm_content_action_command ;
+
+#endif

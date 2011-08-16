@@ -1,0 +1,11 @@
+#ifndef _shy_sender_common_engine_render_enable_face_culling_injections_included
+#define _shy_sender_common_engine_render_enable_face_culling_injections_included
+
+#include "../../message/enable_face_culling/shy_enable_face_culling_injections.h"
+
+#include "./shy_enable_face_culling.h"
+
+typedef shy_sender_common_engine_render_enable_face_culling so_called_sender_common_engine_render_enable_face_culling ;
+
+#endif
+

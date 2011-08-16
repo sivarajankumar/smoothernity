@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_room_mesh_create_injections_included
+#define _shy_message_common_logic_room_mesh_create_injections_included
+
+#include "./shy_mesh_create.h"
+
+typedef shy_message_common_logic_room_mesh_create so_called_message_common_logic_room_mesh_create ;
+
+#endif

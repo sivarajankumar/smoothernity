@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_room_mesh_creation_finished_injections_included
+#define _shy_sender_common_logic_room_mesh_creation_finished_injections_included
+
+#include "../../message/mesh_creation_finished/shy_mesh_creation_finished_injections.h"
+
+#include "./shy_mesh_creation_finished.h"
+
+typedef shy_sender_common_logic_room_mesh_creation_finished so_called_sender_common_logic_room_mesh_creation_finished ;
+
+#endif

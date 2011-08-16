@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_selection_animation_select_finished_injections_included
+#define _shy_sender_common_logic_main_menu_selection_animation_select_finished_injections_included
+
+#include "../../message/select_finished/shy_select_finished_injections.h"
+
+#include "./shy_select_finished.h"
+
+typedef shy_sender_common_logic_main_menu_selection_animation_select_finished so_called_sender_common_logic_main_menu_selection_animation_select_finished ;
+
+#endif

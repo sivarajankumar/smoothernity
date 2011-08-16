@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_letters_meshes_iteration_injections_included
+#define _shy_sender_common_logic_main_menu_letters_meshes_iteration_injections_included
+
+#include "../../message/iteration/shy_iteration_injections.h"
+
+#include "./shy_iteration.h"
+
+typedef shy_sender_common_logic_main_menu_letters_meshes_iteration so_called_sender_common_logic_main_menu_letters_meshes_iteration ;
+
+#endif

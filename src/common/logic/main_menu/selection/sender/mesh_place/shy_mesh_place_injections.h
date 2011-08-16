@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_selection_mesh_place_injections_included
+#define _shy_sender_common_logic_main_menu_selection_mesh_place_injections_included
+
+#include "../../message/mesh_place/shy_mesh_place_injections.h"
+
+#include "./shy_mesh_place.h"
+
+typedef shy_sender_common_logic_main_menu_selection_mesh_place so_called_sender_common_logic_main_menu_selection_mesh_place ;
+
+#endif

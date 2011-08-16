@@ -1,0 +1,10 @@
+#ifndef _shy_sender_common_logic_main_menu_letters_meshes_mesh_create_next_injections_included
+#define _shy_sender_common_logic_main_menu_letters_meshes_mesh_create_next_injections_included
+
+#include "../../message/mesh_create_next/shy_mesh_create_next_injections.h"
+
+#include "./shy_mesh_create_next.h"
+
+typedef shy_sender_common_logic_main_menu_letters_meshes_mesh_create_next so_called_sender_common_logic_main_menu_letters_meshes_mesh_create_next ;
+
+#endif

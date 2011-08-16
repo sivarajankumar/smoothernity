@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_engine_render_matrix_identity_injections_included
+#define _shy_message_common_engine_render_matrix_identity_injections_included
+
+#include "./shy_matrix_identity.h"
+
+typedef shy_message_common_engine_render_matrix_identity so_called_message_common_engine_render_matrix_identity ;
+
+#endif

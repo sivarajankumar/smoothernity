@@ -1,0 +1,1 @@
+typedef const so_called_type_platform_math_num_whole & shy_type_loadable_consts_content_value_whole_binding ;
