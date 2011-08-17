@@ -18,6 +18,7 @@
     #include "./logic_perspective/shy_logic_perspective_injections.h"
     #include "./logic_room/shy_logic_room_injections.h"
     #include "./logic_salutation_letters_meshes/shy_logic_salutation_letters_meshes_injections.h"
+    #include "./logic_salutation_renderer/shy_logic_salutation_renderer_injections.h"
     #include "./logic_salutation_timer/shy_logic_salutation_timer_injections.h"
     #include "./logic_title/shy_logic_title_injections.h"
     #include "./logic_vacuum/shy_logic_vacuum_injections.h"
