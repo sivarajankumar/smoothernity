@@ -2,6 +2,7 @@ namespace shy_guts
 {
     namespace logic_salutation_letters_renderer_render_state
     {
+        static so_called_type_platform_math_num_whole mesh_current ;
         static so_called_type_platform_math_num_whole requested ;
         static void on_requested ( ) ;
     }
@@ -15,6 +16,8 @@ namespace shy_guts
     }
 
     static void request_meshes_amount_in_storage ( ) ;
+    static void send_render_finished ( ) ;
+    static void start_render ( ) ;
     static void work ( ) ;
 }
 
@@ -42,6 +45,13 @@ void shy_guts :: logic_salutation_letters_renderer_render_state :: on_requested 
 
 void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_replied ( )
 {
+    shy_guts :: start_render ( ) ;
+    shy_guts :: send_render_finished ( ) ;
+}
+
+void shy_guts :: start_render ( )
+{
+    shy_guts :: logic_salutation_letters_renderer_render_state :: mesh_current = so_called_platform_math_consts :: whole_0 ;
 }
 
 void shy_guts :: request_meshes_amount_in_storage ( )
@@ -49,6 +59,13 @@ void shy_guts :: request_meshes_amount_in_storage ( )
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested = so_called_platform_math_consts :: whole_true ;
     so_called_sender_common_logic_salutation_letters_meshes_storage_size_request :: send
         ( so_called_message_common_logic_salutation_letters_meshes_storage_size_request ( )
+        ) ;
+}
+
+void shy_guts :: send_render_finished ( )
+{
+    so_called_sender_common_logic_salutation_letters_renderer_render_reply :: send
+        ( so_called_message_common_logic_salutation_letters_renderer_render_reply ( )
         ) ;
 }
 
@@ -70,7 +87,7 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
     }
 }
 
-void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render )
+void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render_request )
 {
     shy_guts :: logic_salutation_letters_renderer_render_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: work ( ) ;
