@@ -75,6 +75,7 @@
 #include "../../logic/salutation/letters/meshes/storage/shy_storage_injections.h"
 #include "../../logic/salutation/letters/renderer/shy_renderer_injections.h"
 #include "../../logic/salutation/letters/text/storage/shy_storage_injections.h"
+#include "../../logic/salutation/renderer/shy_renderer_injections.h"
 #include "../../logic/salutation/timer/appear/shy_appear_injections.h"
 #include "../../logic/salutation/timer/disappear/shy_disappear_injections.h"
 #include "../../logic/sound/shy_sound_injections.h"
