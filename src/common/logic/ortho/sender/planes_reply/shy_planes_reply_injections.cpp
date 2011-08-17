@@ -2,5 +2,6 @@
 
 #include "../../../amusement/renderer/shy_renderer_injections.h"
 #include "../../../main_menu/renderer/shy_renderer_injections.h"
+#include "../../../salutation/renderer/shy_renderer_injections.h"
 
 #include "./shy_planes_reply.hpp"
