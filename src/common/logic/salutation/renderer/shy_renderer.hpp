@@ -13,9 +13,9 @@ namespace shy_guts
         static void on_requested ( ) ;
     }
 
-    static void finish_render ( ) ;
+    static void clear_screen ( ) ;
     static void request_letters_render ( ) ;
-    static void start_render ( ) ;
+    static void request_ortho_projection_planes ( ) ;
     static void work ( ) ;
 }
 
@@ -38,21 +38,22 @@ void shy_guts :: work ( )
 
 void shy_guts :: logic_salutation_renderer_render_state :: on_requested ( )
 {
-    shy_guts :: start_render ( ) ;
+    shy_guts :: clear_screen ( ) ;
+    shy_guts :: request_ortho_projection_planes ( ) ;
     shy_guts :: request_letters_render ( ) ;
 }
 
 void shy_guts :: logic_salutation_letters_renderer_render_state :: on_replied ( )
 {
-    shy_guts :: finish_render ( ) ;
 }
 
-void shy_guts :: finish_render ( )
+void shy_guts :: clear_screen ( )
 {
-}
-
-void shy_guts :: start_render ( )
-{
+    so_called_message_common_engine_render_clear_screen msg ;
+    msg . r = so_called_common_logic_salutation_renderer_consts :: background_r ;
+    msg . g = so_called_common_logic_salutation_renderer_consts :: background_g ;
+    msg . b = so_called_common_logic_salutation_renderer_consts :: background_b ;
+    so_called_sender_common_engine_render_clear_screen :: send ( msg ) ;
 }
 
 void shy_guts :: request_letters_render ( )
@@ -61,6 +62,10 @@ void shy_guts :: request_letters_render ( )
     so_called_sender_common_logic_salutation_letters_renderer_render_request :: send
         ( so_called_message_common_logic_salutation_letters_renderer_render_request ( )
         ) ;
+}
+
+void shy_guts :: request_ortho_projection_planes ( )
+{
 }
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_init )
