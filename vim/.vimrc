@@ -8,6 +8,8 @@ set ruler
 set history=100
 set backspace=indent,eol,start
 set laststatus=2
+set backupdir=~/tmp/vim/
+set directory=~/tmp/vim/
 mapclear
 
 nnoremap j gj
