@@ -83,6 +83,7 @@ void shy_common_init :: init ( )
     so_called_common_logic_salutation_letters_meshes_creator :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_meshes_generator :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_meshes_storage :: register_in_scheduler ( ) ;
+    so_called_common_logic_salutation_letters_renderer :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_text_cleaner :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_text_generator :: register_in_scheduler ( ) ;
     so_called_common_logic_salutation_letters_text_storage :: register_in_scheduler ( ) ;
