@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_salutation_letters_renderer_injections_included
 #define _shy_common_logic_salutation_letters_renderer_injections_included
 
-#include "./message/render/shy_render_injections.h"
+#include "./message/render_request/shy_render_request_injections.h"
 #include "../meshes/storage/message/size_reply/shy_size_reply_injections.h"
 #include "../../../../message/init/shy_init_injections.h"
 #include "../../../../../injections/platform/scheduler/shy_scheduler.h"
