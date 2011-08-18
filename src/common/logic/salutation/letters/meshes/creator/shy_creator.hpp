@@ -9,19 +9,19 @@ namespace shy_guts
 
     namespace logic_salutation_letters_text_storage_letter_state
     {
-        static so_called_type_common_logic_text_letter_id letter_id ;
+        static so_called_message_common_logic_salutation_letters_text_storage_letter_reply msg_replied ;
+        static so_called_message_common_logic_salutation_letters_text_storage_letter_request msg_requested ;
         static so_called_type_platform_math_num_whole replied ;
         static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_letter_index ;
         static void on_replied ( ) ;
     }
 
     namespace logic_text_letter_mesh_create_state
     {
-        static so_called_type_common_engine_render_mesh_id mesh ;
+        static so_called_message_common_logic_text_letter_mesh_create_reply msg_replied ;
+        static so_called_message_common_logic_text_letter_mesh_create_request msg_requested ;
         static so_called_type_platform_math_num_whole replied ;
         static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_common_logic_text_letter_id requested_letter ;
         static void on_replied ( ) ;
     }
 
@@ -76,21 +76,18 @@ void shy_guts :: request_letter_from_storage ( )
     letter_index = shy_guts :: logic_salutation_letters_meshes_creator_create_state :: letter_index ;
 
     shy_guts :: logic_salutation_letters_text_storage_letter_state :: requested = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: logic_salutation_letters_text_storage_letter_state :: requested_letter_index = letter_index ;
+    shy_guts :: logic_salutation_letters_text_storage_letter_state :: msg_requested . letter_index = letter_index ;
 
-    so_called_message_common_logic_salutation_letters_text_storage_letter_request msg ;
-    msg . letter_index = letter_index ;
-    so_called_sender_common_logic_salutation_letters_text_storage_letter_request :: send ( msg ) ;
+    so_called_sender_common_logic_salutation_letters_text_storage_letter_request :: send 
+        ( shy_guts :: logic_salutation_letters_text_storage_letter_state :: msg_requested
+        ) ;
 }
 
 void shy_guts :: request_mesh_creation ( )
 {
     so_called_type_common_logic_text_letter_id letter ;
 
-    letter = shy_guts :: logic_salutation_letters_text_storage_letter_state :: letter_id ;
-
-    shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: logic_text_letter_mesh_create_state :: requested_letter = letter ;
+    letter = shy_guts :: logic_salutation_letters_text_storage_letter_state :: msg_replied . letter_id ;
 
     so_called_message_common_logic_text_letter_mesh_create_request msg ;
     msg . letter = letter ;
@@ -99,13 +96,17 @@ void shy_guts :: request_mesh_creation ( )
     msg . color_g = so_called_common_logic_salutation_letters_meshes_consts :: color_g ;
     msg . color_b = so_called_common_logic_salutation_letters_meshes_consts :: color_b ;
     msg . color_a = so_called_common_logic_salutation_letters_meshes_consts :: color_a ;
+
+    shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: logic_text_letter_mesh_create_state :: msg_requested = msg ;
+
     so_called_sender_common_logic_text_letter_mesh_create_request :: send ( msg ) ;
 }
 
 void shy_guts :: add_mesh_to_storage ( )
 {
     so_called_message_common_logic_salutation_letters_meshes_storage_add_mesh msg ;
-    msg . mesh = shy_guts :: logic_text_letter_mesh_create_state :: mesh ;
+    msg . mesh = shy_guts :: logic_text_letter_mesh_create_state :: msg_replied . mesh ;
     so_called_sender_common_logic_salutation_letters_meshes_storage_add_mesh :: send ( msg ) ;
 }
 
@@ -135,12 +136,12 @@ void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_
 void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_message_common_logic_salutation_letters_text_storage_letter_reply msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_text_storage_letter_state :: requested )
-      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_salutation_letters_text_storage_letter_state :: requested_letter_index , msg . letter_index )
+      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_salutation_letters_text_storage_letter_state :: msg_requested . letter_index , msg . letter_index )
        )
     {
         shy_guts :: logic_salutation_letters_text_storage_letter_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_salutation_letters_text_storage_letter_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_salutation_letters_text_storage_letter_state :: letter_id = msg . letter_id ;
+        shy_guts :: logic_salutation_letters_text_storage_letter_state :: msg_replied = msg ;
         shy_guts :: work ( ) ;
     }
 }
@@ -148,14 +149,14 @@ void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_
 void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_mesh_create_reply msg )
 {
     so_called_type_platform_math_num_whole letters_are_equal ;
-    so_called_common_logic_text_stateless :: are_letters_equal ( letters_are_equal , shy_guts :: logic_text_letter_mesh_create_state :: requested_letter , msg . letter ) ;
+    so_called_common_logic_text_stateless :: are_letters_equal ( letters_are_equal , shy_guts :: logic_text_letter_mesh_create_state :: msg_requested . letter , msg . letter ) ;
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_mesh_create_state :: requested ) 
       && so_called_platform_conditions :: whole_is_true ( letters_are_equal )
        )
     {
         shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_text_letter_mesh_create_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_text_letter_mesh_create_state :: mesh = msg . mesh ;
+        shy_guts :: logic_text_letter_mesh_create_state :: msg_replied = msg ;
         shy_guts :: work ( ) ;
     }
 }
