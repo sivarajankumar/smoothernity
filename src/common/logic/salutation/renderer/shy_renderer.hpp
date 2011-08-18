@@ -9,9 +9,9 @@ namespace shy_guts
 
     namespace logic_ortho_planes_state
     {
+        static so_called_message_common_logic_ortho_planes_reply msg_replied ;
         static so_called_type_platform_math_num_whole replied ;
         static so_called_type_platform_math_num_whole requested ;
-        static so_called_message_common_logic_ortho_planes_reply msg ;
         static void on_replied ( ) ;
     }
 
@@ -103,12 +103,12 @@ void shy_guts :: use_view_transform ( )
 void shy_guts :: use_ortho_projection ( )
 {
     so_called_message_common_engine_render_projection_ortho msg ;
-    msg . x_left = shy_guts :: logic_ortho_planes_state :: msg . x_left ;
-    msg . x_right = shy_guts :: logic_ortho_planes_state :: msg . x_right ;
-    msg . y_bottom = shy_guts :: logic_ortho_planes_state :: msg . y_bottom ;
-    msg . y_top = shy_guts :: logic_ortho_planes_state :: msg . y_top ;
-    msg . z_near = shy_guts :: logic_ortho_planes_state :: msg . z_near ;
-    msg . z_far = shy_guts :: logic_ortho_planes_state :: msg . z_far ;
+    msg . x_left = shy_guts :: logic_ortho_planes_state :: msg_replied . x_left ;
+    msg . x_right = shy_guts :: logic_ortho_planes_state :: msg_replied . x_right ;
+    msg . y_bottom = shy_guts :: logic_ortho_planes_state :: msg_replied . y_bottom ;
+    msg . y_top = shy_guts :: logic_ortho_planes_state :: msg_replied . y_top ;
+    msg . z_near = shy_guts :: logic_ortho_planes_state :: msg_replied . z_near ;
+    msg . z_far = shy_guts :: logic_ortho_planes_state :: msg_replied . z_far ;
     so_called_sender_common_engine_render_projection_ortho :: send ( msg ) ;
 }
 
@@ -152,7 +152,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
     {
         shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_ortho_planes_state :: msg = msg ;
+        shy_guts :: logic_ortho_planes_state :: msg_replied = msg ;
         shy_guts :: work ( ) ;
     }
 }
