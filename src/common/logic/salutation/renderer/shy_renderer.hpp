@@ -1,5 +1,12 @@
 namespace shy_guts
 {
+    namespace consts
+    {
+        static so_called_type_platform_math_num_fract view_x = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+        static so_called_type_platform_math_num_fract view_y = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+        static so_called_type_platform_math_num_fract view_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
+    }
+
     namespace logic_ortho_planes_state
     {
         static so_called_type_platform_math_num_whole replied ;
@@ -27,9 +34,11 @@ namespace shy_guts
     }
 
     static void clear_screen ( ) ;
+    static void prepare_render_state ( ) ;
     static void request_letters_render ( ) ;
     static void request_ortho_projection_planes ( ) ;
     static void use_ortho_projection ( ) ;
+    static void use_view_transform ( ) ;
     static void work ( ) ;
 }
 
@@ -63,12 +72,37 @@ void shy_guts :: logic_salutation_renderer_render_state :: on_requested ( )
 
 void shy_guts :: logic_ortho_planes_state :: on_replied ( )
 {
-    shy_guts :: use_ortho_projection ( ) ;
+    shy_guts :: prepare_render_state ( ) ;
     shy_guts :: request_letters_render ( ) ;
 }
 
 void shy_guts :: logic_salutation_letters_renderer_render_state :: on_replied ( )
 {
+}
+
+void shy_guts :: prepare_render_state ( )
+{
+    shy_guts :: use_ortho_projection ( ) ;
+    shy_guts :: use_view_transform ( ) ;
+}
+
+void shy_guts :: use_view_transform ( )
+{
+    so_called_type_platform_vector_data origin ;
+    so_called_platform_vector :: xyz 
+        ( origin
+        , shy_guts :: consts :: view_x
+        , shy_guts :: consts :: view_y
+        , shy_guts :: consts :: view_z
+        ) ;
+
+    so_called_type_platform_matrix_data view ;
+    so_called_platform_matrix :: identity ( view ) ;
+    so_called_platform_matrix :: set_origin ( view , origin ) ;
+
+    so_called_message_common_engine_render_matrix_load msg ;
+    msg . matrix = view ;
+    so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
 }
 
 void shy_guts :: use_ortho_projection ( )
