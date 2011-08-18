@@ -212,6 +212,10 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
     }
 }
 
+void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_animation_transform_reply )
+{
+}
+
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render_reply )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_renderer_render_state :: requested ) )
