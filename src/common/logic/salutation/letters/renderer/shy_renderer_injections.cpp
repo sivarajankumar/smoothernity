@@ -1,6 +1,7 @@
 #include "./shy_renderer_injections.h"
 
 #include "./sender/render_reply/shy_render_reply_injections.h"
+#include "../animation/sender/transform_request/shy_transform_request_injections.h"
 #include "../meshes/storage/sender/mesh_request/shy_mesh_request_injections.h"
 #include "../meshes/storage/sender/size_request/shy_size_request_injections.h"
 #include "../../../../engine/render/sender/mesh_render/shy_mesh_render_injections.h"
