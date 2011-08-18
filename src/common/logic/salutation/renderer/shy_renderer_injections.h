@@ -4,6 +4,7 @@
 #include "./message/render/shy_render_injections.h"
 #include "../letters/renderer/message/render_reply/shy_render_reply_injections.h"
 #include "../../ortho/message/planes_reply/shy_planes_reply_injections.h"
+#include "../../text/message/use_text_texture_reply/shy_use_text_texture_reply_injections.h"
 #include "../../../message/init/shy_init_injections.h"
 #include "../../../../injections/platform/scheduler/shy_scheduler.h"
 

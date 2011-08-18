@@ -28,10 +28,21 @@ namespace shy_guts
         static void on_requested ( ) ;
     }
 
+    namespace logic_text_use_text_texture_state
+    {
+        static so_called_type_platform_math_num_whole requested ;
+        static so_called_type_platform_math_num_whole replied ;
+        static void on_replied ( ) ;
+    }
+    
+    static void blend_enable ( ) ;
     static void clear_screen ( ) ;
+    static void depth_test_disable ( ) ;
+    static void fog_disable ( ) ;
     static void prepare_render_state ( ) ;
     static void request_letters_render ( ) ;
     static void request_ortho_projection_planes ( ) ;
+    static void request_use_text_texture ( ) ;
     static void use_ortho_projection ( ) ;
     static void use_view_transform ( ) ;
     static void work ( ) ;
@@ -52,6 +63,11 @@ void shy_guts :: work ( )
         shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_ortho_planes_state :: on_replied ( ) ;
     }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_use_text_texture_state :: replied ) )
+    {
+        shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_text_use_text_texture_state :: on_replied ( ) ;
+    }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_renderer_render_state :: replied ) )
     {
         shy_guts :: logic_salutation_letters_renderer_render_state :: replied = so_called_platform_math_consts :: whole_false ;
@@ -68,6 +84,11 @@ void shy_guts :: logic_salutation_renderer_render_state :: on_requested ( )
 void shy_guts :: logic_ortho_planes_state :: on_replied ( )
 {
     shy_guts :: prepare_render_state ( ) ;
+    shy_guts :: request_use_text_texture ( ) ;
+}
+
+void shy_guts :: logic_text_use_text_texture_state :: on_replied ( )
+{
     shy_guts :: request_letters_render ( ) ;
 }
 
@@ -79,6 +100,30 @@ void shy_guts :: prepare_render_state ( )
 {
     shy_guts :: use_ortho_projection ( ) ;
     shy_guts :: use_view_transform ( ) ;
+    shy_guts :: blend_enable ( ) ;
+    shy_guts :: depth_test_disable ( ) ;
+    shy_guts :: fog_disable ( ) ;
+}
+
+void shy_guts :: depth_test_disable ( )
+{
+    so_called_sender_common_engine_render_disable_depth_test :: send 
+        ( so_called_message_common_engine_render_disable_depth_test ( ) 
+        ) ;
+}
+
+void shy_guts :: fog_disable ( )
+{
+    so_called_sender_common_engine_render_fog_disable :: send 
+        ( so_called_message_common_engine_render_fog_disable ( ) 
+        ) ;
+}
+
+void shy_guts :: blend_enable ( )
+{
+    so_called_sender_common_engine_render_blend_src_alpha_dst_one_minus_alpha :: send 
+        ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) 
+        ) ;
 }
 
 void shy_guts :: use_view_transform ( )
@@ -137,6 +182,14 @@ void shy_guts :: request_ortho_projection_planes ( )
         ) ;
 }
 
+void shy_guts :: request_use_text_texture ( )
+{
+    shy_guts :: logic_text_use_text_texture_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_text_use_text_texture_request :: send 
+        ( so_called_message_common_logic_text_use_text_texture_request ( ) 
+        ) ;
+}
+
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_init )
 {
     shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
@@ -144,6 +197,8 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
     shy_guts :: logic_salutation_letters_renderer_render_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_text_use_text_texture_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_ortho_planes_reply msg )
@@ -171,6 +226,16 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
 {
     shy_guts :: logic_salutation_renderer_render_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: work ( ) ;
+}
+
+void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_text_use_text_texture_reply )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_use_text_texture_state :: requested ) )
+    {
+        shy_guts :: logic_text_use_text_texture_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: work ( ) ;
+    }
 }
 
 void _shy_common_logic_salutation_renderer :: register_in_scheduler ( )
