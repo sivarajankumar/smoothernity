@@ -69,6 +69,7 @@
 #include "../../logic/room/shy_room_injections.h"
 #include "../../logic/room/texture/shy_texture_injections.h"
 #include "../../logic/salutation/animation/shy_animation_injections.h"
+#include "../../logic/salutation/animation/zoom/shy_zoom_injections.h"
 #include "../../logic/salutation/letters/animation/shy_animation_injections.h"
 #include "../../logic/salutation/letters/meshes/cleaner/shy_cleaner_injections.h"
 #include "../../logic/salutation/letters/meshes/creator/shy_creator_injections.h"
