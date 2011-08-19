@@ -13,6 +13,10 @@ void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_
 {
 }
 
+void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_common_logic_salutation_animation_zoom_transform_request )
+{
+}
+
 void _shy_common_logic_salutation_animation_zoom :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;
