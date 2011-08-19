@@ -21,6 +21,8 @@ namespace shy_guts
         static void on_replied ( ) ;
     }
 
+    static void request_animation_zoom_transform ( ) ;
+    static void send_computed_transform ( ) ;
     static void work ( ) ;
 }
 
@@ -43,6 +45,23 @@ void shy_guts :: work ( )
 
 void shy_guts :: logic_salutation_animation_transform_state :: on_requested ( )
 {
+    shy_guts :: request_animation_zoom_transform ( ) ;
+}
+
+void shy_guts :: logic_salutation_animation_zoom_transform_state :: on_replied ( )
+{
+    shy_guts :: send_computed_transform ( ) ;
+}
+
+void shy_guts :: request_animation_zoom_transform ( )
+{
+    so_called_sender_common_logic_salutation_animation_zoom_transform_request :: send
+        ( so_called_message_common_logic_salutation_animation_zoom_transform_request ( )
+        ) ;
+}
+
+void shy_guts :: send_computed_transform ( )
+{
     so_called_type_platform_vector_data origin ;
     so_called_platform_vector :: xyz 
         ( origin
@@ -55,10 +74,6 @@ void shy_guts :: logic_salutation_animation_transform_state :: on_requested ( )
     so_called_platform_matrix :: identity ( msg . transform ) ;
     so_called_platform_matrix :: set_origin ( msg . transform , origin ) ;
     so_called_sender_common_logic_salutation_animation_transform_reply :: send ( msg ) ;
-}
-
-void shy_guts :: logic_salutation_animation_zoom_transform_state :: on_replied ( )
-{
 }
 
 void _shy_common_logic_salutation_animation :: receive ( so_called_message_common_init )
