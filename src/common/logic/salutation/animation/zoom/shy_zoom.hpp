@@ -1,12 +1,5 @@
 namespace shy_guts
 {
-    namespace consts
-    {
-        static const so_called_type_platform_math_num_fract zoom_scale_from = so_called_platform_math :: init_num_fract ( 5 , 10 ) ;
-        static const so_called_type_platform_math_num_fract zoom_scale_to = so_called_platform_math :: init_num_fract ( 10 , 10 ) ;
-        static const so_called_type_platform_math_num_fract zoom_time = so_called_platform_math :: init_num_fract ( 3 , 1 ) ;
-    }
-
     static so_called_type_platform_math_num_fract scale ;
     static so_called_type_platform_math_num_fract time ;
     static so_called_type_platform_math_num_whole enabled ;
@@ -23,10 +16,10 @@ void shy_guts :: compute_transform ( )
     so_called_common_engine_math_stateless :: lerp
         ( shy_guts :: scale
         , shy_guts :: time
-        , shy_guts :: consts :: zoom_scale_from
+        , so_called_common_logic_salutation_animation_consts :: zoom_scale_from
         , so_called_platform_math_consts :: fract_0
-        , shy_guts :: consts :: zoom_scale_to
-        , shy_guts :: consts :: zoom_time
+        , so_called_common_logic_salutation_animation_consts :: zoom_scale_to
+        , so_called_common_logic_salutation_animation_consts :: zoom_time
         ) ;
 }
 
