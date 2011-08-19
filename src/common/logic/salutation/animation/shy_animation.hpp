@@ -31,6 +31,10 @@ void _shy_common_logic_salutation_animation :: receive ( so_called_message_commo
     so_called_sender_common_logic_salutation_animation_transform_reply :: send ( msg ) ;
 }
 
+void _shy_common_logic_salutation_animation :: receive ( so_called_message_common_logic_salutation_animation_zoom_transform_reply )
+{
+}
+
 void _shy_common_logic_salutation_animation :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;
