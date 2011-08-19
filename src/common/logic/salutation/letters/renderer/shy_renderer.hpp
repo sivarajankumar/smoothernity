@@ -35,7 +35,8 @@ namespace shy_guts
 
     static void move_to_next_mesh ( ) ;
     static void render ( ) ;
-    static void render_replied_mesh ( ) ;
+    static void replied_mesh_render ( ) ;
+    static void replied_mesh_transform ( ) ;
     static void request_meshes_amount_in_storage ( ) ;
     static void request_current_mesh ( ) ;
     static void request_current_mesh_transform ( ) ;
@@ -89,7 +90,8 @@ void shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_replie
 
 void shy_guts :: logic_salutation_letters_animation_transform_state :: on_replied ( )
 {
-    shy_guts :: render_replied_mesh ( ) ;
+    shy_guts :: replied_mesh_transform ( ) ;
+    shy_guts :: replied_mesh_render ( ) ;
     shy_guts :: move_to_next_mesh ( ) ;
     shy_guts :: render ( ) ;
 }
@@ -113,11 +115,19 @@ void shy_guts :: render ( )
         shy_guts :: send_render_finished ( ) ;
 }
 
-void shy_guts :: render_replied_mesh ( )
+void shy_guts :: replied_mesh_render ( )
 {
     so_called_message_common_engine_render_mesh_render msg ;
     msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: msg_replied . mesh ;
     so_called_sender_common_engine_render_mesh_render :: send ( msg ) ;
+}
+
+void shy_guts :: replied_mesh_transform ( )
+{
+    so_called_message_common_engine_render_mesh_set_transform msg ;
+    msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: msg_replied . mesh ;
+    msg . transform = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_replied . transform ;
+    so_called_sender_common_engine_render_mesh_set_transform :: send ( msg ) ;
 }
 
 void shy_guts :: move_to_next_mesh ( )
