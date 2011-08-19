@@ -9,6 +9,10 @@ void _shy_common_logic_salutation_letters_animation :: receive ( so_called_messa
 {
 }
 
+void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_logic_salutation_letters_animation_layout_transform_reply )
+{
+}
+
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_logic_salutation_letters_animation_transform_request msg )
 {
     so_called_message_common_logic_salutation_letters_animation_transform_reply reply_msg ;

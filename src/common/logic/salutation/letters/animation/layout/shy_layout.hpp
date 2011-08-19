@@ -9,6 +9,10 @@ void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_calle
 {
 }
 
+void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_message_common_logic_salutation_letters_animation_layout_transform_request )
+{
+}
+
 void _shy_common_logic_salutation_letters_animation_layout :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;
