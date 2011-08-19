@@ -55,6 +55,7 @@ void shy_guts :: logic_salutation_animation_zoom_transform_state :: on_replied (
 
 void shy_guts :: request_animation_zoom_transform ( )
 {
+    shy_guts :: logic_salutation_animation_zoom_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
     so_called_sender_common_logic_salutation_animation_zoom_transform_request :: send
         ( so_called_message_common_logic_salutation_animation_zoom_transform_request ( )
         ) ;
@@ -70,9 +71,15 @@ void shy_guts :: send_computed_transform ( )
         , shy_guts :: consts :: origin_z
         ) ;
 
+    so_called_type_platform_math_num_fract scale ;
+    scale = shy_guts :: logic_salutation_animation_zoom_transform_state :: msg_replied . scale ;
+
+    so_called_type_platform_matrix_data transform ;
+    so_called_common_engine_math_stateless :: scale ( transform , scale ) ;
+    so_called_platform_matrix :: set_origin ( transform , origin ) ;
+
     so_called_message_common_logic_salutation_animation_transform_reply msg ;
-    so_called_platform_matrix :: identity ( msg . transform ) ;
-    so_called_platform_matrix :: set_origin ( msg . transform , origin ) ;
+    msg . transform = transform ;
     so_called_sender_common_logic_salutation_animation_transform_reply :: send ( msg ) ;
 }
 
