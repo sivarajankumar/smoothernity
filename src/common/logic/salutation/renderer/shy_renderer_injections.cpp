@@ -1,6 +1,7 @@
 #include "./shy_renderer_injections.h"
 
 #include "./consts/shy_consts_injections.h"
+#include "../animation/sender/transform_request/shy_transform_request_injections.h"
 #include "../letters/renderer/sender/render_request/shy_render_request_injections.h"
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
 #include "../../text/sender/use_text_texture_request/shy_use_text_texture_request_injections.h"
@@ -13,7 +14,5 @@
 #include "../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../injections/platform/math/consts/shy_consts.h"
 #include "../../../../injections/platform/math/shy_math.h"
-#include "../../../../injections/platform/matrix/shy_matrix.h"
-#include "../../../../injections/platform/vector/shy_vector.h"
 
 #include "./shy_renderer.hpp"

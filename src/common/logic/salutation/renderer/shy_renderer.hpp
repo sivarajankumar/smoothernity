@@ -1,15 +1,16 @@
 namespace shy_guts
 {
-    namespace consts
-    {
-        static so_called_type_platform_math_num_fract view_x = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-        static so_called_type_platform_math_num_fract view_y = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-        static so_called_type_platform_math_num_fract view_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
-    }
-
     namespace logic_ortho_planes_state
     {
         static so_called_message_common_logic_ortho_planes_reply msg_replied ;
+        static so_called_type_platform_math_num_whole replied ;
+        static so_called_type_platform_math_num_whole requested ;
+        static void on_replied ( ) ;
+    }
+
+    namespace logic_salutation_animation_transform_state
+    {
+        static so_called_message_common_logic_salutation_animation_transform_reply msg_replied ;
         static so_called_type_platform_math_num_whole replied ;
         static so_called_type_platform_math_num_whole requested ;
         static void on_replied ( ) ;
@@ -40,6 +41,7 @@ namespace shy_guts
     static void depth_test_disable ( ) ;
     static void fog_disable ( ) ;
     static void prepare_render_state ( ) ;
+    static void request_animation_transform ( ) ;
     static void request_letters_render ( ) ;
     static void request_ortho_projection_planes ( ) ;
     static void request_use_text_texture ( ) ;
@@ -63,6 +65,11 @@ void shy_guts :: work ( )
         shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_ortho_planes_state :: on_replied ( ) ;
     }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_animation_transform_state :: replied ) )
+    {
+        shy_guts :: logic_salutation_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_salutation_animation_transform_state :: on_replied ( ) ;
+    }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_use_text_texture_state :: replied ) )
     {
         shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_false ;
@@ -84,6 +91,12 @@ void shy_guts :: logic_salutation_renderer_render_state :: on_requested ( )
 void shy_guts :: logic_ortho_planes_state :: on_replied ( )
 {
     shy_guts :: prepare_render_state ( ) ;
+    shy_guts :: request_animation_transform ( ) ;
+}
+
+void shy_guts :: logic_salutation_animation_transform_state :: on_replied ( )
+{
+    shy_guts :: use_view_transform ( ) ;
     shy_guts :: request_use_text_texture ( ) ;
 }
 
@@ -99,7 +112,6 @@ void shy_guts :: logic_salutation_letters_renderer_render_state :: on_replied ( 
 void shy_guts :: prepare_render_state ( )
 {
     shy_guts :: use_ortho_projection ( ) ;
-    shy_guts :: use_view_transform ( ) ;
     shy_guts :: blend_enable ( ) ;
     shy_guts :: depth_test_disable ( ) ;
     shy_guts :: fog_disable ( ) ;
@@ -128,20 +140,8 @@ void shy_guts :: blend_enable ( )
 
 void shy_guts :: use_view_transform ( )
 {
-    so_called_type_platform_vector_data origin ;
-    so_called_platform_vector :: xyz 
-        ( origin
-        , shy_guts :: consts :: view_x
-        , shy_guts :: consts :: view_y
-        , shy_guts :: consts :: view_z
-        ) ;
-
-    so_called_type_platform_matrix_data view ;
-    so_called_platform_matrix :: identity ( view ) ;
-    so_called_platform_matrix :: set_origin ( view , origin ) ;
-
     so_called_message_common_engine_render_matrix_load msg ;
-    msg . matrix = view ;
+    msg . matrix = shy_guts :: logic_salutation_animation_transform_state :: msg_replied . transform ;
     so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
 }
 
@@ -164,6 +164,14 @@ void shy_guts :: clear_screen ( )
     msg . g = so_called_common_logic_salutation_renderer_consts :: background_g ;
     msg . b = so_called_common_logic_salutation_renderer_consts :: background_b ;
     so_called_sender_common_engine_render_clear_screen :: send ( msg ) ;
+}
+
+void shy_guts :: request_animation_transform ( )
+{
+    shy_guts :: logic_salutation_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
+    so_called_sender_common_logic_salutation_animation_transform_request :: send
+        ( so_called_message_common_logic_salutation_animation_transform_request ( )
+        ) ;
 }
 
 void shy_guts :: request_letters_render ( )
@@ -194,6 +202,8 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
 {
     shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_salutation_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_salutation_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
@@ -212,8 +222,15 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
     }
 }
 
-void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_animation_transform_reply )
+void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_animation_transform_reply msg )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_animation_transform_state :: requested ) )
+    {
+        shy_guts :: logic_salutation_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_salutation_animation_transform_state :: replied = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: logic_salutation_animation_transform_state :: msg_replied = msg ;
+        shy_guts :: work ( ) ;
+    }
 }
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render_reply )
