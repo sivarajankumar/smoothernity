@@ -1,1 +1,1 @@
-ls -l build/Debug-iphoneos/Smoothernity.app/Smoothernity build/Release-iphoneos/Smoothernity.app/Smoothernity
+ls -l ../../../../build/iphone/Debug-iphoneos/Smoothernity.app/Smoothernity ../../../../build/iphone/Release-iphoneos/Smoothernity.app/Smoothernity
