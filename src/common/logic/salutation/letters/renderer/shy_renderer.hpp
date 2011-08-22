@@ -215,8 +215,8 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested ) )
     {
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested = so_called_platform_math_consts  :: whole_false ;
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: replied = so_called_platform_math_consts  :: whole_true ;
+        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested = so_called_platform_math_consts :: whole_false ;
+        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: replied = so_called_platform_math_consts :: whole_true ;
         shy_guts :: logic_salutation_letters_meshes_storage_size_state :: msg_replied = msg ;
         shy_guts :: work ( ) ;
     }
