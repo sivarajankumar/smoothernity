@@ -13,6 +13,7 @@ namespace shy_guts
     {
         static so_called_message_common_logic_salutation_letters_animation_transform_request msg_requested ;
         static so_called_type_platform_math_num_whole requested ;
+        static so_called_type_platform_matrix_data transform ;
         static void on_requested ( ) ;
     }
 
@@ -63,13 +64,29 @@ void shy_guts :: request_animation_layout_transform ( )
 
 void shy_guts :: compute_transform ( )
 {
+    so_called_type_platform_vector_data final_origin ;
+    so_called_type_platform_math_num_fract final_scale ;
+    so_called_type_platform_vector_data layout_origin ;
+    so_called_type_platform_math_num_fract layout_scale ;
+    so_called_type_platform_matrix_data transform ;
+
+    layout_origin = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_replied . origin ;
+    layout_scale = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_replied . scale ;
+
+    final_origin = layout_origin ;
+    final_scale = layout_scale ;
+
+    so_called_common_engine_math_stateless :: scale ( transform , final_scale ) ;
+    so_called_platform_matrix :: set_origin ( transform , final_origin ) ;
+
+    shy_guts :: logic_salutation_letters_animation_transform_state :: transform = transform ;
 }
 
 void shy_guts :: send_computed_transform ( )
 {
     so_called_message_common_logic_salutation_letters_animation_transform_reply msg ;
     msg . letter = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_requested . letter ;
-    so_called_platform_matrix :: identity ( msg . transform ) ;
+    msg . transform = shy_guts :: logic_salutation_letters_animation_transform_state :: transform ;
     so_called_sender_common_logic_salutation_letters_animation_transform_reply :: send ( msg ) ;
 }
 
