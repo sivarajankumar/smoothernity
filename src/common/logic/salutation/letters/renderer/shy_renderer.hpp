@@ -33,7 +33,6 @@ namespace shy_guts
     static void request_current_mesh_transform ( ) ;
     static void send_render_finished ( ) ;
     static void start_render ( ) ;
-    static void work ( ) ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_renderer > _scheduled_context_type ;
