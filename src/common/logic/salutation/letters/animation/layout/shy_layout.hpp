@@ -1,5 +1,6 @@
 template 
-    < typename type_message_reply 
+    < typename type_checker
+    , typename type_message_reply 
     , typename type_message_request
     , typename type_sender_request
     >
@@ -16,37 +17,44 @@ public :
 } ;
 
 template 
-    < typename type_message_reply 
+    < typename type_checker
+    , typename type_message_reply 
     , typename type_message_request
     , typename type_sender_request
     >
-void so_called_common_engine_taker < type_message_reply , type_message_request , type_sender_request > :: request ( )
+void so_called_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: request ( )
 {
     requested = so_called_platform_math_consts :: whole_true ;
     type_sender_request :: send ( msg_request ) ;
 }
 
 template 
-    < typename type_message_reply 
+    < typename type_checker
+    , typename type_message_reply 
     , typename type_message_request
     , typename type_sender_request
     >
-void so_called_common_engine_taker < type_message_reply , type_message_request , type_sender_request > :: init ( )
+void so_called_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: init ( )
 {
     requested = so_called_platform_math_consts :: whole_false ;
 }
 
 template 
-    < typename type_message_reply 
+    < typename type_checker
+    , typename type_message_reply 
     , typename type_message_request
     , typename type_sender_request
     >
-void so_called_common_engine_taker < type_message_reply , type_message_request , type_sender_request > :: should_handle
+void so_called_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: should_handle
     ( so_called_type_platform_math_num_whole & result
     , type_message_reply msg
     )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( requested ) )
+    so_called_type_platform_math_num_whole match ;
+    type_checker :: check ( match , msg_request , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( requested ) 
+      && so_called_platform_conditions :: whole_is_true ( match )
+       )
     {
         requested = so_called_platform_math_consts :: whole_false ;
         msg_reply = msg ;
@@ -56,9 +64,28 @@ void so_called_common_engine_taker < type_message_reply , type_message_request ,
         result = so_called_platform_math_consts :: whole_false ;
 }
 
+class so_called_common_logic_salutation_letters_meshes_storage_size_checker
+{
+public :
+    static void check 
+        ( so_called_type_platform_math_num_whole & 
+        , so_called_message_common_logic_salutation_letters_meshes_storage_size_request
+        , so_called_message_common_logic_salutation_letters_meshes_storage_size_reply
+        ) ;
+} ;
+
+void so_called_common_logic_salutation_letters_meshes_storage_size_checker :: check 
+    ( so_called_type_platform_math_num_whole & result
+    , so_called_message_common_logic_salutation_letters_meshes_storage_size_request
+    , so_called_message_common_logic_salutation_letters_meshes_storage_size_reply
+    )
+{
+    result = so_called_platform_math_consts :: whole_true ;
+}
 
 typedef so_called_common_engine_taker
-    < so_called_message_common_logic_salutation_letters_meshes_storage_size_reply
+    < so_called_common_logic_salutation_letters_meshes_storage_size_checker
+    , so_called_message_common_logic_salutation_letters_meshes_storage_size_reply
     , so_called_message_common_logic_salutation_letters_meshes_storage_size_request
     , so_called_sender_common_logic_salutation_letters_meshes_storage_size_request
     > so_called_common_logic_salutation_letters_meshes_storage_size_taker ;
@@ -72,7 +99,7 @@ namespace shy_guts
 {
     namespace logic_salutation_letters_animation_layout_transform_state
     {
-        static so_called_message_common_logic_salutation_letters_animation_layout_transform_request msg_requested ;
+        static so_called_message_common_logic_salutation_letters_animation_layout_transform_request msg_request ;
         static void on_requested ( ) ;
     }
 
@@ -107,7 +134,7 @@ void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_replie
     scale = so_called_platform_math_consts :: fract_1 ;
 
     so_called_message_common_logic_salutation_letters_animation_layout_transform_reply msg ;
-    msg . letter = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_requested . letter ;
+    msg . letter = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_request . letter ;
     msg . origin = origin ;
     msg . scale = scale ;
     so_called_sender_common_logic_salutation_letters_animation_layout_transform_reply :: send ( msg ) ;
@@ -128,7 +155,7 @@ void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_calle
 
 void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_message_common_logic_salutation_letters_animation_layout_transform_request msg )
 {
-    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_requested = msg ;
+    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_request = msg ;
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on_requested ( ) ;
 }
 
