@@ -2,6 +2,7 @@
 
 #include "./sender/render_reply/shy_render_reply_injections.h"
 #include "../animation/sender/transform_request/shy_transform_request_injections.h"
+#include "../animation/transform/checker/shy_checker_injections.h"
 #include "../meshes/storage/mesh/checker/shy_checker_injections.h"
 #include "../meshes/storage/sender/mesh_request/shy_mesh_request_injections.h"
 #include "../meshes/storage/sender/size_request/shy_size_request_injections.h"
