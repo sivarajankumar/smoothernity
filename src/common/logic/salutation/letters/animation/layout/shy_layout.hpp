@@ -10,10 +10,11 @@ public :
     void init ( ) ;
     void request ( ) ;
     void should_handle ( so_called_type_platform_math_num_whole & , type_message_reply ) ;
-
+public :
     type_message_reply msg_reply ;
     type_message_request msg_request ;
-    so_called_type_platform_math_num_whole requested ;
+private :
+    so_called_type_platform_math_num_whole _requested ;
 } ;
 
 template 
@@ -24,7 +25,7 @@ template
     >
 void so_called_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: request ( )
 {
-    requested = so_called_platform_math_consts :: whole_true ;
+    _requested = so_called_platform_math_consts :: whole_true ;
     type_sender_request :: send ( msg_request ) ;
 }
 
@@ -36,7 +37,7 @@ template
     >
 void so_called_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: init ( )
 {
-    requested = so_called_platform_math_consts :: whole_false ;
+    _requested = so_called_platform_math_consts :: whole_false ;
 }
 
 template 
@@ -52,17 +53,35 @@ void so_called_common_engine_taker < type_checker , type_message_reply , type_me
 {
     so_called_type_platform_math_num_whole match ;
     type_checker :: check ( match , msg_request , msg ) ;
-    if ( so_called_platform_conditions :: whole_is_true ( requested ) 
+    if ( so_called_platform_conditions :: whole_is_true ( _requested ) 
       && so_called_platform_conditions :: whole_is_true ( match )
        )
     {
-        requested = so_called_platform_math_consts :: whole_false ;
+        _requested = so_called_platform_math_consts :: whole_false ;
         msg_reply = msg ;
         result = so_called_platform_math_consts :: whole_true ;
     }
     else
         result = so_called_platform_math_consts :: whole_false ;
 }
+
+
+
+
+
+
+
+#define so_called_common_engine_taker_helper(what) \
+    so_called_common_engine_taker \
+        < so_called_common_##what##_checker \
+        , so_called_message_common_##what##_reply \
+        , so_called_message_common_##what##_request \
+        , so_called_sender_common_##what##_request \
+        >
+
+
+
+
 
 class so_called_common_logic_salutation_letters_meshes_storage_size_checker
 {
@@ -83,13 +102,6 @@ void so_called_common_logic_salutation_letters_meshes_storage_size_checker :: ch
     result = so_called_platform_math_consts :: whole_true ;
 }
 
-typedef so_called_common_engine_taker
-    < so_called_common_logic_salutation_letters_meshes_storage_size_checker
-    , so_called_message_common_logic_salutation_letters_meshes_storage_size_reply
-    , so_called_message_common_logic_salutation_letters_meshes_storage_size_request
-    , so_called_sender_common_logic_salutation_letters_meshes_storage_size_request
-    > so_called_common_logic_salutation_letters_meshes_storage_size_taker ;
-
 
 
 
@@ -105,11 +117,9 @@ namespace shy_guts
 
     namespace logic_salutation_letters_meshes_storage_size_state
     {
-        static so_called_common_logic_salutation_letters_meshes_storage_size_taker taker ;
+        static so_called_common_engine_taker_helper ( logic_salutation_letters_meshes_storage_size ) taker ;
         static void on_replied ( ) ;
     }
-
-    static void work ( ) ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_animation_layout > _scheduled_context_type ;
