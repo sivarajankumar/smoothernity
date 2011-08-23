@@ -20,9 +20,7 @@ namespace shy_guts
 
     namespace logic_salutation_letters_meshes_storage_size_state
     {
-        static so_called_message_common_logic_salutation_letters_meshes_storage_size_reply msg_replied ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_common_engine_taker_helper ( logic_salutation_letters_meshes_storage_size ) taker ;
         static void on_replied ( ) ;
     }
 
@@ -54,11 +52,6 @@ void shy_guts :: work ( )
     {
         shy_guts :: logic_salutation_letters_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_salutation_letters_renderer_render_state :: on_requested ( ) ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_storage_size_state :: replied ) )
-    {
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_replied ( ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: replied ) )
     {
@@ -107,7 +100,7 @@ void shy_guts :: render ( )
     so_called_type_platform_math_num_whole meshes_total ;
 
     mesh_current = shy_guts :: logic_salutation_letters_renderer_render_state :: mesh_current ;
-    meshes_total = shy_guts :: logic_salutation_letters_meshes_storage_size_state :: msg_replied . size ;
+    meshes_total = shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . msg_reply . size ;
 
     if ( so_called_platform_conditions :: whole_less_than_whole ( mesh_current , meshes_total ) )
         shy_guts :: request_current_mesh ( ) ;
@@ -161,10 +154,7 @@ void shy_guts :: request_current_mesh_transform ( )
 
 void shy_guts :: request_meshes_amount_in_storage ( )
 {
-    shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_salutation_letters_meshes_storage_size_request :: send
-        ( so_called_message_common_logic_salutation_letters_meshes_storage_size_request ( )
-        ) ;
+    shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . request ( ) ;
 }
 
 void shy_guts :: send_render_finished ( )
@@ -180,8 +170,7 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
     shy_guts :: logic_salutation_letters_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: requested = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_letters_meshes_storage_size_state :: replied = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
@@ -213,13 +202,10 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
 
 void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_size_reply msg )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested ) )
-    {
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: msg_replied = msg ;
-        shy_guts :: work ( ) ;
-    }
+    so_called_type_platform_math_num_whole should_handle ;
+    shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . should_handle ( should_handle , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
+        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_replied ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render_request )
