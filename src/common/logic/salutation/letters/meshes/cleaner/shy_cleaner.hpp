@@ -3,14 +3,12 @@ namespace shy_guts
     namespace logic_salutation_letters_meshes_cleaner_clean_state
     {
         static so_called_type_platform_math_num_whole mesh_current ;
-        static so_called_type_platform_math_num_whole requested ;
         static void on_request ( ) ;
     }
 
     namespace logic_salutation_letters_meshes_cleaner_update
     {
         static so_called_type_platform_math_num_whole enabled ;
-        static so_called_type_platform_math_num_whole requested ;
         static so_called_type_platform_math_num_fract time ;
         static void on_request ( ) ;
     }
@@ -36,25 +34,10 @@ namespace shy_guts
     static void request_meshes_amount_in_storage ( ) ;
     static void send_clean_finished ( ) ;
     static void start_clean ( ) ;
-    static void work ( ) ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_meshes_cleaner > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
-
-void shy_guts :: work ( )
-{
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: requested ) )
-    {
-        shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: on_request ( ) ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_cleaner_update :: requested ) )
-    {
-        shy_guts :: logic_salutation_letters_meshes_cleaner_update :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_meshes_cleaner_update :: on_request ( ) ;
-    }
-}
 
 void shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: on_request ( )
 {
@@ -167,26 +150,20 @@ void shy_guts :: request_meshes_amount_in_storage ( )
 
 void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_init )
 {
-    shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_meshes_cleaner_update :: enabled = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_letters_meshes_cleaner_update :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . init ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_cleaner_clean )
 {
-    shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: requested = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: work ( ) ;
+    shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: on_request ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_cleaner_update )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_cleaner_update :: enabled ) )
-    {
-        shy_guts :: logic_salutation_letters_meshes_cleaner_update :: requested = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: work ( ) ;
-    }
+        shy_guts :: logic_salutation_letters_meshes_cleaner_update :: on_request ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_mesh_reply msg )
