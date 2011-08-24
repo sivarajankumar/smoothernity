@@ -15,10 +15,7 @@ namespace shy_guts
 
     namespace logic_text_letter_mesh_create_state
     {
-        static so_called_message_common_logic_text_letter_mesh_create_reply msg_reply ;
-        static so_called_message_common_logic_text_letter_mesh_create_request msg_request ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_common_engine_taker_helper ( logic_text_letter_mesh_create ) taker ;
         static void on_reply ( ) ;
     }
 
@@ -38,11 +35,6 @@ void shy_guts :: work ( )
     {
         shy_guts :: logic_salutation_letters_meshes_creator_create_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_salutation_letters_meshes_creator_create_state :: on_request ( ) ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_mesh_create_state :: replied ) )
-    {
-        shy_guts :: logic_text_letter_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_text_letter_mesh_create_state :: on_reply ( ) ;
     }
 }
 
@@ -85,16 +77,14 @@ void shy_guts :: request_mesh_creation ( )
     msg . color_b = so_called_common_logic_salutation_letters_meshes_consts :: color_b ;
     msg . color_a = so_called_common_logic_salutation_letters_meshes_consts :: color_a ;
 
-    shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: logic_text_letter_mesh_create_state :: msg_request = msg ;
-
-    so_called_sender_common_logic_text_letter_mesh_create_request :: send ( msg ) ;
+    shy_guts :: logic_text_letter_mesh_create_state :: taker . msg_request = msg ;
+    shy_guts :: logic_text_letter_mesh_create_state :: taker . request ( ) ;
 }
 
 void shy_guts :: add_mesh_to_storage ( )
 {
     so_called_message_common_logic_salutation_letters_meshes_storage_add_mesh msg ;
-    msg . mesh = shy_guts :: logic_text_letter_mesh_create_state :: msg_reply . mesh ;
+    msg . mesh = shy_guts :: logic_text_letter_mesh_create_state :: taker . msg_reply . mesh ;
     so_called_sender_common_logic_salutation_letters_meshes_storage_add_mesh :: send ( msg ) ;
 }
 
@@ -109,8 +99,7 @@ void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_
 {
     shy_guts :: logic_salutation_letters_meshes_creator_create_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_text_storage_letter_state :: taker . init ( ) ;
-    shy_guts :: logic_text_letter_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_text_letter_mesh_create_state :: taker . init ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_message_common_logic_salutation_letters_meshes_creator_create_request msg )
@@ -130,17 +119,10 @@ void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_
 
 void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_message_common_logic_text_letter_mesh_create_reply msg )
 {
-    so_called_type_platform_math_num_whole letters_are_equal ;
-    so_called_common_logic_text_stateless :: are_letters_equal ( letters_are_equal , shy_guts :: logic_text_letter_mesh_create_state :: msg_request . letter , msg . letter ) ;
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_mesh_create_state :: requested ) 
-      && so_called_platform_conditions :: whole_is_true ( letters_are_equal )
-       )
-    {
-        shy_guts :: logic_text_letter_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_text_letter_mesh_create_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_text_letter_mesh_create_state :: msg_reply = msg ;
-        shy_guts :: work ( ) ;
-    }
+    so_called_type_platform_math_num_whole should_handle ;
+    shy_guts :: logic_text_letter_mesh_create_state :: taker . should_handle ( should_handle , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
+        shy_guts :: logic_text_letter_mesh_create_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_creator :: register_in_scheduler ( )
