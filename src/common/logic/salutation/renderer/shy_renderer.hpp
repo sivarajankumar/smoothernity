@@ -20,7 +20,6 @@ namespace shy_guts
 
     namespace logic_salutation_renderer_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
         static void on_request ( ) ;
     }
 
