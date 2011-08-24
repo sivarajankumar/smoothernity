@@ -2,10 +2,8 @@ namespace shy_guts
 {
     namespace logic_ortho_planes_state
     {
-        static so_called_message_common_logic_ortho_planes_reply msg_replied ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole requested ;
-        static void on_replied ( ) ;
+        static so_called_common_engine_taker_helper ( logic_ortho_planes ) taker ;
+        static void on_reply ( ) ;
     }
 
     namespace logic_salutation_animation_transform_state
@@ -13,27 +11,27 @@ namespace shy_guts
         static so_called_message_common_logic_salutation_animation_transform_reply msg_replied ;
         static so_called_type_platform_math_num_whole replied ;
         static so_called_type_platform_math_num_whole requested ;
-        static void on_replied ( ) ;
+        static void on_reply ( ) ;
     }
 
     namespace logic_salutation_letters_renderer_render_state
     {
         static so_called_type_platform_math_num_whole replied ;
         static so_called_type_platform_math_num_whole requested ;
-        static void on_replied ( ) ;
+        static void on_reply ( ) ;
     }
 
     namespace logic_salutation_renderer_render_state
     {
         static so_called_type_platform_math_num_whole requested ;
-        static void on_requested ( ) ;
+        static void on_request ( ) ;
     }
 
     namespace logic_text_use_text_texture_state
     {
         static so_called_type_platform_math_num_whole requested ;
         static so_called_type_platform_math_num_whole replied ;
-        static void on_replied ( ) ;
+        static void on_reply ( ) ;
     }
     
     static void blend_enable ( ) ;
@@ -58,54 +56,49 @@ void shy_guts :: work ( )
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_renderer_render_state :: requested ) )
     {
         shy_guts :: logic_salutation_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_renderer_render_state :: on_requested ( ) ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_ortho_planes_state :: replied ) )
-    {
-        shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_ortho_planes_state :: on_replied ( ) ;
+        shy_guts :: logic_salutation_renderer_render_state :: on_request ( ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_animation_transform_state :: replied ) )
     {
         shy_guts :: logic_salutation_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_animation_transform_state :: on_replied ( ) ;
+        shy_guts :: logic_salutation_animation_transform_state :: on_reply ( ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_use_text_texture_state :: replied ) )
     {
         shy_guts :: logic_text_use_text_texture_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_text_use_text_texture_state :: on_replied ( ) ;
+        shy_guts :: logic_text_use_text_texture_state :: on_reply ( ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_renderer_render_state :: replied ) )
     {
         shy_guts :: logic_salutation_letters_renderer_render_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_renderer_render_state :: on_replied ( ) ;
+        shy_guts :: logic_salutation_letters_renderer_render_state :: on_reply ( ) ;
     }
 }
 
-void shy_guts :: logic_salutation_renderer_render_state :: on_requested ( )
+void shy_guts :: logic_salutation_renderer_render_state :: on_request ( )
 {
     shy_guts :: clear_screen ( ) ;
     shy_guts :: request_ortho_projection_planes ( ) ;
 }
 
-void shy_guts :: logic_ortho_planes_state :: on_replied ( )
+void shy_guts :: logic_ortho_planes_state :: on_reply ( )
 {
     shy_guts :: prepare_render_state ( ) ;
     shy_guts :: request_animation_transform ( ) ;
 }
 
-void shy_guts :: logic_salutation_animation_transform_state :: on_replied ( )
+void shy_guts :: logic_salutation_animation_transform_state :: on_reply ( )
 {
     shy_guts :: use_view_transform ( ) ;
     shy_guts :: request_use_text_texture ( ) ;
 }
 
-void shy_guts :: logic_text_use_text_texture_state :: on_replied ( )
+void shy_guts :: logic_text_use_text_texture_state :: on_reply ( )
 {
     shy_guts :: request_letters_render ( ) ;
 }
 
-void shy_guts :: logic_salutation_letters_renderer_render_state :: on_replied ( )
+void shy_guts :: logic_salutation_letters_renderer_render_state :: on_reply ( )
 {
 }
 
@@ -148,12 +141,12 @@ void shy_guts :: use_view_transform ( )
 void shy_guts :: use_ortho_projection ( )
 {
     so_called_message_common_engine_render_projection_ortho msg ;
-    msg . x_left = shy_guts :: logic_ortho_planes_state :: msg_replied . x_left ;
-    msg . x_right = shy_guts :: logic_ortho_planes_state :: msg_replied . x_right ;
-    msg . y_bottom = shy_guts :: logic_ortho_planes_state :: msg_replied . y_bottom ;
-    msg . y_top = shy_guts :: logic_ortho_planes_state :: msg_replied . y_top ;
-    msg . z_near = shy_guts :: logic_ortho_planes_state :: msg_replied . z_near ;
-    msg . z_far = shy_guts :: logic_ortho_planes_state :: msg_replied . z_far ;
+    msg . x_left = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . x_left ;
+    msg . x_right = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . x_right ;
+    msg . y_bottom = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . y_bottom ;
+    msg . y_top = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . y_top ;
+    msg . z_near = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . z_near ;
+    msg . z_far = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . z_far ;
     so_called_sender_common_engine_render_projection_ortho :: send ( msg ) ;
 }
 
@@ -184,10 +177,7 @@ void shy_guts :: request_letters_render ( )
 
 void shy_guts :: request_ortho_projection_planes ( )
 {
-    shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_ortho_planes_request :: send 
-        ( so_called_message_common_logic_ortho_planes_request ( ) 
-        ) ;
+    shy_guts :: logic_ortho_planes_state :: taker . request ( ) ;
 }
 
 void shy_guts :: request_use_text_texture ( )
@@ -200,8 +190,7 @@ void shy_guts :: request_use_text_texture ( )
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_init )
 {
-    shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_ortho_planes_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: replied = so_called_platform_math_consts :: whole_false ;
@@ -213,13 +202,10 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_ortho_planes_reply msg )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_ortho_planes_state :: requested ) )
-    {
-        shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_ortho_planes_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_ortho_planes_state :: msg_replied = msg ;
-        shy_guts :: work ( ) ;
-    }
+    so_called_type_platform_math_num_whole should_handle ;
+    shy_guts :: logic_ortho_planes_state :: taker . should_handle ( should_handle , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
+        shy_guts :: logic_ortho_planes_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_animation_transform_reply msg )
