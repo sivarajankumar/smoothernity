@@ -3,25 +3,25 @@ namespace shy_guts
     namespace logic_salutation_letters_animation_transform_state
     {
         static so_called_common_engine_taker_helper ( logic_salutation_letters_animation_transform ) taker ;
-        static void on_replied ( ) ;
+        static void on_reply ( ) ;
     }
 
     namespace logic_salutation_letters_meshes_storage_mesh_state
     {
         static so_called_common_engine_taker_helper ( logic_salutation_letters_meshes_storage_mesh ) taker ;
-        static void on_replied ( ) ;
+        static void on_reply ( ) ;
     }
 
     namespace logic_salutation_letters_meshes_storage_size_state
     {
         static so_called_common_engine_taker_helper ( logic_salutation_letters_meshes_storage_size ) taker ;
-        static void on_replied ( ) ;
+        static void on_reply ( ) ;
     }
 
     namespace logic_salutation_letters_renderer_render_state
     {
         static so_called_type_platform_math_num_whole mesh_current ;
-        static void on_requested ( ) ;
+        static void on_request ( ) ;
     }
 
     static void move_to_next_mesh ( ) ;
@@ -38,23 +38,23 @@ namespace shy_guts
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_renderer > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
-void shy_guts :: logic_salutation_letters_renderer_render_state :: on_requested ( )
+void shy_guts :: logic_salutation_letters_renderer_render_state :: on_request ( )
 {
     shy_guts :: request_meshes_amount_in_storage ( ) ;
 }
 
-void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_replied ( )
+void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply ( )
 {
     shy_guts :: start_render ( ) ;
     shy_guts :: render ( ) ;
 }
 
-void shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_replied ( )
+void shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_reply ( )
 {
     shy_guts :: request_current_mesh_transform ( ) ;
 }
 
-void shy_guts :: logic_salutation_letters_animation_transform_state :: on_replied ( )
+void shy_guts :: logic_salutation_letters_animation_transform_state :: on_reply ( )
 {
     shy_guts :: replied_mesh_transform ( ) ;
     shy_guts :: replied_mesh_render ( ) ;
@@ -139,7 +139,7 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_animation_transform_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
-        shy_guts :: logic_salutation_letters_animation_transform_state :: on_replied ( ) ;
+        shy_guts :: logic_salutation_letters_animation_transform_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_mesh_reply msg )
@@ -147,7 +147,7 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
-        shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_replied ( ) ;
+        shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_size_reply msg )
@@ -155,12 +155,12 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
-        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_replied ( ) ;
+        shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render_request )
 {
-    shy_guts :: logic_salutation_letters_renderer_render_state :: on_requested ( ) ;
+    shy_guts :: logic_salutation_letters_renderer_render_state :: on_request ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_renderer :: register_in_scheduler ( )
