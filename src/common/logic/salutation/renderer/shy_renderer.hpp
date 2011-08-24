@@ -41,20 +41,10 @@ namespace shy_guts
     static void request_use_text_texture ( ) ;
     static void use_ortho_projection ( ) ;
     static void use_view_transform ( ) ;
-    static void work ( ) ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_renderer > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
-
-void shy_guts :: work ( )
-{
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_renderer_render_state :: requested ) )
-    {
-        shy_guts :: logic_salutation_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_renderer_render_state :: on_request ( ) ;
-    }
-}
 
 void shy_guts :: logic_salutation_renderer_render_state :: on_request ( )
 {
@@ -165,7 +155,6 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
     shy_guts :: logic_ortho_planes_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_animation_transform_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: taker . init ( ) ;
-    shy_guts :: logic_salutation_renderer_render_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_text_use_text_texture_state :: taker . init ( ) ;
 }
 
@@ -195,8 +184,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_renderer_render )
 {
-    shy_guts :: logic_salutation_renderer_render_state :: requested = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: work ( ) ;
+    shy_guts :: logic_salutation_renderer_render_state :: on_request ( ) ;
 }
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_text_use_text_texture_reply msg )
