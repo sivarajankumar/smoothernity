@@ -2,10 +2,7 @@ namespace shy_guts
 {
     namespace logic_salutation_letters_animation_layout_transform_state
     {
-        static so_called_message_common_logic_salutation_letters_animation_layout_transform_reply msg_replied ;
-        static so_called_message_common_logic_salutation_letters_animation_layout_transform_request msg_requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_common_engine_taker_helper ( logic_salutation_letters_animation_layout_transform ) taker ;
         static void on_replied ( ) ;
     }
 
@@ -33,11 +30,6 @@ void shy_guts :: work ( )
         shy_guts :: logic_salutation_letters_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_salutation_letters_animation_transform_state :: on_requested ( ) ;
     }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_animation_layout_transform_state :: replied ) )
-    {
-        shy_guts :: logic_salutation_letters_animation_layout_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on_replied ( ) ;
-    }
 }
 
 void shy_guts :: logic_salutation_letters_animation_transform_state :: on_requested ( )
@@ -53,13 +45,9 @@ void shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on
 
 void shy_guts :: request_animation_layout_transform ( )
 {
-    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_requested . letter =
-        shy_guts :: logic_salutation_letters_animation_transform_state :: msg_requested . letter ;
-
-    so_called_sender_common_logic_salutation_letters_animation_layout_transform_request :: send
-        ( shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_requested
-        ) ;
+    so_called_type_platform_math_num_whole letter = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_requested . letter ;
+    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_request . letter = letter ;
+    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . request ( ) ;
 }
 
 void shy_guts :: compute_transform ( )
@@ -70,8 +58,8 @@ void shy_guts :: compute_transform ( )
     so_called_type_platform_math_num_fract layout_scale ;
     so_called_type_platform_matrix_data transform ;
 
-    layout_origin = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_replied . origin ;
-    layout_scale = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_replied . scale ;
+    layout_origin = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_reply . origin ;
+    layout_scale = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_reply . scale ;
 
     final_origin = layout_origin ;
     final_scale = layout_scale ;
@@ -92,22 +80,16 @@ void shy_guts :: send_computed_transform ( )
 
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_init )
 {
-    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_logic_salutation_letters_animation_layout_transform_reply msg )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_animation_layout_transform_state :: requested )
-      && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_requested . letter , msg . letter )
-       )
-    {
-        shy_guts :: logic_salutation_letters_animation_layout_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_animation_layout_transform_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_replied = msg ;
-        shy_guts :: work ( ) ;
-    }
+    so_called_type_platform_math_num_whole should_handle ;
+    shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . should_handle ( should_handle , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
+        shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on_replied ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_logic_salutation_letters_animation_transform_request msg )
