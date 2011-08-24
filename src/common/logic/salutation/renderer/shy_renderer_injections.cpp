@@ -8,6 +8,7 @@
 #include "../../ortho/planes/checker/shy_checker_injections.h"
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
 #include "../../text/sender/use_text_texture_request/shy_use_text_texture_request_injections.h"
+#include "../../text/use_text_texture/checker/shy_checker_injections.h"
 #include "../../../engine/render/sender/blend_src_alpha_dst_one_minus_alpha/shy_blend_src_alpha_dst_one_minus_alpha_injections.h"
 #include "../../../engine/render/sender/clear_screen/shy_clear_screen_injections.h"
 #include "../../../engine/render/sender/disable_depth_test/shy_disable_depth_test_injections.h"
