@@ -10,15 +10,13 @@ namespace shy_guts
     namespace logic_salutation_animation_transform_state
     {
         static so_called_type_platform_math_num_whole requested ;
-        static void on_requested ( ) ;
+        static void on_request ( ) ;
     }
 
     namespace logic_salutation_animation_zoom_transform_state
     {
-        static so_called_message_common_logic_salutation_animation_zoom_transform_reply msg_replied ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole requested ;
-        static void on_replied ( ) ;
+        static so_called_common_engine_taker_helper ( logic_salutation_animation_zoom_transform ) taker ;
+        static void on_reply ( ) ;
     }
 
     static void request_animation_zoom_transform ( ) ;
@@ -34,31 +32,23 @@ void shy_guts :: work ( )
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_animation_transform_state :: requested ) )
     {
         shy_guts :: logic_salutation_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_animation_transform_state :: on_requested ( ) ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_animation_zoom_transform_state :: replied ) )
-    {
-        shy_guts :: logic_salutation_animation_zoom_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_animation_zoom_transform_state :: on_replied ( ) ;
+        shy_guts :: logic_salutation_animation_transform_state :: on_request ( ) ;
     }
 }
 
-void shy_guts :: logic_salutation_animation_transform_state :: on_requested ( )
+void shy_guts :: logic_salutation_animation_transform_state :: on_request ( )
 {
     shy_guts :: request_animation_zoom_transform ( ) ;
 }
 
-void shy_guts :: logic_salutation_animation_zoom_transform_state :: on_replied ( )
+void shy_guts :: logic_salutation_animation_zoom_transform_state :: on_reply ( )
 {
     shy_guts :: send_computed_transform ( ) ;
 }
 
 void shy_guts :: request_animation_zoom_transform ( )
 {
-    shy_guts :: logic_salutation_animation_zoom_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_salutation_animation_zoom_transform_request :: send
-        ( so_called_message_common_logic_salutation_animation_zoom_transform_request ( )
-        ) ;
+    shy_guts :: logic_salutation_animation_zoom_transform_state :: taker . request ( ) ;
 }
 
 void shy_guts :: send_computed_transform ( )
@@ -72,7 +62,7 @@ void shy_guts :: send_computed_transform ( )
         ) ;
 
     so_called_type_platform_math_num_fract scale ;
-    scale = shy_guts :: logic_salutation_animation_zoom_transform_state :: msg_replied . scale ;
+    scale = shy_guts :: logic_salutation_animation_zoom_transform_state :: taker . msg_reply . scale ;
 
     so_called_type_platform_matrix_data transform ;
     so_called_common_engine_math_stateless :: scale ( transform , scale ) ;
@@ -86,8 +76,7 @@ void shy_guts :: send_computed_transform ( )
 void _shy_common_logic_salutation_animation :: receive ( so_called_message_common_init )
 {
     shy_guts :: logic_salutation_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_animation_zoom_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_animation_zoom_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_salutation_animation_zoom_transform_state :: taker . init ( ) ;
 }
 
 void _shy_common_logic_salutation_animation :: receive ( so_called_message_common_logic_salutation_animation_transform_request )
@@ -98,13 +87,10 @@ void _shy_common_logic_salutation_animation :: receive ( so_called_message_commo
 
 void _shy_common_logic_salutation_animation :: receive ( so_called_message_common_logic_salutation_animation_zoom_transform_reply msg )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_animation_zoom_transform_state :: requested ) )
-    {
-        shy_guts :: logic_salutation_animation_zoom_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_animation_zoom_transform_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_salutation_animation_zoom_transform_state :: msg_replied = msg ;
-        shy_guts :: work ( ) ;
-    }
+    so_called_type_platform_math_num_whole should_handle ;
+    shy_guts :: logic_salutation_animation_zoom_transform_state :: taker . should_handle ( should_handle , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
+        shy_guts :: logic_salutation_animation_zoom_transform_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_animation :: register_in_scheduler ( )
