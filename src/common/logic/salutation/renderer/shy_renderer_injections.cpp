@@ -1,8 +1,8 @@
 #include "./shy_renderer_injections.h"
 
 #include "./consts/shy_consts_injections.h"
-#include "../animation/sender/transform_request/shy_transform_request_injections.h"
 #include "../animation/transform/checker/shy_checker_injections.h"
+#include "../animation/transform/request/sender/shy_sender_injections.h"
 #include "../letters/renderer/render/checker/shy_checker_injections.h"
 #include "../letters/renderer/sender/render_request/shy_render_request_injections.h"
 #include "../../ortho/planes/checker/shy_checker_injections.h"
