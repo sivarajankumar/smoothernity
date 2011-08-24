@@ -15,7 +15,6 @@ namespace shy_guts
     namespace logic_salutation_letters_meshes_generator_update
     {
         static so_called_type_platform_math_num_whole enabled ;
-        static so_called_type_platform_math_num_whole requested ;
         static so_called_type_platform_math_num_fract time ;
         static void on_request ( ) ;
     }
@@ -33,20 +32,10 @@ namespace shy_guts
     static void request_letters_amount_in_storage ( ) ;
     static void send_generate_finished ( ) ;
     static void start_generation ( ) ;
-    static void work ( ) ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_meshes_generator > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
-
-void shy_guts :: work ( )
-{
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_generator_update :: requested ) )
-    {
-        shy_guts :: logic_salutation_letters_meshes_generator_update :: requested = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: logic_salutation_letters_meshes_generator_update :: on_request ( ) ;
-    }
-}
 
 void shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: on_request ( )
 {
@@ -147,7 +136,6 @@ void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_calle
 {
     shy_guts :: logic_salutation_letters_meshes_creator_create_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_meshes_generator_update :: enabled = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: logic_salutation_letters_meshes_generator_update :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_text_storage_size_state :: taker . init ( ) ;
 }
 
@@ -159,10 +147,7 @@ void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_calle
 void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_logic_salutation_letters_meshes_generator_update )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_generator_update :: enabled ) )
-    {
-        shy_guts :: logic_salutation_letters_meshes_generator_update :: requested = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: work ( ) ;
-    }
+        shy_guts :: logic_salutation_letters_meshes_generator_update :: on_request ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_logic_salutation_letters_meshes_creator_create_reply msg )
