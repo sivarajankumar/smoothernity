@@ -8,7 +8,7 @@ namespace shy_guts
 
     namespace logic_salutation_animation_transform_state
     {
-        static so_called_message_common_logic_salutation_animation_transform_reply msg_replied ;
+        static so_called_message_common_logic_salutation_animation_transform_reply msg_reply ;
         static so_called_type_platform_math_num_whole replied ;
         static so_called_type_platform_math_num_whole requested ;
         static void on_reply ( ) ;
@@ -134,7 +134,7 @@ void shy_guts :: blend_enable ( )
 void shy_guts :: use_view_transform ( )
 {
     so_called_message_common_engine_render_matrix_load msg ;
-    msg . matrix = shy_guts :: logic_salutation_animation_transform_state :: msg_replied . transform ;
+    msg . matrix = shy_guts :: logic_salutation_animation_transform_state :: msg_reply . transform ;
     so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
 }
 
@@ -214,7 +214,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
     {
         shy_guts :: logic_salutation_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: logic_salutation_animation_transform_state :: replied = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: logic_salutation_animation_transform_state :: msg_replied = msg ;
+        shy_guts :: logic_salutation_animation_transform_state :: msg_reply = msg ;
         shy_guts :: work ( ) ;
     }
 }
