@@ -2,7 +2,7 @@
 
 #include "./layout/transform/checker/shy_checker_injections.h"
 #include "./layout/transform/request/sender/shy_sender_injections.h"
-#include "./sender/transform_reply/shy_transform_reply_injections.h"
+#include "./transform/reply/sender/shy_sender_injections.h"
 #include "../../../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../../../engine/taker/helper/shy_helper_injections.h"
 #include "../../../../../injections/platform/conditions/shy_conditions.h"

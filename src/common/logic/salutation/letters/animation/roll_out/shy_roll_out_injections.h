@@ -2,7 +2,7 @@
 #define _shy_common_logic_salutation_letters_animation_roll_out_injections_included
 
 #include "./message/play/shy_play_injections.h"
-#include "../message/update/shy_update_injections.h"
+#include "../update/message/shy_message_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_roll_out.h"
