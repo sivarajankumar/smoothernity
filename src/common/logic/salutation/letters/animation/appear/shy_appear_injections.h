@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_salutation_letters_animation_appear_injections_included
 #define _shy_common_logic_salutation_letters_animation_appear_injections_included
 
-#include "./message/play/shy_play_injections.h"
+#include "./play/message/shy_message_injections.h"
 #include "../message/update/shy_update_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
