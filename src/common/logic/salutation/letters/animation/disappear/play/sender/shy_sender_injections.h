@@ -1,9 +1,9 @@
 #ifndef _shy_sender_common_logic_salutation_letters_animation_disappear_play_injections_included
 #define _shy_sender_common_logic_salutation_letters_animation_disappear_play_injections_included
 
-#include "../../message/play/shy_play_injections.h"
+#include "../message/shy_message_injections.h"
 
-#include "./shy_play.h"
+#include "./shy_sender.h"
 
 typedef shy_sender_common_logic_salutation_letters_animation_disappear_play so_called_sender_common_logic_salutation_letters_animation_disappear_play ;
 
