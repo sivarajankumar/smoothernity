@@ -1,6 +1,6 @@
 #include "./shy_layout_injections.h"
 
-#include "./sender/transform_reply/shy_transform_reply_injections.h"
+#include "./transform/reply/sender/shy_sender_injections.h"
 #include "../../meshes/storage/sender/size_request/shy_size_request_injections.h"
 #include "../../meshes/storage/size/checker/shy_checker_injections.h"
 #include "../../../../../engine/taker/helper/shy_helper_injections.h"
