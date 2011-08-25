@@ -1,8 +1,8 @@
 #include "./shy_animation_injections.h"
 
 #include "./transform/reply/sender/shy_sender_injections.h"
-#include "./zoom/sender/transform_request/shy_transform_request_injections.h"
 #include "./zoom/transform/checker/shy_checker_injections.h"
+#include "./zoom/transform/request/sender/shy_sender_injections.h"
 #include "../../../engine/math/stateless/shy_stateless_injections.h"
 #include "../../../engine/taker/helper/shy_helper_injections.h"
 #include "../../../../injections/platform/conditions/shy_conditions.h"
