@@ -1,0 +1,8 @@
+#ifndef _shy_message_common_logic_salutation_timer_appear_run_injections_included
+#define _shy_message_common_logic_salutation_timer_appear_run_injections_included
+
+#include "./shy_message.h"
+
+typedef shy_message_common_logic_salutation_timer_appear_run so_called_message_common_logic_salutation_timer_appear_run ;
+
+#endif
