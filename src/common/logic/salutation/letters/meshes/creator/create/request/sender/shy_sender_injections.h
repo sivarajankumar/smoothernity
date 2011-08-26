@@ -1,8 +1,8 @@
 #ifndef _shy_sender_common_logic_salutation_letters_meshes_creator_create_request_injections_included
 #define _shy_sender_common_logic_salutation_letters_meshes_creator_create_request_injections_included
 
-#include "../../message/create_request/shy_create_request_injections.h"
-#include "./shy_create_request.h"
+#include "../message/shy_message_injections.h"
+#include "./shy_sender.h"
 
 typedef shy_sender_common_logic_salutation_letters_meshes_creator_create_request so_called_sender_common_logic_salutation_letters_meshes_creator_create_request ;
 

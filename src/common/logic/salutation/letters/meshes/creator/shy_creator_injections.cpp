@@ -1,6 +1,6 @@
 #include "./shy_creator_injections.h"
 
-#include "./sender/create_reply/shy_create_reply_injections.h"
+#include "./create/reply/sender/shy_sender_injections.h"
 #include "../consts/shy_consts_injections.h"
 #include "../storage/sender/add_mesh/shy_add_mesh_injections.h"
 #include "../../text/storage/letter/checker/shy_checker_injections.h"

@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_salutation_letters_meshes_creator_injections_included
 #define _shy_common_logic_salutation_letters_meshes_creator_injections_included
 
-#include "./message/create_request/shy_create_request_injections.h"
+#include "./create/request/message/shy_message_injections.h"
 #include "../../text/storage/message/letter_reply/shy_letter_reply_injections.h"
 #include "../../../../text/letter/mesh/message/create_reply/shy_create_reply_injections.h"
 #include "../../../../../message/init/shy_init_injections.h"
