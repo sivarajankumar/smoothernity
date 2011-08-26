@@ -3,8 +3,8 @@
 
 #include "./clean/message/shy_message_injections.h"
 #include "./update/message/shy_message_injections.h"
-#include "../storage/message/mesh_reply/shy_mesh_reply_injections.h"
-#include "../storage/message/size_reply/shy_size_reply_injections.h"
+#include "../storage/mesh/reply/message/shy_message_injections.h"
+#include "../storage/size/reply/message/shy_message_injections.h"
 #include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 

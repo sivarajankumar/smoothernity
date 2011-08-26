@@ -1,9 +1,0 @@
-#ifndef _shy_sender_common_logic_salutation_letters_meshes_storage_mesh_reply_injections_included
-#define _shy_sender_common_logic_salutation_letters_meshes_storage_mesh_reply_injections_included
-
-#include "../../message/mesh_reply/shy_mesh_reply_injections.h"
-#include "./shy_mesh_reply.h"
-
-typedef shy_sender_common_logic_salutation_letters_meshes_storage_mesh_reply so_called_sender_common_logic_salutation_letters_meshes_storage_mesh_reply ;
-
-#endif
