@@ -1,7 +1,7 @@
 #ifndef _shy_message_common_logic_salutation_letters_renderer_render_reply_injections_included
 #define _shy_message_common_logic_salutation_letters_renderer_render_reply_injections_included
 
-#include "./shy_render_reply.h"
+#include "./shy_message.h"
 
 typedef shy_message_common_logic_salutation_letters_renderer_render_reply so_called_message_common_logic_salutation_letters_renderer_render_reply ;
 

@@ -1,9 +1,9 @@
 #ifndef _shy_sender_common_logic_salutation_letters_renderer_render_reply_injections_included
 #define _shy_sender_common_logic_salutation_letters_renderer_render_reply_injections_included
 
-#include "../../message/render_reply/shy_render_reply_injections.h"
+#include "../message/shy_message_injections.h"
 
-#include "./shy_render_reply.h"
+#include "./shy_sender.h"
 
 typedef shy_sender_common_logic_salutation_letters_renderer_render_reply so_called_sender_common_logic_salutation_letters_renderer_render_reply ;
 
