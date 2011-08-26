@@ -1,6 +1,6 @@
 #include "./shy_generator_injections.h"
 
-#include "./sender/generate_finished/shy_generate_finished_injections.h"
+#include "./generate/finished/sender/shy_sender_injections.h"
 #include "../consts/shy_consts_injections.h"
 #include "../creator/create/checker/shy_checker_injections.h"
 #include "../creator/create/request/sender/shy_sender_injections.h"
