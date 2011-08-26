@@ -8,7 +8,7 @@
 #include "../../amusement/message/finished/shy_finished_injections.h"
 #include "../../main_menu/message/created/shy_created_injections.h"
 #include "../../main_menu/message/finished/shy_finished_injections.h"
-#include "../../salutation/letters/meshes/cleaner/message/clean_finished/shy_clean_finished_injections.h"
+#include "../../salutation/letters/meshes/cleaner/clean/finished/message/shy_message_injections.h"
 #include "../../salutation/letters/meshes/generator/message/generate_finished/shy_generate_finished_injections.h"
 #include "../../salutation/letters/text/cleaner/message/clean_finished/shy_clean_finished_injections.h"
 #include "../../salutation/letters/text/generator/message/generate_finished/shy_generate_finished_injections.h"

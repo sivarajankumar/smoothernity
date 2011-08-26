@@ -1,8 +1,8 @@
 #ifndef _shy_sender_common_logic_salutation_letters_meshes_cleaner_clean_injections_included
 #define _shy_sender_common_logic_salutation_letters_meshes_cleaner_clean_injections_included
 
-#include "../../message/clean/shy_clean_injections.h"
-#include "./shy_clean.h"
+#include "../message/shy_message_injections.h"
+#include "./shy_sender.h"
 
 typedef shy_sender_common_logic_salutation_letters_meshes_cleaner_clean so_called_sender_common_logic_salutation_letters_meshes_cleaner_clean ;
 
