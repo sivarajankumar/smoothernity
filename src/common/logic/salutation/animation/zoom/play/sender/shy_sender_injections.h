@@ -1,7 +1,7 @@
 #ifndef _shy_sender_common_logic_salutation_animation_zoom_play_injections_included
 #define _shy_sender_common_logic_salutation_animation_zoom_play_injections_included
 
-#include "../message/shy_message_injections.h"
+#include "common/logic/salutation/animation/zoom/play/message/shy_message_injections.h"
 
 #include "./shy_sender.h"
 
