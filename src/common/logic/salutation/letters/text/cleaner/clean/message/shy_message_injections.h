@@ -1,7 +1,7 @@
 #ifndef _shy_message_common_logic_salutation_letters_text_cleaner_clean_injections_included
 #define _shy_message_common_logic_salutation_letters_text_cleaner_clean_injections_included
 
-#include "./shy_clean.h"
+#include "./shy_message.h"
 
 typedef shy_message_common_logic_salutation_letters_text_cleaner_clean so_called_message_common_logic_salutation_letters_text_cleaner_clean ;
 
