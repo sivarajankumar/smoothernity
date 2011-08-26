@@ -1,6 +1,6 @@
 #include "./shy_disappear_injections.h"
 
-#include "./sender/run_finished/shy_run_finished_injections.h"
+#include "./run/finished/sender/shy_sender_injections.h"
 #include "../consts/shy_consts_injections.h"
 #include "../../../../../injections/platform/conditions/shy_conditions.h"
 #include "../../../../../injections/platform/consts/shy_consts.h"

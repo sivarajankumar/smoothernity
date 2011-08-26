@@ -1,8 +1,0 @@
-#ifndef _shy_message_common_logic_salutation_timer_disappear_run_injections_included
-#define _shy_message_common_logic_salutation_timer_disappear_run_injections_included
-
-#include "./shy_run.h"
-
-typedef shy_message_common_logic_salutation_timer_disappear_run so_called_message_common_logic_salutation_timer_disappear_run ;
-
-#endif

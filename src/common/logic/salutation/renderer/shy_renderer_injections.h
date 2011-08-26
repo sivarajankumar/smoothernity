@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_salutation_renderer_injections_included
 #define _shy_common_logic_salutation_renderer_injections_included
 
-#include "./message/render/shy_render_injections.h"
+#include "./render/message/shy_message_injections.h"
 #include "../animation/transform/reply/message/shy_message_injections.h"
 #include "../letters/renderer/render/reply/message/shy_message_injections.h"
 #include "../../ortho/message/planes_reply/shy_planes_reply_injections.h"
