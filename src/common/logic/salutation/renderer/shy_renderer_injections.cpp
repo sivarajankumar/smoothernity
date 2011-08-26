@@ -4,7 +4,7 @@
 #include "../animation/transform/checker/shy_checker_injections.h"
 #include "../animation/transform/request/sender/shy_sender_injections.h"
 #include "../letters/renderer/render/checker/shy_checker_injections.h"
-#include "../letters/renderer/sender/render_request/shy_render_request_injections.h"
+#include "../letters/renderer/render/request/sender/shy_sender_injections.h"
 #include "../../ortho/planes/checker/shy_checker_injections.h"
 #include "../../ortho/sender/planes_request/shy_planes_request_injections.h"
 #include "../../text/sender/use_text_texture_request/shy_use_text_texture_request_injections.h"
