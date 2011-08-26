@@ -3,7 +3,7 @@
 #include "./sender/generate_finished/shy_generate_finished_injections.h"
 #include "../consts/shy_consts_injections.h"
 #include "../creator/create/checker/shy_checker_injections.h"
-#include "../creator/sender/create_request/shy_create_request_injections.h"
+#include "../creator/create/request/sender/shy_sender_injections.h"
 #include "../../text/storage/sender/size_request/shy_size_request_injections.h"
 #include "../../text/storage/size/checker/shy_checker_injections.h"
 #include "../../../../../engine/taker/helper/shy_helper_injections.h"
