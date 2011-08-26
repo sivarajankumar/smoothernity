@@ -4,7 +4,7 @@
 #include "../consts/shy_consts_injections.h"
 #include "../storage/add_mesh/sender/shy_sender_injections.h"
 #include "../../text/storage/letter/checker/shy_checker_injections.h"
-#include "../../text/storage/sender/letter_request/shy_letter_request_injections.h"
+#include "../../text/storage/letter/request/sender/shy_sender_injections.h"
 #include "../../../../text/letter/mesh/create/checker/shy_checker_injections.h"
 #include "../../../../text/letter/mesh/sender/create_request/shy_create_request_injections.h"
 #include "../../../../../engine/taker/helper/shy_helper_injections.h"

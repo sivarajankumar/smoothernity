@@ -1,7 +1,7 @@
 #include "./shy_storage_injections.h"
 
-#include "./sender/letter_reply/shy_letter_reply_injections.h"
-#include "./sender/size_reply/shy_size_reply_injections.h"
+#include "./letter/reply/sender/shy_sender_injections.h"
+#include "./size/reply/sender/shy_sender_injections.h"
 #include "../../consts/shy_consts_injections.h"
 #include "../../../../text/consts/shy_consts_injections.h"
 #include "../../../../../../injections/lib/std/true/shy_true.h"
