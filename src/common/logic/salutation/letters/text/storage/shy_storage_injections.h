@@ -1,10 +1,10 @@
 #ifndef _shy_common_logic_salutation_letters_text_storage_injections_included
 #define _shy_common_logic_salutation_letters_text_storage_injections_included
 
-#include "./message/add_letter/shy_add_letter_injections.h"
-#include "./message/clean/shy_clean_injections.h"
-#include "./message/letter_request/shy_letter_request_injections.h"
-#include "./message/size_request/shy_size_request_injections.h"
+#include "./add_letter/message/shy_message_injections.h"
+#include "./clean/message/shy_message_injections.h"
+#include "./letter/request/message/shy_message_injections.h"
+#include "./size/request/message/shy_message_injections.h"
 #include "../../../../../message/init/shy_init_injections.h"
 #include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
 
