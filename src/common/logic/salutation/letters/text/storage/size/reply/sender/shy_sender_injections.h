@@ -1,7 +1,8 @@
 #ifndef _shy_sender_common_logic_salutation_letters_text_storage_size_reply_injections_included
 #define _shy_sender_common_logic_salutation_letters_text_storage_size_reply_injections_included
 
-#include "../message/shy_message_injections.h"
+#include "common/logic/salutation/letters/text/storage/size/reply/message/shy_message_injections.h"
+
 #include "./shy_sender.h"
 
 typedef shy_sender_common_logic_salutation_letters_text_storage_size_reply so_called_sender_common_logic_salutation_letters_text_storage_size_reply ;
