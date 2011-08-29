@@ -1,7 +1,7 @@
 #ifndef _shy_sender_common_logic_salutation_letters_renderer_render_reply_injections_included
 #define _shy_sender_common_logic_salutation_letters_renderer_render_reply_injections_included
 
-#include "../message/shy_message_injections.h"
+#include "common/logic/salutation/letters/renderer/render/reply/message/shy_message_injections.h"
 
 #include "./shy_sender.h"
 
