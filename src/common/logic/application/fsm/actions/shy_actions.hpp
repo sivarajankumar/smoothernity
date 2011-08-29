@@ -60,7 +60,7 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_animation_upda
 
 void shy_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_play ( )
 {
-    so_called_sender_common_logic_salutation_animation_zoom_play :: send ( so_called_message_common_logic_salutation_animation_zoom_play ( ) ) ;
+    so_called_common_logic_salutation_animation_zoom_play_sender :: send ( so_called_message_common_logic_salutation_animation_zoom_play ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_appear_play ( )
