@@ -27,7 +27,7 @@ void shy_guts :: send_transform ( )
 {
     so_called_message_common_logic_salutation_animation_zoom_transform_reply msg ;
     msg . scale = shy_guts :: scale ;
-    so_called_sender_common_logic_salutation_animation_zoom_transform_reply :: send ( msg ) ;
+    so_called_common_logic_salutation_animation_zoom_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_common_init )
