@@ -38,7 +38,7 @@ void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply 
     msg . letter = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_request . letter ;
     msg . origin = origin ;
     msg . scale = scale ;
-    so_called_sender_common_logic_salutation_letters_animation_layout_transform_reply :: send ( msg ) ;
+    so_called_common_logic_salutation_letters_animation_layout_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_message_common_init )
