@@ -1,9 +1,9 @@
 #ifndef _shy_common_logic_salutation_letters_animation_roll_out_injections_included
 #define _shy_common_logic_salutation_letters_animation_roll_out_injections_included
 
-#include "./play/message/shy_message_injections.h"
-#include "../update/message/shy_message_injections.h"
-#include "../../../../../../injections/platform/scheduler/shy_scheduler.h"
+#include "common/logic/salutation/letters/animation/roll_out/play/message/shy_message_injections.h"
+#include "common/logic/salutation/letters/animation/update/message/shy_message_injections.h"
+#include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_roll_out.h"
 
