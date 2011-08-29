@@ -1,10 +1,10 @@
 #ifndef _shy_common_logic_salutation_timer_appear_injections_included
 #define _shy_common_logic_salutation_timer_appear_injections_included
 
-#include "./run/message/shy_message_injections.h"
-#include "../update/message/shy_message_injections.h"
-#include "../../../../message/init/shy_init_injections.h"
-#include "../../../../../injections/platform/scheduler/shy_scheduler.h"
+#include "common/logic/salutation/timer/appear/run/message/shy_message_injections.h"
+#include "common/logic/salutation/timer/update/message/shy_message_injections.h"
+#include "common/message/init/shy_init_injections.h"
+#include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_appear.h"
 
