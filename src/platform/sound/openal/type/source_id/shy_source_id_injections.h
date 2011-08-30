@@ -1,7 +1,7 @@
 #ifndef _shy_type_platform_sound_openal_source_id_injections_included
 #define _shy_type_platform_sound_openal_source_id_injections_included
 
-#include "../../../../../injections/lib/openal/shy_openal.h"
+#include "injections/lib/openal/shy_openal.h"
 
 #include "./shy_source_id.h"
 
