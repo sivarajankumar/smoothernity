@@ -38,11 +38,13 @@ else :
             for line in old_lines :
                 replace_list = { }
                 if line . strip ( ) . startswith ( consts . include ) :
-                    include_path = line . strip ( ) . split ( consts . include ) [ 1 ] . split ( consts . quote ) [ 1 ]
-                    if include_path . startswith ( consts . dot ) :
-                        if not include_path . startswith ( consts . local_prefix ) :
-                            new_path = os . path . normpath ( os . path . join ( dir , include_path ) )
-                            replace_list [ include_path ] = new_path
+                    include_path = line . strip ( ) . split ( consts . include ) [ 1 ]
+                    if include_path . startswith ( consts . quote ) :
+                        include_path = include_path . split ( consts . quote ) [ 1 ]
+                        if include_path . startswith ( consts . dot ) :
+                            if not include_path . startswith ( consts . local_prefix ) :
+                                new_path = os . path . normpath ( os . path . join ( dir , include_path ) )
+                                replace_list [ include_path ] = new_path
                 for what , to_what in replace_list . items ( ) :
                     line = line . replace ( what , to_what )
                     changed = True
