@@ -1,3 +1,3 @@
-class shy_message_common_engine_render_matrix_identity
+class shy_common_engine_render_matrix_identity_message
 {
 } ;

@@ -83,34 +83,34 @@ void shy_guts :: prepare_render_state ( )
 void shy_guts :: depth_test_disable ( )
 {
     so_called_common_engine_render_disable_depth_test_sender :: send 
-        ( so_called_message_common_engine_render_disable_depth_test ( ) 
+        ( so_called_common_engine_render_disable_depth_test_message ( ) 
         ) ;
 }
 
 void shy_guts :: fog_disable ( )
 {
     so_called_common_engine_render_fog_disable_sender :: send 
-        ( so_called_message_common_engine_render_fog_disable ( ) 
+        ( so_called_common_engine_render_fog_disable_message ( ) 
         ) ;
 }
 
 void shy_guts :: blend_enable ( )
 {
     so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender :: send 
-        ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) 
+        ( so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_message ( ) 
         ) ;
 }
 
 void shy_guts :: use_view_transform ( )
 {
-    so_called_message_common_engine_render_matrix_load msg ;
+    so_called_common_engine_render_matrix_load_message msg ;
     msg . matrix = shy_guts :: logic_salutation_animation_transform_state :: taker . msg_reply . transform ;
     so_called_common_engine_render_matrix_load_sender :: send ( msg ) ;
 }
 
 void shy_guts :: use_ortho_projection ( )
 {
-    so_called_message_common_engine_render_projection_ortho msg ;
+    so_called_common_engine_render_projection_ortho_message msg ;
     msg . x_left = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . x_left ;
     msg . x_right = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . x_right ;
     msg . y_bottom = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . y_bottom ;
@@ -122,7 +122,7 @@ void shy_guts :: use_ortho_projection ( )
 
 void shy_guts :: clear_screen ( )
 {
-    so_called_message_common_engine_render_clear_screen msg ;
+    so_called_common_engine_render_clear_screen_message msg ;
     msg . r = so_called_common_logic_salutation_renderer_consts :: background_r ;
     msg . g = so_called_common_logic_salutation_renderer_consts :: background_g ;
     msg . b = so_called_common_logic_salutation_renderer_consts :: background_b ;
@@ -149,7 +149,7 @@ void shy_guts :: request_use_text_texture ( )
     shy_guts :: logic_text_use_text_texture_state :: taker . request ( ) ;
 }
 
-void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_init )
+void _shy_common_logic_salutation_renderer :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_ortho_planes_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_animation_transform_state :: taker . init ( ) ;
@@ -157,7 +157,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
     shy_guts :: logic_text_use_text_texture_state :: taker . init ( ) ;
 }
 
-void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_ortho_planes_reply msg )
+void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_ortho_planes_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_ortho_planes_state :: taker . should_handle ( should_handle , msg ) ;
@@ -165,7 +165,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
         shy_guts :: logic_ortho_planes_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_animation_transform_reply msg )
+void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_salutation_animation_transform_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_animation_transform_state :: taker . should_handle ( should_handle , msg ) ;
@@ -173,7 +173,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
         shy_guts :: logic_salutation_animation_transform_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render_reply msg )
+void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_salutation_letters_renderer_render_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: taker . should_handle ( should_handle , msg ) ;
@@ -181,12 +181,12 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common
         shy_guts :: logic_salutation_letters_renderer_render_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_salutation_renderer_render )
+void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_salutation_renderer_render_message )
 {
     shy_guts :: logic_salutation_renderer_render_state :: on_request ( ) ;
 }
 
-void _shy_common_logic_salutation_renderer :: receive ( so_called_message_common_logic_text_use_text_texture_reply msg )
+void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_text_use_text_texture_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_text_use_text_texture_state :: taker . should_handle ( should_handle , msg ) ;

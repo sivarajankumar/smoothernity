@@ -37,24 +37,24 @@ void shy_guts :: proceed_with_place ( )
 void shy_guts :: request_animation_transform ( )
 {
     shy_guts :: logic_blanket_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_blanket_animation_transform_request_sender :: send ( so_called_message_common_logic_blanket_animation_transform_request ( ) ) ;
+    so_called_common_logic_blanket_animation_transform_request_sender :: send ( so_called_common_logic_blanket_animation_transform_request_message ( ) ) ;
 }
 
 void shy_guts :: transform_mesh ( )
 {
-    so_called_message_common_logic_blanket_mesh_set_transform msg ;
+    so_called_common_logic_blanket_mesh_set_transform_message msg ;
     msg . transform = shy_guts :: logic_blanket_animation_transform_state :: transform ;
     so_called_common_logic_blanket_mesh_set_transform_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_blanket_placement :: receive ( so_called_message_common_init )
+void _shy_common_logic_blanket_placement :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_blanket_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_blanket_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_blanket_place_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_blanket_placement :: receive ( so_called_message_common_logic_blanket_animation_transform_reply msg )
+void _shy_common_logic_blanket_placement :: receive ( so_called_common_logic_blanket_animation_transform_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_animation_transform_state :: requested ) )
     {
@@ -65,7 +65,7 @@ void _shy_common_logic_blanket_placement :: receive ( so_called_message_common_l
     }
 }
 
-void _shy_common_logic_blanket_placement :: receive ( so_called_message_common_logic_blanket_place )
+void _shy_common_logic_blanket_placement :: receive ( so_called_common_logic_blanket_place_message )
 {
     shy_guts :: logic_blanket_place_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_place ( ) ;

@@ -1,4 +1,4 @@
-class shy_message_common_logic_entities_origin_reply
+class shy_common_logic_entities_origin_reply_message
 {
 public :
     so_called_type_platform_vector_data origin ;

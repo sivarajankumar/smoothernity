@@ -1,3 +1,3 @@
-class shy_message_common_logic_camera_update
+class shy_common_logic_camera_update_message
 {
 } ;

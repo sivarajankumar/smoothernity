@@ -1,3 +1,3 @@
-class shy_message_common_logic_blanket_animation_appear_start
+class shy_common_logic_blanket_animation_appear_start_message
 {
 } ;

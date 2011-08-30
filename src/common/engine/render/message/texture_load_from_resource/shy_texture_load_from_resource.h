@@ -1,4 +1,4 @@
-class shy_message_common_engine_render_texture_load_from_resource
+class shy_common_engine_render_texture_load_from_resource_message
 {
 public :
     so_called_type_common_engine_render_texture_id texture ;

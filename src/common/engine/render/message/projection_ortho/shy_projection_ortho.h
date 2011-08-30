@@ -1,4 +1,4 @@
-class shy_message_common_engine_render_projection_ortho
+class shy_common_engine_render_projection_ortho_message
 {
 public :
     so_called_type_platform_math_num_fract x_left ;

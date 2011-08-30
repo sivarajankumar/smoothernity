@@ -154,18 +154,18 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: render_text_mesh ( )
 {
-    so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender :: send ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
+    so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender :: send ( so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_message ( ) ) ;
     {
-        so_called_message_common_engine_render_texture_select texture_select_msg ;
+        so_called_common_engine_render_texture_select_message texture_select_msg ;
         texture_select_msg . texture = shy_guts :: text_texture_id ;
         so_called_common_engine_render_texture_select_sender :: send ( texture_select_msg ) ;
     }
     {
-        so_called_message_common_engine_render_mesh_render mesh_render_msg ;
+        so_called_common_engine_render_mesh_render_message mesh_render_msg ;
         mesh_render_msg . mesh = shy_guts :: text_mesh_id ;
         so_called_common_engine_render_mesh_render_sender :: send ( mesh_render_msg ) ;
     }
-    so_called_common_engine_render_blend_disable_sender :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
+    so_called_common_engine_render_blend_disable_sender :: send ( so_called_common_engine_render_blend_disable_message ( ) ) ;
 }
 
 void shy_guts :: update_text_mesh ( )
@@ -190,7 +190,7 @@ void shy_guts :: update_text_mesh ( )
     so_called_platform_matrix :: set_axis_z ( matrix , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , scale ) ;
     so_called_platform_matrix :: set_origin ( matrix , shy_guts :: consts :: mesh_x , shy_guts :: consts :: mesh_y , shy_guts :: consts :: mesh_z ) ;
     {
-        so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
+        so_called_common_engine_render_mesh_set_transform_message mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = shy_guts :: text_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
         so_called_common_engine_render_mesh_set_transform_sender :: send ( mesh_set_transform_msg ) ;
@@ -249,7 +249,7 @@ void shy_guts :: create_text_mesh ( )
     shy_guts :: mesh_set_vertex_tex_coord           ( so_called_platform_math_consts :: whole_3 , u_right , v_bottom ) ;
     shy_guts :: mesh_set_triangle_strip_index_value ( so_called_platform_math_consts :: whole_3 , so_called_platform_math_consts :: whole_3 ) ;
 
-    so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
+    so_called_common_engine_render_mesh_finalize_message mesh_finalize_msg ;
     mesh_finalize_msg . mesh = shy_guts :: text_mesh_id ;
     so_called_common_engine_render_mesh_finalize_sender :: send ( mesh_finalize_msg ) ;
 }
@@ -280,7 +280,7 @@ void shy_guts :: create_text_texture ( )
     so_called_common_engine_render_stateless :: set_texel_color ( shy_guts :: filler , filler_r , filler_g , filler_b , filler_a ) ;
     so_called_common_engine_render_stateless :: set_texel_color ( shy_guts :: eraser , eraser_r , eraser_g , eraser_b , eraser_a ) ;
     
-    so_called_message_common_engine_render_texture_set_texels_rect set_texels_msg ;
+    so_called_common_engine_render_texture_set_texels_rect_message set_texels_msg ;
     set_texels_msg . texel = shy_guts :: eraser ;
     set_texels_msg . texture = shy_guts :: text_texture_id ;
     set_texels_msg . left = so_called_platform_math_consts :: whole_0 ;
@@ -299,10 +299,10 @@ void shy_guts :: proceed_with_create_text ( )
         shy_guts :: text_prepare_permitted = so_called_platform_math_consts :: whole_false ;
         
         shy_guts :: texture_create_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_common_engine_render_texture_create_request_sender :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
+        so_called_common_engine_render_texture_create_request_sender :: send ( so_called_common_engine_render_texture_create_request_message ( ) ) ;
         
         shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
+        so_called_common_engine_render_mesh_create_request_message mesh_create_msg ;
         mesh_create_msg . vertices = so_called_platform_math_consts :: whole_4 ;
         mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
         mesh_create_msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
@@ -334,24 +334,24 @@ void shy_guts :: proceed_with_create_text ( )
     {
         shy_guts :: big_letters_rasterized = so_called_platform_math_consts :: whole_false ;
         shy_guts :: rasterize_finalize_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_common_engine_rasterizer_finalize_request_sender :: send ( so_called_message_common_engine_rasterizer_finalize_request ( ) ) ;
+        so_called_common_engine_rasterizer_finalize_request_sender :: send ( so_called_common_engine_rasterizer_finalize_request_message ( ) ) ;
     }
     else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: rasterize_finalize_replied ) )
     {
         shy_guts :: rasterize_finalize_replied = so_called_platform_math_consts :: whole_false ;
         
-        so_called_message_common_engine_render_texture_finalize texture_finalize_msg ;
+        so_called_common_engine_render_texture_finalize_message texture_finalize_msg ;
         texture_finalize_msg . texture = shy_guts :: text_texture_id ;
         so_called_common_engine_render_texture_finalize_sender :: send ( texture_finalize_msg ) ;
         
         shy_guts :: text_mesh_created = so_called_platform_math_consts :: whole_true ;
-        so_called_common_logic_text_prepared_sender :: send ( so_called_message_common_logic_text_prepared ( ) ) ;
+        so_called_common_logic_text_prepared_sender :: send ( so_called_common_logic_text_prepared_message ( ) ) ;
     }
 }
 
 void shy_guts :: prepare_rasterizer_for_drawing ( )
 {
-    so_called_message_common_engine_rasterizer_use_texture rasterize_use_texture_msg ;
+    so_called_common_engine_rasterizer_use_texture_message rasterize_use_texture_msg ;
     rasterize_use_texture_msg . texture = shy_guts :: text_texture_id ;
     rasterize_use_texture_msg . origin_x = shy_guts :: origin_x ;
     rasterize_use_texture_msg . origin_y = shy_guts :: origin_y ;
@@ -1414,7 +1414,7 @@ void shy_guts :: rasterize_font_english_Z ( )
 
 void shy_guts :: rasterize_use_texel ( so_called_type_platform_render_texel_data texel )
 {
-    so_called_message_common_engine_rasterizer_use_texel rasterize_use_texel_msg ;
+    so_called_common_engine_rasterizer_use_texel_message rasterize_use_texel_msg ;
     rasterize_use_texel_msg . texel = texel ;
     so_called_common_engine_rasterizer_use_texel_sender :: send ( rasterize_use_texel_msg ) ;
 }
@@ -1424,7 +1424,7 @@ void shy_guts :: mesh_set_triangle_strip_index_value
     , so_called_type_platform_math_num_whole index
     )
 {
-    so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;
     msg . mesh = shy_guts :: text_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;
@@ -1512,7 +1512,7 @@ void shy_guts :: mesh_set_vertex_tex_coord
     , so_called_type_platform_math_num_fract v 
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_tex_coord msg ;
+    so_called_common_engine_render_mesh_set_vertex_tex_coord_message msg ;
     msg . mesh = shy_guts :: text_mesh_id ;
     msg . offset = offset ;
     msg . u = u ;
@@ -1566,7 +1566,7 @@ void shy_guts :: mesh_set_vertex_position
     , so_called_type_platform_math_num_fract z 
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_position msg ;
+    so_called_common_engine_render_mesh_set_vertex_position_message msg ;
     msg . mesh = shy_guts :: text_mesh_id ;
     msg . offset = offset ;
     msg . x = x ;
@@ -1582,7 +1582,7 @@ void shy_guts :: rasterize_rect
     , so_called_type_platform_math_num_whole y2
     )
 {
-    so_called_message_common_engine_rasterizer_draw_rect rasterize_rect_msg ;
+    so_called_common_engine_rasterizer_draw_rect_message rasterize_rect_msg ;
     rasterize_rect_msg . x1 = x1 ;
     rasterize_rect_msg . y1 = y1 ;
     rasterize_rect_msg . x2 = x2 ;
@@ -1597,7 +1597,7 @@ void shy_guts :: rasterize_ellipse_in_rect
     , so_called_type_platform_math_num_whole y2
     )
 {
-    so_called_message_common_engine_rasterizer_draw_ellipse_in_rect rasterize_ellipse_in_rect_msg ;
+    so_called_common_engine_rasterizer_draw_ellipse_in_rect_message rasterize_ellipse_in_rect_msg ;
     rasterize_ellipse_in_rect_msg . x1 = x1 ;
     rasterize_ellipse_in_rect_msg . y1 = y1 ;
     rasterize_ellipse_in_rect_msg . x2 = x2 ;
@@ -1613,7 +1613,7 @@ void shy_guts :: mesh_set_vertex_color
     , so_called_type_platform_math_num_fract a
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_color msg ;
+    so_called_common_engine_render_mesh_set_vertex_color_message msg ;
     msg . mesh = shy_guts :: text_mesh_id ;
     msg . offset = offset ;
     msg . r = r ;
@@ -1632,7 +1632,7 @@ void shy_guts :: rasterize_triangle
     , so_called_type_platform_math_num_whole y3
     )
 {
-    so_called_message_common_engine_rasterizer_draw_triangle rasterize_triangle_msg ;
+    so_called_common_engine_rasterizer_draw_triangle_message rasterize_triangle_msg ;
     rasterize_triangle_msg . x1 = x1 ;
     rasterize_triangle_msg . y1 = y1 ;
     rasterize_triangle_msg . x2 = x2 ;
@@ -1642,7 +1642,7 @@ void shy_guts :: rasterize_triangle
     so_called_common_engine_rasterizer_draw_triangle_sender :: send ( rasterize_triangle_msg ) ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_engine_rasterizer_finalize_reply )
+void _shy_common_logic_text :: receive ( so_called_common_engine_rasterizer_finalize_reply_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: rasterize_finalize_requested ) )
     {
@@ -1651,7 +1651,7 @@ void _shy_common_logic_text :: receive ( so_called_message_common_engine_rasteri
     }
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
+void _shy_common_logic_text :: receive ( so_called_common_engine_render_mesh_create_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mesh_create_requested ) )
     {
@@ -1662,7 +1662,7 @@ void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_
     }
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
+void _shy_common_logic_text :: receive ( so_called_common_engine_render_texture_create_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: texture_create_requested ) )
     {
@@ -1673,7 +1673,7 @@ void _shy_common_logic_text :: receive ( so_called_message_common_engine_render_
     }
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_init )
+void _shy_common_logic_text :: receive ( so_called_common_init_message )
 {
     shy_guts :: empty_texture_created = so_called_platform_math_consts :: whole_false ;
     shy_guts :: small_letters_rasterized = so_called_platform_math_consts :: whole_false ;
@@ -1693,9 +1693,9 @@ void _shy_common_logic_text :: receive ( so_called_message_common_init )
     shy_guts :: origin_y = so_called_platform_math_consts :: whole_0 ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_letter_big_tex_coords_request msg )
+void _shy_common_logic_text :: receive ( so_called_common_logic_text_letter_big_tex_coords_request_message msg )
 {
-    so_called_message_common_logic_text_letter_big_tex_coords_reply reply_msg ;
+    so_called_common_logic_text_letter_big_tex_coords_reply_message reply_msg ;
     reply_msg . letter = msg . letter ;
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_mesh_created ) )
     {
@@ -1716,9 +1716,9 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_let
     so_called_common_logic_text_letter_big_tex_coords_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_letter_small_tex_coords_request msg )
+void _shy_common_logic_text :: receive ( so_called_common_logic_text_letter_small_tex_coords_request_message msg )
 {
-    so_called_message_common_logic_text_letter_small_tex_coords_reply reply_msg ;
+    so_called_common_logic_text_letter_small_tex_coords_reply_message reply_msg ;
     reply_msg . letter = msg . letter ;
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_mesh_created ) )
     {
@@ -1739,19 +1739,19 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_let
     so_called_common_logic_text_letter_small_tex_coords_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_prepare_permit )
+void _shy_common_logic_text :: receive ( so_called_common_logic_text_prepare_permit_message )
 {
     shy_guts :: text_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_render_request )
+void _shy_common_logic_text :: receive ( so_called_common_logic_text_render_request_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_mesh_created ) )
         shy_guts :: render_text_mesh ( ) ;
-    so_called_common_logic_text_render_reply_sender :: send ( so_called_message_common_logic_text_render_reply ( ) ) ;
+    so_called_common_logic_text_render_reply_sender :: send ( so_called_common_logic_text_render_reply_message ( ) ) ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_update )
+void _shy_common_logic_text :: receive ( so_called_common_logic_text_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: text_mesh_created ) )
         shy_guts :: proceed_with_create_text ( ) ;    
@@ -1759,15 +1759,15 @@ void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_upd
         shy_guts :: update_text_mesh ( ) ;
 }
 
-void _shy_common_logic_text :: receive ( so_called_message_common_logic_text_use_text_texture_request )
+void _shy_common_logic_text :: receive ( so_called_common_logic_text_use_text_texture_request_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_mesh_created ) )
     {
-        so_called_message_common_engine_render_texture_select texture_select_msg ;
+        so_called_common_engine_render_texture_select_message texture_select_msg ;
         texture_select_msg . texture = shy_guts :: text_texture_id ;
         so_called_common_engine_render_texture_select_sender :: send ( texture_select_msg ) ;
     }
-    so_called_common_logic_text_use_text_texture_reply_sender :: send ( so_called_message_common_logic_text_use_text_texture_reply ( ) ) ;
+    so_called_common_logic_text_use_text_texture_reply_sender :: send ( so_called_common_logic_text_use_text_texture_reply_message ( ) ) ;
 }
 
 void _shy_common_logic_text :: register_in_scheduler ( )

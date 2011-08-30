@@ -154,7 +154,7 @@ void shy_guts :: proceed_with_camera_update ( )
         shy_guts :: update_current_camera_origin ( ) ;
         shy_guts :: update_current_camera_target ( ) ;
         shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+        so_called_common_engine_render_aspect_request_sender :: send ( so_called_common_engine_render_aspect_request_message ( ) ) ;
     }
 }
 
@@ -243,8 +243,8 @@ void shy_guts :: fill_next_camera_schedule ( )
         shy_guts :: fill_schedules_origin_requested = so_called_platform_math_consts :: whole_true ;
         shy_guts :: fill_schedules_target_requested = so_called_platform_math_consts :: whole_true ;
 
-        so_called_message_common_logic_entities_origin_request origin_request_msg ;
-        so_called_message_common_logic_entities_origin_request target_request_msg ;
+        so_called_common_logic_entities_origin_request_message origin_request_msg ;
+        so_called_common_logic_entities_origin_request_message target_request_msg ;
         origin_request_msg . index = shy_guts :: fill_schedules_origin_index ;
         target_request_msg . index = shy_guts :: fill_schedules_target_index ;
         so_called_common_logic_entities_origin_request_sender :: send ( origin_request_msg ) ;
@@ -255,7 +255,7 @@ void shy_guts :: fill_next_camera_schedule ( )
         shy_guts :: reset_camera_rubber ( ) ;
         shy_guts :: update_camera ( ) ;
         shy_guts :: camera_created = so_called_platform_math_consts :: whole_true ;
-        so_called_common_logic_camera_prepared_sender :: send ( so_called_message_common_logic_camera_prepared ( ) ) ;
+        so_called_common_logic_camera_prepared_sender :: send ( so_called_common_logic_camera_prepared_message ( ) ) ;
     }
 }
 
@@ -286,7 +286,7 @@ void shy_guts :: update_desired_camera_origin ( )
         shy_guts :: random_camera_origin_index ( shy_guts :: desired_camera_origin_new_index ) ;
         shy_guts :: desired_camera_origin_new_requested = so_called_platform_math_consts :: whole_true ;
 
-        so_called_message_common_logic_entities_origin_request entities_origin_request_msg ;
+        so_called_common_logic_entities_origin_request_message entities_origin_request_msg ;
         entities_origin_request_msg . index = shy_guts :: desired_camera_origin_new_index ;
         so_called_common_logic_entities_origin_request_sender :: send ( entities_origin_request_msg ) ;
     }
@@ -307,7 +307,7 @@ void shy_guts :: update_desired_camera_target ( )
         shy_guts :: random_camera_target_index ( shy_guts :: desired_camera_target_new_index ) ;
         shy_guts :: desired_camera_target_new_requested = so_called_platform_math_consts :: whole_true ;
 
-        so_called_message_common_logic_entities_origin_request entities_origin_request_msg ;
+        so_called_common_logic_entities_origin_request_message entities_origin_request_msg ;
         entities_origin_request_msg . index = shy_guts :: desired_camera_target_new_index ;
         so_called_common_logic_entities_origin_request_sender :: send ( entities_origin_request_msg ) ;
     }
@@ -505,7 +505,7 @@ void shy_guts :: get_random_index
     so_called_platform_math :: add_to_whole ( result , index_min ) ;
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_engine_render_aspect_reply msg )
+void _shy_common_logic_camera :: receive ( so_called_common_engine_render_aspect_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: render_aspect_requested ) )
     {
@@ -515,7 +515,7 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_engine_rende
     }
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_init )
+void _shy_common_logic_camera :: receive ( so_called_common_init_message )
 {
     shy_guts :: origin_rubber = so_called_platform_math_consts :: fract_0 ;
     shy_guts :: target_rubber = so_called_platform_math_consts :: fract_0 ;
@@ -575,9 +575,9 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_init )
     }
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera_matrix_request )
+void _shy_common_logic_camera :: receive ( so_called_common_logic_camera_matrix_request_message )
 {
-    so_called_message_common_logic_camera_matrix_reply reply_msg ;
+    so_called_common_logic_camera_matrix_reply_message reply_msg ;
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: camera_created ) )
         reply_msg . matrix = shy_guts :: camera_matrix ;
     else
@@ -585,25 +585,25 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera
     so_called_common_logic_camera_matrix_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera_prepare_permit )
+void _shy_common_logic_camera :: receive ( so_called_common_logic_camera_prepare_permit_message )
 {
     shy_guts :: camera_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_camera_update )
+void _shy_common_logic_camera :: receive ( so_called_common_logic_camera_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: camera_prepare_permitted ) )
     {
         shy_guts :: entities_height_requested = so_called_platform_math_consts :: whole_true ;
         shy_guts :: entities_mesh_grid_requested = so_called_platform_math_consts :: whole_true ;
         shy_guts :: near_plane_distance_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_common_logic_entities_height_request_sender :: send ( so_called_message_common_logic_entities_height_request ( ) ) ;
-        so_called_common_logic_entities_mesh_grid_request_sender :: send ( so_called_message_common_logic_entities_mesh_grid_request ( ) ) ;
-        so_called_common_logic_core_near_plane_distance_request_sender :: send ( so_called_message_common_logic_core_near_plane_distance_request ( ) ) ;
+        so_called_common_logic_entities_height_request_sender :: send ( so_called_common_logic_entities_height_request_message ( ) ) ;
+        so_called_common_logic_entities_mesh_grid_request_sender :: send ( so_called_common_logic_entities_mesh_grid_request_message ( ) ) ;
+        so_called_common_logic_core_near_plane_distance_request_sender :: send ( so_called_common_logic_core_near_plane_distance_request_message ( ) ) ;
     }
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_core_near_plane_distance_reply msg )
+void _shy_common_logic_camera :: receive ( so_called_common_logic_core_near_plane_distance_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: near_plane_distance_requested ) )
     {
@@ -614,7 +614,7 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_core_n
     }
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_height_reply msg )
+void _shy_common_logic_camera :: receive ( so_called_common_logic_entities_height_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_height_requested ) )
     {
@@ -625,7 +625,7 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entiti
     }
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_mesh_grid_reply msg )
+void _shy_common_logic_camera :: receive ( so_called_common_logic_entities_mesh_grid_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_mesh_grid_requested ) )
     {
@@ -636,7 +636,7 @@ void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entiti
     }
 }
 
-void _shy_common_logic_camera :: receive ( so_called_message_common_logic_entities_origin_reply msg )
+void _shy_common_logic_camera :: receive ( so_called_common_logic_entities_origin_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fill_schedules_origin_requested )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: fill_schedules_origin_index , msg . index )

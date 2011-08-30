@@ -53,7 +53,7 @@ void shy_guts :: rasterize_horizontal_line
     so_called_platform_math :: add_to_whole ( y , origin_y ) ;
 
     {
-        so_called_message_common_engine_render_texture_set_texels_rect texture_set_texels_rect_msg ;
+        so_called_common_engine_render_texture_set_texels_rect_message texture_set_texels_rect_msg ;
         texture_set_texels_rect_msg . left = left ;
         texture_set_texels_rect_msg . right = right ;
         texture_set_texels_rect_msg . bottom = y ;
@@ -277,7 +277,7 @@ void shy_guts :: rasterize_bresenham_ellipse
     }
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_ellipse_in_rect msg )
+void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasterizer_draw_ellipse_in_rect_message msg )
 {
     so_called_type_platform_math_num_whole width ;
     so_called_type_platform_math_num_whole height ;
@@ -304,7 +304,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     shy_guts :: rasterize_bresenham_ellipse ( x_center , y_center , half_width , half_height ) ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_rect msg )
+void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasterizer_draw_rect_message msg )
 {
     so_called_type_platform_math_num_whole left ;
     so_called_type_platform_math_num_whole right ;
@@ -320,7 +320,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     so_called_platform_math :: add_to_whole ( bottom , shy_guts :: origin_y ) ;
     so_called_platform_math :: add_to_whole ( top , shy_guts :: origin_y ) ;
     {
-        so_called_message_common_engine_render_texture_set_texels_rect texture_set_texels_rect_msg ;
+        so_called_common_engine_render_texture_set_texels_rect_message texture_set_texels_rect_msg ;
         texture_set_texels_rect_msg . left = left ;
         texture_set_texels_rect_msg . right = right ;
         texture_set_texels_rect_msg . bottom = bottom ;
@@ -331,7 +331,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     }
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_draw_triangle msg )
+void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasterizer_draw_triangle_message msg )
 {
     so_called_type_platform_math_num_whole x1 = msg . x1 ;
     so_called_type_platform_math_num_whole y1 = msg . y1 ;
@@ -384,12 +384,12 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
     }
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_finalize_request )
+void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasterizer_finalize_request_message )
 {
-    so_called_common_engine_rasterizer_finalize_reply_sender :: send ( so_called_message_common_engine_rasterizer_finalize_reply ( ) ) ;
+    so_called_common_engine_rasterizer_finalize_reply_sender :: send ( so_called_common_engine_rasterizer_finalize_reply_message ( ) ) ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_init )
+void _shy_common_engine_rasterizer :: receive ( so_called_common_init_message )
 {
     shy_guts :: texture_id = so_called_type_common_engine_render_texture_id ( ) ;
     shy_guts :: texel = so_called_type_platform_render_texel_data ( ) ;
@@ -397,12 +397,12 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_init )
     shy_guts :: origin_y = so_called_platform_math_consts :: whole_0 ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texel msg )
+void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasterizer_use_texel_message msg )
 {
     shy_guts :: texel = msg . texel ;
 }
 
-void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_use_texture msg )
+void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasterizer_use_texture_message msg )
 {
     shy_guts :: texture_id = msg . texture ;
     shy_guts :: origin_x = msg . origin_x ;

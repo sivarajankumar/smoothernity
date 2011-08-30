@@ -1,3 +1,3 @@
-class shy_message_common_logic_main_menu_void_chosen
+class shy_common_logic_main_menu_void_chosen_message
 {
 } ;

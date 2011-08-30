@@ -1,3 +1,3 @@
-class shy_message_common_logic_fidget_prepared
+class shy_common_logic_fidget_prepared_message
 {
 } ;

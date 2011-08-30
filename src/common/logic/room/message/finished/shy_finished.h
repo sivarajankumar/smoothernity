@@ -1,3 +1,3 @@
-class shy_message_common_logic_room_finished
+class shy_common_logic_room_finished_message
 {
 } ;

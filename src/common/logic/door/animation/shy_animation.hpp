@@ -40,7 +40,7 @@ void shy_guts :: proceed_with_transform ( )
 void shy_guts :: request_appear_transform ( )
 {
     shy_guts :: logic_door_animation_appear_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_door_animation_appear_transform_request_sender :: send ( so_called_message_common_logic_door_animation_appear_transform_request ( ) ) ;
+    so_called_common_logic_door_animation_appear_transform_request_sender :: send ( so_called_common_logic_door_animation_appear_transform_request_message ( ) ) ;
 }
 
 void shy_guts :: reply_computed_transform ( )
@@ -75,19 +75,19 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_door_animation_transform_reply msg ;
+    so_called_common_logic_door_animation_transform_reply_message msg ;
     msg . transform = shy_guts :: logic_door_animation_transform_state :: transform ;
     so_called_common_logic_door_animation_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_door_animation :: receive ( so_called_message_common_init )
+void _shy_common_logic_door_animation :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_door_animation_appear_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_door_animation_appear_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_door_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_door_animation :: receive ( so_called_message_common_logic_door_animation_appear_transform_reply msg )
+void _shy_common_logic_door_animation :: receive ( so_called_common_logic_door_animation_appear_transform_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_door_animation_appear_transform_state :: requested ) )
     {
@@ -98,7 +98,7 @@ void _shy_common_logic_door_animation :: receive ( so_called_message_common_logi
     }
 }
 
-void _shy_common_logic_door_animation :: receive ( so_called_message_common_logic_door_animation_transform_request )
+void _shy_common_logic_door_animation :: receive ( so_called_common_logic_door_animation_transform_request_message )
 {
     shy_guts :: logic_door_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_transform ( ) ;

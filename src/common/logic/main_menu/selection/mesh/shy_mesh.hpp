@@ -107,7 +107,7 @@ void shy_guts :: place_mesh ( )
     so_called_platform_matrix :: identity ( transform ) ;
     so_called_platform_matrix :: set_origin ( transform , origin_x , origin_y , origin_z ) ;
 
-    so_called_message_common_engine_render_mesh_set_transform msg ;
+    so_called_common_engine_render_mesh_set_transform_message msg ;
     msg . mesh = shy_guts :: mesh ;
     msg . transform = transform ;
     so_called_common_engine_render_mesh_set_transform_sender :: send ( msg ) ;
@@ -115,23 +115,23 @@ void shy_guts :: place_mesh ( )
 
 void shy_guts :: finalize_mesh ( )
 {
-    so_called_message_common_engine_render_mesh_finalize msg ;
+    so_called_common_engine_render_mesh_finalize_message msg ;
     msg . mesh = shy_guts :: mesh ;
     so_called_common_engine_render_mesh_finalize_sender :: send ( msg ) ;
 }
 
 void shy_guts :: render_mesh ( )
 {
-    so_called_common_engine_render_texture_unselect_sender :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    so_called_common_engine_render_texture_unselect_sender :: send ( so_called_common_engine_render_texture_unselect_message ( ) ) ;
 
-    so_called_message_common_engine_render_mesh_render msg ;
+    so_called_common_engine_render_mesh_render_message msg ;
     msg . mesh = shy_guts :: mesh ;
     so_called_common_engine_render_mesh_render_sender :: send ( msg ) ;
 }
 
 void shy_guts :: destroy_mesh ( )
 {
-    so_called_message_common_engine_render_mesh_delete msg ;
+    so_called_common_engine_render_mesh_delete_message msg ;
     msg . mesh = shy_guts :: mesh ;
     so_called_common_engine_render_mesh_delete_sender :: send ( msg ) ;
 }
@@ -143,7 +143,7 @@ void shy_guts :: mesh_set_vertex_position
     , so_called_type_platform_math_num_fract z
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_position msg ;
+    so_called_common_engine_render_mesh_set_vertex_position_message msg ;
     msg . mesh = shy_guts :: mesh ;
     msg . offset = offset ;
     msg . x = x ;
@@ -160,7 +160,7 @@ void shy_guts :: mesh_set_vertex_color
     , so_called_type_platform_math_num_fract a
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_color msg ;
+    so_called_common_engine_render_mesh_set_vertex_color_message msg ;
     msg . mesh = shy_guts :: mesh ;
     msg . offset = offset ;
     msg . r = r ;
@@ -175,70 +175,70 @@ void shy_guts :: mesh_set_triangle_strip_index_value
     , so_called_type_platform_math_num_whole index
     )
 {
-    so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;
     msg . mesh = shy_guts :: mesh ;
     msg . offset = offset ;
     msg . index = index ;
     so_called_common_engine_render_mesh_set_triangle_strip_index_value_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_common_init_message )
 {
     shy_guts :: animation_transform_requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: creation_requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_common_engine_render_mesh_create_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: creation_requested ) )
     {
         shy_guts :: creation_requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: mesh = msg . mesh ;
         shy_guts :: bake_mesh ( ) ;
-        so_called_common_logic_main_menu_selection_mesh_create_finished_sender :: send ( so_called_message_common_logic_main_menu_selection_mesh_create_finished ( ) ) ;
+        so_called_common_logic_main_menu_selection_mesh_create_finished_sender :: send ( so_called_common_logic_main_menu_selection_mesh_create_finished_message ( ) ) ;
     }
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_animation_transform_reply msg )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_common_logic_main_menu_selection_animation_transform_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: animation_transform_requested ) )
     {
         shy_guts :: animation_transform_requested = so_called_platform_math_consts :: whole_false ;
 
-        so_called_message_common_engine_render_mesh_set_transform transform_msg ;
+        so_called_common_engine_render_mesh_set_transform_message transform_msg ;
         transform_msg . mesh = shy_guts :: mesh ;
         transform_msg . transform = msg . transform ;
         so_called_common_engine_render_mesh_set_transform_sender :: send ( transform_msg ) ;
     }
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_create )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_common_logic_main_menu_selection_mesh_create_message )
 {
     shy_guts :: creation_requested = so_called_platform_math_consts :: whole_true ;
 
-    so_called_message_common_engine_render_mesh_create_request msg ;
+    so_called_common_engine_render_mesh_create_request_message msg ;
     msg . vertices = so_called_platform_math_consts :: whole_4 ;
     msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
     msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
     so_called_common_engine_render_mesh_create_request_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_destroy_request )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_common_logic_main_menu_selection_mesh_destroy_request_message )
 {
     shy_guts :: destroy_mesh ( ) ;
-    so_called_common_logic_main_menu_selection_mesh_destroy_reply_sender :: send ( so_called_message_common_logic_main_menu_selection_mesh_destroy_reply ( ) ) ;
+    so_called_common_logic_main_menu_selection_mesh_destroy_reply_sender :: send ( so_called_common_logic_main_menu_selection_mesh_destroy_reply_message ( ) ) ;
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_place )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_common_logic_main_menu_selection_mesh_place_message )
 {
     shy_guts :: animation_transform_requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_main_menu_selection_animation_transform_request_sender :: send ( so_called_message_common_logic_main_menu_selection_animation_transform_request ( ) ) ;
+    so_called_common_logic_main_menu_selection_animation_transform_request_sender :: send ( so_called_common_logic_main_menu_selection_animation_transform_request_message ( ) ) ;
 }
 
-void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_message_common_logic_main_menu_selection_mesh_render_request )
+void _shy_common_logic_main_menu_selection_mesh :: receive ( so_called_common_logic_main_menu_selection_mesh_render_request_message )
 {
     shy_guts :: render_mesh ( ) ;
-    so_called_common_logic_main_menu_selection_mesh_render_reply_sender :: send ( so_called_message_common_logic_main_menu_selection_mesh_render_reply ( ) ) ;
+    so_called_common_logic_main_menu_selection_mesh_render_reply_sender :: send ( so_called_common_logic_main_menu_selection_mesh_render_reply_message ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_selection_mesh :: register_in_scheduler ( )

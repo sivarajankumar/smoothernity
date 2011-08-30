@@ -1,4 +1,4 @@
-class shy_message_common_engine_render_fog_linear
+class shy_common_engine_render_fog_linear_message
 {
 public :
     so_called_type_platform_math_num_fract z_near ;

@@ -42,33 +42,33 @@ void shy_guts :: next_row ( )
     so_called_platform_math :: inc_whole ( shy_guts :: rows_state :: rows_count ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_common_init_message )
 {
     shy_guts :: max_cols = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: rows_state :: rows_count = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: next_row ( ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_boundaries_request )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_common_logic_main_menu_letters_boundaries_request_message )
 {
-    so_called_message_common_logic_main_menu_letters_boundaries_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_boundaries_reply_message reply_msg ;
     reply_msg . rows = shy_guts :: rows_state :: rows_count ;
     reply_msg . cols = shy_guts :: max_cols ;
     so_called_common_logic_main_menu_letters_boundaries_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_cols_request msg )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_common_logic_main_menu_letters_cols_request_message msg )
 {
     so_called_type_platform_pointer_data < shy_guts :: row_state_type > row_state ;
     so_called_platform_static_array :: element_ptr ( row_state , shy_guts :: rows_state :: rows , msg . row ) ;
     
-    so_called_message_common_logic_main_menu_letters_cols_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_cols_reply_message reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . cols = row_state . get ( ) . cols_count ;
     so_called_common_logic_main_menu_letters_cols_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_add msg )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_common_logic_main_menu_letters_letter_add_message msg )
 {
     so_called_type_platform_pointer_data < shy_guts :: row_state_type > row_state ;
     so_called_type_platform_pointer_data < shy_guts :: col_state_type > col_state ;
@@ -82,28 +82,28 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
     so_called_platform_math :: inc_whole ( row_state . get ( ) . cols_count ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_request msg )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_common_logic_main_menu_letters_letter_request_message msg )
 {
     so_called_type_platform_pointer_data < shy_guts :: row_state_type > row_state ;
     so_called_type_platform_pointer_data < shy_guts :: col_state_type > col_state ;
     so_called_platform_static_array :: element_ptr ( row_state , shy_guts :: rows_state :: rows , msg . row ) ;
     so_called_platform_static_array :: element_ptr ( col_state , row_state . get ( ) . cols , msg . col ) ;
 
-    so_called_message_common_logic_main_menu_letters_letter_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_letter_reply_message reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . col = msg . col ;
     reply_msg . letter = col_state . get ( ) . letter ;
     so_called_common_logic_main_menu_letters_letter_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_next_row )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_common_logic_main_menu_letters_next_row_message )
 {
     shy_guts :: next_row ( ) ;
 }
 
-void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_rows_request )
+void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_common_logic_main_menu_letters_rows_request_message )
 {
-    so_called_message_common_logic_main_menu_letters_rows_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_rows_reply_message reply_msg ;
     reply_msg . rows = shy_guts :: rows_state :: rows_count ;
     so_called_common_logic_main_menu_letters_rows_reply_sender :: send ( reply_msg ) ;
 }

@@ -54,22 +54,22 @@ void shy_guts :: proceed_with_creation ( )
 void shy_guts :: request_mesh_create ( )
 {
     shy_guts :: logic_room_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_room_mesh_create_sender :: send ( so_called_message_common_logic_room_mesh_create ( ) ) ;
+    so_called_common_logic_room_mesh_create_sender :: send ( so_called_common_logic_room_mesh_create_message ( ) ) ;
 }
 
 void shy_guts :: request_texture_create ( )
 {
     shy_guts :: logic_room_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_room_texture_create_sender :: send ( so_called_message_common_logic_room_texture_create ( ) ) ;
+    so_called_common_logic_room_texture_create_sender :: send ( so_called_common_logic_room_texture_create_message ( ) ) ;
 }
 
 void shy_guts :: texture_created ( )
 {
-    so_called_common_logic_room_creation_finished_sender :: send ( so_called_message_common_logic_room_creation_finished ( ) ) ;
-    so_called_common_logic_room_render_permit_sender :: send ( so_called_message_common_logic_room_render_permit ( ) ) ;
+    so_called_common_logic_room_creation_finished_sender :: send ( so_called_common_logic_room_creation_finished_message ( ) ) ;
+    so_called_common_logic_room_render_permit_sender :: send ( so_called_common_logic_room_render_permit_message ( ) ) ;
 }
 
-void _shy_common_logic_room :: receive ( so_called_message_common_init )
+void _shy_common_logic_room :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_room_creation_permit_state :: creation_permitted = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_room_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
@@ -80,19 +80,19 @@ void _shy_common_logic_room :: receive ( so_called_message_common_init )
     shy_guts :: logic_room_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_creation_permit )
+void _shy_common_logic_room :: receive ( so_called_common_logic_room_creation_permit_message )
 {
     shy_guts :: logic_room_creation_permit_state :: creation_permitted = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_creation ( ) ;
 }
 
-void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_launch_permit )
+void _shy_common_logic_room :: receive ( so_called_common_logic_room_launch_permit_message )
 {
     shy_guts :: logic_room_update_state :: launch_permitted = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_room_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_mesh_creation_finished )
+void _shy_common_logic_room :: receive ( so_called_common_logic_room_mesh_creation_finished_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_mesh_create_state :: requested ) )
     {
@@ -102,7 +102,7 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_mes
     }
 }
 
-void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_texture_creation_finished )
+void _shy_common_logic_room :: receive ( so_called_common_logic_room_texture_creation_finished_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_texture_create_state :: requested ) )
     {
@@ -112,7 +112,7 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_tex
     }
 }
 
-void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_update )
+void _shy_common_logic_room :: receive ( so_called_common_logic_room_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_update_state :: launch_permitted ) )
     {
@@ -128,7 +128,7 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_upd
         if ( so_called_platform_conditions :: fract_greater_than_fract ( time , show_time ) )
         {
             shy_guts :: logic_room_update_state :: launch_permitted = so_called_platform_math_consts :: whole_false ;
-            so_called_common_logic_room_finished_sender :: send ( so_called_message_common_logic_room_finished ( ) ) ;
+            so_called_common_logic_room_finished_sender :: send ( so_called_common_logic_room_finished_message ( ) ) ;
         }
 
         shy_guts :: logic_room_update_state :: time = time ;

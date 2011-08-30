@@ -65,7 +65,7 @@ void shy_guts :: proceed_with_creation ( )
 void shy_guts :: request_mesh_create ( )
 {
     shy_guts :: engine_render_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_message_common_engine_render_mesh_create_request msg ;
+    so_called_common_engine_render_mesh_create_request_message msg ;
     msg . vertices = shy_guts :: logic_blanket_mesh_consts :: vertices ;
     msg . triangle_strip_indices = shy_guts :: logic_blanket_mesh_consts :: triangle_strip_indices ;
     msg . triangle_fan_indices = shy_guts :: logic_blanket_mesh_consts :: triangle_fan_indices ;
@@ -128,19 +128,19 @@ void shy_guts :: fill_mesh_contents ( )
 void shy_guts :: finalize_mesh ( )
 {
     shy_guts :: engine_render_mesh_create_state :: finalized = so_called_platform_math_consts :: whole_true ;
-    so_called_message_common_engine_render_mesh_finalize msg ;
+    so_called_common_engine_render_mesh_finalize_message msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     so_called_common_engine_render_mesh_finalize_sender :: send ( msg ) ;
 }
 
 void shy_guts :: reply_creation_finished ( )
 {
-    so_called_common_logic_blanket_mesh_creation_finished_sender :: send ( so_called_message_common_logic_blanket_mesh_creation_finished ( ) ) ;
+    so_called_common_logic_blanket_mesh_creation_finished_sender :: send ( so_called_common_logic_blanket_mesh_creation_finished_message ( ) ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
 {
-    so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     msg . offset = offset ;
     msg . index = index ;
@@ -154,7 +154,7 @@ void shy_guts :: mesh_set_vertex_position
     , so_called_type_platform_math_num_fract z
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_position msg ;
+    so_called_common_engine_render_mesh_set_vertex_position_message msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     msg . offset = offset ;
     msg . x = x ;
@@ -171,7 +171,7 @@ void shy_guts :: mesh_set_vertex_color
     , so_called_type_platform_math_num_fract a 
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_color msg ;
+    so_called_common_engine_render_mesh_set_vertex_color_message msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     msg . offset = offset ;
     msg . r = r ;
@@ -181,7 +181,7 @@ void shy_guts :: mesh_set_vertex_color
     so_called_common_engine_render_mesh_set_vertex_color_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
+void _shy_common_logic_blanket_mesh :: receive ( so_called_common_engine_render_mesh_create_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: requested ) )
     {
@@ -192,7 +192,7 @@ void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_engine
     }
 }
 
-void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_init )
+void _shy_common_logic_blanket_mesh :: receive ( so_called_common_init_message )
 {
     shy_guts :: engine_render_mesh_create_state :: finalized = so_called_platform_math_consts :: whole_false ;
     shy_guts :: engine_render_mesh_create_state :: replied = so_called_platform_math_consts :: whole_false ;
@@ -200,28 +200,28 @@ void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_init )
     shy_guts :: logic_blanket_mesh_create_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_create )
+void _shy_common_logic_blanket_mesh :: receive ( so_called_common_logic_blanket_mesh_create_message )
 {
     shy_guts :: logic_blanket_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_creation ( ) ;
 }
 
-void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_render_request )
+void _shy_common_logic_blanket_mesh :: receive ( so_called_common_logic_blanket_mesh_render_request_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: finalized ) )
     {
-        so_called_message_common_engine_render_mesh_render msg ;
+        so_called_common_engine_render_mesh_render_message msg ;
         msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
         so_called_common_engine_render_mesh_render_sender :: send ( msg ) ;
     }
-    so_called_common_logic_blanket_mesh_render_reply_sender :: send ( so_called_message_common_logic_blanket_mesh_render_reply ( ) ) ;
+    so_called_common_logic_blanket_mesh_render_reply_sender :: send ( so_called_common_logic_blanket_mesh_render_reply_message ( ) ) ;
 }
 
-void _shy_common_logic_blanket_mesh :: receive ( so_called_message_common_logic_blanket_mesh_set_transform msg )
+void _shy_common_logic_blanket_mesh :: receive ( so_called_common_logic_blanket_mesh_set_transform_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_mesh_create_state :: finalized ) )
     {
-        so_called_message_common_engine_render_mesh_set_transform transform_msg ;
+        so_called_common_engine_render_mesh_set_transform_message transform_msg ;
         transform_msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
         transform_msg . transform = msg . transform ;
         so_called_common_engine_render_mesh_set_transform_sender :: send ( transform_msg ) ;

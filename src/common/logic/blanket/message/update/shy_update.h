@@ -1,3 +1,3 @@
-class shy_message_common_logic_blanket_update
+class shy_common_logic_blanket_update_message
 {
 } ;

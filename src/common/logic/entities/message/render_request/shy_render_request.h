@@ -1,3 +1,3 @@
-class shy_message_common_logic_entities_render_request
+class shy_common_logic_entities_render_request_message
 {
 } ;

@@ -23,7 +23,7 @@ void shy_common_engine_render_stateless :: mesh_set_vertex_position
     , so_called_type_platform_math_num_fract z 
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_position msg ;
+    so_called_common_engine_render_mesh_set_vertex_position_message msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . x = x ;
@@ -39,7 +39,7 @@ void shy_common_engine_render_stateless :: mesh_set_vertex_tex_coord
     , so_called_type_platform_math_num_fract v 
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_tex_coord msg ;
+    so_called_common_engine_render_mesh_set_vertex_tex_coord_message msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . u = u ;
@@ -56,7 +56,7 @@ void shy_common_engine_render_stateless :: mesh_set_vertex_color
     , so_called_type_platform_math_num_fract a 
     )
 {
-    so_called_message_common_engine_render_mesh_set_vertex_color msg ;
+    so_called_common_engine_render_mesh_set_vertex_color_message msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . r = r ;
@@ -72,7 +72,7 @@ void shy_common_engine_render_stateless :: mesh_set_triangle_strip_index_value
     , so_called_type_platform_math_num_whole index 
     )
 {
-    so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . index = index ;

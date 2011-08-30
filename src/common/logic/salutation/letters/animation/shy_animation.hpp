@@ -8,7 +8,7 @@ namespace shy_guts
 
     namespace logic_salutation_letters_animation_transform_state
     {
-        static so_called_message_common_logic_salutation_letters_animation_transform_request msg_request ;
+        static so_called_common_logic_salutation_letters_animation_transform_request_message msg_request ;
         static so_called_type_platform_matrix_data transform ;
         static void on_request ( ) ;
     }
@@ -61,18 +61,18 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: send_computed_transform ( )
 {
-    so_called_message_common_logic_salutation_letters_animation_transform_reply msg ;
+    so_called_common_logic_salutation_letters_animation_transform_reply_message msg ;
     msg . letter = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_request . letter ;
     msg . transform = shy_guts :: logic_salutation_letters_animation_transform_state :: transform ;
     so_called_common_logic_salutation_letters_animation_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_init )
+void _shy_common_logic_salutation_letters_animation :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . init ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_logic_salutation_letters_animation_layout_transform_reply msg )
+void _shy_common_logic_salutation_letters_animation :: receive ( so_called_common_logic_salutation_letters_animation_layout_transform_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . should_handle ( should_handle , msg ) ;
@@ -80,7 +80,7 @@ void _shy_common_logic_salutation_letters_animation :: receive ( so_called_messa
         shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_logic_salutation_letters_animation_transform_request msg )
+void _shy_common_logic_salutation_letters_animation :: receive ( so_called_common_logic_salutation_letters_animation_transform_request_message msg )
 {
     shy_guts :: logic_salutation_letters_animation_transform_state :: msg_request = msg ;
     shy_guts :: logic_salutation_letters_animation_transform_state :: on_request ( ) ;

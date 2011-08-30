@@ -128,29 +128,29 @@ void shy_guts :: advance_time ( )
 void shy_guts :: send_generate_finished ( )
 {
     so_called_common_logic_salutation_letters_meshes_generator_generate_finished_sender :: send 
-        ( so_called_message_common_logic_salutation_letters_meshes_generator_generate_finished ( ) 
+        ( so_called_common_logic_salutation_letters_meshes_generator_generate_finished_message ( ) 
         ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_init )
+void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_salutation_letters_meshes_creator_create_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_meshes_generator_update :: enabled = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_text_storage_size_state :: taker . init ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_logic_salutation_letters_meshes_generator_generate )
+void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_common_logic_salutation_letters_meshes_generator_generate_message )
 {
     shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: on_request ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_logic_salutation_letters_meshes_generator_update )
+void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_common_logic_salutation_letters_meshes_generator_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_generator_update :: enabled ) )
         shy_guts :: logic_salutation_letters_meshes_generator_update :: on_request ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_logic_salutation_letters_meshes_creator_create_reply msg )
+void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_common_logic_salutation_letters_meshes_creator_create_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_meshes_creator_create_state :: taker . should_handle ( should_handle , msg ) ;
@@ -158,7 +158,7 @@ void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_calle
         shy_guts :: logic_salutation_letters_meshes_creator_create_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_message_common_logic_salutation_letters_text_storage_size_reply msg )
+void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_common_logic_salutation_letters_text_storage_size_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_text_storage_size_state :: taker . should_handle ( should_handle , msg ) ;

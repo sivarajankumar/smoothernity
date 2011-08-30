@@ -1,3 +1,3 @@
-class shy_message_common_init
+class shy_common_init_message
 {
 } ;

@@ -1,3 +1,3 @@
-class shy_message_common_logic_text_use_text_texture_reply
+class shy_common_logic_text_use_text_texture_reply_message
 {
 } ;

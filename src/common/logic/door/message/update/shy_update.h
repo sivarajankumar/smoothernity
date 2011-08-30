@@ -1,3 +1,3 @@
-class shy_message_common_logic_door_update
+class shy_common_logic_door_update_message
 {
 } ;

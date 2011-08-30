@@ -1,3 +1,3 @@
-class shy_message_common_video_mode_changed
+class shy_common_video_mode_changed_message
 {
 } ;

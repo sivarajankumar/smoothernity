@@ -70,14 +70,14 @@ void shy_guts :: start_clean ( )
 
 void shy_guts :: clean_replied_mesh ( )
 {
-    so_called_message_common_engine_render_mesh_delete msg ;
+    so_called_common_engine_render_mesh_delete_message msg ;
     msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . msg_reply . mesh ;
     so_called_common_engine_render_mesh_delete_sender :: send ( msg ) ;
 }
 
 void shy_guts :: clean_meshes_storage ( )
 {
-    so_called_common_logic_salutation_letters_meshes_storage_clean_sender :: send ( so_called_message_common_logic_salutation_letters_meshes_storage_clean ( ) ) ;
+    so_called_common_logic_salutation_letters_meshes_storage_clean_sender :: send ( so_called_common_logic_salutation_letters_meshes_storage_clean_message ( ) ) ;
 }
 
 void shy_guts :: clean_by_time ( )
@@ -140,7 +140,7 @@ void shy_guts :: advance_time ( )
 
 void shy_guts :: send_clean_finished ( )
 {
-    so_called_common_logic_salutation_letters_meshes_cleaner_clean_finished_sender :: send ( so_called_message_common_logic_salutation_letters_meshes_cleaner_clean_finished ( ) ) ;
+    so_called_common_logic_salutation_letters_meshes_cleaner_clean_finished_sender :: send ( so_called_common_logic_salutation_letters_meshes_cleaner_clean_finished_message ( ) ) ;
 }
 
 void shy_guts :: request_meshes_amount_in_storage ( )
@@ -148,25 +148,25 @@ void shy_guts :: request_meshes_amount_in_storage ( )
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . request ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_init )
+void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_salutation_letters_meshes_cleaner_update :: enabled = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . init ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_cleaner_clean )
+void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_common_logic_salutation_letters_meshes_cleaner_clean_message )
 {
     shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: on_request ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_cleaner_update )
+void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_common_logic_salutation_letters_meshes_cleaner_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_salutation_letters_meshes_cleaner_update :: enabled ) )
         shy_guts :: logic_salutation_letters_meshes_cleaner_update :: on_request ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_mesh_reply msg )
+void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_common_logic_salutation_letters_meshes_storage_mesh_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . should_handle ( should_handle , msg ) ;
@@ -174,7 +174,7 @@ void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_
         shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_size_reply msg )
+void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_common_logic_salutation_letters_meshes_storage_size_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . should_handle ( should_handle , msg ) ;

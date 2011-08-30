@@ -9,17 +9,17 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id letter )
 {
-    so_called_message_common_logic_salutation_letters_text_storage_add_letter msg ;
+    so_called_common_logic_salutation_letters_text_storage_add_letter_message msg ;
     msg . letter = letter ;
     so_called_common_logic_salutation_letters_text_storage_add_letter_sender :: send ( msg ) ;
 }
 
 void shy_guts :: finish ( )
 {
-    so_called_common_logic_salutation_letters_text_generator_generate_finished_sender :: send ( so_called_message_common_logic_salutation_letters_text_generator_generate_finished ( ) ) ;
+    so_called_common_logic_salutation_letters_text_generator_generate_finished_sender :: send ( so_called_common_logic_salutation_letters_text_generator_generate_finished_message ( ) ) ;
 }
 
-void _shy_common_logic_salutation_letters_text_generator :: receive ( so_called_message_common_logic_salutation_letters_text_generator_generate )
+void _shy_common_logic_salutation_letters_text_generator :: receive ( so_called_common_logic_salutation_letters_text_generator_generate_message )
 {
     typedef so_called_common_logic_text_consts :: alphabet_english eng ;
     shy_guts :: add_letter ( eng :: S ) ;

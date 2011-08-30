@@ -120,20 +120,20 @@ void shy_guts :: render_started ( )
 
 void shy_guts :: prepare_render_state ( )
 {
-    so_called_common_engine_render_disable_depth_test_sender :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
-    so_called_common_engine_render_fog_disable_sender :: send ( so_called_message_common_engine_render_fog_disable ( ) ) ;
-    so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender :: send ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
-    so_called_common_engine_render_matrix_identity_sender :: send ( so_called_message_common_engine_render_matrix_identity ( ) ) ;
+    so_called_common_engine_render_disable_depth_test_sender :: send ( so_called_common_engine_render_disable_depth_test_message ( ) ) ;
+    so_called_common_engine_render_fog_disable_sender :: send ( so_called_common_engine_render_fog_disable_message ( ) ) ;
+    so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender :: send ( so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_message ( ) ) ;
+    so_called_common_engine_render_matrix_identity_sender :: send ( so_called_common_engine_render_matrix_identity_message ( ) ) ;
 }
 
 void shy_guts :: restore_render_state ( )
 {
-    so_called_common_engine_render_blend_disable_sender :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
+    so_called_common_engine_render_blend_disable_sender :: send ( so_called_common_engine_render_blend_disable_message ( ) ) ;
 }
 
 void shy_guts :: clear_screen ( )
 {
-    so_called_message_common_engine_render_clear_screen msg ;
+    so_called_common_engine_render_clear_screen_message msg ;
     msg . r = so_called_platform_math_consts :: fract_0 ;
     msg . g = so_called_platform_math_consts :: fract_0 ;
     msg . b = so_called_platform_math_consts :: fract_0 ;
@@ -142,7 +142,7 @@ void shy_guts :: clear_screen ( )
 
 void shy_guts :: blue_screen ( )
 {
-    so_called_message_common_engine_render_clear_screen msg ;
+    so_called_common_engine_render_clear_screen_message msg ;
     msg . r = so_called_platform_math_consts :: fract_0 ;
     msg . g = so_called_platform_math_consts :: fract_0 ;
     msg . b = so_called_platform_math_consts :: fract_1 ;
@@ -152,19 +152,19 @@ void shy_guts :: blue_screen ( )
 void shy_guts :: request_ortho_planes ( )
 {
     shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_ortho_planes_request_sender :: send ( so_called_message_common_logic_ortho_planes_request ( ) ) ;
+    so_called_common_logic_ortho_planes_request_sender :: send ( so_called_common_logic_ortho_planes_request_message ( ) ) ;
 }
 
 void shy_guts :: request_animation_transform ( )
 {
     shy_guts :: logic_main_menu_animation_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_main_menu_animation_transform_request_sender :: send ( so_called_message_common_logic_main_menu_animation_transform_request ( ) ) ;
+    so_called_common_logic_main_menu_animation_transform_request_sender :: send ( so_called_common_logic_main_menu_animation_transform_request_message ( ) ) ;
 }
 
 void shy_guts :: request_fidget_render ( )
 {
     shy_guts :: logic_fidget_render_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_fidget_render_request_sender :: send ( so_called_message_common_logic_fidget_render_request ( ) ) ;
+    so_called_common_logic_fidget_render_request_sender :: send ( so_called_common_logic_fidget_render_request_message ( ) ) ;
 }
 
 void shy_guts :: animation_transform_received ( )
@@ -175,7 +175,7 @@ void shy_guts :: animation_transform_received ( )
 
 void shy_guts :: apply_animation_transform ( )
 {
-    so_called_message_common_engine_render_matrix_load msg ;
+    so_called_common_engine_render_matrix_load_message msg ;
     msg . matrix = shy_guts :: logic_main_menu_animation_transform_state :: view ;
     so_called_common_engine_render_matrix_load_sender :: send ( msg ) ;
 }
@@ -183,19 +183,19 @@ void shy_guts :: apply_animation_transform ( )
 void shy_guts :: select_text_texture ( )
 {
     shy_guts :: logic_text_use_text_texture_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_text_use_text_texture_request_sender :: send ( so_called_message_common_logic_text_use_text_texture_request ( ) ) ;
+    so_called_common_logic_text_use_text_texture_request_sender :: send ( so_called_common_logic_text_use_text_texture_request_message ( ) ) ;
 }
 
 void shy_guts :: render_selection_mesh ( )
 {
     shy_guts :: logic_main_menu_selection_mesh_render_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_main_menu_selection_mesh_render_request_sender :: send ( so_called_message_common_logic_main_menu_selection_mesh_render_request ( ) ) ;
+    so_called_common_logic_main_menu_selection_mesh_render_request_sender :: send ( so_called_common_logic_main_menu_selection_mesh_render_request_message ( ) ) ;
 }
 
 void shy_guts :: render_letters_meshes ( )
 {
     shy_guts :: logic_main_menu_letters_meshes_render_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_main_menu_letters_meshes_render_request_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_render_request ( ) ) ;
+    so_called_common_logic_main_menu_letters_meshes_render_request_sender :: send ( so_called_common_logic_main_menu_letters_meshes_render_request_message ( ) ) ;
 }
 
 void shy_guts :: render_finished ( )
@@ -205,7 +205,7 @@ void shy_guts :: render_finished ( )
 
 void shy_guts :: use_ortho_projection ( )
 {
-    so_called_message_common_engine_render_projection_ortho msg ;
+    so_called_common_engine_render_projection_ortho_message msg ;
     msg . x_left = shy_guts :: logic_ortho_planes_state :: x_left ;
     msg . x_right = shy_guts :: logic_ortho_planes_state :: x_right ;
     msg . y_bottom = shy_guts :: logic_ortho_planes_state :: y_bottom ;
@@ -215,7 +215,7 @@ void shy_guts :: use_ortho_projection ( )
     so_called_common_engine_render_projection_ortho_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_animation_transform_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_animation_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
@@ -233,7 +233,7 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
     shy_guts :: permitted = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_fidget_render_reply )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_fidget_render_reply_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_fidget_render_state :: requested ) )
     {
@@ -243,7 +243,7 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
     }
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_main_menu_animation_transform_reply msg )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_main_menu_animation_transform_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_animation_transform_state :: requested ) )
     {
@@ -254,7 +254,7 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
     }
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_render_reply )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_main_menu_letters_meshes_render_reply_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_meshes_render_state :: requested ) )
     {
@@ -264,7 +264,7 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
     }
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_main_menu_render )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_main_menu_render_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: permitted ) )
     {
@@ -275,12 +275,12 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
         shy_guts :: blue_screen ( ) ;
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_main_menu_render_permit )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_main_menu_render_permit_message )
 {
     shy_guts :: permitted = so_called_platform_math_consts :: whole_true ;
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_main_menu_selection_mesh_render_reply )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_main_menu_selection_mesh_render_reply_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_selection_mesh_render_state :: requested ) )
     {
@@ -290,7 +290,7 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
     }
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_ortho_planes_reply msg )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_ortho_planes_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_ortho_planes_state :: requested ) )
     {
@@ -306,7 +306,7 @@ void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_
     }
 }
 
-void _shy_common_logic_main_menu_renderer :: receive ( so_called_message_common_logic_text_use_text_texture_reply )
+void _shy_common_logic_main_menu_renderer :: receive ( so_called_common_logic_text_use_text_texture_reply_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_use_text_texture_state :: requested ) )
     {

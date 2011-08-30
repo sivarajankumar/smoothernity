@@ -1,10 +1,10 @@
-#ifndef _shy_message_common_logic_perspective_planes_request_injections_included
-#define _shy_message_common_logic_perspective_planes_request_injections_included
+#ifndef _shy_common_logic_perspective_planes_request_message_injections_included
+#define _shy_common_logic_perspective_planes_request_message_injections_included
 
 #include "../../message/planes_request/shy_planes_request_injections.h"
 
 #include "./shy_planes_request.h"
 
-typedef shy_message_common_logic_perspective_planes_request so_called_message_common_logic_perspective_planes_request ;
+typedef shy_common_logic_perspective_planes_request_message so_called_common_logic_perspective_planes_request_message ;
 
 #endif

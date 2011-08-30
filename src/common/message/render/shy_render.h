@@ -1,3 +1,3 @@
-class shy_message_common_render
+class shy_common_render_message
 {
 } ;

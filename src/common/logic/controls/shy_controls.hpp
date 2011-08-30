@@ -69,14 +69,14 @@ void shy_guts :: compute_touch_state ( )
 
 void shy_guts :: reply_controls_state ( )
 {
-    so_called_message_common_logic_controls_state_reply msg ;
+    so_called_common_logic_controls_state_reply_message msg ;
     msg . primary_button_down = shy_guts :: logic_controls_state :: primary_button_down ;
     msg . cursor_x = shy_guts :: logic_controls_state :: cursor_x ;
     msg . cursor_y = shy_guts :: logic_controls_state :: cursor_y ;
     so_called_common_logic_controls_state_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_controls :: receive ( so_called_message_common_logic_controls_state_request )
+void _shy_common_logic_controls :: receive ( so_called_common_logic_controls_state_request_message )
 {
     shy_guts :: compute_identity_state ( ) ;
     shy_guts :: compute_mouse_state ( ) ;

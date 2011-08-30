@@ -136,33 +136,33 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_main_menu_letters_animation_selection_transform_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_animation_selection_transform_reply_message reply_msg ;
     reply_msg . row = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_row ;
     reply_msg . col = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_col ;
     reply_msg . scale = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: scale ;
     so_called_common_logic_main_menu_letters_animation_selection_transform_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_update_state :: launch_permitted = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_logic_main_menu_launch_permit )
+void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_common_logic_main_menu_launch_permit_message )
 {
     shy_guts :: logic_main_menu_update_state :: launch_permitted = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_logic_main_menu_letters_animation_selection_transform_request msg )
+void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_common_logic_main_menu_letters_animation_selection_transform_request_message msg )
 {
     shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_row = msg . row ;
     shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_col = msg . col ;
     shy_guts :: proceed_with_transform ( ) ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_logic_main_menu_update )
+void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_common_logic_main_menu_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: launch_permitted ) )
     {

@@ -1,8 +1,8 @@
-#ifndef _shy_message_common_done_injections_included
-#define _shy_message_common_done_injections_included
+#ifndef _shy_common_done_message_injections_included
+#define _shy_common_done_message_injections_included
 
 #include "./shy_done.h"
 
-typedef shy_message_common_done so_called_message_common_done ;
+typedef shy_common_done_message so_called_common_done_message ;
 
 #endif

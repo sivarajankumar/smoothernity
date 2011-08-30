@@ -177,7 +177,7 @@ void _shy_common_logic_application_fsm :: update_fixed_inputs ( )
     shy_guts :: inputs_fixed = shy_guts :: inputs_current ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_init )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_init_message )
 {
     reset_input_events ( ) ;
 
@@ -191,91 +191,91 @@ void _shy_common_logic_application_fsm :: receive ( so_called_message_common_ini
     so_called_common_logic_application_fsm_behaviour :: init ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_amusement_created )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_amusement_created_message )
 {
     shy_guts :: inputs_current . logic_amusement_created = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_amusement_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_amusement_finished_message )
 {
     shy_guts :: inputs_current . logic_amusement_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_application_render )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_application_render_message )
 {
     shy_guts :: inputs_current . logic_application_render = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_application_update )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_application_update_message )
 {
     shy_guts :: inputs_current . logic_application_update = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_main_menu_created )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_main_menu_created_message )
 {
     shy_guts :: inputs_current . logic_main_menu_created = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_main_menu_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_main_menu_finished_message )
 {
     shy_guts :: inputs_current . logic_main_menu_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_letters_meshes_cleaner_clean_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_meshes_cleaner_clean_finished_message )
 {
     shy_guts :: inputs_current . logic_salutation_letters_meshes_cleaner_clean_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_letters_meshes_generator_generate_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_meshes_generator_generate_finished_message )
 {
     shy_guts :: inputs_current . logic_salutation_letters_meshes_generator_generate_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_letters_text_cleaner_clean_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_text_cleaner_clean_finished_message )
 {
     shy_guts :: inputs_current . logic_salutation_letters_text_cleaner_clean_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_letters_text_generator_generate_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_text_generator_generate_finished_message )
 {
     shy_guts :: inputs_current . logic_salutation_letters_text_generator_generate_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_timer_appear_run_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_appear_run_finished_message )
 {
     shy_guts :: inputs_current . logic_salutation_timer_appear_run_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_salutation_timer_disappear_run_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_disappear_run_finished_message )
 {
     shy_guts :: inputs_current . logic_salutation_timer_disappear_run_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_text_prepared )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_text_prepared_message )
 {
     shy_guts :: inputs_current . logic_text_prepared = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_title_created )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_title_created_message )
 {
     shy_guts :: inputs_current . logic_title_created = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_message_common_logic_title_finished )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_title_finished_message )
 {
     shy_guts :: inputs_current . logic_title_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;

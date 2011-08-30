@@ -1,3 +1,3 @@
-class shy_message_common_logic_amusement_created
+class shy_common_logic_amusement_created_message
 {
 } ;

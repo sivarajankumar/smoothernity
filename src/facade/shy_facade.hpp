@@ -8,13 +8,13 @@ void shy_facade :: init ( )
 
     so_called_loadable_loader :: load ( ) ;
 
-    so_called_common_init_sender :: send ( so_called_message_common_init ( ) ) ;
+    so_called_common_init_sender :: send ( so_called_common_init_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 
 void shy_facade :: done ( )
 {
-    so_called_common_done_sender :: send ( so_called_message_common_done ( ) ) ;
+    so_called_common_done_sender :: send ( so_called_common_done_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 
     so_called_common_done :: done ( ) ;
@@ -27,18 +27,18 @@ void shy_facade :: done ( )
 
 void shy_facade :: render ( )
 {
-    so_called_common_render_sender :: send ( so_called_message_common_render ( ) ) ;
+    so_called_common_render_sender :: send ( so_called_common_render_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 
 void shy_facade :: update ( )
 {
-    so_called_common_update_sender :: send ( so_called_message_common_update ( ) ) ;
+    so_called_common_update_sender :: send ( so_called_common_update_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 
 void shy_facade :: video_mode_changed ( )
 {
-    so_called_common_video_mode_changed_sender :: send ( so_called_message_common_video_mode_changed ( ) ) ;
+    so_called_common_video_mode_changed_sender :: send ( so_called_common_video_mode_changed_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }

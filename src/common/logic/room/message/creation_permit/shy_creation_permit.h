@@ -1,3 +1,3 @@
-class shy_message_common_logic_room_creation_permit
+class shy_common_logic_room_creation_permit_message
 {
 } ;

@@ -1,4 +1,4 @@
-class shy_message_common_engine_render_texture_loader_ready_reply
+class shy_common_engine_render_texture_loader_ready_reply_message
 {
 public :
     so_called_type_platform_math_num_whole ready ;

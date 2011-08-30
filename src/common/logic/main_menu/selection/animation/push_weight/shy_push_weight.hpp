@@ -46,7 +46,7 @@ void shy_guts :: proceed_with_update ( )
 void shy_guts :: obtain_controls_state ( )
 {
     shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_controls_state_request_sender :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
+    so_called_common_logic_controls_state_request_sender :: send ( so_called_common_logic_controls_state_request_message ( ) ) ;
 }
 
 void shy_guts :: controls_state_received ( )
@@ -105,12 +105,12 @@ void shy_guts :: compute_weight ( )
 
 void shy_guts :: reply_weight ( )
 {
-    so_called_message_common_logic_main_menu_selection_animation_push_weight_reply msg ;
+    so_called_common_logic_main_menu_selection_animation_push_weight_reply_message msg ;
     msg . weight = shy_guts :: logic_main_menu_selection_animation_push_weight_state :: weight ;
     so_called_common_logic_main_menu_selection_animation_push_weight_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_false ;
@@ -119,7 +119,7 @@ void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_logic_controls_state_reply msg )
+void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_common_logic_controls_state_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: requested ) )
     {
@@ -130,25 +130,25 @@ void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so
     }
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_logic_main_menu_row_chosen )
+void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_common_logic_main_menu_row_chosen_message )
 {
     shy_guts :: logic_main_menu_update_state :: clicked = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_logic_main_menu_selection_animation_push_weight_request )
+void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_common_logic_main_menu_selection_animation_push_weight_request_message )
 {
     shy_guts :: compute_weight ( ) ;
     shy_guts :: reply_weight ( ) ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_logic_main_menu_update )
+void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_common_logic_main_menu_update_message )
 {
     shy_guts :: logic_main_menu_update_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_update ( ) ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_message_common_logic_main_menu_void_chosen )
+void _shy_common_logic_main_menu_selection_animation_push_weight :: receive ( so_called_common_logic_main_menu_void_chosen_message )
 {
     shy_guts :: logic_main_menu_update_state :: clicked = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;

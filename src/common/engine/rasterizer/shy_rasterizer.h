@@ -1,13 +1,13 @@
 class _shy_common_engine_rasterizer
 {
 public :
-    static void receive ( so_called_message_common_engine_rasterizer_draw_ellipse_in_rect ) ;
-    static void receive ( so_called_message_common_engine_rasterizer_draw_rect ) ;
-    static void receive ( so_called_message_common_engine_rasterizer_draw_triangle ) ;
-    static void receive ( so_called_message_common_engine_rasterizer_finalize_request ) ;
-    static void receive ( so_called_message_common_engine_rasterizer_use_texel ) ;
-    static void receive ( so_called_message_common_engine_rasterizer_use_texture ) ;
-    static void receive ( so_called_message_common_init ) ;
+    static void receive ( so_called_common_engine_rasterizer_draw_ellipse_in_rect_message ) ;
+    static void receive ( so_called_common_engine_rasterizer_draw_rect_message ) ;
+    static void receive ( so_called_common_engine_rasterizer_draw_triangle_message ) ;
+    static void receive ( so_called_common_engine_rasterizer_finalize_request_message ) ;
+    static void receive ( so_called_common_engine_rasterizer_use_texel_message ) ;
+    static void receive ( so_called_common_engine_rasterizer_use_texture_message ) ;
+    static void receive ( so_called_common_init_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

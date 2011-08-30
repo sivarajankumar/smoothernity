@@ -1,4 +1,4 @@
-class shy_message_common_engine_rasterizer_draw_ellipse_in_rect
+class shy_common_engine_rasterizer_draw_ellipse_in_rect_message
 {
 public :
     so_called_type_platform_math_num_whole x1 ;

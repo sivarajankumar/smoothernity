@@ -62,24 +62,24 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_main_menu_animation_shake_transform_reply msg ;
+    so_called_common_logic_main_menu_animation_shake_transform_reply_message msg ;
     msg . shift_x = shy_guts :: logic_main_menu_animation_shake_transform_state :: shift_x ;
     so_called_common_logic_main_menu_animation_shake_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_update_state :: started = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_common_logic_main_menu_animation_shake_transform_request )
+void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_common_logic_main_menu_animation_shake_transform_request_message )
 {
     shy_guts :: compute_transform ( ) ;
     shy_guts :: reply_transform ( ) ;
 }
 
-void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_common_logic_main_menu_update )
+void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_common_logic_main_menu_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: started ) )
     {
@@ -103,7 +103,7 @@ void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_
     }
 }
 
-void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_common_logic_main_menu_void_chosen )
+void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_common_logic_main_menu_void_chosen_message )
 {
     if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: logic_main_menu_update_state :: started ) )
     {

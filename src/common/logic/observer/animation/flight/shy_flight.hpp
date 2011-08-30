@@ -106,18 +106,18 @@ void shy_guts :: compute_target ( )
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_observer_animation_flight_transform_reply msg ;
+    so_called_common_logic_observer_animation_flight_transform_reply_message msg ;
     msg . eye = shy_guts :: logic_observer_animation_flight_transform_state :: eye ;
     msg . target = shy_guts :: logic_observer_animation_flight_transform_state :: target ;
     so_called_common_logic_observer_animation_flight_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_init )
+void _shy_common_logic_observer_animation_flight :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_observer_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_animation_flight_transform_request )
+void _shy_common_logic_observer_animation_flight :: receive ( so_called_common_logic_observer_animation_flight_transform_request_message )
 {
     shy_guts :: compute_vertical_offset ( ) ;
     shy_guts :: compute_horizontal_offset ( ) ;
@@ -126,7 +126,7 @@ void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_
     shy_guts :: reply_transform ( ) ;
 }
 
-void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_logic_observer_update )
+void _shy_common_logic_observer_animation_flight :: receive ( so_called_common_logic_observer_update_message )
 {
     so_called_type_platform_math_num_fract time_step ;
     so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;

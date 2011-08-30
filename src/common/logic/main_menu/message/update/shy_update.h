@@ -1,3 +1,3 @@
-class shy_message_common_logic_main_menu_update
+class shy_common_logic_main_menu_update_message
 {
 } ;

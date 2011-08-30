@@ -1,7 +1,7 @@
 class _shy_common_logic_controls
 {
 public :
-    static void receive ( so_called_message_common_logic_controls_state_request ) ;
+    static void receive ( so_called_common_logic_controls_state_request_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

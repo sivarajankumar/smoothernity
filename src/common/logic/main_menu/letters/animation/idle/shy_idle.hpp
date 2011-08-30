@@ -59,7 +59,7 @@ void shy_guts :: obtain_layout_position ( )
     shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ;
     shy_guts :: logic_main_menu_letters_layout_position_state :: requested_col = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ;
 
-    so_called_message_common_logic_main_menu_letters_layout_position_request msg ;
+    so_called_common_logic_main_menu_letters_layout_position_request_message msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ;
     so_called_common_logic_main_menu_letters_layout_position_request_sender :: send ( msg ) ;
@@ -163,7 +163,7 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_animated_transform ( )
 {
-    so_called_message_common_logic_main_menu_letters_animation_idle_transform_reply msg ;
+    so_called_common_logic_main_menu_letters_animation_idle_transform_reply_message msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ;
     msg . position = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: position ;
@@ -171,7 +171,7 @@ void shy_guts :: reply_animated_transform ( )
     so_called_common_logic_main_menu_letters_animation_idle_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_letters_layout_position_state :: requested = so_called_platform_math_consts :: whole_false ;
@@ -180,13 +180,13 @@ void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_m
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_logic_main_menu_launch_permit )
+void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_common_logic_main_menu_launch_permit_message )
 {
     shy_guts :: logic_main_menu_update_state :: launch_permitted = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_animation_idle_transform_request msg )
+void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_common_logic_main_menu_letters_animation_idle_transform_request_message msg )
 {
     shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row = msg . row ;
@@ -194,7 +194,7 @@ void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_m
     shy_guts :: proceed_with_transform ( ) ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_position_reply msg )
+void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_common_logic_main_menu_letters_layout_position_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_position_state :: requested )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_main_menu_letters_layout_position_state :: requested_row , msg . row )
@@ -209,7 +209,7 @@ void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_m
     }
 }
 
-void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_message_common_logic_main_menu_update )
+void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_common_logic_main_menu_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: launch_permitted ) )
     {

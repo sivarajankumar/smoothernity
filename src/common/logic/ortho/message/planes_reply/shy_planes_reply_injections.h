@@ -1,10 +1,10 @@
-#ifndef _shy_message_common_logic_ortho_planes_reply_injections_included
-#define _shy_message_common_logic_ortho_planes_reply_injections_included
+#ifndef _shy_common_logic_ortho_planes_reply_message_injections_included
+#define _shy_common_logic_ortho_planes_reply_message_injections_included
 
 #include "../../../../../injections/platform/math/type/num_fract/shy_num_fract.h"
 
 #include "./shy_planes_reply.h"
 
-typedef shy_message_common_logic_ortho_planes_reply so_called_message_common_logic_ortho_planes_reply ;
+typedef shy_common_logic_ortho_planes_reply_message so_called_common_logic_ortho_planes_reply_message ;
 
 #endif

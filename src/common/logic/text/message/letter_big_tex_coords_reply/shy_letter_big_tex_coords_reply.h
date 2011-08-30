@@ -1,4 +1,4 @@
-class shy_message_common_logic_text_letter_big_tex_coords_reply
+class shy_common_logic_text_letter_big_tex_coords_reply_message
 {
 public :
     so_called_type_platform_math_num_fract left ;

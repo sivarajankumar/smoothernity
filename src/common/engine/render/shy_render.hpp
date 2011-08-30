@@ -53,35 +53,35 @@ namespace shy_guts
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_render , 3000 > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_aspect_request )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_aspect_request_message )
 {
-    so_called_message_common_engine_render_aspect_reply reply_msg ;
+    so_called_common_engine_render_aspect_reply_message reply_msg ;
     so_called_platform_render :: get_aspect_width ( reply_msg . width ) ;
     so_called_platform_render :: get_aspect_height ( reply_msg . height ) ;
     so_called_common_engine_render_aspect_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_blend_disable )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_blend_disable_message )
 {
     so_called_platform_render :: blend_disable ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_message )
 {
     so_called_platform_render :: blend_src_alpha_dst_one_minus_alpha ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_clear_screen msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_clear_screen_message msg )
 {
     so_called_platform_render :: clear_screen ( msg . r , msg . g , msg . b ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_disable_depth_test )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_disable_depth_test_message )
 {
     so_called_platform_render :: disable_depth_test ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_done )
+void _shy_common_engine_render :: receive ( so_called_common_done_message )
 {
     for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_common_engine_render_consts :: max_meshes )
@@ -109,34 +109,34 @@ void _shy_common_engine_render :: receive ( so_called_message_common_done )
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_enable_depth_test )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_enable_depth_test_message )
 {
     so_called_platform_render :: enable_depth_test ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_enable_face_culling )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_enable_face_culling_message )
 {
     so_called_platform_render :: enable_face_culling ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_fog_disable )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_fog_disable_message )
 {
     so_called_platform_render :: fog_disable ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_fog_linear msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_fog_linear_message msg )
 {
     so_called_platform_render :: fog_linear ( msg . z_near , msg . z_far , msg . r , msg . g , msg . b , msg . a ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_frame_loss_request )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_frame_loss_request_message )
 {
-    so_called_message_common_engine_render_frame_loss_reply reply_msg ;
+    so_called_common_engine_render_frame_loss_reply_message reply_msg ;
     so_called_platform_render :: get_frame_loss ( reply_msg . frame_loss ) ;
     so_called_common_engine_render_frame_loss_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_init )
+void _shy_common_engine_render :: receive ( so_called_common_init_message )
 {
     shy_guts :: next_texture_id = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: next_vacant_mesh_id_index = so_called_platform_math_consts :: whole_0 ;
@@ -171,22 +171,22 @@ void _shy_common_engine_render :: receive ( so_called_message_common_init )
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_identity )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_matrix_identity_message )
 {
     so_called_platform_render :: matrix_identity ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_load msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_matrix_load_message msg )
 {
     so_called_platform_render :: matrix_load ( msg . matrix ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_matrix_mult msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_matrix_mult_message msg )
 {
     so_called_platform_render :: matrix_mult ( msg . matrix ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_create_request msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_create_request_message msg )
 {
     so_called_type_common_engine_render_mesh_id created_mesh ;
     if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: next_vacant_mesh_id_index , so_called_common_engine_render_consts :: max_meshes ) )
@@ -240,12 +240,12 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
             so_called_trace ( so_called_trace_common_engine_render :: meshes_overflow_error ( ) ) ;
     }
 
-    so_called_message_common_engine_render_mesh_create_reply reply_msg ;
+    so_called_common_engine_render_mesh_create_reply_message reply_msg ;
     reply_msg . mesh = created_mesh ;
     so_called_common_engine_render_mesh_create_reply_sender :: send ( reply_msg ) ;    
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_delete msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_delete_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -263,7 +263,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_finalize msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_finalize_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -276,7 +276,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_render msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_render_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -307,7 +307,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_transform msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_set_transform_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -317,7 +317,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_fan_index_value msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_set_triangle_fan_index_value_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -344,7 +344,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_triangle_strip_index_value msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -371,7 +371,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_color msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_set_vertex_color_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -393,7 +393,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_position msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_set_vertex_position_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -415,7 +415,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_set_vertex_tex_coord msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_mesh_set_vertex_tex_coord_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . mesh . _mesh_id , so_called_common_engine_render_consts :: max_meshes ) )
     {
@@ -437,17 +437,17 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_projection_frustum msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_projection_frustum_message msg )
 {
     so_called_platform_render :: projection_frustum ( msg . x_left , msg . x_right , msg . y_bottom , msg . y_top , msg . z_near , msg . z_far ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_projection_ortho msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_projection_ortho_message msg )
 {
     so_called_platform_render :: projection_ortho ( msg . x_left , msg . x_right , msg . y_bottom , msg . y_top , msg . z_near , msg . z_far ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_create_request )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_create_request_message )
 {
     so_called_type_common_engine_render_texture_id created_texture ;
     so_called_type_platform_math_num_whole whole_max_textures ;
@@ -466,12 +466,12 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
             so_called_trace ( so_called_trace_common_engine_render :: textures_overflow_error ( ) ) ;
     }
 
-    so_called_message_common_engine_render_texture_create_reply reply_msg ;
+    so_called_common_engine_render_texture_create_reply_message reply_msg ;
     reply_msg . texture = created_texture ;
     so_called_common_engine_render_texture_create_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_finalize msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_finalize_message msg )
 {
     so_called_type_platform_math_num_whole whole_max_textures ;
     so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
@@ -490,7 +490,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_load_from_resource msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_load_from_resource_message msg )
 {
     so_called_type_platform_math_num_whole whole_max_textures ;
     so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
@@ -507,19 +507,19 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_loader_ready_request msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_loader_ready_request_message msg )
 {
-    so_called_message_common_engine_render_texture_loader_ready_reply reply_msg ;
+    so_called_common_engine_render_texture_loader_ready_reply_message reply_msg ;
     so_called_platform_render_texture_loader :: ready ( reply_msg . ready ) ;
     so_called_common_engine_render_texture_loader_ready_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_mode_modulate )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_mode_modulate_message )
 {
     so_called_platform_render :: texture_mode_modulate ( ) ;
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_select msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_select_message msg )
 {
     so_called_type_platform_math_num_whole whole_max_textures ;
     so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
@@ -532,7 +532,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_set_texel_message msg )
 {
     so_called_type_platform_math_num_whole whole_max_textures ;
     so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
@@ -550,7 +550,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texel_rgba msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_set_texel_rgba_message msg )
 {
     so_called_type_platform_math_num_whole whole_max_textures ;
     so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
@@ -568,7 +568,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_set_texels_rect msg )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_set_texels_rect_message msg )
 {
     so_called_type_platform_math_num_whole whole_max_textures ;
     so_called_platform_math :: make_num_whole ( whole_max_textures , shy_guts :: consts :: max_textures ) ;
@@ -597,7 +597,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     }
 }
 
-void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_unselect )
+void _shy_common_engine_render :: receive ( so_called_common_engine_render_texture_unselect_message )
 {
     so_called_platform_render :: disable_texturing ( ) ;
 }
