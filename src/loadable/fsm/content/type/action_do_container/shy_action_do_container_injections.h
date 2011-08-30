@@ -1,7 +1,7 @@
 #ifndef _shy_type_loadable_fsm_content_action_do_container_injections_included
 #define _shy_type_loadable_fsm_content_action_do_container_injections_included
 
-#include "../action_do/shy_action_do_injections.h"
+#include "loadable/fsm/content/type/action_do/shy_action_do_injections.h"
 
 #include "./shy_action_do_container.h"
 

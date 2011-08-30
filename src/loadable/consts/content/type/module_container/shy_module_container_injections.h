@@ -1,7 +1,7 @@
 #ifndef _shy_type_loadable_consts_content_module_container_injections_included
 #define _shy_type_loadable_consts_content_module_container_injections_included
 
-#include "../module/shy_module_injections.h"
+#include "loadable/consts/content/type/module/shy_module_injections.h"
 
 #include "./shy_module_container.h"
 
