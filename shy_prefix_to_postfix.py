@@ -9,6 +9,7 @@ class consts :
     prefix_shy = "shy_"
     prefix_so_called = "so_called_"
     prefix_underscored_shy = "_shy_"
+    postfix_injections_included = "_injections_included"
     underscore = "_"
     usage_long = str \
         ( "%prog [options] dir-path prefix\n"
@@ -25,9 +26,14 @@ class consts :
         )
     usage_short = "[--help] dir-from dir-to"
 
-def check_replace ( replace_list , word , prefix , arg_prefix ) :
-    if word . startswith ( prefix + arg_prefix + consts . underscore ) :
-        replace_list [ word ] = word . replace ( prefix + arg_prefix + consts . underscore , prefix ) + consts . underscore + arg_prefix
+def check_replace ( replace_list , word , prefix , postfix , arg_prefix ) :
+    if word . startswith ( prefix + arg_prefix + consts . underscore ) and word . endswith ( postfix ) :
+        new_word = word
+        new_word = new_word . replace ( prefix + arg_prefix + consts . underscore , prefix )
+        new_word = new_word . replace ( postfix , str ( ) )
+        new_word = new_word + consts . underscore + arg_prefix
+        new_word = new_word + postfix
+        replace_list [ word ] = new_word
 
 parser = optparse . OptionParser ( usage = consts . usage_long )
 options , args = parser . parse_args ( )
@@ -45,9 +51,9 @@ else :
             for line in old_lines :
                 replace_list = { }
                 for word in line . split ( ) :
-                    check_replace ( replace_list , word , consts . prefix_shy , arg_prefix )
-                    check_replace ( replace_list , word , consts . prefix_so_called , arg_prefix )
-                    check_replace ( replace_list , word , consts . prefix_underscored_shy , arg_prefix )
+                    check_replace ( replace_list , word , consts . prefix_shy , str ( ) , arg_prefix )
+                    check_replace ( replace_list , word , consts . prefix_so_called , str ( ) , arg_prefix )
+                    check_replace ( replace_list , word , consts . prefix_underscored_shy , consts . postfix_injections_included , arg_prefix )
                 for what , to_what in replace_list . items ( ) :
                     line = line . replace ( what , to_what )
                     changed = True
