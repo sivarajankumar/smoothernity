@@ -38,14 +38,18 @@ else :
     for dir , dirs , files in os . walk ( arg_dir_path ) :
         for file in files :
             file_path = os . path . join ( dir , file )
-            result_lines = [ ]
-            for line in open ( file_path , consts . mode_read ) . readlines ( ) :
+            old_lines = open ( file_path , consts . mode_read ) . readlines ( ) 
+            new_lines = [ ]
+            changed = False
+            for line in old_lines :
                 replace_list = { }
                 for word in line . split ( ) :
                     check_replace ( replace_list , word , consts . prefix_shy , arg_prefix )
                     check_replace ( replace_list , word , consts . prefix_so_called , arg_prefix )
                 for what , to_what in replace_list . items ( ) :
                     line = line . replace ( what , to_what )
-                result_lines += line
-            open ( file_path , consts . mode_write ) . writelines ( result_lines )
-            print consts ( ) . msg_done ( file_path )
+                    changed = True
+                new_lines += line
+            if changed :
+                open ( file_path , consts . mode_write ) . writelines ( new_lines )
+                print consts ( ) . msg_done ( file_path )
