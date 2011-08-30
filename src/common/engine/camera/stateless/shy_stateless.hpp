@@ -1,14 +1,14 @@
 void shy_common_engine_camera_stateless :: matrix_look_at
-    ( so_called_type_platform_matrix_data & matrix 
-    , so_called_type_platform_vector_data from 
-    , so_called_type_platform_vector_data to 
-    , so_called_type_platform_vector_data norm_up 
+    ( so_called_platform_matrix_data_type & matrix 
+    , so_called_platform_vector_data_type from 
+    , so_called_platform_vector_data_type to 
+    , so_called_platform_vector_data_type norm_up 
     )
 {
-    so_called_type_platform_vector_data dir ;
-    so_called_type_platform_vector_data axis_x ;
-    so_called_type_platform_vector_data axis_y ;
-    so_called_type_platform_vector_data axis_z ;
+    so_called_platform_vector_data_type dir ;
+    so_called_platform_vector_data_type axis_x ;
+    so_called_platform_vector_data_type axis_y ;
+    so_called_platform_vector_data_type axis_z ;
     so_called_platform_vector :: sub ( dir , from , to ) ;
     so_called_platform_vector :: normalize ( axis_z , dir ) ;
     so_called_platform_vector :: cross_product ( axis_x , norm_up , axis_z ) ;

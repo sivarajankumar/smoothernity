@@ -2,20 +2,20 @@ namespace shy_guts
 {
     namespace logic_room_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole render_permitted ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type render_permitted ;
     }
 
     namespace logic_room_mesh_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     namespace logic_room_texture_select_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     static void proceed_with_render ( ) ;

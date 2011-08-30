@@ -2,38 +2,38 @@ namespace shy_guts
 {
     namespace logic_main_menu_selection_track_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole current_row ;
-        static so_called_type_platform_math_num_whole cursor_in_selection_rect ;
-        static so_called_type_platform_math_num_whole cursor_in_prev_selection_rect ;
-        static so_called_type_platform_math_num_whole prev_row_is_selected ;
-        static so_called_type_platform_math_num_whole prev_selected_row_index ;
-        static so_called_type_common_engine_rect prev_selection_rect ;
-        static so_called_type_common_engine_rect scaled_prev_selection_rect ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type current_row ;
+        static so_called_platform_math_num_whole_type cursor_in_selection_rect ;
+        static so_called_platform_math_num_whole_type cursor_in_prev_selection_rect ;
+        static so_called_platform_math_num_whole_type prev_row_is_selected ;
+        static so_called_platform_math_num_whole_type prev_selected_row_index ;
+        static so_called_common_engine_rect_type prev_selection_rect ;
+        static so_called_common_engine_rect_type scaled_prev_selection_rect ;
+        static so_called_platform_matrix_data_type transform ;
     }
 
     namespace logic_main_menu_letters_rows_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole rows ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_whole_type rows ;
     }
 
     namespace logic_main_menu_letters_layout_row_rect_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_common_engine_rect row_rect ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_common_engine_rect_type row_rect ;
     }
 
     namespace logic_controls_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract cursor_x ;
-        static so_called_type_platform_math_num_fract cursor_y ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type cursor_x ;
+        static so_called_platform_math_num_fract_type cursor_y ;
     }
 
     static void proceed_with_track ( ) ;
@@ -45,7 +45,7 @@ namespace shy_guts
     static void received_row_rect ( ) ;
     static void determine_cursor_in_selection_rect ( ) ;
     static void determine_cursor_in_prev_selection_rect ( ) ;
-    static void determine_cursor_in_rect ( so_called_type_platform_math_num_whole & result , so_called_type_common_engine_rect row_rect ) ;
+    static void determine_cursor_in_rect ( so_called_platform_math_num_whole_type & result , so_called_common_engine_rect_type row_rect ) ;
     static void scale_prev_selection_rect ( ) ;
     static void send_row_selected ( ) ;
     static void send_void_selected ( ) ;
@@ -123,9 +123,9 @@ void shy_guts :: obtain_current_row_rect ( )
 
 void shy_guts :: received_row_rect ( )
 {
-    so_called_type_platform_math_num_whole cursor_in_selection_rect ;
-    so_called_type_platform_math_num_whole current_row ;
-    so_called_type_platform_math_num_whole rows_count ;
+    so_called_platform_math_num_whole_type cursor_in_selection_rect ;
+    so_called_platform_math_num_whole_type current_row ;
+    so_called_platform_math_num_whole_type rows_count ;
     
     shy_guts :: determine_cursor_in_selection_rect ( ) ;
     
@@ -171,10 +171,10 @@ void shy_guts :: determine_cursor_in_prev_selection_rect ( )
         ) ;
 }
 
-void shy_guts :: determine_cursor_in_rect ( so_called_type_platform_math_num_whole & result , so_called_type_common_engine_rect row_rect )
+void shy_guts :: determine_cursor_in_rect ( so_called_platform_math_num_whole_type & result , so_called_common_engine_rect_type row_rect )
 {
-    so_called_type_platform_math_num_fract cursor_x ;
-    so_called_type_platform_math_num_fract cursor_y ;
+    so_called_platform_math_num_fract_type cursor_x ;
+    so_called_platform_math_num_fract_type cursor_y ;
     
     cursor_x = shy_guts :: logic_controls_state :: cursor_x ;
     cursor_y = shy_guts :: logic_controls_state :: cursor_y ;
@@ -193,13 +193,13 @@ void shy_guts :: determine_cursor_in_rect ( so_called_type_platform_math_num_who
 
 void shy_guts :: scale_prev_selection_rect ( )
 {
-    so_called_type_platform_math_num_fract selected_rect_vertical_scale ;
-    so_called_type_platform_math_num_fract rect_height ;
-    so_called_type_platform_math_num_fract scaled_rect_height ;
-    so_called_type_platform_math_num_fract half_scaled_rect_height ;
-    so_called_type_platform_math_num_fract y_center ;
-    so_called_type_common_engine_rect prev_selection_rect ;
-    so_called_type_common_engine_rect scaled_prev_selection_rect ;
+    so_called_platform_math_num_fract_type selected_rect_vertical_scale ;
+    so_called_platform_math_num_fract_type rect_height ;
+    so_called_platform_math_num_fract_type scaled_rect_height ;
+    so_called_platform_math_num_fract_type half_scaled_rect_height ;
+    so_called_platform_math_num_fract_type y_center ;
+    so_called_common_engine_rect_type prev_selection_rect ;
+    so_called_common_engine_rect_type scaled_prev_selection_rect ;
     
     selected_rect_vertical_scale = so_called_common_logic_main_menu_selection_consts :: selected_rect_vertical_scale ;
     prev_selection_rect = shy_guts :: logic_main_menu_selection_track_state :: prev_selection_rect ;
@@ -220,10 +220,10 @@ void shy_guts :: scale_prev_selection_rect ( )
 
 void shy_guts :: send_row_selected ( )
 {
-    so_called_type_platform_math_num_whole prev_row_is_selected ;
-    so_called_type_platform_math_num_whole prev_selected_row_index ;
-    so_called_type_platform_math_num_whole current_row ;
-    so_called_type_common_engine_rect row_rect ;
+    so_called_platform_math_num_whole_type prev_row_is_selected ;
+    so_called_platform_math_num_whole_type prev_selected_row_index ;
+    so_called_platform_math_num_whole_type current_row ;
+    so_called_common_engine_rect_type row_rect ;
     
     prev_row_is_selected = shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected ;
     prev_selected_row_index = shy_guts :: logic_main_menu_selection_track_state :: prev_selected_row_index ;

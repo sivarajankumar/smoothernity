@@ -1,8 +1,8 @@
-class shy_type_platform_render_directx_texel_data
+class shy_platform_render_directx_texel_data_type
 {
     friend class shy_platform_render_directx ;
 public :
-    shy_type_platform_render_directx_texel_data ( ) ;
+    shy_platform_render_directx_texel_data_type ( ) ;
 private :
     so_called_lib_directx_BYTE _b ;
     so_called_lib_directx_BYTE _g ;

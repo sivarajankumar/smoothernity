@@ -7,8 +7,8 @@ namespace shy_guts
 }
 
 void shy_trace_common_logic_salutation_letters_text_storage :: entries_in_use 
-    ( so_called_type_platform_math_num_whole current 
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current 
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
@@ -28,8 +28,8 @@ void shy_trace_common_logic_salutation_letters_text_storage :: entries_overflow_
 }
 
 void shy_trace_common_logic_salutation_letters_text_storage :: entry_index_is_out_of_range_error
-    ( so_called_type_platform_math_num_whole index 
-    , so_called_type_platform_math_num_whole max_index
+    ( so_called_platform_math_num_whole_type index 
+    , so_called_platform_math_num_whole_type max_index
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;

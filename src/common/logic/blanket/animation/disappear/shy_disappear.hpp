@@ -2,14 +2,14 @@ namespace shy_guts
 {
     namespace logic_blanket_animation_disappear_transform_state
     {
-        static so_called_type_platform_math_num_fract scale ;
-        static so_called_type_platform_math_num_fract rotation ;
+        static so_called_platform_math_num_fract_type scale ;
+        static so_called_platform_math_num_fract_type rotation ;
     }
 
     namespace logic_blanket_update_state
     {
-        static so_called_type_platform_math_num_whole started ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type started ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void compute_scale ( ) ;
@@ -22,13 +22,13 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_scale ( )
 {
-    so_called_type_platform_math_num_fract scale ;
-    so_called_type_platform_math_num_fract scale_begin ;
-    so_called_type_platform_math_num_fract scale_end ;
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract time_from_begin_to_end ;
+    so_called_platform_math_num_fract_type scale ;
+    so_called_platform_math_num_fract_type scale_begin ;
+    so_called_platform_math_num_fract_type scale_end ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type time_from_begin_to_end ;
 
     scale_begin = so_called_common_logic_blanket_animation_consts :: disappear_scale_begin ;
     scale_end = so_called_common_logic_blanket_animation_consts :: disappear_scale_end ;
@@ -45,13 +45,13 @@ void shy_guts :: compute_scale ( )
 
 void shy_guts :: compute_rotation ( )
 {
-    so_called_type_platform_math_num_fract rotation ;
-    so_called_type_platform_math_num_fract rotation_begin ;
-    so_called_type_platform_math_num_fract rotation_end ;
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract time_from_begin_to_end ;
+    so_called_platform_math_num_fract_type rotation ;
+    so_called_platform_math_num_fract_type rotation_begin ;
+    so_called_platform_math_num_fract_type rotation_end ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type time_from_begin_to_end ;
 
     rotation_begin = so_called_common_logic_blanket_animation_consts :: disappear_rotation_begin ;
     rotation_end = so_called_common_logic_blanket_animation_consts :: disappear_rotation_end ;
@@ -97,10 +97,10 @@ void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_common
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_update_state :: started ) )
     {
-        so_called_type_platform_math_num_fract time ;
-        so_called_type_platform_math_num_fract time_step ;
-        so_called_type_platform_math_num_fract time_from_begin_to_end ;
-        so_called_type_platform_math_num_whole started ;
+        so_called_platform_math_num_fract_type time ;
+        so_called_platform_math_num_fract_type time_step ;
+        so_called_platform_math_num_fract_type time_from_begin_to_end ;
+        so_called_platform_math_num_whole_type started ;
 
         time = shy_guts :: logic_blanket_update_state :: time ;
         started = shy_guts :: logic_blanket_update_state :: started ;

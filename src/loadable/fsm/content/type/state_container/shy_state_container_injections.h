@@ -1,5 +1,5 @@
-#ifndef _shy_type_loadable_fsm_content_state_container_injections_included
-#define _shy_type_loadable_fsm_content_state_container_injections_included
+#ifndef _shy_loadable_fsm_content_state_container_type_injections_included
+#define _shy_loadable_fsm_content_state_container_type_injections_included
 
 #include "loadable/fsm/content/type/state/shy_state_injections.h"
 
@@ -7,6 +7,6 @@
 
 #include "./shy_state_container.h"
 
-typedef shy_type_loadable_fsm_content_state_container so_called_type_loadable_fsm_content_state_container ;
+typedef shy_loadable_fsm_content_state_container_type so_called_loadable_fsm_content_state_container_type ;
 
 #endif

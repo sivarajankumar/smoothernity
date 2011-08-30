@@ -1,8 +1,8 @@
-#ifndef _shy_type_loadable_fsm_content_action_do_injections_included
-#define _shy_type_loadable_fsm_content_action_do_injections_included
+#ifndef _shy_loadable_fsm_content_action_do_type_injections_included
+#define _shy_loadable_fsm_content_action_do_type_injections_included
 
 #include "./shy_action_do.h"
 
-typedef shy_type_loadable_fsm_content_action_do so_called_type_loadable_fsm_content_action_do ;
+typedef shy_loadable_fsm_content_action_do_type so_called_loadable_fsm_content_action_do_type ;
 
 #endif

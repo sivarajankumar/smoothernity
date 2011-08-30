@@ -2,57 +2,57 @@ namespace shy_guts
 {
     namespace logic_amusement_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_platform_math_num_whole_type requested ;
     }
 
     namespace logic_observer_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_matrix_data_type transform ;
     }
 
     namespace logic_ortho_planes_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract x_left ;
-        static so_called_type_platform_math_num_fract x_right ;
-        static so_called_type_platform_math_num_fract y_bottom ;
-        static so_called_type_platform_math_num_fract y_top ;
-        static so_called_type_platform_math_num_fract z_near ;
-        static so_called_type_platform_math_num_fract z_far ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type x_left ;
+        static so_called_platform_math_num_fract_type x_right ;
+        static so_called_platform_math_num_fract_type y_bottom ;
+        static so_called_platform_math_num_fract_type y_top ;
+        static so_called_platform_math_num_fract_type z_near ;
+        static so_called_platform_math_num_fract_type z_far ;
     }
 
     namespace logic_perspective_planes_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract x_left ;
-        static so_called_type_platform_math_num_fract x_right ;
-        static so_called_type_platform_math_num_fract y_bottom ;
-        static so_called_type_platform_math_num_fract y_top ;
-        static so_called_type_platform_math_num_fract z_near ;
-        static so_called_type_platform_math_num_fract z_far ;
-        static so_called_type_platform_math_num_fract scene_scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type x_left ;
+        static so_called_platform_math_num_fract_type x_right ;
+        static so_called_platform_math_num_fract_type y_bottom ;
+        static so_called_platform_math_num_fract_type y_top ;
+        static so_called_platform_math_num_fract_type z_near ;
+        static so_called_platform_math_num_fract_type z_far ;
+        static so_called_platform_math_num_fract_type scene_scale ;
     }
 
     namespace logic_blanket_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     namespace logic_door_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     namespace logic_room_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     static void proceed_with_render ( ) ;
@@ -226,8 +226,8 @@ void shy_guts :: use_observer_transform ( )
 
 void shy_guts :: use_observer_size ( )
 {
-    so_called_type_platform_math_num_fract scene_scale ;
-    so_called_type_platform_matrix_data transform ;
+    so_called_platform_math_num_fract_type scene_scale ;
+    so_called_platform_matrix_data_type transform ;
 
     scene_scale = shy_guts :: logic_perspective_planes_state :: scene_scale ;
     so_called_common_engine_math_stateless :: scale ( transform , scene_scale ) ;

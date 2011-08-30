@@ -1,10 +1,10 @@
 namespace shy_guts
 {
-    static so_called_type_platform_math_num_whole creation_permitted ;
-    static so_called_type_platform_math_num_whole launch_permitted ;
-    static so_called_type_platform_math_num_whole created ;
-    static so_called_type_platform_math_num_whole launched ;
-    static so_called_type_platform_math_num_whole disappearing ;
+    static so_called_platform_math_num_whole_type creation_permitted ;
+    static so_called_platform_math_num_whole_type launch_permitted ;
+    static so_called_platform_math_num_whole_type created ;
+    static so_called_platform_math_num_whole_type launched ;
+    static so_called_platform_math_num_whole_type disappearing ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_main_menu > _scheduled_context_type ;

@@ -2,33 +2,33 @@ namespace shy_guts
 {
     namespace consts
     {
-        static const so_called_type_platform_math_num_fract gain = so_called_platform_math :: init_num_fract ( 7 , 10 ) ;
-        static const so_called_type_platform_math_num_fract magnitude = so_called_platform_math :: init_num_fract ( 128 , 1 ) ;
-        static const so_called_type_platform_math_num_whole music_rough_and_heavy_resource_index = so_called_platform_math :: init_num_whole ( 1 ) ;
-        static const so_called_type_platform_math_num_whole modulator = so_called_platform_math :: init_num_whole ( 256 ) ;
-        static const so_called_type_platform_math_num_whole half_modulator = so_called_platform_math :: init_num_whole ( 128 ) ;
-        static const so_called_type_platform_math_num_whole music_tail_cut = so_called_platform_math :: init_num_whole ( 2293 ) ;
-        static so_called_type_platform_math_const_int_32 max_stereo_sound_samples = so_called_platform_sound :: stereo_sound_samples_per_second * 60 ;
-        static so_called_type_platform_math_const_int_32 max_mono_sound_samples = so_called_platform_sound :: mono_sound_samples_per_second / 2 ;
+        static const so_called_platform_math_num_fract_type gain = so_called_platform_math :: init_num_fract ( 7 , 10 ) ;
+        static const so_called_platform_math_num_fract_type magnitude = so_called_platform_math :: init_num_fract ( 128 , 1 ) ;
+        static const so_called_platform_math_num_whole_type music_rough_and_heavy_resource_index = so_called_platform_math :: init_num_whole ( 1 ) ;
+        static const so_called_platform_math_num_whole_type modulator = so_called_platform_math :: init_num_whole ( 256 ) ;
+        static const so_called_platform_math_num_whole_type half_modulator = so_called_platform_math :: init_num_whole ( 128 ) ;
+        static const so_called_platform_math_num_whole_type music_tail_cut = so_called_platform_math :: init_num_whole ( 2293 ) ;
+        static so_called_platform_math_const_int_32_type max_stereo_sound_samples = so_called_platform_sound :: stereo_sound_samples_per_second * 60 ;
+        static so_called_platform_math_const_int_32_type max_mono_sound_samples = so_called_platform_sound :: mono_sound_samples_per_second / 2 ;
     }
 
     static void load_sound ( ) ;
-    static void int_to_sample ( so_called_type_platform_math_num_fract & result , so_called_type_platform_math_num_whole i ) ;
+    static void int_to_sample ( so_called_platform_math_num_fract_type & result , so_called_platform_math_num_whole_type i ) ;
     static void create_stereo_sound ( ) ;
     static void create_mono_sound ( ) ;
 
-    static so_called_type_platform_math_num_whole mono_sound_created ;
-    static so_called_type_platform_math_num_whole stereo_sound_created ;
-    static so_called_type_platform_math_num_whole stereo_sound_loaded ;
-    static so_called_type_platform_math_num_whole sound_prepare_permitted ;
-    static so_called_type_platform_sound_source_id stereo_sound_source ;
-    static so_called_type_platform_sound_source_id mono_sound_source ;
-    static so_called_type_platform_static_array_data 
-        < so_called_type_platform_sound_sample_stereo
+    static so_called_platform_math_num_whole_type mono_sound_created ;
+    static so_called_platform_math_num_whole_type stereo_sound_created ;
+    static so_called_platform_math_num_whole_type stereo_sound_loaded ;
+    static so_called_platform_math_num_whole_type sound_prepare_permitted ;
+    static so_called_platform_sound_source_id_type stereo_sound_source ;
+    static so_called_platform_sound_source_id_type mono_sound_source ;
+    static so_called_platform_static_array_data_type 
+        < so_called_platform_sound_sample_stereo_type
         , shy_guts :: consts :: max_stereo_sound_samples 
         > stereo_sound_data ;
-    static so_called_type_platform_static_array_data 
-        < so_called_type_platform_sound_sample_mono 
+    static so_called_platform_static_array_data_type 
+        < so_called_platform_sound_sample_mono_type 
         , shy_guts :: consts :: max_mono_sound_samples 
         > mono_sound_data ;
 }
@@ -38,15 +38,15 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: load_sound ( )
 {
-    so_called_type_platform_sound_loader_stereo_resource_id music_resource_id ;
+    so_called_platform_sound_loader_stereo_resource_id_type music_resource_id ;
     so_called_platform_sound_loader :: create_stereo_resource_id ( music_resource_id , shy_guts :: consts :: music_rough_and_heavy_resource_index ) ;
     so_called_platform_sound_loader :: load_stereo_sample_data ( shy_guts :: stereo_sound_data , music_resource_id ) ;
 }
 
-void shy_guts :: int_to_sample ( so_called_type_platform_math_num_fract & result , so_called_type_platform_math_num_whole i )
+void shy_guts :: int_to_sample ( so_called_platform_math_num_fract_type & result , so_called_platform_math_num_whole_type i )
 {
-    so_called_type_platform_math_num_whole whole_sample ;
-    so_called_type_platform_math_num_fract fract_half_modulator ;
+    so_called_platform_math_num_whole_type whole_sample ;
+    so_called_platform_math_num_fract_type fract_half_modulator ;
     so_called_platform_math :: make_fract_from_whole ( fract_half_modulator , shy_guts :: consts :: half_modulator ) ;
     so_called_platform_math :: mod_wholes ( whole_sample , i , shy_guts :: consts :: modulator ) ;
     so_called_platform_math :: sub_from_whole ( whole_sample , shy_guts :: consts :: half_modulator ) ;
@@ -56,17 +56,17 @@ void shy_guts :: int_to_sample ( so_called_type_platform_math_num_fract & result
 
 void shy_guts :: create_stereo_sound ( )
 {
-    so_called_type_platform_math_num_fract pitch ;
-    so_called_type_platform_math_num_fract pos_x ;
-    so_called_type_platform_math_num_fract pos_y ;
-    so_called_type_platform_math_num_fract pos_z ;
-    so_called_type_platform_math_num_fract vel_x ;
-    so_called_type_platform_math_num_fract vel_y ;
-    so_called_type_platform_math_num_fract vel_z ;
-    so_called_type_platform_math_num_whole loaded_samples_count ;
-    so_called_type_platform_vector_data source_pos ;
-    so_called_type_platform_vector_data source_vel ;
-    so_called_type_platform_sound_buffer_id stereo_sound_buffer ;
+    so_called_platform_math_num_fract_type pitch ;
+    so_called_platform_math_num_fract_type pos_x ;
+    so_called_platform_math_num_fract_type pos_y ;
+    so_called_platform_math_num_fract_type pos_z ;
+    so_called_platform_math_num_fract_type vel_x ;
+    so_called_platform_math_num_fract_type vel_y ;
+    so_called_platform_math_num_fract_type vel_z ;
+    so_called_platform_math_num_whole_type loaded_samples_count ;
+    so_called_platform_vector_data_type source_pos ;
+    so_called_platform_vector_data_type source_vel ;
+    so_called_platform_sound_buffer_id_type stereo_sound_buffer ;
         
     pitch = so_called_platform_math_consts :: fract_1 ;
     pos_x = so_called_platform_math_consts :: fract_0 ;
@@ -81,7 +81,7 @@ void shy_guts :: create_stereo_sound ( )
     so_called_platform_sound_loader :: loaded_samples_count ( loaded_samples_count ) ;
     so_called_platform_math :: sub_from_whole ( loaded_samples_count , shy_guts :: consts :: music_tail_cut ) ;
     
-    so_called_type_platform_math_num_whole max_music_samples ;
+    so_called_platform_math_num_whole_type max_music_samples ;
     so_called_platform_math :: make_num_whole ( max_music_samples , shy_guts :: consts :: max_stereo_sound_samples ) ;
     so_called_platform_sound :: create_stereo_buffer 
         ( stereo_sound_buffer
@@ -100,25 +100,25 @@ void shy_guts :: create_stereo_sound ( )
 
 void shy_guts :: create_mono_sound ( )
 {
-    so_called_type_platform_math_num_whole next_sample ;
-    so_called_type_platform_math_num_whole whole_max_mono_sound_samples ;
-    so_called_type_platform_math_num_fract fract_mono_sound_samples_per_second ;
+    so_called_platform_math_num_whole_type next_sample ;
+    so_called_platform_math_num_whole_type whole_max_mono_sound_samples ;
+    so_called_platform_math_num_fract_type fract_mono_sound_samples_per_second ;
 
     so_called_platform_math :: make_num_whole ( whole_max_mono_sound_samples , shy_guts :: consts :: max_mono_sound_samples ) ;
     so_called_platform_math :: make_num_fract ( fract_mono_sound_samples_per_second , so_called_platform_sound :: mono_sound_samples_per_second , 1 ) ;
     next_sample = so_called_platform_math_consts :: whole_0 ;
 
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0 
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0 
         ; so_called_platform_conditions :: whole_less_than_whole ( i , whole_max_mono_sound_samples ) 
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_math_num_fract fract_i ;
-        so_called_type_platform_math_num_fract angle ;
-        so_called_type_platform_math_num_fract angle_sin ;
-        so_called_type_platform_math_num_fract fract_sample_delta ;
-        so_called_type_platform_math_num_fract sample ;
-        so_called_type_platform_math_num_whole whole_sample_delta ;
+        so_called_platform_math_num_fract_type fract_i ;
+        so_called_platform_math_num_fract_type angle ;
+        so_called_platform_math_num_fract_type angle_sin ;
+        so_called_platform_math_num_fract_type fract_sample_delta ;
+        so_called_platform_math_num_fract_type sample ;
+        so_called_platform_math_num_whole_type whole_sample_delta ;
 
         so_called_platform_math :: make_fract_from_whole ( fract_i , i ) ;
         so_called_platform_math :: mul_fracts ( angle , fract_i , so_called_platform_math_consts :: fract_2pi ) ;
@@ -130,23 +130,23 @@ void shy_guts :: create_mono_sound ( )
         so_called_platform_math :: add_to_whole ( next_sample , whole_sample_delta ) ;
         shy_guts :: int_to_sample ( sample , next_sample ) ;
 
-        so_called_type_platform_pointer_data < so_called_type_platform_sound_sample_mono > sample_ptr ;
+        so_called_platform_pointer_data_type < so_called_platform_sound_sample_mono_type > sample_ptr ;
         so_called_platform_static_array :: element_ptr ( sample_ptr , shy_guts :: mono_sound_data , i ) ;
         so_called_platform_sound :: set_sample_value ( sample_ptr . get ( ) , sample ) ;
     }
     
-    so_called_type_platform_math_num_fract gain ;
-    so_called_type_platform_math_num_fract pitch ;
-    so_called_type_platform_math_num_fract pos_x ;
-    so_called_type_platform_math_num_fract pos_y ;
-    so_called_type_platform_math_num_fract pos_z ;
-    so_called_type_platform_math_num_fract vel_x ;
-    so_called_type_platform_math_num_fract vel_y ;
-    so_called_type_platform_math_num_fract vel_z ;
-    so_called_type_platform_vector_data source_pos ;
-    so_called_type_platform_vector_data source_vel ;
-    so_called_type_platform_math_num_whole max_sound_samples ;
-    so_called_type_platform_sound_buffer_id mono_sound_buffer ;
+    so_called_platform_math_num_fract_type gain ;
+    so_called_platform_math_num_fract_type pitch ;
+    so_called_platform_math_num_fract_type pos_x ;
+    so_called_platform_math_num_fract_type pos_y ;
+    so_called_platform_math_num_fract_type pos_z ;
+    so_called_platform_math_num_fract_type vel_x ;
+    so_called_platform_math_num_fract_type vel_y ;
+    so_called_platform_math_num_fract_type vel_z ;
+    so_called_platform_vector_data_type source_pos ;
+    so_called_platform_vector_data_type source_vel ;
+    so_called_platform_math_num_whole_type max_sound_samples ;
+    so_called_platform_sound_buffer_id_type mono_sound_buffer ;
     
     gain = so_called_platform_math_consts :: fract_1 ;
     pitch = so_called_platform_math_consts :: fract_1 ;
@@ -177,26 +177,26 @@ void _shy_common_logic_sound :: receive ( so_called_common_init_message )
     shy_guts :: stereo_sound_loaded = so_called_platform_math_consts :: whole_false ;
     shy_guts :: sound_prepare_permitted = so_called_platform_math_consts :: whole_false ;
     
-    so_called_type_platform_math_num_fract pos_x ;
-    so_called_type_platform_math_num_fract pos_y ;
-    so_called_type_platform_math_num_fract pos_z ;
+    so_called_platform_math_num_fract_type pos_x ;
+    so_called_platform_math_num_fract_type pos_y ;
+    so_called_platform_math_num_fract_type pos_z ;
     
-    so_called_type_platform_math_num_fract vel_x ;
-    so_called_type_platform_math_num_fract vel_y ;
-    so_called_type_platform_math_num_fract vel_z ;
+    so_called_platform_math_num_fract_type vel_x ;
+    so_called_platform_math_num_fract_type vel_y ;
+    so_called_platform_math_num_fract_type vel_z ;
     
-    so_called_type_platform_math_num_fract look_at_x ;
-    so_called_type_platform_math_num_fract look_at_y ;
-    so_called_type_platform_math_num_fract look_at_z ;
+    so_called_platform_math_num_fract_type look_at_x ;
+    so_called_platform_math_num_fract_type look_at_y ;
+    so_called_platform_math_num_fract_type look_at_z ;
     
-    so_called_type_platform_math_num_fract up_x ;
-    so_called_type_platform_math_num_fract up_y ;
-    so_called_type_platform_math_num_fract up_z ;
+    so_called_platform_math_num_fract_type up_x ;
+    so_called_platform_math_num_fract_type up_y ;
+    so_called_platform_math_num_fract_type up_z ;
     
-    so_called_type_platform_vector_data listener_pos ;
-    so_called_type_platform_vector_data listener_vel ;
-    so_called_type_platform_vector_data look_at ;
-    so_called_type_platform_vector_data up ;
+    so_called_platform_vector_data_type listener_pos ;
+    so_called_platform_vector_data_type listener_vel ;
+    so_called_platform_vector_data_type look_at ;
+    so_called_platform_vector_data_type up ;
     
     pos_x = so_called_platform_math_consts :: fract_0 ;
     pos_y = so_called_platform_math_consts :: fract_0 ;
@@ -235,7 +235,7 @@ void _shy_common_logic_sound :: receive ( so_called_common_logic_sound_update_me
     {
         if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: stereo_sound_loaded ) )
         {
-            so_called_type_platform_math_num_whole ready ;
+            so_called_platform_math_num_whole_type ready ;
             so_called_platform_sound_loader :: loader_ready ( ready ) ;
             if ( so_called_platform_conditions :: whole_is_true ( ready ) )
             {
@@ -245,7 +245,7 @@ void _shy_common_logic_sound :: receive ( so_called_common_logic_sound_update_me
         }
         else
         {
-            so_called_type_platform_math_num_whole ready ;
+            so_called_platform_math_num_whole_type ready ;
             so_called_platform_sound_loader :: loader_ready ( ready ) ;
             if ( so_called_platform_conditions :: whole_is_true ( ready ) )
             {
@@ -265,8 +265,8 @@ void _shy_common_logic_sound :: receive ( so_called_common_logic_sound_update_me
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: mono_sound_created ) )
     {
-        so_called_type_platform_math_num_whole touch ;
-        so_called_type_platform_math_num_whole mouse_button ;
+        so_called_platform_math_num_whole_type touch ;
+        so_called_platform_math_num_whole_type mouse_button ;
         so_called_platform_touch :: occured ( touch ) ;
         so_called_platform_mouse :: left_button_down ( mouse_button ) ;
         if ( so_called_platform_conditions :: whole_is_true ( touch ) || so_called_platform_conditions :: whole_is_true ( mouse_button ) )

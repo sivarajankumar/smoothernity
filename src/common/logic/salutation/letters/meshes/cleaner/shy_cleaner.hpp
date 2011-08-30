@@ -2,14 +2,14 @@ namespace shy_guts
 {
     namespace logic_salutation_letters_meshes_cleaner_clean_state
     {
-        static so_called_type_platform_math_num_whole mesh_current ;
+        static so_called_platform_math_num_whole_type mesh_current ;
         static void on_request ( ) ;
     }
 
     namespace logic_salutation_letters_meshes_cleaner_update
     {
-        static so_called_type_platform_math_num_whole enabled ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type enabled ;
+        static so_called_platform_math_num_fract_type time ;
         static void on_request ( ) ;
     }
 
@@ -82,8 +82,8 @@ void shy_guts :: clean_meshes_storage ( )
 
 void shy_guts :: clean_by_time ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_to_clean ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_to_clean ;
 
     time = shy_guts :: logic_salutation_letters_meshes_cleaner_update :: time ;
     time_to_clean = so_called_common_logic_salutation_letters_meshes_consts :: time_between_destruction ;
@@ -98,8 +98,8 @@ void shy_guts :: clean_by_time ( )
 
 void shy_guts :: clean ( )
 {
-    so_called_type_platform_math_num_whole mesh_current ;
-    so_called_type_platform_math_num_whole meshes_total ;
+    so_called_platform_math_num_whole_type mesh_current ;
+    so_called_platform_math_num_whole_type meshes_total ;
 
     mesh_current = shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: mesh_current ;
     meshes_total = shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . msg_reply . size ;
@@ -115,7 +115,7 @@ void shy_guts :: clean ( )
 
 void shy_guts :: clean_next_mesh ( )
 {
-    so_called_type_platform_math_num_whole mesh_index ;
+    so_called_platform_math_num_whole_type mesh_index ;
     mesh_index = shy_guts :: logic_salutation_letters_meshes_cleaner_clean_state :: mesh_current ;
 
     so_called_platform_math :: inc_whole
@@ -128,8 +128,8 @@ void shy_guts :: clean_next_mesh ( )
 
 void shy_guts :: advance_time ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_step ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_step ;
 
     time = shy_guts :: logic_salutation_letters_meshes_cleaner_update :: time ;
     so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
@@ -168,7 +168,7 @@ void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_
 
 void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_common_logic_salutation_letters_meshes_storage_mesh_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_reply ( ) ;
@@ -176,7 +176,7 @@ void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_
 
 void _shy_common_logic_salutation_letters_meshes_cleaner :: receive ( so_called_common_logic_salutation_letters_meshes_storage_size_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply ( ) ;

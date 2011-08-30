@@ -1,10 +1,10 @@
-#ifndef _shy_type_loadable_fsm_content_action_do_container_injections_included
-#define _shy_type_loadable_fsm_content_action_do_container_injections_included
+#ifndef _shy_loadable_fsm_content_action_do_container_type_injections_included
+#define _shy_loadable_fsm_content_action_do_container_type_injections_included
 
 #include "loadable/fsm/content/type/action_do/shy_action_do_injections.h"
 
 #include "./shy_action_do_container.h"
 
-typedef shy_type_loadable_fsm_content_action_do_container so_called_type_loadable_fsm_content_action_do_container ;
+typedef shy_loadable_fsm_content_action_do_container_type so_called_loadable_fsm_content_action_do_container_type ;
 
 #endif

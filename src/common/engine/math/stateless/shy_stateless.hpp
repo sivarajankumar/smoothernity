@@ -1,34 +1,34 @@
 void shy_common_engine_math_stateless :: catmull_rom_spline
-    ( so_called_type_platform_vector_data & result 
-    , so_called_type_platform_math_num_fract t 
-    , so_called_type_platform_vector_data p0 
-    , so_called_type_platform_vector_data p1 
-    , so_called_type_platform_vector_data p2 
-    , so_called_type_platform_vector_data p3 
+    ( so_called_platform_vector_data_type & result 
+    , so_called_platform_math_num_fract_type t 
+    , so_called_platform_vector_data_type p0 
+    , so_called_platform_vector_data_type p1 
+    , so_called_platform_vector_data_type p2 
+    , so_called_platform_vector_data_type p3 
     )
 {
-    so_called_type_platform_math_num_fract t2 ;
-    so_called_type_platform_math_num_fract t3 ;
-    so_called_type_platform_math_num_fract t2_mul_2 ;
-    so_called_type_platform_math_num_fract t2_mul_4 ;
-    so_called_type_platform_math_num_fract t2_mul_5 ;
-    so_called_type_platform_math_num_fract t3_mul_3 ;
-    so_called_type_platform_math_num_fract p0_coeff ;
-    so_called_type_platform_math_num_fract p1_coeff ;
-    so_called_type_platform_math_num_fract p2_coeff ;
-    so_called_type_platform_math_num_fract p3_coeff ;
-    so_called_type_platform_math_num_fract half ;
-    so_called_type_platform_math_num_fract fract_2 ;
-    so_called_type_platform_math_num_fract fract_3 ;
-    so_called_type_platform_math_num_fract fract_4 ;
-    so_called_type_platform_math_num_fract fract_5 ;
-    so_called_type_platform_vector_data p0_scaled ;
-    so_called_type_platform_vector_data p1_scaled ;
-    so_called_type_platform_vector_data p2_scaled ;
-    so_called_type_platform_vector_data p3_scaled ;
-    so_called_type_platform_vector_data result_p0_p1 ;
-    so_called_type_platform_vector_data result_p2_p3 ;
-    so_called_type_platform_vector_data result_p0_p1_p2_p3 ;
+    so_called_platform_math_num_fract_type t2 ;
+    so_called_platform_math_num_fract_type t3 ;
+    so_called_platform_math_num_fract_type t2_mul_2 ;
+    so_called_platform_math_num_fract_type t2_mul_4 ;
+    so_called_platform_math_num_fract_type t2_mul_5 ;
+    so_called_platform_math_num_fract_type t3_mul_3 ;
+    so_called_platform_math_num_fract_type p0_coeff ;
+    so_called_platform_math_num_fract_type p1_coeff ;
+    so_called_platform_math_num_fract_type p2_coeff ;
+    so_called_platform_math_num_fract_type p3_coeff ;
+    so_called_platform_math_num_fract_type half ;
+    so_called_platform_math_num_fract_type fract_2 ;
+    so_called_platform_math_num_fract_type fract_3 ;
+    so_called_platform_math_num_fract_type fract_4 ;
+    so_called_platform_math_num_fract_type fract_5 ;
+    so_called_platform_vector_data_type p0_scaled ;
+    so_called_platform_vector_data_type p1_scaled ;
+    so_called_platform_vector_data_type p2_scaled ;
+    so_called_platform_vector_data_type p3_scaled ;
+    so_called_platform_vector_data_type result_p0_p1 ;
+    so_called_platform_vector_data_type result_p2_p3 ;
+    so_called_platform_vector_data_type result_p0_p1_p2_p3 ;
     so_called_platform_math :: make_num_fract ( half , 1 , 2 ) ;    
     so_called_platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
     so_called_platform_math :: make_num_fract ( fract_3 , 3 , 1 ) ;
@@ -58,36 +58,36 @@ void shy_common_engine_math_stateless :: catmull_rom_spline
 }
 
 void shy_common_engine_math_stateless :: catmull_rom_spline
-    ( so_called_type_platform_math_num_fract & result 
-    , so_called_type_platform_math_num_fract t 
-    , so_called_type_platform_math_num_fract p0 
-    , so_called_type_platform_math_num_fract p1 
-    , so_called_type_platform_math_num_fract p2 
-    , so_called_type_platform_math_num_fract p3 
+    ( so_called_platform_math_num_fract_type & result 
+    , so_called_platform_math_num_fract_type t 
+    , so_called_platform_math_num_fract_type p0 
+    , so_called_platform_math_num_fract_type p1 
+    , so_called_platform_math_num_fract_type p2 
+    , so_called_platform_math_num_fract_type p3 
     )
 {
-    so_called_type_platform_math_num_fract t2 ;
-    so_called_type_platform_math_num_fract t3 ;
-    so_called_type_platform_math_num_fract t2_mul_2 ;
-    so_called_type_platform_math_num_fract t2_mul_4 ;
-    so_called_type_platform_math_num_fract t2_mul_5 ;
-    so_called_type_platform_math_num_fract t3_mul_3 ;
-    so_called_type_platform_math_num_fract p0_coeff ;
-    so_called_type_platform_math_num_fract p1_coeff ;
-    so_called_type_platform_math_num_fract p2_coeff ;
-    so_called_type_platform_math_num_fract p3_coeff ;
-    so_called_type_platform_math_num_fract half ;
-    so_called_type_platform_math_num_fract fract_2 ;
-    so_called_type_platform_math_num_fract fract_3 ;
-    so_called_type_platform_math_num_fract fract_4 ;
-    so_called_type_platform_math_num_fract fract_5 ;
-    so_called_type_platform_math_num_fract p0_scaled ;
-    so_called_type_platform_math_num_fract p1_scaled ;
-    so_called_type_platform_math_num_fract p2_scaled ;
-    so_called_type_platform_math_num_fract p3_scaled ;
-    so_called_type_platform_math_num_fract result_p0_p1 ;
-    so_called_type_platform_math_num_fract result_p2_p3 ;
-    so_called_type_platform_math_num_fract result_p0_p1_p2_p3 ;
+    so_called_platform_math_num_fract_type t2 ;
+    so_called_platform_math_num_fract_type t3 ;
+    so_called_platform_math_num_fract_type t2_mul_2 ;
+    so_called_platform_math_num_fract_type t2_mul_4 ;
+    so_called_platform_math_num_fract_type t2_mul_5 ;
+    so_called_platform_math_num_fract_type t3_mul_3 ;
+    so_called_platform_math_num_fract_type p0_coeff ;
+    so_called_platform_math_num_fract_type p1_coeff ;
+    so_called_platform_math_num_fract_type p2_coeff ;
+    so_called_platform_math_num_fract_type p3_coeff ;
+    so_called_platform_math_num_fract_type half ;
+    so_called_platform_math_num_fract_type fract_2 ;
+    so_called_platform_math_num_fract_type fract_3 ;
+    so_called_platform_math_num_fract_type fract_4 ;
+    so_called_platform_math_num_fract_type fract_5 ;
+    so_called_platform_math_num_fract_type p0_scaled ;
+    so_called_platform_math_num_fract_type p1_scaled ;
+    so_called_platform_math_num_fract_type p2_scaled ;
+    so_called_platform_math_num_fract_type p3_scaled ;
+    so_called_platform_math_num_fract_type result_p0_p1 ;
+    so_called_platform_math_num_fract_type result_p2_p3 ;
+    so_called_platform_math_num_fract_type result_p0_p1_p2_p3 ;
     so_called_platform_math :: make_num_fract ( half , 1 , 2 ) ;    
     so_called_platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
     so_called_platform_math :: make_num_fract ( fract_3 , 3 , 1 ) ;
@@ -117,21 +117,21 @@ void shy_common_engine_math_stateless :: catmull_rom_spline
 }
 
 void shy_common_engine_math_stateless :: lerp
-    ( so_called_type_platform_math_num_fract & result_value
-    , so_called_type_platform_math_num_fract weight
-    , so_called_type_platform_math_num_fract from_value 
-    , so_called_type_platform_math_num_fract from_weight 
-    , so_called_type_platform_math_num_fract to_value 
-    , so_called_type_platform_math_num_fract to_weight 
+    ( so_called_platform_math_num_fract_type & result_value
+    , so_called_platform_math_num_fract_type weight
+    , so_called_platform_math_num_fract_type from_value 
+    , so_called_platform_math_num_fract_type from_weight 
+    , so_called_platform_math_num_fract_type to_value 
+    , so_called_platform_math_num_fract_type to_weight 
     )
 {
     if ( so_called_platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
         result_value = from_value ;
     else if ( so_called_platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
     {
-        so_called_type_platform_math_num_fract value_diff ;
-        so_called_type_platform_math_num_fract weight_diff ;
-        so_called_type_platform_math_num_fract current_diff ;
+        so_called_platform_math_num_fract_type value_diff ;
+        so_called_platform_math_num_fract_type weight_diff ;
+        so_called_platform_math_num_fract_type current_diff ;
         so_called_platform_math :: sub_fracts ( value_diff , to_value , from_value ) ;
         so_called_platform_math :: sub_fracts ( weight_diff , to_weight , from_weight ) ;
         so_called_platform_math :: sub_fracts ( current_diff , weight , from_weight ) ;
@@ -144,26 +144,26 @@ void shy_common_engine_math_stateless :: lerp
 }
 
 void shy_common_engine_math_stateless :: hard_in_easy_out 
-    ( so_called_type_platform_math_num_fract & result_value 
-    , so_called_type_platform_math_num_fract weight 
-    , so_called_type_platform_math_num_fract from_value 
-    , so_called_type_platform_math_num_fract from_weight 
-    , so_called_type_platform_math_num_fract to_value 
-    , so_called_type_platform_math_num_fract to_weight 
+    ( so_called_platform_math_num_fract_type & result_value 
+    , so_called_platform_math_num_fract_type weight 
+    , so_called_platform_math_num_fract_type from_value 
+    , so_called_platform_math_num_fract_type from_weight 
+    , so_called_platform_math_num_fract_type to_value 
+    , so_called_platform_math_num_fract_type to_weight 
     )
 {
     if ( so_called_platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
         result_value = from_value ;
     else if ( so_called_platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
     {
-        so_called_type_platform_math_num_fract p0 ;
-        so_called_type_platform_math_num_fract p1 ;
-        so_called_type_platform_math_num_fract p2 ;
-        so_called_type_platform_math_num_fract p3 ;
-        so_called_type_platform_math_num_fract delta_value ;
-        so_called_type_platform_math_num_fract t ;
-        so_called_type_platform_math_num_fract t0 ;
-        so_called_type_platform_math_num_fract t1 ;
+        so_called_platform_math_num_fract_type p0 ;
+        so_called_platform_math_num_fract_type p1 ;
+        so_called_platform_math_num_fract_type p2 ;
+        so_called_platform_math_num_fract_type p3 ;
+        so_called_platform_math_num_fract_type delta_value ;
+        so_called_platform_math_num_fract_type t ;
+        so_called_platform_math_num_fract_type t0 ;
+        so_called_platform_math_num_fract_type t1 ;
         so_called_platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
         so_called_platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
         so_called_platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
@@ -179,25 +179,25 @@ void shy_common_engine_math_stateless :: hard_in_easy_out
 }
 
 void shy_common_engine_math_stateless :: easy_in_easy_out 
-    ( so_called_type_platform_math_num_fract & result_value 
-    , so_called_type_platform_math_num_fract weight 
-    , so_called_type_platform_math_num_fract from_value 
-    , so_called_type_platform_math_num_fract from_weight 
-    , so_called_type_platform_math_num_fract to_value 
-    , so_called_type_platform_math_num_fract to_weight 
+    ( so_called_platform_math_num_fract_type & result_value 
+    , so_called_platform_math_num_fract_type weight 
+    , so_called_platform_math_num_fract_type from_value 
+    , so_called_platform_math_num_fract_type from_weight 
+    , so_called_platform_math_num_fract_type to_value 
+    , so_called_platform_math_num_fract_type to_weight 
     )
 {
     if ( so_called_platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
         result_value = from_value ;
     else if ( so_called_platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
     {
-        so_called_type_platform_math_num_fract p0 ;
-        so_called_type_platform_math_num_fract p1 ;
-        so_called_type_platform_math_num_fract p2 ;
-        so_called_type_platform_math_num_fract p3 ;
-        so_called_type_platform_math_num_fract t ;
-        so_called_type_platform_math_num_fract t0 ;
-        so_called_type_platform_math_num_fract t1 ;
+        so_called_platform_math_num_fract_type p0 ;
+        so_called_platform_math_num_fract_type p1 ;
+        so_called_platform_math_num_fract_type p2 ;
+        so_called_platform_math_num_fract_type p3 ;
+        so_called_platform_math_num_fract_type t ;
+        so_called_platform_math_num_fract_type t0 ;
+        so_called_platform_math_num_fract_type t1 ;
         so_called_platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
         so_called_platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
         lerp ( t , weight , t0 , from_weight , t1 , to_weight ) ;
@@ -212,26 +212,26 @@ void shy_common_engine_math_stateless :: easy_in_easy_out
 }
 
 void shy_common_engine_math_stateless :: easy_in_hard_out
-    ( so_called_type_platform_math_num_fract & result_value 
-    , so_called_type_platform_math_num_fract weight 
-    , so_called_type_platform_math_num_fract from_value 
-    , so_called_type_platform_math_num_fract from_weight 
-    , so_called_type_platform_math_num_fract to_value 
-    , so_called_type_platform_math_num_fract to_weight 
+    ( so_called_platform_math_num_fract_type & result_value 
+    , so_called_platform_math_num_fract_type weight 
+    , so_called_platform_math_num_fract_type from_value 
+    , so_called_platform_math_num_fract_type from_weight 
+    , so_called_platform_math_num_fract_type to_value 
+    , so_called_platform_math_num_fract_type to_weight 
     )
 {
     if ( so_called_platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
         result_value = from_value ;
     else if ( so_called_platform_conditions :: fract_less_than_fract ( weight , to_weight ) )
     {
-        so_called_type_platform_math_num_fract p0 ;
-        so_called_type_platform_math_num_fract p1 ;
-        so_called_type_platform_math_num_fract p2 ;
-        so_called_type_platform_math_num_fract p3 ;
-        so_called_type_platform_math_num_fract delta_value ;
-        so_called_type_platform_math_num_fract t ;
-        so_called_type_platform_math_num_fract t0 ;
-        so_called_type_platform_math_num_fract t1 ;
+        so_called_platform_math_num_fract_type p0 ;
+        so_called_platform_math_num_fract_type p1 ;
+        so_called_platform_math_num_fract_type p2 ;
+        so_called_platform_math_num_fract_type p3 ;
+        so_called_platform_math_num_fract_type delta_value ;
+        so_called_platform_math_num_fract_type t ;
+        so_called_platform_math_num_fract_type t0 ;
+        so_called_platform_math_num_fract_type t1 ;
         so_called_platform_math :: make_num_fract ( t0 , 0 , 1 ) ;
         so_called_platform_math :: make_num_fract ( t1 , 1 , 1 ) ;
         so_called_platform_math :: sub_fracts ( delta_value , from_value , to_value ) ;
@@ -247,14 +247,14 @@ void shy_common_engine_math_stateless :: easy_in_hard_out
 }
 
 void shy_common_engine_math_stateless :: hard_attack_easy_decay 
-    ( so_called_type_platform_math_num_fract & result_value 
-    , so_called_type_platform_math_num_fract weight 
-    , so_called_type_platform_math_num_fract from_value 
-    , so_called_type_platform_math_num_fract from_weight 
-    , so_called_type_platform_math_num_fract mid_value
-    , so_called_type_platform_math_num_fract mid_weight
-    , so_called_type_platform_math_num_fract to_value
-    , so_called_type_platform_math_num_fract to_weight
+    ( so_called_platform_math_num_fract_type & result_value 
+    , so_called_platform_math_num_fract_type weight 
+    , so_called_platform_math_num_fract_type from_value 
+    , so_called_platform_math_num_fract_type from_weight 
+    , so_called_platform_math_num_fract_type mid_value
+    , so_called_platform_math_num_fract_type mid_weight
+    , so_called_platform_math_num_fract_type to_value
+    , so_called_platform_math_num_fract_type to_weight
     )
 {
     if ( so_called_platform_conditions :: fract_less_than_fract ( weight , from_weight ) )
@@ -268,10 +268,10 @@ void shy_common_engine_math_stateless :: hard_attack_easy_decay
 }
 
 void shy_common_engine_math_stateless :: clamp_fract 
-    ( so_called_type_platform_math_num_fract & result 
-    , so_called_type_platform_math_num_fract num 
-    , so_called_type_platform_math_num_fract from 
-    , so_called_type_platform_math_num_fract to 
+    ( so_called_platform_math_num_fract_type & result 
+    , so_called_platform_math_num_fract_type num 
+    , so_called_platform_math_num_fract_type from 
+    , so_called_platform_math_num_fract_type to 
     )
 {
     if ( so_called_platform_conditions :: fract_less_than_fract ( num , from ) )
@@ -283,9 +283,9 @@ void shy_common_engine_math_stateless :: clamp_fract
 }
 
 void shy_common_engine_math_stateless :: clamp_fract 
-    ( so_called_type_platform_math_num_fract & num 
-    , so_called_type_platform_math_num_fract from 
-    , so_called_type_platform_math_num_fract to 
+    ( so_called_platform_math_num_fract_type & num 
+    , so_called_platform_math_num_fract_type from 
+    , so_called_platform_math_num_fract_type to 
     )
 {
     if ( so_called_platform_conditions :: fract_less_than_fract ( num , from ) )
@@ -295,10 +295,10 @@ void shy_common_engine_math_stateless :: clamp_fract
 }
 
 void shy_common_engine_math_stateless :: clamp_whole
-    ( so_called_type_platform_math_num_whole & result 
-    , so_called_type_platform_math_num_whole num 
-    , so_called_type_platform_math_num_whole from 
-    , so_called_type_platform_math_num_whole to 
+    ( so_called_platform_math_num_whole_type & result 
+    , so_called_platform_math_num_whole_type num 
+    , so_called_platform_math_num_whole_type from 
+    , so_called_platform_math_num_whole_type to 
     )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( num , from ) )
@@ -310,9 +310,9 @@ void shy_common_engine_math_stateless :: clamp_whole
 }
 
 void shy_common_engine_math_stateless :: min_whole 
-    ( so_called_type_platform_math_num_whole & result 
-    , so_called_type_platform_math_num_whole a 
-    , so_called_type_platform_math_num_whole b 
+    ( so_called_platform_math_num_whole_type & result 
+    , so_called_platform_math_num_whole_type a 
+    , so_called_platform_math_num_whole_type b 
     )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( a , b ) )
@@ -322,9 +322,9 @@ void shy_common_engine_math_stateless :: min_whole
 }
 
 void shy_common_engine_math_stateless :: max_whole 
-    ( so_called_type_platform_math_num_whole & result 
-    , so_called_type_platform_math_num_whole a 
-    , so_called_type_platform_math_num_whole b 
+    ( so_called_platform_math_num_whole_type & result 
+    , so_called_platform_math_num_whole_type a 
+    , so_called_platform_math_num_whole_type b 
     )
 {
     if ( so_called_platform_conditions :: whole_greater_than_whole ( a , b ) )
@@ -333,7 +333,7 @@ void shy_common_engine_math_stateless :: max_whole
         result = b ;
 }
     
-void shy_common_engine_math_stateless :: abs_whole ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole a )
+void shy_common_engine_math_stateless :: abs_whole ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type a )
 {
     if ( so_called_platform_conditions :: whole_less_than_zero ( a ) )
         so_called_platform_math :: neg_whole ( result , a ) ;
@@ -342,19 +342,19 @@ void shy_common_engine_math_stateless :: abs_whole ( so_called_type_platform_mat
 }
 
 void shy_common_engine_math_stateless :: rotation_z 
-    ( so_called_type_platform_vector_data & axis_x 
-    , so_called_type_platform_vector_data & axis_y 
-    , so_called_type_platform_math_num_fract angle 
+    ( so_called_platform_vector_data_type & axis_x 
+    , so_called_platform_vector_data_type & axis_y 
+    , so_called_platform_math_num_fract_type angle 
     )
 {
-    so_called_type_platform_math_num_fract rot_sin ;
-    so_called_type_platform_math_num_fract rot_cos ;
-    so_called_type_platform_math_num_fract axis_x_x ;
-    so_called_type_platform_math_num_fract axis_x_y ;
-    so_called_type_platform_math_num_fract axis_x_z ;
-    so_called_type_platform_math_num_fract axis_y_x ;
-    so_called_type_platform_math_num_fract axis_y_y ;
-    so_called_type_platform_math_num_fract axis_y_z ;
+    so_called_platform_math_num_fract_type rot_sin ;
+    so_called_platform_math_num_fract_type rot_cos ;
+    so_called_platform_math_num_fract_type axis_x_x ;
+    so_called_platform_math_num_fract_type axis_x_y ;
+    so_called_platform_math_num_fract_type axis_x_z ;
+    so_called_platform_math_num_fract_type axis_y_x ;
+    so_called_platform_math_num_fract_type axis_y_y ;
+    so_called_platform_math_num_fract_type axis_y_z ;
 
     so_called_platform_math :: sin ( rot_sin , angle ) ;
     so_called_platform_math :: cos ( rot_cos , angle ) ;
@@ -371,9 +371,9 @@ void shy_common_engine_math_stateless :: rotation_z
     so_called_platform_vector :: xyz ( axis_y , axis_y_x , axis_y_y , axis_y_z ) ;
 }
 
-void shy_common_engine_math_stateless :: scale ( so_called_type_platform_matrix_data & matrix , so_called_type_platform_math_num_fract scale )
+void shy_common_engine_math_stateless :: scale ( so_called_platform_matrix_data_type & matrix , so_called_platform_math_num_fract_type scale )
 {
-    so_called_type_platform_math_num_fract zero ;
+    so_called_platform_math_num_fract_type zero ;
     so_called_platform_math :: make_num_fract ( zero , 0 , 1 ) ;
     so_called_platform_matrix :: identity ( matrix ) ;
     so_called_platform_matrix :: set_axis_x ( matrix , scale , zero , zero ) ;

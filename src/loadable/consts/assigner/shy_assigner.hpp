@@ -8,74 +8,74 @@ namespace shy_guts
     static so_called_lib_std_bool error = so_called_lib_std_false ;
 
     static void assign_module 
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
         ) ;
     static void assign_module_value_fract 
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_fract_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_fract_container_type :: const_iterator
         ) ;
     static void assign_module_value_fract_clamped
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator
-        , so_called_type_loadable_consts_content_value_fract_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator
+        , so_called_loadable_consts_content_value_fract_container_type :: const_iterator
         , so_called_lib_std_int32_t
         , so_called_lib_std_int32_t
         ) ;
     static void assign_module_value_fract_max
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_fract_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_fract_container_type :: const_iterator
         ) ;
     static void assign_module_value_fract_min
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_fract_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_fract_container_type :: const_iterator
         ) ;
     static void assign_module_value_whole 
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_whole_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_whole_container_type :: const_iterator
         ) ;
     static void assign_module_value_whole_clamped
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator
-        , so_called_type_loadable_consts_content_value_whole_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator
+        , so_called_loadable_consts_content_value_whole_container_type :: const_iterator
         , so_called_lib_std_int32_t
         ) ;
     static void assign_module_value_whole_max
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_whole_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_whole_container_type :: const_iterator
         ) ;
     static void assign_module_value_whole_min
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_whole_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_whole_container_type :: const_iterator
         ) ;
     static void check_module_value_fract_max
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_fract_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_fract_container_type :: const_iterator
         ) ;
     static void check_module_value_fract_min
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_fract_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_fract_container_type :: const_iterator
         ) ;
     static void check_module_value_whole_max
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_whole_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_whole_container_type :: const_iterator
         ) ;
     static void check_module_value_whole_min
-        ( so_called_type_loadable_consts_content_module_container :: const_iterator 
-        , so_called_type_loadable_consts_content_value_whole_container :: const_iterator
+        ( so_called_loadable_consts_content_module_container_type :: const_iterator 
+        , so_called_loadable_consts_content_value_whole_container_type :: const_iterator
         ) ;
 }
 
 void shy_guts :: assign_module 
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
     )
 {
-    const so_called_type_loadable_consts_content_module & module = module_i -> second ;
-    for ( so_called_type_loadable_consts_content_value_whole_container :: const_iterator whole_i = module . name_to_whole . begin ( )
+    const so_called_loadable_consts_content_module_type & module = module_i -> second ;
+    for ( so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i = module . name_to_whole . begin ( )
         ; whole_i != module . name_to_whole . end ( )
         ; ++ whole_i
         )
     {
         shy_guts :: assign_module_value_whole ( module_i , whole_i ) ;
     }
-    for ( so_called_type_loadable_consts_content_value_fract_container :: const_iterator fract_i = module . name_to_fract . begin ( )
+    for ( so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i = module . name_to_fract . begin ( )
         ; fract_i != module . name_to_fract . end ( )
         ; ++ fract_i
         )
@@ -85,8 +85,8 @@ void shy_guts :: assign_module
 }
 
 void shy_guts :: check_module_value_fract_min
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_fract_container :: const_iterator fract_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     )
 {
     if ( ! fract_i -> second . min_set )
@@ -105,8 +105,8 @@ void shy_guts :: check_module_value_fract_min
 }
 
 void shy_guts :: check_module_value_fract_max
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_fract_container :: const_iterator fract_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     )
 {
     if ( ! fract_i -> second . max_set )
@@ -125,8 +125,8 @@ void shy_guts :: check_module_value_fract_max
 }
 
 void shy_guts :: check_module_value_whole_min
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_whole_container :: const_iterator whole_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     )
 {
     if ( ! whole_i -> second . min_set )
@@ -145,8 +145,8 @@ void shy_guts :: check_module_value_whole_min
 }
 
 void shy_guts :: check_module_value_whole_max
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_whole_container :: const_iterator whole_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     )
 {
     if ( ! whole_i -> second . max_set )
@@ -165,8 +165,8 @@ void shy_guts :: check_module_value_whole_max
 }
 
 void shy_guts :: assign_module_value_fract_min
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_fract_container :: const_iterator fract_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     )
 {
     if ( shy_guts :: consts :: trace_enabled )
@@ -184,8 +184,8 @@ void shy_guts :: assign_module_value_fract_min
 }
 
 void shy_guts :: assign_module_value_fract_max
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_fract_container :: const_iterator fract_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     )
 {
     if ( shy_guts :: consts :: trace_enabled )
@@ -203,8 +203,8 @@ void shy_guts :: assign_module_value_fract_max
 }
 
 void shy_guts :: assign_module_value_whole_min
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_whole_container :: const_iterator whole_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     )
 {
     if ( shy_guts :: consts :: trace_enabled )
@@ -221,8 +221,8 @@ void shy_guts :: assign_module_value_whole_min
 }
 
 void shy_guts :: assign_module_value_whole_max
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_whole_container :: const_iterator whole_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     )
 {
     if ( shy_guts :: consts :: trace_enabled )
@@ -239,13 +239,13 @@ void shy_guts :: assign_module_value_whole_max
 }
 
 void shy_guts :: assign_module_value_fract 
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_fract_container :: const_iterator fract_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     )
 {
     so_called_lib_std_string module_name = module_i -> first ;
     so_called_lib_std_string fract_name = fract_i -> first ;
-    const so_called_type_loadable_consts_content_value_fract & fract = fract_i -> second ;
+    const so_called_loadable_consts_content_value_fract_type & fract = fract_i -> second ;
 
     shy_guts :: check_module_value_fract_min ( module_i , fract_i ) ;
     shy_guts :: check_module_value_fract_max ( module_i , fract_i ) ;
@@ -280,15 +280,15 @@ void shy_guts :: assign_module_value_fract
 }
 
 void shy_guts :: assign_module_value_fract_clamped
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_fract_container :: const_iterator fract_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     , so_called_lib_std_int32_t value_numerator
     , so_called_lib_std_int32_t value_denominator
     )
 {
     so_called_lib_std_string module_name = module_i -> first ;
     so_called_lib_std_string fract_name = fract_i -> first ;
-    const so_called_type_loadable_consts_content_value_fract & fract = fract_i -> second ;
+    const so_called_loadable_consts_content_value_fract_type & fract = fract_i -> second ;
 
     if ( fract . min_set && value_numerator * fract . min_denominator < fract . min_numerator * value_denominator )
     {
@@ -331,14 +331,14 @@ void shy_guts :: assign_module_value_fract_clamped
 }
 
 void shy_guts :: assign_module_value_whole_clamped
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_whole_container :: const_iterator whole_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     , so_called_lib_std_int32_t value
     )
 {
     so_called_lib_std_string module_name = module_i -> first ;
     so_called_lib_std_string whole_name = whole_i -> first ;
-    const so_called_type_loadable_consts_content_value_whole & whole = whole_i -> second ;
+    const so_called_loadable_consts_content_value_whole_type & whole = whole_i -> second ;
 
     if ( whole . min_set && value < whole . min_value )
     {
@@ -377,13 +377,13 @@ void shy_guts :: assign_module_value_whole_clamped
 }
 
 void shy_guts :: assign_module_value_whole 
-    ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i
-    , so_called_type_loadable_consts_content_value_whole_container :: const_iterator whole_i
+    ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i
+    , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     )
 {
     so_called_lib_std_string module_name = module_i -> first ;
     so_called_lib_std_string whole_name = whole_i -> first ;
-    const so_called_type_loadable_consts_content_value_whole & whole = whole_i -> second ;
+    const so_called_loadable_consts_content_value_whole_type & whole = whole_i -> second ;
     
     shy_guts :: check_module_value_whole_min ( module_i , whole_i ) ;
     shy_guts :: check_module_value_whole_max ( module_i , whole_i ) ;
@@ -412,9 +412,9 @@ void shy_loadable_consts_assigner :: prepare ( )
 
 void shy_loadable_consts_assigner :: assign ( )
 {
-    so_called_type_loadable_consts_content_module_container * module_container = 0 ;
+    so_called_loadable_consts_content_module_container_type * module_container = 0 ;
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
-    for ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i = module_container -> begin ( )
+    for ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i = module_container -> begin ( )
         ; module_i != module_container -> end ( )
         ; ++ module_i
         )

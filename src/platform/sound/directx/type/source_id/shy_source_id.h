@@ -1,8 +1,8 @@
-class shy_type_platform_sound_directx_source_id
+class shy_platform_sound_directx_source_id_type
 {
     friend class shy_platform_sound_directx ;
 public :
-    shy_type_platform_sound_directx_source_id ( ) ;
+    shy_platform_sound_directx_source_id_type ( ) ;
 private :
     so_called_lib_std_int32_t _dummy ;
 } ;

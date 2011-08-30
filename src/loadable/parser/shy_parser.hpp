@@ -1,6 +1,6 @@
 namespace shy_guts
 {
-    enum type_token_class
+    enum token_class_type
     {
         token_class_none ,
         token_class_terminator ,
@@ -15,7 +15,7 @@ namespace shy_guts
         token_class_unknown
     } ;
 
-    enum type_state
+    enum state_type
     {
         state_none ,
         state_error ,
@@ -66,25 +66,25 @@ namespace shy_guts
     static so_called_lib_std_string attribute_numerator_value ;
     static so_called_lib_std_bool continue_parsing = so_called_lib_std_false ;
     static so_called_lib_std_bool continue_reading_next_token = so_called_lib_std_false ;
-    static so_called_type_loadable_fsm_content_action_command current_fsm_action_command ;
-    static so_called_type_loadable_fsm_content_actions * current_fsm_actions = 0 ;
-    static so_called_type_loadable_fsm_content_condition_group * current_fsm_condition_group = 0 ;
-    static so_called_type_loadable_fsm_content_condition_group_container * current_fsm_condition_group_container = 0 ;
-    static so_called_type_loadable_fsm_content_condition_state current_fsm_condition_state ;
-    static so_called_type_loadable_fsm_content_machine * current_fsm_machine = 0 ;
-    static so_called_type_loadable_fsm_content_on_input * current_fsm_on_input = 0 ;
-    static so_called_type_loadable_fsm_content_state * current_fsm_state = 0 ;
-    static so_called_type_loadable_fsm_content_system * current_fsm_system = 0 ;
+    static so_called_loadable_fsm_content_action_command_type current_fsm_action_command ;
+    static so_called_loadable_fsm_content_actions_type * current_fsm_actions = 0 ;
+    static so_called_loadable_fsm_content_condition_group_type * current_fsm_condition_group = 0 ;
+    static so_called_loadable_fsm_content_condition_group_container_type * current_fsm_condition_group_container = 0 ;
+    static so_called_loadable_fsm_content_condition_state_type current_fsm_condition_state ;
+    static so_called_loadable_fsm_content_machine_type * current_fsm_machine = 0 ;
+    static so_called_loadable_fsm_content_on_input_type * current_fsm_on_input = 0 ;
+    static so_called_loadable_fsm_content_state_type * current_fsm_state = 0 ;
+    static so_called_loadable_fsm_content_system_type * current_fsm_system = 0 ;
     static so_called_lib_std_string current_fsm_system_name ;
-    static so_called_type_loadable_fsm_content_transition * current_fsm_transition = 0 ;
+    static so_called_loadable_fsm_content_transition_type * current_fsm_transition = 0 ;
     static so_called_lib_std_bool error = so_called_lib_std_false ;
     static so_called_lib_std_bool input_actions_conditions_selected = so_called_lib_std_false ;
     static so_called_lib_std_locale locale ;
     static so_called_lib_std_string module_name ;
     static so_called_lib_std_string remaining_line ;
-    static type_state state = state_none ;
+    static state_type state = state_none ;
     static so_called_lib_std_string token ;
-    static type_token_class token_class = token_class_none ;
+    static token_class_type token_class = token_class_none ;
     static so_called_lib_std_bool transition_conditions_selected = so_called_lib_std_false ;
     static so_called_lib_std_string whole_line ;
 
@@ -1028,7 +1028,7 @@ void shy_guts :: store_attribute_denominator_value ( so_called_lib_std_string va
 
 void shy_guts :: store_system_name ( so_called_lib_std_string name )
 {
-    so_called_type_loadable_fsm_content_system_container * system_container = 0 ;
+    so_called_loadable_fsm_content_system_container_type * system_container = 0 ;
     so_called_loadable_fsm_content :: get_system_container ( system_container ) ;
     if ( system_container -> find ( name ) == system_container -> end ( ) )
     {
@@ -1050,7 +1050,7 @@ void shy_guts :: store_machine_name ( so_called_lib_std_string name )
     if ( shy_guts :: current_fsm_system )
     {
         if ( shy_guts :: current_fsm_system -> machines . find ( name ) == shy_guts :: current_fsm_system -> machines . end ( ) )
-            shy_guts :: current_fsm_system -> machines [ name ] = so_called_type_loadable_fsm_content_machine ( ) ;
+            shy_guts :: current_fsm_system -> machines [ name ] = so_called_loadable_fsm_content_machine_type ( ) ;
         shy_guts :: current_fsm_machine = & ( shy_guts :: current_fsm_system -> machines [ name ] ) ;
     }
 }
@@ -1060,7 +1060,7 @@ void shy_guts :: store_state_name ( so_called_lib_std_string name )
     if ( shy_guts :: current_fsm_machine )
     {
         if ( shy_guts :: current_fsm_machine -> states . find ( name ) == shy_guts :: current_fsm_machine -> states . end ( ) )
-            shy_guts :: current_fsm_machine -> states [ name ] = so_called_type_loadable_fsm_content_state ( ) ;
+            shy_guts :: current_fsm_machine -> states [ name ] = so_called_loadable_fsm_content_state_type ( ) ;
         shy_guts :: current_fsm_state = & ( shy_guts :: current_fsm_machine -> states [ name ] ) ;
     }
 }
@@ -1075,7 +1075,7 @@ void shy_guts :: store_action_do_name ( so_called_lib_std_string name )
     }
     else if ( shy_guts :: current_fsm_actions )
     {
-        so_called_type_loadable_fsm_content_action_do action_do ;
+        so_called_loadable_fsm_content_action_do_type action_do ;
         action_do . action = name ;
         shy_guts :: current_fsm_actions -> actions . push_back ( action_do ) ;
     }
@@ -1091,7 +1091,7 @@ void shy_guts :: store_action_discard_input_name ( so_called_lib_std_string name
     }
     else if ( shy_guts :: current_fsm_actions )
     {
-        so_called_type_loadable_fsm_content_action_discard action_discard ;
+        so_called_loadable_fsm_content_action_discard_type action_discard ;
         action_discard . input = name ;
         shy_guts :: current_fsm_actions -> discards . push_back ( action_discard ) ;
     }
@@ -1129,7 +1129,7 @@ void shy_guts :: store_input_condition ( so_called_lib_std_string input )
     }
     else if ( shy_guts :: current_fsm_condition_group )
     {
-        so_called_type_loadable_fsm_content_condition_input condition ;
+        so_called_loadable_fsm_content_condition_input_type condition ;
         condition . input = input ;
         shy_guts :: current_fsm_condition_group -> inputs . push_back ( condition ) ;
     }
@@ -1155,7 +1155,7 @@ void shy_guts :: store_command_condition_command_name ( so_called_lib_std_string
 {
     if ( shy_guts :: current_fsm_condition_group )
     {
-        so_called_type_loadable_fsm_content_condition_command condition ;
+        so_called_loadable_fsm_content_condition_command_type condition ;
         condition . command = name ;
         shy_guts :: current_fsm_condition_group -> commands . push_back ( condition ) ;
     }
@@ -1207,7 +1207,7 @@ void shy_guts :: add_on_input_event ( )
 {
     if ( shy_guts :: current_fsm_state )
     {
-        shy_guts :: current_fsm_state -> on_input . push_back ( so_called_type_loadable_fsm_content_on_input ( ) ) ;
+        shy_guts :: current_fsm_state -> on_input . push_back ( so_called_loadable_fsm_content_on_input_type ( ) ) ;
         shy_guts :: current_fsm_on_input = & shy_guts :: current_fsm_state -> on_input . back ( ) ;
     }
 }
@@ -1216,7 +1216,7 @@ void shy_guts :: add_transition ( )
 {
     if ( shy_guts :: current_fsm_state )
     {
-        shy_guts :: current_fsm_state -> transitions . push_back ( so_called_type_loadable_fsm_content_transition ( ) ) ;
+        shy_guts :: current_fsm_state -> transitions . push_back ( so_called_loadable_fsm_content_transition_type ( ) ) ;
         shy_guts :: current_fsm_transition = & shy_guts :: current_fsm_state -> transitions . back ( ) ;
     }
 }
@@ -1225,7 +1225,7 @@ void shy_guts :: add_condition_group ( )
 {
     if ( shy_guts :: current_fsm_condition_group_container )
     {
-        shy_guts :: current_fsm_condition_group_container -> push_back ( so_called_type_loadable_fsm_content_condition_group ( ) ) ;
+        shy_guts :: current_fsm_condition_group_container -> push_back ( so_called_loadable_fsm_content_condition_group_type ( ) ) ;
         shy_guts :: current_fsm_condition_group = & shy_guts :: current_fsm_condition_group_container -> back ( ) ;
     }
 }
@@ -1239,8 +1239,8 @@ void shy_guts :: process_syntax_error ( )
 
 void shy_guts :: set_whole_value ( )
 {
-    so_called_type_loadable_consts_content_module_container * module_container = 0 ;
-    so_called_type_loadable_consts_content_module_container :: iterator module_i ;
+    so_called_loadable_consts_content_module_container_type * module_container = 0 ;
+    so_called_loadable_consts_content_module_container_type :: iterator module_i ;
 
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
     module_i = module_container -> find ( shy_guts :: module_name ) ;
@@ -1252,8 +1252,8 @@ void shy_guts :: set_whole_value ( )
     }
     else
     {
-        so_called_type_loadable_consts_content_module & module = module_i -> second ;
-        so_called_type_loadable_consts_content_value_whole_container :: iterator whole_i ;
+        so_called_loadable_consts_content_module_type & module = module_i -> second ;
+        so_called_loadable_consts_content_value_whole_container_type :: iterator whole_i ;
         whole_i = module . name_to_whole . find ( shy_guts :: attribute_name ) ;
         if ( whole_i == module . name_to_whole . end ( ) )
         {
@@ -1263,7 +1263,7 @@ void shy_guts :: set_whole_value ( )
         }
         else
         {
-            so_called_type_loadable_consts_content_value_whole & whole = whole_i -> second ;
+            so_called_loadable_consts_content_value_whole_type & whole = whole_i -> second ;
             whole . sign = shy_guts :: attribute_numerator_sign ;
             whole . value = shy_guts :: attribute_numerator_value ;
         }
@@ -1272,8 +1272,8 @@ void shy_guts :: set_whole_value ( )
 
 void shy_guts :: set_fract_value ( )
 {
-    so_called_type_loadable_consts_content_module_container * module_container = 0 ;
-    so_called_type_loadable_consts_content_module_container :: iterator module_i ;
+    so_called_loadable_consts_content_module_container_type * module_container = 0 ;
+    so_called_loadable_consts_content_module_container_type :: iterator module_i ;
 
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
     module_i = module_container -> find ( shy_guts :: module_name ) ;
@@ -1285,8 +1285,8 @@ void shy_guts :: set_fract_value ( )
     }
     else
     {
-        so_called_type_loadable_consts_content_module & module = module_i -> second ;
-        so_called_type_loadable_consts_content_value_fract_container :: iterator fract_i ;
+        so_called_loadable_consts_content_module_type & module = module_i -> second ;
+        so_called_loadable_consts_content_value_fract_container_type :: iterator fract_i ;
         fract_i = module . name_to_fract . find ( shy_guts :: attribute_name ) ;
         if ( fract_i == module . name_to_fract . end ( ) )
         {
@@ -1296,7 +1296,7 @@ void shy_guts :: set_fract_value ( )
         }
         else
         {
-            so_called_type_loadable_consts_content_value_fract & fract = fract_i -> second ;
+            so_called_loadable_consts_content_value_fract_type & fract = fract_i -> second ;
             fract . numerator_sign = shy_guts :: attribute_numerator_sign ;
             fract . numerator_value = shy_guts :: attribute_numerator_value ;
             fract . denominator_sign = shy_guts :: attribute_denominator_sign ;

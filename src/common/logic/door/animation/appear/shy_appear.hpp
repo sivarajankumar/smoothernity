@@ -2,13 +2,13 @@ namespace shy_guts
 {
     namespace logic_door_animation_appear_transform_state
     {
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_fract_type scale ;
     }
 
     namespace logic_door_update_state
     {
-        static so_called_type_platform_math_num_whole started ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type started ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void compute_transform ( ) ;
@@ -20,13 +20,13 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_math_num_fract scale_begin ;
-    so_called_type_platform_math_num_fract scale_end ;
-    so_called_type_platform_math_num_fract scale ;
-    so_called_type_platform_math_num_fract time_from_begin_to_end ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract time ;
+    so_called_platform_math_num_fract_type scale_begin ;
+    so_called_platform_math_num_fract_type scale_end ;
+    so_called_platform_math_num_fract_type scale ;
+    so_called_platform_math_num_fract_type time_from_begin_to_end ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type time ;
 
     scale_begin = so_called_common_logic_door_animation_consts :: appear_scale_begin ;
     scale_end = so_called_common_logic_door_animation_consts :: appear_scale_end ;
@@ -77,7 +77,7 @@ void _shy_common_logic_door_animation_appear :: receive ( so_called_common_logic
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_door_update_state :: started ) )
     {
-        so_called_type_platform_math_num_fract time_step ;
+        so_called_platform_math_num_fract_type time_step ;
         so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_door_update_state :: time , time_step ) ;
     }

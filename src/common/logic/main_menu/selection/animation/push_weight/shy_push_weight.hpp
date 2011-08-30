@@ -2,21 +2,21 @@ namespace shy_guts
 {
     namespace logic_main_menu_selection_animation_push_weight_state
     {
-        static so_called_type_platform_math_num_fract weight ;
+        static so_called_platform_math_num_fract_type weight ;
     }
 
     namespace logic_controls_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole primary_button_down ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_whole_type primary_button_down ;
     }
 
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole clicked ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type clicked ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void proceed_with_update ( ) ;
@@ -51,10 +51,10 @@ void shy_guts :: obtain_controls_state ( )
 
 void shy_guts :: controls_state_received ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_step ;
-    so_called_type_platform_math_num_whole clicked ;
-    so_called_type_platform_math_num_whole primary_button_down ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_step ;
+    so_called_platform_math_num_whole_type clicked ;
+    so_called_platform_math_num_whole_type primary_button_down ;
 
     time = shy_guts :: logic_main_menu_update_state :: time ;
     clicked = shy_guts :: logic_main_menu_update_state :: clicked ;
@@ -73,14 +73,14 @@ void shy_guts :: controls_state_received ( )
 
 void shy_guts :: compute_weight ( )
 {
-    so_called_type_platform_math_num_fract time_to_begin ;
-    so_called_type_platform_math_num_fract time_from_begin_to_end ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract weight ;
-    so_called_type_platform_math_num_fract weight_min ;
-    so_called_type_platform_math_num_fract weight_max ;
+    so_called_platform_math_num_fract_type time_to_begin ;
+    so_called_platform_math_num_fract_type time_from_begin_to_end ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type weight ;
+    so_called_platform_math_num_fract_type weight_min ;
+    so_called_platform_math_num_fract_type weight_max ;
     
     time = shy_guts :: logic_main_menu_update_state :: time ;
     time_to_begin = so_called_common_logic_main_menu_selection_animation_consts :: push_weight_time_to_begin ;

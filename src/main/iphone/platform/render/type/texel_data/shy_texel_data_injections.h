@@ -1,8 +1,8 @@
-#ifndef _shy_type_iphone_platform_render_texel_data_injections_included
-#define _shy_type_iphone_platform_render_texel_data_injections_included
+#ifndef _shy_iphone_platform_render_texel_data_type_injections_included
+#define _shy_iphone_platform_render_texel_data_type_injections_included
 
 #include "platform/render/opengl/type/texel_data/shy_texel_data_injections.h"
-typedef so_called_type_platform_render_opengl_texel_data so_called_type_platform_render_texel_data ;
+typedef so_called_platform_render_opengl_texel_data_type so_called_platform_render_texel_data_type ;
 
 #endif
 

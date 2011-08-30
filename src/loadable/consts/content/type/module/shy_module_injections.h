@@ -1,11 +1,11 @@
-#ifndef _shy_type_loadable_consts_content_module_injections_included
-#define _shy_type_loadable_consts_content_module_injections_included
+#ifndef _shy_loadable_consts_content_module_type_injections_included
+#define _shy_loadable_consts_content_module_type_injections_included
 
 #include "loadable/consts/content/type/value_fract_container/shy_value_fract_container_injections.h"
 #include "loadable/consts/content/type/value_whole_container/shy_value_whole_container_injections.h"
 
 #include "./shy_module.h"
 
-typedef shy_type_loadable_consts_content_module so_called_type_loadable_consts_content_module ;
+typedef shy_loadable_consts_content_module_type so_called_loadable_consts_content_module_type ;
 
 #endif

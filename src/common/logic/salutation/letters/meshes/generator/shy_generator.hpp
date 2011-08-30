@@ -8,14 +8,14 @@ namespace shy_guts
 
     namespace logic_salutation_letters_meshes_generator_generate_state
     {
-        static so_called_type_platform_math_num_whole letter_current ;
+        static so_called_platform_math_num_whole_type letter_current ;
         static void on_request ( ) ;
     }
 
     namespace logic_salutation_letters_meshes_generator_update
     {
-        static so_called_type_platform_math_num_whole enabled ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type enabled ;
+        static so_called_platform_math_num_fract_type time ;
         static void on_request ( ) ;
     }
 
@@ -72,8 +72,8 @@ void shy_guts :: request_letters_amount_in_storage ( )
 
 void shy_guts :: generate_by_time ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_to_create ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_to_create ;
 
     time = shy_guts :: logic_salutation_letters_meshes_generator_update :: time ;
     time_to_create = so_called_common_logic_salutation_letters_meshes_consts :: time_between_creation ;
@@ -88,8 +88,8 @@ void shy_guts :: generate_by_time ( )
 
 void shy_guts :: generate ( )
 {
-    so_called_type_platform_math_num_whole letter_current ;
-    so_called_type_platform_math_num_whole letters_total ;
+    so_called_platform_math_num_whole_type letter_current ;
+    so_called_platform_math_num_whole_type letters_total ;
 
     letter_current = shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: letter_current ;
     letters_total = shy_guts :: logic_salutation_letters_text_storage_size_state :: taker . msg_reply . size ;
@@ -102,7 +102,7 @@ void shy_guts :: generate ( )
 
 void shy_guts :: generate_next_mesh ( )
 {
-    so_called_type_platform_math_num_whole letter_index ;
+    so_called_platform_math_num_whole_type letter_index ;
     letter_index = shy_guts :: logic_salutation_letters_meshes_generator_generate_state :: letter_current ;
 
     so_called_platform_math :: inc_whole
@@ -115,8 +115,8 @@ void shy_guts :: generate_next_mesh ( )
 
 void shy_guts :: advance_time ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_step ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_step ;
 
     time = shy_guts :: logic_salutation_letters_meshes_generator_update :: time ;
     so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
@@ -152,7 +152,7 @@ void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_calle
 
 void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_common_logic_salutation_letters_meshes_creator_create_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_meshes_creator_create_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_meshes_creator_create_state :: on_reply ( ) ;
@@ -160,7 +160,7 @@ void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_calle
 
 void _shy_common_logic_salutation_letters_meshes_generator :: receive ( so_called_common_logic_salutation_letters_text_storage_size_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_text_storage_size_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_text_storage_size_state :: on_reply ( ) ;

@@ -1,58 +1,58 @@
 template 
-    < typename type_checker
-    , typename type_message_reply 
-    , typename type_message_request
-    , typename type_sender_request
+    < typename checker_type
+    , typename message_reply_type 
+    , typename message_request_type
+    , typename sender_request_type
     >
 class shy_common_engine_taker
 {
 public :
     void init ( ) ;
     void request ( ) ;
-    void should_handle ( so_called_type_platform_math_num_whole & , type_message_reply ) ;
+    void should_handle ( so_called_platform_math_num_whole_type & , message_reply_type ) ;
 public :
-    type_message_reply msg_reply ;
-    type_message_request msg_request ;
+    message_reply_type msg_reply ;
+    message_request_type msg_request ;
 private :
-    so_called_type_platform_math_num_whole _requested ;
+    so_called_platform_math_num_whole_type _requested ;
 } ;
 
 template 
-    < typename type_checker
-    , typename type_message_reply 
-    , typename type_message_request
-    , typename type_sender_request
+    < typename checker_type
+    , typename message_reply_type 
+    , typename message_request_type
+    , typename sender_request_type
     >
-void shy_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: request ( )
+void shy_common_engine_taker < checker_type , message_reply_type , message_request_type , sender_request_type > :: request ( )
 {
     _requested = so_called_platform_math_consts :: whole_true ;
-    type_sender_request :: send ( msg_request ) ;
+    sender_request_type :: send ( msg_request ) ;
 }
 
 template 
-    < typename type_checker
-    , typename type_message_reply 
-    , typename type_message_request
-    , typename type_sender_request
+    < typename checker_type
+    , typename message_reply_type 
+    , typename message_request_type
+    , typename sender_request_type
     >
-void shy_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: init ( )
+void shy_common_engine_taker < checker_type , message_reply_type , message_request_type , sender_request_type > :: init ( )
 {
     _requested = so_called_platform_math_consts :: whole_false ;
 }
 
 template 
-    < typename type_checker
-    , typename type_message_reply 
-    , typename type_message_request
-    , typename type_sender_request
+    < typename checker_type
+    , typename message_reply_type 
+    , typename message_request_type
+    , typename sender_request_type
     >
-void shy_common_engine_taker < type_checker , type_message_reply , type_message_request , type_sender_request > :: should_handle
-    ( so_called_type_platform_math_num_whole & result
-    , type_message_reply msg
+void shy_common_engine_taker < checker_type , message_reply_type , message_request_type , sender_request_type > :: should_handle
+    ( so_called_platform_math_num_whole_type & result
+    , message_reply_type msg
     )
 {
-    so_called_type_platform_math_num_whole match ;
-    type_checker :: check ( match , msg_request , msg ) ;
+    so_called_platform_math_num_whole_type match ;
+    checker_type :: check ( match , msg_request , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( _requested ) 
       && so_called_platform_conditions :: whole_is_true ( match )
        )

@@ -1,7 +1,7 @@
-class shy_type_loadable_fsm_content_actions
+class shy_loadable_fsm_content_actions_type
 {
 public :
-    so_called_type_loadable_fsm_content_action_do_container actions ;
-    so_called_type_loadable_fsm_content_action_command_container commands ;
-    so_called_type_loadable_fsm_content_action_discard_container discards ;
+    so_called_loadable_fsm_content_action_do_container_type actions ;
+    so_called_loadable_fsm_content_action_command_container_type commands ;
+    so_called_loadable_fsm_content_action_discard_container_type discards ;
 } ;

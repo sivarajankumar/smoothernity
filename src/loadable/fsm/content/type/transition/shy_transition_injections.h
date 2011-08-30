@@ -1,10 +1,10 @@
-#ifndef _shy_type_loadable_fsm_content_transition_injections_included
-#define _shy_type_loadable_fsm_content_transition_injections_included
+#ifndef _shy_loadable_fsm_content_transition_type_injections_included
+#define _shy_loadable_fsm_content_transition_type_injections_included
 
 #include "loadable/fsm/content/type/condition_group_container/shy_condition_group_container_injections.h"
 
 #include "./shy_transition.h"
 
-typedef shy_type_loadable_fsm_content_transition so_called_type_loadable_fsm_content_transition ;
+typedef shy_loadable_fsm_content_transition_type so_called_loadable_fsm_content_transition_type ;
 
 #endif

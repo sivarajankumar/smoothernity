@@ -23,7 +23,7 @@ void shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on
 
 void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply ( )
 {
-    so_called_type_platform_vector_data origin ;
+    so_called_platform_vector_data_type origin ;
     so_called_platform_vector :: xyz
         ( origin
         , so_called_platform_math_consts :: fract_0
@@ -31,7 +31,7 @@ void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply 
         , so_called_platform_math_consts :: fract_0
         ) ;
 
-    so_called_type_platform_math_num_fract scale ;
+    so_called_platform_math_num_fract_type scale ;
     scale = so_called_platform_math_consts :: fract_1 ;
 
     so_called_common_logic_salutation_letters_animation_layout_transform_reply_message msg ;
@@ -48,7 +48,7 @@ void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_calle
 
 void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_common_logic_salutation_letters_meshes_storage_size_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply ( ) ;

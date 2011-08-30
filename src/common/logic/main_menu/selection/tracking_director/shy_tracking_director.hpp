@@ -2,19 +2,19 @@ namespace shy_guts
 {
     namespace logic_main_menu_selection_tracking_director_update_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole row_selected ;
-        static so_called_type_platform_math_num_whole selected_row_index ;
-        static so_called_type_platform_math_num_whole first_selection ;
-        static so_called_type_platform_math_num_whole appear_animation_in_progress ;
-        static so_called_type_platform_math_num_whole selection_animation_in_progress ;
-        static so_called_type_platform_math_num_whole unselection_animation_in_progress ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type row_selected ;
+        static so_called_platform_math_num_whole_type selected_row_index ;
+        static so_called_platform_math_num_whole_type first_selection ;
+        static so_called_platform_math_num_whole_type appear_animation_in_progress ;
+        static so_called_platform_math_num_whole_type selection_animation_in_progress ;
+        static so_called_platform_math_num_whole_type unselection_animation_in_progress ;
     }
     
     namespace logic_main_menu_selection_track_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     static void proceed_with_tracking ( ) ;
@@ -90,7 +90,7 @@ void shy_guts :: continue_selection ( )
     shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selection_animation_in_progress = so_called_platform_math_consts :: whole_true ;
     so_called_common_logic_main_menu_selection_animation_select_start_sender :: send ( so_called_common_logic_main_menu_selection_animation_select_start_message ( ) ) ;
     
-    so_called_type_platform_math_num_whole selected_row_index ;    
+    so_called_platform_math_num_whole_type selected_row_index ;    
     selected_row_index = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selected_row_index ;
 
     so_called_common_logic_main_menu_selection_animation_idle_row_selected_message idle_row_selected_msg ;
@@ -102,7 +102,7 @@ void shy_guts :: continue_selection ( )
 
 void shy_guts :: letters_selection ( )
 {
-    so_called_type_platform_math_num_whole selected_row_index ;    
+    so_called_platform_math_num_whole_type selected_row_index ;    
     selected_row_index = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selected_row_index ;
 
     so_called_common_logic_main_menu_letters_animation_selection_weight_select_row_message letter_selection_row_select_msg ;
@@ -116,7 +116,7 @@ void shy_guts :: letters_selection ( )
 
 void shy_guts :: start_unselection ( )
 {
-    so_called_type_platform_math_num_whole selected_row_index ;    
+    so_called_platform_math_num_whole_type selected_row_index ;    
     selected_row_index = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: selected_row_index ;
 
     shy_guts :: logic_main_menu_selection_tracking_director_update_state :: unselection_animation_in_progress = so_called_platform_math_consts :: whole_true ;
@@ -177,8 +177,8 @@ void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_cal
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_common_logic_main_menu_selection_track_row_selected_message msg )
 {
-    so_called_type_platform_math_num_whole first_selection ;
-    so_called_type_platform_math_num_whole prev_row_selected ;
+    so_called_platform_math_num_whole_type first_selection ;
+    so_called_platform_math_num_whole_type prev_row_selected ;
     
     first_selection = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: first_selection ;
     prev_row_selected = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected ;
@@ -195,7 +195,7 @@ void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_cal
 
 void _shy_common_logic_main_menu_selection_tracking_director :: receive ( so_called_common_logic_main_menu_selection_track_void_selected_message )
 {
-    so_called_type_platform_math_num_whole prev_row_selected ;
+    so_called_platform_math_num_whole_type prev_row_selected ;
     
     prev_row_selected = shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected ;
     shy_guts :: logic_main_menu_selection_tracking_director_update_state :: row_selected = so_called_platform_math_consts :: whole_false ;

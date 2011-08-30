@@ -1,7 +1,7 @@
 namespace shy_guts
 {
-    static so_called_type_common_logic_application_fsm_inputs inputs_current ;
-    static so_called_type_common_logic_application_fsm_inputs inputs_fixed ;
+    static so_called_common_logic_application_fsm_inputs_type inputs_current ;
+    static so_called_common_logic_application_fsm_inputs_type inputs_fixed ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_application_fsm > _scheduled_context_type ;
@@ -70,7 +70,7 @@ void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
     }
 }
 
-void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_type_platform_math_num_whole & inputs_changed )
+void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_platform_math_num_whole_type & inputs_changed )
 {
     if ( so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . logic_amusement_created 
@@ -181,8 +181,8 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_init_messag
 {
     reset_input_events ( ) ;
 
-    so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_current ;
-    so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_fixed ;
+    so_called_platform_pointer_data_type < so_called_common_logic_application_fsm_inputs_type > inputs_current ;
+    so_called_platform_pointer_data_type < so_called_common_logic_application_fsm_inputs_type > inputs_fixed ;
 
     so_called_platform_pointer :: bind ( inputs_current , shy_guts :: inputs_current ) ;
     so_called_platform_pointer :: bind ( inputs_fixed , shy_guts :: inputs_fixed ) ;

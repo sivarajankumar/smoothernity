@@ -2,29 +2,29 @@ namespace shy_guts
 {
     namespace logic_main_menu_letters_animation_idle_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole row ;
-        static so_called_type_platform_math_num_whole col ;
-        static so_called_type_platform_vector_data vertical_position_delta ;
-        static so_called_type_platform_vector_data horizontal_position_delta ;
-        static so_called_type_platform_vector_data position ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type row ;
+        static so_called_platform_math_num_whole_type col ;
+        static so_called_platform_vector_data_type vertical_position_delta ;
+        static so_called_platform_vector_data_type horizontal_position_delta ;
+        static so_called_platform_vector_data_type position ;
+        static so_called_platform_math_num_fract_type scale ;
     }
     
     namespace logic_main_menu_letters_layout_position_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_vector_data position ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_vector_data_type position ;
+        static so_called_platform_math_num_fract_type scale ;
     }
     
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_whole launch_permitted ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type launch_permitted ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -75,12 +75,12 @@ void shy_guts :: layout_position_received ( )
 
 void shy_guts :: compute_horizontal_position_delta ( )
 {
-    so_called_type_platform_vector_data horizontal_position_delta ;
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_math_num_fract row ;
-    so_called_type_platform_math_num_fract phase_shift ;
-    so_called_type_platform_math_num_fract phase ;
-    so_called_type_platform_math_num_fract delta ;
+    so_called_platform_vector_data_type horizontal_position_delta ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_math_num_fract_type row ;
+    so_called_platform_math_num_fract_type phase_shift ;
+    so_called_platform_math_num_fract_type phase ;
+    so_called_platform_math_num_fract_type delta ;
     
     zero = so_called_platform_math_consts :: fract_0 ;
     so_called_platform_math :: make_fract_from_whole ( row , shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: row ) ;
@@ -106,14 +106,14 @@ void shy_guts :: compute_horizontal_position_delta ( )
 
 void shy_guts :: compute_vertical_position_delta ( )
 {
-    so_called_type_platform_vector_data vertical_position_delta ;
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_math_num_fract col ;
-    so_called_type_platform_math_num_fract row ;
-    so_called_type_platform_math_num_fract phase_shift_col ;
-    so_called_type_platform_math_num_fract phase_shift_row ;
-    so_called_type_platform_math_num_fract phase ;
-    so_called_type_platform_math_num_fract delta ;
+    so_called_platform_vector_data_type vertical_position_delta ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_math_num_fract_type col ;
+    so_called_platform_math_num_fract_type row ;
+    so_called_platform_math_num_fract_type phase_shift_col ;
+    so_called_platform_math_num_fract_type phase_shift_row ;
+    so_called_platform_math_num_fract_type phase ;
+    so_called_platform_math_num_fract_type delta ;
     
     zero = so_called_platform_math_consts :: fract_0 ;
     so_called_platform_math :: make_fract_from_whole ( col , shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: col ) ;
@@ -143,11 +143,11 @@ void shy_guts :: compute_vertical_position_delta ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_vector_data vertical_position_delta ;
-    so_called_type_platform_vector_data horizontal_position_delta ;
-    so_called_type_platform_vector_data layout_position ;
-    so_called_type_platform_vector_data position ;
-    so_called_type_platform_math_num_fract scale ;
+    so_called_platform_vector_data_type vertical_position_delta ;
+    so_called_platform_vector_data_type horizontal_position_delta ;
+    so_called_platform_vector_data_type layout_position ;
+    so_called_platform_vector_data_type position ;
+    so_called_platform_math_num_fract_type scale ;
     
     vertical_position_delta = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: vertical_position_delta ;
     horizontal_position_delta = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: horizontal_position_delta ;
@@ -213,7 +213,7 @@ void _shy_common_logic_main_menu_letters_animation_idle :: receive ( so_called_c
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: launch_permitted ) )
     {
-        so_called_type_platform_math_num_fract time_step ;
+        so_called_platform_math_num_fract_type time_step ;
         so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_main_menu_update_state :: time , time_step ) ;
     }

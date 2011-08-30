@@ -1,9 +1,9 @@
-class shy_type_common_engine_fsm_state
+class shy_common_engine_fsm_state_type
 {
 public :
-    virtual ~ shy_type_common_engine_fsm_state ( ) ;
+    virtual ~ shy_common_engine_fsm_state_type ( ) ;
     virtual void on_entry ( ) ;
     virtual void on_exit ( ) ;
     virtual void on_input ( ) ;
-    virtual shy_type_common_engine_fsm_state & transition ( ) ;
+    virtual shy_common_engine_fsm_state_type & transition ( ) ;
 } ;

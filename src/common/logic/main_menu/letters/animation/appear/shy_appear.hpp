@@ -2,20 +2,20 @@ namespace shy_guts
 {
     namespace logic_main_menu_letters_animation_appear_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole row ;
-        static so_called_type_platform_math_num_whole col ;
-        static so_called_type_platform_math_num_fract scale ;
-        static so_called_type_platform_math_num_fract delay ;
-        static so_called_type_platform_math_num_fract time_begin ;
-        static so_called_type_platform_math_num_fract time_middle ;
-        static so_called_type_platform_math_num_fract time_end ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type row ;
+        static so_called_platform_math_num_whole_type col ;
+        static so_called_platform_math_num_fract_type scale ;
+        static so_called_platform_math_num_fract_type delay ;
+        static so_called_platform_math_num_fract_type time_begin ;
+        static so_called_platform_math_num_fract_type time_middle ;
+        static so_called_platform_math_num_fract_type time_end ;
     }
     
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_whole launch_permitted ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type launch_permitted ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -48,13 +48,13 @@ void shy_guts :: transform_request_received ( )
 
 void shy_guts :: compute_delay ( )
 {
-    so_called_type_platform_math_num_fract delay_for_row ;
-    so_called_type_platform_math_num_fract delay_for_col ;
-    so_called_type_platform_math_num_fract delay_per_row ;
-    so_called_type_platform_math_num_fract delay_per_col ;
-    so_called_type_platform_math_num_fract delay ;
-    so_called_type_platform_math_num_fract row ;
-    so_called_type_platform_math_num_fract col ;
+    so_called_platform_math_num_fract_type delay_for_row ;
+    so_called_platform_math_num_fract_type delay_for_col ;
+    so_called_platform_math_num_fract_type delay_per_row ;
+    so_called_platform_math_num_fract_type delay_per_col ;
+    so_called_platform_math_num_fract_type delay ;
+    so_called_platform_math_num_fract_type row ;
+    so_called_platform_math_num_fract_type col ;
     
     so_called_platform_math :: make_fract_from_whole ( row , shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: row ) ;
     so_called_platform_math :: make_fract_from_whole ( col , shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: col ) ;
@@ -69,12 +69,12 @@ void shy_guts :: compute_delay ( )
 
 void shy_guts :: compute_time ( )
 {
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_middle ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract delay ;
-    so_called_type_platform_math_num_fract time_from_begin_to_middle ;
-    so_called_type_platform_math_num_fract time_from_middle_to_end ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_middle ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type delay ;
+    so_called_platform_math_num_fract_type time_from_begin_to_middle ;
+    so_called_platform_math_num_fract_type time_from_middle_to_end ;
     
     delay = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: delay ;
     time_from_begin_to_middle = so_called_common_logic_main_menu_letters_animation_consts :: appear_time_from_begin_to_middle_in_seconds ;
@@ -90,14 +90,14 @@ void shy_guts :: compute_time ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_middle ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract scale_begin ;
-    so_called_type_platform_math_num_fract scale_middle ;
-    so_called_type_platform_math_num_fract scale_end ;
-    so_called_type_platform_math_num_fract scale ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_middle ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type scale_begin ;
+    so_called_platform_math_num_fract_type scale_middle ;
+    so_called_platform_math_num_fract_type scale_end ;
+    so_called_platform_math_num_fract_type scale ;
     
     time_begin = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: time_begin ;
     time_middle = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: time_middle ;
@@ -155,7 +155,7 @@ void _shy_common_logic_main_menu_letters_animation_appear :: receive ( so_called
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: launch_permitted ) )
     {
-        so_called_type_platform_math_num_fract time_step ;
+        so_called_platform_math_num_fract_type time_step ;
         so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_main_menu_update_state :: time , time_step ) ;
     }

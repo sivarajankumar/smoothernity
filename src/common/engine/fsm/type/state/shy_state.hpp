@@ -1,20 +1,20 @@
-shy_type_common_engine_fsm_state :: ~ shy_type_common_engine_fsm_state ( )
+shy_common_engine_fsm_state_type :: ~ shy_common_engine_fsm_state_type ( )
 {
 }
 
-void shy_type_common_engine_fsm_state :: on_entry ( )
+void shy_common_engine_fsm_state_type :: on_entry ( )
 {
 }
 
-void shy_type_common_engine_fsm_state :: on_exit ( )
+void shy_common_engine_fsm_state_type :: on_exit ( )
 {
 }
 
-void shy_type_common_engine_fsm_state :: on_input ( )
+void shy_common_engine_fsm_state_type :: on_input ( )
 {
 }
 
-shy_type_common_engine_fsm_state & shy_type_common_engine_fsm_state :: transition ( )
+shy_common_engine_fsm_state_type & shy_common_engine_fsm_state_type :: transition ( )
 {
     return * this ;
 }

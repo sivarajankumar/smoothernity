@@ -2,14 +2,14 @@ namespace shy_guts
 {
     namespace logic_main_menu_selection_animation_appear_transform_state
     {
-        static so_called_type_platform_math_num_fract horizontal_scale ;
-        static so_called_type_platform_math_num_fract vertical_scale ;
+        static so_called_platform_math_num_fract_type horizontal_scale ;
+        static so_called_platform_math_num_fract_type vertical_scale ;
     }
     
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_whole started ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type started ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void compute_horizontal_scale ( ) ;
@@ -22,10 +22,10 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_horizontal_scale ( )
 {
-    so_called_type_platform_math_num_fract horizontal_scale_time_to_begin ;
-    so_called_type_platform_math_num_fract horizontal_scale_time_from_begin_to_end ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_end ;
+    so_called_platform_math_num_fract_type horizontal_scale_time_to_begin ;
+    so_called_platform_math_num_fract_type horizontal_scale_time_from_begin_to_end ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_end ;
     
     horizontal_scale_time_to_begin = so_called_common_logic_main_menu_selection_animation_consts :: appear_horizontal_scale_time_to_begin ;
     horizontal_scale_time_from_begin_to_end = so_called_common_logic_main_menu_selection_animation_consts :: appear_horizontal_scale_time_from_begin_to_end ;
@@ -45,12 +45,12 @@ void shy_guts :: compute_horizontal_scale ( )
 
 void shy_guts :: compute_vertical_scale ( )
 {
-    so_called_type_platform_math_num_fract vertical_scale_time_to_begin ;
-    so_called_type_platform_math_num_fract vertical_scale_time_from_begin_to_middle ;
-    so_called_type_platform_math_num_fract vertical_scale_time_from_middle_to_end ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_middle ;
-    so_called_type_platform_math_num_fract time_end ;
+    so_called_platform_math_num_fract_type vertical_scale_time_to_begin ;
+    so_called_platform_math_num_fract_type vertical_scale_time_from_begin_to_middle ;
+    so_called_platform_math_num_fract_type vertical_scale_time_from_middle_to_end ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_middle ;
+    so_called_platform_math_num_fract_type time_end ;
     
     vertical_scale_time_to_begin = so_called_common_logic_main_menu_selection_animation_consts :: appear_vertical_scale_time_to_begin ;
     vertical_scale_time_from_begin_to_middle = so_called_common_logic_main_menu_selection_animation_consts :: appear_vertical_scale_time_from_begin_to_middle ;
@@ -103,9 +103,9 @@ void _shy_common_logic_main_menu_selection_animation_appear :: receive ( so_call
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: started ) )
     {
-        so_called_type_platform_math_num_fract time ;
-        so_called_type_platform_math_num_fract time_step ;
-        so_called_type_platform_math_num_fract total_animation_time ;
+        so_called_platform_math_num_fract_type time ;
+        so_called_platform_math_num_fract_type time_step ;
+        so_called_platform_math_num_fract_type total_animation_time ;
         
         time = shy_guts :: logic_main_menu_update_state :: time ;
         total_animation_time = so_called_common_logic_main_menu_selection_animation_consts :: appear_total_animation_time ;

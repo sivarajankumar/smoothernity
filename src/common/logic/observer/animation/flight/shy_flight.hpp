@@ -2,15 +2,15 @@ namespace shy_guts
 {
     namespace logic_observer_animation_flight_transform_state
     {
-        static so_called_type_platform_vector_data eye ;
-        static so_called_type_platform_vector_data target ;
-        static so_called_type_platform_math_num_fract vertical_offset ;
-        static so_called_type_platform_math_num_fract horizontal_offset ;
+        static so_called_platform_vector_data_type eye ;
+        static so_called_platform_vector_data_type target ;
+        static so_called_platform_math_num_fract_type vertical_offset ;
+        static so_called_platform_math_num_fract_type horizontal_offset ;
     }
 
     namespace logic_observer_update_state
     {
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void compute_vertical_offset ( ) ;
@@ -25,11 +25,11 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_vertical_offset ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract vertical_offset ;
-    so_called_type_platform_math_num_fract vertical_offset_period ;
-    so_called_type_platform_math_num_fract vertical_offset_amplitude ;
-    so_called_type_platform_math_num_fract vertical_offset_phase ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type vertical_offset ;
+    so_called_platform_math_num_fract_type vertical_offset_period ;
+    so_called_platform_math_num_fract_type vertical_offset_amplitude ;
+    so_called_platform_math_num_fract_type vertical_offset_phase ;
 
     time = shy_guts :: logic_observer_update_state :: time ;
     vertical_offset_period = so_called_common_logic_observer_animation_consts :: flight_vertical_offset_period ;
@@ -46,11 +46,11 @@ void shy_guts :: compute_vertical_offset ( )
 
 void shy_guts :: compute_horizontal_offset ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract horizontal_offset ;
-    so_called_type_platform_math_num_fract horizontal_offset_period ;
-    so_called_type_platform_math_num_fract horizontal_offset_amplitude ;
-    so_called_type_platform_math_num_fract horizontal_offset_phase ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type horizontal_offset ;
+    so_called_platform_math_num_fract_type horizontal_offset_period ;
+    so_called_platform_math_num_fract_type horizontal_offset_amplitude ;
+    so_called_platform_math_num_fract_type horizontal_offset_phase ;
 
     time = shy_guts :: logic_observer_update_state :: time ;
     horizontal_offset_period = so_called_common_logic_observer_animation_consts :: flight_horizontal_offset_period ;
@@ -67,10 +67,10 @@ void shy_guts :: compute_horizontal_offset ( )
 
 void shy_guts :: compute_eye ( )
 {
-    so_called_type_platform_math_num_fract vertical_offset ;
-    so_called_type_platform_math_num_fract horizontal_offset ;
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_vector_data eye ;
+    so_called_platform_math_num_fract_type vertical_offset ;
+    so_called_platform_math_num_fract_type horizontal_offset ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_vector_data_type eye ;
 
     vertical_offset = shy_guts :: logic_observer_animation_flight_transform_state :: vertical_offset ;
     horizontal_offset = shy_guts :: logic_observer_animation_flight_transform_state :: horizontal_offset ;
@@ -83,13 +83,13 @@ void shy_guts :: compute_eye ( )
 
 void shy_guts :: compute_target ( )
 {
-    so_called_type_platform_math_num_fract vertical_offset ;
-    so_called_type_platform_math_num_fract horizontal_offset ;
-    so_called_type_platform_math_num_fract const_target_z ;
-    so_called_type_platform_math_num_fract target_x ;
-    so_called_type_platform_math_num_fract target_y ;
-    so_called_type_platform_math_num_fract target_z ;
-    so_called_type_platform_vector_data target ;
+    so_called_platform_math_num_fract_type vertical_offset ;
+    so_called_platform_math_num_fract_type horizontal_offset ;
+    so_called_platform_math_num_fract_type const_target_z ;
+    so_called_platform_math_num_fract_type target_x ;
+    so_called_platform_math_num_fract_type target_y ;
+    so_called_platform_math_num_fract_type target_z ;
+    so_called_platform_vector_data_type target ;
 
     vertical_offset = shy_guts :: logic_observer_animation_flight_transform_state :: vertical_offset ;
     horizontal_offset = shy_guts :: logic_observer_animation_flight_transform_state :: horizontal_offset ;
@@ -128,7 +128,7 @@ void _shy_common_logic_observer_animation_flight :: receive ( so_called_common_l
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_common_logic_observer_update_message )
 {
-    so_called_type_platform_math_num_fract time_step ;
+    so_called_platform_math_num_fract_type time_step ;
     so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
     so_called_platform_math :: add_to_fract ( shy_guts :: logic_observer_update_state :: time , time_step ) ;
 }

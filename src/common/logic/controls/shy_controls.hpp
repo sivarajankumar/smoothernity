@@ -2,9 +2,9 @@ namespace shy_guts
 {
     namespace logic_controls_state
     {
-        static so_called_type_platform_math_num_whole primary_button_down ;
-        static so_called_type_platform_math_num_fract cursor_x ;
-        static so_called_type_platform_math_num_fract cursor_y ;
+        static so_called_platform_math_num_whole_type primary_button_down ;
+        static so_called_platform_math_num_fract_type cursor_x ;
+        static so_called_platform_math_num_fract_type cursor_y ;
     }
 
     static void compute_identity_state ( ) ;
@@ -18,9 +18,9 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_identity_state ( )
 {
-    so_called_type_platform_math_num_fract cursor_x ;
-    so_called_type_platform_math_num_fract cursor_y ;
-    so_called_type_platform_math_num_whole primary_button_down ;
+    so_called_platform_math_num_fract_type cursor_x ;
+    so_called_platform_math_num_fract_type cursor_y ;
+    so_called_platform_math_num_whole_type primary_button_down ;
 
     cursor_x = so_called_platform_math_consts :: fract_0 ;
     cursor_y = so_called_platform_math_consts :: fract_0 ;
@@ -29,10 +29,10 @@ void shy_guts :: compute_identity_state ( )
 
 void shy_guts :: compute_mouse_state ( )
 {
-    so_called_type_platform_math_num_fract cursor_x ;
-    so_called_type_platform_math_num_fract cursor_y ;
-    so_called_type_platform_math_num_whole mouse_enabled ;
-    so_called_type_platform_math_num_whole primary_button_down ;
+    so_called_platform_math_num_fract_type cursor_x ;
+    so_called_platform_math_num_fract_type cursor_y ;
+    so_called_platform_math_num_whole_type mouse_enabled ;
+    so_called_platform_math_num_whole_type primary_button_down ;
 
     so_called_platform_mouse :: enabled ( mouse_enabled ) ;
     if ( so_called_platform_conditions :: whole_is_true ( mouse_enabled ) )
@@ -49,10 +49,10 @@ void shy_guts :: compute_mouse_state ( )
 
 void shy_guts :: compute_touch_state ( )
 {
-    so_called_type_platform_math_num_fract cursor_x ;
-    so_called_type_platform_math_num_fract cursor_y ;
-    so_called_type_platform_math_num_whole touch_enabled ;
-    so_called_type_platform_math_num_whole primary_button_down ;
+    so_called_platform_math_num_fract_type cursor_x ;
+    so_called_platform_math_num_fract_type cursor_y ;
+    so_called_platform_math_num_whole_type touch_enabled ;
+    so_called_platform_math_num_whole_type primary_button_down ;
 
     so_called_platform_touch :: enabled ( touch_enabled ) ;
     if ( so_called_platform_conditions :: whole_is_true ( touch_enabled ) )

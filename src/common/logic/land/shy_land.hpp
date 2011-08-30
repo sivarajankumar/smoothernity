@@ -2,37 +2,37 @@ namespace shy_guts
 {
     namespace consts
     {
-        static so_called_type_platform_math_num_whole create_rows_per_frame = so_called_platform_math :: init_num_whole ( 8 ) ;
-        static so_called_type_platform_math_num_whole land_grid = so_called_platform_math :: init_num_whole ( 10 ) ;
-        static so_called_type_platform_math_num_whole scale_in_frames = so_called_platform_math :: init_num_whole ( 60 ) ;
-        static so_called_type_platform_math_num_whole modulator_1 = so_called_platform_math :: init_num_whole ( 32 ) ;
-        static so_called_type_platform_math_num_whole modulator_2 = so_called_platform_math :: init_num_whole ( 64 ) ;
-        static so_called_type_platform_math_num_whole modulator_3 = so_called_platform_math :: init_num_whole ( 128 ) ;
-        static so_called_type_platform_math_num_whole multiplier_1 = so_called_platform_math :: init_num_whole ( 8 ) ;
-        static so_called_type_platform_math_num_whole multiplier_2 = so_called_platform_math :: init_num_whole ( 4 ) ;
-        static so_called_type_platform_math_num_whole multiplier_3 = so_called_platform_math :: init_num_whole ( 2 ) ;
-        static so_called_type_platform_math_num_fract color_scale = so_called_platform_math :: init_num_fract ( 255 , 1 ) ;
-        static so_called_type_platform_math_num_fract land_radius = so_called_platform_math :: init_num_fract ( 10 , 1 ) ;
-        static so_called_type_platform_math_num_fract land_r = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
-        static so_called_type_platform_math_num_fract land_g = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
-        static so_called_type_platform_math_num_fract land_b = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static so_called_platform_math_num_whole_type create_rows_per_frame = so_called_platform_math :: init_num_whole ( 8 ) ;
+        static so_called_platform_math_num_whole_type land_grid = so_called_platform_math :: init_num_whole ( 10 ) ;
+        static so_called_platform_math_num_whole_type scale_in_frames = so_called_platform_math :: init_num_whole ( 60 ) ;
+        static so_called_platform_math_num_whole_type modulator_1 = so_called_platform_math :: init_num_whole ( 32 ) ;
+        static so_called_platform_math_num_whole_type modulator_2 = so_called_platform_math :: init_num_whole ( 64 ) ;
+        static so_called_platform_math_num_whole_type modulator_3 = so_called_platform_math :: init_num_whole ( 128 ) ;
+        static so_called_platform_math_num_whole_type multiplier_1 = so_called_platform_math :: init_num_whole ( 8 ) ;
+        static so_called_platform_math_num_whole_type multiplier_2 = so_called_platform_math :: init_num_whole ( 4 ) ;
+        static so_called_platform_math_num_whole_type multiplier_3 = so_called_platform_math :: init_num_whole ( 2 ) ;
+        static so_called_platform_math_num_fract_type color_scale = so_called_platform_math :: init_num_fract ( 255 , 1 ) ;
+        static so_called_platform_math_num_fract_type land_radius = so_called_platform_math :: init_num_fract ( 10 , 1 ) ;
+        static so_called_platform_math_num_fract_type land_r = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static so_called_platform_math_num_fract_type land_g = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static so_called_platform_math_num_fract_type land_b = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
     }
 
     static void render_land ( ) ;
     static void create_land_mesh ( ) ;
     static void create_land_texture ( ) ;
-    static void mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index ) ;
+    static void mesh_set_triangle_strip_index_value ( so_called_platform_math_num_whole_type offset , so_called_platform_math_num_whole_type index ) ;
 
-    static so_called_type_platform_math_num_whole land_mesh_created ;
-    static so_called_type_platform_math_num_whole land_texture_created ;
-    static so_called_type_platform_math_num_whole land_prepare_permitted ;
-    static so_called_type_platform_math_num_whole land_texture_creation_row ;
-    static so_called_type_platform_math_num_fract land_scale ;
-    static so_called_type_platform_math_num_whole texture_create_requested ;
-    static so_called_type_platform_math_num_whole texture_create_replied ;
-    static so_called_type_platform_math_num_whole mesh_create_requested ;
-    static so_called_type_common_engine_render_mesh_id land_mesh_id ;
-    static so_called_type_common_engine_render_texture_id land_texture_id ;
+    static so_called_platform_math_num_whole_type land_mesh_created ;
+    static so_called_platform_math_num_whole_type land_texture_created ;
+    static so_called_platform_math_num_whole_type land_prepare_permitted ;
+    static so_called_platform_math_num_whole_type land_texture_creation_row ;
+    static so_called_platform_math_num_fract_type land_scale ;
+    static so_called_platform_math_num_whole_type texture_create_requested ;
+    static so_called_platform_math_num_whole_type texture_create_replied ;
+    static so_called_platform_math_num_whole_type mesh_create_requested ;
+    static so_called_common_engine_render_mesh_id_type land_mesh_id ;
+    static so_called_common_engine_render_texture_id_type land_texture_id ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_land > _scheduled_context_type ;
@@ -40,10 +40,10 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: render_land ( )
 {
-    so_called_type_platform_matrix_data matrix ;
-    so_called_type_platform_math_num_fract scale_step ;
-    so_called_type_platform_math_num_fract increased_scale ;
-    so_called_type_platform_math_num_fract fract_scale_in_frames ;
+    so_called_platform_matrix_data_type matrix ;
+    so_called_platform_math_num_fract_type scale_step ;
+    so_called_platform_math_num_fract_type increased_scale ;
+    so_called_platform_math_num_fract_type fract_scale_in_frames ;
     
     {
         so_called_common_engine_render_texture_select_message texture_select_msg ;
@@ -76,17 +76,17 @@ void shy_guts :: render_land ( )
 
 void shy_guts :: create_land_mesh ( )
 {
-    so_called_type_platform_math_num_whole vertices_count ;
-    so_called_type_platform_math_num_whole indices_count ;
-    so_called_type_platform_math_num_whole ix ;
-    so_called_type_platform_math_num_whole iz ;
-    so_called_type_platform_math_num_whole ix_max ;
-    so_called_type_platform_math_num_whole iz_max ;
-    so_called_type_platform_math_num_fract grid_step ;
-    so_called_type_platform_math_num_fract grid_origin_x ;
-    so_called_type_platform_math_num_fract grid_origin_z ;
-    so_called_type_platform_math_num_fract fract_land_grid ;
-    so_called_type_platform_math_num_whole land_grid_plus_1 ;
+    so_called_platform_math_num_whole_type vertices_count ;
+    so_called_platform_math_num_whole_type indices_count ;
+    so_called_platform_math_num_whole_type ix ;
+    so_called_platform_math_num_whole_type iz ;
+    so_called_platform_math_num_whole_type ix_max ;
+    so_called_platform_math_num_whole_type iz_max ;
+    so_called_platform_math_num_fract_type grid_step ;
+    so_called_platform_math_num_fract_type grid_origin_x ;
+    so_called_platform_math_num_fract_type grid_origin_z ;
+    so_called_platform_math_num_fract_type fract_land_grid ;
+    so_called_platform_math_num_whole_type land_grid_plus_1 ;
     
     vertices_count = so_called_platform_math_consts :: whole_0 ;
     indices_count = so_called_platform_math_consts :: whole_0 ;
@@ -109,19 +109,19 @@ void shy_guts :: create_land_mesh ( )
             ; so_called_platform_math :: inc_whole ( ix )
             )
         {
-            so_called_type_platform_math_num_fract x ;
-            so_called_type_platform_math_num_fract z ;
-            so_called_type_platform_math_num_fract fract_ix ;
-            so_called_type_platform_math_num_fract fract_iz ;
-            so_called_type_platform_math_num_fract vertex_x ;
-            so_called_type_platform_math_num_fract vertex_y ;
-            so_called_type_platform_math_num_fract vertex_z ;
-            so_called_type_platform_math_num_fract vertex_u ;
-            so_called_type_platform_math_num_fract vertex_v ;
-            so_called_type_platform_math_num_fract vertex_r ;
-            so_called_type_platform_math_num_fract vertex_g ;
-            so_called_type_platform_math_num_fract vertex_b ;
-            so_called_type_platform_math_num_fract vertex_a ;
+            so_called_platform_math_num_fract_type x ;
+            so_called_platform_math_num_fract_type z ;
+            so_called_platform_math_num_fract_type fract_ix ;
+            so_called_platform_math_num_fract_type fract_iz ;
+            so_called_platform_math_num_fract_type vertex_x ;
+            so_called_platform_math_num_fract_type vertex_y ;
+            so_called_platform_math_num_fract_type vertex_z ;
+            so_called_platform_math_num_fract_type vertex_u ;
+            so_called_platform_math_num_fract_type vertex_v ;
+            so_called_platform_math_num_fract_type vertex_r ;
+            so_called_platform_math_num_fract_type vertex_g ;
+            so_called_platform_math_num_fract_type vertex_b ;
+            so_called_platform_math_num_fract_type vertex_a ;
             
             so_called_platform_math :: make_fract_from_whole ( fract_ix , ix ) ;
             so_called_platform_math :: make_fract_from_whole ( fract_iz , iz ) ;
@@ -178,8 +178,8 @@ void shy_guts :: create_land_mesh ( )
             ; so_called_platform_math :: inc_whole ( ix )
             )
         {
-            so_called_type_platform_math_num_whole index ;
-            so_called_type_platform_math_num_whole row_size ;
+            so_called_platform_math_num_whole_type index ;
+            so_called_platform_math_num_whole_type row_size ;
             
             row_size = land_grid_plus_1 ;
             
@@ -217,16 +217,16 @@ void shy_guts :: create_land_mesh ( )
 
 void shy_guts :: create_land_texture ( )
 {
-    so_called_type_platform_math_num_whole texture_width ;
-    so_called_type_platform_math_num_whole texture_height ;
-    so_called_type_platform_math_num_whole prev_creation_row = shy_guts :: land_texture_creation_row ;
+    so_called_platform_math_num_whole_type texture_width ;
+    so_called_platform_math_num_whole_type texture_height ;
+    so_called_platform_math_num_whole_type prev_creation_row = shy_guts :: land_texture_creation_row ;
 
     texture_width = so_called_common_engine_render_consts :: texture_width ;
     texture_height = so_called_common_engine_render_consts :: texture_height ;
     for ( ; ; )
     {
-        so_called_type_platform_math_num_whole rows_delta ;
-        so_called_type_platform_math_num_whole y = shy_guts :: land_texture_creation_row ;
+        so_called_platform_math_num_whole_type rows_delta ;
+        so_called_platform_math_num_whole_type y = shy_guts :: land_texture_creation_row ;
         
         so_called_platform_math :: sub_wholes ( rows_delta , shy_guts :: land_texture_creation_row , prev_creation_row ) ;
         if ( ! so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: land_texture_creation_row , texture_height )
@@ -235,18 +235,18 @@ void shy_guts :: create_land_texture ( )
         {
             break ;
         }
-        for ( so_called_type_platform_math_num_whole x = so_called_platform_math_consts :: whole_0
+        for ( so_called_platform_math_num_whole_type x = so_called_platform_math_consts :: whole_0
             ; so_called_platform_conditions :: whole_less_than_whole ( x , texture_width )
             ; so_called_platform_math :: inc_whole ( x )
             )
         {
-            so_called_type_platform_math_num_whole c ;
-            so_called_type_platform_math_num_whole texel_r ;
-            so_called_type_platform_math_num_whole texel_g ;
-            so_called_type_platform_math_num_whole texel_b ;
-            so_called_type_platform_math_num_fract fract_r ;
-            so_called_type_platform_math_num_fract fract_g ;
-            so_called_type_platform_math_num_fract fract_b ;
+            so_called_platform_math_num_whole_type c ;
+            so_called_platform_math_num_whole_type texel_r ;
+            so_called_platform_math_num_whole_type texel_g ;
+            so_called_platform_math_num_whole_type texel_b ;
+            so_called_platform_math_num_fract_type fract_r ;
+            so_called_platform_math_num_fract_type fract_g ;
+            so_called_platform_math_num_fract_type fract_b ;
             
             so_called_platform_math :: xor_wholes ( c , x , y ) ;
             so_called_platform_math :: mod_wholes ( texel_r , c , shy_guts :: consts :: modulator_1 ) ;
@@ -284,7 +284,7 @@ void shy_guts :: create_land_texture ( )
     }
 }
 
-void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
+void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_platform_math_num_whole_type offset , so_called_platform_math_num_whole_type index )
 {
     so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;
     msg . mesh = shy_guts :: land_mesh_id ;
@@ -357,8 +357,8 @@ void _shy_common_logic_land :: receive ( so_called_common_logic_land_update_mess
         {
             shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_true ;
         
-            so_called_type_platform_math_num_whole total_vertices ;
-            so_called_type_platform_math_num_whole total_indices ;
+            so_called_platform_math_num_whole_type total_vertices ;
+            so_called_platform_math_num_whole_type total_indices ;
             
             so_called_platform_math :: add_wholes ( total_vertices , shy_guts :: consts :: land_grid , so_called_platform_math_consts :: whole_1 ) ;
             so_called_platform_math :: mul_whole_by ( total_vertices , total_vertices ) ;

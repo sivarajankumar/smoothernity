@@ -1,6 +1,6 @@
 namespace shy_guts
 {
-    static so_called_type_platform_math_num_whole iteration_in_progress ;
+    static so_called_platform_math_num_whole_type iteration_in_progress ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_main_menu_letters_meshes_renderer > _scheduled_context_type ;

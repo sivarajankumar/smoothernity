@@ -1,1 +1,1 @@
-typedef void ( * shy_type_loadable_consts_content_module_binding ) ( ) ;
+typedef void ( * shy_loadable_consts_content_module_binding_type ) ( ) ;

@@ -1,8 +1,8 @@
-#ifndef _shy_type_win_platform_vector_data_injections_included
-#define _shy_type_win_platform_vector_data_injections_included
+#ifndef _shy_win_platform_vector_data_type_injections_included
+#define _shy_win_platform_vector_data_type_injections_included
 
 #include "platform/vector/float/type/data/shy_data_injections.h"
-typedef so_called_type_platform_vector_float_data so_called_type_platform_vector_data ;
+typedef so_called_platform_vector_float_data_type so_called_platform_vector_data_type ;
 
 #endif
 

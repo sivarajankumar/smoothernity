@@ -2,41 +2,41 @@ namespace shy_guts
 {
     namespace logic_main_menu_letters_meshes_place_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole current_mesh_index ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type current_mesh_index ;
     }
     
     namespace logic_main_menu_letters_meshes_count_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole meshes ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_whole_type meshes ;
     }
 
     namespace logic_main_menu_letters_mesh_row_col_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_index ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole row ;
-        static so_called_type_platform_math_num_whole col ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_index ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_whole_type row ;
+        static so_called_platform_math_num_whole_type col ;
     }
 
     namespace logic_main_menu_letters_mesh_id_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_index ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_common_engine_render_mesh_id mesh ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_index ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_common_engine_render_mesh_id_type mesh ;
     }
 
     namespace logic_main_menu_letters_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_matrix_data_type transform ;
     }
 
     static void proceed_with_placement ( ) ;

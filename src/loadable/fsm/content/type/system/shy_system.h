@@ -1,7 +1,7 @@
-class shy_type_loadable_fsm_content_system
+class shy_loadable_fsm_content_system_type
 {
 public :
-    so_called_type_loadable_fsm_content_machine_container machines ;
-    so_called_type_loadable_fsm_content_input_binding_container inputs ;
-    so_called_type_loadable_fsm_content_action_binding_container actions ;
+    so_called_loadable_fsm_content_machine_container_type machines ;
+    so_called_loadable_fsm_content_input_binding_container_type inputs ;
+    so_called_loadable_fsm_content_action_binding_container_type actions ;
 } ;

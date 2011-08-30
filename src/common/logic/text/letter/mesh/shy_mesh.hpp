@@ -2,36 +2,36 @@ namespace shy_guts
 {
     namespace consts
     {
-        static so_called_type_platform_math_num_whole mesh_vertices = so_called_platform_math :: init_num_whole ( 4 ) ;
+        static so_called_platform_math_num_whole_type mesh_vertices = so_called_platform_math :: init_num_whole ( 4 ) ;
     }
 
     namespace engine_render_mesh_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_common_engine_render_mesh_id mesh ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_common_engine_render_mesh_id_type mesh ;
     }
     
     namespace logic_text_letter_big_tex_coords_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_common_logic_text_letter_id requested_letter ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract bottom ;
-        static so_called_type_platform_math_num_fract left ;
-        static so_called_type_platform_math_num_fract top ;
-        static so_called_type_platform_math_num_fract right ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_common_logic_text_letter_id_type requested_letter ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type bottom ;
+        static so_called_platform_math_num_fract_type left ;
+        static so_called_platform_math_num_fract_type top ;
+        static so_called_platform_math_num_fract_type right ;
     }
 
     namespace logic_text_letter_mesh_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_common_logic_text_letter_id letter ;
-        static so_called_type_platform_math_num_fract size ;
-        static so_called_type_platform_math_num_fract color_r ;
-        static so_called_type_platform_math_num_fract color_g ;
-        static so_called_type_platform_math_num_fract color_b ;
-        static so_called_type_platform_math_num_fract color_a ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_common_logic_text_letter_id_type letter ;
+        static so_called_platform_math_num_fract_type size ;
+        static so_called_platform_math_num_fract_type color_r ;
+        static so_called_platform_math_num_fract_type color_g ;
+        static so_called_platform_math_num_fract_type color_b ;
+        static so_called_platform_math_num_fract_type color_a ;
     }
 
     static void fill_mesh_content ( ) ;
@@ -48,25 +48,25 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: fill_mesh_content ( )
 {
-    so_called_type_common_engine_render_mesh_id mesh ;
-    so_called_type_platform_math_num_fract half_size ;
-    so_called_type_platform_math_num_fract x_left ;
-    so_called_type_platform_math_num_fract x_right ;
-    so_called_type_platform_math_num_fract y_bottom ;
-    so_called_type_platform_math_num_fract y_top ;
-    so_called_type_platform_math_num_fract u_left ;
-    so_called_type_platform_math_num_fract u_right ;
-    so_called_type_platform_math_num_fract v_bottom ;
-    so_called_type_platform_math_num_fract v_top ;
-    so_called_type_platform_math_num_fract z ;
-    so_called_type_platform_math_num_fract color_r ;
-    so_called_type_platform_math_num_fract color_g ;
-    so_called_type_platform_math_num_fract color_b ;
-    so_called_type_platform_math_num_fract color_a ;
-    so_called_type_platform_math_num_whole index_left_top ;
-    so_called_type_platform_math_num_whole index_left_bottom ;
-    so_called_type_platform_math_num_whole index_right_top ;
-    so_called_type_platform_math_num_whole index_right_bottom ;
+    so_called_common_engine_render_mesh_id_type mesh ;
+    so_called_platform_math_num_fract_type half_size ;
+    so_called_platform_math_num_fract_type x_left ;
+    so_called_platform_math_num_fract_type x_right ;
+    so_called_platform_math_num_fract_type y_bottom ;
+    so_called_platform_math_num_fract_type y_top ;
+    so_called_platform_math_num_fract_type u_left ;
+    so_called_platform_math_num_fract_type u_right ;
+    so_called_platform_math_num_fract_type v_bottom ;
+    so_called_platform_math_num_fract_type v_top ;
+    so_called_platform_math_num_fract_type z ;
+    so_called_platform_math_num_fract_type color_r ;
+    so_called_platform_math_num_fract_type color_g ;
+    so_called_platform_math_num_fract_type color_b ;
+    so_called_platform_math_num_fract_type color_a ;
+    so_called_platform_math_num_whole_type index_left_top ;
+    so_called_platform_math_num_whole_type index_left_bottom ;
+    so_called_platform_math_num_whole_type index_right_top ;
+    so_called_platform_math_num_whole_type index_right_bottom ;
     
     mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     
@@ -197,7 +197,7 @@ void _shy_common_logic_text_letter_mesh :: receive ( so_called_common_init_messa
 
 void _shy_common_logic_text_letter_mesh :: receive ( so_called_common_logic_text_letter_big_tex_coords_reply_message msg )
 {
-    so_called_type_platform_math_num_whole letters_are_equal ;
+    so_called_platform_math_num_whole_type letters_are_equal ;
     so_called_common_logic_text_stateless :: are_letters_equal ( letters_are_equal , shy_guts :: logic_text_letter_big_tex_coords_state :: requested_letter , msg . letter ) ;
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_text_letter_big_tex_coords_state :: requested )
       && so_called_platform_conditions :: whole_is_true ( letters_are_equal )

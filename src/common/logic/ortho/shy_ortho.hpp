@@ -2,21 +2,21 @@ namespace shy_guts
 {
     namespace logic_ortho_planes_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_fract x_left ;
-        static so_called_type_platform_math_num_fract x_right ;
-        static so_called_type_platform_math_num_fract y_bottom ;
-        static so_called_type_platform_math_num_fract y_top ;
-        static so_called_type_platform_math_num_fract z_near ;
-        static so_called_type_platform_math_num_fract z_far ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_fract_type x_left ;
+        static so_called_platform_math_num_fract_type x_right ;
+        static so_called_platform_math_num_fract_type y_bottom ;
+        static so_called_platform_math_num_fract_type y_top ;
+        static so_called_platform_math_num_fract_type z_near ;
+        static so_called_platform_math_num_fract_type z_far ;
     }
 
     namespace engine_render_aspect_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract width ;
-        static so_called_type_platform_math_num_fract height ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type width ;
+        static so_called_platform_math_num_fract_type height ;
     }
 
     static void proceed_with_planes ( ) ;
@@ -56,8 +56,8 @@ void shy_guts :: request_aspect ( )
 
 void shy_guts :: compute_x_left ( )
 {
-    so_called_type_platform_math_num_fract aspect_width ;
-    so_called_type_platform_math_num_fract x_left ;
+    so_called_platform_math_num_fract_type aspect_width ;
+    so_called_platform_math_num_fract_type x_left ;
 
     aspect_width = shy_guts :: engine_render_aspect_state :: width ;
     so_called_platform_math :: neg_fract ( x_left , aspect_width ) ;
@@ -67,8 +67,8 @@ void shy_guts :: compute_x_left ( )
 
 void shy_guts :: compute_x_right ( )
 {
-    so_called_type_platform_math_num_fract aspect_width ;
-    so_called_type_platform_math_num_fract x_right ;
+    so_called_platform_math_num_fract_type aspect_width ;
+    so_called_platform_math_num_fract_type x_right ;
 
     aspect_width = shy_guts :: engine_render_aspect_state :: width ;
     x_right = aspect_width ;
@@ -78,8 +78,8 @@ void shy_guts :: compute_x_right ( )
 
 void shy_guts :: compute_y_bottom ( )
 {
-    so_called_type_platform_math_num_fract aspect_height ;
-    so_called_type_platform_math_num_fract y_bottom ;
+    so_called_platform_math_num_fract_type aspect_height ;
+    so_called_platform_math_num_fract_type y_bottom ;
 
     aspect_height = shy_guts :: engine_render_aspect_state :: height ;
     so_called_platform_math :: neg_fract ( y_bottom , aspect_height ) ;
@@ -89,8 +89,8 @@ void shy_guts :: compute_y_bottom ( )
 
 void shy_guts :: compute_y_top ( )
 {
-    so_called_type_platform_math_num_fract aspect_height ;
-    so_called_type_platform_math_num_fract y_top ;
+    so_called_platform_math_num_fract_type aspect_height ;
+    so_called_platform_math_num_fract_type y_top ;
 
     aspect_height = shy_guts :: engine_render_aspect_state :: height ;
     y_top = aspect_height ;
@@ -100,14 +100,14 @@ void shy_guts :: compute_y_top ( )
 
 void shy_guts :: compute_z_near ( )
 {
-    so_called_type_platform_math_num_fract z_near ;
+    so_called_platform_math_num_fract_type z_near ;
     z_near = so_called_common_logic_ortho_consts :: z_near ;
     shy_guts :: logic_ortho_planes_state :: z_near = z_near ;
 }
 
 void shy_guts :: compute_z_far ( )
 {
-    so_called_type_platform_math_num_fract z_far ;
+    so_called_platform_math_num_fract_type z_far ;
     z_far = so_called_common_logic_ortho_consts :: z_far ;
     shy_guts :: logic_ortho_planes_state :: z_far = z_far ;
 }

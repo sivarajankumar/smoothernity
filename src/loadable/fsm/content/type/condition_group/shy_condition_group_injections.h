@@ -1,5 +1,5 @@
-#ifndef _shy_type_loadable_fsm_content_condition_group_injections_included
-#define _shy_type_loadable_fsm_content_condition_group_injections_included
+#ifndef _shy_loadable_fsm_content_condition_group_type_injections_included
+#define _shy_loadable_fsm_content_condition_group_type_injections_included
 
 #include "loadable/fsm/content/type/condition_command_container/shy_condition_command_container_injections.h"
 #include "loadable/fsm/content/type/condition_input_container/shy_condition_input_container_injections.h"
@@ -7,6 +7,6 @@
 
 #include "./shy_condition_group.h"
 
-typedef shy_type_loadable_fsm_content_condition_group so_called_type_loadable_fsm_content_condition_group ;
+typedef shy_loadable_fsm_content_condition_group_type so_called_loadable_fsm_content_condition_group_type ;
 
 #endif

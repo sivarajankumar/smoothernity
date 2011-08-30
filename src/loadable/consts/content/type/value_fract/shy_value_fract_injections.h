@@ -1,5 +1,5 @@
-#ifndef _shy_type_loadable_consts_content_value_fract_injections_included
-#define _shy_type_loadable_consts_content_value_fract_injections_included
+#ifndef _shy_loadable_consts_content_value_fract_type_injections_included
+#define _shy_loadable_consts_content_value_fract_type_injections_included
 
 #include "injections/lib/std/bool/shy_bool.h"
 #include "injections/lib/std/int32_t/shy_int32_t.h"
@@ -8,6 +8,6 @@
 
 #include "./shy_value_fract.h"
 
-typedef shy_type_loadable_consts_content_value_fract so_called_type_loadable_consts_content_value_fract ;
+typedef shy_loadable_consts_content_value_fract_type so_called_loadable_consts_content_value_fract_type ;
 
 #endif

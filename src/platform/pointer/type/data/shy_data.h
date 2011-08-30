@@ -1,10 +1,10 @@
 template < typename data_type >
-class shy_type_platform_pointer_data
+class shy_platform_pointer_data_type
 {
     friend class shy_platform_pointer ;
     typedef data_type _data_type ;
 public :
-    shy_type_platform_pointer_data ( ) ;
+    shy_platform_pointer_data_type ( ) ;
 public :
     data_type & get ( ) const ;
 private :
@@ -12,13 +12,13 @@ private :
 } ;
 
 template < typename data_type >
-shy_type_platform_pointer_data < data_type > :: shy_type_platform_pointer_data ( )
+shy_platform_pointer_data_type < data_type > :: shy_platform_pointer_data_type ( )
 : _data_ptr ( reinterpret_cast < data_type * > ( so_called_platform_consts_insider :: uninitialized_value ) )
 {
 }
 
 template < typename data_type >
-data_type & shy_type_platform_pointer_data < data_type > :: get ( ) const
+data_type & shy_platform_pointer_data_type < data_type > :: get ( ) const
 {
     return * _data_ptr ;
 }

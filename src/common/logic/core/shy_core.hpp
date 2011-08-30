@@ -2,22 +2,22 @@ namespace shy_guts
 {
     namespace consts
     {
-        static const so_called_type_platform_math_num_fract z_far = so_called_platform_math :: init_num_fract ( 50 , 1 ) ;
-        static const so_called_type_platform_math_num_fract z_near = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
+        static const so_called_platform_math_num_fract_type z_far = so_called_platform_math :: init_num_fract ( 50 , 1 ) ;
+        static const so_called_platform_math_num_fract_type z_near = so_called_platform_math :: init_num_fract ( 1 , 1 ) ;
     }
 
     static void init_render ( ) ;
-    static void get_near_plane_distance ( so_called_type_platform_math_num_fract & ) ;
+    static void get_near_plane_distance ( so_called_platform_math_num_fract_type & ) ;
 
-    static so_called_type_platform_math_num_whole fidget_prepared ;
+    static so_called_platform_math_num_whole_type fidget_prepared ;
     
-    static so_called_type_platform_math_num_whole render_aspect_requested ;
-    static so_called_type_platform_math_num_fract render_aspect_width ;
-    static so_called_type_platform_math_num_fract render_aspect_height ;
+    static so_called_platform_math_num_whole_type render_aspect_requested ;
+    static so_called_platform_math_num_fract_type render_aspect_width ;
+    static so_called_platform_math_num_fract_type render_aspect_height ;
     
-    static so_called_type_platform_math_num_whole handling_near_plane_distance_request ;
-    static so_called_type_platform_math_num_whole handling_use_ortho_projection_request ;
-    static so_called_type_platform_math_num_whole handling_use_perspective_projection_request ;
+    static so_called_platform_math_num_whole_type handling_near_plane_distance_request ;
+    static so_called_platform_math_num_whole_type handling_use_ortho_projection_request ;
+    static so_called_platform_math_num_whole_type handling_use_perspective_projection_request ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_core > _scheduled_context_type ;
@@ -30,7 +30,7 @@ void shy_guts :: init_render ( )
     so_called_common_engine_render_texture_mode_modulate_sender :: send ( so_called_common_engine_render_texture_mode_modulate_message ( ) ) ;
 }
 
-void shy_guts :: get_near_plane_distance ( so_called_type_platform_math_num_fract & result )
+void shy_guts :: get_near_plane_distance ( so_called_platform_math_num_fract_type & result )
 {
     so_called_platform_math :: add_fracts ( result , shy_guts :: render_aspect_width , shy_guts :: render_aspect_height ) ;
 }
@@ -53,10 +53,10 @@ void _shy_common_logic_core :: receive ( so_called_common_engine_render_aspect_r
         {
             shy_guts :: handling_use_ortho_projection_request = so_called_platform_math_consts :: whole_false ;
             
-            so_called_type_platform_math_num_fract width = shy_guts :: render_aspect_width ;
-            so_called_type_platform_math_num_fract height = shy_guts :: render_aspect_height ;
-            so_called_type_platform_math_num_fract neg_width ;
-            so_called_type_platform_math_num_fract neg_height ;
+            so_called_platform_math_num_fract_type width = shy_guts :: render_aspect_width ;
+            so_called_platform_math_num_fract_type height = shy_guts :: render_aspect_height ;
+            so_called_platform_math_num_fract_type neg_width ;
+            so_called_platform_math_num_fract_type neg_height ;
             so_called_platform_math :: neg_fract ( neg_width , width ) ;
             so_called_platform_math :: neg_fract ( neg_height , height ) ;
             
@@ -76,11 +76,11 @@ void _shy_common_logic_core :: receive ( so_called_common_engine_render_aspect_r
         {
             shy_guts :: handling_use_perspective_projection_request = so_called_platform_math_consts :: whole_false ;
         
-            so_called_type_platform_math_num_fract width = shy_guts :: render_aspect_width ;
-            so_called_type_platform_math_num_fract height = shy_guts :: render_aspect_height ;
-            so_called_type_platform_math_num_fract neg_width ;
-            so_called_type_platform_math_num_fract neg_height ;
-            so_called_type_platform_math_num_fract z_near ;
+            so_called_platform_math_num_fract_type width = shy_guts :: render_aspect_width ;
+            so_called_platform_math_num_fract_type height = shy_guts :: render_aspect_height ;
+            so_called_platform_math_num_fract_type neg_width ;
+            so_called_platform_math_num_fract_type neg_height ;
+            so_called_platform_math_num_fract_type z_near ;
             shy_guts :: get_near_plane_distance ( z_near ) ;
             so_called_platform_math :: neg_fract ( neg_width , width ) ;
             so_called_platform_math :: neg_fract ( neg_height , height ) ;

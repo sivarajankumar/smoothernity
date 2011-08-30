@@ -2,53 +2,53 @@ namespace shy_guts
 {
     namespace logic_main_menu_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_platform_math_num_whole_type requested ;
     }
     
     namespace logic_main_menu_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_matrix_data view ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_matrix_data_type view ;
     }
 
     namespace logic_ortho_planes_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract x_left ;
-        static so_called_type_platform_math_num_fract x_right ;
-        static so_called_type_platform_math_num_fract y_bottom ;
-        static so_called_type_platform_math_num_fract y_top ;
-        static so_called_type_platform_math_num_fract z_near ;
-        static so_called_type_platform_math_num_fract z_far ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type x_left ;
+        static so_called_platform_math_num_fract_type x_right ;
+        static so_called_platform_math_num_fract_type y_bottom ;
+        static so_called_platform_math_num_fract_type y_top ;
+        static so_called_platform_math_num_fract_type z_near ;
+        static so_called_platform_math_num_fract_type z_far ;
     }
 
     namespace logic_fidget_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
     
     namespace logic_text_use_text_texture_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
     
     namespace logic_main_menu_letters_meshes_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
     
     namespace logic_main_menu_selection_mesh_render_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
-    static so_called_type_platform_math_num_whole permitted ;
+    static so_called_platform_math_num_whole_type permitted ;
 
     static void proceed_with_render ( ) ;
     static void render_started ( ) ;

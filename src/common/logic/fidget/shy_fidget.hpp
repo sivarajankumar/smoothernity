@@ -4,18 +4,18 @@ namespace shy_guts
     static void render_fidget_mesh ( ) ;
     static void create_fidget_mesh ( ) ;
 
-    static so_called_type_platform_math_num_fract fidget_angle ;
-    static so_called_type_platform_math_num_whole fidget_prepare_permitted ;
-    static so_called_type_platform_math_num_whole fidget_mesh_created ;
-    static so_called_type_platform_math_num_whole fidget_scale ;
-    static so_called_type_platform_math_num_whole mesh_create_requested ;
-    static so_called_type_platform_math_num_whole render_aspect_requested ;
-    static so_called_type_platform_math_num_whole render_aspect_replied ;
-    static so_called_type_platform_math_num_fract render_aspect_height ;
-    static so_called_type_platform_math_num_whole render_frame_loss_requested ;
-    static so_called_type_platform_math_num_whole render_frame_loss_replied ;
-    static so_called_type_platform_math_num_whole render_frame_loss ;
-    static so_called_type_common_engine_render_mesh_id fidget_mesh_id ;
+    static so_called_platform_math_num_fract_type fidget_angle ;
+    static so_called_platform_math_num_whole_type fidget_prepare_permitted ;
+    static so_called_platform_math_num_whole_type fidget_mesh_created ;
+    static so_called_platform_math_num_whole_type fidget_scale ;
+    static so_called_platform_math_num_whole_type mesh_create_requested ;
+    static so_called_platform_math_num_whole_type render_aspect_requested ;
+    static so_called_platform_math_num_whole_type render_aspect_replied ;
+    static so_called_platform_math_num_fract_type render_aspect_height ;
+    static so_called_platform_math_num_whole_type render_frame_loss_requested ;
+    static so_called_platform_math_num_whole_type render_frame_loss_replied ;
+    static so_called_platform_math_num_whole_type render_frame_loss ;
+    static so_called_common_engine_render_mesh_id_type fidget_mesh_id ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_fidget > _scheduled_context_type ;
@@ -30,16 +30,16 @@ void shy_guts :: update_fidget ( )
         shy_guts :: render_aspect_replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: render_frame_loss_replied = so_called_platform_math_consts :: whole_false ;
     
-        so_called_type_platform_matrix_data matrix ;
-        so_called_type_platform_math_num_fract fract_scale_in_frames ;
-        so_called_type_platform_math_num_fract fract_fidget_scale ;
-        so_called_type_platform_math_num_fract scale ;
-        so_called_type_platform_math_num_fract angle_cos ;
-        so_called_type_platform_math_num_fract angle_sin ;
-        so_called_type_platform_math_num_fract cos_by_scale ;
-        so_called_type_platform_math_num_fract sin_by_scale ;
-        so_called_type_platform_math_num_fract neg_sin_by_scale ;
-        so_called_type_platform_math_num_fract mesh_y ;
+        so_called_platform_matrix_data_type matrix ;
+        so_called_platform_math_num_fract_type fract_scale_in_frames ;
+        so_called_platform_math_num_fract_type fract_fidget_scale ;
+        so_called_platform_math_num_fract_type scale ;
+        so_called_platform_math_num_fract_type angle_cos ;
+        so_called_platform_math_num_fract_type angle_sin ;
+        so_called_platform_math_num_fract_type cos_by_scale ;
+        so_called_platform_math_num_fract_type sin_by_scale ;
+        so_called_platform_math_num_fract_type neg_sin_by_scale ;
+        so_called_platform_math_num_fract_type mesh_y ;
         
         so_called_platform_math :: add_to_fract ( shy_guts :: fidget_angle , so_called_common_logic_fidget_consts :: angle_delta ) ;
         so_called_platform_math :: make_fract_from_whole ( fract_scale_in_frames , so_called_common_logic_fidget_consts :: scale_in_frames ) ;
@@ -80,26 +80,26 @@ void shy_guts :: render_fidget_mesh ( )
 
 void shy_guts :: create_fidget_mesh ( )
 {
-    so_called_type_platform_math_num_fract fract_fidget_edges ;
+    so_called_platform_math_num_fract_type fract_fidget_edges ;
     
     so_called_platform_math :: make_fract_from_whole ( fract_fidget_edges , so_called_common_logic_fidget_consts :: fidget_edges ) ;
     
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_common_logic_fidget_consts :: fidget_edges )
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_math_num_fract fract_i ;
-        so_called_type_platform_math_num_fract angle ;
-        so_called_type_platform_math_num_fract angle_cos ;
-        so_called_type_platform_math_num_fract angle_sin ;
-        so_called_type_platform_math_num_fract vertex_x ;
-        so_called_type_platform_math_num_fract vertex_y ;
-        so_called_type_platform_math_num_fract vertex_z ;
-        so_called_type_platform_math_num_fract vertex_r ;
-        so_called_type_platform_math_num_fract vertex_g ;
-        so_called_type_platform_math_num_fract vertex_b ;
-        so_called_type_platform_math_num_fract vertex_a ;
+        so_called_platform_math_num_fract_type fract_i ;
+        so_called_platform_math_num_fract_type angle ;
+        so_called_platform_math_num_fract_type angle_cos ;
+        so_called_platform_math_num_fract_type angle_sin ;
+        so_called_platform_math_num_fract_type vertex_x ;
+        so_called_platform_math_num_fract_type vertex_y ;
+        so_called_platform_math_num_fract_type vertex_z ;
+        so_called_platform_math_num_fract_type vertex_r ;
+        so_called_platform_math_num_fract_type vertex_g ;
+        so_called_platform_math_num_fract_type vertex_b ;
+        so_called_platform_math_num_fract_type vertex_a ;
 
         so_called_platform_math :: make_fract_from_whole ( fract_i , i ) ;
         so_called_platform_math :: mul_fracts ( angle , so_called_platform_math_consts :: fract_2pi , fract_i ) ;

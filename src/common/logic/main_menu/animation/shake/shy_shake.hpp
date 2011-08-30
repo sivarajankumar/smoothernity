@@ -2,13 +2,13 @@ namespace shy_guts
 {
     namespace logic_main_menu_animation_shake_transform_state
     {
-        so_called_type_platform_math_num_fract shift_x ;
+        so_called_platform_math_num_fract_type shift_x ;
     }
 
     namespace logic_main_menu_update_state
     {
-        so_called_type_platform_math_num_whole started ;
-        so_called_type_platform_math_num_fract time ;
+        so_called_platform_math_num_whole_type started ;
+        so_called_platform_math_num_fract_type time ;
     }
 
     static void compute_transform ( ) ;
@@ -20,17 +20,17 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_to_begin ;
-    so_called_type_platform_math_num_fract time_from_begin_to_end ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract shift_x_amplitude_begin ;
-    so_called_type_platform_math_num_fract shift_x_amplitude_end ;
-    so_called_type_platform_math_num_fract shift_x_amplitude ;
-    so_called_type_platform_math_num_fract shift_x_period_in_seconds ;
-    so_called_type_platform_math_num_fract shift_x_phase ;
-    so_called_type_platform_math_num_fract shift_x ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_to_begin ;
+    so_called_platform_math_num_fract_type time_from_begin_to_end ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type shift_x_amplitude_begin ;
+    so_called_platform_math_num_fract_type shift_x_amplitude_end ;
+    so_called_platform_math_num_fract_type shift_x_amplitude ;
+    so_called_platform_math_num_fract_type shift_x_period_in_seconds ;
+    so_called_platform_math_num_fract_type shift_x_phase ;
+    so_called_platform_math_num_fract_type shift_x ;
 
     time = shy_guts :: logic_main_menu_update_state :: time ;
     time_to_begin = so_called_common_logic_main_menu_animation_consts :: shake_time_to_begin ;
@@ -83,11 +83,11 @@ void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_common_l
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: started ) )
     {
-        so_called_type_platform_math_num_fract time ;
-        so_called_type_platform_math_num_fract time_step ;
-        so_called_type_platform_math_num_fract time_total ;
-        so_called_type_platform_math_num_fract time_to_begin ;
-        so_called_type_platform_math_num_fract time_from_begin_to_end ;
+        so_called_platform_math_num_fract_type time ;
+        so_called_platform_math_num_fract_type time_step ;
+        so_called_platform_math_num_fract_type time_total ;
+        so_called_platform_math_num_fract_type time_to_begin ;
+        so_called_platform_math_num_fract_type time_from_begin_to_end ;
 
         time = shy_guts :: logic_main_menu_update_state :: time ;
         time_to_begin = so_called_common_logic_main_menu_animation_consts :: shake_time_to_begin ;

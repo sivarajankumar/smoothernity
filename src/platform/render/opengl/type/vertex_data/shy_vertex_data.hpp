@@ -1,4 +1,4 @@
-shy_type_platform_render_opengl_vertex_data :: shy_type_platform_render_opengl_vertex_data ( )
+shy_platform_render_opengl_vertex_data_type :: shy_platform_render_opengl_vertex_data_type ( )
 {
     for ( so_called_lib_std_int32_t i = 0 ; i < 3 ; i ++ )
         _position [ i ] = so_called_platform_consts_insider :: uninitialized_value ;

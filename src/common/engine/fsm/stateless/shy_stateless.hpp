@@ -1,7 +1,7 @@
-void shy_common_engine_fsm_stateless :: tick_single_fsm ( so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > & state )
+void shy_common_engine_fsm_stateless :: tick_single_fsm ( so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > & state )
 {
-    so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > next_state ;
-    so_called_type_platform_math_num_whole states_are_equal ;
+    so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > next_state ;
+    so_called_platform_math_num_whole_type states_are_equal ;
 
     state . get ( ) . on_input ( ) ;
     for ( ; ; )
