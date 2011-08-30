@@ -8,6 +8,7 @@ class consts :
     mode_write = "w"
     prefix_shy = "shy_"
     prefix_so_called = "so_called_"
+    prefix_underscored_shy = "_shy_"
     underscore = "_"
     usage_long = str \
         ( "%prog [options] dir-path prefix\n"
@@ -46,6 +47,7 @@ else :
                 for word in line . split ( ) :
                     check_replace ( replace_list , word , consts . prefix_shy , arg_prefix )
                     check_replace ( replace_list , word , consts . prefix_so_called , arg_prefix )
+                    check_replace ( replace_list , word , consts . prefix_underscored_shy , arg_prefix )
                 for what , to_what in replace_list . items ( ) :
                     line = line . replace ( what , to_what )
                     changed = True
