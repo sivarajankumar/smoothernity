@@ -37,8 +37,8 @@ else :
             changed = False
             for line in old_lines :
                 replace_list = { }
-                if line . startswith ( consts . include ) :
-                    include_path = line . split ( consts . include ) [ 1 ] . split ( consts . quote ) [ 1 ]
+                if line . strip ( ) . startswith ( consts . include ) :
+                    include_path = line . strip ( ) . split ( consts . include ) [ 1 ] . split ( consts . quote ) [ 1 ]
                     if include_path . startswith ( consts . dot ) :
                         if not include_path . startswith ( consts . local_prefix ) :
                             new_path = os . path . normpath ( os . path . join ( dir , include_path ) )
