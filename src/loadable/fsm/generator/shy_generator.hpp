@@ -599,12 +599,12 @@ void shy_guts :: consts :: hpp_behaviour_set_inputs
     result += "void so_called_common_" ;
     result += system ;
     result += "_fsm_behaviour_static :: set_inputs\n" ;
-    result += "    ( so_called_platform_pointer_data_type < so_called_type_common_" ;
+    result += "    ( so_called_platform_pointer_data_type < so_called_common_" ;
     result += system ;
-    result += "_fsm_inputs > inputs_current\n" ;
-    result += "    , so_called_platform_pointer_data_type < so_called_type_common_" ;
+    result += "_fsm_inputs_type > inputs_current\n" ;
+    result += "    , so_called_platform_pointer_data_type < so_called_common_" ;
     result += system ;
-    result += "_fsm_inputs > inputs_fixed\n" ;
+    result += "_fsm_inputs_type > inputs_fixed\n" ;
     result += "    )\n" ;
     result += "{\n" ;
     result += "    shy_guts :: inputs_current = inputs_current ;\n" ;
@@ -672,12 +672,13 @@ void shy_guts :: consts :: hpp_guts_type_machine_state
     )
 {
     result . clear ( ) ;
-    result += "    class type_machine_" ;
+    result += "    class machine_" ;
     result += machine ;
     result += "_state_" ;
     result += state ;
+    result += "_type" ;
     result += "\n" ;
-    result += "    : public so_called_type_common_engine_fsm_state\n" ;
+    result += "    : public so_called_common_engine_fsm_state_type\n" ;
     result += "    {\n" ;
     result += methods ;
     result += "    } ;\n" ;
@@ -915,10 +916,11 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_entry_implement
     )
 {
     result . clear ( ) ;
-    result += "void shy_guts :: type_machine_" ;
+    result += "void shy_guts :: machine_" ;
     result += machine ;
     result += "_state_" ;
     result += state ;
+    result += "_type" ;
     result += " :: on_entry ( )\n" ;
     result += "{\n" ;
     result += contents ;
@@ -943,10 +945,11 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_exit_implement
     )
 {
     result . clear ( ) ;
-    result += "void shy_guts :: type_machine_" ;
+    result += "void shy_guts :: machine_" ;
     result += machine ;
     result += "_state_" ;
     result += state ;
+    result += "_type" ;
     result += " :: on_exit ( )\n" ;
     result += "{\n" ;
     result += contents ;
@@ -971,10 +974,11 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_on_input_implement
     )
 {
     result . clear ( ) ;
-    result += "void shy_guts :: type_machine_" ;
+    result += "void shy_guts :: machine_" ;
     result += machine ;
     result += "_state_" ;
     result += state ;
+    result += "_type" ;
     result += " :: on_input ( )\n" ;
     result += "{\n" ;
     result += contents ;
@@ -1043,10 +1047,11 @@ void shy_guts :: consts :: hpp_guts_type_machine_state_transition_implement
     )
 {
     result . clear ( ) ;
-    result += "so_called_type_common_engine_fsm_state & shy_guts :: type_machine_" ;
+    result += "so_called_common_engine_fsm_state_type & shy_guts :: machine_" ;
     result += machine ;
     result += "_state_" ;
     result += state ;
+    result += "_type" ;
     result += " :: transition ( )\n" ;
     result += "{\n" ;
     result += contents ;
@@ -1158,7 +1163,7 @@ void shy_guts :: consts :: hpp_guts_type_behaviour_inputs
     )
 {
     result . clear ( ) ;
-    result += "    class type_behaviour_inputs\n" ;
+    result += "    class behaviour_inputs_type\n" ;
     result += "    {\n" ;
     result += "    public :\n" ;
     result += inputs ;
@@ -1249,10 +1254,11 @@ void shy_guts :: consts :: hpp_guts_states ( so_called_lib_std_string & result ,
 void shy_guts :: consts :: hpp_guts_states_state_variable ( so_called_lib_std_string & result , so_called_lib_std_string machine , so_called_lib_std_string state )
 {
     result . clear ( ) ;
-    result += "       static type_machine_" ;
+    result += "       static machine_" ;
     result += machine ;
     result += "_state_" ;
     result += state ;
+    result += "_type" ;
     result += " " ;
     result += machine ;
     result += "_state_" ;
@@ -1274,12 +1280,12 @@ void shy_guts :: consts :: hpp_guts_variables ( so_called_lib_std_string & resul
     result += "    static so_called_platform_math_num_whole_type fsm_running ;\n" ;
     result += "    static behaviour_inputs_type behaviour_inputs_current ;\n" ;
     result += "    static behaviour_inputs_type behaviour_inputs_fixed ;\n" ;
-    result += "    static so_called_platform_pointer_data_type < so_called_type_common_" ;
+    result += "    static so_called_platform_pointer_data_type < so_called_common_" ;
     result += system ;
-    result += "_fsm_inputs > inputs_current ;\n" ;
-    result += "    static so_called_platform_pointer_data_type < so_called_type_common_" ;
+    result += "_fsm_inputs_type > inputs_current ;\n" ;
+    result += "    static so_called_platform_pointer_data_type < so_called_common_" ;
     result += system ;
-    result += "_fsm_inputs > inputs_fixed ;\n" ;
+    result += "_fsm_inputs_type > inputs_fixed ;\n" ;
 }
 
 void shy_guts :: consts :: injections_h_path ( so_called_lib_std_string & path , so_called_lib_std_string system )
@@ -1334,12 +1340,12 @@ void shy_guts :: consts :: h_contents ( so_called_lib_std_string & result , so_c
     result += "    static void run_fsm_begin ( ) ;\n" ;
     result += "    static void run_fsm_end ( ) ;\n" ;
     result += "    static void set_inputs\n" ;
-    result += "        ( so_called_platform_pointer_data_type < so_called_type_common_" ;
+    result += "        ( so_called_platform_pointer_data_type < so_called_common_" ;
     result += system ;
-    result += "_fsm_inputs >\n" ;
-    result += "        , so_called_platform_pointer_data_type < so_called_type_common_" ;
+    result += "_fsm_inputs_type >\n" ;
+    result += "        , so_called_platform_pointer_data_type < so_called_common_" ;
     result += system ;
-    result += "_fsm_inputs >\n" ;
+    result += "_fsm_inputs_type >\n" ;
     result += "        ) ;\n" ;
     result += "    static void tick_all_fsms ( ) ;\n" ;
     result += "    static void update_fixed_behaviour_inputs ( ) ;\n" ;
