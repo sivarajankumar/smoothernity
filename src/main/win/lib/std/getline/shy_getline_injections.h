@@ -2,7 +2,7 @@
 #define _shy_win_lib_std_getline_injections_included 
 
 #ifdef shy_build_with_stl
-    #include "../../../../../lib/std/getline/shy_getline_injections.h"
+    #include "lib/std/getline/shy_getline_injections.h"
 #endif
 
 #endif

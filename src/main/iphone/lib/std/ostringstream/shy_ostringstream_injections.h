@@ -2,7 +2,7 @@
 #define _shy_iphone_lib_std_ostringstream_injections_included 
 
 #ifdef shy_build_with_stl
-    #include "../../../../../lib/std/ostringstream/shy_ostringstream_injections.h"
+    #include "lib/std/ostringstream/shy_ostringstream_injections.h"
 #endif
 
 #endif

@@ -1,1 +1,1 @@
-#include "../../../../../platform/sound/loader/cocoa/shy_cocoa_injections.hpp"
+#include "platform/sound/loader/cocoa/shy_cocoa_injections.hpp"

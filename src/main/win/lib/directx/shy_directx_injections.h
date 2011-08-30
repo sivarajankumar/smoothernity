@@ -1,7 +1,7 @@
 #ifndef _shy_win_lib_directx_injections_included
 #define _shy_win_lib_directx_injections_included
 
-#include "../../DXUT/Core/DXUT.h"
+#include "main/win/DXUT/Core/DXUT.h"
 
 #define so_called_lib_directx_D3DBLEND_INVSRCALPHA D3DBLEND_INVSRCALPHA
 #define so_called_lib_directx_D3DBLEND_SRCALPHA D3DBLEND_SRCALPHA

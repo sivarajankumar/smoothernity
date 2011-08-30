@@ -1,1 +1,1 @@
-#include "../../../../platform/render/opengl/shy_opengl_injections.hpp"
+#include "platform/render/opengl/shy_opengl_injections.hpp"
