@@ -3,7 +3,7 @@
 
 #ifdef shy_build_with_trace
     #ifdef shy_build_loadable_way
-        #include "../../../../injections/lib/std/char/shy_char.h"
+        #include "injections/lib/std/char/shy_char.h"
         #include "./shy_behaviour.h"
         typedef shy_trace_loadable_fsm_behaviour so_called_trace_loadable_fsm_behaviour ;
     #endif
