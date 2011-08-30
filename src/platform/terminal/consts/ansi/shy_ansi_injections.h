@@ -1,7 +1,7 @@
 #ifndef _shy_platform_terminal_consts_ansi_injections_included
 #define _shy_platform_terminal_consts_ansi_injections_included
 
-#include "../../../../injections/lib/std/char/shy_char.h"
+#include "injections/lib/std/char/shy_char.h"
 
 #include "./shy_ansi.h"
 
