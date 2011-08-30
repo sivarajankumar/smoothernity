@@ -64,7 +64,7 @@ void shy_guts :: send_computed_transform ( )
     so_called_message_common_logic_salutation_letters_animation_transform_reply msg ;
     msg . letter = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_request . letter ;
     msg . transform = shy_guts :: logic_salutation_letters_animation_transform_state :: transform ;
-    so_called_sender_common_logic_salutation_letters_animation_transform_reply :: send ( msg ) ;
+    so_called_common_logic_salutation_letters_animation_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_message_common_init )

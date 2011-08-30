@@ -14,7 +14,7 @@ void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called
 void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_destroy_request )
 {
     shy_guts :: iteration_in_progress = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_letters_meshes_iterate_start :: send ( so_called_message_common_logic_main_menu_letters_meshes_iterate_start ( ) ) ;
+    so_called_common_logic_main_menu_letters_meshes_iterate_start_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_iterate_start ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iterate_finished )
@@ -22,7 +22,7 @@ void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: iteration_in_progress ) )
     {
         shy_guts :: iteration_in_progress = so_called_platform_math_consts :: whole_false ;
-        so_called_sender_common_logic_main_menu_letters_meshes_destroy_reply :: send ( so_called_message_common_logic_main_menu_letters_meshes_destroy_reply ( ) ) ;
+        so_called_common_logic_main_menu_letters_meshes_destroy_reply_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_destroy_reply ( ) ) ;
     }
 }
 
@@ -32,7 +32,7 @@ void _shy_common_logic_main_menu_letters_meshes_destroyer :: receive ( so_called
     {
         so_called_message_common_engine_render_mesh_delete delete_msg ;
         delete_msg . mesh = msg . mesh ;
-        so_called_sender_common_engine_render_mesh_delete :: send ( delete_msg ) ;
+        so_called_common_engine_render_mesh_delete_sender :: send ( delete_msg ) ;
     }
 }
 

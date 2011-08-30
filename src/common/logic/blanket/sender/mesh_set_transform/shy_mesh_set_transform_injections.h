@@ -1,10 +1,10 @@
-#ifndef _shy_sender_common_logic_blanket_mesh_set_transform_injections_included
-#define _shy_sender_common_logic_blanket_mesh_set_transform_injections_included
+#ifndef _shy_common_logic_blanket_mesh_set_transform_sender_injections_included
+#define _shy_common_logic_blanket_mesh_set_transform_sender_injections_included
 
 #include "../../message/mesh_set_transform/shy_mesh_set_transform_injections.h"
 
 #include "./shy_mesh_set_transform.h"
 
-typedef shy_sender_common_logic_blanket_mesh_set_transform so_called_sender_common_logic_blanket_mesh_set_transform ;
+typedef shy_common_logic_blanket_mesh_set_transform_sender so_called_common_logic_blanket_mesh_set_transform_sender ;
 
 #endif

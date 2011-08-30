@@ -29,7 +29,7 @@ void shy_common_engine_render_stateless :: mesh_set_vertex_position
     msg . x = x ;
     msg . y = y ;
     msg . z = z ;
-    so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_position_sender :: send ( msg ) ;
 }
 
 void shy_common_engine_render_stateless :: mesh_set_vertex_tex_coord 
@@ -44,7 +44,7 @@ void shy_common_engine_render_stateless :: mesh_set_vertex_tex_coord
     msg . offset = offset ;
     msg . u = u ;
     msg . v = v ;
-    so_called_sender_common_engine_render_mesh_set_vertex_tex_coord :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_tex_coord_sender :: send ( msg ) ;
 }
 
 void shy_common_engine_render_stateless :: mesh_set_vertex_color 
@@ -63,7 +63,7 @@ void shy_common_engine_render_stateless :: mesh_set_vertex_color
     msg . g = g ;
     msg . b = b ;
     msg . a = a ;
-    so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_color_sender :: send ( msg ) ;
 }
 
 void shy_common_engine_render_stateless :: mesh_set_triangle_strip_index_value
@@ -76,7 +76,7 @@ void shy_common_engine_render_stateless :: mesh_set_triangle_strip_index_value
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . index = index ;
-    so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_sender :: send ( msg ) ;
 }
 
 void shy_common_engine_render_stateless :: set_texel_color

@@ -127,7 +127,7 @@ void shy_guts :: reply_transform ( )
     msg . row = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: col ;
     msg . scale = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: scale ;
-    so_called_sender_common_logic_main_menu_letters_animation_appear_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_appear_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_appear :: receive ( so_called_message_common_init )

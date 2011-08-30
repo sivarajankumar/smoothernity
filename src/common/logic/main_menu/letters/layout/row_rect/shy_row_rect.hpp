@@ -63,13 +63,13 @@ void shy_guts :: proceed_with_row_rect ( )
 void shy_guts :: obtain_boundaries ( )
 {
     shy_guts :: logic_main_menu_letters_boundaries_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_letters_boundaries_request :: send ( so_called_message_common_logic_main_menu_letters_boundaries_request ( ) ) ;
+    so_called_common_logic_main_menu_letters_boundaries_request_sender :: send ( so_called_message_common_logic_main_menu_letters_boundaries_request ( ) ) ;
 }
 
 void shy_guts :: obtain_aspect_ratio ( )
 {
     shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void shy_guts :: received_aspect_ratio ( )
@@ -145,7 +145,7 @@ void shy_guts :: reply_row_rect ( )
     so_called_message_common_logic_main_menu_letters_layout_row_rect_reply reply_msg ;
     reply_msg . row = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row ;
     reply_msg . row_rect = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect ;
-    so_called_sender_common_logic_main_menu_letters_layout_row_rect_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_layout_row_rect_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_layout_row_rect :: receive ( so_called_message_common_engine_render_aspect_reply msg )

@@ -27,7 +27,7 @@ void _shy_common_logic_salutation_timer_appear :: receive ( so_called_message_co
         else
         {
             shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
-            so_called_sender_common_logic_salutation_timer_appear_run_finished :: send ( so_called_message_common_logic_salutation_timer_appear_run_finished ( ) ) ;
+            so_called_common_logic_salutation_timer_appear_run_finished_sender :: send ( so_called_message_common_logic_salutation_timer_appear_run_finished ( ) ) ;
         }
     }
 }

@@ -31,7 +31,7 @@ void shy_guts :: reply_transform ( )
     so_called_message_common_logic_main_menu_selection_animation_idle_attention_transform_reply msg ;
     msg . scale_x = shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: horizontal_scale ;
     msg . scale_y = shy_guts :: logic_main_menu_selection_animation_idle_attention_transform_state :: vertical_scale ;
-    so_called_sender_common_logic_main_menu_selection_animation_idle_attention_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_selection_animation_idle_attention_transform_reply_sender :: send ( msg ) ;
 }
 
 void shy_guts :: compute_horizontal_scale ( )

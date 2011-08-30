@@ -71,13 +71,13 @@ void shy_guts :: clear_screen ( )
     fog_msg . g = shy_guts :: color_g ;
     fog_msg . b = shy_guts :: color_b ;
     fog_msg . a = fog_a ;
-    so_called_sender_common_engine_render_fog_linear :: send ( fog_msg ) ;
+    so_called_common_engine_render_fog_linear_sender :: send ( fog_msg ) ;
 
     so_called_message_common_engine_render_clear_screen clear_screen_msg ;
     clear_screen_msg . r = shy_guts :: color_r ;
     clear_screen_msg . g = shy_guts :: color_g ;
     clear_screen_msg . b = shy_guts :: color_b ;
-    so_called_sender_common_engine_render_clear_screen :: send ( clear_screen_msg ) ;
+    so_called_common_engine_render_clear_screen_sender :: send ( clear_screen_msg ) ;
 }
 
 void shy_guts :: update_color ( )
@@ -107,22 +107,22 @@ void shy_guts :: proceed_with_render ( )
         shy_guts :: clear_screen ( ) ;
         
         shy_guts :: use_perspective_projection_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_core_use_perspective_projection_request :: send ( so_called_message_common_logic_core_use_perspective_projection_request ( ) ) ;    
+        so_called_common_logic_core_use_perspective_projection_request_sender :: send ( so_called_message_common_logic_core_use_perspective_projection_request ( ) ) ;    
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_perspective_projection_replied ) )
     {
         shy_guts :: use_perspective_projection_replied = so_called_platform_math_consts :: whole_false ;
-        so_called_sender_common_engine_render_enable_depth_test :: send ( so_called_message_common_engine_render_enable_depth_test ( ) ) ;
+        so_called_common_engine_render_enable_depth_test_sender :: send ( so_called_message_common_engine_render_enable_depth_test ( ) ) ;
         
         so_called_message_common_engine_render_matrix_load matrix_load_msg ;
         matrix_load_msg . matrix = shy_guts :: camera_matrix ;
-        so_called_sender_common_engine_render_matrix_load :: send ( matrix_load_msg ) ;
+        so_called_common_engine_render_matrix_load_sender :: send ( matrix_load_msg ) ;
         
         shy_guts :: land_render_requested = so_called_platform_math_consts :: whole_true ;
         shy_guts :: entities_render_requested = so_called_platform_math_consts :: whole_true ;
         
-        so_called_sender_common_logic_land_render_request :: send ( so_called_message_common_logic_land_render_request ( ) ) ;
-        so_called_sender_common_logic_entities_render_request :: send ( so_called_message_common_logic_entities_render_request ( ) ) ;
+        so_called_common_logic_land_render_request_sender :: send ( so_called_message_common_logic_land_render_request ( ) ) ;
+        so_called_common_logic_entities_render_request_sender :: send ( so_called_message_common_logic_entities_render_request ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: land_render_replied )
       && so_called_platform_conditions :: whole_is_true ( shy_guts :: entities_render_replied )
@@ -132,24 +132,24 @@ void shy_guts :: proceed_with_render ( )
         shy_guts :: entities_render_replied = so_called_platform_math_consts :: whole_false ;
         
         shy_guts :: use_ortho_projection_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_core_use_ortho_projection_request :: send ( so_called_message_common_logic_core_use_ortho_projection_request ( ) ) ;
+        so_called_common_logic_core_use_ortho_projection_request_sender :: send ( so_called_message_common_logic_core_use_ortho_projection_request ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_ortho_projection_replied ) )
     {
         shy_guts :: use_ortho_projection_replied = so_called_platform_math_consts :: whole_false ;
-        so_called_sender_common_engine_render_disable_depth_test :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
-        so_called_sender_common_engine_render_fog_disable :: send ( so_called_message_common_engine_render_fog_disable ( ) ) ;
+        so_called_common_engine_render_disable_depth_test_sender :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
+        so_called_common_engine_render_fog_disable_sender :: send ( so_called_message_common_engine_render_fog_disable ( ) ) ;
         
         shy_guts :: fidget_render_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_fidget_render_request :: send ( so_called_message_common_logic_fidget_render_request ( ) ) ;
+        so_called_common_logic_fidget_render_request_sender :: send ( so_called_message_common_logic_fidget_render_request ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_render_replied ) )
     {
         shy_guts :: fidget_render_replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: text_render_requested = so_called_platform_math_consts :: whole_true ;
         shy_guts :: image_render_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_text_render_request :: send ( so_called_message_common_logic_text_render_request ( ) ) ;
-        so_called_sender_common_logic_image_render_request :: send ( so_called_message_common_logic_image_render_request ( ) ) ;
+        so_called_common_logic_text_render_request_sender :: send ( so_called_message_common_logic_text_render_request ( ) ) ;
+        so_called_common_logic_image_render_request_sender :: send ( so_called_message_common_logic_image_render_request ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_render_replied )
       && so_called_platform_conditions :: whole_is_true ( shy_guts :: image_render_replied )
@@ -157,7 +157,7 @@ void shy_guts :: proceed_with_render ( )
     {
         shy_guts :: text_render_replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: image_render_replied = so_called_platform_math_consts :: whole_false ;
-        so_called_sender_common_logic_touch_render :: send ( so_called_message_common_logic_touch_render ( ) ) ;
+        so_called_common_logic_touch_render_sender :: send ( so_called_message_common_logic_touch_render ( ) ) ;
     }
 }
 
@@ -204,7 +204,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_camera_p
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
         so_called_trace ( so_called_trace_common_logic_game :: land_prepare_permitted ( ) ) ;
-    so_called_sender_common_logic_land_prepare_permit :: send ( so_called_message_common_logic_land_prepare_permit ( ) ) ;
+    so_called_common_logic_land_prepare_permit_sender :: send ( so_called_message_common_logic_land_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_core_near_plane_distance_reply msg )
@@ -242,7 +242,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_entities
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
         so_called_trace ( so_called_trace_common_logic_game :: image_prepare_permitted ( ) ) ;
-    so_called_sender_common_logic_image_prepare_permit :: send ( so_called_message_common_logic_image_prepare_permit ( ) ) ;
+    so_called_common_logic_image_prepare_permit_sender :: send ( so_called_message_common_logic_image_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_entities_render_reply )
@@ -278,8 +278,8 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_ren
     {
         shy_guts :: near_plane_distance_requested = so_called_platform_math_consts :: whole_true ;
         shy_guts :: camera_matrix_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_core_near_plane_distance_request :: send ( so_called_message_common_logic_core_near_plane_distance_request ( ) ) ;
-        so_called_sender_common_logic_camera_matrix_request :: send ( so_called_message_common_logic_camera_matrix_request ( ) ) ;
+        so_called_common_logic_core_near_plane_distance_request_sender :: send ( so_called_message_common_logic_core_near_plane_distance_request ( ) ) ;
+        so_called_common_logic_camera_matrix_request_sender :: send ( so_called_message_common_logic_camera_matrix_request ( ) ) ;
     }
 }
 
@@ -291,20 +291,20 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_game_upd
         {
             if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
                 so_called_trace ( so_called_trace_common_logic_game :: camera_prepare_permitted ( ) ) ;
-            so_called_sender_common_logic_camera_prepare_permit :: send ( so_called_message_common_logic_camera_prepare_permit ( ) ) ;
+            so_called_common_logic_camera_prepare_permit_sender :: send ( so_called_message_common_logic_camera_prepare_permit ( ) ) ;
             shy_guts :: game_launched = so_called_platform_math_consts :: whole_true ;
         }
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: game_launched ) )
     {
         shy_guts :: update_color ( ) ;
-        so_called_sender_common_logic_camera_update :: send ( so_called_message_common_logic_camera_update ( ) ) ;
-        so_called_sender_common_logic_entities_update :: send ( so_called_message_common_logic_entities_update ( ) ) ;
-        so_called_sender_common_logic_land_update :: send ( so_called_message_common_logic_land_update ( ) ) ;
-        so_called_sender_common_logic_image_update :: send ( so_called_message_common_logic_image_update ( ) ) ;
-        so_called_sender_common_logic_sound_update :: send ( so_called_message_common_logic_sound_update ( ) ) ;
-        so_called_sender_common_logic_text_update :: send ( so_called_message_common_logic_text_update ( ) ) ;
-        so_called_sender_common_logic_touch_update :: send ( so_called_message_common_logic_touch_update ( ) ) ;
+        so_called_common_logic_camera_update_sender :: send ( so_called_message_common_logic_camera_update ( ) ) ;
+        so_called_common_logic_entities_update_sender :: send ( so_called_message_common_logic_entities_update ( ) ) ;
+        so_called_common_logic_land_update_sender :: send ( so_called_message_common_logic_land_update ( ) ) ;
+        so_called_common_logic_image_update_sender :: send ( so_called_message_common_logic_image_update ( ) ) ;
+        so_called_common_logic_sound_update_sender :: send ( so_called_message_common_logic_sound_update ( ) ) ;
+        so_called_common_logic_text_update_sender :: send ( so_called_message_common_logic_text_update ( ) ) ;
+        so_called_common_logic_touch_update_sender :: send ( so_called_message_common_logic_touch_update ( ) ) ;
     }
 }
 
@@ -312,7 +312,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_pr
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
         so_called_trace ( so_called_trace_common_logic_game :: touch_prepare_permitted ( ) ) ;
-    so_called_sender_common_logic_touch_prepare_permit :: send ( so_called_message_common_logic_touch_prepare_permit ( ) ) ;
+    so_called_common_logic_touch_prepare_permit_sender :: send ( so_called_message_common_logic_touch_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_image_render_reply )
@@ -329,7 +329,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_land_pre
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
         so_called_trace ( so_called_trace_common_logic_game :: entities_prepare_permitted ( ) ) ;
-    so_called_sender_common_logic_entities_prepare_permit :: send ( so_called_message_common_logic_entities_prepare_permit ( ) ) ;
+    so_called_common_logic_entities_prepare_permit_sender :: send ( so_called_message_common_logic_entities_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: receive ( so_called_message_common_logic_land_render_reply )
@@ -360,7 +360,7 @@ void _shy_common_logic_game :: receive ( so_called_message_common_logic_touch_pr
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
         so_called_trace ( so_called_trace_common_logic_game :: sound_prepare_permitted ( ) ) ;
-    so_called_sender_common_logic_sound_prepare_permit :: send ( so_called_message_common_logic_sound_prepare_permit ( ) ) ;
+    so_called_common_logic_sound_prepare_permit_sender :: send ( so_called_message_common_logic_sound_prepare_permit ( ) ) ;
 }
 
 void _shy_common_logic_game :: register_in_scheduler ( )

@@ -64,7 +64,7 @@ void shy_guts :: reply_transform ( )
 {
     so_called_message_common_logic_main_menu_animation_shake_transform_reply msg ;
     msg . shift_x = shy_guts :: logic_main_menu_animation_shake_transform_state :: shift_x ;
-    so_called_sender_common_logic_main_menu_animation_shake_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_animation_shake_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_animation_shake :: receive ( so_called_message_common_init )

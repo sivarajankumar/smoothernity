@@ -3,52 +3,52 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amusement_creation_permit )
 {
-    so_called_sender_common_logic_blanket_creation_permit :: send ( so_called_message_common_logic_blanket_creation_permit ( ) ) ;
+    so_called_common_logic_blanket_creation_permit_sender :: send ( so_called_message_common_logic_blanket_creation_permit ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amusement_launch_permit )
 {
-    so_called_sender_common_logic_room_launch_permit :: send ( so_called_message_common_logic_room_launch_permit ( ) ) ;
-    so_called_sender_common_logic_blanket_animation_disappear_start :: send ( so_called_message_common_logic_blanket_animation_disappear_start ( ) ) ;
-    so_called_sender_common_logic_blanket_place :: send ( so_called_message_common_logic_blanket_place ( ) ) ;
+    so_called_common_logic_room_launch_permit_sender :: send ( so_called_message_common_logic_room_launch_permit ( ) ) ;
+    so_called_common_logic_blanket_animation_disappear_start_sender :: send ( so_called_message_common_logic_blanket_animation_disappear_start ( ) ) ;
+    so_called_common_logic_blanket_place_sender :: send ( so_called_message_common_logic_blanket_place ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_amusement_update )
 {
-    so_called_sender_common_logic_blanket_update :: send ( so_called_message_common_logic_blanket_update ( ) ) ;
-    so_called_sender_common_logic_door_update :: send ( so_called_message_common_logic_door_update ( ) ) ;
-    so_called_sender_common_logic_observer_update :: send ( so_called_message_common_logic_observer_update ( ) ) ;
-    so_called_sender_common_logic_room_update :: send ( so_called_message_common_logic_room_update ( ) ) ;
+    so_called_common_logic_blanket_update_sender :: send ( so_called_message_common_logic_blanket_update ( ) ) ;
+    so_called_common_logic_door_update_sender :: send ( so_called_message_common_logic_door_update ( ) ) ;
+    so_called_common_logic_observer_update_sender :: send ( so_called_message_common_logic_observer_update ( ) ) ;
+    so_called_common_logic_room_update_sender :: send ( so_called_message_common_logic_room_update ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_animation_appear_finished )
 {
-    so_called_sender_common_logic_amusement_finished :: send ( so_called_message_common_logic_amusement_finished ( ) ) ;
+    so_called_common_logic_amusement_finished_sender :: send ( so_called_message_common_logic_amusement_finished ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_animation_disappear_finished )
 {
-    so_called_sender_common_logic_door_launch_permit :: send ( so_called_message_common_logic_door_launch_permit ( ) ) ;
+    so_called_common_logic_door_launch_permit_sender :: send ( so_called_message_common_logic_door_launch_permit ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_blanket_creation_finished )
 {
-    so_called_sender_common_logic_door_creation_permit :: send ( so_called_message_common_logic_door_creation_permit ( ) ) ;
+    so_called_common_logic_door_creation_permit_sender :: send ( so_called_message_common_logic_door_creation_permit ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_door_creation_finished )
 {
-    so_called_sender_common_logic_room_creation_permit :: send ( so_called_message_common_logic_room_creation_permit ( ) ) ;
+    so_called_common_logic_room_creation_permit_sender :: send ( so_called_message_common_logic_room_creation_permit ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_room_creation_finished )
 {
-    so_called_sender_common_logic_amusement_created :: send ( so_called_message_common_logic_amusement_created ( ) ) ;
+    so_called_common_logic_amusement_created_sender :: send ( so_called_message_common_logic_amusement_created ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: receive ( so_called_message_common_logic_room_finished )
 {
-    so_called_sender_common_logic_blanket_animation_appear_start :: send ( so_called_message_common_logic_blanket_animation_appear_start ( ) ) ;
+    so_called_common_logic_blanket_animation_appear_start_sender :: send ( so_called_message_common_logic_blanket_animation_appear_start ( ) ) ;
 }
 
 void _shy_common_logic_amusement :: register_in_scheduler ( )

@@ -1,4 +1,4 @@
-class shy_sender_common_logic_main_menu_letters_boundaries_reply
+class shy_common_logic_main_menu_letters_boundaries_reply_sender
 {
 public :
     static void send ( so_called_message_common_logic_main_menu_letters_boundaries_reply ) ;

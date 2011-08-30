@@ -114,7 +114,7 @@ void shy_guts :: reply_transform ( )
     msg . row = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: col ;
     msg . scale = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: scale ;
-    so_called_sender_common_logic_main_menu_letters_animation_disappear_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_disappear_transform_reply_sender :: send ( msg ) ;
 }
 
 void shy_guts :: update_request_received ( )
@@ -129,7 +129,7 @@ void shy_guts :: update_request_received ( )
     if ( so_called_platform_conditions :: fract_greater_than_fract ( shy_guts :: logic_main_menu_update_state :: time , animation_time ) )
     {
         shy_guts :: logic_main_menu_update_state :: started = so_called_platform_math_consts :: whole_false ;
-        so_called_sender_common_logic_main_menu_letters_animation_disappear_finished :: send ( so_called_message_common_logic_main_menu_letters_animation_disappear_finished ( ) ) ;
+        so_called_common_logic_main_menu_letters_animation_disappear_finished_sender :: send ( so_called_message_common_logic_main_menu_letters_animation_disappear_finished ( ) ) ;
     }
 }
 

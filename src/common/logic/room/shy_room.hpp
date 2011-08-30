@@ -54,19 +54,19 @@ void shy_guts :: proceed_with_creation ( )
 void shy_guts :: request_mesh_create ( )
 {
     shy_guts :: logic_room_mesh_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_room_mesh_create :: send ( so_called_message_common_logic_room_mesh_create ( ) ) ;
+    so_called_common_logic_room_mesh_create_sender :: send ( so_called_message_common_logic_room_mesh_create ( ) ) ;
 }
 
 void shy_guts :: request_texture_create ( )
 {
     shy_guts :: logic_room_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_room_texture_create :: send ( so_called_message_common_logic_room_texture_create ( ) ) ;
+    so_called_common_logic_room_texture_create_sender :: send ( so_called_message_common_logic_room_texture_create ( ) ) ;
 }
 
 void shy_guts :: texture_created ( )
 {
-    so_called_sender_common_logic_room_creation_finished :: send ( so_called_message_common_logic_room_creation_finished ( ) ) ;
-    so_called_sender_common_logic_room_render_permit :: send ( so_called_message_common_logic_room_render_permit ( ) ) ;
+    so_called_common_logic_room_creation_finished_sender :: send ( so_called_message_common_logic_room_creation_finished ( ) ) ;
+    so_called_common_logic_room_render_permit_sender :: send ( so_called_message_common_logic_room_render_permit ( ) ) ;
 }
 
 void _shy_common_logic_room :: receive ( so_called_message_common_init )
@@ -128,7 +128,7 @@ void _shy_common_logic_room :: receive ( so_called_message_common_logic_room_upd
         if ( so_called_platform_conditions :: fract_greater_than_fract ( time , show_time ) )
         {
             shy_guts :: logic_room_update_state :: launch_permitted = so_called_platform_math_consts :: whole_false ;
-            so_called_sender_common_logic_room_finished :: send ( so_called_message_common_logic_room_finished ( ) ) ;
+            so_called_common_logic_room_finished_sender :: send ( so_called_message_common_logic_room_finished ( ) ) ;
         }
 
         shy_guts :: logic_room_update_state :: time = time ;

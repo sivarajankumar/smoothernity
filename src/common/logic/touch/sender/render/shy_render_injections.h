@@ -1,10 +1,10 @@
-#ifndef _shy_sender_common_logic_touch_render_injections_included
-#define _shy_sender_common_logic_touch_render_injections_included
+#ifndef _shy_common_logic_touch_render_sender_injections_included
+#define _shy_common_logic_touch_render_sender_injections_included
 
 #include "../../message/render/shy_render_injections.h"
 
 #include "./shy_render.h"
 
-typedef shy_sender_common_logic_touch_render so_called_sender_common_logic_touch_render ;
+typedef shy_common_logic_touch_render_sender so_called_common_logic_touch_render_sender ;
 
 #endif

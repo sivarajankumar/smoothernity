@@ -11,12 +11,12 @@ void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id letter 
 {
     so_called_message_common_logic_salutation_letters_text_storage_add_letter msg ;
     msg . letter = letter ;
-    so_called_sender_common_logic_salutation_letters_text_storage_add_letter :: send ( msg ) ;
+    so_called_common_logic_salutation_letters_text_storage_add_letter_sender :: send ( msg ) ;
 }
 
 void shy_guts :: finish ( )
 {
-    so_called_sender_common_logic_salutation_letters_text_generator_generate_finished :: send ( so_called_message_common_logic_salutation_letters_text_generator_generate_finished ( ) ) ;
+    so_called_common_logic_salutation_letters_text_generator_generate_finished_sender :: send ( so_called_message_common_logic_salutation_letters_text_generator_generate_finished ( ) ) ;
 }
 
 void _shy_common_logic_salutation_letters_text_generator :: receive ( so_called_message_common_logic_salutation_letters_text_generator_generate )

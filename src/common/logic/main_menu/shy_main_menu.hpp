@@ -32,43 +32,43 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_finished )
 {
     shy_guts :: disappearing = so_called_platform_math_consts :: whole_false ;
-    so_called_sender_common_logic_main_menu_letters_meshes_destroy_request :: send ( so_called_message_common_logic_main_menu_letters_meshes_destroy_request ( ) ) ;
+    so_called_common_logic_main_menu_letters_meshes_destroy_request_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_destroy_request ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_create_finished )
 {
-    so_called_sender_common_logic_main_menu_letters_meshes_create :: send ( so_called_message_common_logic_main_menu_letters_meshes_create ( ) ) ;
+    so_called_common_logic_main_menu_letters_meshes_create_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_create ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_meshes_creation_finished )
 {
-    so_called_sender_common_logic_main_menu_selection_mesh_create :: send ( so_called_message_common_logic_main_menu_selection_mesh_create ( ) ) ;
+    so_called_common_logic_main_menu_selection_mesh_create_sender :: send ( so_called_message_common_logic_main_menu_selection_mesh_create ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_letters_meshes_destroy_reply )
 {
     shy_guts :: created = so_called_platform_math_consts :: whole_false ;
-    so_called_sender_common_logic_main_menu_selection_mesh_destroy_request :: send ( so_called_message_common_logic_main_menu_selection_mesh_destroy_request ( ) ) ;
+    so_called_common_logic_main_menu_selection_mesh_destroy_request_sender :: send ( so_called_message_common_logic_main_menu_selection_mesh_destroy_request ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_row_chosen )
 {
     shy_guts :: launched = so_called_platform_math_consts :: whole_false ;
     shy_guts :: disappearing = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_letters_animation_disappear_start :: send ( so_called_message_common_logic_main_menu_letters_animation_disappear_start ( ) ) ;
-    so_called_sender_common_logic_main_menu_selection_animation_disappear_start :: send ( so_called_message_common_logic_main_menu_selection_animation_disappear_start ( ) ) ;
+    so_called_common_logic_main_menu_letters_animation_disappear_start_sender :: send ( so_called_message_common_logic_main_menu_letters_animation_disappear_start ( ) ) ;
+    so_called_common_logic_main_menu_selection_animation_disappear_start_sender :: send ( so_called_message_common_logic_main_menu_selection_animation_disappear_start ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_selection_mesh_create_finished )
 {
     shy_guts :: created = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_render_permit :: send ( so_called_message_common_logic_main_menu_render_permit ( ) ) ;
-    so_called_sender_common_logic_main_menu_created :: send ( so_called_message_common_logic_main_menu_created ( ) ) ;
+    so_called_common_logic_main_menu_render_permit_sender :: send ( so_called_message_common_logic_main_menu_render_permit ( ) ) ;
+    so_called_common_logic_main_menu_created_sender :: send ( so_called_message_common_logic_main_menu_created ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_selection_mesh_destroy_reply )
 {
-    so_called_sender_common_logic_main_menu_finished :: send ( so_called_message_common_logic_main_menu_finished ( ) ) ;
+    so_called_common_logic_main_menu_finished_sender :: send ( so_called_message_common_logic_main_menu_finished ( ) ) ;
 }
 
 void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_main_menu_update )
@@ -76,7 +76,7 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: creation_permitted ) )
     {
         shy_guts :: creation_permitted = so_called_platform_math_consts :: whole_false ;
-        so_called_sender_common_logic_main_menu_letters_create :: send ( so_called_message_common_logic_main_menu_letters_create ( ) ) ;
+        so_called_common_logic_main_menu_letters_create_sender :: send ( so_called_message_common_logic_main_menu_letters_create ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: created ) 
       && so_called_platform_conditions :: whole_is_true ( shy_guts :: launch_permitted )
@@ -89,15 +89,15 @@ void _shy_common_logic_main_menu :: receive ( so_called_message_common_logic_mai
       && so_called_platform_conditions :: whole_is_true ( shy_guts :: launched )
        )
     {
-        so_called_sender_common_logic_main_menu_letters_meshes_place :: send ( so_called_message_common_logic_main_menu_letters_meshes_place ( ) ) ;
-        so_called_sender_common_logic_main_menu_selection_tracking_director_update :: send ( so_called_message_common_logic_main_menu_selection_tracking_director_update ( ) ) ;
+        so_called_common_logic_main_menu_letters_meshes_place_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_place ( ) ) ;
+        so_called_common_logic_main_menu_selection_tracking_director_update_sender :: send ( so_called_message_common_logic_main_menu_selection_tracking_director_update ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: created )
       && so_called_platform_conditions :: whole_is_true ( shy_guts :: disappearing )
        )
     {
-        so_called_sender_common_logic_main_menu_letters_meshes_place :: send ( so_called_message_common_logic_main_menu_letters_meshes_place ( ) ) ;
-        so_called_sender_common_logic_main_menu_selection_mesh_place :: send ( so_called_message_common_logic_main_menu_selection_mesh_place ( ) ) ;
+        so_called_common_logic_main_menu_letters_meshes_place_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_place ( ) ) ;
+        so_called_common_logic_main_menu_selection_mesh_place_sender :: send ( so_called_message_common_logic_main_menu_selection_mesh_place ( ) ) ;
     }
 }
 

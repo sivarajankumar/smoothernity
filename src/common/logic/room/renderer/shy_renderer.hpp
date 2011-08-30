@@ -57,25 +57,25 @@ void shy_guts :: render_requested ( )
 void shy_guts :: request_texture_select ( )
 {
     shy_guts :: logic_room_texture_select_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_room_texture_select_request :: send ( so_called_message_common_logic_room_texture_select_request ( ) ) ;
+    so_called_common_logic_room_texture_select_request_sender :: send ( so_called_message_common_logic_room_texture_select_request ( ) ) ;
 }
 
 void shy_guts :: request_mesh_render ( )
 {
     shy_guts :: logic_room_mesh_render_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_room_mesh_render_request :: send ( so_called_message_common_logic_room_mesh_render_request ( ) ) ;
+    so_called_common_logic_room_mesh_render_request_sender :: send ( so_called_message_common_logic_room_mesh_render_request ( ) ) ;
 }
 
 void shy_guts :: prepare_render_state ( )
 {
-    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
-    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
-    so_called_sender_common_engine_render_disable_depth_test :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
+    so_called_common_engine_render_texture_unselect_sender :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    so_called_common_engine_render_blend_disable_sender :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
+    so_called_common_engine_render_disable_depth_test_sender :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
 }
 
 void shy_guts :: reply_room_render ( )
 {
-    so_called_sender_common_logic_room_render_reply :: send ( so_called_message_common_logic_room_render_reply ( ) ) ;
+    so_called_common_logic_room_render_reply_sender :: send ( so_called_message_common_logic_room_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_room_renderer :: receive ( so_called_message_common_init )

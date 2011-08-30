@@ -82,7 +82,7 @@ void shy_guts :: request_mesh_creation ( )
     msg . vertices = shy_guts :: logic_room_mesh_consts :: vertices_count ;
     msg . triangle_strip_indices = shy_guts :: logic_room_mesh_consts :: triangle_strip_indices_count ;
     msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
-    so_called_sender_common_engine_render_mesh_create_request :: send ( msg ) ;
+    so_called_common_engine_render_mesh_create_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_created ( )
@@ -115,12 +115,12 @@ void shy_guts :: transform_mesh ( )
     so_called_message_common_engine_render_mesh_set_transform msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     msg . transform = transform ;
-    so_called_sender_common_engine_render_mesh_set_transform :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_transform_sender :: send ( msg ) ;
 }
 
 void shy_guts :: reply_mesh_creation_finished ( )
 {
-    so_called_sender_common_logic_room_mesh_creation_finished :: send ( so_called_message_common_logic_room_mesh_creation_finished ( ) ) ;
+    so_called_common_logic_room_mesh_creation_finished_sender :: send ( so_called_message_common_logic_room_mesh_creation_finished ( ) ) ;
 }
 
 void shy_guts :: add_cube_sides ( )
@@ -532,7 +532,7 @@ void shy_guts :: finalize_mesh ( )
     shy_guts :: engine_render_mesh_create_state :: finalized = so_called_platform_math_consts :: whole_true ;
     so_called_message_common_engine_render_mesh_finalize msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
-    so_called_sender_common_engine_render_mesh_finalize :: send ( msg ) ;
+    so_called_common_engine_render_mesh_finalize_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value 
@@ -544,7 +544,7 @@ void shy_guts :: mesh_set_triangle_strip_index_value
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     msg . offset = offset ;
     msg . index = index ;
-    so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_tex_coord 
@@ -558,7 +558,7 @@ void shy_guts :: mesh_set_vertex_tex_coord
     msg . offset = offset ;
     msg . u = u ;
     msg . v = v ;
-    so_called_sender_common_engine_render_mesh_set_vertex_tex_coord :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_tex_coord_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 
@@ -574,7 +574,7 @@ void shy_guts :: mesh_set_vertex_position
     msg . x = x ;
     msg . y = y ;
     msg . z = z ;
-    so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_position_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_color 
@@ -592,7 +592,7 @@ void shy_guts :: mesh_set_vertex_color
     msg . g = g ;
     msg . b = b ;
     msg . a = a ;
-    so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_color_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_room_mesh :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )
@@ -626,9 +626,9 @@ void _shy_common_logic_room_mesh :: receive ( so_called_message_common_logic_roo
     {
         so_called_message_common_engine_render_mesh_render render_msg ;
         render_msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
-        so_called_sender_common_engine_render_mesh_render :: send ( render_msg ) ;
+        so_called_common_engine_render_mesh_render_sender :: send ( render_msg ) ;
     }
-    so_called_sender_common_logic_room_mesh_render_reply :: send ( so_called_message_common_logic_room_mesh_render_reply ( ) ) ;
+    so_called_common_logic_room_mesh_render_reply_sender :: send ( so_called_message_common_logic_room_mesh_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_room_mesh :: register_in_scheduler ( )

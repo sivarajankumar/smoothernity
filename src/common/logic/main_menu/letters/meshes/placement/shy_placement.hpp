@@ -85,7 +85,7 @@ void shy_guts :: proceed_with_placement ( )
 void shy_guts :: obtain_meshes_count ( )
 {
     shy_guts :: logic_main_menu_letters_meshes_count_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_letters_meshes_count_request :: send ( so_called_message_common_logic_main_menu_letters_meshes_count_request ( ) ) ;
+    so_called_common_logic_main_menu_letters_meshes_count_request_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_count_request ( ) ) ;
 }
 
 void shy_guts :: obtain_first_mesh_row_col ( )
@@ -101,7 +101,7 @@ void shy_guts :: obtain_current_mesh_row_col ( )
 
     so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_request msg ;
     msg . index = shy_guts :: logic_main_menu_letters_meshes_place_state :: current_mesh_index ;
-    so_called_sender_common_logic_main_menu_letters_meshes_mesh_row_col_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_meshes_mesh_row_col_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_current_mesh_id ( )
@@ -111,7 +111,7 @@ void shy_guts :: obtain_current_mesh_id ( )
 
     so_called_message_common_logic_main_menu_letters_meshes_mesh_id_request msg ;
     msg . index = shy_guts :: logic_main_menu_letters_meshes_place_state :: current_mesh_index ;
-    so_called_sender_common_logic_main_menu_letters_meshes_mesh_id_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_meshes_mesh_id_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_animated_transform ( )
@@ -123,7 +123,7 @@ void shy_guts :: obtain_animated_transform ( )
     so_called_message_common_logic_main_menu_letters_animation_transform_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_mesh_row_col_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_mesh_row_col_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_transform_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_transform_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: animated_transform_received ( )
@@ -137,7 +137,7 @@ void shy_guts :: place_current_mesh ( )
     so_called_message_common_engine_render_mesh_set_transform msg ;
     msg . transform = shy_guts :: logic_main_menu_letters_animation_transform_state :: transform ;
     msg . mesh = shy_guts :: logic_main_menu_letters_mesh_id_state :: mesh ;
-    so_called_sender_common_engine_render_mesh_set_transform :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_transform_sender :: send ( msg ) ;
 }
 
 void shy_guts :: move_to_next_mesh ( )

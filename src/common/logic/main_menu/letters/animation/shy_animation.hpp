@@ -141,7 +141,7 @@ void shy_guts :: obtain_appear_transform ( )
     so_called_message_common_logic_main_menu_letters_animation_appear_transform_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_appear_transform_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_appear_transform_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_disappear_transform ( )
@@ -153,7 +153,7 @@ void shy_guts :: obtain_disappear_transform ( )
     so_called_message_common_logic_main_menu_letters_animation_disappear_transform_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_disappear_transform_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_disappear_transform_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_selection_push_transform ( )
@@ -165,7 +165,7 @@ void shy_guts :: obtain_selection_push_transform ( )
     so_called_message_common_logic_main_menu_letters_animation_selection_push_transform_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_selection_push_transform_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_selection_push_transform_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_selection_transform ( )
@@ -177,7 +177,7 @@ void shy_guts :: obtain_selection_transform ( )
     so_called_message_common_logic_main_menu_letters_animation_selection_transform_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_selection_transform_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_selection_transform_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_selection_weight ( )
@@ -189,7 +189,7 @@ void shy_guts :: obtain_selection_weight ( )
     so_called_message_common_logic_main_menu_letters_animation_selection_weight_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_selection_weight_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_selection_weight_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_unselection_weight ( )
@@ -201,7 +201,7 @@ void shy_guts :: obtain_unselection_weight ( )
     so_called_message_common_logic_main_menu_letters_animation_unselection_weight_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_unselection_weight_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_unselection_weight_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_idle_transform ( )
@@ -213,7 +213,7 @@ void shy_guts :: obtain_idle_transform ( )
     so_called_message_common_logic_main_menu_letters_animation_idle_transform_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
-    so_called_sender_common_logic_main_menu_letters_animation_idle_transform_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_idle_transform_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: all_transforms_received ( )
@@ -279,7 +279,7 @@ void shy_guts :: reply_animated_transform ( )
     msg . row = shy_guts :: logic_main_menu_letters_animation_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_transform_state :: col ;
     msg . transform = shy_guts :: logic_main_menu_letters_animation_transform_state :: transform ;
-    so_called_sender_common_logic_main_menu_letters_animation_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation :: receive ( so_called_message_common_init )

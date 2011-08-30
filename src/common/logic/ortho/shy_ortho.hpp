@@ -51,7 +51,7 @@ void shy_guts :: proceed_with_planes ( )
 void shy_guts :: request_aspect ( )
 {
     shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void shy_guts :: compute_x_left ( )
@@ -121,7 +121,7 @@ void shy_guts :: reply_planes ( )
     msg . y_top = shy_guts :: logic_ortho_planes_state :: y_top ;
     msg . z_near = shy_guts :: logic_ortho_planes_state :: z_near ;
     msg . z_far = shy_guts :: logic_ortho_planes_state :: z_far ;
-    so_called_sender_common_logic_ortho_planes_reply :: send ( msg ) ;
+    so_called_common_logic_ortho_planes_reply_sender :: send ( msg ) ;
 }
 
 void shy_guts :: reply_computed_planes ( )

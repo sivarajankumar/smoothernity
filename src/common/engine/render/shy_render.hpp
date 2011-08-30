@@ -58,7 +58,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
     so_called_message_common_engine_render_aspect_reply reply_msg ;
     so_called_platform_render :: get_aspect_width ( reply_msg . width ) ;
     so_called_platform_render :: get_aspect_height ( reply_msg . height ) ;
-    so_called_sender_common_engine_render_aspect_reply :: send ( reply_msg ) ;
+    so_called_common_engine_render_aspect_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_blend_disable )
@@ -133,7 +133,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 {
     so_called_message_common_engine_render_frame_loss_reply reply_msg ;
     so_called_platform_render :: get_frame_loss ( reply_msg . frame_loss ) ;
-    so_called_sender_common_engine_render_frame_loss_reply :: send ( reply_msg ) ;
+    so_called_common_engine_render_frame_loss_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_init )
@@ -242,7 +242,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
     so_called_message_common_engine_render_mesh_create_reply reply_msg ;
     reply_msg . mesh = created_mesh ;
-    so_called_sender_common_engine_render_mesh_create_reply :: send ( reply_msg ) ;    
+    so_called_common_engine_render_mesh_create_reply_sender :: send ( reply_msg ) ;    
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_mesh_delete msg )
@@ -468,7 +468,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 
     so_called_message_common_engine_render_texture_create_reply reply_msg ;
     reply_msg . texture = created_texture ;
-    so_called_sender_common_engine_render_texture_create_reply :: send ( reply_msg ) ;
+    so_called_common_engine_render_texture_create_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_finalize msg )
@@ -511,7 +511,7 @@ void _shy_common_engine_render :: receive ( so_called_message_common_engine_rend
 {
     so_called_message_common_engine_render_texture_loader_ready_reply reply_msg ;
     so_called_platform_render_texture_loader :: ready ( reply_msg . ready ) ;
-    so_called_sender_common_engine_render_texture_loader_ready_reply :: send ( reply_msg ) ;
+    so_called_common_engine_render_texture_loader_ready_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_engine_render :: receive ( so_called_message_common_engine_render_texture_mode_modulate )

@@ -97,14 +97,14 @@ void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_me
     so_called_message_common_logic_salutation_letters_text_storage_letter_reply reply_msg ;
     reply_msg . letter_index = msg . letter_index ;
     reply_msg . letter_id = letter_id ;
-    so_called_sender_common_logic_salutation_letters_text_storage_letter_reply :: send ( reply_msg ) ;
+    so_called_common_logic_salutation_letters_text_storage_letter_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_size_request )
 {
     so_called_message_common_logic_salutation_letters_text_storage_size_reply msg ;
     msg . size = shy_guts :: entries_count ;
-    so_called_sender_common_logic_salutation_letters_text_storage_size_reply :: send ( msg ) ;
+    so_called_common_logic_salutation_letters_text_storage_size_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_salutation_letters_text_storage :: register_in_scheduler ( )

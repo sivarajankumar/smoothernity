@@ -140,7 +140,7 @@ void shy_guts :: reply_transform ( )
     reply_msg . row = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_row ;
     reply_msg . col = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_col ;
     reply_msg . scale = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: scale ;
-    so_called_sender_common_logic_main_menu_letters_animation_selection_transform_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_animation_selection_transform_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_called_message_common_init )

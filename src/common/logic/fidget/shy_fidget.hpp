@@ -59,7 +59,7 @@ void shy_guts :: update_fidget ( )
         so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
         mesh_set_transform_msg . mesh = shy_guts :: fidget_mesh_id ;
         mesh_set_transform_msg . transform = matrix ;
-        so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+        so_called_common_engine_render_mesh_set_transform_sender :: send ( mesh_set_transform_msg ) ;
 
         if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: fidget_scale , so_called_common_logic_fidget_consts :: scale_in_frames ) )
             so_called_platform_math :: inc_whole ( shy_guts :: fidget_scale ) ;
@@ -71,11 +71,11 @@ void shy_guts :: update_fidget ( )
 
 void shy_guts :: render_fidget_mesh ( )
 {
-    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    so_called_common_engine_render_texture_unselect_sender :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
     
     so_called_message_common_engine_render_mesh_render mesh_render_msg ;
     mesh_render_msg . mesh = shy_guts :: fidget_mesh_id ;
-    so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+    so_called_common_engine_render_mesh_render_sender :: send ( mesh_render_msg ) ;
 }
 
 void shy_guts :: create_fidget_mesh ( )
@@ -120,7 +120,7 @@ void shy_guts :: create_fidget_mesh ( )
         set_pos_msg . x = vertex_x ;
         set_pos_msg . y = vertex_y ;
         set_pos_msg . z = vertex_z ;
-        so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( set_pos_msg ) ;
+        so_called_common_engine_render_mesh_set_vertex_position_sender :: send ( set_pos_msg ) ;
 
         so_called_message_common_engine_render_mesh_set_vertex_color set_col_msg ;
         set_col_msg . mesh = shy_guts :: fidget_mesh_id ;
@@ -129,17 +129,17 @@ void shy_guts :: create_fidget_mesh ( )
         set_col_msg . g = vertex_g ;
         set_col_msg . b = vertex_b ;
         set_col_msg . a = vertex_a ;
-        so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( set_col_msg ) ;
+        so_called_common_engine_render_mesh_set_vertex_color_sender :: send ( set_col_msg ) ;
         
         so_called_message_common_engine_render_mesh_set_triangle_fan_index_value set_index_msg ;
         set_index_msg . mesh = shy_guts :: fidget_mesh_id ;
         set_index_msg . offset = i ;
         set_index_msg . index = i ;
-        so_called_sender_common_engine_render_mesh_set_triangle_fan_index_value :: send ( set_index_msg ) ;
+        so_called_common_engine_render_mesh_set_triangle_fan_index_value_sender :: send ( set_index_msg ) ;
     }
     so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
     mesh_finalize_msg . mesh = shy_guts :: fidget_mesh_id ;
-    so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
+    so_called_common_engine_render_mesh_finalize_sender :: send ( mesh_finalize_msg ) ;
 }
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_render_aspect_reply msg )
@@ -172,7 +172,7 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_engine_rende
         shy_guts :: fidget_mesh_id = msg . mesh ;
         shy_guts :: create_fidget_mesh ( ) ;
         shy_guts :: fidget_mesh_created = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_fidget_prepared :: send ( so_called_message_common_logic_fidget_prepared ( ) ) ;
+        so_called_common_logic_fidget_prepared_sender :: send ( so_called_message_common_logic_fidget_prepared ( ) ) ;
     }
 }
 
@@ -201,7 +201,7 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_mesh_created ) )
             shy_guts :: render_fidget_mesh ( ) ;
     }
-    so_called_sender_common_logic_fidget_render_reply :: send ( so_called_message_common_logic_fidget_render_reply ( ) ) ;
+    so_called_common_logic_fidget_render_reply_sender :: send ( so_called_message_common_logic_fidget_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget_update )
@@ -216,14 +216,14 @@ void _shy_common_logic_fidget :: receive ( so_called_message_common_logic_fidget
             mesh_create_msg . vertices = so_called_common_logic_fidget_consts :: fidget_edges ;
             mesh_create_msg . triangle_fan_indices = so_called_common_logic_fidget_consts :: fidget_edges ;
             mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_0 ;
-            so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+            so_called_common_engine_render_mesh_create_request_sender :: send ( mesh_create_msg ) ;
         }
         else
         {
             shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
             shy_guts :: render_frame_loss_requested = so_called_platform_math_consts :: whole_true ;
-            so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
-            so_called_sender_common_engine_render_frame_loss_request :: send ( so_called_message_common_engine_render_frame_loss_request ( ) ) ;
+            so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+            so_called_common_engine_render_frame_loss_request_sender :: send ( so_called_message_common_engine_render_frame_loss_request ( ) ) ;
         }
     }
 }
