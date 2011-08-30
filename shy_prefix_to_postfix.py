@@ -17,12 +17,14 @@ class consts :
         + "Smoothernity identifiers prefix to postfix notation renamer.\n"
         + "\n"
         + "For every file in subdirectories it replaces:\n"
-        + "so_called_<prefix>_blablabla\n"
-        + "shy_<prefix>_blablabla\n"
+        + prefix_so_called + "<prefix>_blablabla\n"
+        + prefix_shy + "<prefix>_blablabla\n"
+        + prefix_underscored_shy + "<prefix>_blablabla" + postfix_injections_included + "\n"
         + "\n"
         + "With:\n"
-        + "so_called_blablabla_<prefix>\n"
-        + "shy_blablabla_<prefix>"
+        + prefix_so_called + "blablabla_<prefix>\n"
+        + prefix_shy + "blablabla_<prefix>\n"
+        + prefix_underscored_shy + "blablabla_<prefix>" + postfix_injections_included
         )
     usage_short = "[--help] dir-from dir-to"
 
