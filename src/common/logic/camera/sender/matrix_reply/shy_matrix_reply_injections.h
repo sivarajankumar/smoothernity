@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_camera_matrix_reply_sender_injections_included
 #define _shy_common_logic_camera_matrix_reply_sender_injections_included
 
-#include "../../message/matrix_reply/shy_matrix_reply_injections.h"
+#include "common/logic/camera/message/matrix_reply/shy_matrix_reply_injections.h"
 
 #include "./shy_matrix_reply.h"
 

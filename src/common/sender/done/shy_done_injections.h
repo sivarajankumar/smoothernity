@@ -1,7 +1,7 @@
 #ifndef _shy_common_done_sender_injections_included
 #define _shy_common_done_sender_injections_included
 
-#include "../../message/done/shy_done_injections.h"
+#include "common/message/done/shy_done_injections.h"
 
 #include "./shy_done.h"
 

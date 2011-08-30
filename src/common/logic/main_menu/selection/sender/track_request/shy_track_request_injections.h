@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_track_request_sender_injections_included
 #define _shy_common_logic_main_menu_selection_track_request_sender_injections_included
 
-#include "../../message/track_request/shy_track_request_injections.h"
+#include "common/logic/main_menu/selection/message/track_request/shy_track_request_injections.h"
 
 #include "./shy_track_request.h"
 

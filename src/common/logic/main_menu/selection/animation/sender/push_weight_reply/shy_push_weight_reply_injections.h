@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_animation_push_weight_reply_sender_injections_included
 #define _shy_common_logic_main_menu_selection_animation_push_weight_reply_sender_injections_included
 
-#include "../../message/push_weight_reply/shy_push_weight_reply_injections.h"
+#include "common/logic/main_menu/selection/animation/message/push_weight_reply/shy_push_weight_reply_injections.h"
 
 #include "./shy_push_weight_reply.h"
 

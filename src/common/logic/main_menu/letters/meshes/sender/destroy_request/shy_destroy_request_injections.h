@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_meshes_destroy_request_sender_injections_included
 #define _shy_common_logic_main_menu_letters_meshes_destroy_request_sender_injections_included
 
-#include "../../message/destroy_request/shy_destroy_request_injections.h"
+#include "common/logic/main_menu/letters/meshes/message/destroy_request/shy_destroy_request_injections.h"
 
 #include "./shy_destroy_request.h"
 

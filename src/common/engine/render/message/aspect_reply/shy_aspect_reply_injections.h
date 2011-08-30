@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_aspect_reply_message_injections_included
 #define _shy_common_engine_render_aspect_reply_message_injections_included
 
-#include "../../../../../injections/platform/math/type/num_fract/shy_num_fract.h"
+#include "injections/platform/math/type/num_fract/shy_num_fract.h"
 
 #include "./shy_aspect_reply.h"
 

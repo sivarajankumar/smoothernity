@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_render_permit_sender_injections_included
 #define _shy_common_logic_main_menu_render_permit_sender_injections_included
 
-#include "../../message/render_permit/shy_render_permit_injections.h"
+#include "common/logic/main_menu/message/render_permit/shy_render_permit_injections.h"
 
 #include "./shy_render_permit.h"
 

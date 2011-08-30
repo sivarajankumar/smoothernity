@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_text_letter_big_tex_coords_request_message_injections_included
 #define _shy_common_logic_text_letter_big_tex_coords_request_message_injections_included
 
-#include "../../type/letter_id/shy_letter_id_injections.h"
+#include "common/logic/text/type/letter_id/shy_letter_id_injections.h"
 
 #include "./shy_letter_big_tex_coords_request.h"
 

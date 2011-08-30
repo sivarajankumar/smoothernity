@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_blanket_animation_fit_transform_request_sender_injections_included
 #define _shy_common_logic_blanket_animation_fit_transform_request_sender_injections_included
 
-#include "../../message/fit_transform_request/shy_fit_transform_request_injections.h"
+#include "common/logic/blanket/animation/message/fit_transform_request/shy_fit_transform_request_injections.h"
 
 #include "./shy_fit_transform_request.h"
 

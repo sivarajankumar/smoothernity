@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_tracking_director_update_sender_injections_included
 #define _shy_common_logic_main_menu_selection_tracking_director_update_sender_injections_included
 
-#include "../../message/tracking_director_update/shy_tracking_director_update_injections.h"
+#include "common/logic/main_menu/selection/message/tracking_director_update/shy_tracking_director_update_injections.h"
 
 #include "./shy_tracking_director_update.h"
 

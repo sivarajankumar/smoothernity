@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_core_near_plane_distance_reply_sender_injections_included
 #define _shy_common_logic_core_near_plane_distance_reply_sender_injections_included
 
-#include "../../message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
+#include "common/logic/core/message/near_plane_distance_reply/shy_near_plane_distance_reply_injections.h"
 
 #include "./shy_near_plane_distance_reply.h"
 

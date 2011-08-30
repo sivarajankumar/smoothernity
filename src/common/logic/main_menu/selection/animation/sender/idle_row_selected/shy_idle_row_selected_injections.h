@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_animation_idle_row_selected_sender_injections_included
 #define _shy_common_logic_main_menu_selection_animation_idle_row_selected_sender_injections_included
 
-#include "../../message/idle_row_selected/shy_idle_row_selected_injections.h"
+#include "common/logic/main_menu/selection/animation/message/idle_row_selected/shy_idle_row_selected_injections.h"
 
 #include "./shy_idle_row_selected.h"
 

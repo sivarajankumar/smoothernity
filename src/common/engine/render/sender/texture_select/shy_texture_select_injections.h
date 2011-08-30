@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_texture_select_sender_injections_included
 #define _shy_common_engine_render_texture_select_sender_injections_included
 
-#include "../../message/texture_select/shy_texture_select_injections.h"
+#include "common/engine/render/message/texture_select/shy_texture_select_injections.h"
 
 #include "./shy_texture_select.h"
 

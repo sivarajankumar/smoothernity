@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_letter_request_sender_injections_included
 #define _shy_common_logic_main_menu_letters_letter_request_sender_injections_included
 
-#include "../../message/letter_request/shy_letter_request_injections.h"
+#include "common/logic/main_menu/letters/message/letter_request/shy_letter_request_injections.h"
 
 #include "./shy_letter_request.h"
 

@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_room_texture_creation_finished_sender_injections_included
 #define _shy_common_logic_room_texture_creation_finished_sender_injections_included
 
-#include "../../message/texture_creation_finished/shy_texture_creation_finished_injections.h"
+#include "common/logic/room/message/texture_creation_finished/shy_texture_creation_finished_injections.h"
 
 #include "./shy_texture_creation_finished.h"
 

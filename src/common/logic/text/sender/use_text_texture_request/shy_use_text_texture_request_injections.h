@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_text_use_text_texture_request_sender_injections_included
 #define _shy_common_logic_text_use_text_texture_request_sender_injections_included
 
-#include "../../message/use_text_texture_request/shy_use_text_texture_request_injections.h"
+#include "common/logic/text/message/use_text_texture_request/shy_use_text_texture_request_injections.h"
 
 #include "./shy_use_text_texture_request.h"
 

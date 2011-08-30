@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_fidget_render_request_sender_injections_included
 #define _shy_common_logic_fidget_render_request_sender_injections_included
 
-#include "../../message/render_request/shy_render_request_injections.h"
+#include "common/logic/fidget/message/render_request/shy_render_request_injections.h"
 
 #include "./shy_render_request.h"
 

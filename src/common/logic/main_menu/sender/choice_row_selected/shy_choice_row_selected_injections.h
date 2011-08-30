@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_choice_row_selected_sender_injections_included
 #define _shy_common_logic_main_menu_choice_row_selected_sender_injections_included
 
-#include "../../message/choice_row_selected/shy_choice_row_selected_injections.h"
+#include "common/logic/main_menu/message/choice_row_selected/shy_choice_row_selected_injections.h"
 
 #include "./shy_choice_row_selected.h"
 

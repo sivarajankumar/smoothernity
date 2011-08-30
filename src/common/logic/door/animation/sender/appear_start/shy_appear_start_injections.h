@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_door_animation_appear_start_sender_injections_included
 #define _shy_common_logic_door_animation_appear_start_sender_injections_included
 
-#include "../../message/appear_start/shy_appear_start_injections.h"
+#include "common/logic/door/animation/message/appear_start/shy_appear_start_injections.h"
 
 #include "./shy_appear_start.h"
 

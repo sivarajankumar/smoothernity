@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_observer_animation_flight_transform_request_sender_injections_included
 #define _shy_common_logic_observer_animation_flight_transform_request_sender_injections_included
 
-#include "../../message/flight_transform_request/shy_flight_transform_request_injections.h"
+#include "common/logic/observer/animation/message/flight_transform_request/shy_flight_transform_request_injections.h"
 
 #include "./shy_flight_transform_request.h"
 

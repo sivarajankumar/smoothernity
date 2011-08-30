@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_blanket_animation_disappear_transform_reply_sender_injections_included
 #define _shy_common_logic_blanket_animation_disappear_transform_reply_sender_injections_included
 
-#include "../../message/disappear_transform_reply/shy_disappear_transform_reply_injections.h"
+#include "common/logic/blanket/animation/message/disappear_transform_reply/shy_disappear_transform_reply_injections.h"
 
 #include "./shy_disappear_transform_reply.h"
 

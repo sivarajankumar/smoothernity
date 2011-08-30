@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_frame_loss_request_sender_injections_included
 #define _shy_common_engine_render_frame_loss_request_sender_injections_included
 
-#include "../../message/frame_loss_request/shy_frame_loss_request_injections.h"
+#include "common/engine/render/message/frame_loss_request/shy_frame_loss_request_injections.h"
 
 #include "./shy_frame_loss_request.h"
 

@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_door_texture_select_request_sender_injections_included
 #define _shy_common_logic_door_texture_select_request_sender_injections_included
 
-#include "../../message/texture_select_request/shy_texture_select_request_injections.h"
+#include "common/logic/door/message/texture_select_request/shy_texture_select_request_injections.h"
 
 #include "./shy_texture_select_request.h"
 

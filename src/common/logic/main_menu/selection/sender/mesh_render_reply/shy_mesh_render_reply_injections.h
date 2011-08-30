@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_mesh_render_reply_sender_injections_included
 #define _shy_common_logic_main_menu_selection_mesh_render_reply_sender_injections_included
 
-#include "../../message/mesh_render_reply/shy_mesh_render_reply_injections.h"
+#include "common/logic/main_menu/selection/message/mesh_render_reply/shy_mesh_render_reply_injections.h"
 
 #include "./shy_mesh_render_reply.h"
 

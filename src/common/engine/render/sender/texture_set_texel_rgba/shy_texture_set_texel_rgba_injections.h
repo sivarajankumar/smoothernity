@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_texture_set_texel_rgba_sender_injections_included
 #define _shy_common_engine_render_texture_set_texel_rgba_sender_injections_included
 
-#include "../../message/texture_set_texel_rgba/shy_texture_set_texel_rgba_injections.h"
+#include "common/engine/render/message/texture_set_texel_rgba/shy_texture_set_texel_rgba_injections.h"
 
 #include "./shy_texture_set_texel_rgba.h"
 

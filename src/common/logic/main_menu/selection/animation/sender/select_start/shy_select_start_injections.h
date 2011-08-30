@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_animation_select_start_sender_injections_included
 #define _shy_common_logic_main_menu_selection_animation_select_start_sender_injections_included
 
-#include "../../message/select_start/shy_select_start_injections.h"
+#include "common/logic/main_menu/selection/animation/message/select_start/shy_select_start_injections.h"
 
 #include "./shy_select_start.h"
 
