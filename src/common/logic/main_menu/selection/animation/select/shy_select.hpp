@@ -78,7 +78,7 @@ void shy_guts :: reply_computed_transform ( )
     so_called_message_common_logic_main_menu_selection_animation_select_transform_reply msg ;
     msg . scale_x = shy_guts :: logic_main_menu_selection_animation_select_transform_state :: horizontal_scale ;
     msg . scale_y = shy_guts :: logic_main_menu_selection_animation_select_transform_state :: vertical_scale ;
-    so_called_sender_common_logic_main_menu_selection_animation_select_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_selection_animation_select_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_called_message_common_init )
@@ -122,7 +122,7 @@ void _shy_common_logic_main_menu_selection_animation_select :: receive ( so_call
         if ( so_called_platform_conditions :: fract_greater_than_fract ( time , total_animation_time ) )
         {
             shy_guts :: logic_main_menu_update_state :: select_started = so_called_platform_math_consts :: whole_false ;
-            so_called_sender_common_logic_main_menu_selection_animation_select_finished :: send ( so_called_message_common_logic_main_menu_selection_animation_select_finished ( ) ) ;
+            so_called_common_logic_main_menu_selection_animation_select_finished_sender :: send ( so_called_message_common_logic_main_menu_selection_animation_select_finished ( ) ) ;
         }
 
         shy_guts :: logic_main_menu_update_state :: time = time ;

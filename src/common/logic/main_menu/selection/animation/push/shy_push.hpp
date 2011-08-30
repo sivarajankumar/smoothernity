@@ -52,7 +52,7 @@ void shy_guts :: proceed_with_update ( )
 void shy_guts :: obtain_controls_state ( )
 {
     shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_controls_state_request :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
+    so_called_common_logic_controls_state_request_sender :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
 }
 
 void shy_guts :: controls_state_received ( )
@@ -168,7 +168,7 @@ void shy_guts :: reply_transform ( )
     so_called_message_common_logic_main_menu_selection_animation_push_transform_reply msg ;
     msg . scale_x = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: horizontal_scale ;
     msg . scale_y = shy_guts :: logic_main_menu_selection_animation_push_transform_state :: vertical_scale ;
-    so_called_sender_common_logic_main_menu_selection_animation_push_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_selection_animation_push_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_selection_animation_push :: receive ( so_called_message_common_init )

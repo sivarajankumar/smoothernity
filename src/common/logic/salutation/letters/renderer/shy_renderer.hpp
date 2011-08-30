@@ -85,7 +85,7 @@ void shy_guts :: replied_mesh_render ( )
 {
     so_called_message_common_engine_render_mesh_render msg ;
     msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . msg_reply . mesh ;
-    so_called_sender_common_engine_render_mesh_render :: send ( msg ) ;
+    so_called_common_engine_render_mesh_render_sender :: send ( msg ) ;
 }
 
 void shy_guts :: replied_mesh_transform ( )
@@ -93,7 +93,7 @@ void shy_guts :: replied_mesh_transform ( )
     so_called_message_common_engine_render_mesh_set_transform msg ;
     msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . msg_reply . mesh ;
     msg . transform = shy_guts :: logic_salutation_letters_animation_transform_state :: taker . msg_reply . transform ;
-    so_called_sender_common_engine_render_mesh_set_transform :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_transform_sender :: send ( msg ) ;
 }
 
 void shy_guts :: move_to_next_mesh ( )
@@ -122,7 +122,7 @@ void shy_guts :: request_meshes_amount_in_storage ( )
 
 void shy_guts :: send_render_finished ( )
 {
-    so_called_sender_common_logic_salutation_letters_renderer_render_reply :: send
+    so_called_common_logic_salutation_letters_renderer_render_reply_sender :: send
         ( so_called_message_common_logic_salutation_letters_renderer_render_reply ( )
         ) ;
 }

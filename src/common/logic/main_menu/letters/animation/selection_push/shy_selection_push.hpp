@@ -96,13 +96,13 @@ void shy_guts :: reply_transform ( )
     msg . row = shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: requested_row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: requested_col ;
     msg . scale = shy_guts :: logic_main_menu_letters_animation_selection_push_transform_state :: scale ;
-    so_called_sender_common_logic_main_menu_letters_animation_selection_push_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_selection_push_transform_reply_sender :: send ( msg ) ;
 }
 
 void shy_guts :: obtain_controls_state ( )
 {
     shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_controls_state_request :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
+    so_called_common_logic_controls_state_request_sender :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
 }
 
 void shy_guts :: controls_state_received ( )

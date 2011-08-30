@@ -32,7 +32,7 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
 {
     so_called_message_common_logic_main_menu_letters_meshes_count_reply reply_msg ;
     reply_msg . meshes = shy_guts :: meshes_count ;
-    so_called_sender_common_logic_main_menu_letters_meshes_count_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_meshes_count_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iterate_start )
@@ -49,9 +49,9 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
         iteration_msg . row = mesh_state . get ( ) . row ;
         iteration_msg . col = mesh_state . get ( ) . col ;
         iteration_msg . mesh = mesh_state . get ( ) . mesh ;
-        so_called_sender_common_logic_main_menu_letters_meshes_iteration :: send ( iteration_msg ) ;
+        so_called_common_logic_main_menu_letters_meshes_iteration_sender :: send ( iteration_msg ) ;
     }
-    so_called_sender_common_logic_main_menu_letters_meshes_iterate_finished :: send ( so_called_message_common_logic_main_menu_letters_meshes_iterate_finished ( ) ) ;
+    so_called_common_logic_main_menu_letters_meshes_iterate_finished_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_iterate_finished ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_has_been_created msg )
@@ -72,7 +72,7 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
     so_called_message_common_logic_main_menu_letters_meshes_mesh_id_reply reply_msg ;
     reply_msg . index = msg . index ;
     reply_msg . mesh = mesh_state . get ( ) . mesh ;
-    so_called_sender_common_logic_main_menu_letters_meshes_mesh_id_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_meshes_mesh_id_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_request msg )
@@ -84,7 +84,7 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
     reply_msg . index = msg . index ;
     reply_msg . row = mesh_state . get ( ) . row ;
     reply_msg . col = mesh_state . get ( ) . col ;
-    so_called_sender_common_logic_main_menu_letters_meshes_mesh_row_col_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_meshes_mesh_row_col_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_storage :: register_in_scheduler ( )

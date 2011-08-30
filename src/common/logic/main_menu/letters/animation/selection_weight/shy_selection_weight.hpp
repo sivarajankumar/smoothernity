@@ -84,7 +84,7 @@ void shy_guts :: reply_weight ( )
     msg . row = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_col ;
     msg . weight = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: weight ;
-    so_called_sender_common_logic_main_menu_letters_animation_selection_weight_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_animation_selection_weight_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_message_common_init )

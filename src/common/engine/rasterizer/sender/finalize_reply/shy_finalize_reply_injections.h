@@ -1,10 +1,10 @@
-#ifndef _shy_sender_common_engine_rasterizer_finalize_reply_injections_included
-#define _shy_sender_common_engine_rasterizer_finalize_reply_injections_included
+#ifndef _shy_common_engine_rasterizer_finalize_reply_sender_injections_included
+#define _shy_common_engine_rasterizer_finalize_reply_sender_injections_included
 
 #include "../../message/finalize_reply/shy_finalize_reply_injections.h"
 
 #include "./shy_finalize_reply.h"
 
-typedef shy_sender_common_engine_rasterizer_finalize_reply so_called_sender_common_engine_rasterizer_finalize_reply ;
+typedef shy_common_engine_rasterizer_finalize_reply_sender so_called_common_engine_rasterizer_finalize_reply_sender ;
 
 #endif

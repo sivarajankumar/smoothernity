@@ -48,7 +48,7 @@ void shy_guts :: proceed_with_transform ( )
 void shy_guts :: request_flight_transform ( )
 {
     shy_guts :: logic_observer_animation_flight_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_observer_animation_flight_transform_request :: send ( so_called_message_common_logic_observer_animation_flight_transform_request ( ) ) ;
+    so_called_common_logic_observer_animation_flight_transform_request_sender :: send ( so_called_message_common_logic_observer_animation_flight_transform_request ( ) ) ;
 }
 
 void shy_guts :: reply_computed_transform ( )
@@ -83,7 +83,7 @@ void shy_guts :: reply_transform ( )
 {
     so_called_message_common_logic_observer_animation_transform_reply msg ;
     msg . transform = shy_guts :: logic_observer_animation_transform_state :: transform ;
-    so_called_sender_common_logic_observer_animation_transform_reply :: send ( msg ) ;
+    so_called_common_logic_observer_animation_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_observer_animation :: receive ( so_called_message_common_init )

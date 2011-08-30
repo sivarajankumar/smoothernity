@@ -253,7 +253,7 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_u
                 {
                     shy_guts :: create_stereo_sound ( ) ;
                     shy_guts :: stereo_sound_created = so_called_platform_math_consts :: whole_true ;
-                    so_called_sender_common_logic_sound_prepared :: send ( so_called_message_common_logic_sound_prepared ( ) ) ;
+                    so_called_common_logic_sound_prepared_sender :: send ( so_called_message_common_logic_sound_prepared ( ) ) ;
                 }
             }
         }

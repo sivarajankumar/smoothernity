@@ -77,7 +77,7 @@ void shy_guts :: proceed_with_creation ( )
 void shy_guts :: obtain_rows_count ( )
 {
     shy_guts :: logic_main_menu_letters_rows_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_letters_rows_request :: send ( so_called_message_common_logic_main_menu_letters_rows_request ( ) ) ;
+    so_called_common_logic_main_menu_letters_rows_request_sender :: send ( so_called_message_common_logic_main_menu_letters_rows_request ( ) ) ;
 }
 
 void shy_guts :: start_first_row ( )
@@ -102,12 +102,12 @@ void shy_guts :: move_to_next_row ( )
 
         so_called_message_common_logic_main_menu_letters_cols_request msg ;
         msg . row = shy_guts :: current_row ;
-        so_called_sender_common_logic_main_menu_letters_cols_request :: send ( msg ) ;
+        so_called_common_logic_main_menu_letters_cols_request_sender :: send ( msg ) ;
     }
     else
     {
         shy_guts :: logic_main_menu_letters_cols_state :: cols = so_called_platform_math_consts :: whole_0 ;
-        so_called_sender_common_logic_main_menu_letters_meshes_creation_finished :: send ( so_called_message_common_logic_main_menu_letters_meshes_creation_finished ( ) ) ;
+        so_called_common_logic_main_menu_letters_meshes_creation_finished_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_creation_finished ( ) ) ;
     }
 }
 
@@ -123,7 +123,7 @@ void shy_guts :: move_to_next_col ( )
         so_called_message_common_logic_main_menu_letters_letter_request msg ;
         msg . row = shy_guts :: current_row ;
         msg . col = shy_guts :: current_col ;
-        so_called_sender_common_logic_main_menu_letters_letter_request :: send ( msg ) ;
+        so_called_common_logic_main_menu_letters_letter_request_sender :: send ( msg ) ;
     }
     else
         shy_guts :: move_to_next_row ( ) ;
@@ -159,7 +159,7 @@ void shy_guts :: create_mesh ( )
     msg . color_g = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_g ;
     msg . color_b = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_b ;
     msg . color_a = so_called_common_logic_main_menu_letters_meshes_consts :: letter_mesh_color_a ;
-    so_called_sender_common_logic_text_letter_mesh_create_request :: send ( msg ) ;
+    so_called_common_logic_text_letter_mesh_create_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: send_mesh_created_notification ( )
@@ -168,7 +168,7 @@ void shy_guts :: send_mesh_created_notification ( )
     msg . row = shy_guts :: current_row ;
     msg . col = shy_guts :: current_col ;
     msg . mesh = shy_guts :: logic_text_letter_mesh_create_state :: mesh ;
-    so_called_sender_common_logic_main_menu_letters_meshes_mesh_has_been_created :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_meshes_mesh_has_been_created_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_meshes_creator :: receive ( so_called_message_common_init )

@@ -25,9 +25,9 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: init_render ( )
 {
-    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
-    so_called_sender_common_engine_render_enable_face_culling :: send ( so_called_message_common_engine_render_enable_face_culling ( ) ) ;
-    so_called_sender_common_engine_render_texture_mode_modulate :: send ( so_called_message_common_engine_render_texture_mode_modulate ( ) ) ;
+    so_called_common_engine_render_blend_disable_sender :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
+    so_called_common_engine_render_enable_face_culling_sender :: send ( so_called_message_common_engine_render_enable_face_culling ( ) ) ;
+    so_called_common_engine_render_texture_mode_modulate_sender :: send ( so_called_message_common_engine_render_texture_mode_modulate ( ) ) ;
 }
 
 void shy_guts :: get_near_plane_distance ( so_called_type_platform_math_num_fract & result )
@@ -47,7 +47,7 @@ void _shy_common_logic_core :: receive ( so_called_message_common_engine_render_
             shy_guts :: handling_near_plane_distance_request = so_called_platform_math_consts :: whole_false ;
             so_called_message_common_logic_core_near_plane_distance_reply near_plane_distance_reply_msg ;
             shy_guts :: get_near_plane_distance ( near_plane_distance_reply_msg . distance ) ;
-            so_called_sender_common_logic_core_near_plane_distance_reply :: send ( near_plane_distance_reply_msg ) ;
+            so_called_common_logic_core_near_plane_distance_reply_sender :: send ( near_plane_distance_reply_msg ) ;
         }
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: handling_use_ortho_projection_request ) )
         {
@@ -67,10 +67,10 @@ void _shy_common_logic_core :: receive ( so_called_message_common_engine_render_
             proj_msg . y_top = height ;
             proj_msg . z_near = shy_guts :: consts :: z_near ;
             proj_msg . z_far = shy_guts :: consts :: z_far ;
-            so_called_sender_common_engine_render_projection_ortho :: send ( proj_msg ) ;
+            so_called_common_engine_render_projection_ortho_sender :: send ( proj_msg ) ;
             
-            so_called_sender_common_engine_render_matrix_identity :: send ( so_called_message_common_engine_render_matrix_identity ( ) ) ;
-            so_called_sender_common_logic_core_use_ortho_projection_reply :: send ( so_called_message_common_logic_core_use_ortho_projection_reply ( ) ) ;
+            so_called_common_engine_render_matrix_identity_sender :: send ( so_called_message_common_engine_render_matrix_identity ( ) ) ;
+            so_called_common_logic_core_use_ortho_projection_reply_sender :: send ( so_called_message_common_logic_core_use_ortho_projection_reply ( ) ) ;
         }
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: handling_use_perspective_projection_request ) )
         {
@@ -92,10 +92,10 @@ void _shy_common_logic_core :: receive ( so_called_message_common_engine_render_
             proj_msg . y_top = height ;
             proj_msg . z_near = z_near ;
             proj_msg . z_far = shy_guts :: consts :: z_far ;
-            so_called_sender_common_engine_render_projection_frustum :: send ( proj_msg ) ;
+            so_called_common_engine_render_projection_frustum_sender :: send ( proj_msg ) ;
             
-            so_called_sender_common_engine_render_matrix_identity :: send ( so_called_message_common_engine_render_matrix_identity ( ) ) ;
-            so_called_sender_common_logic_core_use_perspective_projection_reply :: send ( so_called_message_common_logic_core_use_perspective_projection_reply ( ) ) ;
+            so_called_common_engine_render_matrix_identity_sender :: send ( so_called_message_common_engine_render_matrix_identity ( ) ) ;
+            so_called_common_logic_core_use_perspective_projection_reply_sender :: send ( so_called_message_common_logic_core_use_perspective_projection_reply ( ) ) ;
         }
     }
 }
@@ -114,21 +114,21 @@ void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_nea
 {
     shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: handling_near_plane_distance_request = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use_ortho_projection_request )
 {
     shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: handling_use_ortho_projection_request = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_logic_core_use_perspective_projection_request )
 {
     shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: handling_use_perspective_projection_request = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_logic_fidget_prepared )
@@ -138,16 +138,16 @@ void _shy_common_logic_core :: receive ( so_called_message_common_logic_fidget_p
 
 void _shy_common_logic_core :: receive ( so_called_message_common_render )
 {
-    so_called_sender_common_logic_application_render :: send ( so_called_message_common_logic_application_render ( ) ) ;
+    so_called_common_logic_application_render_sender :: send ( so_called_message_common_logic_application_render ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_update )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_prepared ) )
-        so_called_sender_common_logic_application_update :: send ( so_called_message_common_logic_application_update ( ) ) ;
+        so_called_common_logic_application_update_sender :: send ( so_called_message_common_logic_application_update ( ) ) ;
     else
-        so_called_sender_common_logic_fidget_prepare_permit :: send ( so_called_message_common_logic_fidget_prepare_permit ( ) ) ;
-    so_called_sender_common_logic_fidget_update :: send ( so_called_message_common_logic_fidget_update ( ) ) ;
+        so_called_common_logic_fidget_prepare_permit_sender :: send ( so_called_message_common_logic_fidget_prepare_permit ( ) ) ;
+    so_called_common_logic_fidget_update_sender :: send ( so_called_message_common_logic_fidget_update ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_message_common_video_mode_changed )

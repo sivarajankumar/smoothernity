@@ -136,11 +136,11 @@ void shy_guts :: title_render ( )
     so_called_platform_matrix :: set_axis_z ( scene_tm , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_1 ) ;
     so_called_platform_matrix :: set_origin ( scene_tm , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
     
-    so_called_sender_common_engine_render_blend_src_alpha_dst_one_minus_alpha :: send ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
+    so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender :: send ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) ) ;
     
     so_called_message_common_engine_render_matrix_load matrix_load_msg ;
     matrix_load_msg . matrix = scene_tm ;
-    so_called_sender_common_engine_render_matrix_load :: send ( matrix_load_msg ) ;
+    so_called_common_engine_render_matrix_load_sender :: send ( matrix_load_msg ) ;
     
     for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: letters_count )
@@ -151,9 +151,9 @@ void shy_guts :: title_render ( )
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
         so_called_message_common_engine_render_mesh_render mesh_render_msg ;
         mesh_render_msg . mesh = letter . get ( ) . mesh ;
-        so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+        so_called_common_engine_render_mesh_render_sender :: send ( mesh_render_msg ) ;
     }
-    so_called_sender_common_engine_render_blend_disable :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
+    so_called_common_engine_render_blend_disable_sender :: send ( so_called_message_common_engine_render_blend_disable ( ) ) ;
 }
 
 void shy_guts :: title_update ( )
@@ -287,7 +287,7 @@ void shy_guts :: title_update ( )
             so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = letter . get ( ) . mesh ;
             mesh_set_transform_msg . transform = tm ;
-            so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+            so_called_common_engine_render_mesh_set_transform_sender :: send ( mesh_set_transform_msg ) ;
         }
     }
 }
@@ -303,7 +303,7 @@ void shy_guts :: delete_all_meshes ( )
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
         so_called_message_common_engine_render_mesh_delete mesh_delete_msg ;
         mesh_delete_msg . mesh = letter . get ( ) . mesh ;
-        so_called_sender_common_engine_render_mesh_delete :: send ( mesh_delete_msg ) ;
+        so_called_common_engine_render_mesh_delete_sender :: send ( mesh_delete_msg ) ;
     }
 }
 
@@ -351,7 +351,7 @@ void shy_guts :: animate_disappear ( )
     {
         shy_guts :: title_finished = so_called_platform_math_consts :: whole_true ;
         shy_guts :: delete_all_meshes ( ) ;
-        so_called_sender_common_logic_title_finished :: send ( so_called_message_common_logic_title_finished ( ) ) ;
+        so_called_common_logic_title_finished_sender :: send ( so_called_message_common_logic_title_finished ( ) ) ;
     }
     else
         shy_guts :: title_update ( ) ;
@@ -384,20 +384,20 @@ void shy_guts :: bake_next_letter ( )
         
         so_called_message_common_logic_text_letter_big_tex_coords_request text_letter_big_tex_coords_request_msg ;
         text_letter_big_tex_coords_request_msg . letter = letter . get ( ) . letter ;
-        so_called_sender_common_logic_text_letter_big_tex_coords_request :: send ( text_letter_big_tex_coords_request_msg  ) ;        
+        so_called_common_logic_text_letter_big_tex_coords_request_sender :: send ( text_letter_big_tex_coords_request_msg  ) ;        
         
         so_called_message_common_engine_render_mesh_create_request mesh_create_msg ;
         mesh_create_msg . vertices = so_called_platform_math_consts :: whole_4 ;
         mesh_create_msg . triangle_strip_indices = so_called_platform_math_consts :: whole_4 ;
         mesh_create_msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
-        so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+        so_called_common_engine_render_mesh_create_request_sender :: send ( mesh_create_msg ) ;
     }
     else
     {
         shy_guts :: title_created = so_called_platform_math_consts :: whole_true ;
         shy_guts :: prepare_to_appear ( ) ;
         shy_guts :: animate_lifecycle ( ) ;
-        so_called_sender_common_logic_title_created :: send ( so_called_message_common_logic_title_created ( ) ) ;
+        so_called_common_logic_title_created_sender :: send ( so_called_message_common_logic_title_created ( ) ) ;
     }
 }
 
@@ -407,7 +407,7 @@ void shy_guts :: proceed_with_render ( )
     {
         shy_guts :: render_started = so_called_platform_math_consts :: whole_false ;
         shy_guts :: use_ortho_projection_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_core_use_ortho_projection_request :: send ( so_called_message_common_logic_core_use_ortho_projection_request ( ) ) ;
+        so_called_common_logic_core_use_ortho_projection_request_sender :: send ( so_called_message_common_logic_core_use_ortho_projection_request ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_ortho_projection_replied ) )
     {
@@ -416,12 +416,12 @@ void shy_guts :: proceed_with_render ( )
         clear_screen_msg . r = so_called_platform_math_consts :: fract_0 ;
         clear_screen_msg . g = so_called_platform_math_consts :: fract_0 ;
         clear_screen_msg . b = so_called_platform_math_consts :: fract_0 ;
-        so_called_sender_common_engine_render_clear_screen :: send ( clear_screen_msg ) ;
-        so_called_sender_common_engine_render_disable_depth_test :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
-        so_called_sender_common_engine_render_fog_disable :: send ( so_called_message_common_engine_render_fog_disable ( ) ) ;
+        so_called_common_engine_render_clear_screen_sender :: send ( clear_screen_msg ) ;
+        so_called_common_engine_render_disable_depth_test_sender :: send ( so_called_message_common_engine_render_disable_depth_test ( ) ) ;
+        so_called_common_engine_render_fog_disable_sender :: send ( so_called_message_common_engine_render_fog_disable ( ) ) ;
 
         shy_guts :: fidget_render_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_logic_fidget_render_request :: send ( so_called_message_common_logic_fidget_render_request ( ) ) ;
+        so_called_common_logic_fidget_render_request_sender :: send ( so_called_message_common_logic_fidget_render_request ( ) ) ;
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_render_replied ) )
     {
@@ -429,7 +429,7 @@ void shy_guts :: proceed_with_render ( )
         if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: title_created ) && so_called_platform_conditions :: whole_is_false ( shy_guts :: title_finished ) )
         {
             shy_guts :: use_text_texture_requested = so_called_platform_math_consts :: whole_true ;
-            so_called_sender_common_logic_text_use_text_texture_request :: send ( so_called_message_common_logic_text_use_text_texture_request ( ) ) ;
+            so_called_common_logic_text_use_text_texture_request_sender :: send ( so_called_message_common_logic_text_use_text_texture_request ( ) ) ;
         }
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: use_text_texture_replied ) )
@@ -483,7 +483,7 @@ void shy_guts :: proceed_with_letter_creation ( )
         
         so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
         mesh_finalize_msg . mesh = letter . get ( ) . mesh ;
-        so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
+        so_called_common_engine_render_mesh_finalize_sender :: send ( mesh_finalize_msg ) ;
         
         so_called_platform_math :: inc_whole ( shy_guts :: bake_letter_index ) ;
         shy_guts :: bake_next_letter ( ) ;
@@ -508,7 +508,7 @@ void shy_guts :: mesh_set_triangle_strip_index_value
     msg . mesh = mesh ;
     msg . offset = offset ;
     msg . index = index ;
-    so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_tex_coord 
@@ -523,7 +523,7 @@ void shy_guts :: mesh_set_vertex_tex_coord
     msg . offset = offset ;
     msg . u = u ;
     msg . v = v ;
-    so_called_sender_common_engine_render_mesh_set_vertex_tex_coord :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_tex_coord_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 
@@ -540,7 +540,7 @@ void shy_guts :: mesh_set_vertex_position
     msg . x = x ;
     msg . y = y ;
     msg . z = z ;
-    so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_position_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_color 
@@ -559,7 +559,7 @@ void shy_guts :: mesh_set_vertex_color
     msg . g = g ;
     msg . b = b ;
     msg . a = a ;
-    so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_color_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_title :: receive ( so_called_message_common_engine_render_aspect_reply msg )
@@ -678,7 +678,7 @@ void _shy_common_logic_title :: receive ( so_called_message_common_logic_title_u
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: title_launch_permitted ) )
     {
         shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_true ;
-        so_called_sender_common_engine_render_aspect_request :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+        so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
     }
 }
 

@@ -1,4 +1,4 @@
-void shy_sender_common_init :: send ( so_called_message_common_init msg )
+void shy_common_init_sender :: send ( so_called_message_common_init msg )
 {
     so_called_common_engine_rasterizer :: receive ( msg ) ;
     so_called_common_engine_render :: receive ( msg ) ;

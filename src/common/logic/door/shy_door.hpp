@@ -15,18 +15,18 @@ void _shy_common_logic_door :: receive ( so_called_message_common_init )
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_creation_permit )
 {
-    so_called_sender_common_logic_door_mesh_create :: send ( so_called_message_common_logic_door_mesh_create ( ) ) ;
+    so_called_common_logic_door_mesh_create_sender :: send ( so_called_message_common_logic_door_mesh_create ( ) ) ;
 }
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_launch_permit )
 {
     shy_guts :: launch_permitted = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_door_animation_appear_start :: send ( so_called_message_common_logic_door_animation_appear_start ( ) ) ;
+    so_called_common_logic_door_animation_appear_start_sender :: send ( so_called_message_common_logic_door_animation_appear_start ( ) ) ;
 }
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_mesh_creation_finished )
 {
-    so_called_sender_common_logic_door_texture_create :: send ( so_called_message_common_logic_door_texture_create ( ) ) ;
+    so_called_common_logic_door_texture_create_sender :: send ( so_called_message_common_logic_door_texture_create ( ) ) ;
 }
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_update )
@@ -35,15 +35,15 @@ void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_upd
       && so_called_platform_conditions :: whole_is_true ( shy_guts :: created )
        )
     {
-        so_called_sender_common_logic_door_place :: send ( so_called_message_common_logic_door_place ( ) ) ;
+        so_called_common_logic_door_place_sender :: send ( so_called_message_common_logic_door_place ( ) ) ;
     }
 }
 
 void _shy_common_logic_door :: receive ( so_called_message_common_logic_door_texture_creation_finished )
 {
     shy_guts :: created = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_door_creation_finished :: send ( so_called_message_common_logic_door_creation_finished ( ) ) ;
-    so_called_sender_common_logic_door_place :: send ( so_called_message_common_logic_door_place ( ) ) ;
+    so_called_common_logic_door_creation_finished_sender :: send ( so_called_message_common_logic_door_creation_finished ( ) ) ;
+    so_called_common_logic_door_place_sender :: send ( so_called_message_common_logic_door_place ( ) ) ;
 }
 
 void _shy_common_logic_door :: register_in_scheduler ( )

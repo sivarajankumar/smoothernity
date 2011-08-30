@@ -5,12 +5,12 @@ void _shy_common_logic_door_placement :: receive ( so_called_message_common_logi
 {
     so_called_message_common_logic_door_mesh_set_transform set_transform_msg ;
     set_transform_msg . transform = msg . transform ;
-    so_called_sender_common_logic_door_mesh_set_transform :: send ( set_transform_msg ) ;
+    so_called_common_logic_door_mesh_set_transform_sender :: send ( set_transform_msg ) ;
 }
 
 void _shy_common_logic_door_placement :: receive ( so_called_message_common_logic_door_place )
 {
-    so_called_sender_common_logic_door_animation_transform_request :: send ( so_called_message_common_logic_door_animation_transform_request ( ) ) ;
+    so_called_common_logic_door_animation_transform_request_sender :: send ( so_called_message_common_logic_door_animation_transform_request ( ) ) ;
 }
 
 void _shy_common_logic_door_placement :: register_in_scheduler ( )

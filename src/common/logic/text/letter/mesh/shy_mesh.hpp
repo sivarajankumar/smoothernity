@@ -117,7 +117,7 @@ void shy_guts :: send_engine_render_mesh_finalize ( )
 {
     so_called_message_common_engine_render_mesh_finalize msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
-    so_called_sender_common_engine_render_mesh_finalize :: send ( msg ) ;
+    so_called_common_engine_render_mesh_finalize_sender :: send ( msg ) ;
 }
 
 void shy_guts :: request_tex_coords ( )
@@ -127,7 +127,7 @@ void shy_guts :: request_tex_coords ( )
 
     so_called_message_common_logic_text_letter_big_tex_coords_request msg ;
     msg . letter = shy_guts :: logic_text_letter_mesh_create_state :: letter ;
-    so_called_sender_common_logic_text_letter_big_tex_coords_request :: send ( msg ) ;
+    so_called_common_logic_text_letter_big_tex_coords_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: proceed_with_creation ( )
@@ -164,7 +164,7 @@ void shy_guts :: request_mesh_create ( )
     msg . vertices = shy_guts :: consts :: mesh_vertices ;
     msg . triangle_strip_indices = shy_guts :: consts :: mesh_vertices ;
     msg . triangle_fan_indices = so_called_platform_math_consts :: whole_0 ;
-    so_called_sender_common_engine_render_mesh_create_request :: send ( msg ) ;
+    so_called_common_engine_render_mesh_create_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: send_letter_mesh_create_reply ( )
@@ -172,7 +172,7 @@ void shy_guts :: send_letter_mesh_create_reply ( )
     so_called_message_common_logic_text_letter_mesh_create_reply msg ;
     msg . mesh = shy_guts :: engine_render_mesh_create_state :: mesh ;
     msg . letter = shy_guts :: logic_text_letter_mesh_create_state :: letter ;
-    so_called_sender_common_logic_text_letter_mesh_create_reply :: send ( msg ) ;
+    so_called_common_logic_text_letter_mesh_create_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_text_letter_mesh :: receive ( so_called_message_common_engine_render_mesh_create_reply msg )

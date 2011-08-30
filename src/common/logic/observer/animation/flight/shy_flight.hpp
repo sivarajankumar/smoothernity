@@ -109,7 +109,7 @@ void shy_guts :: reply_transform ( )
     so_called_message_common_logic_observer_animation_flight_transform_reply msg ;
     msg . eye = shy_guts :: logic_observer_animation_flight_transform_state :: eye ;
     msg . target = shy_guts :: logic_observer_animation_flight_transform_state :: target ;
-    so_called_sender_common_logic_observer_animation_flight_transform_reply :: send ( msg ) ;
+    so_called_common_logic_observer_animation_flight_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_observer_animation_flight :: receive ( so_called_message_common_init )

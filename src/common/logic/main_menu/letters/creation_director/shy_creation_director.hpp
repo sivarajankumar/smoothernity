@@ -12,17 +12,17 @@ void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id letter 
 {
     so_called_message_common_logic_main_menu_letters_letter_add msg ;
     msg . letter = letter ;
-    so_called_sender_common_logic_main_menu_letters_letter_add :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_letter_add_sender :: send ( msg ) ;
 }
 
 void shy_guts :: next_row ( )
 {
-    so_called_sender_common_logic_main_menu_letters_next_row :: send ( so_called_message_common_logic_main_menu_letters_next_row ( ) ) ;
+    so_called_common_logic_main_menu_letters_next_row_sender :: send ( so_called_message_common_logic_main_menu_letters_next_row ( ) ) ;
 }
 
 void shy_guts :: text_create_finished ( )
 {
-    so_called_sender_common_logic_main_menu_letters_create_finished :: send ( so_called_message_common_logic_main_menu_letters_create_finished ( ) ) ;
+    so_called_common_logic_main_menu_letters_create_finished_sender :: send ( so_called_message_common_logic_main_menu_letters_create_finished ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_letters_creation_director :: receive ( so_called_message_common_logic_main_menu_letters_create )

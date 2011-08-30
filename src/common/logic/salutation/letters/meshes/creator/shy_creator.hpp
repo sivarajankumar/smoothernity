@@ -74,14 +74,14 @@ void shy_guts :: add_mesh_to_storage ( )
 {
     so_called_message_common_logic_salutation_letters_meshes_storage_add_mesh msg ;
     msg . mesh = shy_guts :: logic_text_letter_mesh_create_state :: taker . msg_reply . mesh ;
-    so_called_sender_common_logic_salutation_letters_meshes_storage_add_mesh :: send ( msg ) ;
+    so_called_common_logic_salutation_letters_meshes_storage_add_mesh_sender :: send ( msg ) ;
 }
 
 void shy_guts :: reply_finish_of_creation ( )
 {
     so_called_message_common_logic_salutation_letters_meshes_creator_create_reply msg ;
     msg . letter_index = shy_guts :: logic_salutation_letters_meshes_creator_create_state :: msg_request . letter_index ;
-    so_called_sender_common_logic_salutation_letters_meshes_creator_create_reply :: send ( msg ) ;
+    so_called_common_logic_salutation_letters_meshes_creator_create_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_message_common_init )

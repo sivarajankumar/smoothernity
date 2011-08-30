@@ -1,11 +1,11 @@
-#ifndef _shy_sender_common_engine_render_texture_set_texel_rgba_injections_included
-#define _shy_sender_common_engine_render_texture_set_texel_rgba_injections_included
+#ifndef _shy_common_engine_render_texture_set_texel_rgba_sender_injections_included
+#define _shy_common_engine_render_texture_set_texel_rgba_sender_injections_included
 
 #include "../../message/texture_set_texel_rgba/shy_texture_set_texel_rgba_injections.h"
 
 #include "./shy_texture_set_texel_rgba.h"
 
-typedef shy_sender_common_engine_render_texture_set_texel_rgba so_called_sender_common_engine_render_texture_set_texel_rgba ;
+typedef shy_common_engine_render_texture_set_texel_rgba_sender so_called_common_engine_render_texture_set_texel_rgba_sender ;
 
 #endif
 

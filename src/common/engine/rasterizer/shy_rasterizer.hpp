@@ -60,7 +60,7 @@ void shy_guts :: rasterize_horizontal_line
         texture_set_texels_rect_msg . top = y ;
         texture_set_texels_rect_msg . texture = texture_id ;
         texture_set_texels_rect_msg . texel = texel ;
-        so_called_sender_common_engine_render_texture_set_texels_rect :: send ( texture_set_texels_rect_msg ) ;
+        so_called_common_engine_render_texture_set_texels_rect_sender :: send ( texture_set_texels_rect_msg ) ;
     }
 }
 
@@ -327,7 +327,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
         texture_set_texels_rect_msg . top = top ;
         texture_set_texels_rect_msg . texture = shy_guts :: texture_id ;
         texture_set_texels_rect_msg . texel = shy_guts :: texel ;
-        so_called_sender_common_engine_render_texture_set_texels_rect :: send ( texture_set_texels_rect_msg ) ;
+        so_called_common_engine_render_texture_set_texels_rect_sender :: send ( texture_set_texels_rect_msg ) ;
     }
 }
 
@@ -386,7 +386,7 @@ void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_engine_rasterizer_finalize_request )
 {
-    so_called_sender_common_engine_rasterizer_finalize_reply :: send ( so_called_message_common_engine_rasterizer_finalize_reply ( ) ) ;
+    so_called_common_engine_rasterizer_finalize_reply_sender :: send ( so_called_message_common_engine_rasterizer_finalize_reply ( ) ) ;
 }
 
 void _shy_common_engine_rasterizer :: receive ( so_called_message_common_init )

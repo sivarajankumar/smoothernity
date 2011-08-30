@@ -64,7 +64,7 @@ void shy_guts :: proceed_with_creation ( )
 void shy_guts :: request_texture_create ( )
 {
     shy_guts :: engine_render_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_engine_render_texture_create_request :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
+    so_called_common_engine_render_texture_create_request_sender :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
 }
 
 void shy_guts :: texture_received ( )
@@ -83,7 +83,7 @@ void shy_guts :: texture_received ( )
     texture_msg . texture = texture ;
     texture_msg . origin_x = so_called_platform_math_consts :: whole_0 ;
     texture_msg . origin_y = so_called_platform_math_consts :: whole_0 ;
-    so_called_sender_common_engine_rasterizer_use_texture :: send ( texture_msg ) ;
+    so_called_common_engine_rasterizer_use_texture_sender :: send ( texture_msg ) ;
 
     for ( so_called_type_platform_math_num_whole grid_y = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( grid_y , grid_size )
@@ -125,23 +125,23 @@ void shy_guts :: texture_received ( )
     }
 
     shy_guts :: engine_rasterizer_finalize_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_engine_rasterizer_finalize_request :: send ( so_called_message_common_engine_rasterizer_finalize_request ( ) ) ;
+    so_called_common_engine_rasterizer_finalize_request_sender :: send ( so_called_message_common_engine_rasterizer_finalize_request ( ) ) ;
 }
 
 void shy_guts :: rasterizer_finalized ( )
 {
     so_called_message_common_engine_render_texture_finalize msg ;
     msg . texture = shy_guts :: engine_render_texture_create_state :: texture ;
-    so_called_sender_common_engine_render_texture_finalize :: send ( msg ) ;
+    so_called_common_engine_render_texture_finalize_sender :: send ( msg ) ;
 
-    so_called_sender_common_logic_room_texture_creation_finished :: send ( so_called_message_common_logic_room_texture_creation_finished ( ) ) ;
+    so_called_common_logic_room_texture_creation_finished_sender :: send ( so_called_message_common_logic_room_texture_creation_finished ( ) ) ;
 }
 
 void shy_guts :: use_texel ( so_called_type_platform_render_texel_data texel )
 {
     so_called_message_common_engine_rasterizer_use_texel msg ;
     msg . texel = texel ;
-    so_called_sender_common_engine_rasterizer_use_texel :: send ( msg ) ;
+    so_called_common_engine_rasterizer_use_texel_sender :: send ( msg ) ;
 }
 
 void shy_guts :: draw_cell 
@@ -190,7 +190,7 @@ void shy_guts :: draw_rect
     msg . y1 = y1 ;
     msg . x2 = x2 ;
     msg . y2 = y2 ;
-    so_called_sender_common_engine_rasterizer_draw_rect :: send ( msg ) ;
+    so_called_common_engine_rasterizer_draw_rect_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_room_texture :: receive ( so_called_message_common_engine_rasterizer_finalize_reply )
@@ -233,9 +233,9 @@ void _shy_common_logic_room_texture :: receive ( so_called_message_common_logic_
 {
     so_called_message_common_engine_render_texture_select msg ;
     msg . texture = shy_guts :: engine_render_texture_create_state :: texture ;
-    so_called_sender_common_engine_render_texture_select :: send ( msg ) ;
+    so_called_common_engine_render_texture_select_sender :: send ( msg ) ;
 
-    so_called_sender_common_logic_room_texture_select_reply :: send ( so_called_message_common_logic_room_texture_select_reply ( ) ) ;
+    so_called_common_logic_room_texture_select_reply_sender :: send ( so_called_message_common_logic_room_texture_select_reply ( ) ) ;
 }
 
 void _shy_common_logic_room_texture :: register_in_scheduler ( )

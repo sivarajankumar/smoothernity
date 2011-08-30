@@ -72,12 +72,12 @@ void shy_guts :: clean_replied_mesh ( )
 {
     so_called_message_common_engine_render_mesh_delete msg ;
     msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . msg_reply . mesh ;
-    so_called_sender_common_engine_render_mesh_delete :: send ( msg ) ;
+    so_called_common_engine_render_mesh_delete_sender :: send ( msg ) ;
 }
 
 void shy_guts :: clean_meshes_storage ( )
 {
-    so_called_sender_common_logic_salutation_letters_meshes_storage_clean :: send ( so_called_message_common_logic_salutation_letters_meshes_storage_clean ( ) ) ;
+    so_called_common_logic_salutation_letters_meshes_storage_clean_sender :: send ( so_called_message_common_logic_salutation_letters_meshes_storage_clean ( ) ) ;
 }
 
 void shy_guts :: clean_by_time ( )
@@ -140,7 +140,7 @@ void shy_guts :: advance_time ( )
 
 void shy_guts :: send_clean_finished ( )
 {
-    so_called_sender_common_logic_salutation_letters_meshes_cleaner_clean_finished :: send ( so_called_message_common_logic_salutation_letters_meshes_cleaner_clean_finished ( ) ) ;
+    so_called_common_logic_salutation_letters_meshes_cleaner_clean_finished_sender :: send ( so_called_message_common_logic_salutation_letters_meshes_cleaner_clean_finished ( ) ) ;
 }
 
 void shy_guts :: request_meshes_amount_in_storage ( )

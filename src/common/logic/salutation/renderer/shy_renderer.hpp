@@ -82,21 +82,21 @@ void shy_guts :: prepare_render_state ( )
 
 void shy_guts :: depth_test_disable ( )
 {
-    so_called_sender_common_engine_render_disable_depth_test :: send 
+    so_called_common_engine_render_disable_depth_test_sender :: send 
         ( so_called_message_common_engine_render_disable_depth_test ( ) 
         ) ;
 }
 
 void shy_guts :: fog_disable ( )
 {
-    so_called_sender_common_engine_render_fog_disable :: send 
+    so_called_common_engine_render_fog_disable_sender :: send 
         ( so_called_message_common_engine_render_fog_disable ( ) 
         ) ;
 }
 
 void shy_guts :: blend_enable ( )
 {
-    so_called_sender_common_engine_render_blend_src_alpha_dst_one_minus_alpha :: send 
+    so_called_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender :: send 
         ( so_called_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha ( ) 
         ) ;
 }
@@ -105,7 +105,7 @@ void shy_guts :: use_view_transform ( )
 {
     so_called_message_common_engine_render_matrix_load msg ;
     msg . matrix = shy_guts :: logic_salutation_animation_transform_state :: taker . msg_reply . transform ;
-    so_called_sender_common_engine_render_matrix_load :: send ( msg ) ;
+    so_called_common_engine_render_matrix_load_sender :: send ( msg ) ;
 }
 
 void shy_guts :: use_ortho_projection ( )
@@ -117,7 +117,7 @@ void shy_guts :: use_ortho_projection ( )
     msg . y_top = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . y_top ;
     msg . z_near = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . z_near ;
     msg . z_far = shy_guts :: logic_ortho_planes_state :: taker . msg_reply . z_far ;
-    so_called_sender_common_engine_render_projection_ortho :: send ( msg ) ;
+    so_called_common_engine_render_projection_ortho_sender :: send ( msg ) ;
 }
 
 void shy_guts :: clear_screen ( )
@@ -126,7 +126,7 @@ void shy_guts :: clear_screen ( )
     msg . r = so_called_common_logic_salutation_renderer_consts :: background_r ;
     msg . g = so_called_common_logic_salutation_renderer_consts :: background_g ;
     msg . b = so_called_common_logic_salutation_renderer_consts :: background_b ;
-    so_called_sender_common_engine_render_clear_screen :: send ( msg ) ;
+    so_called_common_engine_render_clear_screen_sender :: send ( msg ) ;
 }
 
 void shy_guts :: request_animation_transform ( )

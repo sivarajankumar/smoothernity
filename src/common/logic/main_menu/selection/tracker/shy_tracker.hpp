@@ -82,7 +82,7 @@ void shy_guts :: proceed_with_track ( )
 void shy_guts :: obtain_controls_state ( )
 {
     shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_controls_state_request :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
+    so_called_common_logic_controls_state_request_sender :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
 }
 
 void shy_guts :: controls_state_received ( )
@@ -102,7 +102,7 @@ void shy_guts :: controls_state_received ( )
 void shy_guts :: obtain_rows_count ( )
 {
     shy_guts :: logic_main_menu_letters_rows_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_letters_rows_request :: send ( so_called_message_common_logic_main_menu_letters_rows_request ( ) ) ;
+    so_called_common_logic_main_menu_letters_rows_request_sender :: send ( so_called_message_common_logic_main_menu_letters_rows_request ( ) ) ;
 }
 
 void shy_guts :: obtain_first_row_rect ( )
@@ -118,7 +118,7 @@ void shy_guts :: obtain_current_row_rect ( )
 
     so_called_message_common_logic_main_menu_letters_layout_row_rect_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row ;
-    so_called_sender_common_logic_main_menu_letters_layout_row_rect_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_layout_row_rect_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: received_row_rect ( )
@@ -243,7 +243,7 @@ void shy_guts :: send_row_selected ( )
 
         so_called_message_common_logic_main_menu_selection_track_row_selected msg ;
         msg . row = shy_guts :: logic_main_menu_selection_track_state :: current_row ;
-        so_called_sender_common_logic_main_menu_selection_track_row_selected :: send ( msg ) ;        
+        so_called_common_logic_main_menu_selection_track_row_selected_sender :: send ( msg ) ;        
     }
 }
 
@@ -252,13 +252,13 @@ void shy_guts :: send_void_selected ( )
     if ( ! so_called_platform_conditions :: whole_is_false ( shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected ) )
     {
         shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected = so_called_platform_math_consts :: whole_false ;
-        so_called_sender_common_logic_main_menu_selection_track_void_selected :: send ( so_called_message_common_logic_main_menu_selection_track_void_selected ( ) ) ;
+        so_called_common_logic_main_menu_selection_track_void_selected_sender :: send ( so_called_message_common_logic_main_menu_selection_track_void_selected ( ) ) ;
     }
 }
 
 void shy_guts :: send_reply ( )
 {
-    so_called_sender_common_logic_main_menu_selection_track_reply :: send ( so_called_message_common_logic_main_menu_selection_track_reply ( ) ) ;
+    so_called_common_logic_main_menu_selection_track_reply_sender :: send ( so_called_message_common_logic_main_menu_selection_track_reply ( ) ) ;
 }
 
 void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_init )

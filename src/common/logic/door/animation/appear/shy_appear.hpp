@@ -52,7 +52,7 @@ void shy_guts :: reply_transform ( )
 {
     so_called_message_common_logic_door_animation_appear_transform_reply msg ;
     msg . scale = shy_guts :: logic_door_animation_appear_transform_state :: scale ;
-    so_called_sender_common_logic_door_animation_appear_transform_reply :: send ( msg ) ;
+    so_called_common_logic_door_animation_appear_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_door_animation_appear :: receive ( so_called_message_common_init )

@@ -70,7 +70,7 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: entities_render ( )
 {
-    so_called_sender_common_engine_render_texture_unselect :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
+    so_called_common_engine_render_texture_unselect_sender :: send ( so_called_message_common_engine_render_texture_unselect ( ) ) ;
     
     for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0 
         ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: entities_to_render )
@@ -83,12 +83,12 @@ void shy_guts :: entities_render ( )
             so_called_message_common_engine_render_mesh_set_transform mesh_set_transform_msg ;
             mesh_set_transform_msg . mesh = shy_guts :: entity_mesh_id ;
             mesh_set_transform_msg . transform = matrix . get ( ) ;
-            so_called_sender_common_engine_render_mesh_set_transform :: send ( mesh_set_transform_msg ) ;
+            so_called_common_engine_render_mesh_set_transform_sender :: send ( mesh_set_transform_msg ) ;
         }
         {
             so_called_message_common_engine_render_mesh_render mesh_render_msg ;
             mesh_render_msg . mesh = shy_guts :: entity_mesh_id ;
-            so_called_sender_common_engine_render_mesh_render :: send ( mesh_render_msg ) ;
+            so_called_common_engine_render_mesh_render_sender :: send ( mesh_render_msg ) ;
         }
     }
 }
@@ -181,7 +181,7 @@ void shy_guts :: create_entity_mesh ( )
         {
             so_called_message_common_engine_render_mesh_finalize mesh_finalize_msg ;
             mesh_finalize_msg . mesh = shy_guts :: entity_mesh_id ;
-            so_called_sender_common_engine_render_mesh_finalize :: send ( mesh_finalize_msg ) ;
+            so_called_common_engine_render_mesh_finalize_sender :: send ( mesh_finalize_msg ) ;
             so_called_platform_math :: inc_whole ( shy_guts :: frames_to_render ) ;
         }
         else if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: frames_to_render , shy_guts :: consts :: frames_wait_before_render ) )
@@ -216,7 +216,7 @@ void shy_guts :: update_entity_grid ( )
         {
             so_called_platform_math :: inc_whole ( shy_guts :: entities_to_render ) ;
             if ( so_called_platform_conditions :: wholes_are_equal ( shy_guts :: entities_to_render , i_max ) )
-                so_called_sender_common_logic_entities_prepared :: send ( so_called_message_common_logic_entities_prepared ( ) ) ;
+                so_called_common_logic_entities_prepared_sender :: send ( so_called_message_common_logic_entities_prepared ( ) ) ;
         }
     }
 
@@ -309,7 +309,7 @@ void shy_guts :: mesh_set_triangle_strip_index_value ( so_called_type_platform_m
     msg . mesh = shy_guts :: entity_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;
-    so_called_sender_common_engine_render_mesh_set_triangle_strip_index_value :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_triangle_strip_index_value_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_triangle_fan_index_value ( so_called_type_platform_math_num_whole offset , so_called_type_platform_math_num_whole index )
@@ -318,7 +318,7 @@ void shy_guts :: mesh_set_triangle_fan_index_value ( so_called_type_platform_mat
     msg . mesh = shy_guts :: entity_mesh_id ;
     msg . offset = offset ;
     msg . index = index ;
-    so_called_sender_common_engine_render_mesh_set_triangle_fan_index_value :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_triangle_fan_index_value_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_position 
@@ -334,7 +334,7 @@ void shy_guts :: mesh_set_vertex_position
     msg . x = x ;
     msg . y = y ;
     msg . z = z ;
-    so_called_sender_common_engine_render_mesh_set_vertex_position :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_position_sender :: send ( msg ) ;
 }
 
 void shy_guts :: mesh_set_vertex_color 
@@ -352,7 +352,7 @@ void shy_guts :: mesh_set_vertex_color
     msg . g = g ;
     msg . b = b ;
     msg . a = a ;
-    so_called_sender_common_engine_render_mesh_set_vertex_color :: send ( msg ) ;
+    so_called_common_engine_render_mesh_set_vertex_color_sender :: send ( msg ) ;
 }
 
 void shy_guts :: entity_color 
@@ -469,14 +469,14 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 {
     so_called_message_common_logic_entities_height_reply entities_height_reply_msg ;
     entities_height_reply_msg . height = shy_guts :: consts :: entity_mesh_height ;
-    so_called_sender_common_logic_entities_height_reply :: send ( entities_height_reply_msg ) ;
+    so_called_common_logic_entities_height_reply_sender :: send ( entities_height_reply_msg ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_mesh_grid_request )
 {
     so_called_message_common_logic_entities_mesh_grid_reply entities_mesh_grid_reply_msg ;
     so_called_platform_math :: make_num_whole ( entities_mesh_grid_reply_msg . grid , shy_guts :: consts :: entity_mesh_grid ) ;
-    so_called_sender_common_logic_entities_mesh_grid_reply :: send ( entities_mesh_grid_reply_msg ) ;
+    so_called_common_logic_entities_mesh_grid_reply_sender :: send ( entities_mesh_grid_reply_msg ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_origin_request msg )
@@ -484,7 +484,7 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
     so_called_message_common_logic_entities_origin_reply entities_origin_reply_msg ;
     shy_guts :: get_entity_origin ( entities_origin_reply_msg . origin , msg . index ) ;
     entities_origin_reply_msg . index = msg . index ;
-    so_called_sender_common_logic_entities_origin_reply :: send ( entities_origin_reply_msg ) ;
+    so_called_common_logic_entities_origin_reply_sender :: send ( entities_origin_reply_msg ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_prepare_permit )
@@ -496,7 +496,7 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entity_created ) )
         shy_guts :: entities_render ( ) ;
-    so_called_sender_common_logic_entities_render_reply :: send ( so_called_message_common_logic_entities_render_reply ( ) ) ;
+    so_called_common_logic_entities_render_reply_sender :: send ( so_called_message_common_logic_entities_render_reply ( ) ) ;
 }
 
 void _shy_common_logic_entities :: receive ( so_called_message_common_logic_entities_update )
@@ -526,7 +526,7 @@ void _shy_common_logic_entities :: receive ( so_called_message_common_logic_enti
                 mesh_create_msg . vertices = vertices_count ;
                 mesh_create_msg . triangle_strip_indices = strip_indices_count ;
                 mesh_create_msg . triangle_fan_indices = fan_indices_count ;
-                so_called_sender_common_engine_render_mesh_create_request :: send ( mesh_create_msg ) ;
+                so_called_common_engine_render_mesh_create_request_sender :: send ( mesh_create_msg ) ;
             }
             else if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: entity_mesh_id_created ) )
                 shy_guts :: create_entity_mesh ( ) ;

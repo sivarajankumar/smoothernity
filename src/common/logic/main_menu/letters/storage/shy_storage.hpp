@@ -54,7 +54,7 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
     so_called_message_common_logic_main_menu_letters_boundaries_reply reply_msg ;
     reply_msg . rows = shy_guts :: rows_state :: rows_count ;
     reply_msg . cols = shy_guts :: max_cols ;
-    so_called_sender_common_logic_main_menu_letters_boundaries_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_boundaries_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_cols_request msg )
@@ -65,7 +65,7 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
     so_called_message_common_logic_main_menu_letters_cols_reply reply_msg ;
     reply_msg . row = msg . row ;
     reply_msg . cols = row_state . get ( ) . cols_count ;
-    so_called_sender_common_logic_main_menu_letters_cols_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_cols_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_letter_add msg )
@@ -93,7 +93,7 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
     reply_msg . row = msg . row ;
     reply_msg . col = msg . col ;
     reply_msg . letter = col_state . get ( ) . letter ;
-    so_called_sender_common_logic_main_menu_letters_letter_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_letter_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_common_logic_main_menu_letters_next_row )
@@ -105,7 +105,7 @@ void _shy_common_logic_main_menu_letters_storage :: receive ( so_called_message_
 {
     so_called_message_common_logic_main_menu_letters_rows_reply reply_msg ;
     reply_msg . rows = shy_guts :: rows_state :: rows_count ;
-    so_called_sender_common_logic_main_menu_letters_rows_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_letters_rows_reply_sender :: send ( reply_msg ) ;
 }
 
 void _shy_common_logic_main_menu_letters_storage :: register_in_scheduler ( )

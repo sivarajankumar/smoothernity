@@ -50,7 +50,7 @@ void shy_guts :: obtain_row_rect ( )
 
     so_called_message_common_logic_main_menu_letters_layout_row_rect_request msg ;
     msg . row = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row ;
-    so_called_sender_common_logic_main_menu_letters_layout_row_rect_request :: send ( msg ) ;
+    so_called_common_logic_main_menu_letters_layout_row_rect_request_sender :: send ( msg ) ;
 }
 
 void shy_guts :: received_row_rect ( )
@@ -68,7 +68,7 @@ void shy_guts :: reply_transform ( )
     reply_msg . position = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: position ;
     reply_msg . scale_x = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_x ;
     reply_msg . scale_y = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y ;
-    so_called_sender_common_logic_main_menu_selection_animation_idle_transform_reply :: send ( reply_msg ) ;
+    so_called_common_logic_main_menu_selection_animation_idle_transform_reply_sender :: send ( reply_msg ) ;
 }
 
 void shy_guts :: compute_row_rect_mesh_transform ( )

@@ -40,7 +40,7 @@ void shy_guts :: proceed_with_transform ( )
 void shy_guts :: obtain_shake_transform ( )
 {
     shy_guts :: logic_main_menu_animation_shake_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_sender_common_logic_main_menu_animation_shake_transform_request :: send ( so_called_message_common_logic_main_menu_animation_shake_transform_request ( ) ) ;
+    so_called_common_logic_main_menu_animation_shake_transform_request_sender :: send ( so_called_message_common_logic_main_menu_animation_shake_transform_request ( ) ) ;
 }
 
 void shy_guts :: compute_and_reply_transform ( )
@@ -75,7 +75,7 @@ void shy_guts :: reply_transform ( )
 {
     so_called_message_common_logic_main_menu_animation_transform_reply msg ;
     msg . view = shy_guts :: logic_main_menu_animation_transform_state :: view ;
-    so_called_sender_common_logic_main_menu_animation_transform_reply :: send ( msg ) ;
+    so_called_common_logic_main_menu_animation_transform_reply_sender :: send ( msg ) ;
 }
 
 void _shy_common_logic_main_menu_animation :: receive ( so_called_message_common_init )
